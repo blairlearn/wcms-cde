@@ -21,5 +21,11 @@ namespace NCI.Web.CDE.Configuration
         {
             get { return (PageTitleInformationElement)base["pageTitle"]; }
         }
+
+        [ConfigurationProperty("canonicalHostName")]
+        public CanonicalHostNameInformationElement CanonicalHostName
+        {
+            get { return (CanonicalHostNameInformationElement)base["canonicalHostName"]; }
+        }
     }
 }

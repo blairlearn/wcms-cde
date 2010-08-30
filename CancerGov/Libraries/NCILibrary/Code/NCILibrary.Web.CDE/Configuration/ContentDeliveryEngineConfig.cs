@@ -37,7 +37,17 @@ namespace NCI.Web.CDE.Configuration
                 return ContentDeliveryEngine.PageTitle;
             }
         }
-        
+
+        public static CanonicalHostNameInformationElement CanonicalHostName
+        {
+            get
+            {
+                //ContentDeliveryEngine will throw ConfigurationErrorsException
+                //So this does not have to...
+                return ContentDeliveryEngine.CanonicalHostName;
+            }
+        }
+
         //Question: Should this still be public???
         public static ContentDeliveryEngineSection ContentDeliveryEngine
         {

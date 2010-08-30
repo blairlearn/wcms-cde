@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Globalization;
-
+using NCI.Web.CDE.Configuration;
 using NCI.Util;
 using NCI.Logging;
 using NCI.Web.Extensions;
@@ -239,12 +239,16 @@ namespace NCI.Web.CDE.UI
         /// </summary>
         protected virtual void InsertCanonicalURL()
         {
-            if (CurrentPageHead != null)
+            string CanonicalUrl = PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.CanonicalUrl).ToString();
+            if (!string.IsNullOrEmpty(CanonicalUrl))
             {
-                HtmlLink hml = new HtmlLink();
-                hml.Attributes.Add("rel", "canonical");
-                hml.Href = PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.CanonicalUrl).ToString();
-                CurrentPageHead.Controls.Add(hml);
+                if (CurrentPageHead != null)
+                {
+                    HtmlLink hml = new HtmlLink();
+                    hml.Attributes.Add("rel", "canonical");
+                    hml.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + CanonicalUrl;
+                    CurrentPageHead.Controls.Add(hml);
+                }
             }
         }
 

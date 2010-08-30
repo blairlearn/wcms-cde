@@ -51,6 +51,8 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\canonicalHostNameElement.cs" />
+    <Compile Include="Configuration\CanonicalHostNameInformationElement.cs" />
     <Compile Include="Configuration\ContentDeliveryEngineConfig.cs" />
     <Compile Include="Configuration\DeliverySection.cs" />
     <Compile Include="Configuration\PageAssemblyInfoTypeElement.cs" />
