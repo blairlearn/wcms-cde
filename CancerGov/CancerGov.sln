@@ -1,0 +1,112 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CancerGov.Web", "SiteSpecific\CancerGov.Web\CancerGov.Web.csproj", "{2E572059-B868-45B5-AD56-DB8687EF4DD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.CDE.Test", "Libraries\NCILibrary\UnitTests\NCILibrary.Web.CDE.Test\NCILibrary.Web.CDE.Test.csproj", "{23CB2B33-1ADA-45BB-A900-C59C69FB6DA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B753CCD2-8675-43F1-B675-F227A53BE863}"
+	ProjectSection(SolutionItems) = preProject
+		CancerGov.vsmdi = CancerGov.vsmdi
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Core", "Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj", "{898FF17C-C94A-4D85-8AAD-88764B72CFAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Search", "Libraries\NCILibrary\Code\NCILibrary.Search\NCILibrary.Search.csproj", "{8962B50C-E3A9-4F0A-9E48-7008C40247CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Search.Endeca", "Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj", "{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.TestingTools", "Libraries\NCILibrary\Code\NCILibrary.TestingTools\NCILibrary.TestingTools.csproj", "{364BC997-48F1-450A-9751-8252FD5EBD78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.Authentication.SimpleSSOAuthModule", "Libraries\NCILibrary\Code\NCILibrary.Web.Authentication.SimpleSSOAuthModule\NCILibrary.Web.Authentication.SimpleSSOAuthModule.csproj", "{A1D2B942-13AE-422C-906C-B771CE858E01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.UI.Icons", "Libraries\NCILibrary\Code\NCILibrary.Web.UI.Icons\NCILibrary.Web.UI.Icons.csproj", "{8F039727-466F-4BE5-95A3-7CB85B2638C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.UI.WebControls", "Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj", "{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.CDE", "Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj", "{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Core.Tests", "Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\NCILibrary.Core.Tests.csproj", "{7A18A1E2-2B09-43CE-8A88-F96A818083FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{F404ECC9-61F8-44C9-AED8-30530077A18D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NCILibrary", "NCILibrary", "{BCA4A471-7CFA-4B5B-AECC-620F0233A36C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.CDE.UI", "Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj", "{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}"
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = CancerGov.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E572059-B868-45B5-AD56-DB8687EF4DD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E572059-B868-45B5-AD56-DB8687EF4DD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E572059-B868-45B5-AD56-DB8687EF4DD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E572059-B868-45B5-AD56-DB8687EF4DD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23CB2B33-1ADA-45BB-A900-C59C69FB6DA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23CB2B33-1ADA-45BB-A900-C59C69FB6DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23CB2B33-1ADA-45BB-A900-C59C69FB6DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23CB2B33-1ADA-45BB-A900-C59C69FB6DA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{364BC997-48F1-450A-9751-8252FD5EBD78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{364BC997-48F1-450A-9751-8252FD5EBD78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{364BC997-48F1-450A-9751-8252FD5EBD78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{364BC997-48F1-450A-9751-8252FD5EBD78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1D2B942-13AE-422C-906C-B771CE858E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1D2B942-13AE-422C-906C-B771CE858E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1D2B942-13AE-422C-906C-B771CE858E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1D2B942-13AE-422C-906C-B771CE858E01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A18A1E2-2B09-43CE-8A88-F96A818083FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A18A1E2-2B09-43CE-8A88-F96A818083FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A18A1E2-2B09-43CE-8A88-F96A818083FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A18A1E2-2B09-43CE-8A88-F96A818083FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7A18A1E2-2B09-43CE-8A88-F96A818083FD} = {F404ECC9-61F8-44C9-AED8-30530077A18D}
+		{23CB2B33-1ADA-45BB-A900-C59C69FB6DA6} = {F404ECC9-61F8-44C9-AED8-30530077A18D}
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+		{364BC997-48F1-450A-9751-8252FD5EBD78} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+		{A1D2B942-13AE-422C-906C-B771CE858E01} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+	EndGlobalSection
+EndGlobal
