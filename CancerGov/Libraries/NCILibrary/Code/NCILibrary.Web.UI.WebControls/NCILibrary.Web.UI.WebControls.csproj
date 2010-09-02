@@ -119,6 +119,12 @@
     <Compile Include="ModalControl.cs" />
     <Compile Include="MultiTemplatedDataBoundControl.cs" />
     <Compile Include="MultiTemplatedRepeater.cs" />
+    <Compile Include="PageOptionsBox\AddThisPageOption.cs" />
+    <Compile Include="PageOptionsBox\AddThisPageOptionSettings.cs" />
+    <Compile Include="PageOptionsBox\LinkPageOption.cs" />
+    <Compile Include="PageOptionsBox\PageOption.cs" />
+    <Compile Include="PageOptionsBox\PageOptionsBox.cs" />
+    <Compile Include="PageOptionsBox\PageOptionsCollection.cs" />
     <Compile Include="PagerStyleSettings.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

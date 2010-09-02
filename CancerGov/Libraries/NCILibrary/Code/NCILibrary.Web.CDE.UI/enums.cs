@@ -16,4 +16,15 @@ namespace NCI.Web.CDE.UI
         ContentLanguage,
         Title
     }
+
+    /// <summary>
+    /// Enum to define named contants for types of page option
+    /// </summary>
+    public enum PageOptionType
+    { 
+        Link,
+        Email,
+        BookMarkShare
+    }
+
 }

@@ -64,6 +64,9 @@
     <Compile Include="SnippetControls\GenericHtmlContentSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\PageOptionsDisplay.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">

@@ -63,8 +63,10 @@
     <Compile Include="Configuration\TitleElement.cs" />
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
+    <Compile Include="PageAssembly\AlternateContentVersions.cs" />
     <Compile Include="PageAssembly\BlockedSlot.cs" />
     <Compile Include="PageAssembly\DisplayVersions.cs" />
+    <Compile Include="PageAssembly\Module_PageOptionsBox.cs" />
     <Compile Include="PageAssembly\PageAssemblyContext.cs" />
     <Compile Include="PageAssembly\PageAssemblyException.cs" />
     <Compile Include="PageAssembly\FieldFilterData.cs" />

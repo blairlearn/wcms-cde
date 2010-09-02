@@ -66,7 +66,11 @@ namespace NCI.Web.CDE
         /// <value>The blocked slot names.</value>
         string[] BlockedSlotNames { get; }
 
-
+        /// <summary>
+        /// This property returns the keys which represent the available content versions. 
+        /// </summary>
+        /// <value>A string array which are the keys to the alternate content versions.</value>
+        string[] AlternateContentVersionsKeys { get; }
 
     }
 }

@@ -55,6 +55,7 @@
     <Compile Include="Configuration\HttpSimulatorSection.cs" />
     <Compile Include="Configuration\PathInformationElement.cs" />
     <Compile Include="FieldFilterDataTest.cs" />
+    <Compile Include="Module_PageOptionsBox_Test.cs" />
     <Compile Include="PageAssemblyContextTest.cs" />
     <Compile Include="PageAssemblyInstructionFactoryTest.cs" />
     <Compile Include="PageAssemblyInstructionLoaderTest.cs" />

@@ -80,6 +80,15 @@ namespace NCI.Web.CDE.UI
         }
 
         /// <summary>
+        /// Enable page options only if AlternateContentVersion information is not null.
+        /// Load a user control and add that control to the controls collection. This user 
+        /// control will render the html needed for the page options.
+        /// </summary>
+        private void enablepageOptions()
+        {
+        }
+
+        /// <summary>
         /// Returns the metadata value for different types of metadata name.
         /// </summary>
         /// <param name="metaDataType"></param>
@@ -163,6 +172,7 @@ namespace NCI.Web.CDE.UI
             base.OnPreInit(e);
             loadTemplateSlots();
             loadSnippetsIntoTemplateSlots();
+            enablepageOptions();
         }
 
         /// <summary>
@@ -173,6 +183,7 @@ namespace NCI.Web.CDE.UI
         protected override void OnPreRenderComplete(EventArgs e)
         {
             base.OnPreRenderComplete(e);
+            JSManager.AddExternalScript(this, "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
             SetTitle();
             InsertStyleSheetsReferences();
             InsertCanonicalURL();

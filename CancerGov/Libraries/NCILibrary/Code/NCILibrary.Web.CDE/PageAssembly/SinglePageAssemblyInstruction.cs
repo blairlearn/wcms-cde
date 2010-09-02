@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +16,7 @@ namespace NCI.Web.CDE
     /// Implements the IPageAssemblyInstruction interface.An Instance of this class is created by deserializing the percussion published XML file.
     /// </summary>
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
-    [System.Xml.Serialization.XmlRootAttribute("SinglePageAssemblyInstruction", Namespace = "http://www.example.org/CDESchema", IsNullable = false)] 
+    [System.Xml.Serialization.XmlRootAttribute("SinglePageAssemblyInstruction", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
     public class SinglePageAssemblyInstruction : IPageAssemblyInstruction
     {
 
@@ -104,7 +106,8 @@ namespace NCI.Web.CDE
         /// <value>The blocked slot names.</value>
         public string[] BlockedSlotNames
         {
-            get {
+            get
+            {
                 var names = from slot in BlockedSlots
                             select slot.Name;
 
@@ -147,13 +150,13 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public PageMetadata PageMetadata { get; set; }
 
- 
+
         /// <summary>
         /// Gets the collections of the snippets
         /// </summary>
         /// <value>The snippet infos.</value>
         [System.Xml.Serialization.XmlArray(ElementName = "Snippets", Form = XmlSchemaForm.Unqualified)]
-        [System.Xml.Serialization.XmlArrayItem("SnippetInfo", Form=XmlSchemaForm.Unqualified)]
+        [System.Xml.Serialization.XmlArrayItem("SnippetInfo", Form = XmlSchemaForm.Unqualified)]
         public SnippetInfoCollection SnippetInfos
         {
 
@@ -171,7 +174,7 @@ namespace NCI.Web.CDE
             get
             {
                 List<SnippetInfo> snippets = new List<SnippetInfo>();
-               
+
                 // Add all local snippets to the list to return.
                 snippets.AddRange(_snippets);
 
@@ -299,7 +302,47 @@ namespace NCI.Web.CDE
             }
         }
 
+        /// <summary>
+        /// This property returns the keys which represent the available content versions. 
+        /// </summary>
+        /// <value>A string array which are the keys to the alternate content versions.</value>
+        public string[] AlternateContentVersionsKeys
+        {
+            get
+            {
+                ArrayList keysList = new ArrayList();
+                if (AlternateContentVersions.IsPrintAvailable)
+                    keysList.Add("Print");
+                if (AlternateContentVersions.IsShareBookmarkAvailable)
+                    keysList.Add("ShareBookmark");
+                if (AlternateContentVersions.IsEmailAvailable)
+                    keysList.Add("Email");
+                if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
+                    keysList.Add("OrderCopy");
+
+
+                // Enumerate the Files and set an URL filter.
+                foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
+                {
+                    keysList.Add(acFile.MimeType);
+                    AddUrlFilter(acFile.MimeType, url =>
+                    {
+                       url.SetUrl(acFile.Url);
+                    });
+                }
+
+                return (string[])keysList.ToArray(typeof(string));
+            }
+        }
         #endregion
+
+        /// <summary>
+        /// Returns Alternate content versions object which contains information necessary to display 
+        /// the page options.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public AlternateContentVersions AlternateContentVersions { get; set; }
+
         private void FilterCurrentUrl(NciUrl url)
         {
             //This should always be the first delegate for the CurrentUrl link type
@@ -311,11 +354,11 @@ namespace NCI.Web.CDE
         {
             //This should always be the first delegate for the CurrentUrl link type
             //so we can just overwrite whatever has come before.
-             url.SetUrl(GetUrl("PrettyUrl").ToString());
+            url.SetUrl(GetUrl("PrettyUrl").ToString());
 
         }
 
-        
+
         /// <summary>
         /// Registers the field filters.
         /// </summary>
@@ -407,13 +450,13 @@ namespace NCI.Web.CDE
                 (PageMetadata != null && target.PageMetadata == null) ||
                 (PageMetadata == null && target.PageMetadata != null)
                 )
-                        {
-                            return false;
-                        }
-
-            if(PageMetadata != null && target.PageMetadata != null)
-            if(!PageMetadata.Equals(target.PageMetadata))
+            {
                 return false;
+            }
+
+            if (PageMetadata != null && target.PageMetadata != null)
+                if (!PageMetadata.Equals(target.PageMetadata))
+                    return false;
 
 
             if (

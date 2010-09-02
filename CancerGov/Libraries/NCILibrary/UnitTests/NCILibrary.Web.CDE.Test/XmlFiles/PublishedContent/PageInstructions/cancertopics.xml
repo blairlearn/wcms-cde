@@ -6,13 +6,14 @@
   <PageMetadata>
     <LongTitle>Cancer Topics Home Page</LongTitle>
     <ShortTitle>Cancer Topics Home Page</ShortTitle>
+    <ShortDescription>Cancer Topics Home Page</ShortDescription>
     <LongDescription>Information from the National Cancer Institute about cancer treatment, prevention, screening, genetics, causes, and how to cope with cancer.</LongDescription>
     <MetaDescription>Information from the National Cancer Institute about cancer treatment, prevention, screening, genetics, causes, and how to cope with cancer.</MetaDescription>
     <MetaKeywords>cancer,information</MetaKeywords>
   </PageMetadata>
   <Language>en</Language>
   <BlockedSlots>
-    <Slot Name="ContentHeaderSlot" />	
+    <Slot Name="ContentHeaderSlot" />
   </BlockedSlots>
   <Snippets>
     <SnippetInfo>
@@ -401,5 +402,41 @@ Informaci&oacute;n en espa&ntilde;ol</span><br>
         ]]>
       </Data>
     </SnippetInfo>
+    <SnippetInfo>
+      <ContentID>5</ContentID>
+      <SnippetTemplatePath>~/SnippetTemplates/PageOptionsDisplay.ascx</SnippetTemplatePath>
+      <SlotName>cgvLetfNav</SlotName>
+      <Data>
+        <![CDATA[
+        <?xml version=""1.0"" encoding=""utf-8""?>
+        <cde:Module_PageOptionsBox xsi:schemaLocation=""http://www.example.org/CDESchema CDESchema.xsd"" xmlns:cde=""http://www.example.org/CDESchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+          <Title>Page Options</Title>
+          <PageOptions>
+            <PageOption key = "Print">
+              <cssClass> Class Name</cssClass>
+              <LinkText>text</LinkText>
+              <WebAnalyticsFunction>functionname</WebAnalyticsFunction>
+              <OptionType>type</OptionType>
+            </PageOption>
+            <PageOption key = "Email">
+              <cssClass> Class Name</cssClass>
+              <LinkText>text</LinkText>
+              <WebAnalyticsFunction>functionname</WebAnalyticsFunction>
+              <OptionType>type</OptionType>
+            </PageOption>
+          </PageOptions>
+        </cde:Module_PageOptionsBox>
+        ]]>
+      </Data>
+    </SnippetInfo>
   </Snippets>
+  <AlternateContentVersions>
+    <IsPrintAvailable>true</IsPrintAvailable>
+    <IsEmailAvailable>false</IsEmailAvailable>
+    <IsShareBookmarkAvailable>true</IsShareBookmarkAvailable>
+    <Files>
+      <File Url="/changeme.pdf" MimeType="application/pdf" />
+      <File Url="/altcontent1.pdf" MimeType="application/pdf" />
+    </Files>
+  </AlternateContentVersions>
 </cde:SinglePageAssemblyInstruction>

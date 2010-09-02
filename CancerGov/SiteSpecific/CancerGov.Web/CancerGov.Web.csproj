@@ -56,6 +56,7 @@
     <Content Include="PageTemplates\MockPage2.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
+    <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="UserControls\Headers\MainPageHeader.ascx" />
     <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
     <None Include="Web.config" />

@@ -332,6 +332,21 @@ namespace NCI.Web.CDE.Test
 
         }
 
+        /// <summary>
+        /// Helps in testing the new property AlternateContentVersion.  
+        /// </summary>
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetAlternateContentVersion()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+            string[] alternateContentVersion = null;
+            alternateContentVersion = pageAssemblyInfo.AlternateContentVersionsKeys;
+            Assert.IsNotNull(alternateContentVersion);
+            Assert.IsTrue(alternateContentVersion.Length > 0);
+        }
+
 
         private void FilterCurrentUrl(NciUrl url)
         {
