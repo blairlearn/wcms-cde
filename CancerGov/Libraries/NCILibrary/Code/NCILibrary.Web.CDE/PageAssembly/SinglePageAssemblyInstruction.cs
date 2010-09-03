@@ -66,6 +66,30 @@ namespace NCI.Web.CDE
             AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
             AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
 
+            AddUrlFilter("CurrentURL", url =>
+                { 
+                    url.SetUrl(GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString());
+                    if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
+                    {
+                        url.UriStem += "/print";
+                    }
+                });
+
+            AddUrlFilter("Print", url =>
+            {
+                url.SetUrl( GetUrl("CurrentURL").ToString() + "/print");
+            });
+
+            AddUrlFilter("Email", url =>
+            {
+                url.SetUrl("common/popUps/PopEmail.aspx?");
+                url.QueryParameters.Add("title", GetField("short_title"));
+            });
+
+            AddUrlFilter("OrderCopyURL", url =>
+            {
+                url.SetUrl(AlternateContentVersions.OrderCopyURL);
+            });
 
         }
 
@@ -319,7 +343,6 @@ namespace NCI.Web.CDE
                     keysList.Add("Email");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("OrderCopy");
-
 
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)

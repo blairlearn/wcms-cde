@@ -109,6 +109,8 @@ namespace NCI.Web.CDE
                 dispayVersion=DisplayVersions.Print;
             }
 
+            // Set Display version before loading the assembly instructions so it can be accessed in the constructor
+            PageAssemblyContext.CurrentDisplayVersion = dispayVersion;
 
             //Now lookup the url..
 

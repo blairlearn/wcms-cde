@@ -60,6 +60,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.TeamSystem.Data.UnitTesting, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -73,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Data\SqlHelper.cs" />
     <Compile Include="Data\UsesSProcAttribute.cs" />
+    <Compile Include="HashMaster.cs" />
     <Compile Include="Logging\Configuration\FacilityMatchStringElement.cs" />
     <Compile Include="Logging\Configuration\FacilityMatchStringsCollection.cs" />
     <Compile Include="Logging\Configuration\LoggingSinkElement.cs" />

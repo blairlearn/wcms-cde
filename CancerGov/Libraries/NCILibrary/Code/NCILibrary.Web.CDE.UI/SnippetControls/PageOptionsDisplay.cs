@@ -25,6 +25,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
             // In this case the snippet info data is not HTML(which is often the case)
             // but xml data which contains rendering properties for each page option item 
             processPageOptionsData(SnippetInfo.Data);
+
+            if(!Page.ClientScript.IsClientScriptBlockRegistered(this.GetType(), "popup"))
+                this.Page.ClientScript.RegisterClientScriptBlock( this.GetType(), "popup", "<script language=\"JavaScript\" src=\"/scripts/popEvents.js\"></script>");
         }
         protected override void Render(HtmlTextWriter writer)
         {
@@ -38,9 +41,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// <param name="snippetXmlData">The xml fragment which contains pageoptions information.</param>
         private void processPageOptionsData(string snippetXmlData)
         {
+            IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
             // If AlternateContentVersions information is not in the instructions then do not create 
             // the PageOptions box.
-            string[] acvKeys = PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys;
+            string[] acvKeys = pgInstruction.AlternateContentVersionsKeys;
 
             if (acvKeys != null)
             {
@@ -58,23 +62,44 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     foreach (PageOption pgOptionItem in mPBO.PageOptions)
                     {
-                        // Check if the Pageoptions are recognized in the Alternate Content Version keys
-                        if (acvKeys.Contains<string>(pgOptionItem.Key))
+                        try
                         {
-                            NCI.Web.UI.WebControls.PageOption pgoBase = null;
-
-                            if (String.Compare(pgOptionItem.OptionType, PageOptionType.Link.ToString()) == 0)
+                            // Check if the Pageoptions are recognized in the Alternate Content Version keys
+                            if (acvKeys.Contains<string>(pgOptionItem.Key))
                             {
-                                pgoBase = new LinkPageOption();
-                                ((LinkPageOption)pgoBase).OnClick = pgOptionItem.WebAnalyticsFunction;
-                            }
+                                NCI.Web.UI.WebControls.PageOption pgoBase = null;
 
-                            if (pgoBase != null)
-                            {
-                                pgoBase.CssClass = pgOptionItem.cssClass;
-                                pgoBase.LinkText = pgOptionItem.LinkText;
-                                pageOptionsBox.PageOptions.Add(pgoBase);
+                                if (String.Compare(pgOptionItem.OptionType, PageOptionType.Link.ToString()) == 0)
+                                {
+                                    pgoBase = new LinkPageOption();
+                                    ((LinkPageOption)pgoBase).OnClick = pgOptionItem.WebAnalyticsFunction;
+                                    ((LinkPageOption)pgoBase).Href = pgInstruction.GetUrl(pgOptionItem.Key).ToString();
+                                }
+                                else if (String.Compare(pgOptionItem.OptionType, PageOptionType.Email.ToString()) == 0)
+                                {
+                                    pgoBase = new LinkPageOption();
+                                    ((LinkPageOption)pgoBase).Href = pgInstruction.GetUrl("Email").ToString();
+                                    ((LinkPageOption)pgoBase).OnClick = pgOptionItem.WebAnalyticsFunction;
+                                    ((LinkPageOption)pgoBase).OnClick += " " + "dynPopWindow('" + ((LinkPageOption)pgoBase).Href.Replace("'", "%27").Replace("(", "%28").Replace(")", "%29") + "', 'emailPopUp', 'height=365,width=525'); return false;";
+                                }
+                                else if (String.Compare(pgOptionItem.OptionType, PageOptionType.BookMarkShare.ToString()) == 0)
+                                {
+                                    pgoBase = new AddThisPageOption();
+                                    ((AddThisPageOption)pgoBase).Settings.Language = "en-us";
+                                    ((AddThisPageOption)pgoBase).PageTitle = pgInstruction.GetUrl("PrettyUrl").ToString();
+                                }
+
+                                if (pgoBase != null)
+                                {
+                                    pgoBase.CssClass = pgOptionItem.cssClass;
+                                    pgoBase.LinkText = pgOptionItem.LinkText;
+                                    pageOptionsBox.PageOptions.Add(pgoBase);
+                                }
                             }
+                        }
+                        catch
+                        { 
+                            //TODO, log exception
                         }
                     }
 

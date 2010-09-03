@@ -53,8 +53,15 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Common\FormEmailer.aspx" />
+    <Content Include="Common\PopUps\Email.aspx" />
+    <Content Include="Common\PopUps\popTextFooter.htm" />
+    <Content Include="Common\PopUps\popTextFooterSpanish.htm" />
+    <Content Include="Common\PopUps\popTextHeader.htm" />
+    <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
     <Content Include="PageTemplates\MockPage2.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
+    <Content Include="Common\PopUps\PopEmail.aspx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="UserControls\Headers\MainPageHeader.ascx" />
@@ -62,6 +69,28 @@
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\FormEmailer.aspx.cs">
+      <DependentUpon>FormEmailer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\FormEmailer.aspx.designer.cs">
+      <DependentUpon>FormEmailer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\Email.aspx.cs">
+      <DependentUpon>Email.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\Email.aspx.designer.cs">
+      <DependentUpon>Email.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\PopEmail.aspx.cs">
+      <DependentUpon>PopEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\PopEmail.aspx.designer.cs">
+      <DependentUpon>PopEmail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
       <DependentUpon>MainPageHeader.ascx</DependentUpon>
@@ -79,6 +108,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
       <Project>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</Project>
       <Name>NCILibrary.Web.CDE.UI</Name>
@@ -91,6 +124,11 @@
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
+      <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

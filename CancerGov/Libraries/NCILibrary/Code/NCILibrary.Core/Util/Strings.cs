@@ -1332,6 +1332,25 @@ namespace NCI.Util
 
             return false;
         }
+
+        /// <summary>
+        /// Substitutes default string for a null string
+        /// </summary>
+        /// <param name="val">Test string</param>
+        /// <param name="valDefault">Default string</param>
+        /// <returns>Test string or default string</returns>
+        public static string IfNull(string val, string valDefault)
+        {
+            if (val == null)
+            {
+                return valDefault;
+            }
+            else
+            {
+                return val;
+            }
+        }
+
         #endregion
 
 

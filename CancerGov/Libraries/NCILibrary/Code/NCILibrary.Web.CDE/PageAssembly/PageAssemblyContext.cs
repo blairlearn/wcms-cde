@@ -19,6 +19,8 @@ namespace NCI.Web.CDE
     {
         private static object PAGE_ASSEMBLY_CONTEXT_KEY = new object();
 
+        private static object PAGE_ASSEMBLY_DISPLAYVERSION_KEY = new object();
+
         /// <summary>
         /// Gets the IPageAssemblyInstruction derived object instance that can be used to build up the 
         /// page for the current request.
@@ -29,7 +31,17 @@ namespace NCI.Web.CDE
         /// Gets or sets the display version web,print etc.
         /// </summary>
         /// <value>The display version.</value>
-        public DisplayVersions DisplayVersion { get; private set; }
+        public DisplayVersions DisplayVersion 
+        {
+            get
+            {
+                return PageAssemblyContext.CurrentDisplayVersion;
+            }
+            private set
+            {
+                PageAssemblyContext.CurrentDisplayVersion = value;
+            } 
+        }
 
         /// <summary>
         /// Gets or sets the page template info like the diplay version,page template path to be loaded and the stylesheet path to be applied.
@@ -42,6 +54,25 @@ namespace NCI.Web.CDE
         /// </summary>
         private PageAssemblyContext() { }
 
+        #region Public Properties
+        public static DisplayVersions CurrentDisplayVersion
+        {
+            get 
+            {
+                if (HttpContext.Current.Items.Contains(PAGE_ASSEMBLY_DISPLAYVERSION_KEY))
+                    return (DisplayVersions)HttpContext.Current.Items[PAGE_ASSEMBLY_DISPLAYVERSION_KEY];
+                else
+                    return DisplayVersions.Web;
+            }
+            set 
+            {
+                if (HttpContext.Current.Items.Contains(PAGE_ASSEMBLY_DISPLAYVERSION_KEY))
+                    HttpContext.Current.Items[PAGE_ASSEMBLY_DISPLAYVERSION_KEY] = value;
+                else
+                    HttpContext.Current.Items.Add(PAGE_ASSEMBLY_DISPLAYVERSION_KEY, value);
+            }
+        }
+        #endregion
 
         public static PageAssemblyContext Current
         {
