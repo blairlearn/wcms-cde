@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<cde:MultiPageAssemblyInstrcution xsi:schemaLocation="http://www.example.org/CDESchema CDESchema.xsd" xmlns:cde="http://www.example.org/CDESchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<cde:MultiPageAssemblyInstruction xsi:schemaLocation="http://www.example.org/CDESchema CDESchema.xsd" xmlns:cde="http://www.example.org/CDESchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <PageMetadata>
     <LongTitle>Cancer Topics Home Page</LongTitle>
     <ShortTitle>Cancer Topics Home Page</ShortTitle>
@@ -506,4 +506,4 @@ Informaci&oacute;n en espa&ntilde;ol</span><br>
 		  </Snippets> 			  
 	  </Page>
   </Pages>
-</cde:SinglePageAssemblyInstruction>
+</cde:MultiPageAssemblyInstruction>
