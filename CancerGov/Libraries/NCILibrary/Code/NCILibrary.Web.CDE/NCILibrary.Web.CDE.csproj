@@ -66,13 +66,17 @@
     <Compile Include="PageAssembly\AlternateContentVersions.cs" />
     <Compile Include="PageAssembly\BlockedSlot.cs" />
     <Compile Include="PageAssembly\DisplayVersions.cs" />
+    <Compile Include="PageAssembly\IMultiPageAssemblyInstruction.cs" />
     <Compile Include="PageAssembly\Module_PageOptionsBox.cs" />
+    <Compile Include="PageAssembly\MultiPageAssemblyInstruction.cs" />
+    <Compile Include="PageAssembly\MultiPage.cs" />
     <Compile Include="PageAssembly\PageAssemblyContext.cs" />
     <Compile Include="PageAssembly\PageAssemblyException.cs" />
     <Compile Include="PageAssembly\FieldFilterData.cs" />
     <Compile Include="PageAssembly\FieldFilterDelegate.cs" />
     <Compile Include="PageAssembly\IPageAssemblyInstruction.cs" />
     <Compile Include="PageAssembly\PageAssemblyInstructionFactory.cs" />
+    <Compile Include="PageAssembly\MultiPageCollection.cs" />
     <Compile Include="PageAssembly\PageMetadata.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateCollection.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateConfiguration.cs" />
