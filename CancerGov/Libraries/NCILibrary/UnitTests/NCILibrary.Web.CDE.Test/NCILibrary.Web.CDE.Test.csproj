@@ -56,6 +56,7 @@
     <Compile Include="Configuration\PathInformationElement.cs" />
     <Compile Include="FieldFilterDataTest.cs" />
     <Compile Include="Module_PageOptionsBox_Test.cs" />
+    <Compile Include="MultiPageAssemblyInstructionTest.cs" />
     <Compile Include="PageAssemblyContextTest.cs" />
     <Compile Include="PageAssemblyInstructionFactoryTest.cs" />
     <Compile Include="PageAssemblyInstructionLoaderTest.cs" />
@@ -80,6 +81,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XmlFiles\PublishedContent\PageInstructions\cancertopics_not_wellformed.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XmlFiles\PublishedContent\PageInstructions\Multicancertopics.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XmlFiles\PublishedContent\PageInstructions\SinglePageAssemblyInstructionNotValid.xml">
