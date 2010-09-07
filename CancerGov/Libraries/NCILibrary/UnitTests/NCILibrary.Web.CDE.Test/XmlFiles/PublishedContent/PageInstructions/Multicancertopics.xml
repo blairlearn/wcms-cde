@@ -18,6 +18,9 @@
   		<File Url="/changeme.pdf" MimeType="application/pdf" />
   	</Files>
   </AlternateContentVersions>
+  <BlockedSlots>
+    <Slot Name="cgvContentHeader" />
+  </BlockedSlots>  
  <Snippets>
     <SnippetInfo>
       <ContentID>6</ContentID>
@@ -419,7 +422,7 @@ Informaci&oacute;n en espa&ntilde;ol</span><br>
 			<PrettyUrl>/</PrettyUrl>
 			<PageTemplateName>DefaultCancerGovTemplate</PageTemplateName>
 			  <BlockedSlots>
-			    <Slot Name="cgvContentHeader" />	
+			    <Slot Name="cgvContentHeader--1" />	
 			  </BlockedSlots>
 		 <Snippets>
 		    <SnippetInfo>
@@ -519,7 +522,7 @@ Informaci&oacute;n en espa&ntilde;ol</span><br>
       <PrettyUrl>/page2</PrettyUrl>
       <PageTemplateName>DefaultCancerGovTemplate</PageTemplateName>
       <BlockedSlots>
-        <Slot Name="cgvContentHeader" />
+        <Slot Name="cgvContentHeader-3" />
       </BlockedSlots>
       <Snippets>
         <SnippetInfo>
