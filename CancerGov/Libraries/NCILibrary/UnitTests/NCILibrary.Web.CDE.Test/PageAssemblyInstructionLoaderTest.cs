@@ -115,5 +115,27 @@ namespace NCILibrary.Web.CDE.Test
 
         }
 
+
+        /// <summary>
+        ///A test for RewriteUrl
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void RewriteUrlMultiPage_Cancertopics_Web_Test()
+        {
+            using (HttpSimulator httpSimulator = GetStandardSimulatedRequest())
+            {
+                PageAssemblyInstructionLoader_Accessor target = new PageAssemblyInstructionLoader_Accessor();
+                HttpContext context = HttpContext.Current;
+                string url = "/multicancertopics/page1";
+                target.RewriteUrl(context, url);
+                Assert.IsNotNull(PageAssemblyContext.Current, "PageAssemblyContext.Current is null");
+                Assert.IsNotNull(PageAssemblyContext.Current.PageAssemblyInstruction, "PageAssemblyContext.Current.PageAssemblyInstruction is null");
+                Assert.AreEqual(DisplayVersions.Web, PageAssemblyContext.Current.DisplayVersion);
+
+            }
+        }
+
+
     }
 }
