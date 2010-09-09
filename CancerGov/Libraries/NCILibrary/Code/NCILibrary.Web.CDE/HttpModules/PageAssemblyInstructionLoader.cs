@@ -5,6 +5,7 @@ using System.Configuration;
 using System.IO;
 using NCI.Web.CDE.Configuration;
 using NCI.Logging;
+using System.Reflection;
 namespace NCI.Web.CDE
 {
     public class PageAssemblyInstructionLoader : IHttpModule
@@ -55,6 +56,10 @@ namespace NCI.Web.CDE
             //Don't map items with an extension 
             //if (url.IndexOf('.') != -1)
             //    return;
+
+            if (url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1)
+                return;
+
 
             if (url == "/")
             {
@@ -121,6 +126,31 @@ namespace NCI.Web.CDE
                 //Object log error
                assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(url);
 
+                //Handle multipage pages               
+               if (assemblyInfo == null)
+               {
+                   //1. Remove last part of path, e.g. /cancertopics/wyntk/bladder/page10 becomes /cancertopics/wyntk/bladder
+                   string truncUrl = url.Substring(0, url.LastIndexOf('/'));
+                   if (truncUrl!=string.Empty)
+                   {
+                       assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(truncUrl);
+                       //check if is IMAPI
+                       if (assemblyInfo.GetType().Name.ToString() == "MultiPageAssemblyInstruction")
+                       {
+                           //check if the page requested exists
+                           Object[] args = new Object[] { url };
+                           Boolean boolContainsUrl = (Boolean)assemblyInfo.GetType().InvokeMember("ContainsURL", BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic |
+                                                        BindingFlags.Instance | BindingFlags.InvokeMethod, null, assemblyInfo, args);
+                           //return null if page does not exists
+                           if (boolContainsUrl == false)
+                           {
+                               assemblyInfo = null;
+                               return;
+                           }
+                       }
+                   }
+               }
+
             }
             catch(Exception ex)
             {
@@ -155,7 +185,7 @@ namespace NCI.Web.CDE
             }
 
             //set the page assembly context with the assemblyInfo, dispayVersion and pageTemplateInfo
-            PageAssemblyContext.Current.InitializePageAssemblyInfo(assemblyInfo, dispayVersion, pageTemplateInfo);
+            PageAssemblyContext.Current.InitializePageAssemblyInfo(assemblyInfo, dispayVersion, pageTemplateInfo, url);
             
 
             string rewriteUrl = PageAssemblyContext.Current.PageTemplateInfo.PageTemplatePath;
