@@ -98,7 +98,7 @@ namespace NCI.Web.CDE.Test
                 PageTemplateInfo pageTemplateInfo = new PageTemplateInfo();
                 pageTemplateInfo.PageTemplatePath = "FOO.ASPX";
 
-                target.InitializePageAssemblyInfo(info, dispayVersion, pageTemplateInfo);
+                target.InitializePageAssemblyInfo(info, dispayVersion, pageTemplateInfo,"url");
 
                 Assert.Inconclusive("A method that does not return a value cannot be verified.");
             }
