@@ -15,7 +15,19 @@ namespace NCI.Web.CDE
 {
     public interface IMultiPageAssemblyInstruction : IPageAssemblyInstruction
     {
+        /// <summary>
+        /// Determines whether the specified requested URL contains URL.
+        /// </summary>
+        /// <param name="requestedURL">The requested URL.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified requested URL contains URL; otherwise, <c>false</c>.
+        /// </returns>
         Boolean ContainsURL(string requestedURL);
+        /// <summary>
+        /// Gets the page snippets.
+        /// </summary>
+        /// <returns>Collection of page snippets</returns>
+        List<SnippetInfo> GetPageSnippets();
 
     }
 }
