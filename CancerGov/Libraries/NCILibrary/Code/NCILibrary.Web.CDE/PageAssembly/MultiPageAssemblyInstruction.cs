@@ -32,6 +32,10 @@ namespace NCI.Web.CDE
         /// A collection of the snippets to be displayed on the page.
         /// </summary>
         private SnippetInfoCollection _snippets;
+
+        /// <summary>
+        /// Contains collection of Pages inside the multipage container
+        /// </summary>
         private MultiPageCollection _pages;
 
 
@@ -46,8 +50,7 @@ namespace NCI.Web.CDE
             RegisterFieldFilters(0);
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, data =>
-            {
-                //Site Name should be a configuration setting.
+            {                
                 data.Value = GetField("short_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
             });
 
@@ -206,7 +209,8 @@ namespace NCI.Web.CDE
         {
             get
             {
-                List<SnippetInfo> snippets = new List<SnippetInfo>();               
+                List<SnippetInfo> snippets = new List<SnippetInfo>();
+                List<SnippetInfo> pageSnippets = new List<SnippetInfo>();               
 
                 // Add all local snippets to the list to return.
                 snippets.AddRange(_snippets);
@@ -222,25 +226,12 @@ namespace NCI.Web.CDE
                 }
 
                 
-                //Load Page snippets
-                string URL = PageAssemblyContext.Current.requestedUrl;
-                int pageCount = _pages._Pages.Count;
-                string requestedPage=URL.Substring(URL.LastIndexOf('/'));
-                for(int i=0;i<=pageCount;i++)
+                //Load current Page snippets
+                pageSnippets = GetPageSnippets();
+                if (pageSnippets.Count > 0)
                 {
-                    if (_pages._Pages[i].PrettyUrl.Contains(requestedPage) == true)
-                    {
-                        snippets.AddRange(_pages._Pages[i].SnippetInfos);
-                        if (requestedPage.Contains("page"))
-                        {
-                            PrettyUrl = _pages._Pages[i].PrettyUrl;
-                        }
-                        RegisterFieldFilters(i);
-                        return snippets;
-
-                    }
+                    snippets.AddRange(pageSnippets);
                 }
-
                 return snippets;
 
                 
@@ -255,13 +246,20 @@ namespace NCI.Web.CDE
             {
                 List<MultiPage> page = new List<MultiPage>();
 
-                // Add all local snippets to the list to return.
+                // Add all pages to the list to return.
                 page.AddRange(_pages);
                 return page;
             }
         }
 
 
+        /// <summary>
+        /// Determines whether the specified requested URL contains URL.
+        /// </summary>
+        /// <param name="requestedURL">The requested URL.</param>
+        /// <returns>
+        /// 	<c>true</c> if the specified requested URL contains URL; otherwise, <c>false</c>.
+        /// </returns>
         public Boolean ContainsURL(string requestedURL)
         {
 
@@ -437,6 +435,10 @@ namespace NCI.Web.CDE
             //url.SetUrl(_pages._Pages[0].PrettyUrl);
         }
 
+        /// <summary>
+        /// Canonical URL for the search engines.
+        /// </summary>
+        /// <param name="url">The URL.</param>
         private void CanonicalUrl(NciUrl url)
         {
             //This should always be the first delegate for the CurrentUrl link type
@@ -447,7 +449,7 @@ namespace NCI.Web.CDE
 
 
         /// <summary>
-        /// Registers the field filters.
+        /// Registers the field filters for the page requested.
         /// </summary>
         private void RegisterFieldFilters(int PageNum)
         {
@@ -530,41 +532,33 @@ namespace NCI.Web.CDE
             get { return HttpContext.Current.Server; }
         }
 
-        //public override bool Equals(object obj)
-        //{
-        //    MultiPageAssemblyInstruction target = obj as MultiPageAssemblyInstruction;
+        /// <summary>
+        /// Gets the page snippets.
+        /// </summary>
+        /// <returns>Collection of page snippets</returns>
+        public List<SnippetInfo> GetPageSnippets()
+        {
+            List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
+            string URL = PageAssemblyContext.Current.requestedUrl;
+            int pageCount = _pages._Pages.Count;
+            string requestedPage = URL.Substring(URL.LastIndexOf('/'));
+            for (int i = 0; i <= pageCount; i++)
+            {
+                if (_pages._Pages[i].PrettyUrl.Contains(requestedPage) == true)
+                {
+                    pageSnippets.AddRange(_pages._Pages[i].SnippetInfos);
+                    if (requestedPage.Contains("page"))
+                    {
+                        PrettyUrl = _pages._Pages[i].PrettyUrl;
+                    }
+                    RegisterFieldFilters(i);
+                    return pageSnippets;
 
-        //    if (target == null)
-        //        return false;
+                }
 
-        //    if (
-        //        (PageMetadata != null && target.PageMetadata == null) ||
-        //        (PageMetadata == null && target.PageMetadata != null)
-        //        )
-        //    {
-        //        return false;
-        //    }
+            }
 
-        //    if (PageMetadata != null && target.PageMetadata != null)
-        //        if (!PageMetadata.Equals(target.PageMetadata))
-        //            return false;
-
-
-        //    if (
-        //        (_snippets != null && target._snippets == null) ||
-        //        (_snippets == null && target._snippets != null)
-        //        )
-        //    {
-        //        return false;
-        //    }
-
-        //    if (_snippets != null && target._snippets != null)
-        //    {
-        //        if (!_snippets.Equals(target._snippets))
-        //            return false;
-        //    }
-
-        //    return true;
-        //}
+            return pageSnippets;
+        }
     }
 }
