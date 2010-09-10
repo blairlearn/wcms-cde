@@ -25,10 +25,18 @@
             <tr>
                 <td valign="top">
                     <img src="/images/spacer.gif" width="9" height="1" alt="" border="0" />
-                </td>
+                </td>                
                 <!-- Left Nav Column -->
                 <td id="leftzone" valign="top">
                     <table border="0" cellspacing="0" cellpadding="0" width="164">
+                         <tr>
+                            <td valign="top" align="left">
+                                <NCI:TemplateSlot ID="cgvPageNav" runat="server" CssClass="LeftNavSlot" />
+                            </td>
+                            <td valign="top">
+                                <img src="/images/spacer.gif" border="0" alt="" width="16" height="1" />
+                            </td>
+                        </tr>
                         <tr>
                             <td valign="top" align="left">
                                 <NCI:TemplateSlot ID="cgvLeftNav" runat="server" CssClass="LeftNavSlot" />
