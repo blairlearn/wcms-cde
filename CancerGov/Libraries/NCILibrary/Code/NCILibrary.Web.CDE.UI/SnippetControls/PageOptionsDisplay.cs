@@ -41,6 +41,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// <param name="snippetXmlData">The xml fragment which contains pageoptions information.</param>
         private void processPageOptionsData(string snippetXmlData)
         {
+            // The snippet CDATA may contain CDATA as part of the data but percussion replaces the CDATA 
+            // close tag with Replace ']]>' with ']]ENDCDATA' this ']]ENDCDATA' should be replaced with 
+            // valid CDATA close tag ']]>' before it can be deserialized
+            snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
+
             IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
             // If AlternateContentVersions information is not in the instructions then do not create 
             // the PageOptions box.
