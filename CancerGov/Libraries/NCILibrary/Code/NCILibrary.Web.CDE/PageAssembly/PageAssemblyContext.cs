@@ -20,6 +20,7 @@ namespace NCI.Web.CDE
         private static object PAGE_ASSEMBLY_CONTEXT_KEY = new object();
 
         private static object PAGE_ASSEMBLY_DISPLAYVERSION_KEY = new object();
+        public string requestedUrl { get; set; }
 
         /// <summary>
         /// Gets the IPageAssemblyInstruction derived object instance that can be used to build up the 
@@ -93,7 +94,7 @@ namespace NCI.Web.CDE
         /// available in one central location.
         /// </summary>
         /// <param name="info"></param>
-        public void InitializePageAssemblyInfo(IPageAssemblyInstruction info, DisplayVersions displayVersion, PageTemplateInfo pageTemplateInfo)
+        public void InitializePageAssemblyInfo(IPageAssemblyInstruction info, DisplayVersions displayVersion, PageTemplateInfo pageTemplateInfo,string requestedPath)
         {
             if (PageAssemblyInstruction != null)
             {
@@ -104,6 +105,7 @@ namespace NCI.Web.CDE
                 PageAssemblyInstruction = info;                                
                 PageAssemblyContext.Current.DisplayVersion = displayVersion;
                 PageAssemblyContext.Current.PageTemplateInfo = pageTemplateInfo;
+                PageAssemblyContext.Current.requestedUrl = requestedPath;
 
             }
         }

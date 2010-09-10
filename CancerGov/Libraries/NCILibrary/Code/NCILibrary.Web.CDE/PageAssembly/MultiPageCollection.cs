@@ -8,7 +8,7 @@ namespace NCI.Web.CDE
 {
     public class MultiPageCollection : IEnumerable<MultiPage>
     {
-        private List<MultiPage> _Pages = new List<MultiPage>();
+        public List<MultiPage> _Pages = new List<MultiPage>();
 
 
         /// <summary>

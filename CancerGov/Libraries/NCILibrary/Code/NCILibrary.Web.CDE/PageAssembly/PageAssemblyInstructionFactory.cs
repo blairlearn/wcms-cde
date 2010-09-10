@@ -45,7 +45,6 @@ namespace NCI.Web.CDE
         {
 
             string xmlFilePath = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, requestedPath));
-
             // Input validation.
             if (xmlFilePath == null)
             {
@@ -53,15 +52,13 @@ namespace NCI.Web.CDE
             }
 
             if (!File.Exists(xmlFilePath))
-            {
                 return null;
-            }
 
-            if (ContentDeliveryEngineConfig.PageAssembly.PageAssemblyInfoTypes.EnableValidation == true)
-            {
-                //_isSinglePageAssemblyInstructionXmlValid = PageAssemblyInstructionFactory.ValidateXml(xmlFilePath, "C:\\Projects\\WCM\\CDESites\\CancerGov\\SiteSpecific\\CancerGov.Web\\Schema\\CDESchema.xsd");
-                _isSinglePageAssemblyInstructionXmlValid = PageAssemblyInstructionFactory.ValidateXml(xmlFilePath, HttpContext.Current.Server.MapPath(ContentDeliveryEngineConfig.PageAssembly.PageAssemblyInfoTypes.XsdPath));
-            }
+                if (ContentDeliveryEngineConfig.PageAssembly.PageAssemblyInfoTypes.EnableValidation == true)
+                {
+                    //_isSinglePageAssemblyInstructionXmlValid = PageAssemblyInstructionFactory.ValidateXml(xmlFilePath, "C:\\Projects\\WCM\\CDESites\\CancerGov\\SiteSpecific\\CancerGov.Web\\Schema\\CDESchema.xsd");
+                    _isSinglePageAssemblyInstructionXmlValid = PageAssemblyInstructionFactory.ValidateXml(xmlFilePath, HttpContext.Current.Server.MapPath(ContentDeliveryEngineConfig.PageAssembly.PageAssemblyInfoTypes.XsdPath));
+                }
 
             if (_isSinglePageAssemblyInstructionXmlValid == false)               
             {

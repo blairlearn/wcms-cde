@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Web;
 using System;
+using NCI.Test.Web;
+using System.Reflection;
 namespace NCI.Web.CDE.Test
 {
     
@@ -16,7 +18,7 @@ namespace NCI.Web.CDE.Test
     ///to contain all MultiPageAssemblyInstructionTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class MultiPageAssemblyInstructionTest
+    public class MultiPageAssemblyInstructionTest : CDETest
     {
 
 
@@ -26,17 +28,17 @@ namespace NCI.Web.CDE.Test
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
+        //public TestContext TestContext
+        //{
+        //    get
+        //    {
+        //        return testContextInstance;
+        //    }
+        //    set
+        //    {
+        //        testContextInstance = value;
+        //    }
+        //}
 
         #region Additional test attributes
         // 
@@ -87,316 +89,6 @@ namespace NCI.Web.CDE.Test
             }
         }
 
-        ///// <summary>
-        /////A test for UrlFilterDelegates
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("NCILibrary.Web.ContentDeliveryEngine.dll")]
-        //public void UrlFilterDelegatesTest()
-        //{
-        //    MultiPageAssemblyInstruction_Accessor target = new MultiPageAssemblyInstruction_Accessor(); // TODO: Initialize to an appropriate value
-        //    Dictionary<string, UrlFilterDelegate> actual;
-        //    actual = target.UrlFilterDelegates;
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for Snippets
-        /////</summary>
-        //[TestMethod()]
-        //public void SnippetsTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    IEnumerable<SnippetInfo> actual;
-        //    actual = target.Snippets;
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for SnippetInfos
-        /////</summary>
-        //[TestMethod()]
-        //public void SnippetInfosTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    SnippetInfoCollection actual;
-        //    actual = target.SnippetInfos;
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for Server
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("NCILibrary.Web.ContentDeliveryEngine.dll")]
-        //public void ServerTest()
-        //{
-        //    MultiPageAssemblyInstruction_Accessor target = new MultiPageAssemblyInstruction_Accessor(); // TODO: Initialize to an appropriate value
-        //    HttpServerUtility actual;
-        //    actual = target.Server;
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for SectionPath
-        /////</summary>
-        //[TestMethod()]
-        //public void SectionPathTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string expected = string.Empty; // TODO: Initialize to an appropriate value
-        //    string actual;
-        //    target.SectionPath = expected;
-        //    actual = target.SectionPath;
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for PrettyUrl
-        /////</summary>
-        //[TestMethod()]
-        //public void PrettyUrlTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string expected = string.Empty; // TODO: Initialize to an appropriate value
-        //    string actual;
-        //    target.PrettyUrl = expected;
-        //    actual = target.PrettyUrl;
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for PageTemplateName
-        /////</summary>
-        //[TestMethod()]
-        //public void PageTemplateNameTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string expected = string.Empty; // TODO: Initialize to an appropriate value
-        //    string actual;
-        //    target.PageTemplateName = expected;
-        //    actual = target.PageTemplateName;
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for PageMetadata
-        /////</summary>
-        //[TestMethod()]
-        //public void PageMetadataTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    PageMetadata expected = null; // TODO: Initialize to an appropriate value
-        //    PageMetadata actual;
-        //    target.PageMetadata = expected;
-        //    actual = target.PageMetadata;
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for Language
-        /////</summary>
-        //[TestMethod()]
-        //public void LanguageTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string expected = string.Empty; // TODO: Initialize to an appropriate value
-        //    string actual;
-        //    target.Language = expected;
-        //    actual = target.Language;
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for FieldFilterDelegates
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("NCILibrary.Web.ContentDeliveryEngine.dll")]
-        //public void FieldFilterDelegatesTest()
-        //{
-        //    MultiPageAssemblyInstruction_Accessor target = new MultiPageAssemblyInstruction_Accessor(); // TODO: Initialize to an appropriate value
-        //    Dictionary<string, FieldFilterDelegate> actual;
-        //    actual = target.FieldFilterDelegates;
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for BlockedSlots
-        /////</summary>
-        //[TestMethod()]
-        //public void BlockedSlotsTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    BlockedSlot[] expected = null; // TODO: Initialize to an appropriate value
-        //    BlockedSlot[] actual;
-        //    target.BlockedSlots = expected;
-        //    actual = target.BlockedSlots;
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for BlockedSlotNames
-        /////</summary>
-        //[TestMethod()]
-        //public void BlockedSlotNamesTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string[] actual;
-        //    actual = target.BlockedSlotNames;
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for AlternateContentVersionsKeys
-        /////</summary>
-        //[TestMethod()]
-        //public void AlternateContentVersionsKeysTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string[] actual;
-        //    actual = target.AlternateContentVersionsKeys;
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for AlternateContentVersions
-        /////</summary>
-        //[TestMethod()]
-        //public void AlternateContentVersionsTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    AlternateContentVersions expected = null; // TODO: Initialize to an appropriate value
-        //    AlternateContentVersions actual;
-        //    target.AlternateContentVersions = expected;
-        //    actual = target.AlternateContentVersions;
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for RegisterFieldFilters
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("NCILibrary.Web.ContentDeliveryEngine.dll")]
-        //public void RegisterFieldFiltersTest()
-        //{
-        //    MultiPageAssemblyInstruction_Accessor target = new MultiPageAssemblyInstruction_Accessor(); // TODO: Initialize to an appropriate value
-        //    target.RegisterFieldFilters();
-        //    Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        //}
-
-        ///// <summary>
-        /////A test for GetUrl
-        /////</summary>
-        //[TestMethod()]
-        //public void GetUrlTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string urlType = string.Empty; // TODO: Initialize to an appropriate value
-        //    NciUrl expected = null; // TODO: Initialize to an appropriate value
-        //    NciUrl actual;
-        //    actual = target.GetUrl(urlType);
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for GetMetaDescription
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("NCILibrary.Web.ContentDeliveryEngine.dll")]
-        //public void GetMetaDescriptionTest()
-        //{
-        //    MultiPageAssemblyInstruction_Accessor target = new MultiPageAssemblyInstruction_Accessor(); // TODO: Initialize to an appropriate value
-        //    string expected = string.Empty; // TODO: Initialize to an appropriate value
-        //    string actual;
-        //    actual = target.GetMetaDescription();
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for GetField
-        /////</summary>
-        //[TestMethod()]
-        //public void GetFieldTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string fieldName = string.Empty; // TODO: Initialize to an appropriate value
-        //    string expected = string.Empty; // TODO: Initialize to an appropriate value
-        //    string actual;
-        //    actual = target.GetField(fieldName);
-        //    Assert.AreEqual(expected, actual);
-        //    Assert.Inconclusive("Verify the correctness of this test method.");
-        //}
-
-        ///// <summary>
-        /////A test for FilterCurrentUrl
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("NCILibrary.Web.ContentDeliveryEngine.dll")]
-        //public void FilterCurrentUrlTest()
-        //{
-        //    MultiPageAssemblyInstruction_Accessor target = new MultiPageAssemblyInstruction_Accessor(); // TODO: Initialize to an appropriate value
-        //    NciUrl url = null; // TODO: Initialize to an appropriate value
-        //    target.FilterCurrentUrl(url);
-        //    Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        //}
-
-        ///// <summary>
-        /////A test for CanonicalUrl
-        /////</summary>
-        //[TestMethod()]
-        //[DeploymentItem("NCILibrary.Web.ContentDeliveryEngine.dll")]
-        //public void CanonicalUrlTest()
-        //{
-        //    MultiPageAssemblyInstruction_Accessor target = new MultiPageAssemblyInstruction_Accessor(); // TODO: Initialize to an appropriate value
-        //    NciUrl url = null; // TODO: Initialize to an appropriate value
-        //    target.CanonicalUrl(url);
-        //    Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        //}
-
-        ///// <summary>
-        /////A test for AddUrlFilter
-        /////</summary>
-        //[TestMethod()]
-        //public void AddUrlFilterTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string urlType = string.Empty; // TODO: Initialize to an appropriate value
-        //    UrlFilterDelegate fieldFilter = null; // TODO: Initialize to an appropriate value
-        //    target.AddUrlFilter(urlType, fieldFilter);
-        //    Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        //}
-
-        ///// <summary>
-        /////A test for AddFieldFilter
-        /////</summary>
-        //[TestMethod()]
-        //public void AddFieldFilterTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction(); // TODO: Initialize to an appropriate value
-        //    string fieldName = string.Empty; // TODO: Initialize to an appropriate value
-        //    FieldFilterDelegate filter = null; // TODO: Initialize to an appropriate value
-        //    target.AddFieldFilter(fieldName, filter);
-        //    Assert.Inconclusive("A method that does not return a value cannot be verified.");
-        //}
-
-        ///// <summary>
-        /////A test for MultiPageAssemblyInstruction Constructor
-        /////</summary>
-        //[TestMethod()]
-        //public void MultiPageAssemblyInstructionConstructorTest()
-        //{
-        //    MultiPageAssemblyInstruction target = new MultiPageAssemblyInstruction();
-        //    Assert.Inconclusive("TODO: Implement code to verify target");
-        //}
 
 
         [TestMethod()]
@@ -409,6 +101,158 @@ namespace NCI.Web.CDE.Test
             Assert.IsNotNull(pageAssemblyInfo);
             Assert.IsNotNull(pageAssemblyInfo.PageTemplateName);
             Assert.IsNotNull(pageAssemblyInfo.SectionPath);
+        }
+
+
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void MultiPageAssemblyInstruction_ContainsURL_Test()
+        {
+
+            using (HttpSimulator httpSimulator = GetStandardSimulatedRequest())
+            {
+
+                IPageAssemblyInstruction actual = PageAssemblyInstructionFactory.GetPageAssemblyInfo("/multicancertopics");
+
+                Object[] args = new Object[] { "multicancertopics/page100" };
+                Boolean boolContainsUrl = (Boolean)actual.GetType().InvokeMember("ContainsURL", BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic |
+                                             BindingFlags.Instance | BindingFlags.InvokeMethod, null, actual, args);
+
+                Assert.IsFalse(boolContainsUrl);
+            }
+        }
+
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetField_Test()
+        {
+
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+
+            pageAssemblyInfo.AddFieldFilter("Foo12345", data =>
+            {
+                data.Value = "Foo12345";
+            });
+
+            Assert.AreEqual("Foo12345", pageAssemblyInfo.GetField("Foo12345"));
+
+
+        }
+
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetField_MultipleFieldFilters_Test()
+        {
+
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+
+            pageAssemblyInfo.AddFieldFilter("Foo12345", data =>
+            {
+                data.Value = "Dictionary of cancer terms";
+            });
+
+            //Add another one, but make sure we chain from the previous
+            pageAssemblyInfo.AddFieldFilter("Foo12345", data =>
+            {
+                data.Value += "--Modified";
+            });
+
+            Assert.AreEqual("Dictionary of cancer terms--Modified", pageAssemblyInfo.GetField("Foo12345"));
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), "The fieldName parameter may not be null or empty.")]
+        [DeploymentItem(@"XmlFiles")]
+        public void AddField_NullFieldName_Test()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+
+            pageAssemblyInfo.AddFieldFilter(null, data =>
+            {
+                data.Value = "Dictionary of cancer terms";
+            });
+
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentException), "The fieldName parameter may not be null or empty.")]
+        [DeploymentItem(@"XmlFiles")]
+        public void AddField_EmptyFieldName_Test()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+
+            pageAssemblyInfo.AddFieldFilter(string.Empty, data =>
+            {
+                data.Value = "Dictionary of cancer terms";
+            });
+
+        }
+
+
+        /* Test the MultiPageassemblyinstruction's individual Field Filters. */
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetField_HTML_Title_Field_Test()
+        {
+
+            using (HttpSimulator httpSimulator = GetStandardSimulatedRequest())
+            {
+                string HTML_Title = "Cancer Topics Home Page--About This Booklet";
+                IPageAssemblyInstruction actual = PageAssemblyInstructionFactory.GetPageAssemblyInfo("/multicancertopics");
+                Assert.AreEqual(HTML_Title, actual.GetField("HTML_Title"));
+
+
+            }
+
+        }
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetField_HTML_MetaDescription_Test()
+        {
+            using (HttpSimulator httpSimulator = GetStandardSimulatedRequest())
+            {
+                string MetaDescription = "sdfds --About This Booklet";
+
+                IPageAssemblyInstruction actual = PageAssemblyInstructionFactory.GetPageAssemblyInfo("/multicancertopics");
+                Assert.AreEqual(MetaDescription, actual.GetField("HTML_MetaDescription"));
+            }
+        }
+
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetField_HTML_MetaKeywords_Test()
+        {
+            using (HttpSimulator httpSimulator = GetStandardSimulatedRequest())
+            {
+
+                string MetaKeywords = "cancer,information,About This Booklet";
+                IPageAssemblyInstruction actual = PageAssemblyInstructionFactory.GetPageAssemblyInfo("/multicancertopics");
+
+                Assert.AreEqual(MetaKeywords, actual.GetField("HTML_MetaKeywords"));
+            }
+        }
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetBlockedSlots_Test()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+            string[] expectedBlockSlots = { "cgvContentHeader" };
+            string[] actualblockedSlots;
+
+            actualblockedSlots = pageAssemblyInfo.BlockedSlotNames;
+            Assert.AreEqual(expectedBlockSlots[0], actualblockedSlots[0]);
+
         }
     }
 }

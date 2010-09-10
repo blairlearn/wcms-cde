@@ -10,6 +10,7 @@ using System.Xml.Schema;
 using System.Text.RegularExpressions;
 using NCI.Web.CDE.Configuration;
 using System.Web;
+using System.IO;
 namespace NCI.Web.CDE
 {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
@@ -42,7 +43,7 @@ namespace NCI.Web.CDE
             _snippets = new SnippetInfoCollection();
             _pages = new MultiPageCollection();
             PageMetadata = new PageMetadata();
-            RegisterFieldFilters();
+            RegisterFieldFilters(0);
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, data =>
             {
@@ -66,7 +67,7 @@ namespace NCI.Web.CDE
             AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
 
             AddUrlFilter("CurrentURL", url =>
-                { 
+                {
                     url.SetUrl(GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString());
                     if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
                     {
@@ -76,7 +77,7 @@ namespace NCI.Web.CDE
 
             AddUrlFilter("Print", url =>
             {
-                url.SetUrl( GetUrl("CurrentURL").ToString() + "/print");
+                url.SetUrl(GetUrl("CurrentURL").ToString() + "/print");
             });
 
             AddUrlFilter("Email", url =>
@@ -205,24 +206,46 @@ namespace NCI.Web.CDE
         {
             get
             {
-                List<SnippetInfo> snippets = new List<SnippetInfo>();
+                List<SnippetInfo> snippets = new List<SnippetInfo>();               
 
                 // Add all local snippets to the list to return.
                 snippets.AddRange(_snippets);
-
+                
                 ////Find all of the Slots on the page which are not blocked and where those Slots do not have associated SnippetInfos in the SinglePageAssemblyInstruction XML file.
                 IEnumerable<string> filledTemplateSlots = (from snippet in _snippets select snippet.SlotName).Distinct<string>().Except(BlockedSlotNames);
 
                 SectionDetail sectionDetail = SectionDetailFactory.GetSectionDetail(SectionPath);
                 if (sectionDetail != null)
                 {
-                    List<SnippetInfo> snippetsFromParent = sectionDetail.GetSnippetsNotAssociatedWithSlots(filledTemplateSlots);
+                    List<SnippetInfo> snippetsFromParent = sectionDetail.GetSnippetsNotAssociatedWithSlots(filledTemplateSlots);                     
                     snippets.AddRange(snippetsFromParent);
                 }
+
+                
+                //Load Page snippets
+                string URL = PageAssemblyContext.Current.requestedUrl;
+                int pageCount = _pages._Pages.Count;
+                string requestedPage=URL.Substring(URL.LastIndexOf('/'));
+                for(int i=0;i<=pageCount;i++)
+                {
+                    if (_pages._Pages[i].PrettyUrl.Contains(requestedPage) == true)
+                    {
+                        snippets.AddRange(_pages._Pages[i].SnippetInfos);
+                        if (requestedPage.Contains("page"))
+                        {
+                            PrettyUrl = _pages._Pages[i].PrettyUrl;
+                        }
+                        RegisterFieldFilters(i);
+                        return snippets;
+
+                    }
+                }
+
                 return snippets;
+
+                
             }
         }
-
 
 
         [System.Xml.Serialization.XmlIgnore()]
@@ -238,6 +261,22 @@ namespace NCI.Web.CDE
             }
         }
 
+
+        public Boolean ContainsURL(string requestedURL)
+        {
+
+
+            int pageCount = _pages.Count();
+            for (int i = 0; i <= pageCount-1; i++)
+            {
+                if (_pages._Pages[i].PrettyUrl.Contains(requestedURL) == true)
+                {
+                    return true;
+                }
+            }
+            return  false;
+        }
+
         /// <summary>
         /// Gets or sets the blocked slots which should not be displayed on the page rendered.
         /// </summary>
@@ -245,6 +284,7 @@ namespace NCI.Web.CDE
         [System.Xml.Serialization.XmlArray(ElementName = "BlockedSlots", Form = XmlSchemaForm.Unqualified)]
         [System.Xml.Serialization.XmlArrayItem("Slot", Form = XmlSchemaForm.Unqualified)]
         public BlockedSlot[] BlockedSlots { get; set; }
+
 
 
         /// <summary>
@@ -394,6 +434,7 @@ namespace NCI.Web.CDE
             //This should always be the first delegate for the CurrentUrl link type
             //so we can just overwrite whatever has come before.
             url.SetUrl(PrettyUrl);
+            //url.SetUrl(_pages._Pages[0].PrettyUrl);
         }
 
         private void CanonicalUrl(NciUrl url)
@@ -408,40 +449,44 @@ namespace NCI.Web.CDE
         /// <summary>
         /// Registers the field filters.
         /// </summary>
-        private void RegisterFieldFilters()
+        private void RegisterFieldFilters(int PageNum)
         {
             //Register Field Filters
             AddFieldFilter("long_title", data =>
             {
-                data.Value = this.PageMetadata.LongTitle;
+                data.Value = _pages._Pages[PageNum].PageMetadata.LongTitle;
             });
 
 
             AddFieldFilter("short_title", data =>
             {
-                data.Value = this.PageMetadata.ShortTitle;
+                data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
             });
 
             AddFieldFilter("short_description", data =>
             {
-                data.Value = this.PageMetadata.ShortDescription;
+                data.Value = _pages._Pages[PageNum].PageMetadata.ShortDescription;
             });
 
             AddFieldFilter("long_description", data =>
             {
-                data.Value = this.PageMetadata.LongDescription;
+                data.Value = _pages._Pages[PageNum].PageMetadata.LongDescription;
             });
 
             AddFieldFilter("meta_description", data =>
             {
-                data.Value = this.PageMetadata.MetaDescription;
+                data.Value = _pages._Pages[PageNum].PageMetadata.MetaDescription;
             });
 
             AddFieldFilter("meta_keywords", data =>
             {
-                data.Value = this.PageMetadata.MetaKeywords;
+                data.Value = _pages._Pages[PageNum].PageMetadata.MetaKeywords;
             });
-
+            
+            //Register URL Filters
+            AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
+            AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
+            
         }
 
 

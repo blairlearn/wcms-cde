@@ -13,21 +13,11 @@ using System.Web;
 
 namespace NCI.Web.CDE
 {
-    public class MultiPage : IPageAssemblyInstruction
+    public class MultiPage 
     {
         #region Member Variables
 
-        /// <summary>
-        /// Dictionary holds the registered multiple Url filters.
-        /// </summary>
-        private Dictionary<string, UrlFilterDelegate> _UrlFilterDelegates = new Dictionary<string, UrlFilterDelegate>();
-        /// <summary>
-        /// Dictionary holds the registered multiple Field Filters
-        /// </summary>
-        private Dictionary<string, FieldFilterDelegate> _FieldFilterDelegates = new Dictionary<string, FieldFilterDelegate>();
-        /// <summary>
-        /// A collection of the snippets to be displayed on the page.
-        /// </summary>
+ 
         private SnippetInfoCollection _snippets;
 
         #endregion
@@ -37,87 +27,17 @@ namespace NCI.Web.CDE
             // Initialize sub objects.
             _snippets = new SnippetInfoCollection();
             PageMetadata = new PageMetadata();
-            RegisterFieldFilters();
-
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, data =>
-            {
-                //Site Name should be a configuration setting.
-                data.Value = GetField("short_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
-            });
-
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaDescription, data =>
-            {
-                string metaDescription = GetMetaDescription();
-                data.Value = metaDescription;
-            });
-
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, data =>
-            {
-                data.Value = GetField("meta_keywords");
-            });
-
-            //Register URL Filters
-            AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
-            AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
-
-            AddUrlFilter("CurrentURL", url =>
-                { 
-                    url.SetUrl(GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString());
-                    if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
-                    {
-                        url.UriStem += "/print";
-                    }
-                });
-
-            AddUrlFilter("Print", url =>
-            {
-                url.SetUrl( GetUrl("CurrentURL").ToString() + "/print");
-            });
-
-            AddUrlFilter("Email", url =>
-            {
-                url.SetUrl("common/popUps/PopEmail.aspx?");
-                url.QueryParameters.Add("title", GetField("short_title"));
-            });
-
-            AddUrlFilter("OrderCopyURL", url =>
-            {
-                url.SetUrl(AlternateContentVersions.OrderCopyURL);
-            });
 
         }
 
         #region Properties
 
-        /// <summary>
-        /// Gets the URL filter delegates.
-        /// </summary>
-        /// <value>The URL filter delegates.</value>
-        private Dictionary<string, UrlFilterDelegate> UrlFilterDelegates
-        {
-            get
-            {
-                return _UrlFilterDelegates;
-            }
-        }
-
-        /// <summary>
-        /// Gets the field filter delegates.
-        /// </summary>
-        /// <value>The field filter delegates.</value>
-        private Dictionary<string, FieldFilterDelegate> FieldFilterDelegates
-        {
-            get
-            {
-                return _FieldFilterDelegates;
-            }
-        }
 
 
         #endregion
 
 
-        #region IPageAssemblyInstruction Members
+        #region MultiPage Members
         /// <summary>
         /// BlockedSlots contain information about the blocked slot which should not be displayed on the page rendered.
         /// </summary>
@@ -218,239 +138,10 @@ namespace NCI.Web.CDE
         public BlockedSlot[] BlockedSlots { get; set; }
 
 
-        /// <summary>
-        /// Gets the value of the field referenced by "String" with all field filter applied.
-        /// </summary>
-        /// <param name="fieldName"></param>
-        /// <exception cref="ArgumentException">Thrown when the fieldName field is null or empty.</exception>
-        /// <returns></returns>
-        public string GetField(string fieldName)
-        {
-            if (string.IsNullOrEmpty(fieldName))
-                throw new ArgumentException("The field name may not be null or empty.");
 
-            string rtnValue = string.Empty;
-
-            FieldFilterDelegate del = FieldFilterDelegates[fieldName.ToLower()];
-            if (del != null)
-            {
-                //Initialize the field data to empty field data
-                FieldFilterData data = new FieldFilterData();
-
-                //Call delegate, all delegates will modify the FieldData string of the
-                //FieldFilterData object we are passing in.
-                del(data);
-
-                //set the return value to the processed value of the FieldFilterData
-                rtnValue = data.Value;
-            }
-
-            return rtnValue;
-        }
-        /// <summary>
-        /// Adds a field filter which modifies the value of the field referenced by "string"
-        /// when GetField is called.
-        /// </summary>
-        /// <param name="fieldName"></param>
-        /// <param name="filter"></param>
-        public void AddFieldFilter(string fieldName, FieldFilterDelegate filter)
-        {
-            if (string.IsNullOrEmpty(fieldName))
-                throw new ArgumentException("The fieldName parameter may not be null or empty.");
-
-            string fieldNameKey = fieldName.ToLower();
-
-            if (FieldFilterDelegates.ContainsKey(fieldNameKey) == false)
-            {
-                FieldFilterDelegates.Add(fieldNameKey, filter);
-            }
-            else
-            {
-                //Note, this must be called this way and cannot use an intermediate value, I.E.
-                //  FieldFilterDelegate foo = FieldFilterDelegates[fieldName.ToLower()];
-                //  foo += filter;
-                //will not work.  The reason is, Delegates are Immutable!!
-                FieldFilterDelegates[fieldNameKey] += filter;
-            }
-        }
-
-        /// <summary>
-        /// Gets the URL referenced by "String" with all URL filters.
-        /// </summary>
-        /// <param name="urlType"></param>
-        /// <returns></returns>
-        public NciUrl GetUrl(string urlType)
-        {
-            NciUrl nciUrl = new NciUrl();
-            string linkTypeKey = urlType.ToLower();
-
-            if (UrlFilterDelegates.ContainsKey(linkTypeKey) == true)
-            {
-                UrlFilterDelegate UrlfilterLinkDelegate = UrlFilterDelegates[linkTypeKey];
-                UrlfilterLinkDelegate(nciUrl);
-            }
-            else
-            {
-                throw new PageAssemblyException(String.Format("Unknown link type \"{0}\"", urlType));
-            }
-
-            return nciUrl;
-        }
-
-
-        /// <summary>
-        /// Adds a URL filter which modifies the URL referenced by "string" when GetUrl is called.
-        /// </summary>
-        /// <param name="urlType">Pretty URL or Cannonical URL</param>
-        /// <param name="fieldFilter"></param>
-        public void AddUrlFilter(string urlType, UrlFilterDelegate fieldFilter)
-        {
-            if (string.IsNullOrEmpty(urlType))
-                throw new ArgumentException("The urlType parameter may not be null or empty.");
-
-            string linkTypeKey = urlType.ToLower();
-
-            if (UrlFilterDelegates.ContainsKey(linkTypeKey) == false)
-            {
-                UrlFilterDelegates.Add(linkTypeKey, fieldFilter);
-            }
-            else
-            {
-                UrlFilterDelegates[linkTypeKey] += fieldFilter;
-            }
-        }
-
-        /// <summary>
-        /// This property returns the keys which represent the available content versions. 
-        /// </summary>
-        /// <value>A string array which are the keys to the alternate content versions.</value>
-        public string[] AlternateContentVersionsKeys
-        {
-            get
-            {
-                ArrayList keysList = new ArrayList();
-                if (AlternateContentVersions.IsPrintAvailable)
-                    keysList.Add("Print");
-                if (AlternateContentVersions.IsShareBookmarkAvailable)
-                    keysList.Add("ShareBookmark");
-                if (AlternateContentVersions.IsEmailAvailable)
-                    keysList.Add("Email");
-                if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
-                    keysList.Add("OrderCopy");
-
-                // Enumerate the Files and set an URL filter.
-                foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
-                {
-                    keysList.Add(acFile.MimeType);
-                    AddUrlFilter(acFile.MimeType, url =>
-                    {
-                       url.SetUrl(acFile.Url);
-                    });
-                }
-
-                return (string[])keysList.ToArray(typeof(string));
-            }
-        }
         #endregion
 
-        /// <summary>
-        /// Returns Alternate content versions object which contains information necessary to display 
-        /// the page options.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public AlternateContentVersions AlternateContentVersions { get; set; }
 
-        private void FilterCurrentUrl(NciUrl url)
-        {
-            //This should always be the first delegate for the CurrentUrl link type
-            //so we can just overwrite whatever has come before.
-            url.SetUrl(PrettyUrl);
-        }
-
-        private void CanonicalUrl(NciUrl url)
-        {
-            //This should always be the first delegate for the CurrentUrl link type
-            //so we can just overwrite whatever has come before.
-            url.SetUrl(GetUrl("PrettyUrl").ToString());
-
-        }
-
-
-        /// <summary>
-        /// Registers the field filters.
-        /// </summary>
-        private void RegisterFieldFilters()
-        {
-            //Register Field Filters
-            AddFieldFilter("long_title", data =>
-            {
-                data.Value = this.PageMetadata.LongTitle;
-            });
-
-
-            AddFieldFilter("short_title", data =>
-            {
-                data.Value = this.PageMetadata.ShortTitle;
-            });
-
-            AddFieldFilter("short_description", data =>
-            {
-                data.Value = this.PageMetadata.ShortDescription;
-            });
-
-            AddFieldFilter("long_description", data =>
-            {
-                data.Value = this.PageMetadata.LongDescription;
-            });
-
-            AddFieldFilter("meta_description", data =>
-            {
-                data.Value = this.PageMetadata.MetaDescription;
-            });
-
-            AddFieldFilter("meta_keywords", data =>
-            {
-                data.Value = this.PageMetadata.MetaKeywords;
-            });
-
-        }
-
-
-        /// <summary>
-        /// Gets the meta description.
-        /// </summary>
-        /// <returns>meta description string which can be used for the meta tag on the page</returns>
-        private string GetMetaDescription()
-        {
-            string meta = GetField("meta_description");
-
-            if (string.IsNullOrEmpty(meta))
-            {
-                meta = GetField("short_description");
-
-                if (!string.IsNullOrEmpty(meta))
-                {
-                    //string meta tags from HTML.
-                    meta = Regex.Replace(meta, @"<(.|\n)*?>", String.Empty);
-                }
-
-                else
-                {
-                    meta = GetField("long_description");
-                    if (!string.IsNullOrEmpty(meta))
-                    {
-                        //string meta tags from HTML.
-                        meta = Regex.Replace(meta, @"<(.|\n)*?>", String.Empty);
-                    }
-
-                }
-            }
-            return meta;
-        }
-
-        /// <summary>
-        /// Gets an instance of the HttpServerUtility for the current request.
-        /// </summary>
         private HttpServerUtility Server
         {
             get { return HttpContext.Current.Server; }

@@ -15,7 +15,7 @@ namespace NCI.Web.CDE
 {
     public interface IMultiPageAssemblyInstruction : IPageAssemblyInstruction
     {
-
+        Boolean ContainsURL(string requestedURL);
 
     }
 }
