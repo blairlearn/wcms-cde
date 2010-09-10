@@ -107,7 +107,7 @@ namespace NCI.Web.CDE.Test
 
         [TestMethod()]
         [DeploymentItem(@"XmlFiles")]
-        public void MultiPageAssemblyInstruction_ContainsURL_Test()
+        public void ContainsURL_Test()
         {
 
             using (HttpSimulator httpSimulator = GetStandardSimulatedRequest())
@@ -240,6 +240,28 @@ namespace NCI.Web.CDE.Test
                 Assert.AreEqual(MetaKeywords, actual.GetField("HTML_MetaKeywords"));
             }
         }
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetPageSnippets_Test()
+        {
+            using (HttpSimulator httpSimulator = GetStandardSimulatedRequest())
+            {
+                PageAssemblyInstructionLoader_Accessor target = new PageAssemblyInstructionLoader_Accessor();
+                HttpContext context = HttpContext.Current;
+                string url = "/multicancertopics/page2";
+                int snippetCount=2;
+                target.RewriteUrl(context, url);
+
+                IPageAssemblyInstruction actual = PageAssemblyInstructionFactory.GetPageAssemblyInfo("/multicancertopics");                
+                List<SnippetInfo> boolContainsUrl = (List<SnippetInfo>)actual.GetType().InvokeMember("GetPageSnippets", BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic |
+                                             BindingFlags.Instance | BindingFlags.InvokeMethod, null, actual, null);
+
+                Assert.AreEqual(snippetCount, boolContainsUrl.Count);
+            }
+
+        }
+
 
         [TestMethod()]
         [DeploymentItem(@"XmlFiles")]
