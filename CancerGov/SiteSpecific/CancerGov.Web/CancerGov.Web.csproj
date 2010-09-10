@@ -66,6 +66,7 @@
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="UserControls\Headers\MainPageHeader.ascx" />
     <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
+    <None Include="Schema\CDESchema.xsd" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
