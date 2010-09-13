@@ -9,7 +9,10 @@ using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.Text.RegularExpressions;
 using NCI.Web.CDE.Configuration;
+using NCI.Web.CDE.WebAnalytics;
+
 using System.Web;
+
 namespace NCI.Web.CDE
 {
     /// <summary>
@@ -20,8 +23,7 @@ namespace NCI.Web.CDE
     public class SinglePageAssemblyInstruction : IPageAssemblyInstruction
     {
 
-
-        #region Member Variables
+        #region Private Member Variables
 
         /// <summary>
         /// Dictionary holds the registered multiple Url filters.
@@ -36,6 +38,7 @@ namespace NCI.Web.CDE
         /// </summary>
         private SnippetInfoCollection _snippets;
 
+        private WebAnalyticsSettings webAnalyticsSettings = null;
         #endregion
 
         public SinglePageAssemblyInstruction()
@@ -121,7 +124,6 @@ namespace NCI.Web.CDE
 
 
         #endregion
-
 
         #region IPageAssemblyInstruction Members
         /// <summary>
@@ -357,14 +359,39 @@ namespace NCI.Web.CDE
                 return (string[])keysList.ToArray(typeof(string));
             }
         }
-        #endregion
 
         /// <summary>
-        /// Returns Alternate content versions object which contains information necessary to display 
-        /// the page options.
+        /// This method returns the web analytics settings.
         /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public AlternateContentVersions AlternateContentVersions { get; set; }
+        public WebAnalyticsSettings GetWebAnalytics()
+        {
+            if (webAnalyticsSettings == null)
+                webAnalyticsSettings = new WebAnalyticsSettings();
+
+            webAnalyticsSettings.Props.Add(WebAnalyticsOptions.Props.LongTitle, GetField("short_title"));
+            return webAnalyticsSettings;
+        }
+
+        /// <summary>
+        /// When a data point related to web anlytics is to be modified it is done using this method. 
+        /// </summary>
+        /// <param name="type">The type of the </param>
+        /// <param name="propNumber"></param>
+        /// <param name="filter"></param>
+        public void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, FieldFilterDelegate filter)
+        {}
+        public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, FieldFilterDelegate filter)
+        {}
+        public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, FieldFilterDelegate filter)
+        {}
+
+        #endregion
+
+        #region Private Methods
+        private void setWebAnalytics()
+        {
+            //SetWebAnalytics(WebAnalyticsOptions.eVars.ArticleDownload, GetField(""));
+        }
 
         private void FilterCurrentUrl(NciUrl url)
         {
@@ -461,7 +488,9 @@ namespace NCI.Web.CDE
         {
             get { return HttpContext.Current.Server; }
         }
+        #endregion
 
+        #region Public Methods
         public override bool Equals(object obj)
         {
             SinglePageAssemblyInstruction target = obj as SinglePageAssemblyInstruction;
@@ -498,5 +527,13 @@ namespace NCI.Web.CDE
 
             return true;
         }
+
+        /// <summary>
+        /// Returns Alternate content versions object which contains information necessary to display 
+        /// the page options.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public AlternateContentVersions AlternateContentVersions { get; set; }
+        #endregion
     }
 }

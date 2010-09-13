@@ -5,6 +5,8 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.XPath;
+using NCI.Web.CDE.WebAnalytics;
+
 namespace NCI.Web.CDE
 {
     /// <summary>
@@ -72,5 +74,18 @@ namespace NCI.Web.CDE
         /// <value>A string array which are the keys to the alternate content versions.</value>
         string[] AlternateContentVersionsKeys { get; }
 
+        /// <summary>
+        /// This method returns the web analytics settings.
+        /// </summary>
+        WebAnalyticsSettings GetWebAnalytics();
+
+        /// <summary>
+        /// When a data point related to web anlytics is to be modified it is done using this method. 
+        /// </summary>
+        /// 
+
+        void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, FieldFilterDelegate filter);
+        void SetWebAnalytics(WebAnalyticsOptions.eVars  webAnalyticType, FieldFilterDelegate filter);
+        void SetWebAnalytics(WebAnalyticsOptions.Props  webAnalyticType, FieldFilterDelegate filter);
     }
 }

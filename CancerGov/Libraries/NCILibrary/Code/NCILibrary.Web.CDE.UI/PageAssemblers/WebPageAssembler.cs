@@ -26,6 +26,7 @@ namespace NCI.Web.CDE.UI
     public class WebPageAssembler : Page, IPageAssembler
     {
         #region Private Members
+
         /// <summary>
         /// Loads a collection of all template slots that are declaratively 
         /// defined  in the page template. The slots that are specified as being blocked
@@ -71,7 +72,7 @@ namespace NCI.Web.CDE.UI
                             catch (Exception ex)
                             {
                                 //Failed to load the slot template control. Log this error.
-                                Logger.LogError("CDE:WebPageAssembler.cs:loadSnippetsIntoTemplateSlots", "Failed to load snippet control-" + snippet.SnippetTemplatePath, NCIErrorLevel.Error, ex);
+                                Logger.LogError("CDE:WebPageAssembler.cs:WebPageAssembler", "Failed to load snippet control-" + snippet.SnippetTemplatePath, NCIErrorLevel.Error, ex);
                             }
                         }
                     }
@@ -79,14 +80,6 @@ namespace NCI.Web.CDE.UI
             }
         }
 
-        /// <summary>
-        /// Enable page options only if AlternateContentVersion information is not null.
-        /// Load a user control and add that control to the controls collection. This user 
-        /// control will render the html needed for the page options.
-        /// </summary>
-        private void enablepageOptions()
-        {
-        }
 
         /// <summary>
         /// Returns the metadata value for different types of metadata name.
@@ -172,7 +165,6 @@ namespace NCI.Web.CDE.UI
             base.OnPreInit(e);
             loadTemplateSlots();
             loadSnippetsIntoTemplateSlots();
-            enablepageOptions();
         }
 
         /// <summary>
@@ -281,6 +273,7 @@ namespace NCI.Web.CDE.UI
                 }
             }
         }
+
         #endregion
     }
 }

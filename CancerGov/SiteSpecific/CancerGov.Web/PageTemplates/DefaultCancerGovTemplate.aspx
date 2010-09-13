@@ -1,4 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.WebPageAssembler" %>
+<%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls"
+    TagPrefix="NCI" %>
+    
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
@@ -67,5 +70,8 @@
         <NCI:TemplateSlot ID="cgvFooter" runat="server" RemoveIfEmpty="false" />
     </div>
     <!-- End Foooter-->
+    <!-- TO INSERT WEB ANALYTICS CODE. Every template should have this 
+    control else Web analytics scripts will not show up in the HTML-->
+    <NCI:WebAnalyticsControl ID="WebAnalyticsControl1" runat="server" />
 </body>
 </html>
