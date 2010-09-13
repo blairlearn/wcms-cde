@@ -276,5 +276,116 @@ namespace NCI.Web.CDE.Test
             Assert.AreEqual(expectedBlockSlots[0], actualblockedSlots[0]);
 
         }
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetUrl_Test()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+
+
+            pageAssemblyInfo.AddUrlFilter("foo", url =>
+            {
+                url.Clear();
+                url.UriStem = "/foo";
+            });
+
+            NciUrl expected = new NciUrl();
+            expected.UriStem = "/foo";
+
+            Assert.AreEqual(expected.ToString(), pageAssemblyInfo.GetUrl("foo").ToString());
+        }
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetUrl_MultiFilter_Test()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+
+
+            pageAssemblyInfo.AddUrlFilter("foo", url =>
+            {
+                url.Clear();
+                url.UriStem = "/foo";
+            });
+
+            pageAssemblyInfo.AddUrlFilter("foo", url =>
+            {
+                url.UriStem += "/bar";
+            });
+
+            NciUrl expected = new NciUrl();
+            expected.UriStem = "/foo/bar";
+
+            Assert.AreEqual(expected.ToString(), pageAssemblyInfo.GetUrl("foo").ToString());
+        }
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetUrl_PrettyURL_Test()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+
+
+            NciUrl PrettyUrl = new NciUrl();
+            PrettyUrl = pageAssemblyInfo.GetUrl(PageAssemblyInstructionUrls.PrettyUrl);
+
+            Assert.AreEqual<string>("/multicancertopics", PrettyUrl.UriStem);
+        }
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetUrl_Cannonical_Test()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+
+
+
+            NciUrl CanonicalUrl = new NciUrl();
+            CanonicalUrl = pageAssemblyInfo.GetUrl(PageAssemblyInstructionUrls.CanonicalUrl);
+
+            Assert.AreEqual<string>("/multicancertopics", CanonicalUrl.UriStem);
+        }
+
+        /// <summary>
+        /// Helps in testing the new property AlternateContentVersion.  
+        /// </summary>
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetAlternateContentVersion()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+            string[] alternateContentVersion = null;
+            alternateContentVersion = pageAssemblyInfo.AlternateContentVersionsKeys;
+            Assert.IsNotNull(alternateContentVersion);
+            Assert.IsTrue(alternateContentVersion.Length > 0);
+        }
+
+
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void RegisterFieldFilters_Test()
+        {
+            using (HttpSimulator httpSimulator = GetStandardSimulatedRequest())
+            {
+                PageAssemblyInstructionLoader_Accessor target = new PageAssemblyInstructionLoader_Accessor();
+                HttpContext context = HttpContext.Current;
+                string url = "/multicancertopics/page2";
+                target.RewriteUrl(context, url);
+                Object[] args = new Object[] { 2 };
+
+                IPageAssemblyInstruction actual = PageAssemblyInstructionFactory.GetPageAssemblyInfo("/multicancertopics");
+                actual.GetType().InvokeMember("RegisterFieldFilters", BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic |
+                                             BindingFlags.Instance | BindingFlags.InvokeMethod, null, actual, args);
+
+            }
+
+        }
+
     }
 }
