@@ -34,6 +34,11 @@ namespace NCI.Web.CDE
         /// </summary>
         private Dictionary<string, FieldFilterDelegate> _FieldFilterDelegates = new Dictionary<string, FieldFilterDelegate>();
         /// <summary>
+        /// Collection of FieldFilter delegates for Web analytics field.
+        /// </summary>
+        private Dictionary<string, FieldFilterDelegate> _webAnalyticsFieldFilterDelegates = new Dictionary<string,FieldFilterDelegate>();
+
+        /// <summary>
         /// A collection of the snippets to be displayed on the page.
         /// </summary>
         private SnippetInfoCollection _snippets;
@@ -121,7 +126,6 @@ namespace NCI.Web.CDE
                 return _FieldFilterDelegates;
             }
         }
-
 
         #endregion
 
@@ -361,36 +365,93 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
-        /// This method returns the web analytics settings.
+        /// This method returns the web analytics settings for Event, Props and eVars data points.
         /// </summary>
         public WebAnalyticsSettings GetWebAnalytics()
         {
-            if (webAnalyticsSettings == null)
-                webAnalyticsSettings = new WebAnalyticsSettings();
+            // Enumerate _webAnalyticsFieldFilterDelegates , so each delagate can be executed.
+            foreach (KeyValuePair<string, FieldFilterDelegate> kvDel in _webAnalyticsFieldFilterDelegates)
+            {
+                FieldFilterData fieldData = null;
+                if(Enum.IsDefined( typeof(WebAnalyticsOptions.Events), kvDel.Key))
+                {
+                    fieldData = new FieldFilterData();
+                    // Execute the delegate so we can get the value of the field
+                    kvDel.Value(fieldData);
+                    webAnalyticsSettings.Events.Add((WebAnalyticsOptions.Events)Enum.Parse(typeof(WebAnalyticsOptions.Events), kvDel.Key), fieldData.Value);
+                }
+                else if (Enum.IsDefined(typeof(WebAnalyticsOptions.eVars), kvDel.Key))
+                {
+                    fieldData = new FieldFilterData();
+                    kvDel.Value(fieldData);
+                    webAnalyticsSettings.Evars.Add((WebAnalyticsOptions.eVars)Enum.Parse(typeof(WebAnalyticsOptions.eVars), kvDel.Key), fieldData.Value);
+                }
+                else if (Enum.IsDefined(typeof(WebAnalyticsOptions.Props), kvDel.Key))
+                {
+                    fieldData = new FieldFilterData();
+                    kvDel.Value(fieldData);
+                    webAnalyticsSettings.Props.Add((WebAnalyticsOptions.Props)Enum.Parse(typeof(WebAnalyticsOptions.Props), kvDel.Key), fieldData.Value);
+                }
 
-            webAnalyticsSettings.Props.Add(WebAnalyticsOptions.Props.LongTitle, GetField("short_title"));
+            }
+
             return webAnalyticsSettings;
         }
 
         /// <summary>
-        /// When a data point related to web anlytics is to be modified it is done using this method. 
+        /// A web analytics data point(props, eVars, Events) value is set using this method. The FieldFilter delegate 
+        /// on this method allows registered callback with the same data point name to modfiy the 
+        /// same value.
         /// </summary>
-        /// <param name="type">The type of the </param>
-        /// <param name="propNumber"></param>
-        /// <param name="filter"></param>
+        /// <param name="webAnalyticType">The enum which defines all Events data points.</param>
+        /// <param name="filter">The callback method which will set the value of the fieldfilter object</param>
         public void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, FieldFilterDelegate filter)
-        {}
-        public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, FieldFilterDelegate filter)
-        {}
-        public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, FieldFilterDelegate filter)
-        {}
+        {
+            setWebAnalytics(webAnalyticType.ToString(), filter);
+        }
 
+        /// <summary>
+        /// A web analytics data point(props, eVars, Events) value is set using this method. The FieldFilter delegate 
+        /// on this method allows registered callback with the same data point name to modfiy the 
+        /// same value.
+        /// </summary>
+        /// <param name="webAnalyticType">The enum which defines all eVars data points.</param>
+        /// <param name="filter">The callback method which will set the value of the fieldfilter object</param>
+        public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, FieldFilterDelegate filter)
+        {
+            setWebAnalytics(webAnalyticType.ToString(), filter);
+        }
+
+        /// <summary>
+        /// A web analytics data point(props, eVars, Events) value is set using this method. The FieldFilter delegate 
+        /// on this method allows registered callback with the same data point name to modfiy the 
+        /// same value.
+        /// </summary>
+        /// <param name="webAnalyticType">The enum which defines all Props data point.</param>
+        /// <param name="filter">The callback method which will set the value of the FieldFilterData object</param>
+        public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, FieldFilterDelegate filter)
+        {
+            setWebAnalytics(webAnalyticType.ToString(), filter);
+        }
         #endregion
 
         #region Private Methods
-        private void setWebAnalytics()
+        /// <summary>
+        /// This private method registers all delegates for web analytics.
+        /// </summary>
+        /// <param name="webAnalyticFieldName">The key or the name of the datapoint</param>
+        /// <param name="filter">The actual delegate callback which will modify the FieldFilterData object</param>
+        private void setWebAnalytics(string webAnalyticFieldName, FieldFilterDelegate filter)
         {
-            //SetWebAnalytics(WebAnalyticsOptions.eVars.ArticleDownload, GetField(""));
+            if (string.IsNullOrEmpty(webAnalyticFieldName))
+                throw new ArgumentException("The webAnalyticFieldName parameter may not be null or empty.");
+
+            string fieldNameKey = webAnalyticFieldName;
+
+            if (_webAnalyticsFieldFilterDelegates.ContainsKey(fieldNameKey) == false)
+                _webAnalyticsFieldFilterDelegates.Add(fieldNameKey, filter);
+            else
+                _webAnalyticsFieldFilterDelegates[fieldNameKey] += filter;
         }
 
         private void FilterCurrentUrl(NciUrl url)
@@ -448,6 +509,33 @@ namespace NCI.Web.CDE
 
         }
 
+        /// <summary>
+        /// Register all the field filters for Web Analytics.
+        /// </summary>
+        private void RegisterWebAnalyticsFieldFilters()
+        {
+            SetWebAnalytics(WebAnalyticsOptions.Props.RootPrettyURL, wbField =>
+                {
+                    wbField.Value = PrettyUrl;
+                });
+
+            SetWebAnalytics(WebAnalyticsOptions.eVars.Language, wbField =>
+            {
+                string languageValue = "english";
+                switch (languageValue.ToLower())
+                {
+                    case "en":
+                        languageValue = "english";
+                        break;
+                    case "es":
+                        languageValue = "spanish";
+                        break;
+                    default:
+                        languageValue = "english";
+                        break;
+                }
+            });
+        }
 
         /// <summary>
         /// Gets the meta description.
@@ -535,5 +623,6 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public AlternateContentVersions AlternateContentVersions { get; set; }
         #endregion
+
     }
 }
