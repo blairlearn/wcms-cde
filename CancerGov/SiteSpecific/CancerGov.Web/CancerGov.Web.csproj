@@ -64,6 +64,9 @@
     <Content Include="Common\PopUps\PopEmail.aspx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
+    <Content Include="SnippetTemplates\TopicSearchCategorySnippet.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
     <Content Include="UserControls\Headers\MainPageHeader.ascx" />
     <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
     <None Include="Schema\CDESchema.xsd" />
@@ -124,6 +127,10 @@
     <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.TopicSearch\CancerGov.TopicSearch.csproj">
+      <Project>{917C939E-6AA1-4FEE-8C35-6EC62974455B}</Project>
+      <Name>CancerGov.TopicSearch</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
