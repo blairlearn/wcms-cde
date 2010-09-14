@@ -75,6 +75,7 @@
     <Compile Include="PageAssembly\FieldFilterData.cs" />
     <Compile Include="PageAssembly\FieldFilterDelegate.cs" />
     <Compile Include="PageAssembly\IPageAssemblyInstruction.cs" />
+    <Compile Include="PageAssembly\BasePageAssemblyInstruction.cs" />
     <Compile Include="PageAssembly\PageAssemblyInstructionFactory.cs" />
     <Compile Include="PageAssembly\MultiPageCollection.cs" />
     <Compile Include="PageAssembly\PageMetadata.cs" />

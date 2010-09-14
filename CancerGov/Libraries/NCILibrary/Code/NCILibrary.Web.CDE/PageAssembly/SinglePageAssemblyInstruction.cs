@@ -4,14 +4,15 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 using System.Text.RegularExpressions;
+using System.Globalization;
 using NCI.Web.CDE.Configuration;
 using NCI.Web.CDE.WebAnalytics;
 
-using System.Web;
 
 namespace NCI.Web.CDE
 {
@@ -20,7 +21,7 @@ namespace NCI.Web.CDE
     /// </summary>
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
     [System.Xml.Serialization.XmlRootAttribute("SinglePageAssemblyInstruction", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
-    public class SinglePageAssemblyInstruction : IPageAssemblyInstruction
+    public class SinglePageAssemblyInstruction : BasePageAssemblyInstruction, IPageAssemblyInstruction
     {
 
         #region Private Member Variables
@@ -33,17 +34,12 @@ namespace NCI.Web.CDE
         /// Dictionary holds the registered multiple Field Filters
         /// </summary>
         private Dictionary<string, FieldFilterDelegate> _FieldFilterDelegates = new Dictionary<string, FieldFilterDelegate>();
-        /// <summary>
-        /// Collection of FieldFilter delegates for Web analytics field.
-        /// </summary>
-        private Dictionary<string, FieldFilterDelegate> _webAnalyticsFieldFilterDelegates = new Dictionary<string,FieldFilterDelegate>();
 
         /// <summary>
         /// A collection of the snippets to be displayed on the page.
         /// </summary>
         private SnippetInfoCollection _snippets;
 
-        private WebAnalyticsSettings webAnalyticsSettings = null;
         #endregion
 
         public SinglePageAssemblyInstruction()
@@ -52,6 +48,7 @@ namespace NCI.Web.CDE
             _snippets = new SnippetInfoCollection();
             PageMetadata = new PageMetadata();
             RegisterFieldFilters();
+            RegisterWebAnalyticsFieldFilters();
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, data =>
             {
@@ -368,34 +365,8 @@ namespace NCI.Web.CDE
         /// This method returns the web analytics settings for Event, Props and eVars data points.
         /// </summary>
         public WebAnalyticsSettings GetWebAnalytics()
-        {
-            // Enumerate _webAnalyticsFieldFilterDelegates , so each delagate can be executed.
-            foreach (KeyValuePair<string, FieldFilterDelegate> kvDel in _webAnalyticsFieldFilterDelegates)
-            {
-                FieldFilterData fieldData = null;
-                if(Enum.IsDefined( typeof(WebAnalyticsOptions.Events), kvDel.Key))
-                {
-                    fieldData = new FieldFilterData();
-                    // Execute the delegate so we can get the value of the field
-                    kvDel.Value(fieldData);
-                    webAnalyticsSettings.Events.Add((WebAnalyticsOptions.Events)Enum.Parse(typeof(WebAnalyticsOptions.Events), kvDel.Key), fieldData.Value);
-                }
-                else if (Enum.IsDefined(typeof(WebAnalyticsOptions.eVars), kvDel.Key))
-                {
-                    fieldData = new FieldFilterData();
-                    kvDel.Value(fieldData);
-                    webAnalyticsSettings.Evars.Add((WebAnalyticsOptions.eVars)Enum.Parse(typeof(WebAnalyticsOptions.eVars), kvDel.Key), fieldData.Value);
-                }
-                else if (Enum.IsDefined(typeof(WebAnalyticsOptions.Props), kvDel.Key))
-                {
-                    fieldData = new FieldFilterData();
-                    kvDel.Value(fieldData);
-                    webAnalyticsSettings.Props.Add((WebAnalyticsOptions.Props)Enum.Parse(typeof(WebAnalyticsOptions.Props), kvDel.Key), fieldData.Value);
-                }
-
-            }
-
-            return webAnalyticsSettings;
+        { 
+            return base.GetWebAnalytics();
         }
 
         /// <summary>
@@ -407,7 +378,7 @@ namespace NCI.Web.CDE
         /// <param name="filter">The callback method which will set the value of the fieldfilter object</param>
         public void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, FieldFilterDelegate filter)
         {
-            setWebAnalytics(webAnalyticType.ToString(), filter);
+            base.SetWebAnalytics(webAnalyticType.ToString(), filter);
         }
 
         /// <summary>
@@ -419,7 +390,7 @@ namespace NCI.Web.CDE
         /// <param name="filter">The callback method which will set the value of the fieldfilter object</param>
         public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, FieldFilterDelegate filter)
         {
-            setWebAnalytics(webAnalyticType.ToString(), filter);
+            base.SetWebAnalytics(webAnalyticType.ToString(), filter);
         }
 
         /// <summary>
@@ -431,28 +402,11 @@ namespace NCI.Web.CDE
         /// <param name="filter">The callback method which will set the value of the FieldFilterData object</param>
         public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, FieldFilterDelegate filter)
         {
-            setWebAnalytics(webAnalyticType.ToString(), filter);
+            base.SetWebAnalytics(webAnalyticType.ToString(), filter);
         }
         #endregion
 
         #region Private Methods
-        /// <summary>
-        /// This private method registers all delegates for web analytics.
-        /// </summary>
-        /// <param name="webAnalyticFieldName">The key or the name of the datapoint</param>
-        /// <param name="filter">The actual delegate callback which will modify the FieldFilterData object</param>
-        private void setWebAnalytics(string webAnalyticFieldName, FieldFilterDelegate filter)
-        {
-            if (string.IsNullOrEmpty(webAnalyticFieldName))
-                throw new ArgumentException("The webAnalyticFieldName parameter may not be null or empty.");
-
-            string fieldNameKey = webAnalyticFieldName;
-
-            if (_webAnalyticsFieldFilterDelegates.ContainsKey(fieldNameKey) == false)
-                _webAnalyticsFieldFilterDelegates.Add(fieldNameKey, filter);
-            else
-                _webAnalyticsFieldFilterDelegates[fieldNameKey] += filter;
-        }
 
         private void FilterCurrentUrl(NciUrl url)
         {
@@ -507,34 +461,6 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.MetaKeywords;
             });
 
-        }
-
-        /// <summary>
-        /// Register all the field filters for Web Analytics.
-        /// </summary>
-        private void RegisterWebAnalyticsFieldFilters()
-        {
-            SetWebAnalytics(WebAnalyticsOptions.Props.RootPrettyURL, wbField =>
-                {
-                    wbField.Value = PrettyUrl;
-                });
-
-            SetWebAnalytics(WebAnalyticsOptions.eVars.Language, wbField =>
-            {
-                string languageValue = "english";
-                switch (languageValue.ToLower())
-                {
-                    case "en":
-                        languageValue = "english";
-                        break;
-                    case "es":
-                        languageValue = "spanish";
-                        break;
-                    default:
-                        languageValue = "english";
-                        break;
-                }
-            });
         }
 
         /// <summary>
@@ -624,5 +550,19 @@ namespace NCI.Web.CDE
         public AlternateContentVersions AlternateContentVersions { get; set; }
         #endregion
 
+        #region Protected
+        /// <summary>
+        /// Override this method to add any page specifc web analytics data points.
+        /// </summary>
+        protected override void RegisterWebAnalyticsFieldFilters()
+        {
+            base.RegisterWebAnalyticsFieldFilters();
+
+            SetWebAnalytics(WebAnalyticsOptions.Props.RootPrettyURL.ToString(), wbField =>
+            {
+                wbField.Value = PrettyUrl;
+            });
+        }        
+        #endregion
     }
 }

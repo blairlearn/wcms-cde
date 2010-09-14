@@ -17,7 +17,7 @@ namespace NCI.Web.CDE
 {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
     [System.Xml.Serialization.XmlRootAttribute("MultiPageAssemblyInstruction", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
-    public class MultiPageAssemblyInstruction : IMultiPageAssemblyInstruction
+    public class MultiPageAssemblyInstruction : BasePageAssemblyInstruction, IMultiPageAssemblyInstruction
     {
 
         #region Member Variables
@@ -51,6 +51,7 @@ namespace NCI.Web.CDE
             _pages = new MultiPageCollection();
             PageMetadata = new PageMetadata();
             RegisterFieldFilters(0);
+            RegisterWebAnalyticsFieldFilters();
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, data =>
             {                
@@ -427,7 +428,7 @@ namespace NCI.Web.CDE
         /// </summary>
         public WebAnalyticsSettings GetWebAnalytics()
         {
-            return webAnalyticsSettings;
+            return base.GetWebAnalytics();
         }
 
         /// <summary>
@@ -437,11 +438,11 @@ namespace NCI.Web.CDE
         /// <param name="propNumber"></param>
         /// <param name="filter"></param>
         public void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, FieldFilterDelegate filter)
-        { }
+        { base.SetWebAnalytics(webAnalyticType.ToString(), filter); }
         public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, FieldFilterDelegate filter)
-        { }
+        { base.SetWebAnalytics(webAnalyticType.ToString(),filter); }
         public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, FieldFilterDelegate filter)
-        { }
+        { base.SetWebAnalytics(webAnalyticType.ToString(),filter); }
 
         #endregion
 
@@ -585,5 +586,20 @@ namespace NCI.Web.CDE
 
             return pageSnippets;
         }
+
+        #region Protected
+        /// <summary>
+        /// Override this method to add any page specifc web analytics data points.
+        /// </summary>
+        protected override void RegisterWebAnalyticsFieldFilters()
+        {
+            base.RegisterWebAnalyticsFieldFilters();
+
+            SetWebAnalytics(WebAnalyticsOptions.Props.RootPrettyURL.ToString(), wbField =>
+            {
+                wbField.Value = PrettyUrl;
+            });
+        }
+        #endregion
     }
 }
