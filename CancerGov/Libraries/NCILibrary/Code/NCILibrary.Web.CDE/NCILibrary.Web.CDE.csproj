@@ -92,7 +92,6 @@
     <Compile Include="PageAssembly\SnippetInfoCollection.cs" />
     <Compile Include="PageAssembly\UrlFilterDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebAnalytics\WebAnalyticsSettings.cs" />
     <Compile Include="WebAnalytics\Configuration\ChannelElement.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -105,12 +104,6 @@
     <Compile Include="WebAnalytics\Configuration\ReportingSuitesElementCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WebAnalytics\Configuration\UrlMatchElement.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="WebAnalytics\Configuration\UrlMatchElementCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="WebAnalytics\Configuration\WebAnalyticsSection.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -120,6 +113,7 @@
     <Compile Include="WebAnalytics\WebAnalyticsPageLoad.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WebAnalytics\WebAnalyticsSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">
