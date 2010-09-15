@@ -81,24 +81,20 @@ namespace CancerGov.Modules.TopicSearch.UI
             {
                 string pubMedQuery = "(";
 
-                //if (rblTimeframeList.SelectedItem.Value.Equals("All (No Date Limit)"))
                 if(rblTimeframeList.SelectedIndex == 0)
                 {
                     //nothing
                 }
-                //else if (rblTimeframeList.SelectedItem.Value.Equals("Last 30 Days"))
                 else if (rblTimeframeList.SelectedIndex == 1)
                 {
                     pubMedQuery += "\"" + daysAgo(30) +
                         "\"[Entrez Date] : \"3000\"[Entrez Date]) AND (";
                 }
-                //else if (rblTimeframeList.SelectedItem.Value.Equals("Last 60 Days"))
                 else if (rblTimeframeList.SelectedIndex == 2)
                 {
                     pubMedQuery += "\"" + daysAgo(60) +
                         "\"[Entrez Date] : \"3000\"[Entrez Date]) AND (";
                 }
-                //else if (rblTimeframeList.SelectedItem.Value.Equals("Last 90 Days"))
                 else if (rblTimeframeList.SelectedIndex == 3)
                 {
                     pubMedQuery += "\"" + daysAgo(90) +
