@@ -96,6 +96,11 @@ namespace NCI.Web.CDE
                 url.SetUrl(AlternateContentVersions.OrderCopyURL);
             });
 
+            AddUrlFilter("PostBackURL", url =>
+            {
+                url.SetUrl(GetUrl("CurrentURL").ToString());
+            });
+
         }
 
         #region Properties

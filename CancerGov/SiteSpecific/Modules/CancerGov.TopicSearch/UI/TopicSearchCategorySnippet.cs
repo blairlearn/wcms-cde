@@ -67,6 +67,11 @@ namespace CancerGov.Modules.TopicSearch.UI
                 rblTopicSearchList.DataTextField = "TopicSearchName";
                 rblTopicSearchList.DataBind();
                 strCategoryName.Text = mTSC.CategoryName;
+                if (rblTopicSearchList.Items.Count != 0)
+                {
+                    rblTopicSearchList.SelectedIndex = 0;
+                }
+                rblTimeframeList.SelectedIndex = 0;
             }            
         }
 

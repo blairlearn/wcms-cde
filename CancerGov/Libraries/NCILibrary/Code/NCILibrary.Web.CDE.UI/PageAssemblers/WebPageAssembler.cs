@@ -180,6 +180,21 @@ namespace NCI.Web.CDE.UI
             InsertStyleSheetsReferences();
             InsertCanonicalURL();
             InsertPageMetaData();
+
+            //Set the form action so it does not post back to the page template path.
+            if (this.Form != null)
+            {
+                NciUrl formAction = this.PageAssemblyInstruction.GetUrl("PostBackURL");
+
+                if (formAction == null || string.IsNullOrEmpty(formAction.ToString()))
+                {
+                    //Log Error
+                }
+                else
+                {
+                    this.Form.Action = formAction.ToString();
+                }                
+            }
         }
 
         #endregion
