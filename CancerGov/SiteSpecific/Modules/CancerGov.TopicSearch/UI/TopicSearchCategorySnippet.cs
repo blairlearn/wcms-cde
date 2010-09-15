@@ -24,12 +24,11 @@ namespace CancerGov.Modules.TopicSearch.UI
     {
         protected RadioButtonList rblTopicSearchList;
         protected RadioButtonList rblTimeframeList;
-        protected string strCategoryName;
+        protected Label strCategoryName;
 
         public void Page_Load(object sender, EventArgs e)
         {
             processTopicSearch(SnippetInfo.Data);
-
         }
         protected override void Render(HtmlTextWriter writer)
         {
@@ -64,16 +63,54 @@ namespace CancerGov.Modules.TopicSearch.UI
             if (!Page.IsPostBack)
             {
                 rblTopicSearchList.DataSource = (object)mTSC.TopicSearches;
-                rblTopicSearchList.DataValueField = "TopicSearchID";
+                rblTopicSearchList.DataValueField = "MeshQuery";
                 rblTopicSearchList.DataTextField = "TopicSearchName";
                 rblTopicSearchList.DataBind();
-                strCategoryName = mTSC.CategoryName;
-            }
-            
+                strCategoryName.Text = mTSC.CategoryName;
+            }            
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
+            if (rblTimeframeList.SelectedIndex > -1 && rblTopicSearchList.SelectedIndex > -1)
+            {
+                string pubMedQuery = "(";
+
+                //if (rblTimeframeList.SelectedItem.Value.Equals("All (No Date Limit)"))
+                if(rblTimeframeList.SelectedIndex == 0)
+                {
+                    //nothing
+                }
+                //else if (rblTimeframeList.SelectedItem.Value.Equals("Last 30 Days"))
+                else if (rblTimeframeList.SelectedIndex == 1)
+                {
+                    pubMedQuery += "\"" + daysAgo(30) +
+                        "\"[Entrez Date] : \"3000\"[Entrez Date]) AND (";
+                }
+                //else if (rblTimeframeList.SelectedItem.Value.Equals("Last 60 Days"))
+                else if (rblTimeframeList.SelectedIndex == 2)
+                {
+                    pubMedQuery += "\"" + daysAgo(60) +
+                        "\"[Entrez Date] : \"3000\"[Entrez Date]) AND (";
+                }
+                //else if (rblTimeframeList.SelectedItem.Value.Equals("Last 90 Days"))
+                else if (rblTimeframeList.SelectedIndex == 3)
+                {
+                    pubMedQuery += "\"" + daysAgo(90) +
+                        "\"[Entrez Date] : \"3000\"[Entrez Date]) AND (";
+                }
+                pubMedQuery += rblTopicSearchList.SelectedItem.Value + ")";
+                string pubMedLink = "http://www.ncbi.nlm.nih.gov/pubmed?cmd=Search&report=DocSum&term=" + pubMedQuery;
+                Page.Response.Redirect(pubMedLink, true);
+            }  
+        }
+
+        private string daysAgo(int x)
+        {
+            // Get current date and time
+            DateTime dt = DateTime.Now;
+            dt = DateTime.Today.AddDays(-x);
+            return String.Format("{0:yyyy/MM/dd}", dt);
         }
     }
 }
