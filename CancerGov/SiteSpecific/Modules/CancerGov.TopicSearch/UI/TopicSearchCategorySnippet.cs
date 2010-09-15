@@ -24,7 +24,8 @@ namespace CancerGov.Modules.TopicSearch.UI
     {
         protected RadioButtonList rblTopicSearchList;
         protected RadioButtonList rblTimeframeList;
-        //protected string strTableTitle;
+        protected string strCategoryName;
+
         public void Page_Load(object sender, EventArgs e)
         {
             processTopicSearch(SnippetInfo.Data);
@@ -66,8 +67,8 @@ namespace CancerGov.Modules.TopicSearch.UI
                 rblTopicSearchList.DataValueField = "TopicSearchID";
                 rblTopicSearchList.DataTextField = "TopicSearchName";
                 rblTopicSearchList.DataBind();
+                strCategoryName = mTSC.CategoryName;
             }
-            //strTableTitle += ;
             
         }
 

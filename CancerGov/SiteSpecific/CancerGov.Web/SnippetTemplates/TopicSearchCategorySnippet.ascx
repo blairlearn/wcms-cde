@@ -25,7 +25,6 @@
 <%--Display topic search radio buttons.--%>
 <p>
       <asp:radiobuttonlist id="rblTopicSearchList" runat="server" RepeatLayout="Flow">
-      
       </asp:radiobuttonlist>
 <br></p></td>
 <%--Display timeframe buttons.--%>
