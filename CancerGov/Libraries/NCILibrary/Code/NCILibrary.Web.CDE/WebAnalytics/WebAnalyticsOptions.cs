@@ -12,12 +12,8 @@ namespace NCI.Web.CDE.WebAnalytics
 {
     public static class WebAnalyticsOptions
     {
-
         private static readonly string webAnalyticsPath = "nci/web/analytics";
         private static WebAnalyticsSection _webAnalyticsConfig;
-        //public const string Hostname = "www.cancer.gov";
-        public static readonly string Hostname = "www.cancer.gov";
-
 
         public static void Initialize()
         {
@@ -33,6 +29,10 @@ namespace NCI.Web.CDE.WebAnalytics
             }
         }
 
+        /// <summary>
+        /// This property determines if web analytics is enabled.
+        /// Returns the value set for IsEnabled from the configuration. 
+        /// </summary>
         public static bool IsEnabled
         {
             get
@@ -46,6 +46,9 @@ namespace NCI.Web.CDE.WebAnalytics
             }
         }
 
+        /// <summary>
+        /// This property determines if web analytics EnableNonJavaScriptTagging is enabled.
+        /// </summary>
         public static bool EnableNonJavaScriptTagging
         {
             get
@@ -59,7 +62,12 @@ namespace NCI.Web.CDE.WebAnalytics
             }
         }
 
-
+        /// <summary>
+        /// This method returns a list of all reporting suites for a given channel.
+        /// </summary>
+        /// <param name="channelName">The name of the channel</param>
+        /// <param name="language">The language of the related suite.</param>
+        /// <returns>A string[] containing reporting suite.</returns>
         public static string[] GetSuitesForChannel(string channelName, string language)
         {
             List<string> rtnSuites = new List<string>();
@@ -88,6 +96,9 @@ namespace NCI.Web.CDE.WebAnalytics
             public static readonly string English = "english";
         }
 
+        /// <summary>
+        /// Named constants for Event data point types.
+        /// </summary>
         public enum Events
         {
             /// <summary>
@@ -147,6 +158,10 @@ namespace NCI.Web.CDE.WebAnalytics
             /// </summary>
             SendToPrinter = 14
         }
+
+        /// <summary>
+        /// Named constanst for Props data point types.
+        /// </summary>
         public enum Props
         {
             /// <summary>
@@ -254,6 +269,10 @@ namespace NCI.Web.CDE.WebAnalytics
             /// </summary>
             TimeStamp = 26
         }
+
+        /// <summary>
+        /// Named constants for eVars data point types
+        /// </summary>
         public enum eVars
         {
             /// <summary>

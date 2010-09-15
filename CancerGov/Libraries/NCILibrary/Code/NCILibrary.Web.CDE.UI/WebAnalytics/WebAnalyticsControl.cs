@@ -12,6 +12,9 @@ using NCI.Web.CDE.WebAnalytics;
 
 namespace NCI.Web.CDE.UI.WebControls
 {
+    /// <summary>
+    /// This web controls renders the Omniture java script required for web analytics. 
+    /// </summary>
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:WebAnalyticsControl runat=server></{0}:WebAnalyticsControl>")]
     public class WebAnalyticsControl : WebControl

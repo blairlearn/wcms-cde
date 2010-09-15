@@ -1,12 +1,14 @@
-﻿using NCI.Web.CDE;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCI.Web;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml.Schema;
 using System.Xml;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Web;
 using System;
+using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.CDE;
+using NCI.Web;
+
 namespace NCI.Web.CDE.Test
 {
 
@@ -347,6 +349,18 @@ namespace NCI.Web.CDE.Test
             Assert.IsTrue(alternateContentVersion.Length > 0);
         }
 
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetWebAnalytics()
+        {
+            IPageAssemblyInstruction pageAssemblyInfo = null;
+            pageAssemblyInfo = InitializeTestPageAssemblyInfo();
+            WebAnalyticsSettings webAnalyticsSettings = null;
+            webAnalyticsSettings = pageAssemblyInfo.GetWebAnalytics();
+            Assert.IsNotNull(webAnalyticsSettings);
+            Assert.IsTrue(webAnalyticsSettings.Props.Count > 0);
+            Assert.IsTrue(webAnalyticsSettings.Evars.Count > 0);
+        }
 
         private void FilterCurrentUrl(NciUrl url)
         {

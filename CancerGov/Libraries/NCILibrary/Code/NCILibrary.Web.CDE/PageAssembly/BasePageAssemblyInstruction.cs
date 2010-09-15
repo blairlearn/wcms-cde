@@ -8,14 +8,14 @@ using NCI.Web.CDE.WebAnalytics;
 namespace NCI.Web.CDE
 {
     /// <summary>
-    /// Abstract base class for both single pag ande multiple page classes to 
+    /// Abstract base class for both single page and multiple page classes to 
     /// encapsulate common members and functionality.
     /// </summary>
     abstract public class BasePageAssemblyInstruction
     {
         #region Private
         /// <summary>
-        /// Collection of FieldFilter delegates for Web analytics field.
+        /// Collection of FieldFilter delegates for Web analytics fields.
         /// </summary>
         private Dictionary<string, FieldFilterDelegate> _webAnalyticsFieldFilterDelegates = new Dictionary<string, FieldFilterDelegate>();
         private WebAnalyticsSettings webAnalyticsSettings = null;
@@ -88,7 +88,7 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
-        /// Register all the field filters for Web Analytics.
+        /// Register all site wide field filters for Web Analytics.
         /// </summary>
         protected virtual void RegisterWebAnalyticsFieldFilters()
         {

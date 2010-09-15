@@ -31,7 +31,7 @@ namespace NCI.Web.CDE.WebAnalytics
         private string language = "";
 
 
-         /// <summary>When true, page-wide link tracking is enabled.</summary>
+        /// <summary>When true, page-wide link tracking is enabled.</summary>
         public bool DoPageWideLinkTracking
         {
             get { return pageWideLinkTracking; }
@@ -43,14 +43,14 @@ namespace NCI.Web.CDE.WebAnalytics
         public WebAnalyticsPageLoad()
         {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/Scripts/Omniture/NCIAnalyticsFunctions.js\"></script>");
-            pageLoadPreTag.AppendLine("<!-- SiteCatalyst code version: H.20.3. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com -->");   
+            pageLoadPreTag.AppendLine("<!-- SiteCatalyst code version: H.20.3. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com -->");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/Scripts/Omniture/s_code.js\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
             pageLoadPreTag.AppendLine("<!--");
 
             // Default props, eVars, and/or events
-            AddProp(WebAnalyticsOptions.Props.LongTitle, "document.title",true);  //prop10
-            AddEvent(WebAnalyticsOptions.Events.PageView); 
+            AddProp(WebAnalyticsOptions.Props.LongTitle, "document.title", true);  //prop10
+            AddEvent(WebAnalyticsOptions.Events.PageView);
 
             // The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
             //pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
@@ -61,7 +61,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 pageLoadPostTag.AppendLine("if(s_code)");
                 pageLoadPostTag.AppendLine("   document.write(s_code);");
             }
-          
+
             pageLoadPostTag.AppendLine("-->");
             pageLoadPostTag.AppendLine("</script>");
             if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
@@ -74,10 +74,10 @@ namespace NCI.Web.CDE.WebAnalytics
         private StringBuilder LinkTrackPageLoadCode()
         {
             //Page-wide link tracking is currently not used 
-            
+
             //This should be moved into a function in the NCIAnalytics.js file.
             StringBuilder linkTrackerPageLoadCode = new StringBuilder();
-            
+
             linkTrackerPageLoadCode.AppendLine("// Page-wide click tracking");
             linkTrackerPageLoadCode.AppendLine("if (document.addEventListener)");
             linkTrackerPageLoadCode.AppendLine("   document.addEventListener('click',NCIAnalytics.LinkTrackTagBuilder,false);");
@@ -112,8 +112,8 @@ namespace NCI.Web.CDE.WebAnalytics
                 output.AppendLine(WEB_ANALYTICS_COMMENT_START);
 
                 // Report Suites JavaScript variable (s_account) must be set before the s_code file is loaded
-                foreach (string suite in WebAnalyticsOptions.GetSuitesForChannel(channel,language))
-                    {
+                foreach (string suite in WebAnalyticsOptions.GetSuitesForChannel(channel, language))
+                {
                     if (reportSuites.Length > 0)
                         reportSuites += ",";
                     reportSuites += suite;
@@ -125,7 +125,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 output.AppendLine("</script>");
 
                 output.Append(pageLoadPreTag.ToString());
-                
+
                 if (pageWideLinkTracking)
                 {
                     // Page-wide link tracking is current not used - this may be implemented at a future date
@@ -142,7 +142,7 @@ namespace NCI.Web.CDE.WebAnalytics
 
                 if (pageType != "") // if pageType is set, output them to the tag
                     output.AppendLine("s.pageType=" + DELIMITER + pageType + DELIMITER + ";");
-                                
+
                 if (props.Count > 0) // if props are set, output them to the tag
                 {
 
@@ -165,7 +165,7 @@ namespace NCI.Web.CDE.WebAnalytics
 
                 if (events.Count > 0)  // if events have been defined, output then to the tag
                 {
-                    output.AppendLine("s.events=" + DELIMITER + string.Join(",", events.ToArray<string>()) + DELIMITER + ";");  
+                    output.AppendLine("s.events=" + DELIMITER + string.Join(",", events.ToArray<string>()) + DELIMITER + ";");
                 }
 
                 output.AppendLine("");
@@ -183,7 +183,7 @@ namespace NCI.Web.CDE.WebAnalytics
         {
             AddProp(propNumber, value, false);
         }
-  
+
         /// <summary>Adds an Omniture custom variable (prop) to the Omniture page load JavaScript code 
         /// with delimiters attached to value parameter.</summary>
         /// <param name="propNumber">Omniture custom variable (prop) number</param>
@@ -191,7 +191,7 @@ namespace NCI.Web.CDE.WebAnalytics
         public void AddProp(WebAnalyticsOptions.Props propNumber, string value)
         {
             AddProp((int)propNumber, value, false);
-           
+
         }
 
         /// <summary>Adds Omniture custom variable (prop) to the Omniture page load JavaScript code.</summary>
@@ -212,7 +212,7 @@ namespace NCI.Web.CDE.WebAnalytics
         public void AddProp(int propNumber, string value, bool NoDelimiters)
         {
             // if value is null set to empty string 
-            value = value ?? string.Empty; 
+            value = value ?? string.Empty;
             string newValue = NoDelimiters ? value : DELIMITER + value.Replace("'", "\\'") + DELIMITER;
 
             if (props.ContainsKey(propNumber))
@@ -255,7 +255,7 @@ namespace NCI.Web.CDE.WebAnalytics
         public void AddEvar(int eVarNumber, string value, bool NoDelimiters)
         {
             // if value is null set to empty string 
-            value = value ?? string.Empty; 
+            value = value ?? string.Empty;
             string newValue = NoDelimiters ? value : DELIMITER + value.Replace("'", "\\'") + DELIMITER;
 
             if (evars.ContainsKey(eVarNumber))
