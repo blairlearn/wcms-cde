@@ -369,7 +369,7 @@ namespace NCI.Web.CDE
         /// <summary>
         /// This method returns the web analytics settings for Event, Props and eVars data points.
         /// </summary>
-        public WebAnalyticsSettings GetWebAnalytics()
+        public override WebAnalyticsSettings GetWebAnalytics()
         { 
             return base.GetWebAnalytics();
         }

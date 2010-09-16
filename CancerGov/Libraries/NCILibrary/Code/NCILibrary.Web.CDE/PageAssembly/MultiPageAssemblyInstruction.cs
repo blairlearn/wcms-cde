@@ -431,7 +431,7 @@ namespace NCI.Web.CDE
         /// <summary>
         /// This method returns the web analytics settings.
         /// </summary>
-        public WebAnalyticsSettings GetWebAnalytics()
+        public override WebAnalyticsSettings GetWebAnalytics()
         {
             return base.GetWebAnalytics();
         }

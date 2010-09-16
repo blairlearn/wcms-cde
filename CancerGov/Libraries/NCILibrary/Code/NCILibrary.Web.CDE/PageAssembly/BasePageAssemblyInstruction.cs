@@ -57,7 +57,7 @@ namespace NCI.Web.CDE
         /// <summary>
         /// This method returns the web analytics settings for Event, Props and eVars data points.
         /// </summary>
-        protected WebAnalyticsSettings GetWebAnalytics()
+        public virtual WebAnalyticsSettings GetWebAnalytics()
         {
             // Enumerate _webAnalyticsFieldFilterDelegates , so each delagate can be executed.
             foreach (KeyValuePair<string, FieldFilterDelegate> kvDel in _webAnalyticsFieldFilterDelegates)
