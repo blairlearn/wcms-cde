@@ -493,7 +493,7 @@ namespace NCI.Web.CDE
 
             AddFieldFilter("short_title", data =>
             {
-                data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
+                data.Value = this.PageMetadata.ShortTitle;
             });
 
             AddFieldFilter("short_description", data =>
@@ -514,6 +514,11 @@ namespace NCI.Web.CDE
             AddFieldFilter("meta_keywords", data =>
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.MetaKeywords;
+            });
+
+            AddFieldFilter("multipage_short_title", data =>
+            {
+                data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
             });
 
             //Register URL Filters
@@ -607,12 +612,12 @@ namespace NCI.Web.CDE
 
             SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
             {
-                wbField.Value = GetField("short_title");
+                wbField.Value = this.GetField("short_title");
             });
 
             SetWebAnalytics(WebAnalyticsOptions.Props.MultipageShortTile.ToString(), wbField =>
             {
-                wbField.Value = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+                wbField.Value = this.GetField("multipage_short_title");
             });
         }
         #endregion
