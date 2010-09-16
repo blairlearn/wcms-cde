@@ -567,6 +567,12 @@ namespace NCI.Web.CDE
             {
                 wbField.Value = PrettyUrl;
             });
+
+            SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
+            {
+                wbField.Value = GetField("short_title");
+            });
+
         }        
         #endregion
     }
