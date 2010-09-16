@@ -267,7 +267,9 @@ namespace NCI.Web.CDE.WebAnalytics
             /// <summary>
             /// Omniture custom traffic variable containing time stamp on page load [set in s_code.js] (value=26)
             /// </summary>
-            TimeStamp = 26
+            TimeStamp = 26,
+
+            MultipageShortTile = 27
         }
 
         /// <summary>

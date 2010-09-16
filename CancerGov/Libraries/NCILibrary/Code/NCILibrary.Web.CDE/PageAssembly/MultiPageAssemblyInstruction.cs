@@ -54,7 +54,7 @@ namespace NCI.Web.CDE
             RegisterWebAnalyticsFieldFilters();
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, data =>
-            {                
+            {
                 data.Value = GetField("short_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
             });
 
@@ -203,7 +203,7 @@ namespace NCI.Web.CDE
 
         [System.Xml.Serialization.XmlArray(ElementName = "Pages", Form = XmlSchemaForm.Unqualified)]
         [System.Xml.Serialization.XmlArrayItem("Page", Form = XmlSchemaForm.Unqualified)]
-        public MultiPageCollection Page 
+        public MultiPageCollection Page
         {
 
             get { return _pages; }
@@ -219,22 +219,22 @@ namespace NCI.Web.CDE
             get
             {
                 List<SnippetInfo> snippets = new List<SnippetInfo>();
-                List<SnippetInfo> pageSnippets = new List<SnippetInfo>();               
+                List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
 
                 // Add all local snippets to the list to return.
                 snippets.AddRange(_snippets);
-                
+
                 ////Find all of the Slots on the page which are not blocked and where those Slots do not have associated SnippetInfos in the SinglePageAssemblyInstruction XML file.
                 IEnumerable<string> filledTemplateSlots = (from snippet in _snippets select snippet.SlotName).Distinct<string>().Except(BlockedSlotNames);
 
                 SectionDetail sectionDetail = SectionDetailFactory.GetSectionDetail(SectionPath);
                 if (sectionDetail != null)
                 {
-                    List<SnippetInfo> snippetsFromParent = sectionDetail.GetSnippetsNotAssociatedWithSlots(filledTemplateSlots);                     
+                    List<SnippetInfo> snippetsFromParent = sectionDetail.GetSnippetsNotAssociatedWithSlots(filledTemplateSlots);
                     snippets.AddRange(snippetsFromParent);
                 }
 
-                
+
                 //Load current Page snippets
                 pageSnippets = GetPageSnippets();
                 if (pageSnippets.Count > 0)
@@ -243,7 +243,7 @@ namespace NCI.Web.CDE
                 }
                 return snippets;
 
-                
+
             }
         }
 
@@ -274,14 +274,14 @@ namespace NCI.Web.CDE
 
 
             int pageCount = _pages.Count();
-            for (int i = 0; i <= pageCount-1; i++)
+            for (int i = 0; i <= pageCount - 1; i++)
             {
                 if (_pages._Pages[i].PrettyUrl.Contains(requestedURL) == true)
                 {
                     return true;
                 }
             }
-            return  false;
+            return false;
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace NCI.Web.CDE
                     keysList.Add(acFile.MimeType);
                     AddUrlFilter(acFile.MimeType, url =>
                     {
-                       url.SetUrl(acFile.Url);
+                        url.SetUrl(acFile.Url);
                     });
                 }
 
@@ -445,9 +445,9 @@ namespace NCI.Web.CDE
         public void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, FieldFilterDelegate filter)
         { base.SetWebAnalytics(webAnalyticType.ToString(), filter); }
         public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, FieldFilterDelegate filter)
-        { base.SetWebAnalytics(webAnalyticType.ToString(),filter); }
+        { base.SetWebAnalytics(webAnalyticType.ToString(), filter); }
         public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, FieldFilterDelegate filter)
-        { base.SetWebAnalytics(webAnalyticType.ToString(),filter); }
+        { base.SetWebAnalytics(webAnalyticType.ToString(), filter); }
 
         #endregion
 
@@ -515,11 +515,11 @@ namespace NCI.Web.CDE
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.MetaKeywords;
             });
-            
+
             //Register URL Filters
             AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
             AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
-            
+
         }
 
 
@@ -608,6 +608,11 @@ namespace NCI.Web.CDE
             SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
             {
                 wbField.Value = GetField("short_title");
+            });
+
+            SetWebAnalytics(WebAnalyticsOptions.Props.MultipageShortTile.ToString(), wbField =>
+            {
+                wbField.Value = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
             });
         }
         #endregion

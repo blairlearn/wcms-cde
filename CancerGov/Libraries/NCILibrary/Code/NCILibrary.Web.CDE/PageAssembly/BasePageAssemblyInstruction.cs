@@ -13,7 +13,7 @@ namespace NCI.Web.CDE
     /// </summary>
     abstract public class BasePageAssemblyInstruction
     {
-        #region Private
+        #region Private 
         /// <summary>
         /// Collection of FieldFilter delegates for Web analytics fields.
         /// </summary>
