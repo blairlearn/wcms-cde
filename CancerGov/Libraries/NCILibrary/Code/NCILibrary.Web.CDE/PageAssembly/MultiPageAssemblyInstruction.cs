@@ -516,7 +516,7 @@ namespace NCI.Web.CDE
                 data.Value = _pages._Pages[PageNum].PageMetadata.MetaKeywords;
             });
 
-            AddFieldFilter("multipage_short_title", data =>
+            AddFieldFilter("page_short_title", data =>
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
             });
@@ -617,7 +617,7 @@ namespace NCI.Web.CDE
 
             SetWebAnalytics(WebAnalyticsOptions.Props.MultipageShortTile.ToString(), wbField =>
             {
-                wbField.Value = this.GetField("multipage_short_title");
+                wbField.Value = this.GetField("page_short_title");
             });
         }
         #endregion
