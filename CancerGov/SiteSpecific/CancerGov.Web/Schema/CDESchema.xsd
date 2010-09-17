@@ -89,7 +89,7 @@
     				</annotation>
     				<sequence>
     					<element name="SnippetInfo"
-    						type="cde:snippetInfo" minOccurs="1" maxOccurs="unbounded">
+    						type="cde:snippetInfo" minOccurs="0" maxOccurs="unbounded">
     						<annotation>
     							<documentation>
     								A Snippet in the collection of
