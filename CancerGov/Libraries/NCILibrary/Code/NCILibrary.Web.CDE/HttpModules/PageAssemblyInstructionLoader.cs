@@ -135,14 +135,10 @@ namespace NCI.Web.CDE
                    {
                        assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(truncUrl);
                        //check if is IMAPI
-                       if (assemblyInfo.GetType().Name.ToString() == "MultiPageAssemblyInstruction")
+                       if (assemblyInfo is IMultiPageAssemblyInstruction)
                        {
-                           //check if the page requested exists
-                           Object[] args = new Object[] { url };
-                           Boolean boolContainsUrl = (Boolean)assemblyInfo.GetType().InvokeMember("ContainsURL", BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic |
-                                                        BindingFlags.Instance | BindingFlags.InvokeMethod, null, assemblyInfo, args);
-                           //return null if page does not exists
-                           if (boolContainsUrl == false)
+                           //check if the page requested exists and return null if page does not exists
+                           if (((IMultiPageAssemblyInstruction)assemblyInfo).ContainsURL(url) == false)
                            {
                                assemblyInfo = null;
                                return;

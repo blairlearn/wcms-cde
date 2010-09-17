@@ -276,7 +276,7 @@ namespace NCI.Web.CDE
             int pageCount = _pages.Count();
             for (int i = 0; i <= pageCount - 1; i++)
             {
-                if (_pages._Pages[i].PrettyUrl.Contains(requestedURL) == true)
+                if (string.Compare(_pages._Pages[i].PrettyUrl, requestedURL, true) == 0)
                 {
                     return true;
                 }
