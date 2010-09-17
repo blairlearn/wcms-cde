@@ -466,6 +466,10 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.MetaKeywords;
             });
 
+            AddFieldFilter("channelName", data =>
+            {
+                data.Value = this.SectionPath;
+            });
         }
 
         /// <summary>

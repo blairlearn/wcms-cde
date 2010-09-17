@@ -44,7 +44,7 @@ namespace NCI.Web.CDE.UI.WebControls
             if (webAnalyticsSettings != null)
             {
                 WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
-                webAnalyticsPageLoad.SetChannel(pgInstruction.SectionPath);
+                webAnalyticsPageLoad.SetChannel(pgInstruction.GetField("channelName"));
                 webAnalyticsPageLoad.SetLanguage(CultureInfo.CurrentUICulture.EnglishName);
 
                 foreach (KeyValuePair<WebAnalyticsOptions.eVars, string> kvp in webAnalyticsSettings.Evars)

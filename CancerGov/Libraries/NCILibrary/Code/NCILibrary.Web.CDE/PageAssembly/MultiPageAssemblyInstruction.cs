@@ -525,6 +525,11 @@ namespace NCI.Web.CDE
             AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
             AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
 
+            AddFieldFilter("channelName", data =>
+            {
+                data.Value = this.SectionPath;
+            });
+
         }
 
 
