@@ -18,6 +18,7 @@
     <!-- Content Header -->
     <div id="headerzone" align="center">
         <NCI:TemplateSlot ID="cgvContentHeader" runat="server" />
+        <NCI:TemplateSlot ID="cgvLanguageDate" runat="server" />
     </div>
     <!-- Main Area -->
     <!-- Main Area -->
@@ -53,6 +54,25 @@
                 <!-- Main Content Area -->
                 <td id="contentzone" valign="top" width="571">
                     <a name="skiptocontent"></a>
+                    <NCI:TemplateSlot ID="cgvBodyHeader" runat="server"  />
+                    <NCI:TemplateSlot ID="cgvRightNav" runat="server">
+                        <HeaderHtml>
+                        <table cellspacing="0" cellpadding="0" border="0" align="right" width="167">
+                            <tbody>
+                                <tr>
+                                    <td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>
+                                    <td width="159" valign="top">
+                        </HeaderHtml>
+                        <FooterHtml>
+                                    </td>
+                                </tr> 
+                                <tr>
+		                            <td valign="top" colspan="2"><img height="8" border="0" width="1" alt="" src="/images/spacer.gif"/></td>
+	                            </tr>                                
+                            </tbody>
+                        </table>                        
+                        </FooterHtml>
+                    </NCI:TemplateSlot>
                     <NCI:TemplateSlot ID="cgvBody" runat="server"  />
                 </td>
                 <!-- End Content Area -->
