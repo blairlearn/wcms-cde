@@ -120,6 +120,7 @@ namespace NCI.Web.CDE
             //Now lookup the url..
 
             IPageAssemblyInstruction assemblyInfo = null;
+
             try
             {
                 //Load the XML file to create a assemblyinfo object of type ipageassemblyinstruction.If the XML file fails to create IPageAssemblyInstruction
@@ -150,7 +151,7 @@ namespace NCI.Web.CDE
             }
             catch(Exception ex)
             {
-                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Failed to Create IPageAssemblyInstruction with the XML file Provided.", NCIErrorLevel.Error, ex);
+                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to Create IPageAssemblyInstruction with the XML file Provided.", NCIErrorLevel.Error, ex);
                 RaiseErrorPage();
                 return;
             }
@@ -168,14 +169,14 @@ namespace NCI.Web.CDE
             }
             catch(Exception ex)
             {
-                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Cannot Load the pageTemplateInfo problem with the PageTemplateConfiguration XML file ", NCIErrorLevel.Error, ex);
+                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nCannot Load the pageTemplateInfo problem with the PageTemplateConfiguration XML file ", NCIErrorLevel.Error, ex);
                 RaiseErrorPage();
                 return;
             }
 
             if (pageTemplateInfo == null)
             {
-                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Page Template Not Found", NCIErrorLevel.Error);
+                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nPage Template Not Found", NCIErrorLevel.Error);
                 RaiseErrorPage();
                 return;
             }
@@ -211,13 +212,16 @@ namespace NCI.Web.CDE
 
             catch (HttpException ex)
             {
-                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Failed to rewrite URL.", NCIErrorLevel.Error, ex);
+                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.", NCIErrorLevel.Error, ex);
+                RaiseErrorPage();
             }
 
         }
 
         private static void RaiseErrorPage()
         {
+            HttpContext.Current.Response.Write("There was an error processing the Request");
+            HttpContext.Current.Response.End();
             return;
         }
 
