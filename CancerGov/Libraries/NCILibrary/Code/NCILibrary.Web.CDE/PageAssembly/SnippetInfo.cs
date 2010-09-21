@@ -12,6 +12,8 @@ namespace NCI.Web.CDE
     /// </summary>
     public class SnippetInfo : IXmlSerializable
     {
+        private string _snippetData = null;
+        private bool correctedCDATA = false;
         /// <summary>
         /// Gets and sets the path to the user control that will render this
         /// snippet.
@@ -20,7 +22,22 @@ namespace NCI.Web.CDE
         /// <summary>
         /// html data to be displayed on the page
         /// </summary>
-        public string Data { get; set; }
+        public string Data 
+        {
+            get 
+            {
+                // The snippet CDATA may contain CDATA as part of the data but percussion replaces the CDATA 
+                // close tag with Replace ']]>' with ']]ENDCDATA' this ']]ENDCDATA' should be replaced with 
+                // valid CDATA close tag ']]>' before it can be deserialized
+                if (!correctedCDATA && !string.IsNullOrEmpty(_snippetData))
+                {
+                    _snippetData = _snippetData.Replace("]]ENDCDATA", "]]>");
+                    correctedCDATA = true;
+                }
+                return _snippetData; 
+            }
+            set { _snippetData = value; } 
+        }
         /// <summary>
         /// Slot to be used on the page rendered
         /// </summary>

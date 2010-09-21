@@ -6,9 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
     <title></title>
-
     <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
-    <script type="text/javascript" language="JavaScript" src="/scripts/popEvents.js"></script>
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
     <!-- Site Banner -->

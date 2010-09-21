@@ -40,9 +40,6 @@ namespace NCI.Web.CDE
         /// </summary>        
         void OnBeginRequest(object sender, EventArgs e)
         {
-
-
-
             //Check if the url has been rewritten yet.
             if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
                 return;
@@ -50,7 +47,7 @@ namespace NCI.Web.CDE
             HttpContext context = ((HttpApplication)sender).Context;
 
             // Get absolute path of the request URL as pretty URL
-            String url = context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture);
+            String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
 
             //Commented the below lines for resolveing incident:221 and requirement:190
             //Don't map items with an extension 

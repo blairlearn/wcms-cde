@@ -63,6 +63,8 @@
     <Compile Include="Configuration\TitleElement.cs" />
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
+    <Compile Include="Modules\DynamicList.cs" />
+    <Compile Include="Modules\ModuleObjectFactory.cs" />
     <Compile Include="PageAssembly\AlternateContentVersions.cs" />
     <Compile Include="PageAssembly\BlockedSlot.cs" />
     <Compile Include="PageAssembly\DisplayVersions.cs" />

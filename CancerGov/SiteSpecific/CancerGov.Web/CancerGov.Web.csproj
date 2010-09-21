@@ -59,9 +59,13 @@
     <Content Include="Common\PopUps\popTextFooterSpanish.htm" />
     <Content Include="Common\PopUps\popTextHeader.htm" />
     <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
+    <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
+    <Content Include="JS\Omniture\s_code.js" />
+    <Content Include="JS\popEvents.js" />
     <Content Include="PageTemplates\MockPage2.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
     <Content Include="Common\PopUps\PopEmail.aspx" />
+    <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\TopicSearchCategorySnippet.ascx">

@@ -26,8 +26,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             // but xml data which contains rendering properties for each page option item 
             processPageOptionsData(SnippetInfo.Data);
 
-            if(!Page.ClientScript.IsClientScriptBlockRegistered(this.GetType(), "popup"))
-                this.Page.ClientScript.RegisterClientScriptBlock( this.GetType(), "popup", "<script language=\"JavaScript\" src=\"/scripts/popEvents.js\"></script>");
+            JSManager.AddExternalScript(this.Page,"/JS/popEvents.js" );
         }
         protected override void Render(HtmlTextWriter writer)
         {

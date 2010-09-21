@@ -585,7 +585,7 @@ namespace NCI.Web.CDE
             string requestedPage = URL.Substring(URL.LastIndexOf('/'));
             for (int i = 0; i <= pageCount; i++)
             {
-                if (_pages._Pages[i].PrettyUrl.Contains(requestedPage) == true)
+                if (_pages._Pages[i].PrettyUrl.ToLower().Contains(requestedPage) == true)
                 {
                     pageSnippets.AddRange(_pages._Pages[i].SnippetInfos);
                     if (requestedPage.Contains("page"))
