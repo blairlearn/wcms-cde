@@ -158,7 +158,7 @@ namespace NCI.Web.CDE
                 _isSinglePageAssemblyInstructionXmlValid = false;
                 Exception ex = new Exception(ErrorMessage);
                 // Write exception massage to log
-                throw new PageAssemblyException("XML File failed the validation against the schema(xsd file).", ex);
+                throw new PageAssemblyException(String.Format("XML File, {0}, failed the validation against the schema(xsd file).", xmlPath), ex);
             }
 
 
