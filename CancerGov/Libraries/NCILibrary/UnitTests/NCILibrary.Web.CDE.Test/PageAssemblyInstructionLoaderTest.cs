@@ -136,6 +136,39 @@ namespace NCILibrary.Web.CDE.Test
             }
         }
 
+        /// <summary>
+        ///A test for RewriteUrl
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void RewriteUrl_DisplayVersion_Print_Test()
+        {
+            //For url/print
+            Assert.Inconclusive("Not Implemented");
+        }
+
+        /// <summary>
+        ///A test for RewriteUrl
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void RewriteUrl_DisplayVersion_ViewAll_Test()
+        {
+            //For url/allpages
+            Assert.Inconclusive("Not Implemented");
+        }
+
+        /// <summary>
+        ///A test for RewriteUrl
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void RewriteUrl_DisplayVersion_PrintAll_Test()
+        {
+            //For url/allpages/print
+            Assert.Inconclusive("Not Implemented");
+        }
+
 
     }
 }

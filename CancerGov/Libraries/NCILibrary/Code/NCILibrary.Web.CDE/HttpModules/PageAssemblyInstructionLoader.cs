@@ -11,6 +11,7 @@ namespace NCI.Web.CDE
     public class PageAssemblyInstructionLoader : IHttpModule
     {
         private const string PRINT_URL_ENDING = "/print";
+        private const string VIEWALL_URL_ENDING = "/allpages";
         private static readonly object REQUEST_URL_KEY = new object();
         DisplayVersions dispayVersion = DisplayVersions.Web;
         
@@ -109,6 +110,32 @@ namespace NCI.Web.CDE
 
                 isPrint = true;
                 dispayVersion=DisplayVersions.Print;
+            }
+
+            //Now check to see if it is the view all. (For MultiPageAssemblyInstructions)
+            if (url.EndsWith(VIEWALL_URL_ENDING))
+            {
+                //Do not take a substring if someone is trying to print the homepage 
+                //of the site
+                if (url != VIEWALL_URL_ENDING)
+                {
+                    //Since the pretty url map knows nothing about urls
+                    //that end with print we need to remove /print from
+                    //the key
+                    url = url.Substring(0, url.Length - VIEWALL_URL_ENDING.Length);
+                }
+                else
+                {
+                    //We know the key for the homepage
+                    //This code does not seem to actually work
+                    //At the very least it should rewrite the url to /?print=1 or whatever
+                    url = "/";
+                }
+
+                if (isPrint)
+                    dispayVersion = DisplayVersions.PrintAll;
+                else
+                    dispayVersion = DisplayVersions.ViewAll;
             }
 
             // Set Display version before loading the assembly instructions so it can be accessed in the constructor
