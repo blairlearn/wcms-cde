@@ -15,6 +15,14 @@ namespace NCI.Web.CDE
         /// <summary>
         /// This is for the "print preview" version.
         /// </summary>
-        Print = 2
+        Print = 2,
+        /// <summary>
+        /// This is for viewing all pages of a IMultiPageAssemblyInstruction.
+        /// </summary>
+        ViewAll = 3,
+        /// <summary>
+        /// This is for viewing all pages of a IMultiPageAssemblyInstruction in the "print preview" version.
+        /// </summary>
+        PrintAll = 4
     }
 }
