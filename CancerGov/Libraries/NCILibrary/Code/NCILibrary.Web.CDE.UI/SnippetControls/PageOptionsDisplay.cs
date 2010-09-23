@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Xml;
 using System.Xml.Serialization;
 using NCI.Web.UI.WebControls;
+using NCI.Web.CDE.Modules;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
@@ -46,16 +47,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
             snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
 
             IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
+
             // If AlternateContentVersions information is not in the instructions then do not create 
             // the PageOptions box.
             string[] acvKeys = pgInstruction.AlternateContentVersionsKeys;
 
             if (acvKeys != null)
             {
-                // TODO: use the factory to create the Module_PageOptionsBox objects
-                XmlTextReader reader = new XmlTextReader(snippetXmlData.Trim(), XmlNodeType.Element, null);
-                XmlSerializer serializer = new XmlSerializer(typeof(Module_PageOptionsBox), "cde");
-                Module_PageOptionsBox mPBO = (Module_PageOptionsBox)serializer.Deserialize(reader);
+
+                Module_PageOptionsBox mPBO = ModuleObjectFactory<Module_PageOptionsBox>.GetModuleObject(snippetXmlData);
 
                 if (mPBO != null)
                 {
@@ -95,7 +95,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                                 if (pgoBase != null)
                                 {
-                                    pgoBase.CssClass = pgOptionItem.cssClass;
+                                    pgoBase.CssClass = pgOptionItem.CssClass;
                                     pgoBase.LinkText = pgOptionItem.LinkText;
                                     pageOptionsBox.PageOptions.Add(pgoBase);
                                 }

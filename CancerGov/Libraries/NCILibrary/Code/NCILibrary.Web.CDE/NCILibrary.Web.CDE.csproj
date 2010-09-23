@@ -34,6 +34,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.TeamSystem.Data.UnitTesting, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="NVelocity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdPartyDlls\nVelocity\NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -64,7 +68,9 @@
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
     <Compile Include="Modules\DynamicList.cs" />
+    <Compile Include="Modules\DynamicSearchResult.cs" />
     <Compile Include="Modules\ModuleObjectFactory.cs" />
+    <Compile Include="Modules\VelocityTemplate.cs" />
     <Compile Include="PageAssembly\AlternateContentVersions.cs" />
     <Compile Include="PageAssembly\BlockedSlot.cs" />
     <Compile Include="PageAssembly\DisplayVersions.cs" />
@@ -122,6 +128,10 @@
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
+      <Project>{F4C37116-861A-4FD6-B45D-578B258FEFC7}</Project>
+      <Name>NCILibrary.DataManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>

@@ -14,13 +14,15 @@ namespace NCI.Web.CDE.Modules
         {
             try
             {
-                XmlTextReader reader = new XmlTextReader(snippetXmlData.Trim(), XmlNodeType.Element, null);
-                XmlSerializer serializer = new XmlSerializer(typeof(ModuleObjectType), "cde");
-                return (ModuleObjectType)serializer.Deserialize(reader);
+                using (XmlTextReader reader = new XmlTextReader(snippetXmlData.Trim(), XmlNodeType.Element, null))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(ModuleObjectType), "cde");
+                    return (ModuleObjectType)serializer.Deserialize(reader);
+                }
             }
             catch (Exception ex)
             {
-                Logger.LogError("cde:ModuleObjectFactory.cs.GetModuleObject", NCIErrorLevel.Error, ex);
+                Logger.LogError("cde:ModuleObjectFactory.cs.GetModuleObject", "Invalid xml data in the snippet for DynamicList, check xml received from Percussion", NCIErrorLevel.Error);
                 throw ex;
             }
         }

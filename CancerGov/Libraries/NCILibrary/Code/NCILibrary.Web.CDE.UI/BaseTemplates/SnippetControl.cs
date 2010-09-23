@@ -14,11 +14,20 @@ namespace NCI.Web.CDE.UI
     [ToolboxData("<{0}:BaseSnippetTemplate runat=server></{0}:BaseSnippetTemplate>")]
     public abstract class SnippetControl : UserControl
     {
-        [Bindable(true)]
+        #region Public Properties
+		[Bindable(true)]
         [Category("Appearance")]
         [DefaultValue("")]
         [Localizable(true)]
         public SnippetInfo SnippetInfo { get; set; }
-
+        public IPageAssemblyInstruction PageInstruction
+        {
+            get
+            {
+              return PageAssemblyContext.Current.PageAssemblyInstruction;
+            }
+        }
+ 
+	#endregion    
     }
 }

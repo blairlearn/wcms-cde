@@ -39,6 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CancerGovSpecific", "Cancer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CancerGov.TopicSearch", "SiteSpecific\Modules\CancerGov.TopicSearch\CancerGov.TopicSearch.csproj", "{917C939E-6AA1-4FEE-8C35-6EC62974455B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.DataManager", "Libraries\NCILibrary\Code\NCILibrary.DataManager\NCILibrary.DataManager.csproj", "{F4C37116-861A-4FD6-B45D-578B258FEFC7}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CancerGov.vsmdi
@@ -100,6 +102,10 @@ Global
 		{917C939E-6AA1-4FEE-8C35-6EC62974455B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{917C939E-6AA1-4FEE-8C35-6EC62974455B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{917C939E-6AA1-4FEE-8C35-6EC62974455B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +122,7 @@ Global
 		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
 		{898FF17C-C94A-4D85-8AAD-88764B72CFAE} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
 		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7} = {BCA4A471-7CFA-4B5B-AECC-620F0233A36C}
 		{917C939E-6AA1-4FEE-8C35-6EC62974455B} = {C4C25963-DFBA-42A2-A94F-D163EF948D82}
 	EndGlobalSection
 EndGlobal

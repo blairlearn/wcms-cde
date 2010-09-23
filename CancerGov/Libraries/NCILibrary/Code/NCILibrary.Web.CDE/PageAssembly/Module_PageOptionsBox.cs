@@ -24,7 +24,7 @@ namespace NCI.Web.CDE
         /// The class name used for styling.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string cssClass { get; set; }
+        public string CssClass { get; set; }
 
         /// <summary>
         /// The text for the link.
