@@ -20,7 +20,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
     public class DynamicListSnippet : SnippetControl
     {
         #region Private Members
-        private string _snippetXmlData = String.Empty;
         DynamicList _dynamicList = null; 
 
         private string KeyWords
@@ -89,21 +88,34 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     int actualMaxResult = DynamicList.MaxResults;
                     // Call the  datamanger to perform the search
                     ICollection<SearchResult> searchResults =
-                                SearchDataManager.Execute(StartDate, EndDate, KeyWords,
+                                SearchDataManager.Execute(CurrentPage, StartDate, EndDate, KeyWords,
                                     DynamicList.RecordsPerPage, DynamicList.MaxResults, DynamicList.SearchFilter,
                                     DynamicList.ExcludeSearchFilter, DynamicList.Language, DynamicList.SearchType, out actualMaxResult);
-
-                    int recCount = 0;
-                    foreach (SearchResult sr in searchResults)
-                        sr.RecNumber = ++recCount;
 
                     DynamicSearch dynamicSearch = new DynamicSearch();
                     dynamicSearch.Results = searchResults;
                     dynamicSearch.StartDate = String.Format("{0:MM/dd/yyyy}", StartDate);
                     dynamicSearch.EndDate = String.Format("{0:MM/dd/yyyy}", EndDate);
+                    dynamicSearch.KeyWord = KeyWords;
 
-                    dynamicSearch.StartCount = CurrentPage > 1 ? CurrentPage * DynamicList.RecordsPerPage : CurrentPage;
-                    dynamicSearch.EndCount = dynamicSearch.StartCount + DynamicList.RecordsPerPage;
+                    if (CurrentPage > 1)
+                        dynamicSearch.StartCount = DynamicList.RecordsPerPage * CurrentPage - 1;
+                    else
+                        dynamicSearch.StartCount = 1;
+
+                    if (CurrentPage == 1)
+                        dynamicSearch.EndCount = DynamicList.RecordsPerPage;
+                    else
+                    {
+                        dynamicSearch.EndCount = dynamicSearch.StartCount + DynamicList.RecordsPerPage - 1;
+                        if (searchResults.Count < DynamicList.RecordsPerPage)
+                            dynamicSearch.EndCount = actualMaxResult;
+                    }
+
+                    int recCount=0;
+                    foreach (SearchResult sr in searchResults)
+                        sr.RecNumber = dynamicSearch.StartCount + recCount++;
+
                     dynamicSearch.ResultCount = actualMaxResult;
 
                     LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResults(DynamicList.ResultsTemplate, dynamicSearch));

@@ -20,7 +20,7 @@ namespace NCI.Web.CDE.Modules
         public int StartCount { get; set; }
         public int EndCount { get; set; }
         public ICollection<SearchResult> Results { get; set; }
-
+        public string KeyWord { get; set; }
 
         public DynamicSearch()
         {
