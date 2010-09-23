@@ -107,6 +107,37 @@ namespace NCILibrary.Web.CDE.Test
         }
 
         /// <summary>
+        ///A test for GetTemplateInfo
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetTemplateInfoTest_PrintAll_DefaultToPrint()
+        {
+            Assert.Inconclusive("This test is not implemented");
+        }
+
+        /// <summary>
+        ///A test for GetTemplateInfo
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetTemplateInfoTest_PrintAll_DefaultToViewAll()
+        {
+            Assert.Inconclusive("This test is not implemented");
+        }
+
+        /// <summary>
+        ///A test for GetTemplateInfo
+        ///</summary>
+        [TestMethod()]
+        [DeploymentItem(@"XmlFiles")]
+        public void GetTemplateInfoTest_DefaultToWeb()
+        {
+            Assert.Inconclusive("This test is not implemented");
+        }
+
+
+        /// <summary>
         ///A test for PageTemplateConfigurationPath
         ///</summary>
         [TestMethod()]

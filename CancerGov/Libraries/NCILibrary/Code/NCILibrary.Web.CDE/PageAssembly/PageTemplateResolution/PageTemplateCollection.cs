@@ -51,9 +51,23 @@ namespace NCI.Web.CDE
             //Find the PageTemplateInfo for the requested version type.
             rtnInfo = PageTemplateInfos.FirstOrDefault(pti => pti.DisplayVersion == version);
 
-            //If there was no PageTemplateInfo for the requested version type, default to web.
+            //If there was no PageTemplateInfo for the requested version type.
             if (rtnInfo == null)
-                rtnInfo = PageTemplateInfos.FirstOrDefault(pti => pti.DisplayVersion == DisplayVersions.Web);
+            {                
+                if (version == DisplayVersions.PrintAll)
+                {
+                    //For PrintAll default to Print if available
+                    rtnInfo = PageTemplateInfos.FirstOrDefault(pti => pti.DisplayVersion == DisplayVersions.Print);
+
+                    //If Print is not available default to ViewAll
+                    if (rtnInfo == null)
+                        rtnInfo = PageTemplateInfos.FirstOrDefault(pti => pti.DisplayVersion == DisplayVersions.ViewAll);
+                }
+
+                //If nothing is available default to Web
+                if (rtnInfo == null)
+                    rtnInfo = PageTemplateInfos.FirstOrDefault(pti => pti.DisplayVersion == DisplayVersions.Web);
+            }
 
             return rtnInfo;
         }
