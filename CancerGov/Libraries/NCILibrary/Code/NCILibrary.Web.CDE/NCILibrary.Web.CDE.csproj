@@ -131,6 +131,10 @@
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
+      <Project>{F4C37116-861A-4FD6-B45D-578B258FEFC7}</Project>
+      <Name>NCILibrary.DataManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
