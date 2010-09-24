@@ -7,9 +7,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
 using NCI.Web.CDE.Modules;
-using NVelocity;
-using NVelocity.App;
-using NVelocity.Context;
 using NCI.DataManager;
 using NCI.Web.UI.WebControls;
 
