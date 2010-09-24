@@ -9,6 +9,7 @@ using System.ComponentModel;
 using NCI.Web.CDE.Modules;
 using NCI.DataManager;
 using NCI.Web.UI.WebControls;
+using NCI.Web.CDE.UI.Configuration;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
@@ -104,7 +105,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     ICollection<SearchResult> searchResults =
                                 SearchDataManager.Execute(CurrentPage, StartDate, EndDate, KeyWords,
                                     this.SearchList.RecordsPerPage, this.SearchList.MaxResults, this.SearchList.SearchFilter,
-                                    this.SearchList.ExcludeSearchFilter, this.SearchList.ResultsSortOrder, this.SearchList.Language, true, out actualMaxResult);
+                                    this.SearchList.ExcludeSearchFilter, this.SearchList.ResultsSortOrder, this.SearchList.Language, Settings.IsLive , out actualMaxResult);
 
                     DynamicSearch dynamicSearch = new DynamicSearch();
                     dynamicSearch.Results = searchResults;
