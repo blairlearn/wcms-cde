@@ -23,5 +23,45 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 return base.SearchList;
             }
         }
+
+        /// <summary>
+        /// Keyword is a search criteria used in searching
+        /// </summary>
+        override protected string KeyWords
+        {
+            get 
+            {
+                return string.IsNullOrEmpty(this.Page.Request.Params["keyword"]) ? String.Empty : this.Page.Request.Params["keyword"];
+            }
+        }
+
+        /// <summary>
+        /// Startdate is a search criteria used in searching.if 
+        /// StartDate value is present then both StartDate and 
+        /// EndDate value should exist.
+        virtual protected DateTime StartDate
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.Page.Request.Params["startdate"]))
+                        return DateTime.MinValue;
+                return DateTime.Parse(this.Page.Request.Params["startdate"]);
+            }
+        }
+
+        /// <summary>
+        /// Startdate is a search criteria used in searching.if 
+        /// StartDate value is present then both StartDate and 
+        /// EndDate value should exist.
+        virtual protected DateTime EndDate
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.Page.Request.Params["enddate"]))
+                    return DateTime.MaxValue;
+                return DateTime.Parse(this.Page.Request.Params["enddate"]);
+            }
+        }
+
     }
 }

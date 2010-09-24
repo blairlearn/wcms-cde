@@ -75,7 +75,7 @@ namespace NCI.DataManager
                 //#endregion
 
                 string connString = ConfigurationSettings.AppSettings["DbConnectionString"];
-
+                
                 if (!string.IsNullOrEmpty(connString))
                 {
                     using (SqlConnection conn = SqlHelper.CreateConnection(connString))
@@ -83,8 +83,8 @@ namespace NCI.DataManager
                         using (SqlDataReader reader =
                                     SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
                                     new SqlParameter("@Keyword ", keyWords),
-                                    new SqlParameter("@StartDate", startDate),
-                                    new SqlParameter("@EndDate", endDate),
+                                    new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)),
+                                    new SqlParameter("@EndDate", endDate == DateTime.MaxValue ? null : String.Format("{0:MM/dd/yyyy}", endDate)),
                                     new SqlParameter("@SearchFilter", searchFilter),
                                     new SqlParameter("@excludeSearchFilter", excludeSearchFilter),
                                     new SqlParameter("@ResultsSortOrder", resultsSortOrder),

@@ -40,11 +40,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// <summary>
         /// Keyword is a search criteria used in searching
         /// </summary>
-        protected string KeyWords
+        virtual protected string KeyWords
         {
             get
             {
-                return string.IsNullOrEmpty(this.Page.Request.Params["KeyWords"]) ? this.SearchList.SearchParameters.Keyword : this.Page.Request.Params["KeyWords"];
+                if (this.SearchList.SearchParameters == null)
+                    return string.Empty;
+                return this.SearchList.SearchParameters.Keyword;
             }
         }
 
@@ -53,13 +55,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// StartDate value is present then both StartDate and 
         /// EndDate value should exist.
         /// </summary>
-        protected DateTime StartDate
+        virtual protected DateTime StartDate
         {
             get
             {
-                if (string.IsNullOrEmpty(this.Page.Request.Params["startdate"]))
-                    return DateTime.Parse(this.SearchList.SearchParameters.StartDate);
-                return DateTime.Parse(this.Page.Request.Params["startdate"]);
+                if (this.SearchList.SearchParameters == null)
+                    return DateTime.MinValue;
+                return string.IsNullOrEmpty(this.SearchList.SearchParameters.StartDate) ? DateTime.MinValue : DateTime.Parse(this.SearchList.SearchParameters.StartDate);
             }
         }
 
@@ -68,13 +70,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// StartDate value is present then both StartDate and 
         /// EndDate value should exist.
         /// </summary>
-        protected DateTime EndDate
+        virtual protected DateTime EndDate
         {
             get
             {
-                if (string.IsNullOrEmpty(this.Page.Request.Params["enddate"]))
-                    return DateTime.Parse(this.SearchList.SearchParameters.EndDate);
-                return DateTime.Parse(this.Page.Request.Params["enddate"]);
+                    if (this.SearchList.SearchParameters == null)
+                        return DateTime.MaxValue;
+                    return string.IsNullOrEmpty(this.SearchList.SearchParameters.EndDate) ? DateTime.MaxValue : DateTime.Parse(this.SearchList.SearchParameters.EndDate);
             }
         }
 
@@ -101,17 +103,30 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     Validate();
 
                     int actualMaxResult = this.SearchList.MaxResults;
+
+                    DateTime startDate = StartDate, endDate = EndDate;
+                    string keyWord = KeyWords;
+                    if( this.SearchList.SearchType == "keyword")
+                    {
+                        startDate = DateTime.MinValue;
+                        endDate = DateTime.MaxValue;
+                    }
+                    else if (this.SearchList.SearchType == "date")
+                    {
+                        keyWord = string.Empty;
+                    }
+
                     // Call the  datamanger to perform the search
                     ICollection<SearchResult> searchResults =
-                                SearchDataManager.Execute(CurrentPage, StartDate, EndDate, KeyWords,
+                                SearchDataManager.Execute(CurrentPage, startDate, endDate, keyWord,
                                     this.SearchList.RecordsPerPage, this.SearchList.MaxResults, this.SearchList.SearchFilter,
                                     this.SearchList.ExcludeSearchFilter, this.SearchList.ResultsSortOrder, this.SearchList.Language, Settings.IsLive , out actualMaxResult);
 
                     DynamicSearch dynamicSearch = new DynamicSearch();
                     dynamicSearch.Results = searchResults;
-                    dynamicSearch.StartDate = String.Format("{0:MM/dd/yyyy}", StartDate);
-                    dynamicSearch.EndDate = String.Format("{0:MM/dd/yyyy}", EndDate);
-                    dynamicSearch.KeyWord = KeyWords;
+                    dynamicSearch.StartDate = String.Format("{0:MM/dd/yyyy}", startDate);
+                    dynamicSearch.EndDate = String.Format("{0:MM/dd/yyyy}", endDate);
+                    dynamicSearch.KeyWord = keyWord;
 
                     if (CurrentPage > 1)
                         dynamicSearch.StartCount = this.SearchList.RecordsPerPage * CurrentPage - 1;
@@ -173,13 +188,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 string.IsNullOrEmpty(this.SearchList.SearchType))
                 throw new Exception("One or more of these fields SearchFilter,ResultsTemplate,SearchType cannot be empty, correct the xml data.");
 
-            if (this.SearchList.SearchParameters == null ||
-                (string.IsNullOrEmpty(this.SearchList.SearchParameters.Keyword) &&
-                    (string.IsNullOrEmpty(this.SearchList.SearchParameters.StartDate) ||
-                string.IsNullOrEmpty(this.SearchList.SearchParameters.EndDate))))
-            {
-                throw new Exception("SearchParameters.Keyword,SearchParameters.StartDate,SearchParameters.EndDate cannot be empty, correct the xml data.");
-            }
         }
         #endregion
 
