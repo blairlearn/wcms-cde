@@ -637,6 +637,10 @@ namespace NCI.Web.CDE
         }
 
 
+        /// <summary>
+        /// Gets all page snippets.
+        /// </summary>
+        /// <returns>Collection of all the page snippets</returns>
         public List<SnippetInfo> GetAllPageSnippets()
         {
             List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
