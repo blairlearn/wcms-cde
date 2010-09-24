@@ -144,7 +144,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             Controls.Add(pager);
         }
         /// <summary>
-        /// Validates the data received from the xml, throws an exception if some of the required 
+        /// Validates the data received from the xml, throws an exception if the required 
         /// fields are null or empty.
         /// </summary>
         /// <param name="dynamicList">The object whose properties are being validated.</param>
