@@ -62,6 +62,7 @@
     <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
     <Content Include="JS\Omniture\s_code.js" />
     <Content Include="JS\popEvents.js" />
+    <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
     <Content Include="PageTemplates\DynamicSearchPage.aspx" />
     <Content Include="PageTemplates\MockPage2.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
