@@ -29,38 +29,50 @@ namespace NCI.DataManager
         /// <param name="searchFilter"></param>
         /// <param name="excludeSearchFilter"></param>
         /// <param name="language"></param>
-        /// <param name="searchType"></param>
         /// <returns>A collection which contains Search Result objects.</returns>
-        public static ICollection<SearchResult> Execute(int currentPage, DateTime startDate, DateTime endDate, string keyWords, int recordsPerPage,
-            int maxResults, string searchFilter, string excludeSearchFilter, string language, string searchType, out int actualMaxResult)
+        public static ICollection<SearchResult> Execute(
+        int         currentPage, 
+        DateTime    startDate, 
+        DateTime    endDate, 
+        string      keyWords, 
+        int         recordsPerPage,
+        int         maxResults, 
+        string      searchFilter, 
+        string      excludeSearchFilter, 
+        int      resultsSortOrder, 
+        string      language, 
+        bool        isLive, 
+        out int     actualMaxResult
+            )
         {
             try
             {
                 ICollection<SearchResult> searchResults = new Collection<SearchResult>();
+                actualMaxResult = 0;
 
-                #region Testing only remove once the real stored proc is available
-                SearchResult searchResult1 = new SearchResult();
-                searchResult1.PostedDate = "1/1/2009";
-                searchResult1.UpdatedDate = "1/1/2009";
-                searchResult1.ShortDescription = "The impact of HPV vaccines and screening tests on cervical cancer prevention: A National Cancer Institute Science Writers' Seminar";
-                searchResult1.LongDescription = "science writers' seminar to discuss new research findings and future directions in HPV-related cancer research.  Among the topics discussed will be the natural history of HPV and related cancers, advances in screening techniques and tools, the role of vaccines and microbicides in prevention, both nationally and internationally, and future research directions";
-                searchResult1.HRef = "http://www.cancer.gov/newscenter/pressreleases/HPVseminar";
-                if (currentPage == 1 || currentPage == 2 || currentPage == 3)
-                    searchResults.Add(searchResult1);
+                //#region Testing only remove once the real stored proc is available
+                //SearchResult searchResult1 = new SearchResult();
+                //searchResult1.PostedDate = "1/1/2009";
+                //searchResult1.UpdatedDate = "1/1/2009";
+                //searchResult1.ShortDescription = "The impact of HPV vaccines and screening tests on cervical cancer prevention: A National Cancer Institute Science Writers' Seminar";
+                //searchResult1.LongDescription = "science writers' seminar to discuss new research findings and future directions in HPV-related cancer research.  Among the topics discussed will be the natural history of HPV and related cancers, advances in screening techniques and tools, the role of vaccines and microbicides in prevention, both nationally and internationally, and future research directions";
+                //searchResult1.HRef = "http://www.cancer.gov/newscenter/pressreleases/HPVseminar";
+                //if (currentPage == 1 || currentPage == 2 || currentPage == 3)
+                //    searchResults.Add(searchResult1);
 
-                searchResult1 = new SearchResult();
-                searchResult1.PostedDate = "1/1/2009";
-                searchResult1.UpdatedDate = "1/1/2009";
-                searchResult1.ShortDescription = "The impact of HPV vaccines and screening tests on cervical cancer prevention: A National Cancer Institute Science Writers' Seminar";
-                searchResult1.LongDescription = "science writers' seminar to discuss new research findings and future directions in HPV-related cancer research.  Among the topics discussed will be the natural history of HPV and related cancers, advances in screening techniques and tools, the role of vaccines and microbicides in prevention, both nationally and internationally, and future research directions";
-                searchResult1.HRef = "http://www.cancer.gov/newscenter/pressreleases/HPVseminar";
-                if( currentPage == 1 || currentPage == 2 )
-                    searchResults.Add(searchResult1);
+                //searchResult1 = new SearchResult();
+                //searchResult1.PostedDate = "1/1/2009";
+                //searchResult1.UpdatedDate = "1/1/2009";
+                //searchResult1.ShortDescription = "The impact of HPV vaccines and screening tests on cervical cancer prevention: A National Cancer Institute Science Writers' Seminar";
+                //searchResult1.LongDescription = "science writers' seminar to discuss new research findings and future directions in HPV-related cancer research.  Among the topics discussed will be the natural history of HPV and related cancers, advances in screening techniques and tools, the role of vaccines and microbicides in prevention, both nationally and internationally, and future research directions";
+                //searchResult1.HRef = "http://www.cancer.gov/newscenter/pressreleases/HPVseminar";
+                //if( currentPage == 1 || currentPage == 2 )
+                //    searchResults.Add(searchResult1);
 
-                actualMaxResult = 5;
-                return searchResults;
+                //actualMaxResult = 5;
+                //return searchResults;
                 
-                #endregion
+                //#endregion
 
                 string connString = ConfigurationSettings.AppSettings["DbConnectionString"];
 
@@ -68,48 +80,47 @@ namespace NCI.DataManager
                 {
                     using (SqlConnection conn = SqlHelper.CreateConnection(connString))
                     {
-                        SqlCommand command = new SqlCommand();
-                        command.Connection = conn;
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.CommandText = "uspDynamicSearch";
-
-                        // Create output parameter for actualMaxResult
-                        SqlParameter paramActualMaxResult = new SqlParameter("@actualMaxResult", SqlDbType.Int);
-                        paramActualMaxResult.Direction = ParameterDirection.Output;
-
                         using (SqlDataReader reader =
-                                    SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "uspDynamicSearch",
-                                    new SqlParameter("@currentPage", currentPage),
-                                    new SqlParameter("@startDate", startDate),
-                                    new SqlParameter("@endDate", endDate),
-                                    new SqlParameter("@keyWords", keyWords),
-                                    new SqlParameter("@recordsPerPage", recordsPerPage),
-                                    new SqlParameter("@maxResults", maxResults),
-                                    new SqlParameter("@searchFilter", searchFilter),
+                                    SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
+                                    new SqlParameter("@Keyword ", keyWords),
+                                    new SqlParameter("@StartDate", startDate),
+                                    new SqlParameter("@EndDate", endDate),
+                                    new SqlParameter("@SearchFilter", searchFilter),
                                     new SqlParameter("@excludeSearchFilter", excludeSearchFilter),
+                                    new SqlParameter("@ResultsSortOrder", resultsSortOrder),
                                     new SqlParameter("@language", language),
-                                    paramActualMaxResult
+                                    new SqlParameter("@maxResults", maxResults),
+                                    new SqlParameter("@recordsPerPage", recordsPerPage),
+                                    new SqlParameter("@StartPage", currentPage),
+                                    new SqlParameter("@isLive", isLive ? 1 : 0)
                             ))
                         {
-                            SqlFieldValueReader sqlFVReader = new SqlFieldValueReader(reader);
                             while (reader.Read())
                             {
-                                SearchResult searchResult = new SearchResult();
-                                searchResult.HRef = sqlFVReader.GetString("HRef");
-                                searchResult.LongDescription = sqlFVReader.GetString("LongDescription");
-                                searchResult.ShortDescription = sqlFVReader.GetString("ShortDescription");
-                                DateTime dt = sqlFVReader.GetDateTime("PostedDate");
-                                if (dt != DateTime.MinValue)
-                                    searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
-
-                                dt = sqlFVReader.GetDateTime("UpdatedDate");
-                                if (dt != DateTime.MinValue)
-                                    searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dt);
-
-                                searchResults.Add(searchResult);
+                                actualMaxResult = reader.GetInt32(0);
                             }
 
-                            actualMaxResult = Convert.ToInt32(paramActualMaxResult.Value);
+                            if (reader.NextResult())
+                            {
+                                SqlFieldValueReader sqlFVReader = new SqlFieldValueReader(reader);
+
+                                while (sqlFVReader.Read())
+                                {
+                                    SearchResult searchResult = new SearchResult();
+                                    searchResult.HRef = sqlFVReader.GetString("prettyurl");
+                                    searchResult.LongDescription = sqlFVReader.GetString("Long_Description");
+                                    searchResult.ShortDescription = sqlFVReader.GetString("Short_Description");
+                                    DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
+                                    if (dt != DateTime.MinValue)
+                                        searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
+
+                                    dt = sqlFVReader.GetDateTime("date_last_modified");
+                                    if (dt != DateTime.MinValue)
+                                        searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dt);
+
+                                    searchResults.Add(searchResult);
+                                }
+                            }
                         }
                     }
                 }

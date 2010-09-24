@@ -63,7 +63,7 @@ namespace NCI.Web.CDE.Modules
         /// Field on which the results should be sorted
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string ResultsSortOrder { get; set; }
+        public int ResultsSortOrder { get; set; }
 
         /// <summary>
         /// Language for which the search will be performed.

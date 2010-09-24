@@ -67,6 +67,7 @@
     <Content Include="PageTemplates\MockPage2.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
     <Content Include="Common\PopUps\PopEmail.aspx" />
+    <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
