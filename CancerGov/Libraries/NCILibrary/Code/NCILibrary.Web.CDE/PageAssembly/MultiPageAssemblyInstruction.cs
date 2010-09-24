@@ -527,7 +527,7 @@ namespace NCI.Web.CDE
 
             AddFieldFilter("short_title", data =>
             {
-                data.Value = this.PageMetadata.ShortTitle;
+                data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
             });
 
             AddFieldFilter("short_description", data =>
