@@ -234,12 +234,23 @@ namespace NCI.Web.CDE
                     snippets.AddRange(snippetsFromParent);
                 }
 
-
-                //Load current Page snippets
-                pageSnippets = GetPageSnippets();
-                if (pageSnippets.Count > 0)
+                if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.ViewAll || PageAssemblyContext.Current.DisplayVersion == DisplayVersions.PrintAll)
                 {
-                    snippets.AddRange(pageSnippets);
+
+                    pageSnippets = GetAllPageSnippets();
+                    if (pageSnippets.Count > 0)
+                    {
+                        snippets.AddRange(pageSnippets);
+                    }
+                }
+                else
+                {
+                    //Load current Page snippets
+                    pageSnippets = GetPageSnippets();
+                    if (pageSnippets.Count > 0)
+                    {
+                        snippets.AddRange(pageSnippets);
+                    }
                 }
                 return snippets;
 
@@ -597,6 +608,25 @@ namespace NCI.Web.CDE
 
                 }
 
+            }
+
+            return pageSnippets;
+        }
+
+
+        public List<SnippetInfo> GetAllPageSnippets()
+        {
+            List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
+            string URL = PageAssemblyContext.Current.requestedUrl;
+            int pageCount = _pages._Pages.Count;
+            string requestedPage = URL.Substring(URL.LastIndexOf('/'));
+            for (int i = 0; i <= pageCount-1; i++)
+            {
+                    pageSnippets.AddRange(_pages._Pages[i].SnippetInfos);
+                    if (requestedPage.Contains("page"))
+                    {
+                        PrettyUrl = _pages._Pages[i].PrettyUrl;
+                    }
             }
 
             return pageSnippets;
