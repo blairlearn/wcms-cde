@@ -12,8 +12,7 @@ namespace NCI.Web.CDE
     {
         private const string PRINT_URL_ENDING = "/print";
         private const string VIEWALL_URL_ENDING = "/allpages";
-        private static readonly object REQUEST_URL_KEY = new object();
-        DisplayVersions dispayVersion = DisplayVersions.Web;
+        private static readonly object REQUEST_URL_KEY = new object();        
         
         /// <summary>
         /// You will need to configure this module in the web.config file of your
@@ -43,7 +42,7 @@ namespace NCI.Web.CDE
         {
             //Check if the url has been rewritten yet.
             if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
-                return;
+                return;            
 
             HttpContext context = ((HttpApplication)sender).Context;
 
@@ -78,6 +77,8 @@ namespace NCI.Web.CDE
         /// <param name="url">Requested URL</param>
         void RewriteUrl(HttpContext context, string url)
         {
+            DisplayVersions displayVersion = DisplayVersions.Web;
+
             if (url.EndsWith("/")) //The key will never be just / because of the statement above
             {
                 //strip the trailing /
@@ -109,7 +110,7 @@ namespace NCI.Web.CDE
                 }
 
                 isPrint = true;
-                dispayVersion=DisplayVersions.Print;
+                displayVersion=DisplayVersions.Print;
             }
 
             //Now check to see if it is the view all. (For MultiPageAssemblyInstructions)
@@ -133,13 +134,13 @@ namespace NCI.Web.CDE
                 }
 
                 if (isPrint)
-                    dispayVersion = DisplayVersions.PrintAll;
+                    displayVersion = DisplayVersions.PrintAll;
                 else
-                    dispayVersion = DisplayVersions.ViewAll;
+                    displayVersion = DisplayVersions.ViewAll;
             }
 
             // Set Display version before loading the assembly instructions so it can be accessed in the constructor
-            PageAssemblyContext.CurrentDisplayVersion = dispayVersion;
+            PageAssemblyContext.CurrentDisplayVersion = displayVersion;
 
             //Now lookup the url..
 
@@ -189,7 +190,7 @@ namespace NCI.Web.CDE
             PageTemplateInfo pageTemplateInfo=null;
             try 
             {
-                    pageTemplateInfo = PageTemplateResolver.GetPageTemplateInfo(assemblyInfo.PageTemplateName, dispayVersion);
+                    pageTemplateInfo = PageTemplateResolver.GetPageTemplateInfo(assemblyInfo.PageTemplateName, displayVersion);
             }
             catch(Exception ex)
             {
@@ -206,7 +207,7 @@ namespace NCI.Web.CDE
             }
 
             //set the page assembly context with the assemblyInfo, dispayVersion and pageTemplateInfo
-            PageAssemblyContext.Current.InitializePageAssemblyInfo(assemblyInfo, dispayVersion, pageTemplateInfo, url);
+            PageAssemblyContext.Current.InitializePageAssemblyInfo(assemblyInfo, displayVersion, pageTemplateInfo, url);
             
 
             string rewriteUrl = PageAssemblyContext.Current.PageTemplateInfo.PageTemplatePath;
