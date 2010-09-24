@@ -31,14 +31,19 @@
                 <!-- Left Nav Column -->
                 <td id="leftzone" valign="top">
                     <table border="0" cellspacing="0" cellpadding="0" width="164">
-                         <tr>
-                            <td valign="top" align="left">
-                                <NCI:TemplateSlot ID="cgvSectionNav" runat="server" CssClass="LeftNavSlot" />
-                            </td>
-                            <td valign="top">
-                                <img src="/images/spacer.gif" border="0" alt="" width="16" height="1" />
-                            </td>
-                        </tr>
+                         <NCI:TemplateSlot ID="cgvSectionNav" runat="server" CssClass="LeftNavSlot">
+                            <HeaderHtml>
+                                <tr>
+                                    <td valign="top" align="left">                            
+                            </HeaderHtml>
+                            <FooterHtml>
+                                    </td>
+                                    <td valign="top">
+                                        <img src="/images/spacer.gif" border="0" alt="" width="16" height="1" />
+                                    </td>
+                                </tr>                            
+                            </FooterHtml>
+                         </NCI:TemplateSlot>
                         <tr>
                             <td valign="top" align="left">
                                 <NCI:TemplateSlot ID="cgvLeftNav" runat="server" CssClass="LeftNavSlot" />
