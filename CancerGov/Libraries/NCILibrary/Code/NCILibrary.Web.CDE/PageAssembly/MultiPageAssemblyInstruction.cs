@@ -82,6 +82,9 @@ namespace NCI.Web.CDE
                     }
                 });
 
+
+            #region AddFilter For PageOptions
+            // URL Filter specifically for PageOptions
             AddUrlFilter("Print", url =>
             {
                 url.SetUrl(GetUrl("CurrentURL").ToString() + "/print");
@@ -97,6 +100,18 @@ namespace NCI.Web.CDE
             {
                 url.SetUrl(AlternateContentVersions.OrderCopyURL);
             });
+
+            AddUrlFilter("ViewAll", url =>
+            {
+                url.SetUrl(GetUrl("CurrentURL").ToString() + "/AllPages");
+            });
+
+            AddUrlFilter("PrintAll", url =>
+            {
+                url.SetUrl(GetUrl("ViewAll").ToString() + "/Print");
+            });
+            
+            #endregion
 
             AddUrlFilter("PostBackURL", url =>
             {
@@ -417,7 +432,15 @@ namespace NCI.Web.CDE
             {
                 ArrayList keysList = new ArrayList();
                 if (AlternateContentVersions.IsPrintAvailable)
+                {
                     keysList.Add("Print");
+                    if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.PrintAll)
+                        keysList.Add("PrintAll");
+                }
+
+                if ( PageAssemblyContext.Current.DisplayVersion != DisplayVersions.ViewAll )
+                    keysList.Add("ViewAll");
+
                 if (AlternateContentVersions.IsShareBookmarkAvailable)
                     keysList.Add("ShareBookmark");
                 if (AlternateContentVersions.IsEmailAvailable)
