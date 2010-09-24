@@ -12,6 +12,13 @@ namespace NCI.DataManager
         /// The record number for use in nvelocity template.
         /// </summary>
         public int RecNumber { get; set; }
+
+
+        /// <summary>
+        /// Long descritpion of the content item
+        /// </summary>
+        public string LongTitle { get; set; }
+
         /// <summary>
         /// Short Description of the content item.
         /// </summary>

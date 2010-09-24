@@ -108,6 +108,7 @@ namespace NCI.DataManager
                                 {
                                     SearchResult searchResult = new SearchResult();
                                     searchResult.HRef = sqlFVReader.GetString("prettyurl");
+                                    searchResult.LongTitle = sqlFVReader.GetString("Long_Title");
                                     searchResult.LongDescription = sqlFVReader.GetString("Long_Description");
                                     searchResult.ShortDescription = sqlFVReader.GetString("Short_Description");
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
