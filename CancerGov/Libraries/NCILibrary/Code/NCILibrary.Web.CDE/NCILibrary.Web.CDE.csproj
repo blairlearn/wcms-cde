@@ -67,6 +67,7 @@
     <Compile Include="Configuration\TitleElement.cs" />
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
+    <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />
     <Compile Include="Modules\ContentSearchList.cs" />
     <Compile Include="Modules\DynamicList.cs" />
     <Compile Include="Modules\DynamicSearchResult.cs" />
@@ -94,6 +95,8 @@
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateInfo.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateResolver.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\StyleSheetInfo.cs" />
+    <Compile Include="PageAssembly\PromoUrlMapping.cs" />
+    <Compile Include="PageAssembly\PromoUrlMappingInfoFactory.cs" />
     <Compile Include="PageAssembly\SectionDetail.cs" />
     <Compile Include="PageAssembly\SectionDetailFactory.cs" />
     <Compile Include="PageAssembly\SinglePageAssemblyInstruction.cs" />

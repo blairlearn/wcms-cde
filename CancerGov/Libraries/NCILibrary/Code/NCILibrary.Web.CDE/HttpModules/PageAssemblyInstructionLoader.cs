@@ -6,6 +6,7 @@ using System.IO;
 using NCI.Web.CDE.Configuration;
 using NCI.Logging;
 using System.Reflection;
+
 namespace NCI.Web.CDE
 {
     public class PageAssemblyInstructionLoader : IHttpModule
@@ -40,24 +41,18 @@ namespace NCI.Web.CDE
         /// </summary>        
         void OnBeginRequest(object sender, EventArgs e)
         {
-            //Check if the url has been rewritten yet.
-            if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
-                return;            
-
             HttpContext context = ((HttpApplication)sender).Context;
 
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
 
-            //Commented the below lines for resolveing incident:221 and requirement:190
-            //Don't map items with an extension 
-            //if (url.IndexOf('.') != -1)
-            //    return;
-
             if (url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1)
                 return;
 
-
+            //Check if the url has been rewritten yet.
+            if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
+                return; 
+          
             if (url == "/")
             {
                 //This may fix a bug with .net, and just use the virdir instead.

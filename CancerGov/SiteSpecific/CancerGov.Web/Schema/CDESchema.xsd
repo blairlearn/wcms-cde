@@ -13,6 +13,7 @@
 
     </documentation>
   </annotation>
+
   <complexType name="MultiPageAssemblyInstruction">
     <annotation>
       <documentation>
@@ -356,9 +357,6 @@
     </all>
   </complexType>
 
-
-
-
   <complexType name="singlePageAssemblyInstruction">
     <annotation>
       <documentation>
@@ -681,7 +679,6 @@
     </restriction>
   </simpleType>
 
-
   <simpleType name="templateName">
     <annotation>
       <documentation>The name of a template.</documentation>
@@ -761,12 +758,14 @@
       </element>
     </all>
   </complexType>
+
   <element name="SinglePageAssemblyInstruction"
     type="cde:singlePageAssemblyInstruction">
     <annotation>
       <documentation>This element represents an instance of a Single Page Assembly Instruction published from Percussion. </documentation>
     </annotation>
   </element>
+
   <element name="MultiPageAssemblyInstruction"
     type="cde:MultiPageAssemblyInstruction">
     <annotation>
@@ -880,7 +879,6 @@
     </all>
   </complexType>
 
-
   <complexType name="localFields">
     <annotation>
       <documentation>Additional fields of a Page Assembly Instruction which are needed by the CDE yet do not fall into the pageMetadata.</documentation>
@@ -889,7 +887,6 @@
       <element name="LocalField" type="cde:localField" minOccurs="0" maxOccurs="unbounded"></element>
     </sequence>
   </complexType>
-
 
   <complexType name="localField">
     <annotation>
@@ -1117,7 +1114,6 @@
     </sequence>
   </complexType>
 
-
   <simpleType name="displayVersion">
     <annotation>
       <documentation>This type is an enumeration of different display versions of the CDE.</documentation>
@@ -1144,9 +1140,6 @@
   </complexType>
 
   <element name="PageTemplateConfiguration" type="cde:pageTemplateConfiguration"></element>
-
-
-
 
   <complexType name="alternateContentVersions">
     <annotation>
@@ -1312,6 +1305,7 @@
       <documentation>Defines an instance of a PageOptionsBox module.</documentation>
     </annotation>
   </element>
+
   <complexType name="module_TopicSearchCategory">
     <annotation>
       <documentation>
@@ -1371,4 +1365,58 @@
       </annotation>
     </attribute>
   </complexType>
+
+  <complexType name="promoURLMapping">
+    <annotation>
+      <documentation>
+        Defines the mapping data elements for promo url. This element is the top level element of the
+        promo url mapping.
+      </documentation>
+    </annotation>
+    <all>
+      <element name="PromoUrls">
+        <annotation>
+          <documentation>The collection element for the promoURL elements.</documentation>
+        </annotation>
+        <complexType>
+          <sequence>
+            <element name="PromoUrl" type="cde:promoURLMapping_promoURL" maxOccurs="unbounded" minOccurs="0"></element>
+          </sequence>
+        </complexType>
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="promoURLMapping_promoURL">
+    <annotation>
+      <documentation>Describes the data elements for single promo url entity.</documentation>
+    </annotation>
+    <sequence>
+      <element name="MappedTo" type="string" maxOccurs="1"
+        minOccurs="1">
+        <annotation>
+          <documentation>
+            The pretty url for which this promo url is mapped to. A request for a promo url is redirected to this mapped pretty url.
+          </documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="Name" type="string">
+      <annotation>
+        <documentation>
+          This attribute is the name of the promoUrl, there can be more than one promoUrl for the same prettyUrl(mappedTo element). 
+        </documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+  
+  <element name="PromoUrlMapping" type="cde:promoURLMapping">
+    <annotation>
+      <documentation>Defines an instance of PromoUrlMapping.</documentation>
+    </annotation>
+  </element>
 </schema>
+
+
+
+

@@ -28,5 +28,11 @@ namespace NCI.Web.CDE.Configuration
         {
             get { return (PathElement)base["pageTemplateConfigurationPath"]; }
         }
+
+        [ConfigurationProperty("promoUrlMappingPath")]
+        public PathElement PromoUrlMappingPath
+        {
+            get { return (PathElement)base["promoUrlMappingPath"]; }
+        }
     }
 }
