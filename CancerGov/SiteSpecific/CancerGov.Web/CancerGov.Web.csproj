@@ -59,6 +59,7 @@
     <Content Include="Common\PopUps\popTextFooterSpanish.htm" />
     <Content Include="Common\PopUps\popTextHeader.htm" />
     <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
+    <Content Include="Global.asax" />
     <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
     <Content Include="JS\Omniture\s_code.js" />
     <Content Include="JS\popEvents.js" />
@@ -103,6 +104,9 @@
     </Compile>
     <Compile Include="Common\PopUps\PopEmail.aspx.designer.cs">
       <DependentUpon>PopEmail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">

@@ -44,11 +44,27 @@ namespace NCI.Web.CDE
 
             try
             {
-                PromoUrlMapping promoUrlMapping = PromoUrlMappingInfoFactory.GetPromoUrlMapping("/");
+                //Check if Promo Url information is in the Application State
+                PromoUrlMapping promoUrlMapping = null;
+                bool reLoad = false;
+                if (context.Application["reloadPromoUrlMappingInfo"] != null)
+                    reLoad = (bool)context.Application["reloadPromoUrlMappingInfo"];
+
+                if (context.Application["PromoUrlMapping"] != null && !reLoad)
+                    promoUrlMapping = (PromoUrlMapping)context.Application["PromoUrlMapping"];
+                else
+                {
+                    promoUrlMapping = PromoUrlMappingInfoFactory.GetPromoUrlMapping("/");
+                    context.Application.Lock();
+                    context.Application["reloadPromoUrlMappingInfo"] = false;
+                    context.Application["PromoUrlMapping"] = promoUrlMapping;
+                    context.Application.UnLock();
+                }
+
                 PromoUrl promoUrl = promoUrlMapping.PromoUrls[url];
                 if (promoUrl != null)
                 {
-                    context.Response.Redirect(promoUrl.MappedTo + "?" + context.Request.QueryString, true);
+                    context.Response.Redirect(promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : "?" + context.Request.Url.Query), true);
                 }
             }
             catch (Exception ex)
