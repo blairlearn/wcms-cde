@@ -47,15 +47,25 @@ namespace NCI.Web.CDE
                 PromoUrlMapping promoUrlMapping = PromoUrlMappingInfoFactory.GetPromoUrlMapping("/");
                 PromoUrl promoUrl = promoUrlMapping.PromoUrls[url];
                 if (promoUrl != null)
-                    context.Response.Redirect(promoUrl.MappedTo,true);
+                {
+                    context.Response.Redirect(promoUrl.MappedTo + "?" + context.Request.QueryString, true);
+                }
             }
             catch (Exception ex)
-            { 
+            {
+                Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "\nFailed to Process Promo URL - " + url, NCIErrorLevel.Error, ex);
+                RaiseErrorPage();
             }
-
-            
         }
 
         #endregion
+
+        private static void RaiseErrorPage()
+        {
+            HttpContext.Current.Response.Write("There was an error processing the Promo Url Request");
+            HttpContext.Current.Response.End();
+            return;
+        }
+
     }
 }

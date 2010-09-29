@@ -51,7 +51,7 @@ namespace NCI.Web.CDE
             }
             catch (Exception ex)
             {
-                string message = String.Format("Unable to load section detail from file \"{0}.\"  The file may not exist or the XML in the file may not be serializable into a valid promoUrlMapping object.", xmlFileName);
+                string message = String.Format("Unable to load section Promo Url mapping from file \"{0}.\"  The file may not exist or the XML in the file may not be serializable into a valid promoUrlMapping object.", xmlFileName);
                 Logger.LogError("CDE:promoUrlMappingFactory.cs:GetPromoUrlMapping", message, NCIErrorLevel.Error, ex);
                 return null;
             }

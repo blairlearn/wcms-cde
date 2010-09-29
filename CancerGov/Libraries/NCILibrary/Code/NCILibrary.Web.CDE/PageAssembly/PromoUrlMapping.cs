@@ -71,7 +71,7 @@ namespace NCI.Web.CDE
                 {
                     //Create instance of promo url
                     PromoUrl promoUrl = new PromoUrl();
-                    string key = reader.GetAttribute("name");
+                    string key = reader.GetAttribute("Name");
                     if (!string.IsNullOrEmpty(key))
                     {
                         promoUrl.Name = key;
@@ -81,13 +81,17 @@ namespace NCI.Web.CDE
                             PromoUrls.Add(key, promoUrl);
                         reader.ReadEndElement();
                     }
+                    else
+                    {
+                        throw new Exception("name attribute cannot be null for the Promo URL");
+                    }
                 }
             }
         }
 
         public void WriteXml(System.Xml.XmlWriter writer)
         {
-
+            throw new Exception("This class does not support Serialization");
         }
 
         #endregion
