@@ -29,12 +29,12 @@ namespace CancerGov.Web
             #endregion
         }
 
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-            monitorPromoUrlMappingFile();
-        }
-
         #region Private Methods
+        /// <summary>
+        /// This method will set up a file watcher on the promo url mapping file to
+        /// identify the update to the contents of the file or creation of a new mapping 
+        /// file
+        /// </summary>
         private void monitorPromoUrlMappingFile()
         {
             if (fsw == null)
@@ -58,9 +58,9 @@ namespace CancerGov.Web
         }
 
         /// <summary>
-        /// This event handler , sets a flag of the application state that signifies a new promo url mapping 
+        /// This event handler , sets a flag in the application state that signifies a new promo url mapping 
         /// information is avaliable. If this flag is true the PromoUrlMappingLoader will load new mapping 
-        /// information
+        /// information from the xml file.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
