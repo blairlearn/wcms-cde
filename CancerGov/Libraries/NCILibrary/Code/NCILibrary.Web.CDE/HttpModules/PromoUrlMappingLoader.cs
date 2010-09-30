@@ -64,9 +64,12 @@ namespace NCI.Web.CDE
                 promoUrlMapping = (PromoUrlMapping)context.Application["PromoUrlMapping"];
                 if (promoUrlMapping != null)
                 {
-                    PromoUrl promoUrl = promoUrlMapping.PromoUrls[url];
-                    if (promoUrl != null)
+                    PromoUrl promoUrl = null;
+                    if (promoUrlMapping.PromoUrls.ContainsKey(url.ToLower()))
+                    {
+                        promoUrl = promoUrlMapping.PromoUrls[url.ToLower()];
                         context.Response.Redirect(promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : "?" + context.Request.Url.Query), true);
+                    }
                     else
                         Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "Promo Url Mapping information not found for " + url, NCIErrorLevel.Warning);
                 }

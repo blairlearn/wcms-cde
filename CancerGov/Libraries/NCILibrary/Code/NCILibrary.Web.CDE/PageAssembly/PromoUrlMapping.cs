@@ -74,6 +74,7 @@ namespace NCI.Web.CDE
                     string key = reader.GetAttribute("Name");
                     if (!string.IsNullOrEmpty(key))
                     {
+                        key = key.ToLower();
                         promoUrl.Name = key;
                         reader.Read();
                         promoUrl.MappedTo = reader.ReadString();
