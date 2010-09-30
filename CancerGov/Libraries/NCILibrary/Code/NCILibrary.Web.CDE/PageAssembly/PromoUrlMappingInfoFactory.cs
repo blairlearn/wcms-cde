@@ -37,8 +37,13 @@ namespace NCI.Web.CDE
             try
             {
                 xmlFileName = String.Format(ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath.Path, (path == "/" ? String.Empty : path));
-
                 xmlFileName = Server.MapPath(xmlFileName);
+                if (!File.Exists(xmlFileName))
+                {
+                    Logger.LogError("CDE:promoUrlMappingFactory.cs:GetPromoUrlMapping", "PromoUrl Mapping file does not exists", NCIErrorLevel.Warning);
+                    return null;
+                }
+
                 using (FileStream xmlFile = File.Open(xmlFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
                 {
                     XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();

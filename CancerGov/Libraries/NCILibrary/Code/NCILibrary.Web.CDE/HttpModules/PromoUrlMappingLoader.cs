@@ -61,10 +61,18 @@ namespace NCI.Web.CDE
                     context.Application.UnLock();
                 }
 
-                PromoUrl promoUrl = promoUrlMapping.PromoUrls[url];
-                if (promoUrl != null)
+                promoUrlMapping = (PromoUrlMapping)context.Application["PromoUrlMapping"];
+                if (promoUrlMapping != null)
                 {
-                    context.Response.Redirect(promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : "?" + context.Request.Url.Query), true);
+                    PromoUrl promoUrl = promoUrlMapping.PromoUrls[url];
+                    if (promoUrl != null)
+                        context.Response.Redirect(promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : "?" + context.Request.Url.Query), true);
+                    else
+                        Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "Promo Url Mapping information not found for " + url, NCIErrorLevel.Warning);
+                }
+                else
+                {
+                    Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "No Promo Url Mapping information", NCIErrorLevel.Warning);
                 }
             }
             catch (Exception ex)
