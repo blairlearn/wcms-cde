@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace NCI.Util
 {
@@ -1354,6 +1355,21 @@ namespace NCI.Util
         #endregion
 
 
+        #region StripHTMLTags method
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string StripHTMLTags(string text)
+        {
+            Regex tagExpr = new Regex("<.+?>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
+
+            return tagExpr.Replace(text, "");
+        }
+
+        #endregion
 
     }
 
