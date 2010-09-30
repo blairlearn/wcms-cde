@@ -346,7 +346,7 @@ namespace NCI.Web.CDE
                 if (AlternateContentVersions.IsPrintAvailable)
                     keysList.Add("Print");
                 if (AlternateContentVersions.IsShareBookmarkAvailable)
-                    keysList.Add("ShareBookmark");
+                    keysList.Add("BookMarkShare");
                 if (AlternateContentVersions.IsEmailAvailable)
                     keysList.Add("Email");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
