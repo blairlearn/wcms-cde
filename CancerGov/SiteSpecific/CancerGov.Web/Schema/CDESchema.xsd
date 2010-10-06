@@ -803,6 +803,13 @@
           <documentation>The ID of the content item from Percussion. This will be used for automated testing.</documentation>
         </annotation>
       </element>
+      <element name="OnlyDisplayFor" minOccurs="0" maxOccurs="1">
+        <complexType>
+          <sequence>
+            <element name="DisplayVersion" type="string" minOccurs="0" maxOccurs="unbounded" />
+          </sequence>
+        </complexType>
+      </element>
     </all>
   </complexType>
 
