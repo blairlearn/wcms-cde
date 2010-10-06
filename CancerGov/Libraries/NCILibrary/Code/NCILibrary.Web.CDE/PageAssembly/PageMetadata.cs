@@ -44,7 +44,7 @@ namespace NCI.Web.CDE
         public string MetaKeywords { get; set; }
 
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string PostedDate { get; set; }  
+        public DateTime PostedDate { get; set; }  
 
         public override bool Equals(object obj)
         {
@@ -67,7 +67,9 @@ namespace NCI.Web.CDE
 
             if (MetaKeywords != target.MetaKeywords)
                 return false;
-            
+
+            if (PostedDate != target.PostedDate)
+                return false;
             
             return true;
         }

@@ -595,7 +595,7 @@ namespace NCI.Web.CDE
 
             SetWebAnalytics(WebAnalyticsOptions.Props.PostedDate.ToString(), wbField =>
             {
-                wbField.Value = this.PageMetadata.PostedDate;
+                wbField.Value = String.Format("{0:MM/dd/yyyy}", this.PageMetadata.PostedDate);
             });
         }        
         #endregion
