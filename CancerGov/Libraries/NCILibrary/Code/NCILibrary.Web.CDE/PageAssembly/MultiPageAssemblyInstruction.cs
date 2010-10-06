@@ -237,7 +237,10 @@ namespace NCI.Web.CDE
                 List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
 
                 // Add all local snippets to the list to return.
-                snippets.AddRange(_snippets);
+                foreach (SnippetInfo sni in _snippets)
+                {
+                    snippets.AddRange(_snippets);
+                }
 
                 ////Find all of the Slots on the page which are not blocked and where those Slots do not have associated SnippetInfos in the SinglePageAssemblyInstruction XML file.
                 IEnumerable<string> filledTemplateSlots = (from snippet in _snippets select snippet.SlotName).Distinct<string>().Except(BlockedSlotNames);
