@@ -209,8 +209,13 @@ namespace NCI.Web.CDE
                 List<SnippetInfo> snippets = new List<SnippetInfo>();
 
                 // Add all local snippets to the list to return.
-                snippets.AddRange(_snippets);
-
+                foreach (SnippetInfo snipt in _snippets)
+                {
+                    if (snipt.OnlyDisplayFor.Count() == 0 || snipt.OnlyDisplayFor.Contains(PageAssemblyContext.Current.DisplayVersion))
+                    {
+                        snippets.Add(snipt);
+                    }
+                }
                 ////Find all of the Slots on the page which are not blocked and where those Slots do not have associated SnippetInfos in the SinglePageAssemblyInstruction XML file.
                 IEnumerable<string> filledTemplateSlots = (from snippet in _snippets select snippet.SlotName).Distinct<string>().Except(BlockedSlotNames);
 
@@ -218,7 +223,14 @@ namespace NCI.Web.CDE
                 if (sectionDetail != null)
                 {
                     List<SnippetInfo> snippetsFromParent = sectionDetail.GetSnippetsNotAssociatedWithSlots(filledTemplateSlots);
-                    snippets.AddRange(snippetsFromParent);
+                    foreach (SnippetInfo sniptParents in snippetsFromParent)
+                    {
+                        if (sniptParents.OnlyDisplayFor.Count() == 0 || sniptParents.OnlyDisplayFor.Contains(PageAssemblyContext.Current.DisplayVersion))
+                        {
+                            snippets.Add(sniptParents);
+                        }
+
+                    }
                 }
                 return snippets;
             }

@@ -14,6 +14,7 @@ namespace NCI.Web.CDE
     {
         private string _snippetData = null;
         private bool correctedCDATA = false;
+        private List<DisplayVersions> listOnlyDisplayFor = new List<DisplayVersions>();
         /// <summary>
         /// Gets and sets the path to the user control that will render this
         /// snippet.
@@ -44,6 +45,16 @@ namespace NCI.Web.CDE
         public string SlotName { get; set; }
 
         public string ContentID { get; set; }
+
+        public DisplayVersions[] OnlyDisplayFor
+        {
+            get
+            {
+
+                return listOnlyDisplayFor.ToArray();
+            }
+        }
+
 
         /// <summary>
         /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
@@ -112,6 +123,13 @@ namespace NCI.Web.CDE
                             ContentID = reader.ReadString();
                         }
                         break;
+
+                    case "DisplayVersion":
+                        {
+                            listOnlyDisplayFor.Add((DisplayVersions)Enum.Parse(typeof(DisplayVersions), reader.ReadString()));
+                        }
+                        break;
+
 
                 }
             }

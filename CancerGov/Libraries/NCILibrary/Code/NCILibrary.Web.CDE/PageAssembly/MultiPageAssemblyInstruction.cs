@@ -237,9 +237,12 @@ namespace NCI.Web.CDE
                 List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
 
                 // Add all local snippets to the list to return.
-                foreach (SnippetInfo sni in _snippets)
+                foreach (SnippetInfo snipt in _snippets)
                 {
-                    snippets.AddRange(_snippets);
+                    if (snipt.OnlyDisplayFor.Count()==0 || snipt.OnlyDisplayFor.Contains(PageAssemblyContext.Current.DisplayVersion))
+                    {
+                        snippets.Add(snipt);
+                    }
                 }
 
                 ////Find all of the Slots on the page which are not blocked and where those Slots do not have associated SnippetInfos in the SinglePageAssemblyInstruction XML file.
@@ -249,7 +252,16 @@ namespace NCI.Web.CDE
                 if (sectionDetail != null)
                 {
                     List<SnippetInfo> snippetsFromParent = sectionDetail.GetSnippetsNotAssociatedWithSlots(filledTemplateSlots);
-                    snippets.AddRange(snippetsFromParent);
+
+                    foreach (SnippetInfo sniptParents in snippetsFromParent)
+                    {
+                        if (sniptParents.OnlyDisplayFor.Count() == 0 || sniptParents.OnlyDisplayFor.Contains(PageAssemblyContext.Current.DisplayVersion))
+                        {
+                            snippets.Add(sniptParents);
+                        }
+
+                    }
+
                 }
 
                 if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.ViewAll || PageAssemblyContext.Current.DisplayVersion == DisplayVersions.PrintAll)
@@ -258,7 +270,15 @@ namespace NCI.Web.CDE
                     pageSnippets = GetAllPageSnippets();
                     if (pageSnippets.Count > 0)
                     {
-                        snippets.AddRange(pageSnippets);
+
+                        foreach (SnippetInfo pagesnipt in pageSnippets)
+                        {
+                            if (pagesnipt.OnlyDisplayFor.Count() == 0 || pagesnipt.OnlyDisplayFor.Contains(PageAssemblyContext.Current.DisplayVersion))
+                            {
+                                snippets.Add(pagesnipt);
+                            }
+
+                        }
                     }
                 }
                 else
@@ -267,7 +287,14 @@ namespace NCI.Web.CDE
                     pageSnippets = GetPageSnippets();
                     if (pageSnippets.Count > 0)
                     {
-                        snippets.AddRange(pageSnippets);
+                        foreach (SnippetInfo pagesnipt in pageSnippets)
+                        {
+                            if (pagesnipt.OnlyDisplayFor.Count() == 0 || pagesnipt.OnlyDisplayFor.Contains(PageAssemblyContext.Current.DisplayVersion))
+                            {
+                                snippets.Add(pagesnipt);
+                            }
+
+                        }
                     }
                 }
                 return snippets;
