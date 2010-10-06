@@ -39,13 +39,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// Startdate is a search criteria used in searching.if 
         /// StartDate value is present then both StartDate and 
         /// EndDate value should exist.
-        virtual protected DateTime StartDate
+        override protected DateTime StartDate
         {
             get
             {
-                if (string.IsNullOrEmpty(this.Page.Request.Params["startdate"]))
+                if (string.IsNullOrEmpty(this.Page.Request.Params["startmonth"]) ||
+                    string.IsNullOrEmpty(this.Page.Request.Params["startyear"]))
                         return DateTime.MinValue;
-                return DateTime.Parse(this.Page.Request.Params["startdate"]);
+                return new DateTime( Int32.Parse(this.Page.Request.Params["startyear"]), 
+                                    Int32.Parse(this.Page.Request.Params["startmonth"]), 1  );
             }
         }
 
@@ -53,15 +55,19 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// Startdate is a search criteria used in searching.if 
         /// StartDate value is present then both StartDate and 
         /// EndDate value should exist.
-        virtual protected DateTime EndDate
+        override protected DateTime EndDate
         {
             get
             {
-                if (string.IsNullOrEmpty(this.Page.Request.Params["enddate"]))
-                    return DateTime.MaxValue;
-                return DateTime.Parse(this.Page.Request.Params["enddate"]);
+                if (string.IsNullOrEmpty(this.Page.Request.Params["endmonth"]) ||
+                    string.IsNullOrEmpty(this.Page.Request.Params["endyear"]))
+                    return DateTime.MinValue;
+                DateTime dt = new DateTime(Int32.Parse(this.Page.Request.Params["endyear"]),
+                                    Int32.Parse(this.Page.Request.Params["endmonth"]), 1);
+                dt = dt.AddMonths(1);
+                dt = dt.Subtract( new TimeSpan(1,0,0,0));
+                return dt;
             }
         }
-
     }
 }

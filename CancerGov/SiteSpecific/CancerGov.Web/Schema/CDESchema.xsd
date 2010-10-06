@@ -723,6 +723,11 @@
           <documentation>A description for a Page Assembly Instruction which will be used for a HTML keywords meta tag.</documentation>
         </annotation>
       </element>
+      <element name="PostedDate" type="dateTime" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>The posted dated of the page.</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1415,8 +1420,39 @@
       <documentation>Defines an instance of PromoUrlMapping.</documentation>
     </annotation>
   </element>
+
+  <element name="Module_SearchBox" type="cde:module_SearchBox">
+    <annotation>
+      <documentation>Defines an instance of a SearchBox settings.</documentation>
+    </annotation>
+  </element>
+  <complexType name="module_SearchBox">
+    <annotation>
+      <documentation>Defines all the elements which make up the properties for SearchBox</documentation>
+    </annotation>
+    <sequence>
+      <element name="SearchType"  type="string" maxOccurs="1" minOccurs="1">
+        <annotation>
+          <documentation>The type of search box, keyword, keywordate, date</documentation>
+        </annotation>
+      </element>
+      <element name="Title" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>The title of the search box.</documentation>
+        </annotation>
+      </element>
+      <element name="ActionUrl" type="string" maxOccurs="1" minOccurs="1">
+        <annotation>
+          <documentation>The url to which the user input is submitted.</documentation>
+        </annotation>
+      </element>
+      <element name="WebAnalyticsFunction" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>The web analytics javascript method that will be executed on the client side when the search button is clicked.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
 </schema>
-
-
 
 

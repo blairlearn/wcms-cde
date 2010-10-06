@@ -50,30 +50,6 @@ namespace NCI.DataManager
                 ICollection<SearchResult> searchResults = new Collection<SearchResult>();
                 actualMaxResult = 0;
 
-                //#region Testing only remove once the real stored proc is available
-                //SearchResult searchResult1 = new SearchResult();
-                //searchResult1.PostedDate = "1/1/2009";
-                //searchResult1.UpdatedDate = "1/1/2009";
-                //searchResult1.ShortDescription = "The impact of HPV vaccines and screening tests on cervical cancer prevention: A National Cancer Institute Science Writers' Seminar";
-                //searchResult1.LongDescription = "science writers' seminar to discuss new research findings and future directions in HPV-related cancer research.  Among the topics discussed will be the natural history of HPV and related cancers, advances in screening techniques and tools, the role of vaccines and microbicides in prevention, both nationally and internationally, and future research directions";
-                //searchResult1.HRef = "http://www.cancer.gov/newscenter/pressreleases/HPVseminar";
-                //if (currentPage == 1 || currentPage == 2 || currentPage == 3)
-                //    searchResults.Add(searchResult1);
-
-                //searchResult1 = new SearchResult();
-                //searchResult1.PostedDate = "1/1/2009";
-                //searchResult1.UpdatedDate = "1/1/2009";
-                //searchResult1.ShortDescription = "The impact of HPV vaccines and screening tests on cervical cancer prevention: A National Cancer Institute Science Writers' Seminar";
-                //searchResult1.LongDescription = "science writers' seminar to discuss new research findings and future directions in HPV-related cancer research.  Among the topics discussed will be the natural history of HPV and related cancers, advances in screening techniques and tools, the role of vaccines and microbicides in prevention, both nationally and internationally, and future research directions";
-                //searchResult1.HRef = "http://www.cancer.gov/newscenter/pressreleases/HPVseminar";
-                //if( currentPage == 1 || currentPage == 2 )
-                //    searchResults.Add(searchResult1);
-
-                //actualMaxResult = 5;
-                //return searchResults;
-                
-                //#endregion
-
                 string connString = ConfigurationSettings.AppSettings["DbConnectionString"];
                 
                 if (!string.IsNullOrEmpty(connString))
@@ -82,7 +58,7 @@ namespace NCI.DataManager
                     {
                         using (SqlDataReader reader =
                                     SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
-                                    new SqlParameter("@Keyword ", keyWords),
+                                    new SqlParameter("@Keyword ", string.IsNullOrEmpty(keyWords) ? null : keyWords),
                                     new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)),
                                     new SqlParameter("@EndDate", endDate == DateTime.MaxValue ? null : String.Format("{0:MM/dd/yyyy}", endDate)),
                                     new SqlParameter("@SearchFilter", searchFilter),

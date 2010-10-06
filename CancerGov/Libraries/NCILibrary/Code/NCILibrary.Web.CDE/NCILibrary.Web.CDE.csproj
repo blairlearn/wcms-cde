@@ -65,6 +65,7 @@
     <Compile Include="Configuration\PathElement.cs" />
     <Compile Include="Configuration\PathInformationElement.cs" />
     <Compile Include="Configuration\TitleElement.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
     <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />

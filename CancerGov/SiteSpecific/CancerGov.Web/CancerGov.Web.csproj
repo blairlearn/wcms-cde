@@ -71,7 +71,9 @@
     <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
+    <Content Include="SnippetTemplates\ModuleSearchBox.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
+    <Content Include="SnippetTemplates\SearchBox.ascx" />
     <Content Include="SnippetTemplates\TopicSearchCategorySnippet.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -128,6 +130,10 @@
     <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Modules.Search\NCILibrary.Web.CDE.UI.Modules.csproj">
+      <Project>{680B6841-020D-46DE-BFBB-FC38ACA2EF82}</Project>
+      <Name>NCILibrary.Web.CDE.UI.Modules</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
       <Project>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</Project>
