@@ -113,11 +113,6 @@ namespace NCI.Web.CDE
                         break;
                 }
             });
-
-            SetWebAnalytics(WebAnalyticsOptions.Props.PostedDate.ToString(), wbField =>
-            {
-                wbField.Value = "1/1/1980";
-            });
         }
         #endregion
     }

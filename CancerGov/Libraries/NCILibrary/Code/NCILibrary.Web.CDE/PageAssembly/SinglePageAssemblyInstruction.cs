@@ -592,6 +592,11 @@ namespace NCI.Web.CDE
                 wbField.Value = GetField("short_title");
             });
 
+
+            SetWebAnalytics(WebAnalyticsOptions.Props.PostedDate.ToString(), wbField =>
+            {
+                wbField.Value = this.PageMetadata.PostedDate;
+            });
         }        
         #endregion
     }

@@ -43,6 +43,8 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string MetaKeywords { get; set; }
 
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string PostedDate { get; set; }  
 
         public override bool Equals(object obj)
         {
