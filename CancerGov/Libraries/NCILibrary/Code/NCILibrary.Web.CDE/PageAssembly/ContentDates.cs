@@ -1,47 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 
 namespace NCI.Web.CDE
 {
-    public class PageMetadata
+/// <summary>
+    /// Defines the content dates for an item.
+    /// </summary>
+    public class ContentDates
     {
         /// <summary>
-        /// Gets the title of the requested page
+        /// Gets the date the item was first published.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string LongTitle { get; set; }
+        public DateTime FirstPublished { get; set; }
 
         /// <summary>
-        /// Gets the title of the requested page
+        /// Gets the date the item was last modified. 
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string ShortTitle { get; set; }
+        public DateTime LastModified { get; set; }
 
         /// <summary>
-        /// Short description is used for populating the meta name="description"
+        /// Gets the date the item was last reviewed.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string ShortDescription { get; set; }
+        public DateTime LastReviewed { get; set; }
 
         /// <summary>
-        /// Long description is used for populating the meta name="description" when both meta and short description filed are empty
+        /// Gets the date the item should be reviewed.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string LongDescription { get; set; }
-
-
-        /// <summary>
-        /// Gets the text that should be used for the meta name="description" tag.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string MetaDescription { get; set; }
+        public DateTime NextReview { get; set; }
 
         /// <summary>
-        /// Gets the text that should be used for the name="keywords" tag.
+        /// Gets the display mode when dates are displayed.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string MetaKeywords { get; set; }
+        public DateDisplayModes DateDisplayMode { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
@@ -55,26 +54,28 @@ namespace NCI.Web.CDE
         /// </exception>
         public override bool Equals(object obj)
         {
-            PageMetadata target = obj as PageMetadata;
+            ContentDates target = obj as ContentDates;
 
+            if (target == null)
+                return false;
 
-            if (LongTitle != target.LongTitle)
+            if (LastModified != target.LastModified)
                 return false;
 
 
-            if (ShortTitle != target.ShortTitle)
+            if (FirstPublished != target.FirstPublished)
                 return false;
 
-            if (LongDescription != target.LongDescription)
+            if (LastReviewed != target.LastReviewed)
                 return false;
 
-            if (MetaDescription != target.MetaDescription)
+            if (NextReview != target.NextReview)
                 return false;
 
 
-            if (MetaKeywords != target.MetaKeywords)
+            if (DateDisplayMode != target.DateDisplayMode)
                 return false;
-            
+
             return true;
         }
     }

@@ -59,6 +59,9 @@
     <Compile Include="Configuration\CanonicalHostNameInformationElement.cs" />
     <Compile Include="Configuration\ContentDeliveryEngineConfig.cs" />
     <Compile Include="Configuration\DeliverySection.cs" />
+    <Compile Include="Configuration\FileInstructionElement.cs" />
+    <Compile Include="Configuration\FileInstructionTypeElement.cs" />
+    <Compile Include="Configuration\FileInstructionTypeElementCollection.cs" />
     <Compile Include="Configuration\PageAssemblyInfoTypeElement.cs" />
     <Compile Include="Configuration\PageAssemblyInfoTypeElementCollection.cs" />
     <Compile Include="Configuration\PageTitleInformationElement.cs" />
@@ -66,6 +69,7 @@
     <Compile Include="Configuration\PathInformationElement.cs" />
     <Compile Include="Configuration\TitleElement.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="HttpModules\FileInstructionLoader.cs" />
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
     <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />
@@ -77,7 +81,13 @@
     <Compile Include="Modules\VelocityTemplate.cs" />
     <Compile Include="PageAssembly\AlternateContentVersions.cs" />
     <Compile Include="PageAssembly\BlockedSlot.cs" />
+    <Compile Include="PageAssembly\ContentDates.cs" />
+    <Compile Include="PageAssembly\DisplayDateModes.cs" />
     <Compile Include="PageAssembly\DisplayVersions.cs" />
+    <Compile Include="PageAssembly\GenericFileInstruction.cs" />
+    <Compile Include="PageAssembly\FileInstructionException.cs" />
+    <Compile Include="PageAssembly\FileInstructionFactory.cs" />
+    <Compile Include="PageAssembly\IFileInstruction.cs" />
     <Compile Include="PageAssembly\IMultiPageAssemblyInstruction.cs" />
     <Compile Include="PageAssembly\Module_PageOptionsBox.cs" />
     <Compile Include="PageAssembly\MultiPageAssemblyInstruction.cs" />

@@ -113,7 +113,7 @@ namespace NCI.Web.CDE.Test
             {
 
                 string xmlPath = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/cancertopics"));
-                string XsdPath = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/CDESchema.xsd")).Replace(".xml", "");
+                string XsdPath = HttpContext.Current.Server.MapPath("~/schema/CDESchema.xsd");
                 bool expected = true;
                 bool actual;
                 actual = PageAssemblyInstructionFactory.ValidateXml(xmlPath, XsdPath);
@@ -127,8 +127,8 @@ namespace NCI.Web.CDE.Test
             using (HttpSimulator httpSimulator = GetStandardSimulatedRequest())
             {
 
-                string xmlPath = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/SinglePageAssemblyInstructionNotValid"));                    
-                string XsdPath = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/CDESchema.xsd")).Replace(".xml","");
+                string xmlPath = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/SinglePageAssemblyInstructionNotValid"));
+                string XsdPath = HttpContext.Current.Server.MapPath("~/schema/CDESchema.xsd");
                 bool expected = false;
                 bool actual;
                 actual = PageAssemblyInstructionFactory.ValidateXml(xmlPath, XsdPath);

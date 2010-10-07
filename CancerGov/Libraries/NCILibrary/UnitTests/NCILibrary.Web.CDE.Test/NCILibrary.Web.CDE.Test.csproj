@@ -33,6 +33,10 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.TeamSystem.Data.UnitTesting, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="NVelocity, Version=1.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdPartyDlls\nVelocity\NVelocity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -56,6 +60,7 @@
     <Compile Include="Configuration\PathInformationElement.cs" />
     <Compile Include="DynamicListTest.cs" />
     <Compile Include="FieldFilterDataTest.cs" />
+    <Compile Include="FileInstructionFactoryTest.cs" />
     <Compile Include="Module_PageOptionsBox_Test.cs" />
     <Compile Include="MultiPageAssemblyInstructionTest.cs" />
     <Compile Include="PageAssemblyContextTest.cs" />
@@ -71,13 +76,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="XmlFiles\PublishedContent\PageInstructions\CDESchema.xsd">
+    <None Include="XmlFiles\Schema\CDESchema.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Shadow Include="Test References\NCILibrary.Web.ContentDeliveryEngine.accessor" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />
+    <Content Include="XmlFiles\PublishedContent\FileInstructions\CancerTopics\Test.pdf.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="XmlFiles\PublishedContent\PageInstructions\cancertopics.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -104,6 +112,10 @@
     <ProjectReference Include="..\..\Code\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Code\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
+      <Project>{F4C37116-861A-4FD6-B45D-578B258FEFC7}</Project>
+      <Name>NCILibrary.DataManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Code\NCILibrary.TestingTools\NCILibrary.TestingTools.csproj">
       <Project>{364BC997-48F1-450A-9751-8252FD5EBD78}</Project>

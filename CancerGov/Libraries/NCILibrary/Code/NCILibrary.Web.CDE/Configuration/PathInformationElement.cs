@@ -11,6 +11,12 @@ namespace NCI.Web.CDE.Configuration
             get { return (PathElement)base["pagePathFormat"]; }
         }
 
+        [ConfigurationProperty("filePathFormat")]
+        public PathElement FilePathFormat
+        {
+            get { return (PathElement)base["filePathFormat"]; }
+        }
+
         [ConfigurationProperty("sectionPathFormat")]
         public PathElement SectionPathFormat
         {

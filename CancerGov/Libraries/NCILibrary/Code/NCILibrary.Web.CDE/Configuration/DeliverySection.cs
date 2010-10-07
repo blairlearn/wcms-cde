@@ -11,6 +11,12 @@ namespace NCI.Web.CDE.Configuration
             get { return (PageAssemblyElement)base["pageAssembly"]; }
         }
 
+        [ConfigurationProperty("fileInstruction")]
+        public FileInstructionElement FileInstruction
+        {
+            get { return (FileInstructionElement)base["fileInstruction"]; }
+        }
+
         [ConfigurationProperty("pathInformation")]
         public PathInformationElement PathInformation
         {

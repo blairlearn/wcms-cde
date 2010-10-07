@@ -28,6 +28,16 @@ namespace NCI.Web.CDE.Configuration
             }
         }
 
+        public static FileInstructionElement FileInstruction
+        {
+            get
+            {
+                //ContentDeliveryEngine will throw ConfigurationErrorsException
+                //So this does not have to...
+                return ContentDeliveryEngine.FileInstruction;
+            }
+        }
+
         public static PageTitleInformationElement PageTitle
         {
             get

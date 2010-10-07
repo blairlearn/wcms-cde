@@ -201,6 +201,12 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public PageMetadata PageMetadata { get; set; }
 
+        /// <summary>
+        /// Gets or sets the content dates for the page.
+        /// </summary>
+        /// <value>The page metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public ContentDates ContentDates { get; set; }
 
         /// <summary>
         /// Gets the collections of the snippets
@@ -714,8 +720,9 @@ namespace NCI.Web.CDE
 
             SetWebAnalytics(WebAnalyticsOptions.Props.PostedDate.ToString(), wbField =>
             {
-                wbField.Value = "10/10/2010";
+                wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
+
         }
         #endregion
     }

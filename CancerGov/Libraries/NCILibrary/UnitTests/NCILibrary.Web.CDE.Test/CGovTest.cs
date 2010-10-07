@@ -36,6 +36,14 @@ namespace NCI.Web.CDE.Test
                     LongDescription = "Information from the National Cancer Institute about cancer treatment, prevention, screening, genetics, causes, and how to cope with cancer.",
                     MetaDescription = "Information from the National Cancer Institute about cancer treatment, prevention, screening, genetics, causes, and how to cope with cancer.",
                     MetaKeywords = "cancer,information"
+                },
+                ContentDates = new ContentDates()
+                {
+                    FirstPublished = new DateTime(2010, 10, 3),
+                    LastModified = new DateTime(2010, 10, 3),
+                    LastReviewed = new DateTime(2010, 10, 3),
+                    NextReview = new DateTime(2011, 10, 3),
+                    DateDisplayMode = DateDisplayModes.PostedReviewed
                 }
             };
                 
@@ -173,6 +181,37 @@ namespace NCI.Web.CDE.Test
         }
 
         #endregion
+
+        public GenericFileInstruction GetTestFileInstuction()
+        {
+            GenericFileInstruction fi = new GenericFileInstruction()
+            {
+                SectionPath = "/cancertopics",
+                PrettyUrl = "/cancertopics/test.pdf",
+                FilePath = "/PublishedContent/Files/CancerTopics/test.pdf",
+                Language = "en",
+                PageMetadata = new PageMetadata()
+                {
+                    LongTitle = "Test PDF",
+                    ShortTitle = "Test PDF",
+                    ShortDescription = "Test PDF",
+                    LongDescription = "Information from the National Cancer Institute about cancer treatment, prevention, screening, genetics, causes, and how to cope with cancer.",
+                    MetaDescription = "Information from the National Cancer Institute about cancer treatment, prevention, screening, genetics, causes, and how to cope with cancer.",
+                    MetaKeywords = "cancer,information"
+                },
+                ContentDates = new ContentDates()
+                {
+                    FirstPublished = new DateTime(2010, 10, 3),
+                    LastModified = new DateTime(2010, 10, 3),
+                    LastReviewed = new DateTime(2010, 10, 3),
+                    NextReview = new DateTime(2011, 10, 3),
+                    DateDisplayMode = DateDisplayModes.PostedReviewed
+                }
+            };
+
+            return fi;
+        }
+
 
         #endregion
 

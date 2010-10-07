@@ -11,6 +11,13 @@
     <MetaDescription></MetaDescription>
     <MetaKeywords>cancer,information</MetaKeywords>
   </PageMetadata>
+  <ContentDates>
+    <FirstPublished>2010-10-03T00:00:00</FirstPublished>
+    <LastModified>2010-10-03T00:00:00</LastModified>
+    <LastReviewed>2010-10-03T00:00:00</LastReviewed>
+    <NextReview>2011-10-03T00:00:00</NextReview>
+    <DateDisplayMode>PostedReviewed</DateDisplayMode>
+  </ContentDates>
   <Language>en</Language>
   <AlternateContentVersions>
     <IsPrintAvailable>true</IsPrintAvailable>
