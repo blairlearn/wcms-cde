@@ -19,14 +19,6 @@ namespace NCI.Web.CDE
         private static PageAssemblyInstructionFactory _instance;
 
         /// <summary>
-        /// Boolean to set xml file validity.
-        /// </summary>
-        private static bool _isSinglePageAssemblyInstructionXmlValid = true;
-
-        // Validation Error Message
-        static string ErrorMessage = "";
-
-        /// <summary>
         /// An object instance to use for locking access to _instance.
         /// </summary>
         private static object _syncObject = new object();
@@ -43,7 +35,7 @@ namespace NCI.Web.CDE
         /// </summary>
         public static IPageAssemblyInstruction GetPageAssemblyInfo(string requestedPath)
         {
-
+            bool pageAssemblyInstructionXmlValid = false;
             string xmlFilePath = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, requestedPath));
             // Input validation.
             if (xmlFilePath == null)
@@ -56,11 +48,11 @@ namespace NCI.Web.CDE
 
             if (ContentDeliveryEngineConfig.PageAssembly.PageAssemblyInfoTypes.EnableValidation == true)
             {
-                _isSinglePageAssemblyInstructionXmlValid = PageAssemblyInstructionFactory.ValidateXml(xmlFilePath, 
+                pageAssemblyInstructionXmlValid = PageAssemblyInstructionFactory.ValidateXml(xmlFilePath, 
                     HttpContext.Current.Server.MapPath(ContentDeliveryEngineConfig.PageAssembly.PageAssemblyInfoTypes.XsdPath));
             }
 
-            if (_isSinglePageAssemblyInstructionXmlValid == false)
+            if (pageAssemblyInstructionXmlValid == false)
             {
                 return null;
             }
@@ -129,13 +121,15 @@ namespace NCI.Web.CDE
         public static bool ValidateXml(string xmlPath, string XsdPath)
         {
             XmlReader xsd = null;
+            string errorMessage = string.Empty;
+            bool pageAssemblyInstructionXmlValid = false;
+
             try
             {
                 using (FileStream xmlFile = File.Open(xmlPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
                 {
 
-                    _isSinglePageAssemblyInstructionXmlValid = true;
-                    ErrorMessage = string.Empty;
+                    pageAssemblyInstructionXmlValid = true;
                     xsd = new XmlTextReader(XsdPath);
 
                     XmlSchemaSet schema = new XmlSchemaSet();
@@ -144,7 +138,11 @@ namespace NCI.Web.CDE
                     XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
                     xmlReaderSettings.ValidationType = ValidationType.Schema;
                     xmlReaderSettings.Schemas.Add(schema);
-                    xmlReaderSettings.ValidationEventHandler += new ValidationEventHandler(ValidationHandler);
+                    
+                    xmlReaderSettings.ValidationEventHandler += new ValidationEventHandler((sender, e) =>
+                    {
+                        errorMessage = errorMessage + e.Message + "\r\n";
+                    });
 
                     XmlTextReader xmlTextReader = new XmlTextReader(xmlFile);
                     XmlReader xmlReader = XmlReader.Create(xmlTextReader, xmlReaderSettings);
@@ -155,8 +153,8 @@ namespace NCI.Web.CDE
             }
             catch (Exception ex)
             {
-                _isSinglePageAssemblyInstructionXmlValid = false;
-                ErrorMessage = ex.ToString();
+                pageAssemblyInstructionXmlValid = false;
+                errorMessage = ex.ToString();
             }
             finally
             {
@@ -164,31 +162,17 @@ namespace NCI.Web.CDE
                     ((IDisposable)xsd).Dispose();
             }
 
-            if (ErrorMessage != string.Empty)
+            if (errorMessage != string.Empty)
             {
-                _isSinglePageAssemblyInstructionXmlValid = false;
-                Exception ex = new Exception(ErrorMessage);
+                pageAssemblyInstructionXmlValid = false;
+                Exception ex = new Exception(errorMessage);
                 // Write exception massage to log
                 throw new PageAssemblyException(String.Format("XML File, {0}, failed the validation against the schema(xsd file).", xmlPath), ex);
             }
 
 
-            return _isSinglePageAssemblyInstructionXmlValid;
+            return pageAssemblyInstructionXmlValid;
         }
-
-        /// <summary>
-        /// ValidationEventHandler for handling reporting error in the XML file
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="System.Xml.Schema.ValidationEventArgs"/> instance containing the event data.</param>
-        public static void ValidationHandler(object sender,
-                                     ValidationEventArgs args)
-        {
-
-            ErrorMessage = ErrorMessage + args.Message + "\r\n";
-
-        }
-
 
         /// <summary>
         /// Provides access to the singleton instance, lazy initializing the markup extensions 

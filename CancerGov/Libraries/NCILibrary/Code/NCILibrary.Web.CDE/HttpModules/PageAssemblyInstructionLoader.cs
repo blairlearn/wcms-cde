@@ -165,6 +165,8 @@ namespace NCI.Web.CDE
                                return;
                            }
                        }
+                       else
+                           assemblyInfo = null;
                    }
                }
 

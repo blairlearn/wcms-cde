@@ -61,7 +61,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 if (string.IsNullOrEmpty(this.Page.Request.Params["endmonth"]) ||
                     string.IsNullOrEmpty(this.Page.Request.Params["endyear"]))
-                    return DateTime.MinValue;
+                    return DateTime.MaxValue;
                 DateTime dt = new DateTime(Int32.Parse(this.Page.Request.Params["endyear"]),
                                     Int32.Parse(this.Page.Request.Params["endmonth"]), 1);
                 dt = dt.AddMonths(1);
