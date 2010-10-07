@@ -46,6 +46,7 @@ namespace NCI.DataManager
         public SearchResult()
         {
             ShortDescription = string.Empty;
+            LongTitle = string.Empty;
             LongDescription = string.Empty;
             UpdatedDate = string.Empty;
             PostedDate = string.Empty;
