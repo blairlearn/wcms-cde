@@ -79,6 +79,7 @@
                         </FooterHtml>
                     </NCI:TemplateSlot>
                     <NCI:TemplateSlot ID="cgvBody" runat="server"  />
+                    <NCI:TemplateSlot ID="cgvBodyNav" runat="server" />
                 </td>
                 <!-- End Content Area -->
                 <td valign="top">

@@ -2,7 +2,6 @@
 <%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls"
     TagPrefix="NCI" %>
 	
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" > 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
@@ -21,6 +20,8 @@
 	<!-- Content Header -->
     <!-- Content Header -->
     <div id="headerzone" align="center">
+        <table cellspacing="0" cellpadding="0" border="0" width="751"><tbody><tr><td align="left"><table cellspacing="0" cellpadding="0" border="0" width="650"><tbody><tr><td><a class="navigation-dark-red-link" href="javascript:NCIAnalytics.SendToPrinterLink(this); window.print();">Send to Printer</a></td></tr></tbody></table></td></tr></tbody></table>
+        <table cellspacing="0" cellpadding="0" border="0" width="1"><tbody><tr><td><img height="10" border="0" width="1" alt="" src="/images/spacer.gif"/></td></tr></tbody></table>
         <NCI:TemplateSlot ID="cgvContentHeader" runat="server" />
         <NCI:TemplateSlot ID="cgvLanguageDate" runat="server" />
     </div>
