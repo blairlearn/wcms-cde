@@ -7,6 +7,9 @@
 <head id="header" runat="server">
     <title></title>
     <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
+    <!--[if IE]>
+	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
+    <![endif]-->
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
     <!-- Site Banner -->
@@ -45,7 +48,7 @@
                             </FooterHtml>
                          </NCI:TemplateSlot>
                         <tr>
-                            <td valign="top" align="left">
+                            <td valign="top" align="left" width="164">
                                 <NCI:TemplateSlot ID="cgvLeftNav" runat="server" CssClass="LeftNavSlot" />
                             </td>
                             <!-- So... there should be 6px rendered after each item. -->
