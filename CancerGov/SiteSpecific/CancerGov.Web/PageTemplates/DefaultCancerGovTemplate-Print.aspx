@@ -12,7 +12,7 @@
      
 	<!-- Site Banner -->
     <div id="bannerDiv" align="center">
-        <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
+        <NCI:TemplateSlot ID="cgvSiteBannerPrint" runat="server" />
     </div>
 	
 	<div align="center"></div>
