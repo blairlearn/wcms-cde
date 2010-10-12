@@ -81,6 +81,7 @@
                         </table>                        
                         </FooterHtml>
                     </NCI:TemplateSlot>
+                    <NCI:TemplateSlot ID="cgvMpTOC" runat="server"  />
                     <NCI:TemplateSlot ID="cgvBody" runat="server"  />
                     <NCI:TemplateSlot ID="cgvBodyNav" runat="server" />
                 </td>
