@@ -12,6 +12,8 @@ using System.Web;
 using System.IO;
 using NCI.Web.CDE.Configuration;
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Util;
+using NCI.Core;
 
 namespace NCI.Web.CDE
 {
@@ -92,8 +94,7 @@ namespace NCI.Web.CDE
 
             AddUrlFilter("Email", url =>
             {
-                url.SetUrl("common/popUps/PopEmail.aspx?");
-                url.QueryParameters.Add("title", GetField("short_title"));
+                url.SetUrl(GetEmailUrl());
             });
 
             AddUrlFilter("OrderCopyURL", url =>
@@ -641,6 +642,21 @@ namespace NCI.Web.CDE
         private HttpServerUtility Server
         {
             get { return HttpContext.Current.Server; }
+        }
+
+        private string GetEmailUrl()
+        {
+            string emailUrl = "";
+
+            string title = GetField("long_title");
+            title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
+
+            if ((Strings.Clean(PrettyUrl) != null) && (Strings.Clean(PrettyUrl) != ""))
+            {
+                emailUrl = "/common/popUps/PopEmail.aspx?title=" + title + "&docurl=" + System.Web.HttpUtility.UrlEncode(this.PrettyUrl.Replace("&", "__amp;"));
+                emailUrl = emailUrl + HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + PrettyUrl);
+            }
+            return emailUrl;
         }
 
         /// <summary>

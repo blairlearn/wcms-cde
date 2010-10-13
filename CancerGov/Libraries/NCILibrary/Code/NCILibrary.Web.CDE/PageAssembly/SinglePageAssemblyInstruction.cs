@@ -451,7 +451,7 @@ namespace NCI.Web.CDE
         {
             string emailUrl = "";
 
-            string title = GetField(PageAssemblyInstructionFields.HTML_Title);
+            string title = GetField("long_title");
             title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
 
             if ((Strings.Clean(PrettyUrl) != null) && (Strings.Clean(PrettyUrl) != ""))
