@@ -6,6 +6,8 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Globalization;
+using NCI.Web.UI.WebControls.Configuration;
 
 namespace NCI.Web.UI.WebControls
 {
@@ -130,7 +132,9 @@ namespace NCI.Web.UI.WebControls
                     writer.Write("}");
                     writer.RenderEndTag();
 
-                    
+                    AddThisConfigElement elem = AddThisConfig.GetByCultureLanguage(CultureInfo.CurrentUICulture);
+                    ((AddThisPageOption)option).Settings.CompactServicesList = elem.CompactServices;
+                    ((AddThisPageOption)option).Settings.ExpandedServicesList = elem.ExpandedServices;
 
                     //Setup options
                     writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
