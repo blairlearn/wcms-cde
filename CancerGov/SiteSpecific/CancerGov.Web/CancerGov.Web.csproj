@@ -93,6 +93,9 @@
     <Compile Include="Common\FormEmailer.aspx.designer.cs">
       <DependentUpon>FormEmailer.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Common\PopUpPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Common\PopUps\Email.aspx.cs">
       <DependentUpon>Email.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

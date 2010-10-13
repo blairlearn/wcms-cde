@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace CancerGov.Web
 {
-    public partial class PopEmail : System.Web.UI.Page
+    public partial class PopEmail : PopUpPage
     {
         private string urlArgs = "";
         private string header = "popHeader.htm";

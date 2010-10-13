@@ -13,23 +13,9 @@ namespace CancerGov.Web
         ClinicalTrialPrintableSearchResults = 2
     }
 
-    public enum DisplayVersion
-    {
-        Image = 1,
-        [Obsolete("Text-only is dead.  Long live text-only!")]
-        Text = 2,
-        Print = 3
-    }
-
     public enum DisplayLanguage
     {
         English = 1,
         Spanish = 2
-    }
-
-    public struct DisplayInformation
-    {
-        public DisplayVersion Version;
-        public DisplayLanguage Language;
     }
 }

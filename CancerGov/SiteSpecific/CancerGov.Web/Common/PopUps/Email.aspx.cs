@@ -11,9 +11,8 @@ using NCI.Util;
 
 namespace CancerGov.Web
 {
-    public partial class Email : System.Web.UI.Page
+    public partial class Email : PopUpPage
     {
-        protected DisplayInformation pageDisplayInformation;
         protected System.Web.UI.WebControls.Button submitClick;
 
         protected string strSendtoEmail = "Send this link to (e-mail address)&nbsp;&nbsp;";
@@ -50,7 +49,7 @@ namespace CancerGov.Web
 
             this.Header.Title = "E-Mail This Document - National Cancer Institute";
 
-            if (pageDisplayInformation.Language == DisplayLanguage.Spanish)
+            if ( this.DisplayLanguage  == DisplayLanguage.Spanish)
             {
                 strSendtoEmail = "Compartir este enlace con&nbsp;&nbsp;<br>(dirección de correo electrónico)&nbsp;&nbsp;<br>(Send to this e-mail)&nbsp;&nbsp;";
                 strFromEmail = "Su dirección de correo electrónico&nbsp;&nbsp;<br>(Your e-mail)&nbsp;&nbsp;";
