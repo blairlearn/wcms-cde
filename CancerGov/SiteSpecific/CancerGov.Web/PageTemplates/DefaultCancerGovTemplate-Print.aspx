@@ -61,7 +61,7 @@
                         </table>                        
                     </FooterHtml>
                 </NCI:TemplateSlot>
-            <NCI:TemplateSlot ID="cgvMpTOC" runat="server"  />
+            <NCI:TemplateSlot ID="cgvMpToc" runat="server"  />
             <NCI:TemplateSlot ID="cgvBody" runat="server"  />
 			<!-- Glossary of Terms -->
 			<!-- Link Extraction -->
