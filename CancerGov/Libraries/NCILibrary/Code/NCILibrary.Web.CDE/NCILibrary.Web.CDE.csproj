@@ -58,6 +58,7 @@
     <Compile Include="Configuration\canonicalHostNameElement.cs" />
     <Compile Include="Configuration\CanonicalHostNameInformationElement.cs" />
     <Compile Include="Configuration\ContentDeliveryEngineConfig.cs" />
+    <Compile Include="Configuration\DefaultHomePageElement.cs" />
     <Compile Include="Configuration\DeliverySection.cs" />
     <Compile Include="Configuration\FileInstructionElement.cs" />
     <Compile Include="Configuration\FileInstructionTypeElement.cs" />
