@@ -80,7 +80,7 @@ namespace NCI.Web.CDE
                 url = url.Substring(0, url.LastIndexOf('/'));
                 if (string.IsNullOrEmpty(url))
                 {
-                    url = "/defaulthomepage";
+                    url = ContentDeliveryEngineConfig.DefaultHomePage.Homepage;
                 }
             }
 
@@ -110,7 +110,7 @@ namespace NCI.Web.CDE
 
                 //Set the URL to Default home page if the requested url is "/".
                 if (url == "/")
-                    url = "/defaulthomepage";
+                    url = ContentDeliveryEngineConfig.DefaultHomePage.Homepage;
 
                 isPrint = true;
                 displayVersion=DisplayVersions.Print;
