@@ -53,14 +53,14 @@ namespace NCI.Web.CDE
             if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
                 return; 
           
-            if (url == "/")
-            {
-                //This may fix a bug with .net, and just use the virdir instead.
-                //The issue is that instead of the clientdir being /, the clientfile
-                //is / and the clientdir is null.  Internal things then start throwing
-                //exceptions.
-                return;
-            }
+            //if (url == "/")
+            //{
+            //    //This may fix a bug with .net, and just use the virdir instead.
+            //    //The issue is that instead of the clientdir being /, the clientfile
+            //    //is / and the clientdir is null.  Internal things then start throwing
+            //    //exceptions.
+            //    return;
+            //}
 
             RewriteUrl(context, url);
         }
@@ -78,6 +78,10 @@ namespace NCI.Web.CDE
             {
                 //strip the trailing /
                 url = url.Substring(0, url.LastIndexOf('/'));
+                if (string.IsNullOrEmpty(url))
+                {
+                    url = "/defaulthomepage";
+                }
             }
 
             //Store the url so it can be rewritten for logging.
@@ -103,6 +107,10 @@ namespace NCI.Web.CDE
                     //At the very least it should rewrite the url to /?print=1 or whatever
                     url = "/";
                 }
+
+                //Set the URL to Default home page if the requested url is "/".
+                if (url == "/")
+                    url = "/defaulthomepage";
 
                 isPrint = true;
                 displayVersion=DisplayVersions.Print;
