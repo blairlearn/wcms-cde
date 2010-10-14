@@ -33,5 +33,12 @@ namespace NCI.Web.CDE.Configuration
         {
             get { return (CanonicalHostNameInformationElement)base["canonicalHostName"]; }
         }
+
+        [ConfigurationProperty("defaultHomePage")]
+        public DefaultHomePageElement DefaultHomePage
+        {
+            get { return (DefaultHomePageElement)base["defaultHomePage"]; }
+        }
+
     }
 }

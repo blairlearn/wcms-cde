@@ -58,6 +58,14 @@ namespace NCI.Web.CDE.Configuration
             }
         }
 
+        public static DefaultHomePageElement DefaultHomePage
+        {
+            get
+            {
+                return ContentDeliveryEngine.DefaultHomePage;
+            }
+        }
+
         //Question: Should this still be public???
         public static ContentDeliveryEngineSection ContentDeliveryEngine
         {
