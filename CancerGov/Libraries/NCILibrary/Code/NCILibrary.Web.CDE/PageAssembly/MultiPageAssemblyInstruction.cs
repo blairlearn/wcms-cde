@@ -43,6 +43,10 @@ namespace NCI.Web.CDE
         /// </summary>
         private MultiPageCollection _pages;
 
+        /// <summary>
+        /// Defines the current url that is being requested.
+        /// </summary>
+        private int _currentPageIndex = -1;
 
         #endregion
 
@@ -172,7 +176,38 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <value>The name of the page template.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string PageTemplateName { get; set; }
+        [XmlIgnore()]
+        public string PageTemplateName { 
+            get 
+            {
+                if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll ||
+                    PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
+                {
+                    return InternalPageTemplateName;
+                }
+                else
+                {
+                    //It must be one of the pages.
+                    if (_currentPageIndex == -1)
+                    {
+                        //First page when using container url
+                        return _pages._Pages[0].PageTemplateName;
+                    }
+                    else
+                    {
+                        return _pages._Pages[_currentPageIndex].PageTemplateName;
+                    }
+                }
+            } 
+        }
+
+        /// <summary>
+        /// Gets the name of the page template i.e the actual aspx page to be loaded.
+        /// </summary>
+        /// <value>The name of the page template.</value>
+        [XmlElement(ElementName = "PageTemplateName", Form = XmlSchemaForm.Unqualified)]        
+        public string InternalPageTemplateName { get; set; }
+
 
         /// <summary>
         /// Gets or sets the language for the page displayed.
@@ -334,17 +369,31 @@ namespace NCI.Web.CDE
         /// </returns>
         public Boolean ContainsURL(string requestedURL)
         {
+            return GetPageIndexOfUrl(requestedURL) >= 0;
+        }
 
+        /// <summary>
+        /// Gets the page index of URL.
+        /// </summary>
+        /// <param name="url">The page URL to get the index for.</param>
+        /// <returns></returns>
+        public int GetPageIndexOfUrl(string url)
+        {
 
             int pageCount = _pages.Count();
             for (int i = 0; i <= pageCount - 1; i++)
             {
-                if (string.Compare(_pages._Pages[i].PrettyUrl, requestedURL, true) == 0)
+                if (string.Compare(_pages._Pages[i].PrettyUrl, url, true) == 0)
                 {
-                    return true;
+                    return i;
                 }
             }
-            return false;
+            return -1;
+        }
+
+        public void SetCurrentPageIndex(int index)
+        {
+            _currentPageIndex = index;
         }
 
         /// <summary>
@@ -666,23 +715,18 @@ namespace NCI.Web.CDE
         public List<SnippetInfo> GetPageSnippets()
         {
             List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
-            string URL = PageAssemblyContext.Current.requestedUrl;
-            int pageCount = _pages._Pages.Count;
-            string requestedPage = URL.Substring(URL.LastIndexOf('/'));
-            for (int i = 0; i <= pageCount; i++)
-            {
-                if (_pages._Pages[i].PrettyUrl.ToLower().Contains(requestedPage) == true)
-                {
-                    pageSnippets.AddRange(_pages._Pages[i].SnippetInfos);
-                    if (requestedPage.Contains("page"))
-                    {
-                        PrettyUrl = _pages._Pages[i].PrettyUrl;
-                    }
-                    RegisterFieldFilters(i);
-                    return pageSnippets;
 
-                }
+            if (_pages._Pages.Count > 0) {
+                int tmpPageIndex = _currentPageIndex;
 
+                if (tmpPageIndex == -1)
+                    tmpPageIndex = 0;
+
+                pageSnippets.AddRange(_pages._Pages[tmpPageIndex].SnippetInfos);
+                
+                //TODO: Do not register here, register as normal.
+                PrettyUrl = _pages._Pages[tmpPageIndex].PrettyUrl;
+                RegisterFieldFilters(tmpPageIndex);
             }
 
             return pageSnippets;
@@ -698,12 +742,13 @@ namespace NCI.Web.CDE
             List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
             string URL = PageAssemblyContext.Current.requestedUrl;
             int pageCount = _pages._Pages.Count;
-            string requestedPage = URL.Substring(URL.LastIndexOf('/'));
+            string requestedPage = URL.Substring(URL.LastIndexOf('/'));            
             for (int i = 0; i <= pageCount-1; i++)
             {
                     pageSnippets.AddRange(_pages._Pages[i].SnippetInfos);
                     if (requestedPage.Contains("page"))
                     {
+                        //TODO: What is the purpose of this?  Since it will be rewritten over and over again.
                         PrettyUrl = _pages._Pages[i].PrettyUrl;
                     }
             }

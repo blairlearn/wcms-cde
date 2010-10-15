@@ -23,6 +23,20 @@ namespace NCI.Web.CDE
         /// 	<c>true</c> if the specified requested URL contains URL; otherwise, <c>false</c>.
         /// </returns>
         Boolean ContainsURL(string requestedURL);
+
+
+        /// <summary>
+        /// Sets the index of the current page.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        void SetCurrentPageIndex(int index);
+
+        /// <summary>
+        /// Gets the page index of URL.
+        /// </summary>
+        /// <param name="url">The page URL to get the index for.</param>
+        int GetPageIndexOfUrl(string url);
+
         /// <summary>
         /// Gets the page snippets.
         /// </summary>

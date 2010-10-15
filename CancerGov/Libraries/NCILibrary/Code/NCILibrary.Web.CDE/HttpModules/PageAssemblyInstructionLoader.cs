@@ -167,11 +167,18 @@ namespace NCI.Web.CDE
                        if (assemblyInfo is IMultiPageAssemblyInstruction)
                        {
                            //check if the page requested exists and return null if page does not exists
-                           if (((IMultiPageAssemblyInstruction)assemblyInfo).ContainsURL(url) == false)
+                           int index = ((IMultiPageAssemblyInstruction)assemblyInfo).GetPageIndexOfUrl(url);
+
+                           if (index >= 0)
+                           {
+                               //This url is a page, so set the current index so we can get the page template later.
+                               ((IMultiPageAssemblyInstruction)assemblyInfo).SetCurrentPageIndex(index);
+                           }
+                           else
                            {
                                assemblyInfo = null;
                                return;
-                           }
+                           }                           
                        }
                        else
                            assemblyInfo = null;
