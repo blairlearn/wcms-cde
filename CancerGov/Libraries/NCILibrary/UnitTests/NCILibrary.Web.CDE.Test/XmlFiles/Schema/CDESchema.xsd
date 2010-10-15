@@ -41,7 +41,7 @@
           </documentation>
         </annotation>
       </element>
-      <element name="FilePath" type="cde:path" minOccurs="1" maxOccurs="1">
+      <element name="FilePath" type="string" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>
             The actual file path of the file on the web site.
