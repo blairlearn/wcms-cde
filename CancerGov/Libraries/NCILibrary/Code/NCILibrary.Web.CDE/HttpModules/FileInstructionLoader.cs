@@ -83,7 +83,7 @@ namespace NCI.Web.CDE
 
             if (!string.IsNullOrEmpty(url))
             {
-                context.RewritePath(url, false);
+                //context.RewritePath(url, false);
             }
         }
 
