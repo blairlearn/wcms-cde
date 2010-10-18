@@ -13,6 +13,10 @@ namespace NCI.DataManager
         /// </summary>
         public int RecNumber { get; set; }
 
+        /// <summary>
+        /// Long descritpion of the content item
+        /// </summary>
+        public string ShortTitle { get; set; }
 
         /// <summary>
         /// Long descritpion of the content item

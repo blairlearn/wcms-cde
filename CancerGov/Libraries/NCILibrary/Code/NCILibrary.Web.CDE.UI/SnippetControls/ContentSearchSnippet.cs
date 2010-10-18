@@ -31,7 +31,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         {
             get 
             {
-                return string.IsNullOrEmpty(this.Page.Request.Params["keyword"]) ? String.Empty : this.Page.Request.Params["keyword"];
+                return string.IsNullOrEmpty(this.Page.Request.Params["keyword"]) ? String.Empty : Server.HtmlDecode(this.Page.Request.Params["keyword"]);
             }
         }
 

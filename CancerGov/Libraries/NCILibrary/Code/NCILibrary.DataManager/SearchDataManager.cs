@@ -87,6 +87,7 @@ namespace NCI.DataManager
                                     searchResult.LongTitle = sqlFVReader.GetString("Long_Title");
                                     searchResult.LongDescription = sqlFVReader.GetString("Long_Description");
                                     searchResult.ShortDescription = sqlFVReader.GetString("Short_Description");
+                                    searchResult.ShortTitle = sqlFVReader.GetString("Short_Title");
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);

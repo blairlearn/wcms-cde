@@ -74,14 +74,14 @@ namespace NCI.Web.CDE.UI.SnippetControls
         {
             get
             {
-                    if (this.SearchList.SearchParameters == null)
-                        return DateTime.MaxValue;
-                    return string.IsNullOrEmpty(this.SearchList.SearchParameters.EndDate) ? DateTime.MaxValue : DateTime.Parse(this.SearchList.SearchParameters.EndDate);
+                if (this.SearchList.SearchParameters == null)
+                    return DateTime.MaxValue;
+                return string.IsNullOrEmpty(this.SearchList.SearchParameters.EndDate) ? DateTime.MaxValue : DateTime.Parse(this.SearchList.SearchParameters.EndDate);
             }
         }
 
         protected virtual SearchList SearchList
-        {get;set;}
+        { get; set; }
 
         #endregion
 
@@ -90,7 +90,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         {
             processData();
         }
-        
+
         #endregion
 
         #region Private Methods
@@ -100,13 +100,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 if (this.SearchList != null)
                 {
-                    Validate();
+                    // Validate();
 
                     int actualMaxResult = this.SearchList.MaxResults;
 
                     DateTime startDate = StartDate, endDate = EndDate;
                     string keyWord = KeyWords;
-                    if( this.SearchList.SearchType == "keyword")
+                    if (this.SearchList.SearchType == "keyword")
                     {
                         startDate = DateTime.MinValue;
                         endDate = DateTime.MaxValue;
@@ -120,7 +120,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     ICollection<SearchResult> searchResults =
                                 SearchDataManager.Execute(CurrentPage, startDate, endDate, keyWord,
                                     this.SearchList.RecordsPerPage, this.SearchList.MaxResults, this.SearchList.SearchFilter,
-                                    this.SearchList.ExcludeSearchFilter, this.SearchList.ResultsSortOrder, this.SearchList.Language, Settings.IsLive , out actualMaxResult);
+                                    this.SearchList.ExcludeSearchFilter, this.SearchList.ResultsSortOrder, this.SearchList.Language, Settings.IsLive, out actualMaxResult);
 
                     DynamicSearch dynamicSearch = new DynamicSearch();
                     dynamicSearch.Results = searchResults;
@@ -174,6 +174,24 @@ namespace NCI.Web.CDE.UI.SnippetControls
             pager.PageParamName = "page";
             pager.PagerStyleSettings.SelectedIndexCssClass = "pager-SelectedPage";
             pager.BaseUrl = PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
+            
+            string searchQueryParams = string.Empty;
+            if (this.SearchList.SearchType.ToLower() == "keyword" || this.SearchList.SearchType.ToLower() == "keyword_with_date")
+                searchQueryParams = "?keyword=" + Server.HtmlEncode(KeyWords);
+            if (this.SearchList.SearchType.ToLower() == "date" || this.SearchList.SearchType.ToLower()=="keyword_with_date")
+            {
+                if (string.IsNullOrEmpty(searchQueryParams))
+                    searchQueryParams = "?";
+                else
+                    searchQueryParams += "&";
+                if (StartDate != DateTime.MinValue && EndDate != DateTime.MaxValue)
+                    searchQueryParams += string.Format("startMonth={0}&startyear={1}&endMonth={2}&endYear={3}", StartDate.Month, StartDate.Year, EndDate.Month, EndDate.Year);
+                else
+                    searchQueryParams += "startMonth=&startyear=&endMonth=&endYear=";
+             }
+
+            pager.BaseUrl += searchQueryParams;
+
             Controls.Add(pager);
         }
         /// <summary>
