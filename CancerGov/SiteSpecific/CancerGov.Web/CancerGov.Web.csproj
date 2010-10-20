@@ -118,10 +118,31 @@
     <Compile Include="Common\PopUps\PopEmail.aspx.designer.cs">
       <DependentUpon>PopEmail.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Common\UserControls\AlphaListBox.ascx.cs">
+      <DependentUpon>AlphaListBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\UserControls\AlphaListBox.ascx.designer.cs">
+      <DependentUpon>AlphaListBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\UserControls\LangSwitch.ascx.cs">
+      <DependentUpon>LangSwitch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\UserControls\LangSwitch.ascx.designer.cs">
+      <DependentUpon>LangSwitch.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\db_alpha.ascx.cs">
+      <DependentUpon>db_alpha.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Templates\db_alpha.ascx.designer.cs">
+      <DependentUpon>db_alpha.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
       <DependentUpon>MainPageHeader.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -166,6 +187,9 @@
   <ItemGroup>
     <Content Include="App_LocalResources\SiteWideSearch.resx">
     </Content>
+    <Content Include="Common\UserControls\AlphaListBox.ascx" />
+    <Content Include="Common\UserControls\LangSwitch.ascx" />
+    <Content Include="Templates\db_alpha.ascx" />
     <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
       <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
     </EmbeddedResource>
