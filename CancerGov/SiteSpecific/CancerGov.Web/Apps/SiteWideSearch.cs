@@ -19,6 +19,7 @@ using NCI.Search.Endeca;
 using CancerGov.Modules.Search.Endeca;
 using NCI.Web.CDE;
 
+
 namespace NCI.Web.CancerGov.Apps
 {
     public class SiteWideSearch : AppsBaseUserControl
@@ -30,9 +31,9 @@ namespace NCI.Web.CancerGov.Apps
         protected Repeater rptBestBets;
         protected Label lblBBCatName;
         protected Repeater rptBBListItems;
-        protected Panel phDYM;
+        protected PlaceHolder phDYM;
         protected Literal litDidYouMeanText;
-        protected Panel phError;
+        protected PlaceHolder phError;
         protected Label lblTopResultsXofYKeyword;
         protected HyperLink lnkDym;
         protected Label lblTopResultsXofY;

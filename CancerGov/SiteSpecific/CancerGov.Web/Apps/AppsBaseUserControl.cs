@@ -13,10 +13,11 @@ using System.Globalization;
 using NCI.Util;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE;
+using NCI.Web.CDE.UI;
 
 namespace NCI.Web.CancerGov.Apps
 {
-    public class AppsBaseUserControl : UserControl
+    public class AppsBaseUserControl : SnippetControl
     {
         private WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
         protected DisplayInformation pageDisplayInformation;
@@ -25,7 +26,7 @@ namespace NCI.Web.CancerGov.Apps
         {
             if( string.IsNullOrEmpty(key) )
                 return "";
-            object localizedObject = GetLocalResourceObject(key);
+            object localizedObject = this.GetGlobalResourceObject(key);
             if (localizedObject == null)
                 return "key:" + key + "not localized";
             return localizedObject as string;

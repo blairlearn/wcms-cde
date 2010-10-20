@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CancerGov.Apps.SiteWideSearch" %>
-<%@ Register Assembly="NCI.Web.UI.WebControls" Namespace="NCI.Web.CDE.UI.WebControls" TagPrefix="NCI" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CancerGov.Apps.SiteWideSearch"  %>
+<%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="cc1" %>
 
 	<!-- Main Area -->
 	<div align="center">
@@ -12,7 +12,7 @@
 				<td id="contentzone" valign="top" width="571">
 				   <a name="skiptocontent"></a>
                     <form id="resultForm" runat="server">
-                        <NCI:JavascriptProbeControl ID="jsProbe" runat="server" />
+                        <cc1:JavascriptProbeControl ID="jsProbe" runat="server" />
                         <asp:Label CssClass="page-title" id="lblResultsForText" Text="Results for:" runat="server"/>&nbsp;&nbsp;<asp:Label CssClass="search-result" ID="lblResultsForKeyword" runat="server" />
                         <p></p>
                         
@@ -22,7 +22,7 @@
                                 <div style="background:#e7e7e7;padding: 4px 8px 4px 8px; border: 1px solid #bdbdbc;">
                                     <asp:Label CssClass="header-A" 
                                         ID="lblBBCatName" 
-                                        Text='<%# (PageDisplayInformation.Language == CancerGov.UI.DisplayLanguage.Spanish ? "Mejores resultados para " : "Best Bets for ") + Eval("CategoryName")%>'
+                                        Text='<%# (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish ? "Mejores resultados para " : "Best Bets for ") + Eval("CategoryName")%>'
                                         runat="server" />
                                 </div>    
                                 <asp:Repeater ID="rptBBListItems" EnableViewState="false" runat="server" DataSource='<%# Eval("ListItems") %>'>
@@ -30,14 +30,6 @@
                                         <div style="padding: 12px 0 20px 8px;">
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <CancerGovWww:ClickLoggedLink
-                                            id="cllBBItemLink"
-                                            runat="server"
-                                            Text='<%# Eval("Title") %>'
-                                            ClickItem="Best+Bet"
-                                            onclick='<%# ResultsHyperlinkOnclick(Container,true) %>'                                   
-                                            NavigateUrl='<%# Eval("Url") %>'
-                                             />
                                         <%# Eval("Description") == null ? "" : "<br/>" + Eval("Description")%>
                                     </ItemTemplate>
                                     <SeparatorTemplate>
@@ -62,11 +54,11 @@
                         </div>
                         
                         <!-- Error message, used to be ResultsView -->
-                        <asp:Placeholder ID="phError" runat="server">
+                        <asp:PlaceHolder ID="phError" runat="server">
                             <div style="margin: 24px 0 24px 0;">
                                 <asp:Literal ID="litError" runat="server" Text="Please enter a search phrase." />
                             </div>
-                        </asp:Placeholder>
+                        </asp:PlaceHolder>
                         
                         <asp:Repeater ID="rptResults" EnableViewState="false" runat="server">
                             <HeaderTemplate>
@@ -122,9 +114,10 @@
 								</td>
 								<td nowrap="nowrap" valign="middle" width="100%"><asp:Label id="lblDDLPageUnitResultsPPText" Text="results per page." runat="server" style="margin-left:5px"/></td>
 								<td nowrap="nowrap">&nbsp;&nbsp;</td>
-								<td valign="middle" align="right"><NCI:SimplePager 
+								<td valign="middle" align="right">
+                                    <cc1:simplepager 
 								ID="spPager" runat="server">								    
-								</NCI:SimplePager></td>
+								</cc1:simplepager></td>
 							</tr>						
 						</table>
 						    <div style="border: 1px solid #bdbdbd; padding: 5px 5px 18px 5px; margin: 28px 0 12px 0;">
