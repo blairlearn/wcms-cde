@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace CancerGov.Web.Templates
+namespace CancerGov.Web.SnippetTemplates
 {
     public partial class db_alpha : System.Web.UI.UserControl
     {

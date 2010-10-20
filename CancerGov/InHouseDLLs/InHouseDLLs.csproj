@@ -49,8 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="NCI.EmergencyAlert.Library.dll" />
-    <Content Include="NCILibrary.Core.dll" />
-    <Content Include="NCILibrary.Web.UI.WebControls.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

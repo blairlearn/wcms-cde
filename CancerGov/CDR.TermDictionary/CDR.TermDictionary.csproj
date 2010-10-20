@@ -67,7 +67,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CancerGovCommon\CancerGovCommon.csproj">
       <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
-      <Name>CancerGovCommon %28CancerGovCommon\CancerGovCommon%29</Name>
+      <Name>CancerGovCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>

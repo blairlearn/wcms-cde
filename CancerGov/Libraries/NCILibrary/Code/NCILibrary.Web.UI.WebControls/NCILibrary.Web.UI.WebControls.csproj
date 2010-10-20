@@ -79,6 +79,7 @@
     <Compile Include="DropDownListItem.cs" />
     <Compile Include="DropDownListItemCollection.cs" />
     <Compile Include="EditOnProControl.cs" />
+    <Compile Include="FormControls\AutoComplete.cs" />
     <Compile Include="FormControls\ListControlSelectionCountValidator.cs" />
     <Compile Include="FormControls\TextAreaMaxLengthControl.cs" />
     <Compile Include="FormControls\PhoneNumberControl.cs" />
