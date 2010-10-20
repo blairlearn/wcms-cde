@@ -93,11 +93,6 @@
     <Compile Include="Apps\SiteWideSearch.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="App_GlobalResources\SiteWideSearch.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SiteWideSearch.resx</DependentUpon>
-    </Compile>
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\FormEmailer.aspx.cs">
       <DependentUpon>FormEmailer.aspx</DependentUpon>
