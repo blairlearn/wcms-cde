@@ -88,6 +88,7 @@
     <Compile Include="ITemplatedDataItem.cs" />
     <Compile Include="ITemplatedTreeNode.cs" />
     <Compile Include="JavascriptDetectionControl.cs" />
+    <Compile Include="JavascriptProbeControl.cs" />
     <Compile Include="JSLibraries\Exceptions.cs" />
     <Compile Include="JSLibraries\HtmlBuilderManager.cs" />
     <Compile Include="JSLibraries\PrototypeManager.cs" />
