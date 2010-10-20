@@ -122,9 +122,9 @@
 								</td>
 								<td nowrap="nowrap" valign="middle" width="100%"><asp:Label id="lblDDLPageUnitResultsPPText" Text="results per page." runat="server" style="margin-left:5px"/></td>
 								<td nowrap="nowrap">&nbsp;&nbsp;</td>
-								<td valign="middle" align="right"><CancerGovWww:SimplePager 
+								<td valign="middle" align="right"><NCI:SimplePager 
 								ID="spPager" runat="server">								    
-								</CancerGovWww:SimplePager></td>
+								</NCI:SimplePager></td>
 							</tr>						
 						</table>
 						    <div style="border: 1px solid #bdbdbd; padding: 5px 5px 18px 5px; margin: 28px 0 12px 0;">

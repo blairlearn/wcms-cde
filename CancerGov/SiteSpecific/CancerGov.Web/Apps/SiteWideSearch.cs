@@ -12,6 +12,8 @@ using System.Xml;
 using System.Globalization;
 using NCI.Util;
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.CDE.UI.WebControls;
+using NCI.Web.UI.WebControls;
 
 namespace NCI.Web.CancerGov.Apps
 {
@@ -42,10 +44,12 @@ namespace NCI.Web.CancerGov.Apps
         protected RadioButtonList rblSWRSearchType;
         protected Label lblSWRKeywordLabel;
         protected TextBox txtSWRKeyword;
-        protected Button btnSWRImgSearch;
+        protected ImageButton btnSWRImgSearch;
         protected Button btnSWRTxtSearch;
         protected Label lblDDLPageUnitResultsPPText;
         protected Button btnTextChangePageUnit;
+        protected JavascriptProbeControl jsProbe;
+        protected SimplePager spPager;
         #endregion
         private bool _allowedToShowDYM = false;
 

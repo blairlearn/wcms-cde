@@ -1,322 +1,271 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Collections;
+using System.Configuration;
 using Endeca.Navigation;
-
 
 namespace NCI.Search.Endeca
 {
-    /// <summary>
-    /// This is an abstraction around the Endeca.Navigation search classes.
-    /// <remarks>This handles Navigation searches, or what we are now calling normal searches. It also has the
-    /// begining code to handle Dimension searches.  It can even do both a Nav search and a Dim search which is
-    /// how you handle search results with all that cool guided navigation stuff on the right and left.  What
-    /// it does not handle, and will not until we get more experience is an Aggregated record search and 
-    /// record rollups.
-    /// </remarks>
-    /// </summary>
-    public class EndecaSearch
-    {
+	/// <summary>
+	/// Summary description for EndecaSearch.
+	/// </summary>
+	public class EndecaSearch
+	{
 
-        #region Fields
+		protected HttpENEConnection eneConnection;
+		protected ENEQuery searchQuery;
+		protected ENEQueryResults results;
+		protected string searchInterface;
 
-        private string _serverIP = "";
-        private string _serverPort = "";
+		public long TotalSearchResults {
+			get {
+				if (results != null) {
+					if (results.ContainsNavigation()) {
+						
+						return (int)results.Navigation.TotalNumERecs;
+						/*
+						if (results.Navigation.ESearchReports.Contains(searchInterface)) {
+							ESearchReport searchReport = (ESearchReport)results.Navigation.ESearchReports[searchInterface];
+							return searchReport.NumMatchingResults;
+						} */
+					}
+				}
 
-        //This allows us to define a normal Nav search and a dimension search in a sane way
-        //private EndecaNormalSearchDefinition _normalSearchDefinition;
-        //private EndecaDimensionSearchDefinition _dimensionSearchDefinition;
-        //private EndecaRecordSearchDefinition _recordSearchDefinition;
-        private IEndecaSearchDefinition _searchDefinition;
-        
-        #endregion
+				return 0;
+			}
+		}
 
-        #region Properties
+		public string DidYouMean(){
+			string str=null;
+			if (results!=null &&  results.ContainsNavigation()){
+				IDictionary recSrchRprts =   results.Navigation.ESearchReports;
+				if (recSrchRprts.Count>0)
+				{
+					IDictionaryEnumerator ide = recSrchRprts.GetEnumerator();
+					ide.MoveNext();
+					ESearchReport searchRep = (ESearchReport)ide.Value;
+					//get the list of did you mean objects
+					IList dymList = searchRep.DYMSuggestions;
+					if (dymList.Count > 0)
+					{
+						ESearchDYMSuggestion dymSug = (ESearchDYMSuggestion)dymList[0];
+						str= dymSug.Terms;
+					}
 
-        /// <summary>
-        /// Gets and sets the normal search definition for this Endeca search.  This would be what endeca calls a Navigation search.
-        /// </summary>
-        //public EndecaNormalSearchDefinition NormalSearchDefinition
-        //{
-        //    get { return _normalSearchDefinition; }
-        //    set { _normalSearchDefinition = value; }
-        //}
+				}
+			}
+			return str;
+		}
 
-        ///// <summary>
-        ///// Gets and sets the dimension search definition for this Endeca search.
-        ///// </summary>
-        //public EndecaDimensionSearchDefinition DimensionSearchDefinition
-        //{
-        //    get { return _dimensionSearchDefinition; }
-        //    set { _dimensionSearchDefinition = value; }
-        //}
+		public EndecaSearch(string searchTerms, long numberOfRecords, long firstRecord, string doc_type)
+		{
+			//Step 1.  Create a connection.
+			string host = ConfigurationSettings.AppSettings["EndecaSearchIP"];
+			string port = ConfigurationSettings.AppSettings["EndecaSearchPort"];
+			CreateConnection(host,port);
 
-        //public EndecaRecordSearchDefinition RecordSearchDefinition
-        //{
-        //    get { return _recordSearchDefinition; }
-        //    set { _recordSearchDefinition = value; }
-        //}
+			//Step 2.  Create a query
+			searchQuery = new ENEQuery();
 
+			//Step 2a.  Setup the ENEQuery
+			
+			//Get the default search interface
+			searchInterface = ConfigurationSettings.AppSettings["EndecaSearchInterface"];
+			//Get the default search mode
+			string searchOptions = ConfigurationSettings.AppSettings["EndecaSearchMode"];
 
-        public IEndecaSearchDefinition SearchDefinition
-        {
-            get { return _searchDefinition; }
-            set { _searchDefinition = value; }
-        }
+			//Setup the queries.  An ERecSearch defines the search query.  See the comment in GetSearchItem.
+			//I will probably create a class for these, and pass this in to this constructor... but for now.
+			ERecSearch searchItem = GetSearchItem(searchInterface, searchTerms, searchOptions);
+			
+			//Put the search query into the um, search query?
+			searchQuery.NavERecSearches = new ERecSearchList();
+			searchQuery.NavERecSearches.Add(0,searchItem); // <-- JUST IMPLIMENT ADD(object)!!!
 
-        #endregion
+			//enable did you mean feature
+			searchQuery.NavERecSearchDidYouMean = true;
+			
+			//This is going to get tricky to explain.  Thier search works by searching through nodes in concept trees.
+			//By default we search through 0, which is the root node.  But say I wanted to narrow my search results for
+			//the search term "Breast Cancer" by seeing all the results in the fictious NCI Taxonomy:
+			//  ROOT (This is the top node of all of the different taxonomies)   Value: 0
+			//    |
+			//  Types Of Cancer -- Value: 100
+			//      |
+			//       ----> Breast Cancer -- Value: 150
+			//                  |
+			//                   --------> Breast Cancer Treatment (BCT) -- Value: 151
+			//                  |
+			//                   --------> Breast Cancer Prevention (BCP) -- Value: 152
+			//
+			//   I want to see all documents that match the search terms in the Breast Cancer Treatment node, then we would do
+			//   searchQuery.NavDescriptors = new DimValIdList("151");
+			//
+			//   Now, this is a list, so I could choose to see which documents matched the search term in the BCT and BCP
+			//   nodes, then this list would have 151 and 152 in it.  There is also another option that says what set operator to
+			//   use.  (Intersection or Union)  But that is for another comment.  BTW, these values come from a link that is setup
+			//   when rendering the dimensions, they come from the dimensions themselves.  But that to is another comment.
 
+			searchQuery.NavDescriptors = new DimValIdList(doc_type);  
 
-        #region Constructors
+			//This says how many records to return.
+			searchQuery.NavNumERecs = numberOfRecords;
 
-        /// <summary>
-        /// Creates a new endeca search with no search definition 
-        /// </summary>
-        /// <param name="ip">The server host/ip</param>
-        /// <param name="port">The port number for the dgraph</param>
-        public EndecaSearch(string ip, string port)
-        {
-            _serverIP = ip;
-            _serverPort = port;
-        }
+			//This says what record to start at.
+			searchQuery.NavERecsOffset = firstRecord;
 
-        /// <summary>
-        /// Creates a new endeca search with a Normal search definition
-        /// </summary>
-        /// <param name="ip">The server host/ip</param>
-        /// <param name="port">The port number for the dgraph</param>
-        /// <param name="normalSearchDef">The search definition for this search</param>
-        //public EndecaSearch(string ip, string port, EndecaNormalSearchDefinition normalSearchDef)
-        //{
-        //    _serverIP = ip;
-        //    _serverPort = port;
-        //    _normalSearchDefinition = normalSearchDef;
-        //}
+			//That is pretty much it for now.  There are a lot more options, and well that is beyond the scope of this class for now.
 
-        //public EndecaSearch(string ip, string port, EndecaDimensionSearchDefinition dimensionSearchDef)
-        //{
-        //    _serverIP = ip;
-        //    _serverPort = port;
-        //    _dimensionSearchDefinition = dimensionSearchDef;
-        //}
+		}
 
-        //public EndecaSearch(string ip, string port, EndecaRecordSearchDefinition recordSearchDef)
-        //{
-        //    _serverIP = ip;
-        //    _serverPort = port;
-        //    _recordSearchDefinition = recordSearchDef;
-        //}
+		public EndecaSearch(string searchTerms, long numberOfRecords, string host, string port, string searchInterface, string searchOptions, string doc_type) {
 
-        public EndecaSearch(string ip, string port, IEndecaSearchDefinition searchDef)
-        {
-            _serverIP = ip;
-            _serverPort = port;
-            _searchDefinition = searchDef;
-        }
+			//This needs to be done so we can get number of results.
+			this.searchInterface = searchInterface;
 
-        /* -- For now we have not really done the full coding for the dimension stuff
-         * so this is going to be commented out until it is used.
-        public GSSEndecaSearch(string ip, string port, GSSEndecaDimensionSearchDefinition dimSearchDef)
-        {
-            _serverIP = ip;
-            _serverPort = port;
-            _dimSearchDefinition = dimSearchDef;
-        }
-       
-        public GSSEndecaSearch(string ip, string port, GSSEndecaNormalSearchDefinition normalSearchDef, GSSEndecaDimensionSearchDefinition dimSearchDef)
-        {
-            _serverIP = ip;
-            _serverPort = port;
-            _normalSearchDefinition = normalSearchDef;
-            _dimSearchDefinition = dimSearchDef;
-        }
-        */
+			//Step 1.  Create a connection.
+			CreateConnection(host,port);
 
-        #endregion
+			//Step 2.  Create a query
+			searchQuery = new ENEQuery();
 
-        #region Methods
+			//Step 2a.  Setup the ENEQuery
+			
+			ERecSearch searchItem = GetSearchItem(searchInterface, searchTerms, searchOptions);
+			
+			//Put the search query into the um, search query?
+			searchQuery.NavERecSearches = new ERecSearchList();
+			searchQuery.NavERecSearches.Add(0,searchItem); // <-- JUST IMPLIMENT ADD(object)!!!
+			
+			//enable did you mean feature
+			searchQuery.NavERecSearchDidYouMean = true;
 
-        /// <summary>
-        /// Creates a new ENEQuery to be executed
-        /// </summary>
-        /// <returns>ENEQuery</returns>
-        //private ENEQuery CreateQuery()
-        //{
+			searchQuery.NavDescriptors = new DimValIdList(doc_type); 
 
-        //    //Step 2.  Create a query
-        //    ENEQuery searchQuery = new ENEQuery();
+			//This says how many records to return.
+			searchQuery.NavNumERecs = numberOfRecords;
 
-        //    //Step 2a.  Setup the ENEQuery
+			//This says what record to start at.
+			searchQuery.NavERecsOffset = 0;
 
-        //    #region long description that might not be relevant anymore
-        //    //Since we now have to handle both property searching (versus SearchInterfaces) and possibly dimension             
-        //    //searching (diminsion searching is not searching by dimensions, but searching the dimensions)
-        //    //We will have to be a bit more clever about this all.
+			//That is pretty much it for now.  There are a lot more options, and well that is beyond the scope of this class for now.
 
-        //    //This is going to get tricky to explain.  Thier search works by searching through nodes in concept trees.
-        //    //By default we search through 0, which is the root node.  But say I wanted to narrow my search results for
-        //    //the search term "Breast Cancer" by seeing all the results in the fictious NCI Taxonomy:
-        //    //  ROOT (This is the top node of all of the different taxonomies)   Value: 0
-        //    //    |
-        //    //  Types Of Cancer -- Value: 100
-        //    //      |
-        //    //       ----> Breast Cancer -- Value: 150
-        //    //                  |
-        //    //                   --------> Breast Cancer Treatment (BCT) -- Value: 151
-        //    //                  |
-        //    //                   --------> Breast Cancer Prevention (BCP) -- Value: 152
-        //    //
-        //    //   I want to see all documents that match the search terms in the Breast Cancer Treatment node, then we would do
-        //    //   searchQuery.NavDescriptors = new DimValIdList("151");
-        //    //
-        //    //   Now, this is a list, so I could choose to see which documents matched the search term in the BCT and BCP
-        //    //   nodes, then this list would have 151 and 152 in it.  There is also another option that says what set operator to
-        //    //   use.  (Intersection or Union)  But that is for another comment.  BTW, these values come from a link that is setup
-        //    //   when rendering the dimensions, they come from the dimensions themselves.  But that to is another comment.
-        //    #endregion
+		}
 
+		private ERecSearch GetSearchItem(string searchFields, string searchTerms, string searchOptions) {
+			//An ERecSearch defines the search query.  Since they did not document it, I will.
+			//ERecSearch(string key, string searchTerms, string opts);
+			//
+			// key -->  This is the name of the search interface to use, or, optionally what fields
+			// to search on.  So for us, we would choose ALL.  If it is just searching against some
+			// fields(Properties), I.E. Keywords and Title, then it would look like Keywords|Title.  
+			// The | character separates the different fields.  Note, a new search interface requires
+			// a full indexing, so XMLSearch replacement we might just uses fields instead of creating
+			// new interfaces.
+			//
+			// searchTerms --> This is pretty self explanitory
+			//
+			// opts --> These are the options to search with.  This is where you set the search modes.
+			// We use "mode matchallpartial" for now, if there are more options, then they are separated
+			// with the | character.  
+			//
+			// Note: This is not really documented in the search documentation, and where it is is in the
+			// URL Search Parameters section of the appendicies.  (And then it is not exactly documented)
+			//
+			// I will show an example of what needs to be done for xmlsearch elsewhere.
 
-        //    //If there is a normal search def then setup the query with the nav search details
-        //    if (_normalSearchDefinition != null)
-        //    {
-        //        _normalSearchDefinition.SetupQuery(searchQuery);
-        //    }
+			ERecSearch searchItem = new ERecSearch(searchFields, searchTerms, searchOptions);
 
-        //    //If there is a nav search def then setup the query with the nav search details
-        //    if (_dimensionSearchDefinition != null)
-        //    {
-        //        //TODO: Add dimsearch stuff
-        //    }
-
-        //    return searchQuery;
-        //}
-
-        private ENEQuery CreateQuery()
-        {
-
-            //Step 2.  Create a query
-            ENEQuery searchQuery = new ENEQuery();
-
-            //Step 2a.  Setup the ENEQuery
-
-            #region long description that might not be relevant anymore
-            //Since we now have to handle both property searching (versus SearchInterfaces) and possibly dimension             
-            //searching (diminsion searching is not searching by dimensions, but searching the dimensions)
-            //We will have to be a bit more clever about this all.
-
-            //This is going to get tricky to explain.  Thier search works by searching through nodes in concept trees.
-            //By default we search through 0, which is the root node.  But say I wanted to narrow my search results for
-            //the search term "Breast Cancer" by seeing all the results in the fictious NCI Taxonomy:
-            //  ROOT (This is the top node of all of the different taxonomies)   Value: 0
-            //    |
-            //  Types Of Cancer -- Value: 100
-            //      |
-            //       ----> Breast Cancer -- Value: 150
-            //                  |
-            //                   --------> Breast Cancer Treatment (BCT) -- Value: 151
-            //                  |
-            //                   --------> Breast Cancer Prevention (BCP) -- Value: 152
-            //
-            //   I want to see all documents that match the search terms in the Breast Cancer Treatment node, then we would do
-            //   searchQuery.NavDescriptors = new DimValIdList("151");
-            //
-            //   Now, this is a list, so I could choose to see which documents matched the search term in the BCT and BCP
-            //   nodes, then this list would have 151 and 152 in it.  There is also another option that says what set operator to
-            //   use.  (Intersection or Union)  But that is for another comment.  BTW, these values come from a link that is setup
-            //   when rendering the dimensions, they come from the dimensions themselves.  But that to is another comment.
-            #endregion
+			return searchItem;
+		}
 
 
-            //If there is a normal search def then setup the query with the nav search details
-            if (_searchDefinition != null)
-            {
-                _searchDefinition.SetupQuery(searchQuery);
-            }
-            return searchQuery;
-        }
+		public EndecaSearch(string searchTerms, long numberOfRecords, long firstRecord,string startDate,string endDate, string doc_type)
+		{
+			//This Endeca Search is for searching Cancer Bulletin individual pages
+			//Step 1.  Create a connection.
+			string host = ConfigurationSettings.AppSettings["EndecaSearchIP"];
+			string port = ConfigurationSettings.AppSettings["EndecaSearchPort"];
+			CreateConnection(host,port);
 
-        /// <summary>
-        /// Gets the search results
-        /// </summary>
-        /// <returns>ENEQueryResults</returns>
-        public ENEQueryResults GetSearchResults()
-        {
+			//Step 2.  Create a query
+			searchQuery = new ENEQuery();
 
-            //Create the connection
-            HttpENEConnection connection = new HttpENEConnection(_serverIP, _serverPort);
+			//Step 2a.  Setup the ENEQuery
+			
+			//Get the default search interface
+			searchInterface = ConfigurationSettings.AppSettings["EndecaSearchInterface"];
+			//Get the default search mode
+			string searchOptions = ConfigurationSettings.AppSettings["EndecaSearchMode"];
 
-            //Create the search query
-            ENEQuery searchQuery = CreateQuery();
+			//Setup the queries.  An ERecSearch defines the search query.  See the comment in GetSearchItem.
+			//I will probably create a class for these, and pass this in to this constructor... but for now.
+			ERecSearch searchItem = GetSearchItem(searchInterface, searchTerms, searchOptions);
+			
+			//Put the search query into the um, search query?
+			searchQuery.NavERecSearches = new ERecSearchList();
+			searchQuery.NavERecSearches.Add(0,searchItem); // <-- JUST IMPLIMENT ADD(object)!!!
 
-            // Run the query
-            ENEQueryResults results = null;
-            results = connection.Query(searchQuery); //maybe put a try here
+			//enable did you mean feature
+			searchQuery.NavERecSearchDidYouMean = true;
+			
+			searchQuery.NavDescriptors = new DimValIdList(doc_type);
 
-            return results;
+			//Set up date range filters
+			if (startDate!=null && endDate!=null)
+			{
+				string rangeFilterStr = "NCI.UpdateDate|BTWN "+startDate+" "+endDate;
+				RangeFilterList rfl = new RangeFilterList();
+				rfl.Add(0,new RangeFilter(rangeFilterStr));
+				searchQuery.NavRangeFilters = rfl;
+			}
 
-        }
+			//This says how many records to return.
+			searchQuery.NavNumERecs = numberOfRecords;
 
-        #endregion
+			//This says what record to start at.
+			searchQuery.NavERecsOffset = firstRecord;
 
-        /// <summary>
-        /// Gets a list of all refinements available for a given root dimension
-        /// </summary>
-        /// <param name="ip"></param>
-        /// <param name="port"></param>
-        /// <param name="dimID"></param>
-        /// <returns></returns>
-        public static List<DimVal> GetDimensionRefinements(string ip, string port, long dimID)
-        {
-            List<DimVal> dimVals = new List<DimVal>();
+			//That is pretty much it for now.  There are a lot more options, and well that is beyond the scope of this class for now.
 
-            EndecaDimensionSearchParameter searchParam = new EndecaDimensionSearchParameter("NCIRefinement");
-            EndecaDimensionSearchDefinition dimDef = new EndecaDimensionSearchDefinition(searchParam);
+		}
 
-            dimDef.DimensionFilters.Add(dimID);
+		private void CreateConnection(string hostname, string port) 
+		{
+			eneConnection = new HttpENEConnection(hostname, port);
+		}
 
-            EndecaSearch search = new EndecaSearch(ip, port, dimDef);
-            ENEQueryResults results = search.GetSearchResults();
+		/// <summary>
+		/// Executes the search
+		/// </summary>
+		public void ExecuteSearch() {
+			
+			try {
+				results = eneConnection.Query(searchQuery);
+			} catch (Exception e){
+				throw e;
+			}
 
-            if (results.ContainsDimensionSearch())
-            {
-                if (results.DimensionSearch.Results.Count > 0)
-                {
-                    DimensionSearchResultGroup resultGroup = (DimensionSearchResultGroup)results.DimensionSearch.Results[0];
-                    for (int i = 0; i < resultGroup.Count; i++ )
-                    {
-                        DimLocationList dimLocList = (DimLocationList)resultGroup[i];
-                        foreach (DimLocation dimLoc in dimLocList)
-                        {
-                            dimVals.Add(dimLoc.DimValue);
-                        }
-                    } 
-                }
-            }
-            return dimVals;
-        }
+		}
 
-        /// <summary>
-        /// Returns a record's details
-        /// </summary>
-        /// <param name="recordID">Either the endeca generated record id or the user assigned record spec id</param>
-        /// <returns></returns>
-        public static ERec GetRecord(string ip, string port, string recordID)
-        {
-            ERec endecaRecord = null;
+		/// <summary>
+		/// This fills a EndecaResultsCollection.
+		/// </summary>
+		public virtual void FillSearchResults(ArrayList resultsCollection) {
+			if (results.ContainsNavigation()) {
 
-            EndecaRecordSearchDefinition recDef = new EndecaRecordSearchDefinition();
-            recDef.RecordID = recordID;
+				//JESUS!  I did it again.  DO NOT, I REPEAT DO NOT, mistake
+				//results.ERecs with results.Navigation.ERecs.
+				//results.ERecs is if you just search for record ids.
+				//results.Navigation.ERecs are the search results from 
+				//searching by query.
+				
+				foreach (ERec result in results.Navigation.ERecs) {
+					resultsCollection.Add(new EndecaResult(result));
+				}
+			}
+		}
 
-            EndecaSearch search = new EndecaSearch(ip, port, recDef);
-            ENEQueryResults results = search.GetSearchResults();
-
-            if (results.ContainsERec())
-            {
-                endecaRecord = results.ERec;
-            }
-
-
-            return endecaRecord;
-        }
-    }
+		//Note, when we get hard core and setup taxonimies and stuff there should be other Fill*** methods here,
+		//Like FillNavigation or something like that.  Obviously, I am not going to impliment that right now.
+	}
 }
