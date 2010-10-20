@@ -39,4 +39,28 @@ namespace NCI.Web.CDE
         ClinicalTrialSearchResults = 1,
         ClinicalTrialPrintableSearchResults = 2
     }
+
+    ///<summary>
+    ///Defines values for application error type constants<br/>
+    ///</summary>
+    public class ErrorType
+    {
+        //Data type errors
+        public static int InvalidGuid = 100;
+        public static int InvalidArgument = 101;
+
+        //Database errors
+        public static int DbUnavailable = 200;
+        public static int DbNoData = 201;
+
+        //Include file errors
+        public static int FileNotFound = 300;
+
+        //Endeca errors
+        public static int EndecaError = 400;
+
+
+        //XML errors
+        public static int XmlStringParseError = 500;
+    }
 }

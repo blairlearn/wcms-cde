@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\EndecaSection.cs" />
     <Compile Include="EndecaBestBetResult.cs" />
     <Compile Include="EndecaBestBetsSearch.cs" />
     <Compile Include="EndecaResult.cs" />

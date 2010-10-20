@@ -822,7 +822,7 @@ namespace NCI.Web.CancerGov.Apps
             }
             catch (Exception ex)
             {
-                Logging.Logger.LogError(Request.Url.AbsoluteUri, this.ToString(), ErrorType.EndecaError, ex);
+                Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetBestBetsResults", NCIErrorLevel.Error, ex);
                 this.RaiseErrorPage("error");
             }
 
@@ -848,7 +848,7 @@ namespace NCI.Web.CancerGov.Apps
             }
             catch (Exception ex)
             {
-                Logging.Logger.LogError(Request.Url.AbsoluteUri, this.ToString(), ErrorType.EndecaError, (ex.Message + "\nEndeca Search ERROR\nQuery:\n\n" + searchTerm));
+                Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetSearchResults, Endeca Search Query used:" + searchTerm, NCIErrorLevel.Error, ex);
                 this.RaiseErrorPage("error");
             }
 
