@@ -93,6 +93,11 @@
     <Compile Include="Apps\SiteWideSearch.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="App_GlobalResources\SiteWideSearch.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SiteWideSearch.resx</DependentUpon>
+    </Compile>
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\FormEmailer.aspx.cs">
       <DependentUpon>FormEmailer.aspx</DependentUpon>
@@ -193,18 +198,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\SiteWideSearch.resx">
-    </Content>
     <Content Include="Common\UserControls\AlphaListBox.ascx" />
     <Content Include="Common\UserControls\LangSwitch.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
+    <Content Include="App_GlobalResources\SiteWideSearch.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SiteWideSearch.designer.cs</LastGenOutput>
+    </Content>
     <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
       <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="App_GlobalResources\" />
+    <Folder Include="App_LocalResources\" />
     <Folder Include="UserControls\Footers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
