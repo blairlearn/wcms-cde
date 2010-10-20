@@ -167,6 +167,10 @@
       <Project>{680B6841-020D-46DE-BFBB-FC38ACA2EF82}</Project>
       <Name>NCILibrary.Web.CDE.UI.Modules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
+      <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>
+      <Name>NCILibrary.Search.Endeca</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
       <Project>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</Project>
       <Name>NCILibrary.Web.CDE.UI</Name>
@@ -178,6 +182,10 @@
     <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.Search.Endeca\CancerGov.Search.Endeca.csproj">
+      <Project>{4FD1D24F-D186-46FE-B44E-FA110AFE27FF}</Project>
+      <Name>CancerGov.Search.Endeca</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.TopicSearch\CancerGov.TopicSearch.csproj">
       <Project>{917C939E-6AA1-4FEE-8C35-6EC62974455B}</Project>

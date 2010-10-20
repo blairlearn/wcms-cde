@@ -14,6 +14,9 @@ using NCI.Util;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE.UI.WebControls;
 using NCI.Web.UI.WebControls;
+using NCI.Logging;
+using NCI.Search.Endeca;
+using CancerGov.Modules.Search.Endeca;
 
 namespace NCI.Web.CancerGov.Apps
 {
@@ -32,7 +35,6 @@ namespace NCI.Web.CancerGov.Apps
         protected Label lblTopResultsXofYKeyword;
         protected HyperLink lnkDym;
         protected Label lblTopResultsXofY;
-        protected Label lblTopResultsXofYKeyword;
         protected Literal litError;
         protected Repeater rptResults;
         protected Label lblBottomResultsXofY;
@@ -51,8 +53,9 @@ namespace NCI.Web.CancerGov.Apps
         protected JavascriptProbeControl jsProbe;
         protected SimplePager spPager;
         #endregion
-        private bool _allowedToShowDYM = false;
 
+        #region Private Memebers
+        private bool _allowedToShowDYM = false;
         private string _topResultsXofYFormatter = "Results {0}-{1} of {2} for:";
         private string _bottomResultsXofYFormatter = "Results {0}-{1} of {2}.";
         private string _swrResultsFor = "{0} results found for: ";
@@ -60,8 +63,8 @@ namespace NCI.Web.CancerGov.Apps
         private bool _hasPageUnitChanged = false;
         private bool _isIENoJSAndHitEnderInTheSearchBox = false;
         private int _resultOffset = 1;
-
-
+        
+        #endregion
         #region Properties
 
         /// <summary>
@@ -730,8 +733,6 @@ namespace NCI.Web.CancerGov.Apps
             this.WebAnalyticsPageLoad.AddEvar(WebAnalyticsOptions.eVars.NumberOfSearchResults, "0"); // eVar10
             litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
             // End Web Analytics *********************************************
-
-
         }
 
         private void ShowResultsXoYLabels(int firstIndex, int lastIndex, long totalNumResults)
@@ -820,7 +821,7 @@ namespace NCI.Web.CancerGov.Apps
             }
             catch (Exception ex)
             {
-                CancerGovError.LogError(Request.Url.AbsoluteUri, this.ToString(), ErrorType.EndecaError, ex);
+                Logging.Logger.LogError(Request.Url.AbsoluteUri, this.ToString(), ErrorType.EndecaError, ex);
                 this.RaiseErrorPage();
             }
 
@@ -846,7 +847,7 @@ namespace NCI.Web.CancerGov.Apps
             }
             catch (Exception ex)
             {
-                CancerGovError.LogError(Request.Url.AbsoluteUri, this.ToString(), ErrorType.EndecaError, (ex.Message + "\nEndeca Search ERROR\nQuery:\n\n" + searchTerm));
+                Logging.Logger.LogError(Request.Url.AbsoluteUri, this.ToString(), ErrorType.EndecaError, (ex.Message + "\nEndeca Search ERROR\nQuery:\n\n" + searchTerm));
                 this.RaiseErrorPage();
             }
 

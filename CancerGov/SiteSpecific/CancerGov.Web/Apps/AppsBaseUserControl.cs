@@ -11,11 +11,14 @@ using System.Configuration;
 using System.Xml;
 using System.Globalization;
 using NCI.Util;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace NCI.Web.CancerGov.Apps
 {
     public class AppsBaseUserControl : UserControl
     {
+        private WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
+
         virtual protected string GetResource(string key)
         {
             if( string.IsNullOrEmpty(key) )
@@ -25,5 +28,12 @@ namespace NCI.Web.CancerGov.Apps
                 return "key:" + key + "not localized";
             return localizedObject as string;
         }
+
+        public WebAnalyticsPageLoad WebAnalyticsPageLoad
+        {
+            get { return webAnalyticsPageLoad; }
+            set { webAnalyticsPageLoad = value; }
+        }
+
     }
 }
