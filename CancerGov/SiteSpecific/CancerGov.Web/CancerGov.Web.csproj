@@ -141,13 +141,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnippetTemplates\db_alpha.ascx.cs">
-      <DependentUpon>db_alpha.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\db_alpha.ascx.designer.cs">
-      <DependentUpon>db_alpha.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
       <DependentUpon>MainPageHeader.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
