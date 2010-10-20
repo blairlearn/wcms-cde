@@ -12,12 +12,14 @@ using System.Xml;
 using System.Globalization;
 using NCI.Util;
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.CDE;
 
 namespace NCI.Web.CancerGov.Apps
 {
     public class AppsBaseUserControl : UserControl
     {
         private WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
+        protected DisplayInformation pageDisplayInformation;
 
         virtual protected string GetResource(string key)
         {
@@ -35,5 +37,21 @@ namespace NCI.Web.CancerGov.Apps
             set { webAnalyticsPageLoad = value; }
         }
 
+        public DisplayInformation PageDisplayInformation
+        {
+            get { return pageDisplayInformation; }
+            set { pageDisplayInformation = value; }
+        }
+
+        virtual public void RaiseErrorPage(string messageKey)
+        {
+            string systemMessagePageUrl = ConfigurationSettings.AppSettings["SystemMessagePage"].Trim();
+
+            if (systemMessagePageUrl.Substring(systemMessagePageUrl.Length - 1, 1) != "?")
+                systemMessagePageUrl += "?";
+
+            systemMessagePageUrl += "msg=" + messageKey.Trim();
+            Response.Redirect(systemMessagePageUrl, true);
+        }
     }
 }
