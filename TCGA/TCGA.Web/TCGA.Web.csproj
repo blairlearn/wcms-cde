@@ -94,8 +94,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="PageTemplates\DefaultTCGAPageTemplate.aspx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
-    <Content Include="Web.config" />
+    <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -113,7 +114,6 @@
     <Folder Include="App_LocalResources\" />
     <Folder Include="Common\" />
     <Folder Include="JS\" />
-    <Folder Include="PageTemplates\" />
     <Folder Include="UserControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
