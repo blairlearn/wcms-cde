@@ -23,11 +23,17 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         public void Page_Load(object sender, EventArgs e)
         {
+        }
+
+        protected override void CreateChildControls()
+        {
+            base.CreateChildControls();
             // In this case the snippet info data is not HTML(which is often the case)
             // but xml data which contains rendering properties for each page option item 
             processPageOptionsData(SnippetInfo.Data);
 
-            JSManager.AddExternalScript(this.Page,"/JS/popEvents.js" );
+            JSManager.AddExternalScript(this.Page, "/JS/popEvents.js");
+
         }
         protected override void Render(HtmlTextWriter writer)
         {
