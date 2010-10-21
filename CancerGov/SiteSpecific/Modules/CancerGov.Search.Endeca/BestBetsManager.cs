@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 using NCI.Util;
 using NCI.Web.CDE;
 using NCI.Search.Endeca;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.Configuration;
 
 namespace CancerGov.Modules.Search.Endeca
 {
@@ -39,46 +41,20 @@ namespace CancerGov.Modules.Search.Endeca
             //Loop through the cats and get the list items.
             foreach (EndecaBestBetResult res in tmpBBCats)
             {
-                DataTable dt = GetListFromDB(res.ListID);
-
-                //Only create a BestBetResult if there are list items
-                if (dt.Rows.Count > 0)
-                {                    
-                    //Soo... this is weird, but it is in the old logic.  We seem
-                    //to get the category name not from the EndecaBestBetResults, but
-                    //from the datatable that is returned.  The reason for this is probably
-                    //that the best bets in endeca are only updated when synonyms or
-                    //categories are added.  So if someone were to change the name of a
-                    //category then the best bets would have to be re-indexed in order to
-                    //show the new category name.  However if we get the name from the
-                    //database, then we will always have the most up to date category
-                    //name for a best bets category.
-                    //Since that is the way it currently works, and it would actually be
-                    //a change in the process of updating best bets, we will keep the logic
-                    //in here even though it is kind of hinky.
-                    string catName = Strings.Clean((string)dt.Rows[0]["CatName"]);
-
-                    if (!string.IsNullOrEmpty(catName))
-                    {
-                        BestBetResult bbr = new BestBetResult(catName);
-
-                        //Note: the AsEnumerable comes from System.Data.DataSetExtensions.
-                        var listItems =
-                            from listItem in dt.AsEnumerable() 
-                            select new BestBetListItem(
-                                GetListItemUrl(
-                                    listItem.Field<string>("PrettyUrl"),
-                                    listItem.Field<string>("Url"),
-                                    listItem.Field<string>("UrlArguments")),
-                                Strings.Clean(listItem.Field<string>("Title")), 
-                                Strings.Clean(listItem.Field<string>("Description")));
-
-                        bbr.AddRange(listItems);
-                        rtnResults.Add(bbr);
-                    }                                        
+                string bbResFileName = String.Format(ContentDeliveryEngineConfig.PathInformation.BestBetsResultPath.Path, res.CategoryID.ToString());
+                try
+                {
+                    BestBetResult bbResult = ModuleObjectFactory<BestBetResult>.GetObjectFromFile(bbResFileName);
+                    if (bbResult != null)
+                        rtnResults.Add(bbResult);
                 }
-                if (dt != null)
-                    dt.Dispose();
+                catch (Exception ex)
+                { 
+                    // The bestbet result xml file may not always be there, so catch the exception and log the error
+                    // and ignore the exception
+                    NCI.Logging.Logger.LogError("GetBestBets", "could not find bb result for category id " + res.CategoryID.ToString() + " Category name " + res.CategoryName, NCI.Logging.NCIErrorLevel.Warning, ex);
+
+                }
             }
 
             return rtnResults;
@@ -132,7 +108,7 @@ namespace CancerGov.Modules.Search.Endeca
                     using (SqlDataAdapter dbAdapter = new SqlDataAdapter(cmd))
                     {
                         dbAdapter.Fill(dt);
-                    }                    
+                    }
                 }
             }
 

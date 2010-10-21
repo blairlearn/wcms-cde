@@ -2,39 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
+using System.Xml.Schema;
 
 namespace CancerGov.Modules.Search.Endeca
 {
-    public class BestBetResult : List<BestBetListItem>
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
+    [System.Xml.Serialization.XmlRootAttribute("BestBetCategory", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
+    public class BestBetResult
     {
         private string _catName;
 
         /// <summary>
-        /// Gets the list items of this Best Bet Result.
-        /// </summary>
-        /// <remarks>
-        /// This is to be used if this BestBetResult is being databound to a repeater item.  We can repeat
-        /// the list items of this best bet by using this property.
-        /// </remarks>
-        public BestBetListItem[] ListItems
-        {
-            get
-            {
-                return this.ToArray();
-            }
-        }
-
-        /// <summary>
         /// Gets the Category Name of this BestBetResult
         /// </summary>
-        public string CategoryName
-        {
-            get { return _catName; }
-        }
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string CategoryName { get; set; }
 
-        public BestBetResult(string catName)
-        {
-            _catName = catName;
-        }
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string CategoryDisplay { get; set; }
     }
 }
