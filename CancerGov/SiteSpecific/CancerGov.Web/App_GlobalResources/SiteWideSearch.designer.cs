@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Search.
         /// </summary>
         internal static string AlternateText {
             get {
@@ -70,7 +70,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Results {0}-{1} of {2}..
         /// </summary>
         internal static string bottomResultsXofYFormatter {
             get {
@@ -79,7 +79,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Did you mean.
         /// </summary>
         internal static string DidYouMeanText {
             get {
@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Please enter a search phrase..
         /// </summary>
         internal static string ErrorMessage {
             get {
@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to /images/search_site.gif.
         /// </summary>
         internal static string imageURL {
             get {
@@ -106,7 +106,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Next&amp;nbsp;&amp;gt;.
         /// </summary>
         internal static string NextPageText {
             get {
@@ -115,7 +115,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Show.
         /// </summary>
         internal static string PageUnit {
             get {
@@ -124,7 +124,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to results per page..
         /// </summary>
         internal static string PageUnitResults {
             get {
@@ -133,7 +133,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to &amp;lt;&amp;nbsp;Previous.
         /// </summary>
         internal static string PrevPageText {
             get {
@@ -151,7 +151,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Results for:.
         /// </summary>
         internal static string ResultsForText {
             get {
@@ -160,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Search.
         /// </summary>
         internal static string Search {
             get {
@@ -169,7 +169,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to New Search&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;.
         /// </summary>
         internal static string SearchTypeText1 {
             get {
@@ -178,7 +178,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Search Within Results.
         /// </summary>
         internal static string SearchTypeText2 {
             get {
@@ -187,7 +187,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Show.
         /// </summary>
         internal static string TextChangePageUnit {
             get {
@@ -205,7 +205,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Results {0}-{1} of {2} for:.
         /// </summary>
         internal static string topResultsXofYFormatter {
             get {

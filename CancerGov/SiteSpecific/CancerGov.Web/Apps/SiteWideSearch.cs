@@ -584,7 +584,7 @@ namespace NCI.Web.CancerGov.Apps
             if (rblSWRSearchType.Items.Count == 2)
             {
                 rblSWRSearchType.Items[0].Text = GetResource("SearchTypeText1"); //"Nueva b&uacute;squeda&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                rblSWRSearchType.Items[1].Text = GetResource("SearchTypeText1"); // "B&uacute;squeda dentro de los resultados";
+                rblSWRSearchType.Items[1].Text = GetResource("SearchTypeText2"); // "B&uacute;squeda dentro de los resultados";
             }
 
             //Search within results button

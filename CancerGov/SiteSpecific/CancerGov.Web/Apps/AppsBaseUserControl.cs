@@ -27,8 +27,11 @@ namespace NCI.Web.CancerGov.Apps
             if( string.IsNullOrEmpty(key) )
                 return "";
             object localizedObject = this.GetGlobalResourceObject("SiteWideSearch", key);
-            if (localizedObject == null)
+            if (localizedObject == null )
                 return "key: " + key + " not localized";
+            string val = localizedObject as string;
+            if (string.IsNullOrEmpty(val))
+                return key;
             return localizedObject as string;
         }
 
