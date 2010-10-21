@@ -40,5 +40,12 @@ namespace NCI.Web.CDE.Configuration
         {
             get { return (PathElement)base["promoUrlMappingPath"]; }
         }
+
+        [ConfigurationProperty("bestBetsResultPath")]
+        public PathElement BestBetsResultPath
+        {
+            get { return (PathElement)base["bestBetsResultPath"]; }
+        }
+
     }
 }
