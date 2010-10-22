@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCGA.Web", "TCGA.Web\TCGA.Web.csproj", "{1F72F00E-694F-4110-B356-91668F181653}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCGA.Web", "SiteSpecific\TCGA.Web\TCGA.Web.csproj", "{1F72F00E-694F-4110-B356-91668F181653}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
