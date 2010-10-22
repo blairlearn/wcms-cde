@@ -3,7 +3,7 @@
 
 	<!-- Main Area -->
 	<div align="center">
-		<table width="771" cellspacing="0" cellpadding="0" border="0">
+		<table width="571" cellspacing="0" cellpadding="0" border="0">
 			<tr>		
 				<td valign="top">
 				<!-- a href="#Content"><img src="/images/spacer.gif" width="1" height="1" alt="skip to content" border="0"></a -->
