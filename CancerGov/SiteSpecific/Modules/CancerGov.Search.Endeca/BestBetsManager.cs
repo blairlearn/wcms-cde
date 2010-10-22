@@ -44,6 +44,12 @@ namespace CancerGov.Modules.Search.Endeca
                 string bbResFileName = String.Format(ContentDeliveryEngineConfig.PathInformation.BestBetsResultPath.Path, res.CategoryID);
                 try
                 {
+                    if (string.IsNullOrEmpty(res.CategoryID))
+                    {
+                        NCI.Logging.Logger.LogError("GetBestBets", "category id is null/empty", NCI.Logging.NCIErrorLevel.Warning);
+                        continue;
+                    }
+
                     BestBetResult bbResult = ModuleObjectFactory<BestBetResult>.GetObjectFromFile(bbResFileName);
                     if (bbResult != null)
                         rtnResults.Add(bbResult);
