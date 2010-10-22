@@ -46,7 +46,7 @@ namespace NCI.Web.CDE
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
 
-            if (url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1)
+            if (url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
                 return;
 
             //Check if the url has been rewritten yet.
@@ -140,6 +140,13 @@ namespace NCI.Web.CDE
                     displayVersion = DisplayVersions.PrintAll;
                 else
                     displayVersion = DisplayVersions.ViewAll;
+            }
+
+            //Handle for Dictionary Print pages
+
+            if(context.Request.Url.Query.Contains("print"))
+            {
+                displayVersion = DisplayVersions.Print;
             }
 
             // Set Display version before loading the assembly instructions so it can be accessed in the constructor
