@@ -784,7 +784,7 @@ namespace NCI.Web.CancerGov.Apps
             {
                 spPager.BaseUrl = string.Format(
                     "{0}?swKeyword={1}&old_keywords={2}",
-                    Request.Url.AbsolutePath,
+                    PageInstruction.GetUrl("PrettyUrl").UriStem,
                     Server.UrlEncode(Keyword),
                     Server.UrlEncode(OldKeywordsForQuery));
             }
@@ -792,7 +792,7 @@ namespace NCI.Web.CancerGov.Apps
             {
                 spPager.BaseUrl = string.Format(
                     "{0}?swKeyword={1}",
-                    Request.Url.AbsolutePath,
+                    PageInstruction.GetUrl("PrettyUrl").UriStem,
                     Server.UrlEncode(Keyword));
             }
 
@@ -810,7 +810,7 @@ namespace NCI.Web.CancerGov.Apps
             lnkDym.Text = dymText;
             lnkDym.NavigateUrl = string.Format(
                 "{0}?swKeyword={1}&pageunit={2}&dym=1",
-                Request.Url.AbsolutePath,
+                PageInstruction.GetUrl("PrettyUrl").UriStem,
                 Server.UrlEncode(dymText),
                 ItemsPerPage);
         }

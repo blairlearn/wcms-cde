@@ -25,20 +25,8 @@
                                         Text='<%# (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish ? "Mejores resultados para " : "Best Bets for ") + Eval("CategoryName")%>'
                                         runat="server" />
                                 </div>    
-                                <asp:Repeater ID="rptBBListItems" EnableViewState="false" runat="server" DataSource='<%# Eval("ListItems") %>'>
-                                    <HeaderTemplate>
-                                        <div style="padding: 12px 0 20px 8px;">
-                                    </HeaderTemplate>
-                                    <ItemTemplate>
-                                        <%# Eval("Description") == null ? "" : "<br/>" + Eval("Description")%>
-                                    </ItemTemplate>
-                                    <SeparatorTemplate>
-                                        <br/><br/>
-                                    </SeparatorTemplate>
-                                    <FooterTemplate>
-                                        </div>
-                                    </FooterTemplate>
-                                </asp:Repeater>
+                                <asp:Literal ID="Literal1" runat="server" Text='<%# Eval("CategoryDisplay") %>' >
+                                </asp:Literal>
                             </ItemTemplate>
                         </asp:Repeater>
                         

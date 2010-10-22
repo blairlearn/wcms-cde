@@ -6,6 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 using NCI.Logging;
+using System.Web;
 
 namespace NCI.Web.CDE.Modules
 {
@@ -34,12 +35,20 @@ namespace NCI.Web.CDE.Modules
         {
             try
             {
-                XmlSerializer serializer = serializers[typeof(ModuleObjectType).ToString()];
-                if( serializer== null )
+                XmlSerializer serializer = null;
+                string typeName = typeof(ModuleObjectType).ToString().ToLower();
+
+                if(serializers.ContainsKey(typeName))
+                    serializer = serializers[typeof(ModuleObjectType).ToString()];
+                else
                 {
                     serializer = new XmlSerializer(typeof(ModuleObjectType), "cde");
                     serializers.Add( typeof(ModuleObjectType).ToString(), serializer);
                 }
+
+                // Make an absolute path.
+                filePath = HttpContext.Current.Server.MapPath(filePath);
+
                 using (FileStream xmlFile = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
                 {
                     using (XmlReader xmlReader = XmlReader.Create(xmlFile))
