@@ -12,7 +12,7 @@ namespace NCI.Search.Endeca
 	{
 		private string categoryName = "";
 		private Guid listID;
-		private Guid categoryID;
+		private string categoryID;
  
 		public string CategoryName {
 			get { return categoryName; }
@@ -22,7 +22,7 @@ namespace NCI.Search.Endeca
 			get { return listID; }
 		}
 
-		public Guid CategoryID {
+		public string CategoryID {
 			get { return categoryID; }
 		}
 
@@ -41,7 +41,7 @@ namespace NCI.Search.Endeca
 			}
 
 			if (record.Properties.Contains("CatID")) {
-				categoryID = Strings.ToGuid(record.Properties["CatID"].ToString());
+				categoryID = record.Properties["CatID"].ToString();
 			}
 
 		}

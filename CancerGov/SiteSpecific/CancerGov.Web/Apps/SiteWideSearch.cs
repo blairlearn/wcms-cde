@@ -707,6 +707,11 @@ namespace NCI.Web.CancerGov.Apps
                 wbField.Value = TotalNumberOfResults.ToString();
             });
 
+            this.PageInstruction.AddFieldFilter("channelName", data =>
+            {
+                data.Value = "NCI Home";
+            });
+
             if (rptBestBets.Visible)
             {
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.BestBets, wbField =>

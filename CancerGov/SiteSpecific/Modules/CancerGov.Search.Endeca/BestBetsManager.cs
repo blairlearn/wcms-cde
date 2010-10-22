@@ -41,7 +41,7 @@ namespace CancerGov.Modules.Search.Endeca
             //Loop through the cats and get the list items.
             foreach (EndecaBestBetResult res in tmpBBCats)
             {
-                string bbResFileName = String.Format(ContentDeliveryEngineConfig.PathInformation.BestBetsResultPath.Path, res.CategoryID.ToString());
+                string bbResFileName = String.Format(ContentDeliveryEngineConfig.PathInformation.BestBetsResultPath.Path, res.CategoryID);
                 try
                 {
                     BestBetResult bbResult = ModuleObjectFactory<BestBetResult>.GetObjectFromFile(bbResFileName);
@@ -52,7 +52,7 @@ namespace CancerGov.Modules.Search.Endeca
                 { 
                     // The bestbet result xml file may not always be there, so catch the exception and log the error
                     // and ignore the exception
-                    NCI.Logging.Logger.LogError("GetBestBets", "could not find bb result for category id " + res.CategoryID.ToString() + " Category name " + res.CategoryName, NCI.Logging.NCIErrorLevel.Warning, ex);
+                    NCI.Logging.Logger.LogError("GetBestBets", "could not find bb result for category id " + res.CategoryID + " Category name " + res.CategoryName, NCI.Logging.NCIErrorLevel.Warning, ex);
 
                 }
             }
