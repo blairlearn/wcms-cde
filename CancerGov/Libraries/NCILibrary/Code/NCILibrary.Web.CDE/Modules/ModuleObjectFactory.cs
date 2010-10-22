@@ -39,11 +39,11 @@ namespace NCI.Web.CDE.Modules
                 string typeName = typeof(ModuleObjectType).ToString().ToLower();
 
                 if(serializers.ContainsKey(typeName))
-                    serializer = serializers[typeof(ModuleObjectType).ToString()];
+                    serializer = serializers[typeName];
                 else
                 {
                     serializer = new XmlSerializer(typeof(ModuleObjectType), "cde");
-                    serializers.Add( typeof(ModuleObjectType).ToString(), serializer);
+                    serializers.Add(typeName, serializer);
                 }
 
                 // Make an absolute path.
