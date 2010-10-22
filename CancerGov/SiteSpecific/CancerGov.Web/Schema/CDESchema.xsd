@@ -1735,6 +1735,66 @@
       </element>
     </sequence>
   </complexType>
+
+  <element name="BestBetCategory" type="cde:bestBetCategory">
+    <annotation>
+      <documentation>.</documentation>
+    </annotation>
+  </element>
+  <complexType name="bestBetCategory">
+    <annotation>
+      <documentation>Defines the elements of the BestBets search result and elements needed by endeca.</documentation>
+    </annotation>
+    <all>
+        <element name="CategoryID" type="string" maxOccurs="1" minOccurs="1">
+          <annotation>
+            <documentation>
+              The id which uniquely identifies the BestBets category.
+            </documentation>
+          </annotation>
+        </element>
+        <element name="CategoryName" type="string" maxOccurs="1" minOccurs="1">
+          <annotation>
+            <documentation>Name of the category.</documentation>
+          </annotation>
+        </element>
+        <element name="CategoryDisplay" type="string" maxOccurs="1" minOccurs="1">
+          <annotation>
+            <documentation>Contains the HTML that will be displayed for this BestBets category.</documentation>
+          </annotation>
+        </element>
+        <element name="IncludeSynonyms" maxOccurs="1" minOccurs="1">
+          <complexType>
+            <sequence>
+              <element name="Synonym" maxOccurs="1" minOccurs="1">
+                <complexType>
+                  <attribute name="IsExactMatch" type="boolean">
+                    <annotation>
+                      <documentation></documentation>
+                    </annotation>
+                  </attribute>
+                </complexType>
+              </element>
+            </sequence>
+          </complexType>
+        </element>
+        <element name="ExcludedSynonyms">
+          <complexType>
+            <sequence>
+              <element name="Synonym" maxOccurs="1" minOccurs="1">
+                <complexType>
+                  <attribute name="IsExactMatch" type="boolean">
+                    <annotation>
+                      <documentation></documentation>
+                    </annotation>
+                  </attribute>
+                </complexType>
+              </element>
+            </sequence>
+          </complexType>
+        </element>
+    </all>
+  </complexType>
 </schema>
 
 
