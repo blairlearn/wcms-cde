@@ -8,9 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Www.Common.UserControls {
+namespace Www.Common.PopUps {
     
     
-    public partial class AlphaListBox {
+    public partial class PopDefinition {
     }
 }
