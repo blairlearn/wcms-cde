@@ -15,7 +15,7 @@ namespace CancerGov.Web.SnippetTemplates
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ltDefinitionText.Text = DefinitionText;
         }
 
         protected string DefinitionText
