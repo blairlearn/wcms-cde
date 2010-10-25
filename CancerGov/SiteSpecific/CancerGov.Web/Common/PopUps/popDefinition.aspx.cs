@@ -93,19 +93,19 @@ namespace Www.Common.PopUps
             {
                 header = "popTextHeader.htm";
                 footer = "popTextFooter.htm";
-                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
-                {
+                //if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+                //{
                     footer = "popTextFooterSpanish.htm";
                     header = "popTextHeaderSpanish.htm";
-                }
-            }
-            else
-            {
-                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
-                {
+                //}
+            //}
+            //else
+            //{
+               // if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+                //{
                     footer = "popFooterSpanish.htm";
                     header = "popHeaderSpanish.htm";
-                }
+                //}
             }
 
             urlArgs = Request.Url.Query.Substring(1);
