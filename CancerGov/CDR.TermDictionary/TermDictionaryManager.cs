@@ -7,7 +7,7 @@ using System.Data;
 using CancerGov.UI;
 using CancerGov.Common.ErrorHandling;
 using NCI.Util;
-
+using NCI.Web.CDE;
 namespace CancerGov.CDR.TermDictionary
 {
     /// <summary>
@@ -26,7 +26,7 @@ namespace CancerGov.CDR.TermDictionary
         /// <param name="contains">indicator as to whether the text is to be searched starting from the beginning or anywhere
         ///                        in the string</param>
         /// <returns>Returns the search results</returns>
-        public static TermDictionaryCollection Search(DisplayLanguage language, string criteria, int maxRows, bool contains)
+        public static TermDictionaryCollection Search(string language, string criteria, int maxRows, bool contains)
         {
             TermDictionaryCollection dc = new TermDictionaryCollection();
 
@@ -47,7 +47,7 @@ namespace CancerGov.CDR.TermDictionary
 
                 // Find out the field we need to get to build our list
                 string fieldName = "TermName";
-                if (language == DisplayLanguage.Spanish)
+                if (language == "Spanish")
                 {
                     fieldName = language.ToString() + fieldName;
                 }
@@ -110,7 +110,7 @@ namespace CancerGov.CDR.TermDictionary
                     di = GetEntryFromDR(dt.Rows[0]);
 
                     // Get the neighbors
-                    GetTermNeighbors(di, language, nNeighborMatches);
+                    GetTermNeighbors(di, language.ToString(), nNeighborMatches);
                 }
                 else if (dt.Rows.Count > 0)
                 {
@@ -134,7 +134,7 @@ namespace CancerGov.CDR.TermDictionary
         /// <param name="termName"></param>
         /// <param name="nMatches"></param>
         /// <returns></returns>
-        public static TermDictionaryDataItem GetDefinitionByTermID(DisplayLanguage language, string termID, string audience, int nNeighborMatches)
+        public static TermDictionaryDataItem GetDefinitionByTermID(string language, string termID, string audience, int nNeighborMatches)
         {
             TermDictionaryDataItem di = null;
 
@@ -181,7 +181,7 @@ namespace CancerGov.CDR.TermDictionary
         /// object.
         /// </summary>
         /// <param name="di"></param>
-        public static void GetTermNeighbors(TermDictionaryDataItem di, DisplayLanguage language, int nMatches)
+        public static void GetTermNeighbors(TermDictionaryDataItem di, string language, int nMatches)
         {
             try
             {

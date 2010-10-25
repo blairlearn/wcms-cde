@@ -12,7 +12,7 @@ using System.Text;
 using System.Data.SqlClient;
 using CancerGov.UI;
 using CancerGov.Common.ErrorHandling;
-
+using NCI.Web.CDE;
 namespace CancerGov.CDR.TermDictionary
 {
     /// <summary>
@@ -79,7 +79,7 @@ namespace CancerGov.CDR.TermDictionary
 
                 // Call the database query
                 TermDictionaryCollection dc =
-                    TermDictionaryManager.Search(displayLanguage, criteria, maxRows, contains);
+                    TermDictionaryManager.Search(language, criteria, maxRows, contains);
 
                 // Use Linq to extract the data from the business layer and create 
                 // the service data objects
