@@ -176,6 +176,13 @@
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.designer.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\db_alpha.ascx.cs">
+      <DependentUpon>db_alpha.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\db_alpha.ascx.designer.cs">
+      <DependentUpon>db_alpha.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
       <DependentUpon>MainPageHeader.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -251,6 +258,7 @@
     <Content Include="PageTemplates\CancerGovDictionaryTemplate.aspx" />
     <Content Include="PageTemplates\CancerGovDictionaryTemplate-CorrectDocType.aspx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
+    <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="TermDictionary.svc" />
     <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
       <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
