@@ -23,7 +23,7 @@ namespace CancerGov.Web.SnippetTemplates
             get 
             {
                 string definitionText = string.Empty;
-                definitionText = SnippetInfo.CDRDefinition + ":";
+                definitionText = SnippetInfo.CDRDefinitionName + ":";
                 // TODO:make the call to the CDR database here to obtain the text based on the 
                 // CDRId
 

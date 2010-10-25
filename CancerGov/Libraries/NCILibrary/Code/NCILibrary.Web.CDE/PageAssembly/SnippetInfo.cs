@@ -63,7 +63,7 @@ namespace NCI.Web.CDE
         /// <summary>
         /// The name of the CDR Definition.
         /// </summary>
-        public string CDRDefinition { get; set; }
+        public string CDRDefinitionName { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
@@ -131,6 +131,15 @@ namespace NCI.Web.CDE
                         {
                             ContentID = reader.ReadString();
                         }
+                        break;
+                    case "CDRId":
+                        string cdrId = reader.ReadString();
+                        if (!string.IsNullOrEmpty(cdrId))
+                            CDRId = Int32.Parse(cdrId);
+                        break;
+
+                    case "CDRDefinitionName":
+                        CDRDefinitionName = reader.ReadString();
                         break;
 
                     case "DisplayVersion":
