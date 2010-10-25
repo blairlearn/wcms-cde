@@ -69,9 +69,6 @@
     <Compile Include="SnippetControls\ContentSearchSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\db_alpha.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="SnippetControls\DynamicListSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

@@ -164,7 +164,13 @@ namespace NCI.Web.CDE.UI
         {
             base.OnPreInit(e);
             loadTemplateSlots();
-            loadSnippetsIntoTemplateSlots();
+            loadSnippetsIntoTemplateSlots();            
+        }
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            JSManager.AddExternalScript(this, "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
         }
 
         /// <summary>
@@ -174,8 +180,7 @@ namespace NCI.Web.CDE.UI
         /// <param name="e">Not used</param>
         protected override void OnPreRenderComplete(EventArgs e)
         {
-            base.OnPreRenderComplete(e);
-            JSManager.AddExternalScript(this, "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+            base.OnPreRenderComplete(e);            
             SetTitle();
             InsertStyleSheetsReferences();
             InsertCanonicalURL();
