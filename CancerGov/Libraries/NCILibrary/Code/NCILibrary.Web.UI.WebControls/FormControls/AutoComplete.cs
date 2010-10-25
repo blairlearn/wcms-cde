@@ -579,8 +579,8 @@ namespace NCI.Web.UI.WebControls.FormControls
             // Order is important.
             // The control's JavaScript component relies on Prototype being present first.
             PrototypeManager.Load(this.Page);
-            JSManager.AddResource(this.Page, typeof(AutoComplete), "CancerGov.UI.WebControls.scripts.autocompleteNCI.js");
-            CssManager.AddResource(this.Page, typeof(AutoComplete), "CancerGov.UI.WebControls.StyleSheets.autocompleteRect.css");
+            JSManager.AddResource(this.Page, typeof(AutoComplete), "NCI.Web.UI.WebControls.FormControls.Resources.AutoComplete.js");
+            CssManager.AddResource(this.Page, typeof(AutoComplete), "NCI.Web.UI.WebControls.FormControls.Resources.AutoComplete.css");
 
             // Register this control to require postback handling when the page
             // is posted back to the server

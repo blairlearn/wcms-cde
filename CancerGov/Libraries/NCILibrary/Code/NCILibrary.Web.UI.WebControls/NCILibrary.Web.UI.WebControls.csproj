@@ -283,6 +283,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FormControls\Resources\AutoComplete.js" />
+    <EmbeddedResource Include="FormControls\Resources\AutoComplete.css" />
     <Content Include="Resources\spacer.gif" />
     <Content Include="Resources\TemplatedTreeView.js" />
   </ItemGroup>
