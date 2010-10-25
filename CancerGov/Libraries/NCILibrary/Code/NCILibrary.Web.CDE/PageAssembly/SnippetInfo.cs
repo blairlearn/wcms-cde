@@ -55,6 +55,15 @@ namespace NCI.Web.CDE
             }
         }
 
+        /// <summary>
+        /// The id of the CDR definition. 
+        /// </summary>
+        public int CDRId { get; set; }
+
+        /// <summary>
+        /// The name of the CDR Definition.
+        /// </summary>
+        public string CDRDefinition { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
