@@ -8,7 +8,7 @@ using System.Xml.Schema;
 namespace CancerGov.Modules.Search.Endeca
 {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
-    [System.Xml.Serialization.XmlRootAttribute("BestBetCategory", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
+    [System.Xml.Serialization.XmlRootAttribute("BestBetsCategory", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
     public class BestBetResult
     {
         private string _catName;

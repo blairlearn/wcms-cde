@@ -41,7 +41,6 @@ namespace CancerGov.Modules.Search.Endeca
             //Loop through the cats and get the list items.
             foreach (EndecaBestBetResult res in tmpBBCats)
             {
-                string bbResFileName = String.Format(ContentDeliveryEngineConfig.PathInformation.BestBetsResultPath.Path, res.CategoryID);
                 try
                 {
                     if (string.IsNullOrEmpty(res.CategoryID))
@@ -49,6 +48,8 @@ namespace CancerGov.Modules.Search.Endeca
                         NCI.Logging.Logger.LogError("GetBestBets", "category id is null/empty", NCI.Logging.NCIErrorLevel.Warning);
                         continue;
                     }
+
+                    string bbResFileName = String.Format(ContentDeliveryEngineConfig.PathInformation.BestBetsResultPath.Path, res.CategoryID);
 
                     BestBetResult bbResult = ModuleObjectFactory<BestBetResult>.GetObjectFromFile(bbResFileName);
                     if (bbResult != null)
