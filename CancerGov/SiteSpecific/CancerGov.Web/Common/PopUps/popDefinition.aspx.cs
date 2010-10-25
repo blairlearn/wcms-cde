@@ -88,7 +88,7 @@ namespace Www.Common.PopUps
         /// <param name="e"></param>
         protected override void OnLoad(EventArgs e)
         {
-            //base.OnLoad(e);
+            base.OnLoad(e);
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web)
             {
                 header = "popTextHeader.htm";
