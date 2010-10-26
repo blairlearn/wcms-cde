@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Www.Common.PopUps {
+namespace CancerGov.Web.Common.PopUps {
     
     
     public partial class Definition {

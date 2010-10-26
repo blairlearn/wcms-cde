@@ -8,7 +8,7 @@ namespace CancerGov.Web
     /// </summary>
     public enum EmailPopupInvokedBy
     {
-        Unspecified = 0,
+        Unspecified = 0,s,
         ClinicalTrialSearchResults = 1,
         ClinicalTrialPrintableSearchResults = 2
     }

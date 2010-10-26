@@ -1,4 +1,4 @@
-﻿<%@ Page language="c#" Codebehind="definition.aspx.cs" AutoEventWireup="True" Inherits="Www.Common.PopUps.Definition" %>
+﻿<%@ Page language="c#" Codebehind="definition.aspx.cs" AutoEventWireup="True" Inherits="CancerGov.Web.Common.PopUps.Definition" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
   <HEAD id="header" runat="server">
