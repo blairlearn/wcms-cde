@@ -33,8 +33,6 @@ namespace CancerGov.Web.SnippetTemplates
                 }
 
                 string definitionText = string.Empty;
-                // TODO:make the call to the CDR database here to obtain the text based on the 
-                // CDRId
                 TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, SnippetInfo.CDRId, null, 5);
                 definitionText = SnippetInfo.CDRDefinitionName + ":" + dataItem.DefinitionHTML;
                 return definitionText;
