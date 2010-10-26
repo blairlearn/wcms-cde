@@ -63,4 +63,12 @@ namespace NCI.Web.CDE
         //XML errors
         public static int XmlStringParseError = 500;
     }
+
+    //public enum PDQVersion
+    //{
+    //    Unknown = -1,
+    //    Patient = 0,
+    //    HealthProfessional = 1
+    //}
+
 }
