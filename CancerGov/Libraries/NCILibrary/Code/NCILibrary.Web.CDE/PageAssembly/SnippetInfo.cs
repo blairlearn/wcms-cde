@@ -58,7 +58,7 @@ namespace NCI.Web.CDE
         /// <summary>
         /// The id of the CDR definition. 
         /// </summary>
-        public int CDRId { get; set; }
+        public string CDRId { get; set; }
 
         /// <summary>
         /// The name of the CDR Definition.
