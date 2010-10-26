@@ -7,6 +7,7 @@ using System.Data;
 using CancerGov.UI;
 using CancerGov.Common.ErrorHandling;
 using NCI.Util;
+using NCI.DataManager;
 using NCI.Web.CDE;
 namespace CancerGov.CDR.TermDictionary
 {
@@ -235,6 +236,13 @@ namespace CancerGov.CDR.TermDictionary
         }
 
 
+        public static ArrayList GetDefinition(string type, string param, PDQVersion pdqVersion, string language)
+        {
+            ArrayList returnvalue = new ArrayList(3);
+           
+            PopUpDefinition popUpDef = new PopUpDefinition();
+            returnvalue = popUpDef.GetDefinition(type, param, pdqVersion.ToString(), language);
+            return returnvalue;
+        }
     }
-
 }

@@ -73,6 +73,10 @@
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Libraries\NCILibrary\Code\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
+      <Project>{F4C37116-861A-4FD6-B45D-578B258FEFC7}</Project>
+      <Name>NCILibrary.DataManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
       <Project>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</Project>
       <Name>NCILibrary.Web.CDE</Name>
