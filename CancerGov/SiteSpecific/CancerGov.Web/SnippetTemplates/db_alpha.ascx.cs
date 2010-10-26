@@ -130,6 +130,7 @@ namespace Www.Templates
 
         protected override void OnLoad(EventArgs e)
         {
+            base.OnLoad(e);
             GetQueryParams();
 
             //Setup URLS

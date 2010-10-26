@@ -135,7 +135,7 @@ namespace NCI.Web.CDE
                     case "CDRId":
                         string cdrId = reader.ReadString();
                         if (!string.IsNullOrEmpty(cdrId))
-                            CDRId = Int32.Parse(cdrId);
+                            CDRId = cdrId;
                         break;
 
                     case "CDRDefinitionName":
