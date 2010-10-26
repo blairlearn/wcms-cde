@@ -188,65 +188,6 @@ namespace CancerGov.Web.Common.PopUps
             ArrayList returnvalue = new ArrayList(3);
             returnvalue = CancerGov.CDR.TermDictionary.TermDictionaryManager.GetDefinition(type, param, pdqVersion, lng);
             return returnvalue;
-            //string version = (pdqVersion == PDQVersion.HealthProfessional) ? "Health Professional" : "Patient";
-
-            //SqlConnection dbh = new SqlConnection(ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
-            //SqlCommand sth = new SqlCommand("usp_GetGlossaryDefinition", dbh);
-            //sth.CommandType = CommandType.StoredProcedure;
-
-            //if (type == "term")
-            //{
-            //    SqlParameter param_term = new SqlParameter("@Term", SqlDbType.VarChar, 255);
-            //    param_term.Value = param;
-            //    sth.Parameters.Add(param_term);
-
-            //    SqlParameter param_audience = new SqlParameter("@Audience", SqlDbType.VarChar, 50);
-            //    param_audience.Value = version;
-            //    sth.Parameters.Add(param_audience);
-
-            //    SqlParameter param_language = new SqlParameter("@Language", SqlDbType.VarChar, 50);
-            //    param_language.Value = language.ToString().ToUpper();
-            //    sth.Parameters.Add(param_language);
-            //}
-            //else if (type == "id")
-            //{
-            //    SqlParameter param_id = new SqlParameter("@ID", SqlDbType.VarChar, 50);
-            //    param_id.Value = param;
-            //    sth.Parameters.Add(param_id);
-
-            //    SqlParameter param_audience = new SqlParameter("@Audience", SqlDbType.VarChar, 50);
-            //    param_audience.Value = version;
-            //    sth.Parameters.Add(param_audience);
-
-            //    SqlParameter param_language = new SqlParameter("@Language", SqlDbType.VarChar, 50);
-            //    param_language.Value = language.ToString().ToUpper();
-            //    sth.Parameters.Add(param_language);
-            //}
-            //else
-            //{
-            //    throw new Exception("Unknown type (" + type + ") in get_definition()");
-            //}
-
-            //dbh.Open();
-
-            //SqlDataReader rows = sth.ExecuteReader();
-            //if (rows.Read())
-            //{
-            //    returnvalue.Add(rows[1]); // Name
-            //    returnvalue.Add(rows[2]); // Pronounciation
-            //    returnvalue.Add(rows[3]); // Definition
-            //    returnvalue.Add(rows[4]); // MediaHtml
-            //    rows.Close();
-            //    dbh.Close();
-            //}
-            //else
-            //{
-            //    rows.Close();
-            //    dbh.Close();
-            //    return null;
-            //}
-
-            //return returnvalue;
         }
 
         protected void Page_Init(object sender, EventArgs e)

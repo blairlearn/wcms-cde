@@ -8,7 +8,7 @@ using NCI.Web.UI.WebControls;
 using NCI.Web.CDE.UI.Configuration;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
-
+using CancerGov.CDR.TermDictionary;
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class CDRDefinitionTemplate : SnippetControl
@@ -22,11 +22,21 @@ namespace CancerGov.Web.SnippetTemplates
         {
             get 
             {
+                string language = string.Empty;
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+                {
+                    language = "English";
+                }
+                else
+                {
+                    language = "Spanish";
+                }
+
                 string definitionText = string.Empty;
-                definitionText = SnippetInfo.CDRDefinitionName + ":";
                 // TODO:make the call to the CDR database here to obtain the text based on the 
                 // CDRId
-
+                TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, SnippetInfo.CDRId, null, 5);
+                definitionText = SnippetInfo.CDRDefinitionName + ":" + dataItem.DefinitionHTML;
                 return definitionText;
             }
         }
