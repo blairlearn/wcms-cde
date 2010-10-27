@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 
-namespace NCILibrary.Web.CDE.UI.Modules
+namespace NCI.Web.CDE.UI.Modules
 {
     /// <summary>
     /// The class which defines all configurable properties.

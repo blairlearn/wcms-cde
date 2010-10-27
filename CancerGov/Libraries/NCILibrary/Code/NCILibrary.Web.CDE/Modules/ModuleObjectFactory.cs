@@ -26,7 +26,7 @@ namespace NCI.Web.CDE.Modules
             }
             catch (Exception ex)
             {
-                Logger.LogError("cde:ModuleObjectFactory.cs.GetModuleObject", "Invalid xml data in the snippet for DynamicList, check xml received from Percussion", NCIErrorLevel.Error);
+                Logger.LogError("cde:ModuleObjectFactory.cs.GetModuleObject", "Invalid xml data in the snippet for " + typeof(ModuleObjectType).ToString() + " , check xml received from Percussion", NCIErrorLevel.Error);
                 throw ex;
             }
         }

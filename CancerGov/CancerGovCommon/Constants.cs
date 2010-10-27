@@ -278,7 +278,7 @@ namespace CancerGov.DataAccessClasses.UI.Types
     }
 }
 
-namespace CancerGov.DataAccessClasses.CDR
+namespace CancerGov.CDR.DataManager
 {
 
     public enum ProtocolSectionTypes

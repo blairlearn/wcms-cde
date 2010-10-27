@@ -10,7 +10,7 @@ using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
 
-namespace NCILibrary.Web.CDE.UI.Modules
+namespace NCI.Web.CDE.UI.Modules
 {
     [DefaultProperty("Title")]
     [ToolboxData("<{0}:SearchControl runat=server></{0}:SearchControl>")]

@@ -1,1 +1,1 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCILibrary.Web.CDE.UI.Modules.SearchBox"  %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.Modules.SearchBox"  %>
