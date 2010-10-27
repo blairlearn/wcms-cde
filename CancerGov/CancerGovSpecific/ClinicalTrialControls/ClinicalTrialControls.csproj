@@ -39,14 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NCILibrary.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b68440c3db501d2b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\InHouseDLLs\NCILibrary.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="NCILibrary.Web.UI.WebControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\InHouseDLLs\NCILibrary.Web.UI.WebControls.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -90,6 +82,14 @@
     <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
       <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
       <Name>CDR.ClinicalTrials</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
+      <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
+      <Name>NCILibrary.Web.UI.WebControls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
