@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2ED8F4D6-9A1D-4109-8F37-6D407C674184}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{1F48A070-CA42-46D7-8C14-1CBE11609F4F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmergencyAlert</RootNamespace>
-    <AssemblyName>EmergencyAlert</AssemblyName>
+    <RootNamespace>CDR.DrugDictionary</RootNamespace>
+    <AssemblyName>CDR.DrugDictionary</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,15 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NCI.EmergencyAlert.Library, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\InHouseDLLs\NCI.EmergencyAlert.Library.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -50,21 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EmergencyAlertBanner.cs" />
-    <Compile Include="EmergencyAlertHttpModule.cs" />
-    <Compile Include="EmergencyAlertMessage.cs" />
-    <Compile Include="EmergencyContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CancerGovCommon\CancerGovCommon.csproj">
-      <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
-      <Name>CancerGovCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
-      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
-      <Name>NCILibrary.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
