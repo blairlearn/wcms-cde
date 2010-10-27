@@ -210,6 +210,10 @@
       <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
       <Name>CancerGovCommon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CancerGovSpecific\ClinicalTrialControls\ClinicalTrialControls.csproj">
+      <Project>{2FDF38AF-E70B-485F-86B9-A32948AC8926}</Project>
+      <Name>ClinicalTrialControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
       <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
       <Name>CDR.ClinicalTrials</Name>

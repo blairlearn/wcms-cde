@@ -5,9 +5,18 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-using CancerGov.CDR.ClinicalTrials.Search;
 using System.Diagnostics;
+using System.Collections;
+using System.Configuration;
+
+using CancerGov.CDR.ClinicalTrials.Search;
+using CancerGov.CDR.ClinicalTrials.Helpers;
+using CancerGov.Common.HashMaster;
 using NCI.Util;
+using NCI.Web.UI.WebControls.FormControls;
+using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
+using NCI.Logging;
+
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -159,7 +168,7 @@ namespace CancerGov.Web.SnippetTemplates
                     }
                     catch (Exception ex)
                     {
-                        CancerGovError.LogError("", "CTSearchManager.LoadSavedCriteria", ErrorType.DbUnavailable, ex);
+                        NCI.Logging.Logger.LogError("", "CTSearchManager.LoadSavedCriteria", NCIErrorLevel.Error, ex);
                         this.RaiseErrorPage("InvalidSearchID");
                     }
 
@@ -206,26 +215,26 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
 
-            this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinical Trial Search", this.Request.Url.OriginalString.ToString());
-            this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.RootPrettyURL, "/clinicaltrials/search"); // prop3
-            this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.ShortTitle, "Search for Clinical Trials"); // prop6
-            this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.PostedDate, ""); //prop25
-            this.WebAnalyticsPageLoad.SetPageName(WebAnalyticsOptions.Hostname + "/clinicaltrials/search");
-            litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
+            //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinical Trial Search", this.Request.Url.OriginalString.ToString());
+            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.RootPrettyURL, "/clinicaltrials/search"); // prop3
+            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.ShortTitle, "Search for Clinical Trials"); // prop6
+            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.PostedDate, ""); //prop25
+            //this.WebAnalyticsPageLoad.SetPageName(WebAnalyticsOptions.Hostname + "/clinicaltrials/search");
+            //litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
 
-            string webAnalyticsParameters =
-                String.Format(
-                    "{{typeOfTrialControlID : '{0}',drugControlID : '{1}',treatnentInterventionControlID : '{2}',sponsorOfTrialControlID : '{3}',trialInvestigatorsControlID : '{4}',leadOrganizationCooperativeGroupControlID : '{5}', specialCategoryControlID : '{6}'}}",
-                    trialType.ClientID,
-                    drug.ClientID,
-                    intervention.ClientID,
-                    sponsor.ClientID,
-                    investigator.ClientID,
-                    leadOrg.ClientID,
-                    specialCategory.ClientID
-                );
+            //string webAnalyticsParameters =
+            //    String.Format(
+            //        "{{typeOfTrialControlID : '{0}',drugControlID : '{1}',treatnentInterventionControlID : '{2}',sponsorOfTrialControlID : '{3}',trialInvestigatorsControlID : '{4}',leadOrganizationCooperativeGroupControlID : '{5}', specialCategoryControlID : '{6}'}}",
+            //        trialType.ClientID,
+            //        drug.ClientID,
+            //        intervention.ClientID,
+            //        sponsor.ClientID,
+            //        investigator.ClientID,
+            //        leadOrg.ClientID,
+            //        specialCategory.ClientID
+            //    );
 
-            submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
+            //submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
         }
 
         #endregion

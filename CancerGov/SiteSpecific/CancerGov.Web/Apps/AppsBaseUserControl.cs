@@ -21,6 +21,7 @@ namespace NCI.Web.CancerGov.Apps
     {
         private WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
         protected DisplayInformation pageDisplayInformation;
+        private string strHelpPageLink = "#";
 
         virtual protected string GetResource(string key)
         {
@@ -56,6 +57,17 @@ namespace NCI.Web.CancerGov.Apps
 
             systemMessagePageUrl += "msg=" + messageKey.Trim();
             Response.Redirect(systemMessagePageUrl, true);
+        }
+
+        public string CurrentPageUrl
+        {
+            get { return this.Request.RawUrl; }
+        }
+
+        public string HelpPageLink
+        {
+            get { return strHelpPageLink; }
+            set { strHelpPageLink = value; }
         }
     }
 }

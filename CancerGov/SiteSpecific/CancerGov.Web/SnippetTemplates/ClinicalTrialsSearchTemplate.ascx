@@ -1,5 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ClinicalTrialsSearchTemplate.ascx.cs"
     Inherits="CancerGov.Web.SnippetTemplates.ClinicalTrialsSearchTemplate" %>
+<%@ Register assembly="CancerGovUIControls" namespace="NCI.Web.UI.WebControls.FormControls" tagprefix="CancerGov" %>    
+
 <td id="contentzone" valign="top" width="*">
     <a name="skiptocontent"></a>
     <form name="advSearchForm" id="advSearchForm" method="post" runat="server">
