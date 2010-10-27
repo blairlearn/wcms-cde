@@ -39,10 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NCILibrary.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b68440c3db501d2b, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\InHouseDLLs\NCILibrary.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -89,6 +85,10 @@
     <ProjectReference Include="..\CDR.DataManager\CDR.DataManager.csproj">
       <Project>{BD37ACFC-049C-4807-93CC-1A3BFA25F11A}</Project>
       <Name>CDR.DataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
+      <Name>NCILibrary.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
