@@ -32,7 +32,7 @@ namespace www.Common.UserControls
             get { return _displayInfo.Language; }
         }
 
-        public DisplayVersion Version
+        public DisplayVersions Version
         {
             get { return _displayInfo.Version; }
         }
@@ -83,7 +83,7 @@ namespace www.Common.UserControls
             {
                 pnlLangSelect.Visible = false;
             }
-            else if (Version == DisplayVersion.Text)
+            else if (Version == DisplayVersions.Text)
             {
                 hlEnglish.Text = "In English";
                 hlSpanish.Text = "En espa&ntilde;ol";
@@ -102,7 +102,7 @@ namespace www.Common.UserControls
             if (!EnableBothLinks)
                 hlEnglish.Enabled = false;
 
-            if (Version == DisplayVersion.Text && !EnableBothLinks)
+            if (Version == DisplayVersions.Text && !EnableBothLinks)
             {
                 hlEnglish.Visible = false;
                 lblEnglish.Visible = true;
@@ -115,7 +115,7 @@ namespace www.Common.UserControls
             if (!EnableBothLinks)
                 hlSpanish.Enabled = false;
 
-            if (Version == DisplayVersion.Text && !EnableBothLinks)
+            if (Version == DisplayVersions.Text && !EnableBothLinks)
             {
                 hlSpanish.Visible = false;
                 lblSpanish.Visible = true;

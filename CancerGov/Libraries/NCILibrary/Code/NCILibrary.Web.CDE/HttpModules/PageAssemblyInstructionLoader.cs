@@ -227,7 +227,9 @@ namespace NCI.Web.CDE
 
             //set the page assembly context with the assemblyInfo, dispayVersion and pageTemplateInfo
             PageAssemblyContext.Current.InitializePageAssemblyInfo(assemblyInfo, displayVersion, pageTemplateInfo, url);
-            
+
+            if (!string.IsNullOrEmpty(assemblyInfo.Language))
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(assemblyInfo.Language);
 
             string rewriteUrl = PageAssemblyContext.Current.PageTemplateInfo.PageTemplatePath;
 

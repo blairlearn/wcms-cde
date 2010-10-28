@@ -267,7 +267,7 @@ namespace NCI.Web.CancerGov.Apps
             //Setup if we are allowed to show DYM
             _allowedToShowDYM = Strings.ToBoolean((string)ConfigurationSettings.AppSettings["EndecaDidYouMean"]) && PageDisplayInformation.Language == DisplayLanguage.English;
 
-            if (PageDisplayInformation.Version == DisplayVersion.Image)
+            if (PageDisplayInformation.Version == DisplayVersions.Image)
             {
                 btnSWRImgSearch.Visible = true;
                 btnSWRTxtSearch.Visible = false; 
@@ -397,7 +397,7 @@ namespace NCI.Web.CancerGov.Apps
 
             base.OnPreRender(e);
 
-            if (PageDisplayInformation.Version == DisplayVersion.Image)
+            if (PageDisplayInformation.Version == DisplayVersions.Image)
                 pnlSWR.DefaultButton = btnSWRImgSearch.ID;
             else
                 pnlSWR.DefaultButton = btnSWRTxtSearch.ID;

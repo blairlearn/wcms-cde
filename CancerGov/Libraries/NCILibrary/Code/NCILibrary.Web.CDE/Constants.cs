@@ -25,7 +25,7 @@ namespace NCI.Web.CDE
 
     public struct DisplayInformation
     {
-        public DisplayVersion Version;
+        public DisplayVersions Version;
         public DisplayLanguage Language;
     }
 

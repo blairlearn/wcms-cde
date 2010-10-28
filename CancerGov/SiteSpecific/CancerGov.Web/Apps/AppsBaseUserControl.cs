@@ -23,6 +23,26 @@ namespace NCI.Web.CancerGov.Apps
         protected DisplayInformation pageDisplayInformation;
         private string strHelpPageLink = "#";
 
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            pageDisplayInformation = new DisplayInformation();
+            switch(PageInstruction.Language)
+            {
+                case "en":
+                    pageDisplayInformation.Language = DisplayLanguage.English;
+                    break;
+                case "es":
+                    pageDisplayInformation.Language = DisplayLanguage.Spanish;
+                    break;
+                default:
+                    pageDisplayInformation.Language = DisplayLanguage.English;
+                    break;
+            }
+            pageDisplayInformation.Version  = PageAssemblyContext.Current.DisplayVersion;
+        }
+
         virtual protected string GetResource(string key)
         {
             if( string.IsNullOrEmpty(key) )
