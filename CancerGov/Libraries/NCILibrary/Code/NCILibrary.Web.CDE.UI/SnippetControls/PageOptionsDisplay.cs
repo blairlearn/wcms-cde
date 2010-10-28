@@ -113,7 +113,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         }
                     }
 
-                    this.Controls.Add(pageOptionsBox);
+                    if( pageOptionsBox.PageOptions.Count > 0 )
+                        this.Controls.Add(pageOptionsBox);
                 }
             }
         }
