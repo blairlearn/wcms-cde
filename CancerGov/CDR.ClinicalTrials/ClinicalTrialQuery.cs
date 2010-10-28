@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-using CancerGov.Common.ErrorHandling;
+using CancerGov.Common.ErrorHandling; 
 using NCI.Data;
 
 namespace CancerGov.CDR.ClinicalTrials

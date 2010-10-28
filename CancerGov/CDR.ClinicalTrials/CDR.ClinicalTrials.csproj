@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CancerGovCommon\CancerGovCommon.csproj">
-      <Project>{EB27E6EE-7FE9-47F4-9414-E726A5C0626E}</Project>
+      <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
       <Name>CancerGovCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\CDR.DataManager\CDR.DataManager.csproj">
