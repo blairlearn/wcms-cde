@@ -1,6 +1,7 @@
 ﻿namespace Www.Common.UserControls
 {
     using System;
+    using NCI.Web.CDE;
 
     ///<summary>
     ///HTML alphabetic index box<br/>
@@ -156,17 +157,17 @@
                 if (numericItems)
                 {
                     if (doWebAnalytics)
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + baseUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'#') >#</a></td>\n";
+                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'#') >#</a></td>\n";
                     else
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + baseUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\">#</a></td>\n";
+                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\">#</a></td>\n";
                 }
 
                 for (int i = 65; i < 91; i++)
                 {
                     if (doWebAnalytics)
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + baseUrl + "?expand=" + (char)i + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + (char)i + "') >" + (char)i + "</a></td>\n";
+                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + (char)i + "') >" + (char)i + "</a></td>\n";
                     else
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + baseUrl + "?expand=" + (char)i + urlArgs + "\">" + (char)i + "</a></td>\n";
+                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\">" + (char)i + "</a></td>\n";
                 }
             }
             else
@@ -174,18 +175,18 @@
                 foreach (string item in boxItems)
                 {
                     if (doWebAnalytics)
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + baseUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + item + "') >" + item + "</a></td>\n";
+                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + item + "') >" + item + "</a></td>\n";
                     else
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + baseUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\">" + item + "</a></td>\n";
+                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\">" + item + "</a></td>\n";
                 }
             }
 
             if (showAll)
             {
                 if (doWebAnalytics)
-                    alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + baseUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'ALL') >" + "All" + "</a></td>\n";
+                    alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'ALL') >" + "All" + "</a></td>\n";
                 else
-                    alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + baseUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\">" + "All" + "</a></td>\n";
+                    alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\">" + "All" + "</a></td>\n";
             }
 
             //alphaListItems += "	<td width=\"1\"><img src=\"/images/spacer.gif\" alt=\"\" border=\"0\" width=\"1\" height=\"30\"></td>\n";
