@@ -134,8 +134,8 @@ namespace Www.Templates
             GetQueryParams();
 
             //Setup URLS
-            DictionaryURLSpanish = PageAssemblyContext.Current.requestedUrl; //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLSpanish"];
-            DictionaryURLEnglish = PageAssemblyContext.Current.requestedUrl; //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLEnglish"];
+            DictionaryURLSpanish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("dictionary", "diccionario"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLSpanish"];
+            DictionaryURLEnglish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("diccionario", "dictionary"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLEnglish"];
             DictionaryURL = DictionaryURLEnglish;
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
