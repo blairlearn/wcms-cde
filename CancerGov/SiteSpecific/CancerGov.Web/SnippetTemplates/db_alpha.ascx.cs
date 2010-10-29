@@ -222,7 +222,7 @@ namespace Www.Templates
                     suffix = " - AlphaNumericBrowse";
                 else if(CdrID != "") 
                     suffix = " - Definition";
-                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] +(_isSpanish ? "/diccionario" : "/dictionary") + suffix;
+                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
 
             }

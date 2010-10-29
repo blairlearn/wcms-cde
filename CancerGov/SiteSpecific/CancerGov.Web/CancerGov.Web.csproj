@@ -151,6 +151,13 @@
     <Compile Include="Common\PopUps\PopEmail.aspx.designer.cs">
       <DependentUpon>PopEmail.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Common\PopUps\popHelp.aspx.cs">
+      <DependentUpon>popHelp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\popHelp.aspx.designer.cs">
+      <DependentUpon>popHelp.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Common\UserControls\AlphaListBox.ascx.cs">
       <DependentUpon>AlphaListBox.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -190,6 +197,13 @@
     <Compile Include="SnippetTemplates\db_alpha.ascx.designer.cs">
       <DependentUpon>db_alpha.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\drugdictionary.ascx.cs">
+      <DependentUpon>drugdictionary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
+      <DependentUpon>drugdictionary.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
       <DependentUpon>MainPageHeader.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -218,9 +232,17 @@
       <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
       <Name>CDR.ClinicalTrials</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CDR.DrugDictionary\CDR.DrugDictionary.csproj">
+      <Project>{1F48A070-CA42-46D7-8C14-1CBE11609F4F}</Project>
+      <Name>CDR.DrugDictionary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CDR.TermDictionary\CDR.TermDictionary.csproj">
       <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
       <Name>CDR.TermDictionary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\EmergencyAlert\EmergencyAlert.csproj">
+      <Project>{2ED8F4D6-9A1D-4109-8F37-6D407C674184}</Project>
+      <Name>EmergencyAlert %28EmergencyAlert\EmergencyAlert%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
@@ -258,6 +280,8 @@
   <ItemGroup>
     <Content Include="Common\PopUps\definition.aspx" />
     <Content Include="Common\PopUps\popDefinition.aspx" />
+    <Content Include="Common\PopUps\popHelp.aspx" />
+    <Content Include="Common\PopUps\popHelp.html" />
     <Content Include="Common\UserControls\AlphaListBox.ascx" />
     <Content Include="Common\UserControls\LangSwitch.ascx" />
     <Content Include="App_GlobalResources\SiteWideSearch.resx">
@@ -268,6 +292,7 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SiteWideSearch.es.designer.cs</LastGenOutput>
     </Content>
+    <Content Include="DrugDictionary.svc" />
     <Content Include="JS\imgEvents.js" />
     <Content Include="JS\NetTracker\ntpagetag.js" />
     <Content Include="PageTemplates\CancerGovDictionaryTemplate.aspx" />
@@ -275,6 +300,7 @@
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
+    <Content Include="SnippetTemplates\drugdictionary.ascx" />
     <Content Include="TermDictionary.svc" />
     <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
       <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
