@@ -133,6 +133,7 @@
     <Compile Include="PageOptionsBox\PageOptionsCollection.cs" />
     <Compile Include="PagerStyleSettings.cs">
     </Compile>
+    <Compile Include="PostBackButtonPager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleAtoZList.cs" />
     <Compile Include="SimplePager.cs" />

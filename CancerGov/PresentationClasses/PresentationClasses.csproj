@@ -48,6 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CDR\AdvancedSearchProtocolRenderer.cs" />
+    <Compile Include="CDR\AdvancedSearchResultRenderer.cs" />
+    <Compile Include="CDR\PrintProtocolRenderer.cs" />
+    <Compile Include="CDR\PrintSearchResultsRenderer.cs" />
+    <Compile Include="CDR\ProtocolFunctions.cs" />
+    <Compile Include="CDR\ProtocolRenderer.cs" />
+    <Compile Include="CDR\ProtocolRendererOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,9 +62,17 @@
       <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
       <Name>CancerGovCommon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CDR.DataManager\CDR.DataManager.csproj">
+      <Project>{BD37ACFC-049C-4807-93CC-1A3BFA25F11A}</Project>
+      <Name>CDR.DataManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
+      <Project>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</Project>
+      <Name>NCILibrary.Web.CDE</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

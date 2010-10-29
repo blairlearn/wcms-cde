@@ -1,7 +1,105 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ClinicalTrialsSearchTemplate.ascx.cs"
     Inherits="CancerGov.Web.SnippetTemplates.ClinicalTrialsSearchTemplate" %>
 <%@ Register assembly="CancerGovUIControls" namespace="NCI.Web.UI.WebControls.FormControls" tagprefix="CancerGov" %>    
+<style type="text/css">
+/* IE doesn't include the drop down button in its width calculation,
+   so for IE only we need to shrink the drop down. */
+#country {
+    width: 100%;
+}
+* html #country {
+    width: 85%;
+}
 
+#trialPhase tr:first-child td
+{
+    height: 28px;
+    vertical-align: top;
+}
+
+div.locationGroupbox
+{
+    margin: 10px 0 0 0;
+    padding: 10px;
+}
+ 
+div.scrollingList
+{
+    background-color: #ffffff;
+    border: solid 1px #bdbdbd;
+    overflow: scroll;
+    white-space: nowrap;
+}
+ 
+div.scrollingListDisabled
+{
+    background-color: #ffffff;
+    border: solid 1px #bdbdbd;
+    overflow: scroll;
+    white-space: nowrap;
+    color: #9e9e9e;
+}
+
+
+table.cttable td.column1-noline, table.cttable td.column2-noline, table.cttable td.column3-noline {
+    border-top: none;
+    padding-bottom: 10px;
+}
+
+table.cttable td.column1 {
+    padding: 10px 6px;
+    text-align: right;
+    color: #000000;
+    font-weight: bold;
+    width: 23%;
+}
+
+table.cttable td.column2 {
+    padding: 10px 0 10px 10px;
+}	
+
+table.cttable td.column3 {
+    padding: 13px 0 13px 3px;
+    text-align: right;
+    width: 5%;
+}
+
+table.cttable td.hr {
+    padding: 0;
+}
+
+table.cttable td.sectionBreak {
+    border-top: 1px solid #bdbdbd;
+}
+
+table.subtable td.subSectionBreak
+{
+    border-top: dashed 1px #bdbdbd;
+}
+
+table.cttable td.sectionBottom
+{
+	padding-bottom: 25px;
+}
+
+span.gray-text
+{
+	color: #6e6e6e;
+}
+
+#updateSubTypeList
+{
+	border: none;
+	margin-top: 3px;
+}
+
+#LocationChooser input[type='radio']
+{
+	margin-top: 0px;
+	padding-top:0px;
+}
+
+</style>
 <td id="contentzone" valign="top" width="*">
     <a name="skiptocontent"></a>
     <form name="advSearchForm" id="advSearchForm" method="post" runat="server">

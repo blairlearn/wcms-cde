@@ -13,6 +13,7 @@ using CancerGov.CDR.ClinicalTrials.Search;
 using CancerGov.CDR.ClinicalTrials.Helpers;
 using CancerGov.Common.HashMaster;
 using NCI.Util;
+using NCI.Web.UI.WebControls;
 using NCI.Web.UI.WebControls.FormControls;
 using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Logging;
@@ -47,7 +48,7 @@ namespace CancerGov.Web.SnippetTemplates
                 if (searchID > 0)
                 {
                     // Redirect to the search results page.
-                    Response.Redirect(String.Format("ResultsClinicalTrials.aspx?protocolsearchid={0}", searchID), true);
+                    Response.Redirect(String.Format("csearchresults?protocolsearchid={0}", searchID), true);
                 }
                 else
                 {
@@ -235,6 +236,10 @@ namespace CancerGov.Web.SnippetTemplates
             //    );
 
             //submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
+
+            JSManager.AddExternalScript( this.Page, "/scripts/Search/SearchClinicalTrials.js");
+            JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
+            CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css");
         }
 
         #endregion

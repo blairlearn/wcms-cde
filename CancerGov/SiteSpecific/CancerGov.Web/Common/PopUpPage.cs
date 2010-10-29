@@ -36,7 +36,7 @@ namespace CancerGov.Web
             JSManager.AddExternalScript(this, "/scripts/popEvents.js");
         }
 
-        private DisplayVersions DisplayVersion
+        public DisplayVersions DisplayVersion
         {
             get
             {

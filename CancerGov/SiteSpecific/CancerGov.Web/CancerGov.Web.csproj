@@ -204,6 +204,20 @@
     <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
       <DependentUpon>drugdictionary.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\ResultsClinicalTrials.ascx.cs">
+      <DependentUpon>ResultsClinicalTrials.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ResultsClinicalTrials.ascx.designer.cs">
+      <DependentUpon>ResultsClinicalTrials.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CTCustomSelection.ascx.cs">
+      <DependentUpon>CTCustomSelection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\CTCustomSelection.ascx.designer.cs">
+      <DependentUpon>CTCustomSelection.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
       <DependentUpon>MainPageHeader.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -231,6 +245,10 @@
     <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
       <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
       <Name>CDR.ClinicalTrials</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDR.DataManager\CDR.DataManager.csproj">
+      <Project>{BD37ACFC-049C-4807-93CC-1A3BFA25F11A}</Project>
+      <Name>CDR.DataManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\CDR.DrugDictionary\CDR.DrugDictionary.csproj">
       <Project>{1F48A070-CA42-46D7-8C14-1CBE11609F4F}</Project>
@@ -268,6 +286,10 @@
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PresentationClasses\PresentationClasses.csproj">
+      <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
+      <Name>PresentationClasses %28CancerGovSpecific\PresentationClasses\PresentationClasses%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Search.Endeca\CancerGov.Search.Endeca.csproj">
       <Project>{4FD1D24F-D186-46FE-B44E-FA110AFE27FF}</Project>
       <Name>CancerGov.Search.Endeca</Name>
@@ -301,7 +323,9 @@
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
+    <Content Include="SnippetTemplates\ResultsClinicalTrials.ascx" />
     <Content Include="TermDictionary.svc" />
+    <Content Include="UserControls\CTCustomSelection.ascx" />
     <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
       <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
     </EmbeddedResource>
