@@ -10,7 +10,6 @@
 			{
 			    var itemsSelected = false;
 				var returnControl = eval('window.parent.opener.window.' + fld + "_obj");
-
                 var selectedText;
                 var selectedValue;
 
@@ -47,8 +46,8 @@
 				    			    selectedText = chkInputs[i].value;
 			    				    selectedValue = "0";
 //		    						chkValues += chkInputs[i].value;
-//	    							chkIds += "0";								
-    							}
+//	    							chkIds += "0";
+			    				}
 								returnControl.AddEntry(selectedText, selectedValue);
 								itemsSelected = true;
 							}
@@ -57,7 +56,7 @@
 				}
 				
 				if(itemsSelected)
-    				RevealParentListArea(fld);
+    				RevealParentListArea('<%=Request.Params["fld"]%>');
 
 				window.parent.window.close();				
 			}
@@ -92,7 +91,7 @@
 	 <td><img src="/images/spacer.gif" width="10" height="1" alt=""></td>
 	 <td valign="top" width="100%">
     <form>
-      <input type="image" src="/images/ctsearch/add-selected-btn.gif" name="selectchecked" onclick="doSubmit('<%=Request.Params["fld"]%>');" alt="Add Selected" title="Add Selected" />
+      <input type="image" src="/images/ctsearch/add-selected-btn.gif" name="selectchecked" onclick="doSubmit('<%=Request.Params["type"]%>');" alt="Add Selected" title="Add Selected" />
      </form>
      </td>
    </tr>

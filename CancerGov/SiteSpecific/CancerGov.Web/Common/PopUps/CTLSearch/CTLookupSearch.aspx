@@ -11,7 +11,7 @@
                 bName = navigator.appName;
                 bVer  = parseInt(navigator.appVersion);
 
-                window.parent.frames[2].location.href = '/common/popups/CTLSearch/CTLookupSelect.aspx?fld=<%=Request.Params["fld"]%>';
+                window.parent.frames[2].location.href = '/common/popups/CTLSearch/CTLookupSelect.aspx?fld=<%=Request.Params["fld"]%>&type=<%=Request.Params["type"]%>';
 				document.lookupSearch.submit();
 			}
 		</script>

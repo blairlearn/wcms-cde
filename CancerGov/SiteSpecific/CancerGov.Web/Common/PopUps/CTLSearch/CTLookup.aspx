@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/stylesheets/nci.css" />
   </head>
   <frameset rows="275,*,40" id="Lookup" frameborder="no" border="0">
-	<frame name="search" title="Search" src="/Common/popups/CTLSearch/CTLookupSearch.aspx?fld=<%=Request.Params["fld"]%>&title=<%=Title%>" scrolling="no" noresize/>
+	<frame name="search" title="Search" src="/Common/popups/CTLSearch/CTLookupSearch.aspx?fld=<%=Request.Params["fld"]%>&type=<%=Request.Params["type"]%>&title=<%=Title%>" scrolling="no" noresize/>
 	<frame name="results" title="Results" src="/Common/popups/CTLSearch/CTLookupResults.aspx?fld=<%=Request.Params["fld"]%>" scrolling="auto" frameborder="0" />
 	<frame name="select" title="Select" src="/Common/popups/CTLSearchblank.htm" scrolling="no" noresize>	
   </frameset>
