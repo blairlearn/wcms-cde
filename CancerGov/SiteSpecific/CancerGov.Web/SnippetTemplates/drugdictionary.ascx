@@ -201,8 +201,7 @@
                             </asp:Panel>
                         </asp:View>
                     </asp:MultiView>
-                    <!--<asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal>-->
-<a href="#top" class="backtotop-link"><img src="/images/backtotop_red.gif" alt="Back to Top" border="0">Back to Top</a>
+                    <asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal>
                     
                     <asp:Literal ID="litPager" runat="server"></asp:Literal>
                 </td>

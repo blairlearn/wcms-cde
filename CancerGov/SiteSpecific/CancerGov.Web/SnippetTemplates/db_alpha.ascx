@@ -266,9 +266,9 @@
                 </asp:MultiView>
 			  
 	
-						<!-- <img src="/images/spacer.gif" width="10" height="19" alt="" border="0"><br>
-                <asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal> -->
-                <a href="#top" class="backtotop-link"><img src="/images/backtotop_red.gif" alt="Back to Top" border="0">Back to Top</a>
+						<!-- <img src="/images/spacer.gif" width="10" height="19" alt="" border="0"><br>-->
+                <asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal> 
+                
 			  
 			  </td>
 

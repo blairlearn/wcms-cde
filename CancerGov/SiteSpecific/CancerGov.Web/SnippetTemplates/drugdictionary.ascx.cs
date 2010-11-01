@@ -133,8 +133,7 @@ namespace Www.Templates
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
-
+            base.OnLoad(e);            
             GetQueryParams();
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString(); //ConfigurationSettings.AppSettings["DrugDictionaryURL"];
 
@@ -200,7 +199,14 @@ namespace Www.Templates
             }
 
 
-            //prerender
+            BackTopLink();
+            //set up pager stuff
+            if (NumResults > 0 && PageAssemblyContext.Current.DisplayVersion != DisplayVersions.Print)
+            {
+                CancerGov.Common.ResultPager objPager = new CancerGov.Common.ResultPager(PageUrl, CurrentPageIndex, PageSize, 2, NumResults);
+                PagerHtml = "<p>" + objPager.RenderPager() + "</p>";
+            }
+            litPager.Text = PagerHtml;
 
 
         }
@@ -213,7 +219,26 @@ namespace Www.Templates
             //else
                 return "";
         }
+        protected void BackTopLink()
+        {
+            //		RawUrl	"/drugdictionary?CdrID=42766"	string
 
+            if (Request.RawUrl.Contains("?") == false)
+            {
+
+                litBackToTop.Visible = false;
+            }
+            else if (Request.RawUrl.Contains("?CdrID") == true)
+            {
+                litBackToTop.Visible = false;
+            }
+            else
+            {
+                litBackToTop.Visible = true;
+                litBackToTop.Text = "<a href=\"#top\" class=\"backtotop-link\"><img src=\"/images/backtotop_red.gif\" alt=\"Back to Top\" border=\"0\">Back to Top</a>";
+
+            }
+        }
 
         /// <summary>
         /// Saves the quesry parameters to support old gets
