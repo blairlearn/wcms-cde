@@ -31,9 +31,9 @@
                     <a name="skiptocontent"></a>
                     <!-- ADMIN TOOL CONTENT GOES HERE -->
                     <!-- Search area -->
-                    <asp:Panel ID="pnlDrugSearch" runat="server">
-                        <div class="searchboxTopRow">
-                            <div id="searchboxContainer" runat="server">
+                    <asp:Panel ID="pnlDrugSearch" runat="server" CssClass="pnlDrugSearch">
+                        <div class="searchboxTopRow" class="searchboxTopRow">
+                            <div id="searchboxContainer" runat="server" class="searchboxContainer">
                                 <div class="hidden">
                                     The search textbox has an autosuggest feature. When you enter three or more characters,
                                     a list of up to 10 suggestions will popup under the textbox. Use the arrow keys
@@ -41,33 +41,33 @@
                                     the escape key closes the listbox and puts you back at the textbox. The radio buttons
                                     allow you to toggle between having all search items start with or contain the text
                                     you entered in the search box.</div>
-                                <asp:Label ID="lblStrSearch" runat="server" Text="Search for"></asp:Label>
-                                <CGov:AutoComplete ID="AutoComplete1" Name="AutoComplete1" runat="server" CallbackFunc="ACOnSubmit" autocomplete="off"
+                                <asp:Label CssClass="lblStrSearch" ID="lblStrSearch" runat="server" Text="Search for"></asp:Label>
+                                <CGov:AutoComplete CssClass="AutoComplete1" ID="AutoComplete1" Name="AutoComplete1" runat="server" CallbackFunc="ACOnSubmit" autocomplete="off"
                                     MinWidth="384" />
                                 <asp:Label ID="lblAccessSearch" CssClass="hidden" runat="server" Text="Search text box"
                                     AssociatedControlID="AutoComplete1"></asp:Label>
                             </div>
-                            <div id="drugSearchboxBtn">
-                                <asp:ImageButton ID="btnGo" Name="btnGo" runat="server" ImageUrl="/images/red_go_button.gif" 
+                            <div id="drugSearchboxBtn" class="searchboxBtn">
+                                <asp:ImageButton ID="btnGo"  Name="btnGo" runat="server" ImageUrl="/images/red_go_button.gif" 
                                     AlternateText="Search" ToolTip="Search" />
                             </div>
-                            <div id="drugSearchboxStarts">
+                            <div id="drugSearchboxStarts" class="searchboxStarts">
                                 <asp:RadioButton ID="radioStarts" runat="server" Checked="True" GroupName="sgroup"
                                     Text="Starts with" ToolTip="Search item starts with this" />
                             </div>
-                            <div id="searchboxSeparator">
+                            <div id="searchboxSeparator" class="searchboxSeparator" class="searchboxSeparator">
                                 <img alt="" src="/images/dictionary-search-radio.gif" />
                             </div>
-                            <div id="drugSearchboxContains">
+                            <div id="drugSearchboxContains" class="searchboxContains">
                                 <asp:RadioButton  Name="radioContains" ID="radioContains" runat="server" GroupName="sgroup" />
                                 <asp:Label ID="lblAccessRadioContains" CssClass="hidden" runat="server" Text="Search item contains this"
                                     AssociatedControlID="radioContains"></asp:Label>
                                 <asp:Label ID="lblContains" runat="server" Text="Contains"></asp:Label>
                             </div>
-                             <div id="searchboxSeparator2">
+                             <div id="searchboxSeparator2" class="searchboxContains">
                                 <img alt="" src="/images/dictionary-search-radio.gif" />
                              </div>
-                             <div id="drugSearchboxHelp">
+                             <div id="drugSearchboxHelp" class="drugSearchboxHelp">
                                 <a href="javascript:dynPopWindow('/Common/PopUps/popHelp.aspx','popup','width=500,height=700,scrollbars=1,resizable=1,menubar=0,location=0,status=0,toolbar=0')">
                                     <img src="/images/drug-dictionary-help.gif" width="13" height="13" alt="" border="0">
                                 </a>                            

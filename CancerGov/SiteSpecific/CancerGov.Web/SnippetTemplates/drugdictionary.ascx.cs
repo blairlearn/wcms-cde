@@ -200,6 +200,7 @@ namespace Www.Templates
 
 
             BackTopLink();
+            ResultsForText();
             //set up pager stuff
             if (NumResults > 0 && PageAssemblyContext.Current.DisplayVersion != DisplayVersions.Print)
             {
@@ -209,6 +210,13 @@ namespace Www.Templates
             litPager.Text = PagerHtml;
 
 
+        }
+        protected void ResultsForText()
+        {
+            if (!string.IsNullOrEmpty(Expand))
+                numResDiv.Visible = false;
+            if (NumResults > 1)
+                lblResultsFor.Text = "results found for:";
         }
         protected string ResultListViewHrefOnclick(ListViewDataItem dataItem)
         {
