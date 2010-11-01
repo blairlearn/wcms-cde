@@ -15,8 +15,9 @@
 
     <!-- Main Area -->
     <form id="drugForm" runat="server">
-    <div style="margin-right: auto; margin-left: auto; width: 771px;">
-        <table width="771" cellspacing="0" cellpadding="0" border="0">
+    <a name="top"></a>
+    <div style="margin-right: auto; margin-left: auto; width: 571px;">
+        <table width="571" cellspacing="0" cellpadding="0" border="0">
             <tr>
                 <td valign="top">
                     <img src="/images/spacer.gif" width="10" height="1" alt="" border="0">
@@ -200,7 +201,9 @@
                             </asp:Panel>
                         </asp:View>
                     </asp:MultiView>
-                    <asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal>
+                    <!--<asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal>-->
+<a href="#top" class="backtotop-link"><img src="/images/backtotop_red.gif" alt="Back to Top" border="0">Back to Top</a>
+                    
                     <asp:Literal ID="litPager" runat="server"></asp:Literal>
                 </td>
                 <td valign="top">

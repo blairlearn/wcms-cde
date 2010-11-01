@@ -2,7 +2,7 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN">
 <HTML>
-  <HEAD>
+  <HEAD  id="header" runat="server">
 	<TITLE>NCI Drug Dictionary</TITLE>
 	
   </HEAD>

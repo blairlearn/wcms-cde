@@ -51,7 +51,7 @@ namespace www.Common.PopUps
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (this.DisplayVersion == DisplayVersions.Text)
+            if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web)
             {
                 header = "popTextHeader.htm";
                 footer = "popTextFooter.htm";

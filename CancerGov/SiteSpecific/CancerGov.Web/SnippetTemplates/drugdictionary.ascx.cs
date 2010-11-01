@@ -20,8 +20,10 @@ using System.Text.RegularExpressions;
 
 namespace Www.Templates
 {
+    
     public partial class drugdictionary : SnippetControl
     {
+        
         protected AlphaListBox alphaListBox;
 
         //These are the QueryString related variables
@@ -197,8 +199,11 @@ namespace Www.Templates
 
             }
 
-        }
 
+            //prerender
+
+
+        }
         protected string ResultListViewHrefOnclick(ListViewDataItem dataItem)
         {
             //int indexAdjust = ((PageSize * CurrentPageIndex) - PageSize) + 1;
