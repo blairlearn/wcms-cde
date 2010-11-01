@@ -29,7 +29,7 @@
 	
 <form name="aspnetForm" method="post" action="/dictionary/" id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);" runat="server">
 
-	
+	<a name="top"></a>
 	<div style="margin-right: auto;margin-left: auto; width: 571px;">
 		<table width="571" cellspacing="0" cellpadding="0" border="0">
 			<tr>		
@@ -266,8 +266,9 @@
                 </asp:MultiView>
 			  
 	
-						<!-- <img src="/images/spacer.gif" width="10" height="19" alt="" border="0"><br> -->
-                <asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal>
+						<!-- <img src="/images/spacer.gif" width="10" height="19" alt="" border="0"><br>
+                <asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal> -->
+                <a href="#top" class="backtotop-link"><img src="/images/backtotop_red.gif" alt="Back to Top" border="0">Back to Top</a>
 			  
 			  </td>
 
