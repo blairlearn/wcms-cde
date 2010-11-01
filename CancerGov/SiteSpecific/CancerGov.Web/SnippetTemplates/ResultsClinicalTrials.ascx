@@ -5,6 +5,23 @@
 <%@ Register TagPrefix="CGov" TagName="CustomSectionSelector" Src="~/UserControls/CTCustomSelection.ascx" %>
 <%@ Register TagPrefix="CGov" assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" %>    
 
+
+<script type="text/javascript">
+    var ids = {
+    checkAllTop:"<%=checkAllTop.ClientID %>"
+    ,checkAllBottom:"<%=checkAllBottom.ClientID %>"
+    ,pageSize:"<%=pageSize.ClientID %>"
+    ,OffPageSelectionsExist:"<%=OffPageSelectionsExist.ClientID%>"
+    ,customFormat:"<%=customFormat.ClientID%>"
+    ,titleFormat:"<%=titleFormat.ClientID%>"
+    ,healthProfAudience:"<%=healthProfAudience.ClientID%>"
+    ,includeLocations:"<%=includeLocations.ClientID%>"
+    ,includeEligibility:"<%=includeEligibility.ClientID%>"
+    ,descriptionFormat:"<%=descriptionFormat.ClientID%>"
+    ,DisplaySearchCriteriaCollapsed:"<%=DisplaySearchCriteriaCollapsed.ClientID%>"
+    ,CriteriaDisplay:"<%=CriteriaDisplay.ClientID%>"
+        }
+</script>
     
 <td id="contentzone" valign="top" width="*">
     <a name="skiptocontent"></a>
@@ -57,14 +74,14 @@
 
                             <script type="text/javascript">
                                 document.observe("dom:loaded", function() {
-                                    Event.observe($("patientAudience"), "click", AudienceType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("healthProfAudience"), "click", AudienceType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("titleFormat"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("descriptionFormat"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("fullDescriptionFormat"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("customFormat"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("includeLocations"), "click", DescriptionSubtype_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("includeEligibility"), "click", DescriptionSubtype_clickhandler.bindAsEventListener(this));
+                                    Event.observe($("<% =patientAudience.ClientID%>"), "click", AudienceType_clickhandler.bindAsEventListener(this));
+                                    Event.observe($("<% =healthProfAudience.ClientID%>"), "click", AudienceType_clickhandler.bindAsEventListener(this));
+                                    Event.observe($("<% =titleFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
+                                    Event.observe($("<% =descriptionFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
+                                    Event.observe($("<% =fullDescriptionFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
+                                    Event.observe($("<% =customFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
+                                    Event.observe($("<% =includeLocations.ClientID%>"), "click", DescriptionSubtype_clickhandler.bindAsEventListener(this));
+                                    Event.observe($("<% =includeEligibility.ClientID%>"), "click", DescriptionSubtype_clickhandler.bindAsEventListener(this));
                                 });
                             </script>
 
@@ -114,8 +131,8 @@
 
                 <script type="text/javascript">
                     document.observe("dom:loaded", function() {
-                        if ($("TopPrintButton") != null)
-                            Event.observe($("TopPrintButton"), "click", submitPrint_ClickHandler.bindAsEventListener(this));
+                        if ($("<% =TopPrintButton.ClientID %>") != null)
+                            Event.observe($("<% =TopPrintButton.ClientID %>"), "click", submitPrint_ClickHandler.bindAsEventListener(this));
                     });
                 </script>
 
@@ -135,8 +152,8 @@
 
                 <script type="text/javascript">
                     document.observe("dom:loaded", function() {
-                        if ($("checkAllTop") != null)
-                            Event.observe($("checkAllTop"), "click", checkAll_ClickHandler.bindAsEventListener(this));
+                        if ($("<%=checkAllTop.ClientID %>") != null)
+                            Event.observe($("<%=checkAllTop.ClientID %>"), "click", checkAll_ClickHandler.bindAsEventListener(this));
                     });
                 </script>
 
@@ -166,8 +183,8 @@
 
                 <script type="text/javascript">
                     document.observe("dom:loaded", function() {
-                        if ($("checkAllBottom") != null)
-                            Event.observe($("checkAllBottom"), "click", checkAll_ClickHandler.bindAsEventListener(this));
+                        if ($("<% =checkAllBottom.ClientID %>") != null)
+                            Event.observe($("<% =checkAllBottom.ClientID %>"), "click", checkAll_ClickHandler.bindAsEventListener(this));
                     });
                 </script>
 
@@ -192,8 +209,8 @@
 
                 <script type="text/javascript">
                     document.observe("dom:loaded", function() {
-                        if ($("BottomPrintButton") != null)
-                            Event.observe($("BottomPrintButton"), "click", submitPrint_ClickHandler.bindAsEventListener(this));
+                        if ($("<%=BottomPrintButton.ClientID%>") != null)
+                            Event.observe($("<%=BottomPrintButton.ClientID%>"), "click", submitPrint_ClickHandler.bindAsEventListener(this));
                     });
                 </script>
 

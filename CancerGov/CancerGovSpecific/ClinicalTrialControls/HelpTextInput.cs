@@ -189,7 +189,7 @@ namespace NCI.Web.UI.WebControls.FormControls
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
             writer.RenderBeginTag(HtmlTextWriterTag.Script);
             writer.Write(string.Format("HelpTextInput.Create(\"{0}\", \"{1}\", \"{2}\", \"{3}\");",
-                ID, stateFieldID, HelperText, HelperTextColor));
+                ClientID, stateFieldID, HelperText, HelperTextColor));
             writer.RenderEndTag();
         }
 

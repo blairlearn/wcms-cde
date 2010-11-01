@@ -123,6 +123,34 @@
     <Compile Include="Common\PopUpPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookup.aspx.cs">
+      <DependentUpon>CTLookup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookup.aspx.designer.cs">
+      <DependentUpon>CTLookup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.cs">
+      <DependentUpon>CTLookupResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.designer.cs">
+      <DependentUpon>CTLookupResults.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.cs">
+      <DependentUpon>CTLookupSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.designer.cs">
+      <DependentUpon>CTLookupSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.cs">
+      <DependentUpon>CTLookupSelect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.designer.cs">
+      <DependentUpon>CTLookupSelect.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Common\PopUps\definition.aspx.cs">
       <DependentUpon>definition.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -300,6 +328,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Common\PopUps\CTLSearch\CTLookup.aspx" />
+    <Content Include="Common\PopUps\CTLSearch\CTLookupResults.aspx" />
+    <Content Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx" />
+    <Content Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx" />
     <Content Include="Common\PopUps\definition.aspx" />
     <Content Include="Common\PopUps\popDefinition.aspx" />
     <Content Include="Common\PopUps\popHelp.aspx" />
@@ -328,6 +360,18 @@
     <Content Include="UserControls\CTCustomSelection.ascx" />
     <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
       <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookup.aspx.resx">
+      <DependentUpon>CTLookup.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.resx">
+      <DependentUpon>CTLookupResults.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.resx">
+      <DependentUpon>CTLookupSearch.aspx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.resx">
+      <DependentUpon>CTLookupSelect.aspx.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

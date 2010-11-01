@@ -1,6 +1,39 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ClinicalTrialsSearchTemplate.ascx.cs"
     Inherits="CancerGov.Web.SnippetTemplates.ClinicalTrialsSearchTemplate" %>
-<%@ Register assembly="CancerGovUIControls" namespace="NCI.Web.UI.WebControls.FormControls" tagprefix="CancerGov" %>    
+<%@ Register assembly="CancerGovUIControls" namespace="NCI.Web.UI.WebControls.FormControls" tagprefix="CancerGov" %>
+<script type="text/javascript">
+    var ids = {
+    drugListArea:               "<%=drugListArea.ClientID %>"
+    , drugListExpanded:         "<%=drugListExpanded.ClientID %>"
+    , interventionListArea:     "<%=interventionListArea.ClientID %>"
+    , trialStatusExpanded:      "<%=trialStatusExpanded.ClientID %>"
+    , hospitalLocationButton: "<%=hospitalLocationButton.ClientID %>"
+    , zipCodeLocationButton: "<%=zipCodeLocationButton.ClientID %>"
+    , cityStateLocationButton:"<%=cityStateLocationButton.ClientID %>"
+    , atNihLocationButton:"<%=atNihLocationButton.ClientID %>"
+    , LocationSelection:"<%=LocationSelection.ClientID %>"
+    , zipCodeLocationButtonStatic:"<%=zipCodeLocationButtonStatic.ClientID %>"
+    , cityStateLocationButtonStatic:"<%=cityStateLocationButtonStatic.ClientID %>"
+    , hospitalLocationButtonStatic:"<%=hospitalLocationButtonStatic.ClientID %>"
+    , atNihLocationButtonStatic:"<%=atNihLocationButtonStatic.ClientID %>"
+    , country:"<%=country.ClientID %>"
+    , city:"<%=city.ClientID %>"
+    , state:"<%=state.ClientID %>"
+    , hospitalBox:"<%=hospitalBox.ClientID %>"
+    , showInstitutionListButton:"<%=showInstitutionListButton.ClientID %>"
+    , treatmentTypeAreaExpanded:"<%=treatmentTypeAreaExpanded.ClientID %>"
+    , interventionListArea:"<%=interventionListArea.ClientID %>"
+    , interventionListExpanded:"<%=interventionListExpanded.ClientID %>"
+    , trialSponsorExpanded:"<%=trialSponsorExpanded.ClientID %>"
+    , trialInvestigatorsRow:"<%=trialInvestigatorsRow.ClientID %>"
+    , investigatorListExpanded:"<%=investigatorListExpanded.ClientID %>"
+    , investigatorid:"<%=investigatorid.ClientID %>"
+    , trialLeadOrganizationRow:"<%=trialLeadOrganizationRow.ClientID %>"
+    , leadOrgListExpanded: "<%=leadOrgListExpanded.ClientID %>"
+    , institutionListExpanded: "<%=institutionListExpanded.ClientID %>"
+    , institutionListSubBox: "<%=institutionListSubBox.ClientID %>"    
+     }
+</script>    
 <style type="text/css">
 /* IE doesn't include the drop down button in its width calculation,
    so for IE only we need to shrink the drop down. */
@@ -141,7 +174,7 @@ span.gray-text
                 <asp:ImageButton ID="updateSubTypeList" runat="server" ImageUrl="/images/CTSearch/btn-stage-subtype.gif"
                     AlternateText="Show Stage/Subtype" />
 
-                <script language="javascript" type="text/javascript">document.observe("dom:loaded", function(){$("updateSubTypeList").hide();});</script>
+                <script language="javascript" type="text/javascript">                    document.observe("dom:loaded", function() { $("<% =updateSubTypeList.ClientID %>").hide(); });</script>
 
             </td>
             <td class="column3 sectionBreak">
@@ -273,7 +306,7 @@ span.gray-text
                             <cancergov:deletelist id="institution" deleteiconurl="~/Images/delete_item.gif" width="350"
                                 height="110" runat="server" emptylisttext="Select &quot;Add More&quot; to see hospital names.">
 											        </cancergov:deletelist>
-                            <span id="institutionAddButton" style="display: none;"><a href="javascript:dynPopWindow('/search/popups/CTLookup.aspx?fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                            <span id="institutionAddButton" style="display: none;"><a href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                 <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                             </span>
                             <asp:ImageButton ID="institutionClearAll" runat="server" AlternateText="Clear All"
@@ -370,7 +403,7 @@ span.gray-text
                                 <cancergov:deletelist id="drug" deleteiconurl="~/Images/delete_item.gif" height="110"
                                     width="350" runat="server" emptylisttext="Select &quot;Add More&quot; to see drug names.">
 											            </cancergov:deletelist>
-                                <span id="druglistAddButton" style="display: none;"><a class="black-text" href="javascript:dynPopWindow('/search/popups/CTLookup.aspx?fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                <span id="druglistAddButton" style="display: none;"><a class="black-text" href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="druglistClearAll" runat="server" AlternateText="Clear All" OnClick="DrugListClearAll_ClickHandler"
@@ -397,7 +430,7 @@ span.gray-text
                                 <cancergov:deletelist id="intervention" deleteiconurl="~/Images/delete_item.gif"
                                     height="110" width="350" runat="server" emptylisttext="Select &quot;Add More&quot; to see treatment/intervention names.">
 										                </cancergov:deletelist>
-                                <span id="interventionlistAddButton" style="display: none;"><a href="javascript:dynPopWindow('/search/popups/CTLookup.aspx?fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                <span id="interventionlistAddButton" style="display: none;"><a href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="interventionlistClearAll" runat="server" AlternateText="Clear All"
@@ -559,7 +592,7 @@ span.gray-text
                                 <cancergov:deletelist id="investigator" deleteiconurl="~/Images/delete_item.gif"
                                     height="110" width="350" runat="server" emptylisttext="Select &quot;Add More&quot; to see investigator names.">
 										            </cancergov:deletelist>
-                                <span id="investigatorListAddButton" style="display: none;"><a href="javascript:dynPopWindow('/search/popups/CTLookup.aspx?fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                <span id="investigatorListAddButton" style="display: none;"><a href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="investigatorListAddButtonClearAll" runat="server" AlternateText="Clear All"
@@ -587,7 +620,7 @@ span.gray-text
                                 <cancergov:deletelist id="leadOrg" deleteiconurl="~/Images/delete_item.gif" height="110"
                                     width="350" runat="server" emptylisttext="Select &quot;Add More&quot; to see lead organization names.">
 										            </cancergov:deletelist>
-                                <span id="leadOrgAddButton" style="display: none;"><a class="black-text" href="javascript:dynPopWindow('/search/popups/CTLookup.aspx?fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                <span id="leadOrgAddButton" style="display: none;"><a class="black-text" href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="leadOrgClearAll" runat="server" AlternateText="Clear All" OnClick="LeadOrgClearAll_ClickHandler"

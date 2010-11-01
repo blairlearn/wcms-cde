@@ -237,7 +237,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             //submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
 
-            JSManager.AddExternalScript( this.Page, "/scripts/Search/SearchClinicalTrials.js");
+            JSManager.AddExternalScript( this.Page, "/scripts/Search/CDESearchClinicalTrials.js");
             JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
             CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css");
         }
