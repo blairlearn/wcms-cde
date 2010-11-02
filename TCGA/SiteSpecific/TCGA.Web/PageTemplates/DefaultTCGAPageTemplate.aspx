@@ -15,37 +15,37 @@
 <div class="skip"><a title="Skip to content" href="#skiptocontent">Skip to content</a></div>
 <!-- NCI Banner (please keep all code on one line for browsers spacing issue) -->
 <div id="nci-banner">
-<NCI:TemplateSlot ID="tcgaBrandingBar" runat="server"  />
+<NCI:TemplateSlot ID="tcgaSlotBrandingBar" runat="server"  />
 </div>
 <!-- END NCI Banner -->
 
 <!-- Masthead (Logo, utility links, search) -->
 <div id="masthead">
-<NCI:TemplateSlot ID="tcgaHeader" runat="server"  />
+<NCI:TemplateSlot ID="tcgaSlotHeader" runat="server"  />
 </div>
 <!-- END Masthead (Logo, utility links, search) -->
 
 <div id="mainnav">
-<NCI:TemplateSlot ID="tcgaMainNav" runat="server"  />
+<NCI:TemplateSlot ID="tcgaSlotMainNav" runat="server"  />
 </div>
 <!-- END Main Navigation -->
 <!-- Container for Content and Sidebar -->
 <div id="container">
     <!-- Content -->
     <div id="content">
-    <NCI:TemplateSlot ID="tcgaBody" runat="server"  />
+    <NCI:TemplateSlot ID="tcgaSlotBody" runat="server"  />
     </div>
     <!-- END Content -->
     <!-- Sidebar -->
 	<div id="sidebar">
-	<NCI:TemplateSlot ID="tcgaRightNav" runat="server"  />
+	<NCI:TemplateSlot ID="tcgaSlotRightNav" runat="server"  />
 	</div>
 	<!-- END Sidebar -->
 </div>
 <!-- END Container for Content and Sidebar -->
 <!-- Footer -->
 <div id="footer">
-<NCI:TemplateSlot ID="tcgaFooter" runat="server"  />
+<NCI:TemplateSlot ID="tcgaSlotFooter" runat="server"  />
 </div>
 <!-- END Footer -->
 </body>
