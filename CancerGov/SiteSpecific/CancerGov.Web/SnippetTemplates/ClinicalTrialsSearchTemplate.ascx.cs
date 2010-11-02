@@ -17,12 +17,14 @@ using NCI.Web.UI.WebControls;
 using NCI.Web.UI.WebControls.FormControls;
 using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Logging;
-
+using NCI.Web.CDE.Modules;
 
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class ClinicalTrialsSearchTemplate : NCI.Web.CancerGov.Apps.AppsBaseUserControl
     {
+        private string searchResultsPrettyUrl = String.Empty;
+
         #region Constants
 
         // The only allowed values for marking a section as collapsed/expanded.
@@ -48,7 +50,7 @@ namespace CancerGov.Web.SnippetTemplates
                 if (searchID > 0)
                 {
                     // Redirect to the search results page.
-                    Response.Redirect(String.Format("csearchresults?protocolsearchid={0}", searchID), true);
+                    Response.Redirect(String.Format("{0}?protocolsearchid={1}", searchResultsPrettyUrl, searchID), true);
                 }
                 else
                 {
@@ -147,6 +149,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (!IsPostBack)
             {
+
                 // On initial page load, check for a protocol search ID. If one is found, load the
                 // saved criteria and initialize the page's controls.
                 CTSearchDefinition savedSearch = null;
@@ -213,6 +216,27 @@ namespace CancerGov.Web.SnippetTemplates
                 FillTrialType(savedSearch);
 
                 SetLocationButtons(savedSearch);
+            }
+            else
+            {
+                // Read the search page information xml , to determine the 
+                // search results pretty url
+                string spidata = this.SnippetInfo.Data;
+                if (!string.IsNullOrEmpty(spidata))
+                {
+                    try
+                    {
+                        SearchResultPageInfo searchResultPageInfo = ModuleObjectFactory<SearchResultPageInfo>.GetModuleObject(spidata);
+                        searchResultsPrettyUrl = searchResultPageInfo.SearchResultsPrettyUrl;
+                        if (string.IsNullOrEmpty(searchResultsPrettyUrl))
+                            throw new Exception("searchResultsPrettyUrl not present in SearchResultPageInfo, check the config info of the application module in percussion");
+                    }
+                    catch(Exception ex)
+                    {
+                        NCI.Logging.Logger.LogError("OnLoad", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
+                    }
+                }
+
             }
 
 

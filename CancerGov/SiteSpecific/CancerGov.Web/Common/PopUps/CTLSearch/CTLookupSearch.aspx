@@ -11,7 +11,7 @@
                 bName = navigator.appName;
                 bVer  = parseInt(navigator.appVersion);
 
-                window.parent.frames[2].location.href = '/common/popups/CTLSearch/CTLookupSelect.aspx?fld=<%=Request.Params["fld"]%>&type=<%=Request.Params["type"]%>';
+                window.parent.frames[2].location.href = '/Common/PopUps/CTLSearch/CTLookupSelect.aspx?fld=<%=Request.Params["fld"]%>&type=<%=Request.Params["type"]%>';
 				document.lookupSearch.submit();
 			}
 		</script>
@@ -39,7 +39,7 @@
         </table>	
         <!-- end Top Header Section -->
 
-        <form name="lookupSearch" method="get" action="/common/popups/CTLSearch/CTLookupResults.aspx" target="results" onsubmit="javascript: document.forms[0].alphaIndex.value=''; doSubmit();">
+        <form name="lookupSearch" method="get" action="/Common/PopUps/CTLSearch/CTLookupResults.aspx" target="results" onsubmit="javascript: document.forms[0].alphaIndex.value=''; doSubmit();">
 	        <input type="hidden" name="title" value="<%=Title%>">
 	        <input type="hidden" name="alphaIndex" value="<%=InputAlphaIndex%>">
 	        <input type="hidden" name="fld" value="<%=Request.Params["fld"]%>">

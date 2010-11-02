@@ -311,7 +311,7 @@ span.gray-text
                             <cancergov:deletelist id="institution" deleteiconurl="~/Images/delete_item.gif" width="350"
                                 height="110" runat="server" emptylisttext="Select &quot;Add More&quot; to see hospital names.">
 											        </cancergov:deletelist>
-                            <span id="institutionAddButton" style="display: none;"><a href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                            <span id="institutionAddButton" style="display: none;"><a href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                 <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                             </span>
                             <asp:ImageButton ID="institutionClearAll" runat="server" AlternateText="Clear All"
@@ -408,7 +408,7 @@ span.gray-text
                                 <cancergov:deletelist id="drug" deleteiconurl="~/Images/delete_item.gif" height="110"
                                     width="350" runat="server" emptylisttext="Select &quot;Add More&quot; to see drug names.">
 											            </cancergov:deletelist>
-                                <span id="druglistAddButton" style="display: none;"><a class="black-text" href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?type=<% =drug.ClientID %>&amp;fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                <span id="druglistAddButton" style="display: none;"><a class="black-text" href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =drug.ClientID %>&amp;fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="druglistClearAll" runat="server" AlternateText="Clear All" OnClick="DrugListClearAll_ClickHandler"
@@ -435,7 +435,7 @@ span.gray-text
                                 <cancergov:deletelist id="intervention" deleteiconurl="~/Images/delete_item.gif"
                                     height="110" width="350" runat="server" emptylisttext="Select &quot;Add More&quot; to see treatment/intervention names.">
 										                </cancergov:deletelist>
-                                <span id="interventionlistAddButton" style="display: none;"><a href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?type=<% =intervention.ClientID %>&amp;fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                <span id="interventionlistAddButton" style="display: none;"><a href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =intervention.ClientID %>&amp;fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="interventionlistClearAll" runat="server" AlternateText="Clear All"
@@ -597,7 +597,7 @@ span.gray-text
                                 <cancergov:deletelist id="investigator" deleteiconurl="~/Images/delete_item.gif"
                                     height="110" width="350" runat="server" emptylisttext="Select &quot;Add More&quot; to see investigator names.">
 										            </cancergov:deletelist>
-                                <span id="investigatorListAddButton" style="display: none;"><a href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?type=<% =investigator.ClientID %>&amp;fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                <span id="investigatorListAddButton" style="display: none;"><a href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =investigator.ClientID %>&amp;fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="investigatorListAddButtonClearAll" runat="server" AlternateText="Clear All"
@@ -625,7 +625,7 @@ span.gray-text
                                 <cancergov:deletelist id="leadOrg" deleteiconurl="~/Images/delete_item.gif" height="110"
                                     width="350" runat="server" emptylisttext="Select &quot;Add More&quot; to see lead organization names.">
 										            </cancergov:deletelist>
-                                <span id="leadOrgAddButton" style="display: none;"><a class="black-text" href="javascript:dynPopWindow('/common/popups/CTLSearch/CTLookup.aspx?type=<% =leadOrg.ClientID %>&amp;fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                <span id="leadOrgAddButton" style="display: none;"><a class="black-text" href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =leadOrg.ClientID %>&amp;fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="leadOrgClearAll" runat="server" AlternateText="Clear All" OnClick="LeadOrgClearAll_ClickHandler"
