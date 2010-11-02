@@ -233,7 +233,8 @@ namespace CancerGov.Web.SnippetTemplates
                     }
                     catch(Exception ex)
                     {
-                        NCI.Logging.Logger.LogError("OnLoad", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
+                        NCI.Logging.Logger.LogError("ClinicalTrialsSearchTemplate:OnLoad", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
+                        throw ex;
                     }
                 }
 
