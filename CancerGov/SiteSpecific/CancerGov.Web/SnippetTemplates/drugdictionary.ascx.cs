@@ -591,43 +591,44 @@ namespace Www.Templates
 
         private void SetupPageUrl()
         {
-            //PageUrl = "/Templates/drugdictionary.aspx?";
-            PageUrl = "/drugdictionary?";
+            PagePrintUrl = "?print=1";
 
-            //add expand or cdrid or searchstr
+            //add expand
             if (!string.IsNullOrEmpty(Expand))
             {
                 if (Expand.Trim() == "#")
                 {
-                    PageUrl += "&expand=%23";
-                }
-                else if (Expand.Trim() == "All")
-                {
-                    PageUrl += "expand=All";
+                    PagePrintUrl += "&expand=%23";
                 }
                 else
                 {
-                    PageUrl += "&expand=" + Expand.Trim().ToUpper();
+                    PagePrintUrl += "&expand=" + Expand.Trim().ToUpper();
                 }
             }
-            else if (!string.IsNullOrEmpty(CdrID))
+
+            //Language stuff
+            //PagePrintUrl += QueryStringLang;
+
+            //add cdrid or searchstr
+            if (!string.IsNullOrEmpty(CdrID))
             {
-                PageUrl += "&cdrid=" + CdrID;
+                PagePrintUrl += "&cdrid=" + CdrID;
             }
             else if (!string.IsNullOrEmpty(SearchStr))
             {
-                PageUrl += "&searchTxt=" + SearchStr;
+                PagePrintUrl += "&searchTxt=" + SearchStr;
                 if (BContains)
-                    PageUrl += "&sgroup=Contains";
+                    PagePrintUrl += "&sgroup=Contains";
             }
+
         }
 
         private void SetupPrintUrl()
         {
-            PagePrintUrl = PageUrl + "&page=" + CurrentPageIndex + "&print=1";
+            //PagePrintUrl = PageUrl + "&page=" + CurrentPageIndex + "&print=1";
             PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", url =>
             {
-                url.SetUrl(PagePrintUrl);
+                url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
             });
 
         }
