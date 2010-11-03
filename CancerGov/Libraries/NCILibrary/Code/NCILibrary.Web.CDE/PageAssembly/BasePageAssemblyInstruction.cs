@@ -115,5 +115,20 @@ namespace NCI.Web.CDE
             });
         }
         #endregion
+
+        #region Public 
+        public ContentDates ContentDates
+        {
+            get
+            {
+                ContentDates contentDates = null;
+                if (this is SinglePageAssemblyInstruction)
+                    contentDates = ((SinglePageAssemblyInstruction)this).ContentDates;
+                else if (this is MultiPageAssemblyInstruction)
+                    contentDates = ((MultiPageAssemblyInstruction)this).ContentDates;
+                return contentDates;
+            }
+        }
+        #endregion
     }
 }
