@@ -60,6 +60,8 @@
     <Compile Include="MarkupExtensions\CancerGovViewPageHandler.cs" />
     <Compile Include="MarkupExtensions\ViewDateHandler.cs" />
     <Compile Include="MarkupExtensions\ViewLinkHandler.cs" />
+    <Compile Include="MarkupExtensions\ViewPropertyHandler.cs" />
+    <Compile Include="MarkupExtensions\ViewTitleHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
