@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 using NCI.Text;
-using CancerGov.UI.Pages;
+//using CancerGov.UI.Pages;
 
 namespace CancerGov.MarkupExtensions
 {
@@ -15,17 +15,17 @@ namespace CancerGov.MarkupExtensions
         /// Pulls the current BasePage from the http context so cancer gov specific 
         /// Process methods in derived classes will have access to the base page.
         /// </summary>
-        protected BasePage BasePage
-        {
-            get
-            {
-                if ((HttpContext.Current.Handler is BasePage) == false)
-                {
-                    throw new MarkupExtensionException(this.GetType() + " requires that HttpContext.Current.Handler be compatible with " + typeof(BasePage) + " but was of type " + HttpContext.Current.Handler.GetType());
-                }
+        //protected BasePage BasePage
+        //{
+        //    get
+        //    {
+        //        if ((HttpContext.Current.Handler is BasePage) == false)
+        //        {
+        //            throw new MarkupExtensionException(this.GetType() + " requires that HttpContext.Current.Handler be compatible with " + typeof(BasePage) + " but was of type " + HttpContext.Current.Handler.GetType());
+        //        }
 
-                return (BasePage)HttpContext.Current.Handler;
-            }
-        }
+        //        return (BasePage)HttpContext.Current.Handler;
+        //    }
+        //}
     }
 }
