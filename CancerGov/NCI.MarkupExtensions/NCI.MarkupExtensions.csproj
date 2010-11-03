@@ -32,9 +32,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -45,7 +47,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\Config.cs" />
+    <Compile Include="Configuration\LoaderElement.cs" />
+    <Compile Include="Configuration\LoaderElementCollection.cs" />
+    <Compile Include="Configuration\MarkupExtensionsSection.cs" />
+    <Compile Include="HtmlHelperMarkupExtensions\DateHandler.cs" />
+    <Compile Include="HtmlHelperMarkupExtensions\FlashHandler.cs" />
+    <Compile Include="HtmlHelperMarkupExtensions\HtmlHelperLoader.cs" />
+    <Compile Include="MarkupExtensionException.cs" />
+    <Compile Include="MarkupExtensionHandler.cs" />
+    <Compile Include="MarkupExtensionHandlerAttribute.cs" />
+    <Compile Include="MarkupExtensionLoader.cs" />
+    <Compile Include="MarkupExtensionProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
