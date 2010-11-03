@@ -33,7 +33,7 @@
 <div id="container">
     <!-- Content -->
     <div id="content">
-    <NCI:TemplateSlot ID="tcgaSlotBody" runat="server"  />
+    <NCI:TemplateSlot ID="tcgaBody" runat="server"  />
     </div>
     <!-- END Content -->
     <!-- Sidebar -->
