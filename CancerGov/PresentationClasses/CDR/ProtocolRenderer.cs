@@ -19,13 +19,14 @@ namespace CancerGov.UI.CDR
 		protected Protocol pProtocol;
         protected DisplayInformation displayInfo;
         private ProtocolRendererOptions prOptions;
+        protected string DetailedViewPage=String.Empty;
 
-
-        public ProtocolRenderer(DisplayInformation displayInfo, Protocol protocol, ProtocolRendererOptions options)
+        public ProtocolRenderer(DisplayInformation displayInfo, Protocol protocol, ProtocolRendererOptions options, string detailedViewPage)
         {
 			this.pProtocol = protocol;
             this.displayInfo = displayInfo;
             this.prOptions = options;
+            this.DetailedViewPage = detailedViewPage;
 		}
 
 		public string Render() {

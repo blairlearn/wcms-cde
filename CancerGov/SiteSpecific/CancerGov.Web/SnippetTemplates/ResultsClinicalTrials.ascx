@@ -137,7 +137,7 @@
                     });
                 </script>
 
-                <a id="newSearch1" runat="server" href="/search/SearchClinicalTrials.aspx">
+                <a id="newSearch1" href="<% =SearchPageInfo.SearchPagePrettyUrl %>">
                     <img alt="Start Over" border="0" height="15" width="70" src="/images/CTSearch/grey_start_over_btn.gif" /></a>
             </div>
             <div style="float: right;">
@@ -215,7 +215,7 @@
                     });
                 </script>
 
-                <a id="newSearch" runat="server" href="/search/SearchClinicalTrials.aspx">
+                <a id="newSearch" href="<% =SearchPageInfo.SearchPagePrettyUrl %>">
                     <img alt="New Search" border="0" height="15" width="70" src="/images/grey_start_over_btn.gif" /></a>
             </div>
             <div style="float: right;">

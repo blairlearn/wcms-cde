@@ -21,8 +21,8 @@ namespace CancerGov.UI.CDR
         private ProtocolDisplayFormats _displayFormat;
 
         public AdvancedSearchProtocolRenderer(DisplayInformation displayInfo    , Protocol protocol,
-            ArrayList cdrIDs, ProtocolDisplayFormats displayFormat)
-            : base(displayInfo, protocol, null)
+            ArrayList cdrIDs, ProtocolDisplayFormats displayFormat,string detailedViewPage)
+            : base(displayInfo, protocol, null,detailedViewPage)
         {
             this.alCDRIDs = cdrIDs;
             _displayFormat = displayFormat;
@@ -38,8 +38,8 @@ namespace CancerGov.UI.CDR
             sbContent.Append("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
 
             //Draw the title, everything has to have a title
-            sbContent.AppendFormat("<tr>\n<td valign=\"top\"><label for=\"cdrid{0}\"><a href=\"/search/ViewClinicalTrials.aspx?cdrid={0}",
-                pProtocol.CdrId);
+            sbContent.AppendFormat("<tr>\n<td valign=\"top\"><label for=\"cdrid{1}\"><a href=\"{0}?cdrid={1}",
+                DetailedViewPage, pProtocol.CdrId);
 
             sbContent.Append("&version=");
             sbContent.Append(pProtocol.ProtocolVersion.ToString());

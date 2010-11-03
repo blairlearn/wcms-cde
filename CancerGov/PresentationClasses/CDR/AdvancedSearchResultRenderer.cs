@@ -17,15 +17,16 @@ namespace CancerGov.UI.CDR
 		private ArrayList alCDRIDs;
         private DisplayInformation displayInfo;
         private ProtocolDisplayFormats displayFormat;
+        private string detailedViewPage;
 
         public AdvancedSearchResultRenderer(DisplayInformation displayInfo, ProtocolCollection protocols,
-            int[] checkedCDRIDs, ProtocolDisplayFormats displayFormat)
+            int[] checkedCDRIDs, ProtocolDisplayFormats displayFormat, string detailedViewPage)
         {
 
             this.pcProtocols = protocols;
             this.displayInfo = displayInfo;
             this.displayFormat = displayFormat;
-
+            this.detailedViewPage = detailedViewPage;
             alCDRIDs = new ArrayList(checkedCDRIDs);
         }
 
@@ -55,7 +56,7 @@ namespace CancerGov.UI.CDR
                     pProto.ResultNumber, pProto.CdrId, alCDRIDs.Contains(pProto.CdrId) ? "checked" : "");
 
                 sbContent.Append("<td width=\"100%\">\n");
-                sbContent.Append(new AdvancedSearchProtocolRenderer(displayInfo, pProto, this.alCDRIDs, displayFormat).Render());
+                sbContent.Append(new AdvancedSearchProtocolRenderer(displayInfo, pProto, this.alCDRIDs, displayFormat, detailedViewPage).Render());
                 sbContent.Append("</td>\n");
                 sbContent.Append("</tr>\n");
 

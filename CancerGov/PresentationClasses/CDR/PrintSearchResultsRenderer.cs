@@ -16,7 +16,7 @@ namespace CancerGov.UI.CDR
         private bool bRenderPageBreaks = true;
         private DisplayInformation displayInfo;
         private ProtocolDisplayFormats displayFormat;
-
+        private string detailedViewPage;
         /// <summary>
         /// Constructor
         /// </summary>
@@ -24,12 +24,13 @@ namespace CancerGov.UI.CDR
         /// <param name="protocols">A collection of protocols</param>
         /// <param name="renderPageBreaks">True if you want page breaks displayed after each trial</param>
         public PrintSearchResultsRenderer(DisplayInformation displayInfo, ProtocolCollection protocols,
-            ProtocolDisplayFormats displayFormat, bool renderPageBreaks)
+            ProtocolDisplayFormats displayFormat, bool renderPageBreaks, string detailedViewPage)
         {
             this.bRenderPageBreaks = renderPageBreaks;
             this.displayInfo = displayInfo;
             this.pcProtocols = protocols;
             this.displayFormat = displayFormat;
+            this.detailedViewPage = detailedViewPage;
         }
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace CancerGov.UI.CDR
                 sbContent.AppendFormat("<td valign=\"top\">{0}.</td>\n", i + 1);
 
                 sbContent.Append("<td valign=\"top\" width=\"100%\">\n");
-                sbContent.Append(new PrintProtocolRenderer(displayInfo, pcProtocols[i], displayFormat).Render());
+                sbContent.Append(new PrintProtocolRenderer(displayInfo, pcProtocols[i], displayFormat, detailedViewPage).Render());
 
                 sbContent.Append("</td>\n");
                 sbContent.Append("</tr>\n");

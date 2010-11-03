@@ -16,11 +16,23 @@ namespace NCI.Web.CDE.Modules
     [System.Xml.Serialization.XmlRootAttribute("Module_SearchResultPageInfo", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
     public class SearchResultPageInfo
     {
+        /// <summary>
+        /// The page that displays the search results.
+        /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string SearchResultsPrettyUrl { get; set; }
 
+        /// <summary>
+        /// The page that displays the search conditions for selection by the user.
+        /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string SearchPagePrettyUrl { get; set; }
+
+        /// <summary>
+        /// The page displays the detailed view of a single result.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string DetailedViewSearchResultPagePrettyUrl { get; set; }
 
     }
 }

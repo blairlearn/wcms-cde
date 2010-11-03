@@ -212,15 +212,6 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.HtmlControls.HtmlInputImage refineSearch1;
         
         /// <summary>
-        /// newSearch1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor newSearch1;
-        
-        /// <summary>
         /// topControlArea control.
         /// </summary>
         /// <remarks>
@@ -327,14 +318,5 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputImage refineSearch;
-        
-        /// <summary>
-        /// newSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor newSearch;
     }
 }
