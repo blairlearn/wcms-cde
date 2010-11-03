@@ -55,6 +55,11 @@
     <Compile Include="CDR\ProtocolFunctions.cs" />
     <Compile Include="CDR\ProtocolRenderer.cs" />
     <Compile Include="CDR\ProtocolRendererOptions.cs" />
+    <Compile Include="MarkupExtensions\CancerGovBasePageHandler.cs" />
+    <Compile Include="MarkupExtensions\CancerGovLoader.cs" />
+    <Compile Include="MarkupExtensions\CancerGovViewPageHandler.cs" />
+    <Compile Include="MarkupExtensions\ViewDateHandler.cs" />
+    <Compile Include="MarkupExtensions\ViewLinkHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
