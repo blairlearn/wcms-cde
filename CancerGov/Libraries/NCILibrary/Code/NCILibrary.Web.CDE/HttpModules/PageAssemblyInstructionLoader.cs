@@ -253,7 +253,7 @@ namespace NCI.Web.CDE
             // Do not reset the client path because it'll break form action url's.
             try
             {
-                context.RewritePath(rewriteUrl, false);
+                context.RewritePath(rewriteUrl,  false); 
             }
 
             catch (HttpException ex)

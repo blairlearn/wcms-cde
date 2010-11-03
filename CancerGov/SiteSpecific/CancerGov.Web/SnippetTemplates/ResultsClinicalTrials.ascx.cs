@@ -318,6 +318,8 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected override void OnPreRender(EventArgs e)
         {
+            protocolsearchid.Value = GetProtocolSearchID().ToString();
+
             /// Set up JavaScript resources. Order is important.  Because the page's script
             /// uses prototype, we need to register that one first.
             PrototypeManager.Load(this.Page);
