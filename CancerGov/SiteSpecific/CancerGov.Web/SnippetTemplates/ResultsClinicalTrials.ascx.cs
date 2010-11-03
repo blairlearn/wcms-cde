@@ -22,6 +22,8 @@ using NCI.Util;
 using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Web.UI.WebControls.FormControls;  // For the CTSearchCriteriaDisplay object.
 using NCI.Web.CancerGov.Apps;
+using NCI.Logging;
+using NCI.Web.CDE.Modules;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -318,8 +320,6 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected override void OnPreRender(EventArgs e)
         {
-            protocolsearchid.Value = GetProtocolSearchID().ToString();
-
             /// Set up JavaScript resources. Order is important.  Because the page's script
             /// uses prototype, we need to register that one first.
             PrototypeManager.Load(this.Page);
@@ -349,7 +349,7 @@ namespace CancerGov.Web.SnippetTemplates
         /// protocol search ID.
         /// </summary>
         /// <returns>Integer value identifiying the protocol search to retrieve.</returns>
-        private int GetProtocolSearchID()
+        protected int GetProtocolSearchID()
         {
             int protocolSearchID = Strings.ToInt(Strings.Clean(Request.Params["protocolsearchid"]));
             if (protocolSearchID == -1)
@@ -546,8 +546,30 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected void refineSearch_ServerClick(object sender, System.Web.UI.ImageClickEventArgs e)
         {
-            int protocolSearchID = Strings.ToInt(Strings.Clean(Request.Params["protocolsearchid"]));
-            Response.Redirect("/search/SearchClinicalTrials.aspx?protocolsearchid=" + protocolSearchID);
+            // Read the search page information xml , to determine the 
+            // search results pretty url
+            string spidata = this.SnippetInfo.Data;
+            if (!string.IsNullOrEmpty(spidata))
+            {
+                try
+                {
+                    spidata = spidata.Trim();
+                    if (string.IsNullOrEmpty(spidata))
+                        throw new Exception("searchResultPageInfo not present in xml, associate an application module item  with this page in percussion");
+
+                    SearchResultPageInfo searchResultPageInfo = ModuleObjectFactory<SearchResultPageInfo>.GetModuleObject(spidata);
+                    if (string.IsNullOrEmpty(searchResultPageInfo.SearchPagePrettyUrl))
+                        throw new Exception("searchResultsPrettyUrl not present in SearchResultPageInfo, check the config info of the application module in percussion");
+                        
+                    Response.Redirect( searchResultPageInfo.SearchPagePrettyUrl + "?protocolsearchid=" + GetProtocolSearchID());
+
+                }
+                catch(Exception ex)
+                {
+                    NCI.Logging.Logger.LogError("ResultsClinicalTrials", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
+                    throw ex;
+                }
+            }
         }
 
         /// <summary>

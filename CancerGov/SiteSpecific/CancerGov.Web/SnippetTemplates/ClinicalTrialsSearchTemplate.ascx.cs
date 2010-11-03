@@ -226,6 +226,10 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     try
                     {
+                        spidata = spidata.Trim();
+                        if (string.IsNullOrEmpty(spidata))
+                            throw new Exception("searchResultPageInfo not present in xml, associate an application module item  with this page in percussion");
+
                         SearchResultPageInfo searchResultPageInfo = ModuleObjectFactory<SearchResultPageInfo>.GetModuleObject(spidata);
                         searchResultsPrettyUrl = searchResultPageInfo.SearchResultsPrettyUrl;
                         if (string.IsNullOrEmpty(searchResultsPrettyUrl))

@@ -18,6 +18,10 @@ namespace NCI.Web.CDE.Modules
     {
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string SearchResultsPrettyUrl { get; set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string SearchPagePrettyUrl { get; set; }
+
     }
 }
     
