@@ -130,18 +130,6 @@ namespace NCI.Web.CDE
             }
         }
 
-        public PageMetadata PageMetadata
-        {
-            get
-            {
-                PageMetadata pageMetadata = null;
-                if (this is SinglePageAssemblyInstruction)
-                    pageMetadata = ((SinglePageAssemblyInstruction)this).PageMetadata;
-                else if (this is MultiPageAssemblyInstruction)
-                    pageMetadata = ((MultiPageAssemblyInstruction)this).PageMetadata;
-                return pageMetadata;
-            }
-        }
         #endregion
     }
 }
