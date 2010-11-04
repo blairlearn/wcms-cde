@@ -252,19 +252,19 @@ namespace CancerGov.Web.SnippetTemplates
             //this.WebAnalyticsPageLoad.SetPageName(WebAnalyticsOptions.Hostname + "/clinicaltrials/search");
             //litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
 
-            //string webAnalyticsParameters =
-            //    String.Format(
-            //        "{{typeOfTrialControlID : '{0}',drugControlID : '{1}',treatnentInterventionControlID : '{2}',sponsorOfTrialControlID : '{3}',trialInvestigatorsControlID : '{4}',leadOrganizationCooperativeGroupControlID : '{5}', specialCategoryControlID : '{6}'}}",
-            //        trialType.ClientID,
-            //        drug.ClientID,
-            //        intervention.ClientID,
-            //        sponsor.ClientID,
-            //        investigator.ClientID,
-            //        leadOrg.ClientID,
-            //        specialCategory.ClientID
-            //    );
+            string webAnalyticsParameters =
+                String.Format(
+                    "{{typeOfTrialControlID : '{0}',drugControlID : '{1}',treatnentInterventionControlID : '{2}',sponsorOfTrialControlID : '{3}',trialInvestigatorsControlID : '{4}',leadOrganizationCooperativeGroupControlID : '{5}', specialCategoryControlID : '{6}'}}",
+                    trialType.ClientID,
+                    drug.ClientID,
+                    intervention.ClientID,
+                    sponsor.ClientID,
+                    investigator.ClientID,
+                    leadOrg.ClientID,
+                    specialCategory.ClientID
+                );
 
-            //submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
+            submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
 
             JSManager.AddExternalScript( this.Page, "/scripts/Search/CDESearchClinicalTrials.js");
             JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");

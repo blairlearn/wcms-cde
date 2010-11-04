@@ -363,14 +363,6 @@ namespace CancerGov.Web.SnippetTemplates
             base.OnPreRender(e);
         }
 
-        //protected override void OnPreRenderComplete(EventArgs e)
-        //{
-        //    if (_pageRenderingState == PageRenderingState.Results && _pageRenderer != null)
-        //    {
-        //        ProtocolContent.Text = _pageRenderer.Render();
-        //    }
-        //}
-
         #endregion
 
         #region Helper Methods
