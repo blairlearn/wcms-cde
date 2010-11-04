@@ -36,7 +36,12 @@
     , drug: "<%=drug.ClientID%>"
     , intervention:"<%=intervention.ClientID%>"
     , investigator:"<%=investigator.ClientID%>"
-    , leadOrg:"<%=leadOrg.ClientID%>"
+    , leadOrg: "<%=leadOrg.ClientID%>"
+    , cancerType: "<%=cancerType.ClientID%>"
+    , newOnly: "<%=newOnly.ClientID%>"
+    , txtKeywords: "<%=txtKeywords.ClientID%>"
+    , trialStatus: "<%=trialStatus.ClientID%>"
+    , trialPhase: "<%=trialPhase.ClientID%>" 
      }
 </script>    
 <style type="text/css">

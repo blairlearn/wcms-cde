@@ -231,7 +231,7 @@ namespace CancerGov.Web.SnippetTemplates
             //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.PostedDate, ""); // prop25
             //litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
             JSManager.AddExternalScript(this.Page, "/scripts/Search/CDEResultsClinicalTrials.js");
-            JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
+            //JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
             CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css");
 
             OnLoadComplete();

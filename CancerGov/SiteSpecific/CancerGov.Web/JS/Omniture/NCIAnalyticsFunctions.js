@@ -166,7 +166,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         var sponsor = '';
         var special = ''; 
         var keyword = '';       
-        var cancerTypeCondition = document.getElementById('cancerType').options[document.getElementById('cancerType').selectedIndex].text; 
+        var cancerTypeCondition = document.getElementById(ids.cancerType).options[document.getElementById(ids.cancerType).selectedIndex].text; 
 
         var typeOfTrialControl = document.getElementById(webAnalyticsOptions.typeOfTrialControlID);
         var drugControl = document.getElementById(webAnalyticsOptions.drugControlID);
@@ -178,41 +178,41 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
   
         //Location 
         // - zip code
-        if (document.getElementById('zipCodeLocationButton').checked)
+        if (document.getElementById(ids.zipCodeLocationButton).checked)
             location = 'Near Zip Code';
         // - At NIH
-        else if (document.getElementById('atNihLocationButton').checked)
+        else if (document.getElementById(ids.atNihLocationButton).checked)
             if (document.getElementById('nihOnly').checked)
                 location = 'At NIH Only Bethesda, Md';
             else
                 location = 'At NIH';
         // - City/State/Country
-        else if (document.getElementById('cityStateLocationButton').checked)  {
+        else if (document.getElementById(ids.cityStateLocationButton).checked)  {
             location =  'In City/State/Country';
         }
-        else if (document.getElementById('hospitalLocationButton').checked)  {
+        else if (document.getElementById(ids.hospitalLocationButton).checked)  {
             location = 'At Hospital/Institution';
         }
         
         // Trial Status/Phase
         // - Status
-        if (document.getElementById('trialStatus_0').checked) {
+        if (document.getElementById( ids.trialStatus + '_0' ).checked) {
             statusPhase = 'Trial Status';
         }
-        else if (document.getElementById('trialStatus_1').checked) { 
+        else if (document.getElementById(ids.trialStatus + '_1').checked) { 
             statusPhase = 'Trial Status';
         }
         statusPhase += NCIAnalytics.fieldDelimiter;
         // - Phase
         for(var i=1; i < 5; i++) {
-            if (document.getElementById('trialPhase_' + i).checked)  {
+            if (document.getElementById(ids.trialPhase + '_' + i).checked)  {
                     phaseList = 'Trial Phase';
                     break;
             }
         }
         statusPhase += phaseList + NCIAnalytics.fieldDelimiter;
         // - New Trial
-        if (document.getElementById('newOnly').checked)  { 
+        if (document.getElementById(ids.newOnly).checked)  { 
             item = $('trialStatusTable').select("label[for=newOnly]");
             statusPhase += 'New Trials';
         } 
@@ -246,8 +246,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
        if ((special != '') && (special != 'All'))
             trialIdSponsor += 'Special Category';
        
-       if (document.getElementById('txtKeywords_state').value == 'valid')
-            keyword = document.getElementById('txtKeywords').value; 
+       keyword = document.getElementById(ids.txtKeywords).value; 
         
        clickParams = new NCIAnalytics.ClickParams(null,
             'nciglobal,nciclinicaltrials','o','CTSearch');
