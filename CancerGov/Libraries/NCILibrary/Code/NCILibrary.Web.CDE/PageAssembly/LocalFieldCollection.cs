@@ -97,8 +97,9 @@ namespace NCI.Web.CDE
                     case "Field":
                         {
                             LocalField localField = new LocalField();
-                            localField.Name = reader.ReadString();
-                            //localField.Value = localFieldElement.InnerText;
+                            localField.Name = reader.GetAttribute("Name");
+                            localField.Value = reader.ReadString();
+                            Add(localField);                            
                         }
                         break;
                 }

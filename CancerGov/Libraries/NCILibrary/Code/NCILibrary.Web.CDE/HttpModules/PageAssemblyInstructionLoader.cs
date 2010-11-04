@@ -161,13 +161,13 @@ namespace NCI.Web.CDE
                 //Load the XML file to create a assemblyinfo object of type ipageassemblyinstruction.If the XML file fails to create IPageAssemblyInstruction
                 //Object log error
                assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(url);
-
+                //set Field filters,url filters...and other necessary things which depend on assemblyinfo.
                 //Handle multipage pages               
                if (assemblyInfo == null)
                {
                    //1. Remove last part of path, e.g. /cancertopics/wyntk/bladder/page10 becomes /cancertopics/wyntk/bladder
                    string truncUrl = url.Substring(0, url.LastIndexOf('/'));
-                   if (truncUrl!=string.Empty)
+                   if (truncUrl != string.Empty)
                    {
                        assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(truncUrl);
                        //check if is IMAPI
@@ -180,16 +180,23 @@ namespace NCI.Web.CDE
                            {
                                //This url is a page, so set the current index so we can get the page template later.
                                ((IMultiPageAssemblyInstruction)assemblyInfo).SetCurrentPageIndex(index);
+                               assemblyInfo.Initialize();
                            }
+
                            else
                            {
                                assemblyInfo = null;
                                return;
-                           }                           
+                           }
                        }
                        else
                            assemblyInfo = null;
                    }
+               }
+
+               else
+               {
+                   assemblyInfo.Initialize();
                }
 
             }

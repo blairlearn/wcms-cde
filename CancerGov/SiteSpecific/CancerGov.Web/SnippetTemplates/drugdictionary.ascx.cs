@@ -448,20 +448,20 @@ namespace Www.Templates
 
             if (!string.IsNullOrEmpty(dataItem.PreferredName))
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", data =>
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
                 {
                     data.Value = "Definition of " + dataItem.PreferredName + " - National Cancer Institute Drug Dictionary";
                 });
 
                 this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
 
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", data =>
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
                 {
                     data.Value = "definition, " + dataItem.PreferredName + strMetaText;
                 });
 
 
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", data =>
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
                 {
                     data.Value = strMetaText;
 

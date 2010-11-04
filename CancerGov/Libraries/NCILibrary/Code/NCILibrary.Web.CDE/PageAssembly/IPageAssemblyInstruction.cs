@@ -84,8 +84,9 @@ namespace NCI.Web.CDE
         /// </summary>
         /// 
 
-        void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, FieldFilterDelegate filter);
-        void SetWebAnalytics(WebAnalyticsOptions.eVars  webAnalyticType, FieldFilterDelegate filter);
-        void SetWebAnalytics(WebAnalyticsOptions.Props  webAnalyticType, FieldFilterDelegate filter);
+        void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, WebAnalyticsDataPointDelegate filter);
+        void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, WebAnalyticsDataPointDelegate filter);
+        void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, WebAnalyticsDataPointDelegate filter);
+        void Initialize();
     }
 }

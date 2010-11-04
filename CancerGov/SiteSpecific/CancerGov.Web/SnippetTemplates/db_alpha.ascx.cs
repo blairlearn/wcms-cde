@@ -570,7 +570,7 @@ namespace Www.Templates
 
             if (language == "Spanish")
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction. AddFieldFilter("short_title", data =>
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
                         {
                             data.Value = "Definici&oacute;n de " + termName + " - Diccionario de c&aacute;ncer";
                         });
@@ -580,7 +580,7 @@ namespace Www.Templates
             else
             {
 
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", data =>
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
                         {
                             data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                         });
@@ -590,13 +590,13 @@ namespace Www.Templates
                 lblTermPronun.Text = termPronun;
             }
 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", data =>
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
             {
                 data.Value = "Definition of " + termName;
             });
 
 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", data =>
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = termName + ", definition";
 

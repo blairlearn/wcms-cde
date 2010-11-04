@@ -111,17 +111,17 @@ namespace NCILibrary.Web.CDE.Test
         ///</summary>
         public void FieldFilterDataConstructorTest()
         {
-            AddFieldFilter("ShotTitle", data =>
+            AddFieldFilter("ShotTitle", (name,data) =>
             {
                 data.Value = "Dictionary of cancer terms";
             });
 
-            AddFieldFilter("ShotTitle", data =>
+            AddFieldFilter("ShotTitle", (name, data) =>
             {
                 data.Value = "Dictionary of cancer terms--Modified";
             });
 
-            AddFieldFilter("HTMLTitle", data =>
+            AddFieldFilter("HTMLTitle", (name, data) =>
             {
                 data.Value = GetField("ShotTitle") + "-National cancer Institute";
             });
@@ -148,7 +148,7 @@ namespace NCILibrary.Web.CDE.Test
 
                 //Call delegate, all delegates will modify the FieldData string of the
                 //FieldFilterData object we are passing in.
-                del(data);
+                del(fieldName,data);
 
                 //set the return value to the processed value of the FieldFilterData
                 rtnValue = data.Value;

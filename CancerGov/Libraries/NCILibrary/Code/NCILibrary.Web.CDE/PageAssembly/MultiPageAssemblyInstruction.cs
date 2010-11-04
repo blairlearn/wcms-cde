@@ -47,6 +47,7 @@ namespace NCI.Web.CDE
         /// Defines the current url that is being requested.
         /// </summary>
         private int _currentPageIndex = -1;
+        private LocalFieldCollection _localFields;
 
         #endregion
 
@@ -56,21 +57,22 @@ namespace NCI.Web.CDE
             _snippets = new SnippetInfoCollection();
             _pages = new MultiPageCollection();
             PageMetadata = new PageMetadata();
+            _localFields = new LocalFieldCollection();
             RegisterFieldFilters(0);
             RegisterWebAnalyticsFieldFilters();
 
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, data =>
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, (name, data) =>
             {
                 data.Value = GetField("short_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
             });
 
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaDescription, data =>
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaDescription, (name, data) =>
             {
                 string metaDescription = GetMetaDescription();
                 data.Value = metaDescription;
             });
 
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, data =>
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, (name, data) =>
             {
                 data.Value = GetField("meta_keywords");
             });
@@ -156,6 +158,18 @@ namespace NCI.Web.CDE
 
 
         #region IPageAssemblyInstruction Members
+        [System.Xml.Serialization.XmlElement(ElementName = "LocalFields", Form = XmlSchemaForm.Unqualified)]
+        public LocalFieldCollection LocalFields
+        {
+            get
+            {
+                return _localFields;
+            }
+            set
+            {
+                _localFields = value;
+            }
+        }
         /// <summary>
         /// BlockedSlots contain information about the blocked slot which should not be displayed on the page rendered.
         /// </summary>
@@ -427,7 +441,7 @@ namespace NCI.Web.CDE
 
                 //Call delegate, all delegates will modify the FieldData string of the
                 //FieldFilterData object we are passing in.
-                del(data);
+                del(fieldName,data);
 
                 //set the return value to the processed value of the FieldFilterData
                 rtnValue = data.Value;
@@ -562,11 +576,11 @@ namespace NCI.Web.CDE
         /// <param name="type">The type of the </param>
         /// <param name="propNumber"></param>
         /// <param name="filter"></param>
-        public void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, FieldFilterDelegate filter)
+        public void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, WebAnalyticsDataPointDelegate filter)
         { base.SetWebAnalytics(webAnalyticType.ToString(), filter); }
-        public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, FieldFilterDelegate filter)
+        public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, WebAnalyticsDataPointDelegate filter)
         { base.SetWebAnalytics(webAnalyticType.ToString(), filter); }
-        public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, FieldFilterDelegate filter)
+        public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, WebAnalyticsDataPointDelegate filter)
         { base.SetWebAnalytics(webAnalyticType.ToString(), filter); }
 
         #endregion
@@ -605,38 +619,38 @@ namespace NCI.Web.CDE
         private void RegisterFieldFilters(int PageNum)
         {
             //Register Field Filters
-            AddFieldFilter("long_title", data =>
+            AddFieldFilter("long_title", (name, data) =>
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.LongTitle;
             });
 
 
-            AddFieldFilter("short_title", data =>
+            AddFieldFilter("short_title", (name, data) =>
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
             });
 
-            AddFieldFilter("short_description", data =>
+            AddFieldFilter("short_description", (name, data) =>
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.ShortDescription;
             });
 
-            AddFieldFilter("long_description", data =>
+            AddFieldFilter("long_description", (name, data) =>
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.LongDescription;
             });
 
-            AddFieldFilter("meta_description", data =>
+            AddFieldFilter("meta_description", (name, data) =>
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.MetaDescription;
             });
 
-            AddFieldFilter("meta_keywords", data =>
+            AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.MetaKeywords;
             });
 
-            AddFieldFilter("page_short_title", data =>
+            AddFieldFilter("page_short_title", (name, data) =>
             {
                 data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
             });
@@ -645,7 +659,7 @@ namespace NCI.Web.CDE
             AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
             AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
 
-            AddFieldFilter("channelName", data =>
+            AddFieldFilter("channelName", (name, data) =>
             {
                 data.Value = this.SectionPath;
             });
@@ -707,6 +721,18 @@ namespace NCI.Web.CDE
             }
             return emailUrl;
         }
+        private void RegisterMarkupExtensionFieldFilters()
+        {
+            //Register Field Filters
+
+            foreach (LocalField localField in _localFields)
+            {
+                AddFieldFilter(localField.Name, (name,data) =>
+                {
+                    data.Value = localField.Value;
+                });
+            }
+        }
 
         /// <summary>
         /// Gets the page snippets.
@@ -755,7 +781,12 @@ namespace NCI.Web.CDE
 
             return pageSnippets;
         }
+        public void Initialize()
+        {
 
+            RegisterMarkupExtensionFieldFilters();
+
+        }
         #region Protected
         /// <summary>
         /// Override this method to add any page specifc web analytics data points.

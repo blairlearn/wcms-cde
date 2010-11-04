@@ -114,7 +114,7 @@ namespace NCI.Web.CDE.Test
             IPageAssemblyInstruction pageAssemblyInfo = null;
             pageAssemblyInfo = InitializeTestPageAssemblyInfo();
 
-            pageAssemblyInfo.AddFieldFilter("Foo12345", data =>
+            pageAssemblyInfo.AddFieldFilter("Foo12345", (name,data) =>
             {
                 data.Value = "Foo12345";
             });
@@ -132,13 +132,13 @@ namespace NCI.Web.CDE.Test
             IPageAssemblyInstruction pageAssemblyInfo = null;
             pageAssemblyInfo = InitializeTestPageAssemblyInfo();
 
-            pageAssemblyInfo.AddFieldFilter("Foo12345", data =>
+            pageAssemblyInfo.AddFieldFilter("Foo12345", (name, data) =>
             {
                 data.Value = "Dictionary of cancer terms";
             });
 
             //Add another one, but make sure we chain from the previous
-            pageAssemblyInfo.AddFieldFilter("Foo12345", data =>
+            pageAssemblyInfo.AddFieldFilter("Foo12345", (name, data) =>
             {
                 data.Value += "--Modified";
             });
@@ -154,7 +154,7 @@ namespace NCI.Web.CDE.Test
             IPageAssemblyInstruction pageAssemblyInfo = null;
             pageAssemblyInfo = InitializeTestPageAssemblyInfo();
 
-            pageAssemblyInfo.AddFieldFilter(null, data =>
+            pageAssemblyInfo.AddFieldFilter(null, (name, data) =>
             {
                 data.Value = "Dictionary of cancer terms";
             });
@@ -169,7 +169,7 @@ namespace NCI.Web.CDE.Test
             IPageAssemblyInstruction pageAssemblyInfo = null;
             pageAssemblyInfo = InitializeTestPageAssemblyInfo();
 
-            pageAssemblyInfo.AddFieldFilter(string.Empty, data =>
+            pageAssemblyInfo.AddFieldFilter(string.Empty, (name, data) =>
             {
                 data.Value = "Dictionary of cancer terms";
             });

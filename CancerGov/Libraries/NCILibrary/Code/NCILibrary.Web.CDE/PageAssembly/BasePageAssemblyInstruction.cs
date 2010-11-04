@@ -17,7 +17,7 @@ namespace NCI.Web.CDE
         /// <summary>
         /// Collection of FieldFilter delegates for Web analytics fields.
         /// </summary>
-        private Dictionary<string, FieldFilterDelegate> _webAnalyticsFieldFilterDelegates = new Dictionary<string, FieldFilterDelegate>();
+        private Dictionary<string, WebAnalyticsDataPointDelegate> _webAnalyticsFieldFilterDelegates = new Dictionary<string, WebAnalyticsDataPointDelegate>();
         private WebAnalyticsSettings webAnalyticsSettings = null;
         #endregion
 
@@ -27,7 +27,7 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <param name="webAnalyticFieldName">The key or the name of the datapoint</param>
         /// <param name="filter">The actual delegate callback which will modify the FieldFilterData object</param>
-        protected void SetWebAnalytics(string webAnalyticFieldName, FieldFilterDelegate filter)
+        protected void SetWebAnalytics(string webAnalyticFieldName, WebAnalyticsDataPointDelegate filter)
         {
             if (string.IsNullOrEmpty(webAnalyticFieldName))
                 throw new ArgumentException("The webAnalyticFieldName parameter may not be null or empty.");
@@ -60,7 +60,7 @@ namespace NCI.Web.CDE
         public virtual WebAnalyticsSettings GetWebAnalytics()
         {
             // Enumerate _webAnalyticsFieldFilterDelegates , so each delagate can be executed.
-            foreach (KeyValuePair<string, FieldFilterDelegate> kvDel in _webAnalyticsFieldFilterDelegates)
+            foreach (KeyValuePair<string, WebAnalyticsDataPointDelegate> kvDel in _webAnalyticsFieldFilterDelegates)
             {
                 FieldFilterData fieldData = null;
                 if (Enum.IsDefined(typeof(WebAnalyticsOptions.Events), kvDel.Key))

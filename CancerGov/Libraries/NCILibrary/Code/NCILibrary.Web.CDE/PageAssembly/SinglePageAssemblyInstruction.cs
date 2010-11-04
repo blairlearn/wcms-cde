@@ -54,19 +54,19 @@ namespace NCI.Web.CDE
             RegisterFieldFilters();
             RegisterWebAnalyticsFieldFilters();
 
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, data =>
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, (name, data) =>
             {
                 //Site Name should be a configuration setting.
                 data.Value = GetField("short_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
             });
 
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaDescription, data =>
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaDescription, (name, data) =>
             {
                 string metaDescription = GetMetaDescription();
                 data.Value = metaDescription;
             });
 
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, data =>
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, (name, data) =>
             {
                 data.Value = GetField("meta_keywords");
             });
@@ -288,7 +288,7 @@ namespace NCI.Web.CDE
 
                 //Call delegate, all delegates will modify the FieldData string of the
                 //FieldFilterData object we are passing in.
-                del(data);
+                del(fieldName, data);
 
                 //set the return value to the processed value of the FieldFilterData
                 rtnValue = data.Value;
@@ -416,7 +416,7 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <param name="webAnalyticType">The enum which defines all Events data points.</param>
         /// <param name="filter">The callback method which will set the value of the fieldfilter object</param>
-        public void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, FieldFilterDelegate filter)
+        public void SetWebAnalytics(WebAnalyticsOptions.Events webAnalyticType, WebAnalyticsDataPointDelegate filter)
         {
             base.SetWebAnalytics(webAnalyticType.ToString(), filter);
         }
@@ -428,7 +428,7 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <param name="webAnalyticType">The enum which defines all eVars data points.</param>
         /// <param name="filter">The callback method which will set the value of the fieldfilter object</param>
-        public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, FieldFilterDelegate filter)
+        public void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, WebAnalyticsDataPointDelegate filter)
         {
             base.SetWebAnalytics(webAnalyticType.ToString(), filter);
         }
@@ -440,7 +440,7 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <param name="webAnalyticType">The enum which defines all Props data point.</param>
         /// <param name="filter">The callback method which will set the value of the FieldFilterData object</param>
-        public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, FieldFilterDelegate filter)
+        public void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, WebAnalyticsDataPointDelegate filter)
         {
             base.SetWebAnalytics(webAnalyticType.ToString(), filter);
         }
@@ -478,44 +478,58 @@ namespace NCI.Web.CDE
             return emailUrl;
         }
 
+        private void RegisterMarkupExtensionFieldFilters()
+        {
+            //Register Field Filters
+
+            foreach (LocalField localField in _localFields)
+            {
+                AddFieldFilter(localField.Name, (name, data) =>
+                {
+                    data.Value = _localFields[name].Value;
+                });
+            }
+
+        }
+
         /// <summary>
         /// Registers the field filters.
         /// </summary>
         private void RegisterFieldFilters()
         {
             //Register Field Filters
-            AddFieldFilter("long_title", data =>
+            AddFieldFilter("long_title", (name, data) =>
             {
                 data.Value = this.PageMetadata.LongTitle;
             });
 
 
-            AddFieldFilter("short_title", data =>
+            AddFieldFilter("short_title", (name, data) =>
             {
                 data.Value = this.PageMetadata.ShortTitle;
             });
 
-            AddFieldFilter("short_description", data =>
+            AddFieldFilter("short_description", (name, data) =>
             {
                 data.Value = this.PageMetadata.ShortDescription;
             });
 
-            AddFieldFilter("long_description", data =>
+            AddFieldFilter("long_description", (name, data) =>
             {
                 data.Value = this.PageMetadata.LongDescription;
             });
 
-            AddFieldFilter("meta_description", data =>
+            AddFieldFilter("meta_description", (name, data) =>
             {
                 data.Value = this.PageMetadata.MetaDescription;
             });
 
-            AddFieldFilter("meta_keywords", data =>
+            AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = this.PageMetadata.MetaKeywords;
             });
 
-            AddFieldFilter("channelName", data =>
+            AddFieldFilter("channelName", (name, data) =>
             {
                 data.Value = this.SectionPath;
             });
@@ -633,5 +647,10 @@ namespace NCI.Web.CDE
             });
         }        
         #endregion
+
+        public void Initialize()
+        {
+            RegisterMarkupExtensionFieldFilters();
+        }
     }
 }

@@ -707,7 +707,7 @@ namespace NCI.Web.CancerGov.Apps
                 wbField.Value = TotalNumberOfResults.ToString();
             });
 
-            this.PageInstruction.AddFieldFilter("channelName", data =>
+            this.PageInstruction.AddFieldFilter("channelName", (name, data) =>
             {
                 data.Value = "NCI Home";
             });
