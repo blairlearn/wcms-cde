@@ -41,7 +41,8 @@
     , newOnly: "<%=newOnly.ClientID%>"
     , txtKeywords: "<%=txtKeywords.ClientID%>"
     , trialStatus: "<%=trialStatus.ClientID%>"
-    , trialPhase: "<%=trialPhase.ClientID%>" 
+    , trialPhase: "<%=trialPhase.ClientID%>"
+    , protocolID: "<%=protocolID.ClientID%>" 
      }
 </script>    
 <style type="text/css">

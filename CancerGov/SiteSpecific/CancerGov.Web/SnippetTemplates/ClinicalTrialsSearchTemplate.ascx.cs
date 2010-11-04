@@ -17,10 +17,10 @@ using NCI.Web.UI.WebControls;
 using NCI.Web.UI.WebControls.FormControls;
 using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Logging;
-using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.Modules; 
 
 namespace CancerGov.Web.SnippetTemplates
-{
+{ 
     public partial class ClinicalTrialsSearchTemplate : NCI.Web.CancerGov.Apps.AppsBaseUserControl
     {
         private string searchResultsPrettyUrl = String.Empty;
@@ -252,19 +252,19 @@ namespace CancerGov.Web.SnippetTemplates
             //this.WebAnalyticsPageLoad.SetPageName(WebAnalyticsOptions.Hostname + "/clinicaltrials/search");
             //litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
 
-            //string webAnalyticsParameters =
-            //    String.Format(
-            //        "{{typeOfTrialControlID : '{0}',drugControlID : '{1}',treatnentInterventionControlID : '{2}',sponsorOfTrialControlID : '{3}',trialInvestigatorsControlID : '{4}',leadOrganizationCooperativeGroupControlID : '{5}', specialCategoryControlID : '{6}'}}",
-            //        trialType.ClientID,
-            //        drug.ClientID,
-            //        intervention.ClientID,
-            //        sponsor.ClientID,
-            //        investigator.ClientID,
-            //        leadOrg.ClientID,
-            //        specialCategory.ClientID
-            //    );
+            string webAnalyticsParameters =
+                String.Format(
+                    "{{typeOfTrialControlID : '{0}',drugControlID : '{1}',treatnentInterventionControlID : '{2}',sponsorOfTrialControlID : '{3}',trialInvestigatorsControlID : '{4}',leadOrganizationCooperativeGroupControlID : '{5}', specialCategoryControlID : '{6}'}}",
+                    trialType.ClientID,
+                    drug.ClientID,
+                    intervention.ClientID,
+                    sponsor.ClientID,
+                    investigator.ClientID,
+                    leadOrg.ClientID,
+                    specialCategory.ClientID
+                );
 
-            //submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
+            submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
 
             JSManager.AddExternalScript( this.Page, "/scripts/Search/CDESearchClinicalTrials.js");
             //JSManager.AddExternalScript(this.Page, "/Scripts/Omniture/NCIAnalyticsFunctions.js");

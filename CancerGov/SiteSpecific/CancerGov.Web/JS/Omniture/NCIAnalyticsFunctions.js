@@ -229,7 +229,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             treatmentType += 'Treatment/Intervention'; 
 
         // Trial ID / Sponsor
-        if ($('protocolID').value != '') 
+        if ($(ids.protocolID).value != '') 
             trialIdSponsor += 'Protocol ID';
        trialIdSponsor += NCIAnalytics.fieldDelimiter;
        sponsor = sponsorOfTrialControl.SelectedTextList(NCIAnalytics.stringDelimiter);
