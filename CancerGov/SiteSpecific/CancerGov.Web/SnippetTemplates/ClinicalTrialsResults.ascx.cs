@@ -28,9 +28,9 @@ using NCI.Web.CDE.Modules;
 namespace CancerGov.Web.SnippetTemplates
 {
     /// <summary>
-    /// Summary description for ResultsClinicalTrials.
+    /// Summary description for ClinicalTrialsResults.
     /// </summary>
-    public partial class ResultsClinicalTrials : AppsBaseUserControl
+    public partial class ClinicalTrialsResults : AppsBaseUserControl
     {
         private AdvancedSearchResultRenderer _pageRenderer = null;
 
@@ -152,7 +152,7 @@ namespace CancerGov.Web.SnippetTemplates
                 }
                 catch (Exception ex)
                 {
-                    NCI.Logging.Logger.LogError("ResultsClinicalTrials", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
+                    NCI.Logging.Logger.LogError("ClinicalTrialsResults", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
                     throw ex;
                 }
             }
@@ -298,19 +298,19 @@ namespace CancerGov.Web.SnippetTemplates
                 }
                 catch (ProtocolFetchFailureException fetchError)
                 {
-                    CancerGovError.LogError("ResultsClinicalTrialsAdvanced.aspx", 1, "Failed to fetch Results for PSID : " + protocolSearchID.ToString() + " Error : " + fetchError.Message);
+                    CancerGovError.LogError("ClinicalTrialsResultsAdvanced.aspx", 1, "Failed to fetch Results for PSID : " + protocolSearchID.ToString() + " Error : " + fetchError.Message);
                     //this.RaiseErrorPage();
                     this.RaiseErrorPage("InvalidSearchID");
                 }
                 catch (ProtocolTableEmptyException fetchError)
                 {
-                    CancerGovError.LogError("ResultsClinicalTrialsAdvanced", 1, "ProtocolSearchID = " + protocolSearchID.ToString() + " Error: " + fetchError.Message);
+                    CancerGovError.LogError("ClinicalTrialsResultsAdvanced", 1, "ProtocolSearchID = " + protocolSearchID.ToString() + " Error: " + fetchError.Message);
                     //this.RaiseErrorPage();
                     this.RaiseErrorPage("InvalidSearchID");
                 }
                 catch (ProtocolTableMiscountException fetchError)
                 {
-                    CancerGovError.LogError("ResultsClinicalTrialsAdvanced", 1, "ProtocolSearchID = " + protocolSearchID.ToString() + " Error: " + fetchError.Message);
+                    CancerGovError.LogError("ClinicalTrialsResultsAdvanced", 1, "ProtocolSearchID = " + protocolSearchID.ToString() + " Error: " + fetchError.Message);
                     //this.RaiseErrorPage();
                     this.RaiseErrorPage("InvalidSearchID");
                 }
@@ -377,7 +377,7 @@ namespace CancerGov.Web.SnippetTemplates
             int protocolSearchID = Strings.ToInt(Strings.Clean(Request.Params["protocolsearchid"]));
             if (protocolSearchID == -1)
             {
-                CancerGovError.LogError("ResultsClinicalTrialsAdvanced.aspx", 1, "Invalid Protocol Search ID");
+                CancerGovError.LogError("ClinicalTrialsResultsAdvanced.aspx", 1, "Invalid Protocol Search ID");
                 //this.RaiseErrorPage();
                 this.RaiseErrorPage("InvalidSearchID");
             }

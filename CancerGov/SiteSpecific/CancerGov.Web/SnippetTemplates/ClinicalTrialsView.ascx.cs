@@ -52,7 +52,7 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 String url = Request.UrlReferrer.AbsolutePath.ToString();
                 //only do the survey for the advanced search page 
-                if (url.Equals("/search/ResultsClinicalTrials.aspx") || url.Equals("/search/Results_ClinicalTrials.aspx"))
+                if (url.Equals("/search/ClinicalTrialsResults.aspx") || url.Equals("/search/Results_ClinicalTrials.aspx"))
                 {
                     //only show this survey if the other survey was not shown
                     //look at the persistant cookie  for that survey  ascookie parameter in the tiggerParams file 
@@ -97,7 +97,6 @@ namespace CancerGov.Web.SnippetTemplates
                 //this.RaiseErrorPage();
                 NCI.Logging.Logger.LogError("ViewClinicalTrials", NCIErrorLevel.Error, "No ProtocalID Specified");
                 this.RaiseErrorPage("No ProtocalID Specified");
-                NCI.Logging.Logger.LogError("ViewClinicalTrials",
             }
 
 			iProtocolSearchID = Strings.ToInt(Strings.IfNull(Strings.Clean(Request.Params["protocolsearchid"]),"0"));

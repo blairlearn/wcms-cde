@@ -16,7 +16,7 @@ if(omurl.indexOf(".gov/cancertopics") >= 0)
     omrs = ",ncicancertopics";
 }
 else if(omurl.indexOf(".gov/clinicaltrials") >= 0
-        || omurl.indexOf(".gov/search/resultsclinicaltrials") >= 0
+        || omurl.indexOf(".gov/search/ClinicalTrialsResults") >= 0
 	|| omurl.indexOf(".gov/search/viewclinicaltrials") >= 0)
 {
     omrs = ",nciclinicaltrials";

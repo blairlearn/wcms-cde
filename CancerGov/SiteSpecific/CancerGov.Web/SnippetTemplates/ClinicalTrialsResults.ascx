@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ResultsClinicalTrials.ascx.cs"
-    Inherits="CancerGov.Web.SnippetTemplates.ResultsClinicalTrials" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ClinicalTrialsResults.ascx.cs"
+    Inherits="CancerGov.Web.SnippetTemplates.ClinicalTrialsResults" %>
    
 <%@ Register TagPrefix="CGov" assembly="CancerGovUIControls" namespace="NCI.Web.UI.WebControls.FormControls" %>    
 <%@ Register TagPrefix="CGov" TagName="CustomSectionSelector" Src="~/UserControls/CTCustomSelection.ascx" %>

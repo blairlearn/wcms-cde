@@ -11,7 +11,7 @@
 namespace CancerGov.Web.SnippetTemplates {
     
     
-    public partial class ResultsClinicalTrials {
+    public partial class ClinicalTrialsResults {
         
         /// <summary>
         /// advResultForm control.
