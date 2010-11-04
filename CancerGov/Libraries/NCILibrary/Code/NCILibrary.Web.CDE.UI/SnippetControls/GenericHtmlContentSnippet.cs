@@ -21,6 +21,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public void Page_Load(object sender, EventArgs e)
         {
             string data = SnippetInfo.Data;
+            data = MarkupExtensionProcessor.Instance.Process(data);
             LiteralControl lit = new LiteralControl(data);
             this.Controls.Add(lit);
         }        
