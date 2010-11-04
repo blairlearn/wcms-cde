@@ -56,6 +56,15 @@
     <Compile Include="CDR\ProtocolFunctions.cs" />
     <Compile Include="CDR\ProtocolRenderer.cs" />
     <Compile Include="CDR\ProtocolRendererOptions.cs" />
+    <Compile Include="MarkupExtensions\CancerGovLoader.cs" />
+    <Compile Include="MarkupExtensions\ViewDateHandler.cs" />
+    <Compile Include="MarkupExtensions\ViewLinkHandler.cs" />
+    <Compile Include="MarkupExtensions\ViewPropertyHandler.cs" />
+    <Compile Include="MarkupExtensions\ViewTitleHandler.cs" />
+    <Compile Include="PageMarkupHandlers\PageInfoDateHandler.cs" />
+    <Compile Include="PageMarkupHandlers\PageInfoFieldHandler.cs" />
+    <Compile Include="PageMarkupHandlers\PageInfoLinkHandler.cs" />
+    <Compile Include="PageMarkupHandlers\PageInfoTitleHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,9 +84,6 @@
       <Project>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</Project>
       <Name>NCILibrary.Web.CDE</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MarkupExtensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

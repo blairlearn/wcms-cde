@@ -93,6 +93,8 @@
     <Compile Include="PageAssembly\FileInstructionFactory.cs" />
     <Compile Include="PageAssembly\IFileInstruction.cs" />
     <Compile Include="PageAssembly\IMultiPageAssemblyInstruction.cs" />
+    <Compile Include="PageAssembly\LocalField.cs" />
+    <Compile Include="PageAssembly\LocalFieldCollection.cs" />
     <Compile Include="PageAssembly\Module_PageOptionsBox.cs" />
     <Compile Include="PageAssembly\MultiPageAssemblyInstruction.cs" />
     <Compile Include="PageAssembly\MultiPage.cs" />

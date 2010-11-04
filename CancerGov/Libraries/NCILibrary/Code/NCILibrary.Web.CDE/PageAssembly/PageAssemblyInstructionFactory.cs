@@ -35,7 +35,7 @@ namespace NCI.Web.CDE
         /// </summary>
         public static IPageAssemblyInstruction GetPageAssemblyInfo(string requestedPath)
         {
-            bool pageAssemblyInstructionXmlValid = false;
+            bool pageAssemblyInstructionXmlValid = true;
             string xmlFilePath = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, requestedPath));
             // Input validation.
             if (xmlFilePath == null)

@@ -41,6 +41,7 @@ namespace NCI.Web.CDE
         /// A collection of the snippets to be displayed on the page.
         /// </summary>
         private SnippetInfoCollection _snippets;
+        private LocalFieldCollection _localFields;
 
         #endregion
 
@@ -49,6 +50,7 @@ namespace NCI.Web.CDE
             // Initialize sub objects.
             _snippets = new SnippetInfoCollection();
             PageMetadata = new PageMetadata();
+            _localFields = new LocalFieldCollection();
             RegisterFieldFilters();
             RegisterWebAnalyticsFieldFilters();
 
@@ -133,6 +135,20 @@ namespace NCI.Web.CDE
         #endregion
 
         #region IPageAssemblyInstruction Members
+
+        [System.Xml.Serialization.XmlElement(ElementName = "LocalFields", Form = XmlSchemaForm.Unqualified)]
+        public LocalFieldCollection LocalFields
+        {
+            get
+            {
+                return _localFields;
+            }
+            set
+            {
+                _localFields = value;
+            }
+        }
+
         /// <summary>
         /// BlockedSlots contain information about the blocked slot which should not be displayed on the page rendered.
         /// </summary>
