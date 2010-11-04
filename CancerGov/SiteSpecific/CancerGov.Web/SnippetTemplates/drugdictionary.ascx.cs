@@ -204,7 +204,7 @@ namespace Www.Templates
             //set up pager stuff
             if (NumResults > 0 && PageAssemblyContext.Current.DisplayVersion != DisplayVersions.Print)
             {
-                CancerGov.Common.ResultPager objPager = new CancerGov.Common.ResultPager(PageUrl, CurrentPageIndex, PageSize, 2, NumResults);
+                CancerGov.Common.ResultPager objPager = new CancerGov.Common.ResultPager(DictionaryURL + PageUrl, CurrentPageIndex, PageSize, 2, NumResults);
                 PagerHtml = "<p>" + objPager.RenderPager() + "</p>";
             }
             litPager.Text = PagerHtml;
@@ -592,17 +592,19 @@ namespace Www.Templates
         private void SetupPageUrl()
         {
             PagePrintUrl = "?print=1";
-
+            PageUrl = "/?";
             //add expand
             if (!string.IsNullOrEmpty(Expand))
             {
                 if (Expand.Trim() == "#")
                 {
                     PagePrintUrl += "&expand=%23";
+                    PageUrl += "&expand=%23"; 
                 }
                 else
                 {
                     PagePrintUrl += "&expand=" + Expand.Trim().ToUpper();
+                    PageUrl += "&expand=" + Expand.Trim();
                 }
             }
 
