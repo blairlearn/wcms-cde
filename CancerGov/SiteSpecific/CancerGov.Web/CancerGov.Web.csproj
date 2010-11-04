@@ -232,6 +232,13 @@
     <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
       <DependentUpon>drugdictionary.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\psrv.ascx.cs">
+      <DependentUpon>psrv.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\psrv.ascx.designer.cs">
+      <DependentUpon>psrv.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\ResultsClinicalTrials.ascx.cs">
       <DependentUpon>ResultsClinicalTrials.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -342,10 +349,12 @@
     <Content Include="App_GlobalResources\SiteWideSearch.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SiteWideSearch.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\SiteWideSearch.es.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SiteWideSearch.es.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="DrugDictionary.svc" />
     <Content Include="JS\imgEvents.js" />
@@ -356,23 +365,29 @@
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
+    <Content Include="SnippetTemplates\psrv.ascx" />
     <Content Include="SnippetTemplates\ResultsClinicalTrials.ascx" />
     <Content Include="TermDictionary.svc" />
     <Content Include="UserControls\CTCustomSelection.ascx" />
     <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
       <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookup.aspx.resx">
       <DependentUpon>CTLookup.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.resx">
       <DependentUpon>CTLookupResults.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.resx">
       <DependentUpon>CTLookupSearch.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.resx">
       <DependentUpon>CTLookupSelect.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
