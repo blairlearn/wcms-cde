@@ -421,6 +421,22 @@
           </sequence>
         </complexType>
       </element>
+      <element name="LocalFields" minOccurs="0">
+        <complexType>
+          <sequence>
+            <element name="Field" nillable="true" minOccurs="0" maxOccurs="unbounded">
+              <complexType>
+                <simpleContent>
+                  <extension base="string">
+                    <attribute name="Name" form="unqualified" type="string" />
+                  </extension>
+                </simpleContent>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+
       <element name="Language" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>
@@ -734,6 +750,21 @@
               <complexType>
                 <attribute name="Name" type="string">
                 </attribute>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="LocalFields" minOccurs="0">
+        <complexType>
+          <sequence>
+            <element name="Field" nillable="true" minOccurs="0" maxOccurs="unbounded">
+              <complexType>
+                <simpleContent>
+                  <extension base="string">
+                    <attribute name="Name" form="unqualified" type="string" />
+                  </extension>
+                </simpleContent>
               </complexType>
             </element>
           </sequence>
@@ -1173,30 +1204,23 @@
           </sequence>
         </complexType>
       </element>
+      <element name="LocalFields" minOccurs="0">
+        <complexType>
+          <sequence>
+            <element name="Field" nillable="true" minOccurs="0" maxOccurs="unbounded">
+              <complexType>
+                <simpleContent>
+                  <extension base="string">
+                    <attribute name="Name" form="unqualified" type="string" />
+                  </extension>
+                </simpleContent>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
     </all>
-  </complexType>
-
-  <complexType name="localFields">
-    <annotation>
-      <documentation>Additional fields of a Page Assembly Instruction which are needed by the CDE yet do not fall into the pageMetadata.</documentation>
-    </annotation>
-    <sequence>
-      <element name="LocalField" type="cde:localField" minOccurs="0" maxOccurs="unbounded"></element>
-    </sequence>
-  </complexType>
-
-  <complexType name="localField">
-    <annotation>
-      <documentation>A local file of a Page Assembly Instruction.</documentation>
-    </annotation>
-    <simpleContent>
-      <extension base="string">
-        <attribute name="fieldName" type="string"
-          use="required">
-        </attribute>
-      </extension>
-    </simpleContent>
-  </complexType>
+  </complexType> 
 
   <complexType name="sectionDetail">
     <annotation>
