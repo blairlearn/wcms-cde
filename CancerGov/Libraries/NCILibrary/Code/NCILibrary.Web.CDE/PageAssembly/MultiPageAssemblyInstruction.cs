@@ -729,7 +729,7 @@ namespace NCI.Web.CDE
             {
                 AddFieldFilter(localField.Name, (name,data) =>
                 {
-                    data.Value = localField.Value;
+                    data.Value = _localFields[name].Value;
                 });
             }
         }
