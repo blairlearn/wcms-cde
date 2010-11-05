@@ -9,6 +9,7 @@ using NCI.Web.CDE.UI.Configuration;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using CancerGov.CDR.TermDictionary;
+using NCI.Web.CDE.Modules;
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class CDRDefinitionTemplate : SnippetControl
@@ -23,6 +24,7 @@ namespace CancerGov.Web.SnippetTemplates
             get 
             {
                 string language = string.Empty;
+                string snippetXmlData = string.Empty;
                 if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
                 {
                     language = "English";
@@ -33,11 +35,19 @@ namespace CancerGov.Web.SnippetTemplates
                 }
 
                 string definitionText = string.Empty;
-                TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, SnippetInfo.CDRId, null, 5);
-                definitionText = SnippetInfo.CDRDefinitionName + ":" + dataItem.DefinitionHTML;
+
+                snippetXmlData=SnippetInfo.Data;
+                // The snippet CDATA may contain CDATA as part of the data but percussion replaces the CDATA 
+                // close tag with Replace ']]>' with ']]ENDCDATA' this ']]ENDCDATA' should be replaced with 
+                // valid CDATA close tag ']]>' before it can be deserialized
+                snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
+                CDRDefinition mPBO = ModuleObjectFactory<CDRDefinition>.GetModuleObject(snippetXmlData);
+
+                TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, mPBO.CDRId, null, 5);
+                definitionText = mPBO.CDRDefinitionName + ":" + dataItem.DefinitionHTML;
                 return definitionText;
             }
         }
-
+              
     }
 }

@@ -85,6 +85,7 @@
     <Compile Include="Modules\VelocityTemplate.cs" />
     <Compile Include="PageAssembly\AlternateContentVersions.cs" />
     <Compile Include="PageAssembly\BlockedSlot.cs" />
+    <Compile Include="PageAssembly\CDRDefinition.cs" />
     <Compile Include="PageAssembly\ContentDates.cs" />
     <Compile Include="PageAssembly\DisplayDateModes.cs" />
     <Compile Include="PageAssembly\DisplayVersions.cs" />
