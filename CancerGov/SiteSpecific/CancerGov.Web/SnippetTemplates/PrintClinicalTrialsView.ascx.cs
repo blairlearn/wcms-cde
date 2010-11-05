@@ -23,11 +23,6 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class PrintClinicalTrialsView : AppsBaseUserControl
     {
-        //protected void Page_Load(object sender, EventArgs e)
-        //{
-
-        //}
-
         private string strEmailUrl = "";
 
         public string EmailUrl
@@ -39,12 +34,6 @@ namespace CancerGov.Web.SnippetTemplates
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
-            // Set base page to display the print verison of the banner.
-            //SetDisplayVersion(DisplayVersion.Print);
-
-            // PageHtmlHead.Title = "Clinical Trials Results - National Cancer Institute";
-
             
             // Let's find out what they want to see...
             int protocolSearchID = Strings.ToInt(Strings.Clean(Request.QueryString["protocolsearchid"]));
@@ -63,16 +52,15 @@ namespace CancerGov.Web.SnippetTemplates
                 litPageContent.Text = cachedPage.PageHtml;
                 cacheDate.Text = cachedPage.CacheDate.ToString("d");
 
-                string title = String.Empty;
-                // string title = (PageHtmlHead.Title != null ? PageHtmlHead.Title : "");
-                string url = System.Web.HttpUtility.UrlEncode(this.Request.Url.ToString().Replace("&", "__amp;"));
+                string title = PageInstruction.GetField("long_title");
+                string url = System.Web.HttpUtility.UrlEncode(PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString().Replace("&", "__amp;"));
                 string url2 = "/common/popUps/PopEmail.aspx?title="
-                    //  + title
+                    + title
                     + "&docurl="
                     + url
                     + "&invokedFrom="
-                    + EmailPopupInvokedBy.ClinicalTrialPrintableSearchResults.ToString("d")                     
-                    + NCI.Core.HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + this.Request.Url, "PSRV1");
+                    + EmailPopupInvokedBy.ClinicalTrialPrintableSearchResults.ToString("d")
+                    + NCI.Core.HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString(), "PSRV1");
                     
 
                 EmailResults.NavigateUrl = url2;

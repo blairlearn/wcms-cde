@@ -60,7 +60,7 @@ function SelectionsExistOnPage() {
         }
         else	//case: checkbox array
         {
-            var protocolsPerPage = $F("pageSize");
+            var protocolsPerPage = $F(ids.pageSize);
             for (i = 0; i <= protocolsPerPage; i++) {
                 if ($(ids.advResultForm).cdrid[i] != null) {
                     if ($(ids.advResultForm).cdrid[i].checked == true) {

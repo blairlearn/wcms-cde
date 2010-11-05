@@ -613,7 +613,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                 int cacheID = CTSearchManager.CachePageHtml(pageHtml);
 
-                Response.Redirect(string.Format("/search/psrv.aspx?cid={0}&protocolsearchid={1}", cacheID, GetProtocolSearchID()));
+                Response.Redirect(string.Format("{2}?cid={0}&protocolsearchid={1}", cacheID, GetProtocolSearchID(), SearchPageInfo.PrintSearchResultPagePrettyUrl ));
             }
         }
 

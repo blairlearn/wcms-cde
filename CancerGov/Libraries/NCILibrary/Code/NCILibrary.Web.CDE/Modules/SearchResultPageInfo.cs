@@ -34,6 +34,12 @@ namespace NCI.Web.CDE.Modules
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string DetailedViewSearchResultPagePrettyUrl { get; set; }
 
+        /// <summary>
+        /// The page displays the detailed view of a single result.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string PrintSearchResultPagePrettyUrl { get; set; }
+
     }
 }
     

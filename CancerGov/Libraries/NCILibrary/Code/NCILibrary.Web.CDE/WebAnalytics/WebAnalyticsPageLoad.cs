@@ -42,9 +42,9 @@ namespace NCI.Web.CDE.WebAnalytics
         /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
         public WebAnalyticsPageLoad()
         {
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/js/Omniture/NCIAnalyticsFunctions.js\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/NCIAnalyticsFunctions.js\"></script>");
             pageLoadPreTag.AppendLine("<!-- SiteCatalyst code version: H.20.3. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com -->");
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/js/Omniture/s_code.js\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/s_code.js\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
             pageLoadPreTag.AppendLine("<!--");
 
