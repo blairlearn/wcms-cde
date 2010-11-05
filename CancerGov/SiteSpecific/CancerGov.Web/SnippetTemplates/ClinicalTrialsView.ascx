@@ -1,2 +1,2 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ClinicalTrialsView.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.ClinicalTrialsView" %>
-<td id="contentzone" valign="top"><a name="skiptocontent"></a><%=Content%></td>
+<a name="skiptocontent"></a><%=Content%>
