@@ -60,7 +60,7 @@ namespace NCI.Web.CDE.UI
                         {
                             try
                             {
-                                SnippetControl snippetControl = (SnippetControl)Page.LoadControl(snippet.SnippetTemplatePath);
+                                SnippetControl snippetControl = (SnippetControl)Page.LoadControl(snippet.SnippetTemplatePath.Trim());
 
                                 // Note this has to come before adding the template control to the control tree.  
                                 // This way, we can be sure any event in the control lifecycle like OnInit() 

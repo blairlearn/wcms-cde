@@ -242,6 +242,7 @@ namespace CancerGov.Web.SnippetTemplates
             //End Web Analytics
 
             JSManager.AddExternalScript(this.Page, "/scripts/Search/CDEResultsClinicalTrials.js");
+            JSManager.AddExternalScript(this.Page, "/scripts/popEvents.js");
             //JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
             CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css");
 

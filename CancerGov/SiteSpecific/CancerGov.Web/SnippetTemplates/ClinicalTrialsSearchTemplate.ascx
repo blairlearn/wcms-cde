@@ -321,7 +321,7 @@ span.gray-text
                                 <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                             </span>
                             <asp:ImageButton ID="institutionClearAll" runat="server" AlternateText="Clear All"
-                                OnClick="InstutionListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll('institution');Event.stop(event)"
+                                OnClick="InstutionListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll(ids.institution);Event.stop(event)"
                                 ImageUrl="/images/clear_all_btn.gif" Width="62" Height="15" />
                         </div>
                     </div>
@@ -418,7 +418,7 @@ span.gray-text
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="druglistClearAll" runat="server" AlternateText="Clear All" OnClick="DrugListClearAll_ClickHandler"
-                                    OnClientClick="DeleteList.ClearAll('drug');Event.stop(event)" ImageUrl="/images/clear_all_btn.gif"
+                                    OnClientClick="DeleteList.ClearAll(ids.drug);Event.stop(event)" ImageUrl="/images/clear_all_btn.gif"
                                     Width="62" Height="15" />
                             </div>
                         </td>
@@ -445,7 +445,7 @@ span.gray-text
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="interventionlistClearAll" runat="server" AlternateText="Clear All"
-                                    OnClick="InterventionListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll('intervention');Event.stop(event)"
+                                    OnClick="InterventionListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll(ids.intervention);Event.stop(event)"
                                     ImageUrl="/images/clear_all_btn.gif" Width="62" Height="15" />
                             </div>
                         </td>
@@ -607,7 +607,7 @@ span.gray-text
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="investigatorListAddButtonClearAll" runat="server" AlternateText="Clear All"
-                                    OnClick="InvestigatorListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll('investigator');Event.stop(event)"
+                                    OnClick="InvestigatorListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll(ids.investigator);Event.stop(event)"
                                     ImageUrl="/images/clear_all_btn.gif" Width="62" Height="15" />
                             </div>
                         </td>
@@ -635,7 +635,7 @@ span.gray-text
                                     <img height="15" alt="Add More" src="/images/add_more_btn.gif" width="65" border="0" /></a>
                                 </span>
                                 <asp:ImageButton ID="leadOrgClearAll" runat="server" AlternateText="Clear All" OnClick="LeadOrgClearAll_ClickHandler"
-                                    OnClientClick="DeleteList.ClearAll('leadOrg');Event.stop(event)" ImageUrl="/images/clear_all_btn.gif"
+                                    OnClientClick="DeleteList.ClearAll(ids.leadOrg);Event.stop(event)" ImageUrl="/images/clear_all_btn.gif"
                                     Width="62" Height="15" />
                             </div>
                         </td>
