@@ -40,6 +40,12 @@ namespace NCI.Web.CDE.Modules
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string PrintSearchResultPagePrettyUrl { get; set; }
 
+        /// <summary>
+        /// The help page.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string SearchHelpPrettyUrl { get; set; }
+
     }
 }
     

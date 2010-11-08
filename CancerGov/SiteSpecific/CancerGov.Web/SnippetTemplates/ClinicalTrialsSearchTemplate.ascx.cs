@@ -23,7 +23,7 @@ namespace CancerGov.Web.SnippetTemplates
 { 
     public partial class ClinicalTrialsSearchTemplate : NCI.Web.CancerGov.Apps.AppsBaseUserControl
     {
-        private string searchResultsPrettyUrl = String.Empty;
+        private SearchResultPageInfo _searchPageInfo = null;
 
         #region Constants
 
@@ -50,7 +50,7 @@ namespace CancerGov.Web.SnippetTemplates
                 if (searchID > 0)
                 {
                     // Redirect to the search results page.
-                    Response.Redirect(String.Format("{0}?protocolsearchid={1}", searchResultsPrettyUrl, searchID), true);
+                    Response.Redirect(String.Format("{0}?protocolsearchid={1}", SearchPageInfo.SearchResultsPrettyUrl, searchID), true);
                 }
                 else
                 {
@@ -219,29 +219,6 @@ namespace CancerGov.Web.SnippetTemplates
             }
             else
             {
-                // Read the search page information xml , to determine the 
-                // search results pretty url
-                string spidata = this.SnippetInfo.Data;
-                if (!string.IsNullOrEmpty(spidata))
-                {
-                    try
-                    {
-                        spidata = spidata.Trim();
-                        if (string.IsNullOrEmpty(spidata))
-                            throw new Exception("searchResultPageInfo not present in xml, associate an application module item  with this page in percussion");
-
-                        SearchResultPageInfo searchResultPageInfo = ModuleObjectFactory<SearchResultPageInfo>.GetModuleObject(spidata);
-                        searchResultsPrettyUrl = searchResultPageInfo.SearchResultsPrettyUrl;
-                        if (string.IsNullOrEmpty(searchResultsPrettyUrl))
-                            throw new Exception("searchResultsPrettyUrl not present in SearchResultPageInfo, check the config info of the application module in percussion");
-                    }
-                    catch(Exception ex)
-                    {
-                        NCI.Logging.Logger.LogError("ClinicalTrialsSearchTemplate:OnLoad", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
-                        throw ex;
-                    }
-                }
-
             }
 
 
@@ -270,6 +247,44 @@ namespace CancerGov.Web.SnippetTemplates
             //JSManager.AddExternalScript(this.Page, "/Scripts/Omniture/NCIAnalyticsFunctions.js");
             //JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
             CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css");
+        }
+
+        protected SearchResultPageInfo SearchPageInfo
+        {
+            get
+            {
+                if (_searchPageInfo != null)
+                    return _searchPageInfo;
+                // Read the search page information xml , to determine the 
+                // search results pretty url
+                string spidata = this.SnippetInfo.Data;
+                try
+                {
+                    if (string.IsNullOrEmpty(spidata))
+                        throw new Exception("searchResultPageInfo not present in xml, associate an application module item  with this page in percussion");
+
+                    spidata = spidata.Trim();
+                    if (string.IsNullOrEmpty(spidata))
+                        throw new Exception("searchResultPageInfo not present in xml, associate an application module item  with this page in percussion");
+
+                    SearchResultPageInfo searchResultPageInfo = ModuleObjectFactory<SearchResultPageInfo>.GetModuleObject(spidata);
+
+                    return _searchPageInfo = searchResultPageInfo;
+                }
+                catch (Exception ex)
+                {
+                    NCI.Logging.Logger.LogError("ClinicalTrialsResults", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
+                    throw ex;
+                }
+            }
+        }
+
+        protected string SearchHelpPrettyUrl
+        {
+            get
+            {
+                return string.IsNullOrEmpty(SearchPageInfo.SearchHelpPrettyUrl) ? String.Empty : SearchPageInfo.SearchHelpPrettyUrl;
+            }
         }
 
         #endregion

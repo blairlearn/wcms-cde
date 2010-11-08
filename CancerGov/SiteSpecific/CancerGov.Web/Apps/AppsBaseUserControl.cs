@@ -20,27 +20,12 @@ namespace NCI.Web.CancerGov.Apps
     public class AppsBaseUserControl : SnippetControl
     {
         private WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
-        protected DisplayInformation pageDisplayInformation;
+        private DisplayInformation pageDisplayInformation;
         private string strHelpPageLink = "#";
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
-            pageDisplayInformation = new DisplayInformation();
-            switch(PageInstruction.Language)
-            {
-                case "en":
-                    pageDisplayInformation.Language = DisplayLanguage.English;
-                    break;
-                case "es":
-                    pageDisplayInformation.Language = DisplayLanguage.Spanish;
-                    break;
-                default:
-                    pageDisplayInformation.Language = DisplayLanguage.English;
-                    break;
-            }
-            pageDisplayInformation.Version  = PageAssemblyContext.Current.DisplayVersion;
         }
 
         virtual protected string GetResource(string key)
@@ -64,8 +49,26 @@ namespace NCI.Web.CancerGov.Apps
 
         public DisplayInformation PageDisplayInformation
         {
-            get { return pageDisplayInformation; }
-            set { pageDisplayInformation = value; }
+            get 
+            {
+                pageDisplayInformation = new DisplayInformation();
+                switch (PageInstruction.Language)
+                {
+                    case "en":
+                        pageDisplayInformation.Language = DisplayLanguage.English;
+                        break;
+                    case "es":
+                        pageDisplayInformation.Language = DisplayLanguage.Spanish;
+                        break;
+                    default:
+                        pageDisplayInformation.Language = DisplayLanguage.English;
+                        break;
+                }
+                pageDisplayInformation.Version = PageAssemblyContext.Current.DisplayVersion;
+
+                return pageDisplayInformation;
+            }
+        
         }
 
         virtual public void RaiseErrorPage(string messageKey)

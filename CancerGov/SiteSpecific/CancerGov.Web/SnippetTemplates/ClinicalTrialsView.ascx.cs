@@ -253,7 +253,7 @@ namespace CancerGov.Web.SnippetTemplates
             else
                 renderOptions = null;
 
-            ProtocolRenderer prProtocol = new ProtocolRenderer(base.pageDisplayInformation, pProtocol, renderOptions, "");
+            ProtocolRenderer prProtocol = new ProtocolRenderer(base.PageDisplayInformation, pProtocol, renderOptions, "");
             this.strContent += prProtocol.Render();
 
             if (this.PageDisplayInformation.Version == DisplayVersions.Print)

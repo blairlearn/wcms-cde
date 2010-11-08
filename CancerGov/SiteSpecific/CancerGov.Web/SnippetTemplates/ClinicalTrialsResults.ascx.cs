@@ -159,6 +159,14 @@ namespace CancerGov.Web.SnippetTemplates
             }
         }
 
+        protected string SearchHelpPrettyUrl
+        {
+            get 
+            {
+                return string.IsNullOrEmpty(SearchPageInfo.SearchHelpPrettyUrl) ? String.Empty : SearchPageInfo.SearchHelpPrettyUrl;
+            }
+        }
+
         #endregion
 
 

@@ -88,7 +88,7 @@
 
                         </td>
                         <td valign="top" width="6%" align="right">
-                            <a target="new" href="/clinicaltrials/search-form-help/page3#1">
+                            <a target="new" href="<% =SearchHelpPrettyUrl %>">/page3#1">
                                 <img src="/images/ctsearch/gray-question.gif" alt="Help with display options." width="15"
                                     height="15" style="margin-bottom: 70px;" /></a>
                             <asp:ImageButton ID="UpdateAudienceAndDisplay" runat="server" ImageUrl="/images/ctsearch/go-btn-red.gif"
@@ -141,7 +141,7 @@
                     <img alt="Start Over" border="0" height="15" width="70" src="/images/CTSearch/grey_start_over_btn.gif" /></a>
             </div>
             <div style="float: right;">
-                <a target="new" href="/clinicaltrials/search-form-help/page3">Help with Results</a>
+                <a target="new" href="<% =SearchHelpPrettyUrl %>/page3">Help with Results</a>
             </div>
             <div style="clear: both;">
             </div>
@@ -219,7 +219,7 @@
                     <img alt="New Search" border="0" height="15" width="70" src="/images/grey_start_over_btn.gif" /></a>
             </div>
             <div style="float: right;">
-                <a target="new" href="/clinicaltrials/search-form-help/page3">Help with Results</a>
+                <a target="new" href="<% =SearchHelpPrettyUrl %>/page3">Help with Results</a>
             </div>
             <div style="clear: both;">
             </div>

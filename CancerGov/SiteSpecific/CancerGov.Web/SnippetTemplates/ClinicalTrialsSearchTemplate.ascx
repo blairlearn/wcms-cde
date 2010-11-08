@@ -156,7 +156,7 @@ span.gray-text
                 <img src="/images/CTSearch/alert-yellow-icon.gif" width="26" height="25" border="0"
                     alt="Warning" style="vertical-align: middle;" />
                 <span>JavaScript is turned off in your browser. Please turn on JavaScript to enable
-                    more <a href="/clinicaltrials/search-form-help/page1#1">search options</a>.</span></p>
+                    more <a href="<% =SearchHelpPrettyUrl %>/page1#1">search options</a>.</span></p>
         </div>
     </noscript>
     <p style="margin-top: 0px;">
@@ -189,7 +189,7 @@ span.gray-text
 
             </td>
             <td class="column3 sectionBreak">
-                <a href="/clinicaltrials/search-form-help/page2#1" target="new">
+                <a href="<% =SearchHelpPrettyUrl %>/page2#1" target="new">
                     <img src="/images/ctsearch/gray-question.gif" width="15" height="15" border="0" alt="Help!" /></a>
             </td>
         </tr>
@@ -357,7 +357,7 @@ span.gray-text
 
             </td>
             <td valign="top" class="column3 sectionBreak">
-                <a href="/clinicaltrials/search-form-help/page2#2" target="new">
+                <a href="<% =SearchHelpPrettyUrl %>/page2#2" target="new">
                     <img src="/images/ctsearch/gray-question.gif" width="15" height="15" border="0" alt="Help!" /></a>
             </td>
         </tr>
@@ -374,7 +374,7 @@ span.gray-text
                 <input type="hidden" id="treatmentTypeAreaExpanded" runat="server" />
             </td>
             <td valign="top" class="column3 sectionBreak">
-                <a href="/clinicaltrials/search-form-help/page2#3" target="new">
+                <a href="<% =SearchHelpPrettyUrl %>/page2#3" target="new">
                     <img src="/images/ctsearch/gray-question.gif" width="15" height="15" border="0" alt="Help!" /></a>
             </td>
         </tr>
@@ -472,7 +472,7 @@ span.gray-text
                     name="txtKeywords" runat="server" />
             </td>
             <td valign="top" class="column3 sectionBreak sectionBottom">
-                <a href="/clinicaltrials/search-form-help/page2#4" target="new">
+                <a href="<% =SearchHelpPrettyUrl %>/page2#4" target="new">
                     <img src="/images/ctsearch/gray-question.gif" width="15" height="15" border="0" alt="Help!" /></a>
             </td>
         </tr>
@@ -488,7 +488,7 @@ span.gray-text
                 <input type="hidden" id="trialStatusExpanded" runat="server" />
             </td>
             <td valign="top" class="column3 sectionBreak">
-                <a href="/clinicaltrials/search-form-help/page2#5" target="new">
+                <a href="<% =SearchHelpPrettyUrl %>/page2#5" target="new">
                     <img src="/images/ctsearch/gray-question.gif" width="15" height="15" border="0" alt="Help!" /></a>
             </td>
         </tr>
@@ -552,7 +552,7 @@ span.gray-text
                 <input type="hidden" id="trialSponsorExpanded" runat="server" />
             </td>
             <td valign="top" class="column3 sectionBreak">
-                <a href="/clinicaltrials/search-form-help/page2#6" target="new">
+                <a href="<% =SearchHelpPrettyUrl %>/page2#6" target="new">
                     <img src="/images/ctsearch/gray-question.gif" width="15" height="15" border="0" alt="Help!" /></a>
             </td>
         </tr>
