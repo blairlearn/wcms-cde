@@ -24,6 +24,7 @@ using NCI.Web.UI.WebControls.FormControls;  // For the CTSearchCriteriaDisplay o
 using NCI.Web.CancerGov.Apps;
 using NCI.Logging;
 using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -224,12 +225,14 @@ namespace CancerGov.Web.SnippetTemplates
                 }
             }
 
-            //TODO
+            //WebAnalytics
             //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinical Trial Search", this.Request.Url.OriginalString.ToString());
-            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.RootPrettyURL, ""); // prop3
-            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.ShortTitle, "Clinical Trials Results"); // prop6
-            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.PostedDate, ""); // prop25
-            //litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
+            this.PageInstruction.AddFieldFilter("channelName", (fieldName, data) =>
+                {
+                    data.Value = "Clinical Trial Search";
+                });
+            //End Web Analytics
+
             JSManager.AddExternalScript(this.Page, "/scripts/Search/CDEResultsClinicalTrials.js");
             //JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
             CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css");
@@ -613,7 +616,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                 int cacheID = CTSearchManager.CachePageHtml(pageHtml);
 
-                Response.Redirect(string.Format("{2}?cid={0}&protocolsearchid={1}", cacheID, GetProtocolSearchID(), SearchPageInfo.PrintSearchResultPagePrettyUrl ));
+                Response.Redirect(string.Format("{2}?cid={0}&protocolsearchid={1}", cacheID, GetProtocolSearchID(), SearchPageInfo.PrintSearchResultPagePrettyUrl));
             }
         }
 
