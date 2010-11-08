@@ -377,6 +377,7 @@
     <Content Include="JS\Search\CDESearchClinicalTrials.js" />
     <Content Include="PageTemplates\CancerGovDictionaryTemplate.aspx" />
     <Content Include="PageTemplates\CancerGovDictionaryTemplate-CorrectDocType.aspx" />
+    <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
