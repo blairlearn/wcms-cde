@@ -29,19 +29,13 @@ using NCI.Web.UI.WebControls;
 using NCI.Web.UI.WebControls.FormControls;
 using NCI.Web.UI.WebControls.JSLibraries;
 using System.Text.RegularExpressions;
-
-//using CancerGov.UI.WebAnalytics;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class ClinicalTrialsView : NCI.Web.CancerGov.Apps.AppsBaseUserControl
     {
 
-        //protected HtmlGenericControl bannerSection;
-        //protected HtmlGenericControl footerSection;
-        //protected System.Web.UI.HtmlControls.HtmlTable titleSection;
-        //protected HtmlTableCell spacerColumn;
-        //protected HtmlTableCell contentColumn;
         public string strContent = "";
 
         public string Content
@@ -96,8 +90,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (iProtocolID < 1)
             {
-                //CancerGovError.LogError("ViewClinicalTrials", 1, "No ProtocolID Specified");
-                //this.RaiseErrorPage();
+
                 NCI.Logging.Logger.LogError("ViewClinicalTrials.OnLoad", "No ProtocalID Specified", NCIErrorLevel.Error);
                 this.RaiseErrorPage("No ProtocalID Specified");
             }
@@ -158,22 +151,19 @@ namespace CancerGov.Web.SnippetTemplates
             }
             catch (ProtocolFetchFailureException fetchError)
             {
-                //CancerGovError.LogError("ViewClinicalTrials", 1, "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message);
-                //this.RaiseErrorPage();
+
                 NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
                 this.RaiseErrorPage("Error:" + fetchError.Message);
             }
             catch (ProtocolTableEmptyException fetchError)
             {
-                //CancerGovError.LogError("ViewClinicalTrials", 1, "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message);
-                //this.RaiseErrorPage();
+
                 NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
                 this.RaiseErrorPage("Error:" + fetchError.Message);
             }
             catch (ProtocolTableMiscountException fetchError)
             {
-                //CancerGovError.LogError("ViewClinicalTrials", 1, "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message);
-                //this.RaiseErrorPage();
+
                 NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
                 this.RaiseErrorPage("Error:" + fetchError.Message);
             }
@@ -263,7 +253,7 @@ namespace CancerGov.Web.SnippetTemplates
             else
                 renderOptions = null;
 
-            ProtocolRenderer prProtocol = new ProtocolRenderer( base.pageDisplayInformation, pProtocol, renderOptions, "");
+            ProtocolRenderer prProtocol = new ProtocolRenderer(base.pageDisplayInformation, pProtocol, renderOptions, "");
             this.strContent += prProtocol.Render();
 
             if (this.PageDisplayInformation.Version == DisplayVersions.Print)
@@ -297,16 +287,27 @@ namespace CancerGov.Web.SnippetTemplates
 
             //// Web Analytics *************************************************
             //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinicaltrials", this.Request.Url.OriginalString.ToString());
-            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.RootPrettyURL, "");  //prop3
-            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.ShortTitle, "Clinical Trials (PDQ®)"); //prop6
-            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.PostedDate, ""); // prop25
-            //this.WebAnalyticsPageLoad.AddEvar(WebAnalyticsOptions.eVars.ClinicalTrialViewCount, "+1"); // eVar22
-            //if(hasProtocolSearchid)
-            //    this.WebAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.ClinicalTrialViewFromSearch);  //View is result of Clinical Trials search (event4)
-            //else
-            //    this.WebAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.ClinicalTrialViewNotSearch);  //View is NOT the result of Clinical Trials search
+            this.PageInstruction.AddFieldFilter("channelName", (name,data) =>
+            {
+                data.Value = "Clinicaltrials";
+            });
 
-            //litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.ClinicalTrialViewCount, wbField =>
+            {
+                wbField.Value = "+1";
+            });
+
+            if (hasProtocolSearchid)
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.ClinicalTrialViewFromSearch, wbField =>
+                {
+                    wbField.Value = "";
+                });
+            else
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.ClinicalTrialViewNotSearch, wbField =>
+                {
+                    wbField.Value = "";
+                });
+
             //// End Web Analytics *********************************************
 
         }
