@@ -202,13 +202,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="PageTemplates\CancerTypeHomeTemplate.aspx.cs">
-      <DependentUpon>CancerTypeHomeTemplate.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PageTemplates\CancerTypeHomeTemplate.aspx.designer.cs">
-      <DependentUpon>CancerTypeHomeTemplate.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
@@ -384,7 +377,6 @@
     <Content Include="JS\Search\CDESearchClinicalTrials.js" />
     <Content Include="PageTemplates\CancerGovDictionaryTemplate.aspx" />
     <Content Include="PageTemplates\CancerGovDictionaryTemplate-CorrectDocType.aspx" />
-    <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
