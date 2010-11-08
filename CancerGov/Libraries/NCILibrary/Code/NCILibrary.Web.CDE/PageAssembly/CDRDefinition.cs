@@ -9,7 +9,7 @@ using System.Xml.Schema;
 namespace NCI.Web.CDE
 {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
-    [System.Xml.Serialization.XmlRootAttribute("CDRDefinition", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
+    [System.Xml.Serialization.XmlRootAttribute("Module_CDRDefinition", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
     public class CDRDefinition
     {
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
