@@ -231,6 +231,13 @@
     <Compile Include="SnippetTemplates\ClinicalTrialsView.ascx.designer.cs">
       <DependentUpon>ClinicalTrialsView.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.cs">
+      <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.designer.cs">
+      <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\db_alpha.ascx.cs">
       <DependentUpon>db_alpha.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -375,6 +382,7 @@
     <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsView.ascx" />
+    <Content Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
     <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />

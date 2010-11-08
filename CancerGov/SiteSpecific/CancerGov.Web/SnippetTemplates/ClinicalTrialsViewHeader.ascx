@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ContentSearchSnippet.ascx.cs"
-    Inherits="CancerGov.Web.SnippetTemplates.ContentSearchSnippet" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ClinicalTrialsViewHeader.ascx.cs"
+    Inherits="CancerGov.Web.SnippetTemplates.ClinicalTrialsViewHeader" %>
 
 <%--<table border="0" cellspacing="0" cellpadding="0" width="751" bgcolor="#ffffff">
     <tbody>

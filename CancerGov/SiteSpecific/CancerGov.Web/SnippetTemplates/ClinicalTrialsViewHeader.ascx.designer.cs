@@ -11,7 +11,7 @@
 namespace CancerGov.Web.SnippetTemplates {
     
     
-    public partial class ContentSearchSnippet {
+    public partial class ClinicalTrialsViewHeader {
         
         /// <summary>
         /// contentHeader control.

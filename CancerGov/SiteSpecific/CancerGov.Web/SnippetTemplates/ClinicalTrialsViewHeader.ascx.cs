@@ -11,7 +11,7 @@ using NCI.Web.CDE;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class ContentSearchSnippet : NCI.Web.CancerGov.Apps.AppsBaseUserControl
+    public partial class ClinicalTrialsViewHeader : NCI.Web.CancerGov.Apps.AppsBaseUserControl
     {
         private string strDates = "";
         private string strPageUrl = "";
