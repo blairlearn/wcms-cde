@@ -22,12 +22,16 @@ namespace CancerGov.Web.SnippetTemplates
             contentHeader.Text = data;
             strPageUrl = this.PageInstruction.GetUrl("PrettyUrl").ToString() + "?cdrid=" + Request.QueryString["cdrid"] + "&protocolsearchid=" + Request.QueryString["protocolsearchid"];
             cdrVersionBar.Text = RenderCDRVesionrBar();
+            
         }
 
         private string RenderCDRVesionrBar()
         {
 
             StringBuilder sbContent = new StringBuilder();
+
+            string pvFirstPublished = PageInstruction.GetField("pvFirstPublished");
+            string pvLastModified = PageInstruction.GetField("pvLastModified");
 
             sbContent.Append("<table width=\"771\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
             sbContent.Append("<tr>\n");

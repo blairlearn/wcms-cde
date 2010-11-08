@@ -177,30 +177,37 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 if (pProtocol.DateLastModified != new DateTime(0))
                 {
-                    sbDate.Append("<span class=\"protocol-date-label\">Last Modified: </span>");
-                    sbDate.Append("<span class=\"protocol-dates\">");
-                    sbDate.Append(pProtocol.DateLastModified.ToString("d"));
-                    sbDate.Append("</span>");
+                    PageInstruction.AddFieldFilter("pvLastModified", (fieldName, data) =>
+                        {
+                            data.Value = pProtocol.DateLastModified.ToString("d");
+                        });
+                }
+                else
+                {
+                    PageInstruction.AddFieldFilter("pvLastModified", (fieldName, data) =>
+                    {
+                        data.Value = String.Empty;
+                    });
 
-                    if (pProtocol.DateFirstPublished != new DateTime(0))
-                    {
-                        sbDate.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp");
-                    }
-                    else
-                    {
-                        sbDate.Append("&nbsp;&nbsp;");
-                    }
                 }
 
                 if (pProtocol.DateFirstPublished != new DateTime(0))
                 {
-                    sbDate.Append("<span class=\"protocol-date-label\">First Published: </span>");
-                    sbDate.Append("<span class=\"protocol-dates\">");
-                    sbDate.Append(pProtocol.DateFirstPublished.ToString("d"));
-                    sbDate.Append("</span>");
-                    sbDate.Append("&nbsp;&nbsp;");
+                    PageInstruction.AddFieldFilter("pvFirstPublished", (fieldName, data) =>
+                    {
+                        data.Value = pProtocol.DateFirstPublished.ToString("d");
+                    });
                 }
+                else
+                {
+                    PageInstruction.AddFieldFilter("pvFirstPublished", (fieldName, data) =>
+                    {
+                        data.Value = String.Empty;
+                    });
+                }
+
             }
+
             //SCR30153
             //this.PageHtmlHead.Title = pProtocol.ProtocolTitle;
 
@@ -287,7 +294,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             //// Web Analytics *************************************************
             //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinicaltrials", this.Request.Url.OriginalString.ToString());
-            this.PageInstruction.AddFieldFilter("channelName", (name,data) =>
+            this.PageInstruction.AddFieldFilter("channelName", (name, data) =>
             {
                 data.Value = "Clinicaltrials";
             });
