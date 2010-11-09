@@ -72,14 +72,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td valign="top">
                         <NCI:TemplateSlot ID="cgvRightNav" runat="server">
                             <HeaderHtml>
                             <table cellspacing="0" cellpadding="0" border="0" align="right" width="167">
                                 <tbody>
                                     <tr>
-                                        <td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>
-                                        <td width="159" valign="top">
+                                       <%-- <td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>--%>
+                                        <td width="159" valign="top" align="right">
                             </HeaderHtml>
                             <FooterHtml>
                     </td>
@@ -142,7 +142,7 @@
         </NCI:TemplateSlot>
         <NCI:TemplateSlot ID="cgvBodyRight" runat="server">
             <HeaderHtml>
-                        <table cellspacing="0" cellpadding="0" border="0" align="left" width="202">
+                        <table cellspacing="0" cellpadding="1" border="0" align="left" width="202">
                             <tbody>
                                 <tr>
                                     <td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>
