@@ -21,53 +21,46 @@ namespace CancerGov.Web.SnippetTemplates
             string data = SnippetInfo.Data;
             contentHeader.Text = data;
             strPageUrl = this.PageInstruction.GetUrl("PrettyUrl").ToString() + "?cdrid=" + Request.QueryString["cdrid"] + "&protocolsearchid=" + Request.QueryString["protocolsearchid"];
-
-            //cdrVersionBar.Text = RenderCDRVesionrBar();
-            
         }
 
         protected override void OnPreRender(EventArgs e)
         {
-            
-            string pvFirstPublished = PageInstruction.GetField("pvFirstPublished");
-            string pvLastModified = PageInstruction.GetField("pvLastModified");
+            string pvFirstPublished = String.Empty;
+            string pvLastModified = String.Empty;
 
-            StringBuilder sbDate = new StringBuilder();
+            try
+            { pvFirstPublished = PageInstruction.GetField("pvFirstPublished"); }
+            catch { }
 
-            //if (pProtocol.ProtocolType == ProtocolTypes.Protocol)
-            //{
-            //    if (pProtocol.DateLastModified != new DateTime(0))
-            //    {
+            try
+            { pvLastModified = PageInstruction.GetField("pvLastModified"); }
+            catch { }
+
+            if (pvLastModified != String.Empty || pvFirstPublished != String.Empty)
+            {
+                StringBuilder sbDate = new StringBuilder();
+
+                if (pvLastModified != String.Empty)
+                {
                     sbDate.Append("<span class=\"protocol-date-label\">Last Modified: </span>");
                     sbDate.Append("<span class=\"protocol-dates\">");
                     sbDate.Append(pvLastModified);
                     sbDate.Append("</span>");
-
-                    //if (pProtocol.DateFirstPublished != new DateTime(0))
-                    //{
-                        sbDate.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp");
-                    //}
-                //    else
-                //    {
-                //        sbDate.Append("&nbsp;&nbsp;");
-                //    }
-                //}
-
-                //if (pProtocol.DateFirstPublished != new DateTime(0))
-                //{
+                    sbDate.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp");
+                }
+                if (pvFirstPublished != String.Empty)
+                {
                     sbDate.Append("<span class=\"protocol-date-label\">First Published: </span>");
                     sbDate.Append("<span class=\"protocol-dates\">");
                     sbDate.Append(pvFirstPublished);
                     sbDate.Append("</span>");
                     sbDate.Append("&nbsp;&nbsp;");
-            //    }
-            //}
-            strDates = sbDate.ToString();
+                }
+                strDates = sbDate.ToString();
 
-            cdrVersionBar.Text = RenderCDRVesionrBar();
-
+                cdrVersionBar.Text = RenderCDRVesionrBar();
+            }
             base.OnPreRender(e);
-
         }
 
         private string RenderCDRVesionrBar()
@@ -75,7 +68,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             StringBuilder sbContent = new StringBuilder();
 
-            
+
 
             sbContent.Append("<table width=\"771\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
             sbContent.Append("<tr>\n");
@@ -143,7 +136,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         private ProtocolVersions PVersion
         {
-            get 
+            get
             {
                 return (ProtocolVersions)Enum.Parse(typeof(ProtocolVersions), Request.Params["version"], true);
             }

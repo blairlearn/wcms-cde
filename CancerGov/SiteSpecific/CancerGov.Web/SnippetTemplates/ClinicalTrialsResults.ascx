@@ -88,7 +88,7 @@
 
                         </td>
                         <td valign="top" width="6%" align="right">
-                            <a target="new" href="<% =SearchHelpPrettyUrl %>">/page3#1">
+                            <a target="new" href="<% =SearchHelpPrettyUrl %>/page3#1">
                                 <img src="/images/ctsearch/gray-question.gif" alt="Help with display options." width="15"
                                     height="15" style="margin-bottom: 70px;" /></a>
                             <asp:ImageButton ID="UpdateAudienceAndDisplay" runat="server" ImageUrl="/images/ctsearch/go-btn-red.gif"
