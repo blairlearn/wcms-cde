@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2E572059-B868-45B5-AD56-DB8687EF4DD6}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -259,6 +259,13 @@
     <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.designer.cs">
       <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\ResultsGeneticsServices.ascx.cs">
+      <DependentUpon>ResultsGeneticsServices.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ResultsGeneticsServices.ascx.designer.cs">
+      <DependentUpon>ResultsGeneticsServices.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\CTCustomSelection.ascx.cs">
       <DependentUpon>CTCustomSelection.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -386,6 +393,7 @@
     <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
     <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />
+    <Content Include="SnippetTemplates\ResultsGeneticsServices.ascx" />
     <Content Include="TermDictionary.svc" />
     <Content Include="UserControls\CTCustomSelection.ascx" />
     <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
@@ -433,9 +441,6 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2222</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
