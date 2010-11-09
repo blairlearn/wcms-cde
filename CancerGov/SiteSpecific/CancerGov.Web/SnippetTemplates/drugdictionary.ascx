@@ -16,12 +16,9 @@
     <!-- Main Area -->
     <form id="drugForm" runat="server">
     <a name="top"></a>
-    <div style="margin-right: auto; margin-left: auto; width: 571px;">
+    <!--<div style="margin-right: auto; margin-left: auto; width: 571px;">-->
         <table width="571" cellspacing="0" cellpadding="0" border="0">
             <tr>
-                <td valign="top">
-                    <img src="/images/spacer.gif" width="10" height="1" alt="" border="0">
-                </td>
                 <!-- Left Nav Column -->
                 <td id="leftzone" valign="top">
                     <asp:Literal ID="litPageLeftColumn" runat="server"></asp:Literal>
@@ -210,7 +207,7 @@
                 </td>
             </tr>
         </table>
-    </div>
+    <!--</div>-->
     </form>
     <!-- Footer -->
     <div id="footerzone" align="center">

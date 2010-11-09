@@ -7,6 +7,8 @@
 <head id="header" runat="server">
     <title></title>
     <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
+    <script src="/JS/popEvents.js" type="text/javascript"></script>
+
     <!--[if IE]>
 	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
     <![endif]-->

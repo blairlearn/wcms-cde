@@ -231,7 +231,7 @@ namespace Www.Templates
         {
             //		RawUrl	"/drugdictionary?CdrID=42766"	string
 
-            if (Request.RawUrl.Contains("?") == false)
+            if (Request.RawUrl.Contains("?") == false && NumResults < 1)
             {
 
                 litBackToTop.Visible = false;
