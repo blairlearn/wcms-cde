@@ -1,17 +1,19 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.WebPageAssembler" %>
+
 <%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls"
     TagPrefix="NCI" %>
-    
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
     <title></title>
+
     <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
+
     <!--[if IE]>
 	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
     <![endif]-->
 </head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
+<body id="Body1" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
     <!-- Site Banner -->
     <div id="bannerDiv" align="center">
         <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
@@ -54,22 +56,27 @@
                 <td valign="top">
                     <img src="/images/spacer.gif" border="0" alt="" width="16" height="1" />
                 </td>
-            </tr>            
-        </table>        
+            </tr>
+        </table>
         </td>
         <!-- End Left Nav -->
         <!-- Main Content Area -->
         <td id="contentzone" valign="top" width="571">
-            <a name="skiptocontent"></a>
             <NCI:TemplateSlot ID="cgvBodyHeader" runat="server" />
-            <table border="0" cellspacing="0" cellpadding="0" width="571">
+            <table width="571" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <td valign="top">
+                            <img height="16" border="0" width="8" alt="" src="/images/spacer.gif" />
+                        </td>
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <NCI:TemplateSlot ID="cgvRightNav" runat="server">
                             <HeaderHtml>
                             <table cellspacing="0" cellpadding="0" border="0" align="right" width="167">
                                 <tbody>
-                                <tr><td valign="top"><img height="16" border="0" width="8" alt="" src="/images/spacer.gif"/></td></tr>
                                     <tr>
                                         <td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>
                                         <td width="159" valign="top">
@@ -87,37 +94,39 @@
             </FooterHtml> </NCI:TemplateSlot>
             <NCI:TemplateSlot ID="cgvCdrDefinition" runat="server">
                 <HeaderHtml>
-                            <table cellspacing="0" cellpadding="0" border="0" align="right" width="">
-                                <tbody>
-                                <tr><td valign="top"><img height="16" border="0" width="8" alt="" src="/images/spacer.gif"/></td></tr>
-                                    <tr>                                    
-                                        <td valign="top"  width="">
+                        <table cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                                <tr>                                                                 
+                                    <td valign="top">
                 </HeaderHtml>
                 <FooterHtml>
         </td>
         </tr>
         <tr>
-            <td valign="top">
-                <img height="8" border="0" width="8" alt="" src="/images/spacer.gif" />
+            <td>
+                <td valign="top">
+                    <img height="13" border="0" width="1" alt="" src="/images/spacer.gif" />
+                </td>
             </td>
         </tr>
         <tr>
-            <td bgcolor="#999999" valign="top">
-                <img border="0" alt="" src="/images/spacer.gif" height="1">
-            </td>
+        <td><hr /></td>
+<%--            <td valign="top" bgcolor="#999999">
+                <img border="0" alt="" src="/images/spacer.gif" height="1" border="0">
+            </td>--%>
         </tr>
         <tr>
-            <td valign="top">
-                <img height="8" border="0" width="8" alt="" src="/images/spacer.gif" />
+            <td>
+                <td valign="top">
+                    <img height="1" border="0" width="1" alt="" src="/images/spacer.gif" />
+                </td>
             </td>
         </tr>
         </tbody> </table> </FooterHtml> </NCI:TemplateSlot>
-        
-        
         <NCI:TemplateSlot ID="cgvBodyLeft" runat="server">
             <HeaderHtml>
                         <table cellspacing="0" cellpadding="0" border="0" align="left" width="202">
-                            <tbody>
+                            <tbody> 
                                 <tr>
                                     <td valign="top">
             </HeaderHtml>
@@ -149,7 +158,15 @@
                         </table>                        
             </FooterHtml>
         </NCI:TemplateSlot>
-        </td> </tr> </table> </td> </tr> </table>
+        </td> </tr> <a name="skiptocontent"></a>
+        <NCI:TemplateSlot ID="cgvMpToc" runat="server" />
+        <NCI:TemplateSlot ID="cgvBodyNav" runat="server" />
+        </table> </td>
+        <!-- End Content Area -->
+        <td valign="top">
+            <img src="/images/spacer.gif" width="10" height="1" alt="" border="0" />
+        </td>
+        </tr> </table>
     </div>
     <!-- End Main Area -->
     <!-- Footer -->
