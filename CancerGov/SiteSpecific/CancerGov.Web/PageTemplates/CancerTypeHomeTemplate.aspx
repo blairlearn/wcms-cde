@@ -64,12 +64,10 @@
         <td id="contentzone" valign="top" width="571">
             <NCI:TemplateSlot ID="cgvBodyHeader" runat="server" />
             <table width="571" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>
-                        <td valign="top">
-                            <img height="16" border="0" width="8" alt="" src="/images/spacer.gif" />
-                        </td>
-                    </td>
+                <tr>                   
+                    <td valign="top">
+                        <img height="16" border="0" width="8" alt="" src="/images/spacer.gif" />
+                    </td>                    
                 </tr>
                 <tr>
                     <td valign="top">
@@ -142,7 +140,7 @@
         </NCI:TemplateSlot>
         <NCI:TemplateSlot ID="cgvBodyRight" runat="server">
             <HeaderHtml>
-                        <table cellspacing="0" cellpadding="1" border="0" align="left" width="202">
+                        <table cellspacing="0" cellpadding="0" border="0" align="left" width="202">
                             <tbody>
                                 <tr>
                                     <td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>
