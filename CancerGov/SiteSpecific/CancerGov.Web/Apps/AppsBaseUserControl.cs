@@ -71,6 +71,11 @@ namespace NCI.Web.CancerGov.Apps
         
         }
 
+        virtual public void RaiseErrorPage()
+        {
+            RaiseErrorPage("");
+        }
+
         virtual public void RaiseErrorPage(string messageKey)
         {
             string systemMessagePageUrl = ConfigurationSettings.AppSettings["SystemMessagePage"].Trim();

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2E572059-B868-45B5-AD56-DB8687EF4DD6}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -210,6 +210,16 @@
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.designer.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsBaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsLink.ascx.cs">
+      <DependentUpon>ClinicalTrialsLink.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsLink.ascx.designer.cs">
+      <DependentUpon>ClinicalTrialsLink.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\ClinicalTrialsResults.ascx.cs">
       <DependentUpon>ClinicalTrialsResults.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -386,6 +396,7 @@
     <Content Include="PageTemplates\CancerGovDictionaryTemplate-CorrectDocType.aspx" />
     <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
+    <Content Include="SnippetTemplates\ClinicalTrialsLink.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsView.ascx" />
@@ -441,6 +452,9 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2222</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

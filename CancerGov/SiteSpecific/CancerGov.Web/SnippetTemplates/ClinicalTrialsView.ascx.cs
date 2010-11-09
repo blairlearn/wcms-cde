@@ -33,7 +33,7 @@ using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class ClinicalTrialsView : NCI.Web.CancerGov.Apps.AppsBaseUserControl
+    public partial class ClinicalTrialsView : ClinicalTrialsBaseUserControl
     {
 
         public string strContent = "";
@@ -49,7 +49,7 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 String url = Request.UrlReferrer.AbsolutePath.ToString();
                 //only do the survey for the advanced search page 
-                if (url.Equals("/search/ClinicalTrialsResults.aspx") || url.Equals("/search/Results_ClinicalTrials.aspx"))
+                if (url.Contains(SearchPageInfo.SearchResultsPrettyUrl))
                 {
                     //only show this survey if the other survey was not shown
                     //look at the persistant cookie  for that survey  ascookie parameter in the tiggerParams file 
@@ -212,7 +212,7 @@ namespace CancerGov.Web.SnippetTemplates
             //this.PageHtmlHead.Title = pProtocol.ProtocolTitle;
 
             StringBuilder sbPageUrl = new StringBuilder();
-            sbPageUrl.Append("/search/ViewClinicalTrials.aspx");
+            sbPageUrl.Append(SearchPageInfo.DetailedViewSearchResultPagePrettyUrl);
             sbPageUrl.Append("?cdrid=");
             sbPageUrl.Append(iProtocolID.ToString());
 

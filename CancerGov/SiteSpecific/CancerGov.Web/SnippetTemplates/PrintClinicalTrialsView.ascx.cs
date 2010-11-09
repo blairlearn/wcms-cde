@@ -23,10 +23,8 @@ using NCI.Logging;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class PrintClinicalTrialsView : AppsBaseUserControl
+    public partial class PrintClinicalTrialsView : ClinicalTrialsBaseUserControl
     {
-
-        private SearchResultPageInfo _searchPageInfo = null;
         enum PageRenderingState
         {
             None = 0,
@@ -42,19 +40,6 @@ namespace CancerGov.Web.SnippetTemplates
         {
             get { return strEmailUrl; }
         }
-
-        //protected int GetProtocolSearchID()
-        //{
-        //    int protocolSearchID = Strings.ToInt(Strings.Clean(Request.Params["protocolsearchid"]));
-        //    if (protocolSearchID == -1)
-        //    {
-        //        CancerGovError.LogError("ClinicalTrialsResultsAdvanced.aspx", 1, "Invalid Protocol Search ID");
-        //        //this.RaiseErrorPage();
-        //        this.RaiseErrorPage("InvalidSearchID");
-        //    }
-
-        //    return protocolSearchID;
-        //}
 
         protected override void OnLoad(EventArgs e)
         {
@@ -106,36 +91,6 @@ namespace CancerGov.Web.SnippetTemplates
             }
         }
 
-
-        protected SearchResultPageInfo SearchPageInfo
-        {
-            get
-            {
-                if (_searchPageInfo != null)
-                    return _searchPageInfo;
-                // Read the search page information xml , to determine the 
-                // search results pretty url
-                string spidata = this.SnippetInfo.Data;
-                try
-                {
-                    if (string.IsNullOrEmpty(spidata))
-                        throw new Exception("searchResultPageInfo not present in xml, associate an application module item  with this page in percussion");
-
-                    spidata = spidata.Trim();
-                    if (string.IsNullOrEmpty(spidata))
-                        throw new Exception("searchResultPageInfo not present in xml, associate an application module item  with this page in percussion");
-
-                    SearchResultPageInfo searchResultPageInfo = ModuleObjectFactory<SearchResultPageInfo>.GetModuleObject(spidata);
-
-                    return _searchPageInfo = searchResultPageInfo;
-                }
-                catch (Exception ex)
-                {
-                    NCI.Logging.Logger.LogError("ClinicalTrialsResults", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
-                    throw ex;
-                }
-            }
-        }
 
         #region Event Handlers
 
