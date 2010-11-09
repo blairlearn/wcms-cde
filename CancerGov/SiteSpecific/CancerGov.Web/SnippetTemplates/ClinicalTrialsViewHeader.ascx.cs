@@ -21,8 +21,53 @@ namespace CancerGov.Web.SnippetTemplates
             string data = SnippetInfo.Data;
             contentHeader.Text = data;
             strPageUrl = this.PageInstruction.GetUrl("PrettyUrl").ToString() + "?cdrid=" + Request.QueryString["cdrid"] + "&protocolsearchid=" + Request.QueryString["protocolsearchid"];
-            cdrVersionBar.Text = RenderCDRVesionrBar();
+
+            //cdrVersionBar.Text = RenderCDRVesionrBar();
             
+        }
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            
+            string pvFirstPublished = PageInstruction.GetField("pvFirstPublished");
+            string pvLastModified = PageInstruction.GetField("pvLastModified");
+
+            StringBuilder sbDate = new StringBuilder();
+
+            //if (pProtocol.ProtocolType == ProtocolTypes.Protocol)
+            //{
+            //    if (pProtocol.DateLastModified != new DateTime(0))
+            //    {
+                    sbDate.Append("<span class=\"protocol-date-label\">Last Modified: </span>");
+                    sbDate.Append("<span class=\"protocol-dates\">");
+                    sbDate.Append(pvLastModified);
+                    sbDate.Append("</span>");
+
+                    //if (pProtocol.DateFirstPublished != new DateTime(0))
+                    //{
+                        sbDate.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp");
+                    //}
+                //    else
+                //    {
+                //        sbDate.Append("&nbsp;&nbsp;");
+                //    }
+                //}
+
+                //if (pProtocol.DateFirstPublished != new DateTime(0))
+                //{
+                    sbDate.Append("<span class=\"protocol-date-label\">First Published: </span>");
+                    sbDate.Append("<span class=\"protocol-dates\">");
+                    sbDate.Append(pvFirstPublished);
+                    sbDate.Append("</span>");
+                    sbDate.Append("&nbsp;&nbsp;");
+            //    }
+            //}
+            strDates = sbDate.ToString();
+
+            cdrVersionBar.Text = RenderCDRVesionrBar();
+
+            base.OnPreRender(e);
+
         }
 
         private string RenderCDRVesionrBar()
@@ -30,8 +75,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             StringBuilder sbContent = new StringBuilder();
 
-            string pvFirstPublished = PageInstruction.GetField("pvFirstPublished");
-            string pvLastModified = PageInstruction.GetField("pvLastModified");
+            
 
             sbContent.Append("<table width=\"771\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
             sbContent.Append("<tr>\n");
