@@ -139,7 +139,16 @@ namespace CancerGov.Web.SnippetTemplates
 			string country = Request.Form["selCountry"];
 			string lastName = Request.Form["txtLastName"];
 
-           // this.PageHeaders.Add(new TitleBlock("Search: Cancer Genetic Services Directory", null, this.PageDisplayInformation));
+            if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web)
+            {
+                this.textSubmit.Visible = false;
+            }
+            else
+            {
+                this.submit.Visible = false;
+            }
+
+
 
             DataTable dbTable = new DataTable();
 
@@ -183,7 +192,7 @@ namespace CancerGov.Web.SnippetTemplates
                 this.textSubmit.Visible = false;
                 resultGrid.Visible = false;
             }
-            else
+            else 
             {
                 int selectedPage = Strings.ToInt(Request.Form["selectedPage"], 0);
                 selectedPage = selectedPage <= 0 ? 1 : selectedPage;

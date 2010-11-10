@@ -2,37 +2,63 @@
     Inherits="CancerGov.Web.SnippetTemplates.ResultsGeneticsServices" %>
 <!-- Main Content Area -->
 <!--div align="center"-->
-    <table width="771" cellspacing="0" cellpadding="0" border="0">
+
+<script language="javascript">
+			function page(first)
+			{
+				document.searchParamForm.selectedPage.value=first;
+				document.searchParamForm.action='/genetic/resultgenetics';
+				document.searchParamForm.submit();			
+			}
+			
+			function doSubmit()
+			{
+				var blnInput = '';
+				
+				if(document.resultForm.personid != null)
+				{
+					if(<%=LastRec%> - <%=FirstRec%> == 0)
+					{
+						if(document.resultForm.personid.checked == true)
+						{
+							blnInput = document.resultForm.personid.value;								
+						}
+					}
+					else
+					{
+						for(var i = 0; i <= (<%=LastRec%> - <%=FirstRec%>); i++)
+						{
+							if(document.resultForm.personid[i].checked == true)
+							{
+								if(blnInput.length > 0)
+								{
+									blnInput += ',';
+								}
+								blnInput += document.resultForm.personid[i].value;
+							}
+						}
+					}
+				}
+											
+				if(blnInput.length > 0)
+				{
+					window.location.href='/genetic/Sesultgenetics?personid=' + blnInput;								
+				}
+				else
+				{
+					alert("Please check the professionals you would like to view.");					
+				}
+			}
+		</script>
+		<script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>	
+
+
+
+    <table width="571" cellspacing="0" cellpadding="0" border="0">
         <tr>
-            <!-- Main Content Area -->
+            <!-- Main Content Area --> 
             <td id="contentzone" valign="top" width="100%">
-                <a name="skiptocontent"></a>
-                <table cellpadding="1" width="100%" cellspacing="0" border="0" class="gray-border">
-                    <tr>
-                        <td>
-                            <table cellpadding="7" cellspacing="0" border="0" width="100%" bgcolor="#ffffff">
-                                <tr>
-                                    <td>
-                                        <span class="grey-text" a>This directory lists professionals who provide services related
-                                            to cancer genetics (cancer risk assessment, genetic counseling, genetic susceptibility
-                                            testing, and others). These professionals have applied to be listed in this directory.
-                                            Inclusion in this directory does not imply an endorsement by the National Cancer
-                                            Institute. For information on inclusion criteria and applying to the directory,
-                                            see the <a href="/cancertopics/genetics/directory/applicationform">application form</a>.</span>
-                                        <p>
-                                            <span class="grey-text">For more information please send an e-mail to </span><a href="mailto:GeneticsDirectory@cancer.gov">
-                                                GeneticsDirectory@cancer.gov</a>
-                                            <p>
-                                                <a href="/cancertopics/genetics/directory/description" class="navigation-dark-red-link">
-                                                    NCI Cancer Genetics Services Directory: Description</a><br>
-                                                <a href="/cancertopics/genetics/directory/applicationform" class="navigation-dark-red-link">
-                                                    Join the NCI Cancer Genetics Services Directory</a><br>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+
                 <form name="searchParamForm" method="post">
                 <input type="hidden" name="selCancerType" value="<%=Request.Form["selCancerType"]%>">
                 <input type="hidden" name="selCancerFamily" value="<%=Request.Form["selCancerFamily"]%>">
@@ -67,7 +93,7 @@
                                             <asp:TemplateColumn ItemStyle-VerticalAlign="Top" ItemStyle-Width="100%">
                                                 <ItemTemplate>
                                                     <label for="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
-                                                        <a href="/search/view_geneticspro.aspx?personid=<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
+                                                        <a href="/genetic/Sesultgenetics?personid=<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
                                                             <%#DataBinder.Eval(Container.DataItem, "FullName")%>
                                                             <%#DataBinder.Eval(Container.DataItem, "Degree")%></a></label>
                                                 </ItemTemplate>
@@ -93,14 +119,10 @@
                         <table>
                             <tr>
                                 <td align="left" valign="bottom">
-                                    <a href="javascript:doSubmit();" id="submit" runat="server">
-                                        <img src="/images/form_checked_button.gif" alt="display checked results" 
-                                        border="0" style="width: 61px; height: 18px"></a><input
-                                            type="submit" id="textSubmit" value="Display Checked Results" 
-                                        runat="server" style="margin-left: 0px">
-                                    &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search/search_geneticsservices.aspx" alt="New Genetics Services Search">
-                                        <img src="/images/new_search_red.gif" border="0" alt="New Search"></a>
-                                </td>
+									<a href="javascript:doSubmit();" id="submit" runat="server"><img src="/images/form_checked_button.gif" alt="display checked results" border="0"></a><input type="submit" id="textSubmit" value="Display Checked Results" runat="server">
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<a href="/search/search_geneticsservices.aspx" alt="New Genetics Services Search"><img src="/images/new_search_red.gif" border="0" alt="New Search"></a>
+								</td>
                             </tr>
                         </table>
                 </form>
