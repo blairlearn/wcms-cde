@@ -8,8 +8,8 @@
     <ProjectGuid>{F3414554-93F7-4116-88B2-637A3ABA050E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CGovHandlers</RootNamespace>
-    <AssemblyName>CGovHandlers</AssemblyName>
+    <RootNamespace>CancerGov.Handlers</RootNamespace>
+    <AssemblyName>CancerGov.Handlers</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>

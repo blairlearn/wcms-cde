@@ -14,7 +14,7 @@ using CancerGov.CDR.ClinicalTrials.Helpers;
 using NCI.Util;
 using NCI.Logging;
 
-namespace CGovHandlers
+namespace CancerGov.Handlers
 {
     public class ClinicalTrialsLinkHandler : IHttpHandler
     {
