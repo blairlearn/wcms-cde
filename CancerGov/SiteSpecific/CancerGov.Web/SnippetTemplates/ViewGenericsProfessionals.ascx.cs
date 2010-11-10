@@ -76,6 +76,7 @@ namespace CancerGov.Web.SnippetTemplates
                         content += "<p>";
                         content += new ReturnToTopAnchor(this.PageDisplayInformation).Render();
                         content += "<p>";
+                        content = content.Replace("/search/search_geneticsservices.aspx", SearchPageInfo.SearchPagePrettyUrl);
                     }
                 }
 
