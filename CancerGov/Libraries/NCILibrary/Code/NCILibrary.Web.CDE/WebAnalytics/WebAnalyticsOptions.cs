@@ -89,7 +89,7 @@ namespace NCI.Web.CDE.WebAnalytics
 
             return rtnSuites.ToArray();
         }
-
+                
         public static class Language
         {
             public static readonly string Spanish = "spanish";

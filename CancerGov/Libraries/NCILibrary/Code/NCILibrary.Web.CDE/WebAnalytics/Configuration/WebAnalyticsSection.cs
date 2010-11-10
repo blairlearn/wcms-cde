@@ -18,7 +18,6 @@ namespace NCI.Web.CDE.WebAnalytics.Configuration
             get { return (ReportingSuitesElementCollection)base["reportingSuites"]; }
         }
 
-
         [ConfigurationProperty("enableNonJavaScriptTagging", IsRequired = false, DefaultValue = false)]
         public bool EnableNonJavaScriptTagging
         {
