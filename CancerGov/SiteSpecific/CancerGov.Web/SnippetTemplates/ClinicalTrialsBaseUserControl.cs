@@ -16,7 +16,7 @@ using NCI.Web.CancerGov.Apps;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public class ClinicalTrialsBaseUserControl:AppsBaseUserControl
+    public class SearchBaseUserControl:AppsBaseUserControl
     {
         private SearchResultPageInfo _searchPageInfo = null;
 

@@ -31,7 +31,7 @@ namespace CancerGov.Web.SnippetTemplates
     /// <summary>
     /// Summary description for ClinicalTrialsResults.
     /// </summary>
-    public partial class ClinicalTrialsResults : ClinicalTrialsBaseUserControl
+    public partial class ClinicalTrialsResults : SearchBaseUserControl
     {
         private AdvancedSearchResultRenderer _pageRenderer = null;
 

@@ -22,7 +22,7 @@ using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class ClinicalTrialsLink : ClinicalTrialsBaseUserControl
+    public partial class ClinicalTrialsLink : SearchBaseUserControl
     {
         #region Page Life Cycle Events
 

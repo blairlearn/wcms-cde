@@ -36,6 +36,10 @@ namespace CancerGov.CDR.DataManager
 		{
 			documentId = cdrId;	
 		}
+        public GeneticProfessional()
+        {
+            
+        }
 
 		public string GetXML()
 		{
@@ -189,5 +193,36 @@ namespace CancerGov.CDR.DataManager
 
 			return html;
 		}
+
+        public DataSet GetSearchFormMasterData()
+        {
+            DataSet dbSet = new DataSet();
+            SqlDataAdapter dbAdapter = null;
+            try
+            {
+                dbAdapter = new SqlDataAdapter("Select ShortName + ' - ' + ISNULL(FullName, ShortName) AS Name, ShortName AS StateAbbr From PoliticalSubUnit WHERE ShortName IS NOT NULL AND CountryName = 'U.S.A.' AND ShortName <> 'AS' Order By ShortName", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter.Fill(dbSet, "States");
+                dbAdapter.SelectCommand.CommandText = "Select FamilyCancerSyndrome, FamilyCancerSyndrome + ';' + CONVERT(varchar,FamilyCancerSyndromeListID) AS Value From GenProfFamilyCancerSyndromeList Order By FamilyCancerSyndrome";
+                dbAdapter.Fill(dbSet, "CancerFamily");
+                dbAdapter.SelectCommand.CommandText = "Select CancerTypeSite, CancerTypeSite + ';' + CONVERT(varchar,CancerTypeSiteID) As [Type] From GenProfCancerTypeSite Order By CancerTypeSite";
+                dbAdapter.Fill(dbSet, "CancerType");
+                dbAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+                dbAdapter.SelectCommand.CommandText = "usp_GetGenProfCountry";
+                dbAdapter.Fill(dbSet, "Country");
+            }
+            catch (SqlException sqlE)
+            {
+                CancerGovError.LogError("GeneticProfessional GetSearchFormMasterData method:  Error Getting the Master data for the Search Form:  ","", this.ToString(), ErrorType.DbUnavailable, sqlE);                
+            }
+            finally
+            {
+                if (dbAdapter != null)
+                {
+                    dbAdapter.Dispose();
+                }
+            }
+
+            return dbSet;
+        }
 	}
 }

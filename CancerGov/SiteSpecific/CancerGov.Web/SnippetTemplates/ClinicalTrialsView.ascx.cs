@@ -33,7 +33,7 @@ using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class ClinicalTrialsView : ClinicalTrialsBaseUserControl
+    public partial class ClinicalTrialsView : SearchBaseUserControl
     {
 
         public string strContent = "";

@@ -21,7 +21,7 @@ using NCI.Web.CDE.Modules;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class ClinicalTrialsSearchTemplate : ClinicalTrialsBaseUserControl
+    public partial class ClinicalTrialsSearchTemplate : SearchBaseUserControl
     {
 
         #region Constants

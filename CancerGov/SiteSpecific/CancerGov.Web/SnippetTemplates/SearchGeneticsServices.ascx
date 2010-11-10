@@ -1,14 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SearchGeneticsServices.ascx.cs"
     Inherits="CancerGov.Web.SnippetTemplates.SearchGeneticsServices" %>
-<table width="771" cellspacing="0" cellpadding="0" border="0">
+<table width="571" cellspacing="0" cellpadding="0" border="0">
     <tr>
-        <td valign="top">
-            <img src="/images/spacer.gif" width="10" height="1" alt="" border="0">
-        </td>
-        <!-- Left Nav Column -->
-        <td id="leftzone" valign="top">
-            <%=this.PageLeftColumn.Render()%>
-        </td>
         <!-- Main Content Area -->
         <td id="contentzone" valign="top" width="100%">
             <a name="skiptocontent"></a>
@@ -39,8 +32,7 @@
                 </tr>
             </table>
             <p />
-            <form id="searchForm" name="searchForm" action="/search/results_geneticsservices.aspx"
-            method="post">
+            <form id="searchForm" name="searchForm" action="<%=SearchPageInfo.SearchResultsPrettyUrl%>"  method="post">
             <table cellpadding="1" cellspacing="0" border="0" width="100%" class="gray-border">
                 <tr>
                     <td>
@@ -255,10 +247,6 @@
 					        }					    
                         </script>
             </asp:Literal>
-        </td>
-        <!----------------------->
-        <td valign="top">
-            <img src="/images/spacer.gif" width="10" height="1" alt="" border="0">
         </td>
     </tr>
 </table>

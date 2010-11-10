@@ -23,7 +23,7 @@ using NCI.Logging;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class PrintClinicalTrialsView : ClinicalTrialsBaseUserControl
+    public partial class PrintClinicalTrialsView : SearchBaseUserControl
     {
         enum PageRenderingState
         {
