@@ -73,7 +73,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClinicalTrialControls", "Ca
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HttpHandlers", "HttpHandlers", "{3D4E017C-CC86-42AD-8A2F-B0A509442C6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CancerGov.Handlers", "CancerGovSpecific\CGovHandlers\CancerGov.Handlers.csproj", "{F3414554-93F7-4116-88B2-637A3ABA050E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CancerGov.Handlers", "CancerGovSpecific\CancerGov.Handlers\CancerGov.Handlers.csproj", "{F3414554-93F7-4116-88B2-637A3ABA050E}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
