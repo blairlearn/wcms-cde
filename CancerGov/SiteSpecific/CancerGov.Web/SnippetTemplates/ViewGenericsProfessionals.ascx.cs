@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -9,17 +11,15 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
-using NCI.Web.CancerGov.Apps;
-using System.Data.SqlClient;
 using System.Xml;
-using System.IO;
-using NCI.Util;
+using System.Xml.Linq;
+using CancerGov.CDR.DataManager;
+using CancerGov.DataAccessClasses.UI.Types;
 using CancerGov.UI.PageObjects;
 using NCI.Data;
-using CancerGov.DataAccessClasses.UI.Types;
 using NCI.Logging;
-using CancerGov.CDR.DataManager;
+using NCI.Util;
+using NCI.Web.CancerGov.Apps;
 using NCI.Web.CDE;
 using NCI.Web.CDE.WebAnalytics;
 namespace CancerGov.Web.SnippetTemplates
@@ -96,7 +96,8 @@ namespace CancerGov.Web.SnippetTemplates
                 url.SetUrl(pagePrintUrl);
                 
             });
-
+            
+            //Web Analytics
             if (WebAnalyticsOptions.IsEnabled)
             {
 
@@ -104,7 +105,7 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     wbField.Value = ConfigurationSettings.AppSettings["HostName"] + SearchPageInfo.SearchResultsPrettyUrl;
                 });
-
+                //End of Web Anlytics
             }
 
         }

@@ -71,19 +71,7 @@ namespace CancerGov.Web.SnippetTemplates
             string strVersion = "";
             bool hasProtocolSearchid = false;
 
-            //this.PageHtmlHead.Title = "National Cancer Institute - Clinical Trials (PDQ&#174;)";
-            //this.PageHtmlHead.Title = "Clinical Trials (PDQ&#174;) - National Cancer Institute";
-            //for protocal title as page title (SCR: 30153), see Line: ~156
-            // -------------------------------------------
-            // 6-22-09 This code was used to overcome the issue related to CTSearchPage loading 
-            // generic navigation because it is also used by SearchCancerTopics.  Ultimately the solution 
-            // will be to have CTSearchPage use "nav_clinical_trials" and to have SearchCancerTopic not 
-            // inherit from CTSearchPage.  For now the problem is an error when displaying the print version
-            // that does not have a NavigationBar - to fix this problem we will check to see if the 
-            // NavigationBar is null before we set anything.  
-            // ------------------------------------------
-            //if ( !(this.pageBanner.NavigationBar == null))
-            //    this.pageBanner.NavigationBar.SelectedTabImg = "nav_clinical_trials";
+           
 
             ProtocolVersions pvVersion = ProtocolVersions.HealthProfessional;
             iProtocolID = Strings.ToInt(Request.Params["cdrid"]);
@@ -168,9 +156,7 @@ namespace CancerGov.Web.SnippetTemplates
                 this.RaiseErrorPage("Error:" + fetchError.Message);
             }
 
-            //Fix related to SCR: 30153 - client decided to impliment 
-            //this.PageHtmlHead.Title = pProtocol.ProtocolTitle + " - National Cancer Institute";
-
+            
             StringBuilder sbDate = new StringBuilder();
 
             if (pProtocol.ProtocolType == ProtocolTypes.Protocol)

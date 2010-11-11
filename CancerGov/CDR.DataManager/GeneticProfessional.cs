@@ -7,7 +7,6 @@ using System.IO;
 using CancerGov.Common;
 using CancerGov.Common.ErrorHandling;
 
-//namespace CancerGov.DataAccessClasses.CDR
 namespace CancerGov.CDR.DataManager
 {
 	/// <summary>
