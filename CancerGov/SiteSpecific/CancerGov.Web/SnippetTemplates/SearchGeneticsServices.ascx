@@ -4,34 +4,7 @@
     <tr>
         <!-- Main Content Area -->
         <td id="contentzone" valign="top" width="100%">
-            <a name="skiptocontent"></a>
-            <table cellpadding="1" width="100%" cellspacing="0" border="0" class="gray-border">
-                <tr>
-                    <td>
-                        <table cellpadding="7" cellspacing="0" border="0" width="100%" bgcolor="#ffffff">
-                            <tr>
-                                <td>
-                                    <span class="grey-text">This directory lists professionals who provide services related
-                                        to cancer genetics (cancer risk assessment, genetic counseling, genetic susceptibility
-                                        testing, and others). These professionals have applied to be listed in this directory.
-                                        Inclusion in this directory does not imply an endorsement by the National Cancer
-                                        Institute. For information on inclusion criteria and applying to the directory,
-                                        see the <a href="/cancertopics/genetics/directory/applicationform">application form</a>.</span>
-                                    <p>
-                                        <span class="grey-text">For more information please send an e-mail to </span><a href="mailto:GeneticsDirectory@cancer.gov">
-                                            GeneticsDirectory@cancer.gov</a>
-                                    <p>
-                                        <a href="/cancertopics/genetics/directory/description" class="navigation-dark-red-link">
-                                            NCI Cancer Genetics Services Directory: Description</a><br>
-                                        <a href="/cancertopics/genetics/directory/applicationform" class="navigation-dark-red-link">
-                                            Join the NCI Cancer Genetics Services Directory</a><br>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-            <p />
+<br />
             <form id="searchForm" name="searchForm" action="<%=SearchPageInfo.SearchResultsPrettyUrl%>"  method="post">
             <table cellpadding="1" cellspacing="0" border="0" width="100%" class="gray-border">
                 <tr>

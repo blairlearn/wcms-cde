@@ -7,7 +7,7 @@
 			function page(first)
 			{
 				document.searchParamForm.selectedPage.value=first;
-				document.searchParamForm.action='/genetic/resultgenetics';
+				document.searchParamForm.action='<%=SearchPageInfo.SearchResultsPrettyUrl%>';
 				document.searchParamForm.submit();			
 			}
 			
@@ -42,7 +42,7 @@
 											
 				if(blnInput.length > 0)
 				{
-					window.location.href='/genetic/Sesultgenetics?personid=' + blnInput;								
+					window.location.href='<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>' + '?personid=' + blnInput;								
 				}
 				else
 				{
@@ -50,7 +50,7 @@
 				}
 			}
 		</script>
-		<script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>	
+		<script src="/JS/JSLoader/JSLoader.js" type="text/javascript"></script>	
 
 
 
@@ -68,7 +68,7 @@
                 <input type="hidden" name="txtLastName" value="<%=Request.Form["txtLastName"]%>">
                 <input type="hidden" name="selectedPage" value="">
                 </form>
-                <form id="resultForm" name="resultForm" method="post" action="/search/view_geneticspro.aspx">
+                <form id="resultForm" name="resultForm" method="post" action="<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>">
                 <!-- Search Result Summary Section -->
                 <%=SearchSummary%>
                 <p>
@@ -93,7 +93,7 @@
                                             <asp:TemplateColumn ItemStyle-VerticalAlign="Top" ItemStyle-Width="100%">
                                                 <ItemTemplate>
                                                     <label for="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
-                                                        <a href="/genetic/Sesultgenetics?personid=<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
+                                                        <a href="<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>?personid=<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
                                                             <%#DataBinder.Eval(Container.DataItem, "FullName")%>
                                                             <%#DataBinder.Eval(Container.DataItem, "Degree")%></a></label>
                                                 </ItemTemplate>
@@ -121,7 +121,7 @@
                                 <td align="left" valign="bottom">
 									<a href="javascript:doSubmit();" id="submit" runat="server"><img src="/images/form_checked_button.gif" alt="display checked results" border="0"></a><input type="submit" id="textSubmit" value="Display Checked Results" runat="server">
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<a href="/search/search_geneticsservices.aspx" alt="New Genetics Services Search"><img src="/images/new_search_red.gif" border="0" alt="New Search"></a>
+									<a href="<%=SearchPageInfo.SearchPagePrettyUrl%>" alt="New Genetics Services Search"><img src="/images/new_search_red.gif" border="0" alt="New Search"></a>
 								</td>
                             </tr>
                         </table>

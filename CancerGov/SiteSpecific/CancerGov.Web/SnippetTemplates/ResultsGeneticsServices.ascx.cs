@@ -21,7 +21,7 @@ using CancerGov.Common.ErrorHandling;
 using NCI.Web.CDE.UI;
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class ResultsGeneticsServices : SnippetControl
+    public partial class ResultsGeneticsServices : SearchBaseUserControl
     {
         //protected void Page_Load(object sender, EventArgs e)
         //{
