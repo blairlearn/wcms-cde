@@ -16,9 +16,10 @@ using CancerGov.Common;
 using NCI.Web.CDE;
 using NCI.Util;
 using CancerGov.Common.ErrorHandling;
-//using CanerGov.CDR.DataManager;
-
+using NCI.Web.CDE.WebAnalytics;
+using CancerGov.CDR.DataManager;
 using NCI.Web.CDE.UI;
+
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class ResultsGeneticsServices : SearchBaseUserControl
@@ -228,11 +229,17 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 dbTable.Dispose();
             }
-            
-            //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Cancerinfo", this.Request.Url.OriginalString.ToString());
-            
-            
-            //litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
+
+            if (WebAnalyticsOptions.IsEnabled)
+            {
+
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.PageName, wbField =>
+                {
+                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + SearchPageInfo.DetailedViewSearchResultPagePrettyUrl;
+                });
+
+            }
+ 
         }
 
         
