@@ -2,7 +2,7 @@
 
 
 
-    <div align="center"; style="width: 773px; margin: 5px auto 0px auto; text-align: left;">
+    <div align="center"; style="width: 571px; margin: 5px auto 0px auto; text-align: left;">
 
           <!-- Version tab and Date -->
           <table width="100%" cellspacing="0" cellpadding="0" border="0">

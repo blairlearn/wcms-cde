@@ -44,7 +44,7 @@
 				{
 					window.location.href='<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>' + '?personid=' + blnInput;								
 				}
-				else
+				else 
 				{
 					alert("Please check the professionals you would like to view.");					
 				}

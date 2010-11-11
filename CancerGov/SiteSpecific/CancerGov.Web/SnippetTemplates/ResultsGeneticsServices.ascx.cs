@@ -172,7 +172,7 @@ namespace CancerGov.Web.SnippetTemplates
             catch (SqlException sqlE)
             {
                 CancerGovError.LogError(Request.Url.AbsoluteUri, Functions.GetReferrer(Request), this.ToString(), NCI.Web.CDE.ErrorType.DbUnavailable, sqlE);
-                //this.RaiseErrorPage();
+                //this.RaiseErrorPage(); 
             }
             finally
             {
