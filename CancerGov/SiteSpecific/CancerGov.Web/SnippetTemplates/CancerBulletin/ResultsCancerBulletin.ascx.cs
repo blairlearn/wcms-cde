@@ -189,7 +189,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 }
                 catch (Exception ex)
                 {
-                    CancerGovError.LogError(Request.Url.AbsoluteUri, this.ToString(), CancerGov.Common.ErrorHandling.ErrorType.EndecaError, (ex.Message + "\nEndeca Search ERROR\nQuery:\n\n" + keyword));
+                    CancerGovError.LogError(PrettyUrl, this.ToString(), CancerGov.Common.ErrorHandling.ErrorType.EndecaError, (ex.Message + "\nEndeca Search ERROR\nQuery:\n\n" + keyword));
                     this.RaiseErrorPage();
                 }
 
@@ -209,12 +209,12 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     string pagerUrl;
                     if (bSearchRange)
                     {
-                        urlFormat = Request.Url.AbsolutePath + "?cbsubmit=range&cbkeyword={0}&startMonth={1}&startYear={2}&endMonth={3}&endYear={4}";
+                        urlFormat = PrettyUrl + "?cbsubmit=range&cbkeyword={0}&startMonth={1}&startYear={2}&endMonth={3}&endYear={4}";
                         pagerUrl = String.Format(urlFormat, Server.UrlEncode(keyword), startMonth.ToString(), startYear.ToString(), endMonth.ToString(), endYear.ToString());
                     }
                     else
                     {
-                        urlFormat = Request.Url.AbsolutePath + "?cbkeyword={0}";
+                        urlFormat = PrettyUrl + "?cbkeyword={0}";
                         pagerUrl = String.Format(urlFormat, Server.UrlEncode(keyword));
                     }
 
@@ -228,10 +228,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 }
             }
             
-            //Web Analytics
-            //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Bulletin", this.Request.Url.OriginalString.ToString());
-
-            //litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
             this.PageInstruction.AddFieldFilter("channelName", (fieldName, data) =>
             {
                 data.Value = "Bulletin";

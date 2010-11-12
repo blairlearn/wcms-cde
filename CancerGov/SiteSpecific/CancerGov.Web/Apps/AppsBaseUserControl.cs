@@ -30,10 +30,10 @@ namespace NCI.Web.CancerGov.Apps
 
         virtual protected string GetResource(string key)
         {
-            if( string.IsNullOrEmpty(key) )
+            if (string.IsNullOrEmpty(key))
                 return "";
             object localizedObject = this.GetGlobalResourceObject("SiteWideSearch", key);
-            if (localizedObject == null )
+            if (localizedObject == null)
                 return "key: " + key + " not localized";
             string val = localizedObject as string;
             if (string.IsNullOrEmpty(val))
@@ -49,7 +49,7 @@ namespace NCI.Web.CancerGov.Apps
 
         public DisplayInformation PageDisplayInformation
         {
-            get 
+            get
             {
                 pageDisplayInformation = new DisplayInformation();
                 switch (PageInstruction.Language)
@@ -68,7 +68,7 @@ namespace NCI.Web.CancerGov.Apps
 
                 return pageDisplayInformation;
             }
-        
+
         }
 
         virtual public void RaiseErrorPage()
@@ -85,6 +85,21 @@ namespace NCI.Web.CancerGov.Apps
 
             systemMessagePageUrl += "msg=" + messageKey.Trim();
             Response.Redirect(systemMessagePageUrl, true);
+        }
+
+        public string PrettyUrl
+        {
+            get
+            {
+                return this.PageInstruction.GetUrl("PrettyUrl").UriStem;
+            }
+        }
+        public string PrettyUrlWithQS
+        {
+            get
+            {
+                return this.PageInstruction.GetUrl("PrettyUrl").ToString();
+            }
         }
 
         public string CurrentPageUrl
