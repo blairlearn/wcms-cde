@@ -210,6 +210,13 @@
     <Compile Include="SnippetTemplates\CancerBulletin\cbComments.ascx.designer.cs">
       <DependentUpon>cbComments.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx.cs">
+      <DependentUpon>ResultsCancerBulletin.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx.designer.cs">
+      <DependentUpon>ResultsCancerBulletin.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -421,6 +428,7 @@
     <Content Include="PageTemplates\CancerGovDictionaryTemplate-CorrectDocType.aspx" />
     <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
     <Content Include="SnippetTemplates\CancerBulletin\cbComments.ascx" />
+    <Content Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsLink.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
@@ -476,7 +484,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>14943</DevelopmentServerPort>
+          <DevelopmentServerPort>14944</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2222</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
