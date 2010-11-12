@@ -451,6 +451,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_LocalResources\" />
+    <Folder Include="SnippetTemplates\CancerBulletin\" />
     <Folder Include="UserControls\Footers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
