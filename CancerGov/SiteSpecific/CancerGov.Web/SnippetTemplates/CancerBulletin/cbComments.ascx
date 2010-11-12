@@ -1,14 +1,5 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeBehind="cbComments.ascx.cs"
     Inherits="CancerGov.Web.SnippetTemplates.CancerBulletin.cbComments" %>
-    
-    
-<meta http-equiv="content-type" content="text/html;charset=ISO-8859-1">
-<meta name="vs_defaultClientScript" content="JavaScript (ECMAScript)">
-<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
-<!-- 
-<%=this.PageHtmlHead.Render()%>  -->
-
-
 <!-- Styles needed for this page -->
 <style>
     .GoodText

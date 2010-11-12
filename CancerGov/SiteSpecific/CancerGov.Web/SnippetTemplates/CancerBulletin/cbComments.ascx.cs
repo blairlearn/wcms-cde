@@ -92,16 +92,16 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                     //Also send email
 
-                    //System.Web.Mail.MailMessage mailMsg = new System.Web.Mail.MailMessage();
+                    System.Web.Mail.MailMessage mailMsg = new System.Web.Mail.MailMessage();
 
-                    //mailMsg.From = "misc@mail.nih.gov";
-                    //mailMsg.Subject = "Cancer Bulletin";
+                    mailMsg.From = "misc@mail.nih.gov";
+                    mailMsg.Subject = "Cancer Bulletin";
 
-                    //mailMsg.Body += strComment;
+                    mailMsg.Body += strComment;
 
-                    //mailMsg.To = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                    mailMsg.To = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
 
-                    //System.Web.Mail.SmtpMail.Send(mailMsg);
+                    System.Web.Mail.SmtpMail.Send(mailMsg);
 
                     //trThanks.Visible = true;
                     //trForm.Visible = false;
