@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2E572059-B868-45B5-AD56-DB8687EF4DD6}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -203,6 +203,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnippetTemplates\CancerBulletin\cbComments.ascx.cs">
+      <DependentUpon>cbComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\cbComments.ascx.designer.cs">
+      <DependentUpon>cbComments.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -413,6 +420,7 @@
     <Content Include="PageTemplates\CancerGovDictionaryTemplate.aspx" />
     <Content Include="PageTemplates\CancerGovDictionaryTemplate-CorrectDocType.aspx" />
     <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
+    <Content Include="SnippetTemplates\CancerBulletin\cbComments.ascx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsLink.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
@@ -451,7 +459,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="App_LocalResources\" />
-    <Folder Include="SnippetTemplates\CancerBulletin\" />
     <Folder Include="UserControls\Footers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -473,9 +480,6 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2222</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
