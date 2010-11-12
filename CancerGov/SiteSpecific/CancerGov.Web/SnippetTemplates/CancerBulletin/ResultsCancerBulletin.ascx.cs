@@ -15,6 +15,7 @@ using CancerGov.Common;
 using NCI.Util;
 using NCI.Web.CDE;
 using CancerGov.Common.ErrorHandling;
+using NCI.Web.CDE.WebAnalytics;
 //using CancerGov.Text;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
@@ -58,16 +59,16 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             get { return lastRecord; }
         }
 
-        //public string WebAnalytics
-        //{
-        //    get
-        //    {
-        //        if (WebAnalyticsOptions.IsEnabled)
-        //            return "NCIAnalytics.SearchResults(this, " + (recordIndex++).ToString() + ");";
-        //        else
-        //            return "";
-        //    }
-        //}
+        public string WebAnalytics
+        {
+            get
+            {
+                if (WebAnalyticsOptions.IsEnabled)
+                    return "NCIAnalytics.SearchResults(this, " + (recordIndex++).ToString() + ");";
+                else
+                    return "";
+            }
+        }
         public int TotalItems
         {
             get { return totalItems; }
