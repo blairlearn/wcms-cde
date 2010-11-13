@@ -16,10 +16,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
     public partial class cbComments : AppsBaseUserControl
     {
-        //protected void Page_Load(object sender, EventArgs e)
-        //{
-
-        //}
+        
         protected string strPostResponse = "";
         protected string strError = "";
 
@@ -28,21 +25,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         {
             
             string strComment = "";
-
-            //include page title
-            //this.pageHtmlHead.Title = "NCI Cancer Bulletin Comments - National Cancer Institute";
-            //trThanks.Visible = false;
-            //tblTextHeader.Visible = false;
-
-            //this.pageDisplayInformation.Language = DisplayLanguage.English;
-            //this.PageBanner.NavigationBar.ClickLog = false;  
-            //this.NCISectionId = Strings.ToGuid(ConfigurationSettings.AppSettings["DCSectionID"]);
-
-            //if (this.PageDisplayInformation.Version == DisplayVersion.Text)
-            //{
-            //    tblImgHeader.Visible = false;
-            //    tblTextHeader.Visible = true;
-            //}
 
             if (Page.Request.HttpMethod == "POST")
             {
@@ -82,8 +64,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     }
                     catch (System.Data.SqlClient.SqlException sqlE)
                     {
-
-                        strPostResponse = "	<p> " +
+                            strPostResponse = "	<p> " +
                             "Unexpected errors occurred. Our technicians have been " +
                             "notified and are working to correct the situation." +
                             "</p>";
@@ -92,16 +73,16 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                     //Also send email
 
-                    System.Web.Mail.MailMessage mailMsg = new System.Web.Mail.MailMessage();
+                    //System.Web.Mail.MailMessage mailMsg = new System.Web.Mail.MailMessage();
 
-                    mailMsg.From = "misc@mail.nih.gov";
-                    mailMsg.Subject = "Cancer Bulletin";
+                    //mailMsg.From = "misc@mail.nih.gov";
+                    //mailMsg.Subject = "Cancer Bulletin";
 
-                    mailMsg.Body += strComment;
+                    //mailMsg.Body += strComment;
 
-                    mailMsg.To = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                    //mailMsg.To = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
 
-                    System.Web.Mail.SmtpMail.Send(mailMsg);
+                    //System.Web.Mail.SmtpMail.Send(mailMsg);
 
                     //trThanks.Visible = true;
                     //trForm.Visible = false;
@@ -109,16 +90,16 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             }
         }
 
-        public cbComments()
-        {
-            Page.Init += new System.EventHandler(Page_Init);
-        }
+        //public cbComments()
+        //{
+        //    Page.Init += new System.EventHandler(Page_Init);
+        //}
 
-        /*		private	void Page_Load(object sender, System.EventArgs e)
-                {	
-                    //content =	new	ContentTemplateProvider(this);			
-                }
-        */
+        //private	void Page_Load(object sender, System.EventArgs e)
+        //        {	
+        //            content =	new	ContentTemplateProvider(this);			
+        //        }
+        
         #region	Page_Init method
 
         protected void Page_Init(object sender, EventArgs e)
