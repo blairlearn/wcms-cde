@@ -26,6 +26,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             
             string strComment = "";
 
+            //trThanks.Visible = false;
+
             if (Page.Request.HttpMethod == "POST")
             {
                 //Insert Stuff
@@ -90,15 +92,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             }
         }
 
-        //public cbComments()
-        //{
-        //    Page.Init += new System.EventHandler(Page_Init);
-        //}
-
-        //private	void Page_Load(object sender, System.EventArgs e)
-        //        {	
-        //            content =	new	ContentTemplateProvider(this);			
-        //        }
+        
         
         #region	Page_Init method
 
