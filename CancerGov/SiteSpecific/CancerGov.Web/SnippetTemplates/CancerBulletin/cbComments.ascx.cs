@@ -26,7 +26,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             
             string strComment = "";
 
-            //trThanks.Visible = false;
+            trThanks.Visible = false;
 
             if (Page.Request.HttpMethod == "POST")
             {
@@ -86,8 +86,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                     //System.Web.Mail.SmtpMail.Send(mailMsg);
 
-                    //trThanks.Visible = true;
-                    //trForm.Visible = false;
+                    trThanks.Visible = true;
+                    trForm.Visible = false;
                 }
             }
         }
