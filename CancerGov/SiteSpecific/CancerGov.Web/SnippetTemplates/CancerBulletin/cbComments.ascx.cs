@@ -53,7 +53,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     scComment.CommandText = "insert into DCComments (CommentID,Comment,CommentType) Values (newid(),'" + strComment.Replace("'", "''") + "','CancerBulletin')";
 
                     try
-                    {
+                    { 
                         scComment.ExecuteNonQuery();
 
                         //THANK YOU
