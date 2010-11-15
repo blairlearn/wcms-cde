@@ -29,7 +29,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             trThanks.Visible = false;
 
             if (Page.Request.HttpMethod == "POST")
-            {
+            { 
                 //Insert Stuff
                 strComment = Request.Params["txtComment"];
 
@@ -39,7 +39,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     strError = "<font color=red>Please enter a message.<br></font>";
                 }
                 else
-                {
+                { 
                     strComment = strComment.Replace("'", "''");
                     CancerGov.DataManager.GeneralCommentsDataManager.AddComments(strComment, "CancerBulletin");
    

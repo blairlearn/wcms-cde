@@ -44,7 +44,7 @@ namespace NCI.DataManager
         bool        isLive, 
         out int     actualMaxResult
             )
-        {
+        { 
             try
             {
                 ICollection<SearchResult> searchResults = new Collection<SearchResult>();
@@ -56,7 +56,7 @@ namespace NCI.DataManager
                 {
                     using (SqlConnection conn = SqlHelper.CreateConnection(connString))
                     {
-                        using (SqlDataReader reader =
+                        using (SqlDataReader reader =                                    
                                     SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
                                     new SqlParameter("@Keyword ", string.IsNullOrEmpty(keyWords) ? null : keyWords),
                                     new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)),
