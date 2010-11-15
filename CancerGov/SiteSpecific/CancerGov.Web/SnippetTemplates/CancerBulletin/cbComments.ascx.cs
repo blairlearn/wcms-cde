@@ -40,53 +40,48 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 }
                 else
                 {
-                    //Insert it
+                    strComment = strComment.Replace("'", "''");
+                    CancerGov.DataManager.GeneralCommentsDataManager.AddComments(strComment, "CancerBulletin");
+   
+                    //string strConnString = ConfigurationSettings.AppSettings["DbConnectionString"];
 
-                    string strConnString = ConfigurationSettings.AppSettings["DbConnectionString"];
-
-                    System.Data.SqlClient.SqlConnection scnComment = new System.Data.SqlClient.SqlConnection(strConnString);
-                    System.Data.SqlClient.SqlCommand scComment = new System.Data.SqlClient.SqlCommand();
-                    scComment.Connection = scnComment;
+                    //System.Data.SqlClient.SqlConnection scnComment = new System.Data.SqlClient.SqlConnection(strConnString);
+                    //System.Data.SqlClient.SqlCommand scComment = new System.Data.SqlClient.SqlCommand();
+                    //scComment.Connection = scnComment;
                      
 
-                    scComment.Connection.Open();
-                    scComment.CommandText = "insert into DCComments (CommentID,Comment,CommentType) Values (newid(),'" + strComment.Replace("'", "''") + "','CancerBulletin')";
-                    //scComment.CommandText = "insert into GeneralComments (CommentID,Comment,CommentType) Values (newid(),'" + strComment.Replace("'", "''") + "','CancerBulletin')";
+                    //scComment.Connection.Open();
+                    //scComment.CommandText = "insert into DCComments (CommentID,Comment,CommentType) Values (newid(),'" + strComment.Replace("'", "''") + "','CancerBulletin')";
 
-                    try 
-                    {  
-                        scComment.ExecuteNonQuery();
+                    //try 
+                    //{  
+                    //    scComment.ExecuteNonQuery();
 
-                        //THANK YOU
-                        strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Thank You</div>" +
-                            "			<div>Your feedback was sent to the <i>NCI Cancer Bulletin</i> team. " +
-                            "                   We thank you. <br /><a href=\"/ncicancerbulletin\">View the <i>NCI Cancer Bulletin</i> home page</a><br>" +
-                            "			</div>";
+                    //    //THANK YOU
+                    //    strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Thank You</div>" +
+                    //        "			<div>Your feedback was sent to the <i>NCI Cancer Bulletin</i> team. " +
+                    //        "                   We thank you. <br /><a href=\"/ncicancerbulletin\">View the <i>NCI Cancer Bulletin</i> home page</a><br>" +
+                    //        "			</div>";
 
 
-                    }
-                    catch (System.Data.SqlClient.SqlException sqlE)
-                    {
-                            strPostResponse = "	<p> " +
-                            "Unexpected errors occurred. Our technicians have been " +
-                            "notified and are working to correct the situation." +
-                            "</p>";
+                    //}
+                    //catch (System.Data.SqlClient.SqlException sqlE)
+                    //{
+                    //        strPostResponse = "	<p> " +
+                    //        "Unexpected errors occurred. Our technicians have been " +
+                    //        "notified and are working to correct the situation." +
+                    //        "</p>";
 
-                    }
+                    //}
 
                     //Also send email
 
-                    //System.Web.Mail.MailMessage mailMsg = new System.Web.Mail.MailMessage();
-
-                    //mailMsg.From = "misc@mail.nih.gov";
-                    //mailMsg.Subject = "Cancer Bulletin";
-
-                    //mailMsg.Body += strComment;
-
-                    //mailMsg.To = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
-
-                    //System.Web.Mail.SmtpMail.Send(mailMsg);
-
+                    System.Web.Mail.MailMessage mailMsg = new System.Web.Mail.MailMessage();
+                    mailMsg.From = "misc@mail.nih.gov";
+                    mailMsg.Subject = "Cancer Bulletin";
+                    mailMsg.Body += strComment;
+                    mailMsg.To = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                    System.Web.Mail.SmtpMail.Send(mailMsg);
                     trThanks.Visible = true;
                     trForm.Visible = false;
                 }
