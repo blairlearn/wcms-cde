@@ -47,13 +47,14 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     System.Data.SqlClient.SqlConnection scnComment = new System.Data.SqlClient.SqlConnection(strConnString);
                     System.Data.SqlClient.SqlCommand scComment = new System.Data.SqlClient.SqlCommand();
                     scComment.Connection = scnComment;
-
+                     
 
                     scComment.Connection.Open();
                     scComment.CommandText = "insert into DCComments (CommentID,Comment,CommentType) Values (newid(),'" + strComment.Replace("'", "''") + "','CancerBulletin')";
+                    //scComment.CommandText = "insert into GeneralComments (CommentID,Comment,CommentType) Values (newid(),'" + strComment.Replace("'", "''") + "','CancerBulletin')";
 
-                    try
-                    { 
+                    try 1
+                    {  
                         scComment.ExecuteNonQuery();
 
                         //THANK YOU
