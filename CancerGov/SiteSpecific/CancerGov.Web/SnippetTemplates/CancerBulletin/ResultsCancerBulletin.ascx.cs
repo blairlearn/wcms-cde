@@ -1,23 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
-using NCI.Search.Endeca;
 using CancerGov.Common;
-using NCI.Util;
-using NCI.Web.CDE;
-using CancerGov.Common.ErrorHandling;
-using NCI.Web.CDE.WebAnalytics;
 using NCI.Logging;
-//using CancerGov.Text;
+using NCI.Search.Endeca;
+using NCI.Util;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
@@ -143,8 +132,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 {
                     if (startMonth < 0 || startMonth > 12 || endMonth < 0 || endMonth > 12 || startYear < 0 || endYear < 0)
                     {
-                        CancerGovError.LogError("ResultsCancerBulletin.aspx", 1, "Invalid date range parameters");
-                        this.RaiseErrorPage();
+                        NCI.Logging.Logger.LogError("Invalid date range parameters","ResultCancerBulletin", NCIErrorLevel.Error);
+                        this.RaiseErrorPage("Invalid date range parameters");
                     }
 
                     string startRange = getTimeStamp(startYear, startMonth, 1);
@@ -160,7 +149,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 }
                 else
                 {
-
                     eSearch = new EndecaSearch(keyword, pageSize, firstRecord - 1, null, null, doc_type);
                 }
 
@@ -170,10 +158,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 }
                 catch (Exception ex)
                 {
-                    CancerGovError.LogError(PrettyUrl, this.ToString(), CancerGov.Common.ErrorHandling.ErrorType.EndecaError, (ex.Message + "\nEndeca Search ERROR\nQuery:\n\n" + keyword));
-                    //NCI.Logging.Logger.LogError(PrettyUrl, NCIErrorLevel.Error, ex.Message);
+                    NCI.Logging.Logger.LogError( "ResultsCancerBulletin" ,PrettyUrl, NCIErrorLevel.Error, ex);
                     this.RaiseErrorPage();
-
                 }
 
                 

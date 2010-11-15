@@ -1,33 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Specialized;   // In order to reference Prototype.
 using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Text;
 using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.MobileControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
-using CancerGov.CDR.ClinicalTrials.Helpers;
 using CancerGov.CDR.ClinicalTrials.Search;
 using CancerGov.CDR.DataManager;
-using CancerGov.Common.HashMaster;
 using CancerGov.UI.CDR;
-using CancerGov.UI.HTML;
 using CancerGov.UI.PageObjects;
 using NCI.Logging;
 using NCI.Util;
 using NCI.Web.CDE;
-using NCI.Web.CDE.Modules;
-using NCI.Web.CDE.UI;
-using NCI.Web.UI.WebControls;
-using NCI.Web.UI.WebControls.FormControls;
-using NCI.Web.UI.WebControls.JSLibraries;
 using System.Text.RegularExpressions;
 using NCI.Web.CDE.WebAnalytics;
 
@@ -210,20 +192,7 @@ namespace CancerGov.Web.SnippetTemplates
                 sbPageUrl.Append(iProtocolSearchID.ToString());
             }
 
-            if (this.PageDisplayInformation.Version != DisplayVersions.Print)
-            {
-                //CancerGov.UI.HTML.HtmlImage headerImage = new CancerGov.UI.HTML.HtmlImage("/images/title_clinical_trials.jpg", "", "160", "60");
-                //headerImage.DisplayInfo = this.PageDisplayInformation;
-                //TitleBlock tbTitle = new TitleBlock("Clinical Trials (PDQ<sup class=\"header\">&#174;</sup>)", headerImage, this.PageDisplayInformation);
-
-                //tbTitle.Gutter.Add(new CDRVersionBar((BasePage)this, pvVersion, sbDate.ToString(), sbPageUrl.ToString()));
-                //this.PageHeaders.Add(tbTitle);
-                //this.PageLeftColumn = new LeftNavColumn(this, Strings.ToGuid(ConfigurationSettings.AppSettings["ClinicalTrialSearchLeftViewID"]));
-                //this.PageLeftColumn.Insert(0, new ProtocolContentVersionBox((BasePage)this, pProtocol));
-            }
-
-
-            // Add "See all Trial Sites" link if protocolsearchid is in the QueryString
+           
             ProtocolRendererOptions renderOptions;
             string protocolSearchID;
             if ((protocolSearchID = Request.QueryString.Get("protocolsearchid")) != null)
