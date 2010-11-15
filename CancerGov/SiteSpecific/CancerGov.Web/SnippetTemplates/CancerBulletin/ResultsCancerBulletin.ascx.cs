@@ -16,6 +16,7 @@ using NCI.Util;
 using NCI.Web.CDE;
 using CancerGov.Common.ErrorHandling;
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Logging;
 //using CancerGov.Text;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
@@ -115,27 +116,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             }
            
             
-            //set up the page -------------------
-            ////this.PageHtmlHead.Title = "Cancer Bulletin Search Results - National Cancer Institute";
-            ////this.PageLeftColumn = new LeftNavColumn(this, Strings.ToGuid(ConfigurationSettings.AppSettings["BulletinSearchViewID"]));
-
-            //if (this.PageDisplayInformation.Version == DisplayVersion.Text)
-            //{
-            //    imgBanner.Visible = false;
-            //    txtBanner.Visible = true;
-            //}
-            //else
-            //{
-            //    imgBanner.Visible = true;
-            //    txtBanner.Visible = false;
-            //}
-
-            //Updated the NavBar to use SelectedTabImg instead of SelectedSectionId for Spanish CancerGov.
-            //This should be removed at some point. --Vadim 1/12/07 
-            //this.pageBanner.NavigationBar.SelectedSectionId = new Guid("0C0D1AD1-BD1C-4003-BF15-9F4BC1983DC1");
-            ////this.pageBanner.NavigationBar.SelectedTabImg = "aboutnci";
-            //---------------------------------
-           
+                                
             firstRecord = 0;
             lastRecord = 0;
             totalItems = 0;
@@ -190,9 +171,12 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 catch (Exception ex)
                 {
                     CancerGovError.LogError(PrettyUrl, this.ToString(), CancerGov.Common.ErrorHandling.ErrorType.EndecaError, (ex.Message + "\nEndeca Search ERROR\nQuery:\n\n" + keyword));
+                    //NCI.Logging.Logger.LogError(PrettyUrl, NCIErrorLevel.Error, ex.Message);
                     this.RaiseErrorPage();
+
                 }
 
+                
                 eSearch.FillSearchResults(eSearchResults);
 
                 if (eSearchResults.Count != 0)
