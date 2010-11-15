@@ -32,11 +32,11 @@
 
 <div align="center">
     <table border="0" cellpadding="0" cellspacing="0" width="571" valign="top">
-        <tr runat="server" id="trForm">
+        <tr>
             <td valign="top">
                 <a name="skiptocontent"></a>
                 <table border="0" cellpadding="10" cellspacing="0">
-                    <tr>
+                    <tr runat="server" id="trForm">
                         <td>
                             &nbsp;
                         </td>

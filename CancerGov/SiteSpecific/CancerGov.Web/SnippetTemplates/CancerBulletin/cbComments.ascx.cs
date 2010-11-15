@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using NCI.Web.CancerGov.Apps;
+using NCI.Data;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
@@ -45,16 +46,24 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         strComment = strComment.Replace("'", "''");
                         CancerGov.DataManager.GeneralCommentsDataManager.AddComments(strComment, "CancerBulletin");
 
-                        //Also send email
-                        string toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
-                        string fromAddress = "misc@mail.nih.gov";
-                        System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
-                        mailMsg.Subject = "Cancer Bulletin";
-                        mailMsg.Body += strComment;
-                        System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
-                        smtpClient.Send(mailMsg);
+                        //THANK YOU
+                        strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Thank You</div>" +
+                            "			<div>Your feedback was sent to the <i>NCI Cancer Bulletin</i> team. " +
+                            "                   We thank you. <br /><a href=\"/ncicancerbulletin\">View the <i>NCI Cancer Bulletin</i> home page</a><br>" +
+                            "			</div>";
+
                         trThanks.Visible = true;
                         trForm.Visible = false;
+
+                        //Also send email
+                        //string toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                        //string fromAddress = "misc@mail.nih.gov";
+                        //System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
+                        //mailMsg.Subject = "Cancer Bulletin";
+                        //mailMsg.Body += strComment;
+                        //System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
+                        //smtpClient.Send(mailMsg);
+
                     }
                     catch (Exception ex)
                     {
