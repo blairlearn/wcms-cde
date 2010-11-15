@@ -149,38 +149,9 @@ namespace CancerGov.Web.SnippetTemplates
                 this.submit.Visible = false;
             }
 
-
-
-            DataTable dbTable = new DataTable();
-
-            //Execute search and show results
-            string commandText = "usp_GetCancerGeneticProfessionals";
-            commandText += " @CancerType=" + Functions.ParseNameValue(cancerType, 1);
-            commandText += ", @CancerFamily=" + Functions.ParseNameValue(cancerFamily, 1);
-            commandText += ", @City=" + Functions.EvalArg(city, true);
-            commandText += ", @StateId=" + Functions.ParseNameValue(state, 1);
-            commandText += ", @CountryId=" + Functions.ParseNameValue(country, 1);
-            commandText += ", @LastName=" + Functions.EvalArg(lastName, true);
-
-
-            SqlDataAdapter dbAdapter = null;
-            try
-            {
-                dbAdapter = new SqlDataAdapter(commandText, ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
-                dbAdapter.Fill(dbTable);
-            }
-            catch (SqlException sqlE)
-            {
-                CancerGovError.LogError(Request.Url.AbsoluteUri, Functions.GetReferrer(Request), this.ToString(), NCI.Web.CDE.ErrorType.DbUnavailable, sqlE);
-                //this.RaiseErrorPage(); 
-            }
-            finally
-            {
-                if (dbAdapter != null)
-                {
-                    dbAdapter.Dispose();
-                }
-            }
+            GeneticProfessional gp = new GeneticProfessional();
+            DataTable dbTable;
+            dbTable = gp.GetCancerGeneticProfessionals(cancerType, cancerFamily, city, state, country, lastName);
 
             resultCount = dbTable.Rows.Count.ToString();
 

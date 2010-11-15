@@ -223,5 +223,43 @@ namespace CancerGov.CDR.DataManager
 
             return dbSet;
         }
+
+
+        public DataTable GetCancerGeneticProfessionals(string cancerType, string cancerFamily, string city, string state, string country, string lastName)
+        {
+
+            DataTable dbTable = new DataTable();
+
+            //Execute search and show results
+            string commandText = "usp_GetCancerGeneticProfessionals";
+            commandText += " @CancerType=" + Functions.ParseNameValue(cancerType, 1);
+            commandText += ", @CancerFamily=" + Functions.ParseNameValue(cancerFamily, 1);
+            commandText += ", @City=" + Functions.EvalArg(city, true);
+            commandText += ", @StateId=" + Functions.ParseNameValue(state, 1);
+            commandText += ", @CountryId=" + Functions.ParseNameValue(country, 1);
+            commandText += ", @LastName=" + Functions.EvalArg(lastName, true);
+
+
+            SqlDataAdapter dbAdapter = null;
+            try
+            {
+                dbAdapter = new SqlDataAdapter(commandText, ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter.Fill(dbTable);
+            }
+            catch (SqlException sqlE)
+            {
+                CancerGovError.LogError("GeneticProfessional GetCancerGeneticProfessionals method:  Error Getting the cancer genetic professional data:  ", "", this.ToString(), ErrorType.DbUnavailable, sqlE);
+                //this.RaiseErrorPage(); 
+            }
+            finally
+            {
+                if (dbAdapter != null)
+                {
+                    dbAdapter.Dispose();
+                }
+            }
+
+            return dbTable;
+        }
 	}
 }
