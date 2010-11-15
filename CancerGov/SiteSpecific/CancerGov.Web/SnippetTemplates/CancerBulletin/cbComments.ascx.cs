@@ -39,51 +39,27 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     strError = "<font color=red>Please enter a message.<br></font>";
                 }
                 else
-                { 
-                    strComment = strComment.Replace("'", "''");
-                    CancerGov.DataManager.GeneralCommentsDataManager.AddComments(strComment, "CancerBulletin");
-   
-                    //string strConnString = ConfigurationSettings.AppSettings["DbConnectionString"];
+                {
+                    try
+                    {
+                        strComment = strComment.Replace("'", "''");
+                        CancerGov.DataManager.GeneralCommentsDataManager.AddComments(strComment, "CancerBulletin");
 
-                    //System.Data.SqlClient.SqlConnection scnComment = new System.Data.SqlClient.SqlConnection(strConnString);
-                    //System.Data.SqlClient.SqlCommand scComment = new System.Data.SqlClient.SqlCommand();
-                    //scComment.Connection = scnComment;
-                     
-
-                    //scComment.Connection.Open();
-                    //scComment.CommandText = "insert into DCComments (CommentID,Comment,CommentType) Values (newid(),'" + strComment.Replace("'", "''") + "','CancerBulletin')";
-
-                    //try 
-                    //{  
-                    //    scComment.ExecuteNonQuery();
-
-                    //    //THANK YOU
-                    //    strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Thank You</div>" +
-                    //        "			<div>Your feedback was sent to the <i>NCI Cancer Bulletin</i> team. " +
-                    //        "                   We thank you. <br /><a href=\"/ncicancerbulletin\">View the <i>NCI Cancer Bulletin</i> home page</a><br>" +
-                    //        "			</div>";
-
-
-                    //}
-                    //catch (System.Data.SqlClient.SqlException sqlE)
-                    //{
-                    //        strPostResponse = "	<p> " +
-                    //        "Unexpected errors occurred. Our technicians have been " +
-                    //        "notified and are working to correct the situation." +
-                    //        "</p>";
-
-                    //}
-
-                    //Also send email
-
-                    System.Web.Mail.MailMessage mailMsg = new System.Web.Mail.MailMessage();
-                    mailMsg.From = "misc@mail.nih.gov";
-                    mailMsg.Subject = "Cancer Bulletin";
-                    mailMsg.Body += strComment;
-                    mailMsg.To = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
-                    System.Web.Mail.SmtpMail.Send(mailMsg);
-                    trThanks.Visible = true;
-                    trForm.Visible = false;
+                        //Also send email
+                        string toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                        string fromAddress = "misc@mail.nih.gov";
+                        System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
+                        mailMsg.Subject = "Cancer Bulletin";
+                        mailMsg.Body += strComment;
+                        System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
+                        smtpClient.Send(mailMsg);
+                        trThanks.Visible = true;
+                        trForm.Visible = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        NCI.Logging.Logger.LogError("CB Comments", NCI.Logging.NCIErrorLevel.Error, ex);
+                    }
                 }
             }
         }

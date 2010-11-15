@@ -12,27 +12,19 @@ namespace CancerGov.DataManager
 {
     static public class GeneralCommentsDataManager
     {
-        static public void AddComments(string comments, string commetType)
+        static public void AddComments(string comments, string commentType)
         {
-            // Code goes here for calling the stored proc.  
-
             string connString = ConfigurationSettings.AppSettings["DbConnectionString"];
 
             if (!string.IsNullOrEmpty(connString))
             {
                 using (SqlConnection conn = SqlHelper.CreateConnection(connString))
                 {
-                    using (SqlDataReader reader =
-                                SqlHelper.ExecuteNonQuery(conn, CommandType.StoredProcedure, "dbo.usp_GeneralComments_Add",
+                    SqlHelper.ExecuteNonQuery(conn, CommandType.StoredProcedure, "dbo.usp_GeneralComments_Add",
                                 new SqlParameter("@Comment", comments),
-                                new SqlParameter("@CommentType", commetType)
-                                ))
-                               
-                        
+                                new SqlParameter("@CommentType", commentType));
 
-
-
-                
+                }
             }
         }
     }
