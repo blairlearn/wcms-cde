@@ -50,7 +50,7 @@ namespace CancerGov.Web.SnippetTemplates
                 }
                 else
                 {
-                    definitionText = "<strong>" + dataItem.TermName + "</strong>" + ":" + dataItem.DefinitionHTML;
+                    definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ":" + dataItem.DefinitionHTML;
 
                 }
                 return definitionText;
