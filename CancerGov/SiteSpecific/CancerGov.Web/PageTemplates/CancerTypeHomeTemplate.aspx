@@ -78,7 +78,7 @@
                                 <tbody>                                
                                     <tr>
                                        <%--<td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>--%>
-                                        <td width="159" valign="top" align="right">
+                                        <td  valign="top" align="right">
                             </HeaderHtml>
                             <FooterHtml>
                     </td>
