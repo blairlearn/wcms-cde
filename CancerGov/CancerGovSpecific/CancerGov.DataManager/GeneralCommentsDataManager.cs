@@ -19,7 +19,7 @@ namespace CancerGov.DataManager
             if (!string.IsNullOrEmpty(connString))
             {
                 using (SqlConnection conn = SqlHelper.CreateConnection(connString))
-                {
+                {                 
                     SqlHelper.ExecuteNonQuery(conn, CommandType.StoredProcedure, "dbo.usp_GeneralComments_Add",
                                 new SqlParameter("@Comment", comments),
                                 new SqlParameter("@CommentType", commentType));
