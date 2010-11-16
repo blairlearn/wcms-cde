@@ -125,7 +125,6 @@
         
         <img height="5" border="0" width="1" alt="" src="/images/spacer.gif" />        
         <NCI:TemplateSlot ID="cgvBody" runat="server"  />
-        <hr />
         <NCI:TemplateSlot ID="cgvBodyLeft" runat="server">
             <HeaderHtml>
                         <table cellspacing="0" cellpadding="0" border="0" align="left" width="202">
