@@ -77,8 +77,6 @@
                             <table cellspacing="0" cellpadding="0" border="0" align="right" width="167">
                                 <tbody>                                
                                     <tr>
-                                    <TD vAlign=top><IMG border=0 alt="" src="/images/spacer.gif" width=6 height=1></TD>
-
                                        <%--<td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>--%>
                                         <td width="159" valign="top" align="right">
                             </HeaderHtml>
