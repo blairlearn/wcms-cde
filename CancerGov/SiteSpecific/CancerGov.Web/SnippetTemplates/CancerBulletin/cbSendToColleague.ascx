@@ -8,7 +8,7 @@
         color: #484bd0;
         font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     }
-    .BadText
+    .BadText 
     {
         font-weight: bold;
         color: #a8364d;

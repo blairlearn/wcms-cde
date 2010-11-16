@@ -29,7 +29,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
+            base.OnLoad();
 
             string strFromEmail = "";
             string strToEmail = "";
@@ -61,8 +61,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             strFromName = Request.Params["fromname"];
             strIssueLink = Request.Params["issuelink"];
 
-            strIssueLink = ConfigurationSettings.AppSettings["DCIssueLink"];
-
+            
+            //strIssueLink = ConfigurationSettings.AppSettings["DCIssueLink"]; 
             //strDownloadLink = System.Configuration.ConfigurationSettings.AppSettings["RootUrl"] + strIssueLink; 
             strDownloadLink = @"http://www.cancer.gov/ncicancerbulletin/cancerbulletin";
 
