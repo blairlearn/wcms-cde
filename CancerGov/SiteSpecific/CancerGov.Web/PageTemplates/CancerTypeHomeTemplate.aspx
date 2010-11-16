@@ -90,8 +90,9 @@
                 </tbody>
             </table>
             </FooterHtml> </NCI:TemplateSlot>
+
             <NCI:TemplateSlot ID="cgvCdrDefinition" runat="server">
-                <HeaderHtml>
+                <%--<HeaderHtml>
                         <table cellspacing="0" cellpadding="0" border="0">
                             <tbody>
                                 <tr>                                                                 
@@ -111,7 +112,7 @@
         <td><hr /></td>
 <%--            <td valign="top" bgcolor="#999999">
                 <img border="0" alt="" src="/images/spacer.gif" height="1" border="0">
-            </td>--%>
+            </td>comment
         </tr>
         <tr>
             <td>
@@ -120,7 +121,11 @@
                 </td>
             </td>
         </tr>
-        </tbody> </table> </FooterHtml> </NCI:TemplateSlot>
+        </tbody> </table> </FooterHtml>--%> </NCI:TemplateSlot>
+        
+        <img height="5" border="0" width="1" alt="" src="/images/spacer.gif" />        
+        <NCI:TemplateSlot ID="cgvBody" runat="server"  />
+        <hr />
         <NCI:TemplateSlot ID="cgvBodyLeft" runat="server">
             <HeaderHtml>
                         <table cellspacing="0" cellpadding="0" border="0" align="left" width="202">

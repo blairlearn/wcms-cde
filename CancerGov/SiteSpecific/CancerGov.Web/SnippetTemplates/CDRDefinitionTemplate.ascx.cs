@@ -44,7 +44,15 @@ namespace CancerGov.Web.SnippetTemplates
                 CDRDefinition mPBO = ModuleObjectFactory<CDRDefinition>.GetModuleObject(snippetXmlData);
 
                 TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, mPBO.CDRId, null, 5);
-                definitionText = mPBO.CDRDefinitionName + ":" + dataItem.DefinitionHTML;
+                if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
+                {
+                    definitionText = "<strong>" + mPBO.CDRDefinitionName + "</strong>" + ":" + dataItem.DefinitionHTML;
+                }
+                else
+                {
+                    definitionText = "<strong>" + dataItem.TermName + "</strong>" + ":" + dataItem.DefinitionHTML;
+
+                }
                 return definitionText;
             }
         }
