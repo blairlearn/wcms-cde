@@ -12,11 +12,11 @@ namespace CancerGov.Web.SnippetTemplates
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ltTableofLinks.Text = TableofLinks;
+            ltTableofLinks.Text = TableofLinksList;
 
         }
 
-        protected string TableofLinks
+        protected string TableofLinksList
         {
             get
             {
