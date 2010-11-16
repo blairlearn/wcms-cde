@@ -74,13 +74,14 @@
                         <NCI:TemplateSlot ID="cgvRightNav" runat="server">
                             <HeaderHtml>
                             <table cellspacing="0" cellpadding="0" border="0" align="right" width="167">
-                                <tbody>
+                                <tbody>                                
                                     <tr>
-                                       <%-- <td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>--%>
+                                       <%--<td valign="top"><img height="1" border="0" width="8" alt="" src="/images/spacer.gif"/></td>--%>
                                         <td width="159" valign="top" align="right">
                             </HeaderHtml>
                             <FooterHtml>
                     </td>
+                    
                 </tr>
                 <tr>
                     <td valign="top" colspan="2">
