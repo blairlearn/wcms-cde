@@ -29,7 +29,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad();
+            base.OnLoad(e);
 
             string strFromEmail = "";
             string strToEmail = "";
@@ -66,11 +66,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             //strDownloadLink = System.Configuration.ConfigurationSettings.AppSettings["RootUrl"] + strIssueLink; 
             strDownloadLink = @"http://www.cancer.gov/ncicancerbulletin/cancerbulletin";
 
-
-            if (Page.Request.HttpMethod.ToLower() == "post")
-            {
-                this.ErrorMsg.Visible = true;
-                if ((strToEmail != null) && (System.Text.RegularExpressions.Regex.IsMatch(strToEmail, strRegEx)))
+                       
+            if ((strToEmail != null) && (System.Text.RegularExpressions.Regex.IsMatch(strToEmail, strRegEx)))
                 {
                     if ((strFromEmail != null) && (System.Text.RegularExpressions.Regex.IsMatch(strFromEmail, strRegEx)))
                     {
@@ -195,4 +192,3 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
 
     }
-}
