@@ -46,11 +46,11 @@ namespace CancerGov.Web.SnippetTemplates
                 TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, mPBO.CDRId, null, 5);
                 if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
                 {
-                    definitionText = "<strong>Definition of " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                    definitionText = "<strong>" + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
                 }
                 else
                 {
-                    definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ":" + dataItem.DefinitionHTML;
+                    definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
 
                 }
                 return definitionText;
