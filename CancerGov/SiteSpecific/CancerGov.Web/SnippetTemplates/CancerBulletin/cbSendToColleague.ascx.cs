@@ -72,14 +72,14 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                             strFromName = "A colleague";
                         }
 
-                        System.Web.Mail.MailMessage mailMsg = new System.Web.Mail.MailMessage();
+                        string toAddress = strToEmail;
+                        string fromAddress = "\"" + strFromName + "\" <" + strFromEmail + ">";
 
+                        System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
 
-                        mailMsg.To = strToEmail;
-                        mailMsg.From = "\"" + strFromName + "\" <" + strFromEmail + ">";
                         mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
                         mailMsg.Subject = strFromName + " has sent you the NCI Cancer Bulletin";
-                        mailMsg.BodyFormat = System.Web.Mail.MailFormat.Html;
+                        mailMsg.IsBodyHtml = true;
                         mailMsg.Body += "<html>" +
                             "<head>\n" +
                             "	<title>Cancer Bulletin</title>\n" +
@@ -149,8 +149,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                             "</body>" +
                             "</html>";
 
-
-                        System.Web.Mail.SmtpMail.Send(mailMsg);
+                        System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
+                        smtpClient.Send(mailMsg);
                         tableSend.Visible = false;
                     }
                     else

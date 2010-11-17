@@ -56,14 +56,13 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         trForm.Visible = false;
 
                         //Also send email
-                        //string toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
-                        //string fromAddress = "misc@mail.nih.gov";
-                        //System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
-                        //mailMsg.Subject = "Cancer Bulletin";
-                        //mailMsg.Body += strComment;
-                        //System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
-                        //smtpClient.Send(mailMsg);
-
+                        string toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                        string fromAddress = "misc@mail.nih.gov";
+                        System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
+                        mailMsg.Subject = "Cancer Bulletin";
+                        mailMsg.Body += strComment;
+                        System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
+                        smtpClient.Send(mailMsg);
                     }
                     catch (Exception ex)
                     {
