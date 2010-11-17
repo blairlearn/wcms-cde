@@ -1,7 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ResultsCancerBulletin.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.CancerBulletin.ResultsCancerBulletin" %>
     <!-- Main Content Area -->
-				<td id="contentzone" valign="top" width="571">
-				   <a name="skiptocontent"></a>
 				   
 				   <!-- Nam's html -->
 				   <table width="571" cellspacing="0" cellpadding="0" border="0">
@@ -79,7 +77,5 @@
 						<%=Pager%>
 					<!---------------- end cancer bulletin content -->
 					</p>
-				
-				</td>
 							
 	<!-- End Main Area -->
