@@ -13,7 +13,7 @@
         font-weight: bold;
         color: #a8364d;
         font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    }
+    } 
     .InfoText
     {
         font-weight: bold;
@@ -29,7 +29,7 @@
     }
 </style>
 
-<script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>
+
 
 <table cellspacing="0" cellpadding="0" border="0">
     <tr>

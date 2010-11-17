@@ -15,12 +15,7 @@ using NCI.Web.CancerGov.Apps;
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
     public partial class cbSendToColleague : AppsBaseUserControl
-    {
-        //protected void Page_Load(object sender, EventArgs e)
-        //{
-
-        //}
-
+    {        
         protected string strInfo = "";
         protected string strHeader = "";
         protected string strMessageBody = "";
