@@ -38,36 +38,24 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             string strDownloadLink = "";
             string strIssueLink = "";
             string strImage = "";
-
-            //this.tblTextHeader.Visible = false;
-            //this.pageDisplayInformation.Language = DisplayLanguage.English;
-
-            ////inculde page title
-            //this.pageHtmlHead.Title = "Send the NCI Cancer Bulletin to a Colleague - National Cancer Institute";
-
-            ////this.PageBanner.NavigationBar.ClickLog = false;
-            //this.NCISectionId = Strings.ToGuid(ConfigurationSettings.AppSettings["DCSectionID"]);
-
-            //if (this.PageDisplayInformation.Version == DisplayVersion.Text)
-            //{
-            //    this.tblImgHeader.Visible = false;
-            //    this.tblTextHeader.Visible = true;
-            //}
-
+                        
             strImage = ConfigurationSettings.AppSettings["RootUrl"] + ConfigurationSettings.AppSettings["DCIssueImg"];
 
             strFromEmail = Request.Params["fromemail"];
             strToEmail = Request.Params["toemail"];
             strFromName = Request.Params["fromname"];
             strIssueLink = Request.Params["issuelink"];
-
+                        
+            strIssueLink = ConfigurationSettings.AppSettings["DCIssueLink"]; 
             
-            //strIssueLink = ConfigurationSettings.AppSettings["DCIssueLink"]; 
             //strDownloadLink = System.Configuration.ConfigurationSettings.AppSettings["RootUrl"] + strIssueLink; 
             strDownloadLink = @"http://www.cancer.gov/ncicancerbulletin/cancerbulletin";
 
-                       
-            if ((strToEmail != null) && (System.Text.RegularExpressions.Regex.IsMatch(strToEmail, strRegEx)))
+            if (Page.Request.HttpMethod.ToLower() == "post")
+            {
+                this.ErrorMsg.Visible = true;
+         
+                if ((strToEmail != null) && (System.Text.RegularExpressions.Regex.IsMatch(strToEmail, strRegEx)))
                 {
                     if ((strFromEmail != null) && (System.Text.RegularExpressions.Regex.IsMatch(strFromEmail, strRegEx)))
                     {
@@ -192,3 +180,4 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
 
     }
+}
