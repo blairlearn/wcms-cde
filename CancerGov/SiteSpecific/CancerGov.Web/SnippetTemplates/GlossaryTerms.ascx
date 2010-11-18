@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GlossaryTerms.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.GlossaryTerms" %>
+<asp:Literal runat="server" ID="ltGlossaryTerms"></asp:Literal>

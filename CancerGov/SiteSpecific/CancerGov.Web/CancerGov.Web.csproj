@@ -304,6 +304,13 @@
     <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
       <DependentUpon>drugdictionary.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\GlossaryTerms.ascx.cs">
+      <DependentUpon>GlossaryTerms.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\GlossaryTerms.ascx.designer.cs">
+      <DependentUpon>GlossaryTerms.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.cs">
       <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -480,6 +487,7 @@
     <Content Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
+    <Content Include="SnippetTemplates\GlossaryTerms.ascx" />
     <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />
     <Content Include="SnippetTemplates\ResultsGeneticsServices.ascx" />
     <Content Include="SnippetTemplates\SearchGeneticsServices.ascx" />
