@@ -489,7 +489,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             bool isFirst = true;
             foreach (DictionaryEntry pair in items)
             {
-                if (isFirst)
+                if (isFirst) 
                     isFirst = false;
                 else
                     sb.Append(";");
