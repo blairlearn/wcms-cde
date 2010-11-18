@@ -21,6 +21,10 @@ namespace NCI.Web.CDE
 
         private static object PAGE_ASSEMBLY_DISPLAYVERSION_KEY = new object();
         public string requestedUrl { get; set; }
+        public ArrayList TableofLinksHash = new ArrayList();
+        public ArrayList glossaryIds = new ArrayList();
+        public Hashtable glossaryIDHash = new Hashtable();
+        public Hashtable glossaryTermHash = new Hashtable();
 
         /// <summary>
         /// Gets the IPageAssemblyInstruction derived object instance that can be used to build up the 
