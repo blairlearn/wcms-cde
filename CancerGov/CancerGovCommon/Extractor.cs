@@ -39,8 +39,8 @@ namespace CancerGov.Common.Extraction
 		private string extractGroup = "extractValue";
 		private bool removeReturnToTopBar = true;
 		private string[] excludeList;
-		private Hashtable extractHash = new Hashtable();
-		private ArrayList hashIndex = new ArrayList();
+		public Hashtable extractHash = new Hashtable();
+        public ArrayList hashIndex = new ArrayList();
 
 		#region Public Class Properties
         

@@ -51,7 +51,7 @@ namespace CancerGov.Web.SnippetTemplates
         {
             GlossaryTermExtractor gte = new GlossaryTermExtractor();
             string glossaryTerms = "";
-            glossaryTerms = gte.BuildGlossaryTable(title, PageAssemblyContext.Current.glossaryIds);
+            glossaryTerms = gte.BuildGlossaryTable(title, PageAssemblyContext.Current.glossaryIds, PageAssemblyContext.Current.glossaryIDHash, PageAssemblyContext.Current.glossaryTermHash);
             return glossaryTerms;
         }
     }

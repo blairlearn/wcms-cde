@@ -27,11 +27,11 @@ namespace CancerGov.Common.Extraction
 	public class GlossaryTermExtractor
 	{		
 		private ArrayList terms = new ArrayList();
-		private ArrayList glossaryIds = new ArrayList();
+		public ArrayList glossaryIds = new ArrayList();
 		private ArrayList sourceIds = new ArrayList();
 		private Hashtable glossaryHash = new Hashtable();
-		private Hashtable glossaryIDHash = new Hashtable();
-		private Hashtable glossaryTermHash = new Hashtable();
+		public Hashtable glossaryIDHash = new Hashtable();
+		public Hashtable glossaryTermHash = new Hashtable();
 		private int termCount = 0;
 
 		#region Properties
@@ -102,7 +102,7 @@ namespace CancerGov.Common.Extraction
 					}
 					if(!glossaryIDHash.ContainsKey(lookup))
 					{		
-						glossaryIDHash.Add(lookup, audience + @"\" + language);
+						glossaryIDHash.Add(lookup, audience   + @"\" + language);
 					}
 					break;
 				case "definition":
@@ -249,6 +249,116 @@ namespace CancerGov.Common.Extraction
 			
 			return result;
 		}
+
+
+//Function Overload
+        public string BuildGlossaryTable(string title, ArrayList glossaryid, Hashtable glossaryIDHash, Hashtable glossaryTermHash)
+        {
+            string result = "";
+            string commandText = "";
+
+            //Build query to get glossary terms
+            if (terms.Count > 0 || glossaryid.Count > 0 || sourceIds.Count > 0)
+            {
+                if (terms.Count > 0)
+                {
+                    if (commandText.Length > 0)
+                    {
+                        commandText += ",";
+                    }
+
+                    commandText += "@Terms='" + CollateParams(terms, false) + "'";
+                }
+
+                if (glossaryid.Count > 0)
+                {
+                    if (commandText.Length > 0)
+                    {
+                        commandText += ",";
+                    }
+
+                    commandText += "@GlossaryIDs='" + CollateParams(glossaryid, true) + "'";
+                }
+
+                commandText = "usp_GetGlossaryTerms " + commandText;
+
+                SqlDataAdapter dbAdapter = new SqlDataAdapter(commandText, ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                DataTable dbTable = new DataTable();
+
+                try
+                {
+                    dbAdapter.Fill(dbTable);
+                }
+                catch (SqlException sqlE)
+                {
+                    CancerGovError.LogError("GlossaryTermExtractor:  " + commandText, this.ToString(), ErrorType.InvalidArgument, sqlE);
+                }
+
+                result += "<table border=0 width=699 cellspacing=0 cellpadding=0><tr><td>\n";
+                result += "<BR><BR><a name=\"" + title + "\"></a><h2>" + title + "</h2>\n";
+                termCount = termCount + dbTable.Rows.Count;
+
+                string intResult = "";
+
+                foreach (DataRow dbRow in dbTable.Rows)
+                {
+                    bool include_p = false;
+                    string hashvalue = "";
+                    string audience = "";
+                    string language = "";
+
+                    if (glossaryIDHash.ContainsKey(dbRow["GlossaryID"].ToString()))
+                    {
+                        hashvalue = glossaryIDHash[dbRow["GlossaryID"].ToString()].ToString();
+                        audience = hashvalue.Substring(0, hashvalue.IndexOf(@"\"));
+                        language = hashvalue.Substring(hashvalue.IndexOf(@"\") + 1);
+                        if (dbRow["audience"].ToString() == audience && dbRow["language"].ToString() == language)
+                        {
+                            include_p = true;
+                        }
+                    }
+                    else if (glossaryTermHash.ContainsKey(dbRow["name"]))
+                    {
+                        hashvalue = glossaryTermHash[dbRow["name"]].ToString();
+                        audience = hashvalue.Substring(0, hashvalue.IndexOf(@"\"));
+                        language = hashvalue.Substring(hashvalue.IndexOf(@"\") + 1);
+                        if (dbRow["audience"].ToString() == audience && dbRow["language"].ToString() == language)
+                        {
+                            include_p = true;
+                        }
+                    }
+
+                    if (include_p)
+                    {
+                        intResult += "<B>" + dbRow["name"].ToString() + "</B> ";
+                        if (Functions.HasValue(dbRow["pronunciation"].ToString()))
+                        {
+                            intResult += dbRow["pronunciation"].ToString();
+                        }
+                        intResult += "\n<blockquote>\n";
+                        intResult += dbRow["definition"].ToString() + "\n";
+                        intResult += "</blockquote>\n\n";
+                    }
+                }
+
+                if (intResult.Trim().Length > 0)
+                {
+                    result += intResult + "</td></tr></table>\n";
+                }
+                else
+                    result = "";
+
+                dbTable.Clear();
+                dbTable.Dispose();
+                dbAdapter.Dispose();
+            }
+
+            glossaryHash.Clear();
+            glossaryIDHash.Clear();
+            glossaryTermHash.Clear();
+
+            return result;
+        }
 
 		private string CollateParams(ArrayList paramArray, bool numericParam)
 		{
