@@ -8,12 +8,12 @@
         color: #484bd0;
         font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     }
-    .BadText 
+    .BadText
     {
         font-weight: bold;
         color: #a8364d;
         font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    } 
+    }
     .InfoText
     {
         font-weight: bold;
@@ -28,9 +28,6 @@
         color: #C5080B;
     }
 </style>
-
-
-
 <table cellspacing="0" cellpadding="0" border="0">
     <tr>
         <td width="30">
@@ -116,4 +113,3 @@
         </td>
     </tr>
 </table>
- 
