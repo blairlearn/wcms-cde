@@ -46,7 +46,14 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         private Guid gNewsletterID = Guid.Empty;
         private Guid gUserID = Guid.Empty;
 
-
+        public string NewsLetterDBConnection 
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["NewsLetterDB"].ConnectionString;
+            }
+        }
+        
         protected void Page_Load(object sender, System.EventArgs e)
         {
 
@@ -461,7 +468,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             string question1 = GetLearnedAnswersString(learnedItems);
             string question2 = GetProfAnswersString(profItems);
 
-            using (SqlConnection scnSurvey = new SqlConnection(ConfigurationSettings.AppSettings["DbConnectionString"]))
+            using (SqlConnection scnSurvey = new SqlConnection(NewsLetterDBConnection))
             {
                 using (SqlCommand scSurvey = new SqlCommand("usp_AnswerNewsletterSurvey", scnSurvey))
                 {
@@ -580,7 +587,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             //We have a userid and a Newsletterid
 
             //Try and subscribe the user
-            using (SqlConnection scnEmail = new SqlConnection(ConfigurationSettings.AppSettings["DbConnectionString"]))
+            using (SqlConnection scnEmail = new SqlConnection(NewsLetterDBConnection))
             {
                 using (SqlCommand scEmail = new SqlCommand("usp_Newsletter_AddSubscription", scnEmail))
                 {
@@ -640,7 +647,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         private void HandleInitialSubscription()
         {
 
-            using (SqlConnection scnEmail = new SqlConnection(ConfigurationSettings.AppSettings["DbConnectionString"]))
+            using (SqlConnection scnEmail = new SqlConnection(NewsLetterDBConnection))
             {
                 using (SqlCommand scEmail = new SqlCommand("usp_Newsletter_AddUser2", scnEmail))
                 {
@@ -750,15 +757,13 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
         public void SendValidationEmail(Guid userID, Guid newsletterID, string strEmailAddr)
         {
+            string toAddress = strEmailAddr;
+            string fromAddress = "\"NCI Cancer Bulletin\" <ncicancerbulletin@mail.nih.gov>";  //I had to comment this out in order for it to work?
 
-            System.Web.Mail.MailMessage mailMsg = new System.Web.Mail.MailMessage();
-
-            mailMsg.To = strEmailAddr;
-            mailMsg.From = "\"NCI Cancer Bulletin\" <ncicancerbulletin@mail.nih.gov>";  //I had to comment this out in order for it to work?
-            //mailMsg.From = "\"NCI Cancer Bulletin\" <bryanp@mail.nih.gov>";
+            System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
             mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
             mailMsg.Subject = "Confirm Your Subscription";
-            mailMsg.BodyFormat = System.Web.Mail.MailFormat.Html;
+            mailMsg.IsBodyHtml = true;
             mailMsg.Body += "To begin your subscription to the <i>NCI Cancer Bulletin</i>, please <a href=\"" + System.Configuration.ConfigurationSettings.AppSettings["RootUrl"] + "/cbSubscribe.aspx" +
                 "?cid=bulletin_confirm" +
                 "&userid=" +
@@ -767,37 +772,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 newsletterID.ToString() +
                 "\">click here</a> to confirm your e-mail address.";
 
-            System.Web.Mail.SmtpMail.Send(mailMsg);
+            System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
+            smtpClient.Send(mailMsg);
         }
-
-        public CancerBulletinSubscribe()
-        {
-            Page.Init += new System.EventHandler(Page_Init);
-        }
-
-        #region	Page_Init method
-
-        protected void Page_Init(object sender, EventArgs e)
-        {
-            //
-            // CODEGEN:	This call is required by the ASP.NET Web Form Designer.
-            //
-            InitializeComponent();
-        }
-
-        #endregion
-
-        #region Web Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-        }
-        #endregion
-
-
     }
 }

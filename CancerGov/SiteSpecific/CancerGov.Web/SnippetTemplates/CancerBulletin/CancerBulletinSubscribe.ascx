@@ -84,7 +84,7 @@
                                                                 <div id="divMessageBox" runat="server">
                                                                     <asp:Label ID="lblMessage" runat="server" Width="100%" />
                                                                     <div id="divSubscribe" runat="server">
-                                                                        <form name="frmSubscribe" action="/cbsubscribe.aspx" method="post">
+                                                                        <form name="frmSubscribe" action="<% =PrettyUrl %>" method="post">
                                                                         <table>
                                                                             <tr>
                                                                                 <td>
@@ -124,7 +124,7 @@
                                         </table>
                                         <br />
                                         <div id="divSurvey" runat="server" style="padding-left: 10px;">
-                                            <form name="frmSurvey" action="/cbsubscribe.aspx" method="post">
+                                            <form name="frmSurvey" action="<% =PrettyUrl %>" method="post">
                                             <input type="hidden" name="hdnSurvey" value="1" />
                                             <asp:Label ID="lblSurveyMessage" runat="server">
 	                                       In an effort to better 

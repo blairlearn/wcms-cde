@@ -23,7 +23,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                 string strUserID = "";
                 string strNewsletterID = "";
-                string strConnString = ConfigurationSettings.AppSettings["DbConnectionString"];
+                string strConnString = NewsLetterDBConnection;
 
                 System.Data.SqlClient.SqlConnection scnEmail = new System.Data.SqlClient.SqlConnection(strConnString);
                 System.Data.SqlClient.SqlCommand scEmail = new System.Data.SqlClient.SqlCommand();
@@ -97,6 +97,14 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     strTextClass = "BadText";
                     strInfo = "Please Provide A Valid User ID";
                     strHeader = "Sorry, Invalid User ID";
+                }
+            }
+
+            public string NewsLetterDBConnection
+            {
+                get
+                {
+                    return ConfigurationManager.ConnectionStrings["NewsLetterDB"].ConnectionString;
                 }
             }
 
