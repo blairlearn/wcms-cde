@@ -473,6 +473,7 @@
     <Content Include="PageTemplates\CancerGovDictionaryTemplate.aspx" />
     <Content Include="PageTemplates\CancerGovDictionaryTemplate-CorrectDocType.aspx" />
     <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
+    <Content Include="PageTemplates\CancerBulletinTemplate.aspx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx" />
