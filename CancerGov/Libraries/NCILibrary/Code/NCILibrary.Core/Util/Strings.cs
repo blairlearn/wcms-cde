@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Xml;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace NCI.Util
 {
@@ -179,6 +180,20 @@ namespace NCI.Util
             }
         }
 
+        public static ArrayList ToArrayListOfInts(string val, char separator)
+        {
+            ArrayList alList = new ArrayList();
+
+            if (val != null)
+            {
+                foreach (string strItem in val.Split(separator))
+                {
+                    alList.Add(Strings.ToInt(strItem));
+                }
+            }
+
+            return alList;
+        }
        
         #endregion
 
