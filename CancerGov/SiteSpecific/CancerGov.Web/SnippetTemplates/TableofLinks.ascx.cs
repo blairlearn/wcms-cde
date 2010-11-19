@@ -51,10 +51,10 @@ namespace CancerGov.Web.SnippetTemplates
         {
             string footnotes = "";
             int LinkNum = 1;
-            ArrayList tableofLinks = new ArrayList(PageAssemblyContext.Current.TableofLinksHash);
+            ArrayList tableofLinks = new ArrayList(PageAssemblyContext.Current.tableofLinksHash);
             
 
-            if (PageAssemblyContext.Current.TableofLinksHash.Count > 0)
+            if (PageAssemblyContext.Current.tableofLinksHash.Count > 0)
             {
                 footnotes = "<BR><BR><a name=\"" + title + "\"></a><h2>" + title + "</h2><P>";
                 footnotes += "<table border=\"0\" cellspacing=\"2\" cellpadding=\"0\">\n";
