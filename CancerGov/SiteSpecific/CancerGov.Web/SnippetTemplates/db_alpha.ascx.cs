@@ -14,6 +14,7 @@ using NCI.Web.CDE.WebAnalytics;
 using CancerGov.CDR.TermDictionary;
 using CancerGov.UI;
 using NCI.Web.UI.WebControls.FormControls;
+using NCI.Web.CDE.Modules;
 namespace Www.Templates
 {
     public partial class DbAlpha : SnippetControl
@@ -133,9 +134,19 @@ namespace Www.Templates
             base.OnLoad(e);
             GetQueryParams();
 
+            //DictionaryURLSpanish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("dictionary", "diccionario"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLSpanish"];
+            //DictionaryURLEnglish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("diccionario", "dictionary"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLEnglish"];
+            
             //Setup URLS
-            DictionaryURLSpanish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("dictionary", "diccionario"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLSpanish"];
-            DictionaryURLEnglish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("diccionario", "dictionary"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLEnglish"];
+            string snippetXmlData = string.Empty;
+            snippetXmlData = SnippetInfo.Data;
+            snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
+            NCI.Web.CDE.Modules.DictionaryURL dUrl = ModuleObjectFactory<NCI.Web.CDE.Modules.DictionaryURL>.GetModuleObject(snippetXmlData);
+            
+            DictionaryURLSpanish = dUrl.DictionarySpanishURL;
+            DictionaryURLEnglish = dUrl.DictionaryEnglishURL;
+
+
             DictionaryURL = DictionaryURLEnglish;
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
