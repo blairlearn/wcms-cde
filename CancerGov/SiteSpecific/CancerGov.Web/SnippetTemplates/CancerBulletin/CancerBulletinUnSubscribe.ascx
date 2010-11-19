@@ -38,6 +38,9 @@
                                         <%=strHeader%></div>
                                     <br>
                                     <form name="frmUnSubscribe" id="frmUnSubscribe" method="post" runat="server">
+                                                            <input type="hidden" name="userId" id="userId" value="<% =Request.Params["userid"] %>" />
+                                                            <input type="hidden" name="newsletterid" id="newsletterid" value="<% =Request.Params["newsletterid"] %>" />
+                                    
                                     <table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#C3C2C2">
                                         <tr>
                                             <td valign="top">
