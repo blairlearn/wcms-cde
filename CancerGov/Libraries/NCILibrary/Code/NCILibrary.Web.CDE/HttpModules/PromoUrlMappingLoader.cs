@@ -35,7 +35,7 @@ namespace NCI.Web.CDE
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
 
-            if (url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1)
+            if (url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1 )
                 return;
 
             //Check if the PageAssemblyInstruction is not null then it was processed as pretty url.
@@ -71,7 +71,7 @@ namespace NCI.Web.CDE
                         context.Response.Redirect(promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : "?" + context.Request.Url.Query), true);
                     }
                     else
-                        Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "Promo Url Mapping information not found for " + url, NCIErrorLevel.Warning);
+                        Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "Promo Url Mapping information not found for " + url, NCIErrorLevel.Debug);
                 }
                 else
                 {

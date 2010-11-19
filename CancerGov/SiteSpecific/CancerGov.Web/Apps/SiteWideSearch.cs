@@ -267,16 +267,10 @@ namespace NCI.Web.CancerGov.Apps
             //Setup if we are allowed to show DYM
             _allowedToShowDYM = Strings.ToBoolean((string)ConfigurationSettings.AppSettings["EndecaDidYouMean"]) && PageDisplayInformation.Language == DisplayLanguage.English;
 
-            if (PageDisplayInformation.Version == DisplayVersions.Image)
-            {
-                btnSWRImgSearch.Visible = true;
-                btnSWRTxtSearch.Visible = false; 
-            }
-            else
-            {
-                btnSWRImgSearch.Visible = false;
-                btnSWRTxtSearch.Visible = true;
-            }
+            btnSWRImgSearch.Attributes.Add("src","/images/search_site.gif"); 
+
+            btnSWRImgSearch.Visible = true;
+            btnSWRTxtSearch.Visible = false; 
 
             if (Page.Request.RequestType == "POST")
             {
