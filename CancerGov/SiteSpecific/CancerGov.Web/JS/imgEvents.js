@@ -87,7 +87,7 @@ function siteSearchSubmit(bSpanish)
 //Validates RightNav Search Control input
 function siteResultSearchSubmit(bSpanish)
 {
-	if(trim(document.resultForm.txtSWRKeyword.value) != "")
+	if(trim(document.getElementById(ids.txtSWRKeyword).value) != "")
 	{
 		return true;
 	}
@@ -97,7 +97,7 @@ function siteResultSearchSubmit(bSpanish)
 			alert("Se necesita t" + String.fromCharCode(233) + "rmino de b" + String.fromCharCode(250) + "squeda.");
 		else
 			alert("You must enter a search value.");
-		document.resultForm.txtSWRKeyword.focus();	
+		document.getElementById(ids.txtSWRKeyword).focus();	
 	}	
 	return false;
 }

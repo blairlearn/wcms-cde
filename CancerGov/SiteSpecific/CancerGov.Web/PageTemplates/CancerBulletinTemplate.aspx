@@ -47,15 +47,34 @@
     <div class="skip">
         <a title="Skip to content" href="#skiptocontent">Skip to content</a></div>
     <div align="center">
-        <div class="bulletin-header">
-            <a href="/">
-                <img src="/images/cancerbulletin/cancerbulletin-header-nci.gif" width="112" height="85"
-                    alt="National Cancer Institute" border="0" style="float: left;"></a> <a href="/ncicancerbulletin/cancerbulletin">
-                        <img src="/images/cancerbulletin/cancerbulletin-header-bulletin.gif" width="306"
-                            height="85" alt="NCI Cancer Bulletin: A Trusted Source for Cancer Research News"
-                            border="0" style="float: right;"></a>
-        </div>
-        <NCI:TemplateSlot ID="cgvBody" runat="server" />
+        <NCI:TemplateSlot ID="cgvContentHeader" runat="server" />
+        <table width="771" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
+            <tr>
+                <td valign="top" height="100%">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" valign="top">
+                        <tr>
+                            <td valign="top" height="61">
+                                <NCI:TemplateSlot ID="cgvBulletinHeader" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <!-- Start of questionable content cut -->
+                            <td valign="top">
+                                <a name="skiptocontent"></a>
+                                <NCI:TemplateSlot ID="cgvBody" runat="server" />
+                            </td>
+                        </tr>
+                        <!-- End of questionable content cut -->
+                        <tr>
+                            <td height="10">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <!-- end of the content pane -->
+            </tr>
+        </table>
     </div>
     <!-- Footer -->
     <div id="footerzone" align="center">

@@ -121,7 +121,7 @@
                             </td>
                             <td width="100%">
                                 &nbsp;&nbsp;<input id="searchRangeButton" onclick="searchType=1;" alt="search" src="/images/search_red.gif"
-                                    type="image" name="searchRangeButton" runat="server">
+                                    type="image" name="searchRangeButton">
                             </td>
                         </tr>
                     </tbody>
