@@ -14,24 +14,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin {
     public partial class CancerBulletinUnSubscribe {
         
         /// <summary>
-        /// tblImgHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable tblImgHeader;
-        
-        /// <summary>
-        /// tblTextHeader control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable tblTextHeader;
-        
-        /// <summary>
         /// frmUnSubscribe control.
         /// </summary>
         /// <remarks>

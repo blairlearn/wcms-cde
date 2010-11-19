@@ -1,6 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CancerGov.Apps.SiteWideSearch"  %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="cc1" %>
 
+<script type="text/javascript">
+    var ids = {
+    txtSWRKeyword: "<%=txtSWRKeyword.ClientID %>"
+}
+</script>
+
+
 	<!-- Main Area -->
 	<div align="center">
 		<table width="571" cellspacing="0" cellpadding="0" border="0">
