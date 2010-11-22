@@ -64,7 +64,7 @@
                                 <td valign="top" width="100%" style="font-family: Arial;">
                                     We welcome your comments about the <i>NCI Cancer Bulletin</i>.
                                     <p>
-                                        <form name="frmComment" method="post" action="/cbComments.aspx">
+                                        <form name="frmComment" method="post" action="<% =strCommentsUrl %>">
                                         <span style="color: #333367; text-decoration: none; font-weight: bold;">Your comments:</span><br>
                                         <img src="/images/spacer.gif" width="1" height="5" alt="" border="0"><br>
                                         <label class="hidden" for="txtComment">
