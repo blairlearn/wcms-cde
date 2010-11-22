@@ -2,6 +2,8 @@
 <%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls"
     TagPrefix="NCI" %>
 	
+<%@ Register src="../SnippetTemplates/TableofLinks.ascx" tagname="TableofLinks" tagprefix="uc1" %>
+	
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
@@ -64,7 +66,9 @@
             <NCI:TemplateSlot ID="cgvMpToc" runat="server"  />
             <NCI:TemplateSlot ID="cgvBody" runat="server"  />
 			<!-- Glossary of Terms -->
+                    
 			<!-- Link Extraction -->
+		    <uc1:TableofLinks ID="TableofLinks1" runat="server" />
 		</td>
 				<!----------------------->				
 				<td valign="top"><img src="/images/spacer.gif" width="10" height="1" alt="" border="0"></td>
@@ -79,6 +83,7 @@
     <!-- TO INSERT WEB ANALYTICS CODE. Every template should have this 
     control else Web analytics scripts will not show up in the HTML-->
     <NCI:WebAnalyticsControl ID="WebAnalyticsControl1" runat="server" />
+  
   
   </body>
 </html>
