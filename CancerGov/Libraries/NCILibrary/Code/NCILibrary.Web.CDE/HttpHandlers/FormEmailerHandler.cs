@@ -510,21 +510,19 @@ namespace NCI.Web.CDE.HttpHandlers
         }
         #endregion
 
-
-
-
         /// <summary>
         /// Method builds email message and sends it to recipient defined in web.config
         /// PublicCommentContactEmailRecipient appSetting
         /// </summary>
         public void SendEmail()
         {
-            System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage();
-            
-           // mailMsg.From = from;
-            //mailMsg.To = to; 
+            string fromAddress = from;
+            string toAddress = to;
+
+            System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
+
             mailMsg.Subject = subject;
-            mailMsg.Body = body;                        
+            mailMsg.Body = body;
             System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
             smtpClient.Send(mailMsg);
         }
