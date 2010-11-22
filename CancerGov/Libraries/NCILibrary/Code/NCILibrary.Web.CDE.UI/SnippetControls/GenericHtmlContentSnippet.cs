@@ -33,7 +33,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 data = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, data);
                 if (fe.hashIndex.Count >= 1)
                 {
-                    PageAssemblyContext.Current.TableofLinksHash.AddRange(fe.hashIndex);
+                    PageAssemblyContext.Current.tableofLinksHash.AddRange(fe.hashIndex);
                 }
 
                 if (gte.glossaryIds.Count >= 1)
@@ -41,9 +41,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     PageAssemblyContext.Current.glossaryIds.AddRange(gte.glossaryIds);
 
                 }
-                PageAssemblyContext.Current.glossaryIDHash = gte.glossaryIDHash;
+                if (gte.glossaryIDHash.Count >= 1)
+                    PageAssemblyContext.Current.glossaryIDHash.AddRange(gte.glossaryIDHash);
+                if (gte.glossaryIDHash.Count >= 1)
+                    PageAssemblyContext.Current.glossaryTermHash.AddRange(gte.glossaryTermHash);
+                if (gte.terms.Count >= 1)
+                {
+                    PageAssemblyContext.Current.terms.AddRange(gte.terms);
 
-                PageAssemblyContext.Current.glossaryTermHash = gte.glossaryTermHash;
+                }
+
             }
             LiteralControl lit = new LiteralControl(data);
             this.Controls.Add(lit);

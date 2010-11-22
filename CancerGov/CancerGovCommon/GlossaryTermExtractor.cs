@@ -26,7 +26,7 @@ namespace CancerGov.Common.Extraction
 	///</summary>
 	public class GlossaryTermExtractor
 	{		
-		private ArrayList terms = new ArrayList();
+		public ArrayList terms = new ArrayList();
 		public ArrayList glossaryIds = new ArrayList();
 		private ArrayList sourceIds = new ArrayList();
 		private Hashtable glossaryHash = new Hashtable();
@@ -252,10 +252,22 @@ namespace CancerGov.Common.Extraction
 
 
 //Function Overload
-        public string BuildGlossaryTable(string title, ArrayList glossaryid, Hashtable glossaryIDHash, Hashtable glossaryTermHash)
+        public string BuildGlossaryTable(string title, ArrayList glossaryid, ArrayList glossaryIDHash, ArrayList glossaryTermHash, ArrayList terms)
         {
             string result = "";
             string commandText = "";
+            Hashtable glossaryIDHash1=new Hashtable();
+            Hashtable glossaryTermHash1 = new Hashtable();
+
+            foreach (DictionaryEntry de in glossaryIDHash)
+            {
+                glossaryIDHash1.Add(de.Key, de.Value);
+            }
+
+            foreach (DictionaryEntry de in glossaryTermHash)
+            {
+                glossaryTermHash1.Add(de.Key, de.Value);
+            }
 
             //Build query to get glossary terms
             if (terms.Count > 0 || glossaryid.Count > 0 || sourceIds.Count > 0)
@@ -307,9 +319,9 @@ namespace CancerGov.Common.Extraction
                     string audience = "";
                     string language = "";
 
-                    if (glossaryIDHash.ContainsKey(dbRow["GlossaryID"].ToString()))
+                    if (glossaryIDHash1.ContainsKey(dbRow["GlossaryID"].ToString()))
                     {
-                        hashvalue = glossaryIDHash[dbRow["GlossaryID"].ToString()].ToString();
+                        hashvalue = glossaryIDHash1[dbRow["GlossaryID"].ToString()].ToString();
                         audience = hashvalue.Substring(0, hashvalue.IndexOf(@"\"));
                         language = hashvalue.Substring(hashvalue.IndexOf(@"\") + 1);
                         if (dbRow["audience"].ToString() == audience && dbRow["language"].ToString() == language)
@@ -317,9 +329,9 @@ namespace CancerGov.Common.Extraction
                             include_p = true;
                         }
                     }
-                    else if (glossaryTermHash.ContainsKey(dbRow["name"]))
+                    else if (glossaryTermHash1.ContainsKey(dbRow["name"]))
                     {
-                        hashvalue = glossaryTermHash[dbRow["name"]].ToString();
+                        hashvalue = glossaryTermHash1[dbRow["name"]].ToString();
                         audience = hashvalue.Substring(0, hashvalue.IndexOf(@"\"));
                         language = hashvalue.Substring(hashvalue.IndexOf(@"\") + 1);
                         if (dbRow["audience"].ToString() == audience && dbRow["language"].ToString() == language)
