@@ -145,7 +145,7 @@
     <value>&amp;lt;&amp;nbsp;Previous</value>
   </data>
   <data name="ResultsFor" xml:space="preserve">
-    <value>Results For</value>
+    <value>{0} results found for: </value>
   </data>
   <data name="ResultsForText" xml:space="preserve">
     <value>Results for:</value>

@@ -207,7 +207,7 @@ namespace CancerGov.Web.SnippetTemplates
                     NameValueCollection queryStringSansProtocolSearchid = HttpUtility.ParseQueryString(Request.QueryString.ToString());
                     queryStringSansProtocolSearchid.Remove("protocolsearchid");
                     renderOptions = new ProtocolRendererOptions();
-                    renderOptions.TrialSitesSeeAllUrl = Request.FilePath + "?" + queryStringSansProtocolSearchid.ToString();
+                    renderOptions.TrialSitesSeeAllUrl = PrettyUrl + "?" + queryStringSansProtocolSearchid.ToString();
                     renderOptions.TrialSitesSeeAllText = "See All Trial Sites";
                 }
 

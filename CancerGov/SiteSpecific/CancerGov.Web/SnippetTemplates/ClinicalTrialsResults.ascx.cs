@@ -206,8 +206,7 @@ namespace CancerGov.Web.SnippetTemplates
             JSManager.AddExternalScript(this.Page, "/scripts/popEvents.js");
             //JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
             CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css");
-
-            OnLoadComplete();
+            
         }
 
         /// <summary>
@@ -324,6 +323,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected override void OnPreRender(EventArgs e)
         {
+            OnLoadComplete();
             /// Set up JavaScript resources. Order is important.  Because the page's script
             /// uses prototype, we need to register that one first.
             PrototypeManager.Load(this.Page);
