@@ -51,7 +51,7 @@
                                         <%=strHeader%></div>
                                     <br />
                                     <%=strMessageBody%><br />
-                                    <form name="frmSendToFriend" action="<% PrettyUrl %>" method="post">
+                                    <form name="frmSendToFriend" action="<% =PrettyUrl %>" method="post">
                                     <table runat="server" id="tableSend" style="font-family: Arial;">
                                         <tr>
                                             <td>
