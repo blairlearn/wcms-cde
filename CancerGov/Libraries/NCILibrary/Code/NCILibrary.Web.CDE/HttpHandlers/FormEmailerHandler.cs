@@ -91,7 +91,7 @@ namespace NCI.Web.CDE.HttpHandlers
                                 else
                                 {
                                     // split the field into multiple lines                                    
-                                    body += key.Replace("_", " ") + ": \n\t\t" + Server.UrlDecode(context.Request.Params[key].Replace(",", "\n\t\t")) + "\n";
+                                    body += key.Replace("_", " ") + ": \n\t\t" + context.Server.UrlDecode(context.Request.Params[key].Replace(",", "\n\t\t")) + "\n";
                                 }
 
                             }
@@ -519,10 +519,10 @@ namespace NCI.Web.CDE.HttpHandlers
         /// </summary>
         public void SendEmail()
         {
-            System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(from, to, subject, body);
-
-            mailMsg.From = from;
-            mailMsg.To = to;
+            System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage();
+            
+           // mailMsg.From = from;
+            //mailMsg.To = to; 
             mailMsg.Subject = subject;
             mailMsg.Body = body;                        
             System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
