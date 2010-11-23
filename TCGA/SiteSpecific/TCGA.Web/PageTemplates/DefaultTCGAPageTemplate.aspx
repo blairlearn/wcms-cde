@@ -11,7 +11,7 @@
 <div class="skip"><a title="Skip to content" href="#skiptocontent">Skip to content</a></div>
 <!-- NCI Banner (please keep all code on one line for browsers spacing issue) -->
 <div id="nci-banner">
-<NCI:TemplateSlot IDEastwood1!tcgaSlotBrandingBar" runat="server"  />
+<NCI:TemplateSlot ID="tcgaSlotBrandingBar" runat="server"  />
 </div>
 <!-- END NCI Banner -->
 
