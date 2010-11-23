@@ -8,8 +8,8 @@
     <ProjectGuid>{2ED8F4D6-9A1D-4109-8F37-6D407C674184}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmergencyAlert</RootNamespace>
-    <AssemblyName>EmergencyAlert</AssemblyName>
+    <RootNamespace>CancerGov.EmergencyAlert</RootNamespace>
+    <AssemblyName>CancerGov.EmergencyAlert</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,6 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.WebPageAssembler" %>
 <%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls"
     TagPrefix="NCI" %>
+<%@ Register tagPrefix="CGov" namespace="CancerGov.EmergencyAlert" assembly="CancerGov.EmergencyAlert" %>
     
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -19,6 +20,8 @@
         <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
     </div>
     <div align="center">
+    <CGov:EmergencyAlertBanner ID="EmergencyAlertBanner" runat="server" />
+    <CGov:EmergencyAlertMessage ID="EmergencyAlertMessage" runat="server" CssClass="EmergencyMessage" />
     </div>
     <!-- Content Header -->
     <div id="headerzone" align="center">
