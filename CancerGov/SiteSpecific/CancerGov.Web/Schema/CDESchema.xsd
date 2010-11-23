@@ -19,6 +19,16 @@
       <documentation>Defines the schema for a file instruction xml file for the CDE.  In order to allow files to have pretty urls and be indexed by the search engine, there needs to be a record of that item in the file system.  This is that record.</documentation>
     </annotation>
     <all>
+      <element name="ContentItemInfo" type="cde:contentItemInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The information of the content item this Assembly Item represents</documentation>
+        </annotation>
+      </element>
+      <element name="SearchMetadata" type="cde:searchMetadata" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines metadata for this Assembly Instruction used for searching</documentation>
+        </annotation>
+      </element>
       <element name="PageMetadata" type="cde:pageMetadata"
         minOccurs="1" maxOccurs="1">
         <annotation>
@@ -291,6 +301,16 @@
       </documentation>
     </annotation>
     <all>
+      <element name="ContentItemInfo" type="cde:contentItemInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The information of the content item this Assembly Item represents</documentation>
+        </annotation>
+      </element>
+      <element name="SearchMetadata" type="cde:searchMetadata" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines metadata for this Assembly Instruction used for searching</documentation>
+        </annotation>
+      </element>
       <element name="PageTemplateName" type="cde:path"
         minOccurs="1" maxOccurs="1">
         <annotation>
@@ -655,6 +675,16 @@
       </documentation>
     </annotation>
     <all>
+      <element name="ContentItemInfo" type="cde:contentItemInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The information of the content item this Assembly Item represents</documentation>
+        </annotation>
+      </element>
+      <element name="SearchMetadata" type="cde:searchMetadata" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines metadata for this Assembly Instruction used for searching</documentation>
+        </annotation>
+      </element>
       <element name="PageTemplateName" type="cde:path"
         minOccurs="1" maxOccurs="1">
         <annotation>
@@ -998,6 +1028,51 @@
       <pattern value="\S+"></pattern>
     </restriction>
   </simpleType>
+
+  <complexType name="contentItemInfo">
+    <annotation>
+      <documentation>Defines information about the content item a Page Assembly Instruction represents.</documentation>
+    </annotation>
+    <all>
+      <element name="ContentItemID" type="string" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>The content ID of the content item for the Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+      <element name="ContentItemType" type="string" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>The content type of the content item for the Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="searchMetadata">
+    <annotation>
+      <documentation>Defines metadata for the Assembly Instruction used for searching</documentation>
+    </annotation>
+    <all>
+      <element name="DoNotIndex" type="boolean" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>Defines if this Assembly Instruction should NOT be indexed by the search engine</documentation>
+        </annotation>
+      </element>
+      <element name="SiteSpecificSearchMetadata" type="cde:siteSpecificSearchMetadata" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>Defines any site specific metadata for an Assembly Instruction to be used for searching</documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="siteSpecificSearchMetadata">
+    <annotation>
+      <documentation>Defines any site specific metadata for an Assembly Instruction to be used for searching.  Note: This is free form XML</documentation>
+    </annotation>
+    <sequence>
+      <any minOccurs="0" maxOccurs="unbounded"></any>
+    </sequence>
+  </complexType>
 
   <complexType name="pageMetadata">
     <annotation>
