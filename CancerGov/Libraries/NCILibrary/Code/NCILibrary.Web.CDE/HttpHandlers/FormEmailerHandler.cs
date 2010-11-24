@@ -123,7 +123,7 @@ namespace NCI.Web.CDE.HttpHandlers
                 {
                     content = "Error: " + exception.Message + "<br>\n";
                 }
-
+                 
                 if (redirect != null)
                 {
                     context.Response.Redirect(redirect);
