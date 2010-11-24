@@ -56,8 +56,9 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (PageAssemblyContext.Current.tableofLinksHash.Count > 0)
             {
-                footnotes = "<BR><BR><a name=\"" + title + "\"></a><h2>" + title + "</h2><P>";
+                //footnotes = "<BR><BR><a name=\"" + title + "\"></a><h2>" + title + "</h2><P>";
                 footnotes += "<table border=\"0\" cellspacing=\"2\" cellpadding=\"0\">\n";
+                footnotes += "<caption align=\"left\"><a name=\"" + title + "\"></a><h2>" + title + "</h2></caption>";
 
 
                 for (int i = 0; i < tableofLinks.Count; i++)

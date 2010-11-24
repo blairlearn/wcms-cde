@@ -10,7 +10,7 @@ using CancerGov.Common.ErrorHandling;
 namespace CancerGov.Common.Extraction
 {
 	///<summary>
-	///Exposes methods for extracting glossary terms from a large text field,
+	///Exposes methods for extracting glossary terms from a large text field, 
 	///changing the terms' links to anchor links, and building a glossary appendix.<br/>
 	///
 	///Design limitation (Chen): This program, because it keys off of the GlossaryTermID (CDRID)

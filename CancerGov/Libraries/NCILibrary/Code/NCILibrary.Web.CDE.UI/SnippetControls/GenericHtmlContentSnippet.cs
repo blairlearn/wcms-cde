@@ -29,26 +29,29 @@ namespace NCI.Web.CDE.UI.SnippetControls
             data = MarkupExtensionProcessor.Instance.Process(data);
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print || PageAssemblyContext.Current.DisplayVersion == DisplayVersions.PrintAll)
             {
-                data = gte.ExtractGlossaryTerms(data);
-                data = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, data);
-                if (fe.hashIndex.Count >= 1)
+                if (SnippetInfo.SlotName != "cgvContentHeader" && SnippetInfo.SlotName != "cgvSiteBanner" && SnippetInfo.SlotName != "cgvLanguageDate" && SnippetInfo.SlotName != "cgvBodyHeader")
                 {
-                    PageAssemblyContext.Current.tableofLinksHash.AddRange(fe.hashIndex);
-                }
+                    data = gte.ExtractGlossaryTerms(data);
+                    data = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, data);
+                    if (fe.hashIndex.Count >= 1)
+                    {
+                        PageAssemblyContext.Current.tableofLinksHash.AddRange(fe.hashIndex);
+                    }
 
-                if (gte.glossaryIds.Count >= 1)
-                {
-                    PageAssemblyContext.Current.glossaryIds.AddRange(gte.glossaryIds);
+                    if (gte.glossaryIds.Count >= 1)
+                    {
+                        PageAssemblyContext.Current.glossaryIds.AddRange(gte.glossaryIds);
 
-                }
-                if (gte.glossaryIDHash.Count >= 1)
-                    PageAssemblyContext.Current.glossaryIDHash.AddRange(gte.glossaryIDHash);
-                if (gte.glossaryIDHash.Count >= 1)
-                    PageAssemblyContext.Current.glossaryTermHash.AddRange(gte.glossaryTermHash);
-                if (gte.terms.Count >= 1)
-                {
-                    PageAssemblyContext.Current.terms.AddRange(gte.terms);
+                    }
+                    if (gte.glossaryIDHash.Count >= 1)
+                        PageAssemblyContext.Current.glossaryIDHash.AddRange(gte.glossaryIDHash);
+                    if (gte.glossaryIDHash.Count >= 1)
+                        PageAssemblyContext.Current.glossaryTermHash.AddRange(gte.glossaryTermHash);
+                    if (gte.terms.Count >= 1)
+                    {
+                        PageAssemblyContext.Current.terms.AddRange(gte.terms);
 
+                    }
                 }
 
             }

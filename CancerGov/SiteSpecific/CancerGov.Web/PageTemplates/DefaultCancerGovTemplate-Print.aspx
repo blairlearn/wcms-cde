@@ -4,6 +4,8 @@
 	
 <%@ Register src="../SnippetTemplates/TableofLinks.ascx" tagname="TableofLinks" tagprefix="uc1" %>
 	
+<%@ Register src="../SnippetTemplates/GlossaryTerms.ascx" tagname="GlossaryTerms" tagprefix="uc2" %>
+	
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
@@ -11,7 +13,6 @@
     <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
-     
 	<!-- Site Banner -->
     <div id="bannerDiv" align="center">
         <NCI:TemplateSlot ID="cgvSiteBannerPrint" runat="server" />
@@ -19,7 +20,7 @@
 	
 	<div align="center"></div>
  
-	<!-- Content Header -->
+	<!-- Content Header --> 
     <!-- Content Header -->
     <div id="headerzone" align="center">
         <table cellspacing="0" cellpadding="0" border="0" width="1"><tbody><tr><td><img height="10" border="0" width="1" alt="" src="/images/spacer.gif"/></td></tr></tbody></table>
@@ -66,7 +67,8 @@
             <NCI:TemplateSlot ID="cgvMpToc" runat="server"  />
             <NCI:TemplateSlot ID="cgvBody" runat="server"  />
 			<!-- Glossary of Terms -->
-                    
+ 		    <uc2:GlossaryTerms ID="GlossaryTerms1" runat="server" />
+                   
 			<!-- Link Extraction -->
 		    <uc1:TableofLinks ID="TableofLinks1" runat="server" />
 		</td>
@@ -83,7 +85,6 @@
     <!-- TO INSERT WEB ANALYTICS CODE. Every template should have this 
     control else Web analytics scripts will not show up in the HTML-->
     <NCI:WebAnalyticsControl ID="WebAnalyticsControl1" runat="server" />
-  
   
   </body>
 </html>
