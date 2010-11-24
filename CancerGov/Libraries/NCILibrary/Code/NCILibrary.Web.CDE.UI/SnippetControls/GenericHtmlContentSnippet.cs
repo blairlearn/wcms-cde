@@ -29,7 +29,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             data = MarkupExtensionProcessor.Instance.Process(data);
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print || PageAssemblyContext.Current.DisplayVersion == DisplayVersions.PrintAll)
             {
-                if (SnippetInfo.SlotName != "cgvContentHeader" && SnippetInfo.SlotName != "cgvSiteBanner" && SnippetInfo.SlotName != "cgvLanguageDate" && SnippetInfo.SlotName != "cgvBodyHeader")
+                if (SnippetInfo.SlotName != "cgvSiteBannerPrint" && SnippetInfo.SlotName != "cgvContentHeader" && SnippetInfo.SlotName != "cgvSiteBanner" && SnippetInfo.SlotName != "cgvLanguageDate" && SnippetInfo.SlotName != "cgvBodyHeader")
                 {
                     data = gte.ExtractGlossaryTerms(data);
                     data = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, data);
