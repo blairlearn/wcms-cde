@@ -16,4 +16,6 @@ Begin
 	insert into GeneralComments(CommentID, Comment, CommentDate, CommentType)
 	values (newid(), @Comment, getdate(), @CommentType)
 End
+GO
  
+grant execute on usp_GeneralComments_Add to CDEUser
