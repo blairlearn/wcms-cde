@@ -19,6 +19,7 @@ using CancerGov.Common.ErrorHandling;
 using NCI.Web.CDE.WebAnalytics;
 using CancerGov.CDR.DataManager;
 using NCI.Web.CDE.UI;
+using System.Collections.Specialized;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -131,13 +132,43 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected override void OnLoad(EventArgs e)
         {
+
+            string cancerType=string.Empty;
+            string cancerFamily = string.Empty;
+            string state=string.Empty;
+            string country=string.Empty;
+            NameValueCollection postedValues = Request.Form;
+            String nextKey;
+            for (int i = 0; i < postedValues.AllKeys.Length; i++)
+            {
+                nextKey = postedValues.AllKeys[i];
+                if (nextKey.Substring(0, 2) != "__")
+                {
+                    if (nextKey.Contains("selCancerType"))
+                    {
+                        cancerType=postedValues[i];
+                    }
+                    else if (nextKey.Contains("selCancerFamily"))
+                    {
+                        cancerFamily = postedValues[i];
+                    }
+                    else if (nextKey.Contains("selState"))
+                    {
+                        state = postedValues[i];
+
+                    }
+
+                    else if (nextKey.Contains("selCountry"))
+                    {
+                        country = postedValues[i];
+
+                    }
+                }
+            }
+
+
             base.OnLoad(e);
-			//Capture submitted data
-			string cancerType = Request.Form["selCancerType"];
-			string cancerFamily = Request.Form["selCancerFamily"];
 			string city = Request.Form["txtCity"];
-			string state = Request.Form["selState"];
-			string country = Request.Form["selCountry"];
 			string lastName = Request.Form["txtLastName"];
 
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web)

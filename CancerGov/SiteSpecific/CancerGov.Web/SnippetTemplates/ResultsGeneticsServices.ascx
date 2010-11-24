@@ -60,7 +60,8 @@
             <td id="contentzone" valign="top" width="100%">
 
                 <form name="searchParamForm" method="post">
-                <input type="hidden" name="selCancerType" value="<%=Request.Form["selCancerType"]%>">
+                                
+<input type="hidden" name="selCancerType" value="<%=Request.Form["selCancerType"]%>">                 
                 <input type="hidden" name="selCancerFamily" value="<%=Request.Form["selCancerFamily"]%>">
                 <input type="hidden" name="txtCity" value="<%=Request.Form["txtCity"]%>">
                 <input type="hidden" name="selState" value="<%=Request.Form["selState"]%>">
