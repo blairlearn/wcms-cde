@@ -127,6 +127,8 @@ namespace NCI.Web.CDE.HttpHandlers
                 if (redirect != null)
                 {
                     context.Response.Redirect(redirect);
+                   //context.Response.Write("<html><body><h1>Hello 15Seconds   Reader ");
+                   //context.Response.Write("</body></html>");
                 }
             }
 
