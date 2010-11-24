@@ -21,7 +21,7 @@
     </div>
     <div align="center">
     <CGov:EmergencyAlertBanner ID="EmergencyAlertBanner" runat="server" />
-    <CGov:EmergencyAlertMessage ID="EmergencyAlertMessage" runat="server" CssClass="EmergencyMessage" />
+    
     </div>
     <!-- Content Header -->
     <div id="headerzone" align="center">

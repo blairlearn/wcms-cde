@@ -27,9 +27,9 @@ namespace CancerGov.EmergencyAlert
 
             if (ctx == null || !ctx.InEmergency)
             {
-                //output.RenderBeginTag(HtmlTextWriterTag.H1);
-                //output.Write("There is currently no emergency.");
-                //output.RenderEndTag();
+                output.RenderBeginTag(HtmlTextWriterTag.H1);
+                output.Write("There is currently no emergency.");
+                output.RenderEndTag();
             }
             else
             {
