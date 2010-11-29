@@ -5,15 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F3414554-93F7-4116-88B2-637A3ABA050E}</ProjectGuid>
+    <ProjectGuid>{32A3E812-40FA-49F5-8B7A-962AAAE8E2EE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CancerGov.Handlers</RootNamespace>
-    <AssemblyName>CancerGov.Handlers</AssemblyName>
+    <RootNamespace>CDR.Summary</RootNamespace>
+    <AssemblyName>CDR.Summary</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <StartupObject>
-    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +30,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SummaryInfo.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -40,36 +56,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Compile Include="ClinicalTrialsLinkHandler.cs" />
-    <Compile Include="NewSummaryRSSHandler.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\CancerGovCommon\CancerGovCommon.csproj">
-      <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
-      <Name>CancerGovCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
-      <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
-      <Name>CDR.ClinicalTrials</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CDR.Common\CDR.Common.csproj">
-      <Project>{0614DB16-1CB1-40E7-BAE8-112E3A290331}</Project>
-      <Name>CDR.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
-      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
-      <Name>NCILibrary.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
