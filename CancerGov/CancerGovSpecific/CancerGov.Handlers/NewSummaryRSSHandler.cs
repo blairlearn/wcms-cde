@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CancerGov.Handlers
 {
-    class NewSummaryRSSHandler
+    class NewSummaryRSSHandler 
     {
 
     }
