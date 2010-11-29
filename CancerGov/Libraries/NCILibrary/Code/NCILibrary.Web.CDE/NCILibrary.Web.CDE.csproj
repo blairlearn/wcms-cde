@@ -70,6 +70,8 @@
     <Compile Include="Configuration\PathInformationElement.cs" />
     <Compile Include="Configuration\TitleElement.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="HttpHandlers\FlashGetCookieHandler.cs" />
+    <Compile Include="HttpHandlers\FlashSetCookieHandler.cs" />
     <Compile Include="HttpHandlers\FormEmailerHandler.cs" />
     <Compile Include="HttpHandlers\ListservSubscriptionHandler.cs" />
     <Compile Include="HttpModules\FileInstructionLoader.cs" />
