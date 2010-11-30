@@ -13,7 +13,7 @@ namespace CDR.Common
     /// may use them, but they're not tied to the UI layer.)
     /// </summary>
     // TODO: Replace AbstractAudience in CDR.ClinicalTrials.Search with this enum.
-    public enum Audience
+    public enum TargetAudience
     {
         Unknown = -1,
         Patient = 0,
@@ -38,7 +38,7 @@ namespace CDR.Common
     /// Bitmap flag for the new vs. updated status of items to search for.
     /// </summary>
     [Flags]
-    public enum NewOrUpdated
+    public enum NewOrUpdateStatus
     {
         New = 0x01,
         Update = 0x02,
@@ -49,7 +49,7 @@ namespace CDR.Common
     /// <summary>
     /// The language.
     /// </summary>
-    public enum Language
+    public enum CDRLanguage
     {
         English = 0,
         Spanish = 1

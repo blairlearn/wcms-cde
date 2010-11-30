@@ -5,16 +5,19 @@ using System.Text;
 using System.Web;
 using System.Configuration;
 using CDR.Common;
+using CDR.Summary;
+using NCI.Util;
+using System.Xml;
 
 namespace CancerGov.Handlers
 {
-    class NewSummaryRSSHandler 
+    class NewSummaryRSSHandler : IHttpHandler
     {
 
-        const int NumItems = 20;
+        const int DEFAULT_MAXIMUM_RETURNCOUNT = 20;
         const SummaryType DEFAULT_SUMMARY_TYPE = SummaryType.All;
-        const NewOrUpdated DEFAULT_NEW_OR_UPDATED = NewOrUpdated.Both;
-        const Language DEFAULT_LANGUAGE = Language.English;
+        const NewOrUpdateStatus DEFAULT_NEW_OR_UPDATED = NewOrUpdateStatus.Both;
+        const CDRLanguage DEFAULT_LANGUAGE = CDRLanguage.English;
 
         #region IHttpHandler Members
 
@@ -24,38 +27,38 @@ namespace CancerGov.Handlers
         }
 
 
-        //public void ProcessRequest(HttpContext context)
-        //{
-        //    List<SummaryInfo> summaries = null;
+        public void ProcessRequest(HttpContext context)
+        {
+            List<SummaryInfo> summaries = null;
 
-        //    try
-        //    {
-        //        // Audience is a required parameter
-        //        if (string.IsNullOrEmpty(context.Request.Params["Audience"]))
-        //            throw new ArgumentNullException("Audience");
+            try
+            {
+                // Audience is a required parameter
+                if (string.IsNullOrEmpty(context.Request.Params["Audience"]))
+                    throw new ArgumentNullException("Audience");
 
-        //        Audience audience =
-        //            ConvertEnum<Audience>.Convert(Strings.Clean(context.Request.Params["Audience"]));
+                TargetAudience audience =
+                    ConvertEnum<TargetAudience>.Convert(Strings.Clean(context.Request.Params["Audience"]));
 
-        //        int NumItems = Strings.ToInt(context.Request.Params["NumItems"], NumItems);
-        //        SummaryType type =
-        //            ConvertEnum<SummaryType>.Convert(Strings.Clean(context.Request.Params["SummaryType"]), DEFAULT_SUMMARY_TYPE);
-        //        NewOrUpdated newOrUpdated =
-        //            ConvertEnum<NewOrUpdated>.Convert(Strings.Clean(context.Request.Params["NewOrUpdated"]), DEFAULT_NEW_OR_UPDATED);
-        //        Language language =
-        //            ConvertEnum<Language>.Convert(Strings.Clean(context.Request.Params["Language"]), DEFAULT_LANGUAGE);
+                int NumItems = Strings.ToInt(context.Request.Params["NumItems"], DEFAULT_MAXIMUM_RETURNCOUNT);
+                SummaryType type =
+                    ConvertEnum<SummaryType>.Convert(Strings.Clean(context.Request.Params["SummaryType"]), DEFAULT_SUMMARY_TYPE);
+                NewOrUpdateStatus newOrUpdated =
+                    ConvertEnum<NewOrUpdateStatus>.Convert(Strings.Clean(context.Request.Params["NewOrUpdated"]), DEFAULT_NEW_OR_UPDATED);
+                CDRLanguage language =
+                    ConvertEnum<CDRLanguage>.Convert(Strings.Clean(context.Request.Params["Language"]), DEFAULT_LANGUAGE);
 
-        //        // Get the list of summaries and pass off to rendering.
-        //        SummaryManager manager = new SummaryManager();
-        //        summaries = manager.LoadNewOrUpdatedSummaries(NumItems, audience, type, newOrUpdated, language);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        context.Response.Write(ex.Message);
-        //    }
+                // Get the list of summaries and pass off to rendering.
+                SummaryManager manager = new SummaryManager();
+                summaries = manager.LoadNewOrUpdatedSummaries(NumItems, audience, type, newOrUpdated, language);
+            }
+            catch (Exception ex)
+            {
+                context.Response.Write(ex.Message);
+            }
 
-        //    RenderRSSFeed(context.Response, summaries);
-        //}
+            //RenderRSSFeed(context.Response, summaries);
+        }
 
         #endregion
 
@@ -106,9 +109,6 @@ namespace CancerGov.Handlers
 
         //    response.End();
         //}
-
-
-
 
     }
 }

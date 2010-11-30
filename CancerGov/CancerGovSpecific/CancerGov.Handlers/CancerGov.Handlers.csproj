@@ -67,6 +67,10 @@
       <Project>{0614DB16-1CB1-40E7-BAE8-112E3A290331}</Project>
       <Name>CDR.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CDR.Summary\CDR.Summary.csproj">
+      <Project>{32A3E812-40FA-49F5-8B7A-962AAAE8E2EE}</Project>
+      <Name>CDR.Summary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
