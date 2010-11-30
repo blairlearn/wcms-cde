@@ -8,6 +8,7 @@ using CDR.Common;
 using CDR.Summary;
 using NCI.Util;
 using System.Xml;
+using Argotic.Syndication;
 
 namespace CancerGov.Handlers
 {
@@ -57,58 +58,56 @@ namespace CancerGov.Handlers
                 context.Response.Write(ex.Message);
             }
 
-            //RenderRSSFeed(context.Response, summaries);
+            RenderRSSFeed(context.Response, summaries);
         }
 
         #endregion
 
+        private void RenderRSSFeed(HttpResponse response, List<SummaryInfo> summaryList)
+        {
+            RssFeed feed = new RssFeed();
+            string siteURL = ConfigurationManager.AppSettings["RootUrl"].ToString();
+            if (!string.IsNullOrEmpty(siteURL))
+                siteURL = siteURL.Trim();
 
+            // RSS Feed header material.
+            feed.Channel.Link = new Uri(siteURL);
+            feed.Channel.Title = "NCI Cancer Information Sumamries";
+            feed.Channel.Description = "NCI Cancer Information Sumamries";
 
-        //private void RenderRSSFeed(HttpResponse response, List<SummaryInfo> summaryList)
-        //{
-        //    RssFeed feed = new RssFeed();
-        //    string siteURL = ConfigurationManager.AppSettings["RootUrl"].ToString();
-        //    if (!string.IsNullOrEmpty(siteURL))
-        //        siteURL = siteURL.Trim();
+            // Turn the individual summaries into RSS items.
+            if (summaryList != null)
+            {
+                foreach (SummaryInfo summary in summaryList)
+                {
+                    RssItem item = new RssItem();
 
-        //    // RSS Feed header material.
-        //    feed.Channel.Link = new Uri(siteURL);
-        //    feed.Channel.Title = "NCI Cancer Information Sumamries";
-        //    feed.Channel.Description = "NCI Cancer Information Sumamries";
+                    // Pretty URL always starts with a /.
+                    string url = siteURL + summary.PrettyUrl;
 
-        //    // Turn the individual summaries into RSS items.
-        //    if (summaryList != null)
-        //    {
-        //        foreach (SummaryInfo summary in summaryList)
-        //        {
-        //            RssItem item = new RssItem();
+                    item.Title = summary.Title;
+                    item.Description = summary.Description;
+                    item.PublicationDate = summary.PublicationDate.ToUniversalTime();
+                    if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                        item.Link = new Uri(url);
+                    item.Categories.Add(new RssCategory(summary.Category));
 
-        //            // Pretty URL always starts with a /.
-        //            string url = siteURL + summary.PrettyUrl;
+                    feed.Channel.AddItem(item);
+                }
+            }
 
-        //            item.Title = summary.Title;
-        //            item.Description = summary.Description;
-        //            item.PublicationDate = summary.PublicationDate.ToUniversalTime();
-        //            if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
-        //                item.Link = new Uri(url);
-        //            item.Categories.Add(new RssCategory(summary.Category));
+            // Write the RSS to the response output.
+            XmlTextWriter writer = new XmlTextWriter(response.OutputStream, System.Text.Encoding.UTF8);
+            feed.Save(writer);
+            writer.Flush();
+            writer.Close();
 
-        //            feed.Channel.AddItem(item);
-        //        }
-        //    }
+            response.ContentEncoding = System.Text.Encoding.UTF8;
+            response.ContentType = "text/xml";
+            response.Cache.SetCacheability(HttpCacheability.Public);
 
-        //    // Write the RSS to the response output.
-        //    XmlTextWriter writer = new XmlTextWriter(response.OutputStream, System.Text.Encoding.UTF8);
-        //    feed.Save(writer);
-        //    writer.Flush();
-        //    writer.Close();
-
-        //    response.ContentEncoding = System.Text.Encoding.UTF8;
-        //    response.ContentType = "text/xml";
-        //    response.Cache.SetCacheability(HttpCacheability.Public);
-
-        //    response.End();
-        //}
+            response.End();
+        }
 
     }
 }
