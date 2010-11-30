@@ -1016,6 +1016,7 @@
       <documentation>The path to a file or url</documentation>
     </annotation>
     <restriction base="string">
+      <whiteSpace value="collapse"/>
       <pattern value="\S+"></pattern>
     </restriction>
   </simpleType>
