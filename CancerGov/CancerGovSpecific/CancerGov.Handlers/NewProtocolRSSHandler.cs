@@ -72,7 +72,7 @@ namespace CancerGov.Handlers
             {
                 foreach (ClinicalTrialInfo trial in triallist)
                 {
-                    RssItem item = new RssItem();
+                    RssItem item = new RssItem(); 
 
                     item.Title = trial.HealthProfessionalTitle;
                     item.Description = trial.Description;
