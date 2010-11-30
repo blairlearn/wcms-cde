@@ -32,7 +32,7 @@
 <script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>
 
 <!--div align="center"-->
-    <table width="571" align="center" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
+    <table width="571" align="Left" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
         <tr>
             <td valign="top" height="100%">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" valign="top">
