@@ -2,7 +2,7 @@
 using System.Web;
 using System.Configuration;
 using System.Diagnostics;
-
+using NCI.Logging;
 namespace CancerGov.Common.ErrorHandling
 {
     ///<summary>
@@ -102,11 +102,15 @@ namespace CancerGov.Common.ErrorHandling
         {
             try
             {
-                string source = GetEventLogName();
-                if (!string.IsNullOrEmpty(source) && EventLog.SourceExists(source))
-                {
-                    EventLog.WriteEntry(source, errString, type, eventID);
-                }
+                //string source = GetEventLogName();
+                //if (!string.IsNullOrEmpty(source) && EventLog.SourceExists(source))
+                //{
+                //    EventLog.WriteEntry(source, errString, type, eventID);
+                //}
+                Exception ex = new Exception("Event ID" + eventID + "-Type" + type);                
+                LoggingHelper helper = LoggingHelper.Instance;
+                helper.LogError("CancerGovSpecific", errString, NCIErrorLevel.Error, ex);
+
             }
             catch { }
         }
