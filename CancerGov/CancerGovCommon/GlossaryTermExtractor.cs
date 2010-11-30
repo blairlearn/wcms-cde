@@ -128,6 +128,9 @@ namespace CancerGov.Common.Extraction
 				(Regex.IsMatch(text, "/dictionary/db_alpha.aspx", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline))) 
 			{
                 Regex exp = new Regex("href=\"(/common/popups/popDefinition.aspx.+?|/dictionary/db_alpha.aspx.+?)\"\\s+?onclick=\"(popWindow|javascript:popWindow)\\(\'(definition|defbyid)\',.*?\'(.+?)\'\\).+?\">", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
+                exp.Replace(text, new MatchEvaluator(ChangeLink));
+                
+                exp = new Regex("href=\"(" + ConfigurationSettings.AppSettings["RootUrl"] + "/common/popups/popDefinition.aspx.+?|/dictionary/db_alpha.aspx.+?)\"\\s+?onclick=\"(popWindow|javascript:popWindow)\\(\'(definition|defbyid)\',.*?\'(.+?)\'\\).+?\">", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
 				return exp.Replace(text, new MatchEvaluator(ChangeLink));
 			} 
 			else 
