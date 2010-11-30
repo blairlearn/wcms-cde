@@ -107,7 +107,7 @@ namespace CancerGov.Common.ErrorHandling
                 //{
                 //    EventLog.WriteEntry(source, errString, type, eventID);
                 //}
-                Exception ex = new Exception("Event ID" + eventID + "-Type" + type);                
+                Exception ex = new Exception("Event ID-" + eventID + "-Type-" + type);                
                 LoggingHelper helper = LoggingHelper.Instance;
                 helper.LogError("CancerGovSpecific", errString, NCIErrorLevel.Error, ex);
 
