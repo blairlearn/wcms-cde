@@ -58,7 +58,7 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 //footnotes = "<BR><BR><a name=\"" + title + "\"></a><h2>" + title + "</h2><P>";
                 footnotes += "<table border=\"0\" cellspacing=\"2\" cellpadding=\"0\">\n";
-                footnotes += "<caption align=\"left\"><a name=\"" + title + "\"></a><h2>" + title + "</h2></caption>";
+                footnotes += "<tr><td align=\"left\" colspan=\"2\"><a name=\"" + title + "\"></a><h2>" + title + "</h2></td></tr>";
 
 
                 for (int i = 0; i < tableofLinks.Count; i++)
