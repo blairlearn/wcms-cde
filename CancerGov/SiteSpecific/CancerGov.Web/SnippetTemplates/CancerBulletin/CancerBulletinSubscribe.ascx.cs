@@ -12,6 +12,7 @@ using System.Configuration;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using NCI.Logging;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
@@ -638,6 +639,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 "Error",
                                 "There was an error processing your request<br/>"
                                 );
+
+                            NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleConfirmation", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
+
                         }
                     }
                 }
