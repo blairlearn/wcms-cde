@@ -8,7 +8,7 @@ using System.Configuration;
 using NCI.Web.CancerGov.Apps;
 using CancerGovCommon.Modules;
 using NCI.Web.CDE.Modules;
-
+using NCI.Logging;
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
     public partial class CancerBulletinUnSubscribe : AppsBaseUserControl
@@ -81,6 +81,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 strInfo = "Database Error";
                                 strHeader = "Sorry, Database Error";
                                 tblFeedback.Visible = false;
+                                NCI.Logging.Logger.LogError("CancerBulletinUnSubscribe:pageload", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
+
+
                             }
                         }
                         scEmail.Connection.Close();

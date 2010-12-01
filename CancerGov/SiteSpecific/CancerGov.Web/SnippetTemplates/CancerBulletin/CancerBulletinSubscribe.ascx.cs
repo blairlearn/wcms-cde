@@ -565,6 +565,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         "Error",
                         "There was an error processing your request<br/>"
                         );
+
+                    NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleSurvey", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
+
                 }
             }
             else
@@ -629,6 +632,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 "Address Already Confirmed",
                                 "Address Already Confirmed<br/>"
                                 );
+
                         }
                         else
                         {
@@ -716,7 +720,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 "Error",
                                 "There was an error processing your request"
                                 );
-                            //TODO: Log error because failed to get user ID
+
                         }
                     }
                     catch (System.Data.SqlClient.SqlException sqlE)
@@ -739,7 +743,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 "Error",
                                 "There was an error processing your request"
                                 );
-                            //TODO: Log SQLError
+                            
+                            NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleInitialSubscription", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
+
                         }
                     }
                 }
