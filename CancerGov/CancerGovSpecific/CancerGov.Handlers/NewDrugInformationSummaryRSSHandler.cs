@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using CDR.Common;
 using CancerGov.CDR.ClinicalTrials;
 using NCI.Util;
-using System.Xml;
-using System.Configuration;
 using Argotic.Syndication;
+using System.Configuration;
+using System.Xml;
 
 namespace CancerGov.Handlers
 {
-    public class NewProtocolRSSHandler : IHttpHandler
+    public class NewDrugInformationSummaryRSSHandler : IHttpHandler
     {
 
-        const int DEFAULT_MAXIMUM_RETURNCOUNT = 40;
+        const int DEFAULT_MAXIMUM_RETURNCOUNT = 20;
+        const NewOrUpdateStatus DEFAULT_NEW_OR_UPDATED = NewOrUpdateStatus.Both;
 
         #region IHttpHandler Members
 
@@ -46,13 +48,12 @@ namespace CancerGov.Handlers
 
         #endregion
 
-
         /// <summary>
         /// Helper method to create an RSS from a list of clinical trials (protocols).
         /// </summary>
         /// <param name="response">The HTTP response for writing the feed to.</param>
         /// <param name="triallist">List of clinical trials.</param>
-
+        
         private void RenderRSSFeed(HttpResponse response, List<ClinicalTrialInfo> triallist)
         {
             RssFeed feed = new RssFeed();
@@ -72,7 +73,7 @@ namespace CancerGov.Handlers
             {
                 foreach (ClinicalTrialInfo trial in triallist)
                 {
-                    RssItem item = new RssItem(); 
+                    RssItem item = new RssItem();
 
                     item.Title = trial.HealthProfessionalTitle;
                     item.Description = trial.Description;
@@ -106,7 +107,7 @@ namespace CancerGov.Handlers
             response.Cache.SetCacheability(HttpCacheability.Public);
 
             response.End();
-        }        
+        }
 
     }
 }

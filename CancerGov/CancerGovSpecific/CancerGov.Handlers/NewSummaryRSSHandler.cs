@@ -12,7 +12,7 @@ using Argotic.Syndication;
 
 namespace CancerGov.Handlers
 {
-    class NewSummaryRSSHandler : IHttpHandler
+    public class NewSummaryRSSHandler : IHttpHandler
     {
 
         const int DEFAULT_MAXIMUM_RETURNCOUNT = 20;

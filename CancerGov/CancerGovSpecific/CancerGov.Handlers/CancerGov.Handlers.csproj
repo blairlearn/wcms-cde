@@ -42,6 +42,7 @@
   -->
   <ItemGroup>
     <Compile Include="ClinicalTrialsLinkHandler.cs" />
+    <Compile Include="NewDrugInformationSummaryRSSHandler.cs" />
     <Compile Include="NewProtocolRSSHandler.cs" />
     <Compile Include="NewSummaryRSSHandler.cs" />
   </ItemGroup>
