@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using NCI.Web.CDE.UI;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class EmergencyErrorMessage : System.Web.UI.UserControl
+    public partial class EmergencyErrorMessage : SnippetControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {

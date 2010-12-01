@@ -15,7 +15,7 @@ using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 
-namespace NCI.Web.CancerGov.Apps
+namespace NCI.Web.TCGA.Apps
 {
     public class AppsBaseUserControl : SnippetControl
     {
