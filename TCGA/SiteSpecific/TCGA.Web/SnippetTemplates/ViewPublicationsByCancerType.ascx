@@ -11,13 +11,24 @@
     <asp:DropDownList CssClass="ddlCancerType" runat="server" ID="ddlCancerType" Width="600px">
     </asp:DropDownList>
     <p>
-        TCGA Research Network</p>
+        * TCGA Research Network</p>
     <asp:Repeater runat="server" ID="rptPublicationResults">
         <ItemTemplate>
-            <div>
-                <p>
-                    Description<a class="pubLink" href="">Link Title</a></p>
+            <div class="citation">
+            #if($inNetwork == "true")##
+            * ##
+            #end##
+            #field("bodyfield")##
+             (##
+            #displaydatefieldalt("publication_date" "yyyy" "")##
+            ) ##
+            #field("journal_title"). ##
+            #if($associatedLink != "")##
+            GetAssociatedLink()
+            <a href="#field("associated_link")">#field("link_title")</a>##
+            #end##
             </div>
+        
         </ItemTemplate>
     </asp:Repeater>
 </div>

@@ -123,7 +123,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="App_GlobalResources\" />
     <Folder Include="App_LocalResources\" />
-    <Folder Include="Common\" />
+    <Folder Include="Common\Configuration\" />
     <Folder Include="JS\" />
     <Folder Include="UserControls\" />
   </ItemGroup>
