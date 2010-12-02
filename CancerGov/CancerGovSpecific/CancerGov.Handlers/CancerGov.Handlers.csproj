@@ -85,6 +85,10 @@
       <Project>{0614DB16-1CB1-40E7-BAE8-112E3A290331}</Project>
       <Name>CDR.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CDR.DrugInformationSummary\CDR.DrugInformationSummary.csproj">
+      <Project>{9F0C47FE-B1FC-4C82-8FAC-89400CBC3830}</Project>
+      <Name>CDR.DrugInformationSummary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CDR.Summary\CDR.Summary.csproj">
       <Project>{32A3E812-40FA-49F5-8B7A-962AAAE8E2EE}</Project>
       <Name>CDR.Summary</Name>

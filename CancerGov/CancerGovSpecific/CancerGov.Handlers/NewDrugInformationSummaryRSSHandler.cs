@@ -9,6 +9,7 @@ using NCI.Util;
 using Argotic.Syndication;
 using System.Configuration;
 using System.Xml;
+using CDR.DrugInformationSummary;
 
 namespace CancerGov.Handlers
 {
@@ -27,15 +28,18 @@ namespace CancerGov.Handlers
 
         public void ProcessRequest(HttpContext context)
         {
-            List<ClinicalTrialInfo> trials = null;
+            List<DrugInformationSummaryInfo> summaries = null;
 
             try
             {
-                // Get the list of protocols and pass off to rendering.
+                // Retrieve RSS parameters
                 int NumItems = Strings.ToInt(context.Request.Params["NumItems"], DEFAULT_MAXIMUM_RETURNCOUNT);
+                NewOrUpdateStatus newOrUpdated =
+                    ConvertEnum<NewOrUpdateStatus>.Convert(Strings.Clean(context.Request.Params["NewOrUpdated"]), DEFAULT_NEW_OR_UPDATED);
 
-                ClinicalTrialManager manager = new ClinicalTrialManager();
-                trials = manager.LoadNewAndActiveProtocols(NumItems);
+                // Get the list of drug information summaries and pass off to rendering.
+                DrugInformationSummaryManager manager = new DrugInformationSummaryManager();
+                summaries = manager.LoadNewOrUpdatedDrugInformationSummaries(NumItems, newOrUpdated);
             }
             catch (Exception ex)
             {
@@ -43,57 +47,48 @@ namespace CancerGov.Handlers
             }
 
             // Write the Feed data
-            RenderRSSFeed(context.Response, trials);
+            RenderRSSFeed(context.Response, summaries);
         }
 
         #endregion
 
         /// <summary>
-        /// Helper method to create an RSS from a list of clinical trials (protocols).
+        /// Helper method to create an RSS from a list of summaries.
         /// </summary>
         /// <param name="response">The HTTP response for writing the feed to.</param>
-        /// <param name="triallist">List of clinical trials.</param>
-        
-        private void RenderRSSFeed(HttpResponse response, List<ClinicalTrialInfo> triallist)
+        /// <param name="summaryList">List of summaries.</param>
+
+        private void RenderRSSFeed(HttpResponse response, List<DrugInformationSummaryInfo> summaryList)
         {
             RssFeed feed = new RssFeed();
             string siteURL = ConfigurationManager.AppSettings["RootUrl"].ToString();
             if (!string.IsNullOrEmpty(siteURL))
                 siteURL = siteURL.Trim();
-            if (!siteURL.EndsWith("/"))
-                siteURL += "/";
 
             // RSS Feed header material.
             feed.Channel.Link = new Uri(siteURL);
-            feed.Channel.Title = "NCI Clinical Trials";
-            feed.Channel.Description = "NCI Clinical Trials";
+            feed.Channel.Title = "NCI Drug Information Sumamries";
+            feed.Channel.Description = "NCI Drug Information Sumamries";
 
-            // Turn the individual trials into RSS items.
-            if (triallist != null)
+            // Turn the individual summaries into RSS items.
+            if (summaryList != null)
             {
-                foreach (ClinicalTrialInfo trial in triallist)
+                summaryList.ForEach(summary =>
                 {
                     RssItem item = new RssItem();
 
-                    item.Title = trial.HealthProfessionalTitle;
-                    item.Description = trial.Description;
-                    item.PublicationDate = trial.PublicationDate.ToUniversalTime();
+                    // Pretty URL always starts with a /.
+                    string url = siteURL + summary.PrettyUrl;
 
-                    // Build a link to the protocol's pretty URL.
-                    if (!string.IsNullOrEmpty(siteURL) && !string.IsNullOrEmpty(trial.PrettyUrlID))
-                    {
-                        // After being retrieved, siteURL is already guaranteed to end with a / (see above).
-                        string url = siteURL
-                            + "clinicaltrials/"
-                            + trial.PrettyUrlID;
+                    item.Title = summary.Title;
+                    item.Description = summary.Description;
+                    item.PublicationDate = summary.PublicationDate.ToUniversalTime();
+
+                    if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
                         item.Link = new Uri(url);
-                    }
-
-                    // Add categories to the RSS item.
-                    trial.Categories.ForEach(category => item.Categories.Add(new RssCategory(category)));
 
                     feed.Channel.AddItem(item);
-                }
+                });
             }
 
             // Write the RSS to the response output.
