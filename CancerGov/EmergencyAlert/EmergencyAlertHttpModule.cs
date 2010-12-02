@@ -53,7 +53,7 @@ namespace CancerGov.EmergencyAlert
                 {
                     //check to see if this is the emergency url. Note since the emergency page is a flat
                     //aspx, it will not be a prettyURL and therefore not rewritten.
-                    if (currContext.Request.Path != context.EmergencyUrl)
+                    if (currContext.Request.RawUrl.ToLower() != context.EmergencyUrl.ToLower())
                         currContext.Response.Redirect(context.EmergencyUrl, true);
                 }
             }
