@@ -97,6 +97,10 @@
     <Content Include="PageTemplates\DefaultTCGAPageTemplate.aspx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\ViewPublicationsByCancerType.ascx" />
+    <Content Include="..\..\..\..\Common\CDE_XML\CDESchema.xsd">
+      <Link>Schema\CDESchema.xsd</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -114,9 +118,6 @@
     <Compile Include="SnippetTemplates\ViewPublicationsByCancerType.ascx.designer.cs">
       <DependentUpon>ViewPublicationsByCancerType.ascx</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Schema\CDESchema.xsd" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
