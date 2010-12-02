@@ -33,13 +33,11 @@
 <div id="container">
     <!-- Content -->
     <div id="content">
-    <div class="one-column-with-right-nav">
     <NCI:TemplateSlot ID="tcgaSlotBodyTop" runat="server" />
     <NCI:TemplateSlot ID="tcgaSlotImageCaption" runat="server" CssClass="content-sidebox" />
     <NCI:TemplateSlot ID="tcgaSlotBody" runat="server" />
     <NCI:TemplateSlot ID="tcgaSlotCitation" runat="server" />
     <NCI:TemplateSlot ID="tcgaSlotBodyBottom" runat="server" />
-    </div>
     </div>
     <!-- END Content -->
     <!-- Sidebar -->
