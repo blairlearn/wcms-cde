@@ -39,12 +39,7 @@
     <NCI:TemplateSlot ID="tcgaSlotCitation" runat="server" />
     <NCI:TemplateSlot ID="tcgaSlotBodyBottom" runat="server" />
     </div>
-    <!-- END Content -->
-    <!-- Sidebar -->
-	<div id="sidebar">
-	<NCI:TemplateSlot ID="tcgaSlotRightNav" runat="server"  />
-	</div>
-	<!-- END Sidebar -->
+    <!-- END Content --> 
 </div>
 <!-- END Container for Content and Sidebar -->
 <!-- Footer -->
