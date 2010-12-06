@@ -23,7 +23,7 @@ namespace CancerGov.CDR.ClinicalTrials
 
         public ClinicalTrialQuery()
         {
-            CdrDbConnectionString = ConfigurationManager.AppSettings["CDRDbConnectionString"];
+            CdrDbConnectionString = ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString;
         }
 
         #endregion

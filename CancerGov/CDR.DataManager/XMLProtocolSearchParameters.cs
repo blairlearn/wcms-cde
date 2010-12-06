@@ -153,7 +153,7 @@ namespace CancerGov.CDR.DataManager
 			SqlDataAdapter daParams = null;
 
 			try {
-				daParams = new SqlDataAdapter("usp_GetProtocolSearchParamsID",ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                daParams = new SqlDataAdapter("usp_GetProtocolSearchParamsID", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
 				daParams.SelectCommand.CommandType = CommandType.StoredProcedure;
 				daParams.SelectCommand.Parameters.Add("@ProtocolSearchID",iProtocolSearchID);
 

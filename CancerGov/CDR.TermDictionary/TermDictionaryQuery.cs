@@ -46,7 +46,7 @@ namespace CancerGov.CDR.TermDictionary
             {
                 // Query the database and get the results
                 dt = SqlHelper.ExecuteDatatable(
-                    ConfigurationManager.AppSettings["CDRDbConnectionString"],
+                    ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
                     CommandType.StoredProcedure,
                     "usp_GetGlossary",
                     parms);
@@ -119,7 +119,7 @@ namespace CancerGov.CDR.TermDictionary
             {
                 // Query the database and get the results
                 dt = SqlHelper.ExecuteDatatable(
-                    ConfigurationManager.AppSettings["CDRDbConnectionString"],
+                    ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
                     CommandType.StoredProcedure,
                     "usp_GetGlossaryTermNeighbors",
                     parms);
@@ -183,7 +183,7 @@ namespace CancerGov.CDR.TermDictionary
             {
                 // Query the database and get the results
                 dt = SqlHelper.ExecuteDatatable(
-                    ConfigurationManager.AppSettings["CDRDbConnectionString"],
+                    ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
                     CommandType.StoredProcedure,
                     "usp_GetGlossaryDefinition",
                     parms);
@@ -216,7 +216,7 @@ namespace CancerGov.CDR.TermDictionary
             ArrayList returnvalue = new ArrayList(3);
             //string version = (pdqVersion == PDQVersion.HealthProfessional) ? "Health Professional" : "Patient";
             string version = pdqVersion;
-            SqlConnection dbh = new SqlConnection(ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+            SqlConnection dbh = new SqlConnection(ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
             SqlCommand sth = new SqlCommand("usp_GetGlossaryDefinition", dbh);
             sth.CommandType = CommandType.StoredProcedure;
 

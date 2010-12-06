@@ -22,7 +22,7 @@ namespace CDR.Summary
 
         public SummaryQuery()
         {
-            CdrDbConnectionString = ConfigurationManager.AppSettings["CDRDbConnectionString"];
+            CdrDbConnectionString = ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString;
         }
 
         #endregion

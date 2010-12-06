@@ -71,7 +71,7 @@ namespace CancerGov.UI
                 myReader.Close();
                 myConnection.Close();
 
-                SqlConnection myConnection1 = new SqlConnection(ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                SqlConnection myConnection1 = new SqlConnection(ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
 
                 SqlCommand myCommand1 = new SqlCommand("usp_GetSummaryURLSection", myConnection1);
 

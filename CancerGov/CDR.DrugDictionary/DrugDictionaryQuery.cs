@@ -51,7 +51,7 @@ namespace CancerGov.CDR.DrugDictionary
             {
                 // Query the database and get the results
                 dt = SqlHelper.ExecuteDatatable(
-                    ConfigurationManager.AppSettings["CDRDbConnectionString"],
+                    ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
                     CommandType.StoredProcedure,
                     "usp_TermDD_GetMatchingTerms",
                     parms);
@@ -102,7 +102,7 @@ namespace CancerGov.CDR.DrugDictionary
             {
                 // Query the database and get the results
                 dt = SqlHelper.ExecuteDatatable(
-                    ConfigurationManager.AppSettings["CDRDbConnectionString"],
+                    ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
                     CommandType.StoredProcedure,
                     "usp_getDrugTermName",
                     parms);
@@ -146,7 +146,7 @@ namespace CancerGov.CDR.DrugDictionary
             {
                 // Query the database and get the results
                 ds = SqlHelper.ExecuteDataset(
-                    ConfigurationManager.AppSettings["CDRDbConnectionString"],
+                    ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
                     CommandType.StoredProcedure,
                     "usp_TermDD_GetTermDefinition",
                     parms);
@@ -196,7 +196,7 @@ namespace CancerGov.CDR.DrugDictionary
             {
                 // Query the database and get the results
                 dt = SqlHelper.ExecuteDatatable(
-                    ConfigurationManager.AppSettings["CDRDbConnectionString"],
+                    ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
                     CommandType.StoredProcedure,
                     "usp_TermDD_GetTermNeighbors",
                     parms);

@@ -25,7 +25,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
         public CTSearchQuery()
         {
-            _cdrDbConnectionString = ConfigurationManager.AppSettings["CDRDbConnectionString"];
+            _cdrDbConnectionString = ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString;
         }
 
         #endregion
@@ -393,7 +393,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
             try
             {
-                daCancerTypes = new SqlDataAdapter("usp_GetMenuTypeInformation", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                daCancerTypes = new SqlDataAdapter("usp_GetMenuTypeInformation", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 daCancerTypes.SelectCommand.CommandType = CommandType.StoredProcedure;
                 daCancerTypes.SelectCommand.Parameters.Add(new SqlParameter("@MenuTypeID", (int)CDRMenuTypes.CancerTypes));
                 daCancerTypes.SelectCommand.Parameters.Add(new SqlParameter("@ParentID", DBNull.Value));
@@ -429,7 +429,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
                 try
                 {
-                    daCancerStages = new SqlDataAdapter("usp_GetMenuTypeInformation", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                    daCancerStages = new SqlDataAdapter("usp_GetMenuTypeInformation", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                     daCancerStages.SelectCommand.CommandType = CommandType.StoredProcedure;
                     daCancerStages.SelectCommand.Parameters.Add(new SqlParameter("@MenuTypeID", (int)CDRMenuTypes.CancerTypes));
                     daCancerStages.SelectCommand.Parameters.Add(new SqlParameter("@ParentID", cancerTypeID));
@@ -463,7 +463,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
             try
             {
-                daStatesAndCountries = new SqlDataAdapter("usp_GetProtocolCountryState", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                daStatesAndCountries = new SqlDataAdapter("usp_GetProtocolCountryState", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 daStatesAndCountries.SelectCommand.CommandType = CommandType.StoredProcedure;
 
                 daStatesAndCountries.Fill(dtStatesAndCountries);
@@ -491,7 +491,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
             try
             {
-                daTrialTypes = new SqlDataAdapter("usp_getTrialTypeManualList", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                daTrialTypes = new SqlDataAdapter("usp_getTrialTypeManualList", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 daTrialTypes.SelectCommand.CommandType = CommandType.StoredProcedure;
 
                 daTrialTypes.Fill(dtTrialTypes);
@@ -534,7 +534,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
             try
             {
-                daSponsors = new SqlDataAdapter("usp_GetProtocolSponsors", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                daSponsors = new SqlDataAdapter("usp_GetProtocolSponsors", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 daSponsors.SelectCommand.CommandType = CommandType.StoredProcedure;
 
                 daSponsors.Fill(dtSponsors);
@@ -564,7 +564,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
             try
             {
-                daSpecialCategories = new SqlDataAdapter("usp_GetProtocolSpecialCategory", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                daSpecialCategories = new SqlDataAdapter("usp_GetProtocolSpecialCategory", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 daSpecialCategories.SelectCommand.CommandType = CommandType.StoredProcedure;
 
                 daSpecialCategories.Fill(dtSpecialCategories);

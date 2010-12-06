@@ -175,7 +175,7 @@ namespace CancerGov.Common.Extraction
 				
 				commandText = "usp_GetGlossaryTerms " + commandText;
 
-				SqlDataAdapter dbAdapter = new SqlDataAdapter(commandText, ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                SqlDataAdapter dbAdapter = new SqlDataAdapter(commandText, ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
 				DataTable dbTable = new DataTable();
 
 				try
@@ -297,7 +297,7 @@ namespace CancerGov.Common.Extraction
 
                 commandText = "usp_GetGlossaryTerms " + commandText;
 
-                SqlDataAdapter dbAdapter = new SqlDataAdapter(commandText, ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                SqlDataAdapter dbAdapter = new SqlDataAdapter(commandText, ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 DataTable dbTable = new DataTable();
 
                 try

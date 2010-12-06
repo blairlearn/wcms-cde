@@ -267,7 +267,7 @@ namespace CancerGov.CDR.DataManager
 			//Fill the data set
 			try {
 				//11-23-2004 BryanP: SCR1002 Changed the database object fetching from adhoc to stored proc. 
-				daProtocol = new SqlDataAdapter("usp_GetProtocolByProtocolID", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                daProtocol = new SqlDataAdapter("usp_GetProtocolByProtocolID", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
 				daProtocol.SelectCommand.CommandType = CommandType.StoredProcedure;
 				daProtocol.SelectCommand.CommandTimeout = Strings.ToInt(ConfigurationSettings.AppSettings["CTSearchTimeout"]);
 				daProtocol.SelectCommand.Parameters.Add(new SqlParameter("@ProtocolID", iProtocolID));

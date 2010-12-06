@@ -40,7 +40,7 @@ namespace CancerGov.CDR.DataManager
 
             try
             {
-                dbAdapter = new SqlDataAdapter("usp_GetProtocolInstitutions", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter = new SqlDataAdapter("usp_GetProtocolInstitutions", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 dbAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 dbAdapter.SelectCommand.Parameters.Add("@Keyword", keyword);
 
@@ -80,7 +80,7 @@ namespace CancerGov.CDR.DataManager
 
             try
             {
-                dbAdapter = new SqlDataAdapter("usp_GetProtocolLeadOrganizations", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter = new SqlDataAdapter("usp_GetProtocolLeadOrganizations", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 dbAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 dbAdapter.SelectCommand.Parameters.Add("@Keyword", keyword);
 
@@ -111,7 +111,7 @@ namespace CancerGov.CDR.DataManager
 
             try
             {
-                dbAdapter = new SqlDataAdapter("usp_GetProtocolInvestigators", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter = new SqlDataAdapter("usp_GetProtocolInvestigators", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 dbAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 dbAdapter.SelectCommand.Parameters.Add("@Keyword", keyword);
                 dbAdapter.SelectCommand.Parameters.Add("@LookupMethod", lookupMethod);
@@ -142,7 +142,7 @@ namespace CancerGov.CDR.DataManager
 
             try
             {
-                dbAdapter = new SqlDataAdapter("usp_GetInterventions", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter = new SqlDataAdapter("usp_GetInterventions", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 dbAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 dbAdapter.SelectCommand.Parameters.Add("@Match", keyword);
                 //dbAdapter.SelectCommand.Parameters.Add("@LookupMethod", lookupMethod);
@@ -182,7 +182,7 @@ namespace CancerGov.CDR.DataManager
 
             try
             {
-                dbAdapter = new SqlDataAdapter("usp_GetProtocolDrugs", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter = new SqlDataAdapter("usp_GetProtocolDrugs", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 dbAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 dbAdapter.SelectCommand.Parameters.Add("@Keyword", keyword);
 

@@ -48,7 +48,7 @@ namespace CancerGov.CDR.DataManager
 
 			try {
 				//11-23-2004 BryanP: SCR1002 Changed the database object fetching from adhoc to stored proc. 
-				dbAdapter = new SqlDataAdapter("usp_GetCDRDocumentXml", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter = new SqlDataAdapter("usp_GetCDRDocumentXml", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 dbAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                 dbAdapter.SelectCommand.Parameters.Add(new SqlParameter("@DocumentId", documentId));
 				dbAdapter.Fill(dbTable);
@@ -86,7 +86,7 @@ namespace CancerGov.CDR.DataManager
 			SqlDataAdapter sqlAdapter = null;
 						
 			try {
-				sqlAdapter = new SqlDataAdapter("usp_GetCacheDocument",ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                sqlAdapter = new SqlDataAdapter("usp_GetCacheDocument", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
 				sqlAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 				sqlAdapter.SelectCommand.Parameters.Add(new SqlParameter("@DocumentID", documentId));
 
@@ -150,7 +150,7 @@ namespace CancerGov.CDR.DataManager
 						try {
 							//11-23-2004 BryanP: SCR1002 Changed the database object fetching from adhoc to stored proc. 
 							sqlCommand = new SqlCommand("usp_InsertCacheDocument");
-							sqlCommand.Connection = new SqlConnection(ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                            sqlCommand.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
 							sqlCommand.CommandType = CommandType.StoredProcedure;
 
 							SqlParameter sqlParam = null;
@@ -199,7 +199,7 @@ namespace CancerGov.CDR.DataManager
             SqlDataAdapter dbAdapter = null;
             try
             {
-                dbAdapter = new SqlDataAdapter("Select ShortName + ' - ' + ISNULL(FullName, ShortName) AS Name, ShortName AS StateAbbr From PoliticalSubUnit WHERE ShortName IS NOT NULL AND CountryName = 'U.S.A.' AND ShortName <> 'AS' Order By ShortName", ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter = new SqlDataAdapter("Select ShortName + ' - ' + ISNULL(FullName, ShortName) AS Name, ShortName AS StateAbbr From PoliticalSubUnit WHERE ShortName IS NOT NULL AND CountryName = 'U.S.A.' AND ShortName <> 'AS' Order By ShortName", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 dbAdapter.Fill(dbSet, "States");
                 dbAdapter.SelectCommand.CommandText = "Select FamilyCancerSyndrome, FamilyCancerSyndrome + ';' + CONVERT(varchar,FamilyCancerSyndromeListID) AS Value From GenProfFamilyCancerSyndromeList Order By FamilyCancerSyndrome";
                 dbAdapter.Fill(dbSet, "CancerFamily");
@@ -243,7 +243,7 @@ namespace CancerGov.CDR.DataManager
             SqlDataAdapter dbAdapter = null;
             try
             {
-                dbAdapter = new SqlDataAdapter(commandText, ConfigurationSettings.AppSettings["CDRDbConnectionString"]);
+                dbAdapter = new SqlDataAdapter(commandText, ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
                 dbAdapter.Fill(dbTable);
             }
             catch (SqlException sqlE)
