@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2E572059-B868-45B5-AD56-DB8687EF4DD6}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -110,6 +110,48 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SiteWideSearch.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_dictionary.aspx.cs">
+      <DependentUpon>arch_dictionary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_dictionary.aspx.designer.cs">
+      <DependentUpon>arch_dictionary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_drugdictionary.aspx.cs">
+      <DependentUpon>arch_drugdictionary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_drugdictionary.aspx.designer.cs">
+      <DependentUpon>arch_drugdictionary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_druginfosummaries.aspx.cs">
+      <DependentUpon>arch_druginfosummaries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_druginfosummaries.aspx.designer.cs">
+      <DependentUpon>arch_druginfosummaries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_protocols.aspx.cs">
+      <DependentUpon>arch_protocols.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_protocols.aspx.designer.cs">
+      <DependentUpon>arch_protocols.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_summaries.aspx.cs">
+      <DependentUpon>arch_summaries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_summaries.aspx.designer.cs">
+      <DependentUpon>arch_summaries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\FormEmailer.aspx.cs">
@@ -450,6 +492,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Archive\arch_dictionary.aspx" />
+    <Content Include="Archive\arch_drugdictionary.aspx" />
+    <Content Include="Archive\arch_druginfosummaries.aspx" />
+    <Content Include="Archive\arch_protocols.aspx" />
+    <Content Include="Archive\arch_summaries.aspx" />
+    <Content Include="Archive\index.aspx" />
     <Content Include="Common\PopUps\CTLSearch\blank.htm" />
     <Content Include="Common\PopUps\CTLSearch\CTLookup.aspx" />
     <Content Include="Common\PopUps\CTLSearch\CTLookupResults.aspx" />
@@ -504,6 +552,22 @@
     <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
     <Content Include="TermDictionary.svc" />
     <Content Include="UserControls\CTCustomSelection.ascx" />
+    <EmbeddedResource Include="Archive\arch_dictionary.aspx.resx">
+      <DependentUpon>arch_dictionary.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Archive\arch_protocols.aspx.resx">
+      <DependentUpon>arch_protocols.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Archive\arch_summaries.aspx.resx">
+      <DependentUpon>arch_summaries.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Archive\index.aspx.resx">
+      <DependentUpon>index.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
       <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -549,9 +613,6 @@
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2222</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
