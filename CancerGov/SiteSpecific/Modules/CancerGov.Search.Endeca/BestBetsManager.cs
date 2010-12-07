@@ -102,7 +102,7 @@ namespace CancerGov.Modules.Search.Endeca
         private static DataTable GetListFromDB(Guid listID)
         {
             DataTable dt = new DataTable();
-            using (SqlConnection conn = new SqlConnection(ConfigurationManager.AppSettings["DbConnectionString"]))
+            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("dbo.usp_GetBestBetsByListId", conn))
                 {

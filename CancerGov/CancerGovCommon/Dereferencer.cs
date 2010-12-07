@@ -109,7 +109,7 @@ namespace CancerGov.Common
 
 						SqlDataAdapter imgAdapter = null;
 						try {
-							imgAdapter = new SqlDataAdapter("usp_GetImageViewObject", ConfigurationSettings.AppSettings["DbConnectionString"]);
+                            imgAdapter = new SqlDataAdapter("usp_GetImageViewObject", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 							imgAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 							imgAdapter.SelectCommand.Parameters.Add("@ImageName",refHash["imagename"].ToString());
 							imgAdapter.Fill(objTable);
@@ -232,7 +232,7 @@ namespace CancerGov.Common
 								SqlDataAdapter daDates = null;
 								//Grab all types of dates out of the db
 								try {
-									daDates = new SqlDataAdapter("usp_GetViewDates", ConfigurationSettings.AppSettings["DbConnectionString"]);
+                                    daDates = new SqlDataAdapter("usp_GetViewDates", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 
 									daDates.SelectCommand.CommandType = CommandType.StoredProcedure;
 									daDates.SelectCommand.Parameters.Add("@ViewID", viewId);
@@ -549,7 +549,7 @@ namespace CancerGov.Common
 								
 								//Get the name of the print template
 
-								SqlConnection scnPrint = new SqlConnection(ConfigurationSettings.AppSettings["DbConnectionString"]);
+                                SqlConnection scnPrint = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 								SqlCommand scPrint = new SqlCommand("usp_GetPrintTemplate @viewid='" + viewId + "'",scnPrint);
 								
 								string strPrintTemplate = "";
@@ -633,7 +633,7 @@ namespace CancerGov.Common
 
 						if (Functions.IsGuid(viewId)) 
 						{
-							string strConnString = System.Configuration.ConfigurationSettings.AppSettings["DbConnectionString"];
+                            string strConnString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
 
 							System.Data.SqlClient.SqlConnection scnComment = new System.Data.SqlClient.SqlConnection(strConnString);
 							System.Data.SqlClient.SqlCommand scComment = new System.Data.SqlClient.SqlCommand();

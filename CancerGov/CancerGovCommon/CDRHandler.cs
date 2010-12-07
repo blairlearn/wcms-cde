@@ -51,7 +51,7 @@ namespace CancerGov.UI
             Guid summaryID = Guid.Empty;
             try
             {
-                SqlConnection myConnection = new SqlConnection(ConfigurationSettings.AppSettings["DbConnectionString"]);
+                SqlConnection myConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 
                 SqlCommand myCommand = new SqlCommand("usp_GetSummaryRealURL", myConnection);
 

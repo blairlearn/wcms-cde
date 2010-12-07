@@ -14,7 +14,7 @@ namespace CancerGov.DataManager
     {
         static public void AddComments(string comments, string commentType)
         {
-            string connString = ConfigurationSettings.AppSettings["DbConnectionString"];
+            string connString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
 
             if (!string.IsNullOrEmpty(connString))
             {

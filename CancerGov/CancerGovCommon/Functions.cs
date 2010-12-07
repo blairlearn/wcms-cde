@@ -51,7 +51,7 @@ namespace CancerGov.Common {
 		{
 			try 
 			{
-                using (SqlConnection conn = new SqlConnection(ConfigurationSettings.AppSettings["DbConnectionString"]))
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString))
                 {
                     using (SqlCommand cmd = new SqlCommand("usp_LogClick", conn))
                     {
@@ -114,7 +114,7 @@ namespace CancerGov.Common {
 
 			if(Functions.IsGuid(viewId)) {
 				DataTable dbTable = new DataTable();
-				SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewProperties @ViewID='" + viewId + "', @PropertyName='" + property + "'", ConfigurationSettings.AppSettings["DbConnectionString"]);
+                SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewProperties @ViewID='" + viewId + "', @PropertyName='" + property + "'", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 			
 				try {
 					dbAdapter.Fill(dbTable);
@@ -148,7 +148,7 @@ namespace CancerGov.Common {
 		public static string GetViewProperty(string viewId, string property) {
 			string propertyValue = "";
 			DataTable dbTable = new DataTable();
-			SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewProperties @ViewID='" + viewId + "', @PropertyName='" + property + "'", ConfigurationSettings.AppSettings["DbConnectionString"]);
+            SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewProperties @ViewID='" + viewId + "', @PropertyName='" + property + "'", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 			
 			try {
 				dbAdapter.Fill(dbTable);
@@ -175,7 +175,7 @@ namespace CancerGov.Common {
 						
 			try 
 			{
-				SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewProperties  @ViewID='" + viewId + "'", ConfigurationSettings.AppSettings["DbConnectionString"]);
+                SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewProperties  @ViewID='" + viewId + "'", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 				dbAdapter.Fill(dbTable);
 			}
 			catch(SqlException sqlE) 
@@ -208,7 +208,7 @@ namespace CancerGov.Common {
 		{
 			string propertyValue = "";
 			DataTable dbTable = new DataTable();
-			SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewObjectProperties  @ViewObjectID='" + viewObjectId + "', @PropertyName='" + property + "'", ConfigurationSettings.AppSettings["DbConnectionString"]);
+            SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewObjectProperties  @ViewObjectID='" + viewObjectId + "', @PropertyName='" + property + "'", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 			
 			try 
 			{
@@ -239,7 +239,7 @@ namespace CancerGov.Common {
 						
 			try 
 			{
-				SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewObjectProperties  @ViewObjectID='" + viewObjectId + "'", ConfigurationSettings.AppSettings["DbConnectionString"]);
+                SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetViewObjectProperties  @ViewObjectID='" + viewObjectId + "'", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 				dbAdapter.Fill(dbTable);
 			}
 			catch(SqlException sqlE) 

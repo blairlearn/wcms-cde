@@ -31,7 +31,7 @@ namespace CancerGov.DataAccessClasses.UI
 			SqlDataAdapter dbAdapter = null;
 
 			try {
-				dbAdapter = new SqlDataAdapter("usp_GetImageViewObject", ConfigurationSettings.AppSettings["DbConnectionString"]);
+                dbAdapter = new SqlDataAdapter("usp_GetImageViewObject", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 				dbAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 				dbAdapter.SelectCommand.Parameters.Add("@ImageName",imageName);
 				dbAdapter.Fill(dbTable);
@@ -64,7 +64,7 @@ namespace CancerGov.DataAccessClasses.UI
 			SqlDataAdapter dbAdapter = null;
 
 			try {
-				dbAdapter = new SqlDataAdapter("usp_GetImage", ConfigurationSettings.AppSettings["DbConnectionString"]);
+                dbAdapter = new SqlDataAdapter("usp_GetImage", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 				dbAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 				dbAdapter.SelectCommand.Parameters.Add("@ImageID",gImageID);
 				dbAdapter.Fill(dbTable);

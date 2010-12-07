@@ -50,7 +50,7 @@ namespace NCI.DataManager
                 ICollection<SearchResult> searchResults = new Collection<SearchResult>();
                 actualMaxResult = 0;
 
-                string connString = ConfigurationSettings.AppSettings["DbConnectionString"];
+                string connString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
                 
                 if (!string.IsNullOrEmpty(connString))
                 {

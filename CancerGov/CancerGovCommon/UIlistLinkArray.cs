@@ -295,7 +295,7 @@ namespace CancerGov.Common
 
 				try
 				{
-					SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetListItems @ListId='" + listId + "'", ConfigurationSettings.AppSettings["DbConnectionString"]);
+                    SqlDataAdapter dbAdapter = new SqlDataAdapter("usp_GetListItems @ListId='" + listId + "'", ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString);
 					dbAdapter.Fill(dbTable);
 				}
 				catch(SqlException sqlE)
