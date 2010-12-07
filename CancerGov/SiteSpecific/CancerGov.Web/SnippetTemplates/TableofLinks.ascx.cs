@@ -60,19 +60,12 @@ namespace CancerGov.Web.SnippetTemplates
                 {   
                     data = slot.SnippetInfo.Data;
                     data = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, data);
-                    slot.SnippetInfo.Data = data;                    
                     if (fe.hashIndex.Count >= 1)                    {
 
                         tableofLinksHash.AddRange(fe.hashIndex);
                     }
 
-                    foreach (LiteralControl lit in Page.FindControlByType<LiteralControl>())
-                    {
-                        if(lit.ClientID.Contains(slot.ClientID))
-                        {
-                            lit.Text=data;
-                        }
-                    }
+                    slot.HtmlData = data;
 
                 }
             }

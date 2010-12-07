@@ -19,13 +19,25 @@ namespace NCI.Web.CDE.UI.SnippetControls
     [ToolboxData("<{0}:GenericHtmlContentSnippet runat=server></{0}:GenericHtmlContentSnippet>")]
     public class GenericHtmlContentSnippet : SnippetControl
     {
+        string _htmlData = String.Empty;
+
+        public string HtmlData
+        {
+            get { return _htmlData; }
+            set { _htmlData = value; }
+        }
+
         public void Page_Load(object sender, EventArgs e)
         {
+            HtmlData = SnippetInfo.Data;
+        }
 
-            string data = SnippetInfo.Data;
-            data = MarkupExtensionProcessor.Instance.Process(data);
-            LiteralControl lit = new LiteralControl(data);
-            this.Controls.Add(lit);
-        }        
+        public override void RenderControl(HtmlTextWriter writer)
+        {
+            base.RenderControl(writer);
+            MarkupExtensionProcessor.Instance.Process(HtmlData);
+            LiteralControl lit = new LiteralControl(HtmlData);
+            lit.RenderControl(writer);
+        }
     }
 }
