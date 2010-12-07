@@ -774,7 +774,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
             mailMsg.Subject = "Confirm Your Subscription";
             mailMsg.IsBodyHtml = true;
-            mailMsg.Body += "To begin your subscription to the <i>NCI Cancer Bulletin</i>, please <a href=\"" + System.Configuration.ConfigurationSettings.AppSettings["RootUrl"] + "/cbSubscribe.aspx" +
+            mailMsg.Body += "To begin your subscription to the <i>NCI Cancer Bulletin</i>, please <a href=\"" + System.Configuration.ConfigurationSettings.AppSettings["RootUrl"] + PrettyUrl +
                 "?cid=bulletin_confirm" +
                 "&userid=" +
                 userID.ToString() +
