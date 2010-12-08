@@ -11,14 +11,15 @@ using CancerGov.Common.Extraction;
 using System.Collections;
 using NCI.Web.CDE.UI.SnippetControls;
 using NCI.Web.Extensions;
-namespace CancerGov.Web.SnippetTemplates
-{
-    public partial class GlossaryTerms : SnippetControl
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
 
-        }
+namespace NCI.Web.CancerGov.Apps
+{
+    public class GlossaryTerms : AppsBaseUserControl
+    {
+        #region Control Members
+        protected Literal ltGlossaryTerms;
+        #endregion
+        
         protected override void OnPreRender(EventArgs e)
         {
             base.OnPreRender(e);
@@ -58,6 +59,5 @@ namespace CancerGov.Web.SnippetTemplates
             this.Controls.Add(lit);
 
         }
-
     }
 }
