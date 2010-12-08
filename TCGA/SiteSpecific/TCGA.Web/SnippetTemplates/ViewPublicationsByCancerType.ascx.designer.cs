@@ -14,6 +14,15 @@ namespace TCGA.Web.SnippetTemplates {
     public partial class ViewPublicationsByCancerType {
         
         /// <summary>
+        /// frmViewPublications control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm frmViewPublications;
+        
+        /// <summary>
         /// ddlCancerType control.
         /// </summary>
         /// <remarks>
@@ -30,5 +39,23 @@ namespace TCGA.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptPublicationResults;
+        
+        /// <summary>
+        /// pager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NCI.Web.UI.WebControls.PostBackButtonPager pager;
+        
+        /// <summary>
+        /// itemsPerPage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField itemsPerPage;
     }
 }
