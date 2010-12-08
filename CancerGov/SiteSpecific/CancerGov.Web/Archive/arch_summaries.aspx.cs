@@ -47,10 +47,9 @@ namespace www.Archive
 			sumTable.Columns.Add(new DataColumn("Audience", System.Type.GetType("System.String")));
 			sumTable.Columns.Add(new DataColumn("Title", System.Type.GetType("System.String")));
 			sumTable.Columns.Add(new DataColumn("Language", System.Type.GetType("System.String")));
-			sumTable.Columns.Add(new DataColumn("ViewId", System.Type.GetType("System.String")));
-			sumTable.Columns.Add(new DataColumn("ViewLink", System.Type.GetType("System.String")));
+            sumTable.Columns.Add(new DataColumn("PrettyURL", System.Type.GetType("System.String")));
 
-			string docid, type, audience, title, language, myaudience;
+			string docid, type, audience, title, language,prettyurl;
 			SqlConnection dbh = new SqlConnection(dbConn);
 			dbh.Open();
 
@@ -63,35 +62,16 @@ namespace www.Archive
                     audience = row["Audience"].ToString();
                     title = row["Title"].ToString();
                     language = row["Language"].ToString();
-                    Guid docguid = (Guid)row["DocumentGUID"];
+                    prettyurl = row["PrettyURL"].ToString();
 
-                    // Get view ID from cancer gov database (not CDR database)
-                    SqlCommand vCmd = new SqlCommand("usp_GetNCIViewByObjectId", dbh);
-                    vCmd.CommandType = CommandType.StoredProcedure;
-
-                    vCmd.Parameters.Add("@DocGUID", SqlDbType.UniqueIdentifier);
-                    vCmd.Parameters["@DocGUID"].Value = docguid;
-
-                    // If a summary is active, it can be selected for a PDQ nciview page. 
-                    // But its active status doesn't mean that it will be a part of a nciview. 
-                    // So an active summary with no nciview linked is ok but a pdq nciview has 
-                    // an inactive summary is not ok
                     
-                    Guid viewid = Guid.Empty;
-                    //Object obj = vCmd.ExecuteScalar();
-                    //if (obj != null && obj != DBNull.Value)
-                    //    viewid = (Guid)obj;
-                    //else
-                    //    continue;
+                    //myaudience = "1";
+                    //if (audience == "Patients")
+                    //{
+                    //    myaudience = "0";
+                    //}
 
-                    myaudience = "1";
-                    if (audience == "Patients")
-                    {
-                        myaudience = "0";
-                    }
-
-                    string viewLink = "/templates/doc.aspx?viewid=" + viewid.ToString() + "&version=" + myaudience + "&allpages=1&print=1";
-
+                                      
                     // insert the link to result table
                     DataRow dr = sumTable.NewRow();
                     dr["SummaryId"] = docid;
@@ -99,9 +79,7 @@ namespace www.Archive
                     dr["Audience"] = audience;
                     dr["Title"] = title;
                     dr["Language"] = language;
-                    dr["ViewId"] = viewid;
-                    dr["ViewLink"] = viewLink;
-
+                    dr["PrettyUrl"] = prettyurl;
                     sumTable.Rows.Add(dr);
                 }
             }
