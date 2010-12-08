@@ -65,8 +65,7 @@ namespace www.Archive
                     prettyurl = row["PrettyURL"].ToString();
 
 
-                    string prul = prettyurl.Substring(0, indexof('/'));
-                    prettyurl = prul;
+                   
 
                                       
                     // insert the link to result table

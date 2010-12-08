@@ -29,7 +29,7 @@
 			<Columns>
 				<asp:TemplateColumn HeaderText="ID">
 					<ItemTemplate>
-						<asp:HyperLink id="HyperLink1" Text='<%# DataBinder.Eval(Container.DataItem,"TermID") %>' NavigateUrl='<%# "/Templates/drugdictionary.aspx?page=1&print=1&cdrid=" + DataBinder.Eval(Container.DataItem,"TermID") %>' Target="_blank" runat="server" />
+						<asp:HyperLink id="HyperLink1" Text='<%# DataBinder.Eval(Container.DataItem,"TermID") %>' NavigateUrl='<%# "/drugdictionary?print=1&cdrid=" + DataBinder.Eval(Container.DataItem,"TermID") %>' Target="_blank" runat="server" />
 					</ItemTemplate>
 				</asp:TemplateColumn>
 				<asp:BoundColumn DataField="PreferredName" HeaderText="Name"></asp:BoundColumn>
