@@ -64,12 +64,9 @@ namespace www.Archive
                     language = row["Language"].ToString();
                     prettyurl = row["PrettyURL"].ToString();
 
-                    
-                    //myaudience = "1";
-                    //if (audience == "Patients")
-                    //{
-                    //    myaudience = "0";
-                    //}
+
+                    string prul = prettyurl.Substring(0, indexof('/'));
+                    prettyurl = prul;
 
                                       
                     // insert the link to result table
@@ -79,7 +76,11 @@ namespace www.Archive
                     dr["Audience"] = audience;
                     dr["Title"] = title;
                     dr["Language"] = language;
-                    dr["PrettyUrl"] = prettyurl;
+                    if (!string.IsNullOrEmpty(prettyurl))
+                    {
+                        Uri siteUri = new Uri(prettyurl);
+                        dr["PrettyUrl"] = siteUri.LocalPath;
+                    }
                     sumTable.Rows.Add(dr);
                 }
             }
