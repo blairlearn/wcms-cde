@@ -14,9 +14,17 @@ namespace TCGA.Web.SnippetTemplates
 {
     public partial class ViewPublicationsByCancerType : AppsBaseUserControl
     {
+        #region Define Controls 
+        protected global::System.Web.UI.HtmlControls.HtmlForm frmViewPublications;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCancerType;
+        protected global::System.Web.UI.WebControls.Repeater rptPublicationResults;
+        protected global::NCI.Web.UI.WebControls.PostBackButtonPager pager;
+        protected global::System.Web.UI.WebControls.HiddenField itemsPerPage;
+        #endregion
+
         private XElement publicationRoot = null;
         private int totalResults = 0;
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

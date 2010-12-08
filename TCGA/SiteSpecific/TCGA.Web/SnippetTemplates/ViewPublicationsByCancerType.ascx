@@ -1,5 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ViewPublicationsByCancerType.ascx.cs"
-    Inherits="TCGA.Web.SnippetTemplates.ViewPublicationsByCancerType" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="TCGA.Web.SnippetTemplates.ViewPublicationsByCancerType" %>
 <%@ Register TagPrefix="TCGA" Assembly="NCILibrary.Web.UI.WebControls" Namespace="NCI.Web.UI.WebControls" %>
 <Style>
 .pager {
