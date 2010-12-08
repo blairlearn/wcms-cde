@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -7,6 +8,7 @@ using System.Web.SessionState;
 using System.IO;
 using NCI.Web.CDE;
 using NCI.Web.CDE.Configuration;
+using System.Configuration;
 
 namespace CancerGov.Web
 {
@@ -69,6 +71,79 @@ namespace CancerGov.Web
             this.Application.Lock();
             this.Application["reloadPromoUrlMappingInfo"] = true;
             this.Application.UnLock();
+        }
+
+        /// <summary>
+        /// Get the name of the event log to write to
+        /// </summary>
+        /// <returns>the name of the event log</returns>
+        private static string GetEventLogName()
+        {
+            try
+            {
+                if (System.Configuration.ConfigurationManager.AppSettings["EventLogName"] != null)
+                    return System.Configuration.ConfigurationManager.AppSettings["EventLogName"];
+            }
+            catch (Exception e)
+            {
+            }
+            return "CancerGov";
+        }
+
+        /// <summary>
+        /// Get the source name for the event
+        /// </summary>
+        /// <returns>the source name of the event</returns>
+        private static string GetSourceName()
+        {
+            try
+            {
+                if (System.Configuration.ConfigurationManager.AppSettings["EventLogSourceName"] != null)
+                    return System.Configuration.ConfigurationManager.AppSettings["EventLogSourceName"];
+            }
+            catch (Exception e)
+            {
+            }
+            return "CancerGov";
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            //Hopefully this will only log errors we want
+
+            Exception objErr = Server.GetLastError();
+
+            if (objErr != null)
+            {
+
+                string err = "Error Caught in Application_Error event\n" +
+                    "Error in: " + Request.Url.ToString() +
+                    "\nError Message:" + objErr.Message.ToString() +
+                    "\nStack Trace:" + objErr.ToString();
+
+                try
+                {
+                    EventLog eLog = new EventLog(GetEventLogName());
+                    eLog.Source = GetSourceName();
+                    eLog.WriteEntry(err, EventLogEntryType.Error);
+                    eLog.Close();
+                }
+                catch (System.ComponentModel.Win32Exception)
+                { //Since we cannot log to the eventlog, then we should not try again
+                }
+            }
+
+            Server.ClearError();
+            string error = Request.Params["TransferredByError"];
+
+            if ((error != null) && (error == "1"))
+            {
+                //Response.Write("<b>Unexpected errors occurred. Our technicians have been notified and are working to correct the situation.</b>");
+            }
+            else
+            {
+                Response.Redirect(System.Configuration.ConfigurationManager.AppSettings["ErrorPage"], true);                
+            }
         }
 
         #endregion
