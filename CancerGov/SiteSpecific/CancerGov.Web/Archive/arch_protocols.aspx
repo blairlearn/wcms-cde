@@ -19,8 +19,8 @@
 			<Columns>
 				<asp:TemplateColumn HeaderText="ID">
 					<ItemTemplate>
-						<asp:HyperLink id="patientLink" Text='<%# DataBinder.Eval(Container.DataItem,"ProtocolID") + "_P" %>' NavigateUrl='<%# "/search/viewclinicaltrials.aspx?cdrid=" + DataBinder.Eval(Container.DataItem,"ProtocolID") + "&version=patient&print=1" %>' Target="_blank" runat="server" />
-						<asp:HyperLink id="profLink" Text='<%# DataBinder.Eval(Container.DataItem,"ProtocolID") + "_H" %>' NavigateUrl='<%# "/search/viewclinicaltrials.aspx?cdrid=" + DataBinder.Eval(Container.DataItem,"ProtocolID") + "&version=healthprofessional&print=1" %>' Target="_blank" runat="server" />
+						<asp:HyperLink id="patientLink" Text='<%# DataBinder.Eval(Container.DataItem,"ProtocolID") + "_P" %>' NavigateUrl='<%# "/ClinicalTrials/search/view?cdrid=" + DataBinder.Eval(Container.DataItem,"ProtocolID") + "&version=patient&print=1" %>' Target="_blank" runat="server" />
+						<asp:HyperLink id="profLink" Text='<%# DataBinder.Eval(Container.DataItem,"ProtocolID") + "_H" %>' NavigateUrl='<%# "/ClinicalTrials/search/view?cdrid=" + DataBinder.Eval(Container.DataItem,"ProtocolID") + "&version=healthprofessional&print=1" %>' Target="_blank" runat="server" />
 					</ItemTemplate>
 				</asp:TemplateColumn>
 				<asp:BoundColumn DataField="CurrentStatus" HeaderText="Status"></asp:BoundColumn>
