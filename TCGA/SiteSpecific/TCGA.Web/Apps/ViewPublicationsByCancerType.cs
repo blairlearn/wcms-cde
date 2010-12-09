@@ -9,6 +9,7 @@ using NCI.Web.TCGA.Apps;
 using System.Xml.Linq;
 using NCI.Web.CDE;
 using NCI.Web.UI.WebControls;
+using NCI.Logging;
 
 namespace TCGA.Web.SnippetTemplates
 {
@@ -29,16 +30,24 @@ namespace TCGA.Web.SnippetTemplates
         {
             if (!IsPostBack)
             {
-                IEnumerable<XElement> pubResults = null;
-                // Bind the dropdownlist control to display the cancer types
-                pubResults = GetPublications("ALL");
-                PopulateCancerTypeDropDown(pubResults);
+                try
+                {
+                    IEnumerable<XElement> pubResults = null;
+                    // Bind the dropdownlist control to display the cancer types
+                    pubResults = GetPublications("ALL");
+                    PopulateCancerTypeDropDown(pubResults);
 
-                // Load the dropdown box, with default all selected when the page is first 
-                // displayed.
-                PopulatePublicationsResults(pubResults);
+                    // Load the dropdown box, with default all selected when the page is first 
+                    // displayed.
+                    PopulatePublicationsResults(pubResults);
 
-                SetUpPagerInformation();
+                    SetUpPagerInformation();
+
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError("ViewPublicationsByCancerType", NCIErrorLevel.Error, ex);
+                }
             }
         }
 
@@ -48,22 +57,31 @@ namespace TCGA.Web.SnippetTemplates
         /// <param name="pubResults">The publication data that is used to bind to the repeater.</param>
         private void PopulatePublicationsResults(IEnumerable<XElement> pubResults)
         {
-            pubResults = pubResults.Skip(pager.CurrentPage * ItemsPerPage - ItemsPerPage).Take(ItemsPerPage);
+            try
+            {
+                pubResults = pubResults.Skip(pager.CurrentPage * ItemsPerPage - ItemsPerPage).Take(ItemsPerPage);
 
-            var publications = from publication in pubResults
-                               select
-                                   new
-                                   {
-                                       cancerType = publication.Element("CancerType").Value,
-                                       publicationDate = publication.Element("PublicationDate").Value,
-                                       isTCGANetworkType = getTCGAIdentifier(publication.Element("IsTCGANetworkType").Value),
-                                       description = publication.Element("Description").Value,
-                                       journalTitle = publication.Element("JournalTitle").Value,
-                                       associatedLink = getAssociatedLink(publication.Element("LinkText").Value, publication.Element("LinkText").Value)
-                                   };
+                var publications = from publication in pubResults
+                                   select
+                                       new
+                                       {
+                                           cancerType = publication.Element("CancerType").Value,
+                                           publicationDate = publication.Element("PublicationDate").Value,
+                                           isTCGANetworkType = getTCGAIdentifier(publication.Element("IsTCGANetworkType").Value),
+                                           description = publication.Element("Description").Value,
+                                           journalTitle = publication.Element("JournalTitle").Value,
+                                           associatedLink = getAssociatedLink(publication.Element("LinkText").Value, publication.Element("LinkText").Value)
+                                       };
 
-            rptPublicationResults.DataSource = publications.ToList();
-            rptPublicationResults.DataBind();
+                rptPublicationResults.DataSource = publications.ToList();
+                rptPublicationResults.DataBind();
+            }
+            catch(Exception ex)
+            {
+                Logger.LogError("ViewPublicationsByCancerType", "could not Populate Publications Results", NCIErrorLevel.Error);
+                throw ex;
+            }
+
         }
 
         /// <summary>
@@ -94,26 +112,35 @@ namespace TCGA.Web.SnippetTemplates
         /// <param name="pubResults">Dropdown values are populated from this object.</param>
         private void PopulateCancerTypeDropDown(IEnumerable<XElement> pubResults)
         {
-            var publications =
-                               (from publication in pubResults
-                                group publication by (string)publication.Element("CancerType").Value into grp
-                                where grp.Count() >= 1
-                                orderby grp.First().Element("CancerType").Value
-                                select new { cancerType = grp.First().Element("CancerType").Value });
+            try
+            {
+                var publications =
+                           (from publication in pubResults
+                            group publication by (string)publication.Element("CancerType").Value into grp
+                            where grp.Count() >= 1
+                            orderby grp.First().Element("CancerType").Value
+                            select new { cancerType = grp.First().Element("CancerType").Value });
 
-            ddlCancerType.DataSource = publications.ToList();
-            ddlCancerType.DataTextField = "cancerType";
-            ddlCancerType.DataValueField = "cancerType";
-            ddlCancerType.DataBind();
+                ddlCancerType.DataSource = publications.ToList();
+                ddlCancerType.DataTextField = "cancerType";
+                ddlCancerType.DataValueField = "cancerType";
+                ddlCancerType.DataBind();
 
-            // Add the all option.
-            if (ddlCancerType.Items.Count > 0)
-                ddlCancerType.Items.Insert(0, new ListItem("All", "All"));
-            else
-                ddlCancerType.Items.Add(new ListItem("All", "All"));
+                // Add the all option.
+                if (ddlCancerType.Items.Count > 0)
+                    ddlCancerType.Items.Insert(0, new ListItem("All", "All"));
+                else
+                    ddlCancerType.Items.Add(new ListItem("All", "All"));
 
-            if (ddlCancerType.SelectedIndex == -1)
-                ddlCancerType.SelectedIndex = 0;
+                if (ddlCancerType.SelectedIndex == -1)
+                    ddlCancerType.SelectedIndex = 0;
+
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("ViewPublicationsByCancerType", "could not Populate CancerType DropDown", NCIErrorLevel.Error);
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -124,7 +151,11 @@ namespace TCGA.Web.SnippetTemplates
             get
             {
                 if (publicationRoot == null)
+                {
+                    if (string.IsNullOrEmpty(PublicationsDataPath))
+                        throw new Exception("PublicationsDataPath is not provided, update the appsettings to include this key and provide the path value");
                     publicationRoot = XElement.Load(Server.MapPath(PublicationsDataPath));
+                }
                 return publicationRoot;
             }
         }
@@ -136,33 +167,42 @@ namespace TCGA.Web.SnippetTemplates
         /// <returns></returns>
         private IEnumerable<XElement> GetPublications(string type)
         {
-            IEnumerable<XElement> publications = null;
-
-            switch (type.ToLower())
+            try
             {
-                case "all":
-                    {
-                        publications =
-                            from publication in PublicationDataXml.Elements("Publication")
-                            orderby makevalidDate(publication.Element("PublicationDate").Value) descending, publication.Element("Description").Value
-                            select publication;
-                        break;
+                IEnumerable<XElement> publications = null;
 
-                    }
-                default:
-                    {
-                        publications =
-                            from publication in PublicationDataXml.Elements("Publication")
-                            where
-                                     (string)publication.Element("CancerType").Value == type
-                            orderby makevalidDate(publication.Element("PublicationDate").Value) descending, publication.Element("Description").Value
-                            select publication;
-                        break;
-                    }
+                switch (type.ToLower())
+                {
+                    case "all":
+                        {
+                            publications =
+                                from publication in PublicationDataXml.Elements("Publication")
+                                orderby makevalidDate(publication.Element("PublicationDate").Value) descending, publication.Element("Description").Value
+                                select publication;
+                            break;
+
+                        }
+                    default:
+                        {
+                            publications =
+                                from publication in PublicationDataXml.Elements("Publication")
+                                where
+                                         (string)publication.Element("CancerType").Value == type
+                                orderby makevalidDate(publication.Element("PublicationDate").Value) descending, publication.Element("Description").Value
+                                select publication;
+                            break;
+                        }
+                }
+
+                totalResults = publications.Count();
+                return publications;
+
             }
-
-            totalResults = publications.Count();
-            return publications;
+            catch (Exception ex)
+            {
+                Logger.LogError("ViewPublicationsByCancerType", "GetPublications failed", NCIErrorLevel.Error);
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -204,10 +244,18 @@ namespace TCGA.Web.SnippetTemplates
 
         protected void ddlCancerType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            IEnumerable<XElement> pubResults = null;
-            pubResults = GetPublications(CancerTypeSelected);
-            SetUpPagerInformation();
-            PopulatePublicationsResults(pubResults);
+            try
+            {
+                IEnumerable<XElement> pubResults = null;
+                pubResults = GetPublications(CancerTypeSelected);
+                SetUpPagerInformation();
+                PopulatePublicationsResults(pubResults);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("ViewPublicationsByCancerType", NCIErrorLevel.Error, ex);
+            }
         }
 
         #region Pager
@@ -238,9 +286,17 @@ namespace TCGA.Web.SnippetTemplates
 
         protected void pager_PageChanged(object sender, EventArgs e)
         {
-            IEnumerable<XElement> pubResults = null;
-            pubResults = GetPublications(CancerTypeSelected);
-            PopulatePublicationsResults(pubResults);
+            try
+            {
+                IEnumerable<XElement> pubResults = null;
+                pubResults = GetPublications(CancerTypeSelected);
+                PopulatePublicationsResults(pubResults);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("ViewPublicationsByCancerType", NCIErrorLevel.Error, ex);
+            }
         }
 
         #endregion
