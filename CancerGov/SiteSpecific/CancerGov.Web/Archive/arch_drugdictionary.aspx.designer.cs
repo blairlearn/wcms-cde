@@ -20,7 +20,7 @@ namespace www.Archive {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Www.Common.UserControls.AlphaListBox alphaListBox;
+        protected global::System.Web.UI.UserControl alphaListBox;
         
         /// <summary>
         /// drugDictionaryList control.

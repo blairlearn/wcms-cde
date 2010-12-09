@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" CodeBehind="arch_drugdictionary.aspx.cs" AutoEventWireup="true" Inherits="www.Archive.arch_drugdictionary" %>
-<%@ Register TagPrefix="CancerGovWww" TagName="AlphaListBox" Src="/Common/UserControls/AlphaListBox.ascx"%>
+<%@ Register TagPrefix="CancerGovWww" TagName="AlphaListBox" Src="/Archive/UserControls/AlphaListBox.ascx"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
