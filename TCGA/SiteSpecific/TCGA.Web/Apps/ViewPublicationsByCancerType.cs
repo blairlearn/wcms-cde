@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Configuration;
 using System.Web.UI.WebControls;
-using NCI.Web.TCGA.Apps;
+using TCGA.Apps;
 using System.Xml.Linq;
 using NCI.Web.CDE;
 using NCI.Web.UI.WebControls;

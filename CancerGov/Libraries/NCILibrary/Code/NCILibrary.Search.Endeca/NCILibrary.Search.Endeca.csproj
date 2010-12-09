@@ -79,10 +79,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\EndecaSection.cs" />
+    <Compile Include="DescStrLengthComparer.cs" />
     <Compile Include="EndecaBestBetResult.cs" />
     <Compile Include="EndecaBestBetsSearch.cs" />
+    <Compile Include="EndecaDimensionSearchDefinition.cs" />
+    <Compile Include="EndecaDimensionSearchParameter.cs" />
+    <Compile Include="EndecaNavDimSearchDefinition.cs" />
+    <Compile Include="EndecaNavigationSearchParameter.cs" />
+    <Compile Include="EndecaNormalSearchDefinition.cs" />
+    <Compile Include="EndecaRangeFilter.cs" />
+    <Compile Include="EndecaRecordSearchDefinition.cs" />
     <Compile Include="EndecaResult.cs" />
     <Compile Include="EndecaSearch.cs" />
+    <Compile Include="EndecaSearchModeEnums.cs" />
+    <Compile Include="EndecaSortParam.cs" />
+    <Compile Include="GenericEndecaSearch.cs" />
+    <Compile Include="GenericSiteWideSearchManager.cs" />
+    <Compile Include="IEndecaSearchDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
