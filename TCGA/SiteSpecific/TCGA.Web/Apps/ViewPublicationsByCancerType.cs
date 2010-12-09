@@ -116,6 +116,7 @@ namespace TCGA.Web.SnippetTemplates
             {
                 var publications =
                            (from publication in pubResults
+                            where string.IsNullOrEmpty(publication.Element("CancerType").Value) == false
                             group publication by (string)publication.Element("CancerType").Value into grp
                             where grp.Count() >= 1
                             orderby grp.First().Element("CancerType").Value
