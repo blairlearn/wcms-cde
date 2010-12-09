@@ -74,7 +74,7 @@ namespace NCI.Web.CancerGov.Apps
         virtual public void RaiseErrorPage()
         {
             RaiseErrorPage("");
-        }
+        } 
 
         virtual public void RaiseErrorPage(string messageKey)
         {
@@ -82,17 +82,18 @@ namespace NCI.Web.CancerGov.Apps
             if (messageKey == "InvalidSearchID")
             {
                 systemMessagePageUrl = ConfigurationSettings.AppSettings["ClinicalTrialInvalidSearchID"].Trim();
+                Response.Redirect(systemMessagePageUrl, true);
             }
             else
             {
                 systemMessagePageUrl = ConfigurationSettings.AppSettings["SystemMessagePage"].Trim();
+
+                if (systemMessagePageUrl.Substring(systemMessagePageUrl.Length - 1, 1) != "?")
+                    systemMessagePageUrl += "?";
+
+                systemMessagePageUrl += "msg=" + messageKey.Trim();
+                Response.Redirect(systemMessagePageUrl, true);
             }
-
-            if (systemMessagePageUrl.Substring(systemMessagePageUrl.Length - 1, 1) != "?")
-                systemMessagePageUrl += "?";
-
-            systemMessagePageUrl += "msg=" + messageKey.Trim();
-            Response.Redirect(systemMessagePageUrl, true);
         }
 
         public string PrettyUrl
@@ -102,6 +103,7 @@ namespace NCI.Web.CancerGov.Apps
                 return this.PageInstruction.GetUrl("PrettyUrl").UriStem;
             }
         }
+
         public string PrettyUrlWithQS
         {
             get
@@ -120,5 +122,6 @@ namespace NCI.Web.CancerGov.Apps
             get { return strHelpPageLink; }
             set { strHelpPageLink = value; }
         }
+
     }
 }
