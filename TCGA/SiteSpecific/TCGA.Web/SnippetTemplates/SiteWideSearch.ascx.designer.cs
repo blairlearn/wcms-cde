@@ -23,33 +23,6 @@ namespace TCGA.Web.SnippetTemplates {
         protected global::System.Web.UI.HtmlControls.HtmlForm frmResults;
         
         /// <summary>
-        /// phResultsLabel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phResultsLabel;
-        
-        /// <summary>
-        /// lblSearchTerm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSearchTerm;
-        
-        /// <summary>
-        /// lblResults control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblResults;
-        
-        /// <summary>
         /// rptSearchResults control.
         /// </summary>
         /// <remarks>
@@ -59,33 +32,6 @@ namespace TCGA.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.Repeater rptSearchResults;
         
         /// <summary>
-        /// tblPager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable tblPager;
-        
-        /// <summary>
-        /// lblResultsBottom control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblResultsBottom;
-        
-        /// <summary>
-        /// ddlPageUnit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPageUnit;
-        
-        /// <summary>
         /// spPager control.
         /// </summary>
         /// <remarks>
@@ -93,5 +39,14 @@ namespace TCGA.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::NCI.Web.UI.WebControls.SimplePager spPager;
+        
+        /// <summary>
+        /// itemsPerPage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField itemsPerPage;
     }
 }
