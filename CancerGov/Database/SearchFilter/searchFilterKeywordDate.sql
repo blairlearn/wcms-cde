@@ -27,8 +27,11 @@ BEGIN
 			@paging nvarchar(1000),
 			@Scount nvarchar(max)
 
-	select @select = 'select top ' + convert(nvarchar(20), @maxResults)  
-		+' * '
+	if @maxResults > 0
+			select @select = 'select top ' + convert(nvarchar(20), @maxResults)  
+				+' * '
+		ELSE
+			select @select = 'select  *  '
 		
 	-- staging or live
 	
