@@ -34,7 +34,10 @@
     <!-- Content -->
     <div id="content">
     <NCI:TemplateSlot ID="tcgaSlotBodyTop" runat="server" />
-    <NCI:TemplateSlot ID="tcgaSlotImageCaption" runat="server" CssClass="content-sidebox" />
+    <div class="content-sidebox">
+    <NCI:TemplateSlot ID="tcgaSlotImageCaption" runat="server" />   
+	<NCI:TemplateSlot ID="tcgaSlotMultimedia" runat="server" CssClass="multimedia-sidebox" /> 
+    </div>
     <NCI:TemplateSlot ID="tcgaSlotBody" runat="server" />
     <NCI:TemplateSlot ID="tcgaSlotCitation" runat="server" />
     <NCI:TemplateSlot ID="tcgaSlotBodyBottom" runat="server" />
