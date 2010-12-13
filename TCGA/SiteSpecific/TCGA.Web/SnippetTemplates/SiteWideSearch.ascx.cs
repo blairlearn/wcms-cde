@@ -84,7 +84,6 @@ namespace TCGA.Web.SnippetTemplates
                 {
                     ResultsText = "No results found";
                     rptSearchResults.Visible = false;
-                    spPager.Visible = false;
                 }
             }
             else

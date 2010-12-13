@@ -14,7 +14,7 @@
 <form id="frmResults" runat="server">
 
     <div class="searchresults">
-        <input onchange="trackTextChange(this)" type="text" id="txtKeyword1" name="txtKeyword1" size="75"; value="<% =Keyword %>" />&nbsp;&nbsp;<input type="submit" value="Search"  />
+        <input onchange="trackTextChange(this)" type="text" id="txtKeyword1" name="txtKeyword1" size="75"; value="<% =Keyword %>" />&nbsp;&nbsp;<input type="image" class="schImg" src="images/general/content-search.gif" alt="Search" />
         <% if (!string.IsNullOrEmpty(ResultsText))
            { %>
         <br />
@@ -41,7 +41,7 @@
   <br />
    <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" />
   <br />
-   <input type="text" onchange="trackTextChange(this)" id="txtKeyword2" name="txtKeyword2" size="75"; value="<% =Keyword %>" />&nbsp;&nbsp;<input type="submit" value="Search"  />
+   <input type="text" onchange="trackTextChange(this)" id="txtKeyword2" name="txtKeyword2" size="75"; value="<% =Keyword %>" />&nbsp;&nbsp;<input type="image" class="schImg" src="images/general/content-search.gif" alt="Search" />
     <%} %>
     </div>
     
