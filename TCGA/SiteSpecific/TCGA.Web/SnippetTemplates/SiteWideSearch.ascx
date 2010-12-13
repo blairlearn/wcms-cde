@@ -13,7 +13,7 @@
 </script>
 <form id="frmResults" runat="server">
 
-    <div class="searchresults">
+    <div>
         <input onchange="trackTextChange(this)" type="text" id="txtKeyword1" name="txtKeyword1" size="75"; value="<% =Keyword %>" />&nbsp;&nbsp;<input type="image" class="schImg" src="images/general/content-search.gif" alt="Search" />
         <% if (!string.IsNullOrEmpty(ResultsText))
            { %>
@@ -24,13 +24,10 @@
             <asp:Repeater ID="rptSearchResults" runat="server">
                 <ItemTemplate>
                     <li>
-                        <strong>
-                            <a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>">
-                            <%# DataBinder.Eval(Container.DataItem, "Title")%></a>
-                        </strong><br />
-                     
-                        <%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") + "<br />" : "" %>                               
+                        <h1><%# DataBinder.Eval(Container.DataItem, "Title")%></h1>
+                        <%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") + "<br />" : "" %>
                         <a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>"><%# DataBinder.Eval(Container.DataItem, "Url")%></a>
+                        <br />
                     </li>
                 </ItemTemplate>     
             </asp:Repeater>
