@@ -44,9 +44,35 @@ namespace NCI.DataManager
         public string UpdatedDate { get; set; }
 
         /// <summary>
+        /// Question and Answer Url
+        /// </summary>
+        public string QandAUrl { get; set; }
+
+        /// <summary>
+        /// Imagee URL
+        /// </summary>
+        public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// Video URL
+        /// </summary>
+        public string VideoUrl { get; set; }
+
+        /// <summary>
+        /// Audio URL
+        /// </summary>
+        public string AudioUrl { get; set; }
+
+        /// <summary>
+        /// Language settings
+        /// </summary>
+        public string Language { get; set; }
+
+        /// <summary>
         /// Posted date of the content.
         /// </summary>
         public string PostedDate { get; set; }
+
         public SearchResult()
         {
             ShortDescription = string.Empty;

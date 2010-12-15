@@ -88,6 +88,13 @@ namespace NCI.DataManager
                                     searchResult.LongDescription = sqlFVReader.GetString("Long_Description");
                                     searchResult.ShortDescription = sqlFVReader.GetString("Short_Description");
                                     searchResult.ShortTitle = sqlFVReader.GetString("Short_Title");
+
+                                    searchResult.QandAUrl = sqlFVReader.GetString("news_qandaurl");
+                                    searchResult.ImageUrl = sqlFVReader.GetString("imageurl");
+                                    searchResult.VideoUrl = sqlFVReader.GetString("videourl");
+                                    searchResult.AudioUrl = sqlFVReader.GetString("audiourl");
+                                    searchResult.Language = sqlFVReader.GetString("language");
+
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
