@@ -63,17 +63,7 @@ namespace www.Archive
                     title = row["Title"].ToString();
                     language = row["Language"].ToString();
                     prettyurl = row["PrettyURL"].ToString();
-
-                    //string myaudience;
-                    //myaudience = "1";
-                    //if (audience == "Patient")
-                    //{
-                    //    myaudience = "0";
-                    //}
-
-                   
-
-                                      
+               
                     // insert the link to result table
                     DataRow dr = sumTable.NewRow();
                     dr["SummaryId"] = docid;
@@ -90,7 +80,6 @@ namespace www.Archive
                 }
             }
 
-            
 			finally 
 			{
 				sumDa.Dispose();
