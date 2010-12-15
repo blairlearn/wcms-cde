@@ -51,9 +51,13 @@ namespace CancerGov.Modules.Search.Endeca
 
                     string bbResFileName = String.Format(ContentDeliveryEngineConfig.PathInformation.BestBetsResultPath.Path, res.CategoryID);
 
+
                     BestBetResult bbResult = ModuleObjectFactory<BestBetResult>.GetObjectFromFile(bbResFileName);
-                    if (bbResult != null)
-                        rtnResults.Add(bbResult);
+                    if (bbResult.Display == "true")
+                    {
+                        if (bbResult != null)
+                            rtnResults.Add(bbResult);
+                    }
                 }
                 catch (Exception ex)
                 { 

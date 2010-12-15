@@ -21,5 +21,9 @@ namespace CancerGov.Modules.Search.Endeca
 
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string CategoryDisplay { get; set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string Display { get; set; }
+
     }
 }
