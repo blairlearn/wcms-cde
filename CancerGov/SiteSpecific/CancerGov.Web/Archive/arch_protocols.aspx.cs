@@ -35,15 +35,7 @@ namespace www.Archive
 
 		private void BindProtocols()
         {
-            #region //Sql not used 
-            /*			string sql = "";
-
-			sql = "SELECT P.ProtocolID, P.CurrentStatus, ISNULL(P.PatientTitle, P.HealthProfessionalTitle) As PatientTitle," +
-					"P.HealthProfessionalTitle " +
-				   "FROM Protocol P Inner Join Document D on P.ProtocolID = D.DocumentID " +
-				   "WHERE D.IsActive = 'Y' ORDER BY P.ProtocolID";
-*/
-            #endregion
+            
             SqlConnection cdrDbh = new SqlConnection(cdrDbConn);
 			SqlCommand cmd = new SqlCommand("usp_GetActiveProtocols", cdrDbh);
 			SqlDataAdapter proDa = new SqlDataAdapter(cmd);
