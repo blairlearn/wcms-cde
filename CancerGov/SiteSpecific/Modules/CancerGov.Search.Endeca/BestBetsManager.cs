@@ -53,7 +53,7 @@ namespace CancerGov.Modules.Search.Endeca
 
 
                     BestBetResult bbResult = ModuleObjectFactory<BestBetResult>.GetObjectFromFile(bbResFileName);
-                    if (bbResult.Display == "true")
+                    if (bbResult.Display.ToLower() == "true")
                     {
                         if (bbResult != null)
                             rtnResults.Add(bbResult);
