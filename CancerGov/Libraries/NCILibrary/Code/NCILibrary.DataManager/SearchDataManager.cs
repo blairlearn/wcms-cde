@@ -89,7 +89,7 @@ namespace NCI.DataManager
                                     searchResult.ShortDescription = sqlFVReader.GetString("Short_Description");
                                     searchResult.ShortTitle = sqlFVReader.GetString("Short_Title");
 
-                                    searchResult.QandAUrl = sqlFVReader.GetString("news_qandaurl");
+                                    searchResult.QandAUrl = sqlFVReader.GetString("news_qanda_url");
                                     searchResult.ImageUrl = sqlFVReader.GetString("imageurl");
                                     searchResult.VideoUrl = sqlFVReader.GetString("videourl");
                                     searchResult.AudioUrl = sqlFVReader.GetString("audiourl");

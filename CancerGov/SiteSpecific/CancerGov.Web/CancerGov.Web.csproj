@@ -342,13 +342,6 @@
     <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.designer.cs">
       <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\ContentSearchSnippet.ascx.cs">
-      <DependentUpon>ContentSearchSnippet.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ContentSearchSnippet.ascx.designer.cs">
-      <DependentUpon>ContentSearchSnippet.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\db_alpha.ascx.cs">
       <DependentUpon>db_alpha.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
