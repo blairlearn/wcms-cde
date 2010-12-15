@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Endeca.Logging, Version=4.7.2.23, Culture=neutral, PublicKeyToken=6d02be8724ca751c" />
+    <Reference Include="Endeca.Navigation, Version=4.7.2.23, Culture=neutral, PublicKeyToken=6d02be8724ca751c" />
+    <Reference Include="Endeca.Navigation.AccessControl, Version=4.7.2.23, Culture=neutral, PublicKeyToken=6d02be8724ca751c" />
     <Reference Include="NCILibrary.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b68440c3db501d2b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CancerGov\Libraries\NCILibrary\Code\NCILibrary.Core\bin\Debug\NCILibrary.Core.dll</HintPath>

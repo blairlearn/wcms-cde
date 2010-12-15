@@ -12,6 +12,7 @@ using NCI.Logging;
 using NCI.Util;
 using NCI.Search.Endeca;
 using NCI.Search;
+using NCI.Logging;
 
 namespace TCGA.Web.SnippetTemplates
 {
@@ -40,8 +41,6 @@ namespace TCGA.Web.SnippetTemplates
                 _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
             }
 
-            long dimFilter = Strings.ToLong(ConfigurationManager.AppSettings["EndecaSWSearchDimFilter"], 0);
-
             if (PerformSearch)
             {
                 if (Keyword != null)
@@ -52,33 +51,43 @@ namespace TCGA.Web.SnippetTemplates
                     else
                         ViewState[swKeyword] = Keyword;
 
-                    ISiteWideSearchResultCollection results = GenericSiteWideSearchManager.GetSearchResults(Keyword, _currentPage, _recordsPerPage, dimFilter);
-
-                    rptSearchResults.DataSource = results;
-                    rptSearchResults.DataBind();
-
-                    if (results.TotalNumResults == 0)
+                    try
                     {
-                        ResultsText = "No results found";
-                        rptSearchResults.Visible = false;
+                        long dimFilter = Strings.ToLong(ConfigurationManager.AppSettings["EndecaSWSearchDimFilter"], 0);
+
+                        ISiteWideSearchResultCollection results = GenericSiteWideSearchManager.GetSearchResults(Keyword, _currentPage, _recordsPerPage, dimFilter);
+
+                        rptSearchResults.DataSource = results;
+                        rptSearchResults.DataBind();
+
+                        if (results.TotalNumResults == 0)
+                        {
+                            ResultsText = "No results found";
+                            rptSearchResults.Visible = false;
+                        }
+                        else
+                        {
+                            int startRecord = 0;
+                            int endRecord = 0;
+                            _resultsFound = true;
+                            SimplePager.GetFirstItemLastItem(_currentPage, _recordsPerPage, (int)results.TotalNumResults, out startRecord, out endRecord);
+
+                            //phNoResultsLabel.Visible = false;
+                            rptSearchResults.Visible = true;
+                            string resultsCount = String.Format("{0}-{1} of {2}", startRecord.ToString(), endRecord.ToString(), results.TotalNumResults.ToString());
+                            ResultsText = "Results " + resultsCount;
+                        }
+
+                        spPager.RecordCount = (int)results.TotalNumResults;
+                        spPager.RecordsPerPage = _recordsPerPage;
+                        spPager.CurrentPage = _currentPage;
+                        spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        int startRecord = 0;
-                        int endRecord = 0;
-                        _resultsFound = true;
-                        SimplePager.GetFirstItemLastItem(_currentPage, _recordsPerPage, (int)results.TotalNumResults, out startRecord, out endRecord);
-
-                        //phNoResultsLabel.Visible = false;
-                        rptSearchResults.Visible = true;
-                        string resultsCount = String.Format("{0}-{1} of {2}", startRecord.ToString(), endRecord.ToString(), results.TotalNumResults.ToString());
-                        ResultsText = "Results " + resultsCount;
+                        Logger.LogError("SiteWideSearch", NCIErrorLevel.Error, ex);
                     }
 
-                    spPager.RecordCount = (int)results.TotalNumResults;
-                    spPager.RecordsPerPage = _recordsPerPage;
-                    spPager.CurrentPage = _currentPage;
-                    spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
                 }
                 else
                 {
@@ -90,15 +99,6 @@ namespace TCGA.Web.SnippetTemplates
             {
                 ResultsText = String.Empty;
             }
-        }
-
-        protected void ddlPageUnit_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //If we change then set page to page 1
-            _recordsPerPage = 10;
-            _currentPage = 1;
-            _offSet = 0;
-            _didDDLChange = true;
         }
 
         protected string ResultsText
