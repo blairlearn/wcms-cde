@@ -35,7 +35,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public override void RenderControl(HtmlTextWriter writer)
         {
             base.RenderControl(writer);
-            MarkupExtensionProcessor.Instance.Process(HtmlData);
+            HtmlData=MarkupExtensionProcessor.Instance.Process(HtmlData);
             LiteralControl lit = new LiteralControl(HtmlData);
             lit.RenderControl(writer);
         }
