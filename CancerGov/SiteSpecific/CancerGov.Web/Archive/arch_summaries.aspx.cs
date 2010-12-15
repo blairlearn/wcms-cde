@@ -49,7 +49,7 @@ namespace www.Archive
 			sumTable.Columns.Add(new DataColumn("Language", System.Type.GetType("System.String")));
             sumTable.Columns.Add(new DataColumn("PrettyURL", System.Type.GetType("System.String")));
 
-			string docid, type, audience, title, language,prettyurl;
+            string docid, type, audience, title, language, prettyurl ;
 			SqlConnection dbh = new SqlConnection(dbConn);
 			dbh.Open();
 
@@ -64,6 +64,12 @@ namespace www.Archive
                     language = row["Language"].ToString();
                     prettyurl = row["PrettyURL"].ToString();
 
+                    //string myaudience;
+                    //myaudience = "1";
+                    //if (audience == "Patient")
+                    //{
+                    //    myaudience = "0";
+                    //}
 
                    
 
@@ -78,7 +84,7 @@ namespace www.Archive
                     if (!string.IsNullOrEmpty(prettyurl))
                     {
                         Uri siteUri = new Uri(prettyurl);
-                        dr["PrettyUrl"] = siteUri.LocalPath;
+                        dr["PrettyURL"] = siteUri.LocalPath;
                     }
                     sumTable.Rows.Add(dr);
                 }
