@@ -18,7 +18,7 @@
 			<Columns>
 				<asp:TemplateColumn HeaderText="ID">
 					<ItemTemplate>
-						<asp:HyperLink id="docLink" Text='<%# DataBinder.Eval(Container.DataItem,"SummaryID") %>' NavigateUrl='<%# DataBinder.Eval(Container.DataItem,"prettyurl") %>' Target="_blank" runat="server" />
+						<asp:HyperLink id="docLink" Text='<%# DataBinder.Eval(Container.DataItem,"SummaryID") %>' NavigateUrl='<%# DataBinder.Eval(Container.DataItem,"prettyurl")+ "?print=1" %>' Target="_blank" runat="server" />
 					</ItemTemplate>
 				</asp:TemplateColumn>
 				<asp:BoundColumn DataField="Type" HeaderText="Type"></asp:BoundColumn>
