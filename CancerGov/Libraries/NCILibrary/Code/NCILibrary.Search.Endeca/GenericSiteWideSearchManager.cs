@@ -160,7 +160,7 @@ namespace NCI.Search.Endeca
 
                     string title = Strings.Clean(result.Properties["Title"]);
                     string description = Strings.Clean(result.Properties["Description"]);
-                    string url = Strings.Clean(result.Properties["url"]);
+                    string url = Strings.Clean(result.Properties["URL"]);
 
                     GenericSiteWideSearchResult sr = new GenericSiteWideSearchResult(title, description, url);
                     rtnResults.Add(sr);
