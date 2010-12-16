@@ -98,6 +98,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="PageTemplates\DefaultTCGAPageTemplate.aspx" />
+    <Content Include="PageTemplates\NoRightNavTCGAPageTemplate.aspx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="SnippetTemplates\ViewPublicationsByCancerType.ascx" />
