@@ -94,6 +94,7 @@ namespace NCI.DataManager
                                     searchResult.VideoUrl = sqlFVReader.GetString("videourl");
                                     searchResult.AudioUrl = sqlFVReader.GetString("audiourl");
                                     searchResult.Language = sqlFVReader.GetString("language");
+                                    searchResult.OtherlanguageUrl = sqlFVReader.GetString("otherlanguageURL");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)

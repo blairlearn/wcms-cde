@@ -64,6 +64,10 @@ namespace NCI.DataManager
         public string AudioUrl { get; set; }
 
         /// <summary>
+        /// Other language Url
+        /// </summary>
+        public string OtherlanguageUrl { get; set; }
+        /// <summary>
         /// Language settings
         /// </summary>
         public string Language { get; set; }
