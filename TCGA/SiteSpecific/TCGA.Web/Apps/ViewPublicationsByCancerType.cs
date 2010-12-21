@@ -59,20 +59,29 @@ namespace TCGA.Web.SnippetTemplates
         {
             try
             {
-                pubResults = pubResults.Skip(pager.CurrentPage * ItemsPerPage - ItemsPerPage).Take(ItemsPerPage);
-
                 var publications = from publication in pubResults
+                                   group publication by 
+                                            new
+                                            {
+                                                    PublicationDate=(string)publication.Element("PublicationDate").Value,
+                                                    IsTCGANetworkType=(string)publication.Element("IsTCGANetworkType").Value,
+                                                    Description=(string)publication.Element("Description").Value,    
+                                                    JournalTitle=(string)publication.Element("JournalTitle").Value,
+					                                LinkText=(string)publication.Element("LinkText").Value,
+                                                    Link=(string)publication.Element("Link").Value
+                                            } into grp
                                    select
                                        new
                                        {
-                                           cancerType = publication.Element("CancerType").Value,
-                                           publicationDate = publication.Element("PublicationDate").Value,
-                                           isTCGANetworkType = getTCGAIdentifier(publication.Element("IsTCGANetworkType").Value),
-                                           description = publication.Element("Description").Value,
-                                           journalTitle = publication.Element("JournalTitle").Value,
-                                           associatedLink = getAssociatedLink(publication.Element("LinkText").Value, publication.Element("LinkText").Value)
+                                           publicationDate = grp.First().Element("PublicationDate").Value,
+                                           isTCGANetworkType = getTCGAIdentifier(grp.First().Element("IsTCGANetworkType").Value),
+                                           description = grp.First().Element("Description").Value,
+                                           journalTitle = grp.First().Element("JournalTitle").Value,
+                                           associatedLink = getAssociatedLink(grp.First().Element("LinkText").Value, grp.First().Element("Link").Value)
                                        };
 
+                totalResults = publications.Count();
+                publications = publications.Skip(pager.CurrentPage * ItemsPerPage - ItemsPerPage).Take(ItemsPerPage);
                 rptPublicationResults.DataSource = publications.ToList();
                 rptPublicationResults.DataBind();
             }
@@ -195,7 +204,6 @@ namespace TCGA.Web.SnippetTemplates
                         }
                 }
 
-                totalResults = publications.Count();
                 return publications;
 
             }
@@ -249,9 +257,8 @@ namespace TCGA.Web.SnippetTemplates
             {
                 IEnumerable<XElement> pubResults = null;
                 pubResults = GetPublications(CancerTypeSelected);
-                SetUpPagerInformation();
                 PopulatePublicationsResults(pubResults);
-
+                SetUpPagerInformation();
             }
             catch (Exception ex)
             {
