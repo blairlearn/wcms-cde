@@ -10,6 +10,8 @@ using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using CancerGov.CDR.TermDictionary;
 using NCI.Web.CDE.Modules;
+using NCI.Logging;
+
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class CDRDefinitionTemplate : SnippetControl
@@ -21,40 +23,51 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected string DefinitionText
         {
+
             get 
             {
-                string language = string.Empty;
-                string snippetXmlData = string.Empty;
-                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
-                {
-                    language = "English";
-                }
-                else
-                {
-                    language = "Spanish";
-                }
-
                 string definitionText = string.Empty;
 
-                snippetXmlData=SnippetInfo.Data;
-                // The snippet CDATA may contain CDATA as part of the data but percussion replaces the CDATA 
-                // close tag with Replace ']]>' with ']]ENDCDATA' this ']]ENDCDATA' should be replaced with 
-                // valid CDATA close tag ']]>' before it can be deserialized
-                snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
-                CDRDefinition mPBO = ModuleObjectFactory<CDRDefinition>.GetModuleObject(snippetXmlData);
+                try
+                {
+                    string language = string.Empty;
+                    string snippetXmlData = string.Empty;
+                    if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+                    {
+                        language = "English";
+                    }
+                    else
+                    {
+                        language = "Spanish";
+                    }
 
-                TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, mPBO.CDRId, null, 5);
-                if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
-                {
-                    definitionText = "<strong>" + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
+
+                    snippetXmlData = SnippetInfo.Data;
+                    // The snippet CDATA may contain CDATA as part of the data but percussion replaces the CDATA 
+                    // close tag with Replace ']]>' with ']]ENDCDATA' this ']]ENDCDATA' should be replaced with 
+                    // valid CDATA close tag ']]>' before it can be deserialized
+                    snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
+                    CDRDefinition mPBO = ModuleObjectFactory<CDRDefinition>.GetModuleObject(snippetXmlData);
+
+                    TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, mPBO.CDRId, null, 5);
+                    if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
+                    {
+                        definitionText = "<strong>" + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                    }
+                    else
+                    {
+                        definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
+
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                    Logger.LogError("CDE:CDRDefinitionTemplate.ascx.cs:DefinitionText", "Could not load the definition.Requires <CDRId></CDRId> in the CDRDefinitionTemplate.ascx module", NCIErrorLevel.Info,ex);
 
                 }
                 return definitionText;
             }
+
         }
               
     }
