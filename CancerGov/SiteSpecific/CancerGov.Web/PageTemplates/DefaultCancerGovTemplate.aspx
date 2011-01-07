@@ -63,7 +63,7 @@
                         </tr>
                     </table>
                 </td>
-                <!-- End Left Nav -->
+                <!-- End Left Nav -->                
                 <!-- Main Content Area -->
                 <td id="contentzone" valign="top" width="571">
                     <a name="skiptocontent"></a>
@@ -87,6 +87,7 @@
                         </FooterHtml>
                     </NCI:TemplateSlot>
                     <NCI:TemplateSlot ID="cgvMpToc" runat="server"  />
+                    <NCI:TemplateSlot ID="cgvCBRedLine" runat="server"  />
                     <NCI:TemplateSlot ID="cgvBody" runat="server"  />
                     <NCI:TemplateSlot ID="cgvBodyNav" runat="server" />
                 </td>
