@@ -19,6 +19,11 @@
       <documentation>Defines the schema for a file instruction xml file for the CDE.  In order to allow files to have pretty urls and be indexed by the search engine, there needs to be a record of that item in the file system.  This is that record.</documentation>
     </annotation>
     <all>
+      <element name="MimeType" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Multipurpose Internet Mail Extensions</documentation>
+        </annotation>
+      </element>
       <element name="ContentItemInfo" type="cde:contentItemInfo" minOccurs="0" maxOccurs="1">
         <annotation>
           <documentation>The information of the content item this Assembly Item represents</documentation>
