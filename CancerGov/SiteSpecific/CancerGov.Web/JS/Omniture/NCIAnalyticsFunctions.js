@@ -1,6 +1,6 @@
 ﻿var NCIAnalytics = {
     
-    displayAlerts  : true,
+    displayAlerts  : false,
     stringDelimiter : '|',
     fieldDelimiter : '~',
 
