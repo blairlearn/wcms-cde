@@ -1,4 +1,4 @@
-﻿var NCIAnalytics = {
+﻿ var NCIAnalytics = {
     
     displayAlerts  : false,
     stringDelimiter : '|',
@@ -28,6 +28,11 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 	        var local_s=s_gi(this.ReportSuites);
 	        local_s.linkTrackVars='';
     	    
+    	    // add language prop8 - Warning: adding prop8 to individual onclick functions will cause duplication
+            local_s['prop8'] = s.prop8; 
+            local_s.linkTrackVars += 'channel,';
+            local_s.linkTrackVars += 'prop8';
+
             for (var i in this.Props) {
                 local_s['prop' + i] = this.Props[i];
 
@@ -36,7 +41,13 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 
                 local_s.linkTrackVars += 'prop' + i;
             }
-            
+
+    	    // add language eVar2 - Warning: adding eVar2 to individual onclick functions will cause duplication
+            local_s['eVar2'] = s.eVar2; 
+            if (local_s.linkTrackVars.length > 0)
+               local_s.linkTrackVars += ',';
+            local_s.linkTrackVars += 'eVar2';
+
             for (var i in this.Evars) {
                 local_s['eVar' + i] = this.Evars[i];
 
@@ -93,6 +104,9 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         var searchType = 'sitewide';
         var keyword = document.getElementById('swKeyword').value;
     
+        if (s.prop8.toLowerCase() == 'spanish')
+            searchType += '_spanish';
+            
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal','o','SiteWideSearch');
         clickParams.Props = {
@@ -116,18 +130,24 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             if(e[i].checked)  {
                 if (e[i].value == 2)
                 {
-                    var searchType = 'sitewide_searchwithinresults';
+                    var searchType = 'sitewide_bottom_withinresults';
                     break;
                 }
                 else
                 {
-                    var searchType = 'sitewide_bottom_newsearch';
+                    var searchType = 'sitewide_bottom_new';
                     break;
                 }
             }
         }
-            
-        clickParams = new NCIAnalytics.ClickParams(sender,
+        
+        if (s.prop8.toLowerCase() == 'spanish')
+            searchType += '_spanish';
+
+        // the Omniture s_code file generates 'class does not support Automation' errors on the 
+		// dataSrc, dataFld, and dataFormatAs properties the 'SEARCH' Image button = therefore reference to
+		// the control is being set to null instead of sender
+        clickParams = new NCIAnalytics.ClickParams(null,
             'nciglobal','o','SiteWideSearchResultsSearch');
         clickParams.Props = {
             11 : searchType,
@@ -166,7 +186,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         var sponsor = '';
         var special = ''; 
         var keyword = '';       
-        var cancerTypeCondition = document.getElementById(ids.cancerType).options[document.getElementById(ids.cancerType).selectedIndex].text; 
+        var cancerTypeCondition = document.getElementById('cancerType').options[document.getElementById('cancerType').selectedIndex].text; 
 
         var typeOfTrialControl = document.getElementById(webAnalyticsOptions.typeOfTrialControlID);
         var drugControl = document.getElementById(webAnalyticsOptions.drugControlID);
@@ -178,41 +198,41 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
   
         //Location 
         // - zip code
-        if (document.getElementById(ids.zipCodeLocationButton).checked)
+        if (document.getElementById('zipCodeLocationButton').checked)
             location = 'Near Zip Code';
         // - At NIH
-        else if (document.getElementById(ids.atNihLocationButton).checked)
+        else if (document.getElementById('atNihLocationButton').checked)
             if (document.getElementById('nihOnly').checked)
                 location = 'At NIH Only Bethesda, Md';
             else
                 location = 'At NIH';
         // - City/State/Country
-        else if (document.getElementById(ids.cityStateLocationButton).checked)  {
+        else if (document.getElementById('cityStateLocationButton').checked)  {
             location =  'In City/State/Country';
         }
-        else if (document.getElementById(ids.hospitalLocationButton).checked)  {
+        else if (document.getElementById('hospitalLocationButton').checked)  {
             location = 'At Hospital/Institution';
         }
         
         // Trial Status/Phase
         // - Status
-        if (document.getElementById( ids.trialStatus + '_0' ).checked) {
+        if (document.getElementById('trialStatus_0').checked) {
             statusPhase = 'Trial Status';
         }
-        else if (document.getElementById(ids.trialStatus + '_1').checked) { 
+        else if (document.getElementById('trialStatus_1').checked) { 
             statusPhase = 'Trial Status';
         }
         statusPhase += NCIAnalytics.fieldDelimiter;
         // - Phase
         for(var i=1; i < 5; i++) {
-            if (document.getElementById(ids.trialPhase + '_' + i).checked)  {
+            if (document.getElementById('trialPhase_' + i).checked)  {
                     phaseList = 'Trial Phase';
                     break;
             }
         }
         statusPhase += phaseList + NCIAnalytics.fieldDelimiter;
         // - New Trial
-        if (document.getElementById(ids.newOnly).checked)  { 
+        if (document.getElementById('newOnly').checked)  { 
             item = $('trialStatusTable').select("label[for=newOnly]");
             statusPhase += 'New Trials';
         } 
@@ -229,7 +249,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             treatmentType += 'Treatment/Intervention'; 
 
         // Trial ID / Sponsor
-        if ($(ids.protocolID).value != '') 
+        if ($('protocolID').value != '') 
             trialIdSponsor += 'Protocol ID';
        trialIdSponsor += NCIAnalytics.fieldDelimiter;
        sponsor = sponsorOfTrialControl.SelectedTextList(NCIAnalytics.stringDelimiter);
@@ -246,7 +266,8 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
        if ((special != '') && (special != 'All'))
             trialIdSponsor += 'Special Category';
        
-       keyword = document.getElementById(ids.txtKeywords).value; 
+       if (document.getElementById('txtKeywords_state').value == 'valid')
+            keyword = document.getElementById('txtKeywords').value; 
         
        clickParams = new NCIAnalytics.ClickParams(null,
             'nciglobal,nciclinicaltrials','o','CTSearch');
@@ -441,7 +462,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         var endDate = document.getElementById('endMonth').options[document.getElementById('endMonth').selectedIndex].text + ' ' 
             + document.getElementById('endYear').value;
 
-        NCIAnalytics.KeywordSearch(sender, searchType, keyword, startDate, endDate);
+        NCIAnalytics.KeywordDateRangeSearch(sender, searchType, keyword, startDate, endDate);
     },
     
 //******************************************************************************************************	
@@ -580,6 +601,15 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         clickParams.Events = [7]; 
         clickParams.LogToOmniture(); 
     },
+
+//******************************************************************************************************	
+    HelpLink : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','HelpLink');
+        clickParams.Events = [5]; 
+        clickParams.LogToOmniture(); 
+    },
     
 //******************************************************************************************************	
     PrintLink : function(sender)  {
@@ -598,9 +628,41 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         clickParams.Events = [14]; 
         clickParams.LogToOmniture(); 
     },
+//******************************************************************************************************	
+    FooterLink : function(sender, footerName)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','FooterLink-' + footerName );
+        clickParams.Props = {
+            36 : footerName};
+        clickParams.Evars = {
+            36 : footerName};
+        clickParams.Events = [16]; 
+        clickParams.LogToOmniture();
+    },
+//******************************************************************************************************	
+    BulletinSubscription : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','BulletinSubscription');
+        clickParams.Events = [9]; 
+        clickParams.LogToOmniture(); 
+    },
     
 //******************************************************************************************************	
-    LinkTracking : function(toLink, fromLink)  {
+    GenericLinkTrack : function(sender,label)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','GenericLinkTrack');
+        clickParams.Props = {
+            4 : sender.href,
+            5 : sender.innerHTML,
+           28 : label};
+        clickParams.LogToOmniture();  
+    },
+
+//******************************************************************************************************	
+    LinkTracking : function(toLink, fromLink, label)  {
         
         clickParams = new NCIAnalytics.ClickParams(null,
             'nciglobal','o','LinkTracking');
@@ -609,7 +671,24 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             5 : fromLink + NCIAnalytics.stringDelimiter + toLink};
         clickParams.LogToOmniture();  
     },
+    
+//******************************************************************************************************	
+    CustomLink : function(sender, linkName)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o',linkName);
+        clickParams.LogToOmniture(); 
+    },
 
+//******************************************************************************************************	
+    BookmarkShareClick : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','BookmarkShareClick');
+        clickParams.Events = [17]; 
+        clickParams.LogToOmniture(); 
+    },
+    
 //******************************************************************************************************	
     LinkTrackTagBuilder : function(e)  {
 

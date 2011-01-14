@@ -1,88 +1,16 @@
-/* Received 11-20-2009 3:51 PM */ 
+/* CTB version */ 
 /* SiteCatalyst code version: H.20.3.
-Copyright 1997-2009 Omniture, Inc. More info available at
-http://www.omniture.com */
-/************************ ADDITIONAL FEATURES ************************
-     Plugins
-*/
+Copyright 1997-2009 Omniture, Inc. 
+More info available at http://www.omniture.com */
 
-/*Semphonic edits for report suite selection begin*/
-var omurl = location.hostname.toLowerCase() + location.pathname.toLowerCase();
-
-var omrs = "";
-
-if(omurl.indexOf(".gov/cancertopics") >= 0)
-{
-    omrs = ",ncicancertopics";
-}
-else if(omurl.indexOf(".gov/clinicaltrials") >= 0
-        || omurl.indexOf(".gov/search/ClinicalTrialsResults") >= 0
-	|| omurl.indexOf(".gov/search/viewclinicaltrials") >= 0)
-{
-    omrs = ",nciclinicaltrials";
-}
-else if(omurl.indexOf(".gov/statistics") >= 0)
-{
-    omrs = ",ncicancerstatistics";
-}
-else if(omurl.indexOf(".gov/researchandfunding") >= 0)
-{
-    omrs = ",nciresearch";
-}
-else if(omurl.indexOf(".gov/newscenter") >= 0)
-{
-    omrs = ",ncinews";
-}
-else if(omurl.indexOf(".gov/aboutnci") >= 0
-	|| omurl.indexOf(".gov/directorscorner") >= 0
-	|| omurl.indexOf(".gov/directorsnotes") >= 0
-	|| omurl.indexOf(".gov/recovery") >= 0
-	|| omurl.indexOf(".gov/help") >= 0
-	|| omurl.indexOf(".gov/policies") >= 0
-	|| omurl.indexOf(".gov/sitehelp") >= 0
-	|| omurl.indexOf(".gov/nci-international-portfolio") >= 0)
-{
-    omrs = ",nciabout";
-}
-else if(omurl.indexOf(".gov/espanol/cancer") >= 0)
-{
-    omrs = ",ncielcancer";
-}
-else if(omurl.indexOf(".gov/espanol/tipos") >= 0)
-{
-    omrs = ",ncitiposdecancer";
-}
-else if(omurl.indexOf(".gov/espanol/recursos") >= 0)
-{
-    omrs = ",ncincirecursos";
-}
-else if(omurl.indexOf(".gov/espanol/noticias") >= 0)
-{
-    omrs = ",ncinoticias";
-}
-else if(omurl.indexOf(".gov/espanol/instituto") >= 0)
-{
-    omrs = ",ncinuestroinstituto";
-}
-else if(omurl.indexOf(".gov/drugdictionary") >= 0)
-{
-    omrs = ",ncidrugdictionary";
-}
-else if(omurl.indexOf(".gov/ncicancerbulletin") >= 0
-	|| omurl.indexOf(".gov/search/resultscancerbulletin") >= 0)
-{
-    omrs = ",ncibulletin";
-}
-
-/*end Semphonic edits for report suite selection*/
-
-//var s_account="nciglobal"+omrs;
+// s_account (report suites) is defined and set before this file is loaded
 var s=s_gi(s_account)
+
 /************************** CONFIG SECTION **************************/
-/* You may add or alter any code config here. */
 /* Specify the life time of the cookie in seconds, or */
 /* set to "Session" to turn off persistent cookies.   */
-s.cookieLifetime="Session"
+//s.cookieLifetime="Session"
+s.cookieLifetime=""
 /* Conversion Config */
 s.currencyCode="USD"
 /* Language Config */
@@ -97,45 +25,89 @@ s.linkLeaveQueryString=false
 s.linkTrackVars="None"
 s.linkTrackEvents="None"
 
+// If the cid query parameter exists - set prop16 and eVar16 to value of cid
+var cdrid = caseInsensitiveGetQueryParm('cdrid');
+if(cdrid)
+    s.prop16=s.eVar16=cdrid; 
 
-var version = semphonicGetQueryParm('version');
-var cdrid = semphonicGetQueryParm('cdrid');
+var localPageName = "www.cancer.gov" + location.pathname.toLowerCase();
+if (typeof pageNameOverride!="undefined")
+    localPageName = pageNameOverride;
 
 var canonicalLink = document.getElementById("lnkCanonical");
-var pN = "";
+// if lnkCannonical element exists, set localPageName to 
+// lnkCannonical href sans protocal and query parameters
 if(canonicalLink)
 {
-    var params = "";
-    if(cdrid) { params += "cdrid=" + cdrid + "&"; }
-    if(version) { params += "version=" + version.toLowerCase() + "&"; }
-    if(semphonicGetQueryParm('page')) { params += "page=" + semphonicGetQueryParm('page') + "&"; }
-    if(semphonicGetQueryParm('allpages')) { params += "allpages=" + semphonicGetQueryParm('allpages').toLowerCase() + "&"; }
-    if(semphonicGetQueryParm('print')) { params += "print=" + semphonicGetQueryParm('print').toLowerCase() + "&"; }
+    canonicalLink = canonicalLink.href.toLowerCase();
 
-    var canonicalHRef = canonicalLink.href.toLowerCase();
-    if(params.length > 0)
-	  canonicalHRef += "?" + params;
-    if(canonicalHRef.indexOf("http://") >= 0)
-	  pN = canonicalHRef.substring(canonicalHRef.indexOf("http://")+7);
-    else
-	  pN = canonicalHRef;
+    // Remove protocol
+    if(canonicalLink.indexOf("http://") >= 0)
+	  canonicalLink = canonicalLink.substring(canonicalLink.indexOf("http://")+7);
+
+	// Remove query parameters
+	if(canonicalLink.indexOf("?") > 0)
+	  canonicalLink = canonicalLink.substring(0, canonicalLink.indexOf("?"));
+	  
+    localPageName = canonicalLink;
+}
+
+// Determine if patient or healthprofessional version
+// set prop7 and eVar7 to version and add value to 
+// addToLocalPageName
+var version = semphonicGetQueryParm('version');
+var addToLocalPageName = "";
+var omversion = "";
+if(localPageName.indexOf("patient") >= 0 )
+{
+	omversion = "patient";
+}
+else if(localPageName.indexOf("healthprofessional") >= 0 )
+{
+	omversion = "healthprofessional";
 }
 else
 {
-    var params = "";
-    if(cdrid) { params += "cdrid=" + cdrid + "&"; }
-    if(version) { params += "version=" + version.toLowerCase() + "&"; }
-    if(semphonicGetQueryParm('page')) { params += "page=" + semphonicGetQueryParm('page') + "&"; }
-    if(semphonicGetQueryParm('allpages')) { params += "allpages=" + semphonicGetQueryParm('allpages').toLowerCase() + "&"; }
-    if(semphonicGetQueryParm('print')) { params += "print=" + semphonicGetQueryParm('print').toLowerCase() + "&"; }
+	if (version) 
+	{
+		if( version.toLowerCase() == "patient"  
+			|| version == "patients"
+			|| version == "0" )
+		{
+			omversion = "patient";
+			addToLocalPageName = CommaList(addToLocalPageName,"Patient");
+		}
+		else if( version.toLowerCase() == "healthprofessional" 
+			|| version.toLowerCase() == "healthprofessionals"
+			|| version == "1" )
+		{
+			omversion = "healthprofessional";
+			addToLocalPageName = CommaList(addToLocalPageName,"HealthProfessional");
+		}
+	}
+}
+s.prop7=s.eVar7=omversion;
 
-    var url = omurl;
-    if(params.length > 0)
-	  url += "?" + params;
-    pN = url;
+// if dictionary, define addToLocalPageName
+if(localPageName.indexOf("dictionary") > 0 || 
+   localPageName.indexOf("diccionario")> 0)
+{
+    if (caseInsensitiveGetQueryParm('expand'))
+        addToLocalPageName = CommaList(addToLocalPageName,'AlphaNumericBrowse');
+    else if (cdrid)
+        addToLocalPageName = CommaList(addToLocalPageName,'Definition');
 }
 
-s.pageName=s.eVar1=pN
+// retain page query parameter value
+var pageNum = caseInsensitiveGetQueryParm('page');
+if (pageNum)
+    addToLocalPageName = CommaList(addToLocalPageName,"Page " + pageNum.toString());
+
+// add any additional information to localPageName and
+// set pageName and eVar1 to localPageName
+if(addToLocalPageName.length > 0)
+    localPageName += " - " + addToLocalPageName;
+s.pageName=s.eVar1=localPageName;
 
 var fullURL = document.URL;
 if(fullURL.length > 100)
@@ -146,27 +118,20 @@ if(fullURL.length > 100)
 else
     s.prop1 = fullURL;
 
+// Set prop8 and eVar3 to "english" unless "espanol" is in the url 
+// or "lang=spanish" or "language=spanish" query parameters exist
 var language = "english";
-if(omurl.indexOf("espanol") >= 0) { language = "spanish"; }
-var lang = semphonicGetQueryParm('lang');
-if(lang)
-{
-    if(lang.toLowerCase().indexOf("spanish") >= 0) { language = "spanish"; }
-    if(lang.length > 0) { language = lang; }
-}
+if(localPageName.indexOf("espanol") >= 0) 
+    language = "spanish";
+if(caseInsensitiveGetQueryParm('lang')=='spanish')
+    language = "spanish";
+if(caseInsensitiveGetQueryParm('language')=='spanish')
+    language = "spanish";
 s.prop8=s.eVar2=language;
 
+// Set prop26 to Time Stamp format: <year>|<month>|<day>|<hour>
 var now = new Date();
-var month = now.getMonth() + 1;
-var day = now.getDate();
-var year = now.getFullYear();
-var hour = now.getHours();
-
-var now_string = year + "|" + month + "|" + day + "|" + hour;
-s.prop26 = now_string;
-
-if(version) { s.prop7=s.eVar7=version; }
-if(cdrid) { s.prop16=s.eVar16=cdrid; }
+s.prop26 = now.getFullYear() + "|" + (now.getMonth() + 1) + "|" + now.getDate() + "|" + now.getHours();
 
 /* Plugin Config */
 s.usePlugins=true
@@ -174,112 +139,74 @@ function s_doPlugins(s) {
 	/* Add calls to plugins here */
 	
 	s.prop15=s.eVar15=s.getQueryParam('protocolsearchid');
+	s.eVar35=s.getQueryParam('cid');
 	s.campaign=s.getQueryParam('cid'); //change cid to actual query parameter
 	s.campaign=s.getValOnce(s.campaign,'s_campaign',30);
 
-/* Force Custom Variables to Lower Case */
-
-
-var prop6 = s.prop6;
-if(typeof(prop6) != 'undefined' && prop6 != null){
-	s.prop6=s.prop6.toLowerCase() 
-	};
-
-var prop7 = s.prop7;
-if(typeof(prop7) != 'undefined' && prop7 != null){
-	s.prop7=s.prop7.toLowerCase()
-	};
-
-var eVar7 = s.eVar7;
-if(typeof(eVar7) != 'undefined' && eVar7 != null){
-	s.eVar7=s.eVar7.toLowerCase()
-	};
-
-var prop10 = s.prop10;
-if(typeof(prop10) != 'undefined' && prop10 != null){
-	s.prop10=s.prop10.toLowerCase()
-	};
-
-var prop14 = s.prop14;
-if(typeof(prop14) != 'undefined' && prop14 != null){
-	s.prop14=s.prop14.toLowerCase()
-	};
-
-var eVar14 = s.eVar14;
-if(typeof(eVar14) != 'undefined' && eVar14 != null){
-	s.eVar14=s.eVar14.toLowerCase()
-	};
-
-var prop17 = s.prop17;
-if(typeof(prop17) != 'undefined' && prop17 != null){
-	s.prop17=s.prop17.toLowerCase()
-	};
-
-var eVar17 = s.eVar17;
-if(typeof(eVar17) != 'undefined' && eVar17 != null){
-	s.eVar17=s.eVar17.toLowerCase()
-	};
-
-var prop18 = s.prop18;
-if(typeof(prop18) != 'undefined' && prop18 != null){
-	s.prop18=s.prop18.toLowerCase()
-	};
-
-var eVar18 = s.eVar18;
-if(typeof(eVar18) != 'undefined' && eVar18 != null){
-	s.eVar18=s.eVar18.toLowerCase()
-	};
-
-var prop19 = s.prop19;
-if(typeof(prop19) != 'undefined' && prop19 != null){
-	s.prop19=s.prop19.toLowerCase()
-	};
-
-var eVar19 = s.eVar19;
-if(typeof(eVar19) != 'undefined' && eVar19 != null){
-	s.eVar19=s.eVar19.toLowerCase()
-	};
-
-var prop20 = s.prop20;
-if(typeof(prop20) != 'undefined' && prop20 != null){
-	s.prop20=s.prop20.toLowerCase()
-	};
-
-var eVar20 = s.eVar20;
-if(typeof(eVar20) != 'undefined' && eVar20 != null){
-	s.eVar20=s.eVar20.toLowerCase()
-	};
-
-var prop21 = s.prop21;
-if(typeof(prop21) != 'undefined' && prop21 != null){
-	s.prop21=s.prop21.toLowerCase()
-	};
-
-var eVar21 = s.eVar21;
-if(typeof(eVar21) != 'undefined' && eVar21 != null){
-	s.eVar21=s.eVar21.toLowerCase()
-	};
-
-var prop22 = s.prop22;
-if(typeof(prop22) != 'undefined' && prop22 != null){
-	s.prop22=s.prop22.toLowerCase()
-	};
-
-var eVar23 = s.eVar23;
-if(typeof(eVar23) != 'undefined' && eVar23 != null){
-	s.eVar23=s.eVar23.toLowerCase()
-	};
-
-var eVar24 = s.eVar24;
-if(typeof(eVar24) != 'undefined' && eVar24 != null){
-	s.eVar24=s.eVar24.toLowerCase()
-	};
+    /* Force Custom Variables to Lower Case */
+    //s.prop6 = makeLowerCase(s.prop6);
+    s.prop7 = makeLowerCase(s.prop7);
+    s.eVar7= makeLowerCase(s.eVar7);
+    //s.prop10 = makeLowerCase(s.prop10);
+    s.prop14 = makeLowerCase(s.prop14);
+    s.eVar14= makeLowerCase(s.eVar14);
+    s.prop17 = makeLowerCase(s.prop17);
+    s.eVar17= makeLowerCase(s.eVar17);
+    s.prop18 = makeLowerCase(s.prop18);
+    s.eVar18= makeLowerCase(s.eVar18);
+    s.prop19 = makeLowerCase(s.prop19);
+    s.eVar19 = makeLowerCase(s.eVar19);
+    s.prop20 = makeLowerCase(s.prop20);
+    s.eVar20 = makeLowerCase(s.eVar20);
+    s.prop21 = makeLowerCase(s.prop21);
+    s.eVar21 = makeLowerCase(s.eVar21);
+    s.prop22 = makeLowerCase(s.prop22);
+    s.eVar23 = makeLowerCase(s.eVar23);
+    s.eVar24 = makeLowerCase(s.eVar24);
 
 }
 s.doPlugins=s_doPlugins
 
 
+/* CTB functions */
+function CommaList(commaList, addValue)
+{
+    if (commaList.length > 0)
+        return commaList + ", " + addValue;
+    else 
+        return addValue;
+}
+function makeLowerCase(value)
+{
+    if(value == null || typeof(value) == 'undefined' )
+        return value;
+    else     
+        return value.toLowerCase();
+}
+/* END CTB functions */
+
 /*Semphonic edits for variable customization begin*/
+function caseInsensitiveGetQueryParm(qp)
+{
+	var fullurl = location.search.toLowerCase();
+	var cipos = fullurl.indexOf(qp + "=");
+	if (cipos == -1)
+      	return null;
+	cipos += qp.length+1;
+	if (cipos >= fullurl.length)
+      	return null;
+	var ciendPos1 = fullurl.indexOf("&", cipos);
+	var ciendPos2 = fullurl.indexOf("#", cipos);
+	if (ciendPos1 < 0 && ciendPos2 < 0)
+	{
+		return unescape(fullurl.substring(cipos));
+	}
+	var ciendPos = ciendPos1;
+	if (ciendPos < 0 || (ciendPos2 >= 0 && ciendPos2 < ciendPos1))
+		ciendPos = ciendPos2;
+
+	return unescape(fullurl.substring(cipos, ciendPos));
+}
 
 function semphonicGetQueryParm(qp)
 {
@@ -301,9 +228,6 @@ function semphonicGetQueryParm(qp)
 
 	return unescape(document.URL.substring(pos, endPos));
 }
-
-
-
 /* SEMPHONIC edits END */
 
 
@@ -472,3 +396,4 @@ w.s_ft=new Function("c","c+='';var s,e,o,a,d,q,f,h,x;s=c.indexOf('=function(');w
 +"f(h==q&&!x)q='';if(h=='\\\\')x=x?0:1;else x=0}else{if(h=='\"'||h==\"'\")q=h;if(h=='{')d++;if(h=='}')d--}if(d>0)e++}c=c.substring(0,s)+'new Function('+(a?a+',':'')+'\"'+s_fe(c.substring(o+1,e))+'\")"
 +"'+c.substring(e+1);s=c.indexOf('=function(')}return c;");
 c=s_d(c);if(e>0){a=parseInt(i=v.substring(e+5));if(a>3)a=parseFloat(i)}else if(m>0)a=parseFloat(u.substring(m+10));else a=parseFloat(v);if(a>=5&&v.indexOf('Opera')<0&&u.indexOf('Opera')<0){w.s_c=new Function("un","pg","ss","var s=this;"+c);return new s_c(un,pg,ss)}else s=new Function("un","pg","ss","var s=new Object;"+s_ft(c)+";return s");return s(un,pg,ss)}
+
