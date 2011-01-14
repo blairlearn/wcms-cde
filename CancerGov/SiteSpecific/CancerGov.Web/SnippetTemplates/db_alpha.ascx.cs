@@ -236,6 +236,15 @@ namespace Www.Templates
                     wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
 
+                Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.TermsDictionarySearch(this," + _isSpanish.ToString().ToLower() + ");"); // Load from onsubit script
+                if (_isSpanish)
+                    alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaListSpanish"; // Load A-Z list onclick script
+                else
+                    alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaList"; // Load A-Z list onclick script
+                printLinkHref.HRef = "javascript: NCIAnalytics.SendToPrinterLink(this); window.print();";
+
+
+
             }
 
             BackTopLink();
@@ -636,9 +645,9 @@ namespace Www.Templates
 
         protected string ResultListViewHrefOnclick(ListViewDataItem dataItem)
         {
-            //if (WebAnalyticsOptions.IsEnabled)
-            //    return "onclick=\"NCIAnalytics.TermsDictionaryResults(this,'" + (dataItem.DataItemIndex + 1).ToString() + "');\""; // Load results onclick script
-            //else
+            if (WebAnalyticsOptions.IsEnabled)
+                return "onclick=\"NCIAnalytics.TermsDictionaryResults(this,'" + (dataItem.DataItemIndex + 1).ToString() + "');\""; // Load results onclick script
+            else
                 return "";
         }
 

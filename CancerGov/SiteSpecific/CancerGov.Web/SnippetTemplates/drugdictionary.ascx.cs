@@ -196,6 +196,10 @@ namespace Www.Templates
                     wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
 
+                Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.DrugDictionarySearch(this);"); // Load from onsubit script
+                alphaListBox.WebAnalyticsFunction = "NCIAnalytics.DrugDictionarySearchAlphaList"; // Load A-Z list onclick script
+
+
             }
 
 
@@ -220,11 +224,11 @@ namespace Www.Templates
         }
         protected string ResultListViewHrefOnclick(ListViewDataItem dataItem)
         {
-            //int indexAdjust = ((PageSize * CurrentPageIndex) - PageSize) + 1;
+            int indexAdjust = ((PageSize * CurrentPageIndex) - PageSize) + 1;
 
-            //if (WebAnalyticsOptions.IsEnabled)
-            //    return "onclick=\"NCIAnalytics.DrugDictionaryResults(this,'" + (dataItem.DataItemIndex + indexAdjust).ToString() + "');\""; // Load results onclick script
-            //else
+            if (WebAnalyticsOptions.IsEnabled)
+                return "onclick=\"NCIAnalytics.DrugDictionaryResults(this,'" + (dataItem.DataItemIndex + indexAdjust).ToString() + "');\""; // Load results onclick script
+            else
                 return "";
         }
         protected void BackTopLink()
