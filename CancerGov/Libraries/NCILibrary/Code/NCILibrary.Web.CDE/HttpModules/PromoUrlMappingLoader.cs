@@ -81,18 +81,11 @@ namespace NCI.Web.CDE
             catch (Exception ex)
             {
                 Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "\nFailed to Process Promo URL - " + url, NCIErrorLevel.Error, ex);
-                RaiseErrorPage();
             }
         }
 
         #endregion
 
-        private static void RaiseErrorPage()
-        {
-            HttpContext.Current.Response.Write("There was an error processing the Promo Url Request");
-            HttpContext.Current.Response.End();
-            return;
-        }
 
     }
 }

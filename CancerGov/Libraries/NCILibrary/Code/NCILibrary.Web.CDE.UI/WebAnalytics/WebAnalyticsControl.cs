@@ -44,9 +44,15 @@ namespace NCI.Web.CDE.UI.WebControls
             if (webAnalyticsSettings != null)
             {
                 WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
-                webAnalyticsPageLoad.SetChannel(pgInstruction.GetField("channelName"));
-                webAnalyticsPageLoad.SetLanguage(CultureInfo.CurrentUICulture.EnglishName);
+                webAnalyticsPageLoad.SetLanguage(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
 
+                // Use pretty url to get channel name from the mapping, mapping information is in web.config
+                string prettyUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("PrettyUrl").UriStem;
+                if(!string.IsNullOrEmpty(prettyUrl))
+                {
+                    string channelName = WebAnalyticsOptions.GetChannelForUrlPath(prettyUrl);
+                    webAnalyticsPageLoad.SetChannel(channelName);
+                }
                 foreach (KeyValuePair<WebAnalyticsOptions.eVars, string> kvp in webAnalyticsSettings.Evars)
                     webAnalyticsPageLoad.AddEvar(kvp.Key, kvp.Value ); 
 

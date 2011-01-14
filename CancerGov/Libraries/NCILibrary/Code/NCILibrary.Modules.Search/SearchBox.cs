@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
+using System.Configuration;
 
 namespace NCI.Web.CDE.UI.Modules
 {
@@ -125,20 +126,20 @@ namespace NCI.Web.CDE.UI.Modules
                 <TD vAlign=top>&nbsp;</TD></TR><TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=8></TD></TR>
                 <TR><TD vAlign=top>&nbsp;</TD>");
 
-                output.Write(@"<TD vAlign=top>Between these dates:<BR><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=5><BR></TD>
+                output.Write(string.Format(@"<TD vAlign=top>Between these dates:<BR><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=5><BR></TD>
                     <TD vAlign=top>&nbsp;</TD></TR><TR>
-                    <TD vAlign=top>&nbsp;</TD><TD vAlign=top><LABEL class=hidden for=startMonth>select start Month</LABEL> <SELECT id=startMonth name=startMonth> <OPTION selected value=1>Jan.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</OPTION> <OPTION value=2>Feb.</OPTION> <OPTION value=3>Mar.</OPTION> <OPTION value=4>Apr.</OPTION> <OPTION value=5>May</OPTION> <OPTION value=6>Jun.</OPTION> <OPTION value=7>Jul.</OPTION> <OPTION value=8>Aug.</OPTION> <OPTION value=9>Sept.</OPTION> <OPTION value=10>Oct.</OPTION> <OPTION value=11>Nov.</OPTION> <OPTION value=12>Dec.</OPTION></SELECT> &nbsp;&nbsp;<LABEL class=hidden for=startYear>select start Year</LABEL> <SELECT id=startYear name=startYear> <OPTION selected value=1998>1998</OPTION> <OPTION value=1999>1999</OPTION> <OPTION value=2000>2000</OPTION> <OPTION value=2001>2001</OPTION> <OPTION value=2002>2002</OPTION> <OPTION value=2003>2003</OPTION> <OPTION value=2004>2004</OPTION> <OPTION value=2005>2005</OPTION> <OPTION value=2006>2006</OPTION> <OPTION value=2007>2007</OPTION> <OPTION value=2008>2008</OPTION> <OPTION value=2009>2009</OPTION> <OPTION value=2010>2010</OPTION></SELECT> </TD>
-                    <TD vAlign=top>&nbsp;</TD></TR><TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=3></TD></TR>
+                    <TD vAlign=top>&nbsp;</TD><TD vAlign=top><LABEL class=hidden for=startMonth>select start Month</LABEL> <SELECT id=startMonth name=startMonth> <OPTION selected value=1>Jan.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</OPTION> <OPTION value=2>Feb.</OPTION> <OPTION value=3>Mar.</OPTION> <OPTION value=4>Apr.</OPTION> <OPTION value=5>May</OPTION> <OPTION value=6>Jun.</OPTION> <OPTION value=7>Jul.</OPTION> <OPTION value=8>Aug.</OPTION> <OPTION value=9>Sept.</OPTION> <OPTION value=10>Oct.</OPTION> <OPTION value=11>Nov.</OPTION> <OPTION value=12>Dec.</OPTION></SELECT> &nbsp;&nbsp;<LABEL class=hidden for=startYear>select start Year</LABEL> <SELECT id=startYear name=startYear>{0}</SELECT> </TD>
+                    <TD vAlign=top>&nbsp;</TD></TR><TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=3></TD></TR> 
                     <TR><TD vAlign=top>&nbsp;</TD>
-                    <TD vAlign=top><LABEL class=hidden for=endMonth>select end Month</LABEL><SELECT id=endMonth name=endMonth> <OPTION value=1>Jan.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</OPTION> <OPTION value=2>Feb.</OPTION> <OPTION value=3>Mar.</OPTION> <OPTION value=4>Apr.</OPTION> <OPTION value=5>May</OPTION> <OPTION value=6>Jun.</OPTION> <OPTION value=7>Jul.</OPTION> <OPTION value=8>Aug.</OPTION> <OPTION value=9>Sept.</OPTION> <OPTION selected value=10>Oct.</OPTION> <OPTION value=11>Nov.</OPTION> <OPTION value=12>Dec.</OPTION></SELECT> &nbsp;&nbsp;<LABEL class=hidden for=endYear>select end Year</LABEL> <SELECT id=endYear name=endYear> <OPTION value=1998>1998</OPTION> <OPTION value=1999>1999</OPTION> <OPTION value=2000>2000</OPTION> <OPTION value=2001>2001</OPTION> <OPTION value=2002>2002</OPTION> <OPTION value=2003>2003</OPTION> <OPTION value=2004>2004</OPTION> <OPTION value=2005>2005</OPTION> <OPTION value=2006>2006</OPTION> <OPTION value=2007>2007</OPTION> <OPTION value=2008>2008</OPTION> <OPTION value=2009>2009</OPTION> <OPTION selected value=2010>2010</OPTION></SELECT> </TD>
+                    <TD vAlign=top><LABEL class=hidden for=endMonth>select end Month</LABEL><SELECT id=endMonth name=endMonth> {1} </SELECT> &nbsp;&nbsp;<LABEL class=hidden for=endYear>select end Year</LABEL> <SELECT id=endYear name=endYear>{2}</SELECT> </TD>
                     <TD vAlign=top>&nbsp;</TD></TR>
-                    <TR><TD vAlign=top colSpan=3><IMG border=0 alt=""spacer image"" src=""/images/spacer.gif"" width=1 height=10></TD></TR>");
+                    <TR><TD vAlign=top colSpan=3><IMG border=0 alt=""spacer image"" src=""/images/spacer.gif"" width=1 height=10></TD></TR>", GetYearListItems("startYear"), GetMonthListItems("endMonth"), GetYearListItems("endYear")));
                 output.Write(@"<TR><TD vAlign=top>&nbsp;</TD>
                     <TD vAlign=top align=left><INPUT alt=Search src=""/images/red_go_button.gif"" type=image>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
                     <TD vAlign=top>&nbsp;</TD></TR></FORM></TD>");
             }
             else
-            { 
+            {
                 output.Write(@"<tr><td valign=""top"">&nbsp;</td><td valign=""center""><label class=""hidden"" for=""keyword"">keyword</label>
                     <input id=""keyword"" class=""search-field"" size=""10"" name=""keyword"">&nbsp;&nbsp;<input
                     alt=""Search"" src=""/images/red_go_button.gif"" type=""image""></td><td valign=""top"">&nbsp;</td></tr>
@@ -149,6 +150,35 @@ namespace NCI.Web.CDE.UI.Modules
 
             output.Write(@"<TR><TD vAlign=top align=right><IMG border=0 alt="""" src=""/images/spacer.gif"" width=7 height=1></TD></TR>
             <TR><TD vAlign=top colSpan=3 align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=162 height=8></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>");
+        }
+
+        private string GetMonthListItems(string monthType)
+        {
+            string html = String.Empty;
+            string[] monthNameLookup = { "Jan.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec." };
+            for (int i = 1; i <= 12; i++)
+                html += string.Format("<option {0} value=\"{1}\">{2}</option>", i == DateTime.Now.Month ? "selected" : String.Empty, i, monthNameLookup[i - 1]);
+            return html;
+        }
+
+        private string GetYearListItems(string yearType)
+        {
+            int yearsAgo = Int32.Parse(ConfigurationSettings.AppSettings["CBSearchYearsAgo"].ToString());
+            string html = String.Empty;
+            int startYear = DateTime.Now.Year - yearsAgo;
+            startYear = 1998;
+
+            while (startYear <= DateTime.Now.Year)
+            {
+                if ((string.Compare("startYear", yearType, true) == 0 && startYear == DateTime.Now.Year - yearsAgo) ||
+                     (string.Compare("endYear", yearType, true) == 0 && startYear == DateTime.Now.Year))
+                    html += string.Format("<option selected value=\"{0}\">{0}</option>", startYear.ToString());
+                else
+                    html += string.Format("<option value=\"{0}\">{0}</option>", startYear.ToString());
+                startYear++;
+            }
+
+            return html;
         }
     }
 }

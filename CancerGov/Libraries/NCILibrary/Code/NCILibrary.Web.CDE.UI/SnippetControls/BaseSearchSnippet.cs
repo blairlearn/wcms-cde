@@ -150,11 +150,17 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     foreach (SearchResult sr in searchResults)
                         sr.RecNumber = dynamicSearch.StartCount + recCount++;
 
-                    dynamicSearch.ResultCount = actualMaxResult;
+                    int validCount = this.SearchList.MaxResults;
 
+                    if (actualMaxResult < this.SearchList.MaxResults)
+                        validCount = actualMaxResult;
+                    else
+                        validCount = this.SearchList.MaxResults;
+
+                    dynamicSearch.ResultCount = validCount;
                     LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResults(this.SearchList.ResultsTemplate, dynamicSearch));
                     Controls.Add(ltl);
-                    SetupPager(this.SearchList.RecordsPerPage, actualMaxResult);
+                    SetupPager(this.SearchList.RecordsPerPage, validCount);
                 }
             }
             catch (Exception ex)

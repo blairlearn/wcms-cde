@@ -24,5 +24,11 @@ namespace NCI.Web.CDE.WebAnalytics.Configuration
             get { return (bool)base["enableNonJavaScriptTagging"]; }
         }
 
+        [ConfigurationProperty("urlPathChannelMappings")]
+        public UrlPathChannelElementCollection UrlPathChannelMappings
+        {
+            get { return (UrlPathChannelElementCollection)base["urlPathChannelMappings"]; }
+        }
+
     }
 }

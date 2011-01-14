@@ -5,7 +5,7 @@ using System.Text;
 using System.Configuration;
 using NCI.Web.CDE.WebAnalytics.Configuration;
 using System.Text.RegularExpressions;
-
+using NCI.Logging;
 
 
 namespace NCI.Web.CDE.WebAnalytics
@@ -14,6 +14,8 @@ namespace NCI.Web.CDE.WebAnalytics
     {
         private static readonly string webAnalyticsPath = "nci/web/analytics";
         private static WebAnalyticsSection _webAnalyticsConfig;
+        private static Dictionary<string, UrlPathChannelElement> urlPathChannelLookUp = new Dictionary<string, UrlPathChannelElement>();
+        private static Dictionary<string, UrlPathChannelElement> urlPathChannelWithUrlMatchLookUp = new Dictionary<string, UrlPathChannelElement>();
 
         public static void Initialize()
         {
@@ -25,6 +27,28 @@ namespace NCI.Web.CDE.WebAnalytics
                 if (_webAnalyticsConfig == null)
                 {
                     throw new ConfigurationErrorsException(String.Format("Could not load web analytics configuration from {0}.  Please ensure the web analytics section group and configuration element have been defined in the configuration file.", webAnalyticsPath));
+                }
+
+                if (_webAnalyticsConfig.UrlPathChannelMappings != null)
+                {
+                    var urlPathChannelMappings = from urlPathChannel in _webAnalyticsConfig.UrlPathChannelMappings.Cast<UrlPathChannelElement>()
+                                                 orderby urlPathChannel.UrlPath descending
+                                                 select urlPathChannel;
+
+                    foreach (UrlPathChannelElement urlPathChannelElement in urlPathChannelMappings)
+                    {
+                        string key = urlPathChannelElement.UrlPath.ToLower();
+                        if (string.IsNullOrEmpty(urlPathChannelElement.UrlMatch))
+                        {
+                            if (!urlPathChannelLookUp.ContainsKey(key))
+                                urlPathChannelLookUp.Add(key, urlPathChannelElement);
+                        }
+                        else
+                        {
+                            if (!urlPathChannelWithUrlMatchLookUp.ContainsKey(key))
+                                urlPathChannelWithUrlMatchLookUp.Add(key, urlPathChannelElement);
+                        }
+                    }
                 }
             }
         }
@@ -89,7 +113,66 @@ namespace NCI.Web.CDE.WebAnalytics
 
             return rtnSuites.ToArray();
         }
-                
+
+        /// <summary>
+        /// This method returns a channel name for a given folderpath. It also matches occurence
+        /// of certain text in the url.
+        /// </summary>
+        /// <param name="urlFolderPath">This value contains the complete url</param>
+        /// <returns>The channel name which matches the urlFolderPath.</returns>
+        public static string GetChannelForUrlPath(string urlFolderPath)
+        {
+            try
+            {
+                WebAnalyticsOptions.Initialize();
+
+                if (_webAnalyticsConfig.UrlPathChannelMappings != null)
+                {
+                    string url = urlFolderPath.Substring(urlFolderPath.LastIndexOf('/') + 1).ToLower();
+                    int urlDelimiter = urlFolderPath.LastIndexOf('/');
+                    while (urlDelimiter != -1)
+                    {
+                        string urlPath = urlFolderPath.Substring(0, urlDelimiter).ToLower();
+                        string currUrlPath = urlPath;
+                        //Reached the beginning of the url path or the request is for the home page.
+                        //when this happens set the path '/' so the lookup can succeed. This 
+                        //is the final fall back.
+                        if (string.IsNullOrEmpty(currUrlPath))
+                            currUrlPath = "/";
+
+                        var urlPathChannelMappings = from urlPathChannel in urlPathChannelLookUp
+                                                     where urlPathChannel.Key == currUrlPath
+                                                     select urlPathChannel;
+
+                        var urlPathWithUrlChannelMappings = from urlPathChannel in urlPathChannelWithUrlMatchLookUp
+                                                            where urlPathChannel.Key == currUrlPath && urlFolderPath.Contains(((UrlPathChannelElement)urlPathChannel.Value).UrlMatch)
+                                                            select urlPathChannel;
+
+                        if (urlPathWithUrlChannelMappings.Count() != 0)
+                            return ((UrlPathChannelElement)urlPathWithUrlChannelMappings.FirstOrDefault().Value).ChannelName;
+                        else if (urlPathChannelMappings.Count() != 0)
+                            return ((UrlPathChannelElement)urlPathChannelMappings.FirstOrDefault().Value).ChannelName;
+
+                        // did not find anything if it here, backtrack the url path to find the matching elements
+                        urlDelimiter = urlPath.LastIndexOf('/');
+                    }
+
+                    // if it reaches here then, no mapping could be found.
+                    Logger.LogError("GetChannelForUrlPath", "No channel mapping exists for pretty url:" + urlFolderPath, NCIErrorLevel.Info); 
+                }
+                else
+                    Logger.LogError("GetChannelForUrlPath", "Url to channel mapping information not present in config file.", NCIErrorLevel.Info); 
+
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("GetChannelForUrlPath", "Failed to process url to channel mapping", NCIErrorLevel.Error, ex); 
+            }
+
+            // Should never be executed.
+            return "";
+        }
+
         public static class Language
         {
             public static readonly string Spanish = "spanish";

@@ -140,6 +140,8 @@
     <Compile Include="WebAnalytics\Configuration\ReportingSuitesElementCollection.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WebAnalytics\Configuration\UrlPathChannelElement.cs" />
+    <Compile Include="WebAnalytics\Configuration\UrlPathChannelElementCollection.cs" />
     <Compile Include="WebAnalytics\Configuration\WebAnalyticsSection.cs">
       <SubType>Code</SubType>
     </Compile>

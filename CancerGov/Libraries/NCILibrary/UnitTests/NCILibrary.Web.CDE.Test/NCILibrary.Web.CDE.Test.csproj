@@ -73,9 +73,13 @@
     <Compile Include="SectionDetailTest.cs" />
     <Compile Include="SinglePageAssemblyInstructionTest.cs" />
     <Compile Include="SnippetInfoTest.cs" />
+    <Compile Include="WebAnalyticsOptionsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="WenAnalytics.GenericTest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="XmlFiles\Schema\CDESchema.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

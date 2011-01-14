@@ -97,22 +97,22 @@ namespace NCI.Web.CDE
                 wbField.Value = "";
             });
 
-            SetWebAnalytics(WebAnalyticsOptions.eVars.Language.ToString(), wbField =>
-            {
-                string languageValue = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
-                switch (languageValue.ToLower())
-                {
-                    case "en":
-                        wbField.Value = "english";
-                        break;
-                    case "es":
-                        wbField.Value = "spanish";
-                        break;
-                    default:
-                        wbField.Value = "english";
-                        break;
-                }
-            });
+            //SetWebAnalytics(WebAnalyticsOptions.eVars.Language.ToString(), wbField =>
+            //{
+            //    string languageValue = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            //    switch (languageValue.ToLower())
+            //    {
+            //        case "en":
+            //            wbField.Value = "english";
+            //            break;
+            //        case "es":
+            //            wbField.Value = "spanish";
+            //            break;
+            //        default:
+            //            wbField.Value = "english";
+            //            break;
+            //    }
+            //});
         }
         #endregion
 
