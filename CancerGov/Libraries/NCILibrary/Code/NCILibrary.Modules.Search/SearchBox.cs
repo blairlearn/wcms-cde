@@ -163,11 +163,9 @@ namespace NCI.Web.CDE.UI.Modules
 
         private string GetYearListItems(string yearType)
         {
-            int yearsAgo = Int32.Parse(ConfigurationSettings.AppSettings["CBSearchYearsAgo"].ToString());
             string html = String.Empty;
-            int startYear = DateTime.Now.Year - yearsAgo;
-            startYear = 1998;
-
+            int startYear = 1998;
+            int yearsAgo = DateTime.Now.Year - startYear;
             while (startYear <= DateTime.Now.Year)
             {
                 if ((string.Compare("startYear", yearType, true) == 0 && startYear == DateTime.Now.Year - yearsAgo) ||
