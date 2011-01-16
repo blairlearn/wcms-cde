@@ -826,7 +826,7 @@ namespace NCI.Web.CDE
 
             SetWebAnalytics(WebAnalyticsOptions.Props.MultipageShortTile.ToString(), wbField =>
             {
-                wbField.Value = this.GetField(" page_short_title");
+                wbField.Value = this.GetField("page_short_title");
             });
 
             SetWebAnalytics(WebAnalyticsOptions.Props.PostedDate.ToString(), wbField =>
