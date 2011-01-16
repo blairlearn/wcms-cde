@@ -57,8 +57,33 @@ namespace NCI.Web.CDE.UI.MarkupExtensions
         public override string Process(string[] parameters)
         {
             ParseParams(parameters);
+            string field = string.Empty;
 
-            string field = PageAssemblyContext.Current.PageAssemblyInstruction.GetField(_propertyName);
+            switch (_propertyName)
+            {
+                case "IsPDFAvailable":
+                    {
+                        field = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("application/pdf").UriStem;
+
+                    }
+                    break;
+
+                case "VolumeNumber":
+                    {
+                        field = PageAssemblyContext.Current.PageAssemblyInstruction.GetField(_propertyName);
+
+                    }
+                    break;
+            }
+
+            if(string.IsNullOrEmpty(field))
+                field = PageAssemblyContext.Current.PageAssemblyInstruction.GetField(_propertyName);
+
+            //if (_propertyName == "IsPDFAvailable")
+            //{
+            //    //string field = PageAssemblyContext.Current.PageAssemblyInstruction.GetField(_propertyName);
+            //    field = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("application/pdf").UriStem;
+            //}
 
             return field;
         }
