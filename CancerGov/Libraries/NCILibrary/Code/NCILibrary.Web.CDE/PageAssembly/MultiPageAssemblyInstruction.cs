@@ -621,33 +621,39 @@ namespace NCI.Web.CDE
             //Register Field Filters
             AddFieldFilter("long_title", (name, data) =>
             {
-                data.Value = _pages._Pages[PageNum].PageMetadata.LongTitle;
+                // data.Value = _pages._Pages[PageNum].PageMetadata.LongTitle;
+                data.Value = this.PageMetadata.LongTitle;
             });
 
 
             AddFieldFilter("short_title", (name, data) =>
             {
-                data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
+                //data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
+                data.Value = this.PageMetadata.ShortTitle;
             });
 
             AddFieldFilter("short_description", (name, data) =>
             {
-                data.Value = _pages._Pages[PageNum].PageMetadata.ShortDescription;
+                //data.Value = _pages._Pages[PageNum].PageMetadata.ShortDescription;
+                data.Value = this.PageMetadata.ShortDescription;
             });
 
             AddFieldFilter("long_description", (name, data) =>
             {
-                data.Value = _pages._Pages[PageNum].PageMetadata.LongDescription;
+                //data.Value = _pages._Pages[PageNum].PageMetadata.LongDescription;
+                data.Value = this.PageMetadata.LongDescription;
             });
 
             AddFieldFilter("meta_description", (name, data) =>
             {
-                data.Value = _pages._Pages[PageNum].PageMetadata.MetaDescription;
+                //data.Value = _pages._Pages[PageNum].PageMetadata.MetaDescription;
+                data.Value = this.PageMetadata.MetaDescription;
             });
 
             AddFieldFilter("meta_keywords", (name, data) =>
             {
-                data.Value = _pages._Pages[PageNum].PageMetadata.MetaKeywords;
+                //data.Value = _pages._Pages[PageNum].PageMetadata.MetaKeywords;
+                data.Value = this.PageMetadata.MetaKeywords;
             });
 
             AddFieldFilter("page_short_title", (name, data) =>
@@ -797,7 +803,20 @@ namespace NCI.Web.CDE
 
             SetWebAnalytics(WebAnalyticsOptions.Props.RootPrettyURL.ToString(), wbField =>
             {
-                wbField.Value = PrettyUrl;
+                // This is  hack to fix the rooturl for web analytics. If this is content type is 
+                // rx:pdqCancerInfoSummary then the remove the 'patient' or 'healthprofessional' from
+                // the pretty url
+                string prettyUrl = PrettyUrl.ToLower();
+                if (ContentItemInfo != null && ContentItemInfo.ContentItemType == "rx:pdqCancerInfoSummary")
+                {
+                    int verIndex = prettyUrl.LastIndexOf("/patient");
+                    if( verIndex == -1 )
+                        verIndex = prettyUrl.LastIndexOf("/healthprofessional");
+                    if (verIndex != -1)
+                        prettyUrl = prettyUrl.Substring(0, verIndex);
+                }
+
+                wbField.Value = prettyUrl;
             });
 
             SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
@@ -807,7 +826,7 @@ namespace NCI.Web.CDE
 
             SetWebAnalytics(WebAnalyticsOptions.Props.MultipageShortTile.ToString(), wbField =>
             {
-                wbField.Value = this.GetField("page_short_title");
+                wbField.Value = this.GetField(" page_short_title");
             });
 
             SetWebAnalytics(WebAnalyticsOptions.Props.PostedDate.ToString(), wbField =>

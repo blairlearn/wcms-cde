@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+
 using NCI.Web.CDE.WebAnalytics;
 
 namespace NCI.Web.CDE
@@ -129,6 +132,9 @@ namespace NCI.Web.CDE
                 return contentDates;
             }
         }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public ContentItemInfo ContentItemInfo { get; set; }
 
         #endregion
     }
