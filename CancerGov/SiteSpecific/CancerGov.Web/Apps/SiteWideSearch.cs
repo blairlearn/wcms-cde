@@ -373,7 +373,7 @@ namespace NCI.Web.CancerGov.Apps
             var siteResultSearchSubmitCall = "return siteResultSearchSubmit(" + siteResultSearchSubmitParameter + ")";
             // Web Analytics *************************************************
             if (WebAnalyticsOptions.IsEnabled)
-                siteResultSearchSubmitCall += "&& NCIAnalytics.SiteWideSearchResultsSearch(this,'" + txtSWRKeyword.ClientID + "','" + rblSWRSearchType.ClientID + "')";
+                siteResultSearchSubmitCall += "&& NCIAnalytics.SiteWideSearchResultsSearch(this,'" + txtSWRKeyword.ClientID + "','" + rblSWRSearchType.UniqueID + "')";
             // End Web Analytics *********************************************
             siteResultSearchSubmitCall += ";";
             btnSWRImgSearch.OnClientClick = siteResultSearchSubmitCall;
@@ -525,6 +525,8 @@ namespace NCI.Web.CancerGov.Apps
             //per page.  This would show as a bug in QA, although it might not be a bad things since you can do 2 things at once...
             if (PreviousItemsPerPage != ItemsPerPage)
                 ItemsPerPage = PreviousItemsPerPage;
+
+
 
             DoSearchWithinResults();
         }

@@ -32,7 +32,7 @@ namespace NCI.Web.CDE.UI.MarkupExtensions
             if (PageAssemblyContext.Current != null)
             {
                 //TODO: Is this what we actually want?  What about for booklets???
-                result = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+                result = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("long_title");
             }
 
             return result;
