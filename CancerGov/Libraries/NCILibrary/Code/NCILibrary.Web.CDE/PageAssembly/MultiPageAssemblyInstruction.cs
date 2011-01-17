@@ -58,7 +58,7 @@ namespace NCI.Web.CDE
             _pages = new MultiPageCollection();
             PageMetadata = new PageMetadata();
             _localFields = new LocalFieldCollection();
-            RegisterFieldFilters(0);
+            RegisterFieldFilters();
             RegisterWebAnalyticsFieldFilters();
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, (name, data) =>
@@ -618,6 +618,14 @@ namespace NCI.Web.CDE
         /// </summary>
         private void RegisterFieldFilters(int PageNum)
         {
+            AddFieldFilter("page_short_title", (name, data) =>
+            {
+                data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
+            });
+        }
+
+        private void RegisterFieldFilters()
+        {
             //Register Field Filters
             AddFieldFilter("long_title", (name, data) =>
             {
@@ -656,11 +664,6 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.MetaKeywords;
             });
 
-            AddFieldFilter("page_short_title", (name, data) =>
-            {
-                data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
-            });
-
             //Register URL Filters
             AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
             AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
@@ -669,9 +672,7 @@ namespace NCI.Web.CDE
             {
                 data.Value = this.SectionPath;
             });
-
         }
-
 
         /// <summary>
         /// Gets the meta description.
