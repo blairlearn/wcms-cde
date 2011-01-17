@@ -94,6 +94,11 @@
             </FooterHtml> </NCI:TemplateSlot>
 
             <NCI:TemplateSlot ID="cgvCdrDefinition" runat="server">
+            <HeaderHtml>
+                </HeaderHtml>
+                <FooterHtml>
+                        <img height="5" border="0" width="1" alt="" src="/images/spacer.gif" />
+                </FooterHtml>
                 <%--<HeaderHtml>
                         <table cellspacing="0" cellpadding="0" border="0">
                             <tbody>
@@ -125,7 +130,6 @@
         </tr>
         </tbody> </table> </FooterHtml>--%> </NCI:TemplateSlot>
         
-        <img height="5" border="0" width="1" alt="" src="/images/spacer.gif" />        
         <NCI:TemplateSlot ID="cgvBody" runat="server"  />
         <NCI:TemplateSlot ID="cgvBodyLeft" runat="server">
             <HeaderHtml>
