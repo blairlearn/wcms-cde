@@ -59,6 +59,7 @@ namespace NCI.Web.CDE.UI.MarkupExtensions
             ParseParams(parameters);
             string field = string.Empty;
 
+            string [] keys = PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys;
             switch (_propertyName)
             {
                 case "IsPDFAvailable":
