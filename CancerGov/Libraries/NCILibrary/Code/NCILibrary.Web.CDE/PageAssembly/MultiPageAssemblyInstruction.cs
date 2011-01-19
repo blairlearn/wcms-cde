@@ -672,6 +672,12 @@ namespace NCI.Web.CDE
             {
                 data.Value = this.SectionPath;
             });
+
+            AddFieldFilter("page_short_title", (name, data) =>
+            {
+                data.Value = this.PageMetadata.ShortTitle;
+            });
+
         }
 
         /// <summary>
