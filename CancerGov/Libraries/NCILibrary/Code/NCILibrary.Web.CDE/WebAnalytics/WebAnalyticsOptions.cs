@@ -130,16 +130,9 @@ namespace NCI.Web.CDE.WebAnalytics
                 {
                     string url = urlFolderPath.Substring(urlFolderPath.LastIndexOf('/') + 1).ToLower();
                     int urlDelimiter = urlFolderPath.LastIndexOf('/');
-                    while (urlDelimiter != -1)
+                    string currUrlPath = urlFolderPath;
+                    while (!string.IsNullOrEmpty(currUrlPath))
                     {
-                        string urlPath = urlFolderPath.Substring(0, urlDelimiter).ToLower();
-                        string currUrlPath = urlPath;
-                        //Reached the beginning of the url path or the request is for the home page.
-                        //when this happens set the path '/' so the lookup can succeed. This 
-                        //is the final fall back.
-                        if (string.IsNullOrEmpty(currUrlPath))
-                            currUrlPath = "/";
-
                         var urlPathChannelMappings = from urlPathChannel in urlPathChannelLookUp
                                                      where urlPathChannel.Key == currUrlPath
                                                      select urlPathChannel;
@@ -154,7 +147,22 @@ namespace NCI.Web.CDE.WebAnalytics
                             return ((UrlPathChannelElement)urlPathChannelMappings.FirstOrDefault().Value).ChannelName;
 
                         // did not find anything if it here, backtrack the url path to find the matching elements
-                        urlDelimiter = urlPath.LastIndexOf('/');
+                        urlDelimiter = currUrlPath.LastIndexOf('/');
+
+                        if (currUrlPath == "/" && urlDelimiter == -1)
+                        {
+                            // shoud never come here, there should be the minumum '/' mapping in the web.config
+                            currUrlPath = String.Empty;
+                            continue;
+                        }
+
+                        currUrlPath = currUrlPath.Substring(0, urlDelimiter).ToLower();
+
+                        //Reached the beginning of the url path or the request is for the home page.
+                        //when this happens set the path '/' so the lookup can succeed. This 
+                        //is the final fall back.
+                        if (string.IsNullOrEmpty(currUrlPath))
+                            currUrlPath = "/";
                     }
 
                     // if it reaches here then, no mapping could be found.
