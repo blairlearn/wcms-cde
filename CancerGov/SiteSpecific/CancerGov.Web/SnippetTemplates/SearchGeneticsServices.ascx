@@ -1,5 +1,18 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SearchGeneticsServices.ascx.cs"
     Inherits="CancerGov.Web.SnippetTemplates.SearchGeneticsServices" %>
+
+<script type="text/javascript">
+    var ids = {
+    txtCity: "<%=txtCity.ClientID %>"
+    ,txtLastName: "<%=txtLastName.ClientID %>"
+    ,selCancerType: "<%=selCancerType.ClientID %>"
+    ,selCancerFamily: "<%=selCancerFamily.ClientID %>"
+    ,selState: "<%=selState.ClientID %>"
+    ,selCountry: "<%=selCountry.ClientID %>"
+    ,searchForm: "<%=searchForm.ClientID %>"
+}
+</script>   
+    
 <table width="571" cellspacing="0" cellpadding="0" border="0">
     <tr>
         <!-- Main Content Area -->
@@ -208,7 +221,7 @@
             </form>
             <asp:Literal Mode="PassThrough" ID="litOnSubmitHandlerAdder" runat="server">
 					    <script type="text/javascript">
-					        var the_form = document.getElementById('searchForm');
+					        var the_form = $(ids.searchForm);
     					    
 					        if (the_form) 
 					        {

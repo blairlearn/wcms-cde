@@ -467,18 +467,18 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
     GeneticServicesDirectorySearch : function(sender)  {
         var searchType = 'genetics';
         var typeOfCancer = '';
-        var familyCancerSyndrome = '';
-        var city = document.getElementById('txtCity').value;
+        var familyCancerSyndrome = ''; 
+        var city = $(ids.txtCity).value;
         var state = '';
         var country = '';
-        var lastName = document.getElementById('txtLastName').value;
+        var lastName = $(ids.txtLastName).value;
         var searchCriteria = '';
         var specialty = '';
         var selected = '';
         var list; 
         
         //get Type(s) of Cancer
-        list = document.getElementById('selCancerType');
+        list = $(ids.selCancerType);
         for(var i=0; i<list.length; i++)  {
             if (list[i].selected)  {
                 if (typeOfCancer.length > 0)
@@ -487,7 +487,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             }
         }
         // get Family Cancer Syndrome
-        list = document.getElementById('selCancerFamily');
+        list = $(ids.selCancerFamily);
         for(var i=0; i<list.length; i++)  {
             if (list[i].selected)  {
                 if (familyCancerSyndrome.length > 0)
@@ -496,7 +496,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             }
         }
         //get State(s)
-        list = document.getElementById('selState');
+        list = $(ids.selState);
         for(var i=0; i<list.length; i++)  {
             if (list[i].selected)  {
                 if (state.length > 0)
@@ -506,7 +506,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         }
         
         //get Country(ies)
-        list = document.getElementById('selCountry');
+        list = $(ids.selCountry);
         for(var i=0; i<list.length; i++)  {
             if (list[i].selected)  {
                 if (country.length > 0)
