@@ -3,13 +3,12 @@
 
 <script type="text/javascript">
     var ids = {
-    txtCity: "<%=txtCity.ClientID %>"
-    ,txtLastName: "<%=txtLastName.ClientID %>"
-    ,selCancerType: "<%=selCancerType.ClientID %>"
-    ,selCancerFamily: "<%=selCancerFamily.ClientID %>"
-    ,selState: "<%=selState.ClientID %>"
-    ,selCountry: "<%=selCountry.ClientID %>"
-    ,searchForm: "<%=searchForm.ClientID %>"
+    txtCity: "txtCity>"
+    ,txtLastName: "txtLastName"
+    ,selCancerType: "<%=selCancerType.ClientID%>"
+    ,selCancerFamily: "<%=selCancerFamily.ClientID%>"
+    ,selState: "<%=selState.ClientID%>"
+    , selCountry: "<%=selCountry.ClientID%>"
 }
 </script>   
     
@@ -221,12 +220,10 @@
             </form>
             <asp:Literal Mode="PassThrough" ID="litOnSubmitHandlerAdder" runat="server">
 					    <script type="text/javascript">
-					        var the_form = $(ids.searchForm);
-    					    
-					        if (the_form) 
-					        {
+					        var the_form = document.searchForm;
+					        if (the_form) {
 					            if (the_form.addEventListener) {
-					                the_form.addEventListener('submit',function() {NCIAnalytics.GeneticServicesDirectorySearch(null)},false);
+					                the_form.addEventListener('onsubmit',function() {NCIAnalytics.GeneticServicesDirectorySearch(null)},false);
 					            } else {
 					                the_form.attachEvent('onsubmit', function() { NCIAnalytics.GeneticServicesDirectorySearch(null)} );
 					            }
