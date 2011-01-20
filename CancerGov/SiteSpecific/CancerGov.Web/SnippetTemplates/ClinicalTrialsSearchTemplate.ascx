@@ -40,9 +40,20 @@
     , cancerType: "<%=cancerType.ClientID%>"
     , newOnly: "<%=newOnly.ClientID%>"
     , txtKeywords: "<%=txtKeywords.ClientID%>"
+    , txtKeywords_state: "<%=txtKeywords.ClientID%>_state"
     , trialStatus: "<%=trialStatus.ClientID%>"
+    , trialStatus_0: "<%=trialStatus.ClientID%>_0"
+    , trialStatus_1: "<%=trialStatus.ClientID%>_1"
     , trialPhase: "<%=trialPhase.ClientID%>"
-    , protocolID: "<%=protocolID.ClientID%>" 
+    , trialPhase_0: "<%=trialPhase.ClientID%>_0"
+    , trialPhase_1: "<%=trialPhase.ClientID%>_1"
+    , trialPhase_2: "<%=trialPhase.ClientID%>_2"
+    , trialPhase_3: "<%=trialPhase.ClientID%>_3"
+    , trialPhase_4: "<%=trialPhase.ClientID%>_4"
+    , trialPhase_5: "<%=trialPhase.ClientID%>_5"
+    , protocolID: "<%=protocolID.ClientID%>"
+    , nihOnly: "<%=nihOnly.ClientID%>"
+
      }
 </script>    
 <style type="text/css">

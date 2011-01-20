@@ -185,8 +185,8 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         var phaseList = '';
         var sponsor = '';
         var special = ''; 
-        var keyword = '';       
-        var cancerTypeCondition = document.getElementById('cancerType').options[document.getElementById('cancerType').selectedIndex].text; 
+        var keyword = '';        
+        var cancerTypeCondition = $(ids.cancerType).options[$(ids.cancerType).selectedIndex].text; 
 
         var typeOfTrialControl = document.getElementById(webAnalyticsOptions.typeOfTrialControlID);
         var drugControl = document.getElementById(webAnalyticsOptions.drugControlID);
@@ -198,41 +198,39 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
   
         //Location 
         // - zip code
-        if (document.getElementById('zipCodeLocationButton').checked)
+        if ($(ids.zipCodeLocationButton).checked)
             location = 'Near Zip Code';
         // - At NIH
-        else if (document.getElementById('atNihLocationButton').checked)
-            if (document.getElementById('nihOnly').checked)
+        else if ($(ids.atNihLocationButton).checked)
+            if ($(ids.nihOnly).checked)
                 location = 'At NIH Only Bethesda, Md';
             else
                 location = 'At NIH';
         // - City/State/Country
-        else if (document.getElementById('cityStateLocationButton').checked)  {
+        else if ($(ids.cityStateLocationButton).checked)  {
             location =  'In City/State/Country';
         }
-        else if (document.getElementById('hospitalLocationButton').checked)  {
+        else if ($(ids.hospitalLocationButton).checked)  {
             location = 'At Hospital/Institution';
         }
         
         // Trial Status/Phase
         // - Status
-        if (document.getElementById('trialStatus_0').checked) {
+        if ($(ids.trialStatus_0).checked) {
             statusPhase = 'Trial Status';
         }
-        else if (document.getElementById('trialStatus_1').checked) { 
+        else if ($(ids.trialStatus_1).checked) { 
             statusPhase = 'Trial Status';
         }
         statusPhase += NCIAnalytics.fieldDelimiter;
         // - Phase
-        for(var i=1; i < 5; i++) {
-            if (document.getElementById('trialPhase_' + i).checked)  {
-                    phaseList = 'Trial Phase';
-                    break;
-            }
+        if ( $(ids.trialPhase_0).checked || $(ids.trialPhase_1).checked || $(ids.trialPhase_2).checked || $(ids.trialPhase_3).checked || $(ids.trialPhase_4).checked)  {
+                phaseList = 'Trial Phase';
         }
+        
         statusPhase += phaseList + NCIAnalytics.fieldDelimiter;
         // - New Trial
-        if (document.getElementById('newOnly').checked)  { 
+        if ($(ids.newOnly).checked)  { 
             item = $('trialStatusTable').select("label[for=newOnly]");
             statusPhase += 'New Trials';
         } 
@@ -249,7 +247,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             treatmentType += 'Treatment/Intervention'; 
 
         // Trial ID / Sponsor
-        if ($('protocolID').value != '') 
+        if ($(ids.protocolID).value != '') 
             trialIdSponsor += 'Protocol ID';
        trialIdSponsor += NCIAnalytics.fieldDelimiter;
        sponsor = sponsorOfTrialControl.SelectedTextList(NCIAnalytics.stringDelimiter);
@@ -266,8 +264,8 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
        if ((special != '') && (special != 'All'))
             trialIdSponsor += 'Special Category';
        
-       if (document.getElementById('txtKeywords_state').value == 'valid')
-            keyword = document.getElementById('txtKeywords').value; 
+       if ($(ids.txtKeywords_state).value == 'valid')
+            keyword = $(ids.txtKeywords).value; 
         
        clickParams = new NCIAnalytics.ClickParams(null,
             'nciglobal,nciclinicaltrials','o','CTSearch');
@@ -366,10 +364,10 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 		
 //******************************************************************************************************	
 	DrugDictionarySearch : function(sender) {
-	    var prop24Contents = (document.getElementById('radioStarts').checked) ? 'starts with' : 'contains';
+	    var prop24Contents = ($(ids.radioStarts).checked) ? 'starts with' : 'contains';
 
         NCIAnalytics.DrugDictionarySearchCore(sender,
-            document.getElementById('AutoComplete1').value,
+            $(AutoComplete1).value,
             prop24Contents,
             'DrugDictionarySearch'); 
 	},

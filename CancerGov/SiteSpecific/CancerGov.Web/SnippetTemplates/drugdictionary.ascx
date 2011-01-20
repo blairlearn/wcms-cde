@@ -13,6 +13,12 @@
         }
     </script>
 
+<script type="text/javascript">
+    var ids = {
+    radioStarts: "<%=radioStarts.ClientID %>"
+    ,AutoComplete1:"<%=AutoComplete1.ClientID %>"
+    }
+</script>    
     <!-- Main Area -->
     <form id="drugForm" runat="server">
     <a name="top"></a>
