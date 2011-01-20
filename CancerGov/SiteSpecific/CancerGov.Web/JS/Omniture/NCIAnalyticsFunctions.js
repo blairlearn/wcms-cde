@@ -301,10 +301,10 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 
 //******************************************************************************************************	
 	TermsDictionarySearch : function(sender, isSpanish) {
-        var prop24Contents = (document.getElementById('radioStarts').checked) ? 'starts with' : 'contains';
-
+        //var prop24Contents = (document.getElementById('radioStarts').checked) ? 'starts with' : 'contains';
+        var prop24Contents = ($(ids.radioStarts).checked) ? 'starts with' : 'contains';
         NCIAnalytics.TermsDictionarySearchCore(sender,
-            document.getElementById('AutoComplete1').value,
+            $(ids.AutoComplete1).value,
             prop24Contents,
             'TermsDictionarySearch',
             isSpanish); 
@@ -367,7 +367,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 	    var prop24Contents = ($(ids.radioStarts).checked) ? 'starts with' : 'contains';
 
         NCIAnalytics.DrugDictionarySearchCore(sender,
-            $(AutoComplete1).value,
+            $(ids.AutoComplete1).value,
             prop24Contents,
             'DrugDictionarySearch'); 
 	},

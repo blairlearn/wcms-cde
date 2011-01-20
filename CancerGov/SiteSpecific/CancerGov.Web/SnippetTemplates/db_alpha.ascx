@@ -11,7 +11,12 @@
     }
            
 </script>
-
+<script type="text/javascript">
+    var ids = {
+    radioStarts: "<%=radioStarts.ClientID %>"
+    ,AutoComplete1:"<%=AutoComplete1.ClientID %>"
+    }
+</script> 
 
 	<!-- Content Header 
 	<div id="headerzone" style="margin-right: auto;margin-left: auto; width: 751px;">
