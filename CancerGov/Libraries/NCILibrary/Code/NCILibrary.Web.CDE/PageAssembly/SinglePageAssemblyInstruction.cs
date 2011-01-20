@@ -641,6 +641,8 @@ namespace NCI.Web.CDE
                     prettyUrl = prettyUrl.ToLower().Replace("/patient", "");
                     prettyUrl = prettyUrl.ToLower().Replace("/healthprofessional", "");
                 }
+
+                wbField.Value = prettyUrl;
             });
 
             SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
