@@ -133,20 +133,21 @@ namespace NCI.Web.CDE.WebAnalytics
                     string currUrlPath = urlFolderPath;
                     while (!string.IsNullOrEmpty(currUrlPath))
                     {
-                        var urlPathChannelMappings = from urlPathChannel in urlPathChannelLookUp
-                                                     where urlPathChannel.Key == currUrlPath
-                                                     select urlPathChannel;
 
                         var urlPathWithUrlChannelMappings = from urlPathChannel in urlPathChannelWithUrlMatchLookUp
                                                             where urlPathChannel.Key == currUrlPath && urlFolderPath.Contains(((UrlPathChannelElement)urlPathChannel.Value).UrlMatch)
                                                             select urlPathChannel;
-
                         if (urlPathWithUrlChannelMappings.Count() != 0)
                             return ((UrlPathChannelElement)urlPathWithUrlChannelMappings.FirstOrDefault().Value).ChannelName;
-                        else if (urlPathChannelMappings.Count() != 0)
+
+                        var urlPathChannelMappings = from urlPathChannel in urlPathChannelLookUp
+                                                     where urlPathChannel.Key == currUrlPath
+                                                     select urlPathChannel;
+
+                        if (urlPathChannelMappings.Count() != 0)
                             return ((UrlPathChannelElement)urlPathChannelMappings.FirstOrDefault().Value).ChannelName;
 
-                        // did not find anything if it here, backtrack the url path to find the matching elements
+                        // did not find, backtrack the url path to find the matching elements
                         urlDelimiter = currUrlPath.LastIndexOf('/');
 
                         if (currUrlPath == "/" && urlDelimiter == -1)
@@ -166,15 +167,15 @@ namespace NCI.Web.CDE.WebAnalytics
                     }
 
                     // if it reaches here then, no mapping could be found.
-                    Logger.LogError("GetChannelForUrlPath", "No channel mapping exists for pretty url:" + urlFolderPath, NCIErrorLevel.Info); 
+                    Logger.LogError("GetChannelForUrlPath", "No channel mapping exists for pretty url:" + urlFolderPath, NCIErrorLevel.Info);
                 }
                 else
-                    Logger.LogError("GetChannelForUrlPath", "Url to channel mapping information not present in config file.", NCIErrorLevel.Info); 
+                    Logger.LogError("GetChannelForUrlPath", "Url to channel mapping information not present in config file.", NCIErrorLevel.Info);
 
             }
             catch (Exception ex)
             {
-                Logger.LogError("GetChannelForUrlPath", "Failed to process url to channel mapping", NCIErrorLevel.Error, ex); 
+                Logger.LogError("GetChannelForUrlPath", "Failed to process url to channel mapping", NCIErrorLevel.Error, ex);
             }
 
             // Should never be executed.

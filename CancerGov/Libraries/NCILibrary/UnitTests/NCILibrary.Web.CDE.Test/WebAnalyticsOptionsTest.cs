@@ -186,6 +186,7 @@ namespace NCILibrary.Web.CDE.Test
             Assert.AreEqual("About NCI (Other)", WebAnalyticsOptions.GetChannelForUrlPath("/aboutnci/test"));
 
             Assert.AreEqual("NCI Home", WebAnalyticsOptions.GetChannelForUrlPath("/"));
+            Assert.AreEqual("Newscenter",WebAnalyticsOptions.GetChannelForUrlPath("/newscenter"));
             Assert.AreEqual("Cancer Statistics", WebAnalyticsOptions.GetChannelForUrlPath("/statistics"));
             Assert.AreEqual("Center for Cancer Training (CCT)", WebAnalyticsOptions.GetChannelForUrlPath("/researchandfunding/cancertraining"));
             Assert.AreEqual("Research & Funding", WebAnalyticsOptions.GetChannelForUrlPath("/researchandfunding"));
