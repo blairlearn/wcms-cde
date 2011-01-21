@@ -71,7 +71,26 @@ namespace NCI.Web.CDE
                         context.Response.Redirect(promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query), true);
                     }
                     else
-                        Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "Promo Url Mapping information not found for " + url, NCIErrorLevel.Debug);
+                    {
+                        //1. Remove last part of path, e.g. /cancertopics/wyntk/bladder/page10 becomes /cancertopics/wyntk/bladder
+                        string truncUrl = url.Substring(0, url.LastIndexOf('/'));
+                        string appendUrl = url.Substring(url.LastIndexOf('/'));
+
+                        if (truncUrl != string.Empty)
+                        {
+                            if (promoUrlMapping.PromoUrls.ContainsKey(truncUrl.ToLower()))
+                            {
+                                promoUrl = promoUrlMapping.PromoUrls[truncUrl.ToLower()];
+                                context.Response.Redirect(promoUrl.MappedTo + appendUrl + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query), true);
+                            }
+
+                        }
+                        else
+                        {
+                            Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "Promo Url Mapping information not found for " + url, NCIErrorLevel.Debug);
+                        }
+
+                    }
                 }
                 else
                 {
