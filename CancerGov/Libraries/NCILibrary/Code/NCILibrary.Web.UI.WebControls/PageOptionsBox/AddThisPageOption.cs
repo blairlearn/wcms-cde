@@ -90,7 +90,23 @@ namespace NCI.Web.UI.WebControls
             ((IStateManager)_settings).TrackViewState();
         }
 
-
+        public virtual string OnClick
+        {
+            get
+            {
+                return (string)this.ViewState["OnClick"] ?? string.Empty;
+            }
+            set
+            {
+                //If the text is the same, just ignore and don't set dirtyness
+                //or fire any events.
+                if (!object.Equals(value, this.ViewState["OnClick"]))
+                {
+                    this.ViewState["OnClick"] = value;
+                    this.OnOptionChanged();
+                }
+            }
+        }
     }
     
 }

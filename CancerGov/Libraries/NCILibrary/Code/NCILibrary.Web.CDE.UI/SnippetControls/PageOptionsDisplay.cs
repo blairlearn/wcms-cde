@@ -97,6 +97,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                                     pgoBase = new AddThisPageOption();
                                     ((AddThisPageOption)pgoBase).Settings.Language = "en-us";
                                     ((AddThisPageOption)pgoBase).PageTitle = pgInstruction.GetUrl("PrettyUrl").ToString();
+                                    ((AddThisPageOption)pgoBase).OnClick = pgOptionItem.WebAnalyticsFunction;
                                 }
 
                                 if (pgoBase != null)

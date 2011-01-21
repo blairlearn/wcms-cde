@@ -32,7 +32,7 @@
                                         Text='<%# (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish ? "Mejores resultados para " : "Best Bets for ") + Eval("CategoryName")%>'
                                         runat="server" />
                                 </div>    
-                                <asp:Literal ID="Literal1" runat="server" Text='<%# Eval("CategoryDisplay") %>' >
+                                <asp:Literal ID="Literal1" runat="server" Text='<%# BestBetResultsHyperlinkOnclick(Container) %>'>
                                 </asp:Literal>
                             </ItemTemplate>
                         </asp:Repeater>
@@ -63,7 +63,7 @@
                                 <asp:HyperLink
                                     id="lnkResultLink"
                                     runat="server"
-                                    onclick='<%# ResultsHyperlinkOnclick(Container,false) %>'                                   
+                                    onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
                                     NavigateUrl='<%# Eval("Url") %>'
                                     Text='<%# Eval("Title") %>' />
    								<br/>

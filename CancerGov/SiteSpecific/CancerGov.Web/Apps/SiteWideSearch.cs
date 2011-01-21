@@ -61,7 +61,7 @@ namespace NCI.Web.CancerGov.Apps
         private string _topResultsXofYFormatter = "Results {0}-{1} of {2} for:";
         private string _bottomResultsXofYFormatter = "Results {0}-{1} of {2}.";
         private string _swrResultsFor = "{0} results found for: ";
-
+        private bool isBestBet = false;
         private bool _hasPageUnitChanged = false;
         private bool _isIENoJSAndHitEnderInTheSearchBox = false;
         private int _resultOffset = 1;
@@ -397,7 +397,30 @@ namespace NCI.Web.CancerGov.Apps
                 pnlSWR.DefaultButton = btnSWRTxtSearch.ID;
         }
 
-        protected string ResultsHyperlinkOnclick(RepeaterItem result, bool isBestBet)
+        protected string BestBetResultsHyperlinkOnclick(RepeaterItem result)
+        {
+            string resultData="";
+            if (WebAnalyticsOptions.IsEnabled)
+            {
+                try
+                {
+                    BestBetResult bbResultItem = (BestBetResult)result.DataItem;
+                    resultData = bbResultItem.CategoryDisplay;
+                    // Did not use html parser here, seemed like a overkill just to inject a simple string. 
+                    int hrefIndex = resultData.IndexOf("<a");
+
+                    if (hrefIndex != -1)
+                    {
+                        return resultData.Replace("<a","<a onClick=NCIAnalytics.SiteWideSearchResults(this,true,'1'); " );
+                    }
+                }
+                catch { }
+            }
+
+            return "";
+        }
+            
+        protected string ResultsHyperlinkOnclick(RepeaterItem result)
         {
             if (WebAnalyticsOptions.IsEnabled)
                 return "NCIAnalytics.SiteWideSearchResults(this," + (isBestBet ? "true" : "false") + ",'" + (result.ItemIndex + _resultOffset).ToString() + "');"; // Load results onclick script
@@ -646,6 +669,7 @@ namespace NCI.Web.CancerGov.Apps
 
                 if (bbResults.Count > 0)
                 {
+                    isBestBet = true;
                     rptBestBets.DataSource = bbResults;
                     rptBestBets.DataBind();
                     rptBestBets.Visible = true;

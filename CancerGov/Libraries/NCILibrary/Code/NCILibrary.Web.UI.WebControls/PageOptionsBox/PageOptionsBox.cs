@@ -198,14 +198,16 @@ namespace NCI.Web.UI.WebControls
                     //Setup the OnDomReady event handler to wire up the JS events for add this
                     writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
                     writer.RenderBeginTag(HtmlTextWriterTag.Script);
+
+                    string webAnalytics = String.Empty;
+                    if (((AddThisPageOption)option).OnClick != String.Empty)
+                        webAnalytics = ((AddThisPageOption)option).OnClick + ",";
                     writer.Write(@"
                         jQuery(document).ready(function($) {
                             $('#NCIAddThisLI').show();
                             $('#NCIAddThisContainer a').click(function() { return false; });
                             $('#NCIAddThisContainer').mouseout(function() { addthis_close(); });
-                            $('#NCIAddThisContainer').click(function() { return addthis_open(this, '', ''); });
-                        });
-                    ");
+                            $('#NCIAddThisContainer').click(function() { return " + webAnalytics + "addthis_open(this, '', ''); });});");
 
                     writer.RenderEndTag();
 
