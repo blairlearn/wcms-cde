@@ -3,13 +3,19 @@
 
 <script type="text/javascript">
     var ids = {
-    txtCity: "txtCity>"
+    txtCity: "txtCity"
     ,txtLastName: "txtLastName"
     ,selCancerType: "<%=selCancerType.ClientID%>"
     ,selCancerFamily: "<%=selCancerFamily.ClientID%>"
     ,selState: "<%=selState.ClientID%>"
     , selCountry: "<%=selCountry.ClientID%>"
 }
+
+function doWebAnalyticsStuff() {
+    NCIAnalytics.GeneticServicesDirectorySearch(null);
+    return true;
+}
+
 </script>   
     
 <table width="571" cellspacing="0" cellpadding="0" border="0">
@@ -17,7 +23,7 @@
         <!-- Main Content Area -->
         <td id="contentzone" valign="top" width="100%">
 <br />
-            <form id="searchForm" name="searchForm" action="<%=SearchPageInfo.SearchResultsPrettyUrl%>"  method="post">
+            <form id="searchForm" name="searchForm" action="<%=SearchPageInfo.SearchResultsPrettyUrl%>"  method="post" onsubmit="return doWebAnalyticsStuff();">
             <table cellpadding="1" cellspacing="0" border="0" width="100%" class="gray-border">
                 <tr>
                     <td>
@@ -220,15 +226,15 @@
             </form>
             <asp:Literal Mode="PassThrough" ID="litOnSubmitHandlerAdder" runat="server">
 					    <script type="text/javascript">
-					        var the_form = document.searchForm;
-					        if (the_form) {
-					            if (the_form.addEventListener) {
-					                the_form.addEventListener('onsubmit',function() {NCIAnalytics.GeneticServicesDirectorySearch(null)},false);
-					            } else {
-					                the_form.attachEvent('onsubmit', function() { NCIAnalytics.GeneticServicesDirectorySearch(null)} );
-					            }
-					        }					    
-                        </script>
+//					        var the_form = document.searchForm;
+//					        if (the_form) {
+//					            if (the_form.addEventListener) {
+//					                the_form.addEventListener('submit',function() {NCIAnalytics.GeneticServicesDirectorySearch(null)},false);
+//					            } else {
+//					                the_form.attachEvent('onsubmit', function() { NCIAnalytics.GeneticServicesDirectorySearch(null)} );
+//					            }
+//					        }					    
+//                        </script>
             </asp:Literal>
         </td>
     </tr>
