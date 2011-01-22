@@ -24,7 +24,7 @@
         }
 </script>
     
-<td id="contentzone" valign="top" width="*">
+
     <a name="skiptocontent"></a>
     <form name="advResultForm" id="advResultForm" runat="server" method="post">
     <asp:Panel ID="CustomSectionsDisplay" runat="server" Visible="false">
@@ -233,4 +233,4 @@
     <!--end new form footnote-->
     <input type="hidden" value=<% =GetProtocolSearchID().ToString() %> name="protocolsearchid" id="protocolsearchid" />
     </form>
-</td>
+

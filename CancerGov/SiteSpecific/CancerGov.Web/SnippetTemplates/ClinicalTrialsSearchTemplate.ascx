@@ -155,7 +155,7 @@ span.gray-text
 }
 
 </style>
-<td id="contentzone" valign="top" width="*">
+
     <a name="skiptocontent"></a>
     <form name="advSearchForm" id="advSearchForm" method="post" runat="server">
     <input type="hidden" value="2" name="searchtype" />
@@ -702,4 +702,4 @@ span.gray-text
             <img src="/images/ctsearch/livehelp.gif" alt="Having trouble with this form? Check the help page or contact an NCI information specialist through LiveHelp online text chat or by calling 1-800-4-CANCER." /></a></p>
     <!--end new form footnote-->
     </form>
-</td>
+
