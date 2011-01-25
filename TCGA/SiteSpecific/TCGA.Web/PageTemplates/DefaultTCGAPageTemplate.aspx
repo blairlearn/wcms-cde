@@ -48,6 +48,7 @@
     <!-- END Content -->
     <!-- Sidebar -->
 	<div id="sidebar">
+	<NCI:TemplateSlot ID="tcgaSlotRelatedPages" runat="server"  />
 	<NCI:TemplateSlot ID="tcgaSlotRightNav" runat="server"  />
 	</div>
 	<!-- END Sidebar -->
