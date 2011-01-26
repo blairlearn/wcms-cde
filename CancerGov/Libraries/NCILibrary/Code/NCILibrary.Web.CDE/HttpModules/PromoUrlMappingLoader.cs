@@ -97,10 +97,13 @@ namespace NCI.Web.CDE
                     Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "No Promo Url Mapping information", NCIErrorLevel.Warning);
                 }
             }
+            catch (System.Threading.ThreadAbortException)
+            { }
             catch (Exception ex)
             {
                 Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "\nFailed to Process Promo URL - " + url, NCIErrorLevel.Error, ex);
             }
+ 
         }
 
         #endregion
