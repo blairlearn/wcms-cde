@@ -19,7 +19,7 @@
         <NCI:TemplateSlot ID="cgvSiteBannerPrint" runat="server" />
     </div>
 	
-	<div align="center"></div>
+	<%--<div align="center"></div>--%>
  
 	<!-- Content Header --> 
     <!-- Content Header -->
