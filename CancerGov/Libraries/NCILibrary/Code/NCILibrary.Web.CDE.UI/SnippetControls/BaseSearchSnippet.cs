@@ -128,22 +128,27 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     dynamicSearch.EndDate = String.Format("{0:MM/dd/yyyy}", endDate);
                     dynamicSearch.KeyWord = keyWord;
 
-                    if (CurrentPage > 1)
-                        dynamicSearch.StartCount = this.SearchList.RecordsPerPage * CurrentPage - 1;
-                    else
-                        dynamicSearch.StartCount = 1;
+                    if (actualMaxResult > 0)
+                    {
+                        if (CurrentPage > 1)
+                            dynamicSearch.StartCount = (this.SearchList.RecordsPerPage * (CurrentPage - 1)) + 1;
+                        else
+                        {
+                            dynamicSearch.StartCount = 1;
+                        }
 
-                    if (CurrentPage == 1)
-                    {
-                        dynamicSearch.EndCount = this.SearchList.RecordsPerPage;
-                        if (searchResults.Count < this.SearchList.RecordsPerPage)
-                            dynamicSearch.EndCount = actualMaxResult;
-                    }
-                    else
-                    {
-                        dynamicSearch.EndCount = dynamicSearch.StartCount + this.SearchList.RecordsPerPage - 1;
-                        if (searchResults.Count < this.SearchList.RecordsPerPage)
-                            dynamicSearch.EndCount = actualMaxResult;
+                        if (CurrentPage == 1)
+                        {
+                            dynamicSearch.EndCount = this.SearchList.RecordsPerPage;
+                            if (searchResults.Count < this.SearchList.RecordsPerPage)
+                                dynamicSearch.EndCount = actualMaxResult;
+                        }
+                        else
+                        {
+                            dynamicSearch.EndCount = dynamicSearch.StartCount + this.SearchList.RecordsPerPage - 1;
+                            if (searchResults.Count < this.SearchList.RecordsPerPage)
+                                dynamicSearch.EndCount = actualMaxResult;
+                        }
                     }
 
                     int recCount = 0;
@@ -152,7 +157,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     int validCount = this.SearchList.MaxResults;
 
-                    if (actualMaxResult < this.SearchList.MaxResults)
+                    if (actualMaxResult < this.SearchList.MaxResults || this.SearchList.MaxResults == 0)
                         validCount = actualMaxResult;
                     else
                         validCount = this.SearchList.MaxResults;
