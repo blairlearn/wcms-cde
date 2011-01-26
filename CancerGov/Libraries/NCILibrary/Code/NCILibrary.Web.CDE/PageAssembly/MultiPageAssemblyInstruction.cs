@@ -533,25 +533,25 @@ namespace NCI.Web.CDE
                 ArrayList keysList = new ArrayList();
                 if (AlternateContentVersions.IsPrintAvailable)
                 {
-                    keysList.Add("Print");
+                    keysList.Add("print");
                     if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.PrintAll)
-                        keysList.Add("PrintAll");
+                        keysList.Add("printall");
                 }
 
                 if ( PageAssemblyContext.Current.DisplayVersion != DisplayVersions.ViewAll )
-                    keysList.Add("ViewAll");
+                    keysList.Add("viewall");
 
                 if (AlternateContentVersions.IsShareBookmarkAvailable)
-                    keysList.Add("BookMarkShare");
+                    keysList.Add("bookmarkshare");
                 if (AlternateContentVersions.IsEmailAvailable)
-                    keysList.Add("Email");
+                    keysList.Add("email");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
-                    keysList.Add("OrderCopy");
+                    keysList.Add("ordercopy");
 
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
                 {
-                    keysList.Add(acFile.MimeType);
+                    keysList.Add(acFile.MimeType.ToLower());
                     AddUrlFilter(acFile.MimeType, url =>
                     {
                         url.SetUrl(acFile.Url);

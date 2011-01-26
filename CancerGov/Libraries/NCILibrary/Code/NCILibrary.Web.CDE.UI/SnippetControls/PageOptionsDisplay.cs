@@ -75,7 +75,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         try
                         {
                             // Check if the Pageoptions are recognized in the Alternate Content Version keys
-                            if (acvKeys.Contains<string>(pgOptionItem.Key))
+                            string key = pgOptionItem.Key;
+                            
+                            if(!string.IsNullOrEmpty(key))
+                                key = key.ToLower();
+
+                            if (acvKeys.Contains<string>(key))
                             {
                                 NCI.Web.UI.WebControls.PageOption pgoBase = null;
 
@@ -83,12 +88,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
                                 {
                                     pgoBase = new LinkPageOption();
                                     ((LinkPageOption)pgoBase).OnClick = pgOptionItem.WebAnalyticsFunction;
-                                    ((LinkPageOption)pgoBase).Href = pgInstruction.GetUrl(pgOptionItem.Key).ToString();
+                                    ((LinkPageOption)pgoBase).Href = pgInstruction.GetUrl(key).ToString();
                                 }
                                 else if (String.Compare(pgOptionItem.OptionType, PageOptionType.Email.ToString()) == 0)
                                 {
                                     pgoBase = new LinkPageOption();
-                                    ((LinkPageOption)pgoBase).Href = pgInstruction.GetUrl("Email").ToString();
+                                    ((LinkPageOption)pgoBase).Href = pgInstruction.GetUrl("email").ToString();
                                     ((LinkPageOption)pgoBase).OnClick = pgOptionItem.WebAnalyticsFunction;
                                     ((LinkPageOption)pgoBase).OnClick += " " + "dynPopWindow('" + ((LinkPageOption)pgoBase).Href.Replace("'", "%27").Replace("(", "%28").Replace(")", "%29") + "', 'emailPopUp', 'height=365,width=525'); return false;";
                                 }
