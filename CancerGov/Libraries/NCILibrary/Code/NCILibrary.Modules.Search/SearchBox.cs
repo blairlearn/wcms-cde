@@ -134,16 +134,40 @@ namespace NCI.Web.CDE.UI.Modules
                     <TD vAlign=top><LABEL class=hidden for=endMonth>select end Month</LABEL><SELECT id=endMonth name=endMonth> {1} </SELECT> &nbsp;&nbsp;<LABEL class=hidden for=endYear>select end Year</LABEL> <SELECT id=endYear name=endYear>{2}</SELECT> </TD>
                     <TD vAlign=top>&nbsp;</TD></TR>
                     <TR><TD vAlign=top colSpan=3><IMG border=0 alt=""spacer image"" src=""/images/spacer.gif"" width=1 height=10></TD></TR>", GetYearListItems("startYear"), GetMonthListItems("endMonth"), GetYearListItems("endYear")));
-                output.Write(@"<TR><TD vAlign=top>&nbsp;</TD>
+
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                {
+                    output.Write(@"<TR><TD vAlign=top>&nbsp;</TD>
+                    <TD vAlign=top align=left><INPUT alt=Search src=""/images/red_buscar_button.gif"" type=image>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+                    <TD vAlign=top>&nbsp;</TD></TR></FORM></TD>");
+                }
+
+                else
+                {
+                    output.Write(@"<TR><TD vAlign=top>&nbsp;</TD>
                     <TD vAlign=top align=left><INPUT alt=Search src=""/images/red_go_button.gif"" type=image>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
                     <TD vAlign=top>&nbsp;</TD></TR></FORM></TD>");
+                }
+
             }
             else
             {
-                output.Write(@"<tr><td valign=""top"">&nbsp;</td><td valign=""center""><label class=""hidden"" for=""keyword"">keyword</label>
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                {
+                    output.Write(@"<tr><td valign=""top"">&nbsp;</td><td valign=""center""><label class=""hidden"" for=""keyword"">keyword</label>
+                    <input id=""keyword"" class=""search-field"" size=""10"" name=""keyword"">&nbsp;&nbsp;<input
+                    alt=""Search"" src=""/images/red_buscar_button.gif"" type=""image""></td><td valign=""top"">&nbsp;</td></tr>
+                <TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=8></TD></TR>");
+
+                }
+                else
+                {
+
+                    output.Write(@"<tr><td valign=""top"">&nbsp;</td><td valign=""center""><label class=""hidden"" for=""keyword"">keyword</label>
                     <input id=""keyword"" class=""search-field"" size=""10"" name=""keyword"">&nbsp;&nbsp;<input
                     alt=""Search"" src=""/images/red_go_button.gif"" type=""image""></td><td valign=""top"">&nbsp;</td></tr>
                 <TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=8></TD></TR>");
+                }
 
             }
 
