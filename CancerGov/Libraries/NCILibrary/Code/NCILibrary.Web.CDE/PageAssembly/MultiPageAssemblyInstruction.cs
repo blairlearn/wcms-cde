@@ -841,6 +841,13 @@ namespace NCI.Web.CDE
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
 
+            if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
+            {
+                SetWebAnalytics(WebAnalyticsOptions.Events.AllPages, wbField =>
+                {
+                    wbField.Value = "";
+                });
+            }
         }
         #endregion
     }
