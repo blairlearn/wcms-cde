@@ -578,6 +578,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     "Address Received",
                     "You will receive an e-mail shortly asking you to verify your e-mail address.  To start your subscription to the <i>NCI Cancer Bulletin</i>, simply respond to the confirmation e-mail.<br/>"
                     );
+
                 divSurvey.Visible = true;
                 lblSurveyMessage.CssClass = "BadText";
                 DrawSurvey(learnedItems, profItems);
@@ -693,7 +694,11 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                                 // Web Analytics *************************************************
                                 if (WebAnalyticsOptions.IsEnabled)
-                                    this.WebAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.Subscription);  // add Bulletin Subscribe event (event9) to Page Load tag when 'thank you for subscribing' is displayed
+                                    this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.Subscription, wbField =>
+                                    {
+                                        wbField.Value = "";
+                                    });
+
                                 // End Web Analytics **********************************************
 
                                 lblSurveyMessage.CssClass = "GoodText";

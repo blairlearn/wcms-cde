@@ -77,6 +77,11 @@ namespace NCI.DataManager
         /// </summary>
         public string PostedDate { get; set; }
 
+        /// <summary>
+        /// Posted date of the content.
+        /// </summary>
+        public string DateDisplayMode { get; set; }
+
         public SearchResult()
         {
             ShortDescription = string.Empty;
