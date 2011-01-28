@@ -73,47 +73,6 @@ namespace CancerGov.Web.SnippetTemplates
                 pvVersion = ProtocolVersions.Patient;
             }
 
-
-            //Get Related Links Info Box
-            #region TODO RELATED LINKS INFO BOX
-            //if (pvVersion == ProtocolVersions.Patient)
-            //{
-            //    Guid gLinksList = Strings.ToGuid(ConfigurationSettings.AppSettings["ClinicalTrialsPatientRelatedLinksList"]);
-
-            //    if (gLinksList != Guid.Empty)
-            //    {
-            //        List lLinksList = new List(gLinksList);
-
-            //        if ((lLinksList != null) && (lLinksList.Count > 0))
-            //        {
-            //            InfoBoxListStyle iblsStyle = new InfoBoxListStyle();
-            //            BaseList blLinksList = new BaseList(lLinksList, iblsStyle);
-
-            //            if (blLinksList != null)
-            //            {
-            //                InfoBoxStyle ibs = new InfoBoxStyle(159);
-            //                ibs.ShowHeader = true;
-            //                InfoBox ibxListbox = new InfoBox(blLinksList, "Related Links", ibs, (BasePage)this);
-            //                StringBuilder sbContent = new StringBuilder();
-            //                sbContent.Append("<table border=\"0\" width=\"165\" cellpadding=\"0\" cellspacing=\"0\" align=\"right\">\n");
-            //                sbContent.Append("<tr>\n");
-            //                sbContent.Append("<td valign=\"top\" width=\"6\"><img src=\"/images/spacer.gif\" width=\"3\" height=\"1\" alt=\"\"></td>\n");
-            //                sbContent.Append("<td valign=\"top\" width=\"159\">\n");
-            //                sbContent.Append(ibxListbox.Render());
-            //                sbContent.Append("</td>\n");
-            //                sbContent.Append("</tr>\n");
-            //                sbContent.Append("<tr>\n");
-            //                sbContent.Append("<td valign=\"top\" colspan=\"2\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"3\" alt=\"\"></td>\n");
-            //                sbContent.Append("</tr>\n");
-            //                sbContent.Append("</table>\n");
-            //                strContent = sbContent.ToString();
-            //            }
-            //        }
-            //    }
-            //}
-            #endregion
-
-
             Protocol pProtocol = null;
             try
             {
@@ -271,6 +230,12 @@ namespace CancerGov.Web.SnippetTemplates
                 });
 
             //// End Web Analytics *********************************************
+
+            // Set the URL needed for PageOption Print
+            this.PageInstruction.AddUrlFilter("Print", url =>
+            {
+                url.SetUrl(this.PageInstruction.GetUrl("CurrentURL").ToString() + "/print?" + Request.QueryString.ToString());
+            });
 
         }
 

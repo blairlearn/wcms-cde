@@ -40,6 +40,19 @@ namespace NCI.Web
         }
 
         /// <summary>
+        /// This function will not make any chnages to url that is passed in. This value is 
+        /// set as is on URIStem. This function alos does not perform any validation.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="externalLink"></param>
+        public void SetUrl(string url, bool externalLink)
+        {
+            if (externalLink)
+                _uriStem = url;
+            else
+                SetUrl(url);
+        }
+        /// <summary>
         /// Loads (or reloads) the data of the current instance's fields based on the passed in URL.
         /// </summary>
         /// <param name="uriString"></param>

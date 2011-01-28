@@ -100,7 +100,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                                 else if (String.Compare(pgOptionItem.OptionType, PageOptionType.BookMarkShare.ToString()) == 0)
                                 {
                                     pgoBase = new AddThisPageOption();
-                                    ((AddThisPageOption)pgoBase).Settings.Language = "en-us";
+                                    ((AddThisPageOption)pgoBase).Settings.Language = pgInstruction.Language;
                                     ((AddThisPageOption)pgoBase).PageTitle = pgInstruction.GetUrl("PrettyUrl").ToString();
                                     ((AddThisPageOption)pgoBase).OnClick = pgOptionItem.WebAnalyticsFunction;
                                 }

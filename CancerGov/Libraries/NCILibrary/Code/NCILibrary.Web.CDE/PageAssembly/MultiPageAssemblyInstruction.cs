@@ -103,9 +103,9 @@ namespace NCI.Web.CDE
                 url.SetUrl(GetEmailUrl());
             });
 
-            AddUrlFilter("OrderCopyURL", url =>
+            AddUrlFilter("ordercopy", url =>
             {
-                url.SetUrl(AlternateContentVersions.OrderCopyURL);
+                url.SetUrl(AlternateContentVersions.OrderCopyURL,true);
             });
 
             AddUrlFilter("ViewAll", url =>

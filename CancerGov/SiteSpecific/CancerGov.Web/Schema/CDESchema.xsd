@@ -1563,9 +1563,16 @@
       <element name="IsShareBookmarkAvailable" type="boolean"
         minOccurs="1" maxOccurs="1">
         <annotation>
-          <documentation>
+          <documentation> 
             Defines if this Page Assembly Instruction can be
             shared.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="OrderCopyURL" type="string"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Links to external page for downloading a free copy.
           </documentation>
         </annotation>
       </element>
