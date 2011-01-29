@@ -100,9 +100,9 @@ namespace CancerGov.Web
             switch (this.DisplayVersion)
             {
                 case DisplayVersions.Print:
-                    return "/stylesheets/print_nci.css";
+                    return "/StyleSheets/print_nci.css";
                 default:
-                    return "/stylesheets/nci.css";
+                    return "/StyleSheets/nci.css";
             }
         }
 
