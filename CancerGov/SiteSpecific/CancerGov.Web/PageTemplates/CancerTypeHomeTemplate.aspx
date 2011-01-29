@@ -27,7 +27,7 @@
     </div>
     <!-- Main Area -->
     <!-- Main Area -->
-    <div align="center">
+    <div style="margin-right: auto; margin-left: auto; width: 771px;">
         <table width="771" cellspacing="0" cellpadding="0" border="0">
             <tr>
                 <td valign="top">
