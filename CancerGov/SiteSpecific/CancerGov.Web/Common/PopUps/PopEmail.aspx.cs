@@ -41,6 +41,12 @@ namespace CancerGov.Web
             base.OnLoad(e);
             header = "popTextHeader.htm";
             footer = "popTextFooter.htm";
+            if (this.DisplayLanguage == DisplayLanguage.Spanish)
+            {
+                header = "popTextHeaderSpanish.htm";
+                footer = "popTextFooterSpanish.htm";
+            }
+
         }
     }
 }

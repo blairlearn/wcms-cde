@@ -60,9 +60,25 @@ namespace CancerGov.Web
             get
             {
                 string langParam = Request.Params["language"];
-                switch (langParam == null ? "" : langParam.Trim().ToLower())
+
+                if (!string.IsNullOrEmpty(langParam))
                 {
-                    case "spanish":
+                    switch (langParam.Trim().ToLower())
+                    {
+                        case "spanish":
+                        case "es":
+                            return DisplayLanguage.Spanish;
+                        case "english":
+                        case "en":
+                            return DisplayLanguage.English;
+                    }
+                }
+
+                // if the language is not passed in the query string , then determin the language settings
+                // from the current ui culture
+                switch (System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.ToLower())
+                {
+                    case "es":
                         return DisplayLanguage.Spanish;
                     default:
                         return DisplayLanguage.English;

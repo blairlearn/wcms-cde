@@ -472,7 +472,7 @@ namespace NCI.Web.CDE
 
             if ((Strings.Clean(PrettyUrl) != null) && (Strings.Clean(PrettyUrl) != ""))
             {
-                emailUrl = "/common/popUps/PopEmail.aspx?title=" + title + "&docurl=" + System.Web.HttpUtility.UrlEncode(this.PrettyUrl.Replace("&", "__amp;"));
+                emailUrl = "/common/popUps/PopEmail.aspx?title=" + title + "&docurl=" + System.Web.HttpUtility.UrlEncode(this.PrettyUrl.Replace("&", "__amp;")) + "&language=" + PageAssemblyContext.Current.PageAssemblyInstruction.Language;
                 emailUrl = emailUrl + HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + PrettyUrl);
             }
             return emailUrl;
