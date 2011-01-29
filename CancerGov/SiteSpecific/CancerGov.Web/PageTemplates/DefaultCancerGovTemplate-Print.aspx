@@ -12,6 +12,10 @@
     <title></title>
     <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
     <script type="text/javascript" language="JavaScript" src="/JS/NetTracker/ntpagetag.js"></script>
+    <!--[if IE]>
+	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
+    <![endif]-->
+    
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
 	<!-- Site Banner -->
