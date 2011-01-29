@@ -31,9 +31,9 @@ namespace CancerGov.Web
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            CssManager.AddStyleSheet(this, GetStylesheetUrl());
-            JSManager.AddExternalScript(this, "/scripts/imgEvents.js");
-            JSManager.AddExternalScript(this, "/scripts/popEvents.js");
+            //CssManager.AddStyleSheet(this, GetStylesheetUrl());
+            //JSManager.AddExternalScript(this, "/scripts/imgEvents.js");
+            //JSManager.AddExternalScript(this, "/scripts/popEvents.js");
         }
 
         public DisplayVersions DisplayVersion

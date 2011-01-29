@@ -61,10 +61,12 @@ namespace CancerGov.Web.Common.PopUps
 
             DisplayLanguage dl=new DisplayLanguage();
 
-            if(Request.QueryString["language"] == "English")
+            if (Request.QueryString["language"] == "English")
                 dl = DisplayLanguage.English;
+            else if (Request.QueryString["language"] == "Spanish")
+                dl = DisplayLanguage.Spanish;
             else
-                dl=DisplayLanguage.Spanish;
+                dl = DisplayLanguage.English;
             
 
             
@@ -72,8 +74,8 @@ namespace CancerGov.Web.Common.PopUps
             this.pageHtmlHead.Title = "Definition - National Cancer Institute";
             input_term = Strings.Clean(Request.Params["term"]);
             id = Strings.IfNull(Strings.Clean(Request.Params["id"]), Strings.Clean(Request.Params["cdrid"]));
-            //version = PDQVersionResolver.GetPDQVersion(Strings.Clean(Request.Params["version"]));
-            version = PDQVersion.Patient;
+            version = PDQVersionResolver.GetPDQVersion(Strings.Clean(Request.Params["version"]));
+            //version = PDQVersion.version;
 
             ArrayList result = null;
 

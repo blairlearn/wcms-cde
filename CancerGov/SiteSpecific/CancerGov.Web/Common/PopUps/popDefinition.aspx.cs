@@ -93,7 +93,7 @@ namespace Www.Common.PopUps
             {
                 header = "popTextHeader.htm";
                 footer = "popTextFooter.htm";
-                if (Request.QueryString["language"] != "English")
+                if (Request.QueryString["language"] == "Spanish")
                 {
                     footer = "popTextFooterSpanish.htm";
                     header = "popTextHeaderSpanish.htm";
@@ -101,7 +101,7 @@ namespace Www.Common.PopUps
             }
             else
             {
-                if (Request.QueryString["language"] != "English")
+                if (Request.QueryString["language"] == "Spanish")
                 {
                     footer = "popFooterSpanish.htm";
                     header = "popHeaderSpanish.htm";
