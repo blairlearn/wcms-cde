@@ -94,7 +94,7 @@ namespace NCI.Web.CDE
                 url.SetUrl(GetEmailUrl());
             });
 
-            AddUrlFilter("ordercopy", url =>
+            AddUrlFilter("free", url =>
             {
                 url.SetUrl(AlternateContentVersions.OrderCopyURL,true);
             });
@@ -385,7 +385,7 @@ namespace NCI.Web.CDE
                 if (AlternateContentVersions.IsEmailAvailable)
                     keysList.Add("email");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
-                    keysList.Add("ordercopy");
+                    keysList.Add("free");
 
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
