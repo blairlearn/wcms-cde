@@ -30,6 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CancerGovCommon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="CDR.TermDictionary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Endeca.Logging, Version=4.7.2.23, Culture=neutral, PublicKeyToken=6d02be8724ca751c" />
     <Reference Include="Endeca.Navigation, Version=4.7.2.23, Culture=neutral, PublicKeyToken=6d02be8724ca751c" />
     <Reference Include="Endeca.Navigation.AccessControl, Version=4.7.2.23, Culture=neutral, PublicKeyToken=6d02be8724ca751c" />
@@ -96,8 +98,15 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Common\PopUps\definition.aspx" />
     <Content Include="Common\PopUps\popDefinition.aspx" />
+    <Content Include="Common\PopUps\popTextFooter.htm" />
+    <Content Include="Common\PopUps\popTextFooterSpanish.htm" />
+    <Content Include="Common\PopUps\popTextHeader.htm" />
+    <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
     <Content Include="Global.asax" />
+    <Content Include="JS\imgEvents.js" />
+    <Content Include="JS\popEvents.js" />
     <Content Include="PageTemplates\DefaultTCGAPageTemplate.aspx" />
     <Content Include="PageTemplates\NoRightNavTCGAPageTemplate.aspx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
@@ -116,9 +125,15 @@
     <Compile Include="Apps\ViewPublicationsByCancerType.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Common\Interfaces.cs" />
     <Compile Include="Common\PopUpPage.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\definition.aspx.cs">
+      <DependentUpon>definition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\definition.aspx.designer.cs">
+      <DependentUpon>definition.aspx</DependentUpon>
     </Compile>
     <Compile Include="Common\PopUps\popDefinition.aspx.cs">
       <DependentUpon>popDefinition.aspx</DependentUpon>
@@ -144,7 +159,6 @@
     <Folder Include="App_GlobalResources\" />
     <Folder Include="App_LocalResources\" />
     <Folder Include="Common\Configuration\" />
-    <Folder Include="JS\" />
     <Folder Include="UserControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using TCGA.Web;
 using System.Web.UI.HtmlControls;
-using TCGA.UI;
+using CancerGov.UI;
 using NCI.Web.CDE;
 
 namespace TCGA.Web.Common.PopUps
@@ -68,12 +68,12 @@ namespace TCGA.Web.Common.PopUps
         protected void Page_Load(object sender, EventArgs e)
         {
 
-                        base.OnLoad(e);
+            //base.OnLoad(e);
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web)
             {
                 header = "popTextHeader.htm";
                 footer = "popTextFooter.htm";
-                if (Request.QueryString["language"] != "English")
+                if (Request.QueryString["language"] == "Spanish")
                 {
                     footer = "popTextFooterSpanish.htm";
                     header = "popTextHeaderSpanish.htm";
@@ -81,7 +81,7 @@ namespace TCGA.Web.Common.PopUps
             }
             else
             {
-                if (Request.QueryString["language"] != "English")
+                if (Request.QueryString["language"] == "Spanish")
                 {
                     footer = "popFooterSpanish.htm";
                     header = "popHeaderSpanish.htm";

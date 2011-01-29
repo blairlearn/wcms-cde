@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="popDefinition.aspx.cs" Inherits="TCGA.Web.Common.PopUps.popDefinition" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="popDefinition.aspx.cs" Inherits="TCGA.Web.Common.PopUps.PopDefinition" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN">
 <HTML>
