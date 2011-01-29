@@ -105,6 +105,10 @@ namespace NCI.DataManager
                                     if (dt != DateTime.MinValue)
                                         searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dt);
 
+                                    dt = sqlFVReader.GetDateTime("date_last_reviewed");
+                                    if (dt != DateTime.MinValue)
+                                        searchResult.ReviewedDate = String.Format("{0:MM/dd/yyyy}", dt);
+
                                     searchResults.Add(searchResult);
                                 }
                             }

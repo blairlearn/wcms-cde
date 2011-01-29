@@ -82,6 +82,8 @@ namespace NCI.DataManager
         /// </summary>
         public string DateDisplayMode { get; set; }
 
+        public string ReviewedDate { get; set; }
+
         public SearchResult()
         {
             ShortDescription = string.Empty;
