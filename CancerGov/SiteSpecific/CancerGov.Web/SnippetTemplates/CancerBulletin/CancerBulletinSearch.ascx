@@ -1,6 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CancerBulletinSearch.ascx.cs"
     Inherits="CancerGov.Web.SnippetTemplates.CancerBulletin.CancerBulletinSearch" %>
+
 <script type="text/javascript">    var searchType = 0; /* 0 = Search All 1 = Search Date Range */ </script>
+
 <table border="0" cellspacing="0" cellpadding="0" width="571">
     <tbody>
         <tr>
@@ -9,9 +11,7 @@
                 <table border="0" cellspacing="0" cellpadding="0" bgcolor="#e9e9e9">
                     <tbody>
                         <tr>
-                            <td bgcolor="#cccccc" width="571" colspan="2">
-                                <img alt="" src="/images/spacer.gif" width="1" height="1">
-                            </td>
+                            <td colspan="2" bgcolor="#CCCCCC" width="571"><img src="/images/spacer.gif" width="1" height="1" alt="" /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -19,15 +19,15 @@
                     <tbody>
                         <tr>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="5" height="1">
+                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td width="571">
-                                <img alt="" src="/images/spacer.gif" width="1" height="5">
+                                <img alt="" src="/images/spacer.gif" width="1" height="5" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="5" height="1">
+                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td>
                                 <label style="color: #333333; font-size: 13px; font-weight: bold" id="searchAllIssues"
@@ -41,14 +41,14 @@
                     <tbody>
                         <tr>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="5" height="1">
+                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td>
                                 <input id="cbkeyword" onkeyup="CBSetSearchType(event);" value="Enter Keyword" size="28"
                                     name="cbkeyword">
                             </td>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="3" height="1">
+                                <img alt="" src="/images/spacer.gif" width="3" height="1" />
                             </td>
                             <td width="100%">
                                 <input id="searchAllButton" onclick="searchType=0;" alt="search all" src="/images/searchAll.gif"
@@ -57,7 +57,7 @@
                         </tr>
                         <tr>
                             <td colspan="4">
-                                <img alt="" src="/images/spacer.gif" width="1" height="1">
+                                <img alt="" src="/images/spacer.gif" width="1" height="1" />
                             </td>
                         </tr>
                     </tbody>
@@ -66,7 +66,7 @@
                     <tbody>
                         <tr>
                             <td width="1">
-                                <img alt="" src="/images/spacer.gif" width="5" height="1">
+                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td colspan="6">
                                 <span style="color: #333333; font-size: 11px; font-weight: normal">Or search between
@@ -75,7 +75,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="5" height="1">
+                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td width="40">
                                 <label class="hidden" for="startMonth">
@@ -99,7 +99,7 @@
                                 <label class="hidden" for="startYear">
                                     select start Year</label>
                                 <select id="startYear" name="startYear">
-                                <% =GetYearListItems("startYear") %>
+                                    <% =GetYearListItems("startYear") %>
                                 </select>
                             </td>
                             <td width="20">
@@ -130,12 +130,12 @@
                     <tbody>
                         <tr>
                             <td bgcolor="#e9e9e9" colspan="7">
-                                <img alt="" src="/images/spacer.gif" width="1" height="5">
+                                <img alt="" src="/images/spacer.gif" width="1" height="5" />
                             </td>
                         </tr>
                         <tr>
                             <td bgcolor="#ffffff" colspan="7">
-                                <img alt="" src="/images/spacer.gif" width="1" height="1">
+                                <img alt="" src="/images/spacer.gif" width="1" height="1" />
                             </td>
                         </tr>
                     </tbody>
