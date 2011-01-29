@@ -232,7 +232,8 @@ namespace NCI.Web.CDE.UI
         {
             if (CurrentPageHead != null)
             {
-                CurrentPageHead.Title = PageAssemblyInstruction.GetField(PageAssemblyInstructionFields.HTML_Title);
+                string title = PageAssemblyInstruction.GetField(PageAssemblyInstructionFields.HTML_Title);
+                CurrentPageHead.Title = title.Replace("<i>","").Replace("</i>","");
             }
         }
 
