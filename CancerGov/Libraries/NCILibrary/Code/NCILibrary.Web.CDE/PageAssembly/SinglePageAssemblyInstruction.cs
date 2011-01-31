@@ -96,7 +96,10 @@ namespace NCI.Web.CDE
 
             AddUrlFilter("free", url =>
             {
-                url.SetUrl(AlternateContentVersions.OrderCopyURL,true);
+                string freeCopyUrl = string.Empty; ;
+                if (string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
+                    freeCopyUrl = freeCopyUrl.Trim();
+                url.SetUrl(freeCopyUrl, true);
             });
 
             AddUrlFilter("PostBackURL", url =>
