@@ -97,8 +97,8 @@ namespace NCI.Web.CDE
             AddUrlFilter("free", url =>
             {
                 string freeCopyUrl = string.Empty; ;
-                if (string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
-                    freeCopyUrl = freeCopyUrl.Trim();
+                if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
+                    freeCopyUrl = AlternateContentVersions.OrderCopyURL.Trim();
                 url.SetUrl(freeCopyUrl, true);
             });
 
