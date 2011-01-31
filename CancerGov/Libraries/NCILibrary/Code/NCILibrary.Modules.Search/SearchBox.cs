@@ -105,12 +105,22 @@ namespace NCI.Web.CDE.UI.Modules
             output.Write(@"<table width=""164"" class=""gray-border"" border=""0"" cellSpacing=""0"" cellPadding=""1""><TBODY><TR><TD vAlign=top><TABLE border=0 cellSpacing=0 cellPadding=0 width=162 bgColor=#ffffff><TBODY>
                 <TR><TD class=box-title vAlign=top align=left><IMG border=0 src=""/images/spacer.gif"" width=7 height=17></TD>");
             output.Write(string.Format(@"<TD class=box-title vAlign=left colSpan=2>{0}</TD></TR>", Title));
-            output.Write(@"<TR><TD class=gray-border vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=1></TD></TR>
+
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es" && SearchType.ToLower() == "keyword")
+            {
+                output.Write(@"<tr><td valign=""top"" colspan=""3"" class=""gray-border""><img src=""/images/spacer.gif"" width=""1"" height=""1"" alt="""" border=""0""></td>
+            </tr><tr><td valign=""top"" align=""left"" colspan=""3""><img src=""/images/spacer.gif""  alt="""" width=""162"" height=""8"" alt="""" border=""0""></td>
+            </tr><tr><td valign=""top"" align=""left""><img src=""/images/spacer.gif"" width=""7"" height=""1"" alt="""" border=""0""></td>
+               <td valign=""top"" class=""leftnav"" align=""left"" width=""148"" >");
+            }
+            else
+            {
+                output.Write(@"<TR><TD class=gray-border vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=1></TD></TR>
                 <TR><TD vAlign=top colSpan=3 align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=162 height=8></TD></TR>
                 <TR><TD vAlign=top align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=7 height=1></TD>
                 <TD class=leftnav vAlign=top width=148 align=left></TR>
                 <TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=5><BR></TD>");
-
+            }
             if (!string.IsNullOrEmpty(WebAnalyticsFunction))
                 WebAnalyticsFunction = string.Format("onsubmit=\"{0}\"", WebAnalyticsFunction);
             else
@@ -154,10 +164,20 @@ namespace NCI.Web.CDE.UI.Modules
             {
                 if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 {
-                    output.Write(@"<tr><td valign=""top"">&nbsp;</td><td valign=""center""><label class=""hidden"" for=""keyword"">keyword</label>
-                    <input id=""keyword"" class=""search-field"" size=""10"" name=""keyword"">&nbsp;&nbsp;<input
-                    alt=""Search"" src=""/images/red_buscar_button.gif"" type=""image""></td><td valign=""top"">&nbsp;</td></tr>
-                <TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=8></TD></TR>");
+                    output.Write(@"<table width=""148"" cellspacing=""0"" cellpadding=""0"" border=""0""><tr>
+                    <td valign=""top""><img src=""/images/spacer.gif"" width=""7"" height=""1"" alt="""" border=""0""></td>
+                    <td valign=""middle"" width=""87"" align=""left"" height=""24""><label for=""keyword"">Palabra clave</label></td>
+                    <td valign=""top""><img src=""/images/spacer.gif"" width=""5"" height=""1"" alt="""" border=""0""></td><td></td>
+                    </tr><tr>
+                    <td valign=""top""><img src=""/images/spacer.gif"" width=""7"" height=""1"" alt="""" border=""0""></td>
+                    <td valign=""middle"" width=""87"" align=""left"" height=""24"">
+                    <input type=""text"" id=""keyword"" name=""keyword"" style=""width:87px; height:21px;"" class=""search-field""></td>
+                    <td valign=""top""><img src=""/images/spacer.gif"" width=""5"" height=""1"" alt="""" border=""0""></td>
+                    <td><input type=""image"" src=""/images/buscar-left-nav.gif"" alt=""Buscar"" width=""50"" height=""15"" /></td></tr></table></Form>");
+
+                    output.Write(@"</td><td valign=""top"" align=""right""><img src=""/images/spacer.gif"" width=""7"" height=""1"" alt="""" border=""0""></td></tr>");
+                    output.Write(@"<TR><TD vAlign=top colSpan=3 align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=162 height=8></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>");
+                    return;
 
                 }
                 else
@@ -166,7 +186,7 @@ namespace NCI.Web.CDE.UI.Modules
                     output.Write(@"<tr><td valign=""top"">&nbsp;</td><td valign=""center""><label class=""hidden"" for=""keyword"">keyword</label>
                     <input id=""keyword"" class=""search-field"" size=""10"" name=""keyword"">&nbsp;&nbsp;<input
                     alt=""Search"" src=""/images/red_go_button.gif"" type=""image""></td><td valign=""top"">&nbsp;</td></tr>
-                <TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=8></TD></TR>");
+                <TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=8></TD></TR></Form>");
                 }
 
             }
