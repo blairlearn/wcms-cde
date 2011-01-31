@@ -56,15 +56,25 @@ namespace CancerGov.Web.SnippetTemplates
 
             foreach (GenericHtmlContentSnippet slot in Page.FindControlByType<GenericHtmlContentSnippet>())
             {
+
                 if (slot.SnippetInfo.SlotName != "cgvSiteBannerPrint" && slot.SnippetInfo.SlotName != "cgvContentHeader" && slot.SnippetInfo.SlotName != "cgvSiteBanner" && slot.SnippetInfo.SlotName != "cgvLanguageDate" && slot.SnippetInfo.SlotName != "cgvBodyHeader")
-                {   
+                {
                     data = slot.SnippetInfo.Data;
                     data = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, data);
-                    if (fe.hashIndex.Count >= 1)                    {
+                    if (fe.hashIndex.Count >= 1)
+                    {
+                        for (int i = 0; i < fe.hashIndex.Count; i++)
+                        {
+                            if (!tableofLinksHash.Contains(fe.hashIndex[i].ToString()))
+                            {
 
-                        tableofLinksHash.AddRange(fe.hashIndex);
+                                {
+                                    tableofLinksHash.Add(fe.hashIndex[i].ToString());
+                                    //tableofLinksHash.AddRange(fe.hashIndex);
+                                }
+                            }
+                        }
                     }
-
                     slot.HtmlData = data;
 
                 }

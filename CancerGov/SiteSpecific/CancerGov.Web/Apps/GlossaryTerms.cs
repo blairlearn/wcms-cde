@@ -50,10 +50,12 @@ namespace NCI.Web.CancerGov.Apps
                     data = slot.SnippetInfo.Data;
                     data = gte.ExtractGlossaryTerms(data);
                     slot.SnippetInfo.Data = data;
-                    glossaryTerms = gte.BuildGlossaryTable(linksTableTitle);
+                    glossaryTerms = glossaryTerms + gte.BuildGlossaryTable(linksTableTitle);
+                    glossaryTerms= glossaryTerms.Replace("<table border=0 width=699 cellspacing=0 cellpadding=0><tr><td>\n<BR><BR><a name=\"Glossary Terms\"></a><h2>Glossary Terms</h2>\n", "").Replace("</td></tr></table>", "");
 
                 }
             }
+            glossaryTerms = "<table border=0 width=699 cellspacing=0 cellpadding=0><tr><td><BR><BR><a name=\"Glossary Terms\"></a><h2>Glossary Terms</h2>" + glossaryTerms + "</td></tr></table>";
 
             LiteralControl lit = new LiteralControl(glossaryTerms);
             this.Controls.Add(lit);

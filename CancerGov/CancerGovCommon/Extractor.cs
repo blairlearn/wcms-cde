@@ -98,6 +98,7 @@ namespace CancerGov.Common.Extraction
 		/// <returns>data with alterations made to matches defined by MatchEvaluator</returns>
 		public string Extract(Regex expr, string group, int extractionType, string data)
 		{
+           
 			extType = extractionType;	
 			extractGroup = group;
 
@@ -121,6 +122,7 @@ namespace CancerGov.Common.Extraction
 		private string ExtractFootnote(Match mt) 
 		{			
 			bool include = true;
+            excludeList = new string[] { "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?" };
 			string extract = extract = mt.Groups[extractGroup].Value;
 			int pos = 0;
 
@@ -128,8 +130,10 @@ namespace CancerGov.Common.Extraction
 			// these two (a newline in the original XML) and whitespace, should cover 80%
 			// of all issues.
 			extract = Regex.Replace(extract, "^&#xD;&#xA;", "", RegexOptions.Compiled | RegexOptions.Singleline);
-			extract = Regex.Replace(extract, "^\\s+", "", RegexOptions.Compiled | RegexOptions.Singleline);
+            extract = Regex.Replace(extract, "&amp;#xD;&amp;#xA;", "", RegexOptions.Compiled | RegexOptions.Singleline);
 
+			extract = Regex.Replace(extract, "^\\s+", "", RegexOptions.Compiled | RegexOptions.Singleline);
+            
 			switch(extType)
 			{
 				case ExtractionTypes.URL:		//URL extraction
@@ -145,11 +149,12 @@ namespace CancerGov.Common.Extraction
 							extract = HttpUtility.UrlDecode(extract.Substring(pos, extract.IndexOf("&", pos) - pos));
 						}
 
-						if((extract.IndexOf("http://") == -1) && extract.StartsWith("/"))
-						{
-							extract = ConfigurationSettings.AppSettings["RootUrl"] + extract;
-							//throw new Exception("Got: '" + extract + "'");
-						}
+                        if ((extract.IndexOf("http://") == -1) && extract.StartsWith("/"))
+                        {
+                            extract = ConfigurationSettings.AppSettings["RootUrl"] + extract;
+                            //throw new Exception("Got: '" + extract + "'");
+                        }
+
 
 						/*if (extract.StartsWith("mailto:")) 
 						{
