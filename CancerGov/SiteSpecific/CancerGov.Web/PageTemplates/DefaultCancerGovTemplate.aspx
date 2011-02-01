@@ -66,7 +66,7 @@
                 </td>
                 <!-- End Left Nav -->                
                 <!-- Main Content Area -->
-                <td id="contentzone" valign="top" width="571">
+                <td id="contentzone" valign="top" width="100%">
                     <a name="skiptocontent"></a>
                     <NCI:TemplateSlot ID="cgvBodyHeader" runat="server"  />
                     <NCI:TemplateSlot ID="cgvRightNav" runat="server">
