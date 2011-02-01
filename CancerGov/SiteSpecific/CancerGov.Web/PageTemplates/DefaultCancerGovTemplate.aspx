@@ -69,7 +69,7 @@
                 <td id="contentzone" valign="top" width="100%">
                     <a name="skiptocontent"></a>
                     <NCI:TemplateSlot ID="cgvBodyHeader" runat="server"  />
-                    <NCI:TemplateSlot ID="cgvRightNav" runat="server">
+                    <NCI:TemplateSlot ID="cgvRightNav" runat="server" CssClass="LeftNavSlot">
                         <HeaderHtml>
                         <table cellspacing="0" cellpadding="0" border="0" align="right" width="167">
                             <tbody>
