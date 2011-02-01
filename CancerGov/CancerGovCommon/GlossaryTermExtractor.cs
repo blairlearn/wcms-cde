@@ -125,12 +125,12 @@ namespace CancerGov.Common.Extraction
 		public string ExtractGlossaryTerms(string text)
 		{
 			if (Regex.IsMatch(text, "/common/popups/popDefinition.aspx", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline) ||
-				(Regex.IsMatch(text, "/dictionary/db_alpha.aspx", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline))) 
+				(Regex.IsMatch(text, "/dictionary", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline))) 
 			{
-                Regex exp = new Regex("href=\"(/common/popups/popDefinition.aspx.+?|/dictionary/db_alpha.aspx.+?)\"\\s+?onclick=\"(popWindow|javascript:popWindow)\\(\'(definition|defbyid)\',.*?\'(.+?)\'\\).+?\">", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
+                Regex exp = new Regex("href=\"(/common/popups/popDefinition.aspx.+?|/dictionary.+?)\"\\s+?onclick=\"(popWindow|javascript:popWindow)\\(\'(definition|defbyid)\',.*?\'(.+?)\'\\).+?\">", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
                 exp.Replace(text, new MatchEvaluator(ChangeLink));
                 
-                exp = new Regex("href=\"(" + ConfigurationSettings.AppSettings["RootUrl"] + "/common/popups/popDefinition.aspx.+?|/dictionary/db_alpha.aspx.+?)\"\\s+?onclick=\"(popWindow|javascript:popWindow)\\(\'(definition|defbyid)\',.*?\'(.+?)\'\\).+?\">", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
+                exp = new Regex("href=\"(" + ConfigurationSettings.AppSettings["RootUrl"] + "/common/popups/popDefinition.aspx.+?|/dictionary.+?)\"\\s+?onclick=\"(popWindow|javascript:popWindow)\\(\'(definition|defbyid)\',.*?\'(.+?)\'\\).+?\">", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
 				return exp.Replace(text, new MatchEvaluator(ChangeLink));
 			} 
 			else 
