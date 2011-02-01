@@ -39,7 +39,7 @@
     <NCI:TemplateSlot ID="tcgaSlotBodyTop" runat="server" />
     <!-- <div class="content-sidebox"> -->
     <NCI:TemplateSlot ID="tcgaSlotImageCaption" runat="server" />   
-	<NCI:TemplateSlot ID="tcgaSlotMultimedia" runat="server" CssClass="multimedia-sidebox" /> 
+	<NCI:TemplateSlot ID="tcgaSlotMultimedia" runat="server" /> 
     <!-- </div> -->
     <NCI:TemplateSlot ID="tcgaSlotBody" runat="server" />
     <NCI:TemplateSlot ID="tcgaSlotCDERelatedMultimedia" runat="server" />
