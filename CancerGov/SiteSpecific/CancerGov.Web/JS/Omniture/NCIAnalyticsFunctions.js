@@ -224,7 +224,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         }
         statusPhase += NCIAnalytics.fieldDelimiter;
         // - Phase
-        if ( $(ids.trialPhase_0).checked || $(ids.trialPhase_1).checked || $(ids.trialPhase_2).checked || $(ids.trialPhase_3).checked || $(ids.trialPhase_4).checked)  {
+        if ( $(ids.trialPhase_1).checked || $(ids.trialPhase_2).checked || $(ids.trialPhase_3).checked || $(ids.trialPhase_4).checked)  {
                 phaseList = 'Trial Phase';
         }
         
