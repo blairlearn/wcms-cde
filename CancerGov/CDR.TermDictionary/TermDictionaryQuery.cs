@@ -214,8 +214,7 @@ namespace CancerGov.CDR.TermDictionary
         public static ArrayList GetPopDefinition(string type, string param, string pdqVersion, string language)
         {
             ArrayList returnvalue = new ArrayList(3);
-            //string version = (pdqVersion == PDQVersion.HealthProfessional) ? "Health Professional" : "Patient";
-            string version = pdqVersion;
+            string version = (pdqVersion == "HealthProfessional") ? "Health Professional" : "Patient";
             SqlConnection dbh = new SqlConnection(ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
             SqlCommand sth = new SqlCommand("usp_GetGlossaryDefinition", dbh);
             sth.CommandType = CommandType.StoredProcedure;
