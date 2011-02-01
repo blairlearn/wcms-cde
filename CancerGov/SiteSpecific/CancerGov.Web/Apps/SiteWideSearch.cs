@@ -423,7 +423,7 @@ namespace NCI.Web.CancerGov.Apps
         protected string ResultsHyperlinkOnclick(RepeaterItem result)
         {
             if (WebAnalyticsOptions.IsEnabled)
-                return "NCIAnalytics.SiteWideSearchResults(this," + (isBestBet ? "true" : "false") + ",'" + (result.ItemIndex + _resultOffset).ToString() + "');"; // Load results onclick script
+                return "NCIAnalytics.SiteWideSearchResults(this," + "false" + ",'" + (result.ItemIndex + _resultOffset).ToString() + "');"; // Load results onclick script
             else
                 return "";
         }
