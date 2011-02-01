@@ -137,7 +137,7 @@ namespace CancerGov.Common.Extraction
 			switch(extType)
 			{
 				case ExtractionTypes.URL:		//URL extraction
-					if (! (Regex.IsMatch(extract, "^(#|mailto|/common/popups/popdefinition.aspx|/dictionary/db_alpha.aspx|^\\s+$|^\"|javascript:)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline)
+					if (! (Regex.IsMatch(extract, "^(#|mailto|/common/popups/popdefinition.aspx|/dictionary|^\\s+$|^\"|javascript:)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline)
                         || Regex.IsMatch(extract, "^(#|mailto|" + ConfigurationSettings.AppSettings["RootUrl"] + "/common/popups/popdefinition.aspx|/dictionary/db_alpha.aspx|^\\s+$|^\"|javascript:)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline)
 						   || mt.Groups["linkText"].Value.StartsWith("http")
 						   || mt.Groups["linkText"].Value.StartsWith("www.")) ) {
