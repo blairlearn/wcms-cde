@@ -60,6 +60,7 @@ namespace CancerGov.Web.SnippetTemplates
                 if (slot.SnippetInfo.SlotName != "cgvSectionNav" && slot.SnippetInfo.SlotName != "cgvSiteBannerPrint" && slot.SnippetInfo.SlotName != "cgvContentHeader" && slot.SnippetInfo.SlotName != "cgvSiteBanner" && slot.SnippetInfo.SlotName != "cgvLanguageDate" && slot.SnippetInfo.SlotName != "cgvBodyHeader")
                 {
                     data = slot.SnippetInfo.Data;
+                    data = data.Replace("contenteditable=\"false\"", "");
                     data = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, data);
                     if (fe.hashIndex.Count >= 1)
                     {
