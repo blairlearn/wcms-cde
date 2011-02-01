@@ -103,16 +103,6 @@
                     </FooterHtml>
                 </NCI:TemplateSlot>
             <NCI:TemplateSlot ID="cgvMpToc" runat="server"  />
-                    <NCI:TemplateSlot ID="cgvSectionNav" runat="server" CssClass="LeftNavSlot">
-                        <HeaderHtml>
-                                                        
-                        </HeaderHtml>
-                        <FooterHtml>
-                                    
-                                        <img src="/images/spacer.gif" border="0" alt="" width="16" height="1" />
-                                                              
-                        </FooterHtml>
-                    </NCI:TemplateSlot>
                     <NCI:TemplateSlot ID="cgvBody" runat="server"  />
 			<!-- Glossary of Terms -->
  		    <uc2:GlossaryTerms ID="GlossaryTerms1" runat="server" />
