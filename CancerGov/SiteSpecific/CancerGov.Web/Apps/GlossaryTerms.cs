@@ -55,7 +55,8 @@ namespace NCI.Web.CancerGov.Apps
 
                 }
             }
-            glossaryTerms = "<table border=0 width=699 cellspacing=0 cellpadding=0><tr><td><BR><BR><a name=\"Glossary Terms\"></a><h2>Glossary Terms</h2>" + glossaryTerms + "</td></tr></table>";
+            if(!string.IsNullOrEmpty(glossaryTerms))
+                glossaryTerms = "<table border=0 width=699 cellspacing=0 cellpadding=0><tr><td><BR><BR><a name=\"Glossary Terms\"></a><h2>Glossary Terms</h2>" + glossaryTerms + "</td></tr></table>";
 
             LiteralControl lit = new LiteralControl(glossaryTerms);
             this.Controls.Add(lit);
