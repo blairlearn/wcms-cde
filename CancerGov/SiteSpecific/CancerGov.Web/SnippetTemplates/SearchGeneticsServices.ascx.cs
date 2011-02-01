@@ -14,6 +14,7 @@ using CancerGov.Common;
 using CancerGov.Common.ErrorHandling;
 using CancerGov.CDR.DataManager;
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class SearchGeneticsServices : SearchBaseUserControl
@@ -82,6 +83,8 @@ namespace CancerGov.Web.SnippetTemplates
                 litOnSubmitHandlerAdder.Visible = false;
             }
 
+            NCI.Web.UI.WebControls.JSManager.AddExternalScript(this.Page, "/scripts/popEvents.js");
+            PrototypeManager.Load(this.Page);
         }
     }
 }
