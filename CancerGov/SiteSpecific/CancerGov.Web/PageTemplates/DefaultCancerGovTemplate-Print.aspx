@@ -11,6 +11,7 @@
 <head id="header" runat="server">
     <title></title>
     <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
+    <script src="/JS/popEvents.js" language="JavaScript" type="text/javascript"></script>
     <script type="text/javascript" language="JavaScript" src="/JS/NetTracker/ntpagetag.js"></script>
     <!--[if IE]>
 	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
