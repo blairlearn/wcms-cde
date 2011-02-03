@@ -181,6 +181,9 @@
     <Compile Include="Common\PopUps\CTLSearch\CTLookup.aspx.designer.cs">
       <DependentUpon>CTLookup.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookUpBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.cs">
       <DependentUpon>CTLookupResults.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
