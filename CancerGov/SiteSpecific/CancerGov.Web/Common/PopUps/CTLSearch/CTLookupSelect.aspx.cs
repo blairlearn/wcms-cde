@@ -19,6 +19,7 @@ namespace CancerGov.Web
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
             ValidateInputData(Request.Params["fld"]);
+            ValidateInputData(Request.Params["type"]);
             ValidateValidValues(Request.Params["fld"], new ArrayList { "institution", "drug", "intervention", "investigator", "leadorg" });
 		}
 
