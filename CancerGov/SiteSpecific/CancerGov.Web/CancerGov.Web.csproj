@@ -356,6 +356,13 @@
     <Compile Include="SnippetTemplates\db_alpha.ascx.designer.cs">
       <DependentUpon>db_alpha.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\DocTitleBlock.ascx.cs">
+      <DependentUpon>DocTitleBlock.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\DocTitleBlock.ascx.designer.cs">
+      <DependentUpon>DocTitleBlock.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\drugdictionary.ascx.cs">
       <DependentUpon>drugdictionary.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -555,6 +562,7 @@
     <Content Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx" />
     <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
+    <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
     <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
     <Content Include="SnippetTemplates\GlossaryTerms.ascx" />
