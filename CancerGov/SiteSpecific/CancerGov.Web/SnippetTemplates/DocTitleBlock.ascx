@@ -25,5 +25,5 @@
 </table>
 </asp:PlaceHolder>
 <asp:PlaceHolder ID="phPrint" runat="server" Visible="false">
-
+    <span class="page-title"><asp:Literal ID="litPrintTitle" runat="server" /></span><br />
 </asp:PlaceHolder>

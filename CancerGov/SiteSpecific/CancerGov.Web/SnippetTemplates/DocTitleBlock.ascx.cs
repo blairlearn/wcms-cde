@@ -24,7 +24,7 @@ namespace CancerGov.Web.SnippetTemplates
                 XmlNode titleDisplay = doc.SelectSingleNode("//TitleDisplay");
                 XmlNode imageUrl = doc.SelectSingleNode("//ImageUrl");
 
-                string title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("");
+                String title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("long_title");
 
                 if (titleDisplay != null)
                 {
@@ -32,19 +32,36 @@ namespace CancerGov.Web.SnippetTemplates
                     {
                         case "DocTitleBlockTitle":
                             {
-                            }
-                            break;
-                        default:
-                            {
-
+                                if (xnTitle != null)
+                                {
+                                    title = xnTitle.Value;
+                                }
                             }
                             break;
                     }
                 }
-                
+
+                if (imageUrl != null)
+                {
+                    imgImage.ImageUrl = imageUrl.Value;
+                }
+
+                if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print ||
+                    PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
+                {
+                    phPrint.Visible = true;
+                    litPrintTitle.Text = title;
+                }
+                else
+                {
+                    phWeb.Visible = true;
+                    litTitle.Text = title;
+                }
+
             }
             catch (Exception ex)
             {
+                //Should have logging...
             }
         }
     }
