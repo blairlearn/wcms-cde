@@ -159,14 +159,14 @@
                 </script>
 
                 &nbsp;&nbsp;
-                <label for="sortOrder">
+                <label for="<%=sortOrder.ClientID%>">
                     Sort by:</label>&nbsp;
                 <asp:DropDownList ID="sortOrder" runat="server" AutoPostBack="false">
                 </asp:DropDownList>
                 &nbsp;&nbsp; Show
                 <asp:DropDownList ID="resultsPerPage" runat="server" AutoPostBack="false">
                 </asp:DropDownList>
-                <label for="resultsPerPage">
+                <label for="<%=resultsPerPage.ClientID%>">
                     Results per Page</label>
             </span><span style="float: right; margin-top: 4px;">
                 <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="/images/ctsearch/go-btn-red.gif"
