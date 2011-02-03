@@ -67,8 +67,8 @@ namespace CancerGov.Web.Common.PopUps
                 dl = DisplayLanguage.Spanish;
             else
                 dl = DisplayLanguage.English;
-            
 
+            ValidateParams();
             
             //include page title
             this.pageHtmlHead.Title = "Definition - National Cancer Institute";
@@ -167,6 +167,45 @@ namespace CancerGov.Web.Common.PopUps
             //webAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.DictionaryTermView); // Dictionary Term view (event11)
             //litOmniturePageLoad.Text = webAnalyticsPageLoad.Tag();  // Load page load script 
             // End Web Analytics *********************************************
+        }
+
+        private void ValidateParams()
+        {
+            //input_term = Strings.Clean(Request.Params["term"]);
+            string id;
+            string version;
+            string language;
+            id = Strings.IfNull(Strings.Clean(Request.Params["id"]), Strings.Clean(Request.Params["cdrid"]));
+            if(!string.IsNullOrEmpty(id))
+                id = Regex.Replace(id, "^CDR0+", "", RegexOptions.Compiled);
+
+            version = Strings.Clean(Request.Params["version"]);
+            language = Request.QueryString["language"];
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                    Int32.Parse(id.Trim());
+                if (!string.IsNullOrEmpty(version))
+                {
+                    if (version.ToString().ToLower().Trim() != "patient" && version.ToString().ToLower().Trim() != "healthprofessional")
+                    {
+                        throw new Exception("Invalid Version " + version);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(language))
+                {
+                    if (language.ToLower().Trim() != "english" && language.ToLower().Trim() != "Spanish")
+                    {
+                        throw new Exception("Invalid Language " + language);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         /// <summary>

@@ -142,7 +142,7 @@ namespace CancerGov.Web
             }
             else
             {
-                Response.Redirect(System.Configuration.ConfigurationManager.AppSettings["ErrorPage"], true);                
+                Response.Redirect(System.Configuration.ConfigurationManager.AppSettings["RootUrl"] + System.Configuration.ConfigurationManager.AppSettings["ErrorPage"], true);                
             }
         }
 

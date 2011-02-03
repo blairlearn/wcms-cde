@@ -132,6 +132,7 @@ namespace Www.Templates
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            ValidateParams();
             GetQueryParams();
 
             //DictionaryURLSpanish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("dictionary", "diccionario"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLSpanish"];
@@ -402,6 +403,21 @@ namespace Www.Templates
                 noDataSpanPanel.Visible = true;
             else
                 noDataEngPanel.Visible = true;
+        }
+
+        private void ValidateParams()
+        {
+            CdrID = Strings.Clean(Request.Params["cdrid"]);
+            if (!string.IsNullOrEmpty(CdrID.Trim()))
+                try
+                {
+                    Int32.Parse(CdrID);
+                }
+                catch(Exception ex)
+                {
+                    throw new  Exception("Invalid CDRID" + CdrID);
+                    
+                }
         }
 
         /// <summary>
