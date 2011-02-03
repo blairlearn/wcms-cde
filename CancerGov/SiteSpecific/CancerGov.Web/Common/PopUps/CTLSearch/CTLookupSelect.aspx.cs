@@ -14,11 +14,12 @@ namespace CancerGov.Web
 	/// <summary>
 	/// Summary description for CTLookupSelect.
 	/// </summary>
-	public partial class CTLookupSelect : System.Web.UI.Page
+    public partial class CTLookupSelect : CTLookupBase
 	{
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
-			// Put user code to initialize the page here
+            ValidateInputData(Request.Params["fld"]);
+            ValidateValidValues(Request.Params["fld"], new ArrayList { "institution", "drug", "intervention", "investigator", "leadorg" });
 		}
 
 		#region Web Form Designer generated code

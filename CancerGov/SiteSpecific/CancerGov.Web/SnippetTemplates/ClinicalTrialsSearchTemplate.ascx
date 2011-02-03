@@ -182,7 +182,7 @@ span.gray-text
     <table width="100%" cellpadding="0" cellspacing="0" border="0" class="cttable">
         <tr valign="top">
             <td class="column1 sectionBreak">
-                <label for="cancerType" style="white-space: nowrap;">
+                <label for="<%=cancerType.ClientID%>" style="white-space: nowrap;">
                     Cancer Type/Condition</label>
             </td>
             <td class="column2 sectionBreak">
@@ -229,22 +229,22 @@ span.gray-text
                     <tr>
                         <td valign="top" style="vertical-align: top;">
                             <input type="radio" id="zipCodeLocationButton" name="LocationChooser" value="zip"
-                                runat="server" style="" /><label for="zipCodeLocationButton" style="margin-top: 0px;
+                                runat="server" style="" /><label for="<%=zipCodeLocationButton.ClientID%>" style="margin-top: 0px;
                                     padding-top: 0px;">Near ZIP Code</label>
                         </td>
                         <td valign="top">
                             <input type="radio" id="hospitalLocationButton" name="LocationChooser" value="hospital"
-                                runat="server" /><label for="hospitalLocationButton">At&nbsp;Hospital/Institution</label>
+                                runat="server" /><label for="<%=hospitalLocationButton.ClientID%>">At&nbsp;Hospital/Institution</label>
                         </td>
                     </tr>
                     <tr>
                         <td valign="top">
                             <input type="radio" id="cityStateLocationButton" name="LocationChooser" value="city"
-                                runat="server" /><label for="cityStateLocationButton">In&nbsp;City/State/Country</label>
+                                runat="server" /><label for="<%=cityStateLocationButton.ClientID%>">In&nbsp;City/State/Country</label>
                         </td>
                         <td valign="top">
                             <input type="radio" id="atNihLocationButton" name="LocationChooser" value="nih" runat="server" /><label
-                                for="atNihLocationButton">At NIH</label>
+                                for="<%=atNihLocationButton.ClientID%>">At NIH</label>
                         </td>
                     </tr>
                 </table>
@@ -255,10 +255,10 @@ span.gray-text
                     <div class="locationGroupbox clinicaltrials-filledbox">
                         <input type="radio" id="zipCodeLocationButtonStatic" name="LocationChooser" value="zip-static"
                             runat="server" checked />
-                        <label for="zipCodeLocationButtonStatic">
+                        <label for="<%=zipCodeLocationButtonStatic.ClientID%>">
                             <span style="font-weight: bold; color: #000000;">Near ZIP Code</span></label><br />
                         <div style="padding: 5px 0 0 40px; line-height: 25px;">
-                            <label for="zipCodeProximity">
+                            <label for="<%=zipCodeProximity.ClientID%>">
                                 Show trials located within:</label><br />
                             <asp:DropDownList ID="zipCodeProximity" runat="server">
                                 <asp:ListItem Value="20">20 miles</asp:ListItem>
@@ -287,17 +287,17 @@ span.gray-text
                     <div class="locationGroupbox clinicaltrials-filledbox">
                         <input type="radio" id="cityStateLocationButtonStatic" name="LocationChooser" value="city-static"
                             runat="server" />
-                        <label for="cityStateLocationButtonStatic">
+                        <label for="<%=cityStateLocationButtonStatic.ClientID%>">
                             <span style="font-weight: bold; color: #000000;">In City/State/Country</span></label><br />
                         <div style="padding: 5px 0 0 40px; line-height: 25px;">
-                            <label for="country">
+                            <label for="<%=country.ClientID%>">
                                 Country:</label><br />
                             <!-- Width set in style section -->
                             <select id="country" onchange="country_onChange(this);" name="country" runat="server">
                             </select>
                         </div>
                         <div style="padding: 5px 0 0 40px; line-height: 25px;">
-                            <label for="city">
+                            <label for="<%=city.ClientID%>">
                                 City:</label><br />
                             <input id="city" type="text" size="14" name="city" style="width: 100%;" runat="server" />
                         </div>
@@ -318,7 +318,7 @@ span.gray-text
                         <input type="radio" id="hospitalLocationButtonStatic" name="LocationChooser" value="hospital-static"
                             runat="server" />
                         <span style="font-weight: bold; color: #000000;">
-                            <label for="hospitalLocationButtonStatic">
+                            <label for="<%=hospitalLocationButtonStatic.ClientID%>">
                                 At Hospital/Institution:</label></span>
                         <input type="image" id="showInstitutionListButton" src="/images/choose_from_list_btn.gif"
                             alt="Choose From List" style="margin-left: 15px; vertical-align: middle;" runat="server" /><br />
@@ -345,7 +345,7 @@ span.gray-text
                     <div class="locationGroupbox clinicaltrials-filledbox">
                         <input type="radio" id="atNihLocationButtonStatic" name="LocationChooser" value="nih-static"
                             runat="server" />
-                        <label for="atNihLocationButtonStatic">
+                        <label for="<%=atNihLocationButtonStatic.ClientID%>">
                             <span style="font-weight: bold; color: #000000;">At NIH</span></label><br />
                         <div style="padding: 5px 0 0 40px; line-height: 25px;">
                             <table cellpadding="0" cellspacing="3">
@@ -354,7 +354,7 @@ span.gray-text
                                         <input id="nihOnly" type="checkbox" value="1" checked="checked" name="nihOnly" runat="server" />
                                     </td>
                                     <td>
-                                        <label for="nihOnly">
+                                        <label for="<%=nihOnly.ClientID%>">
                                             Only show trials at the NIH Clinical Center<br />
                                             (Bethesda, Md.)</label>
                                     </td>
@@ -476,7 +476,7 @@ span.gray-text
                 Phrases
             </td>
             <td valign="top" class="column2 sectionBreak sectionBottom">
-                <label for="txtKeywords">
+                <label for="<%=txtKeywords.ClientID%>">
                     Search by word or phrase (use quote marks with phrases)</label><br />
                 <cancergov:helptextinput id="txtKeywords" helpertext="Examples: PSA, HER-2, \&quot;Paget disease\&quot;"
                     helpertextcolor="#6e6e6e" style="width: 100%; margin: 5px 0px;" size="50" maxlength="100"
@@ -573,7 +573,7 @@ span.gray-text
                     width="100%">
                     <tr>
                         <td valign="top" class="column1">
-                            <label for="protocolID">
+                            <label for="<%=protocolID.ClientID%>">
                                 <span class="gray-text"><b>Protocol ID</b></span></label>
                         </td>
                         <td valign="top" class="column2">

@@ -16,7 +16,7 @@ namespace CancerGov.Web
 	/// <summary>
 	/// Summary description for CTLookupSearch.
 	/// </summary>
-	public partial class CTLookupSearch : System.Web.UI.Page
+    public partial class CTLookupSearch : CTLookupBase
 	{
 		private string title = "";
 		private string inputKeyword;
@@ -60,8 +60,17 @@ namespace CancerGov.Web
 
 		#endregion
 
+
 		protected void Page_Load(object sender, System.EventArgs e)
 		{
+            ValidateInputData(Request.Params["fld"]);
+            ValidateInputData(Request.Params["type"]);
+            ValidateInputData(Request.Params["title"]);
+            
+            ValidateValidValues( Request.Params["fld"], new ArrayList { "institution", "drug", "intervention", "investigator", "leadorg" });
+            ValidateValidValues(Title, new ArrayList { "find+hospitals/institutions", 
+                "find+drug", "treatment/intervention", "find+trial+investigators", "find+lead+organizations" });
+
 			title = Strings.IfNull(Strings.Clean(Request.Params["title"]), "");
 			inputKeyword = Strings.IfNull(Strings.Clean(Request.Params["keyword"]), "");
 			inputAlphaIndex = Strings.IfNull(Strings.Clean(Request.Params["alphaIndex"]), "");

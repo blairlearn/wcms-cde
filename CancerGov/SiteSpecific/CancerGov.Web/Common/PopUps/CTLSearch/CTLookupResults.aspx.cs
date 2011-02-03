@@ -20,7 +20,7 @@ namespace CancerGov.Web
  	/// <summary>
 	/// Summary description for CTLookupResults.
 	/// </summary>
-	public partial class CTLookupResults : System.Web.UI.Page
+	public partial class CTLookupResults : CTLookupBase
 	{
 
 		private string caption = "";
@@ -32,6 +32,15 @@ namespace CancerGov.Web
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
+
+            ValidateInputData(Request.Params["fld"]);
+            ValidateInputData(Request.Params["type"]);
+            ValidateInputData(Request.Params["title"]);
+
+            ValidateValidValues(Request.Params["fld"], new ArrayList { "institution", "drug", "intervention", "investigator", "leadorg" });
+            ValidateValidValues(Title, new ArrayList { "find+hospitals/institutions", 
+                "find+drug", "treatment/intervention", "find+trial+investigators", "find+lead+organizations" });
+
             resultsForm.EnableViewState = false;
 
             //Local variables			
