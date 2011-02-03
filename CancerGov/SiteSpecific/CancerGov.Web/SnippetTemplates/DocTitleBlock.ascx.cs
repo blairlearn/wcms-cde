@@ -25,6 +25,7 @@ namespace CancerGov.Web.SnippetTemplates
                 XmlNode imageUrl = doc.SelectSingleNode("//ImageUrl");
 
                 String title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("long_title");
+                String audience = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("PDQAudience");
 
                 if (titleDisplay != null)
                 {
@@ -49,8 +50,17 @@ namespace CancerGov.Web.SnippetTemplates
                 if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print ||
                     PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
                 {
-                    phPrint.Visible = true;
-                    litPrintTitle.Text = title;
+                    if (audience != null || audience.Length != 0)
+                    {
+                        phPrint.Visible = true;
+                        litPrintTitle.Text = title;
+                        litAudienceTitle.Text = audience;
+                    }
+                    else
+                    {
+                        phPrintNoAudience.Visible = true;
+                        litNoAudiencePrintTitle.Text = title;
+                    }
                 }
                 else
                 {

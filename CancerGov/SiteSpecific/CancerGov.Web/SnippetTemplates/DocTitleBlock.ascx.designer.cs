@@ -57,5 +57,32 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litPrintTitle;
+        
+        /// <summary>
+        /// litAudienceTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litAudienceTitle;
+        
+        /// <summary>
+        /// phPrintNoAudience control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phPrintNoAudience;
+        
+        /// <summary>
+        /// litNoAudiencePrintTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litNoAudiencePrintTitle;
     }
 }
