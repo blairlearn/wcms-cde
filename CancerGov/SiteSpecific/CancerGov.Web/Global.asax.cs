@@ -9,6 +9,7 @@ using System.IO;
 using NCI.Web.CDE;
 using NCI.Web.CDE.Configuration;
 using System.Configuration;
+using NCI.Logging;
 
 namespace CancerGov.Web
 {
@@ -109,8 +110,6 @@ namespace CancerGov.Web
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            //Hopefully this will only log errors we want
-
             Exception objErr = Server.GetLastError();
 
             if (objErr != null)
@@ -123,14 +122,12 @@ namespace CancerGov.Web
 
                 try
                 {
-                    EventLog eLog = new EventLog(GetEventLogName());
-                    eLog.Source = GetSourceName();
-                    eLog.WriteEntry(err, EventLogEntryType.Error);
-                    eLog.Close();
+                    NCI.Logging.Logger.LogError("Application Exception", err, NCIErrorLevel.Error);
                 }
                 catch (System.ComponentModel.Win32Exception)
                 { //Since we cannot log to the eventlog, then we should not try again
                 }
+                catch { }
             }
 
             Server.ClearError();
@@ -142,7 +139,7 @@ namespace CancerGov.Web
             }
             else
             {
-                Response.Redirect(System.Configuration.ConfigurationManager.AppSettings["RootUrl"] + System.Configuration.ConfigurationManager.AppSettings["ErrorPage"], true);                
+                Response.Redirect(System.Configuration.ConfigurationManager.AppSettings["ErrorPage"], true);                
             }
         }
 
