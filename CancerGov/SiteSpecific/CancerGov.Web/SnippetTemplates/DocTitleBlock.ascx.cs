@@ -27,18 +27,23 @@ namespace CancerGov.Web.SnippetTemplates
                 //XmlNode displayedDate = doc.SelectSingleNode("//Date");
 
                 String title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("long_title");
-                String audience = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("PDQAudience");
+                String audience = string.Empty;
+                try
+                {
+                    audience = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("PDQAudience");
+                }
+                catch { }
                 //String date = displayedDate.InnerText;
 
                 if (titleDisplay != null)
                 {
-                    switch (titleDisplay.Value)
+                    switch (titleDisplay.InnerText)
                     {
                         case "DocTitleBlockTitle":
                             {
                                 if (xnTitle != null)
                                 {
-                                    title = xnTitle.Value;
+                                    title = xnTitle.InnerText;
                                 }
                             }
                             break;
@@ -47,13 +52,13 @@ namespace CancerGov.Web.SnippetTemplates
 
                 if (imageUrl != null)
                 {
-                    imgImage.ImageUrl = imageUrl.Value;
+                    imgImage.ImageUrl = imageUrl.InnerText;
                 }
 
                 if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print ||
                     PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
                 {
-                    if (audience != null || audience.Length != 0)
+                    if (!string.IsNullOrEmpty(audience))
                     {
                         phPrint.Visible = true;
                         litPrintTitle.Text = title;
