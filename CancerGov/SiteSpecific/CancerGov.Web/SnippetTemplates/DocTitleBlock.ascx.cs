@@ -24,11 +24,11 @@ namespace CancerGov.Web.SnippetTemplates
                 XmlNode xnTitle = doc.SelectSingleNode("//Title");
                 XmlNode titleDisplay = doc.SelectSingleNode("//TitleDisplay");
                 XmlNode imageUrl = doc.SelectSingleNode("//ImageUrl");
-                XmlNode displayedDate = doc.SelectSingleNode("//Date");
+                //XmlNode displayedDate = doc.SelectSingleNode("//Date");
 
                 String title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("long_title");
                 String audience = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("PDQAudience");
-                String date = displayedDate.InnerText;
+                //String date = displayedDate.InnerText;
 
                 if (titleDisplay != null)
                 {
