@@ -536,7 +536,8 @@ namespace NCI.Web.CDE
                 ArrayList keysList = new ArrayList();
                 if (AlternateContentVersions.IsPrintAvailable)
                 {
-                    keysList.Add("print");
+                    if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.ViewAll)
+                        keysList.Add("print");
                     if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.PrintAll)
                         keysList.Add("printall");
                 }
