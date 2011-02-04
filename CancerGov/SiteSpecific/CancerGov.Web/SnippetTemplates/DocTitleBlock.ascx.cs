@@ -57,7 +57,68 @@ namespace CancerGov.Web.SnippetTemplates
                         phPrint.Visible = true;
                         litPrintTitle.Text = title;
                         litAudienceTitle.Text = audience;
-                        litPrintDate.Text = date;
+
+                        ContentDates contenDates = ((BasePageAssemblyInstruction)PageAssemblyContext.Current.PageAssemblyInstruction).ContentDates;
+                        string postedTxt = string.Empty;
+                        string updatedTxt = string.Empty;
+                        string reviewedTxt = string.Empty;
+                        
+                        //make code better
+                        if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+                        {
+                            postedTxt = "Posted: ";
+                            updatedTxt = "Last Modified: ";
+                            reviewedTxt = "Reviewed: ";
+                        }
+                        else if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                        {
+                            postedTxt = "Publicaci&oacute;n: ";
+                            updatedTxt = "Actualizado: ";
+                            reviewedTxt = "Revisi&oacute;n: ";
+                        }
+
+                        string posted = "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
+                            postedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", contenDates.FirstPublished);
+                        string reviewed =  "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
+                            reviewedTxt + "</strong>"+String.Format("{0:MM/dd/yyyy}", contenDates.LastReviewed);
+                        string updated =  "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
+                             updatedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", contenDates.LastModified);
+
+
+
+                        if (contenDates.DateDisplayMode == DateDisplayModes.All)
+                        {
+                            litPrintDate.Text = posted + updated + reviewed;
+                        }
+                        else if (contenDates.DateDisplayMode == DateDisplayModes.UpdatedReviewed)
+                        {
+                            litPrintDate.Text = updated + reviewed;
+                        }
+                        else if (contenDates.DateDisplayMode == DateDisplayModes.PostedReviewed)
+                        {
+                            litPrintDate.Text = posted + reviewed;
+                        }
+                        else if (contenDates.DateDisplayMode == DateDisplayModes.Reviewed)
+                        {
+                            litPrintDate.Text = reviewed;
+                        }
+                        else if (contenDates.DateDisplayMode == DateDisplayModes.PostedUpdated)
+                        {
+                            litPrintDate.Text = posted + updated;
+                        }
+                        else if (contenDates.DateDisplayMode == DateDisplayModes.Updated)
+                        {
+                            litPrintDate.Text = updated;
+                        }
+                        else if (contenDates.DateDisplayMode == DateDisplayModes.Posted)
+                        {
+                            litPrintDate.Text = posted;
+                        }
+                        else
+                        {
+                            litPrintDate.Text = "";
+                        }
+ 
                     }
                     else
                     {
