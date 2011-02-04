@@ -7,10 +7,11 @@ using System.Web.UI.WebControls;
 using System.Xml;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
+using NCI.Web.CancerGov.Apps;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class DocTitleBlock : SnippetControl
+    public partial class DocTitleBlock : AppsBaseUserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -63,14 +64,15 @@ namespace CancerGov.Web.SnippetTemplates
                         string updatedTxt = string.Empty;
                         string reviewedTxt = string.Empty;
                         
+
                         //make code better
-                        if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+                        if (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.English)
                         {
                             postedTxt = "Posted: ";
                             updatedTxt = "Last Modified: ";
                             reviewedTxt = "Reviewed: ";
                         }
-                        else if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                        else if (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish)
                         {
                             postedTxt = "Publicaci&oacute;n: ";
                             updatedTxt = "Actualizado: ";
