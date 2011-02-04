@@ -195,7 +195,7 @@ namespace CancerGov.Web.Common.PopUps
 
                 if (!string.IsNullOrEmpty(language))
                 {
-                    if (language.ToLower().Trim() != "english" && language.ToLower().Trim() != "Spanish")
+                    if (language.ToLower().Trim() != "english" && language.ToLower().Trim() != "spanish")
                     {
                         throw new Exception("Invalid Language " + language);
 
