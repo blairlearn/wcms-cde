@@ -306,7 +306,7 @@ namespace Www.Templates
                     PagePrintUrl += "&sgroup=Contains";
             }
 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", url =>
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name,url) => 
             {
                 url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
             });

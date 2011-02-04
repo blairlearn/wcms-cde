@@ -285,7 +285,7 @@ namespace NCI.Web.CDE.Test
             pageAssemblyInfo = InitializeTestPageAssemblyInfo();
 
 
-            pageAssemblyInfo.AddUrlFilter("foo", url =>
+            pageAssemblyInfo.AddUrlFilter("foo", (name, url) =>
             {
                 url.Clear();
                 url.UriStem = "/foo";
@@ -305,13 +305,13 @@ namespace NCI.Web.CDE.Test
             pageAssemblyInfo = InitializeTestPageAssemblyInfo();
 
 
-            pageAssemblyInfo.AddUrlFilter("foo", url =>
+            pageAssemblyInfo.AddUrlFilter("foo", (name, url ) =>
             {
                 url.Clear();
                 url.UriStem = "/foo";
             });
 
-            pageAssemblyInfo.AddUrlFilter("foo", url =>
+            pageAssemblyInfo.AddUrlFilter("foo", (name, url ) =>
             {
                 url.UriStem += "/bar";
             });

@@ -232,7 +232,7 @@ namespace CancerGov.Web.SnippetTemplates
             //// End Web Analytics *********************************************
 
             // Set the URL needed for PageOption Print
-            this.PageInstruction.AddUrlFilter("Print", url =>
+            this.PageInstruction.AddUrlFilter("Print", (name, url) =>
             {
                 url.SetUrl(this.PageInstruction.GetUrl("CurrentURL").ToString() + "/print?" + Request.QueryString.ToString());
             });

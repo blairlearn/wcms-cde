@@ -91,10 +91,9 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             string pagePrintUrl = PageAssemblyContext.Current.requestedUrl + "?personid=" + args + "&print=1";
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", url =>
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url) =>
             {
                 url.SetUrl(pagePrintUrl);
-                
             });
             
             //Web Analytics

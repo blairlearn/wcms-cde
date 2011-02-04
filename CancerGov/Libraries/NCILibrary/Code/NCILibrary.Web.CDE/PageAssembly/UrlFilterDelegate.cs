@@ -9,6 +9,6 @@ namespace NCI.Web.CDE
         /// Adds a URL filter which modifies the URL referenced by 'string' when GetURL is called.
         /// </summary>
         /// <param name="fieldFilterData"></param>
-    public delegate void UrlFilterDelegate(NciUrl url);
+    public delegate void UrlFilterDelegate(string name, NciUrl url);
 
 }

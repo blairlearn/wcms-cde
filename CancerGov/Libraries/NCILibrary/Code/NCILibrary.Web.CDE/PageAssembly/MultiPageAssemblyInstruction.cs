@@ -81,7 +81,7 @@ namespace NCI.Web.CDE
             AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
             AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
 
-            AddUrlFilter("CurrentURL", url =>
+            AddUrlFilter("CurrentURL", (name,url) =>
                 {
                     url.SetUrl(GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString());
                     if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
@@ -93,17 +93,17 @@ namespace NCI.Web.CDE
 
             #region AddFilter For PageOptions
             // URL Filter specifically for PageOptions
-            AddUrlFilter("Print", url =>
+            AddUrlFilter("Print", (name,url) =>
             {
                 url.SetUrl(GetUrl("CurrentURL").ToString() + "/print");
             });
 
-            AddUrlFilter("Email", url =>
+            AddUrlFilter("Email", (name,url) =>
             {
                 url.SetUrl(GetEmailUrl());
             });
 
-            AddUrlFilter("free", url =>
+            AddUrlFilter("free", (name, url) =>
             {
                 string freeCopyUrl = string.Empty;
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
@@ -111,19 +111,19 @@ namespace NCI.Web.CDE
                 url.SetUrl(freeCopyUrl, true);
             });
 
-            AddUrlFilter("ViewAll", url =>
+            AddUrlFilter("ViewAll", (name, url) =>
             {
                 url.SetUrl(GetUrl("CurrentURL").ToString() + "/AllPages");
             });
 
-            AddUrlFilter("PrintAll", url =>
+            AddUrlFilter("PrintAll", (name, url ) =>
             {
                 url.SetUrl(GetUrl("ViewAll").ToString() + "/Print");
             });
             
             #endregion
 
-            AddUrlFilter("PostBackURL", url =>
+            AddUrlFilter("PostBackURL", (name,url) =>
             {
                 url.SetUrl(GetUrl("CurrentURL").ToString());
             });
@@ -492,7 +492,7 @@ namespace NCI.Web.CDE
             if (UrlFilterDelegates.ContainsKey(linkTypeKey) == true)
             {
                 UrlFilterDelegate UrlfilterLinkDelegate = UrlFilterDelegates[linkTypeKey];
-                UrlfilterLinkDelegate(nciUrl);
+                UrlfilterLinkDelegate(linkTypeKey,nciUrl);
             }
             else
             {
@@ -555,9 +555,13 @@ namespace NCI.Web.CDE
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
                 {
                     keysList.Add(acFile.MimeType.ToLower());
-                    AddUrlFilter(acFile.MimeType, url =>
+                    AddUrlFilter(acFile.MimeType.ToLower(), (name, url) =>
                     {
-                        url.SetUrl(acFile.Url);
+                        foreach (AlternateContentFile file in AlternateContentVersions.Files)
+                        {
+                            if (file.MimeType.ToLower() == name.ToLower())
+                                url.SetUrl(file.Url);
+                        }
                     });
                 }
 
@@ -595,7 +599,7 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public AlternateContentVersions AlternateContentVersions { get; set; }
 
-        private void FilterCurrentUrl(NciUrl url)
+        private void FilterCurrentUrl(string name, NciUrl url)
         {
             //This should always be the first delegate for the CurrentUrl link type
             //so we can just overwrite whatever has come before.
@@ -607,7 +611,7 @@ namespace NCI.Web.CDE
         /// Canonical URL for the search engines.
         /// </summary>
         /// <param name="url">The URL.</param>
-        private void CanonicalUrl(NciUrl url)
+        private void CanonicalUrl(string name, NciUrl url)
         {
             //This should always be the first delegate for the CurrentUrl link type
             //so we can just overwrite whatever has come before.

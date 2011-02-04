@@ -632,7 +632,7 @@ namespace Www.Templates
         private void SetupPrintUrl()
         {
             //PagePrintUrl = PageUrl + "&page=" + CurrentPageIndex + "&print=1";
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", url =>
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url ) =>
             {
                 url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
             });
