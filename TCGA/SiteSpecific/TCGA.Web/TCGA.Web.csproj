@@ -51,14 +51,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CancerGov\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\NCILibrary.Search.Endeca.dll</HintPath>
     </Reference>
-    <Reference Include="NCILibrary.TestingTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CancerGov\Libraries\NCILibrary\Code\NCILibrary.TestingTools\bin\Debug\NCILibrary.TestingTools.dll</HintPath>
-    </Reference>
-    <Reference Include="NCILibrary.Web.Authentication.SimpleSSOAuthModule, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CancerGov\Libraries\NCILibrary\Code\NCILibrary.Web.Authentication.SimpleSSOAuthModule\bin\Debug\NCILibrary.Web.Authentication.SimpleSSOAuthModule.dll</HintPath>
-    </Reference>
     <Reference Include="NCILibrary.Web.ContentDeliveryEngine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CancerGov\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\bin\Debug\NCILibrary.Web.ContentDeliveryEngine.dll</HintPath>
@@ -66,10 +58,6 @@
     <Reference Include="NCILibrary.Web.ContentDeliveryEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CancerGov\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\bin\Debug\NCILibrary.Web.ContentDeliveryEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="NCILibrary.Web.UI.Icons, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CancerGov\Libraries\NCILibrary\Code\NCILibrary.Web.UI.Icons\bin\Debug\NCILibrary.Web.UI.Icons.dll</HintPath>
     </Reference>
     <Reference Include="NCILibrary.Web.UI.WebControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -106,6 +94,8 @@
     <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
     <Content Include="Global.asax" />
     <Content Include="JS\imgEvents.js" />
+    <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
+    <Content Include="JS\Omniture\s_code.js" />
     <Content Include="JS\popEvents.js" />
     <Content Include="PageTemplates\DefaultTCGAPageTemplate.aspx" />
     <Content Include="PageTemplates\NoRightNavTCGAPageTemplate.aspx" />

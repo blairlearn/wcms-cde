@@ -1,4 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.WebPageAssembler" %>
+<%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls" TagPrefix="NCI" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -57,7 +59,7 @@
 <!-- END Container for Content and Sidebar -->
 <!-- Footer -->
 <div id="footer">
-<NCI:TemplateSlot ID="tcgaSlotSiteFooter" runat="server"  />
+<NCI:TemplateSlot ID="tcgaSlotSiteFooter" runat="server"  /> 
 </div>
 <!-- END Footer -->
 <script type="text/javascript">
@@ -74,5 +76,8 @@ $("#news-slider").tabs("rotate", 15000, true);
 );
 });
 </script>
+    <!-- TO INSERT WEB ANALYTICS CODE. Every template should have this 
+    control else Web analytics scripts will not show up in the HTML-->
+    <NCI:WebAnalyticsControl ID="WebAnalyticsControl1" runat="server" />
 </body>
 </html>
