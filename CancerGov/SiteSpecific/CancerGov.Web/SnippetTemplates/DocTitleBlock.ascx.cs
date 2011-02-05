@@ -8,6 +8,7 @@ using System.Xml;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CancerGov.Apps;
+using NCI.Logging;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -19,7 +20,7 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 //Parse Data To Get Information
                 XmlDocument doc = new XmlDocument();
-                doc.LoadXml(this.SnippetInfo.Data);
+                doc.LoadXml(this.SnippetInfo.Data.Trim());
 
                 XmlNode xnTitle = doc.SelectSingleNode("//Title");
                 XmlNode titleDisplay = doc.SelectSingleNode("//TitleDisplay");
@@ -142,7 +143,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
             catch (Exception ex)
             {
-                //Should have logging...
+                Logger.LogError("Docktitle Snippet Control", NCIErrorLevel.Error, ex);               
             }
         }
     }
