@@ -150,7 +150,7 @@ namespace Www.Templates
 
             DictionaryURL = DictionaryURLEnglish;
 
-            if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish"))
+            if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish") || Request.RawUrl.ToLower().Contains("db_alpha.aspx") && Request.RawUrl.ToLower().Contains("spanish"))
             {
                 Response.Redirect("/diccionario" + Request.Url.Query);
                 
