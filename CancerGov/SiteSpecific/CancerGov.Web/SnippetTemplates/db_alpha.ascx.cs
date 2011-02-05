@@ -150,6 +150,12 @@ namespace Www.Templates
 
             DictionaryURL = DictionaryURLEnglish;
 
+            if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish"))
+            {
+                Response.Redirect("/diccionario" + Request.Url.Query);
+                
+            }
+
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
                 DictionaryURL = DictionaryURLSpanish;
 
