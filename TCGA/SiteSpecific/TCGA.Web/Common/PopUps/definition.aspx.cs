@@ -44,13 +44,13 @@ namespace TCGA.Web.Common.PopUps
         protected void Page_Load(object sender, EventArgs e)
         {
             //base.OnLoad(e);
-            string input_term;
-            string term;
-            string id;
+            string input_term=string.Empty;
+            string term = string.Empty;
+            string id = string.Empty;
             string mediaHtml = "";
             PDQVersion version;
-            string pronunciation;
-            string termDefinition;
+            string pronunciation = string.Empty;
+            string termDefinition = string.Empty;
 
             DisplayLanguage dl = new DisplayLanguage();
 
@@ -62,20 +62,28 @@ namespace TCGA.Web.Common.PopUps
                 dl = DisplayLanguage.English;
 
 
-
-            //include page title
-            this.pageHtmlHead.Title = "Definition - National Cancer Institute";
-            input_term = Strings.Clean(Request.Params["term"]);
-            id = Strings.IfNull(Strings.Clean(Request.Params["id"]), Strings.Clean(Request.Params["cdrid"]));
-            version = PDQVersionResolver.GetPDQVersion(Strings.Clean(Request.Params["version"]));
-            //version = PDQVersion.Patient;
-
-            ArrayList result = null;
-                    term = "Error";
-                    pronunciation = "invalid input";
-                    termDefinition = string.Empty;
             try
             {
+
+                //include page title
+                this.pageHtmlHead.Title = "Definition - National Cancer Institute";
+                input_term = Strings.Clean(Request.Params["term"]);
+                id = Strings.IfNull(Strings.Clean(Request.Params["id"]), Strings.Clean(Request.Params["cdrid"]));
+                //version = PDQVersion.Patient;
+            }
+            catch(Exception ex)
+            {
+                Logger.LogError("TCGA:Definition.cs:PageLoad", "", NCIErrorLevel.Error, ex);
+
+            }
+            version = PDQVersionResolver.GetPDQVersion(Strings.Clean(Request.Params["version"]));
+
+            ArrayList result = null;
+            try
+            {
+                term = "Error";
+                pronunciation = "invalid input";
+                termDefinition = string.Empty;
 
                 if (input_term == null && id == null)
                 {
