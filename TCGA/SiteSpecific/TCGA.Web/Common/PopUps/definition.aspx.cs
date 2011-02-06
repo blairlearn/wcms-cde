@@ -14,6 +14,7 @@ using CancerGov.CDR.TermDictionary;
 using CancerGov.UI;
 using CancerGov.Common;
 using CancerGov.UI.HTML;
+using NCI.Logging;
 namespace TCGA.Web.Common.PopUps
 {
     public partial class Definition : PopUpPage
@@ -70,67 +71,75 @@ namespace TCGA.Web.Common.PopUps
             //version = PDQVersion.Patient;
 
             ArrayList result = null;
+                    term = "Error";
+                    pronunciation = "invalid input";
+                    termDefinition = string.Empty;
+            try
+            {
 
-            if (input_term == null && id == null)
-            {
-                term = "Error";
-                pronunciation = "invalid input";
-                termDefinition = "You have not specified either a CDRID nor a term name.";
-            }
-            else
-            {
-                if (input_term != null && input_term.Length > 0)
+                if (input_term == null && id == null)
                 {
-                    result = get_definition("term", input_term, version, dl);
-                    if (result == null && input_term.EndsWith("s"))
+                    termDefinition = "You have not specified either a CDRID nor a term name.";
+                }
+                else
+                {
+                    if (input_term != null && input_term.Length > 0)
                     {
-                        result = get_definition("term", input_term.Substring(0, input_term.Length - 1), version, dl);
-                        if (result == null && input_term.EndsWith("es"))
+                        result = get_definition("term", input_term, version, dl);
+                        if (result == null && input_term.EndsWith("s"))
                         {
-                            result = get_definition("term", input_term.Substring(0, input_term.Length - 2), version, dl);
-                            if (result == null && input_term.EndsWith("ies"))
+                            result = get_definition("term", input_term.Substring(0, input_term.Length - 1), version, dl);
+                            if (result == null && input_term.EndsWith("es"))
                             {
-                                result = get_definition("term", input_term.Substring(0, input_term.Length - 3) + "y", version, dl);
-                                if (result == null && input_term.EndsWith("um"))
+                                result = get_definition("term", input_term.Substring(0, input_term.Length - 2), version, dl);
+                                if (result == null && input_term.EndsWith("ies"))
                                 {
-                                    result = get_definition("term", input_term.Substring(0, input_term.Length - 2) + "a", version, dl);
-                                    if (result == null && input_term.EndsWith("ly"))
+                                    result = get_definition("term", input_term.Substring(0, input_term.Length - 3) + "y", version, dl);
+                                    if (result == null && input_term.EndsWith("um"))
                                     {
-                                        result = get_definition("term", input_term.Substring(0, input_term.Length - 2), version, dl);
-                                        if (result == null && input_term.EndsWith("ii"))
+                                        result = get_definition("term", input_term.Substring(0, input_term.Length - 2) + "a", version, dl);
+                                        if (result == null && input_term.EndsWith("ly"))
                                         {
-                                            result = get_definition("term", input_term.Substring(0, input_term.Length - 2) + "us", version, dl);
+                                            result = get_definition("term", input_term.Substring(0, input_term.Length - 2), version, dl);
+                                            if (result == null && input_term.EndsWith("ii"))
+                                            {
+                                                result = get_definition("term", input_term.Substring(0, input_term.Length - 2) + "us", version, dl);
+                                            }
+
                                         }
 
                                     }
-
                                 }
                             }
                         }
                     }
-                }
-                else
-                {
-                    id = Regex.Replace(id, "^CDR0+", "", RegexOptions.Compiled);
-                    result = get_definition("id", id, version, dl);
-                }
+                    else
+                    {
+                        id = Regex.Replace(id, "^CDR0+", "", RegexOptions.Compiled);
+                        result = get_definition("id", id, version, dl);
+                    }
 
-                if (result == null)
-                {
-                    term = "term not found";
-                    pronunciation = "";
-                    termDefinition = "The term you are looking for does not exist in the glossary.";
-                }
-                else
-                {
-                    term = result[0].ToString();
-                    pronunciation = result[1].ToString();
-                    termDefinition = result[2].ToString();
-                    mediaHtml = result[3].ToString();
-                    mediaHtml = mediaHtml.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+                    if (result == null)
+                    {
+                        term = "term not found";
+                        pronunciation = "";
+                        termDefinition = "The term you are looking for does not exist in the glossary.";
+                    }
+                    else
+                    {
+                        term = result[0].ToString();
+                        pronunciation = result[1].ToString();
+                        termDefinition = result[2].ToString();
+                        mediaHtml = result[3].ToString();
+                        mediaHtml = mediaHtml.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Logger.LogError("TCGA:Definition.cs:PageLoad", "", NCIErrorLevel.Error, ex);
 
+            }
             if (dl == DisplayLanguage.Spanish)
             {
                 strSendPrinter = "Imprima esta página";
