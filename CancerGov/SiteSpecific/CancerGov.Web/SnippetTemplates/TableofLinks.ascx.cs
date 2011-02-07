@@ -11,6 +11,7 @@ using CancerGov.Common.Extraction;
 using System.Collections;
 using NCI.Web.Extensions;
 using NCI.Web.CDE.UI.SnippetControls;
+using CancerGov.Common;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -99,7 +100,7 @@ namespace CancerGov.Web.SnippetTemplates
                 for (int i = 0; i < tableofLinksHash.Count; i++)
                 {
 
-                    footnotes += "<tr><td valign=\"top\"><a name=\"footnote" + (i + 1) + "\"></a><b><sup>" + (i + 1) + "</sup></b></td><td valign=\"top\">" + tableofLinksHash[i] + "</td></tr>\n";
+                    footnotes += "<tr><td valign=\"top\"><a name=\"footnote" + (i + 1) + "\"></a><b><sup>" + (i + 1) + "</sup></b></td><td valign=\"top\">" + Functions.TruncLine(tableofLinksHash[i].ToString(), 80, true, true) + "</td></tr>\n";
                     LinkNum = LinkNum + 1;
                 }
                 footnotes += "</table>\n";
