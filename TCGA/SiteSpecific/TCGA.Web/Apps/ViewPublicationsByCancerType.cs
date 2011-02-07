@@ -102,7 +102,7 @@ namespace TCGA.Web.SnippetTemplates
         private string getAssociatedLink(string linkText, string link)
         {
             return string.IsNullOrEmpty(linkText) ? string.Empty
-                : string.Format("<a href=\"{0}\">{1}</a>", linkText, link);
+                : string.Format("<a href=\"{0}\">{1}</a>", link, linkText);
         }
 
         /// <summary>
