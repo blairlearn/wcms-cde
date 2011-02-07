@@ -256,6 +256,8 @@ namespace TCGA.Web.SnippetTemplates
             try
             {
                 IEnumerable<XElement> pubResults = null;
+                pager.CurrentPage = 1;
+                pager.RecordsPerPage = ItemsPerPage;
                 pubResults = GetPublications(CancerTypeSelected);
                 PopulatePublicationsResults(pubResults);
                 SetUpPagerInformation();
