@@ -179,12 +179,19 @@ namespace NCI.Web.CDE
         /// <value>The blocked slot names.</value>
         public string[] BlockedSlotNames
         {
-            get
+            get 
             {
-                var names = from slot in BlockedSlots
-                            select slot.Name;
-
-                return names.ToArray();
+                if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.PrintAll &&
+                    PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.ViewAll)
+                {
+                    return _pages._Pages[_currentPageIndex].BlockedSlotNames;
+                }
+                else
+                {
+                    var names = from slot in BlockedSlots
+                                select slot.Name;
+                    return names.ToArray();
+                }
             }
         }
 
