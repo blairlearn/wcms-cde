@@ -11,6 +11,7 @@
 	<script type="text/javascript" language="JavaScript" src="/JS/popEvents.js"></script>
 	<script type="text/javascript" language="JavaScript" src="/JS/NetTracker/ntpagetag.js"></script>
 	<script type="text/javascript" language="javascript">	    var bSearchBoxBool = false; </script>
+	<script type="text/javascript" language="JavaScript" src="/JS/JSLoader/JSLoader.js"></script>
 
     <!--[if IE]>
 	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
