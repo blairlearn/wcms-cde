@@ -184,7 +184,16 @@ namespace NCI.Web.CDE
                 if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.PrintAll &&
                     PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.ViewAll)
                 {
-                    return _pages._Pages[_currentPageIndex].BlockedSlotNames;
+                    if (_currentPageIndex == -1)
+                    {
+
+                        return _pages._Pages[0].BlockedSlotNames;
+                    }
+                    else
+                    {
+                        return _pages._Pages[_currentPageIndex].BlockedSlotNames;
+
+                    }
                 }
                 else
                 {

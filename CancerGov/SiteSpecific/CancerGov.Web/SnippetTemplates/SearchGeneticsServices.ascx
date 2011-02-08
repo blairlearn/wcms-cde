@@ -50,7 +50,7 @@ function doWebAnalyticsStuff() {
                                                     </tr>
                                                     <tr>
                                                         <td align="right" valign="top">
-                                                            <label for="selCancerType">
+                                                            <label for="selCancerType" runat="server">
                                                                 Type of Cancer:</label>&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                                             <i>(choose 1 or more)</i>&nbsp;&nbsp;&nbsp;&nbsp;
                                                         </td>
