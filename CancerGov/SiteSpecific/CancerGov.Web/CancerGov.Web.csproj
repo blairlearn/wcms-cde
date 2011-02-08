@@ -450,6 +450,10 @@
       <Project>{F3414554-93F7-4116-88B2-637A3ABA050E}</Project>
       <Name>CancerGov.Handlers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.Modules\CancerGov.Modules.csproj">
+      <Project>{7634C4C2-6EC8-45D4-A423-7B53B15BDD9E}</Project>
+      <Name>CancerGov.Modules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CancerGovSpecific\ClinicalTrialControls\ClinicalTrialControls.csproj">
       <Project>{2FDF38AF-E70B-485F-86B9-A32948AC8926}</Project>
       <Name>ClinicalTrialControls</Name>

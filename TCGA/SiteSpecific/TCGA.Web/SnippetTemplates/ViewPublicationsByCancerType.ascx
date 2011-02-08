@@ -47,5 +47,5 @@
         onpagechanged="pager_PageChanged" ShowNumPages="5">
         <pagerstylesettings nextpagetext="Next &gt;" prevpagetext="&lt; Prev" />
     </TCGA:PostBackButtonPager>
-    <asp:HiddenField ID="itemsPerPage" Value="5" runat="server" />
+    <asp:HiddenField ID="itemsPerPage" Value="10" runat="server" />
 </form>
