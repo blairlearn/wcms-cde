@@ -73,7 +73,7 @@ namespace TCGA.Web.SnippetTemplates
                                    select
                                        new
                                        {
-                                           publicationDate = grp.First().Element("PublicationDate").Value,
+                                           publicationDate = formatDate(grp.First().Element("PublicationDate").Value),
                                            isTCGANetworkType = getTCGAIdentifier(grp.First().Element("IsTCGANetworkType").Value),
                                            description = grp.First().Element("Description").Value,
                                            journalTitle = grp.First().Element("JournalTitle").Value,
@@ -113,6 +113,16 @@ namespace TCGA.Web.SnippetTemplates
             if (string.IsNullOrEmpty(value))
                 return string.Empty;
             return value.ToLower() == "true" ? "*" : string.Empty;
+        }
+
+        /// <summary>
+        /// Returns the year value of the date as string
+        /// </summary>
+        /// <returns></returns>
+        private string formatDate(string dateValue)
+        {
+            DateTime dt = makevalidDate(dateValue);
+            return  dt == DateTime.MinValue ? "" : dt.Year.ToString();
         }
 
         /// <summary>
