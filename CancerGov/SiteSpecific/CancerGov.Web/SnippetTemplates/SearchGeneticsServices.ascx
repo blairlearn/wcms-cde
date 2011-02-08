@@ -50,7 +50,7 @@ function doWebAnalyticsStuff() {
                                                     </tr>
                                                     <tr>
                                                         <td align="right" valign="top">
-                                                            <label for="selCancerType" runat="server">
+                                                            <label for="<%=selCancerType.ClientID%>">
                                                                 Type of Cancer:</label>&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                                             <i>(choose 1 or more)</i>&nbsp;&nbsp;&nbsp;&nbsp;
                                                         </td>
@@ -80,7 +80,7 @@ function doWebAnalyticsStuff() {
                                                     </tr>
                                                     <tr>
                                                         <td align="right" valign="top">
-                                                            <label for="selCancerFamily">
+                                                            <label for="<%=selCancerFamily.ClientID%>">
                                                                 Family Cancer&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                                                 Syndrome:</label>&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                                             <i>(choose 1 or more)</i>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -129,7 +129,7 @@ function doWebAnalyticsStuff() {
                                                     </tr>
                                                     <tr>
                                                         <td align="right" valign="top" nowrap>
-                                                            <label for="selState">
+                                                            <label for="<%=selState.ClientID%>">
                                                                 State:</label>&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                                             <i>(choose 1 or more)</i>&nbsp;&nbsp;&nbsp;&nbsp;
                                                         </td>
@@ -146,7 +146,7 @@ function doWebAnalyticsStuff() {
                                                     </tr>
                                                     <tr>
                                                         <td align="right">
-                                                            <label for="selCountry">
+                                                            <label for="<%=selCountry.ClientID%>">
                                                                 Country:</label>&nbsp;&nbsp;&nbsp;&nbsp;
                                                         </td>
                                                         <td>
