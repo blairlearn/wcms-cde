@@ -68,22 +68,50 @@ namespace CancerGov.Web.SnippetTemplates
                         url.QueryParameters.Add(key, Request.QueryString[key]);
                 });
 
-                string url1 = this.PageInstruction.GetUrl("EmailUrl").ToString();
+                string popUpemailUrl = "";
 
-                string title = PageInstruction.GetField("long_title");
-                url1 = url1.ToString().Replace("&", "__amp;");
-                string url2 = "/common/popUps/PopEmail.aspx?title="
-                    + title
-                    + "&docurl="
-                    + url1
-                    + "&invokedFrom="
-                    + EmailPopupInvokedBy.ClinicalTrialPrintableSearchResults.ToString("d")
-                    + NCI.Core.HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + url1, "PSRV1");
-                 
-                
+                string title = this.PageInstruction.GetField("long_title");
+                title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
 
-                EmailResults.NavigateUrl = url2;
-                EmailResults.Attributes.Add("onclick", "javascript: dynPopWindow('" + url2 + "' "
+                string emailUrl = this.PageInstruction.GetUrl("EmailUrl").ToString();
+
+                if ((Strings.Clean(emailUrl) != null) && (Strings.Clean(emailUrl) != ""))
+                {
+                    popUpemailUrl = "/common/popUps/PopEmail.aspx?title=" + 
+                        title + 
+                        "&docurl=" + System.Web.HttpUtility.UrlEncode(emailUrl.Replace("&", "__amp;")) + 
+                        "&invokedFrom=" +
+                        EmailPopupInvokedBy.ClinicalTrialPrintableSearchResults.ToString("d") +
+                        "&language=" + 
+                        PageAssemblyContext.Current.PageAssemblyInstruction.Language;
+                    popUpemailUrl = popUpemailUrl + NCI.Core.HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + emailUrl);
+                }
+
+                //string url1 = this.PageInstruction.GetUrl("EmailUrl").ToString();
+                //string title = PageInstruction.GetField("long_title");
+                //url1 = System.Web.HttpUtility.UrlEncode(url1.Replace("&", "__amp;"));
+                //string url2 = "/common/popUps/PopEmail.aspx?title="
+                //    + title
+                //    + "&docurl="
+                //    + url1
+                //    + "&invokedFrom="
+                //    + EmailPopupInvokedBy.ClinicalTrialPrintableSearchResults.ToString("d")
+                //    + NCI.Core.HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + url1, "PSRV1");
+
+
+                //string title = PageInstruction.GetField("long_title");
+                //string url = System.Web.HttpUtility.UrlEncode(PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString().Replace("&", "__amp;"));
+                //string url2 = "/common/popUps/PopEmail.aspx?title="
+                //    + title
+                //    + "&docurl="
+                //    + url
+                //    + "&invokedFrom="
+                //    + EmailPopupInvokedBy.ClinicalTrialPrintableSearchResults.ToString("d")
+                //    + NCI.Core.HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString(), "PSRV1");
+
+
+                EmailResults.NavigateUrl = popUpemailUrl;
+                EmailResults.Attributes.Add("onclick", "javascript: dynPopWindow('" + popUpemailUrl + "' "
                     + ", 'emailPopUp', 'height=365,width=525'); return false;");
 
             }
