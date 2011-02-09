@@ -46,8 +46,8 @@ namespace CancerGov.Modules
             try
             {
                 // Access the database to get protocolid only if the request url has '/clinicaltrials/oldId'
-                // If effect this request should have only three parts '/', 'clinicaltrials/' & 'oldid'. Examples of 
-                // oldid are NCT00942578, NCI-W82-0538, MDA-DT-7635A, E-4Z93, NCI-93-C-021O, UTHSC-9235011015, etc
+                // In effect this request should have only three or four parts '/', 'clinicaltrials/' & 'oldid'. Examples of 
+                // oldid are NCT00942578, NCI-W82-0538/patient, MDA-DT-7635A/healthprofessaional, E-4Z93, NCI-93-C-021O, UTHSC-9235011015, etc
                 if (context.Request.Url.Segments.Count() >= 3 &&
                     context.Request.Url.Segments[1].ToLower() == "clinicaltrials/")
                 {

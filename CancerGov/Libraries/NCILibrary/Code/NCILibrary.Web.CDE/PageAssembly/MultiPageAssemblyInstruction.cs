@@ -98,6 +98,11 @@ namespace NCI.Web.CDE
                 url.SetUrl(GetUrl("CurrentURL").ToString() + "/print");
             });
 
+            AddUrlFilter("EmailUrl", (name, url) =>
+            {
+                url.SetUrl(PrettyUrl);
+            });
+
             AddUrlFilter("Email", (name,url) =>
             {
                 url.SetUrl(GetEmailUrl());
@@ -125,9 +130,10 @@ namespace NCI.Web.CDE
 
             AddUrlFilter("PostBackURL", (name,url) =>
             {
-                url.SetUrl(GetUrl("CurrentURL").ToString());
+                url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);
             });
 
+            base.Initialize();
         }
 
         #region Properties
@@ -744,20 +750,21 @@ namespace NCI.Web.CDE
             get { return HttpContext.Current.Server; }
         }
 
-        private string GetEmailUrl()
-        {
-            string emailUrl = "";
+        //private string GetEmailUrl()
+        //{
+        //    string emailUrl = "";
 
-            string title = GetField("long_title");
-            title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
+        //    string title = GetField("long_title");
+        //    title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
 
-            if ((Strings.Clean(PrettyUrl) != null) && (Strings.Clean(PrettyUrl) != ""))
-            {
-                emailUrl = "/common/popUps/PopEmail.aspx?title=" + title + "&docurl=" + System.Web.HttpUtility.UrlEncode(this.PrettyUrl.Replace("&", "__amp;")) + "&language=" + PageAssemblyContext.Current.PageAssemblyInstruction.Language;
-                emailUrl = emailUrl + HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + PrettyUrl);
-            }
-            return emailUrl;
-        }
+        //    if ((Strings.Clean(PrettyUrl) != null) && (Strings.Clean(PrettyUrl) != ""))
+        //    {
+        //        emailUrl = "/common/popUps/PopEmail.aspx?title=" + title + "&docurl=" + System.Web.HttpUtility.UrlEncode(this.PrettyUrl.Replace("&", "__amp;")) + "&language=" + PageAssemblyContext.Current.PageAssemblyInstruction.Language;
+        //        emailUrl = emailUrl + HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + PrettyUrl);
+        //    }
+        //    return emailUrl;
+        //}
+
         private void RegisterMarkupExtensionFieldFilters()
         {
             //Register Field Filters

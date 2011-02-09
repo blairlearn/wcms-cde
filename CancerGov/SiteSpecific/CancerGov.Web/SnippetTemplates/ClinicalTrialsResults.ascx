@@ -231,6 +231,5 @@
             href="https://cissecure.nci.nih.gov/livehelp/welcome.asp">
             <img src="/images/ctsearch/livehelp.gif" alt="Having trouble with this form? Check the help page or contact an NCI information specialist through LiveHelp online text chat or by calling 1-800-4-CANCER." /></a></p>
     <!--end new form footnote-->
-    <input type="hidden" value=<% =GetProtocolSearchID().ToString() %> name="protocolsearchid" id="protocolsearchid" />
     </form>
 

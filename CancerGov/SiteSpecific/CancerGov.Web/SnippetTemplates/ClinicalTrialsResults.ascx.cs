@@ -202,6 +202,16 @@ namespace CancerGov.Web.SnippetTemplates
                 });
             //End Web Analytics
 
+            this.PageInstruction.AddUrlFilter("EmailUrl", (name, url) =>
+            {
+                url.QueryParameters.Add("protocolsearchId", protocolSearchID.ToString());
+            });
+
+            this.PageInstruction.AddUrlFilter("BookMarkShareUrl", (name, url) =>
+            {
+                url.QueryParameters.Add("protocolsearchId", protocolSearchID.ToString());
+            });
+
             JSManager.AddExternalScript(this.Page, "/scripts/Search/CDEResultsClinicalTrials.js");
             JSManager.AddExternalScript(this.Page, "/scripts/popEvents.js");
             //JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");

@@ -237,6 +237,18 @@ namespace CancerGov.Web.SnippetTemplates
                 url.SetUrl(this.PageInstruction.GetUrl("CurrentURL").ToString() + "/print?" + Request.QueryString.ToString());
             });
 
+            this.PageInstruction.AddUrlFilter("EmailUrl", (name, url) =>
+            {
+                foreach (string key in Request.QueryString)
+                    url.QueryParameters.Add(key, Request.QueryString[key]);
+            });
+
+            this.PageInstruction.AddUrlFilter("BookMarkShareUrl", (name, url) =>
+            {
+                foreach (string key in Request.QueryString)
+                    url.QueryParameters.Add(key, Request.QueryString[key]);
+            });
+
         }
 
     }

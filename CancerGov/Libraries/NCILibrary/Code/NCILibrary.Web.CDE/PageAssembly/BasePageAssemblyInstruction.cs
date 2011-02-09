@@ -5,8 +5,12 @@ using System.Text;
 using System.Globalization;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using System.Web;
 
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Core;
+using NCI.Text;
+using NCI.Util;
 
 namespace NCI.Web.CDE
 {
@@ -25,8 +29,21 @@ namespace NCI.Web.CDE
         #endregion
 
         #region Private Methods
+        #endregion
+
+        #region Protected Members
+
+        protected virtual void Initialize()
+        {
+            ((IPageAssemblyInstruction)this).AddUrlFilter("BookMarkShareUrl", (name,url) =>
+            {
+                string prettyUrl = ((IPageAssemblyInstruction)this).GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
+                url.SetUrl(prettyUrl);
+            });
+        }
+
         /// <summary>
-        /// This private method registers all delegates for web analytics.
+        /// This protected method registers all delegates for web analytics.
         /// </summary>
         /// <param name="webAnalyticFieldName">The key or the name of the datapoint</param>
         /// <param name="filter">The actual delegate callback which will modify the FieldFilterData object</param>
@@ -42,9 +59,7 @@ namespace NCI.Web.CDE
             else
                 _webAnalyticsFieldFilterDelegates[fieldNameKey] += filter;
         }
-        #endregion
 
-        #region Protected Members
         protected WebAnalyticsSettings WebAnalyticsSettings
         {
             get 
@@ -54,6 +69,24 @@ namespace NCI.Web.CDE
                 return webAnalyticsSettings;
             }
         }
+
+        protected virtual string GetEmailUrl()
+        {
+            string popUpemailUrl = "";
+
+            string title = ((IPageAssemblyInstruction)this).GetField("long_title");
+            title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
+
+            string emailUrl = ((IPageAssemblyInstruction)this).GetUrl("EmailUrl").ToString();
+
+            if ((Strings.Clean(emailUrl) != null) && (Strings.Clean(emailUrl) != ""))
+            {
+                popUpemailUrl = "/common/popUps/PopEmail.aspx?title=" + title + "&docurl=" + System.Web.HttpUtility.UrlEncode(emailUrl.Replace("&", "__amp;")) + "&language=" + PageAssemblyContext.Current.PageAssemblyInstruction.Language;
+                popUpemailUrl = popUpemailUrl + HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + emailUrl);
+            }
+            return popUpemailUrl;
+        }
+
         #endregion
 
         #region Protected Methods
