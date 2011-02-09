@@ -20,11 +20,11 @@ BEGIN
 
 		SELECT ProtocolID, PrimaryPrettyUrlID OldID
 			FROM protocolDetail
-			where LOWER(LTRIM(RTRIM(PrimaryPrettyUrlID))) = LOWER(@oldID)
+			where PrimaryPrettyUrlID = @oldID
 		union all
 		SELECT ProtocolID, IDString as OldID
 			FROM ProtocolSecondaryUrl
-			Where LOWER(LTRIM(RTRIM(IDString))) = LOWER(@oldID)
+			Where IDString = @oldID
 	END TRY
 
 	BEGIN CATCH
