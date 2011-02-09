@@ -187,26 +187,23 @@ namespace NCI.Web.CDE
         {
             get 
             {
-                if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.PrintAll &&
-                    PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.ViewAll)
+                var names = from slot in BlockedSlots
+                            select slot.Name;
+                if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.PrintAll && PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.ViewAll)
                 {
                     if (_currentPageIndex == -1)
                     {
+                        names = names.Union(_pages._Pages[0].BlockedSlotNames);
 
-                        return _pages._Pages[0].BlockedSlotNames;
                     }
                     else
                     {
-                        return _pages._Pages[_currentPageIndex].BlockedSlotNames;
+                        names = names.Union(_pages._Pages[_currentPageIndex].BlockedSlotNames);
 
                     }
                 }
-                else
-                {
-                    var names = from slot in BlockedSlots
-                                select slot.Name;
-                    return names.ToArray();
-                }
+            
+               return names.ToArray();
             }
         }
 
