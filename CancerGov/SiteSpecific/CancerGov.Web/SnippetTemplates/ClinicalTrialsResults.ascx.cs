@@ -204,12 +204,14 @@ namespace CancerGov.Web.SnippetTemplates
 
             this.PageInstruction.AddUrlFilter("EmailUrl", (name, url) =>
             {
-                url.QueryParameters.Add("protocolsearchId", protocolSearchID.ToString());
+                foreach (string key in Request.QueryString)
+                    url.QueryParameters.Add(key, Request.QueryString[key]);
             });
 
             this.PageInstruction.AddUrlFilter("BookMarkShareUrl", (name, url) =>
             {
-                url.QueryParameters.Add("protocolsearchId", protocolSearchID.ToString());
+                foreach (string key in Request.QueryString)
+                    url.QueryParameters.Add(key, Request.QueryString[key]);
             });
 
             JSManager.AddExternalScript(this.Page, "/scripts/Search/CDEResultsClinicalTrials.js");
