@@ -62,15 +62,23 @@ namespace CancerGov.Web.SnippetTemplates
                 litPageContent.Text = cachedPage.PageHtml;
                 cacheDate.Text = cachedPage.CacheDate.ToString("d");
 
+                this.PageInstruction.AddUrlFilter("EmailUrl", (name, url) =>
+                {
+                    foreach (string key in Request.QueryString)
+                        url.QueryParameters.Add(key, Request.QueryString[key]);
+                });
+
+                string url1 = this.PageInstruction.GetUrl("EmailUrl").ToString();
+
                 string title = PageInstruction.GetField("long_title");
-                string url = System.Web.HttpUtility.UrlEncode(PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString().Replace("&", "__amp;"));
+                url1 = url1.ToString().Replace("&", "__amp;");
                 string url2 = "/common/popUps/PopEmail.aspx?title="
                     + title
                     + "&docurl="
-                    + url
+                    + url1
                     + "&invokedFrom="
                     + EmailPopupInvokedBy.ClinicalTrialPrintableSearchResults.ToString("d")
-                    + NCI.Core.HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString(), "PSRV1");
+                    + NCI.Core.HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + url1, "PSRV1");
                  
                 
 
