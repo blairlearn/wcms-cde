@@ -47,6 +47,12 @@ namespace NCI.Web.CDE
         /// Defines the current url that is being requested.
         /// </summary>
         private int _currentPageIndex = -1;
+
+        /// <summary>
+        ///temporary fix to add cgvSiteBannerPrint to blocked slots if cgvSiteBanner is blocked.
+
+        /// </summary>
+        private string[] blockCgvBannerPrint = new[] { "cgvSiteBannerPrint" };
         private LocalFieldCollection _localFields;
 
         #endregion
@@ -189,6 +195,7 @@ namespace NCI.Web.CDE
             {
                 var names = from slot in BlockedSlots
                             select slot.Name;
+
                 if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.PrintAll && PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.ViewAll)
                 {
                     if (_currentPageIndex == -1)
@@ -202,7 +209,12 @@ namespace NCI.Web.CDE
 
                     }
                 }
-            
+
+                //temporary fix to add cgvSiteBannerPrint to blocked slots if cgvSiteBanner is blocked.
+                if(names.Contains("cgvSiteBanner"))
+                    names = names.Union(blockCgvBannerPrint);
+
+
                return names.ToArray();
             }
         }
