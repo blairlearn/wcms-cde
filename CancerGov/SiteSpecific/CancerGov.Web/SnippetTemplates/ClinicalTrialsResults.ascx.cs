@@ -206,6 +206,8 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 foreach (string key in Request.QueryString)
                     url.QueryParameters.Add(key, Request.QueryString[key]);
+                    url.QueryParameters.Add("invokedFrom", EmailPopupInvokedBy.ClinicalTrialSearchResults.ToString("d"));
+
             });
 
             this.PageInstruction.AddUrlFilter("BookMarkShareUrl", (name, url) =>
