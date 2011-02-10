@@ -54,8 +54,8 @@ namespace NCI.Web.CDE
                     promoUrlMapping = (PromoUrlMapping)context.Application["PromoUrlMapping"];
                 else
                 {
-                    promoUrlMapping = PromoUrlMappingInfoFactory.GetPromoUrlMapping("/");
                     context.Application.Lock();
+                    promoUrlMapping = PromoUrlMappingInfoFactory.GetPromoUrlMapping("/");
                     context.Application["reloadPromoUrlMappingInfo"] = false;
                     context.Application["PromoUrlMapping"] = promoUrlMapping;
                     context.Application.UnLock();
@@ -68,7 +68,18 @@ namespace NCI.Web.CDE
                     if (promoUrlMapping.PromoUrls.ContainsKey(url.ToLower()))
                     {
                         promoUrl = promoUrlMapping.PromoUrls[url.ToLower()];
-                        context.Response.Redirect(promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query), true);
+                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query);
+
+                        // If the original request is post then save target promo url
+                        // for use in the page instructions assembly loader.
+                        if (context.Request.RequestType == "POST")
+                        {
+                            //string uri = context.Request.Url.Scheme + "://" + context.Request.Url.Authority + mappedToUrl;
+                            // context.Items["promoUrlPost"] = new Uri(uri);
+                            context.RewritePath(mappedToUrl);
+                        }
+                        else
+                            context.Response.Redirect(mappedToUrl, true);
                     }
                     else
                     {
