@@ -124,7 +124,7 @@ namespace CancerGov.Web.SnippetTemplates
                         }
                         else
                         {
-                            litPrintDate.Text = "";
+                            litPrintDate.Text = updated;
                         }
  
                     }
