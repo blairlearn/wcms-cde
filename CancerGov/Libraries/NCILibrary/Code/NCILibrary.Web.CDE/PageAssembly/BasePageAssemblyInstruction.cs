@@ -64,6 +64,10 @@ namespace NCI.Web.CDE
                     url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
             });
 
+            pgInst.AddFieldFilter("invokedFrom", (name, field) =>
+            {
+                field.Value = String.Empty;
+            });
         }
 
         /// <summary>
@@ -102,10 +106,14 @@ namespace NCI.Web.CDE
             title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
 
             string emailUrl = ((IPageAssemblyInstruction)this).GetUrl("EmailUrl").ToString();
+            string invokedFrom = ((IPageAssemblyInstruction)this).GetField("invokedFrom");
+
+            if (!string.IsNullOrEmpty(invokedFrom))
+                invokedFrom = "&invokedFrom=" + invokedFrom;
 
             if ((Strings.Clean(emailUrl) != null) && (Strings.Clean(emailUrl) != ""))
             {
-                popUpemailUrl = "/common/popUps/PopEmail.aspx?title=" + title + "&docurl=" + System.Web.HttpUtility.UrlEncode(emailUrl.Replace("&", "__amp;")) + "&language=" + PageAssemblyContext.Current.PageAssemblyInstruction.Language;
+                popUpemailUrl = "/common/popUps/PopEmail.aspx?title=" + title + invokedFrom + "&docurl=" + System.Web.HttpUtility.UrlEncode(emailUrl.Replace("&", "__amp;")) + "&language=" + PageAssemblyContext.Current.PageAssemblyInstruction.Language;
                 popUpemailUrl = popUpemailUrl + HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + emailUrl);
             }
             return popUpemailUrl;

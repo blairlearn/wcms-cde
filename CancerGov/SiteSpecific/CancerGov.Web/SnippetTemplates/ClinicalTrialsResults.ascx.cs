@@ -206,14 +206,17 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 foreach (string key in Request.QueryString)
                     url.QueryParameters.Add(key, Request.QueryString[key]);
-                    url.QueryParameters.Add("invokedFrom", EmailPopupInvokedBy.ClinicalTrialSearchResults.ToString("d"));
-
             });
 
             this.PageInstruction.AddUrlFilter("BookMarkShareUrl", (name, url) =>
             {
                 foreach (string key in Request.QueryString)
                     url.QueryParameters.Add(key, Request.QueryString[key]);
+            });
+
+            this.PageInstruction.AddFieldFilter("invokedFrom", (name, field) =>
+            {
+                field.Value = EmailPopupInvokedBy.ClinicalTrialSearchResults.ToString("d");
             });
 
             JSManager.AddExternalScript(this.Page, "/scripts/Search/CDEResultsClinicalTrials.js");
