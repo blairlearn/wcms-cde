@@ -89,11 +89,6 @@ namespace NCI.Web.CDE
                 url.SetUrl( GetUrl("CurrentURL").ToString() + "/print");
             });
 
-            AddUrlFilter("EmailUrl", (name, url) =>
-            {
-                url.SetUrl(PrettyUrl);
-            });
-
             AddUrlFilter("Email", (name, url) =>
             {
                 url.SetUrl(GetEmailUrl());

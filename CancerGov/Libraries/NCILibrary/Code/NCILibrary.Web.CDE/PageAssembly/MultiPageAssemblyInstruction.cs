@@ -90,10 +90,6 @@ namespace NCI.Web.CDE
             AddUrlFilter("CurrentURL", (name,url) =>
                 {
                     url.SetUrl(GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString());
-                    if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
-                    {
-                        url.UriStem += "/print";
-                    }
                 });
 
 
@@ -104,10 +100,6 @@ namespace NCI.Web.CDE
                 url.SetUrl(GetUrl("CurrentURL").ToString() + "/print");
             });
 
-            AddUrlFilter("EmailUrl", (name, url) =>
-            {
-                url.SetUrl(PrettyUrl);
-            });
 
             AddUrlFilter("Email", (name,url) =>
             {
@@ -124,7 +116,10 @@ namespace NCI.Web.CDE
 
             AddUrlFilter("ViewAll", (name, url) =>
             {
-                url.SetUrl(GetUrl("CurrentURL").ToString() + "/AllPages");
+                string viewAllUrl = GetUrl("CurrentURL").ToString();
+                if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.ViewAll)
+                    viewAllUrl = viewAllUrl.Substring(0, viewAllUrl.LastIndexOf("/"));
+                url.SetUrl(viewAllUrl + "/AllPages");
             });
 
             AddUrlFilter("PrintAll", (name, url ) =>

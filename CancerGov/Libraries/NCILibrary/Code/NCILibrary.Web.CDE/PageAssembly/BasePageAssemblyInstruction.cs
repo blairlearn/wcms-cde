@@ -32,14 +32,38 @@ namespace NCI.Web.CDE
         #endregion
 
         #region Protected Members
-
+        /// <summary>
+        /// This method intialize the state of the base object or peform tasks that are 
+        /// applicable to all derived class object.
+        /// </summary>
         protected virtual void Initialize()
         {
-            ((IPageAssemblyInstruction)this).AddUrlFilter("BookMarkShareUrl", (name,url) =>
+            IPageAssemblyInstruction pgInst = ((IPageAssemblyInstruction)this);
+            pgInst.AddUrlFilter("BookMarkShareUrl", (name, url) =>
             {
-                string prettyUrl = ((IPageAssemblyInstruction)this).GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
-                url.SetUrl(prettyUrl);
+                if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
+                    url.SetUrl(pgInst.GetUrl("PrintAll").ToString());
+                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
+                    url.SetUrl(pgInst.GetUrl("ViewAll").ToString());
+                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
+                    url.SetUrl(pgInst.GetUrl("Print").ToString());
+                else 
+                    url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
+
             });
+
+            pgInst.AddUrlFilter("EmailUrl", (name, url) =>
+            {
+                if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
+                    url.SetUrl(pgInst.GetUrl("PrintAll").ToString());
+                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
+                    url.SetUrl(pgInst.GetUrl("ViewAll").ToString());
+                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
+                    url.SetUrl(pgInst.GetUrl("Print").ToString());
+                else 
+                    url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
+            });
+
         }
 
         /// <summary>
