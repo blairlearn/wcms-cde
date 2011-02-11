@@ -48,6 +48,7 @@ namespace CancerGov.Web
                 {
                     Application.Add("monitor_promoUrlMappingFile", new FileSystemWatcher(Path.GetDirectoryName(promoUrlMappingFileAndPath)));
                     fsw = (FileSystemWatcher)Application["monitor_promoUrlMappingFile"];
+                    fsw.NotifyFilter = NotifyFilters.LastWrite;
                     fsw.EnableRaisingEvents = true;
                     fsw.Filter = Path.GetFileName(promoUrlMappingFileAndPath);
 
