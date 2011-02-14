@@ -74,8 +74,6 @@ namespace NCI.Web.CDE
                         // for use in the page instructions assembly loader.
                         if (context.Request.RequestType == "POST")
                         {
-                            //string uri = context.Request.Url.Scheme + "://" + context.Request.Url.Authority + mappedToUrl;
-                            // context.Items["promoUrlPost"] = new Uri(uri);
                             context.RewritePath(mappedToUrl);
                         }
                         else
@@ -92,7 +90,13 @@ namespace NCI.Web.CDE
                             if (promoUrlMapping.PromoUrls.ContainsKey(truncUrl.ToLower()))
                             {
                                 promoUrl = promoUrlMapping.PromoUrls[truncUrl.ToLower()];
-                                context.Response.Redirect(promoUrl.MappedTo + appendUrl + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query), true);
+                                string mappedToUrl = promoUrl.MappedTo + appendUrl + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query);
+                                if (context.Request.RequestType == "POST")
+                                {
+                                    context.RewritePath(mappedToUrl);
+                                }
+                                else
+                                    context.Response.Redirect( mappedToUrl, true);
                             }
 
                         }
