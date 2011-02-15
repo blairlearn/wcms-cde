@@ -9,7 +9,7 @@ using NCI.Web.CDE;
 
 namespace NCI.Web.CDE
 {
-    public class PromoUrlMappingLoader:IHttpModule
+    public class PromoUrlMappingLoader : IHttpModule
     {
         #region IHttpModule Members
 
@@ -35,7 +35,7 @@ namespace NCI.Web.CDE
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
 
-            if (url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1 )
+            if (url.ToLower().IndexOf(".ico") != -1 || url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
                 return;
 
             //Check if the PageAssemblyInstruction is not null then it was processed as pretty url.
@@ -100,7 +100,7 @@ namespace NCI.Web.CDE
                                     context.RewritePath(mappedToUrl);
                                 }
                                 else
-                                    context.Response.Redirect( mappedToUrl, true);
+                                    context.Response.Redirect(mappedToUrl, true);
                             }
 
                         }
@@ -122,7 +122,7 @@ namespace NCI.Web.CDE
             {
                 Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "\nFailed to Process Promo URL - " + url, NCIErrorLevel.Error, ex);
             }
- 
+
         }
 
         #endregion
