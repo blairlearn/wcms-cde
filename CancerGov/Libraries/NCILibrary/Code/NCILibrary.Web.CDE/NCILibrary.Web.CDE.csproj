@@ -78,6 +78,7 @@
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
     <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />
+    <Compile Include="HttpModules\Utility.cs" />
     <Compile Include="Modules\ContentSearchList.cs" />
     <Compile Include="Modules\DictionaryURL.cs" />
     <Compile Include="Modules\DynamicList.cs" />

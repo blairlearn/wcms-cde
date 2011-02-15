@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using NCI.Web.CDE.Configuration;
 using System.Web;
 using System.IO;
+
 using NCI.Logging;
+using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE
 {
@@ -29,7 +30,7 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <param name="path">The path.</param>
         /// <returns></returns>
-        public static PromoUrlMapping GetPromoUrlMapping(string path)
+        public static PromoUrlMapping GetPromoUrlMapping(string path, ref FileInfo fileInfo )
         {
             PromoUrlMapping promoUrlMapping = null;
             string xmlFileName = null;
@@ -38,11 +39,14 @@ namespace NCI.Web.CDE
             {
                 xmlFileName = String.Format(ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath.Path, (path == "/" ? String.Empty : path));
                 xmlFileName = Server.MapPath(xmlFileName);
-                if (!File.Exists(xmlFileName))
+                FileInfo promoUrlFileInfo = new FileInfo(xmlFileName);
+                if (!promoUrlFileInfo.Exists)
                 {
                     Logger.LogError("CDE:promoUrlMappingFactory.cs:GetPromoUrlMapping", "PromoUrl Mapping file does not exists", NCIErrorLevel.Warning);
                     return null;
                 }
+                else
+                    fileInfo = promoUrlFileInfo;
 
                 using (FileStream xmlFile = File.Open(xmlFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
                 {

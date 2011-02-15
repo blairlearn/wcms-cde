@@ -4,13 +4,16 @@ using System.Web;
 using System.Globalization;
 using System.Configuration;
 using System.IO;
+
 using NCI.Logging;
 using NCI.Web.CDE;
+using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE
 {
     public class PromoUrlMappingLoader : IHttpModule
     {
+        HttpContext context = null;
         #region IHttpModule Members
 
         public void Dispose()
@@ -30,12 +33,12 @@ namespace NCI.Web.CDE
 
         void OnBeginRequest(object sender, EventArgs e)
         {
-            HttpContext context = ((HttpApplication)sender).Context;
+            context = ((HttpApplication)sender).Context;
 
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
 
-            if (url.ToLower().IndexOf(".ico") != -1 || url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
+            if (Utility.IgnoreWebResource(url))
                 return;
 
             //Check if the PageAssemblyInstruction is not null then it was processed as pretty url.
@@ -46,20 +49,20 @@ namespace NCI.Web.CDE
             {
                 //Check if Promo Url information is in the Application State
                 PromoUrlMapping promoUrlMapping = null;
-                bool reLoad = false;
-                if (context.Application["reloadPromoUrlMappingInfo"] != null)
-                    reLoad = (bool)context.Application["reloadPromoUrlMappingInfo"];
+                bool reLoad = (bool)context.Application["reloadPromoUrlMappingInfo"];
 
-                if (context.Application["PromoUrlMapping"] != null && !reLoad)
+                if (context.Application["PromoUrlMapping"] != null && !reLoad && !IsPromoUrlMappingFileChanged("/"))
                     promoUrlMapping = (PromoUrlMapping)context.Application["PromoUrlMapping"];
                 else
                 {
                     context.Application.Lock();
-                    PromoUrlMapping freshPromoUrlMapping = PromoUrlMappingInfoFactory.GetPromoUrlMapping("/");
+                    FileInfo fileInfo = null;
+                    PromoUrlMapping freshPromoUrlMapping = PromoUrlMappingInfoFactory.GetPromoUrlMapping("/", ref fileInfo);
                     if (freshPromoUrlMapping != null)
                     {
                         context.Application["reloadPromoUrlMappingInfo"] = false;
                         context.Application["PromoUrlMapping"] = freshPromoUrlMapping;
+                        CachedPromoMappingFileInfo = fileInfo;
                     }
                     context.Application.UnLock();
                 }
@@ -127,6 +130,48 @@ namespace NCI.Web.CDE
 
         #endregion
 
+        #region Private Members
+        private FileInfo CachedPromoMappingFileInfo
+        {
+            get
+            {
+                return context.Application["PromoMappingFileInfo"] as FileInfo;
+            }
+            set
+            {
+                context.Application["PromoMappingFileInfo"] = value;
+            }
+        }
 
+        /// <summary>
+        /// The file watcher on the promourlmapping file does not seem to work at all when the file is
+        /// managed using DFS even when the contents of the file have changed, but since we need to load 
+        /// promo url as soon as it is changed, we are going to do out own checking. Check if the file 
+        /// time stamp since the last time it was recorded. If it got updated it is time to reload the mapping 
+        /// file.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsPromoUrlMappingFileChanged(string path)
+        {
+            bool changed = false;
+            try
+            {
+                string pmFile = String.Format(ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath.Path, (path == "/" ? String.Empty : path));
+                pmFile = HttpContext.Current.Server.MapPath(pmFile);
+                FileInfo promoUrlFileInfo = new FileInfo(pmFile);
+                if (CachedPromoMappingFileInfo != null && promoUrlFileInfo != null)
+                {
+                    return  DateTime.Compare( CachedPromoMappingFileInfo.CreationTime, promoUrlFileInfo.CreationTime) != 0 || 
+                            DateTime.Compare( CachedPromoMappingFileInfo.LastAccessTime, promoUrlFileInfo.LastAccessTime ) != 0 ||
+                            DateTime.Compare(CachedPromoMappingFileInfo.LastWriteTime, promoUrlFileInfo.LastWriteTime) != 0;
+                }
+            }
+            catch{}
+
+            return changed;
+        }
+
+
+        #endregion
     }
 }

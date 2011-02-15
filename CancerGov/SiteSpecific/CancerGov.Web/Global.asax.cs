@@ -23,8 +23,7 @@ namespace CancerGov.Web
             try
             {
                 Application["reloadPromoUrlMappingInfo"] = false;
-                this.Application["useCachedVersion"] = false;
-                monitorPromoUrlMappingFile();
+               // monitorPromoUrlMappingFile();
             }
             catch (Exception ex)
             {
