@@ -55,13 +55,17 @@ namespace NCI.Web.CDE
                 else
                 {
                     context.Application.Lock();
-                    promoUrlMapping = PromoUrlMappingInfoFactory.GetPromoUrlMapping("/");
-                    context.Application["reloadPromoUrlMappingInfo"] = false;
-                    context.Application["PromoUrlMapping"] = promoUrlMapping;
+                    PromoUrlMapping freshPromoUrlMapping = PromoUrlMappingInfoFactory.GetPromoUrlMapping("/");
+                    if (freshPromoUrlMapping != null)
+                    {
+                        context.Application["reloadPromoUrlMappingInfo"] = false;
+                        context.Application["PromoUrlMapping"] = freshPromoUrlMapping;
+                    }
                     context.Application.UnLock();
                 }
 
                 promoUrlMapping = (PromoUrlMapping)context.Application["PromoUrlMapping"];
+
                 if (promoUrlMapping != null)
                 {
                     PromoUrl promoUrl = null;

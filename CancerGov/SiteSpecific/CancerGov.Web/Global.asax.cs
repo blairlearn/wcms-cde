@@ -22,6 +22,8 @@ namespace CancerGov.Web
             #region Set Promo URl File Monitoring
             try
             {
+                Application["reloadPromoUrlMappingInfo"] = false;
+                this.Application["useCachedVersion"] = false;
                 monitorPromoUrlMappingFile();
             }
             catch (Exception ex)
@@ -48,17 +50,25 @@ namespace CancerGov.Web
                 {
                     Application.Add("monitor_promoUrlMappingFile", new FileSystemWatcher(Path.GetDirectoryName(promoUrlMappingFileAndPath)));
                     fsw = (FileSystemWatcher)Application["monitor_promoUrlMappingFile"];
-                    fsw.NotifyFilter = NotifyFilters.LastWrite;
+                    fsw.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.Size | NotifyFilters.LastAccess | NotifyFilters.Attributes;
                     fsw.EnableRaisingEvents = true;
                     fsw.Filter = Path.GetFileName(promoUrlMappingFileAndPath);
 
                     // Monitor for file creation and changes.
                     fsw.Changed += new FileSystemEventHandler(OnChanged);
                     fsw.Created += new FileSystemEventHandler(OnChanged);
+                    fsw.Deleted += new FileSystemEventHandler(OnPromoUrlFileDeleted);
                 }
                 else
                     NCI.Logging.Logger.LogError("Global:monitorPromoUrlMappingFile", "ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath is empty, cannot set the file monitoring", NCI.Logging.NCIErrorLevel.Error);
             }
+        }
+
+        void OnPromoUrlFileDeleted(object sender, FileSystemEventArgs e)
+        {
+            this.Application.Lock();
+            this.Application["reloadPromoUrlMappingInfo"] = true;
+            this.Application.UnLock();
         }
 
         /// <summary>
