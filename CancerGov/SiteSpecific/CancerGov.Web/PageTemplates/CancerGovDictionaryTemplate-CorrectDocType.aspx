@@ -9,7 +9,6 @@
     
     <script type="text/javascript" language="JavaScript" src="/JS/imgEvents.js"></script>
 	<script type="text/javascript" language="JavaScript" src="/JS/popEvents.js"></script>
-	<script type="text/javascript" language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 	<script type="text/javascript" language="JavaScript" src="/JS/NetTracker/ntpagetag.js"></script>
 	<script type="text/javascript" language="javascript">	    var bSearchBoxBool = false; </script>
 

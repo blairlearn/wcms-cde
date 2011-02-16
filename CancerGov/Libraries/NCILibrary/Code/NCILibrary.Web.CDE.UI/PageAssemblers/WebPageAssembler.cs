@@ -171,6 +171,8 @@ namespace NCI.Web.CDE.UI
         {
             //base.OnInit(e);
             //JSManager.AddExternalScript(this, "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+            base.OnInit(e);
+            JSManager.AddExternalScript(this, "https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js");
         }
 
         /// <summary>
