@@ -51,6 +51,7 @@ namespace NCI.Web.CDE.UI
         {
             if (TemplateSlots.Count > 0)
             {
+                List<SnippetControl> supportingSnippets = new List<SnippetControl>();
                 foreach (SnippetInfo snippet in PageAssemblyInstruction.Snippets)
                 {
                     if (!String.IsNullOrEmpty(snippet.SlotName))
@@ -68,6 +69,17 @@ namespace NCI.Web.CDE.UI
                                 snippetControl.SnippetInfo = snippet;
 
                                 TemplateSlots[slotName].AddSnippet(snippetControl);
+
+                                // Some snippetcontrol implement the ISupportingSnippet interface. 
+                                // The controls which implement ISupportingSnippet will provide additional 
+                                // snippet control that are required for the complete functionality.
+                                // Add them to a collection that will be processed later.
+                                if( snippetControl is ISupportingSnippet )
+                                {
+                                    SnippetControl[] supportingcontrols = ((ISupportingSnippet)snippetControl).GetSupportingSnippets();
+                                    if( supportingcontrols != null )
+                                        supportingSnippets.AddRange(supportingcontrols);
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -77,6 +89,20 @@ namespace NCI.Web.CDE.UI
                         }
                     }
                 }
+
+                foreach (SnippetControl supportSnippet in supportingSnippets)
+                {
+                    try
+                    {
+                        if (TemplateSlots.ContainsSlotName(supportSnippet.SnippetInfo.SlotName))
+                            TemplateSlots[supportSnippet.SnippetInfo.SlotName].AddSnippet(supportSnippet);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError("CDE:WebPageAssembler.cs:WebPageAssembler", "Failed to add supporting snippet control",NCIErrorLevel.Error, ex);
+                    }
+                }
+
             }
         }
 

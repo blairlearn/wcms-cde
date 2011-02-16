@@ -3,6 +3,8 @@ using System.Collections.Specialized;   // In order to reference Prototype.
 using System.Configuration;
 using System.Text;
 using System.Web;
+using System.Text.RegularExpressions;
+
 using CancerGov.CDR.ClinicalTrials.Search;
 using CancerGov.CDR.DataManager;
 using CancerGov.UI.CDR;
@@ -10,12 +12,12 @@ using CancerGov.UI.PageObjects;
 using NCI.Logging;
 using NCI.Util;
 using NCI.Web.CDE;
-using System.Text.RegularExpressions;
+using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class ClinicalTrialsView : SearchBaseUserControl
+    public partial class ClinicalTrialsView : SearchBaseUserControl, ISupportingSnippet 
     {
 
         public string strContent = "";
@@ -251,6 +253,22 @@ namespace CancerGov.Web.SnippetTemplates
 
         }
 
+
+        #region ISupportingSnippet Members
+
+        public SnippetControl[] GetSupportingSnippets()
+        {
+            // We need this snippet to help us render the version tab.
+            SnippetControl snippetControl = (SnippetControl)Page.LoadControl("~/SnippetTemplates/ClinicalTrialsViewHeader.ascx");
+            SnippetInfo snippetInfo = new SnippetInfo();
+            snippetInfo.SlotName = "cgvContentHeader";
+            snippetInfo.ContentID = "dynamicClinicalTrialsView1";
+            snippetControl.SnippetInfo = snippetInfo;
+            SnippetControl[] supportingControls = {snippetControl};
+            return supportingControls;
+        }
+
+        #endregion
     }
 }
 

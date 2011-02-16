@@ -59,6 +59,7 @@
     <Compile Include="Configuration\Settings.cs" />
     <Compile Include="enums.cs" />
     <Compile Include="PageAssemblers\IPageAssembler.cs" />
+    <Compile Include="PageAssemblers\ISupportingSnippet.cs" />
     <Compile Include="PageAssemblers\WebPageAssembler.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
