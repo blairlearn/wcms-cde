@@ -50,8 +50,9 @@ namespace NCI.Web.CDE
                 //Check if Promo Url information is in the Application State
                 PromoUrlMapping promoUrlMapping = null;
                 bool reLoad = (bool)context.Application["reloadPromoUrlMappingInfo"];
+                bool promoUrlMappingFileChanged = IsPromoUrlMappingFileChanged("/");
 
-                if (context.Application["PromoUrlMapping"] != null && !reLoad && !IsPromoUrlMappingFileChanged("/"))
+                if (context.Application["PromoUrlMapping"] != null && !reLoad && !promoUrlMappingFileChanged)
                     promoUrlMapping = (PromoUrlMapping)context.Application["PromoUrlMapping"];
                 else
                 {
@@ -65,6 +66,10 @@ namespace NCI.Web.CDE
                         CachedPromoMappingFileInfo = fileInfo;
                     }
                     context.Application.UnLock();
+
+                    // Log an event saying the promo url mapping file was loaded
+                    Logger.LogError("CDE:PromoUrlMappingLoader", "Promo Url Mapping file successfully loaded reLoad:" +
+                        reLoad.ToString() + ", promoUrlMappingFileChanged: " + promoUrlMappingFileChanged.ToString(), NCIErrorLevel.Debug);
                 }
 
                 promoUrlMapping = (PromoUrlMapping)context.Application["PromoUrlMapping"];
