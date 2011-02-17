@@ -57,9 +57,8 @@ namespace CancerGov.Web.SnippetTemplates
                     sbDate.Append("&nbsp;&nbsp;");
                 }
                 strDates = sbDate.ToString();
-
-                cdrVersionBar.Text = RenderCDRVesionrBar();
             }
+            cdrVersionBar.Text = RenderCDRVesionrBar();
             base.OnPreRender(e);
         }
 
