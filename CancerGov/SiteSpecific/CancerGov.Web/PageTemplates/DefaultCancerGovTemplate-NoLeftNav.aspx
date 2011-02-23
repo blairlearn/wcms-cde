@@ -17,6 +17,8 @@
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
     <!-- Site Banner -->
+<div class="skip">
+        <a title="Skip to content" href="#skiptocontent">Skip to content</a></div>    
     <div id="bannerDiv" align="center">
         <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
     </div>
