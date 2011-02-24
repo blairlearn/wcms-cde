@@ -40,7 +40,8 @@ namespace NCI.Web.CancerGov.Apps
             }
 
             GlossaryTermExtractor gte = new GlossaryTermExtractor();
-
+            ArrayList renderedglossaryTerms = new ArrayList();
+            int actualGlosaaryCount;
             string data = string.Empty;
 
             foreach (GenericHtmlContentSnippet slot in Page.FindControlByType<GenericHtmlContentSnippet>())
@@ -50,11 +51,56 @@ namespace NCI.Web.CancerGov.Apps
                     data = slot.SnippetInfo.Data;
                     data = gte.ExtractGlossaryTerms(data);
                     slot.SnippetInfo.Data = data;
-                    glossaryTerms = glossaryTerms + gte.BuildGlossaryTable(linksTableTitle);
+
+                    if (renderedglossaryTerms.Count > 0)
+                    {
+                        actualGlosaaryCount = gte.glossaryIds.Count - 1;
+                        try
+                        {
+                            for (int i = 0; i <= actualGlosaaryCount; i++)
+                            {
+                                if (!renderedglossaryTerms.Contains(gte.glossaryIds[i]))
+                                {
+                                    renderedglossaryTerms.Add(gte.glossaryIds[i]);
+
+                                }
+
+                                else
+                                {
+                                    for (int j = 0; j <= actualGlosaaryCount; j++)
+                                    {
+                                        gte.glossaryIds.Remove(gte.glossaryIds[i]);
+                                    }
+                                }
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                        //glossaryTerms = glossaryTerms + gte.BuildGlossaryTable(linksTableTitle);
+
+
+                    }
+
+                    else
+                    {
+                        //glossaryTerms = glossaryTerms + gte.BuildGlossaryTable(linksTableTitle);
+                        if (gte.glossaryIds.Count > 0)
+                            renderedglossaryTerms.AddRange(gte.glossaryIds);
+                            //renderedglossaryTerms.Add(gte.glossaryIds[gte.glossaryIds.Count-1]);
+                    }
                     glossaryTerms= glossaryTerms.Replace("<table border=0 width=699 cellspacing=0 cellpadding=0><tr><td>\n<BR><BR><a name=\"Glossary Terms\"></a><h2>Glossary Terms</h2>\n", "").Replace("</td></tr></table>", "");
 
                 }
             }
+
+            gte.glossaryIds.Clear();
+
+            gte.glossaryIds.AddRange(renderedglossaryTerms);
+            glossaryTerms = glossaryTerms + gte.BuildGlossaryTable(linksTableTitle);
+            glossaryTerms = glossaryTerms.Replace("<table border=0 width=699 cellspacing=0 cellpadding=0><tr><td>\n<BR><BR><a name=\"Glossary Terms\"></a><h2>Glossary Terms</h2>\n", "").Replace("</td></tr></table>", "");
+
             if(!string.IsNullOrEmpty(glossaryTerms))
                 glossaryTerms = "<table border=0 width=699 cellspacing=0 cellpadding=0><tr><td><BR><BR><a name=\"Glossary Terms\"></a><h2>Glossary Terms</h2>" + glossaryTerms + "</td></tr></table>";
 

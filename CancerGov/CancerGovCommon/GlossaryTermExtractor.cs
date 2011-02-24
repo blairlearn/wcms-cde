@@ -29,7 +29,7 @@ namespace CancerGov.Common.Extraction
 		public ArrayList terms = new ArrayList();
 		public ArrayList glossaryIds = new ArrayList();
 		private ArrayList sourceIds = new ArrayList();
-		private Hashtable glossaryHash = new Hashtable();
+		public Hashtable glossaryHash = new Hashtable();
 		public Hashtable glossaryIDHash = new Hashtable();
 		public Hashtable glossaryTermHash = new Hashtable();
 		private int termCount = 0;
