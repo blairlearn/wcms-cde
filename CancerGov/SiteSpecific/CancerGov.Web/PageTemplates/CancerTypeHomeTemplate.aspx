@@ -7,8 +7,7 @@
 <head id="header" runat="server">
     <title></title>
 
-    <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
-    <script type="text/javascript" language="JavaScript" src="/JS/NetTracker/ntpagetag.js"></script>
+    <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>    
     <script type="text/javascript" language="JavaScript" src="/JS/JSLoader/JSLoader.js"></script>
 
     <!--[if IE]>

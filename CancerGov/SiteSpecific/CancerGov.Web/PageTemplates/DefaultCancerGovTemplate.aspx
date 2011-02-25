@@ -7,8 +7,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
     <title></title>
-    <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
-    <script type="text/javascript" language="JavaScript" src="/JS/NetTracker/ntpagetag.js"></script>
+    <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>    
     <script src="/JS/popEvents.js" type="text/javascript"></script>
 	<script type="text/javascript" language="JavaScript" src="/JS/JSLoader/JSLoader.js"></script>
 
