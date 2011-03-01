@@ -59,6 +59,19 @@ namespace Www.Common.PopUps
             if (o != null)
                 caption = latincap.ToString();
             caption = HttpUtility.HtmlEncode(Request.Params["caption"]);
+
+            string bottomCaption = string.Empty;
+            try
+            {
+                // This is really wierd accessing the params or query string 'caption=' value here, you will
+                // find that the values have the funny square chars in them. but some how accessing the rawurl 
+                // property does not have the same issue. 
+                bottomCaption = Request.RawUrl.Substring(Request.RawUrl.IndexOf("?"));
+                bottomCaption = bottomCaption.Substring(bottomCaption.IndexOf("caption=") + "caption=".Length);
+            }
+            catch { bottomCaption = string.Empty; }
+            if( bottomCaption != string.Empty )
+                caption = bottomCaption.Replace("%20", " ");
         }
     }
 }
