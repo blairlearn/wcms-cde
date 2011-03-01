@@ -40,28 +40,25 @@ namespace Www.Common.PopUps
             //if (o != null)
             //    caption = o.ToString();
 
-            ////This is a hack for SCR30157, which IIS7 has some bugs in encoding non-ascii character.
+            //This is a hack for SCR30157, which IIS7 has some bugs in encoding non-ascii character.
 
-            //Encoding unicode = Encoding.UTF8;
-            //Encoding latin1Code = Encoding.GetEncoding(28591);
+            Encoding unicode = Encoding.UTF8;
+            Encoding latin1Code = Encoding.GetEncoding(28591);
 
-            //// Convert the string into a byte[] from UTF8 to western european 
-            //byte[] unicodeBytes = unicode.GetBytes(Request.RawUrl.ToString());
-            //byte[] latinBytes = Encoding.Convert(unicode, latin1Code, unicodeBytes);
-            //string latincap = unicode.GetString(latinBytes); //Get back to Unicode string.
+            // Convert the string into a byte[] from UTF8 to western european 
+            byte[] unicodeBytes = unicode.GetBytes(Request.RawUrl.ToString());
+            byte[] latinBytes = Encoding.Convert(unicode, latin1Code, unicodeBytes);
+            string latincap = unicode.GetString(latinBytes); //Get back to Unicode string.
 
-            ////use regular expression to get caption out
-            //Regex r = new Regex(@"caption=(([^&]*))?");
-            //Match match = r.Match(latincap);
+            //use regular expression to get caption out
+            Regex r = new Regex(@"caption=(([^&]*))?");
+            Match match = r.Match(latincap);
 
-            //latincap = HttpUtility.UrlDecode(match.Groups[1].Value);
+            latincap = HttpUtility.UrlDecode(match.Groups[1].Value);
 
-            //if (o != null)
-            //    caption = latincap.ToString();
-
-            caption = Request.Params["caption"];
-            if( !string.IsNullOrEmpty(caption))
-                caption = HttpUtility.HtmlEncode(caption);
+            if (o != null)
+                caption = latincap.ToString();
+            caption = HttpUtility.HtmlEncode(Request.Params["caption"]);
         }
     }
 }
