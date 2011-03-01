@@ -30,7 +30,7 @@
 		<img src="/images/spacer.gif" border="0" height="3" width="12"  alt="">
 	</td></tr>
 	
-	<tr><td class="caption" align="center" valign="top"><%=Caption%> </td></tr>	
+	<tr><td class="caption" align="left" valign="top"><%=Caption%> </td></tr>	
 	
 	</td></tr>
 	</table>
