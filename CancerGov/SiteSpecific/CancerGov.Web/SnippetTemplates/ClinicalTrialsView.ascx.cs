@@ -258,14 +258,19 @@ namespace CancerGov.Web.SnippetTemplates
 
         public SnippetControl[] GetSupportingSnippets()
         {
-            // We need this snippet to help us render the version tab.
-            SnippetControl snippetControl = (SnippetControl)Page.LoadControl("~/SnippetTemplates/ClinicalTrialsViewHeader.ascx");
-            SnippetInfo snippetInfo = new SnippetInfo();
-            snippetInfo.SlotName = "cgvContentHeader";
-            snippetInfo.ContentID = "dynamicClinicalTrialsView1";
-            snippetControl.SnippetInfo = snippetInfo;
-            SnippetControl[] supportingControls = {snippetControl};
-            return supportingControls;
+            if (this.PageDisplayInformation.Version != DisplayVersions.Print)
+            {
+                // We need this snippet to help us render the version tab.
+                SnippetControl snippetControl = (SnippetControl)Page.LoadControl("~/SnippetTemplates/ClinicalTrialsViewHeader.ascx");
+                SnippetInfo snippetInfo = new SnippetInfo();
+                snippetInfo.SlotName = "cgvContentHeader";
+                snippetInfo.ContentID = "dynamicClinicalTrialsView1";
+                snippetControl.SnippetInfo = snippetInfo;
+                SnippetControl[] supportingControls = { snippetControl };
+                return supportingControls;
+            }
+            else
+                return null;
         }
 
         #endregion

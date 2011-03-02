@@ -58,20 +58,88 @@ namespace Www.Common.PopUps
 
             if (o != null)
                 caption = latincap.ToString();
-            caption = HttpUtility.HtmlEncode(Request.Params["caption"]);
+
+            caption = HttpUtility.HtmlEncode(caption);
 
             string bottomCaption = string.Empty;
             try
             {
-                // This is really wierd accessing the params or query string 'caption=' value here, you will
-                // find that the values have the funny square chars in them. but some how accessing the rawurl 
-                // property does not have the same issue. 
-                bottomCaption = Request.RawUrl.Substring(Request.RawUrl.IndexOf("?"));
-                bottomCaption = bottomCaption.Substring(bottomCaption.IndexOf("caption=") + "caption=".Length);
+                // This server variables is not always present in the request.
+                if (!isStringHtmlEncoded(caption))
+                {
+                    // This is really wierd accessing the params or query string 'caption=' value here, you will
+                    // find that the values have the funny square chars in them. but some how accessing the rawurl 
+                    // property does not have the same issue. 
+                    bottomCaption = Request.RawUrl.Substring(Request.RawUrl.IndexOf("?"));
+                    bottomCaption = bottomCaption.Substring(bottomCaption.IndexOf("caption=") + "caption=".Length);
+                }
             }
             catch { bottomCaption = string.Empty; }
             if( bottomCaption != string.Empty )
                 caption = bottomCaption.Replace("%20", " ");
         }
-    }
-}
+
+        //"C&#233;lulas sangu&#237;neas. La sangre contiene muchos tipos de c&#233;lulas: gl&#243;bulos blancos (monolitos, linfocitos, neutr&#243;filos, eosin&#243;filos, bas&#243;filos y macr&#243;fagos), gl&#243;bulos rojos (eritrocitos) y plaquetas. La sangre circula por el cuerpo a trav&#233;s de las arterias y las venas."
+        private bool isStringHtmlEncoded(string val)
+        {
+            string checkForEncoded = string.Empty;
+            if (val.IndexOf("&#237;") >= 0 || val.IndexOf("&#192;") >= 0 || val.IndexOf("&#193;") >= 0 || val.IndexOf("&#194;") >= 0 ||
+                val.IndexOf("&#195;") >= 0 || val.IndexOf("&#196;") >= 0 || val.IndexOf("&#197;") >= 0 || val.IndexOf("&#198;") >= 0 || val.IndexOf("&#199;") >= 0 ||
+                val.IndexOf("&#200;") >= 0 ||
+                val.IndexOf("&#201;") >= 0 ||
+                val.IndexOf("&#202;") >= 0 ||
+                val.IndexOf("&#203;") >= 0 ||
+                val.IndexOf("&#204;") >= 0 ||
+                val.IndexOf("&#205;") >= 0 ||
+                val.IndexOf("&#206;") >= 0 ||
+                val.IndexOf("&#207;") >= 0 ||
+                val.IndexOf("&#208;") >= 0 ||
+                val.IndexOf("&#209;") >= 0 ||
+                val.IndexOf("&#210;") >= 0 ||
+                val.IndexOf("&#211;") >= 0 ||
+                val.IndexOf("&#212;") >= 0 ||
+                val.IndexOf("&#213;") >= 0 ||
+                val.IndexOf("&#214;") >= 0 ||
+                val.IndexOf("&#216;") >= 0 ||
+                val.IndexOf("&#217;") >= 0 ||
+                val.IndexOf("&#218;") >= 0 ||
+                val.IndexOf("&#219;") >= 0 ||
+                val.IndexOf("&#220;") >= 0 ||
+                val.IndexOf("&#221;") >= 0 ||
+                val.IndexOf("&#222;") >= 0 ||
+                val.IndexOf("&#223;") >= 0 ||
+                val.IndexOf("&#224;") >= 0 ||
+                val.IndexOf("&#225;") >= 0 ||
+                val.IndexOf("&#226;") >= 0 ||
+                val.IndexOf("&#227;") >= 0 ||
+                val.IndexOf("&#228;") >= 0 ||
+                val.IndexOf("&#229;") >= 0 ||
+                val.IndexOf("&#230;") >= 0 ||
+                val.IndexOf("&#231;") >= 0 ||
+                val.IndexOf("&#232;") >= 0 ||
+                val.IndexOf("&#233;") >= 0 ||
+                val.IndexOf("&#234;") >= 0 ||
+                val.IndexOf("&#235;") >= 0 ||
+                val.IndexOf("&#236;") >= 0 ||
+                val.IndexOf("&#237;") >= 0 ||
+                val.IndexOf("&#238;") >= 0 ||
+                val.IndexOf("&#239;") >= 0 ||
+                val.IndexOf("&#240;") >= 0 ||
+                val.IndexOf("&#241;") >= 0 ||
+                val.IndexOf("&#242;") >= 0 ||
+                val.IndexOf("&#243;") >= 0 ||
+                val.IndexOf("&#244;") >= 0 ||
+                val.IndexOf("&#245;") >= 0 ||
+                val.IndexOf("&#246;") >= 0 ||
+                val.IndexOf("&#248;") >= 0 ||
+                val.IndexOf("&#249;") >= 0 ||
+                val.IndexOf("&#250;") >= 0 ||
+                val.IndexOf("&#251;") >= 0 ||
+                val.IndexOf("&#252;") >= 0 ||
+                val.IndexOf("&#253;") >= 0)
+                return true;
+            return false;
+        }
+    }                                   
+}                                       
+                                        
