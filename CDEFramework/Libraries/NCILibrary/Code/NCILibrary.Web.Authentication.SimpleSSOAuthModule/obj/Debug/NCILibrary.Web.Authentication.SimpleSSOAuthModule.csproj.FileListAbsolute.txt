@@ -1,0 +1,5 @@
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.Authentication.SimpleSSOAuthModule\bin\Debug\NCILibrary.Web.Authentication.SimpleSSOAuthModule.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.Authentication.SimpleSSOAuthModule\bin\Debug\NCILibrary.Web.Authentication.SimpleSSOAuthModule.pdb
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.Authentication.SimpleSSOAuthModule\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.Authentication.SimpleSSOAuthModule\obj\Debug\NCILibrary.Web.Authentication.SimpleSSOAuthModule.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.Authentication.SimpleSSOAuthModule\obj\Debug\NCILibrary.Web.Authentication.SimpleSSOAuthModule.pdb

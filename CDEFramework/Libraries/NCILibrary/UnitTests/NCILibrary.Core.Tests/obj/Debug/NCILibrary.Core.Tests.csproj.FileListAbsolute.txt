@@ -1,0 +1,10 @@
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\bin\Debug\NCILibrary.Core.Tests.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\bin\Debug\NCILibrary.Core.Tests.pdb
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\bin\Debug\NCILibrary.Core.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\bin\Debug\NCILibrary.Core.pdb
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\bin\Debug\NCILibrary.Core.xml
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\bin\Debug\NCILibrary.Core_Accessor.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\bin\Debug\NCILibrary.Core_Accessor.pdb
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\obj\Debug\NCILibrary.Core.Tests.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Core.Tests\obj\Debug\NCILibrary.Core.Tests.pdb
