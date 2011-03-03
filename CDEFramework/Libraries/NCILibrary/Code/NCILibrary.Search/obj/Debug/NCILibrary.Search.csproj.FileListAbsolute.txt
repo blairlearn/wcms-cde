@@ -1,8 +1,0 @@
-C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\bin\Debug\NCILibrary.Search.dll
-C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\bin\Debug\NCILibrary.Search.pdb
-C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\bin\Debug\NCILibrary.Core.dll
-C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\bin\Debug\NCILibrary.Core.pdb
-C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\bin\Debug\NCILibrary.Core.xml
-C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\obj\Debug\ResolveAssemblyReference.cache
-C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\obj\Debug\NCILibrary.Search.dll
-C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\obj\Debug\NCILibrary.Search.pdb
