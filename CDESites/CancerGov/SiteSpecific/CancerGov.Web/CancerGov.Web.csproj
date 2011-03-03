@@ -1,0 +1,650 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2E572059-B868-45B5-AD56-DB8687EF4DD6}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CancerGov.Web</RootNamespace>
+    <AssemblyName>CancerGov.Web</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Common\FormEmailer.aspx" />
+    <Content Include="Common\PopUps\Email.aspx" />
+    <Content Include="Common\PopUps\popTextFooter.htm" />
+    <Content Include="Common\PopUps\popTextFooterSpanish.htm" />
+    <Content Include="Common\PopUps\popTextHeader.htm" />
+    <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
+    <Content Include="Global.asax" />
+    <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
+    <Content Include="JS\Omniture\s_code.js" />
+    <Content Include="JS\popEvents.js" />
+    <Content Include="PageTemplates\DefaultCancerGovTemplate-NoLeftNav.aspx" />
+    <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
+    <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
+    <Content Include="Common\PopUps\PopEmail.aspx" />
+    <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
+    <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
+    <Content Include="SnippetTemplates\ModuleSearchBox.ascx" />
+    <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
+    <Content Include="SnippetTemplates\SearchBox.ascx" />
+    <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
+    <Content Include="SnippetTemplates\TopicSearchCategorySnippet.ascx">
+      <SubType>ASPXCodeBehind</SubType>
+    </Content>
+    <Content Include="UserControls\Headers\MainPageHeader.ascx" />
+    <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
+    <None Include="..\..\..\CDESchema\CDESchema.xsd">
+      <Link>Schema\CDESchema.xsd</Link>
+    </None>
+    <None Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Apps\AppsBaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Apps\GlossaryTerms.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Apps\SiteWideSearch.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="App_GlobalResources\SiteWideSearch.es.designer.cs">
+      <DependentUpon>SiteWideSearch.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="App_GlobalResources\SiteWideSearch.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SiteWideSearch.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_dictionary.aspx.cs">
+      <DependentUpon>arch_dictionary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_dictionary.aspx.designer.cs">
+      <DependentUpon>arch_dictionary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_drugdictionary.aspx.cs">
+      <DependentUpon>arch_drugdictionary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_drugdictionary.aspx.designer.cs">
+      <DependentUpon>arch_drugdictionary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_druginfosummaries.aspx.cs">
+      <DependentUpon>arch_druginfosummaries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_druginfosummaries.aspx.designer.cs">
+      <DependentUpon>arch_druginfosummaries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_protocols.aspx.cs">
+      <DependentUpon>arch_protocols.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_protocols.aspx.designer.cs">
+      <DependentUpon>arch_protocols.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\arch_summaries.aspx.cs">
+      <DependentUpon>arch_summaries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\arch_summaries.aspx.designer.cs">
+      <DependentUpon>arch_summaries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Archive\UserControls\AlphaListBox.ascx.cs">
+      <DependentUpon>AlphaListBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Archive\UserControls\AlphaListBox.ascx.designer.cs">
+      <DependentUpon>AlphaListBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\FormEmailer.aspx.cs">
+      <DependentUpon>FormEmailer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\FormEmailer.aspx.designer.cs">
+      <DependentUpon>FormEmailer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUpPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookup.aspx.cs">
+      <DependentUpon>CTLookup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookup.aspx.designer.cs">
+      <DependentUpon>CTLookup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookUpBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.cs">
+      <DependentUpon>CTLookupResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.designer.cs">
+      <DependentUpon>CTLookupResults.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.cs">
+      <DependentUpon>CTLookupSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.designer.cs">
+      <DependentUpon>CTLookupSearch.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.cs">
+      <DependentUpon>CTLookupSelect.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.designer.cs">
+      <DependentUpon>CTLookupSelect.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\definition.aspx.cs">
+      <DependentUpon>definition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\definition.aspx.designer.cs">
+      <DependentUpon>definition.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\Email.aspx.cs">
+      <DependentUpon>Email.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\Email.aspx.designer.cs">
+      <DependentUpon>Email.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\popDefinition.aspx.cs">
+      <DependentUpon>popDefinition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\popDefinition.aspx.designer.cs">
+      <DependentUpon>popDefinition.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\PopEmail.aspx.cs">
+      <DependentUpon>PopEmail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\PopEmail.aspx.designer.cs">
+      <DependentUpon>PopEmail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\popHelp.aspx.cs">
+      <DependentUpon>popHelp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\popHelp.aspx.designer.cs">
+      <DependentUpon>popHelp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\PopUps\popImage.aspx.cs">
+      <DependentUpon>popImage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\PopUps\popImage.aspx.designer.cs">
+      <DependentUpon>popImage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\UserControls\AlphaListBox.ascx.cs">
+      <DependentUpon>AlphaListBox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\UserControls\AlphaListBox.ascx.designer.cs">
+      <DependentUpon>AlphaListBox.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Common\UserControls\LangSwitch.ascx.cs">
+      <DependentUpon>LangSwitch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Common\UserControls\LangSwitch.ascx.designer.cs">
+      <DependentUpon>LangSwitch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx.cs">
+      <DependentUpon>CancerBulletinSearch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx.designer.cs">
+      <DependentUpon>CancerBulletinSearch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx.cs">
+      <DependentUpon>CancerBulletinSubscribe.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx.designer.cs">
+      <DependentUpon>CancerBulletinSubscribe.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx.cs">
+      <DependentUpon>CancerBulletinUnSubscribe.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx.designer.cs">
+      <DependentUpon>CancerBulletinUnSubscribe.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\cbComments.ascx.cs">
+      <DependentUpon>cbComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\cbComments.ascx.designer.cs">
+      <DependentUpon>cbComments.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx.cs">
+      <DependentUpon>cbSendToColleague.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx.designer.cs">
+      <DependentUpon>cbSendToColleague.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx.cs">
+      <DependentUpon>ResultsCancerBulletin.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx.designer.cs">
+      <DependentUpon>ResultsCancerBulletin.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
+      <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.designer.cs">
+      <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsBaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsLink.ascx.cs">
+      <DependentUpon>ClinicalTrialsLink.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsLink.ascx.designer.cs">
+      <DependentUpon>ClinicalTrialsLink.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsResults.ascx.cs">
+      <DependentUpon>ClinicalTrialsResults.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsResults.ascx.designer.cs">
+      <DependentUpon>ClinicalTrialsResults.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx.cs">
+      <DependentUpon>ClinicalTrialsSearchTemplate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx.designer.cs">
+      <DependentUpon>ClinicalTrialsSearchTemplate.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsView.ascx.cs">
+      <DependentUpon>ClinicalTrialsView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsView.ascx.designer.cs">
+      <DependentUpon>ClinicalTrialsView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.cs">
+      <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.designer.cs">
+      <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\db_alpha.ascx.cs">
+      <DependentUpon>db_alpha.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\db_alpha.ascx.designer.cs">
+      <DependentUpon>db_alpha.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\DocTitleBlock.ascx.cs">
+      <DependentUpon>DocTitleBlock.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\DocTitleBlock.ascx.designer.cs">
+      <DependentUpon>DocTitleBlock.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\drugdictionary.ascx.cs">
+      <DependentUpon>drugdictionary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
+      <DependentUpon>drugdictionary.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.cs">
+      <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.designer.cs">
+      <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.cs">
+      <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.designer.cs">
+      <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\ResultsGeneticsServices.ascx.cs">
+      <DependentUpon>ResultsGeneticsServices.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ResultsGeneticsServices.ascx.designer.cs">
+      <DependentUpon>ResultsGeneticsServices.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\SearchGeneticsServices.ascx.cs">
+      <DependentUpon>SearchGeneticsServices.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\SearchGeneticsServices.ascx.designer.cs">
+      <DependentUpon>SearchGeneticsServices.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\TableofLinks.ascx.cs">
+      <DependentUpon>TableofLinks.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\TableofLinks.ascx.designer.cs">
+      <DependentUpon>TableofLinks.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.cs">
+      <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.designer.cs">
+      <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CTCustomSelection.ascx.cs">
+      <DependentUpon>CTCustomSelection.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\CTCustomSelection.ascx.designer.cs">
+      <DependentUpon>CTCustomSelection.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
+      <DependentUpon>MainPageHeader.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\Headers\MainPageHeader.ascx.designer.cs">
+      <DependentUpon>MainPageHeader.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Menu\TopLevelNavigationMenu.ascx.cs">
+      <DependentUpon>TopLevelNavigationMenu.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\Menu\TopLevelNavigationMenu.ascx.designer.cs">
+      <DependentUpon>TopLevelNavigationMenu.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Modules.Search\NCILibrary.Web.CDE.UI.Modules.csproj">
+      <Project>{680B6841-020D-46DE-BFBB-FC38ACA2EF82}</Project>
+      <Name>NCILibrary.Web.CDE.UI.Modules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
+      <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>
+      <Name>NCILibrary.Search.Endeca</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
+      <Project>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</Project>
+      <Name>NCILibrary.Web.CDE.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
+      <Project>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</Project>
+      <Name>NCILibrary.Web.CDE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
+      <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
+      <Name>NCILibrary.Web.UI.WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CancerGovCommon\CancerGovCommon.csproj">
+      <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
+      <Name>CancerGovCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.DataManager\CancerGov.DataManager.csproj">
+      <Project>{F2CB1924-487F-4756-BAC1-719C5CF97368}</Project>
+      <Name>CancerGov.DataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.Handlers\CancerGov.Handlers.csproj">
+      <Project>{F3414554-93F7-4116-88B2-637A3ABA050E}</Project>
+      <Name>CancerGov.Handlers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.Modules\CancerGov.Modules.csproj">
+      <Project>{7634C4C2-6EC8-45D4-A423-7B53B15BDD9E}</Project>
+      <Name>CancerGov.Modules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CancerGovSpecific\ClinicalTrialControls\ClinicalTrialControls.csproj">
+      <Project>{2FDF38AF-E70B-485F-86B9-A32948AC8926}</Project>
+      <Name>ClinicalTrialControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
+      <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
+      <Name>CDR.ClinicalTrials</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDR.DataManager\CDR.DataManager.csproj">
+      <Project>{BD37ACFC-049C-4807-93CC-1A3BFA25F11A}</Project>
+      <Name>CDR.DataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDR.DrugDictionary\CDR.DrugDictionary.csproj">
+      <Project>{1F48A070-CA42-46D7-8C14-1CBE11609F4F}</Project>
+      <Name>CDR.DrugDictionary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDR.TermDictionary\CDR.TermDictionary.csproj">
+      <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
+      <Name>CDR.TermDictionary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\EmergencyAlert\EmergencyAlert.csproj">
+      <Project>{2ED8F4D6-9A1D-4109-8F37-6D407C674184}</Project>
+      <Name>EmergencyAlert %28EmergencyAlert\EmergencyAlert%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PresentationClasses\PresentationClasses.csproj">
+      <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
+      <Name>PresentationClasses %28CancerGovSpecific\PresentationClasses\PresentationClasses%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.Search.Endeca\CancerGov.Search.Endeca.csproj">
+      <Project>{4FD1D24F-D186-46FE-B44E-FA110AFE27FF}</Project>
+      <Name>CancerGov.Search.Endeca</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.TopicSearch\CancerGov.TopicSearch.csproj">
+      <Project>{917C939E-6AA1-4FEE-8C35-6EC62974455B}</Project>
+      <Name>CancerGov.TopicSearch</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Archive\arch_dictionary.aspx" />
+    <Content Include="Archive\arch_drugdictionary.aspx" />
+    <Content Include="Archive\arch_druginfosummaries.aspx" />
+    <Content Include="Archive\arch_protocols.aspx" />
+    <Content Include="Archive\arch_summaries.aspx" />
+    <Content Include="Archive\index.aspx" />
+    <Content Include="Archive\UserControls\AlphaListBox.ascx" />
+    <Content Include="Common\PopUps\CTLSearch\blank.htm" />
+    <Content Include="Common\PopUps\CTLSearch\CTLookup.aspx" />
+    <Content Include="Common\PopUps\CTLSearch\CTLookupResults.aspx" />
+    <Content Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx" />
+    <Content Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx" />
+    <Content Include="Common\PopUps\definition.aspx" />
+    <Content Include="Common\PopUps\popDefinition.aspx" />
+    <Content Include="Common\PopUps\popHelp.aspx" />
+    <Content Include="Common\PopUps\popHelp.html" />
+    <Content Include="Common\PopUps\popImage.aspx" />
+    <Content Include="Common\UserControls\AlphaListBox.ascx" />
+    <Content Include="Common\UserControls\LangSwitch.ascx" />
+    <Content Include="App_GlobalResources\SiteWideSearch.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SiteWideSearch.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_GlobalResources\SiteWideSearch.es.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>SiteWideSearch.es.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="DrugDictionary.svc" />
+    <Content Include="JS\imgEvents.js" />
+    <Content Include="JS\JSLoader\JSLoader.js" />
+    <Content Include="JS\NetTracker\ntpagetag.js" />
+    <Content Include="JS\Search\CDEResultsClinicalTrials.js" />
+    <Content Include="JS\Search\CDESearchClinicalTrials.js" />
+    <Content Include="PageTemplates\CancerGovDictionaryTemplate.aspx" />
+    <Content Include="PageTemplates\CancerGovDictionaryTemplate-CorrectDocType.aspx" />
+    <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
+    <Content Include="PageTemplates\CancerBulletinTemplate.aspx" />
+    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx" />
+    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx" />
+    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx" />
+    <Content Include="SnippetTemplates\CancerBulletin\cbComments.ascx" />
+    <Content Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx" />
+    <Content Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx" />
+    <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
+    <Content Include="SnippetTemplates\ClinicalTrialsLink.ascx" />
+    <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
+    <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
+    <Content Include="SnippetTemplates\ClinicalTrialsView.ascx" />
+    <Content Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx" />
+    <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
+    <Content Include="SnippetTemplates\db_alpha.ascx" />
+    <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
+    <Content Include="SnippetTemplates\drugdictionary.ascx" />
+    <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
+    <Content Include="SnippetTemplates\GlossaryTerms.ascx" />
+    <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />
+    <Content Include="SnippetTemplates\ResultsGeneticsServices.ascx" />
+    <Content Include="SnippetTemplates\SearchGeneticsServices.ascx" />
+    <Content Include="SnippetTemplates\TableofLinks.ascx" />
+    <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
+    <Content Include="TermDictionary.svc" />
+    <Content Include="UserControls\CTCustomSelection.ascx" />
+    <EmbeddedResource Include="Archive\arch_dictionary.aspx.resx">
+      <DependentUpon>arch_dictionary.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Archive\arch_protocols.aspx.resx">
+      <DependentUpon>arch_protocols.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Archive\arch_summaries.aspx.resx">
+      <DependentUpon>arch_summaries.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Archive\index.aspx.resx">
+      <DependentUpon>index.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\FormEmailer.aspx.resx">
+      <DependentUpon>FormEmailer.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookup.aspx.resx">
+      <DependentUpon>CTLookup.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.resx">
+      <DependentUpon>CTLookupResults.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.resx">
+      <DependentUpon>CTLookupSearch.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.resx">
+      <DependentUpon>CTLookupSelect.aspx.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="App_LocalResources\" />
+    <Folder Include="UserControls\Footers\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>14945</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2222</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
