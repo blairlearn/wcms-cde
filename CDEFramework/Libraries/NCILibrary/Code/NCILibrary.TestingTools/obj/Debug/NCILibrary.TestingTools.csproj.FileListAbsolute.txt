@@ -1,0 +1,5 @@
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.TestingTools\bin\Debug\NCILibrary.TestingTools.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.TestingTools\bin\Debug\NCILibrary.TestingTools.pdb
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.TestingTools\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.TestingTools\obj\Debug\NCILibrary.TestingTools.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.TestingTools\obj\Debug\NCILibrary.TestingTools.pdb

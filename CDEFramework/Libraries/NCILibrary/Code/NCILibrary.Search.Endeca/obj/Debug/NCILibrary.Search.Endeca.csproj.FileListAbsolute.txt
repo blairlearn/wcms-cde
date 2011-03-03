@@ -1,0 +1,13 @@
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\NCILibrary.Search.Endeca.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\NCILibrary.Search.Endeca.pdb
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\Endeca.Logging.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\Endeca.Navigation.AccessControl.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\Endeca.Navigation.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\NCILibrary.Core.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\NCILibrary.Search.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\NCILibrary.Search.pdb
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\NCILibrary.Core.pdb
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\bin\Debug\NCILibrary.Core.xml
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\obj\Debug\NCILibrary.Search.Endeca.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\obj\Debug\NCILibrary.Search.Endeca.pdb

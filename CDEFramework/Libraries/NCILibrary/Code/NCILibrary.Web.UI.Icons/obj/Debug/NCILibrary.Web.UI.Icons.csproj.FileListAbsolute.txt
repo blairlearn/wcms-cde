@@ -1,0 +1,5 @@
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.Icons\bin\Debug\NCILibrary.Web.UI.Icons.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.Icons\bin\Debug\NCILibrary.Web.UI.Icons.pdb
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.Icons\obj\Debug\ResolveAssemblyReference.cache
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.Icons\obj\Debug\NCILibrary.Web.UI.Icons.dll
+C:\Projects\WCM-Cancer.gov-6.1\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.Icons\obj\Debug\NCILibrary.Web.UI.Icons.pdb
