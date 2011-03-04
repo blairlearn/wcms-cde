@@ -87,9 +87,7 @@
     </Content>
     <Content Include="UserControls\Headers\MainPageHeader.ascx" />
     <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
-    <None Include="..\..\..\CDESchema\CDESchema.xsd">
-      <Link>Schema\CDESchema.xsd</Link>
-    </None>
+    <None Include="Schema\CDESchema.xsd" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
