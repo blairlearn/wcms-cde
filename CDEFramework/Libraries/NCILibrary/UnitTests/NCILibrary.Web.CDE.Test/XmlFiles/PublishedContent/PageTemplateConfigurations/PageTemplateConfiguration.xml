@@ -18,7 +18,12 @@
               <StyleSheetPath>~/StyleSheets/nci-print.css</StyleSheetPath>
             </StyleSheetInfo>
           </StyleSheets>
-        </PageTemplateInfo>
+          <Javascripts>
+            <JavascriptInfo Begining="true" End="" Type="external">
+              <JavaScriptPath>http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js</JavaScriptPath>
+            </JavascriptInfo>
+          </Javascripts>
+          </PageTemplateInfo>
       </PageTemplateInfos>
     </PageTemplateCollection>
   </PageTemplateCollections>
