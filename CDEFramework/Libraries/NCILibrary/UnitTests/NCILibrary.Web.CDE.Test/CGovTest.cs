@@ -134,7 +134,11 @@ namespace NCI.Web.CDE.Test
                 PageTemplatePath = "~/PageTemplates/DefaultCancerGovTemplate.aspx",
                 StyleSheets = new StyleSheetInfo[] {
                     new StyleSheetInfo(){StyleSheetPath = "~/StyleSheets/nci.css"}
-                }
+                },
+                Javascripts = new JavascriptInfo[] {
+                    new JavascriptInfo(){JavaScriptPath = "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"}
+                                }
+
             };
         }
 
@@ -146,7 +150,12 @@ namespace NCI.Web.CDE.Test
                 PageTemplatePath = "~/PageTemplates/DefaultCancerGovTemplate-Print.aspx",
                 StyleSheets = new StyleSheetInfo[] {
                     new StyleSheetInfo(){StyleSheetPath = "~/StyleSheets/nci-print.css"}
-                }
+
+                },
+
+                                Javascripts = new JavascriptInfo[] {
+                    new JavascriptInfo(){JavaScriptPath = "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"}
+                                }
             };
         }
 
