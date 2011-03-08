@@ -113,6 +113,7 @@
     <Compile Include="PageAssembly\PageAssemblyInstructionFactory.cs" />
     <Compile Include="PageAssembly\MultiPageCollection.cs" />
     <Compile Include="PageAssembly\PageMetadata.cs" />
+    <Compile Include="PageAssembly\PageTemplateResolution\JavascriptInfo.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateCollection.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateConfiguration.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateInfo.cs" />

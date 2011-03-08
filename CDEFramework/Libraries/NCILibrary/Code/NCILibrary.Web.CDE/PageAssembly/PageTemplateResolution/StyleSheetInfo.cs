@@ -20,6 +20,12 @@ namespace NCI.Web.CDE
         [XmlElement(Form=XmlSchemaForm.Unqualified, IsNullable=false)]
         public string StyleSheetPath { get; set; }
 
+        [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string Beginning { get; set; }
+
+        [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string End { get; set; }
+
         /// <summary>
         /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
         /// </summary>

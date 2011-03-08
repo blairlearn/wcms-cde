@@ -196,7 +196,7 @@ namespace NCI.Web.CDE.UI
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            JSManager.AddExternalScript(this, "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js");
+            InsertStyleSheetsJavascriptsReferences();
         }
 
         /// <summary>
@@ -208,7 +208,6 @@ namespace NCI.Web.CDE.UI
         {
             base.OnPreRenderComplete(e);            
             SetTitle();
-            InsertStyleSheetsReferences();
             InsertCanonicalURL();
             InsertPageMetaData();
 
@@ -320,7 +319,66 @@ namespace NCI.Web.CDE.UI
                 }
             }
         }
+        
+        /// <summary>
+        /// Inserts the .css and .js resources to the page. There can be one or more 
+        /// css or js resource for each page template. This information is found in 
+        /// the PageTemplateInfo object of the PageAssembleyContext.Current
+        /// </summary>
+        protected virtual void InsertStyleSheetsJavascriptsReferences()
+        {
+            if (CurrentPageHead != null)
+            {
+                PageTemplateInfo pgTemplateInfo = PageAssemblyContext.Current.PageTemplateInfo;
+                if (pgTemplateInfo != null)
+                {
+                    StyleSheetInfo[] colCss = pgTemplateInfo.StyleSheets;                    
+                    JavascriptInfo[] colJs = pgTemplateInfo.Javascripts;
 
+                    IEnumerable<StyleSheetInfo> firstStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning =="true");
+                    IEnumerable<JavascriptInfo> firstJavaScript = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning == "true");
+                    IEnumerable<StyleSheetInfo> lastStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.End == "true");
+                    IEnumerable<JavascriptInfo> lastJavaScript = System.Linq.Enumerable.Where(colJs, fjs => fjs.End == "true");
+
+                    IEnumerable<StyleSheetInfo> remainingStylesheets = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning != "true" && fcss.End != "true");
+                    IEnumerable<JavascriptInfo> remainingJavaScripts = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning != "true" && fjs.End != "true");
+
+
+                    //Load first Javascript
+                    //if (firstJavaScript.Any())
+                        foreach (StyleSheetInfo ssBeginningInfo in remainingStylesheets)
+                            NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, firstJavaScript.FirstOrDefault().JavaScriptPath); 
+
+                    
+                    //Load first Stylesheet
+                    //if (firstStylesheet.Any())
+                        foreach (StyleSheetInfo ssJavascriptInfo in remainingStylesheets)
+                            NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, firstStylesheet.FirstOrDefault().StyleSheetPath);
+
+
+
+                    
+                    // Loop thru remaining css resources and js resource
+                    foreach (StyleSheetInfo ssInfo in remainingStylesheets)
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath);
+
+                    foreach (JavascriptInfo jsInfo in remainingJavaScripts)
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsInfo.JavaScriptPath);
+
+
+                    //Load last Stylesheet
+                    if (lastStylesheet.Any())
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, lastStylesheet.FirstOrDefault().StyleSheetPath);
+                    //Load last Javascript
+                    if (lastJavaScript.Any())
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, lastJavaScript.FirstOrDefault().JavaScriptPath); 
+
+ 
+                }
+            }
+        }
+
+     
         #endregion
     }
 }
