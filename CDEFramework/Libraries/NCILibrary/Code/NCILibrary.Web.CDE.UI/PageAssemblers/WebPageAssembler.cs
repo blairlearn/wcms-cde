@@ -346,14 +346,15 @@ namespace NCI.Web.CDE.UI
 
                     //Load first Javascript
                     //if (firstJavaScript.Any())
-                        foreach (StyleSheetInfo ssBeginningInfo in remainingStylesheets)
-                            NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, firstJavaScript.FirstOrDefault().JavaScriptPath); 
+                    foreach (JavascriptInfo jsBeginningInfo in firstJavaScript)
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsBeginningInfo.JavaScriptPath); 
 
                     
                     //Load first Stylesheet
                     //if (firstStylesheet.Any())
-                        foreach (StyleSheetInfo ssJavascriptInfo in remainingStylesheets)
-                            NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, firstStylesheet.FirstOrDefault().StyleSheetPath);
+                    //NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, firstStylesheet.FirstOrDefault().StyleSheetPath);
+                    foreach (StyleSheetInfo cssBeginningInfo in firstStylesheet)
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssBeginningInfo.StyleSheetPath);
 
 
 
@@ -367,13 +368,19 @@ namespace NCI.Web.CDE.UI
 
 
                     //Load last Stylesheet
-                    if (lastStylesheet.Any())
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, lastStylesheet.FirstOrDefault().StyleSheetPath);
-                    //Load last Javascript
-                    if (lastJavaScript.Any())
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, lastJavaScript.FirstOrDefault().JavaScriptPath); 
+                    //if (lastStylesheet.Any())
+                    //    NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, lastStylesheet.FirstOrDefault().StyleSheetPath);
 
- 
+                    foreach (StyleSheetInfo cssLastInfo in lastStylesheet)
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssLastInfo.StyleSheetPath);
+
+                    //Load last Javascript
+                    //if (lastJavaScript.Any())
+                    //    NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, lastJavaScript.FirstOrDefault().JavaScriptPath); 
+
+                    foreach (JavascriptInfo jsLastInfo in lastJavaScript)
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsLastInfo.JavaScriptPath);
+
                 }
             }
         }
