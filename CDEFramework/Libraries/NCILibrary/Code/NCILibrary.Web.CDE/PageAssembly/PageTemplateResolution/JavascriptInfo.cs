@@ -15,7 +15,7 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <value>The javascript path.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        public string JavaScriptPath { get; set; }
+        public string JavascriptPath { get; set; }
 
         [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
         public string Beginning{ get; set; }
@@ -33,7 +33,7 @@ namespace NCI.Web.CDE
             if (target == null)
                 return false;
 
-            if (JavaScriptPath != target.JavaScriptPath)
+            if (JavascriptPath != target.JavascriptPath)
                 return false;
 
             return true;

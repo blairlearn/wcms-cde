@@ -1506,7 +1506,7 @@
       <documentation>Represents a Stylesheet for a page template for use by the CDE.</documentation>
     </annotation>
     <sequence>
-      <element name="JavaScriptPath" type="cde:path">
+      <element name="JavascriptPath" type="cde:path">
         <annotation>
           <documentation>The path to the stylesheet relative to the CDE application root.</documentation>
         </annotation>

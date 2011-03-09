@@ -347,7 +347,7 @@ namespace NCI.Web.CDE.UI
                     //Load first Javascript
                     //if (firstJavaScript.Any())
                     foreach (JavascriptInfo jsBeginningInfo in firstJavaScript)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsBeginningInfo.JavaScriptPath); 
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsBeginningInfo.JavascriptPath); 
 
                     
                     //Load first Stylesheet
@@ -364,7 +364,7 @@ namespace NCI.Web.CDE.UI
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath);
 
                     foreach (JavascriptInfo jsInfo in remainingJavaScripts)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsInfo.JavaScriptPath);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsInfo.JavascriptPath);
 
 
                     //Load last Stylesheet
@@ -379,7 +379,7 @@ namespace NCI.Web.CDE.UI
                     //    NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, lastJavaScript.FirstOrDefault().JavaScriptPath); 
 
                     foreach (JavascriptInfo jsLastInfo in lastJavaScript)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsLastInfo.JavaScriptPath);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsLastInfo.JavascriptPath);
 
                 }
             }

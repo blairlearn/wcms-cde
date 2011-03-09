@@ -136,7 +136,7 @@ namespace NCI.Web.CDE.Test
                     new StyleSheetInfo(){StyleSheetPath = "~/StyleSheets/nci.css"}
                 },
                 Javascripts = new JavascriptInfo[] {
-                    new JavascriptInfo(){JavaScriptPath = "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"}
+                    new JavascriptInfo(){JavascriptPath = "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"}
                                 }
 
             };
@@ -154,7 +154,7 @@ namespace NCI.Web.CDE.Test
                 },
 
                                 Javascripts = new JavascriptInfo[] {
-                    new JavascriptInfo(){JavaScriptPath = "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"}
+                    new JavascriptInfo(){JavascriptPath = "http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"}
                                 }
             };
         }
