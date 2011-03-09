@@ -105,6 +105,12 @@ namespace CancerGov.Web.SnippetTemplates
 
         #endregion
 
+        #region protected properties
+        protected string CancerType = string.Empty;
+        protected string CancerFamily = string.Empty;
+        protected string State = string.Empty;
+        protected string Country = string.Empty;
+        #endregion
         /// <summary>
         /// Default web form class constructor
         /// </summary>       
@@ -133,10 +139,6 @@ namespace CancerGov.Web.SnippetTemplates
         protected override void OnLoad(EventArgs e)
         {
 
-            string cancerType=string.Empty;
-            string cancerFamily = string.Empty;
-            string state=string.Empty;
-            string country=string.Empty;
             NameValueCollection postedValues = Request.Form;
             String nextKey;
             for (int i = 0; i < postedValues.AllKeys.Length; i++)
@@ -146,21 +148,21 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     if (nextKey.Contains("selCancerType"))
                     {
-                        cancerType=postedValues[i];
+                        CancerType=postedValues[i];
                     }
                     else if (nextKey.Contains("selCancerFamily"))
                     {
-                        cancerFamily = postedValues[i];
+                        CancerFamily = postedValues[i];
                     }
                     else if (nextKey.Contains("selState"))
                     {
-                        state = postedValues[i];
+                        State = postedValues[i];
 
                     }
 
                     else if (nextKey.Contains("selCountry"))
                     {
-                        country = postedValues[i];
+                        Country = postedValues[i];
 
                     }
                 }
@@ -182,11 +184,11 @@ namespace CancerGov.Web.SnippetTemplates
 
             GeneticProfessional gp = new GeneticProfessional();
             DataTable dbTable;
-            dbTable = gp.GetCancerGeneticProfessionals(cancerType, cancerFamily, city, state, country, lastName);
+            dbTable = gp.GetCancerGeneticProfessionals(CancerType, CancerFamily, city, State, Country, lastName);
 
             resultCount = dbTable.Rows.Count.ToString();
 
-            searchSummary = BuildSearchSummary(Functions.ParseNameValue(cancerType, 0).Replace(",", ", "), Functions.ParseNameValue(cancerFamily, 0).Replace(",", ", "), lastName, city, Functions.ParseNameValue(state, 0).Replace(",", ", "), Functions.ParseNameValue(country, 0), resultCount);
+            searchSummary = BuildSearchSummary(Functions.ParseNameValue(CancerType, 0).Replace(",", ", "), Functions.ParseNameValue(CancerFamily, 0).Replace(",", ", "), lastName, city, Functions.ParseNameValue(State, 0).Replace(",", ", "), Functions.ParseNameValue(Country, 0), resultCount);
 
             if (resultCount == "0")
             {

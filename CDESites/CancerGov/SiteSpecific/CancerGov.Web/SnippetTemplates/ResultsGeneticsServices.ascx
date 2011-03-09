@@ -61,11 +61,11 @@
 
                 <form name="searchParamForm" method="post">
                                 
-<input type="hidden" name="selCancerType" value="<%=Request.Form["selCancerType"]%>">                 
-                <input type="hidden" name="selCancerFamily" value="<%=Request.Form["selCancerFamily"]%>">
+<input type="hidden" name="selCancerType" value="<%=CancerType%>">                 
+                <input type="hidden" name="selCancerFamily" value="<%=CancerFamily%>">
                 <input type="hidden" name="txtCity" value="<%=Request.Form["txtCity"]%>">
-                <input type="hidden" name="selState" value="<%=Request.Form["selState"]%>">
-                <input type="hidden" name="selCountry" value="<%=Request.Form["selCountry"]%>">
+                <input type="hidden" name="selState" value="<%=State%>">
+                <input type="hidden" name="selCountry" value="<%=Country%>">
                 <input type="hidden" name="txtLastName" value="<%=Request.Form["txtLastName"]%>">
                 <input type="hidden" name="selectedPage" value="">
                 </form>
