@@ -87,7 +87,9 @@
     </Content>
     <Content Include="UserControls\Headers\MainPageHeader.ascx" />
     <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
-    <Content Include="Schema\CDESchema.xsd" />
+    <Content Include="Schema\CDESchema.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
