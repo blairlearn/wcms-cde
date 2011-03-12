@@ -688,6 +688,73 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
     },
     
 //******************************************************************************************************	
+    TimelyContentZoneTab : function(sender, tabTitle) {
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','TimelyContentZoneTab' );
+        clickParams.Props = {
+            37 : tabTitle};
+        clickParams.Evars = {
+            37 : tabTitle};
+        clickParams.LogToOmniture();
+    },
+
+//******************************************************************************************************	
+    TimelyContentZoneLink : function(sender, linkTitle, linkURL, panelTitle) {
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','TimelyContentZoneLink' );
+        clickParams.Props = {
+            38 : linkTitle,
+            39 : linkURL,
+            40 : panelTitle};
+        clickParams.Evars = {
+            38 : linkTitle,
+            39 : linkURL,
+            40 : panelTitle};
+        clickParams.LogToOmniture();
+    },
+
+//******************************************************************************************************	
+    QuestionsAboutCancerFooter : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','QuestionsAboutCancerFooter');
+        clickParams.Events = [5]; 
+        clickParams.LogToOmniture(); 
+    },
+
+//******************************************************************************************************	
+   QuestionsAboutCancerHeader : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','QuestionsAboutCancerHeader');
+        clickParams.Events = [18]; 
+        clickParams.LogToOmniture(); 
+    },
+
+//******************************************************************************************************	
+   FindCancerTypeBox : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','FindCancerTypeBox');
+        clickParams.Events = [19]; 
+        clickParams.LogToOmniture(); 
+    },
+
+//******************************************************************************************************	
+    TileCarousel : function(sender, tileTitle, tileURL) {
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','TimelyContentZoneLink' );
+        clickParams.Props = {
+            41 : tileTitle,
+            42 : tileURL};
+        clickParams.Evars = {
+            41 : tileTitle,
+            42 : tileURL};
+        clickParams.Events = [20];
+        clickParams.LogToOmniture();
+    },
+
+//******************************************************************************************************	
     LinkTrackTagBuilder : function(e)  {
 
         if(e.button==0) {  // Left mouse button pressed
