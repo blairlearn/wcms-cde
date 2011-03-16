@@ -699,16 +699,16 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
     },
 
 //******************************************************************************************************	
-    TimelyContentZoneLink : function(sender, linkTitle, linkURL, panelTitle) {
+    TimelyContentZoneLink : function(sender, panelTitle) {
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal','o','TimelyContentZoneLink' );
         clickParams.Props = {
-            38 : linkTitle,
-            39 : linkURL,
+            38 : sender.innerHTML,
+            39 : sender.href,
             40 : panelTitle};
         clickParams.Evars = {
-            38 : linkTitle,
-            39 : linkURL,
+            38 : sender.innerHTML,
+            39 : sender.href,
             40 : panelTitle};
         clickParams.LogToOmniture();
     },
