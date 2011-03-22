@@ -2,9 +2,9 @@
 <%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls"
     TagPrefix="NCI" %>
 	
-<%@ Register src="../SnippetTemplates/TableofLinks.ascx" tagname="TableofLinks" tagprefix="uc1" %>
+<%@ Register src="/SnippetTemplates/TableofLinks.ascx" tagname="TableofLinks" tagprefix="uc1" %>
 	
-<%@ Register src="../SnippetTemplates/GlossaryTerms.ascx" tagname="GlossaryTerms" tagprefix="uc2" %>
+<%@ Register src="/SnippetTemplates/GlossaryTerms.ascx" tagname="GlossaryTerms" tagprefix="uc2" %>
 	
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
