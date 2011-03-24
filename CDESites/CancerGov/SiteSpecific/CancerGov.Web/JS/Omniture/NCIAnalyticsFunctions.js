@@ -700,18 +700,64 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 
 //******************************************************************************************************	
     TimelyContentZoneLink : function(sender, panelTitle) {
-        clickParams = new NCIAnalytics.ClickParams(sender,
+		var targ;
+		if (!e) var e = window.event;
+		if (e.target) targ = e.target;
+		else if (e.srcElement) targ = e.srcElement;
+		if (targ.nodeType == 3) // defeat Safari bug
+			targ = targ.parentNode;
+		
+		if(targ.nodeName == 'IMG')
+			targ = targ.parentNode;
+		
+		if(targ.nodeName == 'A')
+	    {
+		    var linkText="";
+		    var tagstart = -1;
+		    var tagend = -1;
+
+			clickParams = new NCIAnalytics.ClickParams(null,
             'nciglobal','o','TimelyContentZoneLink' );
-        clickParams.Props = {
-            38 : sender.innerHTML,
-            39 : sender.href,
-            40 : panelTitle};
-        clickParams.Evars = {
-            38 : sender.innerHTML,
-            39 : sender.href,
-            40 : panelTitle};
-        clickParams.LogToOmniture();
-    },
+    		
+		    for (i=0; i< targ.innerHTML.length; i++)
+		    {
+			    if(tagstart > -1)
+			    {
+				    if(targ.innerHTML.charAt(i) == ">")
+					    tagend = i;
+			    }
+			    else
+			    {
+				    if(targ.innerHTML.charAt(i) == "<")
+					    tagstart = i;
+			    }
+		    }
+		    if ((tagstart > -1) && (tagend > -1))
+		    {
+			    linkText = targ.innerHTML.substring(0, tagstart);
+			    if (tagend < targ.innerHTML.length-1)
+				    linkText = linkText + targ.innerHTML.substring(tagend + 1);
+		    }
+		    else 
+			    linkText = targ.innerHTML;
+
+			var prefixCheck = targ.innerHTML.toLowerCase();
+		    if (prefixCheck.search("video_icon.jpg") > -1 )
+			    linkText = "Video: " + linkText;
+		    else if (prefixCheck.search("audio_icon.jpg") > -1 )
+			    linkText = "Audio: " + linkText;
+		
+			clickParams.Props = {
+				38 : linkText,
+				39 : targ.href,
+				40 : panelTitle};
+			clickParams.Evars = {
+				38 : linkText,
+				39 : targ.href,
+				40 : panelTitle};
+			clickParams.LogToOmniture();
+		}
+	},
 
 //******************************************************************************************************	
     QuestionsAboutCancerFooter : function(sender)  {
