@@ -142,12 +142,16 @@ namespace NCI.Web.CDE
                     displayVersion = DisplayVersions.ViewAll;
             }
 
-            //Handle for Dictionary Print pages
-
-            if(context.Request.Url.Query.Contains("print"))
+            //Handle for Dictionary Print pages AND foia summaries pages.
+            if (context.Request.Url.Query.Contains("print") && context.Request.Url.Query.Contains("allpages"))
+            {
+                displayVersion = DisplayVersions.PrintAll;
+            }
+            else if (context.Request.Url.Query.Contains("print"))
             {
                 displayVersion = DisplayVersions.Print;
             }
+
 
             // Set Display version before loading the assembly instructions so it can be accessed in the constructor
             PageAssemblyContext.CurrentDisplayVersion = displayVersion;

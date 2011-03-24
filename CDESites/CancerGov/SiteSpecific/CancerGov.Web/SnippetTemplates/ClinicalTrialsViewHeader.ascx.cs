@@ -20,7 +20,7 @@ namespace CancerGov.Web.SnippetTemplates
         {
             string data = SnippetInfo.Data;
             contentHeader.Text = data;
-            strPageUrl = this.PageInstruction.GetUrl("PrettyUrl").ToString() + "?cdrid=" + Request.QueryString["cdrid"] + "&protocolsearchid=" + Request.QueryString["protocolsearchid"];
+            strPageUrl = this.PageInstruction.GetUrl("PrettyUrl").ToString() + "?cdrid=" + Request.QueryString["cdrid"] + (Request.QueryString["protocolsearchid"] == null ? "" : "&protocolsearchid=" + Request.QueryString["protocolsearchid"]);
         }
 
         protected override void OnPreRender(EventArgs e)

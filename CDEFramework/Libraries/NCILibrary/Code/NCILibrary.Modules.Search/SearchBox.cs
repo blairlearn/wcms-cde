@@ -103,7 +103,7 @@ namespace NCI.Web.CDE.UI.Modules
         public override void RenderControl(HtmlTextWriter output)
         {
             output.Write(@"<table width=""164"" class=""gray-border"" border=""0"" cellSpacing=""0"" cellPadding=""1""><TBODY><TR><TD vAlign=top><TABLE border=0 cellSpacing=0 cellPadding=0 width=162 bgColor=#ffffff><TBODY>
-                <TR><TD class=box-title vAlign=top align=left><IMG border=0 src=""/images/spacer.gif"" width=7 height=17></TD>");
+                <TR><TD class=box-title vAlign=top align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=7 height=17></TD>");
             output.Write(string.Format(@"<TD class=box-title vAlign=left colSpan=2>{0}</TD></TR>", Title));
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es" && SearchType.ToLower() == "keyword")

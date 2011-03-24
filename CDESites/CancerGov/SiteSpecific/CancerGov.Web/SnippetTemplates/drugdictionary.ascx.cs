@@ -619,12 +619,17 @@ namespace Www.Templates
             if (!string.IsNullOrEmpty(CdrID))
             {
                 PagePrintUrl += "&cdrid=" + CdrID;
+                PageUrl += "&cdrid=" + CdrID;
             }
             else if (!string.IsNullOrEmpty(SearchStr))
             {
                 PagePrintUrl += "&searchTxt=" + SearchStr;
+                PageUrl += "&searchTxt=" + SearchStr;
                 if (BContains)
+                {
                     PagePrintUrl += "&sgroup=Contains";
+                    PageUrl += "&sgroup=Contains";
+                }
             }
 
         }
