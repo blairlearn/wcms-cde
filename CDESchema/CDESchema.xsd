@@ -1472,6 +1472,12 @@
           <documentation>The collection of CDE Stylesheets for this PageTemplateInfo.</documentation>
         </annotation>
       </element>
+      <element name="Javascripts" type="cde:javascriptCollection"
+        minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>The collection of CDE Javascripts for this PageTemplateInfo.</documentation>
+        </annotation>
+      </element>
     </all>
     <attribute name="DisplayVersion" type="cde:displayVersion">
       <annotation>
@@ -1491,6 +1497,24 @@
         </annotation>
       </element>
     </sequence>
+    <attribute name="Beginning" type="string"></attribute>
+    <attribute name="End" type="string"></attribute>    
+  </complexType>
+  
+  <complexType name="JavascriptInfo">
+    <annotation>
+      <documentation>Represents a Stylesheet for a page template for use by the CDE.</documentation>
+    </annotation>
+    <sequence>
+      <element name="JavascriptPath" type="cde:path">
+        <annotation>
+          <documentation>The path to the stylesheet relative to the CDE application root.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="Beginning" type="string"></attribute>
+    <attribute name="End" type="string"></attribute>
+    <attribute name="Type" type="string"></attribute>
   </complexType>
 
   <complexType name="styleSheetCollection">
@@ -1499,6 +1523,18 @@
     </annotation>
     <sequence>
       <element name="StyleSheetInfo" type="cde:styleSheetInfo" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation>An instance of a styleSheetInfo type for this Collection.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="javascriptCollection">
+    <annotation>
+      <documentation>Represents a collection of StyleSheetInfo elements.</documentation>
+    </annotation>
+    <sequence>
+      <element name="JavascriptInfo" type="cde:JavascriptInfo" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation>An instance of a styleSheetInfo type for this Collection.</documentation>
         </annotation>
