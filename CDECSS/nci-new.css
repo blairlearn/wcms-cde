@@ -1,0 +1,56 @@
+.LeftNavSlot {
+	width: 164px;
+}
+.LeftNavSlot .slot-item 
+{
+	margin-bottom: 6px;
+}
+
+.cgovContainer {
+	width: 771px;
+	margin: 0 auto;
+}
+
+.BodyHeaderSlot {
+	margin-bottom: 6px;
+}
+
+#portalPageContentContainer {
+	width: 571px;
+}
+.BodySlotPortal {
+	float: left;
+}
+#cgvTileSlot {
+	float: right;
+}
+
+a.gray-text {
+	color: #4d4d4d;
+}
+
+/* Cancer Type A to Z Box */
+div.az {
+	width: 162px;
+	border: 1px solid #bdbdbd;
+	margin-bottom: 6px;
+}
+div.az h3 {
+	background: #3c3c3c url(/images/general/leftnav-az-header.gif) repeat-x;
+	color: #fff;
+	font-weight: bold;
+	font-size: 12px;
+	margin: 0;
+	padding: 2px 5px;
+	border-bottom: 1px solid #bdbdbd;
+}
+div.az table {
+	margin: 10px;
+	padding: 0;
+	text-align: center;
+}
+div.az table td {
+	padding-bottom: 5px;
+}
+/* End Cancer Type A to Z Box */
+
