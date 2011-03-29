@@ -72,7 +72,6 @@
                     <NCI:TemplateSlot ID="cgvBody" CssClass="BodySlotPortal" runat="server"  />                                     
                     </div>
                     <!-- End Parent container for content and timely content zone column -->
-                    <div style="clear: both;"></div>
                 </td>
                 <!-- End Content Area -->               
             </tr>
