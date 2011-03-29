@@ -1,34 +1,43 @@
 .LeftNavSlot {
 	width: 164px;
 }
-.LeftNavSlot .slot-item 
-{
+.LeftNavSlot .slot-item {
 	margin-bottom: 6px;
 }
-
-.cgovContainer {
-	width: 771px;
-	margin: 0 auto;
+body {
+	background: #f6f6f5 url(/images/general/body-bg.gif) repeat-x;
+	margin: 0;
 }
-
+.cgovContainer {
+	width: 802px;
+	margin: 0 auto;
+	background: #fbfbfb url(/images/general/container-bg.gif) no-repeat;
+}
 .BodyHeaderSlot {
 	margin-bottom: 6px;
 }
-
-#portalPageContentContainer {
-	width: 571px;
+#cgvSiteBanner {
+	width: 751px;
+	margin: 0 auto 10px;
+	height: 106px;
+	background: #e4e4e3 url(/images/general/header-bg.gif);
 }
-.BodySlotPortal {
-	float: left;
+#mainContainer {
+	width: 751px;
+	margin: 0 auto;
+}
+.portalPageContentContainer {
+	width: 571px;
+	overflow: hidden;
 }
 #cgvTileSlot {
+	width: 159px;
 	float: right;
+	margin: 0 0 10px 8px;
 }
-
 a.gray-text {
 	color: #4d4d4d;
 }
-
 /* Cancer Type A to Z Box */
 div.az {
 	width: 162px;
@@ -54,3 +63,6 @@ div.az table td {
 }
 /* End Cancer Type A to Z Box */
 
+#slides {
+	margin-bottom: 6px;
+}
