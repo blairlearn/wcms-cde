@@ -63,12 +63,12 @@
                 <td id="contentzone" valign="top" width="100%">
                     <a name="skiptocontent"></a>                 
                     <!-- Parent container for content and timely content zone column -->
-                    <div id="portalPageContentContainer">   
+                    <div id="portalPageContentContainer">                       
+                    <NCI:TemplateSlot ID="cgvBodyHeader" runat="server" CssClass="BodyHeaderSlot"/>  
+                    <NCI:TemplateSlot ID="cgvSlotTimelyContentItem" runat="server" CssClass="TimelyContentSlot" />        
                      <!-- Tile zone column -->
                     <NCI:TemplateSlot ID="cgvTileSlot" runat="server" CssClass="TileSlot" />
                     <!-- End Tile zone column -->
-                    <NCI:TemplateSlot ID="cgvBodyHeader" runat="server" CssClass="BodyHeaderSlot"/>  
-                    <NCI:TemplateSlot ID="cgvSlotTimelyContentItem" runat="server" CssClass="TimelyContentSlot" />        
                     <NCI:TemplateSlot ID="cgvBody" CssClass="BodySlotPortal" runat="server"  />                                     
                     </div>
                     <!-- End Parent container for content and timely content zone column -->
