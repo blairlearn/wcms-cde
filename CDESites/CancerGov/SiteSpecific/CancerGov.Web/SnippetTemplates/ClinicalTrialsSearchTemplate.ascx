@@ -696,10 +696,6 @@ span.gray-text
     </p>
     <asp:ValidationSummary ID="ValidationSummary2" runat="server" DisplayMode="List"
         CssClass="clinicaltrials-errorMessage" ValidationGroup="v1" />
-    <p>
-        <a onclick="dynPopWindow('https://cissecure.nci.nih.gov/livehelp/welcome.asp', '', 'width=620px,menubar=no,location=no,height=465px,scrollbar=yes'); return false;"
-            href="https://cissecure.nci.nih.gov/livehelp/welcome.asp">
-            <img src="/images/ctsearch/livehelp.gif" alt="Having trouble with this form? Check the help page or contact an NCI information specialist through LiveHelp online text chat or by calling 1-800-4-CANCER." /></a></p>
     <!--end new form footnote-->
     </form>
 
