@@ -96,6 +96,7 @@ namespace NCI.DataManager
                                     searchResult.Language = sqlFVReader.GetString("language");
                                     searchResult.OtherlanguageUrl = sqlFVReader.GetString("otherlanguageURL");
                                     searchResult.DateDisplayMode = sqlFVReader.GetString("Date_Display_Mode");
+                                    searchResult.SubHeader = sqlFVReader.GetString("subheader");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
