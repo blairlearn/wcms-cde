@@ -14,28 +14,23 @@
 	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
     <![endif]-->
 </head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
+<body runat="server">
+	<!-- CGov Container -->
+    <div class="cgovContainer">
     <!-- Site Banner -->
-    <div id="bannerDiv" align="center">
-        <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
-    </div>
-    <div align="center">
-    <CGov:EmergencyAlertBanner ID="EmergencyAlertBanner" runat="server" />
-    
-    </div>
+    <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
+    <CGov:EmergencyAlertBanner ID="EmergencyAlertBanner" runat="server" />    
+    <!-- End Site Banner -->
     <!-- Content Header -->
     <div id="headerzone" align="center">
         <NCI:TemplateSlot ID="cgvContentHeader" runat="server" />
         <NCI:TemplateSlot ID="cgvLanguageDate" runat="server" />
     </div>
     <!-- Main Area -->
-    <!-- Main Area -->
-    <div class="cgovContainer">
-        <table width="771" cellspacing="0" cellpadding="0" border="0">
-            <tr>
-                <td valign="top">
-                    <img src="/images/spacer.gif" width="9" height="1" alt="" border="0" />
-                </td>                
+    <!-- Left Navigation and Content Area -->
+    <div class="mainContainer">
+        <table width="751" cellspacing="0" cellpadding="0" border="0">
+            <tr>                            
                 <!-- Left Nav Column -->
                 <td id="leftzone" valign="top">
                     <table border="0" cellspacing="0" cellpadding="0" width="164">
@@ -69,29 +64,29 @@
                     <a name="skiptocontent"></a>                 
                     <!-- Parent container for content and timely content zone column -->
                     <div id="portalPageContentContainer">   
-                    <NCI:TemplateSlot ID="cgvBodyHeader" runat="server" CssClass="BodyHeaderSlot"/>  
-                    <NCI:TemplateSlot ID="cgvSlotTimelyContentItem" runat="server" CssClass="TimelyContentSlot" />        
-                    <NCI:TemplateSlot ID="cgvBody" CssClass="BodySlotPortal" runat="server"  />                  
-                    <!-- Tile zone column -->
+                     <!-- Tile zone column -->
                     <NCI:TemplateSlot ID="cgvTileSlot" runat="server" CssClass="TileSlot" />
                     <!-- End Tile zone column -->
+                    <NCI:TemplateSlot ID="cgvBodyHeader" runat="server" CssClass="BodyHeaderSlot"/>  
+                    <NCI:TemplateSlot ID="cgvSlotTimelyContentItem" runat="server" CssClass="TimelyContentSlot" />        
+                    <NCI:TemplateSlot ID="cgvBody" CssClass="BodySlotPortal" runat="server"  />                                     
                     </div>
                     <!-- End Parent container for content and timely content zone column -->
                     <div style="clear: both;"></div>
                 </td>
-                <!-- End Content Area -->
-                <td valign="top">
-                    <img src="/images/spacer.gif" width="10" height="1" alt="" border="0" />
-                </td>
+                <!-- End Content Area -->               
             </tr>
         </table>
-    </div>
+        </div>
+    <!-- End Left Navigation and Content Area -->
     <!-- End Main Area -->
     <!-- Footer -->
     <div id="footerzone" align="center">
         <NCI:TemplateSlot ID="cgvFooter" runat="server" RemoveIfEmpty="false" />
-    </div>
+    </div>    
     <!-- End Foooter-->
+     </div>
+    <!-- End CGovContainer--> 
     <!-- TO INSERT WEB ANALYTICS CODE. Every template should have this 
     control else Web analytics scripts will not show up in the HTML-->
     <NCI:WebAnalyticsControl ID="WebAnalyticsControl1" runat="server" />
