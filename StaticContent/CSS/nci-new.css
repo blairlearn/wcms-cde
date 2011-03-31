@@ -5,35 +5,62 @@
 	margin-bottom: 6px;
 }
 body {
-	background: #f6f6f5 url(/images/general/body-bg.gif) repeat-x;
+	background: #f6f6f5 url(http://wwwnewdev.cancer.gov/images/general/body-bg.gif) repeat-x;
 	margin: 0;
 }
-.cgovContainer {
+H3, h3, .header-A, .header-a {
+	color : #000000;
+	font-size : 14px;
+	font-weight : bold;
+	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
+}
+H4, h4, .header-B, .header-b {
+	color : #000000;
+	font-size : 12px;
+	font-weight : bold;
+	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
+}
+.header-C, .header-c {
+	font-weight : bold;
+	font-size : 12px;
+	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
+}
+.header-D, .header-d {
+	font-weight : bold;
+	font-style : italic;
+	font-size : 12px;
+	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
+}
+#cgovContainer {
 	width: 802px;
 	margin: 0 auto;
-	background: #fbfbfb url(/images/general/container-bg.gif) no-repeat;
+	background: #fbfbfb url(http://wwwnewdev.cancer.gov/images/general/container-bg.gif) no-repeat;
 }
-.BodyHeaderSlot {
-	margin-bottom: 6px;
+#EmergencyAlertBanner {
+	margin: 0 auto;
+	width: 751px;
 }
 #cgvSiteBanner {
 	width: 751px;
 	margin: 0 auto 10px;
 	height: 106px;
-	background: #e4e4e3 url(/images/general/header-bg.gif);
+	background: #e4e4e3 url(http://wwwnewdev.cancer.gov/images/general/header-bg.gif);
 }
 #mainContainer {
 	width: 751px;
 	margin: 0 auto;
 }
-.portalPageContentContainer {
+#portalPageContentContainer {
 	width: 571px;
 	overflow: hidden;
+}
+.BodySlotPortal {
+	float: left;
 }
 #cgvTileSlot {
 	width: 159px;
 	float: right;
-	margin: 0 0 10px 8px;
+	margin: 0 0 10px 5px;
 }
 a.gray-text {
 	color: #4d4d4d;
@@ -45,7 +72,7 @@ div.az {
 	margin-bottom: 6px;
 }
 div.az h3 {
-	background: #3c3c3c url(/images/general/leftnav-az-header.gif) repeat-x;
+	background: #3c3c3c url(http://wwwnewdev.cancer.gov/images/general/leftnav-az-header.gif) repeat-x;
 	color: #fff;
 	font-weight: bold;
 	font-size: 12px;
