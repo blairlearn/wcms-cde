@@ -16,7 +16,7 @@
 </head>
 <body runat="server">
 	<!-- CGov Container -->
-    <div class="cgovContainer">
+    <div id="cgovContainer">
     <!-- Site Banner -->
     <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
     <CGov:EmergencyAlertBanner ID="EmergencyAlertBanner" runat="server" />    
@@ -28,7 +28,7 @@
     </div>
     <!-- Main Area -->
     <!-- Left Navigation and Content Area -->
-    <div class="mainContainer">
+    <div id="mainContainer">
         <table width="751" cellspacing="0" cellpadding="0" border="0">
             <tr>                            
                 <!-- Left Nav Column -->
