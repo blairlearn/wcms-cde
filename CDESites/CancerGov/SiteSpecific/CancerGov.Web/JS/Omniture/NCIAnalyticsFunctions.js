@@ -789,7 +789,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 //******************************************************************************************************	
     TileCarousel : function(sender, tileTitle, tileURL) {
         clickParams = new NCIAnalytics.ClickParams(sender,
-            'nciglobal','o','TimelyContentZoneLink' );
+            'nciglobal','o','TileCarousel' );
         clickParams.Props = {
             41 : tileTitle,
             42 : tileURL};
