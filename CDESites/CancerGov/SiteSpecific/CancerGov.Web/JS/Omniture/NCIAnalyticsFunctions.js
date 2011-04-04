@@ -699,7 +699,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
     },
 
 //******************************************************************************************************	
-    TimelyContentZoneLink : function(sender, panelTitle) {
+    TimelyContentZoneLink : function(e, panelTitle) {
 		var targ;
 		if (!e) var e = window.event;
 		if (e.target) targ = e.target;
