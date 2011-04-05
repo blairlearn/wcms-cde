@@ -18,7 +18,7 @@
     }
 </script> 
 
-	<!-- Content Header -->
+	<!-- Content Header
 	<div id="headerzone" style="margin-right: auto;margin-left: auto; width: 751px;">
 	    <table width="751" cellspacing="0" cellpadding="0" border="0">
 	        <tr>
@@ -28,7 +28,7 @@
 	        </tr>
 	    </table>
 	    
-	</div>
+	</div> -->
 
 	<!-- Main Area -->
 	
