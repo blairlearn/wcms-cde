@@ -8,7 +8,6 @@
 		<meta name="vs_defaultClientScript" content="JavaScript">
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
 	    <script src="/JS/JSLoader/JSLoader.js" type="text/javascript"></script>
-	    <link rel="stylesheet" href="/stylesheets/nci.css" type="text/css">
 	    <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">	    
 	</head>
 	<body MS_POSITIONING="GridLayout">

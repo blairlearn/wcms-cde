@@ -4,7 +4,7 @@
 <html>
   <head>
     <title>Cancer.gov</title>
-    <link rel="stylesheet" href="/stylesheets/nci.css" />
+    <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" />
   </head>
   <frameset rows="275,*,40" id="Lookup" frameborder="no" border="0">
 	<frame name="search" title="Search" src="/Common/PopUps/CTLSearch/CTLookupSearch.aspx?fld=<%=Request.Params["fld"]%>&type=<%=Request.Params["type"]%>&title=<%=Title%>" scrolling="no" noresize/>
