@@ -64,14 +64,10 @@
     <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
     <Content Include="JS\Omniture\s_code.js" />
     <Content Include="JS\popEvents.js" />
-    <Content Include="PageTemplates\DefaultTCGAPageTemplate.aspx" />
-    <Content Include="PageTemplates\NoRightNavTCGAPageTemplate.aspx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="SnippetTemplates\ViewPublicationsByCancerType.ascx" />
-    <None Include="..\..\..\..\CDESchema\CDESchema.xsd">
-      <Link>Schema\CDESchema.xsd</Link>
-    </None>
+    <None Include="Schema\CDESchema.xsd" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

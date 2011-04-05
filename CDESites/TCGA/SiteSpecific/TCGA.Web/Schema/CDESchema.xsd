@@ -19,6 +19,11 @@
       <documentation>Defines the schema for a file instruction xml file for the CDE.  In order to allow files to have pretty urls and be indexed by the search engine, there needs to be a record of that item in the file system.  This is that record.</documentation>
     </annotation>
     <all>
+      <element name="MimeType" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Multipurpose Internet Mail Extensions</documentation>
+        </annotation>
+      </element>
       <element name="ContentItemInfo" type="cde:contentItemInfo" minOccurs="0" maxOccurs="1">
         <annotation>
           <documentation>The information of the content item this Assembly Item represents</documentation>
@@ -1286,7 +1291,7 @@
         </complexType>
       </element>
     </all>
-  </complexType> 
+  </complexType>
 
   <complexType name="sectionDetail">
     <annotation>
@@ -1467,6 +1472,12 @@
           <documentation>The collection of CDE Stylesheets for this PageTemplateInfo.</documentation>
         </annotation>
       </element>
+      <element name="Javascripts" type="cde:javascriptCollection"
+        minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>The collection of CDE Javascripts for this PageTemplateInfo.</documentation>
+        </annotation>
+      </element>
     </all>
     <attribute name="DisplayVersion" type="cde:displayVersion">
       <annotation>
@@ -1486,6 +1497,24 @@
         </annotation>
       </element>
     </sequence>
+    <attribute name="Beginning" type="string"></attribute>
+    <attribute name="End" type="string"></attribute>    
+  </complexType>
+  
+  <complexType name="JavascriptInfo">
+    <annotation>
+      <documentation>Represents a Stylesheet for a page template for use by the CDE.</documentation>
+    </annotation>
+    <sequence>
+      <element name="JavascriptPath" type="cde:path">
+        <annotation>
+          <documentation>The path to the stylesheet relative to the CDE application root.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="Beginning" type="string"></attribute>
+    <attribute name="End" type="string"></attribute>
+    <attribute name="Type" type="string"></attribute>
   </complexType>
 
   <complexType name="styleSheetCollection">
@@ -1494,6 +1523,18 @@
     </annotation>
     <sequence>
       <element name="StyleSheetInfo" type="cde:styleSheetInfo" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation>An instance of a styleSheetInfo type for this Collection.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="javascriptCollection">
+    <annotation>
+      <documentation>Represents a collection of StyleSheetInfo elements.</documentation>
+    </annotation>
+    <sequence>
+      <element name="JavascriptInfo" type="cde:JavascriptInfo" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation>An instance of a styleSheetInfo type for this Collection.</documentation>
         </annotation>
@@ -1561,6 +1602,14 @@
           <documentation>
             Defines if this Page Assembly Instruction can be
             shared.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="OrderCopyURL" type="string"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Links to external page for downloading a free copy.
           </documentation>
         </annotation>
       </element>
