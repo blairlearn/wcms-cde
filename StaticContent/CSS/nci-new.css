@@ -43,8 +43,7 @@ H4, h4, .header-B, .header-b {
 #cgvSiteBanner {
 	width: 751px;
 	margin: 0 auto 10px;
-	height: 106px;
-	background: #e4e4e3 url(http://wwwnewdev.cancer.gov/images/general/header-bg.gif);
+
 }
 #mainContainer {
 	width: 751px;
@@ -92,4 +91,7 @@ div.az table td {
 
 #slides {
 	margin-bottom: 6px;
+}
+.box-title {
+	text-align: left;
 }
