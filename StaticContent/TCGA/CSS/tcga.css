@@ -1,0 +1,1270 @@
+/* ------------- Eric Meyer's reset styles */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+}
+body {
+	line-height: normal;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+td {
+	vertical-align: top;
+}
+/* ------------- END Eric Meyer's reset styles */
+
+/* ------------- "generic" styles --------------------------------------------------------------------------- */
+body {
+	background: #ffffff url(../images/general/background.jpg) repeat-x 50% 0;
+	font: 12px arial, sans-serif;
+	color: #4d4d4d;
+	margin: 0 1em 2em;
+}
+p {
+	line-height: 1.3;
+	margin: 1em 0 1em;
+}
+a:link, a:visited, a:active {
+	color: #0c70a8;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a.backtotop {
+	display: block;
+	margin: 10px 0;
+}
+form {
+	margin: 0;
+	padding: 0;
+}
+td {
+	padding: 5px;
+}
+img.left {
+	float: left;
+	margin: 0 10px 5px 0;
+}
+img.right {
+	float: right;
+	margin: 0 0 5px 10px;
+}
+img.border, .image-border img {
+	border: 1px solid #b2b2b2;
+}
+.nobreak {
+	white-space:nowrap;
+}
+.skip a, .skip a:hover, .skip a:visited {
+	position: absolute;
+	left:-999px;
+}
+.skip a:active, .skip a:focus {
+	display:block;
+	left: 0;
+	z-index:999;
+	background: #fff;
+	border: 1px solid #000;
+	padding: 5px 5px 5px 5px;
+}
+.date {
+	font-size: 11px;
+}
+.type-treatment {
+	display: block;
+	font-size: 14px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+/* ------------- END "generic" styles --------------------------------------------------------------------------- */
+
+/* ------------- NCI Banner styles --------------------------------------------------------------------------- */
+#nci-banner {
+	background: #fff url(../images/general/nci-bg.gif) repeat-x;
+	height: 36px;
+	margin: 0 -1em;
+}
+#nci-banner ul {
+	width: 984px;
+	margin: 0 auto;
+}
+#nci-banner li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+#nci-banner li {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+/* ------------- END NCI Banner styles --------------------------------------------------------------------------- */
+
+/* ------------- Masthead/Search/Utility links styles -------------------------------------------------------------*/
+#masthead {
+	width: 980px;
+	margin: 0 auto;
+	padding: 18px 0 0 0;
+}
+#utility-links {
+	text-align: right;
+	margin-top: -5em;
+	margin-bottom: 2em;
+	font-size:11px;
+}
+#utility-links li {
+	display: inline;
+	padding-right: 8px;
+	margin-right: 8px;
+	border-right: 1px solid #888b8c;
+}
+#utility-links li.last {
+	padding-right: 8px;
+	margin-right: 0;
+	border-right: 0;
+}
+#search {
+	text-align: right;
+	margin-top: 0;
+	padding: 0 8px 16px;
+}
+.main-search {
+	vertical-align : middle;
+	width: 273px;
+	height: 20px;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
+	behavior: url(htc/PIE.htc);
+}
+#schTerm,
+#swKeywordQuery {
+	background: #fff url(../images/general/searchi-bg.gif) 250px 2px no-repeat;
+	line-height: 22px;
+}
+#schImg {
+	vertical-align : middle;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	box-shadow: 0 0 5px #888;
+	opacity: .8;
+	background: white;
+}
+#schImg:hover {
+	opacity: 1;
+	background: #fff;
+}
+/* ------------- END Masthead/Search/Utility links styles --------------------------------------------------------- */
+
+/* ------------- Main Navigation styles --------------------------------------------------------------------------- */
+/* ================================================================ 
+This copyright notice must be kept untouched in the stylesheet at 
+all times.
+ 
+The original version of this stylesheet and the associated (x)html
+is available at http://www.cssplay.co.uk/menus/html-plus-time-dropdown-menu.html
+Copyright (c) 2005-2010 Stu Nicholls. All rights reserved.
+This stylesheet and the associated (x)html may be modified in any 
+way to fit your requirements.
+=================================================================== */
+
+#mainnav {
+	height: 38px;
+	width: 978px;
+	padding: 8px 0 4px;
+	margin: 0 auto;
+	border-left: 1px solid #abafaf;
+	border-right: 1px solid #abafaf;
+	border-top: 1px solid #abafaf;
+	background: #e8e8e8;
+	-moz-border-radius: 8px 8px 0 0;
+	-webkit-border-radius: 8px 8px 0 0;
+	border-radius: 8px 8px 0 0;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
+}
+#mainnav ul {
+	width: 950px;
+	height: 33px;
+	margin:0;
+	padding:0 10px;
+	list-style:none;
+	white-space:nowrap;
+	text-align:left;
+	margin: 0 auto;
+	background: url(../images/general/main-nav-bg.gif) repeat-x;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+#mainnav ul ul {
+	height: auto;
+	width: 200px;
+	white-space: normal;
+	-moz-border-radius: 0 0 8px 8px;
+	-webkit-border-radius: 0 0 8px 8px;
+	border-radius: 0 0 8px 8px;
+	background: #585858 url(../images/general/dropdown-bg.gif) repeat-x;
+	padding: 10px;
+	position:absolute;
+	display:none;
+	left:0;
+	top:33px;
+	z-index: 2;
+}
+#mainnav li {
+	display:inline;
+	margin: 0 5px;
+}
+#mainnav ul ul li {
+	margin: 0;
+}
+#mainnav ul.level1 li.level1-li, #mainnav ul.level1 li.active {
+	float:left;
+	display:block;
+	position:relative;
+}
+#mainnav a.level1-a span, #mainnav a {
+	display:block;
+	font:bold 12px arial, sans-serif;
+	color:#fff;
+	line-height:30px;
+	text-decoration:none;
+	padding:0;
+}
+#mainnav ul ul a {
+	line-height: normal;
+	border:0;
+	padding: 10px 0;
+}
+#mainnav ul.level1 li.level1-li a.level1-a {
+	float:left;
+	padding: 0 13px 0 0;
+}
+#mainnav ul li:hover > ul {
+	display:block;
+}
+#mainnav ul li.level1-li a:hover, #mainnav ul li.level1-li a.active {
+	background: url(../images/general/main-nav-text-bg.png) top right no-repeat;
+	color: #bab9ba;
+	text-decoration: none;
+}
+#mainnav ul a.level1-a:hover span, #mainnav ul li.level1-li a.active span {
+	background: url(../images/general/main-nav-text-bg.png) top left no-repeat;
+	color: black;
+}
+#mainnav ul a.level1-a span {
+	padding: 0 0 10px 13px;
+}
+#mainnav ul.time li a, #mainnav ul.time li a:hover {
+	background: url(../images/general/dropdown-divider.gif) bottom center repeat-x;
+}
+#mainnav ul.time li a {
+	color: #b9b9b9;
+}
+#mainnav ul.time li a:hover {
+	text-decoration: underline;
+	color: #fff;
+}
+#mainnav ul.time li a.last, #mainnav ul.time li a.last:hover {
+	background: none;
+}
+/* ------------- END Main Navigation styles --------------------------------------------------------------------------- */
+
+/* ------------- Containter for Content and Sidebar styles -------------------------------------------------------------- */
+#container {
+	width: 978px;
+	margin: 0 auto;
+	border-left: 1px solid #abafaf;
+	border-right: 1px solid #abafaf;
+	background: url(../images/general/container-bg.gif) repeat-y;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	box-shadow: 0 0 5px #888;
+}
+#container-sans-sidebar {
+	width: 978px;
+	margin: 0 auto;
+	border-left: 1px solid #abafaf;
+	border-right: 1px solid #abafaf;
+	background: #fff;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px #888;
+	box-shadow: 0 0 5px #888;
+}
+/* alternative fix to overflow:auto for making a parent div
+	 take the height of its children divs. Used because overflow:auto
+	 was causting problems with the main nav in Opera */
+#container:after, #container-sans-sidebar:after {
+	content: ".";
+	display: block;
+	clear: both;
+	height: 0;
+	visibility: hidden;
+}
+#container, #container-sans-sidebar {
+ * height: 1%;
+}
+/* ------------- Containter for Content and Sidebar styles ----------------------------------------------------------- */
+
+/* ------------- Content area styles --------------------------------------------------------------------------- */
+#container #content {
+	float: left;
+	width: 620px;
+	padding: 10px 19px 10px 20px;
+}
+#container-sans-sidebar #content {
+	float: left;
+	width: 935px;
+	padding: 10px 19px 10px 20px;
+}
+#content h2 {
+	font: bold 20px "avant garde", "Century Gothic", Arial, Helvetica, sans-serif;
+	color: #000;
+	margin: 10px 0 10px;
+}
+#content h3 {
+	font: bold 18px "avant garde", "Century Gothic", Arial, Helvetica, sans-serif;
+	color: #000;
+	margin: 10px 0 10px;
+}
+#content h3.index {
+	padding-bottom: 6px;
+	border-bottom: 2px solid #c3c3c3;
+}
+#content h2 img, #content h3 img {
+	vertical-align : middle;
+	margin-left: 8px;
+}
+#content h4 {
+	font: 13px arial, sans-serif;
+	font-weight: bold;
+	color: #4d4d4d;
+	margin: 10px 0 10px;
+}
+#content table {
+	margin: 8px auto;
+}
+#content table tr {
+}
+#content table tr th {
+	border: 1px solid #C3C3C3;
+	padding: 2px 6px;
+	background-color: #ECECEC;
+}
+#content table tr td {
+	border: 1px solid #C3C3C3;
+	padding: 4px 6px;
+	vertical-align: top;
+}
+#content table.layout {
+	margin: 0;
+}
+#content table.layout tr td {
+	border: none;
+	padding: 0;
+}
+#content .for-media-box table {
+	margin: 0;
+}
+#content .for-media-box table tr td {
+	border: none;
+	padding: 5px;
+}
+#content ul, #content ol {
+	margin-bottom: 7px;
+}
+#content ol {
+	margin-left: 30px;
+	list-style: decimal;
+}
+#content ol li {
+	margin-bottom: 2px;
+}
+#content ul {
+	margin-left: 20px;
+}
+#content ul li {
+	margin-bottom: 5px;
+	list-style-type: square;
+}
+#content ul.unbulleted {
+	margin-left: 0;
+}
+#content ul.unbulleted li {
+	list-style-type: none;
+	margin-bottom: 20px;
+}
+#content ul.alpha li {
+	list-style-type: lower-alpha;
+}
+#content ul.breadcrumb {
+	margin-left: 0;
+	margin-bottom: 5px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #c3c3c3;
+	width: 100%;
+	overflow: auto;
+	color: #000;
+}
+#content ul.breadcrumb li {
+	margin-bottom: 0;
+	list-style-type: none;
+	float: left;
+	font-weight: bold;
+	background: url(../images/general/breadcrumb-arrow.gif) no-repeat right 4px;
+	padding-right: 12px;
+	margin-right: 7px;
+}
+#content ul.breadcrumb li.last {
+	background: none;
+	padding-right: 0;
+	margin-right: 0;
+}
+#content ul.homepage {
+	margin-left: 0;
+}
+#content ul.homepage li {
+	margin-bottom: 10px;
+	list-style-type: none;
+}
+#content .two-column-container {
+	width: 620px;
+	overflow: hidden;
+	padding-bottom: 8px;
+}
+#content .column1 {
+	float: left;
+	width: 290px;
+}
+#content .column2 {
+	float: right;
+	width: 290px;
+}
+#content .news {
+	width: 100%;
+	overflow: auto;
+}
+#content div.cancer-type-long h3 {
+	margin-bottom: 0;
+}
+#content div.cancer-type-long h3 a {
+	font: bold 12px Arial;
+	outline: none;
+}
+#content div.cancer-type-long {
+	border-top: 1px solid #c3c3c3;
+	margin-top: 20px;
+	padding-top: 10px;
+}
+#content table.cancer-type-long {
+	margin: 0 0 18px 0;
+	width: 520px;
+}
+#content table.cancer-type-long td, #content table.cancer-type-long th {
+	border: 1px solid #c3c3c3;
+	text-align: center;
+	padding: 10px 5px 8px;
+}
+#content table.cancer-type-long th {
+	background: #fefaf4 url(../images/general/cancer-type-short-th-bg.gif) repeat-x;
+}
+#content table.cancer-type-long td.col1, #content table.cancer-type-long th.col1 {
+	width: 50%;
+	text-align: left;
+}
+#content table.cancer-type-long td.col2 {
+	width: 27%;
+}
+#content table.cancer-type-longtd.col3 {
+	width: 23%;
+}
+#content table.cancer-type-short {
+	margin-bottom: 0 0 18px 0;
+}
+#content table.cancer-type-short td, #content table.cancer-type-short th {
+	border: 1px solid #c3c3c3;
+	text-align: center;
+	padding: 10px 5px 8px;
+}
+#content table.cancer-type-short th {
+	background: #fefaf4 url(../images/general/cancer-type-short-th-bg.gif) repeat-x;
+}
+#content .image-sidebox {
+	position: relative;
+	margin: 0 0 10px;
+	padding: 10px;
+	background: #fef9f1;
+	border-top: 1px solid #c3c3c3;
+}
+#content .image-sidebox-enlarge {
+	position: absolute;
+	top: 11px;
+	left: 11px;
+}
+sup, sub {
+	height: 0;
+	line-height: 1;
+	vertical-align: baseline;
+	_vertical-align: bottom;
+	position: relative;
+}
+sup {
+	bottom: .3em;
+}
+sub {
+	top: .3em;
+}
+#content div.multimedia-sidebox {
+	border-top: 1px solid #c3c3c3;
+	background: #fef9f1;
+}
+#content div.multimedia-sidebox table,
+#content div.multimedia-sidebox table tr td{
+	border: 0;
+}
+#content div.multimedia-sidebox h3 {
+	font: bold 12px arial, sans-serif;
+	color: #4d4d4d;
+	padding: 0 14px;
+}
+#content table.multimedia-sidebox {
+	margin: 0;
+}
+#content table.multimedia-sidebox th {
+	text-align: left;
+	padding: 10px 14px;
+}
+#content table.multimedia-sidebox td.col1 {
+	border: 0;
+	padding: 0;
+	vertical-align: top;
+}
+#content table.multimedia-sidebox td.col1 {
+	width: 43%;
+	padding: 6px 0 10px 14px;
+}
+#content table.multimedia-sidebox td.col2 {
+	border: 0;
+	width: 57%;
+	padding: 0 10px 10px 0;
+}
+#content .content-sidebox {
+	float:right;
+	width: 250px;
+	margin: 0 0 10px 15px;
+}
+#content .icon-graphic {
+	background: url(../images/general/graphic-icon.gif) no-repeat;
+	padding-left: 20px;
+}
+#content .icon-video {
+	background: url(../images/general/video-icon.gif) no-repeat;
+	padding-left: 20px;
+}
+#content .icon-image {
+	background: url(../images/general/multimedia-images.gif) no-repeat;
+	padding-left: 20px;
+}
+#content .icon-podcast {
+	background: url(../images/general/multimedia-podcast.gif) no-repeat;
+	padding-left: 20px;
+}
+#content .icon-interactive {
+	background:url(../images/general/multimedia-interactive.gif) no-repeat;
+	padding-left: 20px;
+}
+#content .newslink-video {
+	background: url(../images/general/multimedia-videos.gif) no-repeat;
+	padding-left: 20px;
+}
+#content .newslink-audio {
+	background: url(../images/general/multimedia-podcast.gif) no-repeat;
+	padding-left: 20px;
+}
+#content .research-highlights {
+	width: 580px;
+	overflow: auto;
+	border: 1px solid #c3c3c3;
+	padding: 15px;
+	margin: 0 0 15px 0;
+	background: #fef9f1;
+}
+#content .research-highlights h4 {
+	margin-top: 0;
+}
+#content .share {
+	border-top: 1px solid #c3c3c3;
+	margin: 20px 0 50px;
+	padding-top: 15px;
+}
+#content a.addcalendar {
+	background: url(../images/general/addcalender-icon.gif) no-repeat left 0;
+	padding: 1px 0 10px 20px;
+	line-height: 20px;
+}
+#content .caption {
+	margin-top: 5px;
+	display: block;
+}
+#content .multimedia-library {
+}
+#content table.multimedia-library {
+	padding: 0;
+	border: none;
+}
+#content .multimedia-library table tr td, 
+#content .multimedia-library td {
+	border: none;
+	padding-right: 20px;
+}
+#content .library-box {
+	border: 1px solid #c3c3c3;
+	margin-bottom: 30px;
+}
+#content .library-box img {
+	border-bottom: 1px solid #c3c3c3;
+}
+#content .library-caption {
+	display: block;
+	padding: 5px 5px 8px;
+	background: #eeeeee url(../images/general/library-caption-bg.gif) repeat-x;
+}
+#content .for-media-box {
+	border: 1px solid #c3c3c3;
+	background: #ededed url(../images/general/for-media-bg.gif) no-repeat;
+	padding: 15px 10px 20px 60px;
+}
+#content .for-media-box ul {
+	margin: 0;
+}
+#content .for-media-box td ul li {
+	list-style-type: none;
+	margin-bottom: 5px;
+}
+#content .related-multimedia {
+	background: #ededed url(../images/general/related-multimedia-bg.gif) repeat-x;
+	border: 1px solid #c3c3c3;
+	padding: 10px 22px;
+	width: 572px;
+	overflow: auto;
+}
+#content .related-multimedia ul {
+	margin-left: 0;
+}
+#content .related-multimedia ul li {
+	float: left;
+	width: 150px;
+	list-style-type: none;
+	padding-right: 28px;
+	margin-right: 28px;
+}
+#content .related-multimedia ul li.last {
+	padding-right: 0;
+	margin-right: 0;
+}
+#content .related-multimedia ul li img {
+	border-right: 1px solid #c3c3c3;
+	padding-right: 26px;
+}
+#content .related-multimedia ul li.last img {
+	border-right: none;
+	padding-right: 0;
+}
+#content .citation {
+	line-height: 1.3;
+	margin: 1em 0 1em;
+	text-indent: -10px;
+}
+#content .icon-enlarge {
+	background: url(../images/general/enlarge.gif) no-repeat;
+	width:50px;
+	padding-left: 70px;
+}
+#content .citation {
+	line-height: 1.3;
+	margin: 1em 0 1em;
+	padding-left:10px;
+	text-indent: -10px;
+}
+#content .icon-enlarge-plus {
+	background: url(../images/general/enlarge-plus.gif) no-repeat;
+	width:17px;
+	padding-left: 17px;
+}
+#content table.multimedia-sidebox .image-table-sidebox {
+	position: relative;
+}
+#content table.multimedia-sidebox .image-table-sidebox-enlarge {
+	position: absolute;
+	top: 1px;
+	left: 1px;
+}
+#content .schImg {
+	vertical-align : middle;
+	opacity: .8;
+	background: white;
+}
+#content .schImg:hover {
+	opacity: 1;
+	background: #fff;
+}
+/* ------------- END Content area styles --------------------------------------------------------------------------- */
+
+/* ------------- Sidebar styles --------------------------------------------------------------------------- */
+#sidebar {
+	width: 280px;
+	padding: 10px 19px 10px 0;
+	float: right;
+}
+#sidebar .box {
+	background: #fff url(../images/general/sidebar-box-bg.gif) repeat-x;
+	border: 1px solid #b2b1b0;
+	margin: 0 0 10px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+}
+#sidebar .box h3 {
+	margin: 0;
+	padding: 11px 12px;
+	font-size: 16px;
+	font-weight: bold;
+}
+#sidebar .box ul {
+	padding: 0 12px;
+}
+#sidebar .box li {
+	padding: 10px 0;
+	border-bottom: 1px dotted #b2b1b0;
+}
+#sidebar .box li.last {
+	border-bottom: 0;
+}
+#sidebar .box a {
+	padding: 5px 0;
+}
+#sidebar #launch-portal-image {
+	opacity: .8;
+}
+#sidebar #launch-portal-image:hover {
+	opacity: 1;
+}
+#sidebar .box a.images {
+	background:transparent url(../images/general/multimedia-images.gif) center left no-repeat;
+	padding-left: 28px;
+}
+#sidebar .box a.videos {
+	background:transparent url(../images/general/multimedia-videos.gif) center left no-repeat;
+	padding-left: 28px;
+}
+#sidebar .box a.podcasts {
+	background:transparent url(../images/general/multimedia-podcasts.gif) center left no-repeat;
+	padding-left: 28px;
+}
+#sidebar .box a.interactive {
+	background:transparent url(../images/general/multimedia-interactive.gif) center left no-repeat;
+	padding-left: 28px;
+}
+#sidebar .box a.email {
+	background:transparent url(../images/general/connected-email.gif) center left no-repeat;
+	padding-left: 28px;
+}
+#sidebar .box a.rss {
+	background:transparent url(../images/general/connected-rss.gif) center left no-repeat;
+	padding-left: 28px;
+}
+#sidebar .box a.twitter {
+	background:transparent url(../images/general/connected-twitter.gif) center left no-repeat;
+	padding-left: 28px;
+}
+#sidebar .box a.youtube {
+	background:transparent url(../images/general/connected-youtube.gif) center left no-repeat;
+	padding-left: 28px;
+}
+#sidebar .related a[href^="http:"] {
+ display:inline-block;
+ padding-right:14px;
+ background:transparent url(../images/general/external-icon.gif) center right no-repeat;
+}
+/* ------------- END Sidebar styles --------------------------------------------------------------------------- */
+
+/* ------------- Footer styles --------------------------------------------------------------------------- */
+#footer {
+	clear: both;
+	width: 978px;
+	margin: 0 auto;
+	padding: 16px 0 14px;
+	border-bottom: 1px solid #abafaf;
+	border-left: 1px solid #abafaf;
+	border-right: 1px solid #abafaf;
+	background: #4d4d4d;
+	color: #fff;
+	text-align: center;
+	font-size: 11px;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
+}
+#footer-text {
+	padding-bottom: 14px;
+}
+#footer-text li {
+	display: inline;
+	margin-right: 3px;
+	padding-right: 5px;
+	border-right: 1px solid;
+}
+#footer-text li.last {
+	margin-right: 0;
+	padding-right: 0;
+	border-right: 0;
+}
+#footer-text li a {
+	color: #fff;
+}
+#footer-icons {
+}
+#footer-icons li {
+	display: inline;
+	margin-right: 17px;
+}
+#footer-icons li.last {
+	margin-right: 0;
+}
+/* ------------- END Footer styles --------------------------------------------------------------------------- */
+
+/* ------------- jQuery widgets --------------------------------------------------------------------------- */
+/* Home Page news/content slider */
+/* overall container */
+#news-slider {
+	width: 620px;
+	height: 319px;
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+/* container for featured item */
+#news-slider .ui-tabs-panel-x {
+	width: 580px;
+	height: 250px;
+	border: 0;
+	padding: 0 15px 0 15px;
+	margin-top: 10px;
+}
+#news-slider .ui-tabs-panel-x h2 {
+	margin-top: 0;
+}
+#news-slider .ui-tabs-panel-x a {
+	color: #0c70a8;
+}
+#news-slider .ui-tabs-panel-x a.more {
+	padding-right:10px;
+	background:transparent url(../images/news-sliders/arrow-blue.gif) center right no-repeat;
+}
+/* container for list items box */
+#news-slider ul.news-slider-tabs {
+	overflow: hidden;
+	width: 100%;
+	height: 59px;
+	background: none;
+	margin: 0;
+	padding: 0;
+}
+#news-slider .ui-widget-header {
+	border: 0;
+}
+/* container for individual list items */
+#news-slider ul.news-slider-tabs li {
+	float: left;
+	width: 135px;
+	height: 50px;
+	list-style-type: none;
+	padding: 9px 10px 0;
+	margin: 0;
+}
+/* container for individual list items, last item */
+#news-slider ul.news-slider-tabs li.last {
+}
+#news-slider .ui-state-default {
+	border: 0;
+	background: url(../images/news-sliders/li-unselected.gif) top center repeat-x;
+}
+#news-slider .ui-state-default.last {
+	background: url(../images/news-sliders/li-unselected-last.gif) top center repeat-x;
+}
+#news-slider .ui-state-active {
+	border: 0;
+	background: url(../images/news-sliders/li-selected.gif) top center repeat-x;
+	font-weight: bold;
+}
+#news-slider .ui-state-active.last {
+	background: url(../images/news-sliders/li-selected-last.gif) top center repeat-x;
+}
+#news-slider .ui-corner-top {
+	-moz-border-radius-topleft: 0;
+	-webkit-border-top-left-radius: 0;
+	border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+	-webkit-border-top-right-radius: 0;
+	border-top-right-radius: 0;
+}
+#news-slider .ui-tabs-hide {
+	display:none;
+}
+/* container for individual list items image and text */
+#news-slider li.news-slider-tabs-item a {/*On Hover Style*/
+	display: block;
+	height: 50px;
+	outline: none;
+}
+/* container for individual list items image and text on hover */
+#news-slider li.news-slider-tabs-item a:hover {
+}
+/* container for text in individual list items */
+#news-slider li.news-slider-tabs-item {
+}
+/* container for text in individual list items, selected */
+#news-slider li.ui-tabs-selected { /*Selected tab style*/
+}
+/* container for text in individual list items, selected */
+#news-slider ul.news-slider-tabs li.ui-tabs-selected a {
+}
+/* container for text in individual list items image */
+#news-slider ul.news-slider-tabs li img {
+}
+/* END Home Page news/content slider */
+
+
+/* Multimedia Library content slider */
+/*
+	Accessible News Slider : Plugin Specific
+-----------------------------------------------------------------------------------------*/
+/* Image in featured area */
+div.accessible_news_slider img {
+	border: 0;
+	max-width: 278px;
+}
+/* paragraphs in tabs AND featured area */
+div.accessible_news_slider p {
+	margin: 0;
+	padding: 0;
+}
+/* holder for tabs row */
+div.accessible_news_slider {
+	position: relative;
+	overflow: hidden;
+}
+/* tabs holder */
+div.accessible_news_slider ul {
+	position: relative;
+	left: 0;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	overflow: hidden;
+	z-index: 1;
+}
+/* tabs items */
+div.accessible_news_slider li {
+	float: left;
+	margin: 0;
+	padding: 0;
+	display: inline;
+}
+/* Accessible News Slider : Plugin Specific : Theme Default [ Business as Usual ] */
+
+/* overall container */
+div.accessible_news_slider.business_as_usual {
+	width: 288px;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	margin: 0;
+	padding: 0;
+	background: #fff url(../images/news-sliders/yahoo-view-all-bg.gif) repeat-x bottom left;
+}
+/* tabs holder */
+#content div.accessible_news_slider.business_as_usual ul {
+	padding: 0;
+	margin: 0;
+	height: 110px;
+	margin-left: 0;
+}
+/* tabs items */
+div.accessible_news_slider.business_as_usual li {
+	padding: 5px 0;
+	margin: 5px 0 0 0;
+	overflow: hidden;
+	width: 96px;
+	text-align: center;
+	font-size: 12px;
+	color: #666;
+	background: url(../images/news-sliders/yahoo-background.jpg) no-repeat 0 9px;
+	height: 100px;
+}
+/* tabs selected item */
+div.accessible_news_slider.business_as_usual li.selected {
+	background: #999999 url(../images/news-sliders/yahoo-selected-new.gif) top center no-repeat;
+	color: #FFFFFF;
+}
+/* images in tab items */
+div.accessible_news_slider.business_as_usual li img {
+	margin-top: 10px;
+	border: 1px solid #eee;
+	padding: 1px;
+	background-color: #FFFFFF;
+}
+/* tab item paragraphs */
+div.accessible_news_slider.business_as_usual li p {
+	display: none;
+}
+/* tab item paragraphs */
+/* I changed class from title to tab-title in order to display different
+		text in tab than title in feature area */
+div.accessible_news_slider.business_as_usual li p.tab-title {
+	display: block;
+}
+/* links within each tab item */
+div.accessible_news_slider.business_as_usual a {
+}
+/* area with number of total itams and previus/next buttons */
+ div.accessible_news_slider.business_as_usual .view_all {
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin: 0;
+	padding: 2px 2px 0 2px;
+	background: url(../images/news-sliders/yahoo-view-all-bg.gif) repeat-x bottom left;
+	text-align: left;
+	clear: both;
+	width: 100%;
+	overflow: hidden;
+}
+/* featured area container */
+div.accessible_news_slider.business_as_usual .container {
+	width: 280px;
+	min-height: 250px;
+	text-align: center;
+	padding: 4px 5px 0;
+}
+/* featured area links */
+div.accessible_news_slider.business_as_usual .container a {
+	text-decoration: none;
+	font-weight: bold;
+	background-image: none;
+}
+div.accessible_news_slider.business_as_usual strong {
+	color: #000;
+}
+/* counter at bottom of box */
+div.accessible_news_slider.business_as_usual .count {
+	float: left;
+}
+/* previous/next area at bootom right of box */
+div.accessible_news_slider.business_as_usual .controls {
+	float: right;
+}
+/* previous/next links at bootom right of box */
+div.accessible_news_slider.business_as_usual .controls a {
+	display: inline-block;
+	width: 22px;
+	height: 12px;
+	text-indent: -9999px;
+	background: no-repeat bottom center;
+ *float:left;
+}
+/* previous link at bottom right of box */
+div.accessible_news_slider.business_as_usual .back a {
+	background-image: url(../images/news-sliders/yahoo-previous.jpg);
+}
+/* forward link at bootom right of box */
+div.accessible_news_slider.business_as_usual .next a {
+	background-image: url(../images/news-sliders/yahoo-next.jpg);
+}
+/* featured area paragraph */
+div.accessible_news_slider.business_as_usual .paraText {
+	text-align: left;
+	color: #666666;
+	margin: 4px;
+}
+/* Title area at top of box */
+div.accessible_news_slider.business_as_usual .headline {
+	text-align: left;
+	margin-left: 4px;
+	margin-bottom: 4px;
+}
+/* Title of featured area */
+div.accessible_news_slider.business_as_usual h1 {
+	text-align: left;
+	color: #666666;
+	margin: 8px 4px 4px 4px;
+	font-size: 16px;
+}
+/* links within each tab item */
+div.accessible_news_slider.business_as_usual li a {
+	text-decoration: none;
+	background-image: none;
+	font-weight: normal;
+}
+div.accessible_news_slider.business_as_usual .storywrapper {
+	margin: 0;
+	padding: 0;
+}
+/* END Multimedia Library content slider */
+
+/* How it Works Widget */
+#how-it-works {
+	position: relative;
+	z-index: 0;
+}
+#how-it-works h1 {
+}
+#how-it-works h2 {
+}
+#how-it-works p {
+}
+/*.details {border-top: 1px solid #bdbdbd; float:left}*/
+.details ul li {
+	display: block;
+	float: left;
+	width: 192px;
+	margin-right: 15px;
+}
+/* UNLESS YOU KNOW WHAT YOU'RE DOING, DO NOT CHANGE THE FOLLOWING RULES */
+		
+.easy-accordion {
+	display:block;
+	position:relative;
+	overflow:hidden;
+	padding:0;
+	margin:0
+}
+.easy-accordion dt, .easy-accordion dd {
+	margin:0;
+	padding:0
+}
+.easy-accordion dt, .easy-accordion dd {
+	position:absolute
+}
+.easy-accordion dt {
+	margin-bottom:0;
+	margin-left:0;
+	z-index:5;/* Safari */
+	-webkit-transform: rotate(-90deg); /* Firefox */
+	-moz-transform: rotate(-90deg);
+	-moz-transform-origin: 20px 0px;  /* Internet Explorer */
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	cursor:pointer;
+}
+.easy-accordion dd {
+	z-index:1;
+	opacity:0;
+	overflow:hidden
+}
+.easy-accordion dd.active {
+	opacity:1;
+}
+.easy-accordion dd.no-more-active {
+	z-index:2;
+	opacity:1
+}
+.easy-accordion dd.active {
+	z-index:3
+}
+.easy-accordion dd.plus {
+	z-index:4
+}
+.easy-accordion .slide-number {
+	position:absolute;
+	bottom:0;
+	left:10px;
+	font-weight:normal;
+	font-size:1.2em;/* Safari */
+	-webkit-transform: rotate(90deg); /* Firefox */
+	-moz-transform: rotate(90deg);  /* Internet Explorer */
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+}
+/* FEEL FREE TO CUSTOMIZE THE FOLLOWING RULES */
+		
+#how-it-works dd p {
+	line-height:120%
+}
+#how-it-works {
+	width:900px;
+	height:500px;
+	padding:10px;
+	background:#fff;
+}
+#how-it-works dl {
+	width:900px;
+	height:500px
+}
+#how-it-works dt {
+	height:46px;
+	line-height:44px;
+	text-align:right;
+	padding:0 15px 0 0;
+	font-size:1.2em;
+	font-weight:bold;
+	font-family: Arial, Helvetica, sans-serif;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	background:#fff url(../images/how-it-works/slide-title-inactive-1.jpg) 0 0 no-repeat;
+	color:#26526c
+}
+#how-it-works dt.active {
+	cursor:pointer;
+	color:#fff;
+	background:#fff url(../images/how-it-works/slide-title-active-1.jpg) 0 0 no-repeat
+}
+#how-it-works dt.hover {
+	color:#68889b;
+}
+#how-it-works dt.active.hover {
+	color:#fff
+}
+#how-it-works dd {
+	padding:25px;
+	background:url(../images/how-it-works/slide.jpg) bottom left repeat-x;
+	border:1px solid #dbe9ea;
+	border-left:0;
+	margin-right:3px
+}
+#how-it-works .slide-number {
+	color:#68889b;
+	left:10px;
+	font-weight:bold
+}
+#how-it-works .active .slide-number {
+	color:#fff;
+}
+#how-it-works a {
+	color:#0c70a8;
+	text-decoration:none;
+}
+#how-it-works dd img {
+	margin:0 0 0 0px;
+}
+#how-it-works h2 {
+	font-size:1.8em;
+	margin-top:10px
+}
+#how-it-works .more {
+	padding-top:10px;
+	display:block
+}
+/* END How it Works Widget */
+/* ------------- END jQuery widgets --------------------------------------------------------------------------- */
