@@ -32,8 +32,8 @@ namespace TCGA.Web
         {
             base.OnLoad(e);
             CssManager.AddStyleSheet(this, GetStylesheetUrl());
-            JSManager.AddExternalScript(this, "/scripts/imgEvents.js");
-            JSManager.AddExternalScript(this, "/scripts/popEvents.js");
+            JSManager.AddExternalScript(this, "/JS/imgEvents.js");
+            JSManager.AddExternalScript(this, "/JS/popEvents.js");
         }
 
         public DisplayVersions DisplayVersion
