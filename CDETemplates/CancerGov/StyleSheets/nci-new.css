@@ -5,7 +5,7 @@
 	margin-bottom: 6px;
 }
 body {
-	background: #f6f6f5 url(http://wwwnewdev.cancer.gov/images/general/body-bg.gif) repeat-x;
+	background: #f6f6f5 url(/images/general/body-bg.gif) repeat-x;
 	margin: 0;
 }
 H3, h3, .header-A, .header-a {
@@ -34,17 +34,66 @@ H4, h4, .header-B, .header-b {
 #cgovContainer {
 	width: 802px;
 	margin: 0 auto;
-	background: #fbfbfb url(http://wwwnewdev.cancer.gov/images/general/container-bg.gif) no-repeat;
+	background: #fbfbfb url(/images/general/container-bg.gif) no-repeat;
 }
 #EmergencyAlertBanner {
 	margin: 0 auto;
 	width: 751px;
 }
+/* NCI Banner */
 #cgvSiteBanner {
 	width: 751px;
 	margin: 0 auto 10px;
+ overflow: auto;
+}
+#languageToggle {
+	text-align: right; 
+	margin: 2px 10px 4px 0;
+	font-size: 11px;
+}
+#languageToggle a {
+	font-size: 11px;
+}
+#NCILogo {
+	float:left; 
+	padding: 0 399px 0 0; 
+	border-top: 1px solid #b2b2b2; 
+	background: #e4e4e3 url(/images/general/header-bg.gif) repeat-x;
+}
+#bannerRight {
+	 float:right; 
+	 width: 300px; 
+	 margin: 1px 0 0 -302px; 
+	 text-align: right;
+}
+#questionsNumber {
+	 margin: 0 10px 8px 0;
+}
+#mainSearch {
+	 margin-right: 10px; 
+	 height: 24px; 
 
 }
+#mainSearch form, #mainSearch input {
+	margin: 0; padding: 0;
+}
+.searchString {
+	 height: 17px; 
+	 width: 178px; 
+	 vertical-align: middle;
+}
+.searchSubmit {
+	 vertical-align: middle;
+}
+ul.nci-main-navigation {
+	margin: 0; padding: 0;
+}
+ul.nci-main-navigation li {
+	float: left;
+	list-style: none;
+	margin: 0; padding: 0;
+}
+/* END NCI Banner */
 #mainContainer {
 	width: 751px;
 	margin: 0 auto;
@@ -71,7 +120,7 @@ div.az {
 	margin-bottom: 6px;
 }
 div.az h3 {
-	background: #3c3c3c url(http://wwwnewdev.cancer.gov/images/general/leftnav-az-header.gif) repeat-x;
+	background: #3c3c3c url(/images/general/leftnav-az-header.gif) repeat-x;
 	color: #fff;
 	font-weight: bold;
 	font-size: 12px;
@@ -95,3 +144,71 @@ div.az table td {
 .box-title {
 	text-align: left;
 }
+/* NCI Footer */
+#cgvSiteFooter {
+	width: 751px;
+	margin: 15px auto 0;	padding: 0 0 20px 0;
+	text-align: center;
+}
+#cgvSiteFooter ul {
+	margin: 0; padding: 0;
+}
+#cgvSiteFooter ul li {
+	display: inline;
+	margin: 0; padding: 0;
+}
+#cgvSiteFooter ul#findHelp {
+	border-top: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	background: #ffffe6;
+	margin: 0 0 15px 0; padding: 10px 0;
+	letter-spacing: 2px;
+}
+#cgvSiteFooter ul#findHelp li {
+	margin: 0 45px;
+}
+#cgvSiteFooter ul#footerUtility {
+	margin: 0 0 12px 0;
+}
+#cgvSiteFooter ul#footerUtility li {
+	margin: 0 0 0 4px; padding: 0 8px 0 0;
+	background: url(/images/general/footer-utility-divider.gif) bottom right no-repeat;
+}
+#cgvSiteFooter ul#footerUtility li a {
+	color: #666;
+}
+#cgvSiteFooter ul#footerUtility li a:hover {
+	color: #333;
+}
+#cgvSiteFooter ul#footerUtility li.last {
+	background: none;
+}
+ul#followUs {
+	display: inline;
+	margin: 0 0 0 15px;
+}
+ul#followUs li {
+		margin: 0 12px 0 0; padding: 2px 0 2px 20px;
+}
+ul#followUs li a {
+	color: #666;
+}
+ul#followUs li a:hover {
+	color: #333;
+}
+ul#followUs li.twitter {
+	background: url(/images/general/footer-twitter.gif) left 2px no-repeat;
+}
+ul#followUs li.youtube {
+	background: url(/images/general/footer-youtube.gif) left 2px no-repeat;
+}
+ul#followUs li.facebook {
+	background: url(/images/general/footer-facebook.gif) left 2px no-repeat;
+}
+ul#followUs li.rss {
+	background: url(/images/general/footer-rss.gif) left 2px no-repeat;
+}
+ul#agencyLinks li {
+	margin: 0 6px;
+}
+/* END NCI Footer */
