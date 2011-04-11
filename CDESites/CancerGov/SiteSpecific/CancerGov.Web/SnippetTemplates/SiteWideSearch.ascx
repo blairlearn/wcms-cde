@@ -9,7 +9,7 @@
 
 
 	<!-- Main Area -->
-	<div align="center">
+	<div>
 		<table width="571" cellspacing="0" cellpadding="0" border="0">
 			<tr>		
 				<td valign="top">
