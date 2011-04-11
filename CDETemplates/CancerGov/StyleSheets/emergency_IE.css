@@ -3,7 +3,7 @@
 	height: 86px;
 }
 
-/* These styles apply to the quirks mosde issue for IE as relates to the columns on the Bulletin home page */
+/* These styles apply to the quirks mosde issue for IE as relates to the columns on the Bulletin home page
 .cancer-bulletin-home-page {
 	width: 771px;
 }
@@ -13,4 +13,4 @@
 .bulletin-header-bottom-right {
 	height: 20px;
 }
-/* end These styles apply to the quirks mosde issue for IE as relates to the columns on the Bulletin home page */
+end These styles apply to the quirks mosde issue for IE as relates to the columns on the Bulletin home page */
