@@ -573,6 +573,17 @@
     <Content Include="SnippetTemplates\SearchGeneticsServices.ascx" />
     <Content Include="SnippetTemplates\TableofLinks.ascx" />
     <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
+    <Content Include="sysimages\li-selected-last.gif" />
+    <Content Include="sysimages\li-selected.gif" />
+    <Content Include="sysimages\li-unselected-last.gif" />
+    <Content Include="sysimages\li-unselected.gif" />
+    <Content Include="sysimages\next-1.gif" />
+    <Content Include="sysimages\next.gif" />
+    <Content Include="sysimages\previous.gif" />
+    <Content Include="sysimages\tile-slider-english-next.gif" />
+    <Content Include="sysimages\tile-slider-english-previous.gif" />
+    <Content Include="sysimages\tile-slider-spanish-next.gif" />
+    <Content Include="sysimages\tile-slider-spanish-previous.gif" />
     <Content Include="TermDictionary.svc" />
     <Content Include="UserControls\CTCustomSelection.ascx" />
     <EmbeddedResource Include="Archive\arch_dictionary.aspx.resx">

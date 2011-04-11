@@ -3,7 +3,7 @@
     TagPrefix="NCI" %>
 <%@ Register tagPrefix="CGov" namespace="CancerGov.EmergencyAlert" assembly="CancerGov.EmergencyAlert" %>
     
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
     <title></title>
@@ -41,7 +41,7 @@
     </div>
     <!-- Main Area -->
     <!-- Left Navigation and Content Area -->
-    <div id="mainContainer">
+    <div id="mainContainer"  align="center">
         <table width="751" cellspacing="0" cellpadding="0" border="0">
             <tr>                     
                 <!-- Left Nav Column -->
