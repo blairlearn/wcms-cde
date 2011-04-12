@@ -1473,7 +1473,7 @@
         </annotation>
       </element>
       <element name="Javascripts" type="cde:javascriptCollection"
-        minOccurs="1" maxOccurs="1">
+        minOccurs="0" maxOccurs="1">
         <annotation>
           <documentation>The collection of CDE Javascripts for this PageTemplateInfo.</documentation>
         </annotation>
