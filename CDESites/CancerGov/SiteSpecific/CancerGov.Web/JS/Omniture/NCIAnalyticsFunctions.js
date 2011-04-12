@@ -147,7 +147,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         // the Omniture s_code file generates 'class does not support Automation' errors on the 
 		// dataSrc, dataFld, and dataFormatAs properties the 'SEARCH' Image button = therefore reference to
 		// the control is being set to null instead of sender
-        clickParams = new NCIAnalytics.ClickParams(null,
+        clickParams = new NCIAnalytics.ClickParams(this,
             'nciglobal','o','SiteWideSearchResultsSearch');
         clickParams.Props = {
             11 : searchType,
@@ -267,7 +267,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
        if ($(ids.txtKeywords_state).value == 'valid')
             keyword = $(ids.txtKeywords).value; 
         
-       clickParams = new NCIAnalytics.ClickParams(null,
+       clickParams = new NCIAnalytics.ClickParams(this,
             'nciglobal,nciclinicaltrials','o','CTSearch');
        clickParams.Props = {
             11 : searchType,
@@ -662,7 +662,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 //******************************************************************************************************	
     LinkTracking : function(toLink, fromLink, label)  {
         
-        clickParams = new NCIAnalytics.ClickParams(null,
+        clickParams = new NCIAnalytics.ClickParams(this,
             'nciglobal','o','LinkTracking');
         clickParams.Props = {
             4 : toLink,
@@ -716,7 +716,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 		    var tagstart = -1;
 		    var tagend = -1;
 
-			clickParams = new NCIAnalytics.ClickParams(null,
+			clickParams = new NCIAnalytics.ClickParams(this,
             'nciglobal','o','TimelyContentZoneLink' );
     		
 		    for (i=0; i< targ.innerHTML.length; i++)
