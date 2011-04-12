@@ -6,7 +6,7 @@
 <head runat="server">
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
 <title>The Cancer Genome Atlas</title>
-<!--<link rel="stylesheet" href="/stylesheets/tcga-print.css" type="text/css" media="print" />
+<link rel="stylesheet" href="/stylesheets/tcga-print.css" type="text/css" media="print" />
 <link rel="stylesheet" href="/stylesheets/jquery/jquery-ui-1.8.5.custom.css" type="text/css" media="all" />
 <link rel="stylesheet" href="/Stylesheets/slimbox2.css" type="text/css" media="screen" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
@@ -14,7 +14,7 @@
 <script src="/scripts/jquery-ui-1.8.5.custom.min.js" type="text/javascript"></script> 
 <script src="/scripts/jquery-widgets.js" type="text/javascript"></script>
 <script src="/scripts/508player.js" type="text/javascript"></script>
--->
+
 <script src="/JS/popEvents.js" type="text/javascript"></script>
 </head>
 <body marginwidth="0" marginheight="0" leftmargin="0" topmargin="0"> 
