@@ -34,7 +34,7 @@ H4, h4, .header-B, .header-b {
 #cgovContainer {
 	width: 802px;
 	margin: 0 auto;
-	background: #fbfbfb url(/images/general/container-bg.gif) no-repeat;
+	background: #fff url(/images/general/container-bg.gif) no-repeat;
 }
 #EmergencyAlertBanner {
 	margin: 0 auto;
@@ -60,6 +60,9 @@ H4, h4, .header-B, .header-b {
 	border-top: 1px solid #b2b2b2; 
 	background: #e4e4e3 url(/images/general/header-bg.gif) repeat-x;
 }
+#NCILogo a {
+	outline: none;
+}
 #bannerRight {
 	 float:right; 
 	 width: 300px; 
@@ -68,6 +71,9 @@ H4, h4, .header-B, .header-b {
 }
 #questionsNumber {
 	 margin: 0 10px 8px 0;
+}
+#questionsNumber a {
+	 outline: none;
 }
 #mainSearch {
 	 margin-right: 10px; 
@@ -94,7 +100,7 @@ ul.nci-main-navigation li {
 	margin: 0; padding: 0;
 }
 ul.nci-main-navigation li a {
-	outline: 0;
+	outline: none;
 }
 /* END NCI Banner */
 #mainContainer {
@@ -106,7 +112,7 @@ ul.nci-main-navigation li a {
 	overflow: hidden;
 }
 .BodySlotPortal {
-	float: left;
+
 }
 #cgvTileSlot {
 	width: 159px;
@@ -223,6 +229,9 @@ ul#followUs li.rss {
 ul#agencyLinks li {
 	margin: 0 6px;
 }
+ul#agencyLinks li a {
+	outline: 0;
+}
 /* END NCI Footer */
 
 /* ------------- jQuery widgets --------------------------------------------------------------------------- */
@@ -293,13 +302,16 @@ ul#agencyLinks li {
 /* container for individual list items */
 #news-slider ul.news-slider-tabs li {
 	float: left;
-	width: 182px;
+	width: 183px;
 	height: 64px;
 	list-style: none;
 	list-style-type: none;
 	padding: 2px 3px 0;
 	margin: 0;
 }
+#news-slider ul.news-slider-tabs li.last {
+	width: 184px;
+	}
 /* container for individual list items, last item */
 #news-slider ul.news-slider-tabs li.last {
 
@@ -409,10 +421,10 @@ Show the current slide in the pagination
 	color:red;
 }
 .next {
-	outline: 0;
+	outline: none;
 }
 .prev {
-	outline: 0;
+	outline: none;
 }
 /* END Home Page tile slider */
 
