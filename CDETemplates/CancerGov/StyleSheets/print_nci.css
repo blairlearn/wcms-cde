@@ -3,12 +3,25 @@
 /* NEW CLASSES FOR SUMMER 2004 REDESIGN OF CANCER.GOV */
 /******************************************************/
 
+#bannerDiv {
+	overflow: auto;
+}
+#NCILogo {
+	background: none;
+	margin: 0 auto;
+	float: none;
+	margin: 0; padding: 0;
+}
+#bannerRight {
+	float: none;
+	margin: 0 auto;
+}
 
 /* Default font */
-BODY, TD, TABLE, P, .text {
-	COLOR : #000;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
-	FONT-SIZE : 15px;
+body, td, table, p, .text {
+	color: #000;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size: 15px;
 }
 div, p, td, ul, ol, li, dl, td, dd, .text /* redundant selectors to help NS4 not forget */ {
 	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
@@ -17,112 +30,129 @@ div, p, td, ul, ol, li, dl, td, dd, .text /* redundant selectors to help NS4 not
 	font-weight: normal;
 	text-decoration: none;
 }
-
-.zerop { margin-bottom: 0; }
-
-/* Content links that need to be gray */
-.gray, A.gray, A.gray:active, A.gray:visited, A.gray-link, A.gray-link:visited, A.gray-link:active, A.gray-text, A.gray-text:visited, A.gray-text:active {
-	COLOR : #333333;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
-	FONT-SIZE : 15px;
+.zerop {
+	margin-bottom: 0;
 }
-A.gray-link:hover, A.gray-text:hover, A.gray:hover {
-	COLOR:#000000;
-	TEXT-DECORATION: underline;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+/* Content links that need to be gray */
+.gray, a.gray, a.gray:active, a.gray:visited, a.gray-link, a.gray-link:visited, a.gray-link:active, a.gray-text, a.gray-text:visited, a.gray-text:active {
+	color: #333333;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size: 15px;
+}
+a.gray-link:hover, a.gray-text:hover, a.gray:hover {
+	color:#000000;
+	text-decoration: underline;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Default text, bolded */
 .text-b, .gray-text-b {
 	font-weight: bold;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Portal page titles, not currently being used (images instead) */
 .section-title {
-	COLOR : #6E6C4F;
-	FONT-SIZE : 26px;
-	FONT-WEIGHT : none;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	color: #6E6C4F;
+	font-size: 26px;
+	font-weight: none;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Title in gray bar at top of page right below red header */
 .document-title {
-	COLOR : #000000;
-	FONT-SIZE : 21px;
-	FONT-WEIGHT : none;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	color: #000000;
+	font-size: 21px;
+	font-weight: none;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Page header at beginning of main content area, replaces H2 */
 .page-title, H2, .DrugInfoSummary-SummarySection-Title-Level1 {
-	COLOR : #000000;
-	FONT-SIZE : 19px;
-	FONT-WEIGHT : bold;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	color: #000000;
+	font-size: 19px;
+	font-weight: bold;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* replaces H3 */
-.header-A, H3 {
-	COLOR : #000000;
-	FONT-SIZE : 17px;
-	FONT-WEIGHT : bold;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+.header-a, H3 {
+	color: #000000;
+	font-size: 17px;
+	font-weight: bold;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* replaces H4 */
 .header-B, H4 {
-	COLOR : #000000;
-	FONT-SIZE : 16px;
-	FONT-WEIGHT : bold;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	color: #000000;
+	font-size: 16px;
+	font-weight: bold;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 .header-C {
-	FONT-WEIGHT : bold;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 .header-D {
-	FONT-WEIGHT : bold;
-	FONT-STYLE : italic;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* deafault links */
-A, A:active, A:visited, .red-text {
-	COLOR : #9C3303;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+a, a:active, a:visited, .red-text {
+	color: #9C3303;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
-A:hover {
-	COLOR : #990000;
-	TEXT-DECORATION : underline;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+a:hover {
+	color: #990000;
+	text-decoration: underline;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Back to Top style */
-A.backtotop-link, A.backtotop-link:visited, A.backtotop-link:active {
-	FONT-SIZE : 13px;
-	COLOR:#4d4d4d;
-	TEXT-DECORATION: underline;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+a.backtotop-link, a.backtotop-link:visited, a.backtotop-link:active {
+	font-size: 13px;
+	color:#4d4d4d;
+	text-decoration: underline;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
-A.backtotop-link:hover {
-	COLOR:#000000;
-	TEXT-DECORATION: underline;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+a.backtotop-link:hover {
+	color:#000000;
+	text-decoration: underline;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
-
 h3.popup-definition {
 	font-size: 13px;
 }
-
 /* list item with no bullets */
-ul.generic {padding-left: 0; margin-left: 0;}
-ul.generic li {padding-bottom: 10px; margin-left: 0; padding-left: 0; list-style-type:none; list-style-image:none;}
-ol.generic li {padding-bottom: 10px; margin-left: 0; padding-left: 0;}
-
+ul.generic {
+	padding-left: 0;
+	margin-left: 0;
+}
+ul.generic li {
+	padding-bottom: 10px;
+	margin-left: 0;
+	padding-left: 0;
+	list-style-type:none;
+	list-style-image:none;
+}
+ol.generic li {
+	padding-bottom: 10px;
+	margin-left: 0;
+	padding-left: 0;
+}
 /* end list item with no bullets */
 
 /* list item with bullets */
-ul.generic-bullet {}
-ul.generic-bullet li {padding-bottom: 10px; margin-left: 0; padding-left: 0; list-style-type:none; list-style:url(/images/bullet_sm_css.gif);}
+ul.generic-bullet {
+}
+ul.generic-bullet li {
+	padding-bottom: 10px;
+	margin-left: 0;
+	padding-left: 0;
+	list-style-type:none;
+	list-style:url(/images/bullet_sm_css.gif);
+}
 /* end list item with bullets */
 
 img {
@@ -145,17 +175,23 @@ img.center, .image-center {
 	margin-left: auto;
 	margin-right: auto
 }
-
-ul.toc { margin-top:0; padding-left:8px; margin-left:8px; }
-ul.toc li { margin-top:3px; list-style-image:none; list-style-type:none; }
-
+ul.toc {
+	margin-top:0;
+	padding-left:8px;
+	margin-left:8px;
+}
+ul.toc li {
+	margin-top:3px;
+	list-style-image:none;
+	list-style-type:none;
+}
 /* pullquote */
 .pullquote {
 	float: right;
 	width: 275px;
 	padding: 20px 0px 10px 0px;
 	margin: 0 0 5px 5px;
-	font: 17px georgia; 
+	font: 17px georgia;
 	background:url(/images/pullquote-openquote.gif) no-repeat left 5px;
 }
 .pullquote-text {
@@ -166,7 +202,11 @@ ul.toc li { margin-top:3px; list-style-image:none; list-style-type:none; }
 /* end pullquote */
 
 .callout-box {
-background-color:E5E5E5;border:1px solid #CCC;color:#333;margin:10px 0 10px 0;padding:10px;
+	background-color:E5E5E5;
+	border:1px solid #CCC;
+	color:#333;
+	margin:10px 0 10px 0;
+	padding:10px;
 }
 .tintbox {
 	border: 1px solid #bdbdbd;
@@ -188,72 +228,63 @@ background-color:E5E5E5;border:1px solid #CCC;color:#333;margin:10px 0 10px 0;pa
 	padding-left: 15px;
 	padding-right:15px;
 }
-
 .hide {
 	display: none;
 }
-
-
 /****** CancerSpace section *********/
 ul.steps {
-margin: 0;
-padding: 0;
+	margin: 0;
+	padding: 0;
 }
-
 ul.steps li {
-margin: 0;
-padding: 0;
-height: 48px;
-background: none;
-list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 48px;
+	background: none;
+	list-style: none;
 }
-
-ul.steps li a:link,
-ul.steps li a:visited,
-ul.steps li a:hover,
-ul.steps li a:active {
-color: #000;
-font-family: arial;
-font-size: 12px;
-text-decoration: none;
+ul.steps li a:link, ul.steps li a:visited, ul.steps li a:hover, ul.steps li a:active {
+	color: #000;
+	font-family: arial;
+	font-size: 12px;
+	text-decoration: none;
 }
-
 ul.steps li a.steps-inactive {
-background: url(/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-off.gif) top right no-repeat #eff4fd;  
-border-bottom: 1px solid #d1d1d1;
-border-right: 1px solid #d1d1d1;
-padding: 17px 25px 15px 13px;
-margin: 0;
-display: block;
-list-style: none;
+	background: url(/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-off.gif) top right no-repeat #eff4fd;
+	border-bottom: 1px solid #d1d1d1;
+	border-right: 1px solid #d1d1d1;
+	padding: 17px 25px 15px 13px;
+	margin: 0;
+	display: block;
+	list-style: none;
 }
-
 ul.steps li a.steps-inactive:hover {
-background: url(/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-hover.gif) top right no-repeat #cbdcf7; 
+	background: url(/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-hover.gif) top right no-repeat #cbdcf7;
 }
-
 .steps-active {
-background: url(/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-on.gif) top right no-repeat #ffffff; 
-font-weight: bold;
-border-bottom: 1px solid #d1d1d1;
-padding: 17px 25px 15px 13px;
-margin: 0;
-display: block;
-list-style: none;
-outline: none;
+	background: url(/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-on.gif) top right no-repeat #ffffff;
+	font-weight: bold;
+	border-bottom: 1px solid #d1d1d1;
+	padding: 17px 25px 15px 13px;
+	margin: 0;
+	display: block;
+	list-style: none;
+	outline: none;
 }
-
 .cs-caption {
-background: #666666;
-padding: 10px 15px;
-color: #ffffff;
-font-family: arial;
-font-size: 12px;
-height: 58px;
+	background: #666666;
+	padding: 10px 15px;
+	color: #ffffff;
+	font-family: arial;
+	font-size: 12px;
+	height: 58px;
 }
-
-.cs-hidden { display: none; }
-.cs-unhidden { display: block; }
+.cs-hidden {
+	display: none;
+}
+.cs-unhidden {
+	display: block;
+}
 /****** end CancerSpace section *********/
 
 
@@ -278,7 +309,6 @@ table.table-default td {
 	border: 1px solid #BDBDBD;
 	padding: 4px 4px;
 }
-
 table.table-default-center-td td {
 	text-align: center;
 }
@@ -309,85 +339,85 @@ table.border td {
 
 /* Cancer Bulletin Lead Story */
 .cancer-bulletin-homepage-story-title {
-	COLOR:#B50000;
-	FONT-SIZE : 22px;
-	TEXT-DECORATION: none;
-	FONT-FAMILY : Arial, Verdana, Trebuchet MS, sans-serif;
+	color:#B50000;
+	font-size: 22px;
+	text-decoration: none;
+	font-family: Arial, Verdana, Trebuchet MS, sans-serif;
 }
 /* Cancer Bulletin Subpage Story */
 .cancer-bulletin-subpage-story-title {
-	COLOR:#B50000;
-	FONT-SIZE : 19px;
-	TEXT-DECORATION: none;
-	FONT-FAMILY : Arial, Verdana, Trebuchet MS, sans-serif;
+	color:#B50000;
+	font-size: 19px;
+	text-decoration: none;
+	font-family: Arial, Verdana, Trebuchet MS, sans-serif;
 }
 /* Cancer Bulletin Header Text */
 .cancer-bulletin-header-text {
-	COLOR:#FFFFFF;
-	FONT-SIZE : 11px;
-	TEXT-DECORATION: none;
-	FONT-FAMILY : Arial, Verdana, Trebuchet MS, sans-serif;
+	color:#FFFFFF;
+	font-size: 11px;
+	text-decoration: none;
+	font-family: Arial, Verdana, Trebuchet MS, sans-serif;
 }
-A.cancer-bulletin-header-text, A.cancer-bulletin-header-text:link, A.cancer-bulletin-header-text:active, A.cancer-bulletin-header-text:visited {
-	COLOR:#FFFFFF;
-	FONT-SIZE : 11px;
-	TEXT-DECORATION: underline;
-	FONT-FAMILY : Arial, Verdana, Trebuchet MS, sans-serif;
+a.cancer-bulletin-header-text, a.cancer-bulletin-header-text:link, a.cancer-bulletin-header-text:active, a.cancer-bulletin-header-text:visited {
+	color:#FFFFFF;
+	font-size: 11px;
+	text-decoration: underline;
+	font-family: Arial, Verdana, Trebuchet MS, sans-serif;
 }
-A.cancer-bulletin-header-text:hover {
-	COLOR:#FFFFFF;
-	FONT-SIZE : 11px;
-	TEXT-DECORATION: underline;
-	FONT-FAMILY : Arial, Verdana, Trebuchet MS, sans-serif;
+a.cancer-bulletin-header-text:hover {
+	color:#FFFFFF;
+	font-size: 11px;
+	text-decoration: underline;
+	font-family: Arial, Verdana, Trebuchet MS, sans-serif;
 }
 /* end Cancer Bulletin Old */
 
 /* Definition links within the content are supposed to have a distinct style */
-A.definition, A.definition:visited, A.definition:active {
-	COLOR : #333333;
-	TEXT-DECORATION : underline;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+a.definition, a.definition:visited, a.definition:active {
+	color: #333333;
+	text-decoration: underline;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
-A.definition:hover {
-	COLOR : #000000;
-	TEXT-DECORATION : underline;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+a.definition:hover {
+	color: #000000;
+	text-decoration: underline;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Gray lines around boxes and tables */
 .gray-border {
-	BACKGROUND-COLOR:#BDBDBD;
-	FONT-SIZE : 15px;
+	BACKGROUND-color:#BDBDBD;
+	font-size: 15px;
 }
 /* Director's Update Background Color */
 .directors-corner-contentarea {
-	BACKGROUND-COLOR:#F7F7F5;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	BACKGROUND-color:#F7F7F5;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Style for input box for Searches */
 .search-field {
-	COLOR:#000000;
+	color:#000000;
 	HEIGHT:22px;
 	WIDTH:120px;
 }
 /* Default font for left navigation items */
 .leftnav {
-	FONT-SIZE:11px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size:11px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Titles for boxes, gives bold, black title with gray background color, mostly used in left navigation boxes */
-.box-title, A.box-title, A.box-title:link, A.box-title:active, A.box-title:visited {
-	COLOR : #000000;
-	BACKGROUND-COLOR: #E6E6E2;
-	FONT-WEIGHT : bold;
-	TEXT-DECORATION : none;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+.box-title, a.box-title, a.box-title:link, a.box-title:active, a.box-title:visited {
+	color: #000000;
+	BACKGROUND-color: #E6E6E2;
+	font-weight: bold;
+	text-decoration: none;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
-A.box-title:hover {
-	TEXT-DECORATION : underline;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+a.box-title:hover {
+	text-decoration: underline;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 .leftnav-shaded-box {
 	list-style-type: none;
@@ -398,12 +428,12 @@ A.box-title:hover {
 .leftnav-shaded-box h1 {
 	margin: 0;
 	padding: 3px 7px 3px 7px;
-	color : #000000;
+	color: #000000;
 	line-height: 13px;
-	font-family : Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
-	font-size : 12px;
-	background-color : #DADADA;
-	font-weight : bold;
+	font-family: Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size: 12px;
+	background-color: #DADADA;
+	font-weight: bold;
 }
 .leftnav-shaded-box ul {
 	list-style-type: none;
@@ -435,93 +465,93 @@ a:hover.navigation-white {
 	color: #F1EFEF;
 }
 /* Left navigation gray text and gray links */
-.navigation-gray, A.navigation-gray, A.navigation-gray:visited, A.navigation-gray:active, A.navigation-gray-link, A.navigation-gray-link:visited, A.navigation-gray-link:active {
-	FONT-SIZE:15px;
-	COLOR:#4d4d4d;
+.navigation-gray, a.navigation-gray, a.navigation-gray:visited, a.navigation-gray:active, a.navigation-gray-link, a.navigation-gray-link:visited, a.navigation-gray-link:active {
+	font-size:15px;
+	color:#4d4d4d;
 }
-A.navigation-gray-link:hover, A.navigation-gray:hover {
-	FONT-SIZE:15px;
-	COLOR:#000000;
+a.navigation-gray-link:hover, a.navigation-gray:hover {
+	font-size:15px;
+	color:#000000;
 }
 /* Left navigation, selected item in the anchor link sections */
 .navigation-selected {
-	FONT-SIZE:15px;
-	COLOR:#999999;
+	font-size:15px;
+	color:#999999;
 }
 /* Left navigation, non-selected item in the anchor link sections */
-.navigation-dark-gray, A.navigation-dark-gray-link, A.navigation-dark-gray-link:visited, A.navigation-dark-gray-link:active {
-	FONT-SIZE:15px;
-	COLOR:#333333;
+.navigation-dark-gray, a.navigation-dark-gray-link, a.navigation-dark-gray-link:visited, a.navigation-dark-gray-link:active {
+	font-size:15px;
+	color:#333333;
 }
 /* Looks same as Left navigation, non-selected item in the anchor link sections */
-.navigation-black, A.navigation-black-link, A.navigation-black-link:visited, A.navigation-black-link:active {
-	COLOR:#000000;
+.navigation-black, a.navigation-black-link, a.navigation-black-link:visited, a.navigation-black-link:active {
+	color:#000000;
 	font-size: 11px;
 }
-A.navigation-black-link:hover {
-	FONT-SIZE:15px;
-	COLOR:#333333;
+a.navigation-black-link:hover {
+	font-size:15px;
+	color:#333333;
 }
-A.navigation-dark-gray-link:hover {
-	FONT-SIZE:15px;
-	COLOR:#000000;
+a.navigation-dark-gray-link:hover {
+	font-size:15px;
+	color:#000000;
 }
 /* Left navigation, dark red links and text */
-.navigation-dark-red, A.navigation-dark-red, A.navigation-dark-red:link, A.navigation-dark-red:active, A.navigation-dark-red:visited, A.navigation-dark-red-link, A.navigation-dark-red-link:visited, A.navigation-dark-red-link:active {
-	FONT-SIZE:15px;
-	COLOR:#993300;
+.navigation-dark-red, a.navigation-dark-red, a.navigation-dark-red:link, a.navigation-dark-red:active, a.navigation-dark-red:visited, a.navigation-dark-red-link, a.navigation-dark-red-link:visited, a.navigation-dark-red-link:active {
+	font-size:15px;
+	color:#993300;
 }
-A.navigation-dark-red-link:hover, A.navigation-dark-red:hover {
-	FONT-SIZE:15px;
-	COLOR:#990000;
+a.navigation-dark-red-link:hover, a.navigation-dark-red:hover {
+	font-size:15px;
+	color:#990000;
 }
 /* Red Header on Portal Pages Indexes */
-.red-header, A.red-header, A.red-header:visited, A.red-header:active {
-	FONT-SIZE:16px;
-	COLOR:#CC0000;
+.red-header, a.red-header, a.red-header:visited, a.red-header:active {
+	font-size:16px;
+	color:#CC0000;
 	FONT-WEIGHT:bold;
 }
-A.red-header:hover {
-	FONT-SIZE:16px;
-	COLOR:#990000;
+a.red-header:hover {
+	font-size:16px;
+	color:#990000;
 	FONT-WEIGHT:bold;
 }
 /* Do we need link, looks almost same as default link color.  Only used on clinical trials page, bottom content */
-.dark-red, A.dark-red-link, A.dark-red-link:visited, A.dark-red-link:active {
-	COLOR:#993300;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+.dark-red, a.dark-red-link, a.dark-red-link:visited, a.dark-red-link:active {
+	color:#993300;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
-A.dark-red-link:hover {
-	COLOR:#990000;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+a.dark-red-link:hover {
+	color:#990000;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Portal page links in main columns */
-.black-text, A.black-text, A.black-text:visited, A.black-text:active {
-	COLOR:#000000;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+.black-text, a.black-text, a.black-text:visited, a.black-text:active {
+	color:#000000;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 .black-text-b {
-	COLOR:#000000;
+	color:#000000;
 	font-weight: bold;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
-A.black-text:hover {
-	COLOR:#333333;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+a.black-text:hover {
+	color:#333333;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 .quote {
-	COLOR : #996666;
+	color: #996666;
 	FONT-WEIGHT: bold;
-	FONT-SIZE : 15px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size: 15px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 .caption, .footnote {
-	FONT-SIZE:11px;
-	COLOR:#4d4d4d;
-	FONT-FAMILY : Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size:11px;
+	color:#4d4d4d;
+	font-family: Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* for gray line between image and caption */
 .caption-image {
@@ -540,8 +570,8 @@ A.black-text:hover {
 	border-color: #BDBDBD;
 }
 .dates {
-	FONT-SIZE : 13px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size: 13px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Clinical Trials Help section */
 .clinicaltrialhelp-imagebox-center {
@@ -555,7 +585,11 @@ A.black-text:hover {
 	color:#555;
 	padding: 7px;
 }
-.clinicaltrialhelp-image-center {display:block; margin: 10px auto 10px auto; text-align:center;}
+.clinicaltrialhelp-image-center {
+	display:block;
+	margin: 10px auto 10px auto;
+	text-align:center;
+}
 /* end Clinical Trials Help section */
 
 /* Test H3 with red arrows instead of image */
@@ -563,11 +597,9 @@ div.title-red-arrow h3 {
 	background: url(http://www.cancer.gov/images/title-red-arrow.gif) no-repeat 1px 3px;
 	margin: 0 0 3px 0;
 }
-
 div.title-red-arrow p {
 	margin: 0 0 15px 0;
 }
-
 div.title-red-arrow h3 a:link, div.title-red-arrow h3 a:visited, div.title-red-arrow h3 a:active {
 	color: #4f4d4d;
 	font-weight: bold;
@@ -576,7 +608,6 @@ div.title-red-arrow h3 a:link, div.title-red-arrow h3 a:visited, div.title-red-a
 	text-decoration: none;
 	padding-left: 21px;
 }
-
 div.title-red-arrow h3 a:hover {
 	display: block;
 	color: #000;
@@ -585,33 +616,33 @@ div.title-red-arrow h3 a:hover {
 /* end Test H3 with red arrows instead of image */
 
 .protocol-date-label {
-	FONT-SIZE : 13px;
+	font-size: 13px;
 	FONT-WEIGHT: bold;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 .protocol-dates {
-	FONT-SIZE : 13px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-size: 13px;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 SUP.header {
 	font-size: 16px;
-	FONT-FAMILY : "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Alpha list text in Dictionary of Cancer Terms section */
-.dictionary-alpha-list, A.dictionary-alpha-list, A.dictionary-alpha-list:link, A.dictionary-alpha-list:active, A.dictionary-alpha-list:visited {
-	COLOR : #A90101;
-	FONT-SIZE:11px;
+.dictionary-alpha-list, a.dictionary-alpha-list, a.dictionary-alpha-list:link, a.dictionary-alpha-list:active, a.dictionary-alpha-list:visited {
+	color: #A90101;
+	font-size:11px;
 	padding:  6px 4px;
-	FONT-FAMILY : Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-family: Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 	vertical-align: middle;
 	height: 16px;
 }
-A.dictionary-alpha-list:hover {
-	COLOR :  #A90101;
-	FONT-SIZE:11px;
+a.dictionary-alpha-list:hover {
+	color:  #A90101;
+	font-size:11px;
 	padding: 6px 4px;
 	background-color: #FFFFFF;
-	FONT-FAMILY : Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-family: Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 	vertical-align: middle;
 	height: 16px;
 }
@@ -623,10 +654,10 @@ ul.li-margin10 li {
 }
 /* search result phrase on results page */
 .search-result {
-	COLOR : #646464;
-	FONT-SIZE:17px;
-	FONT-FAMILY : Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
-	font-weight : bold;
+	color: #646464;
+	font-size:17px;
+	font-family: Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
+	font-weight: bold;
 }
 .content-gray-background, .pdq-shaded-area {
 	background: #F5F5F3;
@@ -676,7 +707,6 @@ ul.li-margin10 li {
 }
 .rssSection span.rssRow {
 }
-
 .rssSection p.rssDescription {
 	margin: 0 0 0 21px;
 }
@@ -686,22 +716,22 @@ ul.li-margin10 li {
 
 /* same as page-title */
 .Protocol-Title {
-	COLOR : #000000;
-	FONT-SIZE : 19px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 19px;
+	font-weight: bold;
 }
 .Protocol-OfficialTitle {
-	COLOR : #000000;
-	FONT-SIZE : 19px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 19px;
+	font-weight: bold;
 	LINE-HEIGHT : 18px;
 }
-A.Protocol-TOC-Link, A.Protocol-TOC-Link:visited, A.Protocol-TOC-Link:active {
-	COLOR : #9C3303;
+a.Protocol-TOC-Link, a.Protocol-TOC-Link:visited, a.Protocol-TOC-Link:active {
+	color: #9C3303;
 }
-A.Protocol-TOC-Link:hover {
-	COLOR : #990000;
-	TEXT-DECORATION : underline;
+a.Protocol-TOC-Link:hover {
+	color: #990000;
+	text-decoration: underline;
 }
 .Protocol-TOC-SubLink {
 	text-decoration: none;
@@ -711,26 +741,26 @@ A.Protocol-TOC-Link:hover {
 .Protocol-Purpose {
 }
 .Protocol-Section-Heading {
-	COLOR : #000000;
-	FONT-SIZE : 16px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 16px;
+	font-weight: bold;
 }
 .Protocol-Section-SubHeading {
-	COLOR : #000000;
-	FONT-SIZE : 16px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 16px;
+	font-weight: bold;
 }
 .Protocol-PublishedResults-PUBMED {
-	FONT-SIZE : 13px;
+	font-size: 13px;
 }
 .Protocol-AllTrialSites, .Protocol-DownloadDate {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-BasicStudy-Grayborder {
-	BACKGROUND-COLOR:#BDBDBD;
+	BACKGROUND-color:#BDBDBD;
 }
 .Protocol-LeadOrg-OrgName {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-LeadOrg-PersonName {
 }
@@ -745,16 +775,16 @@ A.Protocol-TOC-Link:hover {
 .Protocol-LeadOrg-Email {
 }
 .Protocol-BasicStudy-TD-Grayborder {
-	BACKGROUND-COLOR:#BDBDBD;
+	BACKGROUND-color:#BDBDBD;
 }
 .Protocol-BasicStudy-Heading {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-BasicStudy-PrimaryID {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-BasicStudy-AlternateID {
-	FONT-SIZE : 10px;
+	font-size: 10px;
 }
 .Protocol-info-box {
 	margin-top: 10px;
@@ -787,32 +817,32 @@ A.Protocol-TOC-Link:hover {
 	color: #000000;
 }
 .Protocol-Term-SubHeading {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-Term-Table-Heading {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-EntryCriteria-DiseaseCharacteristics, .Protocol-EntryCriteria-PatientCharacteristics, .Protocol-EntryCriteria-PriorConcurrentTherapy, .Protocol-EntryCriteria-GeneralEligibilityCriteria {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-Outcomes-Primary {
-	font-weight : bold;
-	FONT-STYLE : italic;
+	font-weight: bold;
+	font-style: italic;
 }
 .Protocol-ProtocolRef {
 }
 .Protocol-Site-PoliticalSubUnitName, .Protocol-Site-PersonName, .Protocol-Site-Suffix, .Protocol-Site-Status, .Protocol-Site-Phone, .Protocol-Site-TollFreePhone, .Protocol-Site-Email {
 }
 .Protocol-country, .Protocol-Site-CountryName, .Protocol-Site-Country {
-	COLOR : #000000;
+	color: #000000;
 	LINE-HEIGHT: 18px;
-	FONT-SIZE : 16px;
+	font-size: 16px;
 	FONT-WEIGHT: BOLD;
-	BACKGROUND-COLOR : #E6E6E2;
+	BACKGROUND-color: #E6E6E2;
 }
 .Protocol-state, .Protocol-Site-StateName, .Protocol-Site-State {
-	COLOR : #993333;
-	FONT-SIZE : 16px;
+	color: #993333;
+	font-size: 16px;
 	FONT-WEIGHT: BOLD;
 }
 .Protocol-city, Protocol-Site-City {
@@ -820,7 +850,7 @@ A.Protocol-TOC-Link:hover {
 }
 /* same as header-D */
 .Protocol-Site-SiteName {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 	FONT-STYLE: italic;
 }
 .Protocol-NLMIdentifier {
@@ -828,23 +858,23 @@ A.Protocol-TOC-Link:hover {
 .Protocol-Site-PersonRole {
 }
 .Protocol-Purpose {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-EligibilityText {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-TreatmentIntervention {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-PatientDisclaimer {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Protocol-LI-Title, .Protocol-IL-Title {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 	FONT-STYLE: italic;
 }
 .Protocol-OL-Title {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 	FONT-STYLE: italic;
 }
 .Protocol-LI {
@@ -884,7 +914,7 @@ OL.Protocol-KeyPoints-Dash {
 	LIST-STYLE-TYPE : square;
 }
 LI.CDR {
-	FONT-SIZE : 15px;
+	font-size: 15px;
 	LINE-HEIGHT : 16px;
 	list-style-image: none;
 	MARGIN-BOTTOM : 0px;
@@ -892,13 +922,13 @@ LI.CDR {
 	MARGIN-TOP : 5px;
 	PADDING-LEFT : 5px;
 }
-A.Protocol-SummaryRef {
+a.Protocol-SummaryRef {
 }
 .Protocol-ScientificName {
 	FONT-STYLE: italic;
 }
 .protocol-primaryprotocolid {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .protocol-alternateprotocolids {
 }
@@ -915,70 +945,71 @@ A.Protocol-SummaryRef {
 }
 /* Page header at beginning of main content area */
 .page-title-summary {
-	COLOR : #000000;
-	FONT-SIZE : 17px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 17px;
+	font-weight: bold;
 	float: left;
 	width: 100%;
 }
 /* same as document-title */
 .Summary-Title {
-	COLOR : #000000;
-	FONT-SIZE : 21px;
-	FONT-WEIGHT : none;
+	color: #000000;
+	font-size: 21px;
+	font-weight: none;
 }
 .Summary-SummaryTitle {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 /* same as header-A */
 LI.Summary-SummaryTitle-Level1 {
-	COLOR : #000000;
-	FONT-SIZE : 17px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 17px;
+	font-weight: bold;
 }
 /* same as header-B */
 LI.Summary-SummaryTitle-Level2 {
-	COLOR : #000000;
-	FONT-SIZE : 16px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 16px;
+	font-weight: bold;
 }
 /* same as header-C */
 LI.Summary-SummaryTitle-Level3 {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 /* same as page-title */
 .Summary-SummarySection-Title-Level1 {
-	COLOR : #000000;
-	FONT-SIZE : 19px;
-	FONT-WEIGHT : none;
+	color: #000000;
+	font-size: 19px;
+	font-weight: none;
+
 }
 /* same as header-A */
 .Summary-SummarySection-Title-Level2 {
-	COLOR : #000000;
-	FONT-SIZE : 17px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 17px;
+	font-weight: bold;
 }
 /* same as header-B */
 .Summary-SummarySection-Title-Level3 {
-	COLOR : #000000;
-	FONT-SIZE : 16px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 16px;
+	font-weight: bold;
 }
 /* same as header-C */
 .Summary-SummarySection-Title-Level4 {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Summary-SummarySection-Keypoint-Title {
-	BACKGROUND-COLOR:#D4D9D9;
-	FONT-WEIGHT : bold;
+	BACKGROUND-color:#D4D9D9;
+	font-weight: bold;
 	text-align: center
 }
 .Summary-SummarySection-Small {
-	FONT-SIZE : 7pt;
+	font-size: 7pt;
 }
 .Summary-Table-Caption {
-	COLOR : #000000;
-	FONT-SIZE : 15px;
+	color: #000000;
+	font-size: 15px;
 }
 UL.SummarySection-KeyPoint-UL-Dash {
 	LIST-STYLE-TYPE : square;
@@ -987,8 +1018,8 @@ UL.SummarySection-KeyPoint-UL-Bullet {
 	LIST-STYLE-TYPE : disc;
 }
 LI.SummarySection-KeyPoint-LI {
-	COLOR : #000000;
-	FONT-SIZE : 15px;
+	color: #000000;
+	font-size: 15px;
 	LINE-HEIGHT : 16px;
 	list-style-image: none;
 	MARGIN-BOTTOM : 0px;
@@ -997,18 +1028,18 @@ LI.SummarySection-KeyPoint-LI {
 	PADDING-LEFT : 5px;
 }
 .Summary-ReferenceSection {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Summary-Citation-PUBMED {
-	FONT-SIZE : 10px;
+	font-size: 10px;
 }
 .Summary-KeyPoint {
-	COLOR : #000000;
-	FONT-SIZE : 15px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 15px;
+	font-weight: bold;
 }
 .Summary-ProfessionalDisclaimer-Title {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .Summary-ProfessionalDisclaimer {
 	FONT-STYLE: italic;
@@ -1017,13 +1048,13 @@ LI.SummarySection-KeyPoint-LI {
 }
 .Summary-LOERef {
 }
-A.Summary-GlossaryTermRef, A.Summary-GlossaryTermRef:visited, A.Summary-GlossaryTermRef:active, A.Protocol-GlossaryTermRef, A.Protocol-GlossaryTermRef:active, A.Protocol-GlossaryTermRef:visited {
-	COLOR : #333333;
-	TEXT-DECORATION : underline;
+a.Summary-GlossaryTermRef, a.Summary-GlossaryTermRef:visited, a.Summary-GlossaryTermRef:active, a.Protocol-GlossaryTermRef, a.Protocol-GlossaryTermRef:active, a.Protocol-GlossaryTermRef:visited {
+	color: #333333;
+	text-decoration: underline;
 }
-A.Summary-GlossaryTermRef:hover, A.Protocol-GlossaryTermRef:hover {
-	COLOR : #000000;
-	TEXT-DECORATION : underline;
+a.Summary-GlossaryTermRef:hover, a.Protocol-GlossaryTermRef:hover {
+	color: #000000;
+	text-decoration: underline;
 }
 /* END PROTOCOL SECTION */
 
@@ -1035,34 +1066,34 @@ A.Summary-GlossaryTermRef:hover, A.Protocol-GlossaryTermRef:hover {
 /* Classes for old cancer.gov site, may still being used */
 
 P.graytext {
-	COLOR : #666666;
+	color: #666666;
 }
 P.blacktext {
-	COLOR : #000000;
+	color: #000000;
 }
 P.block {
 	MARGIN : 10px 20px;
 }
 TD.rightnav {
-	FONT-SIZE : 12px;
+	font-size: 12px;
 }
 TD.rightnav A {
-	FONT-SIZE : 12px;
+	font-size: 12px;
 }
 /* ------------------------------------ Begin Footer ----------------------------------------- */ 
-A.footer {
-	COLOR : #000000;
-	TEXT-DECORATION : none;
+a.footer {
+	color: #000000;
+	text-decoration: none;
 }
-A.footer:visited {
-	COLOR : #666699;
-	TEXT-DECORATION : none;
+a.footer:visited {
+	color: #666699;
+	text-decoration: none;
 }
-A.footer:hover {
-	COLOR : #669999;
-	TEXT-DECORATION : none;
+a.footer:hover {
+	color: #669999;
+	text-decoration: none;
 }
-A.footer-link.rsslink {
+a.footer-link.rsslink {
 	background: url(/images/rss-feed-icon.gif) no-repeat;
 	padding: 0 0 0 16px;
 }
@@ -1070,218 +1101,218 @@ A.footer-link.rsslink {
 
 
 
-A.whitetab {
-	COLOR : #336;
-	FONT-SIZE : 11px;
+a.whitetab {
+	color: #336;
+	font-size: 11px;
 	LINE-HEIGHT : 10px;
-	TEXT-DECORATION : none;
+	text-decoration: none;
 }
-A.whiteslanttab {
-	COLOR : #336;
-	FONT-SIZE : 11px;
-	FONT-STYLE : italic;
+a.whiteslanttab {
+	color: #336;
+	font-size: 11px;
+	font-style: italic;
 	LINE-HEIGHT : 10px;
-	TEXT-DECORATION : none;
+	text-decoration: none;
 }
-A.whitetab:visited {
-	COLOR : #336;
-	FONT-SIZE : 11px;
+a.whitetab:visited {
+	color: #336;
+	font-size: 11px;
 	LINE-HEIGHT : 10px;
-	TEXT-DECORATION : none;
+	text-decoration: none;
 }
-A.whiteslanttab:visited {
-	COLOR : #336;
-	FONT-SIZE : 11px;
-	FONT-STYLE : italic;
+a.whiteslanttab:visited {
+	color: #336;
+	font-size: 11px;
+	font-style: italic;
 	LINE-HEIGHT : 10px;
-	TEXT-DECORATION : none;
+	text-decoration: none;
 }
-A.whitetab:hover {
-	COLOR : #669999;
-	FONT-SIZE : 11px;
+a.whitetab:hover {
+	color: #669999;
+	font-size: 11px;
 	LINE-HEIGHT : 10px;
-	TEXT-DECORATION : none;
+	text-decoration: none;
 }
-A.whiteslanttab:hover {
-	COLOR : #669999;
-	FONT-SIZE : 11px;
-	FONT-STYLE : italic;
+a.whiteslanttab:hover {
+	color: #669999;
+	font-size: 11px;
+	font-style: italic;
 	LINE-HEIGHT : 10px;
-	TEXT-DECORATION : none;
+	text-decoration: none;
 }
-A.alpha {
-	COLOR : #000000;
-	FONT-SIZE : 13px;
-	FONT-WEIGHT : bold;
+a.alpha {
+	color: #000000;
+	font-size: 13px;
+	font-weight: bold;
 	LINE-HEIGHT : 13px;
-	TEXT-DECORATION : underline;
+	text-decoration: underline;
 }
-A.alpha:visited {
-	COLOR : #666699;
-	TEXT-DECORATION : underline;
+a.alpha:visited {
+	color: #666699;
+	text-decoration: underline;
 }
-A.alpha:hover {
-	COLOR : #669999;
-	TEXT-DECORATION : underline;
+a.alpha:hover {
+	color: #669999;
+	text-decoration: underline;
 }
 .field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 22px;
 }
 .font_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 }
 .size7_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 22px;
 	WIDTH : 69px;
 }
 .size10_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 18px;
 	WIDTH : 69px;
 }
 .size12_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 22px;
 	WIDTH : 100px;
 }
 .size14_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 22px;
 	WIDTH : 138px;
 }
 .size30_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 22px;
 	WIDTH : 180px;
 }
 .size30x3_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 60px;
 	WIDTH : 180px;
 }
 .size40_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 22px;
 	WIDTH : 240px;
 }
 .size40x3_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 60px;
 	WIDTH : 240px;
 }
 .size50_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 22px;
 	WIDTH : 300px;
 }
 .size50x3_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 60px;
 	WIDTH : 300px;
 }
 .size60x3_field {
-	COLOR : #000000;
-	FONT-SIZE : 8pt;
+	color: #000000;
+	font-size: 8pt;
 	HEIGHT : 60px;
 	WIDTH : 360px;
 }
 .header1 {
-	COLOR : #000000;
-	FONT-SIZE : 16px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 16px;
+	font-weight: bold;
 	LINE-HEIGHT : 18px;
 }
 H1 {
-	COLOR : #000000;
-	FONT-SIZE : 18px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 18px;
+	font-weight: bold;
 	LINE-HEIGHT : 18px;
 }
 .pressh1 {
-	COLOR : #000000;
-	FONT-SIZE : 17px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 17px;
+	font-weight: bold;
 	LINE-HEIGHT : 18px;
 }
 .header1black {
-	COLOR : #000;
-	FONT-SIZE : 18px;
-	FONT-WEIGHT : bold;
+	color: #000;
+	font-size: 18px;
+	font-weight: bold;
 	LINE-HEIGHT : 18px;
 }
 .header2 {
-	COLOR : #000000;
-	FONT-SIZE : 18px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 18px;
+	font-weight: bold;
 	LINE-HEIGHT : 16px;
 }
 H2.header2 {
-	COLOR : #000000;
-	FONT-SIZE : 17px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 17px;
+	font-weight: bold;
 	LINE-HEIGHT : 16px;
 	margin : 4px 4px 4px 4px;
 }
 PRE {
-	FONT-SIZE : 11px;
+	font-size: 11px;
 }
 .fake_H2 {
-	COLOR : #000000;
-	FONT-SIZE : 15px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 15px;
+	font-weight: bold;
 	LINE-HEIGHT : 16px;
 }
 H1.CDR {
-	COLOR : #000000;
-	FONT-SIZE : 17px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 17px;
+	font-weight: bold;
 	LINE-HEIGHT : 18px;
 }
 H2.CDR {
-	COLOR : #000000;
-	FONT-SIZE : large;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: large;
+	font-weight: bold;
 	line-height:normal;
 }
 H3.CDR {
-	COLOR : #000000;
-	FONT-SIZE : medium;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: medium;
+	font-weight: bold;
 }
 H4.CDR {
-	COLOR : #000000;
-	FONT-SIZE : small;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: small;
+	font-weight: bold;
 }
 H1.OESI {
-	color : #000000;
-	font-family : Times New Roman;
-	font-size : 24pt;
-	font-weight : normal;
+	color: #000000;
+	font-family: Times New Roman;
+	font-size: 24pt;
+	font-weight: normal;
 	line-height : 1;
 	margin-top: 0%;
 	margin-bottom: 0%;
 }
 H2.OESI {
-	color : #666699;
-	font-family : Times New Roman;
-	font-size : 14pt;
+	color: #666699;
+	font-family: Times New Roman;
+	font-size: 14pt;
 	font-variant : small-caps;
-	font-weight : normal;
+	font-weight: normal;
 	line-height : 1;
 	margin-top: 0%;
 	margin-bottom: 0%;
@@ -1290,14 +1321,14 @@ H2.OESI {
 	line-height: 15px;
 }
 H1.digest {
-	color : #000000;
+	color: #000000;
 	font-size: 16pt;
 	line-height: normal;
 	margin-top: 0%;
 	margin-bottom: 0%;
 }
 .digest_header {
-	color : #000000;
+	color: #000000;
 	font-size: 16pt;
 	line-height: normal;
 	margin-top: 0%;
@@ -1309,66 +1340,66 @@ H1.digest {
 	color: #FFFFFF;
 }
 .graytext {
-	COLOR : #666666;
+	color: #666666;
 }
 .whitetext {
-	color : #fff;
+	color: #fff;
 }
 a.whitetext:link, a.whitetext:visited, a.whitetext:hover, a.whitetext:active {
-	color : #fff;
+	color: #fff;
 }
 .bigwhite {
-	COLOR : #FFFFFF;
+	color: #FFFFFF;
 	FONT-WEIGHT: bold;
-	FONT-SIZE : 16px;
+	font-size: 16px;
 }
 .blacktext {
-	COLOR : #000000;
+	color: #000000;
 }
 .toc H2 {
-	COLOR : #000000;
-	FONT-SIZE : 15px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 15px;
+	font-weight: bold;
 	MARGIN-BOTTOM : 3px;
 	MARGIN-TOP : 0px;
 }
 .toc H3 {
-	COLOR : #000000;
-	FONT-SIZE : 14px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 14px;
+	font-weight: bold;
 	MARGIN-BOTTOM : 3px;
 	MARGIN-TOP : 0px;
 }
 .toc H4 {
-	COLOR : #000000;
-	FONT-SIZE : 13px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 13px;
+	font-weight: bold;
 	MARGIN-BOTTOM : 3px;
 	MARGIN-TOP : 0px;
 }
 .toc H5 {
-	COLOR : #000000;
-	FONT-SIZE : 13px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 13px;
+	font-weight: bold;
 	MARGIN-BOTTOM : 3px;
 	MARGIN-TOP : 0px;
 }
 .toc H6 {
-	COLOR : #000000;
-	FONT-SIZE : 13px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 13px;
+	font-weight: bold;
 	MARGIN-BOTTOM : 3px;
 	MARGIN-TOP : 0px;
 }
 H5 {
-	COLOR : #000000;
-	FONT-SIZE : 13px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 13px;
+	font-weight: bold;
 }
 H6 {
-	COLOR : #000000;
-	FONT-SIZE : 13px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 13px;
+	font-weight: bold;
 }
 LI.portal {
 	LINE-HEIGHT : 11px;
@@ -1379,8 +1410,8 @@ LI.portal {
 	PADDING-LEFT : 0px;
 }
 LI.sub {
-	COLOR : #000;
-	FONT-SIZE : 13px;
+	color: #000;
+	font-size: 13px;
 	LINE-HEIGHT : 16px;
 	LIST-STYLE : url(/images/bullet_sm_css.gif);
 	MARGIN-BOTTOM : 5px;
@@ -1389,37 +1420,37 @@ LI.sub {
 	PADDING-LEFT : 0px;
 }
 .pdq P {
-	COLOR : #000000;
+	color: #000000;
 	padding-top : 2px;
 	padding-bottom : 0px;
 	margin-top : 0px;
 	margin-bottom : 10px;
-	FONT-SIZE : 13px;
+	font-size: 13px;
 	position : relative;
 	left : 20px;
 }
 .pdq H2 {
-	COLOR : #000000;
-	FONT-SIZE : 15px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 15px;
+	font-weight: bold;
 	padding-top : 0px;
 	padding-bottom : 0px;
 	margin-top : 0px;
 	margin-bottom : 0px;
 }
 .pdq H3 {
-	COLOR : #000000;
-	FONT-SIZE : 14px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 14px;
+	font-weight: bold;
 	padding-top : 10px;
 	padding-bottom : 0px;
 	margin-top : 0px;
 	margin-bottom : 0px;
 }
 .pdq H4 {
-	COLOR : #333366;
-	FONT-SIZE : 13px;
-	FONT-WEIGHT : bold;
+	color: #333366;
+	font-size: 13px;
+	font-weight: bold;
 	padding-top : 10px;
 	padding-bottom : 0px;
 	margin-top : 0px;
@@ -1467,7 +1498,7 @@ LI.sub {
 	height: 20;
 }
 .PUBMED {
-	FONT-SIZE : 10px;
+	font-size: 10px;
 }
 .oc_section_head {
 	font-size: 14pt;
@@ -1501,19 +1532,19 @@ LI.sub {
 	list-style-type: none
 }
 .occontent {
-	COLOR : #666666;
-	FONT-SIZE : 13pt;
+	color: #666666;
+	font-size: 13pt;
 }
 .graytextCopy {
-	COLOR : #666666;
-	FONT-SIZE : 13px;
+	color: #666666;
+	font-size: 13px;
 	list-style-position: outside;
 	list-style-image: url(/images/oc_bullet.gif);
 	list-style-type: none
 }
 .oc_list {
-	COLOR : #333333;
-	FONT-SIZE : 13px;
+	color: #333333;
+	font-size: 13px;
 	list-style-position: outside;
 	list-style-image: url(/images/oc_bullet.gif);
 	list-style-type: none
@@ -1522,101 +1553,101 @@ LI.sub {
 
 /* New National System Section of Clinical Trials */
 
-A.ns-leftnav {
-	COLOR : #0033cc;
-	TEXT-DECORATION : none;
+a.ns-leftnav {
+	color: #0033cc;
+	text-decoration: none;
 }
-A.ns-leftnav:visited {
-	COLOR : #0033cc;
-	TEXT-DECORATION : none;
+a.ns-leftnav:visited {
+	color: #0033cc;
+	text-decoration: none;
 }
-A.ns-leftnav:hover {
-	COLOR : #669999;
-	TEXT-DECORATION : underline;
+a.ns-leftnav:hover {
+	color: #669999;
+	text-decoration: underline;
 }
 .ns-section {
-	COLOR : #323264;
-	FONT-SIZE : 13px;
-	TEXT-DECORATION : none;
-	FONT-WEIGHT : bold;
+	color: #323264;
+	font-size: 13px;
+	text-decoration: none;
+	font-weight: bold;
 }
-A.ns-section {
-	COLOR : #323264;
-	FONT-SIZE : 13px;
-	TEXT-DECORATION : underline;
-	FONT-WEIGHT : bold;
+a.ns-section {
+	color: #323264;
+	font-size: 13px;
+	text-decoration: underline;
+	font-weight: bold;
 }
-A.ns-section:visited {
-	COLOR : #323264;
-	FONT-SIZE : 13px;
-	TEXT-DECORATION : underline;
-	FONT-WEIGHT : bold;
+a.ns-section:visited {
+	color: #323264;
+	font-size: 13px;
+	text-decoration: underline;
+	font-weight: bold;
 }
-A.ns-section:hover {
-	COLOR : #666666;
-	FONT-SIZE : 13px;
-	TEXT-DECORATION : underline;
-	FONT-WEIGHT : bold;
+a.ns-section:hover {
+	color: #666666;
+	font-size: 13px;
+	text-decoration: underline;
+	font-weight: bold;
 }
 .ns-headline {
-	COLOR : #000000;
-	FONT-SIZE : 13px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 13px;
+	font-weight: bold;
 }
 .ns-title {
-	COLOR : #52A3DB;
-	FONT-SIZE : 18px;
-	FONT-WEIGHT : none;
+	color: #52A3DB;
+	font-size: 18px;
+	font-weight: none;
 }
 .Summary-Table-Head {
 	background-color: #DCE0E0;
 }
 .QandA-Title {
-	COLOR : #000000;
-	FONT-SIZE : 17px;
-	FONT-WEIGHT : bold;
+	color: #000000;
+	font-size: 17px;
+	font-weight: bold;
 }
 OL.QandA-List {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 LI.QandA-ListItem {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .QandA-Question {
-	FONT-WEIGHT : bold;
+	font-weight: bold;
 }
 .QandA-Answer {
-	FONT-WEIGHT : normal;
+	font-weight: normal;
 }
 /* the following are the shrunken versions of linked items inside CDR tables */
 
-A.SummaryRef-Small, A.SummaryRef-Small:hover {
+a.SummaryRef-Small, a.SummaryRef-Small:hover {
 	font-size: 7pt;
 }
-A.Summary-ProtocolRef-Small, A.Summary-ProtocolRef-Small:hover {
+a.Summary-ProtocolRef-Small, a.Summary-ProtocolRef-Small:hover {
 	font-size: 7pt;
 }
-A.Summary-LOERef-Small, A.Summary-LOERef-Small:hover {
+a.Summary-LOERef-Small, a.Summary-LOERef-Small:hover {
 	font-size: 7pt;
 }
-A.Summary-GlossaryTermRef-Small, A.Summary-GlossaryTermRef-Small:visited, A.Summary-GlossaryTermRef-Small:active {
+a.Summary-GlossaryTermRef-Small, a.Summary-GlossaryTermRef-Small:visited, a.Summary-GlossaryTermRef-Small:active {
 	font-size: 7pt;
-	COLOR : #4d4d4d;
-	TEXT-DECORATION : underline;
+	color: #4d4d4d;
+	text-decoration: underline;
 }
-A.Summary-GlossaryTermRef-Small:hover {
+a.Summary-GlossaryTermRef-Small:hover {
 	font-size: 7pt;
-	COLOR : #000000;
-	TEXT-DECORATION : underline;
+	color: #000000;
+	text-decoration: underline;
 }
 .Protocol-GeneName-Small {
 	font-size: 7pt;
 	FONT-STYLE: italic;
 }
-A.Protocol-ExternalRef-Small, A.Protocol-ExternalRef-Small:hover {
+a.Protocol-ExternalRef-Small, a.Protocol-ExternalRef-Small:hover {
 	font-size: 7pt;
 }
-A.SummarySection-Table-Small, A.SummarySection-Table-Small:hover {
+a.SummarySection-Table-Small, a.SummarySection-Table-Small:hover {
 	font-size: 7pt;
 }
 /* end New National System Section of Clinical Trials */
@@ -1644,7 +1675,7 @@ ul.link-farm li {
 	margin-bottom: 3px;
 }
 ul.link-farm li a:link, ul.link-farm li a:visited, ul.link-farm li a:hover, ul.link-farm li a:active {
-	color : #4d4d4d;
+	color: #4d4d4d;
 	text-decoration: underline;
 }
 ul.link-farm ul {
@@ -1815,8 +1846,6 @@ ul.cancer-bulletin-home-page-in-depth li {
 .cancer-bulletin-options-box ul.options li.last {
 	margin: 0;
 }
-
-
 /*This class is used for pages without the twitter icon */
 .cancer-bulletin-subscribe-field {
 	font-size: 11px;
@@ -1824,8 +1853,6 @@ ul.cancer-bulletin-home-page-in-depth li {
 	height: 18px;
 	margin-bottom: 7px;
 }
-
-
 /*This class is used for pages with the twitter icon */
 .cancer-bulletin-subscribe-field2 {
 	font-size: 11px;
@@ -1955,9 +1982,9 @@ ul.cancer-bulletin-home-page-in-depth li {
 	margin: 0;
 	padding: 3px 7px 3px 7px;
 	line-height: 13px;
-	font-size : 12px;
-	background-color : #DADADA;
-	font-weight : bold;
+	font-size: 12px;
+	background-color: #DADADA;
+	font-weight: bold;
 }
 .cancerbulletin-multipage-nav-fb p {
 	margin: 0;
@@ -1980,52 +2007,142 @@ ul.cancer-bulletin-home-page-in-depth li {
 /* ------------------ end Cancer Bulletin 2009 -------------------------------------------------------- */
 
 .Summary-SummarySection-Small a.Protocol-ExternalRef, .Summary-SummarySection-Small a.Protocol-ExternalRef:hover {
-	font-size : 7pt;
+	font-size: 7pt;
 }
-
-
 /*------------------------------------------------ Recovery Section ---------------------------------------- */
 
-h3.recovery { color:#032b73; margin-bottom: 5px; }
-h4.recovery { margin-bottom: 5px; }
-p.recovery { margin-top:0; } 
-.recovery-homebox { margin-top:10px; background-color:#f8f8f8;border-top: 1px solid #e5e5e5;background-color:#f8f8f8; }
-.recovery-linkbox-right {float:right; margin: 10px 0 10px 10px; padding:10px;border-top: 1px solid #e5e5e5;background-color:#f8f8f8; }
-.recovery-imagebox-right {float:right; margin: 0 0 10px 10px;}
-.recovery-smalltext {font-size:90%; color:#666; font-style:italic;}
-.recovery-border {border-top: 1px solid #e5e5e5; }
-p.offscreen {position: absolute; left: -1000px; width: 1px; height: 1px; overflow: hidden;}
-.recovery-caption {background-color: #edeeed; margin-top: 2px;}
-p.recovery-caption {padding: 10px 10px; margin-top: 0px;}
-
-ul.leftnav-shaded-box ul {background-color:#eaebe6; border: 0px solid orange; margin: 0; padding: 0;}
-ul.leftnav-shaded-box ul li {background:url(/images/bullet_sm_css.gif) no-repeat scroll 2px 8px ;list-style-image: none; border-top:none; padding: 2px 5px 2px 10px;}
-a.leftnav-shaded-box h1, a.leftnav-shaded-box:visited h1, a.leftnav-shaded-box:active h1, .leftnav-shaded-box h1 a:link, .leftnav-shaded-box h1 a:visited, .leftnav-shaded-box h1 a:active h1 {color:#1a1a1a; text-decoration:none;}
-a.leftnav-shaded-box:hover h1, .leftnav-shaded-box h1 a:hover  {color:#1a1a1a; text-decoration:underline;}
-
-
-.recovery-table {margin-top:10px;}
-.recovery-topborder {border-top: 1px solid  #e5e5e5; background-color:#f8f8f8; }
-.recovery-notable-date {font-size:90%; color:#666; font-style:italic;}
-a.recovery-smalllink, a.recovery-smalllink:visited, a.recovery-smalllink:active, .recovery-smalllink a:link, .recovery-smalllink a:visited, .recovery-smalllink a:active {font-size:90%; float: right; font-style:italic;  }
-
-#arrafaqdiv1 a, #arrafaqdiv1 a:active, #arrafaqdiv1 a:visited, #arrafaqdiv1 .red-text {color : #4d4d4d; text-decoration : none; } 
-#arrafaqdiv1 a:hover { color : #4d4d4d; text-decoration : underline;}
-#arrafaqdiv1 ol {margin-top: 5px;}
-#arrafaqdiv1 h3{margin-bottom:0px;}
-#arrafaqdiv1 li {margin-top: 2px;}
-#arrafaqdiv2 ol {margin-top: 5px;}
-#arrafaqdiv2 h3{margin-bottom:0px;}
-#arrafaqdiv2 li {margin-top: 8px;}
-#arrafaqdiv2 p {margin-top:8px; margin-bottom: 8px;}
-H3.arrafaq {font-family:Arial,verdana;font-size:14px;font-weight:bold;padding:12px 0 6px 0;margin:0;color:#000000;}
-
+h3.recovery {
+	color:#032b73;
+	margin-bottom: 5px;
+}
+h4.recovery {
+	margin-bottom: 5px;
+}
+p.recovery {
+	margin-top:0;
+}
+.recovery-homebox {
+	margin-top:10px;
+	background-color:#f8f8f8;
+	border-top: 1px solid #e5e5e5;
+	background-color:#f8f8f8;
+}
+.recovery-linkbox-right {
+	float:right;
+	margin: 10px 0 10px 10px;
+	padding:10px;
+	border-top: 1px solid #e5e5e5;
+	background-color:#f8f8f8;
+}
+.recovery-imagebox-right {
+	float:right;
+	margin: 0 0 10px 10px;
+}
+.recovery-smalltext {
+	font-size:90%;
+	color:#666;
+	font-style:italic;
+}
+.recovery-border {
+	border-top: 1px solid #e5e5e5;
+}
+p.offscreen {
+	position: absolute;
+	left: -1000px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+.recovery-caption {
+	background-color: #edeeed;
+	margin-top: 2px;
+}
+p.recovery-caption {
+	padding: 10px 10px;
+	margin-top: 0px;
+}
+ul.leftnav-shaded-box ul {
+	background-color:#eaebe6;
+	border: 0px solid orange;
+	margin: 0;
+	padding: 0;
+}
+ul.leftnav-shaded-box ul li {
+	background:url(/images/bullet_sm_css.gif) no-repeat scroll 2px 8px;
+	list-style-image: none;
+	border-top:none;
+	padding: 2px 5px 2px 10px;
+}
+a.leftnav-shaded-box h1, a.leftnav-shaded-box:visited h1, a.leftnav-shaded-box:active h1, .leftnav-shaded-box h1 a:link, .leftnav-shaded-box h1 a:visited, .leftnav-shaded-box h1 a:active h1 {
+	color:#1a1a1a;
+	text-decoration:none;
+}
+a.leftnav-shaded-box:hover h1, .leftnav-shaded-box h1 a:hover {
+	color:#1a1a1a;
+	text-decoration:underline;
+}
+.recovery-table {
+	margin-top:10px;
+}
+.recovery-topborder {
+	border-top: 1px solid #e5e5e5;
+	background-color:#f8f8f8;
+}
+.recovery-notable-date {
+	font-size:90%;
+	color:#666;
+	font-style:italic;
+}
+a.recovery-smalllink, a.recovery-smalllink:visited, a.recovery-smalllink:active, .recovery-smalllink a:link, .recovery-smalllink a:visited, .recovery-smalllink a:active {
+	font-size:90%;
+	float: right;
+	font-style:italic;
+}
+#arrafaqdiv1 a, #arrafaqdiv1 a:active, #arrafaqdiv1 a:visited, #arrafaqdiv1 .red-text {
+	color: #4d4d4d;
+	text-decoration: none;
+}
+#arrafaqdiv1 a:hover {
+	color: #4d4d4d;
+	text-decoration: underline;
+}
+#arrafaqdiv1 ol {
+	margin-top: 5px;
+}
+#arrafaqdiv1 h3 {
+	margin-bottom:0px;
+}
+#arrafaqdiv1 li {
+	margin-top: 2px;
+}
+#arrafaqdiv2 ol {
+	margin-top: 5px;
+}
+#arrafaqdiv2 h3 {
+	margin-bottom:0px;
+}
+#arrafaqdiv2 li {
+	margin-top: 8px;
+}
+#arrafaqdiv2 p {
+	margin-top:8px;
+	margin-bottom: 8px;
+}
+H3.arrafaq {
+	font-family:Arial, verdana;
+	font-size:14px;
+	font-weight:bold;
+	padding:12px 0 6px 0;
+	margin:0;
+	color:#000000;
+}
 /* ---------------------------------------------  End Recovery Section ---------------------------------------------- */
 
 
 /* -------------------------------------- Recovery Funding Announcements page ------------------------------------ */
-.arrafunding-expired-date { color: #999 }
-
+.arrafunding-expired-date {
+	color: #999
+}
 div.arrafunding-parent {
 	width: 100%;
 	border-left: 1px solid #cfcfcf;
@@ -2039,7 +2156,8 @@ div.arrafunding-title, div.arrafunding-title:link, div.arrafunding-title:visited
 }
 div.arrafunding-title:hover {
 	background-color: #f0f0f0;
-	cursor: pointer; cursor: hand;
+	cursor: pointer;
+	cursor: hand;
 }
 table.arra-announcements {
 	margin-left: 28px;
@@ -2050,7 +2168,6 @@ table.arra-announcements {
 table.arra-announcements td {
 	padding: 7px;
 }
-
 table.arra-announcements ul li {
 	margin-bottom: 10px;
 }
@@ -2058,23 +2175,23 @@ table.arra-announcements ul li {
 
 /* -------------------------------------- Social Media page ------------------------------------ */
 div.social-media-dropdown {
-padding: 1px 0; 
-border-top: 1px solid #bdbdbd;
+	padding: 1px 0;
+	border-top: 1px solid #bdbdbd;
 }
 table.social-media-dropdown {
-background: url(/images/social-media-bg.gif); 
-height: 27px;
+	background: url(/images/social-media-bg.gif);
+	height: 27px;
 }
 table.social-media-dropdown td.1 {
-padding-left: 4px;
+	padding-left: 4px;
 }
 table.social-media-dropdown a:link, table.social-media-dropdown a:visited, table.social-media-dropdown a:active {
-color: #000;
-text-decoration: none;
+	color: #000;
+	text-decoration: none;
 }
 table.social-media-dropdown a:hover {
-color: #000;
-text-decoration: underline;
+	color: #000;
+	text-decoration: underline;
 }
 div.social-media-dropdown-content {
 	padding: 0 20px;
@@ -2082,67 +2199,66 @@ div.social-media-dropdown-content {
 /* -------------------------------------- End Social Media page ------------------------------------ */
 
 /* ------------------------------------------------  Recovery Objectives page -------------------------------------- */
-.objectives-header-arra {background-image:url(/images/documents/184eb054-3d9d-44b6-935f-adb0fec30e76/arra_js_grdnt.jpg ); padding: 5px 5px ; font-weight: bold; font-size: 13px; font-family: arial;  }
+.objectives-header-arra {
+	background-image:url(/images/documents/184eb054-3d9d-44b6-935f-adb0fec30e76/arra_js_grdnt.jpg );
+	padding: 5px 5px;
+	font-weight: bold;
+	font-size: 13px;
+	font-family: arial;
+}
 ul.steps-arra {
-margin: 0;
-padding: 0;
+	margin: 0;
+	padding: 0;
 border-right:
 }
-
 ul.steps-arra li {
-margin: 0;
-padding: 0;
-background: #f2f2f2;
-
-list-style: none;
-list-style-image:none;
-list-style-type:none;
-
+	margin: 0;
+	padding: 0;
+	background: #f2f2f2;
+	list-style: none;
+	list-style-image:none;
+	list-style-type:none;
 }
-
-ul.steps-arra li a:link,
-ul.steps-arra li a:visited,
-ul.steps-arra li a:hover,
-ul.steps-arra li a:active {
-color: #000;
-font-family: arial;
-font-size: 12px;
-text-decoration: none;
+ul.steps-arra li a:link, ul.steps-arra li a:visited, ul.steps-arra li a:hover, ul.steps-arra li a:active {
+	color: #000;
+	font-family: arial;
+	font-size: 12px;
+	text-decoration: none;
 }
-
 ul.steps-arra li a.steps-arra-inactive {
-background: url(/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-off.gif) top right no-repeat #f2f2f2;  
-border-bottom: 1px solid #d1d1d1;
-border-right: 1px solid #d1d1d1;
-padding: 17px 25px 31px 13px;
-margin: 0;
-display: block;
-list-style: none;
+	background: url(/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-off.gif) top right no-repeat #f2f2f2;
+	border-bottom: 1px solid #d1d1d1;
+	border-right: 1px solid #d1d1d1;
+	padding: 17px 25px 31px 13px;
+	margin: 0;
+	display: block;
+	list-style: none;
 }
-
 ul.steps-arra li a.steps-arra-inactive:hover {
-background: url(/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-hover.gif) top right no-repeat #bfbfbf; 
+	background: url(/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-hover.gif) top right no-repeat #bfbfbf;
 }
-
 .steps-arra-active {
-background: url(/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-on.gif) top right no-repeat #ffffff; 
-font-weight: bold;
-border-bottom: 1px solid #d1d1d1;
-padding: 17px 25px 31px 13px;
-margin: 0;
-display: block;
-list-style: none;
-outline: none;
+	background: url(/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-on.gif) top right no-repeat #ffffff;
+	font-weight: bold;
+	border-bottom: 1px solid #d1d1d1;
+	padding: 17px 25px 31px 13px;
+	margin: 0;
+	display: block;
+	list-style: none;
+	outline: none;
 }
-
-.hidden-arra { display: none; }
-.unhidden-arra { display: block; }
+.hidden-arra {
+	display: none;
+}
+.unhidden-arra {
+	display: block;
+}
 /* ------------------------------------------- End Recovery Objectivees Page ---------------------------------- */
 
 /* ------------------------------------------- B-Roll Newscenter styles ---------------------------------- */
 div.brolltoolbar {
- background-color: #A90101;
- padding: 5px 0px 5px 0px;
+	background-color: #A90101;
+	padding: 5px 0px 5px 0px;
 }
 .brollmenu {
 	border-right: 1px solid white;
