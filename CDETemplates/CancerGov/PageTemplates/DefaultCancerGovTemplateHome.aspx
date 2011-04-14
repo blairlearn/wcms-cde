@@ -9,15 +9,14 @@
     <title></title>
     <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
     <script type="text/javascript" language="JavaScript" src="/JS/NetTracker/ntpagetag.js"></script>
-    <script src="/JS/popEvents.js" type="text/javascript"></script>
-    <!--[if IE]>
-	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
-    <![endif]-->
+    <script src="/JS/popEvents.js" type="text/javascript"></script>  
 </head>
 <body runat="server">
 	<!-- CGov Container -->
     <div id="cgovContainer">
     <!-- Site Banner -->
+    <div class="skip">
+        <a title="Skip to content" href="#skiptocontent">Skip to content</a></div> 
     <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
     <CGov:EmergencyAlertBanner ID="EmergencyAlertBanner" runat="server" />    
     <!-- End Site Banner -->

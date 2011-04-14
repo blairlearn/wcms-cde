@@ -7,9 +7,6 @@
 <head id="header" runat="server">
     <title></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <!--[if IE]>
-	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
-    <![endif]-->
 </head>
 <body id="Body1" runat="server">
 <!-- Centered Content (header, body, footer) -->
@@ -60,6 +57,7 @@
         <!-- End Left Nav -->
         <!-- Main Content Area -->
         <td id="contentzone" valign="top" width="571">
+        <a name="skiptocontent"></a>
             <NCI:TemplateSlot ID="cgvBodyHeader" runat="server" />
             <table width="571" border="0" cellspacing="0" cellpadding="0">
                 <tr>                   

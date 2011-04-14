@@ -7,9 +7,6 @@
 <head id="header" runat="server">
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <!--[if IE]>
-	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
-    <![endif]-->
 </head>
 <body runat="server">
 	<!-- CGov Container -->
