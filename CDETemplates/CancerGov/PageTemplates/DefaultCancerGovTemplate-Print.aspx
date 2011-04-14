@@ -23,7 +23,7 @@
 <div class="skip">
         <a title="Skip to content" href="#skiptocontent">Skip to content</a></div>  
 	
-    <div id="bannerDiv" align="center">
+    <div id="bannerDiv">
         <NCI:TemplateSlot ID="cgvSiteBannerPrint" runat="server" />
     </div>
 	
@@ -31,7 +31,7 @@
  
 	<!-- Content Header --> 
     <!-- Content Header -->
-    <div id="headerzone" align="center">
+    <div id="headerzone">
 <%--        <table cellspacing="0" cellpadding="0" border="0" width="1">
             <tbody>
                 <tr>
@@ -122,7 +122,7 @@
          </div>
     <!-- End Left Navigation and Content Area -->
 	<!-- Footer -->
-	<div id="footerzone" align="center"></div>
+	<div id="footerzone"></div>
 	     </div>
     <!-- End CGovContainer--> 
     <!-- TO INSERT WEB ANALYTICS CODE. Every template should have this 

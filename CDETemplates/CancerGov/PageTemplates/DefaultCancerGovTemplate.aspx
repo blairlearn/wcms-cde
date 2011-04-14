@@ -16,15 +16,12 @@
 <div class="skip">
         <a title="Skip to content" href="#skiptocontent">Skip to content</a></div>  
     
-    <div id="bannerDiv" align="center">
+    <div id="bannerDiv">
         <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
     </div>
-    <div align="center">
-    <CGov:EmergencyAlertBanner ID="EmergencyAlertBanner" runat="server" />
-    
-    </div>
+    <CGov:EmergencyAlertBanner ID="EmergencyAlertBanner" runat="server" />       
     <!-- Content Header -->
-    <div id="headerzone" align="center">
+    <div id="headerzone">
         <NCI:TemplateSlot ID="cgvContentHeader" runat="server" />
         <NCI:TemplateSlot ID="cgvLanguageDate" runat="server" />
     </div>
@@ -94,7 +91,7 @@
     <!-- End Left Navigation and Content Area -->
      <!-- End Main Area -->
     <!-- Footer -->
-    <div id="footerzone" align="center">
+    <div id="footerzone">
         <NCI:TemplateSlot ID="cgvFooter" runat="server" RemoveIfEmpty="false" />
     </div>
     <!-- End Foooter-->

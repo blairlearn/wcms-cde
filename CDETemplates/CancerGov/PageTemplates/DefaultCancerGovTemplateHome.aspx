@@ -22,7 +22,7 @@
     <CGov:EmergencyAlertBanner ID="EmergencyAlertBanner" runat="server" />    
     <!-- End Site Banner -->
     <!-- Content Header -->
-    <div id="headerzone" align="center">
+    <div id="headerzone">
         <NCI:TemplateSlot ID="cgvContentHeader" runat="server" />
         <NCI:TemplateSlot ID="cgvLanguageDate" runat="server" />
     </div>
@@ -80,7 +80,7 @@
     <!-- End Left Navigation and Content Area -->
     <!-- End Main Area -->
     <!-- Footer -->
-    <div id="footerzone" align="center">
+    <div id="footerzone">
         <NCI:TemplateSlot ID="cgvFooter" runat="server" RemoveIfEmpty="false" />
     </div>    
     <!-- End Foooter-->
