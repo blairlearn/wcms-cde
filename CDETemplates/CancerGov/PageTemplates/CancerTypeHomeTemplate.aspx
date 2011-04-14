@@ -17,12 +17,12 @@
     <!-- Site Banner and main navigation -->
 <div class="skip">
         <a title="Skip to content" href="#skiptocontent">Skip to content</a></div>    
-    <div id="bannerDiv" align="center">
+    <div id="bannerDiv">
         <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
     </div>
     <!-- End Site Banner and main navigation -->
     <!-- Content Header -->
-    <div id="headerzone" align="center">
+    <div id="headerzone">
         <NCI:TemplateSlot ID="cgvContentHeader" runat="server" />
         <NCI:TemplateSlot ID="cgvLanguageDate" runat="server" />
     </div>
@@ -174,7 +174,7 @@
     </div>
     <!-- End Left Navigation and Content Area -->
     <!-- Footer -->
-    <div id="footerzone" align="center">
+    <div id="footerzone">
         <NCI:TemplateSlot ID="cgvFooter" runat="server" RemoveIfEmpty="false" />
     </div>
     <!-- End Foooter-->
