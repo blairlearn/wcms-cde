@@ -151,7 +151,7 @@
            				    </div>
                     </form>                    				
 				</td>
-				<!----------------------->
+				
 				<td valign="top"><img src="/images/spacer.gif" width="10" height="1" alt="" border="0"></td>
 			</tr>
 		</table>
