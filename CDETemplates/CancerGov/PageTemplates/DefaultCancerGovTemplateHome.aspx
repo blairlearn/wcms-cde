@@ -40,9 +40,9 @@
                             </HeaderHtml>
                             <FooterHtml>
                                     </td>
-                                    <!--<td valign="top">
+                                    <td valign="top">
                                         <img src="/images/spacer.gif" border="0" alt="" width="16" height="1" />
-                                    </td> -->
+                                    </td>
                                 </tr>                            
                             </FooterHtml>
                          </NCI:TemplateSlot>
