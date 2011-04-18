@@ -50,10 +50,10 @@
                             <td valign="top" align="left" width="164">
                                 <NCI:TemplateSlot ID="cgvLeftNav" runat="server" CssClass="LeftNavSlot" />
                             </td>
-                            <!-- So... there should be 6px rendered after each item. 
+                            <!-- So... there should be 6px rendered after each item.  -->
                             <td valign="top">
                                 <img src="/images/spacer.gif" border="0" alt="" width="16" height="1" />
-                            </td> -->
+                            </td>
                         </tr>
                     </table>
                 </td>
