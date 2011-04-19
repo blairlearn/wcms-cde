@@ -69,7 +69,7 @@ namespace CancerGov.Web.SnippetTemplates
 
 
 
-            sbContent.Append("<table width=\"771\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
+            sbContent.Append("<table width=\"751\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
             sbContent.Append("<tr>\n");
             //sbContent.Append("<td valign=\"top\"><img src=\"/images/spacer.gif\" width=\"10\" height=\"1\" alt=\"\" border=\"0\"></td>\n");
 
