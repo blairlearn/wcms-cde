@@ -2,8 +2,11 @@
 /*                 PRINT VERSION                      */
 /* NEW CLASSES FOR SUMMER 2004 REDESIGN OF CANCER.GOV */
 /******************************************************/
-body {
+body, td, table, p, .text, .gray, a.gray, a.gray:active, a.gray:visited, a.gray-link, a.gray-link:visited, a.gray-link:active, a.gray-text, a.gray-text:visited, a.gray-text:active, div, p, td, ul, ol, li, dl, td, dd, .text { 
 	background: none;
+	color: #000;
+	font-family: "Times New Roman", arial, verdana, sans-serif;
+	font-size: 15px;
 }
 
 #cgovContainer {
@@ -12,6 +15,9 @@ body {
 #bannerDiv {
 	overflow: auto;
 	margin-top: 15px;
+}
+#languageToggle {
+	display: none;
 }
 #NCILogo {
 	background: none;
@@ -23,14 +29,18 @@ body {
 	display: none;
 }
 #NCILogo h1 {
+	display: block;
 	color: #a90101;
 	font-size: 30px;
-	margin: 0 0 8px;
+	margin: 0 0 0 20px; padding: 10px 0 8px 0;
+	border: 0px solid green;
 }
 #NCILogo h2 {
-	margin-top: 0;
+	display: block;
+	margin: 0 0 10px 20px;
 	font-size: 14px;
 	color: #a90101;
+	border: 0px solid red;
 }
 #questionsNumber img {
 	display: none;
@@ -39,34 +49,16 @@ body {
 	float: right;
 }
 
+
 /* Default font */
-body, td, table, p, .text {
-	color: #000;
-	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
-	font-size: 15px;
-}
-div, p, td, ul, ol, li, dl, td, dd, .text /* redundant selectors to help NS4 not forget */ {
-	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
-	font-size: 15px;
-	color: #000;
-	font-weight: normal;
-	text-decoration: none;
-}
-.zerop {
-	margin-bottom: 0;
-}
+
 /* Content links that need to be gray */
 .gray, a.gray, a.gray:active, a.gray:visited, a.gray-link, a.gray-link:visited, a.gray-link:active, a.gray-text, a.gray-text:visited, a.gray-text:active {
 	color: #333333;
 	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 	font-size: 15px;
 }
-a.gray-link:hover, a.gray-text:hover, a.gray:hover {
-	color:#000000;
-	text-decoration: underline;
-	font-size: 15px;
-	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
-}
+
 /* Default text, bolded */
 .text-b, .gray-text-b {
 	font-weight: bold;

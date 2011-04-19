@@ -308,35 +308,41 @@ div.az table td {
 #cgvSiteFooter ul#footerUtilityRow1 {
 	margin: 0 0 3px 0;
 }
+#cgvSiteFooter ul#footerUtility,
 #cgvSiteFooter ul#footerUtilityRow2 {
 	margin: 0 0 12px 0;
 }
+#cgvSiteFooter ul#footerUtility li,
 #cgvSiteFooter ul#footerUtilityRow1 li,
 #cgvSiteFooter ul#footerUtilityRow2 li{
 	margin: 0 0 0 4px;
 	padding: 0 8px 0 0;
 	background: url(/images/general/footer-utility-divider.gif) bottom right no-repeat;
 }
+#cgvSiteFooter ul#footerUtility li a,
 #cgvSiteFooter ul#footerUtilityRow1 li a, 
 #cgvSiteFooter ul#footerUtilityRow2 li a,
 #cgvSiteFooter ul#followUs li a {
 	font-size: 11px;
 }
+#cgvSiteFooter ul#footerUtility li a,
 #cgvSiteFooter ul#footerUtilityRow1 li a,
 #cgvSiteFooter ul#footerUtilityRow2 li a{
 	color: #666;
 }
+#cgvSiteFooter ul#footerUtility li a:hover,
 #cgvSiteFooter ul#footerUtilityRow1 li a:hover,
 #cgvSiteFooter ul#footerUtilityRow12li a:hover{
 	color: #333;
 }
+#cgvSiteFooter ul#footerUtility li.last,
 #cgvSiteFooter ul#footerUtilityRow1 li.last,
 #cgvSiteFooter ul#footerUtilityRow2 li.last{
 	background: none;
 }
 ul#followUs {
 	display: inline;
-	margin: 0 0 0 15px;
+	margin: 0 0 0 10px;
 }
 ul#followUs li {
 	margin: 0 12px 0 0;
