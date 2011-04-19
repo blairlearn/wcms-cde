@@ -177,6 +177,12 @@ H4, h4, .header-B, .header-b {
 #NCILogo a {
 	outline: none;
 }
+#NCILogo h1 {
+	display: none;
+}
+#NCILogo h2 {
+	display: none;
+}
 #bannerRight {
 	float:right;
 	width: 300px;
@@ -299,24 +305,33 @@ div.az table td {
 #cgvSiteFooter ul#findHelpEspanol li {
 	margin: 0 20px;
 }
-#cgvSiteFooter ul#footerUtility {
+#cgvSiteFooter ul#footerUtilityRow1 {
+	margin: 0 0 3px 0;
+}
+#cgvSiteFooter ul#footerUtilityRow2 {
 	margin: 0 0 12px 0;
 }
-#cgvSiteFooter ul#footerUtility li {
+#cgvSiteFooter ul#footerUtilityRow1 li,
+#cgvSiteFooter ul#footerUtilityRow2 li{
 	margin: 0 0 0 4px;
 	padding: 0 8px 0 0;
 	background: url(/images/general/footer-utility-divider.gif) bottom right no-repeat;
 }
-#cgvSiteFooter ul#footerUtility li a, #cgvSiteFooter ul#followUs li a {
+#cgvSiteFooter ul#footerUtilityRow1 li a, 
+#cgvSiteFooter ul#footerUtilityRow2 li a,
+#cgvSiteFooter ul#followUs li a {
 	font-size: 11px;
 }
-#cgvSiteFooter ul#footerUtility li a {
+#cgvSiteFooter ul#footerUtilityRow1 li a,
+#cgvSiteFooter ul#footerUtilityRow2 li a{
 	color: #666;
 }
-#cgvSiteFooter ul#footerUtility li a:hover {
+#cgvSiteFooter ul#footerUtilityRow1 li a:hover,
+#cgvSiteFooter ul#footerUtilityRow12li a:hover{
 	color: #333;
 }
-#cgvSiteFooter ul#footerUtility li.last {
+#cgvSiteFooter ul#footerUtilityRow1 li.last,
+#cgvSiteFooter ul#footerUtilityRow2 li.last{
 	background: none;
 }
 ul#followUs {
@@ -388,6 +403,10 @@ ul#agencyLinks li a {
 	margin-left: 0px;
 }
 /* END replace on nci.css from classes already existing */
+,bulletin-header {
+	width: 751px; !important
+	overflow: none; !important
+}
 
 /* ------------- jQuery widgets --------------------------------------------------------------------------- */
 /* Home Page news/content slider */
