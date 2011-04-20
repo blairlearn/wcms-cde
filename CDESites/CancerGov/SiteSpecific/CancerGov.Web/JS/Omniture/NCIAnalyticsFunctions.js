@@ -19,10 +19,6 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 	    this.Props = {};
 	    this.Evars = {};
 	    this.Events = {};
-
-        s.linkTrackVars = null;
-        s.linkTrackEvents = null;
-        s.events = null;
         
         this.LogToOmniture = function() {
 	        var local_s=s_gi(this.ReportSuites);
@@ -74,6 +70,15 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             }
 
             local_s.tl(sender,this.LinkType, this.LinkName);
+            
+            //Clear events and all props and eVars set in this click event image request
+			local_s.events='';
+			for (var i in this.Props) {
+				local_s['prop' + i] = '';
+			}
+ 			for (var i in this.Evars) {
+				local_s['eVar' + i] = '';
+            }
             
 	        if (NCIAnalytics.displayAlerts) {  
 	            var alertString = 
