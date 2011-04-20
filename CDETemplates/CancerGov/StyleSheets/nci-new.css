@@ -608,3 +608,10 @@ Show the current slide in the pagination
 /* END Home Page tile slider */
 
 /* ------------- END jQuery widgets --------------------------------------------------------------------------- */
+
+/*----- PDQ Medialink Styling to provide addtional separation between images and content in bulleted list---*/
+.pdqMediaLink
+{
+    margin-bottom:12px;
+    margin-top:12px;
+}
