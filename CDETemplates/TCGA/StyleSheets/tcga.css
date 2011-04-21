@@ -1,3 +1,6 @@
+@charset "utf-8";
+/* CSS Document */
+
 /* ------------- Eric Meyer's reset styles */
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
@@ -193,8 +196,10 @@ way to fit your requirements.
 	-webkit-border-radius: 8px 8px 0 0;
 	border-radius: 8px 8px 0 0;
 	-moz-box-shadow: 0 0 5px #888;
-	-webkit-box-shadow: 0 0 5px#888;
+	-webkit-box-shadow: 0 0 5px #888;
 	box-shadow: 0 0 5px #888;
+	z-index: 9999;
+	position: relative;
 }
 #mainnav ul {
 	width: 950px;
@@ -223,7 +228,7 @@ way to fit your requirements.
 	display:none;
 	left:0;
 	top:33px;
-	z-index: 2;
+	z-index: 999;
 }
 #mainnav li {
 	display:inline;
@@ -307,7 +312,7 @@ way to fit your requirements.
 }
 /* alternative fix to overflow:auto for making a parent div
 	 take the height of its children divs. Used because overflow:auto
-	 was causting problems with the main nav in Opera */
+	 was causing problems with the main nav in Opera */
 #container:after, #container-sans-sidebar:after {
 	content: ".";
 	display: block;
