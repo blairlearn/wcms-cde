@@ -42,6 +42,9 @@ body, td, table, p, .text, .gray, a.gray, a.gray:active, a.gray:visited, a.gray-
 	color: #a90101;
 	border: 0px solid red;
 }
+#printThisPage {
+	0 0 0 20px;
+}
 #questionsNumber img {
 	display: none;
 }

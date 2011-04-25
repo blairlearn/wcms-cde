@@ -37,7 +37,7 @@
 	margin-bottom: 8px;
 }
 .pnlDrugSearch {
-	background-image:url(/images/drug-dictionary-search.jpg);
+	background:url(/images/drug-dictionary-search.jpg);
 	width:571px;
 	height:81px;
 }
@@ -196,6 +196,7 @@ H4, h4, .header-B, .header-b {
 	outline: none;
 }
 #mainSearch {
+
 	margin-right: 10px;
 	height: 24px;
 }
@@ -278,7 +279,7 @@ div.az table td {
 /* NCI Footer */
 #cgvSiteFooter {
 	width: 751px;
-	margin: 15px auto 0;
+	margin: 25px auto 0;
 	padding: 0 0 20px 0;
 	text-align: center;
 }
@@ -377,11 +378,21 @@ ul#agencyLinks li a {
 .contentCenter {
 	margin: 0 auto;
 }
+.portalPageContentHeaderImage {
+	margin-bottom: 10px;
+}
+
+input.search-field {
+	height: 15px;
+	width: 105px;
+	vertical-align:middle;
+}
+
 /* replace on nci.css from classes already existing */
 .deleteList,
 .deletelist {
 	overflow: scroll;
-	background-color: #ffffff;
+	background-color: #fff;
 	border: solid 1px #bdbdbd;
 	margin: 5px 0px 5px 0px;
 }
@@ -431,15 +442,41 @@ ul#agencyLinks li a {
 	border: 0;
 	margin: 2px;
 }
+#news-slider .ui-tabs-panel-x p,
+#news-slider .ui-tabs-panel-x li,
+#news-slider .ui-tabs-panel-x a
+ {
+	font-size: 12px;
+}
+#news-slider .ui-tabs-panel-x a {
+	text-decoration: none;
+}
+#news-slider .ui-tabs-panel-x a:hover {
+	text-decoration: underline;
+}
+.ui-tabs-panel-x p {
+	margin: 4px 0;
+}
+
+table.carousel-panel-list {
+	width: 90%;
+	margin: 0 0 0 5px;
+}
+table.carousel-panel-list td {
+	vertical-align: top;
+	padding-right: 3px;
+}
 /* text in featured item */
 #news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text {
 	position:absolute;
 	top: 10px;
-	left: 295px;
+	left: 270px;
+	padding: 0 7px 0 0;
 }
 #news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text h2 {
-	color: #8a000a;
-	margin-top: 0;
+	color: #333;
+	margin: 0;
+	font-size: 16px;
 }
 #news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text h2 a {
 	text-decoration: none;
@@ -451,16 +488,12 @@ ul#agencyLinks li a {
 	color: #8a000a;
 }
 .ui-tabs-panel-x ul {
-	border: 0px solid red !important;
-	margin: 0 0 0 10px;
-	padding: 0;
+	margin: 0 0 0 10px;	padding: 0;
 	background: none !important;
 	list-style-type: none !important;
 }
 .ui-tabs-panel-x ul li {
-	border: 0px solid blue !important;
-	margin: 0;
-	padding: 0;
+	margin: 0; padding: 0;
 	background: none !important;
 	list-style-type: none !important;
 }
@@ -521,10 +554,11 @@ ul#agencyLinks li a {
 #news-slider li.news-slider-tabs-item a {/*On Hover Style*/
 	display: block;
 	height: 60px;
-	margin: 0 0 0 0;
+	margin: 0 0 0 0; padding: 0 5px 0 0;
 	outline: none;
 	color: #8a000a;
 	font-weight: bold;
+	font-size: 11px;
 }
 #news-slider li.news-slider-tabs-item a {/*On Hover Style*/
 	margin-top: 7px;
@@ -550,6 +584,7 @@ ul#agencyLinks li a {
 /* container for text in individual list items image */
 #news-slider ul.news-slider-tabs li img {
 }
+
 /* END Home Page news/content slider */
 
 /* Home Page tile slider */
@@ -608,10 +643,3 @@ Show the current slide in the pagination
 /* END Home Page tile slider */
 
 /* ------------- END jQuery widgets --------------------------------------------------------------------------- */
-
-/*----- PDQ Medialink Styling to provide addtional separation between images and content in bulleted list---*/
-.pdqMediaLink
-{
-    margin-bottom:12px;
-    margin-top:12px;
-}
