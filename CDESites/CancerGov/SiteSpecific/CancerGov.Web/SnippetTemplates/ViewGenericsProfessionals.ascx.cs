@@ -68,7 +68,7 @@ namespace CancerGov.Web.SnippetTemplates
                     {
                         geneticPro = new GeneticProfessional(id);
 
-                        content += "<table border=\"0\" cellpadding=\"1\" cellspacing=\"0\" class=\"gray-border\" width=\"100%\"><tr><td>";
+                        content += "<table border=\"0\" cellpadding=\"1\" cellspacing=\"0\" style=\"border: 1px solid #bdbdbd;\" width=\"100%\"><tr><td>";
                         content += "<table border=\"0\" cellpadding=\"10\" cellspacing=\"0\" bgcolor=\"#ffffff\" width=\"100%\"><tr><td>";
                         content += geneticPro.GetHtml(Server.MapPath("/Stylesheets"));
                         content += "</td></tr></table>";

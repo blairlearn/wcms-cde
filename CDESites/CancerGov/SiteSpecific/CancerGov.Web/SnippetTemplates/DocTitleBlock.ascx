@@ -84,11 +84,11 @@
     </table>
 </asp:PlaceHolder>
 <asp:PlaceHolder ID="phPrintNoAudience" runat="server" Visible="false">
-<div align="center">
+<div align="left">
 		<table width="771" cellspacing="0" cellpadding="0" border="0">
 			<tr>
-<td valign="top"><img src="/images/spacer.gif" width="3" height="1" alt="" border="0"></td>
-		
+<%--<td valign="top"><img src="/images/spacer.gif" width="3" height="1" alt="" border="0"></td>
+--%>		
 <td valign="top">
 
     <span class="page-title"><asp:Literal ID="litNoAudiencePrintTitle" runat="server" /></span><br />
