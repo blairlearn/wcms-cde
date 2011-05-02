@@ -528,6 +528,7 @@ A.black-text:hover {
 	background-color:#DDD;
 	display:block;
 	padding: 7px;
+	max-width:571px;
 }
 .caption-image {
 	border-top-width : 0;
