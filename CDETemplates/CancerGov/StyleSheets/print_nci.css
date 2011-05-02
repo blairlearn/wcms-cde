@@ -404,7 +404,7 @@ a.definition:hover {
 }
 /* Gray lines around boxes and tables */
 .gray-border {
-	BACKGROUND-color:#BDBDBD;
+	border: 1px solid #bdbdbd;
 	font-size: 15px;
 }
 /* Director's Update Background Color */
