@@ -522,6 +522,7 @@ A.black-text:hover {
 	font-size : 11px;
 	color : #4d4d4d;
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
+	max-width:571px;
 }
 .caption {
 	background-color:#DDD;
