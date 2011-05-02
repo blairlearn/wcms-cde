@@ -344,7 +344,7 @@ A.definition:hover {
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
 .gray-border {
-		border: 1px solid #bdbdbd;
+	background: #bdbdbd;	
 }
 .directors-corner-contentarea {
 	background-color : #f7f7f5;
