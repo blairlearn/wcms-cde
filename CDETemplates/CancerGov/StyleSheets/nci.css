@@ -525,6 +525,7 @@ A.black-text:hover {
 }
 td.caption {
 	background-color:#DDD;	
+	display: inline;
 	padding: 7px;
 }
 .caption {
