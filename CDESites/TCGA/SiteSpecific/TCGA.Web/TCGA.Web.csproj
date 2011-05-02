@@ -30,8 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CancerGovCommon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="CDR.TermDictionary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core">
@@ -71,9 +69,9 @@
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="SnippetTemplates\ViewPublicationsByCancerType.ascx" />
-    <None Include="..\..\..\CDESchema\CDESchema.xsd">
-      <Link>Schema\CDESchema.xsd</Link>
-    </None>
+    <Content Include="Schema\CDESchema.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +138,14 @@
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CancerGov\CancerGovCommon\CancerGovCommon.csproj">
+      <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
+      <Name>CancerGovCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CancerGov\CDR.TermDictionary\CDR.TermDictionary.csproj">
+      <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
+      <Name>CDR.TermDictionary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

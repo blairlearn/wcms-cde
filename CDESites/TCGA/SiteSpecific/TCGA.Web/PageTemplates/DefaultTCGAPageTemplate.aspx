@@ -11,12 +11,13 @@
 <link rel="stylesheet" href="/Stylesheets/slimbox2.css" type="text/css" media="screen" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script src="/scripts/slimbox2.js" type="text/javascript"></script>
-<script src="/scripts/508player.js" type="text/javascript"></script>
-<script src="/JS/popEvents.js" type="text/javascript">
-</head>
-<body marginwidth="0" marginheight="0" leftmargin="0" topmargin="0"> 
 <script src="/scripts/jquery-ui-1.8.5.custom.min.js" type="text/javascript"></script> 
 <script src="/scripts/jquery-widgets.js" type="text/javascript"></script>
+<script src="/scripts/508player.js" type="text/javascript"></script>
+
+<script src="/JS/popEvents.js" type="text/javascript"></script>
+</head>
+<body marginwidth="0" marginheight="0" leftmargin="0" topmargin="0"> 
 <div class="skip"><a title="Skip to content" href="#skiptocontent">Skip to content</a></div>
 <!-- NCI Banner (please keep all code on one line for browsers spacing issue) -->
 <div id="nci-banner">
