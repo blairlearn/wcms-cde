@@ -34,11 +34,21 @@ namespace NCI.Web.CDE
         public StyleSheetInfo[] StyleSheets { get; set; }
 
         /// <summary>
+        /// Gets or sets the Javascripts of this PageTemplateInfo.
+        /// </summary>
+        /// <value>The Javascripts</value>
+        [XmlArray(ElementName = "Javascripts", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
+        [XmlArrayItem(ElementName = "JavascriptInfo", Form = XmlSchemaForm.Unqualified)]
+        public JavascriptInfo[] Javascripts { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PageTemplateInfo"/> class.
         /// </summary>
         public PageTemplateInfo()
         {
             StyleSheets = new StyleSheetInfo[]{};
+            Javascripts = new JavascriptInfo[] { };
+
         }
 
         /// <summary>
@@ -72,6 +82,15 @@ namespace NCI.Web.CDE
                 return false;
             }
 
+            if (
+                (Javascripts == null && target.Javascripts != null) ||
+                (Javascripts != null && target.Javascripts == null)
+                )
+            {
+                return false;
+            }
+
+
             if (StyleSheets != null && target.StyleSheets != null)
             {
 
@@ -90,6 +109,28 @@ namespace NCI.Web.CDE
                     else
                     {
                         if (!StyleSheets[i].Equals(target.StyleSheets[i]))
+                            return false;
+                    }
+                }
+            }
+            if (Javascripts != null && target.Javascripts != null)
+            {
+
+                if (Javascripts.Length != target.Javascripts.Length)
+                    return false;
+
+                for (int i = 0; i < Javascripts.Length; i++)
+                {
+                    if (Javascripts[i] == null)
+                    {
+                        if (target.Javascripts[i] != null)
+                            return false;
+
+                        //If we did not return then we know that target.Stylesheets[i] is also null
+                    }
+                    else
+                    {
+                        if (!Javascripts[i].Equals(target.Javascripts[i]))
                             return false;
                     }
                 }
