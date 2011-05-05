@@ -1,6 +1,11 @@
 @charset "utf-8";
 /* CSS Document */
 
+body {
+	background: #f6f6f5 url(/images/general/body-bg.gif) repeat-x;
+	margin: 0;
+}
+
 BODY, TD, TABLE, P, .text, .gray, A.gray, A.gray:active, A.gray:visited, A.gray-link, A.gray-link:visited, A.gray-link:active, A.gray-text, A.gray-text:visited, A.gray-text:active {
  color : #4d4d4d;
  font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
@@ -12,6 +17,153 @@ div, p, td, ul, ol, li, dl, td, dd, .text /* redundant selectors to help NS4 not
 	color: #4d4d4d;
 	font-weight: normal;
 	text-decoration: none;
+}
+
+#cgovContainer {
+	width: 802px;
+	margin: 0 auto;
+	background: #fff url(/images/general/container-bg.gif) no-repeat;
+}
+
+#EmergencyAlertBanner {
+	margin: 0 auto;
+	width: 751px;
+}
+#cgvContentHeader {
+	margin: 0 auto;
+	width: 751px;
+}
+#cgvLanguageDate {
+	margin: 0 auto;
+	width: 751px;
+}
+/* NCI Banner */
+#cgvSiteBanner {
+	width: 751px;
+	margin: 0 auto 10px;
+	overflow: auto;
+}
+#languageToggle {
+	text-align: right;
+	margin: 2px 10px 4px 0;
+	font-size: 11px;
+}
+#languageToggle a {
+	font-size: 11px;
+}
+#NCILogo {
+	float:left;
+	padding: 0 399px 0 0;
+	border-top: 1px solid #b2b2b2;
+	background: #e4e4e3 url(/images/general/header-bg.gif) repeat-x;
+}
+#NCILogo a {
+	outline: none;
+}
+#NCILogo h1 {
+	display: none;
+}
+#NCILogo h2 {
+	display: none;
+}
+#bannerRight {
+	float:right;
+	width: 300px;
+	margin: 1px 0 0 -302px;
+	text-align: right;
+}
+#questionsNumber {
+	margin: 0 10px 8px 0;
+}
+#questionsNumber a {
+	outline: none;
+}
+#mainSearch {
+
+	margin-right: 10px;
+	height: 24px;
+}
+#mainSearch form, #mainSearch input {
+	margin: 0;
+	padding: 0;
+}
+.searchString {
+	height: 17px;
+	width: 178px;
+	vertical-align: middle;
+}
+.searchSubmit {
+	vertical-align: middle;
+}
+ul.nci-main-navigation {
+	margin: 0;
+	padding: 0;
+}
+ul.nci-main-navigation li {
+	float: left;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+ul.nci-main-navigation li a {
+	outline: none;
+}
+/* END NCI Banner */
+
+/* Left Navigation */
+.clinical-trial-questions-leftnav {
+	text-align: center; 
+	border: 1px solid #bdbdbd; 
+	margin-bottom: 6px; padding: 8px; 
+	font-weight: bold; 
+	line-height: 20px; 
+	background: #ffffea;
+}
+/* END Left Navigation */
+
+#mainContainer {
+	width: 751px;
+	margin: 0 auto;
+}
+#portalPageContentContainer {
+	width: 571px;
+	overflow: hidden;
+}
+#cgvTileSlot {
+	width: 159px;
+	float: right;
+	margin: 0 0 10px 5px;
+}
+/* Cancer Type A to Z Box */
+div.az {
+	width: 162px;
+	border: 1px solid #bdbdbd;
+	margin-bottom: 6px;
+}
+div.az h3 {
+	background: #3c3c3c url(/images/general/leftnav-az-header.gif) repeat-x;
+	color: #fff;
+	font-weight: bold;
+	font-size: 12px;
+	margin: 0;
+	padding: 2px 5px;
+	border-bottom: 1px solid #bdbdbd;
+}
+div.az table {
+	margin: 10px;
+	padding: 0;
+	text-align: center;
+}
+div.az table td {
+	padding-bottom: 5px;
+	width: 11%;
+}
+/* End Cancer Type A to Z Box */
+#slides {
+	margin-bottom: 6px;
+}
+.box-title {
+	text-align: left;
 }
 .zerop {
 	margin-bottom: 0;
@@ -48,24 +200,24 @@ A.gray-link:hover, A.gray-text:hover, A.gray:hover {
 	font-weight : bold;
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
-.header-A, H3 {
+H3, h3, .header-A, .header-a {
 	color : #000000;
 	font-size : 14px;
 	font-weight : bold;
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
-.header-B, H4 {
+H4, h4, .header-B, .header-b {
 	color : #000000;
 	font-size : 12px;
 	font-weight : bold;
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
-.header-C {
+h5, .header-C, .header-c {
 	font-weight : bold;
 	font-size : 12px;
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
-.header-D {
+h6, .header-D, .header-d {
 	font-weight : bold;
 	font-style : italic;
 	font-size : 12px;
@@ -117,16 +269,7 @@ ol.generic li {
 }
 /* end list item with no bullets */
 
-
-
-
-
-
-
 /* list item with bullets */
-
-
-
 ul.generic-bullet {
 }
 ul.generic-bullet li {
@@ -137,12 +280,6 @@ ul.generic-bullet li {
 	list-style:url(/images/bullet_sm_css.gif);
 }
 /* end list item with bullets */
-
-
-
-
-
-
 
 img {
 	border: 0;
@@ -175,9 +312,6 @@ ul.toc li {
 	list-style-type:none;
 }
 /* pullquote */
-
-
-
 .pullquote {
 	float: right;
 	width: 275px;
@@ -194,10 +328,18 @@ ul.toc li {
 /* end pullquote */
 
 
+.contentCenter {
+	margin: 0 auto;
+}
+.portalPageContentHeaderImage {
+	margin-bottom: 10px;
+}
 
-
-
-
+input.search-field {
+	height: 15px;
+	width: 105px;
+	vertical-align:middle;
+}
 
 .callout-box {
 	background-color:E5E5E5;
@@ -267,28 +409,10 @@ table.border td {
 }
 /* Cancer Bulletin New */
 
-.bulletin-header {
-	width: 771px;
-	height: 85px;
-	background-image: url(/images/cancerbulletin/cancerbulletin-header-bg.gif);
-	background-repeat: repeat-x;
-}
+
 /* end Cancer Bulletin New */
 
-
-
-
-
-
-
-
-
-
-
 /* Cancer Bulletin Old */
-
-
-
 .cancer-bulletin-homepage-story-title {
 	color : #b50000;
 	font-size : 22px;
@@ -302,6 +426,7 @@ table.border td {
 	font-family : Arial, Verdana, "Trebuchet MS", sans-serif;
 }
 .cancer-bulletin-header-text {
+	width: 751px;
 	color : #ffffff;
 	font-size : 11px;
 	text-decoration : none;
@@ -320,16 +445,6 @@ A.cancer-bulletin-header-text:hover {
 	font-family : Arial, Verdana, "Trebuchet MS", sans-serif;
 }
 /* end Cancer Bulletin Old */
-
-
-
-
-
-
-
-
-
-
 
 A.definition, A.definition:visited, A.definition:active {
 	color : #4d4d4d;
@@ -350,26 +465,49 @@ A.definition:hover {
 	background-color : #f7f7f5;
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
-A.footer-link, A.footer-link:visited, A.footer-link:active, .footer-text {
-	color : #666666;
-	font-size : 11px;
-	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
-}
-A.footer-link:hover {
-	color : #333333;
-	font-size : 11px;
-	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
-}
-A.footer-link.rsslink {
-	background: url(/images/rss-feed-icon.gif) no-repeat;
-	padding: 0 0 0 16px;
-}
+
 .search-field {
 	color : #000000;
 	height : 22px;
 	width : 120px;
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
+.LeftNavSlot {
+	width: 164px;
+}
+.LeftNavSlot .slot-item {
+	margin-bottom: 6px;
+}
+.leftnav-shaded-box ul li {
+	word-wrap: break-word;
+}
+.leftnav-shaded-box ul li.leftnav-on {
+	font-weight: 900;
+}
+/* Turns off bolding on other elements in li unless  specifically declared or on a subpage. Also makes the font-size smaller to prevent longer navs. This can be removed when subsection nav does not display until you are in the subsection. */
+	.leftnav-shaded-box ul li.leftnav-on ul li {
+	font-size: 11px;
+	font-weight: normal;
+}
+/* Active Navigation States when in Subsections of Microsites */
+
+/* Bolds the Parent link to the Subsection */
+.leftnav-shaded-box ul li.leftnav-open {
+	font-weight: 900;
+}
+/* Removes bold formatting from sub li elements and reduces the font size for shorter lists. */
+.leftnav-shaded-box ul li.leftnav-open ul li {
+	font-size: 11px;
+	font-weight: normal;
+}
+/* Bolds page you are currently on */
+.leftnav-shaded-box ul li.leftnav-open ul li.leftnav-on {
+	font-weight: 900;
+}
+.RightNavSlot .slot-item {
+	margin-bottom: 8px;
+}
+/* Active Navigation State for page you are currently on */
 .leftnav {
 	font-size : 11px;
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
@@ -552,13 +690,6 @@ td.caption {
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
 /* Page Options */
-
-
-
-
-
-
-
 .po-box {
 	border: 1px solid #BDBDBD;
 }
@@ -622,9 +753,6 @@ td.caption {
 	background: url(/images/view-document.gif) no-repeat;
 }
 /* AddThis popup */
-
-
-
 #at15s_head, #at16pf {
 	display:none;
 }
@@ -645,28 +773,86 @@ td.caption {
 }
 /* End AddThis popup */
 
-
-
 /* End Page Options */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.pnlDrugSearch {
+	background:url(/images/drug-dictionary-search.jpg);
+	width:571px;
+	height:81px;
+}
+.pnlTermSearch label, .pnlTermSearch input, .pnlDrugSearch label, .pnlDrugSearch input {
+	vertical-align:middle;
+}
+.pnlTermSearchLabel {
+	vertical-align:middle;
+}
+.termForm {
+	border:0px;
+	margin-top:8px;
+	margin-right:0px;
+	margin-bottom:0px;
+	margin-left:0px;
+	padding:0px;
+}
+.pnlTermSearch {
+	background-image:url(/images/dictionary-search.jpg);
+	width:571px;
+	height:81px;
+}
+.searchboxContainer {
+	float:left;
+	text-align:right;
+	width:306px;
+	padding-right:7px;
+	height:32px;
+}
+.searchboxStarts {
+	float:left;
+	width:95px;
+	height:28px;
+	margin-top:4px;
+}
+.searchboxBtn {
+	float:left;
+	width:70px;
+	height:28px;
+	margin-top:4px;
+}
+.searchboxSeparator {
+	float:left;
+	width:1px;
+	height:32px;
+	margin-top:-2px;
+}
+.searchboxContains {
+	float:left;
+	width:83px;
+	padding-left:5px;
+	height:29px;
+	margin-top:3px;
+}
+.lblStrSearch {
+	font-weight:bold;
+vertical-align=middle;
+}
+.AutoComplete1 {
+	width:157px;
+	margin-left:5px;
+}
+.lblStrSearch {
+	font-weight:bold;
+}
+.drugSearchboxHelp {
+	float:left;
+	margin-top:5px;
+	margin-left:7px;
+	margin-right:5px;
+}
+.clinicalTrialsSearchResultsPrint {
+	width: 751px;
+	margin: 0 auto;
+}
 /* Clinical Trials Help section */
-
-
-
 .clinicaltrialhelp-imagebox-center {
 	margin: 0 auto 0 auto;
 	border: 1px solid #c5c5c5;
@@ -685,16 +871,7 @@ td.caption {
 }
 /* end Clinical Trials Help section */
 
-
-
-
-
-
-
 /* H3 with red arrows instead of image */
-
-
-
 div.title-red-arrow h3 {
 	background: url(/images/title-red-arrow.gif) no-repeat 1px 3px;
 	margin: 0 0 3px 0;
@@ -717,12 +894,6 @@ div.title-red-arrow h3 a:hover {
 	text-decoration: none;
 }
 /* end Test H3 with red arrows instead of image */
-
-
-
-
-
-
 
 .protocol-date-label {
 	font-size : 11px;
@@ -1074,19 +1245,19 @@ A.Protocol-TOC-Link:hover {
 	font-weight : bold;
 	FONT-STYLE : italic;
 }
-.Protocol-country, .Protocol-Site-CountryName, .Protocol-Site-Country {
-	color : #000000;
+.Protocol-country, .protocol-country, .Protocol-Site-CountryName, .Protocol-Site-Country {
+	color : #000;
 	line-height : 18px;
 	font-size : 14px;
 	font-weight : bold;
 	background-color : #e6e6e2;
 }
-.Protocol-state, .Protocol-Site-StateName, .Protocol-Site-State {
+.Protocol-state, .protocol-state, .Protocol-Site-StateName, .Protocol-Site-State {
 	color : #993333;
 	font-size : 14px;
 	font-weight : bold;
 }
-.Protocol-city, Protocol-Site-City {
+.Protocol-city, .protocol-city, Protocol-Site-City {
 	font-weight : bold;
 }
 .Protocol-Site-SiteName {
@@ -1287,23 +1458,104 @@ TD.rightnav {
 TD.rightnav A {
 	font-size : 12px;
 }
-/* ------------------------------------ Begin Footer ----------------------------------------- */ 
-
-
-
-A.footer {
-	color : #000000;
-	text-decoration : none;
+/* NCI Footer */
+#cgvSiteFooter {
+	width: 751px;
+	margin: 25px auto 0;
+	padding: 0 0 30px 0;
+	text-align: center;
 }
-A.footer:visited {
-	color : #666699;
-	text-decoration : none;
+#cgvSiteFooter ul {
+	margin: 0;
+	padding: 0;
 }
-A.footer:hover {
-	color : #669999;
-	text-decoration : none;
+#cgvSiteFooter ul li {
+	display: inline;
+	margin: 0;
+	padding: 0;
 }
-/* ------------------------------------ end Footer ----------------------------------------- */ 
+#cgvSiteFooter ul#findHelp, #cgvSiteFooter ul#findHelpEspanol {
+	border-top: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	background: #ffffe6;
+	margin: 0 0 15px 0;
+	padding: 10px 0;
+	letter-spacing: 2px;
+}
+#cgvSiteFooter ul#findHelp li {
+	margin: 0 45px;
+}
+#cgvSiteFooter ul#findHelpEspanol li {
+	margin: 0 20px;
+}
+#cgvSiteFooter ul#footerUtilityRow1 {
+	margin: 0 0 3px 0;
+}
+#cgvSiteFooter ul#footerUtility,
+#cgvSiteFooter ul#footerUtilityRow2 {
+	margin: 0 0 12px 0;
+}
+#cgvSiteFooter ul#footerUtility li,
+#cgvSiteFooter ul#footerUtilityRow1 li,
+#cgvSiteFooter ul#footerUtilityRow2 li{
+	margin: 0 0 0 4px;
+	padding: 0 8px 0 0;
+	background: url(/images/general/footer-utility-divider.gif) bottom right no-repeat;
+}
+#cgvSiteFooter ul#footerUtility li a,
+#cgvSiteFooter ul#footerUtilityRow1 li a, 
+#cgvSiteFooter ul#footerUtilityRow2 li a,
+#cgvSiteFooter ul#followUs li a {
+	font-size: 11px;
+}
+#cgvSiteFooter ul#footerUtility li a,
+#cgvSiteFooter ul#footerUtilityRow1 li a,
+#cgvSiteFooter ul#footerUtilityRow2 li a{
+	color: #666;
+}
+#cgvSiteFooter ul#footerUtility li a:hover,
+#cgvSiteFooter ul#footerUtilityRow1 li a:hover,
+#cgvSiteFooter ul#footerUtilityRow12li a:hover{
+	color: #333;
+}
+#cgvSiteFooter ul#footerUtility li.last,
+#cgvSiteFooter ul#footerUtilityRow1 li.last,
+#cgvSiteFooter ul#footerUtilityRow2 li.last{
+	background: none;
+}
+ul#followUs {
+	display: inline;
+	margin: 0 0 0 10px;
+}
+ul#followUs li {
+	margin: 0 12px 0 0;
+	padding: 2px 0 2px 20px;
+}
+ul#followUs li a {
+	color: #666;
+}
+ul#followUs li a:hover {
+	color: #333;
+}
+ul#followUs li.twitter {
+	background: url(/images/general/footer-twitter.gif) left 2px no-repeat;
+}
+ul#followUs li.youtube {
+	background: url(/images/general/footer-youtube.gif) left 2px no-repeat;
+}
+ul#followUs li.facebook {
+	background: url(/images/general/footer-facebook.gif) left 2px no-repeat;
+}
+ul#followUs li.rss {
+	background: url(/images/general/footer-rss.gif) left 2px no-repeat;
+}
+ul#agencyLinks li {
+	margin: 0 6px;
+}
+ul#agencyLinks li a {
+	outline: 0;
+}
+/* END NCI Footer */
 
 
 
@@ -1632,6 +1884,13 @@ LI.sub {
 	margin-top : 5px;
 	padding-left : 0;
 }
+/*----- PDQ Medialink Styling to provide additional separation between images and content in bulleted list---*/
+.pdqMediaLink
+{
+    margin-bottom:12px;
+    margin-top:12px;
+}
+
 .pdq P {
 	color : #000000;
 	padding-top : 2px;
@@ -2016,13 +2275,19 @@ ul.link-farm ul {
 	margin-bottom: 5px;
 }
 /* ------------------ Cancer Bulletin 2009 Redesign --------------------------------------------------------*/
-
 .bulletin-header {
-	width: 771px;
+	width: 751px;
 	height: 85px;
-	background-image: url(/images/cancerbulletin/cancerbulletin-header-bg-new.gif);
+	background-image: url(/images/cancerbulletin/cancerbulletin-header-bg.gif);
 	background-repeat: repeat-x;
-	overflow: auto;
+}
+.cb-subscribe-header {
+	background: #E1E0DE; 
+	padding: 18px 20px; 
+	font-weight: bold; 
+	font-family: Arial; 
+	color: #b50000; 
+	font-size: 22px;
 }
 .bulletin-header-left {
 	float: left;
@@ -2039,7 +2304,7 @@ ul.link-farm ul {
 	border-top: 1px solid #510000;
 	background-image: url(/images/cancerbulletin/cancerbulletin-header-text-bg.gif);
 	background-repeat: repeat-x;
-	width: 771px;
+	width: 751px;
 }
 .bulletin-header-date {
 	float:left;
@@ -2066,10 +2331,8 @@ ul.link-farm ul {
 	text-decoration: underline;
 }
 .cancer-bulletin-home-page {
-	width: 742px;
-	margin: 0;
-	padding: 0 15px 0 14px;
-	text-align: left;
+	width: 751px;
+	margin: 0 auto; padding: 0;
 }
 .cancer-bulletin-home-page a {
 	text-decoration: none;
@@ -2515,26 +2778,32 @@ ul.clinicaltrials-results-formatcontrols li {
 	padding-right: 13px;
 	text-decoration: none;
 }
-.deleteList {
+.deleteList,
+.deletelist {
 	overflow: scroll;
-	background-color: #ffffff;
+	background-color: #fff;
 	border: solid 1px #bdbdbd;
 	margin: 5px 0px 5px 0px;
 }
-.deleteList p {
+.deleteList p,
+.deletelist p {
 	margin: 5px 5px 5px 5px;
 }
-.deleteList ul li input {
+.deleteList ul li input,
+.deletelist ul li input {
 	margin-right: 3px;
 	vertical-align: middle;
 }
-.deleteList ul li {
+.deleteList ul li,
+.deletelist ul li
+{
 	list-style-type: none;
 	list-style-image: none;
 	white-space: nowrap;
 	margin-left: 0px;
 }
-.deleteList ul {
+.deleteList ul,
+.deletelist ul{
 	padding-left: 5px;
 	margin-top: 5px;
 	margin-left: 0px;
@@ -3324,3 +3593,435 @@ OL.Protocol-OL {
 	overflow: hidden;
 }
 
+
+
+
+/* ------------- jQuery widgets --------------------------------------------------------------------------- */
+/* Home Page news/content slider */
+/* overall container */
+#news-slider {
+	width: 569px;
+	height: 256px;
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+/* container for featured item */
+#news-slider .ui-tabs-panel-x {
+	position:relative;
+	width: 565px;
+	height: 186px;
+	border: 0;
+	margin: 2px;
+}
+#news-slider .ui-tabs-panel-x p,
+#news-slider .ui-tabs-panel-x li,
+#news-slider .ui-tabs-panel-x a
+ {
+	font-size: 12px;
+}
+#news-slider .ui-tabs-panel-x a {
+	text-decoration: none;
+}
+#news-slider .ui-tabs-panel-x a:hover {
+	text-decoration: underline;
+}
+.ui-tabs-panel-x p {
+	margin: 4px 0;
+}
+
+table.carousel-panel-list {
+	width: 90%;
+	margin: 0 0 0 5px;
+}
+table.carousel-panel-list td {
+	vertical-align: top;
+	padding-right: 3px;
+}
+/* text in featured item */
+#news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text {
+	position:absolute;
+	top: 10px;
+	left: 270px;
+	padding: 0 7px 0 0;
+}
+#news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text h2 {
+	color: #333;
+	margin: 0;
+	font-size: 16px;
+}
+#news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text h2 a {
+	text-decoration: none;
+}
+#news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text h2 a:hover {
+	text-decoration: underline;
+}
+#news-slider .ui-tabs-panel-x a {
+	color: #8a000a;
+}
+.ui-tabs-panel-x ul {
+	margin: 0 0 0 10px;	padding: 0;
+	background: none !important;
+	list-style-type: none !important;
+}
+.ui-tabs-panel-x ul li {
+	margin: 0; padding: 0;
+	background: none !important;
+	list-style-type: none !important;
+}
+#news-slider .ui-tabs-hide {
+	display:none;
+}
+/* container for list items box */
+#news-slider ul.news-slider-tabs {
+	overflow: hidden;
+	width: 100%;
+	height: 66px;
+	background: none;
+	margin: 0;
+	padding: 0;
+}
+#news-slider .ui-widget-header {
+	border: 0;
+}
+/* container for individual list items */
+#news-slider ul.news-slider-tabs li {
+	float: left;
+	width: 183px;
+	height: 64px;
+	list-style: none;
+	list-style-type: none;
+	padding: 2px 3px 0;
+	margin: 0;
+}
+#news-slider ul.news-slider-tabs li.last {
+	width: 184px;
+}
+/* container for individual list items, last item */
+#news-slider ul.news-slider-tabs li.last {
+}
+#news-slider ul.news-slider-tabs .ui-state-default {
+	border: 0;
+	background: url(/sysimages/li-unselected.gif) top center repeat-x;
+}
+#news-slider ul.news-slider-tabs .ui-state-default.last {
+	background: url(/sysimages/li-unselected-last.gif) top center repeat-x;
+}
+#news-slider ul.news-slider-tabs .ui-state-active {
+	background: url(/sysimages/li-selected.gif) top center repeat-x;
+}
+#news-slider ul.news-slider-tabs .ui-state-active.last {
+	border: 0px solid red;
+	background: url(/sysimages/li-selected-last.gif) top center repeat-x;
+}
+#news-slider .ui-corner-top {
+	-moz-border-radius-topleft: 0;
+	-webkit-border-top-left-radius: 0;
+	border-top-left-radius: 0;
+	-moz-border-radius-topright: 0;
+	-webkit-border-top-right-radius: 0;
+	border-top-right-radius: 0;
+}
+/* container for individual list items image and text */
+#news-slider li.news-slider-tabs-item a {/*On Hover Style*/
+	display: block;
+	height: 60px;
+	margin: 0 0 0 0; padding: 0 5px 0 0;
+	outline: none;
+	color: #8a000a;
+	font-weight: bold;
+	font-size: 11px;
+}
+#news-slider li.news-slider-tabs-item a {/*On Hover Style*/
+	margin-top: 7px;
+}
+/* thumbnail images in tabs */
+#news-slider li.news-slider-tabs-item img {
+	border: 1px solid #b7b7b7;
+	margin: -6px 3px 0 0;
+}
+/* container for individual list items image and text on hover */
+#news-slider li.news-slider-tabs-item a:hover {
+}
+/* container for text in individual list items */
+#news-slider li.news-slider-tabs-item {
+}
+/* container for text in individual list items, selected */
+#news-slider li.ui-tabs-selected { /*Selected tab style*/
+}
+/* container for text in individual list items, selected */
+#news-slider ul.news-slider-tabs li.ui-tabs-selected a {
+	color: #fff;
+}
+/* container for text in individual list items image */
+#news-slider ul.news-slider-tabs li img {
+}
+
+/* END Home Page news/content slider */
+
+/* Home Page tile slider */
+/*
+Slides container
+Important:
+Set the width of your slides container
+Set to display none, prevents content flash
+*/
+.slides_container {
+	width:160px;
+	height: 68px;
+	display:none;
+}
+img {
+	border: 0;
+}
+/*
+Each slide
+Important:
+Set the width of your slides
+If height not specified height will be set by the slide content
+Set to display block
+*/
+.slides_container div {
+	width:159px;
+	height:68px;
+	display:block;
+	margin-bottom: 0;
+}
+.slides_control {
+}
+/*
+Optional:
+Reset list default style
+*/
+.pagination {
+	list-style:none;
+	display: inline;
+	margin:0;
+	padding:0;
+}
+/*
+Optional:
+Show the current slide in the pagination
+*/
+.pagination .current a {
+	color:red;
+}
+.next {
+	outline: none;
+}
+.prev {
+	outline: none;
+}
+/* END Home Page tile slider */
+
+/* ------------- END jQuery widgets --------------------------------------------------------------------------- */
+
+
+/* ------------- classes from nciplus.css  ----------------------------------------------------------------- */
+#drugForm {
+	border:0;
+	margin:0;
+	padding:0;
+}
+.pnlDrugSearch {
+	background-image:url(/images/drug-dictionary-search.jpg);
+	width:571px;
+	height:81px;
+}
+.pnlTermSearch label, .pnlTermSearch input, .pnlDrugSearch label, .pnlDrugSearch input {
+	vertical-align:middle;
+}
+.pnlTermSearchLabel {
+	vertical-align:middle;
+}
+.termForm {
+	border:0;
+	margin: 8px 0 0 0;
+	padding:0;
+}
+.pnlTermSearch {
+	background-image:url(/images/dictionary-search.jpg);
+	width:571px;
+	height:81px;
+}
+.searchboxTopRow {
+	padding: 9px 0 3px 0;
+	vertical-align:middle;
+	height:32px;
+}
+.searchboxTopRow:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.searchboxContainer {
+	float:left;
+	text-align:right;
+	width:306px;
+	padding-right:7px;
+	height:32px;
+}
+.searchboxStarts {
+	float:left;
+	width:95px;
+	height:28px;
+	margin-top:4px;
+}
+.searchboxBtn {
+	float:left;
+	width:70px;
+	height:28px;
+	margin-top:4px;
+}
+#searchboxBottomRow {
+	margin-left:85px;
+	width:474px;
+	height:37px;
+}
+#searchboxContainer {
+	float:left;
+	text-align:right;
+	width:306px;
+	padding-right:7px;
+	height:32px;
+}
+#searchboxBtn {
+	float:left;
+	width:70px;
+	height:28px;
+	margin-top:4px;
+}
+#searchboxStarts {
+	float:left;
+	width:95px;
+	height:29px;
+	margin-top:3px;
+}
+.searchboxSeparator {
+	float:left;
+	width:1px;
+	height:32px;
+	margin-top:-2px;
+}
+#searchboxSeparator, #searchboxSeparator2 {
+	float:left;
+	width:1px;
+	height:32px;
+	margin-top:-2px;
+}
+.searchboxContains {
+	float:left;
+	width:83px;
+	padding-left:5px;
+	height:29px;
+	margin-top:3px;
+}
+#searchboxContains {
+	float:left;
+	width:83px;
+	padding-left:5px;
+	height:29px;
+	margin-top:3px;
+}
+#drugSearchboxContainer {
+	float:left;
+	text-align:right;
+	width:306px;
+	padding-right:7px;
+	height:32px;
+}
+#drugSearchboxBtn {
+	float:left;
+	width:40px;
+	height:28px;
+	margin-top:4px;
+}
+#drugSearchboxStarts {
+	float:left;
+	width:95px;
+	height:29px;
+	margin-top:3px;
+}
+#drugSearchboxContains {
+	float:left;
+	width:83px;
+	padding-left:5px;
+	height:29px;
+	margin-top:3px;
+}
+.drugSearchboxHelp {
+	float:left;
+	margin-top:5px;
+	margin-left:7px;
+	margin-right:5px;
+}
+#pnlTermSearch #AutoComplete1 {
+	width:157px;
+	margin-left:5px;
+}
+#pnlDrugSearch #AutoComplete1 {
+	width:150px;
+	margin-left:2px;
+}
+.lblStrSearch {
+	font-weight:bold;
+vertical-align=middle;
+}
+.AutoComplete1 {
+	width:157px;
+	margin-left:5px;
+}
+.lblStrSearch {
+	font-weight:bold;
+}
+.search-control-div {
+	margin-left:75px;
+	width:496px;
+	height:37px;
+}
+.search-control-div:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.btnGo {
+	height:15px;
+	width:23px;
+}
+.btnBuscar {
+	height:15px;
+	width:52px;
+}
+#hlPatientInfo {
+	margin-left:-6px;
+}
+/*Definition view*/
+.prevNextTerms-images {
+	width:571px;
+}
+.prevNextTerms-images td.col1 {
+	width:124px;
+}
+.prevNextTerms-images td.col2 {
+	width:451px;
+}
+.prevNextTerms-print {
+	width:630px;
+}
+.prevNextTerms-print td.col1 {
+	width:144px;
+}
+.prevNextTerms-print td.col2 {
+	width:490px;
+}
+/*These are related to the LangSwitch user control*/
+.language-link {
+	float:left;
+}
+.language-link-last {
+	float:none;
+}
+/* ------------- classes from nciplus.css  ----------------------------------------------------------------- */
