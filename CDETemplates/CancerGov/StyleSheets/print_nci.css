@@ -404,10 +404,10 @@ a.definition:hover {
 }
 /* Gray lines around boxes and tables */
 .gray-border {
-    background: #bdbdbd;	
-/*	border: 1px solid #bdbdbd;
+/*    background: #bdbdbd;	*/
+	border: 1px solid #bdbdbd;
 	background: none;
-	font-size: 15px;*/
+/*	font-size: 15px;*/
 }
 /* Director's Update Background Color */
 .directors-corner-contentarea {
