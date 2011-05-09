@@ -117,13 +117,11 @@ body, td, table, p, .text, .gray, a.gray, a.gray:active, a.gray:visited, a.gray-
 /* deafault links */
 a, a:active, a:visited, .red-text {
 	color: #9C3303;
-	font-size: 15px;
 	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 a:hover {
 	color: #990000;
 	text-decoration: underline;
-	font-size: 15px;
 	font-family: "Times New Roman", Arial, Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 /* Back to Top style */
