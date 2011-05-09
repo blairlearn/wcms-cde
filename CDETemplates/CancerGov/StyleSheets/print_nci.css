@@ -482,47 +482,7 @@ a.box-title:hover {
 a:hover.navigation-white {
 	color: #F1EFEF;
 }
-/* Left navigation gray text and gray links */
-.navigation-gray, a.navigation-gray, a.navigation-gray:visited, a.navigation-gray:active, a.navigation-gray-link, a.navigation-gray-link:visited, a.navigation-gray-link:active {
-	font-size:15px;
-	color:#4d4d4d;
-}
-a.navigation-gray-link:hover, a.navigation-gray:hover {
-	font-size:15px;
-	color:#000000;
-}
-/* Left navigation, selected item in the anchor link sections */
-.navigation-selected {
-	font-size:15px;
-	color:#999999;
-}
-/* Left navigation, non-selected item in the anchor link sections */
-.navigation-dark-gray, a.navigation-dark-gray-link, a.navigation-dark-gray-link:visited, a.navigation-dark-gray-link:active {
-	font-size:15px;
-	color:#333333;
-}
-/* Looks same as Left navigation, non-selected item in the anchor link sections */
-.navigation-black, a.navigation-black-link, a.navigation-black-link:visited, a.navigation-black-link:active {
-	color:#000000;
-	font-size: 11px;
-}
-a.navigation-black-link:hover {
-	font-size:15px;
-	color:#333333;
-}
-a.navigation-dark-gray-link:hover {
-	font-size:15px;
-	color:#000000;
-}
-/* Left navigation, dark red links and text */
-.navigation-dark-red, a.navigation-dark-red, a.navigation-dark-red:link, a.navigation-dark-red:active, a.navigation-dark-red:visited, a.navigation-dark-red-link, a.navigation-dark-red-link:visited, a.navigation-dark-red-link:active {
-	font-size:15px;
-	color:#993300;
-}
-a.navigation-dark-red-link:hover, a.navigation-dark-red:hover {
-	font-size:15px;
-	color:#990000;
-}
+
 /* Red Header on Portal Pages Indexes */
 .red-header, a.red-header, a.red-header:visited, a.red-header:active {
 	font-size:16px;
