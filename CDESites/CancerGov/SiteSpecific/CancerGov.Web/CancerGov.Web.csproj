@@ -546,10 +546,10 @@
     <Content Include="JS\NetTracker\ntpagetag.js" />
     <Content Include="JS\Search\CDEResultsClinicalTrials.js" />
     <Content Include="JS\Search\CDESearchClinicalTrials.js" />
-    <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
-    <Content Include="PageTemplates\DefaultCancerGovTemplate-NoLeftNav.aspx" />
-    <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
-    <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
+    <Content Include="PageTemplates1\CancerTypeHomeTemplate.aspx" />
+    <Content Include="PageTemplates1\DefaultCancerGovTemplate-NoLeftNav.aspx" />
+    <Content Include="PageTemplates1\DefaultCancerGovTemplate-Print.aspx" />
+    <Content Include="PageTemplates1\DefaultCancerGovTemplate.aspx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx" />
