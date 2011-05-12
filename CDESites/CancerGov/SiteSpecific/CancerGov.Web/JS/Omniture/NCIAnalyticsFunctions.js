@@ -714,37 +714,30 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 		
 		if(targ.nodeName == 'IMG')
 			targ = targ.parentNode;
+			
+		if(targ.nodeName == 'EM')
+			targ = targ.parentNode;
 		
-		if(targ.nodeName == 'A')
+		if(targ.nodeName == 'A' )
 	    {
 		    var linkText="";
-		    var tagstart = -1;
-		    var tagend = -1;
+			var isTag = false;
 
 			clickParams = new NCIAnalytics.ClickParams(this,
             'nciglobal','o','TimelyContentZoneLink' );
     		
 		    for (i=0; i< targ.innerHTML.length; i++)
 		    {
-			    if(tagstart > -1)
-			    {
-				    if(targ.innerHTML.charAt(i) == ">")
-					    tagend = i;
-			    }
-			    else
-			    {
-				    if(targ.innerHTML.charAt(i) == "<")
-					    tagstart = i;
-			    }
+				if(targ.innerHTML.charAt(i) == "<")
+					isTag = true;
+				
+				if(!isTag)
+					linkText = linkText + targ.innerHTML.charAt(i);
+					
+				if(targ.innerHTML.charAt(i) == ">")
+					isTag = false;
+				
 		    }
-		    if ((tagstart > -1) && (tagend > -1))
-		    {
-			    linkText = targ.innerHTML.substring(0, tagstart);
-			    if (tagend < targ.innerHTML.length-1)
-				    linkText = linkText + targ.innerHTML.substring(tagend + 1);
-		    }
-		    else 
-			    linkText = targ.innerHTML;
 
 			var prefixCheck = targ.innerHTML.toLowerCase();
 		    if (prefixCheck.search("video_icon.jpg") > -1 )
