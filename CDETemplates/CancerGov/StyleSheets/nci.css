@@ -327,7 +327,22 @@ ul.toc li {
 }
 /* end pullquote */
 
-
+/* Fact Sheet Key Points box styling */
+div.keyPoints {
+	border: 1px solid #bdbdbd; 
+	margin-bottom: 6px; padding: 0 10px;
+}
+div.keyPoints h4 {
+	margin: 0 -10px; padding: 2px; 
+	background: #ddd; 
+	text-align: center; 
+	border-bottom: 1px solid #bdbdbd; 
+	color: #4d4d4d;
+}
+div.keyPoints ul li {
+	margin-bottom: 5px;
+}
+/* END Fact Sheet Key Points box styling */
 .contentCenter {
 	margin: 0 auto;
 }
@@ -1302,16 +1317,20 @@ LI.Protocol-IL-Circle {
 LI.Protocol-IL-Simple {
 	list-style : none url();
 }
-LI.Protocol-OL-Lroman {
+LI.Protocol-OL-Lroman,
+LI.Protocol-OL-LRoman {
 	list-style : lower-roman url();
 }
-LI.Protocol-OL-Uroman {
+LI.Protocol-OL-Uroman,
+LI.Protocol-OL-URoman {
 	list-style : upper-roman url();
 }
-LI.Protocol-OL-Lalpha {
+LI.Protocol-OL-Lalpha,
+LI.Protocol-OL-LAlpha {
 	list-style : lower-alpha url();
 }
-LI.Protocol-OL-Ualpha {
+LI.Protocol-OL-Ualpha,
+LI.Protocol-OL-UAlpha {
 	list-style : upper-alpha url();
 }
 LI.Protocol-OL-Arabic {
