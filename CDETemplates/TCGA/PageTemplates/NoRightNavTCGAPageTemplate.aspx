@@ -39,6 +39,7 @@
 <div id="container-sans-sidebar">
     <!-- Content -->
     <div id="content">
+    <a name="skiptocontent"></a>
     <NCI:TemplateSlot ID="tcgaSlotBodyTop" runat="server" />
     <NCI:TemplateSlot ID="tcgaSlotImageCaption" runat="server" CssClass="content-sidebox" />
     <NCI:TemplateSlot ID="tcgaSlotBody" runat="server" />

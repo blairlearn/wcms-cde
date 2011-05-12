@@ -39,6 +39,7 @@
 <div id="container">
     <!-- Content -->
     <div id="content">
+    <a name="skiptocontent"></a>
     <NCI:TemplateSlot ID="tcgaSlotBodyTop" runat="server" />
     <!-- <div class="content-sidebox"> -->
     <NCI:TemplateSlot ID="tcgaSlotImageCaption" runat="server" />   
