@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
   <HEAD id="header" runat="server">
-  <link rel="stylesheet" href="/stylesheets/nci.css" type="text/css">
+  <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
 
   </HEAD>
 	<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">

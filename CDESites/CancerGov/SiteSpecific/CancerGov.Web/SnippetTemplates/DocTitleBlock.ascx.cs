@@ -84,15 +84,32 @@ namespace CancerGov.Web.SnippetTemplates
                             updatedTxt = "Actualizado: ";
                             reviewedTxt = "Revisi&oacute;n: ";
                         }
+                        string posted;
+                        string reviewed;
+                        string updated;
 
-                        string posted = "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
-                            postedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", contenDates.FirstPublished);
-                        string reviewed =  "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
-                            reviewedTxt + "</strong>"+String.Format("{0:MM/dd/yyyy}", contenDates.LastReviewed);
-                        string updated =  "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
-                             updatedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", contenDates.LastModified);
+                        if (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish)
+                        {
+                            posted = "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
+                                postedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", CovertToSpanishFormat(contenDates.FirstPublished));
+                            reviewed = "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
+                                reviewedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", CovertToSpanishFormat(contenDates.LastReviewed));
+                            updated = "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
+                                 updatedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", CovertToSpanishFormat(contenDates.LastModified));
+                        }
 
+                        else
+                        {
+                            posted = "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
+                                postedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", contenDates.FirstPublished);
+                            reviewed = "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
+                                reviewedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", contenDates.LastReviewed);
+                            updated = "<img width=\"12\" height=\"15\" border=\"0\" alt=\"\" src=\"/Images/spacer.gif\" /><strong>" +
+                                 updatedTxt + "</strong>" + String.Format("{0:MM/dd/yyyy}", contenDates.LastModified);
 
+                        }
+
+                         
 
                         if (contenDates.DateDisplayMode == DateDisplayModes.All)
                         {
@@ -145,6 +162,65 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 Logger.LogError("Docktitle Snippet Control", NCIErrorLevel.Error, ex);               
             }
+        }
+
+        private string CovertToSpanishFormat(DateTime Date)
+        {
+            string spanishDate = string.Empty;
+
+            spanishDate = Date.Day + " de " + GetSpanishMonth(Date.Month) + " de " + Date.Year;
+
+            return spanishDate;
+        }
+
+
+        private string GetSpanishMonth(int month)
+        {
+            string spanishMonth=string.Empty;
+            switch (month)
+            {
+                case 1:
+                    spanishMonth = "enero";
+                    break;
+                case 2:
+                    spanishMonth = "febrero";
+                    break;
+                case 3:
+                    spanishMonth = "marzo";
+                    break;
+                case 4:
+                    spanishMonth = "abril";
+                    break;
+                case 5:
+                    spanishMonth = "mayo";
+                    break;
+                case 6:
+                    spanishMonth = "junio";
+                    break;
+                case 7:
+                    spanishMonth = "julio";
+                    break;
+                case 8:
+                    spanishMonth = "agosto";
+                    break;
+                case 9:
+                    spanishMonth = "septiembre";
+                    break;
+                case 10:
+                    spanishMonth= "octubre";
+                    break;
+                case 11:
+                    spanishMonth = "noviembre";
+                    break;
+                case 12:
+                    spanishMonth = "diciembre";
+                    break;
+                default:
+                    spanishMonth= "";
+                    break;
+            }
+
+            return spanishMonth;
         }
     }
 }

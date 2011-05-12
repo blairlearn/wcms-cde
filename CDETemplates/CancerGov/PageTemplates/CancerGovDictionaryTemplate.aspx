@@ -5,22 +5,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
-    <title></title>
-    
+    <title></title>    
     <script type="text/javascript" language="JavaScript" src="/JS/imgEvents.js"></script>
 	<script type="text/javascript" language="JavaScript" src="/JS/popEvents.js"></script>	
 	<script type="text/javascript" language="javascript">	    var bSearchBoxBool = false; </script>
-	<script type="text/javascript" language="JavaScript" src="/JS/JSLoader/JSLoader.js"></script>
-
-    <!--[if IE]>
-	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
-    <![endif]-->
-    
-
-    
+	<script type="text/javascript" language="JavaScript" src="/JS/JSLoader/JSLoader.js"></script>    
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
     <!-- Site Banner -->
+    <div class="skip">
+        <a title="Skip to content" href="#skiptocontent">Skip to content</a></div> 
     <div id="bannerDiv" align="center">
         <NCI:TemplateSlot ID="cgvSiteBanner" runat="server" />
     </div>

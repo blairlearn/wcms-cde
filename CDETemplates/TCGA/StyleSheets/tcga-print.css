@@ -1,0 +1,91 @@
+/* ------------- "generic" styles --------------------------------------------------------------------------- */
+body {
+	background: none;
+	font: 12px arial, sans-serif;
+	color: #000000;
+	margin: 0;
+}
+a.backtotop {
+	display: none;
+}
+/* ------------- END "generic" styles --------------------------------------------------------------------------- */
+
+/* ------------- NCI Banner styles --------------------------------------------------------------------------- */
+#nci-banner {
+	display: none;
+}
+/* ------------- END NCI Banner styles --------------------------------------------------------------------------- */
+
+/* ------------- Masthead/Search/Utility links styles -------------------------------------------------------------*/
+#masthead {
+	width: 100%;
+	margin: 0;
+	padding: 18px 0 0 0;
+}
+#utility-links {
+	display: none;
+}
+#search {
+	display: none;
+}
+/* ------------- END Masthead/Search/Utility links styles --------------------------------------------------------- */
+
+/* ------------- Main Navigation styles --------------------------------------------------------------------------- */
+#mainnav {
+	display: none;
+}
+/* ------------- END Main Navigation styles --------------------------------------------------------------------------- */
+
+/* ------------- Containter for Content and Sidebar styles -------------------------------------------------------------- */
+#container, #container-sans-sidebar {
+	width: 100%;
+	margin: 0;
+	border: 0;
+	background: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+/* ------------- Containter for Content and Sidebar styles ----------------------------------------------------------- */
+
+/* ------------- Content area styles --------------------------------------------------------------------------- */
+#container #content {
+	float: left;
+	width: 100%;
+	padding: 10px 0 10px 0;
+}
+#container-sans-sidebar #content {
+	float: left;
+	width: 935px;
+	padding: 10px 19px 10px 20px;
+}
+#content .two-column-container {
+	width: 100%;
+	overflow: visible;
+}
+#content .column1 {
+	float: left;
+	width: 45%;
+	margin-right: 20px;
+}
+#content .column2 {
+	float: right;
+	width: 45%;
+}
+#content .share {
+	display: none;
+}
+/* ------------- END Content area styles --------------------------------------------------------------------------- */
+
+/* ------------- Sidebar styles --------------------------------------------------------------------------- */
+#sidebar {
+	display: none;
+}
+
+/* ------------- END Sidebar styles --------------------------------------------------------------------------- */
+
+/* ------------- Footer styles --------------------------------------------------------------------------- */
+#footer {
+	display: none;
+}
+/* ------------- END Footer styles --------------------------------------------------------------------------- */

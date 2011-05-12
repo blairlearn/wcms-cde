@@ -248,7 +248,7 @@ namespace Www.Templates
                     alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaListSpanish"; // Load A-Z list onclick script
                 else
                     alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaList"; // Load A-Z list onclick script
-                printLinkHref.HRef = "javascript: NCIAnalytics.SendToPrinterLink(this); window.print();";
+
 
 
 
@@ -444,7 +444,6 @@ namespace Www.Templates
         {
             _isSpanish = true;
             //Controls
-            litSendToPrinter.Text = "Imprima esta p&aacute;gina";
             lblStrSearch.Text = String.Empty;
             lblAccessSearch.Text = "Cuadro de búsqueda de texto";
 
@@ -497,8 +496,7 @@ namespace Www.Templates
         /// </summary>
         private void SetupEnglish()
         {
-            //Controls
-            litSendToPrinter.Text = "Send to Printer";
+            //Controls            
             lblStrSearch.Text = "Search for";
 
             lblResultsFor.Text = "results found for:";
@@ -566,7 +564,7 @@ namespace Www.Templates
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
             {
                 pnlTermSearch.Visible = false;
-                pnlSendToPrinter.Visible = true;
+
             }
             else
             {

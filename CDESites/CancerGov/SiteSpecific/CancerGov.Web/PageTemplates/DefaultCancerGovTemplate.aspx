@@ -7,15 +7,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
     <title></title>
-    <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>    
-    <script src="/JS/popEvents.js" type="text/javascript"></script>
-	<script type="text/javascript" language="JavaScript" src="/JS/JSLoader/JSLoader.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <!--[if IE]>
-	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
-    <![endif]-->
+    <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
+
+    <script src="/JS/popEvents.js" type="text/javascript"></script>
+
+    <script type="text/javascript" language="JavaScript" src="/JS/JSLoader/JSLoader.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+
+    <script src="/JS/popEvents.js" type="text/javascript"></script>
+
 </head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
+<body runat="server">
+    <!-- CGov Container -->
+    <div id="cgovContainer">
     <!-- Site Banner -->
 <div class="skip">
         <a title="Skip to content" href="#skiptocontent">Skip to content</a></div>  
@@ -33,13 +40,10 @@
         <NCI:TemplateSlot ID="cgvLanguageDate" runat="server" />
     </div>
     <!-- Main Area -->
-    <!-- Main Area -->
-    <div align="center">
-        <table width="771" cellspacing="0" cellpadding="0" border="0">
-            <tr>
-                <td valign="top">
-                    <img src="/images/spacer.gif" width="9" height="1" alt="" border="0" />
-                </td>                
+    <!-- Left Navigation and Content Area -->
+    <div id="mainContainer"  align="center">
+        <table width="751" cellspacing="0" cellpadding="0" border="0">
+            <tr>                     
                 <!-- Left Nav Column -->
                 <td id="leftzone" valign="top">
                     <table border="0" cellspacing="0" cellpadding="0" width="164">
@@ -94,19 +98,19 @@
                     <NCI:TemplateSlot ID="cgvBody" runat="server"  />
                     <NCI:TemplateSlot ID="cgvBodyNav" runat="server" />
                 </td>
-                <!-- End Content Area -->
-                <td valign="top">
-                    <img src="/images/spacer.gif" width="10" height="1" alt="" border="0" />
-                </td>
+                <!-- End Content Area -->              
             </tr>
         </table>
-    </div>
-    <!-- End Main Area -->
+         </div>
+    <!-- End Left Navigation and Content Area -->
+     <!-- End Main Area -->
     <!-- Footer -->
     <div id="footerzone" align="center">
         <NCI:TemplateSlot ID="cgvFooter" runat="server" RemoveIfEmpty="false" />
     </div>
     <!-- End Foooter-->
+    </div>
+    <!-- End CGovContainer--> 
     <!-- TO INSERT WEB ANALYTICS CODE. Every template should have this 
     control else Web analytics scripts will not show up in the HTML-->
     <NCI:WebAnalyticsControl ID="WebAnalyticsControl1" runat="server" />

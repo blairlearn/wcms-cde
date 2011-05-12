@@ -19,10 +19,6 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 	    this.Props = {};
 	    this.Evars = {};
 	    this.Events = {};
-
-        s.linkTrackVars = null;
-        s.linkTrackEvents = null;
-        s.events = null;
         
         this.LogToOmniture = function() {
 	        var local_s=s_gi(this.ReportSuites);
@@ -74,6 +70,15 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             }
 
             local_s.tl(sender,this.LinkType, this.LinkName);
+            
+            //Clear events and all props and eVars set in this click event image request
+			local_s.events='';
+			for (var i in this.Props) {
+				local_s['prop' + i] = '';
+			}
+ 			for (var i in this.Evars) {
+				local_s['eVar' + i] = '';
+            }
             
 	        if (NCIAnalytics.displayAlerts) {  
 	            var alertString = 
@@ -147,7 +152,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         // the Omniture s_code file generates 'class does not support Automation' errors on the 
 		// dataSrc, dataFld, and dataFormatAs properties the 'SEARCH' Image button = therefore reference to
 		// the control is being set to null instead of sender
-        clickParams = new NCIAnalytics.ClickParams(null,
+        clickParams = new NCIAnalytics.ClickParams(this,
             'nciglobal','o','SiteWideSearchResultsSearch');
         clickParams.Props = {
             11 : searchType,
@@ -267,7 +272,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
        if ($(ids.txtKeywords_state).value == 'valid')
             keyword = $(ids.txtKeywords).value; 
         
-       clickParams = new NCIAnalytics.ClickParams(null,
+       clickParams = new NCIAnalytics.ClickParams(this,
             'nciglobal,nciclinicaltrials','o','CTSearch');
        clickParams.Props = {
             11 : searchType,
@@ -662,7 +667,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 //******************************************************************************************************	
     LinkTracking : function(toLink, fromLink, label)  {
         
-        clickParams = new NCIAnalytics.ClickParams(null,
+        clickParams = new NCIAnalytics.ClickParams(this,
             'nciglobal','o','LinkTracking');
         clickParams.Props = {
             4 : toLink,
@@ -687,6 +692,112 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         clickParams.LogToOmniture(); 
     },
     
+//******************************************************************************************************	
+    TimelyContentZoneTab : function(sender, tabTitle) {
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','TimelyContentZoneTab' );
+        clickParams.Props = {
+            37 : tabTitle};
+        clickParams.Evars = {
+            37 : tabTitle};
+        clickParams.LogToOmniture();
+    },
+
+//******************************************************************************************************	
+    TimelyContentZoneLink : function(e, panelTitle) {
+		var targ;
+		if (!e) var e = window.event;
+		if (e.target) targ = e.target;
+		else if (e.srcElement) targ = e.srcElement;
+		if (targ.nodeType == 3) // defeat Safari bug
+			targ = targ.parentNode;
+		
+		if(targ.nodeName == 'IMG')
+			targ = targ.parentNode;
+			
+		if(targ.nodeName == 'EM')
+			targ = targ.parentNode;
+		
+		if(targ.nodeName == 'A' )
+	    {
+		    var linkText="";
+			var isTag = false;
+
+			clickParams = new NCIAnalytics.ClickParams(this,
+            'nciglobal','o','TimelyContentZoneLink' );
+    		
+		    for (i=0; i< targ.innerHTML.length; i++)
+		    {
+				if(targ.innerHTML.charAt(i) == "<")
+					isTag = true;
+				
+				if(!isTag)
+					linkText = linkText + targ.innerHTML.charAt(i);
+					
+				if(targ.innerHTML.charAt(i) == ">")
+					isTag = false;
+				
+		    }
+
+			var prefixCheck = targ.innerHTML.toLowerCase();
+		    if (prefixCheck.search("video_icon.jpg") > -1 )
+			    linkText = "Video: " + linkText;
+		    else if (prefixCheck.search("audio_icon.jpg") > -1 )
+			    linkText = "Audio: " + linkText;
+		
+			clickParams.Props = {
+				38 : linkText,
+				39 : targ.href,
+				40 : panelTitle};
+			clickParams.Evars = {
+				38 : linkText,
+				39 : targ.href,
+				40 : panelTitle};
+			clickParams.LogToOmniture();
+		}
+	},
+
+//******************************************************************************************************	
+    QuestionsAboutCancerFooter : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','QuestionsAboutCancerFooter');
+        clickParams.Events = [5]; 
+        clickParams.LogToOmniture(); 
+    },
+
+//******************************************************************************************************	
+   QuestionsAboutCancerHeader : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','QuestionsAboutCancerHeader');
+        clickParams.Events = [18]; 
+        clickParams.LogToOmniture(); 
+    },
+
+//******************************************************************************************************	
+   FindCancerTypeBox : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','FindCancerTypeBox');
+        clickParams.Events = [19]; 
+        clickParams.LogToOmniture(); 
+    },
+
+//******************************************************************************************************	
+    TileCarousel : function(sender, tileTitle, tileURL) {
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','TileCarousel' );
+        clickParams.Props = {
+            41 : tileTitle,
+            42 : tileURL};
+        clickParams.Evars = {
+            41 : tileTitle,
+            42 : tileURL};
+        clickParams.Events = [20];
+        clickParams.LogToOmniture();
+    },
+
 //******************************************************************************************************	
     LinkTrackTagBuilder : function(e)  {
 

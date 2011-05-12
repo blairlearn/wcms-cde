@@ -18,7 +18,7 @@
     }
 </script> 
 
-	<!-- Content Header 
+	<!-- Content Header
 	<div id="headerzone" style="margin-right: auto;margin-left: auto; width: 751px;">
 	    <table width="751" cellspacing="0" cellpadding="0" border="0">
 	        <tr>
@@ -28,7 +28,7 @@
 	        </tr>
 	    </table>
 	    
-	</div>
+	</div> -->
 
 	<!-- Main Area -->
 	
@@ -87,23 +87,6 @@
                     </asp:Panel>
                 <!-- end Search area -->
 
-			  <asp:Panel ID="pnlSendToPrinter" runat="server" Visible="False">
-			    <img width="1" height="10" border="0" alt="" src="/images/spacer.gif"/>
-			    <table width="751" cellspacing="0" cellpadding="0" border="0">
-			        <tr>
-			            <td align="left">
-			                <table width="650" cellspacing="0" cellpadding="0" border="0">
-			                    <tr>
-			                        <td><a href="javascript:window.print();"  class="navigation-dark-red-link" runat="server" ID="printLinkHref" >
-                                        <asp:Literal ID="litSendToPrinter" runat="server"></asp:Literal></a>
-			                        </td>
-			                    </tr>
-			                </table>
-			            </td>
-			        </tr>
-			     </table>
-			     <img width="1" height="10" border="0" alt="" src="/images/spacer.gif"/>
-			  </asp:Panel>
 			  
 		        <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
                     <asp:View ID="ViewDefault" runat="server" EnableViewState="false">

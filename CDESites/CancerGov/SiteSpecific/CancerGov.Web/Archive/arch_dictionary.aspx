@@ -7,8 +7,8 @@
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-		<link rel="stylesheet" href="/stylesheets/nci.css" type="text/css">
-		<script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
+		<script src="/JS/JSLoader/JSLoader.js" type="text/javascript"></script>
 	</HEAD>
 	<body MS_POSITIONING="GridLayout">
 		<h1>Dictionary</h1>

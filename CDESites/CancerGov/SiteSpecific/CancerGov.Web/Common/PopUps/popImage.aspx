@@ -5,7 +5,7 @@
 <html>
   <head>
 	<META http-equiv="content-type" content="text/html;charset=ISO-8859-1">
-    <link rel="stylesheet" href="/stylesheets/nci.css" type="text/css">
+    <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
     <title>National Cancer Institute</title>
   </head>
   <body style="margin:0 0 0 0; padding:0 0 0 0"> 

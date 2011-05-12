@@ -6,7 +6,7 @@
 		<script type="text/javascript">
 		    var callingUrl = opener.location.href;
 		</script>
-		<link rel="stylesheet" href="/stylesheets/nci.css" type="text/css">
+		<link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
 
   </HEAD>
   <FRAMESET border=0 frameSpacing=0 rows=55,*,26 frameBorder=no>

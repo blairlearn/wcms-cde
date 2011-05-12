@@ -9,7 +9,7 @@
 
 
 	<!-- Main Area -->
-	<div align="center">
+	<div>
 		<table width="571" cellspacing="0" cellpadding="0" border="0">
 			<tr>		
 				<td valign="top">
@@ -151,7 +151,7 @@
            				    </div>
                     </form>                    				
 				</td>
-				<!----------------------->
+				
 				<td valign="top"><img src="/images/spacer.gif" width="10" height="1" alt="" border="0"></td>
 			</tr>
 		</table>

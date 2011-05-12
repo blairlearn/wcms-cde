@@ -2,25 +2,35 @@
 <%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls"
     TagPrefix="NCI" %>
 	
-<%@ Register src="../SnippetTemplates/TableofLinks.ascx" tagname="TableofLinks" tagprefix="uc1" %>
+<%@ Register src="/SnippetTemplates/TableofLinks.ascx" tagname="TableofLinks" tagprefix="uc1" %>
 	
-<%@ Register src="../SnippetTemplates/GlossaryTerms.ascx" tagname="GlossaryTerms" tagprefix="uc2" %>
+<%@ Register src="/SnippetTemplates/GlossaryTerms.ascx" tagname="GlossaryTerms" tagprefix="uc2" %>
 	
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="header" runat="server">
     <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
     <script type="text/javascript" language="JavaScript" src="/scripts/imgEvents.js"></script>
-    <script type="text/javascript" language="JavaScript" src="/JS/popEvents.js"></script>
-    <script src="/JS/popEvents.js" language="JavaScript" type="text/javascript"></script>
+
+    <script src="/JS/popEvents.js" type="text/javascript"></script>
+
     <script type="text/javascript" language="JavaScript" src="/JS/JSLoader/JSLoader.js"></script>
 
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+
+    <script src="/JS/popEvents.js" type="text/javascript"></script>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!--[if IE]>
 	    <link rel="Stylesheet" type="text/css" href="/stylesheets/emergency_IE.css" />
     <![endif]-->
     
 </head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" runat="server">
+<body runat="server">
+	<!-- CGov Container -->
+    <div id="cgovContainer">
 	<!-- Site Banner -->
 <div class="skip">
         <a title="Skip to content" href="#skiptocontent">Skip to content</a></div>  
@@ -74,11 +84,11 @@
         <NCI:TemplateSlot ID="cgvLanguageDate" runat="server" />
     </div>
     <!-- Main Area -->
-	<div align="center">
-		<table width="771" cellspacing="0" cellpadding="0" border="0">
+    <!-- Left Navigation and Content Area -->
+    <div id="mainContainer"  align="center">
+		<table width="751" cellspacing="0" cellpadding="0" border="0">
 			<tr>		
-			    <td valign="top"><img src="/images/spacer.gif" width="9" height="1" alt="" border="0"></td>
-				
+			    
 				<!-- Left Nav Column -->
 				<td id="leftzone" valign="top"></td>
 				<!----------------------->
@@ -117,15 +127,16 @@
 		    <uc1:TableofLinks ID="TableofLinks1" runat="server" />
 		</td>
 				<!----------------------->				
-				<td valign="top"><img src="/images/spacer.gif" width="10" height="1" alt="" border="0"></td>
+
 			</tr>
 		</table>
-	</div>
 	<!-- End Main Area -->
- 
+         </div>
+    <!-- End Left Navigation and Content Area -->
 	<!-- Footer -->
 	<div id="footerzone" align="center"></div>
-	
+	     </div>
+    <!-- End CGovContainer--> 
     <!-- TO INSERT WEB ANALYTICS CODE. Every template should have this 
     control else Web analytics scripts will not show up in the HTML-->
     <NCI:WebAnalyticsControl ID="WebAnalyticsControl1" runat="server" />
