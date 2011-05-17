@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<w:definitions targetNamespace="cancer.gov/glossproxy" xmlns:w="http://schemas.xmlsoap.org/wsdl/" xmlns="cancer.gov/glossproxy" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <w:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="cancer.gov/glossproxy">
+   <s:element name="glossify">
+    <s:complexType>
+     <s:sequence>
+      <s:element name="fragment" type="s:string"/>
+      <s:element name="dictionaries" type="ArrayOfString"/>
+      <s:element name="languages" type="ArrayOfString"/>
+     </s:sequence>
+    </s:complexType>
+   </s:element>
+   <s:complexType name="ArrayOfString">
+    <s:sequence>
+     <s:element maxOccurs="unbounded" minOccurs="0" name="string" type="s:string"/>
+    </s:sequence>
+   </s:complexType>
+   <s:element name="glossifyResponse">
+    <s:complexType>
+     <s:sequence>
+      <s:element name="glossifyResult" type="ArrayOfTerm"/>
+     </s:sequence>
+    </s:complexType>
+   </s:element>
+   <s:complexType name="ArrayOfTerm">
+    <s:sequence>
+     <s:element maxOccurs="unbounded" minOccurs="0" name="Term" type="Term"/>
+    </s:sequence>
+   </s:complexType>
+   <s:complexType name="Term">
+    <s:sequence>
+     <s:element name="start" type="s:int"/>
+     <s:element name="length" type="s:int"/>
+     <s:element name="docId" type="s:string"/>
+     <s:element minOccurs="0" name="dictionary" type="s:string"/>
+     <s:element name="language" type="s:string"/>
+     <s:element name="firstOccurrence" type="s:boolean"/>
+    </s:sequence>
+   </s:complexType>
+  </s:schema>
+  </w:types>
+  <w:message name="glossifySoapIn">
+    <w:part name="parameters" element="glossify">
+    </w:part>
+  </w:message>
+  <w:message name="glossifySoapOut">
+    <w:part name="parameters" element="glossifyResponse">
+    </w:part>
+  </w:message>
+  <w:portType name="GlossifierSoap">
+    <w:operation name="glossify">
+      <w:input message="glossifySoapIn">
+    </w:input>
+      <w:output message="glossifySoapOut">
+    </w:output>
+    </w:operation>
+  </w:portType>
+  <w:binding name="GlossifierSoap" type="GlossifierSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <w:operation name="glossify">
+      <soap:operation soapAction="cancer.gov/glossproxy/glossify" style="document"/>
+      <w:input>
+        <soap:body use="literal"/>
+      </w:input>
+      <w:output>
+        <soap:body use="literal"/>
+      </w:output>
+    </w:operation>
+  </w:binding>
+  <w:binding name="GlossifierSoap12" type="GlossifierSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <w:operation name="glossify">
+      <soap12:operation soapAction="cancer.gov/glossproxy/glossify" style="document"/>
+      <w:input>
+        <soap12:body use="literal"/>
+      </w:input>
+      <w:output>
+        <soap12:body use="literal"/>
+      </w:output>
+    </w:operation>
+  </w:binding>
+  <w:service name="GlossifierProxy">
+    <w:port name="GlossifierSoap" binding="GlossifierSoap">
+      <soap:address location="http://percussion.cancer.gov/glossifierProxy"/>
+    </w:port>
+    <w:port name="GlossifierSoap12" binding="GlossifierSoap12">
+      <soap12:address location="http://percussion.cancer.gov/glossifierProxy"/>
+    </w:port>
+  </w:service>
+</w:definitions>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file was auto-generated from WSDL -->
+<!-- by the Apache Axis2 version: 1.5.1  Built on : Oct 19, 2009 (10:59:00 EDT) -->
+<serviceGroup>
+    <service name="GlossifierProxy">
+        <messageReceivers>
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="glossproxy.gov.cancer.GlossifierProxyMessageReceiverInOut"/>
+        </messageReceivers>
+        <parameter name="ServiceClass">glossproxy.gov.cancer.GlossifierProxySkeleton</parameter>
+        <parameter name="useOriginalwsdl">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <operation name="glossify" mep="http://www.w3.org/ns/wsdl/in-out" namespace="cancer.gov/glossproxy">
+            <actionMapping>cancer.gov/glossproxy/glossify</actionMapping>
+            <outputActionMapping>cancer.gov/glossproxy/GlossifierSoap/glossifyResponse</outputActionMapping>
+        </operation>
+    </service>
+</serviceGroup>
