@@ -121,6 +121,11 @@ namespace NCI.Web.CDE
 
             XmlSerializer serializer = new XmlSerializer(typeof(PageTemplateConfiguration));
 
+            bool pageAssemblyInstructionXmlValid = true;
+
+            pageAssemblyInstructionXmlValid = PageAssemblyInstructionFactory.ValidateXml(PageTemplateConfigurationPath,
+                                HttpContext.Current.Server.MapPath(ContentDeliveryEngineConfig.PageAssembly.PageAssemblyInfoTypes.XsdPath));
+
             try
             {
                 using (FileStream xmlFile = File.Open(configurationPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))

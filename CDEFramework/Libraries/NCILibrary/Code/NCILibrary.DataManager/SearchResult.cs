@@ -84,6 +84,10 @@ namespace NCI.DataManager
 
         public string ReviewedDate { get; set; }
 
+        /// <summary>
+        /// subheader
+        /// </summary>
+        public string SubHeader { get; set; }
         public SearchResult()
         {
             ShortDescription = string.Empty;
