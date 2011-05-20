@@ -6,7 +6,7 @@ More info available at http://www.omniture.com */
 var s=s_gi(s_account);
 
 /************************** CONFIG SECTION **************************/
-/* Config Section Version - CancerGov_3_2011 */
+/* Config Section Version - CancerGov_5_18_2011 */
 /* Specify the life time of the cookie in seconds, or */
 /* set to "Session" to turn off persistent cookies.   */
 s.cookieLifetime="";
@@ -18,7 +18,7 @@ s.charSet="UTF-8";
 s.trackDownloadLinks=true;
 s.trackExternalLinks=true;
 s.trackInlineStats=true;
-s.linkDownloadFileTypes="exe,zip,wav,mp3,mov,mpg,avi,wmv,doc,docx,xls,xlsx,ppt,pptx";
+s.linkDownloadFileTypes="pdf,exe,zip,wav,mp3,mov,mpg,avi,wmv,doc,docx,xls,xlsx,ppt,pptx";
 s.linkInternalFilters="javascript:,cancer.gov";
 s.linkLeaveQueryString=false;
 s.linkTrackVars="None";
@@ -36,10 +36,18 @@ if (typeof pageNameOverride!="undefined")
 if (typeof linkInternalFiltersOverride!="undefined")
 	s.linkInternalFilters=linkInternalFiltersOverride;	
 	
-var canonicalLink = document.getElementById("lnkCanonical");
+var canonicalLink = null;
+var links = document.getElementsByTagName("link");
+for (var i = 0; i < links.length; i++) {
+	if( links[i].getAttribute("rel") == "canonical")
+	{
+		canonicalLink = links[i].href;
+		break;
+	}
+}
 if(canonicalLink)
 {
-    canonicalLink = canonicalLink.href.toLowerCase();
+    canonicalLink = canonicalLink.toLowerCase();
 
     // Remove protocol
     if(canonicalLink.indexOf("http://") >= 0)
