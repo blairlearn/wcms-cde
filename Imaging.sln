@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.CDE.UI", "CD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.UI.WebControls", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj", "{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIP.Web", "CDESites\CIP\SiteSpecific\CIP.Web\CIP.Web.csproj", "{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imaging.Web", "CDESites\Imaging\SiteSpecific\Imaging.Web\Imaging.Web.csproj", "{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
