@@ -97,7 +97,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Schema\CDESchema.xsd" />
+    <Content Include="Schema\CDESchema.xsd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
