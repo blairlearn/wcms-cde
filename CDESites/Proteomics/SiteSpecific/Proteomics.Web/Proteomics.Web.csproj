@@ -96,6 +96,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
+    <Content Include="JS\Omniture\s_code.js" />
     <Content Include="Schema\CDESchema.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
