@@ -4044,3 +4044,12 @@ vertical-align=middle;
 	float:none;
 }
 /* ------------- classes from nciplus.css  ----------------------------------------------------------------- */
+
+/* New Spanish Portal Banner */
+.esPortalBannerCont{ height:95px; border-bottom:thin solid #878787; padding-bottom:4px;}
+
+.esPortalBanner{ background-color:#cacbd0; height:91px;}
+
+.portalTitle{ float:left; font-family:Tahoma, Geneva, sans-serif; font-size:26px; padding:10px 0 0 10px;}
+
+/* END New Spanish Portal Banner */
