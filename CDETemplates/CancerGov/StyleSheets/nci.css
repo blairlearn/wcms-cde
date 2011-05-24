@@ -1309,7 +1309,7 @@ LI.Protocol-IL-Bullet {
 	list-style : disc url();
 }
 LI.Protocol-IL-Dash {
-	list-style : square url();
+	list-style : disc url();
 }
 LI.Protocol-IL-Circle {
 	list-style : none url();
