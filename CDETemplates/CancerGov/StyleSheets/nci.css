@@ -4046,7 +4046,7 @@ vertical-align=middle;
 /* ------------- classes from nciplus.css  ----------------------------------------------------------------- */
 
 /* New Spanish Portal Banner */
-.esPortalBannerCont{ height:95px; border-bottom:thin solid #878787; padding-bottom:4px;}
+.esPortalBannerCont{ height:95px; border-bottom:thin solid #878787; margin-bottom:10px;}
 
 .esPortalBanner{ background-color:#cacbd0; height:91px;}
 
