@@ -2139,7 +2139,12 @@ LI.QandA-ListItem {
 .display-url {
 	color : #4d4d4d;
 }
-UL LI {
+/***************************** content area style ***************************************/
+#cgvBody ul li {
+	margin-bottom: 5px;
+}
+/***************************** END content area style ***************************************/
+ul li {
 	list-style : url(/images/bullet_sm_css.gif);
 	list-style-type : disc;
 	margin-left : -15px;
