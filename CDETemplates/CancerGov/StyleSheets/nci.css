@@ -494,7 +494,7 @@ A.definition:hover {
 	margin-bottom: 6px;
 }
 .leftnav-shaded-box ul li {
-	word-wrap: break-word;
+	/* word-wrap: break-word; */
 }
 .leftnav-shaded-box ul li.leftnav-on {
 	font-weight: 900;
@@ -1309,7 +1309,7 @@ LI.Protocol-IL-Bullet {
 	list-style : disc url();
 }
 LI.Protocol-IL-Dash {
-	list-style : disc url();
+	list-style : circle url(/images/bullet_sm_css.gif);
 }
 LI.Protocol-IL-Circle {
 	list-style : none url();
@@ -2138,16 +2138,6 @@ LI.QandA-ListItem {
 }
 .display-url {
 	color : #4d4d4d;
-}
-/***************************** content area style ***************************************/
-#cgvBody ul li {
-	margin-bottom: 5px;
-}
-/***************************** END content area style ***************************************/
-ul li {
-	list-style : url(/images/bullet_sm_css.gif);
-	list-style-type : disc;
-	margin-left : -15px;
 }
 ul.li-margin10 li {
 	margin-top:10px;
@@ -3592,12 +3582,22 @@ span.navTitle {
 
 /* Default unordered list style */
 
-UL LI {
-	LIST-STYLE : url(/images/bullet_sm_css.gif);
-	LIST-STYLE-TYPE : disc;
-	MARGIN-LEFT : -15px;
-	PADDING-LEFT : -15px;
+ul li {
+	list-style : disc url(/images/bullet_sm_css.gif);
+	margin-left: -15px; padding-left: -15px;
 }
+/***************************** content area style ***************************************/
+#cgvBody ul {
+margin: 10px 5px 10px 0; padding-left: 22px;
+	
+}
+#cgvBody ul li {
+	background: url(/images/bullet_sm_css.gif) 0 6px no-repeat;
+	list-style-image: none;
+	list-style-type: none;
+	padding-left: 10px;	margin-bottom: 5px;
+}
+/***************************** END content area style ***************************************/
 OL LI {
 }
 UL.Protocol-UL {
@@ -4049,3 +4049,12 @@ vertical-align=middle;
 	float:none;
 }
 /* ------------- classes from nciplus.css  ----------------------------------------------------------------- */
+
+/* New Spanish Portal Banner */
+.esPortalBannerCont{ height:95px; border-bottom:thin solid #878787; margin-bottom:10px;}
+
+.esPortalBanner{ background-color:#cacbd0; height:91px;}
+
+.portalTitle{ float:left; font-family:Tahoma, Geneva, sans-serif; font-size:26px; padding:10px 0 0 10px;}
+
+/* END New Spanish Portal Banner */
