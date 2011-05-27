@@ -16,7 +16,7 @@ body, td, table, p, .text, .gray, a.gray, a.gray:active, a.gray:visited, a.gray-
 div, p, td, ul, ol, li, dl, td, dd, .text /* redundant selectors to help NS4 not forget */ {
 	font-family: Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 	font-size: 12px;
-	color: #4d4d4d;
+F  color: #4d4d4d;
 	font-weight: normal;
 	text-decoration: none;
 }
@@ -1092,7 +1092,6 @@ div.title-red-arrow h3 a:hover {
 	text-decoration: none;
 }
 /* end Test H3 with red arrows instead of image */
-
 h3.popup-definition {
 	font-size: 13px;
 }
@@ -1268,7 +1267,10 @@ div.keyPoints ul li {
 	margin: 0 0 10px 0;
 	padding: 0;
 }
-#cgvBody .cancer-bulletin-home-page h3, .cancer-bulletin-home-page h3 a:link, .cancer-bulletin-home-page h3 a:visited, .cancer-bulletin-home-page h3 a:active {
+#cgvBody .cancer-bulletin-home-page h3, 
+#cgvBody .cancer-bulletin-home-page h3 a:link, 
+#cgvBody .cancer-bulletin-home-page h3 a:visited, 
+#cgvBody .cancer-bulletin-home-page h3 a:active {
 	margin: 0;
 	padding: 0;
 	font-size: 16px;
@@ -1277,7 +1279,10 @@ div.keyPoints ul li {
 #cgvBody .cancer-bulletin-home-page h3 a:hover {
 	text-decoration: underline;
 }
-#cgvBody .cancer-bulletin-home-page h4, .cancer-bulletin-home-page h4 a:link, .cancer-bulletin-home-page h4 a:visited, .cancer-bulletin-home-page h4 a:active {
+#cgvBody .cancer-bulletin-home-page h4, 
+#cgvBody .cancer-bulletin-home-page h4 a:link, 
+#cgvBody .cancer-bulletin-home-page h4 a:visited, 
+#cgvBody .cancer-bulletin-home-page h4 a:active {
 	margin: 0;
 	padding: 0;
 	font-size: 12px;
@@ -1383,7 +1388,9 @@ div.keyPoints ul li {
 	width: 561px;
 	padding-left: 10px;
 }
-#cgvBody .cancer-bulletin-inside-page a:link, .cancer-bulletin-inside-page a:visited, .cancer-bulletin-inside-page a:active {
+#cgvBody .cancer-bulletin-inside-page a:link, 
+#cgvBody .cancer-bulletin-inside-page a:visited, 
+#cgvBody .cancer-bulletin-inside-page a:active {
 	text-decoration: none;
 }
 #cgvBody .cancer-bulletin-inside-page a:hover {
@@ -1430,16 +1437,19 @@ div.keyPoints ul li {
 	background: #edeeed;
 	margin: 0 10px 10px 0;
 }
-#cgvBody .cancer-bulletin-sidebox-right h3, .cancer-bulletin-sidebox-left h3 {
+#cgvBody .cancer-bulletin-sidebox-right h3, 
+#cgvBody .cancer-bulletin-sidebox-left h3 {
 	color: #fff;
 	background: #c31e24;
 	margin: 0;
 	padding: 4px 12px;
 }
-#cgvBody .cancer-bulletin-sidebox-right .content, .cancer-bulletin-sidebox-left .content {
+#cgvBody .cancer-bulletin-sidebox-right .content, 
+#cgvBody .cancer-bulletin-sidebox-left .content {
 	padding: 5px 12px;
 }
-#cgvBody .cancer-bulletin-sidebox-right .content ul, .cancer-bulletin-sidebox-left .content ul {
+#cgvBody .cancer-bulletin-sidebox-right .content ul, 
+#cgvBody .cancer-bulletin-sidebox-left .content ul {
 	margin-bottom: 0;
 }
 #cgvBody .cancer-bulletin-imagebox {
@@ -1457,7 +1467,9 @@ div.keyPoints ul li {
 	width: 200px;
 	margin: 0 10px 10px 0;
 }
-#cgvBody .cancer-bulletin-imagebox-right .caption, .cancer-bulletin-imagebox-left .caption, .cancer-bulletin-imagebox .caption {
+#cgvBody .cancer-bulletin-imagebox-right .caption, 
+#cgvBody .cancer-bulletin-imagebox-left .caption, 
+#cgvBody .cancer-bulletin-imagebox .caption {
 	display: block;
 	color: #666;
 	background: #edeeed;
@@ -1486,7 +1498,10 @@ div.keyPoints ul li {
 #cgvBody .cancerbulletin-multipage-nav p {
 	font-size: 11px;
 }
-#cgvBody .cancerbulletin-multipage-nav a:link, .cancerbulletin-multipage-nav a:visited, .cancerbulletin-multipage-nav a:hover, .cancerbulletin-multipage-nav a:active {
+#cgvBody .cancerbulletin-multipage-nav a:link, 
+#cgvBody .cancerbulletin-multipage-nav a:visited, 
+#cgvBody .cancerbulletin-multipage-nav a:hover, 
+#cgvBody .cancerbulletin-multipage-nav a:active {
 	color:#000;
 	font-size: 11px;
 }
@@ -1815,7 +1830,7 @@ vertical-align=middle;
 	list-style: none;
 	background: none;
 	display: inline;
-	margin: 0;	padding: 0 6px 0 0;
+	margin: 0;	padding: 0 9px 0 0;
 }
 #cgvBody .azMenu:after {
 	content: ".";
@@ -2002,6 +2017,7 @@ a.leftnav-shaded-box:hover h1, .leftnav-shaded-box h1 a:hover {
 .recovery-notable-date {
 	font-size:90%;
 	color:#666;
+
 	font-style:italic;
 }
 a.recovery-smalllink, a.recovery-smalllink:visited, a.recovery-smalllink:active, .recovery-smalllink a:link, .recovery-smalllink a:visited, .recovery-smalllink a:active {
@@ -3275,7 +3291,6 @@ A.ns-leftnav:hover {
 	text-decoration : none;
 	font-weight : bold;
 }
-
 A.ns-section {
 	color : #323264;
 	font-size : 13px;
