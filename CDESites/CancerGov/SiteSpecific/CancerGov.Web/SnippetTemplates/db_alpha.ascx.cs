@@ -600,6 +600,7 @@ namespace Www.Templates
             string termPronun = string.Empty;
             string defHtml = string.Empty;
             string imageHtml = string.Empty;
+            string audioMediaHtml = string.Empty;
 
             CdrID = dataItem.GlossaryTermID.ToString();
             termName = dataItem.TermName;
@@ -607,6 +608,10 @@ namespace Www.Templates
             defHtml = dataItem.DefinitionHTML;
             imageHtml = (dataItem.MediaHTML == null) ? string.Empty : dataItem.MediaHTML;
             imageHtml = imageHtml.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+
+            audioMediaHtml = (dataItem.AudioMediaHTML == null) ? string.Empty : dataItem.AudioMediaHTML;
+            audioMediaHtml = audioMediaHtml.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
+            audioMediaHtml = audioMediaHtml.Replace("[_flashMediaLocation]", ConfigurationSettings.AppSettings["FlashMediaLocation"]);
 
             if (language == "Spanish")
             {
@@ -650,7 +655,7 @@ namespace Www.Templates
             lblTermName.Text = termName;
             litDefHtml.Text = defHtml;
             litImageHtml.Text = imageHtml;
-
+            litAudioMediaHtml.Text = audioMediaHtml;
             RenderLangButtons();
             
         }
