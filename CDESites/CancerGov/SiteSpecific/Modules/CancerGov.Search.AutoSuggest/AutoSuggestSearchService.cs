@@ -36,7 +36,7 @@ namespace CancerGov.Search.AutoSuggest
         /// <param name="contains">Indicator on whether the text is to be search from the beginning of the text or anywhere in the string</param>
         /// <returns>Returns the search results</returns>
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "SearchJSON/{language}?searchTerm={criteria}")]
+            UriTemplate = "SearchJSON/{language}?term={criteria}")]
         [OperationContract]
         public AutoSuggestSearchServiceCollection SearchJSON(string language, string criteria)
         {
@@ -57,7 +57,7 @@ namespace CancerGov.Search.AutoSuggest
         /// <param name="contains">Indicator on whether the text is to be search from the beginning of the text or anywhere in the string</param>
         /// <returns>Returns the search results</returns>
         [WebGet(ResponseFormat = WebMessageFormat.Xml,
-            UriTemplate = "SearchXML/{language}?searchTerm={criteria}")]
+            UriTemplate = "SearchXML/{language}?term={criteria}")]
         [OperationContract]
         public AutoSuggestSearchServiceCollection SearchXML(string language, string criteria)
         {
