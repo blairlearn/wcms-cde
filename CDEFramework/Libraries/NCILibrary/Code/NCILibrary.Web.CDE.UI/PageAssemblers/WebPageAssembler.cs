@@ -210,6 +210,7 @@ namespace NCI.Web.CDE.UI
             SetTitle();
             InsertCanonicalURL();
             InsertPageMetaData();
+            InsertBodyTagAttributes();
 
             //Set the form action so it does not post back to the page template path.
             if (this.Form != null)
@@ -315,7 +316,7 @@ namespace NCI.Web.CDE.UI
                 {
                     // Loop thru all css resources and add css resource
                     foreach (StyleSheetInfo ssInfo in pgTemplateInfo.StyleSheets)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath, ssInfo.Media);
                 }
             }
         }
@@ -354,14 +355,14 @@ namespace NCI.Web.CDE.UI
                     //if (firstStylesheet.Any())
                     //NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, firstStylesheet.FirstOrDefault().StyleSheetPath);
                     foreach (StyleSheetInfo cssBeginningInfo in firstStylesheet)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssBeginningInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssBeginningInfo.StyleSheetPath, cssBeginningInfo.Media);
 
                      
 
                     
                     // Loop thru remaining css resources and js resource
                     foreach (StyleSheetInfo ssInfo in remainingStylesheets)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath, ssInfo.Media);
 
                     foreach (JavascriptInfo jsInfo in remainingJavaScripts)
                         NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsInfo.JavascriptPath);
@@ -372,7 +373,7 @@ namespace NCI.Web.CDE.UI
                     //    NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, lastStylesheet.FirstOrDefault().StyleSheetPath);
 
                     foreach (StyleSheetInfo cssLastInfo in lastStylesheet)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssLastInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssLastInfo.StyleSheetPath, cssLastInfo.Media);
 
                     //Load last Javascript
                     //if (lastJavaScript.Any())
@@ -385,6 +386,31 @@ namespace NCI.Web.CDE.UI
             }
         }
 
+        /// <summary>
+        /// Adds a class attribute to the body html tag and assigns the 
+        /// contenttype of the pageinstructions as the value
+        /// </summary>
+        protected virtual void InsertBodyTagAttributes()
+        {
+
+            foreach (HtmlContainerControl htmlCtl in this.FindControlByType<HtmlContainerControl>())
+            {
+                string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
+                if (htmlTag.Equals("body"))
+                {
+                    string contentType =  ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
+                    contentType = string.IsNullOrEmpty(contentType) ? String.Empty :  contentType.ToLower();
+
+                    if (contentType != String.Empty)
+                    {
+                        // contentType will contain rx:, etc as part of the value, we need to strip it out.
+                        int index = contentType.IndexOf(':');
+                        contentType = index > -1 ? contentType.Substring(index + 1) : contentType;
+                        htmlCtl.Attributes.Add("class", contentType);
+                    }
+                }
+            }
+        }
      
         #endregion
     }

@@ -37,7 +37,7 @@ namespace NCI.Web.UI.WebControls
             }
         }
 
-        public static void AddStyleSheet(Page p, string styleSheet)
+        public static void AddStyleSheet(Page p, string styleSheet, string media)
         {
             //Check arguments
             if (p == null)
@@ -57,6 +57,9 @@ namespace NCI.Web.UI.WebControls
                 link.Href = styleSheet;
 
                 link.Attributes.Add("rel", "stylesheet");
+
+                if(!string.IsNullOrEmpty(media))
+                    link.Attributes.Add("media", media);
 
                 //Mark that the stylesheet has been added so no other 
                 //context menus will add this...

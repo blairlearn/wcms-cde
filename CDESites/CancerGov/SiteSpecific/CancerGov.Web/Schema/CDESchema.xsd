@@ -1498,7 +1498,12 @@
       </element>
     </sequence>
     <attribute name="Beginning" type="string"></attribute>
-    <attribute name="End" type="string"></attribute>    
+    <attribute name="End" type="string"></attribute>
+    <attribute name="Media" type="string">
+      <annotation>
+        <documentation>The media to which the style should be applied.</documentation>
+      </annotation> 
+    </attribute>
   </complexType>
   
   <complexType name="JavascriptInfo">
