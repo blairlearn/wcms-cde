@@ -1,44 +1,30 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SiteWideSearch" %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="NCI" %>
 
-<script type="text/javascript">
-    function trackTextChange(tBox) {
-        if (tBox.name == 'txtKeyword1') {
-            document.getElementById('txtKeyword2').value = tBox.value;
-        }
-        else if (tBox.name == 'txtKeyword2') {
-        document.getElementById('txtKeyword1').value = tBox.value;
-        }
-    }
-</script>
 <form id="frmResults" runat="server">
 
     <div>
-        <input onchange="trackTextChange(this)" type="text" id="txtKeyword1" name="txtKeyword1" size="75"; value="<% =Keyword %>" />&nbsp;&nbsp;<input type="image" class="schImg" src="images/general/content-search.gif" alt="Search" />
+        <input type="text" id="txtKeyword1" name="txtKeyword1"  size="50"; value="<% =Keyword %>" />&nbsp;<input id="swSearchButton" type="submit" value="Search"/>
         <% if (!string.IsNullOrEmpty(ResultsText))
            { %>
         <br />
-        <p><% =ResultsText%></p>
+        <p class="genSiteSearchResultsCount"><% =ResultsText%></p>
         <% } %>
-        <ul>
+        <ol>
             <asp:Repeater ID="rptSearchResults" runat="server">
                 <ItemTemplate>
-                    <li>
-                        <h1><%# DataBinder.Eval(Container.DataItem, "Title")%></h1>
-                        <%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") + "<br />" : "" %>
-                        <a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>"><%# DataBinder.Eval(Container.DataItem, "Url")%></a>
-                        <br />
+                    <li class="genSearchItem">
+                        <h4><a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>"><%# DataBinder.Eval(Container.DataItem, "Title")%></a></h4>
+                        <p class="genListItemDesc"><%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") : "" %></p>
+                        <p class="genListItemLink"><%# DataBinder.Eval(Container.DataItem, "Url")%></p>
                     </li>
                 </ItemTemplate>     
             </asp:Repeater>
-        </ul>
-        <% if (ResultsFound){ %>
-        <p><% =ResultsText%></p><%} %>
+        </ol>
   <% if( ResultsFound ) {%>
   <br />
    <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" />
   <br />
-   <input type="text" onchange="trackTextChange(this)" id="txtKeyword2" name="txtKeyword2" size="75"; value="<% =Keyword %>" />&nbsp;&nbsp;<input type="image" class="schImg" src="images/general/content-search.gif" alt="Search" />
     <%} %>
     </div>
     
