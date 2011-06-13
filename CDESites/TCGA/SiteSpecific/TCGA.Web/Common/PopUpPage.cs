@@ -31,7 +31,7 @@ namespace TCGA.Web
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            CssManager.AddStyleSheet(this, GetStylesheetUrl());
+            CssManager.AddStyleSheet(this, GetStylesheetUrl(), string.Empty);
             JSManager.AddExternalScript(this, "/JS/imgEvents.js");
             JSManager.AddExternalScript(this, "/JS/popEvents.js");
         }
