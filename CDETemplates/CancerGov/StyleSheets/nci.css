@@ -5,7 +5,7 @@
 /*                           BEGIN General Definitions Section                                                               */
 /*****************************************************************************************************************************/
 body {
-	background: #f6f6f5 url(/images/general/body-bg.gif) repeat-x;
+	background: #f6f6f5 url(http://www.cancer.gov/images/general/body-bg.gif) repeat-x;
 	margin: 0;
 }
 body, td, table, p, .text, .gray, a.gray, a.gray:active, a.gray:visited, a.gray-link, a.gray-link:visited, a.gray-link:active, a.gray-text, a.gray-text:visited, a.gray-text:active {
@@ -25,7 +25,7 @@ ul li {
 	margin: 0;	padding: 0;
 }
 /* ul li {
-	list-style : disc url(/images/bullet_sm_css.gif);
+	list-style : disc url(http://www.cancer.gov/images/bullet_sm_css.gif);
 	margin: 0 0 0 -15px;	padding: 0 0 0 -15px;
 } */
 a, a:active, a:visited, .red-text {
@@ -105,7 +105,7 @@ ul.generic-bullet li {
 	margin-left: 0;
 	padding-left: 0;
 	list-style-type:none;
-	list-style:url(/images/bullet_sm_css.gif);
+	list-style:url(http://www.cancer.gov/images/bullet_sm_css.gif);
 }
 /* end list item with bullets */
 
@@ -623,7 +623,7 @@ H6 {
 }
 LI.portal {
 	line-height : 11px;
-	list-style : url(/images/bullet_sm_css.gif);
+	list-style : url(http://www.cancer.gov/images/bullet_sm_css.gif);
 	margin-bottom : 0;
 	margin-left : 0;
 	margin-top : 5px;
@@ -633,7 +633,7 @@ LI.sub {
 	color : #000;
 	font-size : 13px;
 	line-height : 16px;
-	list-style : url(/images/bullet_sm_css.gif);
+	list-style : url(http://www.cancer.gov/images/bullet_sm_css.gif);
 	margin-bottom : 5px;
 	margin-left : 5px;
 	margin-top : 5px;
@@ -649,7 +649,7 @@ LI.sub {
 #cgovContainer {
 	width: 802px;
 	margin: 0 auto;
-	background: #fff url(/images/general/container-bg.gif) no-repeat;
+	background: #fff url(http://www.cancer.gov/images/general/container-bg.gif) no-repeat;
 }
 #EmergencyAlertBanner {
 	margin: 0 auto;
@@ -657,7 +657,7 @@ LI.sub {
 }
 /* Emergency Alert Styles */
 .EmergencyAlertBanner {
-	background: url(/images/EmergencyBanner-bkg.gif) top left no-repeat #fff11e;
+	background: url(http://www.cancer.gov/images/EmergencyBanner-bkg.gif) top left no-repeat #fff11e;
 	margin: 0 0 12px 0;
 	padding: 8px 4px 8px 179px;
 	width: 568px;
@@ -717,7 +717,7 @@ LI.sub {
 	float:left;
 	padding: 0 399px 0 0;
 	border-top: 1px solid #b2b2b2;
-	background: #e4e4e3 url(/images/general/header-bg.gif) repeat-x;
+	background: #e4e4e3 url(http://www.cancer.gov/images/general/header-bg.gif) repeat-x;
 }
 #NCILogo a {
 	outline: none;
@@ -778,7 +778,7 @@ ul.nci-main-navigation li a {
 .bulletin-header {
 	width: 751px;
 	height: 85px;
-	background-image: url(/images/cancerbulletin/cancerbulletin-header-bg.gif);
+	background-image: url(http://www.cancer.gov/images/cancerbulletin/cancerbulletin-header-bg.gif);
 	background-repeat: repeat-x;
 }
 #cgvBody .cb-subscribe-header {
@@ -802,7 +802,7 @@ ul.nci-main-navigation li a {
 	height: 21px;
 	margin: 0;
 	border-top: 1px solid #510000;
-	background-image: url(/images/cancerbulletin/cancerbulletin-header-text-bg.gif);
+	background-image: url(http://www.cancer.gov/images/cancerbulletin/cancerbulletin-header-text-bg.gif);
 	background-repeat: repeat-x;
 	width: 751px;
 }
@@ -911,7 +911,7 @@ div.az {
 	margin-bottom: 6px;
 }
 div.az h3 {
-	background: #3c3c3c url(/images/general/leftnav-az-header.gif) repeat-x;
+	background: #3c3c3c url(http://www.cancer.gov/images/general/leftnav-az-header.gif) repeat-x;
 	color: #fff;
 	font-weight: bold;
 	font-size: 12px;
@@ -960,8 +960,8 @@ div.az table td {
 	margin: 0;
 }
 .leftnav-shaded-box ul li {
-	list-style : url(/images/spacer.gif);
-	background: #EAEBE6 url(/images/left-nav-red-arrow.gif) no-repeat 7px 10px;
+	list-style : url(http://www.cancer.gov/images/spacer.gif);
+	background: #EAEBE6 url(http://www.cancer.gov/images/left-nav-red-arrow.gif) no-repeat 7px 10px;
 	font: 12px Arial, Helvetica, sans-serif;
 	display: block;
 	margin: 0;
@@ -1009,7 +1009,7 @@ a.box-title:hover {
 	list-style: none;
 }
 .po-box ul.po-options li {
-	list-style:url(/images/spacer.gif);
+	list-style:url(http://www.cancer.gov/images/spacer.gif);
 	list-style-type: none;
 	padding: 0 0 2px 0;
 }
@@ -1027,32 +1027,32 @@ a.box-title:hover {
 	display: inline;
 	padding-left: 20px;
 	cursor: pointer;
-	background: url(/images/at_symbol_12x12.gif) no-repeat 2px 0;
+	background: url(http://www.cancer.gov/images/at_symbol_12x12.gif) no-repeat 2px 0;
 	padding-left: 20px;
 }
 .po-box ul.po-options a.po-option:hover {
 	color: #900;
 }
 .po-box ul.po-options a.po-email, .po-box ul.po-options a.po-email:link {
-	background: url(/images/email-document.gif) no-repeat 0 2px;
+	background: url(http://www.cancer.gov/images/email-document.gif) no-repeat 0 2px;
 }
 .po-box ul.po-options a.po-orderpub, .po-box ul.po-options a.po-orderpub:link {
-	background: url(/images/booklet.gif) no-repeat;
+	background: url(http://www.cancer.gov/images/booklet.gif) no-repeat;
 }
 .po-box ul.po-options a.po-pdf, .po-box ul.po-options a.po-pdf:link {
-	background: url(/images/pdf.gif) no-repeat;
+	background: url(http://www.cancer.gov/images/pdf.gif) no-repeat;
 }
 .po-box ul.po-options a.po-ppt, .po-box ul.po-options a.po-ppt:link {
-	background: url(/images/ppt-icon.gif) no-repeat;
+	background: url(http://www.cancer.gov/images/ppt-icon.gif) no-repeat;
 }
 .po-box ul.po-options a.po-printallpages, .po-box ul.po-options a.po-printallpages:link {
-	background: url(/images/print-page.gif) no-repeat;
+	background: url(http://www.cancer.gov/images/print-page.gif) no-repeat;
 }
 .po-box ul.po-options a.po-printpage, .po-box ul.po-options a.po-printpage:link {
-	background: url(/images/printer.gif) no-repeat;
+	background: url(http://www.cancer.gov/images/printer.gif) no-repeat;
 }
 .po-box ul.po-options a.po-viewallpages, .po-box ul.po-options a.po-viewallpages:link {
-	background: url(/images/view-document.gif) no-repeat;
+	background: url(http://www.cancer.gov/images/view-document.gif) no-repeat;
 }
 /* AddThis popup */
 #at15s_head, #at16pf {
@@ -1149,15 +1149,19 @@ a.box-title:hover {
 /*****************************************************************************************************************************/
 /*                           BEGIN Main Content Section                                                                      */
 /*****************************************************************************************************************************/
+
+/* During 6.3, the default holder for content area will change from cgvBody to a new div holder
+   cgovBody is NOT the holder for entire content area */
+
 #cgvBody {
-	width: 571px;
+
 }
 #cgvBody ul {
 	margin: 10px 5px 10px 0;
 	padding-left: 22px;
 }
 #cgvBody ul li {
-	background: url(/images/bullet_sm_css.gif) 0 6px no-repeat;
+	background: url(http://www.cancer.gov/images/bullet_sm_css.gif) 0 6px no-repeat;
 	list-style-image: none;
 	list-style-type: none;
 	padding: 0 0 0 10px;
@@ -1199,7 +1203,7 @@ a.definition:hover {
 }
 /* H3 with red arrows instead of image */
 div.title-red-arrow h3 {
-	background: url(/images/title-red-arrow.gif) no-repeat 1px 3px;
+	background: url(http://www.cancer.gov/images/title-red-arrow.gif) no-repeat 1px 3px;
 	margin: 0 0 3px 0;
 }
 div.title-red-arrow p {
@@ -1226,7 +1230,7 @@ h3.popup-definition {
 #cgvTileSlot {
 	width: 159px;
 	float: right;
-	margin: 0 0 10px 5px;
+	margin: 0 0 10px 4px;
 }
 /* jQuery tile slide */
 #slides {
@@ -1260,7 +1264,7 @@ ul.link-farm ul {
 	margin: 0 0 5px 5px;
 	padding: 20px 0px 10px 0px;
 	font: 17px georgia;
-	background:url(/images/pullquote-openquote.gif) no-repeat left 5px;
+	background:url(http://www.cancer.gov/images/pullquote-openquote.gif) no-repeat left 5px;
 }
 .pullquote-left {
 	float: left;
@@ -1268,11 +1272,11 @@ ul.link-farm ul {
 	margin: 0 5px 5px 0;
 	padding: 20px 0px 10px 0px;
 	font: 17px georgia;
-	background:url(/images/pullquote-openquote.gif) no-repeat left 5px;
+	background:url(http://www.cancer.gov/images/pullquote-openquote.gif) no-repeat left 5px;
 }
 .pullquote-text {
 	display: block;
-	background: url(/images/pullquote-closequote.gif) no-repeat right bottom;
+	background: url(http://www.cancer.gov/images/pullquote-closequote.gif) no-repeat right bottom;
 	padding: 0 30px;
 }
 /* end pullquote */
@@ -1393,7 +1397,7 @@ div.keyPoints ul li {
 }
 #cgvBody ul.cancer-bulletin-home-page-list-item li ul li {
 	list-style: none;
-	background : url(/images/bullet_sm_css.gif) 0 5px no-repeat;
+	background : url(http://www.cancer.gov/images/bullet_sm_css.gif) 0 5px no-repeat;
 	margin: 3px 0 3px 0;	padding-left: 10px;
 }
 #cgvBody ul.cancer-bulletin-home-page-in-depth {
@@ -1417,7 +1421,7 @@ div.keyPoints ul li {
 #cgvBody .cancer-bulletin-options-box {
 	border: 1px solid #bdbdbd;
 	margin: 0 0 20px 0; padding: 7px;
-	background: #f3f3f3 url(/images/cancerbulletin/cancerbulletin-options-bg.gif) repeat-x;
+	background: #f3f3f3 url(http://www.cancer.gov/images/cancerbulletin/cancerbulletin-options-bg.gif) repeat-x;
 }
 #cgvBody .cancer-bulletin-options-box .subscribe {
 	font-size: 13px;
@@ -1622,7 +1626,7 @@ td.caption {
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
 .pnlDrugSearch {
-	background:url(/images/drug-dictionary-search.jpg);
+	background:url(http://www.cancer.gov/images/drug-dictionary-search.jpg);
 	width:571px;
 	height:81px;
 }
@@ -1641,7 +1645,7 @@ td.caption {
 	padding:0px;
 }
 .pnlTermSearch {
-	background-image:url(/images/dictionary-search.jpg);
+	background-image:url(http://www.cancer.gov/images/dictionary-search.jpg);
 	width:571px;
 	height:81px;
 }
@@ -1797,16 +1801,16 @@ vertical-align=middle;
 	text-decoration: underline;
 }
 .rssReader a.google {
-	background: transparent url(/images/rss-google.gif) no-repeat 0 2px;
+	background: transparent url(http://www.cancer.gov/images/rss-google.gif) no-repeat 0 2px;
 }
 .rssReader a.yahoo {
-	background: transparent url(/images/rss-yahoo.gif) no-repeat 0 5px;
+	background: transparent url(http://www.cancer.gov/images/rss-yahoo.gif) no-repeat 0 5px;
 }
 .rssReader a.myaol {
-	background: transparent url(/images/rss-aol.gif) no-repeat 0 3px;
+	background: transparent url(http://www.cancer.gov/images/rss-aol.gif) no-repeat 0 3px;
 }
 .rssSection {
-	background: transparent url(/images/rss-feed-icon.gif) no-repeat 0 3px;
+	background: transparent url(http://www.cancer.gov/images/rss-feed-icon.gif) no-repeat 0 3px;
 	margin-left: 2px;
 	padding-bottom: 5px;
 }
@@ -1864,7 +1868,7 @@ ul.steps li a:link, ul.steps li a:visited, ul.steps li a:hover, ul.steps li a:ac
 	text-decoration: none;
 }
 ul.steps li a.steps-inactive {
-	background: url(/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-off.gif) top right no-repeat #eff4fd;
+	background: url(http://www.cancer.gov/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-off.gif) top right no-repeat #eff4fd;
 	border-bottom: 1px solid #d1d1d1;
 	border-right: 1px solid #d1d1d1;
 	padding: 17px 25px 15px 13px;
@@ -1873,10 +1877,10 @@ ul.steps li a.steps-inactive {
 	list-style: none;
 }
 ul.steps li a.steps-inactive:hover {
-	background: url(/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-hover.gif) top right no-repeat #cbdcf7;
+	background: url(http://www.cancer.gov/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-hover.gif) top right no-repeat #cbdcf7;
 }
 .steps-active {
-	background: url(/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-on.gif) top right no-repeat #fff;
+	background: url(http://www.cancer.gov/images/Documents/a199bc3c-eff7-4104-9d1e-543225acebeb/steps-arrow-on.gif) top right no-repeat #fff;
 	font-weight: bold;
 	border-bottom: 1px solid #d1d1d1;
 	padding: 17px 25px 15px 13px;
@@ -1907,7 +1911,7 @@ div.social-media-dropdown {
 	border-top: 1px solid #bdbdbd;
 }
 table.social-media-dropdown {
-	background: url(/images/social-media-bg.gif);
+	background: url(http://www.cancer.gov/images/social-media-bg.gif);
 	height: 27px;
 }
 table.social-media-dropdown td.1 {
@@ -1999,7 +2003,7 @@ ul.leftnav-shaded-box ul {
 	padding: 0;
 }
 ul.leftnav-shaded-box ul li {
-	background:url(/images/bullet_sm_css.gif) no-repeat scroll 2px 8px;
+	background:url(http://www.cancer.gov/images/bullet_sm_css.gif) no-repeat scroll 2px 8px;
 	list-style-image: none;
 	border-top:none;
 	padding: 2px 5px 2px 10px;
@@ -2116,7 +2120,7 @@ div.arrafunding-child a:hover {
 
 /* Recovery Objectives page */
 .objectives-header-arra {
-	background-image:url(/images/documents/184eb054-3d9d-44b6-935f-adb0fec30e76/arra_js_grdnt.jpg );
+	background-image:url(http://www.cancer.gov/images/documents/184eb054-3d9d-44b6-935f-adb0fec30e76/arra_js_grdnt.jpg );
 	padding: 5px 5px;
 	font-weight: bold;
 	font-size: 13px;
@@ -2142,7 +2146,7 @@ ul.steps-arra li a:link, ul.steps-arra li a:visited, ul.steps-arra li a:hover, u
 	text-decoration: none;
 }
 ul.steps-arra li a.steps-arra-inactive {
-	background: url(/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-off.gif) top right no-repeat #f2f2f2;
+	background: url(http://www.cancer.gov/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-off.gif) top right no-repeat #f2f2f2;
 	border-bottom: 1px solid #d1d1d1;
 	border-right: 1px solid #d1d1d1;
 	padding: 17px 25px 31px 13px;
@@ -2151,10 +2155,10 @@ ul.steps-arra li a.steps-arra-inactive {
 	list-style: none;
 }
 ul.steps-arra li a.steps-arra-inactive:hover {
-	background: url(/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-hover.gif) top right no-repeat #bfbfbf;
+	background: url(http://www.cancer.gov/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-hover.gif) top right no-repeat #bfbfbf;
 }
 .steps-arra-active {
-	background: url(/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-on.gif) top right no-repeat #fff;
+	background: url(http://www.cancer.gov/images/Documents/184eb054-3d9d-44b6-935f-adb0fec30e76/steps-arrow-on.gif) top right no-repeat #fff;
 	font-weight: bold;
 	border-bottom: 1px solid #d1d1d1;
 	padding: 17px 25px 31px 13px;
@@ -2251,7 +2255,7 @@ table.lifeLineTable td {
 
 /* end Spanish Boletin */
 .section {
-	background-image:url(/images/boletin/sectionBG.jpg);
+	background-image:url(http://www.cancer.gov/images/boletin/sectionBG.jpg);
 	width:270px;
 	background-repeat:no-repeat;
 	background-position:top;
@@ -2260,7 +2264,7 @@ table.lifeLineTable td {
 	margin-bottom:10px;
 }
 .section2 {
-	background-image:url(/images/boletin/sectionBG2.jpg);
+	background-image:url(http://www.cancer.gov/images/boletin/sectionBG2.jpg);
 	width:270px;
 	background-repeat:no-repeat;
 	background-position:top;
@@ -2277,7 +2281,7 @@ p.title {
 	margin-bottom:3px;
 }
 .subscribase {
-	background-image:url(/images/boletin/subscribeBG.jpg);
+	background-image:url(http://www.cancer.gov/images/boletin/subscribeBG.jpg);
 	background-position:top;
 	width:270px;
 	height:120px;
@@ -2286,20 +2290,20 @@ p.title {
 	padding-left:10px;
 }
 .articles {
-	background-image:url(/images/boletin/articlesBG.jpg);
+	background-image:url(http://www.cancer.gov/images/boletin/articlesBG.jpg);
 	background-position:left top;
 	width:456px;
 	padding:7px;
 	background-repeat: no-repeat;
 }
 .articlesFooter {
-	background-image:url(/images/boletin/articlesBG.jpg);
+	background-image:url(http://www.cancer.gov/images/boletin/articlesBG.jpg);
 	background-position:left top;
 	padding:7px;
 	background-repeat: no-repeat;
 }
 .dividor {
-	background-image:url(/images/boletin/dividor.jpg);
+	background-image:url(http://www.cancer.gov/images/boletin/dividor.jpg);
 	width:462px;
 	height:27px;
 	background-repeat:no-repeat;
@@ -2341,7 +2345,7 @@ span.leadTitle {
 }
 hr.article {
 	border: none;
-	background-image:url(/images/boletin/hr_img.jpg);
+	background-image:url(http://www.cancer.gov/images/boletin/hr_img.jpg);
 	background-repeat:no-repeat;
 	height: 15px;
 	padding-top:10px;
@@ -2413,14 +2417,14 @@ hr.article {
 	text-decoration: underline;
 }
 .articleNav {
-	background-image:url(/images/boletin/articleNavBG.jpg);
+	background-image:url(http://www.cancer.gov/images/boletin/articleNavBG.jpg);
 	background-repeat:no-repeat;
 	width:160px;
 	padding: 15px 5px 5px 5px;
 	margin-bottom:10px;
 }
 .articleNavSubscribe {
-	background-image:url(/images/boletin/articleNavSubscribe.jpg);
+	background-image:url(http://www.cancer.gov/images/boletin/articleNavSubscribe.jpg);
 	background-repeat:no-repeat;
 	width:160px;
 	height:75px;
@@ -2450,7 +2454,7 @@ span.navTitle {
 
 /* Mammography Banner Begin */
 .banner {
-	background-image:url(/images/documents/813527b7-7f79-4056-a606-29f607cda09f/cervical2011_spanish.jpg);
+	background-image:url(http://www.cancer.gov/images/documents/813527b7-7f79-4056-a606-29f607cda09f/cervical2011_spanish.jpg);
 	background-repeat:no-repeat;
 	width:576px;
 	height:176px;
@@ -2464,7 +2468,7 @@ span.navTitle {
 	padding-right:15px;
 }
 .bannerES {
-	background-image:url(/images/documents/813527b7-7f79-4056-a606-29f607cda09f/smoking2010_spanish.jpg);
+	background-image:url(http://www.cancer.gov/images/documents/813527b7-7f79-4056-a606-29f607cda09f/smoking2010_spanish.jpg);
 	background-repeat:no-repeat;
 	width:576px;
 	height:176px;
@@ -2705,7 +2709,7 @@ ul.clinicaltrials-results-formatcontrols li {
 }
 .clinicaltrials-javascriptOffMessage {
 	color: #000;
-	background-image: url(/images/ctsearch/alert-yellow-bg.gif);
+	background-image: url(http://www.cancer.gov/images/ctsearch/alert-yellow-bg.gif);
 	width:570px;
 	height:37px;
 	background-repeat:no-repeat;
@@ -2723,7 +2727,7 @@ ul.clinicaltrials-results-formatcontrols li {
 }
 .clinicaltrials-errorMessage {
 	color: #000;
-	background-image: url(/images/ctsearch/error-red-wide-bg.gif);
+	background-image: url(http://www.cancer.gov/images/ctsearch/error-red-wide-bg.gif);
 	width:570px;
 	height:37px;
 	background-repeat:no-repeat;
@@ -2741,7 +2745,7 @@ ul.clinicaltrials-results-formatcontrols li {
 }
 .clinicaltrials-errorMessageSmall {
 	color: #000;
-	background-image: url(/images/ctsearch/error-red-bg.gif);
+	background-image: url(http://www.cancer.gov/images/ctsearch/error-red-bg.gif);
 	width:385px;
 	height:37px;
 	background-repeat:no-repeat;
@@ -2804,14 +2808,14 @@ a.dictionary-alpha-list:hover {
 	color : #993300;
 	font-size : 12px;
 	font-weight : bold;
-	background-image : url(/images/dictionary-ext-mtc-bg.gif);
+	background-image : url(http://www.cancer.gov/images/dictionary-ext-mtc-bg.gif);
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
 a.dictionary-partial-match:hover {
 	color : #993300;
 	font-size : 12px;
 	font-weight : bold;
-	background-image : url(/images/dictionary-ext-mtc-bg.gif);
+	background-image : url(http://www.cancer.gov/images/dictionary-ext-mtc-bg.gif);
 	font-family : Arial, Verdana, "Trebuchet MS", Tahoma, sans-serif;
 }
 .dictionary-partial-match-n, A.dictionary-partial-match-n, a.dictionary-partial-match-n:link, a.dictionary-partial-match-n:active, a.dictionary-partial-match-n:visited {
@@ -2997,7 +3001,7 @@ LI.Protocol-IL-Bullet {
 	list-style : disc url();
 }
 LI.Protocol-IL-Dash {
-	list-style : circle url(/images/bullet_sm_css.gif);
+	list-style : circle url(http://www.cancer.gov/images/bullet_sm_css.gif);
 }
 LI.Protocol-IL-Circle {
 	list-style : none url();
@@ -3201,7 +3205,7 @@ A.Summary-GlossaryTermRef:hover, A.Protocol-GlossaryTermRef:hover {
 	left : 25px;
 }
 .pdq UL LI {
-	list-style-image : url(/images/bullet_sm.gif);
+	list-style-image : url(http://www.cancer.gov/images/bullet_sm.gif);
 	margin-bottom : 0;
 	margin-left : 0;
 	margin-top : 0;
@@ -3213,7 +3217,7 @@ A.Summary-GlossaryTermRef:hover, A.Protocol-GlossaryTermRef:hover {
 	text-decoration : none;
 }
 .livehelpbutton {
-	background-image : url(/images/livehelp_button.gif);
+	background-image : url(http://www.cancer.gov/images/livehelp_button.gif);
 	border-style : none;
 	padding-bottom : 0;
 	padding-left : 0;
@@ -3257,7 +3261,7 @@ A.Summary-GlossaryTermRef:hover, A.Protocol-GlossaryTermRef:hover {
 	color : #996633;
 	text-decoration : underline;
 	list-style-position : outside;
-	list-style-image : url(/images/oc_bullet.gif);
+	list-style-image : url(http://www.cancer.gov/images/oc_bullet.gif);
 	list-style-type : none;
 }
 .occontent {
@@ -3268,14 +3272,14 @@ A.Summary-GlossaryTermRef:hover, A.Protocol-GlossaryTermRef:hover {
 	color : #666666;
 	font-size : 13px;
 	list-style-position : outside;
-	list-style-image : url(/images/oc_bullet.gif);
+	list-style-image : url(http://www.cancer.gov/images/oc_bullet.gif);
 	list-style-type : none;
 }
 .oc_list {
 	color : #333333;
 	font-size : 13px;
 	list-style-position : outside;
-	list-style-image : url(/images/oc_bullet.gif);
+	list-style-image : url(http://www.cancer.gov/images/oc_bullet.gif);
 	list-style-type : none;
 }
 A.ns-leftnav {
@@ -3399,7 +3403,7 @@ OL.Protocol-OL {
 	padding:0;
 }
 .pnlDrugSearch {
-	background-image:url(/images/drug-dictionary-search.jpg);
+	background-image:url(http://www.cancer.gov/images/drug-dictionary-search.jpg);
 	width:571px;
 	height:81px;
 }
@@ -3415,7 +3419,7 @@ OL.Protocol-OL {
 	padding:0;
 }
 .pnlTermSearch {
-	background-image:url(/images/dictionary-search.jpg);
+	background-image:url(http://www.cancer.gov/images/dictionary-search.jpg);
 	width:571px;
 	height:81px;
 }
@@ -3646,7 +3650,7 @@ vertical-align=middle;
 #cgvSiteFooter ul#footerUtility li, #cgvSiteFooter ul#footerUtilityRow1 li, #cgvSiteFooter ul#footerUtilityRow2 li {
 	margin: 0 0 0 4px;
 	padding: 0 8px 0 0;
-	background: url(/images/general/footer-utility-divider.gif) bottom right no-repeat;
+	background: url(http://www.cancer.gov/images/general/footer-utility-divider.gif) bottom right no-repeat;
 }
 #cgvSiteFooter ul#footerUtility li a, #cgvSiteFooter ul#footerUtilityRow1 li a, #cgvSiteFooter ul#footerUtilityRow2 li a, #cgvSiteFooter ul#followUs li a {
 	font-size: 11px;
@@ -3675,16 +3679,16 @@ ul#followUs li a:hover {
 	color: #333;
 }
 ul#followUs li.twitter {
-	background: url(/images/general/footer-twitter.gif) left 2px no-repeat;
+	background: url(http://www.cancer.gov/images/general/footer-twitter.gif) left 2px no-repeat;
 }
 ul#followUs li.youtube {
-	background: url(/images/general/footer-youtube.gif) left 2px no-repeat;
+	background: url(http://www.cancer.gov/images/general/footer-youtube.gif) left 2px no-repeat;
 }
 ul#followUs li.facebook {
-	background: url(/images/general/footer-facebook.gif) left 2px no-repeat;
+	background: url(http://www.cancer.gov/images/general/footer-facebook.gif) left 2px no-repeat;
 }
 ul#followUs li.rss {
-	background: url(/images/general/footer-rss.gif) left 2px no-repeat;
+	background: url(http://www.cancer.gov/images/general/footer-rss.gif) left 2px no-repeat;
 }
 ul#agencyLinks li {
 	margin: 0 6px;
@@ -3802,17 +3806,17 @@ table.carousel-panel-list td {
 }
 #news-slider ul.news-slider-tabs .ui-state-default {
 	border: 0;
-	background: url(/sysimages/li-unselected.gif) top center repeat-x;
+	background: url(http://www.cancer.gov/sysimages/li-unselected.gif) top center repeat-x;
 }
 #news-slider ul.news-slider-tabs .ui-state-default.last {
-	background: url(/sysimages/li-unselected-last.gif) top center repeat-x;
+	background: url(http://www.cancer.gov/sysimages/li-unselected-last.gif) top center repeat-x;
 }
 #news-slider ul.news-slider-tabs .ui-state-active {
-	background: url(/sysimages/li-selected.gif) top center repeat-x;
+	background: url(http://www.cancer.gov/sysimages/li-selected.gif) top center repeat-x;
 }
 #news-slider ul.news-slider-tabs .ui-state-active.last {
 	border: 0px solid red;
-	background: url(/sysimages/li-selected-last.gif) top center repeat-x;
+	background: url(http://www.cancer.gov/sysimages/li-selected-last.gif) top center repeat-x;
 }
 #news-slider .ui-corner-top {
 	-moz-border-radius-topleft: 0;
