@@ -55,6 +55,7 @@ namespace CancerGov.Web.Common.PopUps
             string term;
             string id;
             string mediaHtml = "";
+            string audioMediaHTML = String.Empty;
             PDQVersion version;
             string pronunciation;
             string termDefinition;
@@ -136,6 +137,12 @@ namespace CancerGov.Web.Common.PopUps
                     termDefinition = result[2].ToString();
                     mediaHtml = result[3].ToString();
                     mediaHtml = mediaHtml.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+
+                    if (result[4] != null)
+                    {
+                        audioMediaHTML = result[4].ToString();
+                        audioMediaHTML = audioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
+                    }
                 }
             }
             
@@ -147,7 +154,7 @@ namespace CancerGov.Web.Common.PopUps
                 strHeading = "<h3 class='popup-definition'>Definición:</h3>";
             }
 
-           content = new HtmlSegment(String.Format("<span class=\"black-text-b\">{0}</span>", term) + ((Strings.Clean(pronunciation) != null) ? " " + pronunciation : "") + "<p>" + termDefinition + "<p>" + mediaHtml);
+            content = new HtmlSegment(String.Format("<span class=\"black-text-b\">{0}</span>", term) + audioMediaHTML + ((Strings.Clean(pronunciation) != null) ? " " + pronunciation : "") + "<p>" + termDefinition + "<p>" + mediaHtml);
 
             // Web Analytics *************************************************
             //if (pageDisplayInformation.Language == DisplayLanguage.Spanish)

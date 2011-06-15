@@ -192,6 +192,7 @@ runat="server">
                             <a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a><a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%><%=QueryStringLang%>"
                                 <%# ResultListViewHrefOnclick(Container)%>>
                                 <%# Eval("TermName")%></a> &nbsp;&nbsp;
+                            <%# AudioMediaHTML(DataBinder.Eval(Container.DataItem, "AudioMediaHTML")) %>&nbsp;&nbsp;
                             <%#DataBinder.Eval(Container.DataItem, "TermPronunciation")%>
                             <table cellpadding="0" cellspacing="0" border="0" width="100%">
                                 <tr>
@@ -225,9 +226,9 @@ runat="server">
                     <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
                     <!-- Term and def -->
                     <span class="header-A">
-                        <asp:Label ID="lblTermName" runat="server"></asp:Label></span>&nbsp;<asp:Literal
-                            ID="litAudioMediaHtml" runat="server"></asp:Literal>&nbsp;<asp:Label ID="lblTermPronun"
-                                runat="server"></asp:Label><br />
+                        <asp:Label ID="lblTermName" runat="server"></asp:Label></span>&nbsp;
+                        <asp:Literal ID="litAudioMediaHtml" runat="server"></asp:Literal>&nbsp;
+                        <asp:Label ID="lblTermPronun" runat="server"></asp:Label><br />
                     <img src="/images/spacer.gif" width="10" height="5" alt="" border="0" /><br />
                     <table width="" cellspacing="0" cellpadding="0" border="0">
                         <tr>

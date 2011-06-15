@@ -657,16 +657,25 @@ namespace Www.Templates
             litImageHtml.Text = imageHtml;
             litAudioMediaHtml.Text = audioMediaHtml;
             RenderLangButtons();
-            
         }
+
         private void RenderLangButtons()
         {
-            //langSwitch.DisplayInfo = this.PageDisplayInformation;
-
             langSwitch.EnglishUrl = DictionaryURLEnglish + "?CdrID=" + CdrID;
             langSwitch.SpanishUrl = DictionaryURLSpanish + "?CdrID=" + CdrID;
         }
 
+        protected string AudioMediaHTML(object objData)
+        {
+            string audioMediaHTML = String.Empty;
+            if (objData != null )
+            {
+                audioMediaHTML = objData.ToString();
+                audioMediaHTML = audioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
+            }
+
+            return audioMediaHTML;
+        }
 
         protected string ResultListViewHrefOnclick(ListViewDataItem dataItem)
         {
