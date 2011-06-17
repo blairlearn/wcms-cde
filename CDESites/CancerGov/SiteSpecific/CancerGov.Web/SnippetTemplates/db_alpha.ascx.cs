@@ -601,6 +601,7 @@ namespace Www.Templates
             string defHtml = string.Empty;
             string imageHtml = string.Empty;
             string audioMediaHtml = string.Empty;
+            string relatedLinkInfo = String.Empty;
 
             CdrID = dataItem.GlossaryTermID.ToString();
             termName = dataItem.TermName;
@@ -612,6 +613,8 @@ namespace Www.Templates
             audioMediaHtml = (dataItem.AudioMediaHTML == null) ? string.Empty : dataItem.AudioMediaHTML;
             audioMediaHtml = audioMediaHtml.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
             audioMediaHtml = audioMediaHtml.Replace("[_flashMediaLocation]", ConfigurationSettings.AppSettings["FlashMediaLocation"]);
+
+            relatedLinkInfo = (dataItem.RelatedInfoHTML == null) ? string.Empty : dataItem.RelatedInfoHTML;
 
             if (language == "Spanish")
             {
@@ -656,6 +659,15 @@ namespace Www.Templates
             litDefHtml.Text = defHtml;
             litImageHtml.Text = imageHtml;
             litAudioMediaHtml.Text = audioMediaHtml;
+
+            if (!string.IsNullOrEmpty(relatedLinkInfo))
+            {
+                pnlRelatedInfo.Visible = true;
+                litRelatedLinkInfo.Text = relatedLinkInfo;
+            }
+            else
+                pnlRelatedInfo.Visible = false;
+
             RenderLangButtons();
         }
 

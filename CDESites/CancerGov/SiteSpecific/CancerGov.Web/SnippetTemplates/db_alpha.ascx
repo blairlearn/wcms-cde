@@ -227,8 +227,8 @@ runat="server">
                     <!-- Term and def -->
                     <span class="header-A">
                         <asp:Label ID="lblTermName" runat="server"></asp:Label></span>&nbsp;
-                        <asp:Literal ID="litAudioMediaHtml" runat="server"></asp:Literal>&nbsp;
-                        <asp:Label ID="lblTermPronun" runat="server"></asp:Label><br />
+                    <asp:Literal ID="litAudioMediaHtml" runat="server"></asp:Literal>&nbsp;
+                    <asp:Label ID="lblTermPronun" runat="server"></asp:Label><br />
                     <img src="/images/spacer.gif" width="10" height="5" alt="" border="0" /><br />
                     <table width="" cellspacing="0" cellpadding="0" border="0">
                         <tr>
@@ -237,6 +237,10 @@ runat="server">
                             </td>
                             <td valign="top">
                                 <asp:Literal ID="litDefHtml" runat="server"></asp:Literal>
+                                <asp:Panel runat="server" ID="pnlRelatedInfo">
+                                    <br />
+                                    <asp:Literal ID="litRelatedLinkInfo" runat="server"></asp:Literal>
+                                </asp:Panel>
                                 <asp:Literal ID="litImageHtml" runat="server"></asp:Literal>
                             </td>
                         </tr>
