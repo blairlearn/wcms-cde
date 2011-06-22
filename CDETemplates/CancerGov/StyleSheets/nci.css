@@ -2997,13 +2997,13 @@ A.Protocol-TOC-Link:hover {
 LI.Protocol-LI {
 	list-style : disc url();
 }
-LI.Protocol-IL-Bullet {
-	list-style : disc url();
-}
-#cgvBody LI.Protocol-IL-Dash {
+#cgvBody LI.Protocol-IL-Bullet {
 	list-style-type : disc;
 	background: none;
 	padding-left: 0;
+}
+#cgvBody LI.Protocol-IL-Dash {
+	list-style : none;
 }
 LI.Protocol-IL-Circle {
 	list-style : none url();
