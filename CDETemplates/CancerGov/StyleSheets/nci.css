@@ -3000,8 +3000,10 @@ LI.Protocol-LI {
 LI.Protocol-IL-Bullet {
 	list-style : disc url();
 }
-LI.Protocol-IL-Dash {
-	list-style : circle url(http://www.cancer.gov/images/bullet_sm_css.gif);
+#cgvBody LI.Protocol-IL-Dash {
+	list-style-type : disc;
+	background: none;
+	padding-left: 0;
 }
 LI.Protocol-IL-Circle {
 	list-style : none url();
