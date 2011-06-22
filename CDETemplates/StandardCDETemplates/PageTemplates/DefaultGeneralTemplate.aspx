@@ -42,7 +42,7 @@
 					<NCI:TemplateSlot ID="genSlotBody" runat="server"/>
 					<!-- END Body Slot (#genSlotBody) -->
 					<!-- Related Links Slot -->
-					<NCI:TemplateSlot ID="genSlotRelatedLinks" runat="server"/>
+					<NCI:TemplateSlot ID="genSlotRelatedPages" runat="server"/>
 					<!-- END Related Links Slot (#genSlotRelatedLinks) -->
 				</div>
 

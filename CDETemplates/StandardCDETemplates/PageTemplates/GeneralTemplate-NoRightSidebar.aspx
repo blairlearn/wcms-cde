@@ -44,7 +44,7 @@
 					<!-- END Body Slot (#genSlotBody) -->
 					<!-- REMOVED VIDEO SLOT, SEE VIDEOSLOT.TXT -->
 					<!-- Related Links Slot -->
-					<NCI:TemplateSlot ID="genSlotRelatedLinks" runat="server"  />
+					<NCI:TemplateSlot ID="genSlotRelatedPages" runat="server"  />
 					<!-- END Related Links Slot (#genSlotRelatedLinks) -->
 				</div>
 
