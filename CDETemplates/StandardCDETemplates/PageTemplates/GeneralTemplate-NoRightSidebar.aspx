@@ -5,7 +5,7 @@
 <html>
 <head runat="server"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
 
-<body class="genGeneral noRightSidebar">
+<body class="genGeneral">
 	<div class="genSiteSkipToContent"><a href="#genSiteContent">Skip to Content</a></div>
 	<!-- Branding Bar Slot (#genSlotBrandingBar) // Color class on slot determined by Content Type field value  -->
 	<NCI:TemplateSlot ID="genSlotBrandingBar" runat="server" class="clearFix red" />
@@ -28,14 +28,14 @@
 				<!-- END Left Sidebar Slot (#genSlotLeftSidebar) -->
 			</div>
 			<!-- END Left Content Column (#genSiteLeftColumn) -->
-			<div id="genSiteContent" class="genSiteMainColumn clearFix">
+			<div id="genSiteContent" class="genSiteMainColumn clearFix"><a name="skiptocontent" id="skiptocontent "></a> 
 				<!-- Section Banner Slot -->
 				<NCI:TemplateSlot ID="genSlotSectionBanner" runat="server"/>
 				<!-- END Section Banner Slot (#genSlotContentHeader) -->
 				<!-- Content Title Slot // Includes Subtitle (#genSlotTitle) -->
 				<NCI:TemplateSlot ID="genSlotTitle" runat="server"/>
 				<!-- END Content Title Slot // Includes Subtitle (#genSlotTitle) -->
-				<div class="genSiteContentColumn">
+				<div class="genSiteContentColumn noRightSidebar">
 					<!-- Page Options (#genSlotPageOptions) -->
 					<NCI:TemplateSlot ID="genSlotPageOptions" runat="server"/>
 					<!-- END Page Options (#genSlotPageOptions) -->
@@ -44,7 +44,7 @@
 					<!-- END Body Slot (#genSlotBody) -->
 					<!-- REMOVED VIDEO SLOT, SEE VIDEOSLOT.TXT -->
 					<!-- Related Links Slot -->
-					<NCI:TemplateSlot ID="genSlotRelatedPages" runat="server"  />
+					<NCI:TemplateSlot ID="genSlotRelatedLinks" runat="server"  />
 					<!-- END Related Links Slot (#genSlotRelatedLinks) -->
 				</div>
 

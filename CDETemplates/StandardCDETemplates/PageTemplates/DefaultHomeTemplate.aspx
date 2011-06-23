@@ -25,7 +25,7 @@
 			<NCI:TemplateSlot ID="genSlotMainNav" runat="server"  class="clearFix"/>
 		<!-- </div> -->
 		<!-- END Main Navigation Slot (#genSlotMainNav) -->
-		<div class="genSiteContentContainer clearFix">
+		<div class="genSiteContentContainer clearFix"><a name="skiptocontent" id="skiptocontent "></a> 
 		
 				<div class="genSiteContentColumn">
 					<!-- Timely Content Slot (#genSlotTC) -->

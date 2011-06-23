@@ -5,7 +5,7 @@
 <html>
 <head runat="server"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
 
-<body class="genGeneral noSidebars">
+<body class="genGeneral">
 	<div class="genSiteSkipToContent"><a href="#genSiteContent">Skip to Content</a></div>
 	<!-- Branding Bar Slot (#genSlotBrandingBar) // Color class on slot determined by Content Type field value  -->
 	<NCI:TemplateSlot ID="genSlotBrandingBar" runat="server" class="clearFix red" />
@@ -25,7 +25,7 @@
 				<!-- Content Title Slot // Includes Subtitle (#genSlotTitle) -->
 				<NCI:TemplateSlot ID="genSlotTitle" runat="server"/>
 				<!-- END Content Title Slot // Includes Subtitle (#genSlotTitle) -->
-				<div class="genSiteContentColumn">
+				<div class="genSiteContentColumn"><a name="skiptocontent" id="skiptocontent "></a>
 					<!-- Page Options (#genSlotPageOptions) -->
 					<NCI:TemplateSlot ID="genSlotPageOptions" runat="server"/>
 					<!-- END Page Options (#genSlotPageOptions) -->
@@ -33,7 +33,7 @@
 					<NCI:TemplateSlot ID="genSlotBody" runat="server"/>
 					<!-- END Body Slot (#genSlotBody) -->
 					<!-- Related Links Slot -->
-					<NCI:TemplateSlot ID="genSlotRelatedPages" runat="server"/>
+					<NCI:TemplateSlot ID="genSlotRelatedLinks" runat="server"/>
 					<!-- END Related Links Slot (#genSlotRelatedLinks) -->
 				</div>
 			</div><!-- END Main Content Column (#genSiteMainColumn) -->

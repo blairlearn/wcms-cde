@@ -36,7 +36,7 @@
 				<!-- Section Banner Slot -->
 				<NCI:TemplateSlot ID="genSlotSectionBanner" runat="server"/>
 				<!-- END Section Banner Slot (#genSlotContentHeader) -->
-				<div class="genSiteContentColumn">
+				<div class="genSiteContentColumn"><a name="skiptocontent" id="skiptocontent "></a>
 					<!-- Content Title Slot // Includes Subtitle (#genSlotTitle) -->
 					<NCI:TemplateSlot ID="genSlotTitle" runat="server"/>
 					<!-- END Content Title Slot // Includes Subtitle (#genSlotTitle) -->
