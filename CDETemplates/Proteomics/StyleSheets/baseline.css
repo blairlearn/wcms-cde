@@ -1,0 +1,1273 @@
+@charset "utf-8";
+
+/*
+	====
+		Baseline Design Elements for the Genomics Theme
+		
+		Usage: Used to define the look and feel of the website. The default set of styles defined include colors, additional dimensions (line-height, padding, margin), other design-specific elements. This style sheet can be edited to accomodate other website specific design requirements as needed.
+		
+		Last Update: June 23, 2011 by Mal Jones
+	====
+*/
+
+
+/***
+	Typography and Universal Elements
+***/
+
+body {
+	/* Background Gradient */
+	background: #fff url('/publishedcontent/images/images/global/bground-site.jpg') repeat-x;
+	color: #4d4d4d;
+	font-family: Arial, sans-serif;
+	line-height: 1.8em;
+}
+a {
+	color: #0c70a8;
+}
+	a:hover {
+		color: #4d4d4d;
+		text-decoration: none;
+	}
+h1 {
+	color: #262727;
+	font: 2em "ITC Avant Garde", "avant garde", "Century Gothic", Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	line-height: 1.1em;
+}
+	h1 a {
+		text-decoration: none;
+	}
+		h1 a:hover {
+			text-decoration: underline;
+		}
+h2 {
+	color: #262727;
+	font: 1.6em "ITC Avant Garde", "avant garde", "Century Gothic", Arial, Helvetica, sans-serif;
+	font-weight: 900;
+	padding-bottom: 18px;
+}
+	h2 a {
+		text-decoration: none;
+	}
+		h2 a:hover {
+			text-decoration: underline;
+		}
+h3 {
+	color: #262727;
+	font: 1.4em "ITC Avant Garde", "avant garde", "Century Gothic", Arial, Helvetica, sans-serif;
+	font-weight: 900;
+	padding-bottom: 18px;
+}
+	h3 a {
+		text-decoration: none;
+	}
+		h3 a:hover {
+			text-decoration: underline;
+		}
+h4 {
+	font-size: 1.2em;
+	font-weight: 900;
+	padding-bottom: 0;
+}
+h5 {
+	font-size: 1em;
+}
+p {
+	padding-bottom: 18px;
+}
+ul {
+	list-style-type: square;
+	margin-left: 36px;
+	padding-bottom: 18px;
+}
+	ul li {
+	}
+ol {
+	list-style-type: decimal;
+	margin-left: 36px;
+	padding-bottom: 18px;
+}
+	ol li {
+	}
+blockquote {
+	margin: 0 36px 0 36px;
+}
+b,
+strong {
+	font-weight: 900;
+}
+i,
+em {
+	font-style: italic;
+}
+dl {
+}
+	dl dt {
+	}
+	dl dd {
+	}
+table {
+}
+
+/*	Ensuring extra div.slot-items generated from CDE do not have default padding. */
+.slot-item .slot-item {
+	padding: 0;
+}
+
+/***
+	Page Elements
+***/
+
+	/**
+		Branding Bar Container
+	**/
+	
+	.genSiteBrandingBarContainer {
+		border-bottom: 1px solid #262727;
+	}
+
+	/**
+		General Site Container
+	**/
+	.genSiteContainer {
+		font-size: 1.2em;
+
+	}
+
+	/**
+		Site Header
+	**/
+
+	#genSlotSiteBanner {	
+		margin: 0 12px 0 0;
+		padding: 12px 0 14px 0;
+	}
+	
+	/* Contains Site Utility Items such as Search and other links */
+	
+	.genSiteUtilityContainer {
+		}
+		
+		/* Utility Links found in the top right */
+		ol.genSiteUtilityLinks {
+			margin: 0;
+			padding: 14px 0 8px 0;
+		}
+			ol.genSiteUtilityLinks li {
+				border-right: 1px solid #fff;
+				font-size: 11px;
+				margin-right: 6px;
+				padding-right: 8px;
+			}
+				ol.genSiteUtilityLinks li.last {
+					border-right: 0;
+					margin-right: 0;
+					padding-right: 0;
+				}
+			ol.genSiteUtilityLinks a {
+				color: #fff;
+			}
+		
+		/* Site Search */	
+		
+		f#genSlotSiteBanner form.genSiteSearchForm {
+			float: right;
+			padding-bottom: 12px;
+		}
+			#genSlotSiteBanner form.genSiteSearchForm  input#swKeywordQuery,
+			form#aspnetForm input#txtKeyword1 {
+				background: #fff url('/publishedcontent/images/images/global/input-search-bground.gif') no-repeat 98% center;
+				border: 1px solid #aaa;
+				color: #7e7e7e;
+				font-size: 12px;
+				height: 26px;
+				line-height: 26px;
+				padding: 0 4px;
+				vertical-align: middle;
+				width: 275px;
+			}
+			
+			#genSlotSiteBanner form.genSiteSearchForm  input#swSearchButton,
+			form#aspnetForm input#swSearchButton {
+				background: #262727 url('/publishedcontent/images/images/global/button-search-black.gif') no-repeat;
+				border: 0;
+				color: #fff;
+				cursor: pointer;
+				font: 12px "ITC Avant Garde", "avant garde", "Century Gothic", Arial, Helvetica, sans-serif;
+				font-weight: 900;
+				letter-spacing: 1px;
+				height: 26px;
+				margin: 0;
+				padding: 0;
+				text-shadow: 0 0 5px #000; 
+				vertical-align: middle;
+				width: 66px;
+			}
+		
+		
+	/**
+		Site Navigation
+	**/
+	
+	#genSlotMainNav {
+		background: #262727 url('/publishedcontent/images/images/global/bground-mainnav.gif') repeat-x;
+		border-top: 1px solid #727373;
+		border-right: 1px solid #727373;
+		border-left: 1px solid #727373;
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+		box-shadow: 0 -2px 5px #888;
+		color: #fff;
+		font-weight: 900;
+		margin: 0 11px;
+		-moz-border-radius-topleft: 8px;
+		-moz-border-radius-topright: 8px;
+		-moz-box-shadow: 0 -2px 5px #888;
+		padding: 0 11px 0 11px;
+		-webkit-border-top-left-radius: 8px;
+		-webkit-border-top-right-radius: 8px;
+		-webkit-box-shadow: 0 -2px 5px #888;
+	}	
+		#genSlotMainNav a {
+			color: #fff;
+			padding: 14px 0; /* Needs the extra padding for IE7 and correct placement of the Flyout Menu */
+			text-decoration: none;
+		}
+			/* Fly Out Menu */
+			#genSlotMainNav ul.genSiteMainNav  li ul  {
+				background-color: #262727;		
+				border-bottom-left-radius: 8px;
+				border-bottom-right-radius: 8px;
+				-moz-border-radius-bottomleft: 8px;
+				-moz-border-radius-bottomright: 8px;
+				padding: 0 9px 7px 9px;
+				top: 44px; /* Correctly Positions the Fly Out Menu */			
+				-webkit-border-bottom-left-radius: 8px;
+				-webkit-border-bottom-right-radius: 8px;
+			}
+				#genSlotMainNav  ul.genSiteMainNav  li ul a {	
+					color: #b9b9b9;
+					padding: 4px 0;
+				}
+				#genSlotMainNav ul.genSiteMainNav  li ul li {
+					border-bottom: 1px solid #b9b9b9;
+					color: #b9b9b9;
+				}
+					#genSlotMainNav ul.genSiteMainNav  li ul li.last {
+						border-bottom: 0;
+					}
+				#genSlotMainNav ul.genSiteMainNav  li:hover > a {
+					color: #fff;
+				}
+				#genSlotMainNav ul.genSiteMainNav  li ul li:hover > a {					
+					color: #fff;
+					text-decoration: underline;
+				}
+				
+			/* Highlight Box */
+			#genSlotMainNav ul li a span {
+				background-color: transparent; /* Needed for IE 7 */
+				border-radius: 4px;
+				-moz-border-radius: 4px;
+				padding: 4px 9px;
+				-webkit-border-radius: 4px;
+			}
+			#genSlotMainNav ul.genSiteMainNav  li a:hover span,
+			#genSlotMainNav ul.genSiteAdditionalMainNav li  a:hover span,
+			#genSlotMainNav ul.genSiteMainNav  li a.current span {
+				background-color: #fff;
+				color: #000;
+			}
+				/* Removes Highlight Box from Fly Out Menus */
+				#genSlotMainNav ul.genSiteMainNav li ul a span {
+					border-radius: 0;
+					-moz-border-radius: 0;
+					padding: 0;
+					-webkit-border-radius: 0;
+				}
+					#genSlotMainNav ul.genSiteMainNav li ul a:hover span {
+						background-color: transparent;
+						color: #fff;
+					}
+			
+			/* Additional Link Section 0c70a8 */
+			#genSlotMainNav ul.genSiteAdditionalMainNav li  a span {
+				background-color: #0c70a8;
+				color: #fff;
+			}
+			
+				
+
+			
+	/**
+		Site Content Container
+	**/
+	
+		.genSiteContentContainer  {
+			/* Background Gradient */
+			background: #fff; /* Old browsers */
+			background: -moz-linear-gradient(top, #ffffff 0%, #d3d3d3 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#d3d3d3)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, #ffffff 0%,#d3d3d3 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top, #ffffff 0%,#d3d3d3 100%); /* Opera11.10+ */
+			background: -ms-linear-gradient(top, #ffffff 0%,#d3d3d3 100%); /* IE10+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#d3d3d3',GradientType=0 ); /* IE6-9 */
+			background: linear-gradient(top, #ffffff 0%,#d3d3d3 100%); /* W3C */
+			/* End Background Gradient */
+			border-right: 1px solid #727373;
+			border-left: 1px solid #727373;
+			box-shadow: 0 0 5px #888;
+			margin: 0 11px;
+			-moz-box-shadow: 0 0 5px #888;
+			padding-top: 20px;
+			-webkit-box-shadow: 0 0 5px #888;
+		}
+
+		/**
+			Left Column
+		**/
+		
+		.genSiteLeftColumn {
+			width: 160px;
+		}
+			.genSiteLeftColumn .slot-item {
+				border-radius: 4px;
+				-moz-border-radius: 4px;
+				-webkit-border-radius: 4px;
+			}
+			
+		/** Section Navigation **/
+		
+		p.genSiteSectionParent {
+			font-size: 10px;
+			padding: 0 0 8px 0;
+			text-transform: uppercase;
+		}
+			p.genSiteSectionParent a,
+			#genSlotSectionNav a	{
+				color: #4d4d4d;
+			}
+			#genSlotSectionNav {
+				padding-bottom: 18px;
+			}
+				#genSlotSectionNav  .slot-item  {
+					padding: 0 20px;
+				}
+				#genSlotSectionNav ul.genSiteSectionNavigation {
+					background-color: #fff;
+					border: 1px solid #b2b2b2;
+					border-radius: 4px;
+					font-size: 0.9em;
+					-moz-border-radius: 4px;
+					padding: 12px 0 0 0;
+					-webkit-border-radius: 4px;
+				}
+					#genSlotSectionNav ul li {
+						padding: 0 12px;
+					}
+				
+				
+				/* First Level of Section Navigation */
+				#genSlotSectionNav ul {
+					list-style-type: none;
+					margin: 0;
+				}
+					/* Second Level of Section Navigation */
+					#genSlotSectionNav ul ul {
+						padding-bottom: 0;
+					}
+						/* Third Level of Section Navigation */
+						#genSlotSectionNav ul ul ul {
+							font-size: 0.9em;
+							padding-bottom: 0;
+						}
+						
+				
+
+			/* Current Section Identification */
+
+			#genSlotSectionNav ul li.currentSection {
+				/* Background Gradient */
+				background: #fff; /* Old browsers */
+				background: -moz-linear-gradient(top, #ffffff 0%, #f5f6c4 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f5f6c4)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* Opera11.10+ */
+				background: -ms-linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* IE10+ */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f6c4',GradientType=0 ); /* IE6-9 */
+				background: linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* W3C */
+				/* End Background Gradient */
+				border-top: 1px solid #b2b2b2;
+				border-bottom: 1px solid #b2b2b2;
+				margin-top: 12px;
+				margin-bottom: 12px;
+				overflow: auto; /* Needed for IE7 to properly display the gradient filter */
+				padding-top: 12px;
+				padding-bottom: 12px;
+			}
+				#genSlotSectionNav a.current {
+					color: #262727;
+					font-weight: 900;
+					text-decoration: none;
+				}
+				
+					/* Turns off gradient, padding, and margin when in a subsection of .currenSection */
+					
+					#genSlotSectionNav ul li.currentSection li.currentSection {
+						background: transparent; /* Removes gradient on Standards Based browsers */
+						filter: progid:DXImageTransform.Microsoft.gradient(enabled=false ); /* Removes gradient on IE6-9 */
+						border: 0;
+						margin: 0;
+						padding-top: 0;
+						padding-bottom: 0;
+					}
+				
+				/* First Item in the Navigation */
+				
+				#genSlotSectionNav ul li.currentSection.first,
+				#genSlotSectionNav ul li.first{
+					border-top: 0;
+					margin-top: 0;
+					padding-top: 0;
+				}
+					#genSlotSectionNav ul li li.first {
+						padding-top: 0;
+					}
+				/* Last Item in the Navigation */
+				#genSlotSectionNav ul li.last {
+					border-bottom-left-radius: 5px;
+					border-bottom-right-radius: 5px;
+					-moz-border-radius-bottomleft: 5px;
+					-moz-border-radius-bottomright: 5px;			
+					padding-bottom: 12px;
+					-webkit-border-bottom-left-radius: 5px;
+					-webkit-border-bottom-right-radius: 5px;
+				}
+					#genSlotSectionNav ul li li.last {
+						padding-bottom: 0;
+					}
+				#genSlotSectionNav ul li.currentSection.last {
+					border-bottom: 0;
+					margin-bottom: 0;
+				}
+				
+				/* Only Item in Navigation */
+				#genSlotSectionNav ul li.only {
+					padding-bottom: 12px;
+				}
+						border: 0;
+					#genSlotSectionNav ul li.currentSection.only {
+						border-bottom-left-radius: 5px;
+						border-bottom-right-radius: 5px;
+						margin-top: 0;
+						margin-bottom: 0;
+						-moz-border-radius-bottomleft: 5px;
+						-moz-border-radius-bottomright: 5px;			
+						padding-top: 0;
+						padding-bottom: 12px;
+						-webkit-border-bottom-left-radius: 5px;
+						-webkit-border-bottom-right-radius: 5px;
+					}
+			
+				
+		/* Additional content container */
+		
+		#genSlotLeftSidebar {
+			margin: 0 20px 18px 20px;
+		}
+		
+			
+		/**
+			Main Column
+		**/
+		
+		.genSiteMainColumn {
+			background-color: #fff;
+			border-left: 1px solid #b2b2b2;
+			width: 799px;
+		}
+			/* Removes styling for full width column */
+			.genSiteContentContainer.noSidebars .genSiteMainColumn {
+				border-left: 0;
+			}
+			/* Page Title Area */
+			#genSlotTitle {
+				padding: 0 20px 18px 20px;
+			}	
+				#genSlotTitle h1,
+				#genSlotTitle h2 {
+					padding: 0;
+				}
+				#genSlotTitle h1 {
+					line-height: 1.4em;
+				}
+				/* If #genSlotTitle is in side of .genSiteContentColumn change padding */
+				.genSiteContentColumn  #genSlotTitle  {
+					padding: 0 0 18px 0;
+				}
+					.genSiteContentColumn  #genSlotTitle h1,
+					.genSiteContentColumn  #genSlotTitle h2 {
+						padding: 0 0 0 0;
+					}
+
+
+			
+			/* Page Options */
+			.genSiteMainColumn #genSlotPageOptions {
+				padding-bottom: 18px;
+			}
+				#genSlotPageOptions p.genSitePrintButton {
+					font-size: 0.9em;
+					padding-bottom: 0;
+				}
+					
+			/**
+				Content Column
+			**/
+			
+			.genSiteContentColumn  {
+				width: 570px;
+			}			
+				.genSiteContentColumn .slot-item {
+					padding: 0 20px 0 20px;
+				}
+			
+			/**
+				Right Column
+			**/
+			
+			.genSiteRightColumn {
+				padding-top: 0;
+				width: 229px;
+			}
+								
+				/* Additional Section Nav */
+				
+				#genSlotRightNav {
+					background-color: #fff;
+					border: 1px solid #b2b2b2;
+					border-radius: 4px;
+					font-size: 0.9em;
+					margin: 0 20px 18px 20px;
+					-moz-border-radius: 4px;
+					-webkit-border-radius: 4px;
+				}
+					#genSlotRightNav .slot-item {
+						margin: 0;
+						padding: 12px;					
+					}
+					#genSlotRightNav ul {
+						list-style-type: none;
+						margin: 0;
+						padding: 0;
+					}
+					#genSlotRightNav a {
+						color: #262727;
+					}
+				
+				/* Additional content container */
+			
+				#genSlotRightSidebar {
+					margin: 0 20px 18px 20px;
+				}
+			
+		/**
+			Miscellaneous Content
+		**/
+		
+		/* Lists in a Sidebar */
+		
+		#genSlotLeftSidebar .slot-item,
+		#genSlotRightSidebar .slot-item	{
+
+			margin-bottom:  18px;
+		}
+			#genSlotLeftSidebar .slot-item h3,
+			#genSlotRightSidebar .slot-item h3 {
+				/* Background Gradient */
+				background: #a8a7a7; /* Old browsers */
+				background: -moz-linear-gradient(top, #ffffff 0%, #a8a7a7 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#a8a7a7)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top, #ffffff 0%,#a8a7a7 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top, #ffffff 0%,#a8a7a7 100%); /* Opera11.10+ */
+				background: -ms-linear-gradient(top, #ffffff 0%,#a8a7a7 100%); /* IE10+ */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#a8a7a7',GradientType=0 ); /* IE6-9 */
+				background: linear-gradient(top, #ffffff 0%,#a8a7a7 100%); /* W3C */
+				/* End Background Gradient */
+				border: 1px solid #b2b2b2;
+				border-top-left-radius: 5px;
+				border-top-right-radius: 5px;
+				-moz-border-radius-topleft: 5px;
+				-moz-border-radius-topright: 5px;
+				overflow: auto; /* Needed for IE7 to properly display the gradient filter */
+				padding: 12px;
+				-webkit-border-top-left-radius: 5px;
+				-webkit-border-top-right-radius: 5px;
+			}
+			#genSlotLeftSidebar ul.genList,
+			#genSlotRightSidebar ul.genList {
+				margin: 0 0 0 0;
+				padding: 12px 12px 8px 12px;
+				background-color: #fff;
+				border-right: 1px solid #b2b2b2;
+				border-bottom: 1px solid #b2b2b2;
+				border-left: 1px solid #b2b2b2;
+				border-bottom-left-radius: 5px;
+				border-bottom-right-radius: 5px;
+				font-size: 0.9em;
+				-moz-border-radius-bottomleft: 5px;
+				-moz-border-radius-bottomright: 5px;
+				-webkit-border-bottom-left-radius: 5px;
+				-webkit-border-bottom-right-radius: 5px;
+			}
+				#genSlotLeftSidebar ul.genList li,
+				#genSlotRightSidebar ul.genList li {
+					border-bottom: 1px dotted #b2b2b2;
+					line-height: 1.6em;
+					margin-bottom: 6px;
+					padding-bottom: 6px;	
+				}
+					#genSlotLeftSidebar ul.genList li:last-child,
+					#genSlotRightSidebar ul.genList li:last-child {
+						border-bottom: 0;
+						margin-bottom: 0;
+						padding-bottom: 0;
+					}
+			
+		/* Content Block in a Sidebar */
+		
+		#genSlotRightSidebar .genContentBlock p {
+			padding-bottom: 0;			
+		}
+			.genContentBlock ul {
+				margin: 0 0 0 18px;
+				padding: 0 12px 18px 12px;
+			}
+			
+			/* Launch Reagents Data Portal */
+			
+			#genSlotRightSidebar .slot-item .cptcDataPortalLaunch  h3 {
+				background: transparent;
+				border: 0;
+				filter: progid:DXImageTransform.Microsoft.gradient(enabled=false); /* Removes gradient in IE6-9 */
+				padding: 0;
+			}
+				#genSlotRightSidebar .slot-item .cptcDataPortalLaunch h3 a {
+					background-color: #1175AD;
+					background-image: url('/publishedcontent/images/images/global/button-blue-lg.gif');
+					background-repeat: repeat-x;
+					border: 1px solid #2781b4;
+					border-radius: 4px;
+					color: #fff;
+					display: block;
+					font-size: 0.8em;
+					margin: 0 0 8px 0;
+					-moz-border-radius: 4px;		
+					padding: 5px 14px;
+					-webkit-border-radius: 4px;
+				}
+				
+			/* Stay Connected */
+			
+			#genSlotRightSidebar .slot-item .cptcStayConnected ul li {
+				padding-bottom: 2px;
+			}
+				
+				/* For Home Page */
+				
+				body.genHome #genSlotRightSidebar .slot-item .cptcDataPortalLaunch h3 a {
+					font-size: 0.9em;
+					padding: 14px;
+				}
+				
+				
+			#genSlotRightSidebar .slot-item .cptcDataPortalLaunch p {
+				font-size: 0.9em;
+				line-height: 1.6em;
+				margin: 0 14px;
+			}
+			
+			/* Contact Us Links found in Items */
+			
+			.slot-item  a.genSiteContactUs {
+				background-image: url('/publishedcontent/images/images/icons/icon-email-sml.gif');
+				background-repeat: no-repeat;
+				padding-left: 18px;
+			}
+			
+		/* RSS Links */
+		
+		.genSiteRssLink {
+			padding-left: 3px;
+		}
+			.genSiteRssLink a {
+				background-image: url('/publishedcontent/images/images/icons/icon-rss-sml.gif');
+				background-repeat: no-repeat;
+				font-weight: normal;
+				padding-left: 16px;
+			}
+		h1 span.genSiteRssLink a {
+			font-size: 0.6em;
+		}
+		h2 span.genSiteRssLink a {
+			font-size: 0.8em;
+		}
+		h3 span.genSiteRssLink a {
+			font-size: 0.8em;
+		}
+			
+	/**
+		Site Footer
+	**/
+	
+	#genSlotSiteFooter {
+		background-color: #262727;
+		border-right: 1px solid #727373;
+		border-bottom: 1px solid #727373;
+		border-left: 1px solid #727373;
+		color: #fff;
+		font-size: 11px;
+		margin: 0 11px 39px 11px;
+		padding: 18px 0 10px 0;
+		box-shadow: 0 2px 5px #888;
+		-moz-box-shadow: 0 2px 5px #888;
+		-webkit-box-shadow: 0 2px 5px #888;
+	}
+		#genSlotSiteFooter  .slot-item{
+			padding-top: 0;
+		}
+		#genSlotSiteFooter ul {
+			list-style: none;
+			padding-bottom: 8px;
+		}
+			#genSlotSiteFooter ul li {
+				display: inline;
+			}
+		#genSlotSiteFooter a {
+			color: #fff;
+		}
+			#genSlotSiteFooter a:hover {
+				color: #fff;
+			}
+			
+		/* Footer Links */
+		
+		ul.genSiteFooterLinks  li {
+			border-right: 1px solid #fff;
+			margin-right: 6px;
+			padding-right: 6px;
+		}
+			ul.genSiteFooterLinks li.last {
+				border-right: 0;
+				margin-right: 0;
+				padding-right: 0;
+			}
+			
+			ul.genSiteFooterLinks li.genSiteRssLink a {
+				font-size: 1.2em;
+				color: #fff;
+			}
+		
+		
+/***
+	===
+		Content Type Template Specific Styles
+	===
+***/
+
+/**
+	Home page
+**/
+
+body.genHome .genSiteContentColumn {
+	background-color: #fff;
+	border-right: 1px solid #b2b2b2;
+	width: 655px;
+}
+
+	body.genHome  #genSlotBody {
+		
+	}
+
+		body.genHome #genSlotBody .slot-item .genContentBlock {
+			background-color: #e6fcfc;
+			border: 1px solid #b2b2b2;
+			border-radius: 4px;
+			margin-bottom: 18px;
+			-moz-border-radius: 4px;
+			padding: 18px 18px 0 18px;
+			-webkit-border-radius: 4px;
+		}
+	
+	/**
+		Column and Highlight areas used on Home page and Landing pages
+	**/
+
+	/* Two Column Area */
+
+	.genSlotColumnContainer {
+		margin: 0 0 15px 0;
+		padding-right: 0;
+	}
+
+	/* Three Column Area (aka Highlights) */
+
+	.genSiteHighlightContainer {
+		margin: 0 0 15px 0;
+		padding-right: 0;
+	}
+
+	
+	
+	
+body.genHome .genSiteRightColumn {
+	width: 304px;
+}
+
+/**
+	Landing Page
+**/
+
+body.genLanding .genSiteMainColumn {
+	background-color: transparent;
+}
+	body.genLanding .genSiteContentColumn {
+		background-color: #fff;
+		border-right: 1px solid #B2B2B2;
+		width: 570px;
+	}
+		body.genLanding .genSiteContentColumn  .slot-item {
+			padding-right: 20px;
+		}
+	body.genLanding  .genSiteRightColumn {
+		width: 228px; 
+	}
+	
+	/* Columns */
+	
+	.genSlotColumnContainer h3,
+	.genSiteHighlightContainer h3 {
+		border-bottom: 1px solid #B2B2B2;
+		margin-bottom: 14px;
+		padding-bottom: 14px;
+	}
+	
+	/* Highlights */
+
+/**
+	General
+**/
+
+body.genGeneral {
+}
+
+/**
+	News Release
+**/
+
+.genNewsDates {
+	font-weight: 900;
+}
+.genNewsMetadata {
+	margin-bottom: 18px;
+}
+
+/**
+	Event
+**/
+
+.genEventMetadata  {
+	margin-bottom: 20px;
+}
+	.genEventMetadata p {
+		padding-bottom: 0;
+	}
+
+/**
+	Funding Opportunities
+**/
+
+.genFundingOpp li.genListItemFundingOpp  p {
+	text-indent: 22px;
+}
+
+.genFundingOpp li.genListItemFundingOpp p.genListItemSource {
+	font-style: italic;
+	text-indent: 0;
+}
+	
+
+
+/**
+	Lists and Aggro-Widgets
+**/
+
+ul.genList,
+ol.genList,
+ul.genAggroWidget,
+ol.genAggroWidget {
+	list-style-type: none;
+	margin: 0;
+	padding: 0 0 8px 0;
+}
+	
+	/* clearFix is used to allow floated elements to remain properly inside of the box model in these elements. Using this is as opposed to overflow:hidden or clear:both; in order to ensure cross-browser compatibility and for smoother development */
+
+	ul.genList li,
+	ol.genList li,
+	ul.genAggroWidget li,
+	ol.genAggroWidget li {
+		zoom: 1; /* triggers hasLayout in IE */
+		display: block; /* resets display for IE/Windows */
+	}
+	ul.genList li:after,
+	ol.genList li:after,
+	ul.genAggroWidget li:after,
+	ol.genAggroWidget li:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+	/* Title */
+	ul.genList li h4,
+	ol.genList li h4 ,
+	ul.genAggroWidget li h4 ,
+	ol.genAggroWidget li h4 	{
+		font-size: 12px;
+		font-weight: 900;
+	}
+	ul.genList li .genListItemTitle,
+	ol.genList li .genListItemTitle,
+	ul.genAggroWidget li .genListItemTitle,
+	ol.genAggroWidget li .genListItemTitle	{
+		font-weight: 900;
+	}
+	
+	/* Content */
+	ul.genList li p,
+	ol.genList li p,
+	ul.genAggroWidget li p,
+	ol.genAggroWidget li p {
+		padding-bottom: 8px;
+	}
+	
+	/* Descriptions */
+	ul.genList li p.genListItemDesc,
+	ol.genList li p.genListItemDesc,
+	ul.genAggroWidget li p.genListItemDesc,
+	ol.genAggroWidget li p.genListItemDesc	{
+		padding-bottom: 12px;
+	}
+	
+	/* Items with Thumbnails */
+	ul.genList li p.genListItemThumbnail,
+	ol.genList li p.genListItemThumbnail,
+	ul.genAggroWidget li p.genListItemThumbnail,
+	ol.genAggroWidget li p.genListItemThumbnail {
+		float: left;
+		margin: 0 6px 8px 0;
+		height: 44px;
+		width: 60px;	
+	}
+		p.genListItemThumbnail img {
+			border: 1px solid #b2b2b2;
+		}
+		ul.genList li div.genListItemInfo,
+		ol.genList li div.genListItemInfo,
+		ul.genAggroWidget li div.genListItemInfo,
+		ol.genAggroWidget li div.genListItemInfo	{
+			margin-left: 66px;
+		}
+
+	/* Source */
+	p.genListItemSource {
+		font-style: italic;
+	}
+	
+	/* List Items - News */
+	
+	ul li.genListItemNews p.genListItemDate {
+		font-size: 0.9em;
+		padding-bottom: 0;
+	}
+	
+	/* List Items - Citations */
+	
+	ul li.genListItemCitation {
+		padding-bottom: 8px;
+		margin-left: 18px;
+		text-indent: -18px;
+	}
+		ul li.genListItemCitation  .genListItemPub {
+			font-style: italic;
+		}
+	
+	
+	/* List Items - Video */
+	
+	ul li.genListItemVideo .genListItemInfo p.genListItemMetaData {
+		padding-bottom: 0;
+	}
+		.genListItemVideo .genListItemType {
+			background-image: url('/publishedcontent/images/images/icons/icon-videos-sml.gif');
+			background-repeat: no-repeat;
+			padding-left: 18px;
+		}
+	
+	/* List Items in the Sidebars */
+	
+	.genSiteRightColumn  #genSlotRightSidebar ul.genList  li  {
+		padding-bottom: 6px;
+	}
+		.genSiteRightColumn  #genSlotRightSidebar ul.genList  li p {
+			margin: 0;
+			padding: 0;		
+		}	
+		#genSlotRightSidebar ul.genList li p.genListItemThumbnail {
+			margin: 2px 4px 4px 0;
+		}
+		
+		
+		
+	/**
+		Aggregation Widget
+	**/
+
+	ul.genAggroWidget {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
+
+		/**
+			Pagination used on Page Level Aggro Widgets and Search Results
+		**/
+
+		ul.genSitePagination {
+			margin: 0 20px 0 0;
+			padding: 0 0 20px 0;
+		}
+			ul.genSitePagination li {
+				margin-right: 8px;
+			}
+			
+			
+			
+	/**
+		Timely Content Zone
+	**/
+	
+
+	/* overall container */
+	#news-slider {
+		border: 1px solid #b2b2b2;
+		border-radius: 4px;
+		margin: 0 0 15px 0;
+		-moz-border-radius: 4px;
+		padding: 0;
+		-webkit-border-radius: 4px;
+		width: 100%;
+	}
+		/* container for featured item */
+		
+		#news-slider .ui-tabs-panel-x {
+			border: 0;
+			height: 200px;
+			margin: 2px;
+			width: 100%;	
+		}	
+			#news-slider .ui-tabs-panel-x img {
+				float: left;
+				border: 1px solid #b2b2b2;
+				margin: 18px 18px 0 18px;
+			}	
+			#news-slider .ui-tabs-panel-x p,
+			#news-slider .ui-tabs-panel-x li {
+				font-size: 12px;
+			}
+			#news-slider .ui-tabs-panel-x a {
+				text-decoration: none;
+			}
+				#news-slider .ui-tabs-panel-x a:hover {
+					text-decoration: underline;
+				}
+			.ui-tabs-panel-x p {
+				margin: 4px 0;
+			}
+
+			/* text in featured item */
+			
+			#news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text {
+				float: left;
+				width: 314px;
+				padding: 18px 0 0 0;
+			}
+			#news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text h2 {
+				margin: 0;
+			}
+				#news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text h2 a {
+					text-decoration: underline;
+				}
+				#news-slider .ui-tabs-panel-x .ui-tabs-panel-x-text h2 a:hover {
+					text-decoration: none;
+				}
+			.ui-tabs-panel-x ul {
+				margin: 0 0 0 10px;           
+				padding: 0;
+				background: none !important;
+				list-style-type: none !important;
+			}
+				.ui-tabs-panel-x ul li {
+					margin: 0;
+					padding: 0;
+					background: none !important;
+					list-style-type: none !important;
+				}
+
+				table.carousel-panel-list {
+					width: 90%;
+					margin: 0 0 0 5px;
+				}
+					table.carousel-panel-list td {
+						vertical-align: top;
+						padding-right: 3px;
+					}
+
+				#news-slider .ui-tabs-hide {
+					display: none;
+				}
+				
+	/* parent container for list items (tabs) */
+	
+	#news-slider ul.news-slider-tabs {
+		background: none;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+	}
+	#news-slider .ui-widget-header {
+		border: 0;
+	}
+	/* container for individual list items */
+	
+	#news-slider ul.news-slider-tabs {
+		overflow: hidden;
+	
+	}
+		#news-slider ul.news-slider-tabs li.news-slider-tabs-item {
+			/* Background Gradient */
+			background: #a8a7a7; /* Old browsers */
+			background: -moz-linear-gradient(top, #ffffff 0%, #a8a7a7 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#a8a7a7)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, #ffffff 0%,#a8a7a7 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top, #ffffff 0%,#a8a7a7 100%); /* Opera11.10+ */
+			background: -ms-linear-gradient(top, #ffffff 0%,#a8a7a7 100%); /* IE10+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#a8a7a7',GradientType=0 ); /* IE6-9 */
+			background: linear-gradient(top, #ffffff 0%,#a8a7a7 100%); /* W3C */
+			/* End Background Gradient */
+			border-right: 1px solid #b2b2b2;
+			border-top: 1px solid #b2b2b2;
+			float: left;
+			height: 80px;
+			list-style: none;
+			list-style-type: none;
+			margin: 0;
+			width: 205px;
+		}
+		#news-slider ul.news-slider-tabs li.last {
+			border-right: 0;
+			border-bottom-right-radius: 5px;
+			-moz-border-radius-bottomright: 5px;
+			-webkit-border-bottom-right-radius: 5px;
+			width: 203px;
+		}
+		#news-slider ul.news-slider-tabs .ui-state-default {
+		}
+		#news-slider ul.news-slider-tabs .ui-state-default.last {
+		}
+		#news-slider ul.news-slider-tabs .ui-state-active {
+		}
+		#news-slider ul.news-slider-tabs .ui-state-active.last {
+		}
+			
+	#news-slider .ui-corner-top {
+		-moz-border-radius-topleft: 0;
+		-webkit-border-top-left-radius: 0;
+		border-top-left-radius: 0;
+		-moz-border-radius-topright: 0;
+		-webkit-border-top-right-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+			/* link used inside of list items */
+			
+			#news-slider li.news-slider-tabs-item a { /*On Hover Style*/
+				border-right: 1px solid #fff;
+				border-left: 1px solid #fff;
+				display: block;
+				overflow: hidden;
+				font-weight: bold;
+				font-size: 0.9em;
+				margin: 0 0 0 0;
+				outline: none;
+				padding: 8px 18px 18px 18px;
+			}
+			#news-slider li.news-slider-tabs-item a { /*On Hover Style*/
+				margin-top: 7px;
+			}
+			/* thumbnail images in tabs */
+			#news-slider li.news-slider-tabs-item img {
+				border: 1px solid #b2b2b2;
+				margin: 0 8px 0 0;
+			}
+			/* container for individual list items image and text on hover */
+			#news-slider li.news-slider-tabs-item a:hover {
+			}
+			/* container for text in individual list items, selected */
+			#news-slider ul.news-slider-tabs li.ui-tabs-selected { /*Selected tab style*/
+				/* Background Gradient */
+				background: #f5f6c4; /* Old browsers */
+				background: -moz-linear-gradient(top, #ffffff 0%, #f5f6c4 100%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f5f6c4)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* Opera11.10+ */
+				background: -ms-linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* IE10+ */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f6c4',GradientType=0 ); /* IE6-9 */
+				background: linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* W3C */
+				/* End Background Gradient */
+			}
+				/* container for text in individual list items, selected */
+				#news-slider ul.news-slider-tabs li.ui-tabs-selected a {
+					color: #4d4d4d;
+					text-decoration: none;
+				}
+		
+/**
+	Search Results
+**/
+
+p.genSiteSearchResultsCount {
+	font-weight: 900;
+	padding-top: 18px;
+}
+
+ol li.genSearchItem {
+	padding-bottom: 18px;
+}
+	ol li.genSearchItem h4 {
+		font-size: 1em;
+	}
+	ol li.genSearchItem p {
+		padding-bottom: 0;
+	}
+	ol li.genSearchItem p.genListItemLink {
+		font-size: 0.9em;
+		font-style: italic;
+	}
+
+
+	

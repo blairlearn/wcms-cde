@@ -1,0 +1,80 @@
+@charset "utf-8";
+
+/*
+	====
+		Proteomics.cancer.gov Design Elements
+		
+		Usage: Elements specifically used for proteomics.cancer.gov
+		
+		Last Update: June 8, 2011 by Mal Jones
+	====
+*/
+
+/**
+	Site Banner
+**/
+
+#genSlotSiteBanner {
+	background-image: url('/publishedcontent/images/images/global/cptc-bground.jpg');
+	background-repeat: no-repeat;
+	background-position: right -39px;
+}
+
+/* Site Logo */
+
+h1.genSiteLogo {
+	text-indent: -9999px;
+}
+	h1.genSiteLogo a {
+		background-image: url('/publishedcontent/images/images/global/cptc-logo.png');
+		filter: progid:DXImageTransform.Microsoft.AlphaImageLoader('/publishedcontent/images/images/global/cptc-logo.png');
+		display: block;
+		height: 85px;
+		width: 300px;
+	}
+	
+/**
+	Site Footer
+**/
+
+/* Footer Logos */
+
+ul.genSiteFooterLogos {
+		margin: 0 0 0 40%;
+}
+	ul.genSiteFooterLogos li {
+		float: left;
+		text-indent: -9999px;
+		margin-right: 12px;
+	}
+		ul.genSiteFooterLogos li a {
+			background-repeat: no-repeat;
+			display: block;
+			height: 34px;
+		}
+		/* HHS */
+		ul.genSiteFooterLogos li a.genSiteFooterLinkHHS {
+			background-image: url('/publishedcontent/images/images/global/footer-logo-hhs.gif');
+			width: 34px;
+		}
+		/* NIH */
+		ul.genSiteFooterLogos li a.genSiteFooterLinkNIH {
+			background-image: url('/publishedcontent/images/images/global/footer-logo-nih.gif');
+			width: 31px;
+		}
+		/* NCI */
+		ul.genSiteFooterLogos li a.genSiteFooterLinkNCI {
+			background-image: url('/publishedcontent/images/images/global/footer-logo-nci.gif');
+			width: 45px;
+		}
+		/* USA.gov */
+		ul.genSiteFooterLogos li a.genSiteFooterLinkUSA {
+			background-image: url('/publishedcontent/images/images/global/footer-logo-usagov.gif');
+			width: 83px;
+		}
+	
+
+
+
+
+	
