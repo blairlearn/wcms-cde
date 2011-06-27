@@ -1,0 +1,146 @@
+@charset "utf-8";
+
+/*
+	====
+		Baseline Design Elements for Print
+		
+		Usage: Used to define the look and feel of the website when printing. The default set of styles defined include colors, additional dimensions (line-height, padding, margin), other design-specific elements. This style sheet can be edited to accomodate other website specific design requirements as needed.
+		
+		Last Update: May 24, 2011 by Mal Jones
+	====
+*/
+
+
+/***
+	Typography and Universal Elements
+***/
+
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6em;
+}
+a {
+	color: #000;
+}
+h1 {
+	font-size: 2em;
+	font-weight: 900;
+	line-height: 1.1em;
+}
+h2 {
+	font-size: 1.6em;
+	font-weight: 900;
+	padding-bottom: 18px;
+}
+h3 {
+	font-size: 1.4em;
+	font-weight: 900;
+	padding-bottom: 18px;
+}
+h4 {
+	font-size: 1.2em;
+	font-weight: 900;
+	padding-bottom: 0;
+}
+h5 {
+	font-size: 1em;
+}
+p {
+	padding-bottom: 18px;
+}
+ul {
+	list-style-type: square;
+	margin-left: 36px;
+	padding-bottom: 18px;
+}
+	ul li {
+	}
+ol {
+	list-style-type: decimal;
+	margin-left: 36px;
+	padding-bottom: 18px;
+}
+	ol li {
+	}
+blockquote {
+	margin: 0 36px 0 36px;
+}
+b,
+strong {
+	font-weight: 900;
+}
+i,
+em {
+	font-style: italic;
+}
+dl {
+}
+	dl dt {
+	}
+	dl dd {
+	}
+table {
+}
+
+/*	Ensuring extra div.slot-items generated from CDE do not have default padding. */
+.slot-item .slot-item {
+	padding: 0;
+}
+
+/***
+	Page Elements
+***/
+
+	/**
+		General Site Container
+	**/
+	.genSiteContainer {
+		font-size: 1.2em;
+		line-height: 1.4em;
+	}
+
+	/**
+		Site Header
+	**/
+
+	#genSlotSiteBanner {
+		padding-bottom: 1.2em;
+	}
+	
+	/**
+		Site Content Container
+	**/
+
+		/**
+			Main Column
+		**/
+		
+		.genSiteMainColumn {
+		}
+	
+			/* Section banner */
+			#genSlotSectionBanner {
+				padding-bottom: 1.2em;
+			}
+			
+			/* Page Title Area */
+			#genSlotTitle {
+				padding-bottom: 1.2em;
+			}	
+				#genSlotTitle h1,
+				#genSlotTitle h2 {
+					padding: 0;
+				}
+				#genSlotTitle h1 {
+					line-height: 1.4em;
+				}
+		
+			/**
+				Content Column
+			**/
+			
+			/* Page Options */
+			.genSiteMainColumn #genSlotPageOptions {
+				display: none;
+			}				
+	
