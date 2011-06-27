@@ -1,14 +1,14 @@
 ﻿jQuery(document).ready(function() {
     // Uploaded to the CMS, this should be relative to CDE root.
     // Uploaded to web_resources, this should be relative to the preview renderer.
-    var flashPlayer = "/PublishedContent/files/global/flash/speaker.swf";
- 
+    var flashPlayer = "/PublishedContent/files/global/flash/speaker.swf?r=" + new Date().getTime();
+
     // Rewrite links with a class of either CDR_audiofile (PDQ content) or
     // WCM_audiofile (CancerGov content).
     var audioLinks = jQuery("a[class~='CDR_audiofile'],a[class~='WCM_audiofile']");
 
     audioLinks.each(function(index, element) {
-        var file = element.href;
+        var file = element.href + "?r=" + new Date().getTime();
 
         // Setup for browers which support both the audio tag and the MP3 file format.
         // Chrome supports MP3, Firefox does not. (But both support the audio tag.)
