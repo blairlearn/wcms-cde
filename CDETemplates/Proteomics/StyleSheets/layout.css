@@ -6,7 +6,7 @@
 		
 		Usage: Used to define and place elements of the Website's shell, such as the content dimensions and the location of the header and footer. It also includes globally utilized elements such as the .clearFix selector and the Main Navigation flyout menus. It does not include design elements (i.e. padding, background-colors, font-styles, etc). Just positioning and base-line font size for the body.
 		
-		Last Update: June 24, 2011 by Mal Jones
+		Last Update: June 22, 2011 by Mal Jones
 	====
 */
 
@@ -329,7 +329,7 @@ body .genSiteContentContainer.noSidebars .genSiteMainColumn   {
 	}
 	#genSlotColumn2 {
 		float: right;
-		width: 50%;
+		width: 49%;
 	}
 
 /* Three Column Area (aka Highlights) */

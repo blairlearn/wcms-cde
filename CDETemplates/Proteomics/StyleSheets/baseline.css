@@ -411,6 +411,9 @@ table {
 					font-weight: 900;
 					text-decoration: none;
 				}
+					#genSlotSectionNav a.current:hover {
+						text-decoration: underline;
+					}
 				
 					/* Turns off gradient, padding, and margin when in a subsection of .currenSection */
 					
@@ -493,7 +496,7 @@ table {
 			}
 			/* Page Title Area */
 			#genSlotTitle {
-				padding: 0 20px 18px 20px;
+				padding: 0 20px 12px 20px;
 			}	
 				#genSlotTitle h1,
 				#genSlotTitle h2 {
@@ -708,7 +711,7 @@ table {
 				padding-left: 16px;
 			}
 		h1 span.genSiteRssLink a {
-			font-size: 0.6em;
+			font-size: 0.5em;
 		}
 		h2 span.genSiteRssLink a {
 			font-size: 0.8em;
@@ -844,8 +847,10 @@ body.genLanding .genSiteMainColumn {
 		width: 228px; 
 	}
 	
+	
 	/* Columns */
 	
+	#genSlotBody .slot-item h3,
 	.genSlotColumnContainer h3,
 	.genSiteHighlightContainer h3 {
 		border-bottom: 1px solid #B2B2B2;
@@ -888,14 +893,24 @@ body.genGeneral {
 	Funding Opportunities
 **/
 
-.genFundingOpp li.genListItemFundingOpp  p {
-	text-indent: 22px;
+li.genListItemFundingOpp  p {
+	margin-left: 22px;
 }
 
-.genFundingOpp li.genListItemFundingOpp p.genListItemSource {
+li.genListItemFundingOpp p.genListItemSource {
 	font-style: italic;
-	text-indent: 0;
+	margin-left: 0;
 }
+
+ul.genAggroWidget li.genListItemFundingOpp ul {
+	list-style-type: square;
+	padding-bottom: 12px;
+}
+	li.genListItemFundingOpp ul li {
+		padding-bottom: 0;
+	}
+
+
 	
 
 
@@ -920,6 +935,7 @@ ol.genAggroWidget {
 	ol.genAggroWidget li {
 		zoom: 1; /* triggers hasLayout in IE */
 		display: block; /* resets display for IE/Windows */
+		padding-bottom: 12px;
 	}
 	ul.genList li:after,
 	ol.genList li:after,
@@ -960,7 +976,7 @@ ol.genAggroWidget {
 	ol.genList li p.genListItemDesc,
 	ul.genAggroWidget li p.genListItemDesc,
 	ol.genAggroWidget li p.genListItemDesc	{
-		padding-bottom: 12px;
+		padding-bottom: 0;
 	}
 	
 	/* Items with Thumbnails */
@@ -994,7 +1010,9 @@ ol.genAggroWidget {
 		font-size: 0.9em;
 		padding-bottom: 0;
 	}
-	
+	ul li.genListItemNews p.genListItemSource {
+		padding-bottom: 0;
+	}	
 	/* List Items - Citations */
 	
 	ul li.genListItemCitation {
@@ -1090,10 +1108,10 @@ ol.genAggroWidget {
 				font-size: 12px;
 			}
 			#news-slider .ui-tabs-panel-x a {
-				text-decoration: none;
+				text-decoration: underline;
 			}
 				#news-slider .ui-tabs-panel-x a:hover {
-					text-decoration: underline;
+					text-decoration: none;
 				}
 			.ui-tabs-panel-x p {
 				margin: 4px 0;
@@ -1222,6 +1240,7 @@ ol.genAggroWidget {
 			/* thumbnail images in tabs */
 			#news-slider li.news-slider-tabs-item img {
 				border: 1px solid #b2b2b2;
+				float: left;
 				margin: 0 8px 0 0;
 			}
 			/* container for individual list items image and text on hover */

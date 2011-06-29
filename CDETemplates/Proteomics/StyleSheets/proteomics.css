@@ -6,7 +6,7 @@
 		
 		Usage: Elements specifically used for proteomics.cancer.gov
 		
-		Last Update: June 8, 2011 by Mal Jones
+		Last Update: June 24, 2011 by Mal Jones
 	====
 */
 
@@ -74,7 +74,29 @@ ul.genSiteFooterLogos {
 		}
 	
 
+/* News and Events Landing Page */
 
+.genLanding .contentid-88795.last-SI {
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    background-color: #E6FCFC;
+    border: 1px solid #B2B2B2;
+    margin: 0 18px 18px 18px;
+    padding: 18px 18px 0;
+}
+
+/* News and Events Landing Page */
+
+.genLanding .contentid-88924.slot-item {
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    background-color: #E6FCFC;
+    border: 1px solid #B2B2B2;
+    margin: 0 18px 18px 18px;
+    padding: 18px 18px 0;
+}
 
 
 	
