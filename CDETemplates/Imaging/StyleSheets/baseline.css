@@ -481,14 +481,22 @@ table {
 			
 			
 			
+			
 			/* Page Options */
 			.genSiteMainColumn #genSlotPageOptions {
-				padding-bottom: 18px;
+				padding-bottom: 16px;
 			}
 				#genSlotPageOptions p.genSitePrintButton {
 					font-size: 0.9em;
 					padding-bottom: 0;
 				}
+					#genSlotPageOptions p.genSitePrintButton a {
+						background-image: url('/publishedcontent/images/images/icons/icon-print-sml.gif');
+						background-repeat: no-repeat;
+						padding-left: 22px;
+						padding-bottom: 2px;
+					}
+					
 			
 			.genSiteContentColumn {
 				margin-right: 2%;
