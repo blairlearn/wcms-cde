@@ -267,8 +267,8 @@ namespace Www.Templates
             {
 
                 litBackToTop.Visible = false;
-            }
-            else if (Request.RawUrl.Contains("?CdrID") == true)
+            } 
+            else if (Request.RawUrl.ToLower().Contains("?cdrid") == true)
             {
                 litBackToTop.Visible = false;
             }
