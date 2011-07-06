@@ -239,7 +239,6 @@ runat="server">
                                 <asp:Literal ID="litDefHtml" runat="server"></asp:Literal>
                                 <asp:Panel runat="server" ID="pnlRelatedInfo">
                                     <br />
-                                    <span class="header-B">More Info</span>
                                     <asp:Literal ID="litRelatedLinkInfo" runat="server"></asp:Literal>
                                 </asp:Panel>
                                 <asp:Literal ID="litImageHtml" runat="server"></asp:Literal>
