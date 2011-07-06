@@ -360,11 +360,12 @@ table {
 					border-radius: 4px;
 					font-size: 0.9em;
 					-moz-border-radius: 4px;
-					padding: 12px 0 0 0;
+					padding: 0 0 0 0;
 					-webkit-border-radius: 4px;
 				}
 					#genSlotSectionNav ul li {
-						padding: 0 12px;
+						border-bottom: 1px solid #b2b2b2;
+						padding: 6px 12px;
 					}
 				
 				
@@ -377,6 +378,13 @@ table {
 					#genSlotSectionNav ul ul {
 						padding-bottom: 0;
 					}
+						#genSlotSectionNav ul ul li {
+							border-style: dotted;
+							margin-left: 10px;
+							padding-left: 0;
+						}
+
+
 						/* Third Level of Section Navigation */
 						#genSlotSectionNav ul ul ul {
 							font-size: 0.9em;
@@ -388,23 +396,8 @@ table {
 			/* Current Section Identification */
 
 			#genSlotSectionNav ul li.currentSection {
-				/* Background Gradient */
-				background: #fff; /* Old browsers */
-				background: -moz-linear-gradient(top, #ffffff 0%, #f5f6c4 100%); /* FF3.6+ */
-				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f5f6c4)); /* Chrome,Safari4+ */
-				background: -webkit-linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* Chrome10+,Safari5.1+ */
-				background: -o-linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* Opera11.10+ */
-				background: -ms-linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* IE10+ */
-				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f5f6c4',GradientType=0 ); /* IE6-9 */
-				background: linear-gradient(top, #ffffff 0%,#f5f6c4 100%); /* W3C */
-				/* End Background Gradient */
-				border-top: 1px solid #b2b2b2;
-				border-bottom: 1px solid #b2b2b2;
-				margin-top: 12px;
-				margin-bottom: 12px;
+				background: #f5f6c4; /* Old browsers */
 				overflow: auto; /* Needed for IE7 to properly display the gradient filter */
-				padding-top: 12px;
-				padding-bottom: 12px;
 			}
 				#genSlotSectionNav a.current {
 					color: #262727;
@@ -414,17 +407,10 @@ table {
 					#genSlotSectionNav a.current:hover {
 						text-decoration: underline;
 					}
+				#genSlotSectionNav ul li.currentSection  ul {
+					padding-top: 2px;
+				}
 				
-					/* Turns off gradient, padding, and margin when in a subsection of .currenSection */
-					
-					#genSlotSectionNav ul li.currentSection li.currentSection {
-						background: transparent; /* Removes gradient on Standards Based browsers */
-						filter: progid:DXImageTransform.Microsoft.gradient(enabled=false ); /* Removes gradient on IE6-9 */
-						border: 0;
-						margin: 0;
-						padding-top: 0;
-						padding-bottom: 0;
-					}
 				
 				/* First Item in the Navigation */
 				
@@ -432,47 +418,47 @@ table {
 				#genSlotSectionNav ul li.first{
 					border-top: 0;
 					margin-top: 0;
-					padding-top: 0;
+					padding-top: 6px;
 				}
 					#genSlotSectionNav ul li li.first {
 						padding-top: 0;
 					}
+					
 				/* Last Item in the Navigation */
 				#genSlotSectionNav ul li.last {
-					border-bottom-left-radius: 5px;
-					border-bottom-right-radius: 5px;
-					-moz-border-radius-bottomleft: 5px;
-					-moz-border-radius-bottomright: 5px;			
-					padding-bottom: 12px;
-					-webkit-border-bottom-left-radius: 5px;
-					-webkit-border-bottom-right-radius: 5px;
+					border-bottom: 0;
 				}
 					#genSlotSectionNav ul li li.last {
+						border-bottom: 0;
 						padding-bottom: 0;
 					}
 				#genSlotSectionNav ul li.currentSection.last {
-					border-bottom: 0;
+					border-bottom: 0;	
+					border-bottom-left-radius: 8px;
+					border-bottom-right-radius: 8px;
 					margin-bottom: 0;
+					-moz-border-radius-bottomleft: 8px;
+					-moz-border-radius-bottomright: 8px;		
+					-webkit-border-bottom-left-radius: 8px;
+					-webkit-border-bottom-right-radius: 8px;	
 				}
 				
 				/* Only Item in Navigation */
 				#genSlotSectionNav ul li.only {
-					padding-bottom: 12px;
 				}
-						border: 0;
-					#genSlotSectionNav ul li.currentSection.only {
-						border-bottom-left-radius: 5px;
-						border-bottom-right-radius: 5px;
-						margin-top: 0;
-						margin-bottom: 0;
-						-moz-border-radius-bottomleft: 5px;
-						-moz-border-radius-bottomright: 5px;			
-						padding-top: 0;
-						padding-bottom: 12px;
-						-webkit-border-bottom-left-radius: 5px;
-						-webkit-border-bottom-right-radius: 5px;
+					#genSlotSectionNav ul li.currentSection ul li.only {
+						border-bottom: 0;
+						padding: 0;
 					}
-			
+					#genSlotSectionNav ul li.currentSection.only {
+						border-radius: 8px;
+						-moz-border-radius: 8px;		
+						-webkit-border-radius: 8px;
+					}
+					#genSlotSectionNav ul li.currentSection a.only  {
+						padding-bottom: 0;
+					}
+
 				
 		/* Additional content container */
 		
@@ -518,12 +504,18 @@ table {
 			
 			/* Page Options */
 			.genSiteMainColumn #genSlotPageOptions {
-				padding-bottom: 18px;
+				padding-bottom: 16px;
 			}
 				#genSlotPageOptions p.genSitePrintButton {
 					font-size: 0.9em;
 					padding-bottom: 0;
 				}
+					#genSlotPageOptions p.genSitePrintButton a {
+						background-image: url('/publishedcontent/images/images/icons/icon-print-sml.gif');
+						background-repeat: no-repeat;
+						padding-left: 22px;
+						padding-bottom: 2px;
+					}
 					
 			/**
 				Content Column
@@ -788,20 +780,15 @@ body.genHome .genSiteContentColumn {
 	border-right: 1px solid #b2b2b2;
 	width: 655px;
 }
-
-	body.genHome  #genSlotBody {
-		
+	body.genHome #genSlotBody .slot-item .genContentBlock {
+		background-color: #e6fcfc;
+		border: 1px solid #b2b2b2;
+		border-radius: 4px;
+		margin-bottom: 18px;
+		-moz-border-radius: 4px;
+		padding: 18px 18px 0 18px;
+		-webkit-border-radius: 4px;
 	}
-
-		body.genHome #genSlotBody .slot-item .genContentBlock {
-			background-color: #e6fcfc;
-			border: 1px solid #b2b2b2;
-			border-radius: 4px;
-			margin-bottom: 18px;
-			-moz-border-radius: 4px;
-			padding: 18px 18px 0 18px;
-			-webkit-border-radius: 4px;
-		}
 	
 	/**
 		Column and Highlight areas used on Home page and Landing pages
@@ -889,26 +876,6 @@ body.genGeneral {
 		padding-bottom: 0;
 	}
 
-/**
-	Funding Opportunities
-**/
-
-li.genListItemFundingOpp  p {
-	margin-left: 22px;
-}
-
-li.genListItemFundingOpp p.genListItemSource {
-	font-style: italic;
-	margin-left: 0;
-}
-
-ul.genAggroWidget li.genListItemFundingOpp ul {
-	list-style-type: square;
-	padding-bottom: 12px;
-}
-	li.genListItemFundingOpp ul li {
-		padding-bottom: 0;
-	}
 
 
 	
@@ -922,7 +889,6 @@ ul.genList,
 ol.genList,
 ul.genAggroWidget,
 ol.genAggroWidget {
-	list-style-type: none;
 	margin: 0;
 	padding: 0 0 8px 0;
 }
@@ -933,10 +899,11 @@ ol.genAggroWidget {
 	ol.genList li,
 	ul.genAggroWidget li,
 	ol.genAggroWidget li {
+		list-style-type: none;
+		padding: 0 0 12px 0;
 		zoom: 1; /* triggers hasLayout in IE */
-		display: block; /* resets display for IE/Windows */
-		padding-bottom: 12px;
 	}
+	
 	ul.genList li:after,
 	ol.genList li:after,
 	ul.genAggroWidget li:after,
@@ -946,7 +913,7 @@ ol.genAggroWidget {
 		height: 0;
 		clear: both;
 		visibility: hidden;
-	}
+	} 
 
 	/* Title */
 	ul.genList li h4,
@@ -1000,8 +967,12 @@ ol.genAggroWidget {
 		}
 
 	/* Source */
-	p.genListItemSource {
+	ul.genList li p.genListItemSource ,
+	ol.genList li p.genListItemSource ,
+	ul.genAggroWidget li p.genListItemSource ,
+	ol.genAggroWidget li p.genListItemSource {
 		font-style: italic;
+		padding-bottom: 0;
 	}
 	
 	/* List Items - News */
@@ -1010,9 +981,7 @@ ol.genAggroWidget {
 		font-size: 0.9em;
 		padding-bottom: 0;
 	}
-	ul li.genListItemNews p.genListItemSource {
-		padding-bottom: 0;
-	}	
+	
 	/* List Items - Citations */
 	
 	ul li.genListItemCitation {
@@ -1051,23 +1020,39 @@ ol.genAggroWidget {
 		
 		
 		
-	/**
-		Aggregation Widget
-	**/
-
-	ul.genAggroWidget {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
+		/**
+			Funding Opportunities
+		**/
+		ul.genAggroWidget li.genListItemFundingOpp ul {
+			margin-left: 55px;
+			padding-bottom: 12px;
+		}
+			ul.genAggroWidget  li.genListItemFundingOpp ul li {
+				list-style-type: square;
+				padding-bottom: 0;
+			}
+			ul.genAggroWidget li.genListItemFundingOpp ul.genListItemFundingOppDates {
+				padding-top: 12px;
+			}
+		ul.genAggroWidget  li.genListItemFundingOpp ol li {
+			list-style-type: decimal;
+		}			
+		li.genListItemFundingOpp  p {
+			margin-left: 22px;
+		}
+		li.genListItemFundingOpp p.genListItemSource {
+			font-style: italic;
+			margin-left: 0;
+		}
 
 		/**
 			Pagination used on Page Level Aggro Widgets and Search Results
 		**/
 
 		ul.genSitePagination {
+			border-top: 1px solid #B2B2B2;
 			margin: 0 20px 0 0;
-			padding: 0 0 20px 0;
+			padding: 18px 0 20px 0;
 		}
 			ul.genSitePagination li {
 				margin-right: 8px;
