@@ -43,7 +43,7 @@ namespace NCI.Web.CDE.WebAnalytics
         public WebAnalyticsPageLoad()
         {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/NCIAnalyticsFunctions.js\"></script>");
-            pageLoadPreTag.AppendLine("<!-- SiteCatalyst code version: H.20.3. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com -->");
+            //pageLoadPreTag.AppendLine("<!-- SiteCatalyst code version: H.20.3. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com -->");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/s_code.js\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
             pageLoadPreTag.AppendLine("<!--");
@@ -66,7 +66,7 @@ namespace NCI.Web.CDE.WebAnalytics
             pageLoadPostTag.AppendLine("</script>");
             if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
                 pageLoadPostTag.Append(NoScriptTag().ToString());
-            pageLoadPostTag.AppendLine("<!-- End SiteCatalyst code version: H.20.3. -->");
+            //pageLoadPostTag.AppendLine("<!-- End SiteCatalyst code version: H.20.3. -->");
             pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
         }
 
@@ -109,6 +109,7 @@ namespace NCI.Web.CDE.WebAnalytics
 
             if (WebAnalyticsOptions.IsEnabled)
             {
+                output.AppendLine("");
                 output.AppendLine(WEB_ANALYTICS_COMMENT_START);
 
                 // Report Suites JavaScript variable (s_account) must be set before the s_code file is loaded

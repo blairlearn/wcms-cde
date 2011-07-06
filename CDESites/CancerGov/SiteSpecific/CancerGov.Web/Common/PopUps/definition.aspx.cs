@@ -16,6 +16,7 @@ using System.Globalization;
 using CancerGov.UI.HTML;
 using CancerGov.CDR.TermDictionary;
 using CancerGov.UI;
+using NCI.Web.CDE.WebAnalytics;
 namespace CancerGov.Web.Common.PopUps
 {
     public partial class Definition :PopUpPage
@@ -156,24 +157,24 @@ namespace CancerGov.Web.Common.PopUps
 
             content = new HtmlSegment(String.Format("<span class=\"black-text-b\">{0}</span>", term) + audioMediaHTML + ((Strings.Clean(pronunciation) != null) ? " " + pronunciation : "") + "<p>" + termDefinition + "<p>" + mediaHtml);
 
-            // Web Analytics *************************************************
-            //if (pageDisplayInformation.Language == DisplayLanguage.Spanish)
-            //{
-            //    webAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Diccionario de cancer (Dictionary of Cancer Terms)", this.Request.Url.OriginalString.ToString());
-            //    webAnalyticsPageLoad.SetLanguage(WebAnalyticsOptions.Language.Spanish);
-            //}
-            //else
-            //{
-            //    webAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Dictionary of Cancer Terms", this.Request.Url.OriginalString.ToString());
-            //    webAnalyticsPageLoad.SetLanguage(WebAnalyticsOptions.Language.English);
-            //}
-            //if (version.ToString() == "Patient")
-            //    webAnalyticsPageLoad.SetPageName(WebAnalyticsOptions.Hostname + "/common/popups/popdefinition.aspx - Patient");
-            //else
-            //    webAnalyticsPageLoad.SetPageName(WebAnalyticsOptions.Hostname + "/common/popups/popdefinition.aspx - HealthProfessional");
-            //webAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.DictionaryTermView); // Dictionary Term view (event11)
-            //litOmniturePageLoad.Text = webAnalyticsPageLoad.Tag();  // Load page load script 
-            // End Web Analytics *********************************************
+           // Web Analytics *************************************************
+           WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
+
+           if (dl == DisplayLanguage.Spanish)
+           {
+               webAnalyticsPageLoad.SetChannel("Diccionario de cancer (Dictionary of Cancer Terms)");
+               webAnalyticsPageLoad.SetLanguage("es");
+           }
+           else
+           {
+               webAnalyticsPageLoad.SetChannel("Dictionary of Cancer Terms");
+               webAnalyticsPageLoad.SetLanguage("en");
+           }
+           webAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.DictionaryTermView); // Dictionary Term view (event11)
+           litOmniturePageLoad.Text = webAnalyticsPageLoad.Tag();  // Load page load script 
+           // End Web Analytics *********************************************
+
+
         }
 
         private void ValidateParams()
