@@ -2,7 +2,7 @@
 
 /* Cancer Terms Related Information Link */
 .RelatedInfo {
-	background-color:#e8e9ee;
+
 	padding: 12px;
 	}
 
@@ -47,6 +47,7 @@
 	color:#000;
 	background-color:#e7e8ed;
 	border: #999 thin solid;
+	z-index: 9999;
 }
 .ui-menu .ui-menu {
 	margin-top: -3px;
