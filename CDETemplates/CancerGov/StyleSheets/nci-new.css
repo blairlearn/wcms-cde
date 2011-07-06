@@ -1,9 +1,12 @@
 /* 6.2 Additions */
 
 /* Cancer Terms Related Information Link */
-.RelatedInfo-UL {
+.RelatedInfo {
 	background-color:#e8e9ee;
-	padding: 12px 14px 4px;
+	padding: 12px;
+	}
+
+.RelatedInfo-UL {
 }
 
 .RelatedInfo-LI {
