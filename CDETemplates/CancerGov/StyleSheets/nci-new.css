@@ -9,10 +9,10 @@
 .RelatedInfo-UL {
 }
 
-li.RelatedInfo-LI {
+.RelatedInfo-LI {
 	list-style-type : none;
 	list-style-image : none;
-	background: none;
+	background-image:none !important;
 }
 
 /*
