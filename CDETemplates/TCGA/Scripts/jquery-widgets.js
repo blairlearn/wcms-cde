@@ -79,6 +79,7 @@ Unrestricted. This script is free for both personal and commercial use.
 					var para = jQuery('<div></div>');
 					var title = jQuery('p.title a', story);
 					img.attr('src', jQuery('img', story).attr('src'));
+					img.attr('alt', jQuery('img', story).attr('alt'));
 					title = title.attr('title') || title.text();
 					para.html("<h1>" + title + "</h1>" + "<p class='paraText'>" + jQuery('p.description', story).html() + "</p>");
 					stories.removeClass('selected');

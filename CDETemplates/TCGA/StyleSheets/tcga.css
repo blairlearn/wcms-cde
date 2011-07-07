@@ -412,6 +412,7 @@ way to fit your requirements.
 #content ul.unbulleted li {
 	list-style-type: none;
 	margin-bottom: 20px;
+	overflow: hidden;
 }
 #content ul.alpha li {
 	list-style-type: lower-alpha;
@@ -519,6 +520,11 @@ way to fit your requirements.
 	position: absolute;
 	top: 11px;
 	left: 11px;
+}
+#content .image-sidebox-enlarge-plus {
+	position: absolute;
+	top: 1px;
+	left: 1px;
 }
 sup, sub {
 	height: 0;
@@ -705,11 +711,19 @@ sub {
 	padding-left:10px;
 	text-indent: -10px;
 }
-#content .icon-enlarge-plus {
-	background: url(/images/general/enlarge-plus.gif) no-repeat;
+/* #content .icon-enlarge-plus {
+	background: url('http://cancergenome.nih.gov/images/general/enlarge-plus.gif') no-repeat;
 	width:17px;
 	padding-left: 17px;
+} */
+#content .icon-enlarge-plus {
+	background: url("http://cancergenome.nih.gov/images/general/enlarge-plus.gif") no-repeat;
+	display: block;
+	height: 17px;
+	width: 17px;
+	text-indent: -9999px;
 }
+
 #content table.multimedia-sidebox .image-table-sidebox {
 	position: relative;
 }
@@ -718,6 +732,24 @@ sub {
 	top: 1px;
 	left: 1px;
 }
+
+/* Multimedia Library Pages */
+
+#content .mm-item-thumbnail {
+	float: left;
+	height: 42px;
+	margin-right: 8px;
+	position: relative;
+	width: 58px;
+}
+#content .mm-item-info {
+	float: left;
+	width: 85%;
+}
+
+
+/* End Multimedia Library Pages */
+
 #content .schImg {
 	vertical-align : middle;
 	opacity: .8;

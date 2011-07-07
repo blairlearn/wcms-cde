@@ -1,9 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.WebPageAssembler" %>
+<%@ Page Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.WebPageAssembler" %>
 <%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls" TagPrefix="NCI" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+<link rel="icon" href="/PublishedContent/Files/favicon.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="/PublishedContent/Files/favicon.ico" type="image/x-icon">
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
 <title>The Cancer Genome Atlas</title>
 <!--<link rel="stylesheet" href="/stylesheets/tcga-print.css" type="text/css" media="print" />
@@ -17,6 +19,7 @@
 
 <script src="/JS/popEvents.js" type="text/javascript"></script>
 </head>
+
 <body marginwidth="0" marginheight="0" leftmargin="0" topmargin="0"> 
 <div class="skip"><a title="Skip to content" href="#skiptocontent">Skip to content</a></div>
 <!-- NCI Banner (please keep all code on one line for browsers spacing issue) -->
