@@ -1,5 +1,11 @@
 /* 6.2 Additions */
 
+
+/* Cancer Terms Dictionary Lists */
+#cgvBody ul.ac_listbox li {
+	background-image:none;
+}
+
 /* Cancer Terms Related Information Link */
 .RelatedInfo {
 
