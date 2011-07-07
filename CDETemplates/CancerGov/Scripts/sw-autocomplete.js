@@ -1,5 +1,4 @@
 // JavaScript Document
-
 jQuery(document).ready(function($) {
 	
 		//function log( message ) {
@@ -13,7 +12,11 @@ jQuery(document).ready(function($) {
 			language = "Spanish"
 		}
 		
-		$( "#swKeyword" ).autocomplete({
+		var keywordElem = $("#swKeyword")
+		
+		if(keywordElem !== null)	
+			{
+			keywordElem.autocomplete({
 			source: "/AutoSuggestSearch.svc/SearchJSON/" + language,
 			minLength: 3,
 			focus: function( event, ui ) {
@@ -23,7 +26,7 @@ jQuery(document).ready(function($) {
 			select: function( event, ui ) {
 				$( "#swKeyword" ).val( ui.item.item );
 				return false;
-			}
+			}			
 		}).data( "autocomplete" )._renderItem = function( ul, item ) {
 			//Escape bad characters
 			var lterm = this.term.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -37,7 +40,7 @@ jQuery(document).ready(function($) {
 				.data( "item.autocomplete", item )
 				.append( "<a>" + word + "</a>" )
 				.appendTo( ul );
-		};
+		};	
+			}
 	}
 	);
-
