@@ -9,6 +9,8 @@
 
 #cgvBody ul.ac_listbox li {
 	background-image:none;
+	margin:0px !important;
+	padding:0px !important;
 }
 
 /* Cancer Terms Related Information Link */
