@@ -115,6 +115,19 @@ table {
 	padding: 0;
 }
 
+img.right {
+	float: right;
+	margin: 0 0 8px 8px;
+}
+img.left {
+	float: left;
+	margin: 0 8px 8px 0;
+}
+img.center {
+	margin: 0 auto;
+	text-align: center;
+}
+
 /***
 	Page Elements
 ***/
@@ -254,7 +267,8 @@ table {
 					border-bottom: 1px solid #b9b9b9;
 					color: #b9b9b9;
 				}
-					#genSlotMainNav ul.genSiteMainNav  li ul li.last {
+					#genSlotMainNav ul.genSiteMainNav  li ul li.last ,
+					#genSlotMainNav ul.genSiteMainNav  li ul li.only{
 						border-bottom: 0;
 					}
 				#genSlotMainNav ul.genSiteMainNav  li:hover > a {
@@ -279,6 +293,7 @@ table {
 				background-color: #fff;
 				color: #000;
 			}
+			
 				/* Removes Highlight Box from Fly Out Menus */
 				#genSlotMainNav ul.genSiteMainNav li ul a span {
 					border-radius: 0;
@@ -290,6 +305,13 @@ table {
 						background-color: transparent;
 						color: #fff;
 					}
+					
+				/* Current State on Fly Out Menus */
+				#genSlotMainNav ul.genSiteMainNav  li ul li a.current span  {
+					background-color: transparent;
+					color: #fff;
+				}
+				
 			
 			/* Additional Link Section 0c70a8 */
 			#genSlotMainNav ul.genSiteAdditionalMainNav li  a span {
@@ -445,6 +467,7 @@ table {
 				
 				/* Only Item in Navigation */
 				#genSlotSectionNav ul li.only {
+					border-bottom: 0;
 				}
 					#genSlotSectionNav ul li.currentSection ul li.only {
 						border-bottom: 0;
@@ -457,6 +480,7 @@ table {
 					}
 					#genSlotSectionNav ul li.currentSection a.only  {
 						padding-bottom: 0;
+						border-bottom: 0;
 					}
 
 				
@@ -646,6 +670,7 @@ table {
 				background: transparent;
 				border: 0;
 				filter: progid:DXImageTransform.Microsoft.gradient(enabled=false); /* Removes gradient in IE6-9 */
+				overflow: hidden;
 				padding: 0;
 			}
 				#genSlotRightSidebar .slot-item .cptcDataPortalLaunch h3 a {
@@ -656,26 +681,22 @@ table {
 					border-radius: 4px;
 					color: #fff;
 					display: block;
-					font-size: 0.8em;
+					font-size: 1em;
+					line-height: 1.2em;
 					margin: 0 0 8px 0;
 					-moz-border-radius: 4px;		
-					padding: 5px 14px;
+					padding: 12px 14px;
 					-webkit-border-radius: 4px;
 				}
+					#genSlotRightSidebar .slot-item .cptcDataPortalLaunch h3 a :active {
+						
+					}
 				
 			/* Stay Connected */
 			
 			#genSlotRightSidebar .slot-item .cptcStayConnected ul li {
 				padding-bottom: 2px;
-			}
-				
-				/* For Home Page */
-				
-				body.genHome #genSlotRightSidebar .slot-item .cptcDataPortalLaunch h3 a {
-					font-size: 0.9em;
-					padding: 14px;
-				}
-				
+			}	
 				
 			#genSlotRightSidebar .slot-item .cptcDataPortalLaunch p {
 				font-size: 0.9em;

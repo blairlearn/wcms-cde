@@ -73,10 +73,14 @@ ul.genSiteFooterLogos {
 			width: 83px;
 		}
 	
+/* CONTENT HIGHLIGHTS. Content ID's must be used to target specific slots. These need to be changed depending on the environment you are in. */
 
-/* News and Events Landing Page */
 
-.genLanding .contentid-88795.last-SI {
+
+
+.genLanding .contentid-88897.first-SI  /* Current Funding Opportunities on Funding Opps Landing Page */,
+.genLanding .contentid-88905.only-SI   /* CPTC In The News on News and Events Landing Page */ ,
+.genLanding .contentid-90337.first-SI   /* CPTC In The News on News and Events Landing Page */  {
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
     -moz-border-radius: 4px 4px 4px 4px;
@@ -85,18 +89,5 @@ ul.genSiteFooterLogos {
     margin: 0 18px 18px 18px;
     padding: 18px 18px 0;
 }
-
-/* News and Events Landing Page */
-
-.genLanding .contentid-88924.slot-item {
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
-    -moz-border-radius: 4px 4px 4px 4px;
-    background-color: #E6FCFC;
-    border: 1px solid #B2B2B2;
-    margin: 0 18px 18px 18px;
-    padding: 18px 18px 0;
-}
-
 
 	
