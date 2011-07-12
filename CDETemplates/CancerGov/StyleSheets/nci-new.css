@@ -19,13 +19,20 @@
 	}
 
 #RelatedInfo h3{
-	font-size: 14px;
+	font-size: 12px;
     font-weight: bold;
 	}
 	
 #RelatedInfo ul{
 	list-style:none;
 	margin-left:0px;
+	}
+
+#RelatedInfo ul li{
+	list-style-type : none;
+	list-style-image : none;
+	margin-left:0px;
+	background-image:none !important;
 	}
 
 /*
