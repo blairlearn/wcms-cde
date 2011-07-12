@@ -14,19 +14,24 @@
 }
 
 /* Cancer Terms Related Information Link */
-.RelatedInfo {
-
-	padding: 12px 0 12px 0;
+#RelatedInfo {
+	padding: 0;
 	}
 
-.RelatedInfo-UL {
-}
+#RelatedInfo h3{
+	font-size: 12px;
+    font-weight: bold;
+	}
+	
+#RelatedInfo ul{
+	list-style:none;
+	}
 
-.RelatedInfo-LI {
+#RelatedInfo ul li{
 	list-style-type : none;
 	list-style-image : none;
 	background-image:none !important;
-}
+	}
 
 /*
  * jQuery UI Autocomplete 1.8.13
