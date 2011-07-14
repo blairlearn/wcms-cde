@@ -68,7 +68,7 @@ h3 {
 h4 {
 	font-size: 1.2em;
 	font-weight: 900;
-	padding-bottom: 0;
+	padding-bottom: 9px;
 }
 h5 {
 	font-size: 1em;
@@ -124,8 +124,12 @@ img.left {
 	margin: 0 8px 8px 0;
 }
 img.center {
-	margin: 0 auto;
+	margin: 0 auto 8px auto;
 	text-align: center;
+}
+
+.genSiteContentColumn img {
+	border: 1px solid #b2b2b2;
 }
 
 /***
@@ -943,6 +947,7 @@ ol.genAggroWidget {
 	ol.genAggroWidget li h4 	{
 		font-size: 12px;
 		font-weight: 900;
+		padding-bottom: 0;
 	}
 	ul.genList li .genListItemTitle,
 	ol.genList li .genListItemTitle,
