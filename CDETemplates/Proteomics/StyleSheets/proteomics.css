@@ -75,8 +75,8 @@ ul.genSiteFooterLogos {
 	
 /* CONTENT HIGHLIGHTS. Content ID's must be used to target specific slots. These need to be changed depending on the environment you are in. */
 
-.genLanding .contentid-93218 .first-SI  /* Current Funding Opportunities on Funding Opps Landing Page */,
-.genLanding .contentid-93525 .first-SI   /* Leadership Update on eProtein Landing Page */ ,
+.genLanding .contentid-93218.first-SI  /* Current Funding Opportunities on Funding Opps Landing Page */,
+.genLanding .contentid-93525.first-SI   /* Leadership Update on eProtein Landing Page */ ,
 .genLanding .contentid-93223.only-SI   /* CPTC In The News on News and Events Landing Page */  {
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
