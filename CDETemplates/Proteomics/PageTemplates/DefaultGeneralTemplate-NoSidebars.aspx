@@ -3,8 +3,10 @@
     TagPrefix="NCI" %>
 <!DOCTYPE html>
 <html>
-<head runat="server"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
-
+<head runat="server">
+<link rel="icon" href="/publishedcontent/files/shareditems/favicon/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/publishedcontent/files/shareditems/favicon/favicon.ico" type="image/x-icon" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>
 <body class="genGeneral">
 	<div class="genSiteSkipToContent"><a href="#genSiteContent">Skip to Content</a></div>
 	<!-- Branding Bar Slot (#genSlotBrandingBar) // Color class on slot determined by Content Type field value  -->
