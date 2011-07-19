@@ -902,7 +902,12 @@ body.genGeneral {
 	}
 
 
-
+/**
+	One Column Pages (i.e. Error Pages)
+**/
+body .genSiteContentContainer.noSidebars .genSiteMainColumn .genSiteContentColumn  #genSlotBody {
+	padding: 0 20px;
+}
 	
 
 
