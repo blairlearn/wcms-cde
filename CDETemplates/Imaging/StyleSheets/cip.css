@@ -22,6 +22,26 @@ h1.genSiteLogo{
 		width: 320px; 
 		height: 72px;
 	}
+	
+/* Various Depricated Headers */	
+.blue-header {
+	color: #1482B2;
+	font-size: 1.2em;
+	font-weight: 900;
+	padding-bottom: 18px;
+}
+.header-a,
+.header-A {
+	color: #000;
+	font-size: 1.3em;
+	font-weight: 900;
+}
+.page-title {
+	color: #0A5376;
+	font-size: 1.3em;
+	font-weight: normal;
+	padding-bottom: 18px;
+}
 
 /* Section banners */
 #genSlotSectionBanner h1{

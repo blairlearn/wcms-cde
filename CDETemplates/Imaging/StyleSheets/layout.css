@@ -442,6 +442,7 @@ ul.genSitePagination {
 }
 	ul.genSitePagination li {
 		display: inline;
+		margin-right: 6px;
 	}
 	
 /* .clearFix is used to allow floated elements to remain properly inside of the box model. Using this is as opposed to overflow:hidden in order to ensure cross-browser compatibility and for smoother development */

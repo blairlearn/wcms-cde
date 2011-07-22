@@ -28,31 +28,18 @@ a {
 		text-decoration: none;
 	}
 h1 {
-	color: #000;
+	color: #0A5376;
 	font-size: 1.6em;
 	font-weight: normal;
 	line-height: 1.1em;
 }
 h2 {
 	color: #000;
-	font-size: 1.4em;
+	font-size: 1.3em;
 	font-weight: normal;
 	padding-bottom: 18px;
-}
-/* Depricated Style from Migration */
-.header-a {
-	color: #000;
-	font-size: 1.4em;
-	font-weight: normal;
 }
 h3 {
-	color: #000;
-	font-size: 1.2em;
-	font-weight: 900;
-	padding-bottom: 18px;
-}
-/* Depricated Style from Migration */
-.blue-header {
 	color: #000;
 	font-size: 1.2em;
 	font-weight: 900;
@@ -782,8 +769,25 @@ ul.genList {
 
 	}
 	
-	/* List Items - Video */
+	/* List Items - Files */
 	
+	ul.genList li.genListItemFile {
+		padding-bottom: 18px;
+	}
+		ul.genList li.genListItemFile .genListItemType {
+			font-weight: 900;
+			text-transform: uppercase;
+		}
+		ul.genList li.genListItemFile .genListItemFileInfo {
+			font-size: 0.8em;
+			font-style: italic;
+		}
+		
+	
+		ul.genList li.genListItemFile p,
+		ul.genList li.genListItemFile p.genListItemDesc {
+			padding-bottom: 0;
+		}
 	
 	
 	/* List Items in the Right Sidebar */
