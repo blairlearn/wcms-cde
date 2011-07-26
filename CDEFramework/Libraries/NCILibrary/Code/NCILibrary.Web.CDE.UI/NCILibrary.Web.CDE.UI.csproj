@@ -64,6 +64,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnippetControls\AppsBaseSnippetControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\BaseSearchSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -79,6 +82,9 @@
     <Compile Include="SnippetControls\PageOptionsDisplay.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\SideWideSearch.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="WebAnalytics\WebAnalyticsControl.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +95,14 @@
     <ProjectReference Include="..\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
       <Project>{F4C37116-861A-4FD6-B45D-578B258FEFC7}</Project>
       <Name>NCILibrary.DataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
+      <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>
+      <Name>NCILibrary.Search.Endeca</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.Search\NCILibrary.Search.csproj">
+      <Project>{8962B50C-E3A9-4F0A-9E48-7008C40247CD}</Project>
+      <Name>NCILibrary.Search</Name>
     </ProjectReference>
     <ProjectReference Include="..\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
       <Project>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</Project>

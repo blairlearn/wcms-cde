@@ -153,7 +153,9 @@ namespace NCI.Web
 
             if (!HasSWFObjectBeenLoaded)
             {
-                sb.AppendLine(@"<script type=""text/javascript"" src=""http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js""></script>");
+                // This script will now be included in very cde page template originating from percussion.
+                // commenting this line so we will not have duplicate script includes.
+                //sb.AppendLine(@"<script type=""text/javascript"" src=""http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js""></script>");
                 HasSWFObjectBeenLoaded = true;
             }
 

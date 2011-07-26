@@ -135,6 +135,7 @@ namespace NCI.Web.UI.WebControls
                     AddThisConfigElement elem = AddThisConfig.GetByCultureLanguage(CultureInfo.CurrentUICulture);
                     ((AddThisPageOption)option).Settings.CompactServicesList = elem.CompactServices;
                     ((AddThisPageOption)option).Settings.ExpandedServicesList = elem.ExpandedServices;
+                    ((AddThisPageOption)option).Settings.UserName = elem.UserName;
 
                     //Setup options
                     writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");

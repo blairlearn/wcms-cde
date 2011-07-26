@@ -17,6 +17,9 @@ namespace CancerGov.CDR.TermDictionary
         public string TermPronunciation { get { return termPronunciation; } }
         public string DefinitionHTML { get { return definitionHTML; } }
         public string MediaHTML { get { return mediaHTML; } }
+        public string AudioMediaHTML { get { return audioMediaHTML; } }
+        public string RelatedInfoHTML { get { return relatedInfoHTML; } }
+
         public List<TermDictionaryDataItem> PreviousNeighbors
         {
             get { return previousNeighbors; }
@@ -41,7 +44,9 @@ namespace CancerGov.CDR.TermDictionary
             string olTermName,
             string termPronunciation,
             string definitionHTML,
-            string mediaHTML
+            string mediaHTML,
+            string audioMediaHTML,
+            string relatedInfoHTML
         )
         {
             this.termID = termID;
@@ -50,6 +55,8 @@ namespace CancerGov.CDR.TermDictionary
             this.termPronunciation = termPronunciation;
             this.definitionHTML = definitionHTML;
             this.mediaHTML = mediaHTML;
+            this.audioMediaHTML = audioMediaHTML;
+            this.relatedInfoHTML = relatedInfoHTML;
             previousNeighbors = new List<TermDictionaryDataItem>();
             nextNeighbors = new List<TermDictionaryDataItem>();
         }
@@ -60,6 +67,8 @@ namespace CancerGov.CDR.TermDictionary
         private string termPronunciation;
         private string definitionHTML;
         private string mediaHTML;
+        private string audioMediaHTML;
+        private string relatedInfoHTML;
         private List<TermDictionaryDataItem> previousNeighbors;
         private List<TermDictionaryDataItem> nextNeighbors;
 

@@ -26,6 +26,9 @@ namespace NCI.Web.CDE
         [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
         public string End { get; set; }
 
+        [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
+        public string Media { get; set; }
+
         /// <summary>
         /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
         /// </summary>

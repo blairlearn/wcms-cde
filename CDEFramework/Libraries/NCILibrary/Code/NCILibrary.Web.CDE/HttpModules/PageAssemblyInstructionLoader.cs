@@ -206,8 +206,9 @@ namespace NCI.Web.CDE
             }
             catch(Exception ex)
             {
+                string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to Create IPageAssemblyInstruction with the XML file Provided.";
                 Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to Create IPageAssemblyInstruction with the XML file Provided.", NCIErrorLevel.Error, ex);
-                RaiseErrorPage();
+                RaiseErrorPage( errMessage,ex);
                 return;
             }
             //Exiting because there is no page assembly instruction for the requested URL.
@@ -224,15 +225,17 @@ namespace NCI.Web.CDE
             }
             catch(Exception ex)
             {
+                string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nCannot Load the pageTemplateInfo problem with the PageTemplateConfiguration XML file ";
                 Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nCannot Load the pageTemplateInfo problem with the PageTemplateConfiguration XML file ", NCIErrorLevel.Error, ex);
-                RaiseErrorPage();
+                RaiseErrorPage(errMessage, ex);
                 return;
             }
 
             if (pageTemplateInfo == null)
             {
-                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nPage Template Not Found", NCIErrorLevel.Error);
-                RaiseErrorPage();
+                string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nPage Template Not Found";
+                Logger.LogError( "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nPage Template Not Found", NCIErrorLevel.Error);
+                RaiseErrorPage(errMessage, null);
                 return;
             }
 
@@ -269,15 +272,22 @@ namespace NCI.Web.CDE
 
             catch (HttpException ex)
             {
+                string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.";
                 Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.", NCIErrorLevel.Error, ex);
-                RaiseErrorPage();
+                RaiseErrorPage(errMessage, ex);
             }
 
         }
 
-        private static void RaiseErrorPage()
+        private void RaiseErrorPage(string errMessage, Exception ex)
         {
             HttpContext.Current.Response.Write("There was an error processing the Request");
+            if (DisplayErrorOnScreen)
+            {
+                HttpContext.Current.Response.Write("<br/><br/>Error Message: " + errMessage);
+                if( ex != null )
+                    HttpContext.Current.Response.Write("<br/><br/>Exception Message: " + ex.ToString());
+            }
             HttpContext.Current.Response.End();
             return;
         }
@@ -319,5 +329,25 @@ namespace NCI.Web.CDE
                 //context.RewritePath(url, false);
             }
         }
+
+        #region Private Members
+        private bool DisplayErrorOnScreen 
+        {
+            get 
+            {
+                string displayErrorOnScreen = 
+                    System.Configuration.ConfigurationManager.AppSettings["DisplayErrorOnScreen"];
+
+                if (string.IsNullOrEmpty(displayErrorOnScreen))
+                    return false;
+
+                bool flag = false;
+                if (bool.TryParse(displayErrorOnScreen, out flag))
+                    return flag;
+                else
+                    return false;
+            }
+        }
+        #endregion
     }
 }

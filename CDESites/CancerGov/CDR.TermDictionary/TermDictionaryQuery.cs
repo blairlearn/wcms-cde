@@ -126,6 +126,8 @@ namespace CancerGov.CDR.TermDictionary
 
                 // Add the columns we don't have to make this work at the manager level
                 dt.Columns.Add(new DataColumn("MediaHTML", System.Type.GetType("System.String")));
+                dt.Columns.Add(new DataColumn("AudioMediaHTML", System.Type.GetType("System.String")));
+                dt.Columns.Add(new DataColumn("RelatedInformationHtml", System.Type.GetType("System.String")));
                 //if (dt.Rows.Count > 0)
                 //{
                 //if (language == "Spanish")
@@ -261,6 +263,7 @@ namespace CancerGov.CDR.TermDictionary
                 returnvalue.Add(rows[2]); // Pronounciation
                 returnvalue.Add(rows[3]); // Definition
                 returnvalue.Add(rows[4]); // MediaHtml
+                returnvalue.Add(rows[5]); // AudioMediaHtml
                 rows.Close();
                 dbh.Close();
             }

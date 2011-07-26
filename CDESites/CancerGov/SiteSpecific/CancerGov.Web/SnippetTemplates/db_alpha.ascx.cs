@@ -267,8 +267,8 @@ namespace Www.Templates
             {
 
                 litBackToTop.Visible = false;
-            }
-            else if (Request.RawUrl.Contains("?CdrID") == true)
+            } 
+            else if (Request.RawUrl.ToLower().Contains("?cdrid") == true)
             {
                 litBackToTop.Visible = false;
             }
@@ -600,6 +600,8 @@ namespace Www.Templates
             string termPronun = string.Empty;
             string defHtml = string.Empty;
             string imageHtml = string.Empty;
+            string audioMediaHtml = string.Empty;
+            string relatedLinkInfo = String.Empty;
 
             CdrID = dataItem.GlossaryTermID.ToString();
             termName = dataItem.TermName;
@@ -607,6 +609,12 @@ namespace Www.Templates
             defHtml = dataItem.DefinitionHTML;
             imageHtml = (dataItem.MediaHTML == null) ? string.Empty : dataItem.MediaHTML;
             imageHtml = imageHtml.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+
+            audioMediaHtml = (dataItem.AudioMediaHTML == null) ? string.Empty : dataItem.AudioMediaHTML;
+            audioMediaHtml = audioMediaHtml.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
+            audioMediaHtml = audioMediaHtml.Replace("[_flashMediaLocation]", ConfigurationSettings.AppSettings["FlashMediaLocation"]);
+
+            relatedLinkInfo = (dataItem.RelatedInfoHTML == null) ? string.Empty : dataItem.RelatedInfoHTML;
 
             if (language == "Spanish")
             {
@@ -650,18 +658,36 @@ namespace Www.Templates
             lblTermName.Text = termName;
             litDefHtml.Text = defHtml;
             litImageHtml.Text = imageHtml;
+            litAudioMediaHtml.Text = audioMediaHtml;
+
+            if (!string.IsNullOrEmpty(relatedLinkInfo))
+            {
+                pnlRelatedInfo.Visible = true;
+                litRelatedLinkInfo.Text = relatedLinkInfo;
+            }
+            else
+                pnlRelatedInfo.Visible = false;
 
             RenderLangButtons();
-            
         }
+
         private void RenderLangButtons()
         {
-            //langSwitch.DisplayInfo = this.PageDisplayInformation;
-
             langSwitch.EnglishUrl = DictionaryURLEnglish + "?CdrID=" + CdrID;
             langSwitch.SpanishUrl = DictionaryURLSpanish + "?CdrID=" + CdrID;
         }
 
+        protected string AudioMediaHTML(object objData)
+        {
+            string audioMediaHTML = String.Empty;
+            if (objData != null )
+            {
+                audioMediaHTML = objData.ToString();
+                audioMediaHTML = audioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
+            }
+
+            return audioMediaHTML;
+        }
 
         protected string ResultListViewHrefOnclick(ListViewDataItem dataItem)
         {

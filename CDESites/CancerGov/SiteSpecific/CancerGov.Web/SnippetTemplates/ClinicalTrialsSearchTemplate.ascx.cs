@@ -246,7 +246,7 @@ namespace CancerGov.Web.SnippetTemplates
             JSManager.AddExternalScript(this.Page, "/JS/popEvents.js");
             //JSManager.AddExternalScript(this.Page, "/Scripts/Omniture/NCIAnalyticsFunctions.js");
             //JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
-            CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css");
+            CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css", String.Empty);
         }
 
         #endregion

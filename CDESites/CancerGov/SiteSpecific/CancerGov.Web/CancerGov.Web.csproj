@@ -38,6 +38,15 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.Entity">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Services">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Services.Client">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -501,6 +510,10 @@
       <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
       <Name>PresentationClasses %28CancerGovSpecific\PresentationClasses\PresentationClasses%29</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.Search.AutoSuggest\CancerGov.Search.AutoSuggest.csproj">
+      <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>
+      <Name>CancerGov.Search.AutoSuggest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Search.Endeca\CancerGov.Search.Endeca.csproj">
       <Project>{4FD1D24F-D186-46FE-B44E-FA110AFE27FF}</Project>
       <Name>CancerGov.Search.Endeca</Name>
@@ -518,6 +531,7 @@
     <Content Include="Archive\arch_summaries.aspx" />
     <Content Include="Archive\index.aspx" />
     <Content Include="Archive\UserControls\AlphaListBox.ascx" />
+    <Content Include="AutoSuggestSearch.svc" />
     <Content Include="Common\PopUps\CTLSearch\blank.htm" />
     <Content Include="Common\PopUps\CTLSearch\CTLookup.aspx" />
     <Content Include="Common\PopUps\CTLSearch\CTLookupResults.aspx" />
