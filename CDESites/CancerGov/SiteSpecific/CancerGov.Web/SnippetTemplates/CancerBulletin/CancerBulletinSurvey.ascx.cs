@@ -16,7 +16,7 @@ using NCI.Logging;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
-    public partial class CancerBulletinSubscribe : AppsBaseUserControl
+    public partial class CancerBulletinSubscribeSurvey : AppsBaseUserControl
     {
 
         private enum LearnedAnswers
