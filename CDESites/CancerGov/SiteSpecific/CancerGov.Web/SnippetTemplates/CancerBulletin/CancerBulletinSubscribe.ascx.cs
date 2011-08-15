@@ -661,7 +661,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             try
             {
                 System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
-                mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
+                //mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
                 //mailMsg.Subject = "Confirm Your Subscription";
                 //mailMsg.IsBodyHtml = true;
                 mailMsg.Body += ConfigurationSettings.AppSettings["ListServeMessageBody"];
