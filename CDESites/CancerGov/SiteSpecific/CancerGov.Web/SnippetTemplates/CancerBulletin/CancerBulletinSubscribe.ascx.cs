@@ -13,7 +13,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using NCI.Logging;
-
+using NCI.Web.CDE.Modules;
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
     public partial class CancerBulletinSubscribe : AppsBaseUserControl
@@ -46,7 +46,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         private Guid gEmailID = Guid.Empty;
         private Guid gNewsletterID = Guid.Empty;
         private Guid gUserID = Guid.Empty;
-
         public string NewsLetterDBConnection 
         {
             get
@@ -68,6 +67,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
             if (Page.Request.HttpMethod == "POST")
             {
+
                 strEmailAddr = Strings.Clean(Request.Params["email"]);
 
                 //Is this a response to the survey
@@ -108,7 +108,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                         if (IsEmailValid(strEmailAddr))
                         {
-                            HandleInitialSubscription(); //This is a valid email so we may continue
+                            HandleSubscription();
+                            //Response.Redirect(surveyUrl.cbSurveyUrl.ToString());
+                            //HandleInitialSubscription(); //This is a valid email so we may continue
                         }
                         else
                         {
@@ -651,6 +653,39 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     }
                 }
             }
+        }
+        private void HandleSubscription()
+        {
+            string toAddress = ConfigurationSettings.AppSettings["ListServe"];
+            string fromAddress = strEmailAddr;
+            try
+            {
+                System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
+                mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
+                //mailMsg.Subject = "Confirm Your Subscription";
+                //mailMsg.IsBodyHtml = true;
+                mailMsg.Body += ConfigurationSettings.AppSettings["ListServeMessageBody"];
+
+                System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
+                smtpClient.Send(mailMsg);
+
+                ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
+                    "GoodText",
+                    "Address Received",
+                    ""
+                    );
+
+                lblSurveyMessage.CssClass = "GoodText";
+                divSurvey.Visible = true;
+                DrawSurvey(new Hashtable(), new Hashtable());
+            }
+
+            catch(Exception ex)
+            {
+                NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleInitialSubscription", "There was an error processing your request", NCIErrorLevel.Error, ex);
+
+            }
+
         }
 
         private void HandleInitialSubscription()

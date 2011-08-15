@@ -112,12 +112,7 @@
                                                             <td valign="top" width="22">
                                                                 <img src="/images/spacer.gif" width="22" height="1" alt="" border="0">
                                                             </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td valign="top" colspan="3">
-                                                                <img src="/images/spacer.gif" width="1" height="20" alt="" border="0">
-                                                            </td>
-                                                        </tr>
+                                                        </tr>                                                       
                                                     </table>
                                                 </td>
                                             </tr>
