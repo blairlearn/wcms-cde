@@ -14,11 +14,11 @@ using System.Data.SqlClient;
 using System.Data;
 using NCI.Logging;
 using NCI.Web.CDE.Modules;
+
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
-    public partial class CancerBulletinSubscribe : AppsBaseUserControl
+    public partial class CancerBulletinSubscribeListServe : AppsBaseUserControl
     {
-
         private enum LearnedAnswers
         {
             Unknown = -1,
@@ -46,14 +46,14 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         private Guid gEmailID = Guid.Empty;
         private Guid gNewsletterID = Guid.Empty;
         private Guid gUserID = Guid.Empty;
-        public string NewsLetterDBConnection 
+        public string NewsLetterDBConnection
         {
             get
             {
                 return ConfigurationManager.ConnectionStrings["NewsLetterDB"].ConnectionString;
             }
         }
-        
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
 
@@ -108,7 +108,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                         if (IsEmailValid(strEmailAddr))
                         {
-                            HandleInitialSubscription(); //This is a valid email so we may continue
+                            HandleSubscription();
+                            //Response.Redirect(surveyUrl.cbSurveyUrl.ToString());
+                            //HandleInitialSubscription(); //This is a valid email so we may continue
                         }
                         else
                         {
@@ -497,7 +499,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             bool isFirst = true;
             foreach (DictionaryEntry pair in items)
             {
-                if (isFirst) 
+                if (isFirst)
                     isFirst = false;
                 else
                     sb.Append(";");
@@ -678,7 +680,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 DrawSurvey(new Hashtable(), new Hashtable());
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleInitialSubscription", "There was an error processing your request", NCIErrorLevel.Error, ex);
 
@@ -781,7 +783,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 "Error",
                                 "There was an error processing your request"
                                 );
-                            
+
                             NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleInitialSubscription", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
 
                         }
