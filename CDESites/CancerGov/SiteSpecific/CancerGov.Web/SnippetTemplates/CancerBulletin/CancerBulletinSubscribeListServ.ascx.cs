@@ -17,7 +17,7 @@ using NCI.Web.CDE.Modules;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
-    public partial class CancerBulletinSubscribeListServe : AppsBaseUserControl
+    public partial class CancerBulletinSubscribeListServ : AppsBaseUserControl
     {
         private enum LearnedAnswers
         {

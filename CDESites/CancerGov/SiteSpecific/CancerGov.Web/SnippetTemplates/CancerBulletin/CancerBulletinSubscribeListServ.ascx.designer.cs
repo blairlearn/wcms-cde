@@ -11,7 +11,7 @@
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin {
     
     
-    public partial class CancerBulletinSubscribeListServe {
+    public partial class CancerBulletinSubscribeListServ {
         
         /// <summary>
         /// lblInfo control.
