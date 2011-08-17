@@ -14,6 +14,7 @@ using System.Data.SqlClient;
 using System.Data;
 using NCI.Logging;
 using NCI.Web.CDE.Modules;
+using System.Net.Mail;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
@@ -658,16 +659,23 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         {
             string toAddress = ConfigurationSettings.AppSettings["ListServe"];
             string fromAddress = strEmailAddr;
+            string eMailbody = "quiet subscribe NCI-Bulletin no name";
             try
             {
-                System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
-                //mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
-                //mailMsg.Subject = "Confirm Your Subscription";
-                //mailMsg.IsBodyHtml = true;
-                mailMsg.Body += ConfigurationSettings.AppSettings["ListServeMessageBody"];
+                using (MailMessage mess = new MailMessage(fromAddress, toAddress, string.Empty, eMailbody))
+                {
+                    SmtpClient client = new SmtpClient();
+                    client.Send(mess);
+                }
 
-                System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
-                smtpClient.Send(mailMsg);
+                //System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
+                ////mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
+                ////mailMsg.Subject = "Confirm Your Subscription";
+                ////mailMsg.IsBodyHtml = true;
+                //mailMsg.Body += ConfigurationSettings.AppSettings["ListServeMessageBody"];
+
+                //System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
+                //smtpClient.Send(mailMsg);
 
                 ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
                     "GoodText",
