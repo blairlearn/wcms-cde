@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using System.Xml;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
+using NCI.Web.CDE.Modules;
+
 using NCI.Web.CancerGov.Apps;
 using NCI.Logging;
 
@@ -14,62 +16,51 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class DocTitleBlock : AppsBaseUserControl
     {
+        NCI.Web.CDE.Modules.DockTitleBlock moduleData = null;
+        string title = string.Empty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-                //Parse Data To Get Information
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(this.SnippetInfo.Data.Trim());
 
-                XmlNode xnTitle = doc.SelectSingleNode("//Title");
-                XmlNode titleDisplay = doc.SelectSingleNode("//TitleDisplay");
-                XmlNode imageUrl = doc.SelectSingleNode("//ImageUrl");
-                //XmlNode displayedDate = doc.SelectSingleNode("//Date");
+                title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("long_title");
 
-                String title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("long_title");
                 String audience = string.Empty;
                 try
                 {
                     audience = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("PDQAudience");
                 }
                 catch { }
-                //String date = displayedDate.InnerText;
 
-                if (titleDisplay != null)
+                // Use titleDisplay to decide what content should be displayed.
+                if (ModuleData.TitleDisplay != null)
                 {
-                    switch (titleDisplay.InnerText)
+                    switch (ModuleData.TitleDisplay)
                     {
                         case "DocTitleBlockTitle":
+                            if (ModuleData.Title != null)
                             {
-                                if (xnTitle != null)
-                                {
-                                    title = xnTitle.InnerText;
-                                }
+                                title = ModuleData.Title;
                             }
                             break;
                     }
                 }
 
-                if (imageUrl != null)
-                {
-                    imgImage.ImageUrl = imageUrl.InnerText;
-                }
-
                 if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print ||
                     PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
                 {
+                    #region Print Version
                     if (!string.IsNullOrEmpty(audience))
                     {
                         phPrint.Visible = true;
-                        litPrintTitle.Text = title;
                         litAudienceTitle.Text = audience;
 
                         ContentDates contenDates = ((BasePageAssemblyInstruction)PageAssemblyContext.Current.PageAssemblyInstruction).ContentDates;
                         string postedTxt = string.Empty;
                         string updatedTxt = string.Empty;
                         string reviewedTxt = string.Empty;
-                        
+
 
                         //make code better
                         if (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.English)
@@ -109,7 +100,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                         }
 
-                         
+
 
                         if (contenDates.DateDisplayMode == DateDisplayModes.All)
                         {
@@ -143,27 +134,55 @@ namespace CancerGov.Web.SnippetTemplates
                         {
                             litPrintDate.Text = updated;
                         }
- 
+
                     }
                     else
                     {
                         phPrintNoAudience.Visible = true;
-                        litNoAudiencePrintTitle.Text = title;
                     }
+                    #endregion
                 }
                 else
                 {
+                    #region Web Version
                     phWeb.Visible = true;
-                    litTitle.Text = title;
+                    // Image displayed only for web version.
+                    imgImage.ImageUrl = ModuleData.ImageUrl;
+                    #endregion
                 }
 
             }
             catch (Exception ex)
             {
-                Logger.LogError("Docktitle Snippet Control", NCIErrorLevel.Error, ex);               
+                Logger.LogError("Docktitle Snippet Control", NCIErrorLevel.Error, ex);
             }
         }
 
+        protected string TblColor
+        {
+            get{ return string.IsNullOrEmpty(ModuleData.TableColor) == true ? "#d4d9d9" : ModuleData.TableColor; }
+        }
+
+        protected string Title
+        {
+            get { return title; }
+        }
+        protected NCI.Web.CDE.Modules.DockTitleBlock ModuleData
+        {
+            get
+            {
+                if (moduleData == null)
+                {
+                    string snippetXmlData = this.SnippetInfo.Data;
+                    snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
+                    //Parse Data To Get Information
+                    moduleData = ModuleObjectFactory<NCI.Web.CDE.Modules.DockTitleBlock>.GetModuleObject(snippetXmlData);
+                }
+                return moduleData;
+            }
+        }
+
+        #region Private Members
         private string CovertToSpanishFormat(DateTime Date)
         {
             string spanishDate = string.Empty;
@@ -172,11 +191,9 @@ namespace CancerGov.Web.SnippetTemplates
 
             return spanishDate;
         }
-
-
         private string GetSpanishMonth(int month)
         {
-            string spanishMonth=string.Empty;
+            string spanishMonth = string.Empty;
             switch (month)
             {
                 case 1:
@@ -207,7 +224,7 @@ namespace CancerGov.Web.SnippetTemplates
                     spanishMonth = "septiembre";
                     break;
                 case 10:
-                    spanishMonth= "octubre";
+                    spanishMonth = "octubre";
                     break;
                 case 11:
                     spanishMonth = "noviembre";
@@ -216,11 +233,13 @@ namespace CancerGov.Web.SnippetTemplates
                     spanishMonth = "diciembre";
                     break;
                 default:
-                    spanishMonth= "";
+                    spanishMonth = "";
                     break;
             }
 
             return spanishMonth;
         }
-    }
+        #endregion
+    } 
+   
 }
