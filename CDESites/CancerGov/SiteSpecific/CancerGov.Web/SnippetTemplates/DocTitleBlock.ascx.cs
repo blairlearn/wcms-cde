@@ -34,7 +34,7 @@ namespace CancerGov.Web.SnippetTemplates
                 catch { }
 
                 // Use titleDisplay to decide what content should be displayed.
-                if (ModuleData.TitleDisplay != null)
+                if (!string.IsNullOrEmpty(ModuleData.TitleDisplay))
                 {
                     switch (ModuleData.TitleDisplay)
                     {
