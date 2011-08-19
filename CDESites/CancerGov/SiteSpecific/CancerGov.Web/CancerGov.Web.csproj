@@ -283,6 +283,13 @@
     <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx.designer.cs">
       <DependentUpon>CancerBulletinSubscribe.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx.cs">
+      <DependentUpon>CancerBulletinSubscribeListServ.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx.designer.cs">
+      <DependentUpon>CancerBulletinSubscribeListServ.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx.cs">
       <DependentUpon>CancerBulletinUnSubscribe.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -566,6 +573,7 @@
     <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx" />
+    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\cbComments.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx" />

@@ -1,6 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CancerBulletinSubscribe.ascx.cs"
-    Inherits="CancerGov.Web.SnippetTemplates.CancerBulletin.CancerBulletinSubscribe" %>
-<!-- Styles needed for this page -->
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CancerBulletinSubscribeListServ.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.CancerBulletin.CancerBulletinSubscribeListServ" %>
+<!-- Styles needed for this page CancerBulletinSubscribeListServ-->
 <style>
     .GoodText
     {
