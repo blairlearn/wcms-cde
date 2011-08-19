@@ -682,6 +682,14 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     "Address Received",
                     ""
                     );
+                // Web Analytics *************************************************
+                if (WebAnalyticsOptions.IsEnabled)
+                    this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.Subscription, wbField =>
+                    {
+                        wbField.Value = "";
+                    });
+
+                // End Web Analytics **********************************************
 
                 lblSurveyMessage.CssClass = "GoodText";
                 divSurvey.Visible = true;
