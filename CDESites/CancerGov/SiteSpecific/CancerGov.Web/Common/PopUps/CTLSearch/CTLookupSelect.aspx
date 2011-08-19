@@ -91,6 +91,7 @@
 	 <td><img src="/images/spacer.gif" width="10" height="1" alt=""></td>
 	 <td valign="top" width="100%">
     <form>
+            <a href="#" onclick="javascript:window.parent.close();"><img src="/images/pop_close.gif" width="117" height="26" alt="Close Window" border="0"></a>
       <input type="image" src="/images/ctsearch/add-selected-btn.gif" name="selectchecked" onclick="doSubmit('<%=Request.Params["type"]%>');" alt="Add Selected" title="Add Selected" />
      </form>
      </td>

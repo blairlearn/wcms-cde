@@ -533,6 +533,7 @@
     <Content Include="Archive\UserControls\AlphaListBox.ascx" />
     <Content Include="AutoSuggestSearch.svc" />
     <Content Include="Common\PopUps\CTLSearch\blank.htm" />
+    <Content Include="Common\PopUps\CTLSearch\CTFooter.htm" />
     <Content Include="Common\PopUps\CTLSearch\CTLookup.aspx" />
     <Content Include="Common\PopUps\CTLSearch\CTLookupResults.aspx" />
     <Content Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx" />

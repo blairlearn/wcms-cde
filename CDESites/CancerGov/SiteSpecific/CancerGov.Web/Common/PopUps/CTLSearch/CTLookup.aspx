@@ -9,7 +9,8 @@
   <frameset rows="275,*,40" id="Lookup" frameborder="no" border="0">
 	<frame name="search" title="Search" src="/Common/PopUps/CTLSearch/CTLookupSearch.aspx?fld=<%=Request.Params["fld"]%>&type=<%=Request.Params["type"]%>&title=<%=Title%>" scrolling="no" noresize/>
     <frame name="results" title="Results" src="/Common/PopUps/CTLSearch/CTLookupResults.aspx?fld=<%=Request.Params["fld"]%>" scrolling="auto" frameborder="0" />
-    <frame name="select" title="Select" src="/Common/PopUps/CTLSearch/blank.htm" scrolling="no" noresize>	
+    <frame name="footer" title="Footer" src="/Common/PopUps/CTLSearch/CTFooter.htm" scrolling="no" noresize>
+    <frame name="select" title="Select" src="/Common/PopUps/CTLSearch/blank.htm" scrolling="no" noresize>
 
 </frameset>
 </html>
