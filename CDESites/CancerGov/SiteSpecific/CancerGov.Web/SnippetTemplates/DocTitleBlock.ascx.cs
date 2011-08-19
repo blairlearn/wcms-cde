@@ -175,10 +175,19 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     string snippetXmlData = this.SnippetInfo.Data;
                     snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
-                    //Parse Data To Get Information
+                    //Parse xmlData to get Module Information
                     moduleData = ModuleObjectFactory<NCI.Web.CDE.Modules.DockTitleBlock>.GetModuleObject(snippetXmlData);
                 }
                 return moduleData;
+            }
+        }
+
+        protected string TableColor
+        {
+            get 
+            {
+                string tableColor = string.IsNullOrEmpty(ModuleData.TableColor) ? "#d4d9d9" : ModuleData.TableColor;
+                return ModuleData.TitleDisplay != "DocTitleBlockBodyField" ? "style=\"background-color:" + tableColor + "\"" : String.Empty; 
             }
         }
 
