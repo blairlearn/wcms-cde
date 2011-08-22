@@ -408,10 +408,10 @@ namespace Www.Templates
             StringBuilder htmlText = new StringBuilder();
             string strMetaText = string.Empty;
 
-            int width = 571; //for non-print width
+            int width = 700; //for non-print width
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
             {
-                width = 630; //for print width
+                width = 770; //for print width
             }
 
             if (dataItem.DisplayNames.Count > 0)

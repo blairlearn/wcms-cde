@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Modules.TopicSearch.UI.TopicSearchCategorySnippet" %>
 <form id="Form1" runat="server">
-<table cellspacing="0" cellpadding="1" border="0" width="571" class="gray-border">
+<table cellspacing="0" cellpadding="1" border="0" width="100%" class="gray-border">
 	<tbody><tr>
 			<td valign="top">
 <table cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" width="569">

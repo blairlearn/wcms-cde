@@ -54,7 +54,7 @@
 
 
 
-    <table width="571" cellspacing="0" cellpadding="0" border="0">
+    <table width="100%" cellspacing="0" cellpadding="0" border="0">
         <tr>
             <!-- Main Content Area --> 
             <td id="contentzone" valign="top" width="100%">

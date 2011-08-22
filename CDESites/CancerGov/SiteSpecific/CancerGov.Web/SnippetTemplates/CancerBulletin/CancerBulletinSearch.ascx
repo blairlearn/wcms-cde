@@ -3,7 +3,7 @@
 
 <script type="text/javascript">    var searchType = 0; /* 0 = Search All 1 = Search Date Range */ </script>
 
-<table border="0" cellspacing="0" cellpadding="0" width="571">
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tbody>
         <tr>
             <td valign="top">
@@ -11,17 +11,17 @@
                 <table border="0" cellspacing="0" cellpadding="0" bgcolor="#e9e9e9">
                     <tbody>
                         <tr>
-                            <td colspan="2" bgcolor="#CCCCCC" width="571"><img src="/images/spacer.gif" width="1" height="1" alt="" /></td>
+                            <td colspan="2" bgcolor="#CCCCCC" width="100%"><img src="/images/spacer.gif" width="1" height="1" alt="" /></td>
                         </tr>
                     </tbody>
                 </table>
-                <table border="0" cellspacing="0" cellpadding="2" width="571" bgcolor="#e9e9e9">
+                <table border="0" cellspacing="0" cellpadding="2" width="100%" bgcolor="#e9e9e9">
                     <tbody>
                         <tr>
                             <td>
                                 <img alt="" src="/images/spacer.gif" width="5" height="1" />
                             </td>
-                            <td width="571">
+                            <td width="100%">
                                 <img alt="" src="/images/spacer.gif" width="1" height="5" />
                             </td>
                         </tr>
@@ -37,7 +37,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table border="0" cellspacing="0" cellpadding="2" width="571" bgcolor="#e9e9e9">
+                <table border="0" cellspacing="0" cellpadding="2" width="100%" bgcolor="#e9e9e9">
                     <tbody>
                         <tr>
                             <td>
@@ -62,7 +62,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table border="0" cellspacing="0" cellpadding="2" width="571" bgcolor="#e9e9e9">
+                <table border="0" cellspacing="0" cellpadding="2" width="100%" bgcolor="#e9e9e9">
                     <tbody>
                         <tr>
                             <td width="1">
@@ -126,7 +126,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table border="0" cellspacing="0" cellpadding="0" width="571">
+                <table border="0" cellspacing="0" cellpadding="0" width="100%">
                     <tbody>
                         <tr>
                             <td bgcolor="#e9e9e9" colspan="7">

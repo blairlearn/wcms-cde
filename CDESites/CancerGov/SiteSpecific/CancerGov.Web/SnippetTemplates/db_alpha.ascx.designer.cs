@@ -32,15 +32,6 @@ namespace Www.Templates {
         protected global::System.Web.UI.HtmlControls.HtmlForm aspnetForm;
         
         /// <summary>
-        /// litPageLeftColumn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litPageLeftColumn;
-        
-        /// <summary>
         /// pnlTermSearch control.
         /// </summary>
         /// <remarks>

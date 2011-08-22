@@ -19,7 +19,7 @@ namespace NCI.Web.CDE.Modules
          [XmlElement(Form = XmlSchemaForm.Unqualified)] public string TitleDisplay{ get; set; }
          [XmlElement(Form = XmlSchemaForm.Unqualified)] public string ImageUrl { get; set; }
          [XmlElement(Form = XmlSchemaForm.Unqualified)] public string TableColor{ get; set; }
-         [XmlElement(Form = XmlSchemaForm.Unqualified)] public string BodyField{ get; set; }
+         [XmlElement(Form = XmlSchemaForm.Unqualified)] public string ContentField{ get; set; }
          [XmlElement(Form = XmlSchemaForm.Unqualified)] public string LinkText{ get; set; }
          [XmlElement(Form = XmlSchemaForm.Unqualified)] public string LinkUrl{ get; set; }
          [XmlElement(Form = XmlSchemaForm.Unqualified)] public string Subtitle { get; set; }

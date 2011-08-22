@@ -5,7 +5,7 @@
     <div class="document-title-block" <% =TableColor %> >
         <% if (ModuleData.TitleDisplay == "DocTitleBlockBodyField")
            {
-               Response.Write(ModuleData.BodyField); %>
+               Response.Write(ModuleData.ContentField); %>
            <% } else{ %>
         <asp:Image ID="imgImage" BorderWidth="0" runat="server" AlternateText="" GenerateEmptyAlternateText="true" />
         <h1>

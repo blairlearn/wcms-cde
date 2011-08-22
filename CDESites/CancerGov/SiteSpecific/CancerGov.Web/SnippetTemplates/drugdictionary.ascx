@@ -22,13 +22,9 @@
     <!-- Main Area -->
     <form id="drugForm" runat="server">
     <a name="top"></a>
-    <!--<div style="margin-right: auto; margin-left: auto; width: 571px;">-->
-        <table width="571" cellspacing="0" cellpadding="0" border="0">
+    <!--<div style="margin-right: auto; margin-left: auto; ">-->
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
             <tr>
-                <!-- Left Nav Column -->
-                <td id="leftzone" valign="top">
-                    <asp:Literal ID="litPageLeftColumn" runat="server"></asp:Literal>
-                </td>
                 <!-- Main content of page -->
                 <td id="contentzone" valign="top" width="100%">
                     <a name="skiptocontent"></a>
