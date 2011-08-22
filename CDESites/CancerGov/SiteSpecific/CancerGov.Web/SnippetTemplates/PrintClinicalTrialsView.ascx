@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PrintClinicalTrialsView.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.PrintClinicalTrialsView" %>
 
 
-    <div align="center"; style="width: 771px; margin: 5px auto 0px auto; text-align: left;">
+    <div align="center"; style="margin: 5px auto 0px auto; text-align: left;">
 
           <!-- Version tab and Date --> 
           <table width="100%" cellspacing="0" cellpadding="0" border="0">
