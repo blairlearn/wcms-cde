@@ -22,6 +22,6 @@ namespace NCI.Web.CDE.Modules
          [XmlElement(Form = XmlSchemaForm.Unqualified)] public string ContentField{ get; set; }
          [XmlElement(Form = XmlSchemaForm.Unqualified)] public string LinkTitle{ get; set; }
          [XmlElement(Form = XmlSchemaForm.Unqualified)] public string LinkUrl{ get; set; }
-         [XmlElement(Form = XmlSchemaForm.Unqualified)] public string Subtitle { get; set; }
+         [XmlElement(Form = XmlSchemaForm.Unqualified)] public string SubTitle { get; set; }
     }
 }

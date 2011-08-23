@@ -10,8 +10,8 @@
         <asp:Image ID="imgImage" BorderWidth="0" runat="server" AlternateText="" GenerateEmptyAlternateText="true" />
         <h1>
             <% =Title%></h1>
-        <% if (!string.IsNullOrEmpty(ModuleData.Subtitle))
-           { %><span class="subtitle"><% =ModuleData.Subtitle%>
+        <% if (!string.IsNullOrEmpty(ModuleData.SubTitle))
+           { %><span class="subtitle"><% =ModuleData.SubTitle%>
            </span>
         <% } %>
         <span class="backtomain"><a href="<% =ModuleData.LinkUrl %>">
@@ -24,8 +24,8 @@
     <div class="document-title-block" <% =TableColor %> >
         <h1>
             <% =Title %></h1>
-        <% if (!string.IsNullOrEmpty(ModuleData.Subtitle))
-           { %><span class="subtitle"><% =ModuleData.Subtitle%>
+        <% if (!string.IsNullOrEmpty(ModuleData.SubTitle))
+           { %><span class="subtitle"><% =ModuleData.SubTitle%>
            </span>
         <% } %>
         <span class="document-title">
@@ -39,8 +39,8 @@
     <div class="document-title-block" <% =TableColor %> >
         <h1>
             <% =Title %></h1>
-        <% if (!string.IsNullOrEmpty(ModuleData.Subtitle))
-           { %><span class="subtitle"><% =ModuleData.Subtitle%>
+        <% if (!string.IsNullOrEmpty(ModuleData.SubTitle))
+           { %><span class="subtitle"><% =ModuleData.SubTitle%>
            </span>
         <% } %>
     </div>
