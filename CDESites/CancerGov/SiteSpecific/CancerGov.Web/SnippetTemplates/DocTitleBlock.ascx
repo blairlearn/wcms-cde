@@ -15,7 +15,7 @@
            </span>
         <% } %>
         <span class="backtomain"><a href="<% =ModuleData.LinkUrl %>">
-            <% =ModuleData.LinkText%></a></span>
+            <% =ModuleData.LinkTitle%></a></span>
         <%} %>
     </div>
     <!-- END Document Title Block -->
