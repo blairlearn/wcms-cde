@@ -35,9 +35,9 @@
         <asp:HiddenField ID="pageSize" runat="server" />
         <asp:HiddenField ID="OffPageSelectionsExist" runat="server" EnableViewState="false" />
         <!-- Top View Content for box -->
-        <div class="clinicaltrials-filledbox" style="width: 568px;">
+        <div class="clinicaltrials-filledbox" style="width: 700px;">
             <asp:Panel runat="server" ID="ResultsFormatControl" Style="border-bottom: 1px #bdbdbd solid;">
-                <table width="554" cellpadding="0" cellspacing="8" border="0" style="background: #ffffff;
+                <table width="686px" cellpadding="0" cellspacing="8" border="0" style="background: #ffffff;
                     margin: 6px;" align="center">
                     <tr>
                         <td valign="top" width="32%" style="border-right: 1px dotted #bdbdbd;">
