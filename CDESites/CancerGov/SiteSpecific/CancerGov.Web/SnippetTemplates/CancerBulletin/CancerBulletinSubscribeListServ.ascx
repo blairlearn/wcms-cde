@@ -1,6 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CancerBulletinSubscribe.ascx.cs"
-    Inherits="CancerGov.Web.SnippetTemplates.CancerBulletin.CancerBulletinSubscribe" %>
-<!-- Styles needed for this page -->
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CancerBulletinSubscribeListServ.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.CancerBulletin.CancerBulletinSubscribeListServ" %>
+<!-- Styles needed for this page CancerBulletinSubscribeListServ-->
 <style>
     .GoodText
     {
@@ -32,7 +31,7 @@
 <script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>
 
 <!--div align="center"-->
-    <table width="100%" align="Left" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
+    <table width="571" align="Left" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
         <tr>
             <td valign="top" height="100%">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" valign="top">

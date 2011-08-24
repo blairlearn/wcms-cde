@@ -14,11 +14,12 @@ using System.Data.SqlClient;
 using System.Data;
 using NCI.Logging;
 using NCI.Web.CDE.Modules;
+using System.Net.Mail;
+
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
-    public partial class CancerBulletinSubscribe : AppsBaseUserControl
+    public partial class CancerBulletinSubscribeListServ : AppsBaseUserControl
     {
-
         private enum LearnedAnswers
         {
             Unknown = -1,
@@ -46,14 +47,14 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         private Guid gEmailID = Guid.Empty;
         private Guid gNewsletterID = Guid.Empty;
         private Guid gUserID = Guid.Empty;
-        public string NewsLetterDBConnection 
+        public string NewsLetterDBConnection
         {
             get
             {
                 return ConfigurationManager.ConnectionStrings["NewsLetterDB"].ConnectionString;
             }
         }
-        
+
         protected void Page_Load(object sender, System.EventArgs e)
         {
 
@@ -108,7 +109,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                         if (IsEmailValid(strEmailAddr))
                         {
-                            HandleInitialSubscription(); //This is a valid email so we may continue
+                            HandleSubscription();
+                            //Response.Redirect(surveyUrl.cbSurveyUrl.ToString());
+                            //HandleInitialSubscription(); //This is a valid email so we may continue
                         }
                         else
                         {
@@ -497,7 +500,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             bool isFirst = true;
             foreach (DictionaryEntry pair in items)
             {
-                if (isFirst) 
+                if (isFirst)
                     isFirst = false;
                 else
                     sb.Append(";");
@@ -656,29 +659,44 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         {
             string toAddress = ConfigurationSettings.AppSettings["ListServe"];
             string fromAddress = strEmailAddr;
+            string eMailbody = "quiet subscribe NCI-Bulletin no name";
             try
             {
-                System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
-                //mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
-                //mailMsg.Subject = "Confirm Your Subscription";
-                //mailMsg.IsBodyHtml = true;
-                mailMsg.Body += ConfigurationSettings.AppSettings["ListServeMessageBody"];
+                using (MailMessage mess = new MailMessage(fromAddress, toAddress, string.Empty, eMailbody))
+                {
+                    SmtpClient client = new SmtpClient();
+                    client.Send(mess);
+                }
 
-                System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
-                smtpClient.Send(mailMsg);
+                //System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
+                ////mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
+                ////mailMsg.Subject = "Confirm Your Subscription";
+                ////mailMsg.IsBodyHtml = true;
+                //mailMsg.Body += ConfigurationSettings.AppSettings["ListServeMessageBody"];
+
+                //System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
+                //smtpClient.Send(mailMsg);
 
                 ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
                     "GoodText",
                     "Address Received",
                     ""
                     );
+                // Web Analytics *************************************************
+                if (WebAnalyticsOptions.IsEnabled)
+                    this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.Subscription, wbField =>
+                    {
+                        wbField.Value = "";
+                    });
+
+                // End Web Analytics **********************************************
 
                 lblSurveyMessage.CssClass = "GoodText";
                 divSurvey.Visible = true;
                 DrawSurvey(new Hashtable(), new Hashtable());
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleInitialSubscription", "There was an error processing your request", NCIErrorLevel.Error, ex);
 
@@ -781,7 +799,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 "Error",
                                 "There was an error processing your request"
                                 );
-                            
+
                             NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleInitialSubscription", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
 
                         }
