@@ -95,6 +95,7 @@ namespace NCI.Web.CDE
 
             #region AddFilter For PageOptions
             // URL Filter specifically for PageOptions
+
             AddUrlFilter("Print", (name,url) =>
             {
                 url.SetUrl(GetUrl("CurrentURL").ToString() + "/print");
@@ -578,6 +579,30 @@ namespace NCI.Web.CDE
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
 
+                //Set AltLanguage Key
+                if (_currentPageIndex == -1)
+                {
+                    if (PageMetadata.AltLanguageURL != null)
+                    {
+                        if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.Trim()))
+                        {
+                            keysList.Add("altlanguage");
+                        }
+                    }
+                }
+                else
+                {
+                    if (_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL != null)
+                    {
+                        if (!string.IsNullOrEmpty(_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL.Trim()))
+                        {
+                            keysList.Add("altlanguage");
+                        }
+                    }
+                }
+                if (AlternateContentVersions.AltLanguage)
+                    keysList.Add("altlanguage");
+
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
                 {
@@ -781,7 +806,41 @@ namespace NCI.Web.CDE
                 });
             }
         }
+        /// <summary>
+        /// Registers the URL filter for the AltLanguage spanish,english.This URL appears in the
+        /// pageoptions box        
+        /// </summary>
+        private void RegisterAltLanguageURL()
+        {
 
+            if (_currentPageIndex == -1)
+            {
+                if (PageMetadata.AltLanguageURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.ToString().Trim()))
+                    {
+                        AddUrlFilter("AltLanguage", (name, url) =>
+                        {
+                            url.SetUrl(PageMetadata.AltLanguageURL);
+                        });
+                    }
+                }
+            }
+
+            else
+            {
+                if (_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL != null)
+                {
+                    if (!string.IsNullOrEmpty(_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL.ToString().Trim()))
+                    {
+                        AddUrlFilter("AltLanguage", (name, url) =>
+                        {
+                            url.SetUrl(PageMetadata.AltLanguageURL + _pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL);
+                        });
+                    }
+                }
+            }
+        }
         /// <summary>
         /// Gets the page snippets.
         /// </summary>
@@ -833,6 +892,7 @@ namespace NCI.Web.CDE
         {
 
             RegisterMarkupExtensionFieldFilters();
+            RegisterAltLanguageURL();
 
         }
         #region Protected

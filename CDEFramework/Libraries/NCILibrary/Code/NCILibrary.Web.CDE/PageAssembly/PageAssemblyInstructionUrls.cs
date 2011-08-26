@@ -22,5 +22,7 @@ namespace NCI.Web.CDE
         /// </summary>
         public static readonly string CanonicalUrl = "CanonicalUrl ";
 
+        public static readonly string AltLanguage = "AltLanguage ";
+
     }
 }

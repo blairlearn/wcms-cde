@@ -75,6 +75,7 @@ namespace NCI.Web.CDE
             AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
             AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
 
+
             AddUrlFilter("CurrentURL", (name, url) =>
                 { 
                     url.SetUrl(GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString());
@@ -390,6 +391,14 @@ namespace NCI.Web.CDE
                     keysList.Add("email");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
+                //Set Alt Language URL
+                if (PageMetadata.AltLanguageURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.Trim()))
+                    {
+                        keysList.Add("altlanguage");
+                    }
+                }
 
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
@@ -462,7 +471,6 @@ namespace NCI.Web.CDE
             //so we can just overwrite whatever has come before.
             url.SetUrl(PrettyUrl);
         }
-
         private void CanonicalUrl(string name, NciUrl url)
         {
             //This should always be the first delegate for the CurrentUrl link type
@@ -500,6 +508,19 @@ namespace NCI.Web.CDE
                 });
             }
 
+        }
+        private void RegisterAltLanguageURL()
+        {
+            if (PageMetadata.AltLanguageURL != null)
+            {
+                if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.ToString().Trim()))
+                {
+                    AddUrlFilter("AltLanguage", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.AltLanguageURL);
+                    });
+                }
+            }
         }
 
         /// <summary>
@@ -671,6 +692,8 @@ namespace NCI.Web.CDE
         public void Initialize()
         {
             RegisterMarkupExtensionFieldFilters();
+            RegisterAltLanguageURL();
+
         }
     }
 }
