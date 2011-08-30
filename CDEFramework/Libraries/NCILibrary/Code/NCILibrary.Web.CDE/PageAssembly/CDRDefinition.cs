@@ -17,6 +17,9 @@ namespace NCI.Web.CDE
 
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string CDRDefinitionName { get; set; }
+        
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public int CDRCharacterLimit { get; set; }
 
     }
 }
