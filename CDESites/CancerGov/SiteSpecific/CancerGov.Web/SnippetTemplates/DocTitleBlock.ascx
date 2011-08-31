@@ -14,8 +14,11 @@
            { %><span class="subtitle"><% =ModuleData.SubTitle%>
            </span>
         <% } %>
+        <% if (!string.IsNullOrEmpty(ModuleData.LinkTitle))
+           { %> 
         <span class="backtomain"><a href="<% =ModuleData.LinkUrl %>">
-            <% =ModuleData.LinkTitle%></a></span>
+            <% =ModuleData.LinkTitle%></a></span><% } %>
+            
         <%} %>
     </div>
     <!-- END Document Title Block -->
