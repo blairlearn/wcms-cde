@@ -312,9 +312,19 @@ namespace Www.Templates
                     PagePrintUrl += "&sgroup=Contains";
             }
 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name,url) => 
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url) =>
             {
                 url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
+            });
+
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                if (CdrID != "")
+                    url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
+                else if (Expand != "")
+                    url.SetUrl(url.ToString() + "?expland=" + Expand);
+                else 
+                    url.SetUrl(url.ToString());
             });
 
             
