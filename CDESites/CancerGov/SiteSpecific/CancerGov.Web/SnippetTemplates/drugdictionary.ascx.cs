@@ -172,7 +172,7 @@ namespace Www.Templates
             }
 
             SetupPageUrl();
-            SetupPrintUrl();
+            SetupUrlFilters();
 
             // base URL for the A-Z links
             btnGo.PostBackUrl = DictionaryURL;
@@ -634,12 +634,21 @@ namespace Www.Templates
 
         }
 
-        private void SetupPrintUrl()
+        private void SetupUrlFilters()
         {
-            //PagePrintUrl = PageUrl + "&page=" + CurrentPageIndex + "&print=1";
             PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url ) =>
             {
                 url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
+            });
+
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                if (CdrID != "")
+                    url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
+                else if (Expand != "")
+                    url.SetUrl(url.ToString() + "?expland=" + Expand);
+                else
+                    url.SetUrl(url.ToString());
             });
 
         }
