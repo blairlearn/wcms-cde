@@ -665,6 +665,9 @@ namespace NCI.Web.CDE
 
         #region InitializeFunctions
         
+        /// <summary>
+        /// Registers the field filters for Markup Extensions        
+        /// </summary>        
         private void RegisterMarkupExtensionFieldFilters()
         {
             //Register Field Filters
@@ -714,6 +717,9 @@ namespace NCI.Web.CDE
             }
         }
 
+        /// <summary>
+        /// Registers the field filters        
+        /// </summary> 
         private void RegisterFieldFilters()
         {
             AddFieldFilter("long_title", (name, data) =>
@@ -775,6 +781,9 @@ namespace NCI.Web.CDE
 
         }
 
+        /// <summary>
+        /// Registers the URL filters        
+        /// </summary> 
         private void RegisterUrlFilters()
         {
 
