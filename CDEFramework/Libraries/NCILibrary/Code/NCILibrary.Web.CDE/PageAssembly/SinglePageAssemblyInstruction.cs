@@ -501,7 +501,6 @@ namespace NCI.Web.CDE
         public override void Initialize()
         {
             base.Initialize();
-            //RegisterMarkupExtensionFieldFilters();
             RegisterFieldFilters();
             RegisterUrlFilters();
             RegisterWebAnalyticsFieldFilters();
@@ -509,20 +508,6 @@ namespace NCI.Web.CDE
 
         #region InitializeFunctions
 
-        //private void RegisterMarkupExtensionFieldFilters()
-        //{
-        //    //Register Markup Extension Field Filters
-
-        //    foreach (LocalField localField in _localFields)
-        //    {
-        //        AddFieldFilter(localField.Name, (name, data) =>
-        //        {
-        //            data.Value = _localFields[name].Value;
-        //        });
-        //    }
-
-        //}
- 
         /// <summary>
         /// Registers the field filters.
         /// </summary>
@@ -639,11 +624,6 @@ namespace NCI.Web.CDE
                 url.SetUrl(freeCopyUrl, true);
             });
 
-            //AddUrlFilter("PostBackURL", (name, url) =>
-            //{
-            //    url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);
-            //});
-
             if (PageMetadata.AltLanguageURL != null)
             {
                 if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL))
@@ -655,6 +635,7 @@ namespace NCI.Web.CDE
                 }
             }
         }
+
 
         #region Protected
         /// <summary>
@@ -691,8 +672,6 @@ namespace NCI.Web.CDE
             });
         }
         #endregion
-
-
 
         #endregion
 
