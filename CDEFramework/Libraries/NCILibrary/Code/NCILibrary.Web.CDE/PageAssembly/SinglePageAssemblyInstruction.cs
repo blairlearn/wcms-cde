@@ -52,7 +52,7 @@ namespace NCI.Web.CDE
             PageMetadata = new PageMetadata();
             _localFields = new LocalFieldCollection();
 
-            base.Initialize();
+            //base.Initialize();
         }
 
         #region Properties
@@ -498,9 +498,10 @@ namespace NCI.Web.CDE
         public AlternateContentVersions AlternateContentVersions { get; set; }
         #endregion
 
-        public void Initialize()
+        public override void Initialize()
         {
-            RegisterMarkupExtensionFieldFilters();
+            base.Initialize();
+            //RegisterMarkupExtensionFieldFilters();
             RegisterFieldFilters();
             RegisterUrlFilters();
             RegisterWebAnalyticsFieldFilters();
@@ -508,10 +509,26 @@ namespace NCI.Web.CDE
 
         #region InitializeFunctions
 
-        private void RegisterMarkupExtensionFieldFilters()
-        {
-            //Register Field Filters
+        //private void RegisterMarkupExtensionFieldFilters()
+        //{
+        //    //Register Markup Extension Field Filters
 
+        //    foreach (LocalField localField in _localFields)
+        //    {
+        //        AddFieldFilter(localField.Name, (name, data) =>
+        //        {
+        //            data.Value = _localFields[name].Value;
+        //        });
+        //    }
+
+        //}
+ 
+        /// <summary>
+        /// Registers the field filters.
+        /// </summary>
+        private void RegisterFieldFilters()
+        {
+            //Register Markup Extension Field Filters
             foreach (LocalField localField in _localFields)
             {
                 AddFieldFilter(localField.Name, (name, data) =>
@@ -519,14 +536,7 @@ namespace NCI.Web.CDE
                     data.Value = _localFields[name].Value;
                 });
             }
-
-        }
- 
-        /// <summary>
-        /// Registers the field filters.
-        /// </summary>
-        private void RegisterFieldFilters()
-        {
+            
             AddFieldFilter("long_title", (name, data) =>
             {
                 data.Value = this.PageMetadata.LongTitle;
@@ -629,10 +639,10 @@ namespace NCI.Web.CDE
                 url.SetUrl(freeCopyUrl, true);
             });
 
-            AddUrlFilter("PostBackURL", (name, url) =>
-            {
-                url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);
-            });
+            //AddUrlFilter("PostBackURL", (name, url) =>
+            //{
+            //    url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);
+            //});
 
             if (PageMetadata.AltLanguageURL != null)
             {

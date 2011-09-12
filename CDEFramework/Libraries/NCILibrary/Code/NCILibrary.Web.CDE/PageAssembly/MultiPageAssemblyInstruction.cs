@@ -65,7 +65,7 @@ namespace NCI.Web.CDE
             PageMetadata = new PageMetadata();
             _localFields = new LocalFieldCollection();
 
-            base.Initialize();
+            //base.Initialize();
         }
 
         #region Properties
@@ -654,10 +654,12 @@ namespace NCI.Web.CDE
             return pageSnippets;
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
-            RegisterMarkupExtensionFieldFilters();
-            RegisterAltLanguageURL();
+            //RegisterMarkupExtensionFieldFilters();
+            //RegisterAltLanguageURL();
+
+            base.Initialize();
             RegisterFieldFilters();
             RegisterUrlFilters();
             RegisterWebAnalyticsFieldFilters();
@@ -665,57 +667,57 @@ namespace NCI.Web.CDE
 
         #region InitializeFunctions
         
-        /// <summary>
-        /// Registers the field filters for Markup Extensions        
-        /// </summary>        
-        private void RegisterMarkupExtensionFieldFilters()
-        {
-            //Register Field Filters
+        ///// <summary>
+        ///// Registers the field filters for Markup Extensions        
+        ///// </summary>        
+        //private void RegisterMarkupExtensionFieldFilters()
+        //{
+        //    //Register MarkupExtension Field Filters
 
-            foreach (LocalField localField in _localFields)
-            {
-                AddFieldFilter(localField.Name, (name, data) =>
-                {
-                    data.Value = _localFields[name].Value;
-                });
-            }
-        }
+        //    foreach (LocalField localField in _localFields)
+        //    {
+        //        AddFieldFilter(localField.Name, (name, data) =>
+        //        {
+        //            data.Value = _localFields[name].Value;
+        //        });
+        //    }
+        //}
 
-        /// <summary>
-        /// Registers the URL filter for the AltLanguage spanish,english.This URL appears in the
-        /// pageoptions box        
-        /// </summary>
-        private void RegisterAltLanguageURL()
-        {
+        ///// <summary>
+        ///// Registers the URL filter for the AltLanguage spanish,english.This URL appears in the
+        ///// pageoptions box        
+        ///// </summary>
+        //private void RegisterAltLanguageURL()
+        //{
 
-            if (_currentPageIndex == -1)
-            {
-                if (PageMetadata.AltLanguageURL != null)
-                {
-                    if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.ToString().Trim()))
-                    {
-                        AddUrlFilter("AltLanguage", (name, url) =>
-                        {
-                            url.SetUrl(PageMetadata.AltLanguageURL);
-                        });
-                    }
-                }
-            }
+        //    if (_currentPageIndex == -1)
+        //    {
+        //        if (PageMetadata.AltLanguageURL != null)
+        //        {
+        //            if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.ToString().Trim()))
+        //            {
+        //                AddUrlFilter("AltLanguage", (name, url) =>
+        //                {
+        //                    url.SetUrl(PageMetadata.AltLanguageURL);
+        //                });
+        //            }
+        //        }
+        //    }
 
-            else
-            {
-                if (_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL != null)
-                {
-                    if (!string.IsNullOrEmpty(_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL.ToString().Trim()))
-                    {
-                        AddUrlFilter("AltLanguage", (name, url) =>
-                        {
-                            url.SetUrl(PageMetadata.AltLanguageURL + _pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL);
-                        });
-                    }
-                }
-            }
-        }
+        //    else
+        //    {
+        //        if (_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL != null)
+        //        {
+        //            if (!string.IsNullOrEmpty(_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL.ToString().Trim()))
+        //            {
+        //                AddUrlFilter("AltLanguage", (name, url) =>
+        //                {
+        //                    url.SetUrl(PageMetadata.AltLanguageURL + _pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL);
+        //                });
+        //            }
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Registers the field filters        
@@ -779,6 +781,15 @@ namespace NCI.Web.CDE
                 data.Value = _pages._Pages[pageIndex].PageMetadata.ShortTitle;
             });
 
+            //Register MarkupExtension Field Filters
+            foreach (LocalField localField in _localFields)
+            {
+                AddFieldFilter(localField.Name, (name, data) =>
+                {
+                    data.Value = _localFields[name].Value;
+                });
+            }
+
         }
 
         /// <summary>
@@ -797,11 +808,55 @@ namespace NCI.Web.CDE
                     currentURL += "/Print";
                 else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
                     currentURL += "/AllPages/Print";
- 
+
                 url.SetUrl(currentURL);
 
             });
 
+            AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                url.SetUrl(GetUrl("CurrentURL").ToString());
+            });
+
+            AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, (name, url) =>
+            {
+                int pageIndex = (_currentPageIndex == -1) ? 0 : _currentPageIndex;
+                //Set Property 
+                PrettyUrl = _pages._Pages[pageIndex].PrettyUrl;
+                url.SetUrl(PrettyUrl);
+            });
+
+            #region AltLanguageURL
+            // Alt Language URL filter 
+            if (_currentPageIndex == -1)
+            {
+                if (PageMetadata.AltLanguageURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.ToString().Trim()))
+                    {
+                        AddUrlFilter("AltLanguage", (name, url) =>
+                        {
+                            url.SetUrl(PageMetadata.AltLanguageURL);
+                        });
+                    }
+                }
+            }
+
+            else
+            {
+                if (_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL != null)
+                {
+                    if (!string.IsNullOrEmpty(_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL.ToString().Trim()))
+                    {
+                        AddUrlFilter("AltLanguage", (name, url) =>
+                        {
+                            url.SetUrl(PageMetadata.AltLanguageURL + _pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL);
+                        });
+                    }
+                }
+            }
+            #endregion
+            
             #region AddFilter For PageOptions
             // URL Filter specifically for PageOptions
 
@@ -842,23 +897,10 @@ namespace NCI.Web.CDE
 
             #endregion
 
-            AddUrlFilter("PostBackURL", (name, url) =>
-            {
-                url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);
-            });
-
-            AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
-            {
-                url.SetUrl(GetUrl("CurrentURL").ToString());
-            });
-
-            AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, (name, url) =>
-            {
-                int pageIndex = (_currentPageIndex == -1) ? 0 : _currentPageIndex;
-                //Set Property 
-                PrettyUrl = _pages._Pages[pageIndex].PrettyUrl;
-                url.SetUrl(PrettyUrl);
-            });
+            //AddUrlFilter("PostBackURL", (name, url) =>
+            //{
+            //    url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);
+            //});
         }
 
         /// <summary>

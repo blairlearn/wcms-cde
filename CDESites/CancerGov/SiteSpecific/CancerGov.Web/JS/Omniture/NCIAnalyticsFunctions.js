@@ -865,7 +865,26 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
                 target = target.parentNode;
         }
         return target;
+    },
+//**************FOR TESTING ONLY - FOR TESTING ONLY****************************************************************************************	
+	SPLF_Hier1 : function()  {
+	    //alert('Hier1');
+	    s.prop28 = 'Test';
+	    pathArray = window.location.pathname.split( '/' );
+	    out = "";
+	    for ( i = 0; i > pathArray.length; i++ ) 
+	        out = out + " - ";
+	  
+
+	    
+    },
+	SPLF_Lang : function()  {
+	    //alert('Lang');
+    },  
+    SPLF_Yomama : function()  {
+	    //alert('Yomama');
     }
+    
     
 };
 

@@ -107,6 +107,16 @@ namespace CancerGov.Web.SnippetTemplates
                 //End of Web Anlytics
             }
 
+            this.PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                string localUrl = url.ToString();
+
+                if (args != "")
+                    localUrl += "?personid=" + args;
+
+                url.SetUrl(localUrl);
+            });
+
         }
 		
     }

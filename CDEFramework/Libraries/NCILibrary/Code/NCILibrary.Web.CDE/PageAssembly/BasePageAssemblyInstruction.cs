@@ -36,34 +36,50 @@ namespace NCI.Web.CDE
         /// This method intialize the state of the base object or peform tasks that are 
         /// applicable to all derived class object.
         /// </summary>
-        protected virtual void Initialize()
+        public virtual void Initialize()
         {
             IPageAssemblyInstruction pgInst = ((IPageAssemblyInstruction)this);
+            //pgInst.AddUrlFilter("BookMarkShareUrl", (name, url) =>
+            //{
+            //    if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
+            //        url.SetUrl(pgInst.GetUrl("PrintAll").ToString());
+            //    else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
+            //        url.SetUrl(pgInst.GetUrl("ViewAll").ToString());
+            //    else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
+            //        url.SetUrl(pgInst.GetUrl("Print").ToString());
+            //    else 
+            //        url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
+
+            //});
+
+
+            //pgInst.AddUrlFilter("EmailUrl", (name, url) =>
+            //{
+            //    if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
+            //        url.SetUrl(pgInst.GetUrl("PrintAll").ToString());
+            //    else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
+            //        url.SetUrl(pgInst.GetUrl("ViewAll").ToString());
+            //    else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
+            //        url.SetUrl(pgInst.GetUrl("Print").ToString());
+            //    else
+            //        url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
+            //});
+
             pgInst.AddUrlFilter("BookMarkShareUrl", (name, url) =>
             {
-                if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
-                    url.SetUrl(pgInst.GetUrl("PrintAll").ToString());
-                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
-                    url.SetUrl(pgInst.GetUrl("ViewAll").ToString());
-                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
-                    url.SetUrl(pgInst.GetUrl("Print").ToString());
-                else 
-                    url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
-
+                url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
             });
 
             pgInst.AddUrlFilter("EmailUrl", (name, url) =>
             {
-                if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
-                    url.SetUrl(pgInst.GetUrl("PrintAll").ToString());
-                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
-                    url.SetUrl(pgInst.GetUrl("ViewAll").ToString());
-                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
-                    url.SetUrl(pgInst.GetUrl("Print").ToString());
-                else 
-                    url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
+                url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
             });
-
+                        
+            pgInst.AddUrlFilter("PostBackURL", (name, url) =>
+            {
+                url.SetUrl(pgInst.GetUrl("CurrentURL") + "?" + HttpContext.Current.Request.QueryString);
+            });
+        
             pgInst.AddFieldFilter("invokedFrom", (name, field) =>
             {
                 field.Value = String.Empty;

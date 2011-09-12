@@ -23,6 +23,7 @@ using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Web.UI.WebControls.FormControls;  // For the CTSearchCriteriaDisplay object.
 using NCI.Web.CancerGov.Apps;
 using NCI.Logging;
+using NCI.Web.CDE;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.WebAnalytics;
 
@@ -189,7 +190,7 @@ namespace CancerGov.Web.SnippetTemplates
                 }
                 catch (Exception ex)
                 {
-                    CancerGovError.LogError("", "CTSearchManager.LoadDisplayCriteria", ErrorType.DbUnavailable, ex);
+                    CancerGovError.LogError("", "CTSearchManager.LoadDisplayCriteria", CancerGov.Common.ErrorHandling.ErrorType.DbUnavailable, ex);
                     this.RaiseErrorPage("InvalidSearchID");
                 }
             }
@@ -201,6 +202,11 @@ namespace CancerGov.Web.SnippetTemplates
                     data.Value = "Clinical Trial Search";
                 });
             //End Web Analytics
+            
+            this.PageInstruction.AddFieldFilter("invokedFrom", (name, field) =>
+            {
+                field.Value = EmailPopupInvokedBy.ClinicalTrialSearchResults.ToString("d");
+            });
 
             this.PageInstruction.AddUrlFilter("EmailUrl", (name, url) =>
             {
@@ -213,10 +219,15 @@ namespace CancerGov.Web.SnippetTemplates
                 foreach (string key in Request.QueryString)
                     url.QueryParameters.Add(key, Request.QueryString[key]);
             });
-
-            this.PageInstruction.AddFieldFilter("invokedFrom", (name, field) =>
+            
+            this.PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
             {
-                field.Value = EmailPopupInvokedBy.ClinicalTrialSearchResults.ToString("d");
+                string localUrl = url.ToString();
+
+                if (protocolSearchID > -1)
+                    localUrl += "?protocolsearchid=" + protocolSearchID;
+
+                url.SetUrl(localUrl);
             });
 
             JSManager.AddExternalScript(this.Page, "/JS/Search/CDEResultsClinicalTrials.js");

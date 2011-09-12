@@ -11,6 +11,7 @@ using CancerGov.UI.CDR;
 using CancerGov.UI.PageObjects;
 using NCI.Logging;
 using NCI.Util;
+using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
@@ -251,8 +252,24 @@ namespace CancerGov.Web.SnippetTemplates
                     url.QueryParameters.Add(key, Request.QueryString[key]);
             });
 
-        }
+            this.PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                string localUrl = url.ToString();
 
+                if (iProtocolID > -1)
+                    localUrl += "?cdrid=" + iProtocolID;
+
+                if (pvVersion.ToString() != "")
+                    localUrl += "?version=" + pvVersion; 
+                
+                if (iProtocolSearchID > 0)
+                    localUrl +=  "?protocolsearchid=" + iProtocolSearchID;
+                                    
+                url.SetUrl(localUrl);
+            });
+
+
+        }
 
         #region ISupportingSnippet Members
 
