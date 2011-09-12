@@ -501,7 +501,6 @@ namespace NCI.Web.CDE
         public void Initialize()
         {
             RegisterMarkupExtensionFieldFilters();
-            RegisterAltLanguageURL();
             RegisterFieldFilters();
             RegisterUrlFilters();
             RegisterWebAnalyticsFieldFilters();
@@ -523,20 +522,6 @@ namespace NCI.Web.CDE
 
         }
  
-        private void RegisterAltLanguageURL()
-        {
-            if (PageMetadata.AltLanguageURL != null)
-            {
-                if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.ToString().Trim()))
-                {
-                    AddUrlFilter("AltLanguage", (name, url) =>
-                    {
-                        url.SetUrl(PageMetadata.AltLanguageURL);
-                    });
-                }
-            }
-        }
-
         /// <summary>
         /// Registers the field filters.
         /// </summary>
@@ -620,9 +605,15 @@ namespace NCI.Web.CDE
                 }
             });
 
+            //REVIEW: (URL Filter Fix) - Updated this
             AddUrlFilter("Print", (name, url) =>
             {
-                url.SetUrl(GetUrl("CurrentURL").ToString() + "/print");
+                url.SetUrl(GetUrl("CurrentURL").ToString());
+                //If we are in the print version we do not want to generate a URL /foo/print/print
+                if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.Print)
+                {
+                    url.UriStem += "/print";
+                }
             });
 
             AddUrlFilter("Email", (name, url) =>
@@ -643,6 +634,16 @@ namespace NCI.Web.CDE
                 url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);
             });
 
+            if (PageMetadata.AltLanguageURL != null)
+            {
+                if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL))
+                {
+                    AddUrlFilter("AltLanguage", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.AltLanguageURL);
+                    });
+                }
+            }
         }
 
         #region Protected
