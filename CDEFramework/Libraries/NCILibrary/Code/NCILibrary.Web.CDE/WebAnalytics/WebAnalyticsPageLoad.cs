@@ -15,7 +15,7 @@ namespace NCI.Web.CDE.WebAnalytics
     public class WebAnalyticsPageLoad
     {
         private const string DELIMITER = "'";
-        private const string WEB_ANALYTICS_COMMENT_START = "<!-- ***** NCI Web Analytics ***** -->";
+        private const string WEB_ANALYTICS_COMMENT_START = "<!-- ***** NCI Web Analytics - DO NOT ALTER ***** -->";
         private const string WEB_ANALYTICS_COMMENT_END = "<!-- ***** End NCI Web Analytics ***** -->";
         private const bool TEST_MODE = false;  // When true, Omniture image request is not sent 
 
@@ -43,7 +43,6 @@ namespace NCI.Web.CDE.WebAnalytics
         public WebAnalyticsPageLoad()
         {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/NCIAnalyticsFunctions.js\"></script>");
-            //pageLoadPreTag.AppendLine("<!-- SiteCatalyst code version: H.20.3. Copyright 1997-2009 Omniture, Inc. More info available at http://www.omniture.com -->");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/s_code.js\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
             pageLoadPreTag.AppendLine("<!--");
@@ -134,6 +133,31 @@ namespace NCI.Web.CDE.WebAnalytics
                     // file instead of the inline code.
                     //output.AppendLine(LinkTrackPageLoadCode().ToString());
                 }
+
+                // Add calls to special page-load functions for a specific channel
+                bool firstTime = true;
+                bool containsFunctions = false;
+                foreach (string function in WebAnalyticsOptions.GetSpecialPageLoadFunctionsForChannel(channel, language))
+                {
+                    if (function != "")
+                    {
+                        if (firstTime)
+                        {
+                            output.AppendLine("//Special Page-Load Functions (SPLF)");
+                            firstTime = false;
+                        }
+                        string[] functions = function.Split(',');
+                        foreach (string item in functions)
+                        {
+                            output.AppendLine("if(typeof(NCIAnalytics." + item.Trim() + ") == 'function')");
+                            output.AppendLine("   NCIAnalytics." + item.Trim() + "();");
+
+                        }
+                        containsFunctions = true;
+                    }
+                }
+                if (containsFunctions)
+                    output.AppendLine("");
 
                 if (channel != "") // if channel is set, output them to the tag
                     output.AppendLine("s.channel=" + DELIMITER + channel + DELIMITER + ";");

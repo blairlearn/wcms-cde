@@ -37,5 +37,14 @@ namespace NCI.Web.CDE.WebAnalytics.Configuration
         {
             get { return (ChannelElementCollection)base["channels"]; }
         }
+
+        [ConfigurationProperty("specialPageLoadFunctions", IsRequired = false, DefaultValue = "")]
+        public string SpecialPageLoadFunctions
+        {
+            get
+            {
+                return (string)base["specialPageLoadFunctions"];
+            }
+        }
     }
 }

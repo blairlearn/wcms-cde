@@ -115,6 +115,36 @@ namespace NCI.Web.CDE.WebAnalytics
         }
 
         /// <summary>
+        /// This method returns a list of all special page load function for a given channel.
+        /// </summary>
+        /// <param name="channelName">The name of the channel</param>
+        /// <param name="language">The language of the related suite.</param>
+        /// <returns>A string[] containing reporting suite.</returns>
+        public static string[] GetSpecialPageLoadFunctionsForChannel(string channelName, string language)
+        {
+            List<string> rtnFunctions = new List<string>();
+
+            WebAnalyticsOptions.Initialize();
+
+            if (_webAnalyticsConfig != null)
+            {
+                var functions = from reportingSuite in _webAnalyticsConfig.ReportingSuites.Cast<ReportingSuiteElement>()
+                             where
+                                (((reportingSuite.Language == "") || (reportingSuite.Language == language)) &&
+                                (reportingSuite.EnabledForAllChannels ||
+                                 //When looking for channel make it case insensitive.
+                                reportingSuite.Channels.Cast<ChannelElement>().Any(c => string.Compare(c.Name, channelName, true) == 0)))
+                             select reportingSuite.SpecialPageLoadFunctions;
+
+                rtnFunctions.AddRange(functions);
+            }
+
+            return rtnFunctions.ToArray();
+        }
+
+
+
+        /// <summary>
         /// This method returns a channel name for a given folderpath. It also matches occurence
         /// of certain text in the url.
         /// </summary>
