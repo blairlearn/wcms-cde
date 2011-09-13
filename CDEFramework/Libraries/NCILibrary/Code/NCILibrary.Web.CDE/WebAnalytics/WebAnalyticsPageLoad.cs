@@ -134,31 +134,6 @@ namespace NCI.Web.CDE.WebAnalytics
                     //output.AppendLine(LinkTrackPageLoadCode().ToString());
                 }
 
-                // Add calls to special page-load functions for a specific channel
-                bool firstTime = true;
-                bool containsFunctions = false;
-                foreach (string function in WebAnalyticsOptions.GetSpecialPageLoadFunctionsForChannel(channel, language))
-                {
-                    if (function != "")
-                    {
-                        if (firstTime)
-                        {
-                            output.AppendLine("//Special Page-Load Functions (SPLF)");
-                            firstTime = false;
-                        }
-                        string[] functions = function.Split(',');
-                        foreach (string item in functions)
-                        {
-                            output.AppendLine("if(typeof(NCIAnalytics." + item.Trim() + ") == 'function')");
-                            output.AppendLine("   NCIAnalytics." + item.Trim() + "();");
-
-                        }
-                        containsFunctions = true;
-                    }
-                }
-                if (containsFunctions)
-                    output.AppendLine("");
-
                 if (channel != "") // if channel is set, output them to the tag
                     output.AppendLine("s.channel=" + DELIMITER + channel + DELIMITER + ";");
 
@@ -194,8 +169,33 @@ namespace NCI.Web.CDE.WebAnalytics
                 }
 
                 output.AppendLine("");
-                output.AppendLine(pageLoadPostTag.ToString());
 
+                // Add calls to special page-load functions for a specific channel
+                bool firstTime = true;
+                bool containsFunctions = false;
+                foreach (string function in WebAnalyticsOptions.GetSpecialPageLoadFunctionsForChannel(channel, language))
+                {
+                    if (function != "")
+                    {
+                        if (firstTime)
+                        {
+                            output.AppendLine("//Special Page-Load Functions (SPLF)");
+                            firstTime = false;
+                        }
+                        string[] functions = function.Split(',');
+                        foreach (string item in functions)
+                        {
+                            output.AppendLine("if(typeof(NCIAnalytics." + item.Trim() + ") == 'function')");
+                            output.AppendLine("   NCIAnalytics." + item.Trim() + "();");
+
+                        }
+                        containsFunctions = true;
+                    }
+                }
+                if (containsFunctions)
+                    output.AppendLine("");
+
+                output.AppendLine(pageLoadPostTag.ToString());
             }
             return output.ToString();
         }
