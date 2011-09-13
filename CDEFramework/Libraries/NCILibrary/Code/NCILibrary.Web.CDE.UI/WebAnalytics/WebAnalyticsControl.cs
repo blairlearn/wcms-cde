@@ -44,7 +44,8 @@ namespace NCI.Web.CDE.UI.WebControls
             if (webAnalyticsSettings != null)
             {
                 WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
-                webAnalyticsPageLoad.SetLanguage(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+
+                webAnalyticsPageLoad.SetLanguage(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("language"));
 
                 // Use pretty url to get channel name from the mapping, mapping information is in web.config
                 string prettyUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("PrettyUrl").UriStem;

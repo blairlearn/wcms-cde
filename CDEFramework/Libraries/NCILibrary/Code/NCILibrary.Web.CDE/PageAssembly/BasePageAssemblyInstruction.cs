@@ -39,31 +39,48 @@ namespace NCI.Web.CDE
         public virtual void Initialize()
         {
             IPageAssemblyInstruction pgInst = ((IPageAssemblyInstruction)this);
-            //pgInst.AddUrlFilter("BookMarkShareUrl", (name, url) =>
-            //{
-            //    if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
-            //        url.SetUrl(pgInst.GetUrl("PrintAll").ToString());
-            //    else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
-            //        url.SetUrl(pgInst.GetUrl("ViewAll").ToString());
-            //    else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
-            //        url.SetUrl(pgInst.GetUrl("Print").ToString());
-            //    else 
-            //        url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
 
-            //});
+            // field filters
+            pgInst.AddFieldFilter("invokedFrom", (name, field) =>
+            {
+                field.Value = String.Empty;
+            });
 
+            pgInst.AddFieldFilter("language", (name, field) =>
+            {
+                string languageValue = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+                switch (languageValue.ToLower())
+                {
+                    case "en":
+                        field.Value = "english";
+                        break;
+                    case "es":
+                        field.Value = "spanish";
+                        break;
+                    default:
+                        field.Value = "english";
+                        break;
+                }
+            });
 
-            //pgInst.AddUrlFilter("EmailUrl", (name, url) =>
-            //{
-            //    if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
-            //        url.SetUrl(pgInst.GetUrl("PrintAll").ToString());
-            //    else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
-            //        url.SetUrl(pgInst.GetUrl("ViewAll").ToString());
-            //    else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
-            //        url.SetUrl(pgInst.GetUrl("Print").ToString());
-            //    else
-            //        url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
-            //});
+            // URL filters 
+            pgInst.AddUrlFilter("RootPrettyURL", (name, url) =>
+            {
+                url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
+                // This is  hack to fix the RootPrettyURL. If  this content type is 
+                // rx:pdqCancerInfoSummary then remove the 'patient' or 'healthprofessional' from
+                // the pretty url
+                string prettyUrl = pgInst.GetUrl("PrettyURL").ToString().ToLower();
+                if (ContentItemInfo != null && ContentItemInfo.ContentItemType == "rx:pdqCancerInfoSummary")
+                {
+                    int verIndex = prettyUrl.LastIndexOf("/patient");
+                    if (verIndex == -1)
+                        verIndex = prettyUrl.LastIndexOf("/healthprofessional");
+                    if (verIndex != -1)
+                        prettyUrl = prettyUrl.Substring(0, verIndex);
+                }
+                url.SetUrl(prettyUrl);
+            });
 
             pgInst.AddUrlFilter("BookMarkShareUrl", (name, url) =>
             {
@@ -79,11 +96,7 @@ namespace NCI.Web.CDE
             {
                 url.SetUrl(pgInst.GetUrl("CurrentURL") + "?" + HttpContext.Current.Request.QueryString);
             });
-        
-            pgInst.AddFieldFilter("invokedFrom", (name, field) =>
-            {
-                field.Value = String.Empty;
-            });
+
         }
 
         /// <summary>
@@ -176,27 +189,12 @@ namespace NCI.Web.CDE
         /// </summary>
         protected virtual void RegisterWebAnalyticsFieldFilters()
         {
+            IPageAssemblyInstruction pgInst = ((IPageAssemblyInstruction)this);
+
             SetWebAnalytics(WebAnalyticsOptions.Props.RootPrettyURL.ToString(), wbField =>
             {
-                wbField.Value = "";
+                wbField.Value = pgInst.GetUrl("RootPrettyURL").ToString();
             });
-
-            //SetWebAnalytics(WebAnalyticsOptions.eVars.Language.ToString(), wbField =>
-            //{
-            //    string languageValue = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-            //    switch (languageValue.ToLower())
-            //    {
-            //        case "en":
-            //            wbField.Value = "english";
-            //            break;
-            //        case "es":
-            //            wbField.Value = "spanish";
-            //            break;
-            //        default:
-            //            wbField.Value = "english";
-            //            break;
-            //    }
-            //});
         }
         #endregion
 

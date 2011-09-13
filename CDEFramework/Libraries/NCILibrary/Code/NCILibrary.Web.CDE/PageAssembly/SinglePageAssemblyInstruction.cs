@@ -645,26 +645,10 @@ namespace NCI.Web.CDE
         {
             base.RegisterWebAnalyticsFieldFilters();
 
-            SetWebAnalytics(WebAnalyticsOptions.Props.RootPrettyURL.ToString(), wbField =>
-            {
-                // This is  hack to fix the rooturl for web analytics. If  this content type is 
-                // rx:pdqCancerInfoSummary then remove the 'patient' or 'healthprofessional' from
-                // the pretty url
-                string prettyUrl = PrettyUrl;
-                if (ContentItemInfo != null && ContentItemInfo.ContentItemType == "rx:pdqCancerInfoSummary")
-                {
-                    prettyUrl = prettyUrl.ToLower().Replace("/patient", "");
-                    prettyUrl = prettyUrl.ToLower().Replace("/healthprofessional", "");
-                }
-
-                wbField.Value = prettyUrl;
-            });
-
             SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
             {
                 wbField.Value = GetField("short_title");
             });
-
 
             SetWebAnalytics(WebAnalyticsOptions.Props.PostedDate.ToString(), wbField =>
             {
