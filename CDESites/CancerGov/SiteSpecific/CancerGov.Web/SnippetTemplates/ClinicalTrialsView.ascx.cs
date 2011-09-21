@@ -18,7 +18,7 @@ using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class ClinicalTrialsView : SearchBaseUserControl, ISupportingSnippet 
+    public partial class ClinicalTrialsView : SearchBaseUserControl, ISupportingSnippet
     {
 
         public string strContent = "";
@@ -56,7 +56,7 @@ namespace CancerGov.Web.SnippetTemplates
             string strVersion = "";
             bool hasProtocolSearchid = false;
 
-           
+
 
             ProtocolVersions pvVersion = ProtocolVersions.HealthProfessional;
             iProtocolID = Strings.ToInt(Request.Params["cdrid"]);
@@ -100,7 +100,7 @@ namespace CancerGov.Web.SnippetTemplates
                 this.RaiseErrorPage("Error:" + fetchError.Message);
             }
 
-            
+
             StringBuilder sbDate = new StringBuilder();
 
             if (pProtocol.ProtocolType == ProtocolTypes.Protocol)
@@ -108,9 +108,9 @@ namespace CancerGov.Web.SnippetTemplates
                 if (pProtocol.DateLastModified != new DateTime(0))
                 {
                     PageInstruction.AddFieldFilter("pvLastModified", (fieldName, data) =>
-                        {
-                            data.Value = pProtocol.DateLastModified.ToString("d");
-                        });
+                    {
+                        data.Value = pProtocol.DateLastModified.ToString("d");
+                    });
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace CancerGov.Web.SnippetTemplates
                 sbPageUrl.Append(iProtocolSearchID.ToString());
             }
 
-           
+
             ProtocolRendererOptions renderOptions;
             string protocolSearchID;
             if ((protocolSearchID = Request.QueryString.Get("protocolsearchid")) != null)
@@ -260,11 +260,11 @@ namespace CancerGov.Web.SnippetTemplates
                     localUrl += "?cdrid=" + iProtocolID;
 
                 if (pvVersion.ToString() != "")
-                    localUrl += "?version=" + pvVersion; 
-                
+                    localUrl += "?version=" + pvVersion;
+
                 if (iProtocolSearchID > 0)
-                    localUrl +=  "?protocolsearchid=" + iProtocolSearchID;
-                                    
+                    localUrl += "?protocolsearchid=" + iProtocolSearchID;
+
                 url.SetUrl(localUrl);
             });
 
