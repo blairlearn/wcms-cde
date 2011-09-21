@@ -76,7 +76,7 @@
                                             <td colspan="3">
                                                 <br>
                                                 <br>
-                                                <asp:ImageButton ID="btnSearch" runat="server" ImageUrl="/images/search_red.gif"
+                                                <asp:ImageButton alt AlternateText="search" ID="btnSearch" runat="server" ImageUrl="/images/search_red.gif"
                                                     OnClick="btnSearch_Click" />
                                             </td>
                                         </tr>
