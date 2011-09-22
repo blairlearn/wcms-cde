@@ -12,6 +12,7 @@ namespace NCI.Web.CDE
     [System.Xml.Serialization.XmlRootAttribute("Module_CDRDefinition", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
     public class CDRDefinition
     {
+       
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string CDRId { get; set; }
 
@@ -19,7 +20,23 @@ namespace NCI.Web.CDE
         public string CDRDefinitionName { get; set; }
         
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public int CDRCharacterLimit { get; set; }
+        public string CDRCharacterLimit { get; set; }
+
+        public int charLimit
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(CDRCharacterLimit))
+                {
+                    return Convert.ToInt16(CDRCharacterLimit);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+           
+        }
 
     }
 }

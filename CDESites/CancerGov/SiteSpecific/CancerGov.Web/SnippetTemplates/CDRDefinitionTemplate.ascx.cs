@@ -57,22 +57,22 @@ namespace CancerGov.Web.SnippetTemplates
                     if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
                     {
                         definitionText = "<strong>Definition of " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
-                        if (mPBO.CDRCharacterLimit > 0)
+                        if (mPBO.charLimit > 0)
                         {
                             moreLink.Visible = true;
                             spDefinitionTextMore.InnerHtml = definitionText;
-                            definitionText = definitionText.Substring(0, mPBO.CDRCharacterLimit);
+                            definitionText = definitionText.Substring(0, mPBO.charLimit);
 
                         }
                     }
                     else
                     {
                         definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
-                        if (mPBO.CDRCharacterLimit > 0)
+                        if (mPBO.charLimit > 0)
                         {
                             moreLink.Visible = true;
                             spDefinitionTextMore.InnerHtml = definitionText;
-                            definitionText = definitionText.Substring(0, mPBO.CDRCharacterLimit);
+                            definitionText = definitionText.Substring(0, mPBO.charLimit);
 
                         }                       
 
