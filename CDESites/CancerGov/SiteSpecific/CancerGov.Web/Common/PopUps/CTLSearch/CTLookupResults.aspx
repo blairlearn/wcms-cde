@@ -6,7 +6,7 @@
     <title>CTLookupResults</title>
     <link rel="stylesheet" href="/stylesheets/nci.css" />
 </head>
-<body>
+<body style="background:none">
     <form id="resultsForm" runat="server" method="post" > 
         <h1 style="font-size: 14px;  padding-left: 4px"><%=Caption%></h1> 
         <asp:DataGrid CssClass="cts-az-results" ID="results" Runat="server" ShowHeader="False" 
