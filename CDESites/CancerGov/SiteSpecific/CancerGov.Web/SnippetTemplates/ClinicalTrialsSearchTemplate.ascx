@@ -209,7 +209,7 @@ span.gray-text
                 <span class="gray-text">Stage/Subtype</span>
             </td>
             <td valign="top" class="column2 sectionBottom">
-                <div id="Div1" class="scrollingList" style="width: 400px; height: 136px;" runat="server">
+                <div id="Div1" class="scrollingList" style="height: 136px;" runat="server">
                     <p id="emptySubType" style="margin-left: 5px; margin-top: 5px;" runat="server" visible="true">
                         Select cancer type/condition first.</p>
                     <cancergov:smartcheckboxlist id="cancerStage" runat="server" repeatcolumns="1" repeatlayout="Flow" />

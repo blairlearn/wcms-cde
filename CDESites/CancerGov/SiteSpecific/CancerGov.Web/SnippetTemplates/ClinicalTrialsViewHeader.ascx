@@ -19,10 +19,10 @@
   <div class="document-dates"> 
   <ul>
   <% if(!string.IsNullOrEmpty(pvFirstPublished)) {%>
-    <li><strong>First Published:</strong><% =pvFirstPublished%></li> 
+    <li><strong>First Published: </strong><% =pvFirstPublished%></li> 
     <%} %>
   <% if (!string.IsNullOrEmpty(pvLastModified)) { %>
-  <li><strong>Last Modified:</strong><% =pvLastModified%> </li> 
+  <li><strong>Last Modified: </strong><% =pvLastModified%> </li> 
   <% } %>
   </ul>
   </div>
