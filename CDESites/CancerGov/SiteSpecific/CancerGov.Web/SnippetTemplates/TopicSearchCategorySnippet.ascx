@@ -34,7 +34,7 @@
                             <td valign="top">
                                 <img height="1" border="0" width="7" alt="" src="/images/spacer.gif">
                             </td>
-                            <td valign="top" class="leftnav">
+                            <td valign="top">
                                 <table cellspacing="0" cellpadding="0" border="0" width="100%">
                                     <tbody>
                                         <tr>
