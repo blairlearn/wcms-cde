@@ -169,7 +169,7 @@ runat="server">
                 </asp:View>
                 <asp:View ID="ViewResultList" runat="server" EnableViewState="false">
                     <!-- Number of results -->
-                    <asp:Panel ID="numResDiv" runat="server">
+                    <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
                         <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
                         <span class="page-title">
                             <asp:Label ID="lblNumResults" CssClass="page-title" runat="server"></asp:Label>
