@@ -135,19 +135,11 @@ namespace NCI.Web.CDE.UI.Modules
 
                 if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 {
-
-                    output.Write(@"<label class=""hidden"" for=""keyword"">keyword</label>
-                    <input id=""keyword"" class=""search-trial-results-search"" name=""keyword""><input
-                    alt=""Search"" src=""/images/red_buscar_button.gif"" type=""image"" class=""find-news-release-image""></form></div>");
-
-
+                    output.Write(@"<input alt=""Search"" src=""/images/red_buscar_button.gif"" type=""image"" class=""find-news-release-image""></form></div>");
                 }
-
                 else
                 {
-                    output.Write(@"<label class=""hidden"" for=""keyword"">keyword</label>
-                    <input id=""keyword"" class=""search-trial-results-search"" name=""keyword""><input
-                    alt=""Search"" src=""/images/red_go_button.gif"" type=""image"" class=""find-news-release-image""></form></div>");
+                    output.Write(@"<input alt=""Search"" src=""/images/red_go_button.gif"" type=""image"" class=""find-news-release-image""></form></div>");
                 }
 
             }
