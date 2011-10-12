@@ -35,7 +35,7 @@
         <asp:HiddenField ID="pageSize" runat="server" />
         <asp:HiddenField ID="OffPageSelectionsExist" runat="server" EnableViewState="false" />
         <!-- Top View Content for box -->
-        <div class="clinicaltrials-filledbox" style="width: 700px;">
+        <div class="clinicaltrials-filledbox" style="width: 698px;">
             <asp:Panel runat="server" ID="ResultsFormatControl" Style="border-bottom: 1px #bdbdbd solid;">
                 <table width="686px" cellpadding="0" cellspacing="8" border="0" style="background: #ffffff;
                     margin: 6px;" align="center">
@@ -147,7 +147,7 @@
             </div>
         </div>
         <asp:Panel ID="topControlArea" runat="server" CssClass="clinicaltrials-filledbox"
-            Style="color: #000000; font-weight: bold; padding: 8px 8px 8px 8px;">
+            Style="width:682px; color: #000000; font-weight: bold; padding: 8px 8px 8px 8px;">
             <span style="float: left;">
                 <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllTop" Text="Select All on Page" />
 
