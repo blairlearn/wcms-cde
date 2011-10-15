@@ -49,18 +49,19 @@ namespace NCI.Web.CDE
             pgInst.AddFieldFilter("language", (name, field) =>
             {
                 string languageValue = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-                switch (languageValue.ToLower())
-                {
-                    case "en":
-                        field.Value = "english";
-                        break;
-                    case "es":
-                        field.Value = "spanish";
-                        break;
-                    default:
-                        field.Value = "english";
-                        break;
-                }
+                field.Value = languageValue;
+                //switch (languageValue.ToLower())
+                //{
+                //    case "en":
+                //        field.Value = "english";
+                //        break;
+                //    case "es":
+                //        field.Value = "spanish";
+                //        break;
+                //    default:
+                //        field.Value = "english";
+                //        break;
+                //}
             });
 
             // URL filters 
