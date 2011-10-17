@@ -224,7 +224,7 @@ span.gray-text
                 Location
             </td>
             <td valign="top" class="column2 sectionBreak sectionBottom">
-                <table id="LocationChooser" style="display: none;" width="300" cellpadding="4" cellspacing="0"
+                <table id="LocationChooser" style="display: none;" width="100%" cellpadding="4" cellspacing="0"
                     border="0">
                     <tr>
                         <td valign="top" style="vertical-align: top;">
