@@ -89,13 +89,12 @@
                                                                                 <td>
                                                                                     <label for="email">
                                                                                         E-mail address:</label>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
+                                                                                </td>                                                                                
                                                                                 <td>
                                                                                     <input type="text" id="email" name="email" style="width: 200px;" />
                                                                                     <br />
                                                                                 </td>
+                                                                                
                                                                             </tr>
                                                                             <tr>
                                                                                 <td style="text-align: right">

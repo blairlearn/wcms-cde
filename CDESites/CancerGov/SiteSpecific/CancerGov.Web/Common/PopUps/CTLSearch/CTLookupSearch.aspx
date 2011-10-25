@@ -20,18 +20,18 @@
 	<body class="cts-az-search" style="background-color:White;background:none">
 	
         <!-- Top Header Section -->
-        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0"  class="popUp-bg">
         <tr>
          <td valign="top">
-              <table width="681" cellspacing="0" cellpadding="0" border="0">
+              <table cellspacing="0" cellpadding="0" border="0">
               <tr>
                  <td valign="top" rowspan="2"><img src="/images/pop_banner.gif" width="650" height="57" alt="National Cancer Institute" border="0"></td>
-	              <td valign="top" rowspan="2" style="background-color:#e4e4e3;background-repeat:repeat-x;width:100%;" ><img src="/images/spacer.gif" width="205" height="54" alt="" border="0"></td>
-	              <td valign="top" width:100%; style="background-color:#e4e4e3;width:100%"><img src="/images/spacer.gif" width="149" height="34" alt="" border="0"></td>
+	              <td valign="top" rowspan="2"><img src="/images/spacer.gif" width="205" height="54" alt="" border="0"></td>
+	              <td valign="top"><img src="/images/spacer.gif" width="149" height="34" alt="" border="0"></td>
               </tr>
               </table>
           </td>
-          <td valign="top" width="100%" style="background-color:#e4e4e3;background-repeat:repeat-x;width:100%;"><img src="/images/spacer.gif" width="1" height="1" alt="" border="0"></td>
+          <td valign="top"><img src="/images/spacer.gif" width="1" height="1" alt="" border="0"></td>
         </tr>
         </table>	
         <!-- end Top Header Section -->

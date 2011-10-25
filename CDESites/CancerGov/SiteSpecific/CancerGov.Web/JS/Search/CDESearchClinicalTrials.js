@@ -307,7 +307,7 @@ function InitializeLeadOrgListSubBox() {
 // When the leading organization list button is clicked, pop up the selection dialog.
 // The list is only expanded if values are selected.
 function LeadOrgListButtonClickHandler(event) {
-    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.leadOrg + '&fld=leadOrg&title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=650px,menubar=no,resizable=no,location=no,height=580px');
+    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.leadOrg + '&fld=leadOrg&title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=700px,menubar=no,resizable=no,location=no,height=580px');
     Event.stop(event);
 }
 

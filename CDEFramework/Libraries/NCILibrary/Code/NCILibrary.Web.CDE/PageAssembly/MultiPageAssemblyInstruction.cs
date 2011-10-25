@@ -830,7 +830,8 @@ namespace NCI.Web.CDE
             {
                 string viewAllUrl = GetUrl("CurrentURL").ToString();
                 if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.ViewAll)
-                    viewAllUrl = viewAllUrl.Substring(0, viewAllUrl.LastIndexOf("/")) + "/AllPages" ;
+                    //viewAllUrl = viewAllUrl.Substring(0, viewAllUrl.LastIndexOf("/")) + "/AllPages" ;
+                    viewAllUrl = viewAllUrl + "/AllPages";
 
                 url.SetUrl(viewAllUrl);
             });
