@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/stylesheets/nci.css" type="text/css" />
 </head>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="popup">
     <div align="center">
         <p>
             <table border="0" cellpadding="10" cellspacing="0" width="100%">
