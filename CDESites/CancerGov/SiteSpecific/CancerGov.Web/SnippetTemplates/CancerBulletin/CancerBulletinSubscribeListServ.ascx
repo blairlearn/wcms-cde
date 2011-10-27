@@ -87,18 +87,22 @@
                                                                         <table>
                                                                             <tr>
                                                                                 <td>
+                                                                                <br />
                                                                                     <label for="email">
                                                                                         E-mail address:</label>
-                                                                                </td>                                                                                
-                                                                                <td>
                                                                                     <input type="text" id="email" name="email" style="width: 200px;" />
-                                                                                    <br />
+                                                                                     <input type="submit" value="Submit" />
+                                                                                    
                                                                                 </td>
+                                                                                        
+                                                                                </td>                                                                                
                                                                                 
                                                                             </tr>
                                                                             <tr>
+                                                                                                                                                            <td>
+
                                                                                 <td style="text-align: right">
-                                                                                    <input type="submit" value="Submit" />
+                                                                                   
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
