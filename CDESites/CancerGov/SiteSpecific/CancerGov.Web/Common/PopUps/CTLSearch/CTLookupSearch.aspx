@@ -17,24 +17,21 @@
 		</script>
     </head>
   
-	<body class="cts-az-search">
+	<body class="cts-az-search" style="background-color:White;background:none">
 	
         <!-- Top Header Section -->
-        <table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#A80101">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0"  class="popUp-bg">
         <tr>
          <td valign="top">
-              <table width="681" cellspacing="0" cellpadding="0" border="0" bgcolor="#A80101">
+              <table cellspacing="0" cellpadding="0" border="0">
               <tr>
-                 <td valign="top" rowspan="2"><img src="/images/header_popup.gif" width="328" height="54" alt="National Cancer Institute" border="0"></td>
+                 <td valign="top" rowspan="2"><img src="/images/pop_banner.gif" width="650" height="57" alt="National Cancer Institute" border="0"></td>
 	              <td valign="top" rowspan="2"><img src="/images/spacer.gif" width="205" height="54" alt="" border="0"></td>
 	              <td valign="top"><img src="/images/spacer.gif" width="149" height="34" alt="" border="0"></td>
               </tr>
-              <tr>
-                 <td valign="top"><a href="#" onclick="javascript:window.parent.close();"><img src="/images/popup_close_window.gif" width="149" height="20" alt="Close Window" border="0"></a></td>
-              </tr>
               </table>
           </td>
-          <td valign="top" width="100%" bgcolor="#A80101"><img src="/images/spacer.gif" width="1" height="1" alt="" border="0"></td>
+          <td valign="top"><img src="/images/spacer.gif" width="1" height="1" alt="" border="0"></td>
         </tr>
         </table>	
         <!-- end Top Header Section -->

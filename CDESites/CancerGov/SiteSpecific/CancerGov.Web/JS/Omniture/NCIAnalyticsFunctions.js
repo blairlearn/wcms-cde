@@ -865,7 +865,54 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
                 target = target.parentNode;
         }
         return target;
+    },
+//**************FOR TESTING ONLY - FOR TESTING ONLY*****************************************************	
+	SPLF_Hier1 : function()  {
+	    // URL structure
+	    // element 0 = blank
+	    // element 1 = "Cancertopics"
+	    // element 2 = "types"
+	    // element 3 = type of cancer
+	    // element 4 = Patient/Health Professional
+	    // element 5 = topic
+	    // element 6 = sub-topic
+	    
+	    delimiter = "|";
+		pathArray = window.location.pathname.split( '/' );
+	    out = "[" + pathArray.length.toString() + "] ";
+	    for ( i = 0; i < pathArray.length; i++ ) 
+	        out = out + " - (" + i.toString() + ") " + pathArray[i];
+	    //alert(out); 
+	    s.hier1 = s.channel;
+	    if (pathArray.length >= 4) {
+	   	    if(pathArray[1].toLowerCase() == "cancertopics") {
+	            if(pathArray[2].toLowerCase() == "types") {
+	                s.prop30 = pathArray[3];
+	                s.hier1 += delimiter + s.prop30;
+	                if(pathArray.length >= 5) {
+	                    s.prop43 = pathArray[4];
+	                    s.hier1 += delimiter + s.prop43;
+	                    if(pathArray.length >= 6) {
+	                        s.prop44 = pathArray[5];
+	                        s.hier1 += delimiter + s.prop44;
+	                        if(pathArray.length >= 7) {
+	                            s.prop45 = pathArray[6];
+	                            s.hier1 += delimiter + s.prop45;
+	                        }
+	                    }  
+	                }
+	            }
+	        }
+	    }
+    },
+    
+	SPLF_Lang : function()  {
+	    //alert('Lang');
+    },  
+    SPLF_Yomama : function()  {
+	    //alert('Yomama');
     }
+    
     
 };
 

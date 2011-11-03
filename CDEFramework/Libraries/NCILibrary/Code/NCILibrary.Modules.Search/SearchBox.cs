@@ -102,61 +102,44 @@ namespace NCI.Web.CDE.UI.Modules
 
         public override void RenderControl(HtmlTextWriter output)
         {
-            output.Write(@"<table width=""164"" class=""gray-border"" border=""0"" cellSpacing=""0"" cellPadding=""1""><TBODY><TR><TD vAlign=top><TABLE border=0 cellSpacing=0 cellPadding=0 width=162 bgColor=#ffffff><TBODY>
-                <TR><TD class=box-title vAlign=top align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=7 height=17></TD>");
-            output.Write(string.Format(@"<TD class=box-title vAlign=left colSpan=2>{0}</TD></TR>", Title));
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es" && SearchType.ToLower() == "keyword")
-            {
-                output.Write(@"<tr><td valign=""top"" colspan=""3"" class=""gray-border""><img src=""/images/spacer.gif"" width=""1"" height=""1"" alt="""" border=""0""></td>
-            </tr><tr><td valign=""top"" align=""left"" colspan=""3""><img src=""/images/spacer.gif""  alt="""" width=""162"" height=""8"" alt="""" border=""0""></td>
-            </tr><tr><td valign=""top"" align=""left""><img src=""/images/spacer.gif"" width=""7"" height=""1"" alt="""" border=""0""></td>
-               <td valign=""top"" class=""leftnav"" align=""left"" width=""148"" >");
-            }
-            else
-            {
-                output.Write(@"<TR><TD class=gray-border vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=1></TD></TR>
-                <TR><TD vAlign=top colSpan=3 align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=162 height=8></TD></TR>
-                <TR><TD vAlign=top align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=7 height=1></TD>
-                <TD class=leftnav vAlign=top width=148 align=left></TR>
-                <TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=5><BR></TD>");
-            }
             if (!string.IsNullOrEmpty(WebAnalyticsFunction))
                 WebAnalyticsFunction = string.Format("onsubmit=\"{0}\"", WebAnalyticsFunction);
             else
                 WebAnalyticsFunction = "";
 
-            output.Write(string.Format("<FORM {0} method=post name=NCSearchBox action={1}>", WebAnalyticsFunction, ActionURL));
+
+            output.Write(string.Format("<div class=\"leftnav-default\"><h3>{2}</h3><form {0} method=\"post\" name=\"NCSearchBox\" action=\"{1}\">", WebAnalyticsFunction, ActionURL,  Title));
+
+            
 
             if (SearchType.ToLower() == "keyword_with_date")
             {
 
-                output.Write(@"<TR><TD vAlign=top>&nbsp;</TD><TD vAlign=top>Search For:</TD><TD vAlign=top>&nbsp;</TD></TR><TR>
-                <TD vAlign=top>&nbsp;</TD><TD vAlign=top><LABEL class=hidden for=keyword>keyword</LABEL><INPUT id=keyword class=search-field size=8 name=keyword></TD>
-                <TD vAlign=top>&nbsp;</TD></TR><TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=8></TD></TR>
-                <TR><TD vAlign=top>&nbsp;</TD>");
-
-                output.Write(string.Format(@"<TD vAlign=top>Between these dates:<BR><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=5><BR></TD>
-                    <TD vAlign=top>&nbsp;</TD></TR><TR>
-                    <TD vAlign=top>&nbsp;</TD><TD vAlign=top><LABEL class=hidden for=startMonth>select start Month</LABEL> <SELECT id=startMonth name=startMonth> <OPTION selected value=1>Jan.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</OPTION> <OPTION value=2>Feb.</OPTION> <OPTION value=3>Mar.</OPTION> <OPTION value=4>Apr.</OPTION> <OPTION value=5>May</OPTION> <OPTION value=6>Jun.</OPTION> <OPTION value=7>Jul.</OPTION> <OPTION value=8>Aug.</OPTION> <OPTION value=9>Sept.</OPTION> <OPTION value=10>Oct.</OPTION> <OPTION value=11>Nov.</OPTION> <OPTION value=12>Dec.</OPTION></SELECT> &nbsp;&nbsp;<LABEL class=hidden for=startYear>select start Year</LABEL> <SELECT id=startYear name=startYear>{0}</SELECT> </TD>
-                    <TD vAlign=top>&nbsp;</TD></TR><TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=3></TD></TR> 
-                    <TR><TD vAlign=top>&nbsp;</TD>
-                    <TD vAlign=top><LABEL class=hidden for=endMonth>select end Month</LABEL><SELECT id=endMonth name=endMonth> {1} </SELECT> &nbsp;&nbsp;<LABEL class=hidden for=endYear>select end Year</LABEL> <SELECT id=endYear name=endYear>{2}</SELECT> </TD>
-                    <TD vAlign=top>&nbsp;</TD></TR>
-                    <TR><TD vAlign=top colSpan=3><IMG border=0 alt=""spacer image"" src=""/images/spacer.gif"" width=1 height=10></TD></TR>", GetYearListItems("startYear"), GetMonthListItems("endMonth"), GetYearListItems("endYear")));
+                output.Write(@"Search For:<label class=""hidden"" for=""keyword"">keyword</label>
+                            <input id=""keyword"" class=""find-news-release-keyword"" name=""keyword"">
+                            <table class=""find-news-release-dates""><tr><th colspan=""2"" scope=""col"">Between these dates:</th></tr>
+                            <tr><td>
+                            <label class=""hidden"" for=""startMonth"">select start Month</label>
+                            <select id=""startMonth"" name=""startMonth""> <option selected value=""1"">Jan.</option> <option value=""2"">Feb.</option> <option value=""3"">Mar.</option> <option value=""4"">Apr.</option> <option value=""5"">May</option> <option value=""6"">Jun.</option> <option value=""7"">Jul.</option> <option value=""8"">Aug.</option> <option value=""9"">Sept.</option> <option value=""10"">Oct.</option> <option value=""11"">Nov.</option> <option value=""12"">Dec.</option></select>
+                            </td><td>
+                            <label class=""hidden"" for=""startYear"">select start Year</label>
+                            <select id=""startYear"" name=""startYear"">{0}</select>
+                            </td></tr>
+                            <tr><td>
+                            <label class=""hidden"" for=""endMonth"">select end Month</label>
+                            <select id=""endMonth"" name=""endMonth""> {1} </select></td><td>
+                            <label class=""hidden"" for=""endYear"">select end Year</label>
+                            <select id=""endYear"" name=""endYear"">{2}</select>
+                            </td></tr></table>", GetYearListItems("startYear"), GetMonthListItems("endMonth"), GetYearListItems("endYear"));
 
                 if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 {
-                    output.Write(@"<TR><TD vAlign=top>&nbsp;</TD>
-                    <TD vAlign=top align=left><INPUT alt=Search src=""/images/red_buscar_button.gif"" type=image>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-                    <TD vAlign=top>&nbsp;</TD></TR></FORM></TD>");
+                    output.Write(@"<input alt=""Search"" src=""/images/red_buscar_button.gif"" type=""image"" class=""find-news-release-image""></form></div>");
                 }
-
                 else
                 {
-                    output.Write(@"<TR><TD vAlign=top>&nbsp;</TD>
-                    <TD vAlign=top align=left><INPUT alt=Search src=""/images/red_go_button.gif"" type=image>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-                    <TD vAlign=top>&nbsp;</TD></TR></FORM></TD>");
+                    output.Write(@"<input alt=""Search"" src=""/images/red_go_button.gif"" type=""image"" class=""find-news-release-image""></form></div>");
                 }
 
             }
@@ -164,36 +147,22 @@ namespace NCI.Web.CDE.UI.Modules
             {
                 if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 {
-                    output.Write(@"<table width=""148"" cellspacing=""0"" cellpadding=""0"" border=""0""><tr>
-                    <td valign=""top""><img src=""/images/spacer.gif"" width=""7"" height=""1"" alt="""" border=""0""></td>
-                    <td valign=""middle"" width=""87"" align=""left"" height=""24""><label for=""keyword"">Palabra clave</label></td>
-                    <td valign=""top""><img src=""/images/spacer.gif"" width=""5"" height=""1"" alt="""" border=""0""></td><td></td>
-                    </tr><tr>
-                    <td valign=""top""><img src=""/images/spacer.gif"" width=""7"" height=""1"" alt="""" border=""0""></td>
-                    <td valign=""middle"" width=""87"" align=""left"" height=""24"">
-                    <input type=""text"" id=""keyword"" name=""keyword"" style=""width:87px; height:21px;"" class=""search-field""></td>
-                    <td valign=""top""><img src=""/images/spacer.gif"" width=""5"" height=""1"" alt="""" border=""0""></td>
-                    <td><input type=""image"" src=""/images/buscar-left-nav.gif"" alt=""Buscar"" width=""50"" height=""15"" /></td></tr></table></Form>");
-
-                    output.Write(@"</td><td valign=""top"" align=""right""><img src=""/images/spacer.gif"" width=""7"" height=""1"" alt="""" border=""0""></td></tr>");
-                    output.Write(@"<TR><TD vAlign=top colSpan=3 align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=162 height=8></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>");
-                    return;
+                    output.Write(@"<label for=""keyword"" class=""palabra-title"">Palabra clave</label>
+					<input type=""text"" id=""keyword"" name=""keyword"" class=""search-go-spanish"" />
+					<input type=""image"" src=""/images/buscar-left-nav.gif"" alt=""Buscar"" class=""search-go-spanish-image"" />
+				</form></div>");
 
                 }
                 else
                 {
 
-                    output.Write(@"<tr><td valign=""top"">&nbsp;</td><td valign=""center""><label class=""hidden"" for=""keyword"">keyword</label>
-                    <input id=""keyword"" class=""search-field"" size=""10"" name=""keyword"">&nbsp;&nbsp;<input
-                    alt=""Search"" src=""/images/red_go_button.gif"" type=""image""></td><td valign=""top"">&nbsp;</td></tr>
-                <TR><TD vAlign=top colSpan=3><IMG border=0 alt="""" src=""/images/spacer.gif"" width=1 height=8></TD></TR></Form>");
+                    output.Write(@"<label class=""hidden"" for=""keyword"">keyword</label>
+                    <input id=""keyword"" class=""search-go-english"" name=""keyword""><input
+                    alt=""Search"" src=""/images/red_go_button.gif"" type=""image"" class=""search-go-english-image""></form></div>");
                 }
 
             }
 
-
-            output.Write(@"<TR><TD vAlign=top align=right><IMG border=0 alt="""" src=""/images/spacer.gif"" width=7 height=1></TD></TR>
-            <TR><TD vAlign=top colSpan=3 align=left><IMG border=0 alt="""" src=""/images/spacer.gif"" width=162 height=8></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>");
         }
 
         private string GetMonthListItems(string monthType)

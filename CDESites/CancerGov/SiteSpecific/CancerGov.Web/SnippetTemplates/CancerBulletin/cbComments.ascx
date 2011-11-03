@@ -30,7 +30,7 @@
 
 <script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>
 
-<table border="0" cellpadding="0" cellspacing="0" width="571" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" valign="top">
     <tr>
         <td valign="top">
             <a name="skiptocontent"></a>

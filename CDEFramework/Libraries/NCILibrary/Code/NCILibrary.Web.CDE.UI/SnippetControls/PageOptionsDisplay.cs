@@ -101,7 +101,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
                                 {
                                     pgoBase = new AddThisPageOption();
                                     ((AddThisPageOption)pgoBase).Settings.Language = pgInstruction.Language;
-                                    ((AddThisPageOption)pgoBase).PageTitle = pgInstruction.GetUrl("BookMarkShareUrl").ToString();
+                                    //((AddThisPageOption)pgoBase).PageTitle = pgInstruction.GetField("long_description").ToString();  //pgInstruction.GetUrl("BookMarkShareUrl").ToString();
+                                    ((AddThisPageOption)pgoBase).PageTitle = pgInstruction.GetField("long_title").ToString();
                                     ((AddThisPageOption)pgoBase).OnClick = pgOptionItem.WebAnalyticsFunction;
                                 }
 

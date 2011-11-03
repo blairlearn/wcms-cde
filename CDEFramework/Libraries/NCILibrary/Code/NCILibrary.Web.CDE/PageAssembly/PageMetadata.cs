@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 using System.Xml.Schema;
-
+using System.Configuration;
 namespace NCI.Web.CDE
 {
     public class PageMetadata
@@ -42,6 +42,10 @@ namespace NCI.Web.CDE
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string MetaKeywords { get; set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        [ConfigurationProperty("value", DefaultValue = "")]
+        public string AltLanguageURL { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.

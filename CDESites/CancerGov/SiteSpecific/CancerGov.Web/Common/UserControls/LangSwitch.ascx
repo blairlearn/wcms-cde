@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="LangSwitch.ascx.cs" Inherits="www.Common.UserControls.LangSwitch" %>
-<asp:Panel ID="pnlLangSelect" runat="server">
+<asp:Panel ID="pnlLangSelect" runat="server" CssClass="dictionary-individual-search-results-header">
     <div class="language-link">
         <asp:HyperLink ID="hlEnglish" runat="server">
             <asp:Image ID="imgEnglish" runat="server" ImageUrl="/images/in-english-white.gif" AlternateText="In English" />

@@ -50,6 +50,9 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool IsShareBookmarkAvailable { get; set; }
 
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool AltLanguage { get; set; }
+
         /// <summary>
         /// If true displays the order copy Page Option
         /// </summary>

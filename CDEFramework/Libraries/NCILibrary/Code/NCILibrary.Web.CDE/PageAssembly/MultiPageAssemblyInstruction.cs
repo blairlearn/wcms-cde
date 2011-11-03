@@ -64,77 +64,8 @@ namespace NCI.Web.CDE
             _pages = new MultiPageCollection();
             PageMetadata = new PageMetadata();
             _localFields = new LocalFieldCollection();
-            RegisterFieldFilters();
-            RegisterWebAnalyticsFieldFilters();
 
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, (name, data) =>
-            {
-                data.Value = GetField("short_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
-            });
-
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaDescription, (name, data) =>
-            {
-                string metaDescription = GetMetaDescription();
-                data.Value = metaDescription;
-            });
-
-            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, (name, data) =>
-            {
-                data.Value = GetField("meta_keywords");
-            });
-
-            //Register URL Filters
-            AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
-            AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
-
-            AddUrlFilter("CurrentURL", (name,url) =>
-                {
-                    url.SetUrl(GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString());
-                });
-
-
-            #region AddFilter For PageOptions
-            // URL Filter specifically for PageOptions
-            AddUrlFilter("Print", (name,url) =>
-            {
-                url.SetUrl(GetUrl("CurrentURL").ToString() + "/print");
-            });
-
-
-            AddUrlFilter("Email", (name,url) =>
-            {
-                url.SetUrl(GetEmailUrl());
-            });
-
-            AddUrlFilter("free", (name, url) =>
-            {
-                string freeCopyUrl = string.Empty;
-                if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
-                    freeCopyUrl = AlternateContentVersions.OrderCopyURL.Trim();
-                url.SetUrl(freeCopyUrl, true);
-            });
-
-            AddUrlFilter("ViewAll", (name, url) =>
-            {
-                string viewAllUrl = GetUrl("CurrentURL").ToString();
-                if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.ViewAll)
-                    viewAllUrl = viewAllUrl.Substring(0, viewAllUrl.LastIndexOf("/"));
-                url.SetUrl(viewAllUrl + "/AllPages");
-            });
-
-            AddUrlFilter("PrintAll", (name, url ) =>
-            {
-                url.SetUrl(GetUrl("ViewAll").ToString() + "/Print");
-            });
-            
-            #endregion
-
-            AddUrlFilter("PostBackURL", (name,url) =>
-            {
-                url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);
-            });
-
-            base.Initialize();
+            //base.Initialize();
         }
 
         #region Properties
@@ -295,17 +226,13 @@ namespace NCI.Web.CDE
         [System.Xml.Serialization.XmlArrayItem("SnippetInfo", Form = XmlSchemaForm.Unqualified)]
         public SnippetInfoCollection SnippetInfos
         {
-
             get { return _snippets; }
         }
-
-
 
         [System.Xml.Serialization.XmlArray(ElementName = "Pages", Form = XmlSchemaForm.Unqualified)]
         [System.Xml.Serialization.XmlArrayItem("Page", Form = XmlSchemaForm.Unqualified)]
         public MultiPageCollection Page
         {
-
             get { return _pages; }
         }
         /// <summary>
@@ -388,7 +315,6 @@ namespace NCI.Web.CDE
             }
         }
 
-
         [System.Xml.Serialization.XmlIgnore()]
         public IEnumerable<MultiPage> Pages
         {
@@ -401,7 +327,6 @@ namespace NCI.Web.CDE
                 return page;
             }
         }
-
 
         /// <summary>
         /// Determines whether the specified requested URL contains URL.
@@ -578,6 +503,30 @@ namespace NCI.Web.CDE
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
 
+                //Set AltLanguage Key
+                if (_currentPageIndex == -1)
+                {
+                    if (PageMetadata.AltLanguageURL != null)
+                    {
+                        if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.Trim()))
+                        {
+                            keysList.Add("altlanguage");
+                        }
+                    }
+                }
+                else
+                {
+                    if (_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL != null)
+                    {
+                        if (!string.IsNullOrEmpty(_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL.Trim()))
+                        {
+                            keysList.Add("altlanguage");
+                        }
+                    }
+                }
+                if (AlternateContentVersions.AltLanguage)
+                    keysList.Add("altlanguage");
+
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
                 {
@@ -626,94 +575,6 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public AlternateContentVersions AlternateContentVersions { get; set; }
 
-        private void FilterCurrentUrl(string name, NciUrl url)
-        {
-            //This should always be the first delegate for the CurrentUrl link type
-            //so we can just overwrite whatever has come before.
-            url.SetUrl(PrettyUrl);
-            //url.SetUrl(_pages._Pages[0].PrettyUrl);
-        }
-
-        /// <summary>
-        /// Canonical URL for the search engines.
-        /// </summary>
-        /// <param name="url">The URL.</param>
-        private void CanonicalUrl(string name, NciUrl url)
-        {
-            //This should always be the first delegate for the CurrentUrl link type
-            //so we can just overwrite whatever has come before.
-            url.SetUrl(GetUrl("PrettyUrl").ToString());
-
-        }
-
-
-        /// <summary>
-        /// Registers the field filters for the page requested.
-        /// </summary>
-        private void RegisterFieldFilters(int PageNum)
-        {
-            AddFieldFilter("page_short_title", (name, data) =>
-            {
-                data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
-            });
-        }
-
-        private void RegisterFieldFilters()
-        {
-            //Register Field Filters
-            AddFieldFilter("long_title", (name, data) =>
-            {
-                // data.Value = _pages._Pages[PageNum].PageMetadata.LongTitle;
-                data.Value = this.PageMetadata.LongTitle;
-            });
-
-
-            AddFieldFilter("short_title", (name, data) =>
-            {
-                //data.Value = _pages._Pages[PageNum].PageMetadata.ShortTitle;
-                data.Value = this.PageMetadata.ShortTitle;
-            });
-
-            AddFieldFilter("short_description", (name, data) =>
-            {
-                //data.Value = _pages._Pages[PageNum].PageMetadata.ShortDescription;
-                data.Value = this.PageMetadata.ShortDescription;
-            });
-
-            AddFieldFilter("long_description", (name, data) =>
-            {
-                //data.Value = _pages._Pages[PageNum].PageMetadata.LongDescription;
-                data.Value = this.PageMetadata.LongDescription;
-            });
-
-            AddFieldFilter("meta_description", (name, data) =>
-            {
-                //data.Value = _pages._Pages[PageNum].PageMetadata.MetaDescription;
-                data.Value = this.PageMetadata.MetaDescription;
-            });
-
-            AddFieldFilter("meta_keywords", (name, data) =>
-            {
-                //data.Value = _pages._Pages[PageNum].PageMetadata.MetaKeywords;
-                data.Value = this.PageMetadata.MetaKeywords;
-            });
-
-            //Register URL Filters
-            AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, new UrlFilterDelegate(FilterCurrentUrl));
-            AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, new UrlFilterDelegate(CanonicalUrl));
-
-            AddFieldFilter("channelName", (name, data) =>
-            {
-                data.Value = this.SectionPath;
-            });
-
-            AddFieldFilter("page_short_title", (name, data) =>
-            {
-                data.Value = this.PageMetadata.ShortTitle;
-            });
-
-        }
-
         /// <summary>
         /// Gets the meta description.
         /// </summary>
@@ -754,34 +615,6 @@ namespace NCI.Web.CDE
             get { return HttpContext.Current.Server; }
         }
 
-        //private string GetEmailUrl()
-        //{
-        //    string emailUrl = "";
-
-        //    string title = GetField("long_title");
-        //    title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
-
-        //    if ((Strings.Clean(PrettyUrl) != null) && (Strings.Clean(PrettyUrl) != ""))
-        //    {
-        //        emailUrl = "/common/popUps/PopEmail.aspx?title=" + title + "&docurl=" + System.Web.HttpUtility.UrlEncode(this.PrettyUrl.Replace("&", "__amp;")) + "&language=" + PageAssemblyContext.Current.PageAssemblyInstruction.Language;
-        //        emailUrl = emailUrl + HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + PrettyUrl);
-        //    }
-        //    return emailUrl;
-        //}
-
-        private void RegisterMarkupExtensionFieldFilters()
-        {
-            //Register Field Filters
-
-            foreach (LocalField localField in _localFields)
-            {
-                AddFieldFilter(localField.Name, (name,data) =>
-                {
-                    data.Value = _localFields[name].Value;
-                });
-            }
-        }
-
         /// <summary>
         /// Gets the page snippets.
         /// </summary>
@@ -797,16 +630,12 @@ namespace NCI.Web.CDE
                     tmpPageIndex = 0;
 
                 pageSnippets.AddRange(_pages._Pages[tmpPageIndex].SnippetInfos);
-                
-                //TODO: Do not register here, register as normal.
-                PrettyUrl = _pages._Pages[tmpPageIndex].PrettyUrl;
-                RegisterFieldFilters(tmpPageIndex);
+
             }
 
             return pageSnippets;
         }
-
-
+        
         /// <summary>
         /// Gets all page snippets.
         /// </summary>
@@ -819,47 +648,213 @@ namespace NCI.Web.CDE
             string requestedPage = URL.Substring(URL.LastIndexOf('/'));            
             for (int i = 0; i <= pageCount-1; i++)
             {
-                    pageSnippets.AddRange(_pages._Pages[i].SnippetInfos);
-                    if (requestedPage.Contains("page"))
-                    {
-                        //TODO: What is the purpose of this?  Since it will be rewritten over and over again.
-                        PrettyUrl = _pages._Pages[i].PrettyUrl;
-                    }
+                pageSnippets.AddRange(_pages._Pages[i].SnippetInfos);
             }
 
             return pageSnippets;
         }
-        public void Initialize()
-        {
 
-            RegisterMarkupExtensionFieldFilters();
+        public override void Initialize()
+        {
+            base.Initialize();
+            RegisterFieldFilters();
+            RegisterUrlFilters();
+            RegisterWebAnalyticsFieldFilters();
+        }
+
+        #region InitializeFunctions
+        
+        /// <summary>
+        /// Registers the field filters        
+        /// </summary> 
+        private void RegisterFieldFilters()
+        {
+            AddFieldFilter("long_title", (name, data) =>
+            {
+                data.Value = this.PageMetadata.LongTitle;
+            });
+            
+            AddFieldFilter("short_title", (name, data) =>
+            {
+                data.Value = this.PageMetadata.ShortTitle;
+            });
+
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, (name, data) =>
+            {
+                data.Value = GetField("short_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
+            });
+
+            AddFieldFilter("short_description", (name, data) =>
+            {
+                data.Value = this.PageMetadata.ShortDescription;
+            });
+
+            AddFieldFilter("long_description", (name, data) =>
+            {
+                data.Value = this.PageMetadata.LongDescription;
+            });
+
+            AddFieldFilter("meta_description", (name, data) =>
+            {
+                data.Value = this.PageMetadata.MetaDescription;
+            });
+
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaDescription, (name, data) =>
+            {
+                string metaDescription = GetMetaDescription();
+                data.Value = metaDescription;
+            });
+
+            AddFieldFilter("meta_keywords", (name, data) =>
+            {
+                data.Value = this.PageMetadata.MetaKeywords;
+            });
+
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, (name, data) =>
+            {
+                data.Value = GetField("meta_keywords");
+            });
+
+            AddFieldFilter("channelName", (name, data) =>
+            {
+                data.Value = this.SectionPath;
+            });
+
+            AddFieldFilter("page_short_title", (name, data) =>
+            {
+                int pageIndex = (_currentPageIndex == -1) ? 0 : _currentPageIndex;
+                data.Value = _pages._Pages[pageIndex].PageMetadata.ShortTitle;
+            });
+
+            //Register MarkupExtension Field Filters
+            foreach (LocalField localField in _localFields)
+            {
+                AddFieldFilter(localField.Name, (name, data) =>
+                {
+                    data.Value = _localFields[name].Value;
+                });
+            }
 
         }
-        #region Protected
+
+        /// <summary>
+        /// Registers the URL filters        
+        /// </summary> 
+        private void RegisterUrlFilters()
+        {
+
+            AddUrlFilter("CurrentURL", (name, url) =>
+            {
+                string currentURL = GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
+
+                if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
+                    currentURL += "/AllPages";
+                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
+                    currentURL += "/Print";
+                else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
+                    currentURL += "/AllPages/Print";
+
+                url.SetUrl(currentURL);
+
+            });
+
+            AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                url.SetUrl(GetUrl("CurrentURL").ToString());
+            });
+
+            AddUrlFilter(PageAssemblyInstructionUrls.PrettyUrl, (name, url) =>
+            {
+                int pageIndex = (_currentPageIndex == -1) ? 0 : _currentPageIndex;
+                //Set Property 
+                PrettyUrl = _pages._Pages[pageIndex].PrettyUrl;
+                url.SetUrl(PrettyUrl);
+            });
+
+            #region AltLanguageURL
+            // Alt Language URL filter 
+            if (_currentPageIndex == -1)
+            {
+                if (PageMetadata.AltLanguageURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.ToString().Trim()))
+                    {
+                        AddUrlFilter("AltLanguage", (name, url) =>
+                        {
+                            url.SetUrl(PageMetadata.AltLanguageURL);
+                        });
+                    }
+                }
+            }
+
+            else
+            {
+                if (_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL != null)
+                {
+                    if (!string.IsNullOrEmpty(_pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL.ToString().Trim()))
+                    {
+                        AddUrlFilter("AltLanguage", (name, url) =>
+                        {
+                            url.SetUrl(PageMetadata.AltLanguageURL + _pages._Pages[_currentPageIndex].PageMetadata.AltLanguageURL);
+                        });
+                    }
+                }
+            }
+            #endregion
+            
+            #region AddFilter For PageOptions
+            // URL Filter specifically for PageOptions
+
+            AddUrlFilter("Print", (name, url) =>
+            {
+                string printURL = GetUrl("CurrentURL").ToString();
+                if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.Print)
+                    printURL += "/print";
+                url.SetUrl(printURL);
+            });
+
+            AddUrlFilter("Email", (name, url) =>
+            {
+                url.SetUrl(GetEmailUrl());
+            });
+
+            AddUrlFilter("free", (name, url) =>
+            {
+                string freeCopyUrl = string.Empty;
+                if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
+                    freeCopyUrl = AlternateContentVersions.OrderCopyURL.Trim();
+                url.SetUrl(freeCopyUrl, true);
+            });
+
+            AddUrlFilter("ViewAll", (name, url) =>
+            {
+                string viewAllUrl = GetUrl("CurrentURL").ToString();
+                if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.ViewAll)
+                    //viewAllUrl = viewAllUrl.Substring(0, viewAllUrl.LastIndexOf("/")) + "/AllPages" ;
+                    viewAllUrl = viewAllUrl + "/AllPages";
+
+                url.SetUrl(viewAllUrl);
+            });
+
+            AddUrlFilter("PrintAll", (name, url) =>
+            {
+                url.SetUrl(GetUrl("ViewAll").ToString() + "/Print");
+            });
+
+            #endregion
+
+            //AddUrlFilter("PostBackURL", (name, url) =>
+            //{
+            //    url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);
+            //});
+        }
+
         /// <summary>
         /// Override this method to add any page specifc web analytics data points.
         /// </summary>
         protected override void RegisterWebAnalyticsFieldFilters()
         {
             base.RegisterWebAnalyticsFieldFilters();
-
-            SetWebAnalytics(WebAnalyticsOptions.Props.RootPrettyURL.ToString(), wbField =>
-            {
-                // This is  hack to fix the rooturl for web analytics. If  this content type is 
-                // rx:pdqCancerInfoSummary then remove the 'patient' or 'healthprofessional' from
-                // the pretty url
-                string prettyUrl = PrettyUrl.ToLower();
-                if (ContentItemInfo != null && ContentItemInfo.ContentItemType == "rx:pdqCancerInfoSummary")
-                {
-                    int verIndex = prettyUrl.LastIndexOf("/patient");
-                    if( verIndex == -1 )
-                        verIndex = prettyUrl.LastIndexOf("/healthprofessional");
-                    if (verIndex != -1)
-                        prettyUrl = prettyUrl.Substring(0, verIndex);
-                }
-
-                wbField.Value = prettyUrl;
-            });
 
             SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
             {
@@ -884,6 +879,9 @@ namespace NCI.Web.CDE
                 });
             }
         }
+        
         #endregion
     }
 }
+
+

@@ -11,13 +11,14 @@ using CancerGov.UI.CDR;
 using CancerGov.UI.PageObjects;
 using NCI.Logging;
 using NCI.Util;
+using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class ClinicalTrialsView : SearchBaseUserControl, ISupportingSnippet 
+    public partial class ClinicalTrialsView : SearchBaseUserControl, ISupportingSnippet
     {
 
         public string strContent = "";
@@ -55,7 +56,7 @@ namespace CancerGov.Web.SnippetTemplates
             string strVersion = "";
             bool hasProtocolSearchid = false;
 
-           
+
 
             ProtocolVersions pvVersion = ProtocolVersions.HealthProfessional;
             iProtocolID = Strings.ToInt(Request.Params["cdrid"]);
@@ -99,7 +100,7 @@ namespace CancerGov.Web.SnippetTemplates
                 this.RaiseErrorPage("Error:" + fetchError.Message);
             }
 
-            
+
             StringBuilder sbDate = new StringBuilder();
 
             if (pProtocol.ProtocolType == ProtocolTypes.Protocol)
@@ -107,9 +108,9 @@ namespace CancerGov.Web.SnippetTemplates
                 if (pProtocol.DateLastModified != new DateTime(0))
                 {
                     PageInstruction.AddFieldFilter("pvLastModified", (fieldName, data) =>
-                        {
-                            data.Value = pProtocol.DateLastModified.ToString("d");
-                        });
+                    {
+                        data.Value = pProtocol.DateLastModified.ToString("d");
+                    });
                 }
                 else
                 {
@@ -153,7 +154,7 @@ namespace CancerGov.Web.SnippetTemplates
                 sbPageUrl.Append(iProtocolSearchID.ToString());
             }
 
-           
+
             ProtocolRendererOptions renderOptions;
             string protocolSearchID;
             if ((protocolSearchID = Request.QueryString.Get("protocolsearchid")) != null)
@@ -251,8 +252,24 @@ namespace CancerGov.Web.SnippetTemplates
                     url.QueryParameters.Add(key, Request.QueryString[key]);
             });
 
-        }
+            this.PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                string localUrl = url.ToString();
 
+                if (iProtocolID > -1)
+                    localUrl += "?cdrid=" + iProtocolID;
+
+                if (pvVersion.ToString() != "")
+                    localUrl += "?version=" + pvVersion;
+
+                if (iProtocolSearchID > 0)
+                    localUrl += "?protocolsearchid=" + iProtocolSearchID;
+
+                url.SetUrl(localUrl);
+            });
+
+
+        }
 
         #region ISupportingSnippet Members
 

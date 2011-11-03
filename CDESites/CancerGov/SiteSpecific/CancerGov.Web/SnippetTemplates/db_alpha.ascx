@@ -34,13 +34,9 @@
 <form name="aspnetForm" method="post" action="/dictionary/" id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);"
 runat="server">
 <a name="top"></a>
-<!--<div style="margin-right: auto;margin-left: auto; width: 571px;">-->
-<table width="571" cellspacing="0" cellpadding="0" border="0">
+<!--<div style="margin-right: auto;margin-left: auto;">-->
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
     <tr>
-        <!-- Left Nav Column -->
-        <td id="leftzone" valign="top">
-            <asp:Literal ID="litPageLeftColumn" runat="server"></asp:Literal>
-        </td>
         <!-- Main content of page -->
         <td id="contentzone" valign="top" width="100%">
             <a name="skiptocontent"></a>
@@ -173,7 +169,7 @@ runat="server">
                 </asp:View>
                 <asp:View ID="ViewResultList" runat="server" EnableViewState="false">
                     <!-- Number of results -->
-                    <asp:Panel ID="numResDiv" runat="server">
+                    <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
                         <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
                         <span class="page-title">
                             <asp:Label ID="lblNumResults" CssClass="page-title" runat="server"></asp:Label>

@@ -1115,6 +1115,11 @@
           <documentation>A description for a Page Assembly Instruction which will be used for a HTML keywords meta tag.</documentation>
         </annotation>
       </element>
+      <element name="AltLanguageURL" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A description for a Page Assembly Instruction which will be used for a HTML keywords meta tag.</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1618,6 +1623,15 @@
           </documentation>
         </annotation>
       </element>
+      <element name="AltLanguage" type="string"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Language alternate Version of the page .
+          </documentation>
+        </annotation>
+      </element>
+
       <element name="Files" maxOccurs="1" minOccurs="1">
         <annotation>
           <documentation>A collection of zero or more files which are alternate content versions of this Page Assembly Instruction.  The MimeTypes of this collection should be unique. E.G. Only 1 PDF, Only 1 PPT.</documentation>

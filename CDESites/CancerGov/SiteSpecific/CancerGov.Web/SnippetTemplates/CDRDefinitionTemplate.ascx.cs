@@ -35,10 +35,14 @@ namespace CancerGov.Web.SnippetTemplates
                     if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
                     {
                         language = "English";
+                        moreLink.InnerText = "More";
+
                     }
                     else
                     {
                         language = "Spanish";
+                        moreLink.InnerHtml = "M&aacute;s";
+
                     }
 
 
@@ -53,12 +57,28 @@ namespace CancerGov.Web.SnippetTemplates
                     if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
                     {
                         definitionText = "<strong>Definition of " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                        if (mPBO.charLimit > 0)
+                        {
+                            moreLink.Visible = true;
+                            spDefinitionTextMore.InnerHtml = definitionText;
+                            definitionText = definitionText.Substring(0, mPBO.charLimit);
+
+                        }
                     }
                     else
                     {
                         definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                        if (mPBO.charLimit > 0)
+                        {
+                            moreLink.Visible = true;
+                            spDefinitionTextMore.InnerHtml = definitionText;
+                            definitionText = definitionText.Substring(0, mPBO.charLimit);
+
+                        }                       
 
                     }
+
+                   
                 }
                 catch(Exception ex)
                 {

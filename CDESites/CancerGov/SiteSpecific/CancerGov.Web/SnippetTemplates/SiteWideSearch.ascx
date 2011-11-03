@@ -10,13 +10,13 @@
 
 	<!-- Main Area -->
 	<div>
-		<table width="571" cellspacing="0" cellpadding="0" border="0">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
 			<tr>		
 				<td valign="top">
 				<!-- a href="#Content"><img src="/images/spacer.gif" width="1" height="1" alt="skip to content" border="0"></a -->
 				<img src="/images/spacer.gif" width="9" height="1" alt="" border="0"></td>
 				<!-- Main Content Area -->
-				<td id="contentzone" valign="top" width="571">
+				<td id="contentzone" valign="top" width="100%">
 				   <a name="skiptocontent"></a>
                     <form id="resultForm" runat="server">
                         <cc1:JavascriptProbeControl ID="jsProbe" runat="server" />

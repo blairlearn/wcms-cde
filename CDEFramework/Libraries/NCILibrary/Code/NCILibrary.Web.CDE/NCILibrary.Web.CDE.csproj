@@ -81,6 +81,7 @@
     <Compile Include="HttpModules\Utility.cs" />
     <Compile Include="Modules\ContentSearchList.cs" />
     <Compile Include="Modules\DictionaryURL.cs" />
+    <Compile Include="Modules\DockTitleBlock.cs" />
     <Compile Include="Modules\DynamicList.cs" />
     <Compile Include="Modules\DynamicSearchResult.cs" />
     <Compile Include="Modules\ModuleObjectFactory.cs" />

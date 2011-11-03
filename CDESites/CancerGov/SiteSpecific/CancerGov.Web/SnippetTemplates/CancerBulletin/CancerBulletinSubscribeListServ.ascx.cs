@@ -150,7 +150,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 else
                 {
                     divSubscribe.Visible = true;
-                    lblMessage.Text = "To begin your free subscription to the <i>NCI Cancer Bulletin</i>, enter your e-mail address below:";
+                    lblMessage.Text = "To begin your free subscription to the <i>NCI Cancer Bulletin</i>, enter your e-mail address:";
                 }
             }
 

@@ -172,7 +172,7 @@ namespace Www.Templates
             }
 
             SetupPageUrl();
-            SetupPrintUrl();
+            SetupUrlFilters();
 
             // base URL for the A-Z links
             btnGo.PostBackUrl = DictionaryURL;
@@ -408,10 +408,10 @@ namespace Www.Templates
             StringBuilder htmlText = new StringBuilder();
             string strMetaText = string.Empty;
 
-            int width = 571; //for non-print width
+            string width = "100%"; //for non-print width
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
             {
-                width = 630; //for print width
+                width = "100%"; //for print width
             }
 
             if (dataItem.DisplayNames.Count > 0)
@@ -634,12 +634,21 @@ namespace Www.Templates
 
         }
 
-        private void SetupPrintUrl()
+        private void SetupUrlFilters()
         {
-            //PagePrintUrl = PageUrl + "&page=" + CurrentPageIndex + "&print=1";
             PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url ) =>
             {
                 url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
+            });
+
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                if (CdrID != "")
+                    url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
+                else if (Expand != "")
+                    url.SetUrl(url.ToString() + "?expland=" + Expand);
+                else
+                    url.SetUrl(url.ToString());
             });
 
         }

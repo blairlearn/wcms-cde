@@ -152,7 +152,7 @@ function showInstitutionList() {
 // When the institution list button is clicked, pop up the selection dialog.
 // The list is only expanded if values are selected.
 function InstitutionListButtonClickHandler(event) {
-    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.institution + '&fld=institution&title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');
+    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.institution + '&fld=institution&title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=621px,menubar=no,resizable=no,location=no,height=580px');
     Event.stop(event);
 }
 
@@ -196,7 +196,7 @@ function InitializeDrugListSubBox() {
 // When the drug list button is clicked, pop up the selection dialog.
 // The list is only expanded if values are selected.
 function DrugListButtonClickHandler(event) {
-    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.drug + '&fld=drug&title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');
+    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.drug + '&fld=drug&title=Find+Drug', 'DrugLookup', 'width=621px,menubar=no,resizable=no,location=no,height=580px');
     Event.stop(event);
 }
 
@@ -226,7 +226,7 @@ function InitializeInterventionListSubBox() {
 // When the intervention list button is clicked, pop up the selection dialog.
 // The list is only expanded if values are selected.
 function InterventionListButtonClickHandler(event) {
-    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.intervention + '&fld=intervention&title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');
+    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.intervention + '&fld=intervention&title=Treatment/Intervention', 'InterventionLookup', 'width=621px,menubar=no,resizable=no,location=no,height=580px');
     Event.stop(event);
 }
 
@@ -281,7 +281,7 @@ function InitializeInvestigatorListSubBox() {
 // When the investigator list button is clicked, pop up the selection dialog.
 // The list is only expanded if values are selected.
 function InvestigatorListButtonClickHandler(event) {
-    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.investigator + '&fld=investigator&title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');
+    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.investigator + '&fld=investigator&title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=621px,menubar=no,resizable=no,location=no,height=580px');
     Event.stop(event);
 }
 
@@ -307,7 +307,7 @@ function InitializeLeadOrgListSubBox() {
 // When the leading organization list button is clicked, pop up the selection dialog.
 // The list is only expanded if values are selected.
 function LeadOrgListButtonClickHandler(event) {
-    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.leadOrg + '&fld=leadOrg&title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');
+    dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=' + ids.leadOrg + '&fld=leadOrg&title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=700px,menubar=no,resizable=no,location=no,height=580px');
     Event.stop(event);
 }
 
