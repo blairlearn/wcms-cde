@@ -77,6 +77,44 @@
     <None Include="Schema\CDESchema.xsd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
+      <Project>{F4C37116-861A-4FD6-B45D-578B258FEFC7}</Project>
+      <Name>NCILibrary.DataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
+      <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>
+      <Name>NCILibrary.Search.Endeca</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\NCILibrary.Search.csproj">
+      <Project>{8962B50C-E3A9-4F0A-9E48-7008C40247CD}</Project>
+      <Name>NCILibrary.Search</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.TestingTools\NCILibrary.TestingTools.csproj">
+      <Project>{364BC997-48F1-450A-9751-8252FD5EBD78}</Project>
+      <Name>NCILibrary.TestingTools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
+      <Project>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</Project>
+      <Name>NCILibrary.Web.CDE.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
+      <Project>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</Project>
+      <Name>NCILibrary.Web.CDE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.Icons\NCILibrary.Web.UI.Icons.csproj">
+      <Project>{8F039727-466F-4BE5-95A3-7CB85B2638C1}</Project>
+      <Name>NCILibrary.Web.UI.Icons</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
+      <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
+      <Name>NCILibrary.Web.UI.WebControls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
