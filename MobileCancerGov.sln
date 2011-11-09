@@ -1,0 +1,87 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileCancerGov.Web", "CDESites\MobileCancerGov\MobileCancerGov.Web.csproj", "{85C3C6DF-ED06-4BE2-AC85-67E8F3FCF9CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NCILibrary", "NCILibrary", "{CB1681E6-ADC5-4785-A733-610815AB62FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Core", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj", "{898FF17C-C94A-4D85-8AAD-88764B72CFAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.CDE", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj", "{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.CDE.UI", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj", "{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.UI.Icons", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.Icons\NCILibrary.Web.UI.Icons.csproj", "{8F039727-466F-4BE5-95A3-7CB85B2638C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.UI.WebControls", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj", "{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Search", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\NCILibrary.Search.csproj", "{8962B50C-E3A9-4F0A-9E48-7008C40247CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Search.Endeca", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj", "{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.DataManager", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.DataManager\NCILibrary.DataManager.csproj", "{F4C37116-861A-4FD6-B45D-578B258FEFC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.TestingTools", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.TestingTools\NCILibrary.TestingTools.csproj", "{364BC997-48F1-450A-9751-8252FD5EBD78}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{85C3C6DF-ED06-4BE2-AC85-67E8F3FCF9CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85C3C6DF-ED06-4BE2-AC85-67E8F3FCF9CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85C3C6DF-ED06-4BE2-AC85-67E8F3FCF9CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85C3C6DF-ED06-4BE2-AC85-67E8F3FCF9CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{364BC997-48F1-450A-9751-8252FD5EBD78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{364BC997-48F1-450A-9751-8252FD5EBD78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{364BC997-48F1-450A-9751-8252FD5EBD78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{364BC997-48F1-450A-9751-8252FD5EBD78}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{898FF17C-C94A-4D85-8AAD-88764B72CFAE} = {CB1681E6-ADC5-4785-A733-610815AB62FA}
+		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF} = {CB1681E6-ADC5-4785-A733-610815AB62FA}
+		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD} = {CB1681E6-ADC5-4785-A733-610815AB62FA}
+		{8F039727-466F-4BE5-95A3-7CB85B2638C1} = {CB1681E6-ADC5-4785-A733-610815AB62FA}
+		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6} = {CB1681E6-ADC5-4785-A733-610815AB62FA}
+		{8962B50C-E3A9-4F0A-9E48-7008C40247CD} = {CB1681E6-ADC5-4785-A733-610815AB62FA}
+		{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26} = {CB1681E6-ADC5-4785-A733-610815AB62FA}
+		{F4C37116-861A-4FD6-B45D-578B258FEFC7} = {CB1681E6-ADC5-4785-A733-610815AB62FA}
+		{364BC997-48F1-450A-9751-8252FD5EBD78} = {CB1681E6-ADC5-4785-A733-610815AB62FA}
+	EndGlobalSection
+EndGlobal
