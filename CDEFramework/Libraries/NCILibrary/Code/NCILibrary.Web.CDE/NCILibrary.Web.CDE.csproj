@@ -55,6 +55,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CapabilitiesDetection\WURFL_Wrapper.cs" />
     <Compile Include="Configuration\canonicalHostNameElement.cs" />
     <Compile Include="Configuration\CanonicalHostNameInformationElement.cs" />
     <Compile Include="Configuration\ContentDeliveryEngineConfig.cs" />
@@ -172,7 +173,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CapabilitiesDetection\" />
+    <Folder Include="CapabilitiesDetection\App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
