@@ -53,8 +53,13 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="WURFL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdPartyDlls\WURFL\WURFL.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CapabilitiesDetection\WurflLoader.cs" />
     <Compile Include="CapabilitiesDetection\WURFL_Wrapper.cs" />
     <Compile Include="Configuration\canonicalHostNameElement.cs" />
     <Compile Include="Configuration\CanonicalHostNameInformationElement.cs" />
