@@ -1,7 +1,18 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Text;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Xml.Linq;
+using WURFL;
+using Wurfl.AspNet.DeviceBrowser.Helpers;
+
 
 namespace NCI.Web.CDE.CapabilitiesDetection
 {
