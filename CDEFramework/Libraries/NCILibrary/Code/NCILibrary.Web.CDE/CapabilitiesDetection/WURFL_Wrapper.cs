@@ -18,7 +18,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
 {
     public class WURFL_Wrapper
     {
-       private WurflLoader _WurflLoader = new WurflLoader();
+        private WurflLoader _WurflLoader = new WurflLoader();
         private WURFL.IDevice _device = null;
         private Dictionary<string, string> _capabilityDictionary = null;
         private bool _loaded = false;
@@ -49,7 +49,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
             if (_loaded)
             {
                 if (_capabilityDictionary.ContainsKey(property))
-                    return _capabilityDictionary[property];
+                    return _capabilityDictionary[property].Trim().ToLower();
                 else
                     return null;
             }
