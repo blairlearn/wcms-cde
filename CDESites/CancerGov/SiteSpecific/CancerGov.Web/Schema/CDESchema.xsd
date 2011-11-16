@@ -733,7 +733,22 @@
           </documentation>
         </annotation>
       </element>
-      <element name="PageMetadata" type="cde:pageMetadata"
+      <element name="MobileURL" type="cde:path" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            The url path of a page's mobile or desktop 
+            equivalent page.  If the page represented by
+            this item is a mobile page, then the url in
+            this element will represent the desktop url for
+            that page (and vice versa).
+            
+            The CDE uses this information for redirects
+            to the mobile version of a page, if the request
+            comes in from a mobile device.
+          </documentation>
+        </annotation>
+      </element>
+        <element name="PageMetadata" type="cde:pageMetadata"
         minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>
