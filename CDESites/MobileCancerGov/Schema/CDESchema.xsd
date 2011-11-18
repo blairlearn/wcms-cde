@@ -733,6 +733,28 @@
           </documentation>
         </annotation>
       </element>
+      <element name="MobileURL" type="cde:path" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            The url path of a page's mobile equivalent.
+
+            The CDE uses this information for redirects
+            to the mobile version of a page, if the request
+            comes in from a mobile device.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="DesktopURL" type="cde:path" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            The url path of a page's desktop equivalent.
+
+            The CDE uses this information for redirects
+            to the mobile version of a page, if the request
+            comes in from a mobile device.
+          </documentation>
+        </annotation>
+      </element>
       <element name="PageMetadata" type="cde:pageMetadata"
         minOccurs="1" maxOccurs="1">
         <annotation>
@@ -1111,6 +1133,11 @@
         </annotation>
       </element>
       <element name="MetaKeywords" type="string" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>A description for a Page Assembly Instruction which will be used for a HTML keywords meta tag.</documentation>
+        </annotation>
+      </element>
+      <element name="AltLanguageURL" type="string" minOccurs="0" maxOccurs="1">
         <annotation>
           <documentation>A description for a Page Assembly Instruction which will be used for a HTML keywords meta tag.</documentation>
         </annotation>
@@ -1618,6 +1645,15 @@
           </documentation>
         </annotation>
       </element>
+      <element name="AltLanguage" type="string"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Language alternate Version of the page .
+          </documentation>
+        </annotation>
+      </element>
+
       <element name="Files" maxOccurs="1" minOccurs="1">
         <annotation>
           <documentation>A collection of zero or more files which are alternate content versions of this Page Assembly Instruction.  The MimeTypes of this collection should be unique. E.G. Only 1 PDF, Only 1 PPT.</documentation>
