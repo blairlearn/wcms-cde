@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using WURFL;
 using Wurfl.AspNet.DeviceBrowser.Helpers;
 
+
 namespace NCI.Web.CDE.CapabilitiesDetection
 {
     public class CapablitiesDetector
@@ -25,24 +26,16 @@ namespace NCI.Web.CDE.CapabilitiesDetection
 
         //Properties 
         public bool IsDeskTop { get { return _isDeskTop; } }
-        public bool IsTable { get { return _isTablet; } }
+        public bool IsTablet { get { return _isTablet; } }
         public bool IsAdvancedMobile { get { return _isAdvancedMobile; } }
         public bool IsBasicMobile { get { return _isBasicMobile; } }
         public int Height { get { return _height; } }
         public int Width { get { return _width; } }
 
-        public void Detect(HttpRequest request)
+        public CapablitiesDetector()
         {
-            //Reset values
-            _isDeskTop = false;
-            _isTablet = false;
-            _isAdvancedMobile = false;
-            _isBasicMobile = false;
-            _height = -1;
-            _width = -1;
-
             WURFL_Wrapper wurfl = new WURFL_Wrapper();
-            wurfl.DetectCapabilities(request);
+            wurfl.DetectCapabilities(HttpContext.Current.Request);
 
             _height = Convert.ToInt32(wurfl.GetCapability("physical_screen_height"));
             _width = Convert.ToInt32(wurfl.GetCapability("physical_screen_width"));
@@ -53,7 +46,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
                 if (wurfl.GetCapability("is_tablet") == "true")
                     _isTablet = true;
                 else if ((wurfl.GetCapability("ajax_support_javascript") == "true")&&
-                        Convert.ToInt32((wurfl.GetCapability("xhtml_support_level")) > 3))
+                        Convert.ToInt32(wurfl.GetCapability("xhtml_support_level")) > 3)
                     _isAdvancedMobile = true;
                 else
                     _isBasicMobile = true;

@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CapabilitiesDetection\CapablitiesDetector.cs" />
+    <Compile Include="CapabilitiesDetection\DisplayDeviceDetector.cs" />
     <Compile Include="CapabilitiesDetection\WurflLoader.cs" />
     <Compile Include="CapabilitiesDetection\WURFL_Wrapper.cs" />
     <Compile Include="Configuration\canonicalHostNameElement.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="HttpHandlers\FormEmailerHandler.cs" />
     <Compile Include="HttpHandlers\ListservSubscriptionHandler.cs" />
     <Compile Include="HttpModules\FileInstructionLoader.cs" />
+    <Compile Include="HttpModules\MobileRedirect.cs" />
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
     <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />
