@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using NCI.Web.CDE.Configuration;
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Util;
 using NCI.Core;
 
@@ -343,6 +344,20 @@ namespace NCI.Web.CDE
                         keysList.Add("altlanguage");
                     }
                 }
+                if (PageMetadata.MobileURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.MobileURL.Trim()))
+                    {
+                        keysList.Add("mobileurl");
+                    }
+                }
+                if (PageMetadata.DesktopURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.DesktopURL.Trim()))
+                    {
+                        keysList.Add("desktopurl");
+                    }
+                }
 
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
@@ -631,6 +646,26 @@ namespace NCI.Web.CDE
                     AddUrlFilter("AltLanguage", (name, url) =>
                     {
                         url.SetUrl(PageMetadata.AltLanguageURL);
+                    });
+                }
+            }
+            if (PageMetadata.DesktopURL != null)
+            {
+                if (!string.IsNullOrEmpty(PageMetadata.DesktopURL))
+                {
+                    AddUrlFilter("DeskTopUrl", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.DesktopURL, true);
+                    });
+                }
+            }
+            if (PageMetadata.MobileURL != null)
+            {
+                if (!string.IsNullOrEmpty(PageMetadata.MobileURL))
+                {
+                    AddUrlFilter("MobileUrl", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.MobileURL,true);
                     });
                 }
             }

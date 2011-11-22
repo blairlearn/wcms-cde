@@ -733,28 +733,6 @@
           </documentation>
         </annotation>
       </element>
-      <element name="MobileURL" type="cde:path" minOccurs="0" maxOccurs="1">
-        <annotation>
-          <documentation>
-            The url path of a page's mobile equivalent.
-            
-            The CDE uses this information for redirects
-            to the mobile version of a page, if the request
-            comes in from a mobile device.
-          </documentation>
-        </annotation>
-      </element>
-      <element name="DesktopURL" type="cde:path" minOccurs="0" maxOccurs="1">
-        <annotation>
-          <documentation>
-            The url path of a page's desktop equivalent.
-
-            The CDE uses this information for redirects
-            to the mobile version of a page, if the request
-            comes in from a mobile device.
-          </documentation>
-        </annotation>
-      </element>
       <element name="PageMetadata" type="cde:pageMetadata"
         minOccurs="1" maxOccurs="1">
         <annotation>
@@ -1140,6 +1118,16 @@
       <element name="AltLanguageURL" type="string" minOccurs="0" maxOccurs="1">
         <annotation>
           <documentation>A description for a Page Assembly Instruction which will be used for a HTML keywords meta tag.</documentation>
+        </annotation>
+      </element>
+      <element name="MobileURL" type="cde:path" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The url path of a page's mobile equivalent.</documentation>
+        </annotation>
+      </element>
+      <element name="DesktopURL" type="cde:path" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The url path of a page's desktop equivalent.</documentation>
         </annotation>
       </element>
     </all>
@@ -1529,10 +1517,10 @@
     <attribute name="Media" type="string">
       <annotation>
         <documentation>The media to which the style should be applied.</documentation>
-      </annotation> 
+      </annotation>
     </attribute>
   </complexType>
-  
+
   <complexType name="JavascriptInfo">
     <annotation>
       <documentation>Represents a Stylesheet for a page template for use by the CDE.</documentation>

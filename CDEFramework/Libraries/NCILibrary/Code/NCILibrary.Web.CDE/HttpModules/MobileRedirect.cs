@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Configuration;
 using System.IO;
 using NCI.Web.CDE.Configuration;
+using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Logging;
 using System.Reflection;
 
@@ -12,9 +13,6 @@ namespace NCI.Web.CDE
     public class MobileRedirect : IHttpModule
     {
         private static readonly object REQUEST_URL_KEY = new object();
-
-        private static bool tog = true;
-
 
         /// <summary>
         /// You will need to configure this module in the web.config file of your
@@ -41,27 +39,30 @@ namespace NCI.Web.CDE
 
         void OnBeginRequest(object sender, EventArgs e)
         {
-               
 
-            HttpContext context = ((HttpApplication)sender).Context;
-
-            // Get absolute path of the request URL as pretty URL
-            String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
-
-
-            if (Utility.IgnoreWebResource(url))
-                return;
-
-            if (tog)
+            if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
             {
-                tog = false;
-              
-                //context.Response.Redirect("http://www.ibm.com", true);
+               
+                // if mobile device and mobile url exist, redirect to it
+                if( (DisplayDeviceDetector.DisplayDevice == DisplayDevices.BasicMobile) ||
+                    (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile) )
+                 {
+
+                    HttpContext context = ((HttpApplication)sender).Context;
+                    string[] alternateContentVersionsKeys;
+                    //NciUrl mUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");
+
+                    alternateContentVersionsKeys = PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys;
+
+                    if (Array.Find(alternateContentVersionsKeys,
+                                    element => element.StartsWith("mobileurl", StringComparison.Ordinal)) == "mobileurl")
+                    {
+
+                        NciUrl mobileUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");
+                        context.Response.Redirect(mobileUrl.ToString(), true);
+                    }
+                }
             }
-
-            // context.Response.Redirect(url, true);
-            string s = "";
-
        }
 
         void OnLogRequest(object sender, EventArgs e)

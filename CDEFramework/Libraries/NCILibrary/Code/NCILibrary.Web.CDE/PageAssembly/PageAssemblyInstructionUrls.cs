@@ -24,5 +24,9 @@ namespace NCI.Web.CDE
 
         public static readonly string AltLanguage = "AltLanguage ";
 
+        public static readonly string DesktopUrl = "DeskopUrl ";
+        
+        public static readonly string MobileUrl = "MobileUrl ";
+
     }
 }
