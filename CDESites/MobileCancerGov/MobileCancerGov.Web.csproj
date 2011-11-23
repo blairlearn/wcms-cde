@@ -53,11 +53,14 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AutoSuggestSeach.svc" />
     <Content Include="Default.aspx" />
+    <Content Include="DrugDictionary.svc" />
     <Content Include="Global.asax" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
+    <Content Include="TermDictionary.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
