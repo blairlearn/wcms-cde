@@ -2,6 +2,7 @@
 using System.Data;
 using System.Configuration;
 using System.Linq;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -23,6 +24,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
         private bool _isBasicMobile = false;
         private int _height = -1;
         private int _width = -1;
+        private Dictionary<string, string> _capabilitiesList = null;
 
         //Properties 
         public bool IsDeskTop { get { return _isDeskTop; } }
@@ -31,11 +33,14 @@ namespace NCI.Web.CDE.CapabilitiesDetection
         public bool IsBasicMobile { get { return _isBasicMobile; } }
         public int Height { get { return _height; } }
         public int Width { get { return _width; } }
+        public Dictionary<string, string> CapabilitiesList { get { return _capabilitiesList; } }
 
         public CapablitiesDetector()
         {
             WURFL_Wrapper wurfl = new WURFL_Wrapper();
             wurfl.DetectCapabilities(HttpContext.Current.Request);
+
+            _capabilitiesList = wurfl.GetCapabilitiesDictionary();
 
             _height = Convert.ToInt32(wurfl.GetCapability("physical_screen_height"));
             _width = Convert.ToInt32(wurfl.GetCapability("physical_screen_width"));

@@ -84,6 +84,7 @@
     <Compile Include="HttpHandlers\ListservSubscriptionHandler.cs" />
     <Compile Include="HttpModules\FileInstructionLoader.cs" />
     <Compile Include="HttpModules\MobileRedirect.cs" />
+    <Compile Include="HttpModules\MobileRedirectUnmanagedUrl.cs" />
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
     <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />

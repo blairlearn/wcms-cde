@@ -25,5 +25,31 @@ namespace NCI.Web.CDE.CapabilitiesDetection
 
             } 
         }
+        public static string DisplayDeviceString
+        {
+            get
+            {
+                CapablitiesDetector detecto = new CapablitiesDetector();
+
+                if (detecto.IsTablet)
+                    return "Tablet";
+                else if (detecto.IsAdvancedMobile)
+                    return "AdvancedMobile";
+                else if (detecto.IsBasicMobile)
+                    return "BasicMobile";
+                else
+                    return "Decktop";
+
+
+            }
+        }
+        public static Dictionary<string, string> DisplayDeviceCapabilitiesList
+        {
+            get
+            {
+                CapablitiesDetector detecto = new CapablitiesDetector();
+                return detecto.CapabilitiesList;
+            }
+        }
     }
 }

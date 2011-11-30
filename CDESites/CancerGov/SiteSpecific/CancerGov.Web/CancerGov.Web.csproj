@@ -568,6 +568,7 @@
     <Content Include="JS\NetTracker\ntpagetag.js" />
     <Content Include="JS\Search\CDEResultsClinicalTrials.js" />
     <Content Include="JS\Search\CDESearchClinicalTrials.js" />
+    <Content Include="MobileTester.aspx" />
     <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate-NoLeftNav.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
