@@ -1630,7 +1630,7 @@
         <annotation>
           <documentation>
             Defines if this Page Assembly Instruction can be
-            shared.
+            shared on a mobile browser.
           </documentation>
         </annotation>
       </element>
