@@ -20,13 +20,13 @@ namespace NCI.Web.CDE
         ///URLs. Any secondary URL's Canonical URL is a pretty URL. This property returns the 
         ///Pretty URL as the normalized URL.
         /// </summary>
-        public static readonly string CanonicalUrl = "CanonicalUrl ";
+        public static readonly string CanonicalUrl = "CanonicalUrl";
 
-        public static readonly string AltLanguage = "AltLanguage ";
+        public static readonly string AltLanguage = "AltLanguage";
 
-        public static readonly string DesktopUrl = "DeskopUrl ";
+        public static readonly string DesktopUrl = "DeskopUrl";
         
-        public static readonly string MobileUrl = "MobileUrl ";
+        public static readonly string MobileUrl = "MobileUrl";
 
     }
 }

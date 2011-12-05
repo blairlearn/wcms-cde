@@ -14,6 +14,8 @@ namespace NCI.Web.CDE
 {
     public class InformationRequestModuleAndHandler : IHttpModule, IHttpHandler
     {
+        //This functions as both http Module and Handler for information request 
+
         readonly string InformationRequestToken = "Information__Request";
 
         #region IHttpModule Members

@@ -20,6 +20,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
     {
         private WurflLoader _WurflLoader = new WurflLoader();
         private WURFL.IDevice _device = null;
+        private IWURFLManager _manager = null;
         private Dictionary<string, string> _capabilityDictionary = null;
         private bool _loaded = false;
         private HttpRequest _httpRequest = null;
@@ -31,7 +32,10 @@ namespace NCI.Web.CDE.CapabilitiesDetection
 
         public bool DetectCapabilities(HttpRequest httpRequest)
         {
-            if ((_device = WurflLoader.GetManager().GetDeviceForRequest(httpRequest)) != null)
+            _manager = WurflLoader.GetManager();
+            _device = _manager.GetDeviceForRequest(httpRequest);
+
+            if (_device  != null)
             {
                 _capabilityDictionary = new Dictionary<string, string>(_device.GetCapabilities());
 
