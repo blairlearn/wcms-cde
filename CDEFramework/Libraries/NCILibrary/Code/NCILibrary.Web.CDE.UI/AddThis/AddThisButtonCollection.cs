@@ -17,12 +17,21 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
             typeof(AddThisButtonItem)
         };
 
+        private StateBag _statebag;
+        protected StateBag ViewState
+        {
+            get
+            {
+                return this._statebag;
+            }
+        }
+
         private string _language;
         public string Language
         {
             get
             {
-                return (string)((IStateManager)this).ViewState["Language"] ?? string.Empty;
+                return (string)this.ViewState["Language"] ?? string.Empty;
             }
             set
             {
@@ -150,54 +159,5 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
                 this.ButtonItemCollectionChanged(this, EventArgs.Empty);
             }
         }
-
-
- 
-
-        #region IStateManager Members
-
-        /// <summary>
-        /// When implemented by a class, gets a value indicating whether a server control is tracking its view state changes.
-        /// </summary>
-        /// <value></value>
-        /// <returns>true if a server control is tracking its view state changes; otherwise, false.
-        /// </returns>
-        public bool IsTrackingViewState
-        {
-            get { return this._trackViewState; }
-        }
-
-        /// <summary>
-        /// When implemented by a class, loads the server control's previously saved view state to the control.
-        /// </summary>
-        /// <param name="state">An <see cref="T:System.Object"/> that contains the saved view state values for the control.</param>
-        void IStateManager.LoadViewState(object state)
-        {
-            this.LoadViewState(state);
-        }
-
-        /// <summary>
-        /// When implemented by a class, saves the changes to a server control's view state to an <see cref="T:System.Object"/>.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="T:System.Object"/> that contains the view state changes.
-        /// </returns>
-        object IStateManager.SaveViewState()
-        {
-            return this.SaveViewState();
-        }
-
-        /// <summary>
-        /// When implemented by a class, instructs the server control to track changes to its view state.
-        /// </summary>
-        void IStateManager.TrackViewState()
-        {
-            this.TrackViewState();
-        }
-
-        #endregion
-
-        
-
     }
 }

@@ -38,7 +38,7 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
             AddThisLanguageCollection languageItems = new AddThisLanguageCollection();
             foreach (AddThisButtonCollection buttonCollection in this)
             {
-                languageItems.Add(buttonCollection.CloneAddThisButtonItems());
+                languageItems.Add(buttonCollection);
             }
             return languageItems;
         }
@@ -94,7 +94,7 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
             AddThisButtonCollection buttonItem = value as AddThisButtonCollection;
             if (buttonItem != null)
             {
-                buttonItem.ItemsChanged += new EventHandler(this.LanguageCollectionChanged);
+                buttonItem.ButtonItemCollectionChanged += new EventHandler(this.LanguageCollectionChanged);
             }
 
             this.OnLanguageCollectionChanged();

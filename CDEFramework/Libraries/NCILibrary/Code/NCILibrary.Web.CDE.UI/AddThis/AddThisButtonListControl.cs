@@ -58,7 +58,7 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
             //Check the page data.
             foreach (AddThisButtonCollection items in _itemsCollection )
             {
-                foreach (AddThisButtonItem button in items.ButtonCollection)
+                foreach (AddThisButtonItem button in items)
                 {
                     writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_button_" + button.Service);
                     writer.RenderBeginTag(HtmlTextWriterTag.A);
