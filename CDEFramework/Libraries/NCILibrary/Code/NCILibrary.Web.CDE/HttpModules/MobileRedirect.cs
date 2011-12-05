@@ -40,6 +40,7 @@ namespace NCI.Web.CDE
         void OnBeginRequest(object sender, EventArgs e)
         {
             bool doRedirect = false;
+            HttpContext context = ((HttpApplication)sender).Context;
 
             // if page assembly instructions are loaded
             if (PageAssemblyContext.Current.PageAssemblyInstruction != null) 
@@ -51,7 +52,6 @@ namespace NCI.Web.CDE
                 //    (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile) )
                  {
 
-                    HttpContext context = ((HttpApplication)sender).Context;
                     string[] alternateContentVersionsKeys;
                     //NciUrl mUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");
 
