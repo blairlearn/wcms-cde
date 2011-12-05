@@ -50,6 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddThis\AddThisButton.cs" />
+    <Compile Include="AddThis\AddThisButtonCollection.cs" />
+    <Compile Include="AddThis\AddThisButtonItems.cs" />
+    <Compile Include="AddThis\AddThisButtonItemsCollection.cs" />
+    <Compile Include="AddThis\AddThisButtonList.cs" />
     <Compile Include="BaseTemplates\SnippetControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
