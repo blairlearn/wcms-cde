@@ -500,6 +500,8 @@ namespace NCI.Web.CDE
                     keysList.Add("bookmarkshare");
                 if (AlternateContentVersions.IsEmailAvailable)
                     keysList.Add("email");
+                if (AlternateContentVersions.IsMobileShareAvailable)
+                    keysList.Add("mobileShare");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
 
@@ -735,6 +737,16 @@ namespace NCI.Web.CDE
                 });
             }
 
+            AddFieldFilter("add_this_title", (name, data) =>
+            {
+                data.Value = this.PageMetadata.ShortTitle;
+            });
+
+            AddFieldFilter("add_this_description", (name, data) =>
+            {
+                data.Value = this.PageMetadata.ShortDescription;
+            });
+
         }
 
         /// <summary>
@@ -770,6 +782,11 @@ namespace NCI.Web.CDE
                 PrettyUrl = _pages._Pages[pageIndex].PrettyUrl;
                 url.SetUrl(PrettyUrl);
             });
+
+            /*AddUrlFilter("add_this_url", (name, url) =>
+            {
+                url.SetUrl(GetEmailUrl());
+            });*/
 
             #region AltLanguageURL
             // Alt Language URL filter 

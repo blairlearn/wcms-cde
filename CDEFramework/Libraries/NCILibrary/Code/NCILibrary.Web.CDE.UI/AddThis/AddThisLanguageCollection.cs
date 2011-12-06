@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Collections;
 using System.ComponentModel;
 
-namespace NCI.Web.CDE.UI.WebControls.AddThis
+namespace NCI.Web.CDE.UI.WebControls
 {
     public class AddThisLanguageCollection : StateManagedCollection
     {
@@ -14,21 +14,37 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
         //If there needs to be a new type, then add a class and then
         //add it to this list.
         private static readonly Type[] knownTypes = new Type[] { 
-            typeof(AddThisButtonCollection)
+            typeof(AddThisButtonLanguageItem)
         };
 
         public event EventHandler LanguageCollectionChanged;
 
         [Browsable(false)]
-        public AddThisButtonCollection this[int index]
+        public AddThisButtonLanguageItem this[int index]
         {
             get
             {
-                return (this[index] as AddThisButtonCollection);
+                return (this[index] as AddThisButtonLanguageItem);
             }
         }
 
-        public void Add(AddThisButtonCollection languageItem)
+        [Browsable(false)]
+        public AddThisButtonLanguageItem this[String index]
+        {
+            get
+            {
+                foreach (AddThisButtonLanguageItem languageItem in this)
+                {
+                    if (languageItem.Language.Equals(index))
+                    {
+                        return languageItem;
+                    }
+                }
+                return null;
+            }
+        }
+
+        public void Add(AddThisButtonLanguageItem languageItem)
         {
             ((IList)this).Add(languageItem);
         }
@@ -36,36 +52,36 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
         public AddThisLanguageCollection CloneFields()
         {
             AddThisLanguageCollection languageItems = new AddThisLanguageCollection();
-            foreach (AddThisButtonCollection buttonCollection in this)
+            foreach (AddThisButtonLanguageItem languageItem in this)
             {
-                languageItems.Add(buttonCollection);
+                languageItems.Add(languageItem);
             }
             return languageItems;
         }
 
-        public bool Contains(AddThisButtonCollection buttonItem)
+        public bool Contains(AddThisButtonLanguageItem languageItem)
         {
-            return ((IList)this).Contains(buttonItem);
+            return ((IList)this).Contains(languageItem);
         }
 
-        public void CopyTo(AddThisButtonCollection[] array, int index)
+        public void CopyTo(AddThisButtonLanguageItem[] array, int index)
         {
             this.CopyTo(array, index);
         }
 
-        public int IndexOf(AddThisButtonCollection buttonItem)
+        public int IndexOf(AddThisButtonLanguageItem languageItem)
         {
-            return ((IList)this).IndexOf(buttonItem);
+            return ((IList)this).IndexOf(languageItem);
         }
 
-        public void Insert(int index, AddThisButtonCollection buttonItem)
+        public void Insert(int index, AddThisButtonLanguageItem languageItem)
         {
-            ((IList)this).Insert(index, buttonItem);
+            ((IList)this).Insert(index, languageItem);
         }
 
-        public void Removed(AddThisButtonCollection buttonItem)
+        public void Removed(AddThisButtonLanguageItem languageItem)
         {
-            ((IList)this).Remove(buttonItem);
+            ((IList)this).Remove(languageItem);
         }
 
         public void RemoveAt(int index)
@@ -83,7 +99,7 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
             switch (index)
             {
                 case 0 :
-                    return new AddThisButtonCollection();
+                    return new AddThisButtonLanguageItem();
             }
 
             throw new ArgumentOutOfRangeException("Incorrect type");
@@ -91,10 +107,10 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
 
         protected override void OnRemoveComplete(int index, object value)
         {
-            AddThisButtonCollection buttonItem = value as AddThisButtonCollection;
+            AddThisButtonLanguageItem buttonItem = value as AddThisButtonLanguageItem;
             if (buttonItem != null)
             {
-                buttonItem.ButtonItemCollectionChanged += new EventHandler(this.LanguageCollectionChanged);
+                buttonItem.LanguageItemChanged += new EventHandler(this.LanguageCollectionChanged);
             }
 
             this.OnLanguageCollectionChanged();
@@ -103,7 +119,7 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
         protected override void OnValidate(object value)
         {
             base.OnValidate(value);
-            if (!(value is AddThisButtonCollection))
+            if (!(value is AddThisButtonLanguageItem))
             {
                 throw new ArgumentException("Invalid type");
             }
@@ -116,7 +132,7 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
 
         protected override void SetDirtyObject(object b)
         {
-            ((AddThisButtonCollection)b).SetDirty();
+            ((AddThisButtonLanguageItem)b).SetDirty();
         }
 
         private void OnLanguageCollectionChanged(object sender, EventArgs e)

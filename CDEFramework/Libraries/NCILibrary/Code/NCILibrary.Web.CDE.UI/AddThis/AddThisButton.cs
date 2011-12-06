@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.UI;
 
-namespace NCI.Web.CDE.UI.WebControls.AddThis
+namespace NCI.Web.CDE.UI.WebControls
 {
     public class AddThisButtonItem : IStateManager
     {
@@ -68,7 +68,7 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
             }
         }
 
-        private StateBag _statebag;
+        private StateBag _statebag = new StateBag();
         protected StateBag ViewState
         {
             get

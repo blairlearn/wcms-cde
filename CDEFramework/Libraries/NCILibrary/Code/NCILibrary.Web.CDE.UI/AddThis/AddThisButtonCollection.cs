@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Collections;
 using System.ComponentModel;
 
-namespace NCI.Web.CDE.UI.WebControls.AddThis
+namespace NCI.Web.CDE.UI.WebControls
 {
     public class AddThisButtonCollection : StateManagedCollection
     {
@@ -17,33 +17,6 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
             typeof(AddThisButtonItem)
         };
 
-        private StateBag _statebag;
-        protected StateBag ViewState
-        {
-            get
-            {
-                return this._statebag;
-            }
-        }
-
-        private string _language;
-        public string Language
-        {
-            get
-            {
-                return (string)this.ViewState["Language"] ?? string.Empty;
-            }
-            set
-            {
-                //If the text is the same, just ignore and don't set dirtyness
-                //or fire any events.
-                if (!object.Equals(value, this.ViewState["Language"]))
-                {
-                    this.ViewState["Language"] = value;
-                    this.OnButtonItemCollectionChanged();
-                }
-            }
-        }
         public event EventHandler ButtonItemCollectionChanged;
 
         [Browsable(false)]
@@ -52,6 +25,21 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
             get
             {
                 return (this[index] as AddThisButtonItem);
+            }
+        }
+
+        [Browsable(false)]
+        public AddThisButtonItem this[String index]
+        {
+            get
+            {
+                foreach(AddThisButtonItem buttonItem in this){
+                    if (buttonItem.Service.Equals(index))
+                    {
+                        return buttonItem;
+                    }
+                }
+                return null;
             }
         }
 
@@ -67,7 +55,6 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
             {
                 buttonItems.Add(buttonItem.CloneAddThisButtonItem());
             }
-            buttonItems.Language = this.Language;
             return buttonItems;
         }
 
@@ -131,7 +118,7 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
         protected override void OnValidate(object value)
         {
             base.OnValidate(value);
-            if (!(value is AddThisButtonCollection))
+            if (!(value is AddThisButtonItem))
             {
                 throw new ArgumentException("Invalid type");
             }
@@ -159,5 +146,6 @@ namespace NCI.Web.CDE.UI.WebControls.AddThis
                 this.ButtonItemCollectionChanged(this, EventArgs.Empty);
             }
         }
+
     }
 }

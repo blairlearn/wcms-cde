@@ -50,6 +50,12 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool IsShareBookmarkAvailable { get; set; }
 
+        /// <summary>
+        /// If true displays the mobile share "add this" box.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool IsMobileShareAvailable { get; set; }
+
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool AltLanguage { get; set; }
 
