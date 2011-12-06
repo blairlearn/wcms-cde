@@ -59,7 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CapabilitiesDetection\CapablitiesDetector.cs" />
+    <Compile Include="CapabilitiesDetection\CapabilitiesDetector.cs" />
     <Compile Include="CapabilitiesDetection\DisplayDeviceDetector.cs" />
     <Compile Include="CapabilitiesDetection\WurflLoader.cs" />
     <Compile Include="CapabilitiesDetection\WURFL_Wrapper.cs" />

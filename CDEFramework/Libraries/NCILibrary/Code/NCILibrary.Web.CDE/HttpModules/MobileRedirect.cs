@@ -46,10 +46,8 @@ namespace NCI.Web.CDE
             if (PageAssemblyContext.Current.PageAssemblyInstruction != null) 
             {   
                 // if mobile device and mobile url exist, redirect to it
-                // FOR TESTING ONLY
-                if (DisplayDeviceDetector.DisplayDevice == DisplayDevices.Decktop)
-                //if( (DisplayDeviceDetector.DisplayDevice == DisplayDevices.BasicMobile) ||
-                //    (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile) )
+                if( (DisplayDeviceDetector.DisplayDevice == DisplayDevices.BasicMobile) ||
+                    (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile) )
                  {
 
                     string[] alternateContentVersionsKeys;

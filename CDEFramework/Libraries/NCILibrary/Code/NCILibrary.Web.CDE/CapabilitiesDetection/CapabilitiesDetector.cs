@@ -16,7 +16,7 @@ using Wurfl.AspNet.DeviceBrowser.Helpers;
 
 namespace NCI.Web.CDE.CapabilitiesDetection
 {
-    public class CapablitiesDetector
+    public class CapabilitiesDetector
     {
         private bool _isDeskTop = false;
         private bool _isTablet = false;
@@ -31,11 +31,11 @@ namespace NCI.Web.CDE.CapabilitiesDetection
         public bool IsTablet { get { return _isTablet; } }
         public bool IsAdvancedMobile { get { return _isAdvancedMobile; } }
         public bool IsBasicMobile { get { return _isBasicMobile; } }
-        public int Height { get { return _height; } }
-        public int Width { get { return _width; } }
+        public int ScreenHeight { get { return _height; } }
+        public int ScreenWidth { get { return _width; } }
         public Dictionary<string, string> CapabilitiesList { get { return _capabilitiesList; } }
 
-        public CapablitiesDetector()
+        public CapabilitiesDetector()
         {
             WURFL_Wrapper wurfl = new WURFL_Wrapper();
             wurfl.DetectCapabilities(HttpContext.Current.Request);

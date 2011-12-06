@@ -20,7 +20,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
                 }
                 else
                 {
-                   CapablitiesDetector detecto = new CapablitiesDetector();
+                   CapabilitiesDetector detecto = new CapabilitiesDetector();
 
                     if (detecto.IsTablet)
                         return DisplayDevices.Tablet;
@@ -46,7 +46,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
                 }
                 else
                 {
-                    CapablitiesDetector detecto = new CapablitiesDetector();
+                    CapabilitiesDetector detecto = new CapabilitiesDetector();
 
                     if (detecto.IsTablet)
                         return "Tablet";
@@ -71,7 +71,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
                 }
                 else
                 {
-                    CapablitiesDetector detecto = new CapablitiesDetector();
+                    CapabilitiesDetector detecto = new CapabilitiesDetector();
                     return detecto.CapabilitiesList;
                 }
             }
