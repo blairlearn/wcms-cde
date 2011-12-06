@@ -45,6 +45,7 @@ namespace NCI.Web.CDE
             // if page assembly instructions are loaded
             if (PageAssemblyContext.Current.PageAssemblyInstruction != null) 
             {   
+                
                 // if mobile device and mobile url exist, redirect to it
                 if( (DisplayDeviceDetector.DisplayDevice == DisplayDevices.BasicMobile) ||
                     (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile) )

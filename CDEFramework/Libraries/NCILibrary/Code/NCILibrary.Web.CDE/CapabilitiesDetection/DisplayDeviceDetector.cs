@@ -9,6 +9,25 @@ namespace NCI.Web.CDE.CapabilitiesDetection
 {
     public static class DisplayDeviceDetector
     {
+
+        public static int ScreenHeight
+        {
+            get
+            {
+                CapabilitiesDetector detecto = new CapabilitiesDetector();
+                return detecto.ScreenHeight;
+            }
+        }
+        
+        public static int ScreenWidth
+        {
+            get
+            {
+                CapabilitiesDetector detecto = new CapabilitiesDetector();
+                return detecto.ScreenWidth;
+            }
+        }
+        
         public static DisplayDevices DisplayDevice 
         { 
             get 
