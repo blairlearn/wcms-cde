@@ -14,7 +14,9 @@ namespace NCI.Web.CDE.UI
         KeyWords,
         ContentType,
         ContentLanguage,
-        Title
+        Title,
+        EnglishLinkingPolicy,
+        EspanolLinkingPolicy
     }
 
     /// <summary>
