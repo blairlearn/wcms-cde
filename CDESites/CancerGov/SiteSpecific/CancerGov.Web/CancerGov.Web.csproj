@@ -96,6 +96,7 @@
     <Content Include="Schema\CDESchema.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -531,6 +532,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\web_browsers_patch.xml" />
     <Content Include="Archive\arch_dictionary.aspx" />
     <Content Include="Archive\arch_drugdictionary.aspx" />
     <Content Include="Archive\arch_druginfosummaries.aspx" />
@@ -648,7 +650,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="App_LocalResources\" />
     <Folder Include="UserControls\Footers\" />
   </ItemGroup>
