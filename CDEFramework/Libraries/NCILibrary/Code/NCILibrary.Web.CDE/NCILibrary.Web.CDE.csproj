@@ -83,9 +83,8 @@
     <Compile Include="Configuration\PageAssemblyElement.cs" />
     <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />
     <Compile Include="HttpModules\Utility.cs" />
-    <Compile Include="InformationRequest\InformationRequestErrors.cs" />
+    <Compile Include="InformationRequest\InformationRequestMessages.cs" />
     <Compile Include="InformationRequest\InformationRequestModuleAndHandler.cs" />
-    <Compile Include="InformationRequest\InformationRequestProcessor.cs" />
     <Compile Include="Modules\ContentSearchList.cs" />
     <Compile Include="Modules\DictionaryURL.cs" />
     <Compile Include="Modules\DockTitleBlock.cs" />
