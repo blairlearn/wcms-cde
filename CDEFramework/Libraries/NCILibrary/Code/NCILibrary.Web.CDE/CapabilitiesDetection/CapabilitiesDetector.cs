@@ -10,8 +10,8 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using WURFL;
-using Wurfl.AspNet.DeviceBrowser.Helpers;
+using NCI.Web;
+
 
 
 namespace NCI.Web.CDE.CapabilitiesDetection
