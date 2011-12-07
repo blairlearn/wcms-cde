@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.UI.WebContro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proteomics.Web", "CDESites\Proteomics\SiteSpecific\Proteomics.Web\Proteomics.Web.csproj", "{5AF3E5C9-B4B8-41FC-8BD1-676477D6C41F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web\NCILibrary.Web.csproj", "{1FA9B9C2-0E20-4256-A00B-989B33154EBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{5AF3E5C9-B4B8-41FC-8BD1-676477D6C41F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AF3E5C9-B4B8-41FC-8BD1-676477D6C41F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AF3E5C9-B4B8-41FC-8BD1-676477D6C41F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
