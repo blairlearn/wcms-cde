@@ -53,16 +53,10 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="WURFL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ThirdPartyDlls\WURFL\WURFL.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CapabilitiesDetection\CapabilitiesDetector.cs" />
     <Compile Include="CapabilitiesDetection\DisplayDeviceDetector.cs" />
-    <Compile Include="CapabilitiesDetection\WurflLoader.cs" />
-    <Compile Include="CapabilitiesDetection\WURFL_Wrapper.cs" />
     <Compile Include="Configuration\canonicalHostNameElement.cs" />
     <Compile Include="Configuration\CanonicalHostNameInformationElement.cs" />
     <Compile Include="Configuration\ContentDeliveryEngineConfig.cs" />
@@ -183,6 +177,10 @@
     <ProjectReference Include="..\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.Web\NCILibrary.Web.csproj">
+      <Project>{1FA9B9C2-0E20-4256-A00B-989B33154EBB}</Project>
+      <Name>NCILibrary.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -14,7 +14,7 @@ using WURFL;
 using Wurfl.AspNet.DeviceBrowser.Helpers;
 
 
-namespace NCI.Web.CDE.CapabilitiesDetection
+namespace NCI.Web
 {
     public class WURFL_Wrapper
     {
