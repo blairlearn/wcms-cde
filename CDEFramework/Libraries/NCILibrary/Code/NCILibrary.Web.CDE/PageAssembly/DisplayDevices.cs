@@ -13,7 +13,7 @@ namespace NCI.Web.CDE
         /// <summary>
         /// This is the standard Display Device for decktop and laptop browsers
         /// </summary>
-        Decktop = 1,
+        Desktop = 1,
         /// <summary>
         /// This is for Tablet devices like the iPad
         /// </summary>

@@ -26,12 +26,13 @@ namespace NCI.Web.CDE
         public void Init(HttpApplication context)
         {
             context.BeginRequest += new System.EventHandler(OnMapRequestHandler);
+            //context.PostResolveRequestCache  += new System.EventHandler(OnMapRequestHandler);
         }
 
         public void OnMapRequestHandler(object sender, EventArgs args)
         {
-            if (PageAssemblyContext.Current.PageAssemblyInstruction == null)
-                return;
+            //if (PageAssemblyContext.Current.PageAssemblyInstruction == null)
+            //    return;
 
             HttpContext context = ((HttpApplication)sender).Context;
             

@@ -20,10 +20,11 @@ namespace NCI.Web.CDE
     {
         public void Init(HttpApplication app)
         {
-            app.PostLogRequest += new System.EventHandler(OnEndRequest);
+            //app.PostLogRequest += new System.EventHandler(OnPostLogRequest);
+            app.LogRequest += new System.EventHandler(OnPostLogRequest);
         }
 
-        public void OnEndRequest(object source, EventArgs e)
+        public void OnPostLogRequest(object source, EventArgs e)
         {
             HttpApplication app = (HttpApplication)source;
             HttpContext context = app.Context;
@@ -37,32 +38,48 @@ namespace NCI.Web.CDE
                 if (url.ToLower().IndexOf(".ico") != -1 || url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
                     return;
 
-                string urlout = host + context.Request.RawUrl + "?Information__Request=mobileurl";
-                WebRequest wr = WebRequest.Create(urlout);
-                wr.Timeout = 10000;
 
                 try
                 {
-                    HttpWebResponse response = (HttpWebResponse)wr.GetResponse();
-                    
-                    url = response.ResponseUri.OriginalString;
+                    //string urlout = host + context.Request.Url.LocalPath.ToString() + "?Information__Request=mobileurl";
+                    //WebRequest wr = WebRequest.Create(urlout);
+                    //wr.Timeout = 10000;
+                    //HttpWebResponse response = (HttpWebResponse)wr.GetResponse();
+                    //url = response.ResponseUri.OriginalString;
+
+                    WebRequest request = WebRequest.Create(
+                      "http://localhost:7001/ZZ?Information__Request=mobile");
+                    request.Credentials = CredentialCache.DefaultCredentials;
+                    WebResponse response = request.GetResponse();
+
+                    // Display the status
+                    System.Diagnostics.Debug.WriteLine("**** " + ((HttpWebResponse)response).StatusDescription);
+
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    string responseFromServer = reader.ReadToEnd();
+                    System.Diagnostics.Debug.WriteLine("**** " + responseFromServer);
+                    reader.Close();
+                    response.Close();
+
+
+
                     url = "http://www.ibm.com";
                     if (url != "" && url != InformationRequestMessages.MobileUrlNotFound)
                         context.Response.Redirect(url, true);
                 }
                 catch (ThreadAbortException)
                 {
-                    int i = 1;
-                    
+                    // This exception is barfed up because of 
+                    // the second parameter of the above context.Response.Redirect 
+                    // is set to true for endResponse (which throws a ThreadAbortException error)
                     throw;
                 }
                 catch (Exception ex)
                 {
-                    int i = 1;
-                    //If there is an error let this continue on as a 404
+                    if (ex.Message == "The remote server returned an error: (404) Not Found.")
+                        return;
                 }
-
-                int d = 2;
             }
         }
         
