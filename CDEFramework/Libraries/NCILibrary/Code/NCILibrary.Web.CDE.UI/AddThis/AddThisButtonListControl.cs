@@ -15,7 +15,15 @@ namespace NCI.Web.CDE.UI.WebControls
     {
 
         AddThisLanguageCollection _itemsCollection;
-        
+
+        protected override HtmlTextWriterTag TagKey
+        {
+            get
+            {
+                return HtmlTextWriterTag.Div;
+            }
+        }
+
         [PersistenceMode(PersistenceMode.InnerProperty), MergableProperty(false), DefaultValue((string)null), Description("DataControls_Columns"), Category("Default")]
         public virtual AddThisLanguageCollection AddThisButtonLanguages
         {
@@ -43,10 +51,9 @@ namespace NCI.Web.CDE.UI.WebControls
             if (_itemsCollection.Count > 0)
                 base.Render(writer);
         }
-        
+
         public override void RenderBeginTag(HtmlTextWriter writer)
         {
-            base.RenderBeginTag(writer);
             String pageLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language");
             if (_itemsCollection[pageLanguage] != null)
             {
@@ -208,14 +215,14 @@ namespace NCI.Web.CDE.UI.WebControls
                     #endregion
 
                     writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_toolbox addthis_default_style addthis_32x32_style");
-                    writer.RenderBeginTag(HtmlTextWriterTag.Div);
+                    base.RenderBeginTag(writer);
                 }
             }
             else
             {
                 this.Visible = false;
             }
-            
+
         }
 
         protected override void RenderContents(HtmlTextWriter writer)
@@ -250,7 +257,7 @@ namespace NCI.Web.CDE.UI.WebControls
                 String pageLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language");
                 if (_itemsCollection[pageLanguage] != null)
                 {
-                    writer.RenderEndTag();
+                    base.RenderEndTag(writer);
                     writer.AddAttribute(HtmlTextWriterAttribute.Src, "http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ed7cc9f006efaac");
                     writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
                     writer.RenderBeginTag(HtmlTextWriterTag.Script);
