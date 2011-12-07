@@ -47,114 +47,173 @@ namespace NCI.Web.CDE.UI.WebControls
         public override void RenderBeginTag(HtmlTextWriter writer)
         {
             base.RenderBeginTag(writer);
-
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys.Contains("mobileShare"))
+            String pageLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language");
+            if (_itemsCollection[pageLanguage] != null)
             {
 
-                #region Var AddThis_Share
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                writer.RenderBeginTag(HtmlTextWriterTag.Script);
-                writer.Write("var addthis_share = {\n");
-                bool multipleConfig = false;
-                //title
-                if (!string.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("add_this_title")))
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys.Contains("mobileShare"))
                 {
-                    if (multipleConfig)
-                    {
-                        writer.Write(",\n");
-                    }
-                    writer.Write("title: \"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetField("add_this_title") + "\"");
-                    multipleConfig = true;
-                }
-                //description
-                if (!string.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("add_this_description")))
-                {
-                    if (multipleConfig)
-                    {
-                        writer.Write(",\n");
-                    }
-                    writer.Write("description: \"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetField("add_this_description") + "\"");
-                    multipleConfig = true;
-                }
-                //url  NOT WORKING RIGHT NOW
-                /**if (!PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("add_this_url").Equals(""))
-                {
-                    if (multipleConfig)
-                    {
-                        writer.Write(",\n");
-                    }
-                    writer.Write("url: \"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("add_this_url") + "\"");
-                    multipleConfig = true;
-                }*/
-                writer.Write("}");
-                writer.RenderEndTag();
-                #endregion
 
-                #region Var AddThis_Config
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                writer.RenderBeginTag(HtmlTextWriterTag.Script);
-                writer.Write("var addthis_config = {\n");
-                multipleConfig = false;
-                String language = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language");
-                if (!language.Equals(""))
-                {
-                    AddThisButtonLanguageItem langItem = _itemsCollection[language];
-                    if (langItem != null)
+                    #region Var AddThis_Share
+                    writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Script);
+                    writer.Write("var addthis_share = {\n");
+                    bool multipleConfigItems = false;
+                    //title
+                    if (!string.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("add_this_title")))
                     {
-                        //Account Field
-                        if (!langItem.Account.Equals(""))
-                        {
-                            if (multipleConfig)
-                            {
-                                writer.Write(",\n");
-                            }
-                            writer.Write("username: \"" + langItem.Account + "\"");
-                            multipleConfig = true;
-                        }
-                        //Language Field
-                        if (!string.IsNullOrEmpty(langItem.Language))
-                        {
-                            if (multipleConfig)
-                            {
-                                writer.Write(",\n");
-                            }
-                            writer.Write("ui_language: \"" + langItem.Language + "\"");
-                            multipleConfig = true;
-                        }
-                        //Compact Field
-                        if (!string.IsNullOrEmpty(langItem.Compact))
-                        {
-                            if (multipleConfig)
-                            {
-                                writer.Write(",\n");
-                            }
-                            writer.Write("services_compact: \"" + langItem.Compact + "\"");
-                            multipleConfig = true;
-                        }
-                        //Expanded Field
-                        if (!string.IsNullOrEmpty(langItem.Expanded))
-                        {
-                            if (multipleConfig)
-                            {
-                                writer.Write(",\n");
-                            }
-                            writer.Write("services_expanded: \"" + langItem.Expanded + "\"");
-                            multipleConfig = true;
-                        }
-                        //508 compliance
-                        if (multipleConfig)
+                        if (multipleConfigItems)
                         {
                             writer.Write(",\n");
                         }
-                        writer.Write("ui_508_compliant: true");
+                        writer.Write("title: \"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetField("add_this_title") + "\"");
+                        multipleConfigItems = true;
                     }
+                    //description
+                    if (!string.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("add_this_description")))
+                    {
+                        if (multipleConfigItems)
+                        {
+                            writer.Write(",\n");
+                        }
+                        writer.Write("description: \"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetField("add_this_description") + "\"");
+                        multipleConfigItems = true;
+                    }
+                    //url
+                    /**if (!PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("add_this_url").Equals(""))
+                    {
+                        if (multipleConfigItems)
+                        {
+                            writer.Write(",\n");
+                        }
+                        writer.Write("url: \"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("add_this_url") + "\"");
+                        multipleConfigItems = true;
+                    }*/
                     writer.Write("}");
                     writer.RenderEndTag();
-                }
-                #endregion
+                    #endregion
 
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_toolbox addthis_default_style addthis_32x32_style");
-                writer.RenderBeginTag(HtmlTextWriterTag.Div);
+                    #region Var AddThis_Config
+                    writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Script);
+                    writer.Write("var addthis_config = {\n");
+                    multipleConfigItems = false;
+                    String language = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language");
+                    if (!language.Equals(""))
+                    {
+                        AddThisButtonLanguageItem langItem = _itemsCollection[language];
+                        if (langItem != null)
+                        {
+                            //Custom Button Definitions
+                            AddThisButtonCollection buttonCollection = langItem.ButtonsCollection;
+                            if (buttonCollection != null)
+                            {
+                                bool hasCustomButtons = false;
+                                foreach (AddThisButtonItem currButton in buttonCollection)
+                                {
+                                    if (currButton.GetType().Name.Equals("CustomAddThisButtonItem"))
+                                    {
+                                        if (!hasCustomButtons)
+                                        {
+                                            writer.Write("services_custom: {");
+                                            hasCustomButtons = true;
+                                        }
+
+                                        bool hasMoreThenOneProperty = false;
+                                        //Name
+                                        if (!string.IsNullOrEmpty(((CustomAddThisButtonItem)currButton).Name))
+                                        {
+                                            writer.Write("name: \"" + ((CustomAddThisButtonItem)currButton).Name + "\"");
+                                            hasMoreThenOneProperty = true;
+                                        }
+                                        //Url
+                                        if (!string.IsNullOrEmpty(((CustomAddThisButtonItem)currButton).Url))
+                                        {
+                                            if (hasMoreThenOneProperty)
+                                            {
+                                                writer.Write(",\n");
+                                            }
+                                            hasMoreThenOneProperty = true;
+                                            writer.Write("url: \"" + ((CustomAddThisButtonItem)currButton).Url + "\"");
+                                        }
+                                        //Icon
+                                        if (!string.IsNullOrEmpty(((CustomAddThisButtonItem)currButton).Icon))
+                                        {
+                                            if (hasMoreThenOneProperty)
+                                            {
+                                                writer.Write(",\n");
+                                            }
+                                            hasMoreThenOneProperty = true;
+                                            writer.Write("icon: \"" + ((CustomAddThisButtonItem)currButton).Icon + "\"");
+                                        }
+
+                                    }
+                                }
+                                if (hasCustomButtons)
+                                {
+                                    writer.Write("}");
+                                    multipleConfigItems = true;
+                                }
+                            }
+                            //Account Field
+                            if (!langItem.Account.Equals(""))
+                            {
+                                if (multipleConfigItems)
+                                {
+                                    writer.Write(",\n");
+                                }
+                                writer.Write("username: \"" + langItem.Account + "\"");
+                                multipleConfigItems = true;
+                            }
+                            //Language Field
+                            if (!string.IsNullOrEmpty(langItem.Language))
+                            {
+                                if (multipleConfigItems)
+                                {
+                                    writer.Write(",\n");
+                                }
+                                writer.Write("ui_language: \"" + langItem.Language + "\"");
+                                multipleConfigItems = true;
+                            }
+                            //Compact Field
+                            if (!string.IsNullOrEmpty(langItem.Compact))
+                            {
+                                if (multipleConfigItems)
+                                {
+                                    writer.Write(",\n");
+                                }
+                                writer.Write("services_compact: \"" + langItem.Compact + "\"");
+                                multipleConfigItems = true;
+                            }
+                            //Expanded Field
+                            if (!string.IsNullOrEmpty(langItem.Expanded))
+                            {
+                                if (multipleConfigItems)
+                                {
+                                    writer.Write(",\n");
+                                }
+                                writer.Write("services_expanded: \"" + langItem.Expanded + "\"");
+                                multipleConfigItems = true;
+                            }
+                            //508 compliance
+                            if (multipleConfigItems)
+                            {
+                                writer.Write(",\n");
+                            }
+                            writer.Write("ui_508_compliant: true");
+                        }
+                        writer.Write("}");
+                        writer.RenderEndTag();
+                    }
+                    #endregion
+
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_toolbox addthis_default_style addthis_32x32_style");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Div);
+                }
+            }
+            else
+            {
+                this.Visible = false;
             }
             
         }
@@ -163,32 +222,40 @@ namespace NCI.Web.CDE.UI.WebControls
         {
             if (PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys.Contains("mobileShare"))
             {
-                foreach (AddThisButtonLanguageItem languageItem in _itemsCollection)
+                String pageLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language");
+                if (_itemsCollection[pageLanguage] != null)
                 {
-                    if (languageItem.Language.Equals(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language")))
+                    foreach (AddThisButtonItem button in _itemsCollection[pageLanguage].ButtonsCollection)
                     {
-                        foreach (AddThisButtonItem button in languageItem.ButtonsCollection)
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_button_" + button.Service);
-                            writer.RenderBeginTag(HtmlTextWriterTag.A);
-                            //TODO:  Later, include functionality to override the url/description/title by using the AddThisButtonItem property.
-                            writer.RenderEndTag();
-                        }
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_button_" + button.Service);
+                        writer.RenderBeginTag(HtmlTextWriterTag.A);
+                        writer.RenderEndTag();
                     }
                 }
+                else
+                {
+                    this.Visible = false;
+                }
             }
-
+            else
+            {
+                this.Visible = false;
+            }
         }
 
         public override void RenderEndTag(HtmlTextWriter writer)
         {
             if (PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys.Contains("mobileShare"))
             {
-                writer.RenderEndTag();
-                writer.AddAttribute(HtmlTextWriterAttribute.Src, "http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ed7cc9f006efaac");
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
-                writer.RenderBeginTag(HtmlTextWriterTag.Script);
-                writer.RenderEndTag();
+                String pageLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language");
+                if (_itemsCollection[pageLanguage] != null)
+                {
+                    writer.RenderEndTag();
+                    writer.AddAttribute(HtmlTextWriterAttribute.Src, "http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ed7cc9f006efaac");
+                    writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Script);
+                    writer.RenderEndTag();
+                }
             }
         }
 

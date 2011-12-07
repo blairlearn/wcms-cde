@@ -682,10 +682,10 @@ namespace NCI.Web.CDE
                 }
             }
 
-            /*AddUrlFilter("add_this_url", (name, url) =>
+            AddUrlFilter("add_this_url", (name, url) =>
             {
-                url.SetUrl(GetEmailUrl());
-            });*/
+                url.SetUrl(PrettyUrl);
+            });
         }
 
 

@@ -30,44 +30,6 @@ namespace NCI.Web.CDE.UI.WebControls
             }
         }
 
-        private string _url;
-        public string Url
-        {
-            get
-            {
-                return (string)this.ViewState["Url"] ?? string.Empty;
-            }
-            set
-            {
-                //If the text is the same, just ignore and don't set dirtyness
-                //or fire any events.
-                if (!object.Equals(value, this.ViewState["Url"]))
-                {
-                    this.ViewState["Url"] = value;
-                    this.OnButtonItemChanged();
-                }
-            }
-        }
-
-        private string _description;
-        public string Description
-        {
-            get
-            {
-                return (string)this.ViewState["Description"] ?? string.Empty;
-            }
-            set
-            {
-                //If the text is the same, just ignore and don't set dirtyness
-                //or fire any events.
-                if (!object.Equals(value, this.ViewState["Description"]))
-                {
-                    this.ViewState["Description"] = value;
-                    this.OnButtonItemChanged();
-                }
-            }
-        }
-
         private StateBag _statebag = new StateBag();
         protected StateBag ViewState
         {
@@ -97,8 +59,6 @@ namespace NCI.Web.CDE.UI.WebControls
         protected void CopyProperties(AddThisButtonItem newAddThisButtonItem)
         {
             ((AddThisButtonItem)newAddThisButtonItem).Service = this.Service;
-            ((AddThisButtonItem)newAddThisButtonItem).Url = this.Url;
-            ((AddThisButtonItem)newAddThisButtonItem).Description = this.Description;
         }
 
         protected AddThisButtonItem CreateAddThisButtonItem()

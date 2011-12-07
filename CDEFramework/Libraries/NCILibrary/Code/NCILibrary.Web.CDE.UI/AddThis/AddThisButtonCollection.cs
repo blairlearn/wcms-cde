@@ -14,7 +14,8 @@ namespace NCI.Web.CDE.UI.WebControls
         //If there needs to be a new type, then add a class and then
         //add it to this list.
         private static readonly Type[] knownTypes = new Type[] { 
-            typeof(AddThisButtonItem)
+            typeof(AddThisButtonItem),
+            typeof(CustomAddThisButtonItem)
         };
 
         public event EventHandler ButtonItemCollectionChanged;
@@ -99,6 +100,8 @@ namespace NCI.Web.CDE.UI.WebControls
             {
                 case 0:
                     return new AddThisButtonItem();
+                case 1:
+                    return new CustomAddThisButtonItem();
             }
 
             throw new ArgumentOutOfRangeException("Incorrect type");

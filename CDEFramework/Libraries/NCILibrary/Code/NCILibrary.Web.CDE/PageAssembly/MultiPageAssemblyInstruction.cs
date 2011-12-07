@@ -783,10 +783,13 @@ namespace NCI.Web.CDE
                 url.SetUrl(PrettyUrl);
             });
 
-            /*AddUrlFilter("add_this_url", (name, url) =>
+            AddUrlFilter("add_this_url", (name, url) =>
             {
-                url.SetUrl(GetEmailUrl());
-            });*/
+                int pageIndex = (_currentPageIndex == -1) ? 0 : _currentPageIndex;
+                //Set Property 
+                PrettyUrl = _pages._Pages[pageIndex].PrettyUrl;
+                url.SetUrl(PrettyUrl);
+            });
 
             #region AltLanguageURL
             // Alt Language URL filter 

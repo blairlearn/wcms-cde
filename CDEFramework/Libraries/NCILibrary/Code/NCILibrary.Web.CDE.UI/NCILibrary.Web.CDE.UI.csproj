@@ -55,6 +55,7 @@
     <Compile Include="AddThis\AddThisButtonLanguageItem.cs" />
     <Compile Include="AddThis\AddThisButtonListControl.cs" />
     <Compile Include="AddThis\AddThisLanguageCollection.cs" />
+    <Compile Include="AddThis\CustomAddThisButtonItem.cs" />
     <Compile Include="BaseTemplates\SnippetControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
