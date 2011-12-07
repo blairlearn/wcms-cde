@@ -1120,12 +1120,12 @@
           <documentation>A description for a Page Assembly Instruction which will be used for a HTML keywords meta tag.</documentation>
         </annotation>
       </element>
-      <element name="MobileURL" type="cde:path" minOccurs="0" maxOccurs="1">
+      <element name="MobileURL" type="string" minOccurs="0" maxOccurs="1">
         <annotation>
           <documentation>The url path of a page's mobile equivalent.</documentation>
         </annotation>
       </element>
-      <element name="DesktopURL" type="cde:path" minOccurs="0" maxOccurs="1">
+      <element name="DesktopURL" type="string" minOccurs="0" maxOccurs="1">
         <annotation>
           <documentation>The url path of a page's desktop equivalent.</documentation>
         </annotation>
@@ -1622,6 +1622,15 @@
           <documentation>
             Defines if this Page Assembly Instruction can be
             shared.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="IsMobileShareAvailable" type="boolean"
+        minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Defines if this Page Assembly Instruction can be
+            shared on a mobile browser.
           </documentation>
         </annotation>
       </element>
