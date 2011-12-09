@@ -20,7 +20,6 @@ namespace NCI.Web.CDE
     {
         public void Init(HttpApplication app)
         {
-            //app.PostLogRequest += new System.EventHandler(OnPostLogRequest);
             app.LogRequest += new System.EventHandler(OnPostLogRequest);
         }
 
@@ -32,41 +31,24 @@ namespace NCI.Web.CDE
             String key = context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture);
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
             string host = "http://localhost:7001";
+            string informationRequestCommand = "?Information__Request=mobileurl";
 
             if (context.Response.StatusCode == 404)
             {
                 if (url.ToLower().IndexOf(".ico") != -1 || url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
                     return;
 
-
                 try
                 {
-                    //string urlout = host + context.Request.Url.LocalPath.ToString() + "?Information__Request=mobileurl";
-                    //WebRequest wr = WebRequest.Create(urlout);
-                    //wr.Timeout = 10000;
-                    //HttpWebResponse response = (HttpWebResponse)wr.GetResponse();
-                    //url = response.ResponseUri.OriginalString;
-
-                    WebRequest request = WebRequest.Create(
-                      "http://localhost:7001/ZZ?Information__Request=mobile");
-                    request.Credentials = CredentialCache.DefaultCredentials;
-                    WebResponse response = request.GetResponse();
-
-                    // Display the status
-                    System.Diagnostics.Debug.WriteLine("**** " + ((HttpWebResponse)response).StatusDescription);
-
-                    Stream dataStream = response.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    string responseFromServer = reader.ReadToEnd();
-                    System.Diagnostics.Debug.WriteLine("**** " + responseFromServer);
-                    reader.Close();
-                    response.Close();
-
-
-
-                    url = "http://www.ibm.com";
-                    if (url != "" && url != InformationRequestMessages.MobileUrlNotFound)
-                        context.Response.Redirect(url, true);
+                    string InformationRequestCommand = host + context.Request.Url.AbsolutePath + informationRequestCommand;
+                    InformationRequestProcessor irPro = new InformationRequestProcessor(InformationRequestCommand);
+                    if(irPro.ReturnMessage == InformationRequestMessages.MobileUrlFound)
+                    {
+                        //url = "http://www.ibm.com";
+                        url = irPro.ReturnValue;
+                        if (url != "")
+                            context.Response.Redirect(url, true);
+                    }
                 }
                 catch (ThreadAbortException)
                 {

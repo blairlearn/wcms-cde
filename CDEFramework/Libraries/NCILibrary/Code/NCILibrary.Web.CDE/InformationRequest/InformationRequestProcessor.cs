@@ -41,7 +41,7 @@ namespace NCI.Web.CDE.InformationRequest
             int delimitorIndex = -1;
             if ((delimitorIndex = responseFromServer.IndexOf(':')) > -1)
             {
-                _returnMessage = responseFromServer.Substring(0, delimitorIndex);
+                _returnMessage = responseFromServer.Substring(0, delimitorIndex + 1);
                 _returnValue = responseFromServer.Substring(delimitorIndex + 1).Replace('[', ' ').Replace(']', ' ').Trim();
             }
             else
