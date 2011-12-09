@@ -1,35 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Configuration;
 
 namespace NCI.Web.CDE.InformationRequest.Configuration
 {
 
-    public class InformationRequestSection : ConfigurationSection
+    public class WebAnalyticsSection : ConfigurationSection
     {
-        [ConfigurationProperty("enabled", IsRequired = false, DefaultValue = true)]
-        public bool Enabled
+        [ConfigurationProperty("hosts")]
+        public HostElementCollection Hosts
         {
-            get { return (bool)base["enabled"]; }
-        }
-
-        [ConfigurationProperty("reportingSuites")]
-        public ReportingSuitesElementCollection ReportingSuites
-        {
-            get { return (ReportingSuitesElementCollection)base["reportingSuites"]; }
-        }
-
-        [ConfigurationProperty("enableNonJavaScriptTagging", IsRequired = false, DefaultValue = false)]
-        public bool EnableNonJavaScriptTagging
-        {
-            get { return (bool)base["enableNonJavaScriptTagging"]; }
-        }
-
-        [ConfigurationProperty("urlPathChannelMappings")]
-        public UrlPathChannelElementCollection UrlPathChannelMappings
-        {
-            get { return (UrlPathChannelElementCollection)base["urlPathChannelMappings"]; }
+            get { return (HostElementCollection)base["hosts"]; }
         }
     }
 }
