@@ -77,13 +77,13 @@ namespace NCI.Web.CDE
                             element => element.StartsWith("mobileurl", StringComparison.Ordinal)) == "mobileurl")
                         {
                             NciUrl mobileUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");
-                            context.Response.Write(mobileUrl.ToString());
+                            context.Response.Write(InformationRequestMessages.MobileUrlFound + " [" + mobileUrl.ToString() + "]");
                         }
                         else
-                            context.Response.Write(notFoundMessage);
+                            context.Response.Write(InformationRequestMessages.MobileUrlNotFound);
                     }
                     else
-                        context.Response.Write(notFoundMessage);
+                        context.Response.Write(InformationRequestMessages.FileNotFound);
                     break;
 
                 case "canonicalurl":
