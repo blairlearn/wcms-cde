@@ -63,11 +63,9 @@
     <Compile Include="BaseTemplates\TemplateSlot.cs" />
     <Compile Include="BaseTemplates\TemplateSlotCollection.cs" />
     <Compile Include="BaseTemplates\TemplateSlotItem.cs" />
-    <Compile Include="Configuration\MobileLanguageToggleConfig.cs" />
-    <Compile Include="Configuration\MobileLanguageToggleConfigElement.cs" />
-    <Compile Include="Configuration\MobileLanguageToggleConfigElementCollection.cs" />
-    <Compile Include="Configuration\MobileLanguageToggleConfigSection.cs" />
-    <Compile Include="MobileLanguageToggle.cs" />
+    <Compile Include="Configuration\MobileLanguageToggle.cs" />
+    <Compile Include="Configuration\MobileLanguageToggleCollection.cs" />
+    <Compile Include="MobileLanguageToggleControl.cs" />
     <Compile Include="Configuration\Settings.cs" />
     <Compile Include="enums.cs" />
     <Compile Include="PageAssemblers\IPageAssembler.cs" />

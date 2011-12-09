@@ -11,8 +11,10 @@ using NCI.Web.CDE.UI.Configuration;
 
 namespace NCI.Web.CDE.UI
 {
-    public class MobileLanguageToggle : WebControl
+    public class MobileLanguageToggleControl : WebControl
     {
+
+        private MobileLanguageToggleCollection _langToggleCollection;
 
         protected override HtmlTextWriterTag TagKey
         {
@@ -22,6 +24,30 @@ namespace NCI.Web.CDE.UI
             }
         }
 
+        /// <summary>
+        /// Gets and sets the collection of MobileLanguageToggle items
+        /// </summary>
+        [PersistenceMode(PersistenceMode.InnerProperty), MergableProperty(false), DefaultValue((string)null), Description("DataControls_Columns"), Category("Default")]
+        public virtual MobileLanguageToggleCollection MobileLanguageToggles
+        {
+            get
+            {
+                if (this._langToggleCollection == null)
+                {
+                    this._langToggleCollection = new MobileLanguageToggleCollection();
+                    if (base.IsTrackingViewState)
+                    {
+                        ((IStateManager)this._langToggleCollection).TrackViewState();
+                    }
+                }
+                return this._langToggleCollection;
+            }
+            set
+            {
+                _langToggleCollection = value;
+            }
+        }
+        
         protected override void Render(HtmlTextWriter writer)
         {
             //If the page has no AltLanguage URL
@@ -49,22 +75,28 @@ namespace NCI.Web.CDE.UI
 
         protected override void RenderContents(HtmlTextWriter writer)
         {
-            MobileLanguageToggleConfigElement elem = MobileLanguageToggleConfig.GetByCultureLanguage(CultureInfo.CurrentUICulture);
-            if( !String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("AltLanguage").ToString()) ){
-                String formattedUrl;
-                try
+
+            MobileLanguageToggle langToggle = _langToggleCollection[CultureInfo.CurrentUICulture];
+            if (langToggle != null)
+            {
+                if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("AltLanguage").ToString()))
                 {
-                    formattedUrl = String.Format(elem.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("AltLanguage").ToString());
+                    String formattedUrl;
+                    try
+                    {
+                        formattedUrl = String.Format(langToggle.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("AltLanguage").ToString());
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        throw;
+                    }
+                    catch (FormatException)
+                    {
+                        throw;
+                    }
+                    writer.Write(HttpUtility.UrlDecode(formattedUrl));
+                    
                 }
-                catch (ArgumentNullException)
-                {
-                    throw;
-                }
-                catch (FormatException)
-                {
-                    throw;
-                }
-                writer.Write(HttpUtility.UrlDecode(formattedUrl));
             }
             
             
@@ -115,4 +147,5 @@ namespace NCI.Web.CDE.UI
         }
     }
 }
+
 
