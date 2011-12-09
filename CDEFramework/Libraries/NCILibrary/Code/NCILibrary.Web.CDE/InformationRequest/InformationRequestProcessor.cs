@@ -24,9 +24,6 @@ namespace NCI.Web.CDE.InformationRequest
         
         public InformationRequestProcessor(string command)
         {
-            string message = "";
-            string value = "";
-                        
             WebRequest request = WebRequest.Create(command);
             request.Credentials = CredentialCache.DefaultCredentials;
             WebResponse response = request.GetResponse();
@@ -49,12 +46,6 @@ namespace NCI.Web.CDE.InformationRequest
                 _returnMessage = responseFromServer;
                 _returnValue = "";
             }
-
-
-
-
-
-
         }
     }
 }

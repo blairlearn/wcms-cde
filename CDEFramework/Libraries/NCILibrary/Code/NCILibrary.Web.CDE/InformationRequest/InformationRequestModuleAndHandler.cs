@@ -9,14 +9,35 @@ using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Web.CDE.InformationRequest;
 using NCI.Logging;
 using System.Reflection;
+using NCI.Web.CDE.InformationRequest.Configuration;
 
 namespace NCI.Web.CDE
 {
     public class InformationRequestModuleAndHandler : IHttpModule, IHttpHandler
     {
+
         //This functions as both http Module and Handler for information request 
 
         readonly string InformationRequestToken = "Information__Request";
+        private string _MobileHost;
+        private string _DesktopHost;
+
+        public InformationRequestModuleAndHandler()
+        {
+            InformationRequestSection informationRequestConfiguration;
+
+            //foreach (HostElement host in informationRequestConfiguration.Hosts.GetType())
+            //{
+            //    switch (host.Type)
+            //    {
+            //        case InformationRequestConstants.MobileHost:
+            //            _MobileHost = host.Url;
+            //        case InformationRequestConstants.DecktopHost:
+            //            _DesktopHost = host.Url;
+            //    }
+            //}   
+        }
+
 
         #region IHttpModule Members
         /// <summary>

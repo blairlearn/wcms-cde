@@ -4,7 +4,7 @@ using System.Configuration;
 namespace NCI.Web.CDE.InformationRequest.Configuration
 {
 
-    public class WebAnalyticsSection : ConfigurationSection
+    public class InformationRequestSection : ConfigurationSection
     {
         [ConfigurationProperty("hosts")]
         public HostElementCollection Hosts

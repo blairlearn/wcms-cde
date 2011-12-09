@@ -19,4 +19,15 @@ namespace NCI.Web.CDE.InformationRequest
         public static readonly string CanonicalUrlFound = "CanonicalUrl Found:";
         
     }
+
+    /// <summary>
+    /// Information Request Constants 
+    /// </summary>    
+    public sealed class InformationRequestConstants
+    {
+        public static readonly string MobileHost = "mobile";
+        public static readonly string DecktopHost = "desktop";
+    }
+
+
 }
