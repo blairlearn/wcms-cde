@@ -10,6 +10,7 @@ using NCI.Web.CDE.InformationRequest;
 using NCI.Logging;
 using System.Reflection;
 using NCI.Web.CDE.InformationRequest.Configuration;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace NCI.Web.CDE
 {
@@ -17,26 +18,6 @@ namespace NCI.Web.CDE
     {
 
         //This functions as both http Module and Handler for information request 
-
-        readonly string InformationRequestToken = "Information__Request";
-        private string _MobileHost;
-        private string _DesktopHost;
-
-        public InformationRequestModuleAndHandler()
-        {
-            InformationRequestSection informationRequestConfiguration;
-
-            //foreach (HostElement host in informationRequestConfiguration.Hosts.GetType())
-            //{
-            //    switch (host.Type)
-            //    {
-            //        case InformationRequestConstants.MobileHost:
-            //            _MobileHost = host.Url;
-            //        case InformationRequestConstants.DecktopHost:
-            //            _DesktopHost = host.Url;
-            //    }
-            //}   
-        }
 
 
         #region IHttpModule Members
@@ -54,7 +35,7 @@ namespace NCI.Web.CDE
             HttpContext context = ((HttpApplication)sender).Context;
             
             string[] request = { "" };
-            String command = (string)context.Request.QueryString[InformationRequestToken];
+            String command = (string)context.Request.QueryString[InformationRequestConstants.InformationRequestToken];
 
             if (!string.IsNullOrEmpty(command))
             {
@@ -78,16 +59,16 @@ namespace NCI.Web.CDE
 
         public void ProcessRequest(HttpContext context)
         {
-            string command = (string)context.Request.QueryString[InformationRequestToken];
+            string command = (string)context.Request.QueryString[InformationRequestConstants.InformationRequestToken];
 
             string notFoundMessage = "";
 
             switch (command.ToLower())
             {
                 case "mobileurl":
-                    notFoundMessage = InformationRequestMessages.MobileUrlNotFound;
-
-                    if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
+                    if (PageAssemblyContext.Current.PageAssemblyInstruction == null)
+                        context.Response.Write(InformationRequestMessages.FileNotFound);
+                    else
                     {
                         string[] alternateContentVersionsKeys = PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys;
                         if (Array.Find(alternateContentVersionsKeys,
@@ -99,8 +80,6 @@ namespace NCI.Web.CDE
                         else
                             context.Response.Write(InformationRequestMessages.MobileUrlNotFound);
                     }
-                    else
-                        context.Response.Write(InformationRequestMessages.FileNotFound);
                     break;
 
                 case "canonicalurl":
@@ -109,7 +88,7 @@ namespace NCI.Web.CDE
                     {
                         string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.CanonicalUrl).ToString();
                         canonicalUrl = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + canonicalUrl;
-                        context.Response.Write(canonicalUrl);
+                        context.Response.Write(InformationRequestMessages.CanonicalUrlFound + " [" + canonicalUrl + "]");
                     }
                     else
                         context.Response.Write(notFoundMessage);

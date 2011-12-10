@@ -86,6 +86,7 @@
     <Compile Include="InformationRequest\Configuration\HostElement.cs" />
     <Compile Include="InformationRequest\Configuration\HostElementCollection.cs" />
     <Compile Include="InformationRequest\Configuration\InformationRequestSection.cs" />
+    <Compile Include="InformationRequest\InformationRequestConfig.cs" />
     <Compile Include="InformationRequest\InformationRequestMessages.cs" />
     <Compile Include="InformationRequest\InformationRequestModuleAndHandler.cs" />
     <Compile Include="InformationRequest\InformationRequestProcessor.cs" />

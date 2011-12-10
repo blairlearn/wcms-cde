@@ -20,6 +20,7 @@ namespace NCI.Web.CDE
     {
         public void Init(HttpApplication app)
         {
+            //app.LogRequest += new System.EventHandler(OnPostLogRequest);
             app.LogRequest += new System.EventHandler(OnPostLogRequest);
         }
 
@@ -30,8 +31,7 @@ namespace NCI.Web.CDE
             Exception exception = context.Server.GetLastError();
             String key = context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture);
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
-            string host = "http://localhost:7001";
-            string informationRequestCommand = "?Information__Request=mobileurl";
+            //string host = "http://localhost:7001";
 
             if (context.Response.StatusCode == 404)
             {
@@ -40,14 +40,19 @@ namespace NCI.Web.CDE
 
                 try
                 {
-                    string InformationRequestCommand = host + context.Request.Url.AbsolutePath + informationRequestCommand;
+                    string InformationRequestCommand = InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + InformationRequestConstants.MobileUrlRequest;
                     InformationRequestProcessor irPro = new InformationRequestProcessor(InformationRequestCommand);
-                    if(irPro.ReturnMessage == InformationRequestMessages.MobileUrlFound)
+                    if (irPro.ReturnMessage == InformationRequestMessages.MobileUrlFound)
                     {
-                        //url = "http://www.ibm.com";
+                        //Mobile Url found - redirect 
                         url = irPro.ReturnValue;
                         if (url != "")
-                            context.Response.Redirect(url, true);
+                            context.Response.Redirect(url + context.Request.Url.Query, true);
+                    }
+                    else if (irPro.ReturnMessage == InformationRequestMessages.MobileUrlNotFound)
+                    {
+                        //Page found on desktop - no mobile version - redirect to desktop site
+                        context.Response.Redirect(InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + context.Request.Url.Query, true);
                     }
                 }
                 catch (ThreadAbortException)
@@ -63,6 +68,37 @@ namespace NCI.Web.CDE
                         return;
                 }
             }
+
+
+            if (context.Response.StatusCode == 302)
+            {
+                if (url.ToLower().IndexOf(".ico") != -1 || url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
+                    return;
+
+                try
+                {
+                    //Page found on desktop - no mobile version - redirect to desktop site
+                    string redirectUrl = InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + context.Request.Url.Query;
+                    context.Response.Redirect(redirectUrl, true);
+                }
+                catch (ThreadAbortException)
+                {
+                    // This exception is barfed up because of 
+                    // the second parameter of the above context.Response.Redirect 
+                    // is set to true for endResponse (which throws a ThreadAbortException error)
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "The remote server returned an error: (404) Not Found.")
+                        return;
+                }
+            }
+
+
+
+
+
         }
         
         public void Dispose(){} 

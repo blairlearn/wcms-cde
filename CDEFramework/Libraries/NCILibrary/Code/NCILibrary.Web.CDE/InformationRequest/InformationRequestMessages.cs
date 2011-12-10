@@ -17,17 +17,22 @@ namespace NCI.Web.CDE.InformationRequest
         public static readonly string FileNotFound = "File Not Found(404):";
         public static readonly string MobileUrlFound = "MobileUrl Found:";
         public static readonly string CanonicalUrlFound = "CanonicalUrl Found:";
+        public static readonly string MobileHostNotFound = "Mobile Host Not Found:";
+        public static readonly string DesktopHostNotFound = "Desktop Host Not Found:";
         
     }
 
     /// <summary>
     /// Information Request Constants 
-    /// </summary>    
+    /// </summary> 
     public sealed class InformationRequestConstants
     {
+        private InformationRequestConstants() { }
+
         public static readonly string MobileHost = "mobile";
         public static readonly string DecktopHost = "desktop";
+        public static readonly string InformationRequestToken = "?Information__Request=";
+        public static readonly string MobileUrlRequest = "?Information__Request=mobileurl";
+
     }
-
-
 }
