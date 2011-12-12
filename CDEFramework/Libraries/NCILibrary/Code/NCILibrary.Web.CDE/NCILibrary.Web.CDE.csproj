@@ -83,6 +83,8 @@
     <Compile Include="Configuration\PageAssemblyElement.cs" />
     <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />
     <Compile Include="HttpModules\Utility.cs" />
+    <Compile Include="InformationRequest\Configuration\MappedPage.cs" />
+    <Compile Include="InformationRequest\Configuration\MappedPageCollection.cs" />
     <Compile Include="InformationRequest\Configuration\HostElement.cs" />
     <Compile Include="InformationRequest\Configuration\HostElementCollection.cs" />
     <Compile Include="InformationRequest\Configuration\InformationRequestSection.cs" />

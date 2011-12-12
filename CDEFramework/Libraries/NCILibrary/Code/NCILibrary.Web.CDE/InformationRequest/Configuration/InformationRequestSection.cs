@@ -11,5 +11,11 @@ namespace NCI.Web.CDE.InformationRequest.Configuration
         {
             get { return (HostElementCollection)base["hosts"]; }
         }
+
+        [ConfigurationProperty("mappedPages")]
+        public MappedPageCollection MappedPages
+        {
+            get { return (MappedPageCollection)base["mappedPages"]; }
+        }
     }
 }

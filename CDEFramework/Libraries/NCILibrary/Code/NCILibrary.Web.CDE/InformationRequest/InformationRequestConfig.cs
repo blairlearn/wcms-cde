@@ -9,6 +9,7 @@ using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Web.CDE.InformationRequest;
 using NCI.Logging;
 using System.Reflection;
+using System.Collections.Generic;
 using NCI.Web.CDE.InformationRequest.Configuration;
 using NCI.Web.CDE.WebAnalytics;
 
@@ -18,6 +19,7 @@ namespace NCI.Web.CDE.InformationRequest
     {
         private static string _mobileHost = "";
         private static string _desktopHost = "";
+        private static Dictionary<string, string> _applicationUrls = new Dictionary<string, string>();
 
         public static string MobileHost
         {
@@ -28,7 +30,26 @@ namespace NCI.Web.CDE.InformationRequest
         {
             get { return _desktopHost; }
         }
-        
+
+        public static string GetMobileUrl(string desktopUrl)
+        {
+            string searchValue = desktopUrl.Trim().ToLower();
+
+            if(_applicationUrls.ContainsKey(searchValue))
+                return _applicationUrls[searchValue];
+            else
+                return "";
+        }
+
+        public static string GetDesktop(string mobileUrl)
+        {
+            string searchValue = mobileUrl.Trim().ToLower();
+
+            if(_applicationUrls.ContainsKey(searchValue))
+                return _applicationUrls[searchValue];
+            else
+                return "";
+        }
         
         static InformationRequestConfig()
         {
@@ -46,9 +67,11 @@ namespace NCI.Web.CDE.InformationRequest
                     _desktopHost = elem.Url;
                 }
             }
+
+            section = (InformationRequestSection)ConfigurationManager.GetSection("nci/web/informationRequest");
+
+            foreach (ApplicationElement elem in section.MappedPages)
+                _applicationUrls.Add(elem.DesktopUrl.Trim().ToLower(),elem.MobileUrl.Trim().ToLower());
         }
-
-
-
     }
 }

@@ -21,17 +21,17 @@ namespace NCI.Web.CDE
         public void Init(HttpApplication app)
         {
             //app.LogRequest += new System.EventHandler(OnPostLogRequest);
-            app.LogRequest += new System.EventHandler(OnPostLogRequest);
+           app.PreSendRequestHeaders += new System.EventHandler(OnPreSendRequestHeaders);
         }
 
-        public void OnPostLogRequest(object source, EventArgs e)
+        public void OnPreSendRequestHeaders(object source, EventArgs e)
         {
             HttpApplication app = (HttpApplication)source;
             HttpContext context = app.Context;
             Exception exception = context.Server.GetLastError();
             String key = context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture);
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
-            //string host = "http://localhost:7001";
+            String mobileApplication = "";
 
             if (context.Response.StatusCode == 404)
             {
@@ -40,19 +40,29 @@ namespace NCI.Web.CDE
 
                 try
                 {
-                    string InformationRequestCommand = InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + InformationRequestConstants.MobileUrlRequest;
-                    InformationRequestProcessor irPro = new InformationRequestProcessor(InformationRequestCommand);
-                    if (irPro.ReturnMessage == InformationRequestMessages.MobileUrlFound)
+                    //Is this a mapped application 
+                    mobileApplication = InformationRequestConfig.GetMobileUrl(context.Request.Url.PathAndQuery);
+                    if (mobileApplication != "")
                     {
-                        //Mobile Url found - redirect 
-                        url = irPro.ReturnValue;
-                        if (url != "")
-                            context.Response.Redirect(url + context.Request.Url.Query, true);
+                        //redirect to mobile application 
                     }
-                    else if (irPro.ReturnMessage == InformationRequestMessages.MobileUrlNotFound)
+                    else
                     {
-                        //Page found on desktop - no mobile version - redirect to desktop site
-                        context.Response.Redirect(InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + context.Request.Url.Query, true);
+
+                        string InformationRequestCommand = InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + InformationRequestConstants.MobileUrlRequest;
+                        InformationRequestProcessor irPro = new InformationRequestProcessor(InformationRequestCommand);
+                        if (irPro.ReturnMessage == InformationRequestMessages.MobileUrlFound)
+                        {
+                            //Mobile Url found - redirect 
+                            url = irPro.ReturnValue;
+                            if (url != "")
+                                context.Response.Redirect(url + context.Request.Url.Query, true);
+                        }
+                        else if (irPro.ReturnMessage == InformationRequestMessages.MobileUrlNotFound)
+                        {
+                            //Page found on desktop - no mobile version - redirect to desktop site
+                            context.Response.Redirect(InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + context.Request.Url.Query, true);
+                        }
                     }
                 }
                 catch (ThreadAbortException)
@@ -77,9 +87,20 @@ namespace NCI.Web.CDE
 
                 try
                 {
-                    //Page found on desktop - no mobile version - redirect to desktop site
-                    string redirectUrl = InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + context.Request.Url.Query;
-                    context.Response.Redirect(redirectUrl, true);
+                    //Is this a mapped application - see web.config: nci/web/informationRequest/mappedPages 
+                    mobileApplication = InformationRequestConfig.GetMobileUrl(context.Request.Url.LocalPath);
+                    if (mobileApplication != "")
+                    {
+                        //redirect to mobile application 
+                        string redirectUrl = InformationRequestConfig.MobileHost + mobileApplication + context.Request.Url.Query;
+                        context.Response.Redirect(redirectUrl, true);
+                    }
+                    else
+                    {
+                        //Application redirect
+                        string redirectUrl = InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + context.Request.Url.Query;
+                        context.Response.Redirect(redirectUrl, true);
+                    }
                 }
                 catch (ThreadAbortException)
                 {
@@ -94,11 +115,6 @@ namespace NCI.Web.CDE
                         return;
                 }
             }
-
-
-
-
-
         }
         
         public void Dispose(){} 
