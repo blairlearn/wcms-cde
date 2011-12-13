@@ -225,7 +225,7 @@ namespace NCI.Web.CDE.UI.WebControls
             }
             #endregion
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_toolbox addthis_default_style addthis_32x32_style");
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_toolbox addthis_container addthis_default_style addthis_32x32_style");
             base.RenderBeginTag(writer);
         }
 
