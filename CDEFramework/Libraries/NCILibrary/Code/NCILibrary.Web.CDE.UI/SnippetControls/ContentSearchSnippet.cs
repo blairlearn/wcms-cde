@@ -24,6 +24,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             }
         }
 
+
         /// <summary>
         /// Keyword is a search criteria used in searching
         /// </summary>

@@ -21,6 +21,7 @@ namespace NCI.Web.CDE.Modules
         public int EndCount { get; set; }
         public ICollection<SearchResult> Results { get; set; }
         public string KeyWord { get; set; }
+        public string SiteName { get; set; }
 
         public DynamicSearch()
         {
