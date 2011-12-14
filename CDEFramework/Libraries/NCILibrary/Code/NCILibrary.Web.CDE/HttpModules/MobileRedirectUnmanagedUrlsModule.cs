@@ -40,7 +40,7 @@ namespace NCI.Web.CDE
                 mobileDevice = true;
 
             //For TESTING 
-            mobileDevice = true;
+            //mobileDevice = true;
             
             //If mobile device
             if(mobileDevice)

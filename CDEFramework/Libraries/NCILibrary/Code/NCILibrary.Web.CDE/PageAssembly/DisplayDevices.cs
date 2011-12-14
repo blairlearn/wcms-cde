@@ -11,7 +11,7 @@ namespace NCI.Web.CDE
     public enum DisplayDevices
     {
         /// <summary>
-        /// This is the standard Display Device for decktop and laptop browsers
+        /// This is the standard Display Device for Desktop and laptop browsers
         /// </summary>
         Desktop = 1,
         /// <summary>

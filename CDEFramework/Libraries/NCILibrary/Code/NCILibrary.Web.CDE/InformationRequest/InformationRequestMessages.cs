@@ -30,7 +30,7 @@ namespace NCI.Web.CDE.InformationRequest
         private InformationRequestConstants() { }
 
         public static readonly string MobileHost = "mobile";
-        public static readonly string DecktopHost = "desktop";
+        public static readonly string DesktopHost = "desktop";
         public static readonly string InformationRequestToken = "?Information__Request=";
         public static readonly string MobileUrlRequest = "?Information__Request=mobileurl";
 

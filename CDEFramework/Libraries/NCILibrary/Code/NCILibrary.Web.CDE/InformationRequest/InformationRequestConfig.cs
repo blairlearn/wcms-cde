@@ -62,7 +62,7 @@ namespace NCI.Web.CDE.InformationRequest
                     _mobileHost = elem.Url;
                 }
 
-                if (elem.Type == InformationRequestConstants.DecktopHost)
+                if (elem.Type == InformationRequestConstants.DesktopHost)
                 {
                     _desktopHost = elem.Url;
                 }

@@ -61,7 +61,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
                 if (HttpContext.Current.Request.UserAgent == null)
                 {
                     // If Request UserAgent is null - default to desktop
-                    return "Decktop";
+                    return "Desktop";
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace NCI.Web.CDE.CapabilitiesDetection
                     else if (detecto.IsBasicMobile)
                         return "BasicMobile";
                     else
-                        return "Decktop";
+                        return "Desktop";
 
                 }
             }
