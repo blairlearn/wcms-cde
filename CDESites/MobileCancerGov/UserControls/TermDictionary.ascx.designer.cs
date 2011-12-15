@@ -14,6 +14,33 @@ namespace MobileCancerGov.Web.UserControls {
     public partial class TermDictionary {
         
         /// <summary>
+        /// TermSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel TermSearch;
+        
+        /// <summary>
+        /// ViewResultsList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel ViewResultsList;
+        
+        /// <summary>
+        /// ViewDefinition control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel ViewDefinition;
+        
+        /// <summary>
         /// basic control.
         /// </summary>
         /// <remarks>
