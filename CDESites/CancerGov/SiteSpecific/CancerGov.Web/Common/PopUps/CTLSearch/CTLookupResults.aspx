@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>CTLookupResults</title>
-    <link rel="stylesheet" href="/stylesheets/nci.css" />
+    <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" />
 </head>
 <body style="background:none">
     <form id="resultsForm" runat="server" method="post" > 

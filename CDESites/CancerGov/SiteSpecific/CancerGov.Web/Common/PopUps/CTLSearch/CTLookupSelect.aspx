@@ -3,7 +3,7 @@
 
 <html>
   <head>
-        <link rel="stylesheet" href="/stylesheets/nci.css" />
+        <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" />
 		<title>lookup_select</title>				
 		<script language="javascript">
 			function doSubmit(fld)
