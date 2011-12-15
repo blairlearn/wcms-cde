@@ -58,6 +58,7 @@
     <Content Include="Default.aspx" />
     <Content Include="DrugDictionary.svc" />
     <Content Include="Global.asax" />
+    <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
@@ -78,6 +79,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
+      <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.designer.cs">
+      <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
+    </Compile>
     <Compile Include="TermDictionaryTest-O-Matic.aspx.cs">
       <DependentUpon>TermDictionaryTest-O-Matic.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -133,6 +141,10 @@
     <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CancerGov\CDR.TermDictionary\CDR.TermDictionary.csproj">
+      <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
+      <Name>CDR.TermDictionary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
