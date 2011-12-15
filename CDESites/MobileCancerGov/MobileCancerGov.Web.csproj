@@ -62,6 +62,8 @@
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="TermDictionary.svc" />
+    <Content Include="TermDictionaryTest-O-Matic.aspx" />
+    <Content Include="UserControls\TermDictionary.ascx" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +78,20 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TermDictionaryTest-O-Matic.aspx.cs">
+      <DependentUpon>TermDictionaryTest-O-Matic.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TermDictionaryTest-O-Matic.aspx.designer.cs">
+      <DependentUpon>TermDictionaryTest-O-Matic.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TermDictionary.ascx.cs">
+      <DependentUpon>TermDictionary.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\TermDictionary.ascx.designer.cs">
+      <DependentUpon>TermDictionary.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Data\wurfl-latest.zip" />
