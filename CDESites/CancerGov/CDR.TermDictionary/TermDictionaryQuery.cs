@@ -23,9 +23,11 @@ namespace CancerGov.CDR.TermDictionary
         /// <param name="criteria"></param>
         /// <param name="language"></param>
         /// <param name="rows"></param>
+        /// <param pageNumber="rows">The current page for which data needs to be retrived.
+        /// If this value argument is -1 , the stored proc ignores the pageNumber</param>
         /// <returns></returns>
         [UsesSProc("usp_GetGlossary")]
-        public static DataTable Search(string language, string criteria, int rows)
+        public static DataTable Search(string language, string criteria, int rows, int pageNumber)
         {
             // create our null object
             DataTable dt = null;

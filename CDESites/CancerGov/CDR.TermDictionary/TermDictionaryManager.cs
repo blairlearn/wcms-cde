@@ -25,9 +25,11 @@ namespace CancerGov.CDR.TermDictionary
         /// <param name="criteria">The partial text used to query the database</param>
         /// <param name="maxRows">The maximum number of rows that the database will return. a value of zero will return the entire set</param>
         /// <param name="contains">indicator as to whether the text is to be searched starting from the beginning or anywhere
-        ///                        in the string</param>
+        /// in the string</param>
+        /// <param name="pageNumber">The page for which the records should be returned.The records returned 
+        /// will always equal maxRows in every page.</param>
         /// <returns>Returns the search results</returns>
-        public static TermDictionaryCollection Search(string language, string criteria, int maxRows, bool contains)
+        public static TermDictionaryCollection Search(string language, string criteria, bool contains, int maxRows, int pageNumber)
         {
             TermDictionaryCollection dc = new TermDictionaryCollection();
 
@@ -59,7 +61,8 @@ namespace CancerGov.CDR.TermDictionary
                     DataTable dt = TermDictionaryQuery.Search(
                             language.ToString(),
                             criteria,
-                            maxRows);
+                            maxRows,
+                            pageNumber);
 
                     // use Linq to move information from the dataTable
                     // into the TermDictionaryCollection

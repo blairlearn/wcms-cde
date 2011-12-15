@@ -30,6 +30,12 @@ namespace CancerGov.CDR.TermDictionary
         [DataMember]
         public string info;
 
+        [DataMember]
+        public TermDictionaryDataItem TermDictionaryDetail
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// Constructor requires that all item be accounted for when created. This ensures
         /// that any new items or removal of items is address in all places that use this

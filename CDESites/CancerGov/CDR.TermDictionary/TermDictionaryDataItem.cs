@@ -9,6 +9,7 @@ namespace CancerGov.CDR.TermDictionary
     /// Business layer that contains items specific the the TermDictionary query.
     /// This class can only be instantiated by passing all known values in the
     /// constructor.
+    [Serializable]
     public class TermDictionaryDataItem
     {
         public int GlossaryTermID { get { return termID; } }
