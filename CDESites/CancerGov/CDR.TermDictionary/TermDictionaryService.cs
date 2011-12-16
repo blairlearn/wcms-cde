@@ -198,8 +198,12 @@ namespace CancerGov.CDR.TermDictionary
             {
                 int totalRecordCount = 0;
 
+                // No criteria specified
+                if (string.IsNullOrEmpty(criteria))
+                    return sc;
+
                 // if maxrows is 0 and pagenumber is > 0 then return empty.
-                if (maxRows == 0 && pageNumber >= 0)
+                if ((maxRows == 0 && pageNumber >= 0) || (maxRows < 0))
                     return sc;
 
                 if (pageNumber == 0)
