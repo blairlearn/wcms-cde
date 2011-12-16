@@ -185,6 +185,8 @@ namespace CancerGov.CDR.TermDictionary
 
                 // Add the columns we don't have to make this work at the manager level
                 dt.Columns.Add(new DataColumn("MediaHTML", System.Type.GetType("System.String")));
+                dt.Columns.Add(new DataColumn("MediaCaption", System.Type.GetType("System.String")));
+                dt.Columns.Add(new DataColumn("MediaID", System.Type.GetType("System.String")));
                 dt.Columns.Add(new DataColumn("AudioMediaHTML", System.Type.GetType("System.String")));
                 dt.Columns.Add(new DataColumn("RelatedInformationHtml", System.Type.GetType("System.String")));
                 //if (dt.Rows.Count > 0)

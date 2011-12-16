@@ -298,6 +298,8 @@ namespace CancerGov.CDR.TermDictionary
                 Strings.Clean(dr["TermPronunciation"]),
                 Strings.Clean(dr["DefinitionHTML"]),
                 Strings.Clean(dr["MediaHTML"]),
+                Strings.Clean(dr["MediaCaption"]),
+                Strings.ToInt(dr["MediaID"]),
                 Strings.Clean(dr["AudioMediaHTML"]),
                 Strings.Clean(dr["RelatedInformationHtml"])
              );
