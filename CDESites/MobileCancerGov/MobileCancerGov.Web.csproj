@@ -59,6 +59,7 @@
     <Content Include="DrugDictionary.svc" />
     <Content Include="Global.asax" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
+    <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
