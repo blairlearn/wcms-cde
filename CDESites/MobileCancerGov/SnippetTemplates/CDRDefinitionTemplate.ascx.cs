@@ -60,13 +60,14 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     definitionMedia = "<div class=\"thumb\">" + 
                         dataItem.MediaHTML.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]) +
                     "</div>";
-                    if (mPBO.charLimit > 0)
+                    
+                    /*if (mPBO.charLimit > 0)
                     {
                         moreLink.Visible = true;
                         spDefinitionTextMore.InnerHtml = definitionText + definitionMedia;
                         definitionText = definitionText.Substring(0, mPBO.charLimit);
 
-                    }                       
+                    } */                      
                     /*if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
                     {
                         definitionText = "<strong>Definition of " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
