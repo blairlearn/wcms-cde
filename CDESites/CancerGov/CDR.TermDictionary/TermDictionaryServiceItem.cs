@@ -25,10 +25,10 @@ namespace CancerGov.CDR.TermDictionary
         public int id;
 
         [DataMember]
-        public string item;
+        public string item = string.Empty;
 
         [DataMember]
-        public string info;
+        public string info=string.Empty;
 
         [DataMember]
         public TermDictionaryDataItem TermDictionaryDetail

@@ -16,6 +16,7 @@ namespace CancerGov.CDR.TermDictionary
     /// </summary>
     public static class TermDictionaryQuery
     {
+
         /// <summary>
         /// This is a method that will query the database and return a list of glossary terms
         /// based on the criteria and the language needed
@@ -23,11 +24,9 @@ namespace CancerGov.CDR.TermDictionary
         /// <param name="criteria"></param>
         /// <param name="language"></param>
         /// <param name="rows"></param>
-        /// <param pageNumber="rows">The current page for which data needs to be retrived.
-        /// If this value argument is -1 , the stored proc ignores the pageNumber</param>
         /// <returns></returns>
         [UsesSProc("usp_GetGlossary")]
-        public static DataTable Search(string language, string criteria, int rows, int pageNumber)
+        public static DataTable Search(string language, string criteria, int rows)
         {
             // create our null object
             DataTable dt = null;
@@ -53,6 +52,64 @@ namespace CancerGov.CDR.TermDictionary
                     "usp_GetGlossary",
                     parms);
 
+            }
+            catch (Exception ex)
+            {
+                CancerGovError.LogError("TermDictionaryQuery", 2, ex);
+                throw ex;
+            }
+
+            // return the DataTable
+            return dt;
+        }
+
+        /// <summary>
+        /// This is a method that will query the database and return a list of glossary terms
+        /// based on the criteria and the language needed
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <param name="language"></param>
+        /// <param name="rows"></param>
+        /// <param pageNumber="rows">The current page for which data needs to be retrived.
+        /// If this value argument is -1 , the stored proc ignores the pageNumber</param>
+        /// <returns></returns>
+        [UsesSProc("usp_GetGlossary")]
+        public static DataTable GetTermDictionaryList(string language, string criteria, int rows, int pageNumber, ref int totalRecordCount)
+        {
+            // create our null object
+            DataTable dt = null;
+            totalRecordCount = 0;
+
+            SqlParameter outputParam = new SqlParameter("@totalresult", SqlDbType.Int);
+            outputParam.Direction = ParameterDirection.Output;
+
+            // create our parameter array
+            SqlParameter[] parms = {
+                                       new SqlParameter("@Criteria", SqlDbType.VarChar),
+                                       new SqlParameter("@Language", SqlDbType.VarChar),
+                                       new SqlParameter("@topN", SqlDbType.Int),
+                                       new SqlParameter("@pagenumber", SqlDbType.Int),
+                                       new SqlParameter("@recordsPerPage", SqlDbType.Int),
+                                       outputParam
+                                   };
+
+            
+            // Set the values on the parameters
+            parms[0].Value = criteria;
+            parms[1].Value = language;
+            parms[2].Value = rows;
+            parms[3].Value = pageNumber;
+            parms[4].Value = rows;
+            try
+            {
+                // Query the database and get the results
+                dt = SqlHelper.ExecuteDatatable(
+                    ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
+                    CommandType.StoredProcedure,
+                    "usp_GetGlossary",
+                    parms);
+
+                totalRecordCount = (int)parms[5].Value;
             }
             catch (Exception ex)
             {

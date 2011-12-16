@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using System.ServiceModel.Web;
 using System.Text;
 
 namespace CancerGov.CDR.TermDictionary
@@ -10,16 +15,25 @@ namespace CancerGov.CDR.TermDictionary
     /// This class can only be instantiated by passing all known values in the
     /// constructor.
     [Serializable]
+    [DataContract]
     public class TermDictionaryDataItem
     {
-        public int GlossaryTermID { get { return termID; } }
-        public string TermName { get { return termName; } }
-        public string OLTermName { get { return olTermName; } }
-        public string TermPronunciation { get { return termPronunciation; } }
-        public string DefinitionHTML { get { return definitionHTML; } }
-        public string MediaHTML { get { return mediaHTML; } }
-        public string AudioMediaHTML { get { return audioMediaHTML; } }
-        public string RelatedInfoHTML { get { return relatedInfoHTML; } }
+        [DataMember]
+        public int GlossaryTermID { get { return termID; } set { termID = value; } }
+        [DataMember]
+        public string TermName { get { return termName; } set { termName = value; } }
+        [DataMember]
+        public string OLTermName { get { return olTermName; } set { olTermName = value; } }
+        [DataMember]
+        public string TermPronunciation { get { return termPronunciation; } set { termPronunciation = value; } }
+        [DataMember]
+        public string DefinitionHTML { get { return definitionHTML; } set { definitionHTML = value; } }
+        [DataMember]
+        public string MediaHTML { get { return mediaHTML; } set { mediaHTML = value; } }
+        [DataMember]
+        public string AudioMediaHTML { get { return audioMediaHTML; } set { audioMediaHTML = value; } } 
+        [DataMember]
+        public string RelatedInfoHTML { get { return relatedInfoHTML; } set { relatedInfoHTML = value; } }
 
         public List<TermDictionaryDataItem> PreviousNeighbors
         {
