@@ -89,7 +89,7 @@ namespace CancerGov.CDR.TermDictionary
         /// <returns>Returns the object if found in the database else TermDictionaryServiceItem object with 
         /// null TermDictionaryDetail property</returns>
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "GetTermDictionaryByIdJSON{language}?TermId={termId}&Audience={audience}")]
+            UriTemplate = "GetTermDictionaryByIdJSON/{language}?TermId={termId}&Audience={audience}")]
         [OperationContract]
         public TermDictionaryServiceItem GetTermDictionaryByIdJSON(string language, int termId, string audience)
         {
