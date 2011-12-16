@@ -57,10 +57,14 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
                     TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, mPBO.CDRId, null, 5);
                     definitionText = "<p>" + dataItem.DefinitionHTML + "</p>";
-                    definitionMedia = "<div class=\"thumb\">" + 
-                        dataItem.MediaHTML.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]) +
-                    "</div>";
-                    
+                    //Make sure a Media Image exists.
+                    if(dataItem.MediaID != 0)
+                    {
+                    definitionMedia = "<div class=\"thumb\">" +
+                        "<a href=\"" + ConfigurationSettings.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-750.jpg\" class=\"image ui-link\"><img class=\"thumbimage\" src=\"" + ConfigurationSettings.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-274.jpg\"></a>" +
+                        "</div>";
+                    definitionMedia = definitionMedia + "<div class=\"caption\">" + dataItem.MediaCaption + "</div>";
+                    }
                     /*if (mPBO.charLimit > 0)
                     {
                         moreLink.Visible = true;
