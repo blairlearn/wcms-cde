@@ -20,6 +20,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
         protected void Page_Load(object sender, EventArgs e)
         {
             ltDefinitionText.Text = DefinitionText;
+
         }
 
         protected string DefinitionText
@@ -32,22 +33,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
                 try
                 {
-                    string language = string.Empty;
                     string snippetXmlData = string.Empty;
-                    if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
-                    {
-                        language = "English";
-                        moreLink.InnerText = "More";
-
-                    }
-                    else
-                    {
-                        language = "Spanish";
-                        moreLink.InnerHtml = "M&aacute;s";
-
-                    }
-
-
+                    
                     snippetXmlData = SnippetInfo.Data;
                     // The snippet CDATA may contain CDATA as part of the data but percussion replaces the CDATA 
                     // close tag with Replace ']]>' with ']]ENDCDATA' this ']]ENDCDATA' should be replaced with 
@@ -60,44 +47,12 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     //Make sure a Media Image exists.
                     if(dataItem.MediaID != 0)
                     {
-                    definitionMedia = "<div class=\"thumb\">" +
-                        "<a href=\"" + ConfigurationSettings.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-750.jpg\" class=\"image ui-link\"><img class=\"thumbimage\" src=\"" + ConfigurationSettings.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-274.jpg\"></a>" +
-                        "</div>";
-                    definitionMedia = definitionMedia + "<div class=\"caption\">" + dataItem.MediaCaption + "</div>";
+                        definitionMedia = "<div class=\"thumb\">" +
+                            "<a href=\"" + ConfigurationSettings.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-750.jpg\" class=\"image ui-link\"><img class=\"thumbimage\" src=\"" + ConfigurationSettings.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-274.jpg\"></a>" +
+                            "</div>";
+                        definitionMedia = definitionMedia + "<div class=\"caption\">" + dataItem.MediaCaption + "</div>";
                     }
-                    /*if (mPBO.charLimit > 0)
-                    {
-                        moreLink.Visible = true;
-                        spDefinitionTextMore.InnerHtml = definitionText + definitionMedia;
-                        definitionText = definitionText.Substring(0, mPBO.charLimit);
-
-                    } */                      
-                    /*if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
-                    {
-                        definitionText = "<strong>Definition of " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
-                        if (mPBO.charLimit > 0)
-                        {
-                            moreLink.Visible = true;
-                            spDefinitionTextMore.InnerHtml = definitionText;
-                            definitionText = definitionText.Substring(0, mPBO.charLimit);
-
-                        }
-                    }
-                    else
-                    {
-
-                        definitionText = "<p>" + dataItem.DefinitionHTML + "</p>";
-                        definitionMedia = "<div class=\"thumb\">" + dataItem.MediaHTML + "</div>";
-                        if (mPBO.charLimit > 0)
-                        {
-                            moreLink.Visible = true;
-                            spDefinitionTextMore.InnerHtml = definitionText + definitionMedia;
-                            definitionText = definitionText.Substring(0, mPBO.charLimit);
-
-                        }                       
-
-                    }*/
-
+                    
                    
                 }
                 catch(Exception ex)
