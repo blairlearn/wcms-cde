@@ -20,7 +20,6 @@ namespace MobileCancerGov.Web.SnippetTemplates
         protected void Page_Load(object sender, EventArgs e)
         {
             ltDefinitionText.Text = DefinitionText;
-
         }
 
         protected string DefinitionText
@@ -38,11 +37,13 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
                     {
                         language = "English";
+                        spDefinitionHeader.InnerText = "Definition"; 
                         
                     }
                     else
                     {
                         language = "Spanish";
+                        spDefinitionHeader.InnerText = "Definición";
 
                     }
 
