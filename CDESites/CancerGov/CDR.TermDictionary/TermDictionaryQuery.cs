@@ -31,11 +31,15 @@ namespace CancerGov.CDR.TermDictionary
             // create our null object
             DataTable dt = null;
 
+            SqlParameter outputParam = new SqlParameter("@totalresult", SqlDbType.Int);
+            outputParam.Direction = ParameterDirection.Output;
+
             // create our parameter array
             SqlParameter[] parms = {
                                        new SqlParameter("@Criteria", SqlDbType.VarChar),
                                        new SqlParameter("@Language", SqlDbType.VarChar),
-                                       new SqlParameter("@topN", SqlDbType.Int)
+                                       new SqlParameter("@topN", SqlDbType.Int),
+                                       outputParam
                                    };
 
             // Set the values on the parameters
