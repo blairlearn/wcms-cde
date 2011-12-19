@@ -30,10 +30,22 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 string definitionText = string.Empty;
                 string definitionMedia = string.Empty;
+                string language = string.Empty;
 
                 try
                 {
                     string snippetXmlData = string.Empty;
+                    if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+                    {
+                        language = "English";
+                        
+                    }
+                    else
+                    {
+                        language = "Spanish";
+
+                    }
+
                     
                     snippetXmlData = SnippetInfo.Data;
                     // The snippet CDATA may contain CDATA as part of the data but percussion replaces the CDATA 
