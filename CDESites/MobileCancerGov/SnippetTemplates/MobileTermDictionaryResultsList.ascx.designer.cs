@@ -8,37 +8,37 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MobileCancerGov.Web.UserControls {
+namespace MobileCancerGov.Web.SnippetTemplates {
     
     
-    public partial class TermDictionary {
+    public partial class MobileTermDictionaryResultsList {
         
         /// <summary>
-        /// TermSearch control.
+        /// searchString control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel TermSearch;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText searchString;
         
         /// <summary>
-        /// btnGo control.
+        /// goButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnGo;
+        protected global::System.Web.UI.WebControls.ImageButton goButton;
         
         /// <summary>
-        /// ViewResultsList control.
+        /// azLink control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel ViewResultsList;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor azLink;
         
         /// <summary>
         /// resultListView control.
@@ -48,32 +48,5 @@ namespace MobileCancerGov.Web.UserControls {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView resultListView;
-        
-        /// <summary>
-        /// ViewDefinition control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel ViewDefinition;
-        
-        /// <summary>
-        /// basic control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel basic;
-        
-        /// <summary>
-        /// advanced control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel advanced;
     }
 }

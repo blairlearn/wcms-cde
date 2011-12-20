@@ -8,27 +8,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MobileCancerGov.Web {
+namespace MobileCancerGov.Web.SnippetTemplates {
     
     
-    public partial class TermDictionaryTest_O_Matic {
+    public partial class MobileDictionaryHome {
         
         /// <summary>
-        /// form1 control.
+        /// searchString control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText searchString;
         
         /// <summary>
-        /// MobileTermDictionaryRouter2 control.
+        /// goButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::MobileCancerGov.Web.SnippetTemplates.MobileTermDictionaryRouter MobileTermDictionaryRouter2;
+        protected global::System.Web.UI.WebControls.ImageButton goButton;
+        
+        /// <summary>
+        /// azLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor azLink;
     }
 }

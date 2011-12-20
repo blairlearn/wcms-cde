@@ -2,6 +2,12 @@
 
 <%@ Register src="UserControls/TermDictionary.ascx" tagname="TermDictionary" tagprefix="uc1" %>
 
+<%@ Register src="SnippetTemplates/MobileTermDictionaryDefinitionView.ascx" tagname="MobileTermDictionaryDefinitionView" tagprefix="uc2" %>
+
+<%@ Register src="SnippetTemplates/MobileTermDictionaryResultsList.ascx" tagname="MobileTermDictionaryResultsList" tagprefix="uc3" %>
+
+<%@ Register src="SnippetTemplates/MobileTermDictionaryRouter.ascx" tagname="MobileTermDictionaryRouter" tagprefix="uc4" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
@@ -31,10 +37,16 @@
     <meta name="espanol-linking-policy" />
 </head>
 <body>
+    <form id="form1" runat="server">
+<!--
 Calling Page Top---------------------------------------------------------------------------<br/>    
-    <form id="TermDictionaryForm" runat="server">
-    <uc1:TermDictionary ID="TermDictionary1" runat="server" />
+-->
+    <uc4:MobileTermDictionaryRouter ID="MobileTermDictionaryRouter2" 
+        runat="server" />
     </form>
-<br/> Calling Page Bottom------------------------------------------------------------------<br/>
+<!-- 
+Calling Page Bottom------------------------------------------------------------------<br/>
+-->
+
 </body>
 </html>

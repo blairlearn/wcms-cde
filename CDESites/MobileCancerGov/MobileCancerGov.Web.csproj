@@ -61,6 +61,10 @@
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
+    <Content Include="SnippetTemplates\MobileTermDictionaryHome.ascx" />
+    <Content Include="SnippetTemplates\MobileTermDictionaryDefinitionView.ascx" />
+    <Content Include="SnippetTemplates\MobileTermDictionaryResultsList.ascx" />
+    <Content Include="SnippetTemplates\MobileTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="TermDictionary.svc" />
@@ -86,6 +90,34 @@
     </Compile>
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.designer.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\MobileTermDictionaryHome.ascx.cs">
+      <DependentUpon>MobileTermDictionaryHome.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\MobileTermDictionaryHome.ascx.designer.cs">
+      <DependentUpon>MobileTermDictionaryHome.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\MobileTermDictionaryDefinitionView.ascx.cs">
+      <DependentUpon>MobileTermDictionaryDefinitionView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\MobileTermDictionaryDefinitionView.ascx.designer.cs">
+      <DependentUpon>MobileTermDictionaryDefinitionView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\MobileTermDictionaryResultsList.ascx.cs">
+      <DependentUpon>MobileTermDictionaryResultsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\MobileTermDictionaryResultsList.ascx.designer.cs">
+      <DependentUpon>MobileTermDictionaryResultsList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\MobileTermDictionaryRouter.ascx.cs">
+      <DependentUpon>MobileTermDictionaryRouter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\MobileTermDictionaryRouter.ascx.designer.cs">
+      <DependentUpon>MobileTermDictionaryRouter.ascx</DependentUpon>
     </Compile>
     <Compile Include="TermDictionaryTest-O-Matic.aspx.cs">
       <DependentUpon>TermDictionaryTest-O-Matic.aspx</DependentUpon>
@@ -142,6 +174,10 @@
     <ProjectReference Include="..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CancerGov\CancerGovCommon\CancerGovCommon.csproj">
+      <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
+      <Name>CancerGovCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\CancerGov\CDR.TermDictionary\CDR.TermDictionary.csproj">
       <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
