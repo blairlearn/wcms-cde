@@ -595,6 +595,7 @@
     <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
     <Content Include="SnippetTemplates\GlossaryTerms.ascx" />
     <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />
+    <Content Include="SnippetTemplates\PublicArchiveBanner.ascx" />
     <Content Include="SnippetTemplates\ResultsGeneticsServices.ascx" />
     <Content Include="SnippetTemplates\SearchGeneticsServices.ascx" />
     <Content Include="SnippetTemplates\TableofLinks.ascx" />

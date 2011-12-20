@@ -1634,6 +1634,15 @@
           </documentation>
         </annotation>
       </element>
+      <element name="IsPublicArchive" type="boolean"
+        minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Defines if this Page Assembly Instruction is in
+            the Public Archive.
+          </documentation>
+        </annotation>
+      </element>
       <element name="OrderCopyURL" type="string"
         minOccurs="0" maxOccurs="1">
         <annotation>
