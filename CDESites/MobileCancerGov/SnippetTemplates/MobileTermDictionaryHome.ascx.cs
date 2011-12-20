@@ -12,19 +12,43 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
+using CancerGov.CDR.TermDictionary;
 
 namespace MobileCancerGov.Web.SnippetTemplates
 {
     public partial class MobileDictionaryHome : SnippetControl
     {
+        ArrayList azListLettersWithData; 
+
         protected void Page_Load(object sender, EventArgs e)
         {
             azLink.HRef = Page.Request.Url.LocalPath;
+            azListLettersWithData = TermDictionaryManager.GetAZListLettersWithData("english");
+            
+
+        }
+
+        protected string AnchorTagCreator(char letter)
+        {
+            string output="";
+
+            if (azListLettersWithData.IndexOf(letter.ToString().ToUpper()) > -1)
+            {
+                output = "<a href=\"" +
+                         Page.Request.Url.LocalPath +
+                          "?expand=" + letter +
+                          "\">" + letter +
+                          "</a>";
+            }
+            else
+                output = letter.ToString();
+
+            return output;
         }
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Page.Response.Redirect(Page.Request.Url.LocalPath + "?SearchString=" + searchString.Value.Trim().ToString());
+            Page.Response.Redirect(Page.Request.Url.LocalPath + "?search=" + searchString.Value.Trim().ToString());
         }
     }
 }

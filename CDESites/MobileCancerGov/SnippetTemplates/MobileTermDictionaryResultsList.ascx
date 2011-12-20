@@ -32,8 +32,7 @@
         </td>
         <td></td>
     </tr>
-    <tr style="height:12px">
-    </tr>
+    <tr><td>&nbsp;</td></tr>
     <tr>
         <td></td>
         <td>
@@ -44,7 +43,7 @@
             </LayoutTemplate>
             <ItemTemplate>
                 <a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
-                <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%><%=QueryStringLang%>"
+                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=QueryStringLang%>"
                 <%# ResultListViewHrefOnclick(Container)%>>
                 <%# Eval("TermName")%></a>
                 &nbsp;&nbsp;

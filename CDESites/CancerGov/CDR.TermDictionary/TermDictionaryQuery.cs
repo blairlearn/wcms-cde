@@ -68,6 +68,47 @@ namespace CancerGov.CDR.TermDictionary
         }
 
         /// <summary>
+        /// This is a method that will query the database and return a list of letters for which
+        /// glossary terms start with
+        /// </summary>
+        /// <param name="language"></param>
+        /// <returns></returns>
+        [UsesSProc("usp_getGlossaryFirstLetter")]
+        public static DataTable AZListLettersWithData(string language)
+        {
+            // create our null object
+            DataTable dt = null;
+
+            SqlParameter outputParam = new SqlParameter("@totalresult", SqlDbType.Int);
+            outputParam.Direction = ParameterDirection.Output;
+
+            // create our parameter array
+            SqlParameter[] parms = {   new SqlParameter("@Language", SqlDbType.VarChar)};
+
+            // Set the values on the parameters
+            parms[0].Value = language;
+
+            try
+            {
+                // Query the database and get the results
+                dt = SqlHelper.ExecuteDatatable(
+                    ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
+                    CommandType.StoredProcedure,
+                    "usp_getGlossaryFirstLetter",
+                    parms);
+
+            }
+            catch (Exception ex)
+            {
+                CancerGovError.LogError("TermDictionaryQuery", 2, ex);
+                throw ex;
+            }
+
+            // return the DataTable
+            return dt;
+        }
+
+        /// <summary>
         /// This is a method that will query the database and return a list of glossary terms
         /// based on the criteria and the language needed
         /// </summary>
@@ -277,6 +318,8 @@ namespace CancerGov.CDR.TermDictionary
             // return the DataTable
             return dt;
         }
+
+
 
         public static ArrayList GetPopDefinition(string type, string param, string pdqVersion, string language)
         {

@@ -195,6 +195,40 @@ namespace CancerGov.CDR.TermDictionary
             return di;
         }
 
+
+        /// <summary>
+        /// Method will return a all letters that have items that start with the specific letter 
+        /// </summary>
+        /// <param name="language"></param>
+
+        /// <returns></returns>
+        public static ArrayList GetAZListLettersWithData(string language)
+        {
+            DataTable dt = null;
+            ArrayList al = null;
+
+            try
+            {
+                // Call the database layer and get data
+                dt = TermDictionaryQuery.AZListLettersWithData(language);
+                al = new ArrayList(dt.Rows.Count);
+                foreach (DataRow row in dt.Rows)
+                {
+                        al.Add(row[0].ToString().ToUpper());
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                CancerGovError.LogError("TermDictionaryManager.GetAZListLettersWithData", 2, ex);
+                throw ex;
+            }
+
+            return al;
+        }
+
+
+
         /// <summary>
         /// Method will return a single TermDictionaryItem with its associated
         /// TermDictionaryNeighbors

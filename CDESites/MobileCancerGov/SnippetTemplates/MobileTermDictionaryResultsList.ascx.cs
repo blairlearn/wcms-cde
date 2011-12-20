@@ -10,16 +10,17 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using MobileCancerGov.Web.SnippetTemplates;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
+using CancerGov.Text;
 using CancerGov.CDR.TermDictionary;
+using MobileCancerGov.Web.SnippetTemplates;
 
 namespace MobileCancerGov.Web.SnippetTemplates
 {
     public partial class MobileTermDictionaryResultsList : SnippetControl
     {
-        private string _dictionaryURL = "dictionaryURL/";
+        private string _dictionaryURL = "";
         private string _queryStringLanguage = "English";
         private int _numResults = 0;
 
@@ -43,17 +44,18 @@ namespace MobileCancerGov.Web.SnippetTemplates
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            _dictionaryURL = Page.Request.Url.LocalPath;
             azLink.HRef = Page.Request.Url.LocalPath;
-            String searchStr = Request.QueryString["searchString"];
-            String expand = Request.QueryString["expand"];
+            String searchStr = Strings.Clean(Request.QueryString["search"]);
+            String expand = Strings.Clean(Request.QueryString["expand"]);
 
             TermDictionaryCollection dataCollection = null;
-            if (!String.IsNullOrEmpty(searchStr))
+            if (!String.IsNullOrEmpty(searchStr)) // search string provide, do a term search
             {
                 searchString.Value = searchStr;
                 dataCollection = TermDictionaryManager.Search("English", searchStr, 0, true);
             }
-            else if(!String.IsNullOrEmpty(expand))
+            else if(!String.IsNullOrEmpty(expand)) // A-Z provided - do an A-Z search
             {
                 searchString.Value = "";
                 dataCollection = TermDictionaryManager.Search("English", expand, 0, false);
@@ -84,6 +86,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
             else
                 return "";
         }
+
         protected string LimitText(ListViewDataItem item, int numberOfCharacters)
         {
             const int MAX_WALKBACK = 30;
@@ -118,7 +121,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
         protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
         {
-            Page.Response.Redirect(Page.Request.Url.LocalPath + "?SearchString=" + searchString.Value.Trim().ToString());
+            Page.Response.Redirect(Page.Request.Url.LocalPath + "?search=" + searchString.Value.Trim().ToString());
         }
     }
 }
