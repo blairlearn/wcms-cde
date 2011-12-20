@@ -22,10 +22,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            azLink.HRef = Page.Request.Url.LocalPath;
             azListLettersWithData = TermDictionaryManager.GetAZListLettersWithData("english");
-            
-
         }
 
         protected string AnchorTagCreator(char letter)
@@ -36,7 +33,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 output = "<a href=\"" +
                          Page.Request.Url.LocalPath +
-                          "?expand=" + letter +
+                          "?expand=" +  Server.UrlEncode(letter.ToString()) +
                           "\">" + letter +
                           "</a>";
             }

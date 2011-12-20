@@ -44,6 +44,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            bool expandNumbers = false;
             _dictionaryURL = Page.Request.Url.LocalPath;
             azLink.HRef = Page.Request.Url.LocalPath;
             String searchStr = Strings.Clean(Request.QueryString["search"]);
@@ -55,10 +56,16 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 searchString.Value = searchStr;
                 dataCollection = TermDictionaryManager.Search("English", searchStr, 0, true);
             }
-            else if(!String.IsNullOrEmpty(expand)) // A-Z provided - do an A-Z search
+            else if(!String.IsNullOrEmpty(expand)) // A-Z expand provided - do an A-Z search
             {
                 searchString.Value = "";
-                dataCollection = TermDictionaryManager.Search("English", expand, 0, false);
+                if (expand == "#")
+                {
+                    expandNumbers = true;
+                    expand = "[0-9]";
+                }
+
+                dataCollection = TermDictionaryManager.Search("English", expand.Trim().ToUpper(), 0, false);
             }
 
             if (dataCollection != null)
@@ -72,8 +79,20 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 }
                 else
                 {
-                    resultListView.DataSource = dataCollection;
-                    resultListView.DataBind();
+                    if (expandNumbers)
+                    {
+                        resultListViewNoDescription.Visible = true;
+                        resultListView.Visible = false;
+                        resultListViewNoDescription.DataSource = dataCollection;
+                        resultListViewNoDescription.DataBind();
+                    }
+                    else
+                    {
+                        resultListView.Visible = true;
+                        resultListViewNoDescription.Visible = false;
+                        resultListView.DataSource = dataCollection;
+                        resultListView.DataBind();
+                    }
                     NumResults = dataCollection.Count;
                 }
             }

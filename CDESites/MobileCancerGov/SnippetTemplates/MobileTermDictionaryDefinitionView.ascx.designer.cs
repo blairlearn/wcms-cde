@@ -12,5 +12,32 @@ namespace MobileCancerGov.Web.SnippetTemplates {
     
     
     public partial class MobileTermDictionaryDefinitionView {
+        
+        /// <summary>
+        /// searchString control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText searchString;
+        
+        /// <summary>
+        /// goButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton goButton;
+        
+        /// <summary>
+        /// azLink control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor azLink;
     }
 }

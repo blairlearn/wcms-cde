@@ -21,7 +21,6 @@
         </td>
         <td width="2px"></td>
         <td>
-            <a id="azLink" name="asLink" runat="server" href="">A-Z</a>
         </td>
         <td></td>
     </tr>
