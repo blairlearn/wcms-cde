@@ -50,7 +50,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
             if (!String.IsNullOrEmpty(cdrId))
             {
-                di = TermDictionaryManager.GetDefinitionByTermID(language, cdrId, "patient", 1);
+                di = TermDictionaryManager.GetDefinitionByTermID(language, cdrId, "", 1);
                 int i = 0;
              
             }
