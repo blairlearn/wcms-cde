@@ -502,6 +502,8 @@ namespace NCI.Web.CDE
                     keysList.Add("email");
                 if (AlternateContentVersions.IsMobileShareAvailable)
                     keysList.Add("mobileShare");
+                if (AlternateContentVersions.IsPublicArchive)
+                    keysList.Add("publicArchive");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
 
