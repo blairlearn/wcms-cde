@@ -12,7 +12,7 @@
 
     //Hookup JPlayer for Audio
     if (jQuery.jPlayer) {
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function($) {
             var my_jPlayer = $("#dictionary_jPlayer");
 
             my_jPlayer.jPlayer({
