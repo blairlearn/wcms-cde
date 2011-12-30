@@ -26,6 +26,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
         private string _searchStr = "";
         private int _numResults = 0;
 
+        //Properties 
         public string DictionaryURL
         {
             get { return _dictionaryURL; }
@@ -47,7 +48,6 @@ namespace MobileCancerGov.Web.SnippetTemplates
             set { _searchStr = value; }
         }
 
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -67,7 +67,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
             TermDictionaryCollection dataCollection = null;
             if (!String.IsNullOrEmpty(searchStr)) // search string provide, do a term search
             {
-                dataCollection = TermDictionaryManager.Search("English", searchStr,, true);
+                dataCollection = TermDictionaryManager.Search("English", searchStr,0, true);
             }
             else if(!String.IsNullOrEmpty(expand)) // A-Z expand provided - do an A-Z search
             {
