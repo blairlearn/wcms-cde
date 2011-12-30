@@ -67,7 +67,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
             TermDictionaryCollection dataCollection = null;
             if (!String.IsNullOrEmpty(searchStr)) // search string provide, do a term search
             {
-                dataCollection = TermDictionaryManager.Search("English", searchStr, 0, true);
+                dataCollection = TermDictionaryManager.Search("English", searchStr,, true);
             }
             else if(!String.IsNullOrEmpty(expand)) // A-Z expand provided - do an A-Z search
             {
