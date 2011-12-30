@@ -37,16 +37,9 @@
     <meta name="espanol-linking-policy" />
 </head>
 <body>
-    <form id="form1" runat="server">
-<!--
-Calling Page Top---------------------------------------------------------------------------<br/>    
--->
+<!-- Calling Page Top------------------------------------------------------<br/>    -->
     <uc4:MobileTermDictionaryRouter ID="MobileTermDictionaryRouter2" 
         runat="server" />
-    </form>
-<!-- 
-Calling Page Bottom------------------------------------------------------------------<br/>
--->
-
+<!-- Calling Page Bottom---------------------------------------------------<br/>  -->
 </body>
 </html>

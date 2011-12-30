@@ -1,38 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MobileTermDictionaryResultsList.ascx.cs" Inherits="MobileCancerGov.Web.SnippetTemplates.MobileTermDictionaryResultsList" %>
-<!-- Page Title Start --> 
-<style type="text/css">
-    .style4
-    {
-        height: 12px;
-    }
-</style>
-<!-- Page Title End -->
-<!-- Search box Start --> 
-<form id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);" action="/dictionary" method="post" name="aspnetForm">
-    <table border="0" cellpadding="2" cellspacing="0" width="100%">
-    <tbody>
-    <tr>
-        <td></td>
-        <td>
-            <h2>Dictionary of Cancer Terms</h2>
-        </td>       
-    </tr>
-    <tr>
-        <td></td>
-        <td width="90%">
-            <input name="searchString" id="searchString" type="text" runat="server"  />
-        </td>
-        <td></td>
-        <td width="5%">
-            <asp:ImageButton ID="goButton" name="goButton" runat="server" src="/images/go-button.png" onclick="ImageButton1_Click" />
-        </td>
-        <td width="2px"></td>
-        <td>
-            <a id="azLink" name="asLink" runat="server">A-Z</a>
-        </td>
-        <td></td>
-    </tr>
-    <tr><td>&nbsp;</td></tr>
+<asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
+<asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
+<table border="0" cellpadding="2" cellspacing="0" width="100%">
+<tbody>
     <tr>
         <td></td>
         <td>
@@ -43,7 +13,7 @@
             </LayoutTemplate>
             <ItemTemplate>
                 <a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
-                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=QueryStringLang%>"
+                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=QueryStringLang%><% =SearchString %>"
                 <%# ResultListViewHrefOnclick(Container)%>>
                 <%# Eval("TermName")%></a>
                 &nbsp;&nbsp;
@@ -72,7 +42,7 @@
             </LayoutTemplate>
             <ItemTemplate>
                 <a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
-                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=QueryStringLang%>"
+                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=QueryStringLang%><% =SearchString %>"
                 <%# ResultListViewHrefOnclick(Container)%>>
                 <%# Eval("TermName")%></a>
                 &nbsp;&nbsp;
@@ -103,9 +73,8 @@
         <!-- Result List w/o Definition End -->
         </td>
     </tr>
-    </tbody>
-    </table>
-</form>
+</tbody>
+</table>
 <!-- Search box End --> 
 
 

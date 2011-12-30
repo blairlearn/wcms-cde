@@ -15,6 +15,7 @@ using NCI.Web.CDE.WebAnalytics;
 using CancerGov.Text;
 using CancerGov.CDR.TermDictionary;
 using MobileCancerGov.Web.SnippetTemplates;
+using NCI.Web.CDE.UI.SnippetControls;
 
 namespace MobileCancerGov.Web.SnippetTemplates
 {
@@ -22,6 +23,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
     {
         private string _dictionaryURL = "";
         private string _queryStringLanguage = "English";
+        private string _searchStr = "";
         private int _numResults = 0;
 
         public string DictionaryURL
@@ -39,26 +41,36 @@ namespace MobileCancerGov.Web.SnippetTemplates
             get { return _queryStringLanguage; }
             set { _queryStringLanguage = value; }
         }
+        public string SearchString
+        {
+            get { return _searchStr; }
+            set { _searchStr = value; }
+        }
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            bool expandNumbers = false;
-            _dictionaryURL = Page.Request.Url.LocalPath;
-            azLink.HRef = Page.Request.Url.LocalPath;
             String searchStr = Strings.Clean(Request.QueryString["search"]);
             String expand = Strings.Clean(Request.QueryString["expand"]);
+            if (!String.IsNullOrEmpty(searchStr))
+                _searchStr = "&lastSearch=" + searchStr;
+            else
+                _searchStr = "";
+
+            litPageUrl.Text = Page.Request.Url.LocalPath;
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(Page.Request.Url.LocalPath, searchStr);
+            
+            bool expandNumbers = false;
+            _dictionaryURL = Page.Request.Url.LocalPath;
 
             TermDictionaryCollection dataCollection = null;
             if (!String.IsNullOrEmpty(searchStr)) // search string provide, do a term search
             {
-                searchString.Value = searchStr;
                 dataCollection = TermDictionaryManager.Search("English", searchStr, 0, true);
             }
             else if(!String.IsNullOrEmpty(expand)) // A-Z expand provided - do an A-Z search
             {
-                searchString.Value = "";
                 if (expand == "#")
                 {
                     expandNumbers = true;
@@ -138,9 +150,5 @@ namespace MobileCancerGov.Web.SnippetTemplates
             return definition;
         }
 
-        protected void ImageButton1_Click(object sender, ImageClickEventArgs e)
-        {
-            Page.Response.Redirect(Page.Request.Url.LocalPath + "?search=" + searchString.Value.Trim().ToString());
-        }
     }
 }
