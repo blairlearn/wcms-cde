@@ -1,17 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MobileTermDictionaryDefinitionView.ascx.cs" Inherits="MobileCancerGov.Web.SnippetTemplates.MobileTermDictionaryDefinitionView" %>
-<style type="text/css">
-    .style1
-    {
-        height: 8px;
-    }
-</style>
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>  
 <table border="0" cellpadding="2" cellspacing="0" width="100%">
 <tbody>
 <tr >
     <td></td>
-    <td ><span class="term"><% =TermName %></span></td>    
+    <td ><span class="mtd_term"><% =TermName %></span></td>    
 </tr>
 <tr>
     <td></td>
@@ -28,8 +22,8 @@
     </td>   
 </tr>
 <tr>
-    <td class="style1"></td>
-    <td class="style1"></td>
+    <td class="mtd_spacer1"></td>
+    <td class="mtd_spacer1"></td>
 </tr>
 <tr>
     <td></td>
@@ -38,24 +32,24 @@
     </td> 
 </tr>
 <tr>
-    <td class="style1"></td>
-    <td class="style1"></td>
+    <td class="mtd_spacer1"></td>
+    <td class="mtd_spacer1"></td>
 </tr>
 <tr>
     <td></td>
     <td>
-        <span class="definition"><% =DefinitionHTML %></span>
+        <span class="mtd_definition"><% =DefinitionHTML %></span>
     </td>    
 </tr>
 <tr>
-    <td class="style1"></td>
-    <td class="style1"></td>
+    <td class="mtd_spacer1"></td>
+    <td class="mtd_spacer1"></td>
 </tr>
 <tr>
     <td></td>
     <td>
         <table border="0" cellpadding="2" cellspacing="0" 
-            style="width: 40%;" >
+            class="mtd_imageCaption" >
             <tr>
                 <td><% =ImageLink %></td>
             </tr>

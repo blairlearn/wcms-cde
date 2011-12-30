@@ -26,28 +26,6 @@ namespace MobileCancerGov.Web.SnippetTemplates
             litPageUrl.Text = Page.Request.Url.LocalPath;
             litSearchBlock.Text = MobileTermDictionary.SearchBlock("","");
             litAZList.Text = MobileTermDictionary.AZBlock(Page.Request.Url.LocalPath);
-
-
         }
-
-        //protected string AnchorTagCreator(char letter)
-        //{
-        //    string output = "";
-
-        //    if (azListLettersWithData.IndexOf(letter.ToString().ToUpper()) > -1)
-        //    {
-        //        output = "<a href=\"" +
-        //                 Page.Request.Url.LocalPath +
-        //                  "?expand=" + Server.UrlEncode(letter.ToString()) +
-        //                  "\">" + letter +
-        //                  "</a>";
-        //    }
-        //    else
-        //        output = letter.ToString();
-
-        //    return output;
-        //}
-
-
     }
 }

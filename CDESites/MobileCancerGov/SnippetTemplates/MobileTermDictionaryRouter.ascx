@@ -1,49 +1,57 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MobileTermDictionaryRouter.ascx.cs" Inherits="MobileCancerGov.Web.SnippetTemplates.MobileTermDictionaryRouter" %>
-<!-- Temporary location for page CSS 1 -->
+<!-- Mobile Term Dictionary CSS -->
 <style type="text/css">
-    .term
+    .mtd_term
     {
         font-family: Arial,Helvetica,sans-serif;
         font-size: 21px;
         font-weight: bold;
     }
-    .audio
+    .mtd_audio
     {
         font-family: Arial,Helvetica,sans-serif;
     }
-    .pronounce
+    .mtd_pronounce
     {
         font-family: Arial,Helvetica,sans-serif;
     }
-    .definition
+    .mtd_definition
     {
         font-family: Arial,Helvetica,sans-serif;
     }
-    .media
+    .mtd_media
     {
         font-family: Arial,Helvetica,sans-serif;
      }    
-    .imageCaption 
+    .mtd_imageCaption 
     {
         font-family: Arial,Helvetica,sans-serif;
         font-size: 14px;
         font-style:italic;
      }    
-     .az
+     .mtd_az
     {
         font-family: Arial,Helvetica,sans-serif;
         font-size: 21px;
      }
-     .heading1
+     .mtd_heading1
      {
      	font-family: Arial,Helvetica,sans-serif;
         font-size: 21px;
         font-weight: bold;
      }
-     .wait 
+     .mtd_wait 
      { 
      	cursor: wait !important; 
      }
+     .mtd_imageCaption
+     {
+     	width: 200px;
+     }
+     .mtd_spacer1
+    {
+        height: 8px;
+    }
 </style>
-<!-- End Temporary location for page CSS -->
+<!-- End Mobile Term Dictionary CSS -->
 <asp:PlaceHolder ID="phMobileTermDictionary" runat="server" />
