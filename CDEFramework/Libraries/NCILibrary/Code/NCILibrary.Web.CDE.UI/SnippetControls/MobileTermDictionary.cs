@@ -47,6 +47,17 @@ namespace NCI.Web.CDE.UI.SnippetControls
             return azBlock.ToString();
         }
 
+        public static string RawUrlClean(string rawUrl)
+        {
+            int paramStart = rawUrl.IndexOf("?");
+
+            if (paramStart > -1)
+                return rawUrl.Substring(0, paramStart);
+            else
+                return rawUrl;
+        }
+
+
         public static string SearchBlock(string url, string searchString)
         {
             StringBuilder searchBlock = new StringBuilder();
@@ -54,16 +65,22 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("<script type=\"text/javascript\">");
             searchBlock.AppendLine("function DoSearch()");
             searchBlock.AppendLine("{");
-            searchBlock.AppendLine("    document.body.className = 'mtd_wait'");
-            searchBlock.AppendLine("    var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
-            searchBlock.AppendLine("    $(location).attr('href',url);");
+            searchBlock.AppendLine("    if($('#searchString').val() != \"\") {");
+            searchBlock.AppendLine("       document.body.className = 'mtd_wait'");
+            searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
+            searchBlock.AppendLine("       $(location).attr('href',url);");
+            searchBlock.AppendLine("    }");    
             searchBlock.AppendLine("}");
             searchBlock.AppendLine("</script>");
             searchBlock.AppendLine("<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">");
             searchBlock.AppendLine("<tbody>");
             searchBlock.AppendLine("<tr>");
+            searchBlock.AppendLine("    <td class=\"mtd_spacer1\"></td>");
+            searchBlock.AppendLine("    <td class=\"mtd_spacer1\"></td>");
+            searchBlock.AppendLine("</tr>");
+            searchBlock.AppendLine("<tr>");
             searchBlock.AppendLine("    <td></td>");
-            searchBlock.AppendLine("    <td><span class=\"mtd_heading1\">Dictionary of Cancer Terms</span></td>");       
+            searchBlock.AppendLine("    <td><span class=\"mtd_heading1\">Dictionary of Cancer Terms</span></td>");
             searchBlock.AppendLine("</tr>");
             searchBlock.AppendLine("<tr>");
             searchBlock.AppendLine("    <td></td>");

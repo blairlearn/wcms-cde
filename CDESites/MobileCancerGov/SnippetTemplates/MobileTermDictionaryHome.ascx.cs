@@ -23,9 +23,9 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            litPageUrl.Text = Page.Request.Url.LocalPath;
+            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
             litSearchBlock.Text = MobileTermDictionary.SearchBlock("","");
-            litAZList.Text = MobileTermDictionary.AZBlock(Page.Request.Url.LocalPath);
+            litAZList.Text = MobileTermDictionary.AZBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl));
         }
     }
 }

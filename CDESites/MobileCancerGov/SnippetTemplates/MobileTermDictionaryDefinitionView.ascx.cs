@@ -154,8 +154,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
             String language = Strings.Clean(Request.QueryString["language"]);
             String lastSearch = Strings.Clean(Request.QueryString["lastSearch"]);
 
-            litPageUrl.Text = Page.Request.Url.LocalPath;
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(Page.Request.Url.LocalPath, lastSearch);
+            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch);
             
             if(String.IsNullOrEmpty(language))
                 language = "english"; //default to English
