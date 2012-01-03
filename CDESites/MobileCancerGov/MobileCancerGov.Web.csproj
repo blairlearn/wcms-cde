@@ -179,9 +179,17 @@
       <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
       <Name>CancerGovCommon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CancerGov\CDR.DrugDictionary\CDR.DrugDictionary.csproj">
+      <Project>{1F48A070-CA42-46D7-8C14-1CBE11609F4F}</Project>
+      <Name>CDR.DrugDictionary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CancerGov\CDR.TermDictionary\CDR.TermDictionary.csproj">
       <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
       <Name>CDR.TermDictionary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CancerGov\SiteSpecific\Modules\CancerGov.Search.AutoSuggest\CancerGov.Search.AutoSuggest.csproj">
+      <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>
+      <Name>CancerGov.Search.AutoSuggest</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
