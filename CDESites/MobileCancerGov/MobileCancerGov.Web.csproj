@@ -119,6 +119,13 @@
     <Compile Include="SnippetTemplates\MobileTermDictionaryRouter.ascx.designer.cs">
       <DependentUpon>MobileTermDictionaryRouter.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\SiteWideSearch.ascx.cs">
+      <DependentUpon>SiteWideSearch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\SiteWideSearch.ascx.designer.cs">
+      <DependentUpon>SiteWideSearch.ascx</DependentUpon>
+    </Compile>
     <Compile Include="TermDictionaryTest-O-Matic.aspx.cs">
       <DependentUpon>TermDictionaryTest-O-Matic.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

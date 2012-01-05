@@ -1,32 +1,29 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SiteWideSearch" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SiteWideSearch.ascx.cs" Inherits="MobileCancerGov.Web.SnippetTemplates.SiteWideSearch" %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="NCI" %>
 
 <form id="frmResults" runat="server">
-
-    <div>
-        <input type="text" id="txtKeyword1" name="txtKeyword1"  size="50"; value="<% =Keyword %>" />&nbsp;<input id="swSearchButton" type="submit" value="Search"/>
-        <% if (!string.IsNullOrEmpty(ResultsText))
-           { %>
-        <br />
-        <p class="genSiteSearchResultsCount"><% =ResultsText%></p>
-        <% } %>
-        <ol>
+    <div class="searchResults">
+        <ul>
             <asp:Repeater ID="rptSearchResults" runat="server">
                 <ItemTemplate>
-                    <li class="genSearchItem">
-                        <h4><a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>"><%# DataBinder.Eval(Container.DataItem, "Title")%></a></h4>
-                        <p class="genListItemDesc"><%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") : "" %></p>
-                        <p class="genListItemLink"><%# DataBinder.Eval(Container.DataItem, "Url")%></p>
+                    <li>
+                        <a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>"><%# DataBinder.Eval(Container.DataItem, "Title")%></a><br />
+                        <%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") + "<br />" : "" %>
+                        <br />
                     </li>
                 </ItemTemplate>     
             </asp:Repeater>
-        </ol>
-  <% if( ResultsFound ) {%>
-  <br />
+        </ul>
+  <% if (ResultsFound)
+     {%>
    <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" />
   <br />
-    <%} %>
+  <p><asp:HyperLink runat="server" ID="lnkSearchInDeskTop" >Search The Full Site</asp:HyperLink></p>
+    <%}
+     else
+     { %>
+        <p><strong><% =ResultsText %></strong></p>
+    <% } %>
     </div>
-    
 <asp:HiddenField ID="itemsPerPage" Value="5" runat="server" />
 </form>
