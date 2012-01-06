@@ -15,6 +15,8 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.UI.SnippetControls;
 using NCI.Web.UI.WebControls;
 using NCI.Web.CDE.InformationRequest;
+using NCI.Web.CDE.WebAnalytics;
+
 
 namespace MobileCancerGov.Web.SnippetTemplates
 {
@@ -23,6 +25,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
         private int _currentPage = 1;
         private int _offSet = 0;
         private int _recordsPerPage = 10;
+        private int _resultOffset = 1;
+            
         private bool _didDDLChange = false;
         private string _results = string.Empty;
         private const string swKeywordQuery = "swKeywordQuery";
@@ -76,6 +80,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                             int endRecord = 0;
                             _resultsFound = true;
                             SimplePager.GetFirstItemLastItem(_currentPage, _recordsPerPage, (int)results.TotalNumResults, out startRecord, out endRecord);
+                            _resultOffset = startRecord;
 
                             //phNoResultsLabel.Visible = false;
                             rptSearchResults.Visible = true;
@@ -89,7 +94,19 @@ namespace MobileCancerGov.Web.SnippetTemplates
                         spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
 
                         // Set the link for desktop search or full site search
-                        lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + "?swKeyword=" + Keyword;
+                        lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + PrettyUrl + "?swKeyword=" + Keyword;
+
+                        //// Web Analytics *************************************************
+                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.NumberOfSearchResults, wbField =>
+                        {
+                            wbField.Value = results.TotalNumResults.ToString();
+                        });
+
+                        this.PageInstruction.AddFieldFilter("channelName", (name, data) =>
+                        {
+                            data.Value = "NCI Home";
+                        });
+
 
                     }
                     catch (Exception ex)
@@ -171,6 +188,14 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     return 10;
                 return Int32.Parse(itemsPerPage.Value);
             }
+        }
+
+        protected string ResultsHyperlinkOnclick(RepeaterItem result)
+        {
+            if (WebAnalyticsOptions.IsEnabled)
+                return "NCIAnalytics.SiteWideSearchResults(this," + "false" + ",'" + (result.ItemIndex + _resultOffset).ToString() + "');"; // Load results onclick script
+            else
+                return "";
         }
 
         protected DisplayInformation PageDisplayInformation
