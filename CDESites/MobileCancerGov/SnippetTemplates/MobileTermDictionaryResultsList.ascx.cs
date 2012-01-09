@@ -45,11 +45,9 @@ namespace MobileCancerGov.Web.SnippetTemplates
         private int _currentPage = 0;
         private int _recordsPerPage = 0;
         private int _offSet = 0;
-        private string _pageTitle = "";
-        private string _buttonText = "";
-
-
- 
+        private bool _showDefinition = true;
+        private bool _expand = false;
+        private string _expandText = "";
 
         //Properties 
         public string DictionaryURL
@@ -89,6 +87,24 @@ namespace MobileCancerGov.Web.SnippetTemplates
         {
             get { return _pagerInfo; }
         }
+        
+        public bool ShowDefinition
+        {
+            get { return _showDefinition; }
+        }
+        public bool Expand
+        {
+            get { return _expand; }
+        }
+        public string ExpandText
+        {
+            get { return _expandText; }
+        }
+        public bool IsSpanish
+        {
+            get { return (Language == MobileTermDictionary.SPANISH); }
+        }
+
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -97,42 +113,45 @@ namespace MobileCancerGov.Web.SnippetTemplates
             String searchStr = Strings.Clean(Request.QueryString["search"]);
             String expand = Strings.Clean(Request.QueryString["expand"]);
             _languageParam = Strings.Clean(Request.QueryString["language"]);
-            //if (_languageParam == null)
-            //    _languageParam = "spanish";
             _currentPage = Strings.ToInt(Request.Params["PageNum"], 1);
             _recordsPerPage = Strings.ToInt(Request.Params["RecordsPerPage"], 10);
             _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
             _dictionaryURL = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-
 
             string pageTitle;
             string buttonText;
             string language;
             MobileTermDictionary.DetermineLanguage(_languageParam, out language, out pageTitle, out buttonText);
             _language = language;
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), searchStr, pageTitle, buttonText);
             
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), searchStr,language, pageTitle, buttonText);
             litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
             
-            bool noDefinition = false;
             TermDictionaryCollection dataCollection = null;
             if (!String.IsNullOrEmpty(searchStr)) // search string provide, do a term search
             {
-                dataCollection = TermDictionaryManager.Search(language, searchStr, 0, false);
+                //dataCollection = TermDictionaryManager.Search(language, searchStr, 0, false);
+                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, searchStr, false, _rowsPerPage, _currentPage, ref _maxrows);
+                int maxpages = _maxrows / _rowsPerPage;
+
             }
             else if(!String.IsNullOrEmpty(expand)) // A-Z expand provided - do an A-Z search
             {
-                noDefinition = true;
+                _expand = true;
+                _expandText = expand;
+                _showDefinition = false;
+                
                 string unFixedExpand = expand;
                 if (expand == "#")
                 {
                     expand = "[0-9]";
                     unFixedExpand = "%23";
                 }
+               
+
 
                 dataCollection = TermDictionaryManager.GetTermDictionaryList(language, expand.Trim().ToUpper(), false, _rowsPerPage, _currentPage, ref _maxrows);
                 int maxpages = _maxrows / _rowsPerPage;
-
             }
 
             if (dataCollection != null)
@@ -143,21 +162,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 }
                 else
                 {
-                    if (noDefinition)
-                    {
-                        // Expand # displays results without decription
-                        resultListViewNoDescription.Visible = true;
-                        resultListView.Visible = false;
-                        resultListViewNoDescription.DataSource = dataCollection;
-                        resultListViewNoDescription.DataBind();
-                    }
-                    else
-                    {
-                        resultListView.Visible = true;
-                        resultListViewNoDescription.Visible = false;
-                        resultListView.DataSource = dataCollection;
-                        resultListView.DataBind();
-                    }
+                    resultListView.DataSource = dataCollection;
+                    resultListView.DataBind();
                 }
 
 
@@ -168,42 +174,10 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 spPager.RecordCount = _maxrows;
                 spPager.RecordsPerPage = _rowsPerPage;
                 spPager.CurrentPage = _currentPage;
-                if(expand !="")
+                if (!String.IsNullOrEmpty(expand))
                     spPager.BaseUrl = litPageUrl.Text + "?expand=" + expand;
                 else
                     spPager.BaseUrl = litPageUrl.Text + "?search=" + searchStr;
-
-
-                ControlCollection cc = null;
-                if (noDefinition)
-                {
-                    cc = resultListViewNoDescription.Controls[0].Controls;                    
-                    if (language == SPANISH)
-                    {
-                        cc[3].Visible = true;
-                        cc[1].Visible = false;
-                    }
-                    else
-                    {
-                        cc[1].Visible = true;
-                        cc[3].Visible = false;
-                    }
-                }
-                else
-                {
-                    cc = resultListView.Controls[0].Controls;
-                    if (language == SPANISH)
-                    {
-                        cc[3].Visible = true;
-                        cc[1].Visible = false;
-                    }
-                    else
-                    {
-                        cc[1].Visible = true;
-                        cc[3].Visible = false;
-                    }
-                }
-
             }
         }
 

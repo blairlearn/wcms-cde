@@ -13,20 +13,34 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public const string ENGLISH = "english";
         public const string SPANISH = "spanish";
 
-        
-        static ArrayList azListLettersWithData = TermDictionaryManager.GetAZListLettersWithData("english");
 
-        public static string AZBlock(string url)
+        static ArrayList azListLettersWithData = TermDictionaryManager.GetAZListLettersWithData("english");
+        static ArrayList azListLettersWithDataSpanish = TermDictionaryManager.GetAZListLettersWithData("spanish");
+
+        public static string AZBlock(string url,string language)
         {
-          
+
+            ArrayList azList;
+            string languageAtribute = "";
+
+            if (language.Trim().ToUpper() == "english")
+                azList = azListLettersWithData;
+            else
+            {
+                azList = azListLettersWithDataSpanish;
+                languageAtribute = "&language=" + language;
+            }
+
+
             string addOn = "";
             StringBuilder azBlock = new StringBuilder();
             azBlock.AppendLine("<table border=\"0\" cellpadding=\"5\" cellspacing=\"0\" width=\"100%\"> ");
             azBlock.AppendLine("<tbody> ");
             azBlock.AppendLine("<tr> ");
 
-            if (azListLettersWithData.IndexOf("#") > -1)
-                azBlock.AppendLine("    <td><strong><a href=\"" + url + "?expand=%23\" >#</a></strong></td> ");
+            //if (azListLettersWithData.IndexOf("#") > -1)
+            if (azList.IndexOf("#") > -1)
+                    azBlock.AppendLine("    <td><strong><a href=\"" + url + "?expand=%23" + languageAtribute + "\" >#</a></strong></td> ");
             else
                 azBlock.AppendLine("    <td><strong>#</strong></td> ");
             
@@ -39,8 +53,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 else
                     addOn = "";
 
-                if (azListLettersWithData.IndexOf(letter.ToString().ToUpper()) > -1)
-                    azBlock.AppendLine("    <td><strong><a href=\"" + url + "?expand=" + letter.ToString() + "\" >" + letter.ToString() + "</a></strong></td>" + addOn);
+                if (azList.IndexOf(letter.ToString().ToUpper()) > -1)
+                    azBlock.AppendLine("    <td><strong><a href=\"" + url + "?expand=" + letter.ToString() +  languageAtribute + "\" >" + letter.ToString() + "</a></strong></td>" + addOn);
                 else
                     azBlock.AppendLine("    <td><strong>" + letter.ToString() + "</strong></td>" + addOn);
 
@@ -64,8 +78,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
         }
 
 
-        public static string SearchBlock(string url, string searchString, string heading, string buttonText)
+        public static string SearchBlock(string url, string searchString, string language, string heading, string buttonText)
         {
+
+            string languageAtribute = "";
+            if (language.Trim().ToLower() != "english")
+                languageAtribute = "?language=" + language;
+           
             StringBuilder searchBlock = new StringBuilder();
 
             searchBlock.AppendLine("<script type=\"text/javascript\">");
@@ -73,7 +92,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("{");
             searchBlock.AppendLine("    if($('#searchString').val() != \"\") {");
             searchBlock.AppendLine("       document.body.className = 'mtd_wait'");
-            searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
+            if (String.IsNullOrEmpty(language))
+                searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
+            else
+                if(language.Trim().ToLower() != "english")
+                    searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val()+ \"&language=" + language + "\";");
+                else        
+                    searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
             searchBlock.AppendLine("       $(location).attr('href',url);");
             searchBlock.AppendLine("    }");    
             searchBlock.AppendLine("}");
@@ -86,11 +111,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("</tr>");
             searchBlock.AppendLine("<tr>");
             searchBlock.AppendLine("    <td></td>");
-            //searchBlock.AppendLine("    <td><span class=\"mtd_heading1\">Dictionary of Cancer Terms</span></td>");
-            searchBlock.AppendLine("    <td><div=\"pageTile\">");
+            searchBlock.AppendLine("    <td><div class=\"pageTile\">");
             searchBlock.AppendLine("    <h2>" + heading + "</h2>");
             searchBlock.AppendLine("    </div></td>");
-            //searchBlock.AppendLine("    <td><span class=\"mtd_heading1\">Dictionary of Cancer Terms</span></td>");
            
             
             searchBlock.AppendLine("</tr>");
@@ -114,7 +137,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("    </td>");
             
             if (url != "")
-                searchBlock.AppendLine("    <td width=\"2px\"><a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + "\">A-Z</a></td>");
+                searchBlock.AppendLine("    <td width=\"2px\"><a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + languageAtribute + "\">A-Z</a></td>");
             else    
                 searchBlock.AppendLine("    <td width=\"2px\"></td>");
             

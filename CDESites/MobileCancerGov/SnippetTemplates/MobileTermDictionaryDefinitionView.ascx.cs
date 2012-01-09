@@ -158,7 +158,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
             string buttonText;
             string language;
             MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch, pageTitle, buttonText);
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch, language, pageTitle, buttonText);
             litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
                        
             if (!String.IsNullOrEmpty(cdrId))
