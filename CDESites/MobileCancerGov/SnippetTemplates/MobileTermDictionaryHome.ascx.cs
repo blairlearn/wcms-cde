@@ -14,7 +14,7 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE.UI.SnippetControls;
 using CancerGov.CDR.TermDictionary;
-
+using CancerGov.Text;
 
 namespace MobileCancerGov.Web.SnippetTemplates
 {
@@ -23,8 +23,15 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string languageParam = Strings.Clean(Request.QueryString["language"]);
+            string pageTitle;
+            string buttonText;
+            string language;
+            MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), "", pageTitle, buttonText);
+            
             litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock("","");
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock("","", pageTitle, buttonText);
             litAZList.Text = MobileTermDictionary.AZBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl));
         }
     }

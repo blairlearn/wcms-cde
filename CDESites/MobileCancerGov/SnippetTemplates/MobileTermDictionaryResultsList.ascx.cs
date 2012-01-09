@@ -17,6 +17,8 @@ using CancerGov.Common;
 using CancerGov.CDR.TermDictionary;
 using MobileCancerGov.Web.SnippetTemplates;
 using NCI.Web.CDE.UI.SnippetControls;
+using NCI.Web.UI.WebControls;
+using NCI.Web.CDE;
 
 
 namespace MobileCancerGov.Web.SnippetTemplates
@@ -30,11 +32,24 @@ namespace MobileCancerGov.Web.SnippetTemplates
         private string _queryStringLanguage = "English";
         private string _searchStr = "";
         private int _numResults = 0;
+        private string _languageParam = "";
         private string _language = "";
-        private string _page = "";
+        
         private string _previousPagerOnclick = "";
         private string _nextPagerOnclick = "";
         private string _pagerInfo = "";
+        private int _rowsPerPage = 10;
+        private int _maxrows = 0;
+
+
+        private int _currentPage = 0;
+        private int _recordsPerPage = 0;
+        private int _offSet = 0;
+        private string _pageTitle = "";
+        private string _buttonText = "";
+
+
+ 
 
         //Properties 
         public string DictionaryURL
@@ -59,8 +74,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
         }
         public string Language
         {
-            get { return _searchStr; }
-            set { _searchStr = value; }
+            get { return _language; }
+            set { _language = value; }
         }
         public string NextPagerOnclick
         {
@@ -81,69 +96,54 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
             String searchStr = Strings.Clean(Request.QueryString["search"]);
             String expand = Strings.Clean(Request.QueryString["expand"]);
-            _language = Strings.Clean(Request.QueryString["language"]);
-            _page = Strings.Clean(Request.QueryString["page"]);
-            
-            if (!String.IsNullOrEmpty(searchStr))
-                _searchStr = "&lastSearch=" + searchStr;
-            else
-                _searchStr = "";
-
-            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), searchStr);
-            
-            bool expandNumbers = false;
+            _languageParam = Strings.Clean(Request.QueryString["language"]);
+            //if (_languageParam == null)
+            //    _languageParam = "spanish";
+            _currentPage = Strings.ToInt(Request.Params["PageNum"], 1);
+            _recordsPerPage = Strings.ToInt(Request.Params["RecordsPerPage"], 10);
+            _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
             _dictionaryURL = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
+
+
+            string pageTitle;
+            string buttonText;
+            string language;
+            MobileTermDictionary.DetermineLanguage(_languageParam, out language, out pageTitle, out buttonText);
+            _language = language;
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), searchStr, pageTitle, buttonText);
+            
+            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
+            
+            bool noDefinition = false;
             TermDictionaryCollection dataCollection = null;
             if (!String.IsNullOrEmpty(searchStr)) // search string provide, do a term search
             {
-                dataCollection = TermDictionaryManager.Search("English", searchStr, 0, false);
+                dataCollection = TermDictionaryManager.Search(language, searchStr, 0, false);
             }
             else if(!String.IsNullOrEmpty(expand)) // A-Z expand provided - do an A-Z search
             {
+                noDefinition = true;
                 string unFixedExpand = expand;
                 if (expand == "#")
                 {
-                    expandNumbers = true;
                     expand = "[0-9]";
                     unFixedExpand = "%23";
                 }
 
-                int rowsPerPage = 5;
-                int page = 1;
-                
-                if (!String.IsNullOrEmpty(_page))
-                    page = Convert.ToInt32(_page);
-                int prePage = 1;
-                
-                if(page >= 2)
-                    prePage = page - 1;
-                
-                int nextPage = page + 1;
-
-                //dataCollection = TermDictionaryManager.Search("English", expand.Trim().ToUpper(), 0, false);
-                pnlPager.Visible = true;
-                int maxrows = 0;
-                dataCollection = TermDictionaryManager.GetTermDictionaryList("English", expand.Trim().ToUpper(), true, rowsPerPage, page, ref maxrows);
-                int maxpages = maxrows / rowsPerPage;
-
-                _nextPagerOnclick = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl) + "?expand=" + unFixedExpand + "&page=" + nextPage.ToString();
-                _previousPagerOnclick = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl) + "?expand=" + unFixedExpand + "&page=" + prePage.ToString();
-                _pagerInfo = "Page " + page + " of " + maxpages;
+                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, expand.Trim().ToUpper(), false, _rowsPerPage, _currentPage, ref _maxrows);
+                int maxpages = _maxrows / _rowsPerPage;
 
             }
 
             if (dataCollection != null)
             {
-                if (String.IsNullOrEmpty(_language))
-                    _language = ENGLISH; //default to English
-
                 if (dataCollection.Count == 1) //if there is only 1 record - go directly to definition view
                 {
+
                 }
                 else
                 {
-                    if (expandNumbers)
+                    if (noDefinition)
                     {
                         // Expand # displays results without decription
                         resultListViewNoDescription.Visible = true;
@@ -160,11 +160,25 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     }
                 }
 
+
+                int startRecord = 0;
+                int endRecord = 0;
+                SimplePager.GetFirstItemLastItem(_currentPage, _rowsPerPage, _maxrows, out startRecord, out endRecord);
+
+                spPager.RecordCount = _maxrows;
+                spPager.RecordsPerPage = _rowsPerPage;
+                spPager.CurrentPage = _currentPage;
+                if(expand !="")
+                    spPager.BaseUrl = litPageUrl.Text + "?expand=" + expand;
+                else
+                    spPager.BaseUrl = litPageUrl.Text + "?search=" + searchStr;
+
+
                 ControlCollection cc = null;
-                if (expandNumbers)
+                if (noDefinition)
                 {
                     cc = resultListViewNoDescription.Controls[0].Controls;                    
-                    if (_language == SPANISH)
+                    if (language == SPANISH)
                     {
                         cc[3].Visible = true;
                         cc[1].Visible = false;
@@ -178,7 +192,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 else
                 {
                     cc = resultListView.Controls[0].Controls;
-                    if (_language == SPANISH)
+                    if (language == SPANISH)
                     {
                         cc[3].Visible = true;
                         cc[1].Visible = false;
@@ -232,6 +246,5 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
             return definition;
         }
-
     }
 }

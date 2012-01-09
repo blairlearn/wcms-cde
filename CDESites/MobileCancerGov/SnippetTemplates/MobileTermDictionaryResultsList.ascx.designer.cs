@@ -50,12 +50,12 @@ namespace MobileCancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.ListView resultListView;
         
         /// <summary>
-        /// pnlPager control.
+        /// spPager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPager;
+        protected global::NCI.Web.UI.WebControls.SimplePager spPager;
     }
 }

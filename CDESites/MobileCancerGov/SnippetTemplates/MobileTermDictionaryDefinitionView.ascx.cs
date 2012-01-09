@@ -151,15 +151,16 @@ namespace MobileCancerGov.Web.SnippetTemplates
         protected void Page_Load(object sender, EventArgs e)
         {
             String cdrId = Strings.Clean(Request.QueryString["cdrid"]);
-            String language = Strings.Clean(Request.QueryString["language"]);
+            String languageParam = Strings.Clean(Request.QueryString["language"]);
             String lastSearch = Strings.Clean(Request.QueryString["lastSearch"]);
 
+            string pageTitle;
+            string buttonText;
+            string language;
+            MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch, pageTitle, buttonText);
             litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch);
-            
-            if(String.IsNullOrEmpty(language))
-                language = "english"; //default to English
-
+                       
             if (!String.IsNullOrEmpty(cdrId))
             {
                 _di = TermDictionaryManager.GetDefinitionByTermID(language, cdrId, "", 1);

@@ -1,26 +1,25 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MobileTermDictionaryResultsList.ascx.cs" Inherits="MobileCancerGov.Web.SnippetTemplates.MobileTermDictionaryResultsList" %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="NCI" %>
+<style>
+.searchResults ul{ list-style-type:none; margin:0px;}
+
+.searchResults li{margin-bottom:15px;}
+
+</style>
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
-<table border="0" cellpadding="2" cellspacing="0" width="100%">
-<tbody>
-    <tr>
-        <td></td>
-        <td>
+<div class="searchResults">
+    <ul>
         <!-- Result List w/o Definition Begin -->
         <asp:ListView ID="resultListViewNoDescription" runat="server" Visible="true">
             <LayoutTemplate>
                 <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
             </LayoutTemplate>
             <ItemTemplate>
-                <a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
-                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=QueryStringLang%><% =SearchString %>"
+                <li><a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
+                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=Language%><% =SearchString %>"
                 <%# ResultListViewHrefOnclick(Container)%>>
-                <%# Eval("TermName")%></a>
-                &nbsp;&nbsp;
-                <br />
-                &nbsp;&nbsp;
-                <br />
+                <%# Eval("TermName")%></a></li>
             </ItemTemplate>
             <EmptyDataTemplate>
                 <asp:Panel ID="pnlNoDataEnglishNoDef" runat="server" Visible="true" Width="275px">
@@ -42,27 +41,11 @@
                 <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
             </LayoutTemplate>
             <ItemTemplate>
-                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                <tr>
-                <td class="mtd_spacer1"></td>
-                <td width="100%" align="left">
-                <a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
+                <li><a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
                 <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=QueryStringLang%><% =SearchString %>"
                 <%# ResultListViewHrefOnclick(Container)%>>
-                <%# Eval("TermName")%></a>
-                &nbsp;&nbsp;
-                </td>
-                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                    <tr>
-                        <td class="mtd_spacer1"></td>
-                        <td width="100%" align="left">
-                        <div>
-                            <%# LimitText(Container, 235)%>
-                        </div>
-                        </td>
-                    </tr>
-                </table>
-                <br>
+                <%# Eval("TermName")%></a></br>
+                <%# LimitText(Container, 235)%></li>
             </ItemTemplate>
             <EmptyDataTemplate>
                 <asp:Panel ID="pnlNoDataEnglishDef" runat="server" Visible="true" Width="275px" >
@@ -77,34 +60,6 @@
                     lista de términos que empiezan con esa letra.</asp:Panel>
             </EmptyDataTemplate>
         </asp:ListView>
-        <!-- Result List w/Definition End -->
-        <asp:Panel ID="pnlPager" runat="server" Visible="false" >
-        <table border="0" cellpadding="0" cellspacing="0">
-        <tbody>
-        <tr>
-            <td class="mtd_spacer1"></td>
-            <td width="40px">
-                <button class="ui-btn-hidden" 
-                    data-theme="a" 
-                    type="button" 
-                    aria-disabled="false" 
-                    onclick="window.location.href='<% =PreviousPagerOnclick %>'">Previous</button>
-            </td>
-            <td></td>
-            <td >&nbsp;<% =PagerInfo %>&nbsp;</td>
-            <td></td>
-            <td width="40px">
-                <button class="ui-btn-hidden" 
-                    data-theme="a" 
-                    type="button" 
-                    aria-disabled="false" 
-                    onclick="window.location.href='<% =NextPagerOnclick %>'">Next</button>
-            </td>
-        </tr>
-        </tbody>
-        </table>
-        </asp:Panel>
-        </td>
-    </tr>
-</tbody>
-</table>
+        <!-- Result List w/Definition End -->        
+        <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" />
+</div>

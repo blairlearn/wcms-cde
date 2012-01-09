@@ -10,6 +10,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
     
     public static class MobileTermDictionary
     {
+        public const string ENGLISH = "english";
+        public const string SPANISH = "spanish";
+
+        
         static ArrayList azListLettersWithData = TermDictionaryManager.GetAZListLettersWithData("english");
 
         public static string AZBlock(string url)
@@ -25,6 +29,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 azBlock.AppendLine("    <td><strong><a href=\"" + url + "?expand=%23\" >#</a></strong></td> ");
             else
                 azBlock.AppendLine("    <td><strong>#</strong></td> ");
+            
             char letter;
             for (int i = 65; i < 91; i++)
             {
@@ -38,6 +43,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     azBlock.AppendLine("    <td><strong><a href=\"" + url + "?expand=" + letter.ToString() + "\" >" + letter.ToString() + "</a></strong></td>" + addOn);
                 else
                     azBlock.AppendLine("    <td><strong>" + letter.ToString() + "</strong></td>" + addOn);
+
 
             }   
             azBlock.AppendLine("</tr>");
@@ -58,7 +64,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         }
 
 
-        public static string SearchBlock(string url, string searchString)
+        public static string SearchBlock(string url, string searchString, string heading, string buttonText)
         {
             StringBuilder searchBlock = new StringBuilder();
 
@@ -80,7 +86,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("</tr>");
             searchBlock.AppendLine("<tr>");
             searchBlock.AppendLine("    <td></td>");
-            searchBlock.AppendLine("    <td><span class=\"mtd_heading1\">Dictionary of Cancer Terms</span></td>");
+            //searchBlock.AppendLine("    <td><span class=\"mtd_heading1\">Dictionary of Cancer Terms</span></td>");
+            searchBlock.AppendLine("    <td><div=\"pageTile\">");
+            searchBlock.AppendLine("    <h2>" + heading + "</h2>");
+            searchBlock.AppendLine("    </div></td>");
+            //searchBlock.AppendLine("    <td><span class=\"mtd_heading1\">Dictionary of Cancer Terms</span></td>");
+           
+            
             searchBlock.AppendLine("</tr>");
             searchBlock.AppendLine("<tr>");
             searchBlock.AppendLine("    <td></td>");
@@ -98,7 +110,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("            data-theme=\"a\" ");
             searchBlock.AppendLine("            type=\"submit\" "); 
             searchBlock.AppendLine("            aria-disabled=\"false\" "); 
-            searchBlock.AppendLine("            onclick=\"DoSearch();\">Search</button>");
+            searchBlock.AppendLine("            onclick=\"DoSearch();\">"+ buttonText +"</button>");
             searchBlock.AppendLine("    </td>");
             
             if (url != "")
@@ -113,6 +125,47 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("</table>");
 
             return searchBlock.ToString();
+        }
+
+
+        public static void DetermineLanguage(string langParam, out string language, out string pageTitle, out string buttonText)
+        {
+
+            if (langParam == null)
+                langParam = "";
+
+            if (PageAssemblyContext.Current.PageAssemblyInstruction == null)
+            {
+                if (langParam.Trim().ToLower() == SPANISH)
+                {
+                    language = SPANISH;
+                    pageTitle = "Diccionario de cáncer";
+                    buttonText = "Buscar";
+                }
+                else
+                {
+                    language = ENGLISH;
+                    pageTitle = "Dictionary of Cancer Terms";
+                    buttonText = "Search";
+
+                }
+            }
+            else
+            {
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es" || langParam.Trim().ToLower() == SPANISH)
+                {
+                    language = SPANISH;
+                    pageTitle = "Diccionario de cáncer";
+                    buttonText = "Buscar";
+                }
+                else
+                {
+                    language = ENGLISH;
+                    pageTitle = "Dictionary of Cancer Terms";
+                    buttonText = "Search";
+
+                }
+            }
         }
     }
 }
