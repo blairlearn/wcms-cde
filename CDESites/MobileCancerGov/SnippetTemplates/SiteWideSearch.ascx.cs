@@ -27,7 +27,6 @@ namespace MobileCancerGov.Web.SnippetTemplates
         private int _recordsPerPage = 10;
         private int _resultOffset = 1;
             
-        private bool _didDDLChange = false;
         private string _results = string.Empty;
         private const string swKeywordQuery = "swKeywordQuery";
         private const string swKeyword = "swKeyword";
@@ -92,6 +91,13 @@ namespace MobileCancerGov.Web.SnippetTemplates
                         spPager.RecordsPerPage = _recordsPerPage;
                         spPager.CurrentPage = _currentPage;
                         spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
+
+                        if (PageDisplayInformation.Language == DisplayLanguage.Spanish)
+                        {
+                            spPager.PagerStyleSettings.NextPageText = "Siguiente&nbsp;&gt;";
+                            spPager.PagerStyleSettings.PrevPageText = "&lt;&nbsp;Anterior";
+                            lnkSearchInDeskTop.Text = "Search The Full Site";
+                        }
 
                         // Set the link for desktop search or full site search
                         lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + PrettyUrl + "?swKeyword=" + Keyword;
@@ -227,34 +233,38 @@ namespace MobileCancerGov.Web.SnippetTemplates
         protected string LimitText(RepeaterItem item)
         {
             int numberOfCharacters = Strings.ToInt(ConfigurationManager.AppSettings["LimitTextChar"], 235);
-            int MAX_WALKBACK = Strings.ToInt(ConfigurationManager.AppSettings["MaxWalkBack"], 30); 
+            int MAX_WALKBACK = Strings.ToInt(ConfigurationManager.AppSettings["MaxWalkBack"], 30);
 
-            string description = DataBinder.Eval(item.DataItem, "Description").ToString();
+            string description = string.Empty;
 
-            if (description.Length > numberOfCharacters)
+            if (item.DataItem != null && DataBinder.Eval(item.DataItem, "Description") != null )
             {
-                if (description.Substring(numberOfCharacters - 1, 1) == " ")
-                    description = description.Substring(0, numberOfCharacters - 1) + "...";
-                else //walk back to next space
+                description = DataBinder.Eval(item.DataItem, "Description").ToString();
+
+                if (description.Length > numberOfCharacters)
                 {
-                    int i;
-                    for (i = numberOfCharacters; i > 0; i--)
-                    {
-                        if (i == MAX_WALKBACK)
-                        {
-                            i = 0;
-                            break;
-                        }
-                        if (description.Substring(i, 1) == " ")
-                            break;
-                    }
-                    if (i <= 0)
+                    if (description.Substring(numberOfCharacters - 1, 1) == " ")
                         description = description.Substring(0, numberOfCharacters - 1) + "...";
-                    else
-                        description = description.Substring(0, i) + "...";
+                    else //walk back to next space
+                    {
+                        int i;
+                        for (i = numberOfCharacters; i > 0; i--)
+                        {
+                            if (i == MAX_WALKBACK)
+                            {
+                                i = 0;
+                                break;
+                            }
+                            if (description.Substring(i, 1) == " ")
+                                break;
+                        }
+                        if (i <= 0)
+                            description = description.Substring(0, numberOfCharacters - 1) + "...";
+                        else
+                            description = description.Substring(0, i) + "...";
+                    }
                 }
             }
-
             return description;
         }
     }
