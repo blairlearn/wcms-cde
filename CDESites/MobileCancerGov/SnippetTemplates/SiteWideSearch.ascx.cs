@@ -223,5 +223,39 @@ namespace MobileCancerGov.Web.SnippetTemplates
             }
 
         }
+
+        protected string LimitText(RepeaterItem item)
+        {
+            int numberOfCharacters = Strings.ToInt(ConfigurationManager.AppSettings["LimitTextChar"], 235);
+            int MAX_WALKBACK = Strings.ToInt(ConfigurationManager.AppSettings["MaxWalkBack"], 30); 
+
+            string description = DataBinder.Eval(item.DataItem, "Description").ToString();
+
+            if (description.Length > numberOfCharacters)
+            {
+                if (description.Substring(numberOfCharacters - 1, 1) == " ")
+                    description = description.Substring(0, numberOfCharacters - 1) + "...";
+                else //walk back to next space
+                {
+                    int i;
+                    for (i = numberOfCharacters; i > 0; i--)
+                    {
+                        if (i == MAX_WALKBACK)
+                        {
+                            i = 0;
+                            break;
+                        }
+                        if (description.Substring(i, 1) == " ")
+                            break;
+                    }
+                    if (i <= 0)
+                        description = description.Substring(0, numberOfCharacters - 1) + "...";
+                    else
+                        description = description.Substring(0, i) + "...";
+                }
+            }
+
+            return description;
+        }
     }
 }

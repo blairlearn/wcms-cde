@@ -8,8 +8,7 @@
                 <ItemTemplate>
                     <li>
                         <a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>" onclick='<%# ResultsHyperlinkOnclick(Container) %>'><%# DataBinder.Eval(Container.DataItem, "Title")%></a><br />
-                        <%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") + "<br />" : "" %>
-                        <br />
+                        <%# LimitText(Container) %>
                     </li>
                 </ItemTemplate>     
             </asp:Repeater>
