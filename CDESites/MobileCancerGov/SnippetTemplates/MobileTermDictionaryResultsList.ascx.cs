@@ -118,12 +118,21 @@ namespace MobileCancerGov.Web.SnippetTemplates
             _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
             _dictionaryURL = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
 
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                url.SetUrl(Page.Request.RawUrl);
+            }); 
+
             string pageTitle;
             string buttonText;
             string language;
             MobileTermDictionary.DetermineLanguage(_languageParam, out language, out pageTitle, out buttonText);
             _language = language;
-            
+
+
+
+ 
+
             litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), searchStr,language, pageTitle, buttonText);
             litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
             
@@ -147,9 +156,6 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     expand = "[0-9]";
                     unFixedExpand = "%23";
                 }
-               
-
-
                 dataCollection = TermDictionaryManager.GetTermDictionaryList(language, expand.Trim().ToUpper(), false, _rowsPerPage, _currentPage, ref _maxrows);
                 int maxpages = _maxrows / _rowsPerPage;
             }
@@ -158,7 +164,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 if (dataCollection.Count == 1) //if there is only 1 record - go directly to definition view
                 {
-
+                    string itemDefinitionUrl = DictionaryURL + "?cdrid=" + dataCollection[0].GlossaryTermID + "&language=" + Language;
+                    Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else
                 {

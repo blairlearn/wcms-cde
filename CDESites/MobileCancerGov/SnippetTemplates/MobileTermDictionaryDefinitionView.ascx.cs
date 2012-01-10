@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using CancerGov.Text;
 using CancerGov.CDR.TermDictionary;
 using MobileCancerGov.Web.SnippetTemplates;
+using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE.UI.SnippetControls;
@@ -160,7 +161,13 @@ namespace MobileCancerGov.Web.SnippetTemplates
             MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
             litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch, language, pageTitle, buttonText);
             litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-                       
+
+
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                url.SetUrl(Page.Request.RawUrl);
+            }); 
+
             if (!String.IsNullOrEmpty(cdrId))
             {
                 _di = TermDictionaryManager.GetDefinitionByTermID(language, cdrId, "", 1);
