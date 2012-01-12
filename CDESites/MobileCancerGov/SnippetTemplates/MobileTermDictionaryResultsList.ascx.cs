@@ -25,26 +25,15 @@ namespace MobileCancerGov.Web.SnippetTemplates
 {
     public partial class MobileTermDictionaryResultsList : SnippetControl
     {
-        private const string ENGLISH = "english";
-        private const string SPANISH = "spanish";
-
-        private string _dictionaryURL = "";
-        private string _queryStringLanguage = "English";
+        // Query parameter values
         private string _searchStr = "";
-        private int _numResults = 0;
-        private string _languageParam = "";
-        private string _language = "";
-        
-        private string _previousPagerOnclick = "";
-        private string _nextPagerOnclick = "";
-        private string _pagerInfo = "";
-        private int _rowsPerPage = 10;
-        private int _maxrows = 0;
-
-
         private int _currentPage = 0;
         private int _recordsPerPage = 0;
         private int _offSet = 0;
+        private string _dictionaryURL = "";
+
+        // Property variables 
+        private string _language = "";
         private bool _showDefinition = true;
         private bool _expand = false;
         private string _expandText = "";
@@ -54,16 +43,6 @@ namespace MobileCancerGov.Web.SnippetTemplates
         {
             get { return _dictionaryURL; }
             set { _dictionaryURL = value; }
-        }
-        public int NumResults
-        {
-            get { return _numResults; }
-            set { _numResults = value; }
-        }
-        public string QueryStringLang
-        {
-            get { return _queryStringLanguage; }
-            set { _queryStringLanguage = value; }
         }
         public string SearchString
         {
@@ -75,19 +54,6 @@ namespace MobileCancerGov.Web.SnippetTemplates
             get { return _language; }
             set { _language = value; }
         }
-        public string NextPagerOnclick
-        {
-            get { return _nextPagerOnclick; }
-        }
-        public string PreviousPagerOnclick
-        {
-            get { return _previousPagerOnclick; }
-        }
-        public string PagerInfo
-        {
-            get { return _pagerInfo; }
-        }
-        
         public bool ShowDefinition
         {
             get { return _showDefinition; }
@@ -105,59 +71,56 @@ namespace MobileCancerGov.Web.SnippetTemplates
             get { return (Language == MobileTermDictionary.SPANISH); }
         }
 
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            String searchStr = Strings.Clean(Request.QueryString["search"]);
-            String expand = Strings.Clean(Request.QueryString["expand"]);
-            _languageParam = Strings.Clean(Request.QueryString["language"]);
+            // Setup private variables 
+            _searchStr = Strings.Clean(Request.QueryString["search"]);
             _currentPage = Strings.ToInt(Request.Params["PageNum"], 1);
             _recordsPerPage = Strings.ToInt(Request.Params["RecordsPerPage"], 10);
             _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
             _dictionaryURL = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
 
+            // Setup local variables
+            string languageParam = Strings.Clean(Request.QueryString["language"]);  
+            string expandParam = Strings.Clean(Request.QueryString["expand"]);
+            // Pager variables 
+            int maxrows = 0;
+            int rowsPerPage = 10; 
+
+
+            // Define canonical URL
             PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
             {
                 url.SetUrl(Page.Request.RawUrl);
             }); 
 
+            //Determine Language - set language related values
             string pageTitle;
             string buttonText;
             string language;
-            MobileTermDictionary.DetermineLanguage(_languageParam, out language, out pageTitle, out buttonText);
+            MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
             _language = language;
 
-
-
- 
-
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), searchStr,language, pageTitle, buttonText);
+            // At search block (search input and button)
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), SearchString,language, pageTitle, buttonText, true);
             litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
             
             TermDictionaryCollection dataCollection = null;
-            if (!String.IsNullOrEmpty(searchStr)) // search string provide, do a term search
+            if (!String.IsNullOrEmpty(SearchString)) // SearchString provided, do a term search
             {
-                //dataCollection = TermDictionaryManager.Search(language, searchStr, 0, false);
-                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, searchStr, false, _rowsPerPage, _currentPage, ref _maxrows);
-                int maxpages = _maxrows / _rowsPerPage;
-
+                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, SearchString, false, rowsPerPage, _currentPage, ref maxrows);
             }
-            else if(!String.IsNullOrEmpty(expand)) // A-Z expand provided - do an A-Z search
+            else if (!String.IsNullOrEmpty(expandParam)) // A-Z expand provided - do an A-Z search
             {
                 _expand = true;
-                _expandText = expand;
                 _showDefinition = false;
-                
-                string unFixedExpand = expand;
-                if (expand == "#")
+
+                _expandText = expandParam;
+                if (_expandText == "#")
                 {
-                    expand = "[0-9]";
-                    unFixedExpand = "%23";
+                    _expandText = "[0-9]";
                 }
-                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, expand.Trim().ToUpper(), false, _rowsPerPage, _currentPage, ref _maxrows);
-                int maxpages = _maxrows / _rowsPerPage;
+                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, _expandText.Trim().ToUpper(), false, rowsPerPage, _currentPage, ref maxrows);
             }
 
             if (dataCollection != null)
@@ -173,18 +136,17 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     resultListView.DataBind();
                 }
 
-
+                // Setup Pager 
                 int startRecord = 0;
                 int endRecord = 0;
-                SimplePager.GetFirstItemLastItem(_currentPage, _rowsPerPage, _maxrows, out startRecord, out endRecord);
-
-                spPager.RecordCount = _maxrows;
-                spPager.RecordsPerPage = _rowsPerPage;
+                SimplePager.GetFirstItemLastItem(_currentPage, rowsPerPage, maxrows, out startRecord, out endRecord);
+                spPager.RecordCount = maxrows;
+                spPager.RecordsPerPage = rowsPerPage;
                 spPager.CurrentPage = _currentPage;
-                if (!String.IsNullOrEmpty(expand))
-                    spPager.BaseUrl = litPageUrl.Text + "?expand=" + expand;
+                if (Expand)
+                    spPager.BaseUrl = litPageUrl.Text + "?expand=" + _expandText;
                 else
-                    spPager.BaseUrl = litPageUrl.Text + "?search=" + searchStr;
+                    spPager.BaseUrl = litPageUrl.Text + "?search=" + SearchString;
             }
         }
 
@@ -200,6 +162,10 @@ namespace MobileCancerGov.Web.SnippetTemplates
         {
             const int MAX_WALKBACK = 30;
             string definition = DataBinder.Eval(item.DataItem, "DefinitionHTML").ToString();
+            string term = DataBinder.Eval(item.DataItem, "TermName").ToString();
+
+            numberOfCharacters = numberOfCharacters - term.Length;           
+
 
             if (definition.Length > numberOfCharacters)
             {

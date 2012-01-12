@@ -78,15 +78,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
         }
 
 
-        public static string SearchBlock(string url, string searchString, string language, string heading, string buttonText)
+        public static string SearchBlock(string url, string searchString, string language, string heading, string buttonText, bool showAZlink)
         {
-
             string languageAtribute = "";
             if (language.Trim().ToLower() != "english")
                 languageAtribute = "?language=" + language;
-           
-            StringBuilder searchBlock = new StringBuilder();
 
+            StringBuilder searchBlock = new StringBuilder();
             searchBlock.AppendLine("<script type=\"text/javascript\">");
             searchBlock.AppendLine("function DoSearch()");
             searchBlock.AppendLine("{");
@@ -95,58 +93,32 @@ namespace NCI.Web.CDE.UI.SnippetControls
             if (String.IsNullOrEmpty(language))
                 searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
             else
-                if(language.Trim().ToLower() != "english")
+                if (language.Trim().ToLower() != "english")
                     searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val()+ \"&language=" + language + "\";");
-                else        
+                else
                     searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
             searchBlock.AppendLine("       $(location).attr('href',url);");
-            searchBlock.AppendLine("    }");    
+            searchBlock.AppendLine("    }");
             searchBlock.AppendLine("}");
             searchBlock.AppendLine("</script>");
-            searchBlock.AppendLine("<table border=\"0\" cellpadding=\"2\" cellspacing=\"0\" width=\"100%\">");
-            searchBlock.AppendLine("<tbody>");
+            searchBlock.AppendLine("<table width=\"100%\">");
             searchBlock.AppendLine("<tr>");
-            searchBlock.AppendLine("    <td class=\"mtd_spacer1\"></td>");
-            searchBlock.AppendLine("    <td class=\"mtd_spacer1\"></td>");
+            searchBlock.AppendLine("<td>");
+            searchBlock.AppendLine("<input class=\"searchString\" id=\"searchString\" maxlength=\"255\" name=\"searchString\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\" onkeypress=\"if(event.keyCode==13) DoSearch();\" value=\"" + searchString + "\" /> ");
+            searchBlock.AppendLine("</td>");
+            searchBlock.AppendLine("<td width=\"40\">");
+            searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Search\" />");
+            searchBlock.AppendLine("</td>");
             searchBlock.AppendLine("</tr>");
             searchBlock.AppendLine("<tr>");
-            searchBlock.AppendLine("    <td></td>");
-            searchBlock.AppendLine("    <td><div class=\"pageTile\">");
-            searchBlock.AppendLine("    <h2>" + heading + "</h2>");
-            searchBlock.AppendLine("    </div></td>");
-           
-            
+            if (showAZlink)
+            {
+                searchBlock.AppendLine("<td>");
+                searchBlock.AppendLine("<a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + languageAtribute + "\">A-Z</a>");
+                searchBlock.AppendLine("</td>");
+            }
             searchBlock.AppendLine("</tr>");
-            searchBlock.AppendLine("<tr>");
-            searchBlock.AppendLine("    <td></td>");
-            searchBlock.AppendLine("    <td width=\"90%\">");
-            
-            if (searchString != "")
-                searchBlock.AppendLine("        <input name=\"searchString\" id=\"searchString\" type=\"text\" value=\"" + searchString + "\" runat=\"server\" onkeypress=\"if(event.keyCode==13) DoSearch();\" />");
-            else
-                searchBlock.AppendLine("        <input name=\"searchString\" id=\"searchString\" type=\"text\" runat=\"server\" onkeypress=\"if(event.keyCode==13) DoSearch();\" />");
-            
-            searchBlock.AppendLine("    </td>");
-            searchBlock.AppendLine("    <td></td>");
-            searchBlock.AppendLine("    <td width=\"5%\">");
-            searchBlock.AppendLine("        <button class=\"ui-btn-hidden\" ");
-            searchBlock.AppendLine("            data-theme=\"a\" ");
-            searchBlock.AppendLine("            type=\"submit\" "); 
-            searchBlock.AppendLine("            aria-disabled=\"false\" "); 
-            searchBlock.AppendLine("            onclick=\"DoSearch();\">"+ buttonText +"</button>");
-            searchBlock.AppendLine("    </td>");
-            
-            if (url != "")
-                searchBlock.AppendLine("    <td width=\"2px\"><a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + languageAtribute + "\">A-Z</a></td>");
-            else    
-                searchBlock.AppendLine("    <td width=\"2px\"></td>");
-            
-            searchBlock.AppendLine("    <td></td>");
-            searchBlock.AppendLine("    <td></td>");
-            searchBlock.AppendLine("</tr>");
-            searchBlock.AppendLine("</tbody>");
             searchBlock.AppendLine("</table>");
-
             return searchBlock.ToString();
         }
 

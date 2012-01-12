@@ -51,7 +51,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 if (_di != null)
                 {
                     if (!String.IsNullOrEmpty(_di.AudioMediaHTML))
-                        return "<span class=\"mtd_audio\">" + AudioMediaHTML + "</span>&nbsp;&nbsp;<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
+                        return "<span class=\"CDR_audiofile\">" + AudioMediaHTML + "</span>&nbsp;&nbsp;<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
                     else
                         return "<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
                 }
@@ -153,16 +153,12 @@ namespace MobileCancerGov.Web.SnippetTemplates
         {
             String cdrId = Strings.Clean(Request.QueryString["cdrid"]);
             String languageParam = Strings.Clean(Request.QueryString["language"]);
-            String lastSearch = Strings.Clean(Request.QueryString["lastSearch"]);
+            String lastSearch = "";
 
             string pageTitle;
             string buttonText;
             string language;
             MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch, language, pageTitle, buttonText);
-            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-
-
             PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
             {
                 url.SetUrl(Page.Request.RawUrl);
@@ -172,7 +168,11 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 _di = TermDictionaryManager.GetDefinitionByTermID(language, cdrId, "", 1);
                 dissectMediaHTML(_di.MediaHTML);
+                lastSearch = _di.TermName;
             }
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch, language, pageTitle, buttonText, true);
+            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
+
         }
 
         private void dissectMediaHTML(string mediaHTML)

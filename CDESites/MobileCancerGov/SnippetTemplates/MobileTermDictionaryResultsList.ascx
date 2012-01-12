@@ -1,20 +1,17 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MobileTermDictionaryResultsList.ascx.cs" Inherits="MobileCancerGov.Web.SnippetTemplates.MobileTermDictionaryResultsList" %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="NCI" %>
-<style>
-.searchResults ul{ list-style-type:none; margin:0px;}
-
-.searchResults li{margin-bottom:15px;}
-
-</style>
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
 <div class="searchResults">
-<% if(Expand){ %>
-        <div id="Div2" data-iconpos="right" data-collapsed="false" data-role="">
-            <h2 class="section_heading">
-                &nbsp;<span><% =ExpandText %></span>
-            </h2>
-        </div>
+<% if (Expand)
+   { %>
+    <h2 class="section_heading">
+        &nbsp;<span><% =ExpandText%></span>
+    </h2>
+<% }
+   else
+   {%>
+<br />
 <% } %>
     <ul>
         <asp:ListView ID="resultListView" runat="server" Visible="true">
@@ -23,12 +20,12 @@
             </LayoutTemplate>
             <ItemTemplate>
                 <li><a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
-                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=Language%><% =SearchString %>"
+                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=Language%>"
                 <%# ResultListViewHrefOnclick(Container)%>>
                 <%# Eval("TermName")%></a>
-                </br>
+                <br />
                 <% if (ShowDefinition){ %>
-                <%# LimitText(Container, 235)%></li>
+                <%# LimitText(Container, 140)%></li>
                 <% } %>
             </ItemTemplate>
             <EmptyDataTemplate>
