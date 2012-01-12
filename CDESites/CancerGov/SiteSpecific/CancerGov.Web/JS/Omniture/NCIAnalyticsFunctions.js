@@ -866,7 +866,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         }
         return target;
     },
-//**************FOR TESTING ONLY - FOR TESTING ONLY*****************************************************	
+//******************************************************************************************************	
 	SPLF_Hier1 : function()  {
 	    // URL structure
 	    // element 0 = blank
@@ -908,9 +908,6 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
     
 	SPLF_Lang : function()  {
 	    //alert('Lang');
-    },  
-    SPLF_Yomama : function()  {
-	    //alert('Yomama');
     }
     
     
