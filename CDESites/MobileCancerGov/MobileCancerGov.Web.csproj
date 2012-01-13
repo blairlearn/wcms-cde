@@ -59,6 +59,7 @@
     <Content Include="DrugDictionary.svc" />
     <Content Include="Global.asax" />
     <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
+    <Content Include="JS\Omniture\s_code.js" />
     <Content Include="JS\sw-mtd-autocomplete.js" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
@@ -70,7 +71,6 @@
     <Content Include="SnippetTemplates\MobileTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
-    <Content Include="JS\Omniture\s_code.js" />
     <Content Include="TermDictionary.svc" />
     <Content Include="TermDictionaryTest-O-Matic.aspx" />
     <None Include="Web.config" />
