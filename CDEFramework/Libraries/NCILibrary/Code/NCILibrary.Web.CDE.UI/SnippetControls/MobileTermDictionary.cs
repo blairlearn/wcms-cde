@@ -40,7 +40,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             //if (azListLettersWithData.IndexOf("#") > -1)
             if (azList.IndexOf("#") > -1)
-                    azBlock.AppendLine("    <td><strong><a href=\"" + url + "?expand=%23" + languageAtribute + "\" >#</a></strong></td> ");
+                    azBlock.AppendLine("    <td><strong><a onclick=\"NCIAnalytics.TermsDictionarySearchAlphaList(this,'#')\" href=\"" + url + "?expand=%23" + languageAtribute + "\" >#</a></strong></td> ");
             else
                 azBlock.AppendLine("    <td><strong>#</strong></td> ");
             
@@ -54,7 +54,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     addOn = "";
 
                 if (azList.IndexOf(letter.ToString().ToUpper()) > -1)
-                    azBlock.AppendLine("    <td><strong><a href=\"" + url + "?expand=" + letter.ToString() +  languageAtribute + "\" >" + letter.ToString() + "</a></strong></td>" + addOn);
+                    azBlock.AppendLine("    <td><strong><a onclick=\"NCIAnalytics.TermsDictionarySearchAlphaList(this,'" + letter.ToString() + "')\" href=\"" + url + "?expand=" + letter.ToString() + languageAtribute + "\" >" + letter.ToString() + "</a></strong></td>" + addOn);
                 else
                     azBlock.AppendLine("    <td><strong>" + letter.ToString() + "</strong></td>" + addOn);
 
@@ -85,11 +85,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 languageAtribute = "?language=" + language;
 
             StringBuilder searchBlock = new StringBuilder();
+            searchBlock.AppendLine("<script src=\"/js/sw-mtd-autocomplete.js\" type=\"text/javascript\"></script>");
             searchBlock.AppendLine("<script type=\"text/javascript\">");
             searchBlock.AppendLine("function DoSearch()");
             searchBlock.AppendLine("{");
             searchBlock.AppendLine("    if($('#searchString').val() != \"\") {");
             searchBlock.AppendLine("       document.body.className = 'mtd_wait'");
+            //searchBlock.AppendLine("       $.mobile.pageLoading();");
             if (String.IsNullOrEmpty(language))
                 searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
             else

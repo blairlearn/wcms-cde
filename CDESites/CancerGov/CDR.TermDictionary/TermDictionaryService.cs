@@ -42,7 +42,20 @@ namespace CancerGov.CDR.TermDictionary
         {
             return Search(language, criteria, maxRows, contains);
         }
+        
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "SuggestJSON/{language}?term={criteria}")]
+        [OperationContract]
+        public TermDictionaryServiceCollection SuggestJSON(string language, string criteria)
+        {
+            // The below values not used by the system. Retained so it can used in the future for 
+            // customization.
+            int maxRows = 10;
+            bool contains = false;
 
+            return Search(language, criteria, maxRows, contains);
+        }
+        
         /// <summary>
         /// Method to interface through the WCF do get results from a database query.
         /// This will return the data in XML format

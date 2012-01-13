@@ -59,6 +59,7 @@
     <Content Include="DrugDictionary.svc" />
     <Content Include="Global.asax" />
     <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
+    <Content Include="JS\sw-mtd-autocomplete.js" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
@@ -72,7 +73,6 @@
     <Content Include="JS\Omniture\s_code.js" />
     <Content Include="TermDictionary.svc" />
     <Content Include="TermDictionaryTest-O-Matic.aspx" />
-    <Content Include="UserControls\TermDictionary.ascx" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -143,13 +143,6 @@
     <Compile Include="TermDictionaryTest-O-Matic.aspx.designer.cs">
       <DependentUpon>TermDictionaryTest-O-Matic.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TermDictionary.ascx.cs">
-      <DependentUpon>TermDictionary.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\TermDictionary.ascx.designer.cs">
-      <DependentUpon>TermDictionary.ascx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Data\wurfl-latest.zip" />
@@ -208,6 +201,9 @@
       <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>
       <Name>CancerGov.Search.AutoSuggest</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

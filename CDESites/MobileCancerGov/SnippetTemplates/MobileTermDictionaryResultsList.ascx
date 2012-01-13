@@ -5,9 +5,7 @@
 <div class="searchResults">
 <% if (Expand)
    { %>
-    <h2 class="section_heading">
-        &nbsp;<span><% =ExpandText%></span>
-    </h2>
+    <h2><% =ExpandText%></h2>
 <% }
    else
    {%>
