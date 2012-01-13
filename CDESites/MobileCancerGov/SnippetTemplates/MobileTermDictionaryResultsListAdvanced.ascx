@@ -1,7 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MobileTermDictionaryResultsListAdvanced.ascx.cs" Inherits="MobileCancerGov.Web.SnippetTemplates.MobileTermDictionaryResultsListAdvanced" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
- 
+ <script type="text/javascript">
+$.mobile.hidePageLoadingMsg();
+</script>
    <script type="text/javascript" src="test_js/js/jquery-1.4.2.min.js"></script>
    <script type="text/javascript" src="test_js/js/jquery.scrollExtend.min.js"></script>
    <script type="text/javascript">

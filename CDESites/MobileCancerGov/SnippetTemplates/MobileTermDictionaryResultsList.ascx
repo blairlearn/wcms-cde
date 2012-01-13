@@ -11,6 +11,9 @@
    {%>
 <br />
 <% } %>
+<script type="text/javascript">
+$.mobile.hidePageLoadingMsg();
+</script>
     <ul>
         <asp:ListView ID="resultListView" runat="server" Visible="true">
             <LayoutTemplate>

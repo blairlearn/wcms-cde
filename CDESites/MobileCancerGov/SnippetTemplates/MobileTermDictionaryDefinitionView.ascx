@@ -23,6 +23,10 @@
         });
     }
 </script>
+<div id="dictionary_jPlayer"></div>
+<script type="text/javascript">
+$.mobile.hidePageLoadingMsg();
+</script>
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
 <h3><% =TermName %></h3>
