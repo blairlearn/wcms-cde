@@ -175,30 +175,35 @@ namespace MobileCancerGov.Web.SnippetTemplates
             String cdrId = Strings.Clean(Request.QueryString["cdrid"]);
             //String languageParam = Strings.Clean(Request.QueryString["language"]);
             String languageParam = ""; // disable langauge selection by query parameter
-            String lastSearch = "";
 
-            string pageTitle;
-            string buttonText;
+
+            // determine langauge PageAssemblyContext.Current.PageAssemblyInstruction.Language and 
+            // looking at a language query parameter - currently language selection by query parameter
+            // is turned off
+            string pageTitle; // output parameter 
+            string buttonText; // output parameter 
             MobileTermDictionary.DetermineLanguage(languageParam, out _language, out pageTitle, out buttonText);
 
             if (!String.IsNullOrEmpty(cdrId))
             {
                 _di = TermDictionaryManager.GetDefinitionByTermID(_language, cdrId, "", 1);
                 dissectMediaHTML(_di.MediaHTML);
-                lastSearch = _di.TermName;
             }
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch, _language, pageTitle, buttonText, true);
-            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), "", _language, pageTitle, buttonText, true);
+            //litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
             
             // Setup Url Filters 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
             {
-                url.SetUrl(Page.Request.RawUrl);
-            }); 
+                url.QueryParameters.Add("cdrid", cdrId);
+            });
+
             PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
             {
-                url.SetUrl(url.ToString() + "?cdrid=" + cdrId.Trim());
-            }); 
+                url.QueryParameters.Add("cdrid", cdrId);
+            });
+            litPageUrl.Text = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), "", _language, pageTitle, buttonText, true);
         }
 
         private void dissectMediaHTML(string mediaHTML)

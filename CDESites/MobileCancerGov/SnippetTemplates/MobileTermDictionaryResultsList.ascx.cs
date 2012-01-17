@@ -19,6 +19,7 @@ using MobileCancerGov.Web.SnippetTemplates;
 using NCI.Web.CDE.UI.SnippetControls;
 using NCI.Web.UI.WebControls;
 using NCI.Web.CDE;
+using NCI.Web;
 
 
 namespace MobileCancerGov.Web.SnippetTemplates
@@ -78,6 +79,21 @@ namespace MobileCancerGov.Web.SnippetTemplates
             _currentPage = Strings.ToInt(Request.Params["PageNum"], 1);
             _recordsPerPage = Strings.ToInt(Request.Params["RecordsPerPage"], 10);
             _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
+/*
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+            {
+                if (_currentPage != 1)
+                    url.QueryParameters.Add("PageNum", _currentPage);
+                if (_recordsPerPage != 10)
+                    url.QueryParameters.Add("RecordsPerPage", _recordsPerPage);
+                if (_offSet != 0)
+                    url.QueryParameters.Add("OffSet", _offSet);
+
+                //Search or Expand
+            }); 
+*/            
+
+
             _dictionaryURL = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
 
             if (!String.IsNullOrEmpty(_searchStr))
@@ -104,7 +120,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
             string language;
             MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
             _language = language;
-
+           
             // Add search block (search input and button)
             litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), SearchString,language, pageTitle, buttonText, true);
             litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
@@ -114,7 +130,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
                 {
-                    url.SetUrl(url.ToString() + "?search=" + SearchString);
+                    url.QueryParameters.Add("search", SearchString);                    
                 }); 
 
                 dataCollection = TermDictionaryManager.GetTermDictionaryList(language, SearchString, false, rowsPerPage, _currentPage, ref maxrows);
@@ -160,6 +176,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 spPager.CurrentPage = _currentPage;
                 if (Expand)
                     spPager.BaseUrl = litPageUrl.Text + "?expand=" + _expandText;
+                    //NciUrl url = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL");
+                    //url.QueryParameters.Remove("PageNum");
                 else
                     spPager.BaseUrl = litPageUrl.Text + "?search=" + SearchString;
             }

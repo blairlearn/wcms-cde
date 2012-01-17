@@ -18,7 +18,8 @@
             </LayoutTemplate>
             <ItemTemplate>
                 <li><a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
-                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=Language%>"
+               <!--  <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>&language=<%=Language%>" -->
+                <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>"
                 <%# ResultListViewHrefOnclick(Container)%>>
                 <%# Eval("TermName")%></a>
                 <br />

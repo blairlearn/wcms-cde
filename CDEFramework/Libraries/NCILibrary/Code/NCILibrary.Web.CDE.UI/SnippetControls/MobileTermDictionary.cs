@@ -23,7 +23,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             ArrayList azList;
             string languageAtribute = "";
 
-            if (language.Trim().ToUpper() == "english")
+            if (language.Trim().ToUpper() == MobileTermDictionary.ENGLISH)
                 azList = azListLettersWithData;
             else
             {
@@ -80,9 +80,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         public static string SearchBlock(string url, string searchString, string language, string heading, string buttonText, bool showAZlink)
         {
-            string languageAtribute = "";
-            if (language.Trim().ToLower() != "english")
-                languageAtribute = "?language=" + language;
+            //string languageAtribute = "";
+            //if (language.Trim().ToLower() != MobileTermDictionary.ENGLISH)
+            //    languageAtribute = "?language=" + language;
 
             StringBuilder searchBlock = new StringBuilder();
             searchBlock.AppendLine("<script src=\"/js/sw-mtd-autocomplete.js\" type=\"text/javascript\"></script>");
@@ -93,10 +93,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
             if (String.IsNullOrEmpty(language))
                 searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
             else
-                if (language.Trim().ToLower() != "english")
+            {
+                if (language.Trim().ToLower() != MobileTermDictionary.ENGLISH)
                     searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val()+ \"&language=" + language + "\";");
                 else
                     searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
+            }
             searchBlock.AppendLine("       $(location).attr('href',url);");
             searchBlock.AppendLine("    }");
             searchBlock.AppendLine("}");
@@ -107,14 +109,18 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("<input class=\"searchString\" id=\"searchString\" maxlength=\"255\" name=\"searchString\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\" onkeypress=\"if(event.keyCode==13) DoSearch();\" value=\"" + searchString + "\" /> ");
             searchBlock.AppendLine("</td>");
             searchBlock.AppendLine("<td width=\"40\">");
-            searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Search\" />");
+            if (language == MobileTermDictionary.SPANISH)
+                searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Buscar\" />");
+            else
+                searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Search\" />");
             searchBlock.AppendLine("</td>");
             searchBlock.AppendLine("</tr>");
             searchBlock.AppendLine("<tr>");
             if (showAZlink)
             {
                 searchBlock.AppendLine("<td>");
-                searchBlock.AppendLine("<a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + languageAtribute + "\">A-Z</a>");
+                //searchBlock.AppendLine("<a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + languageAtribute + "\">A-Z</a>");
+                searchBlock.AppendLine("<a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + "\">A-Z</a>");
                 searchBlock.AppendLine("</td>");
             }
             searchBlock.AppendLine("</tr>");
