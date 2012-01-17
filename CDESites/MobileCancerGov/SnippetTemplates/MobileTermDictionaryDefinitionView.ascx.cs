@@ -12,6 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using CancerGov.Text;
 using CancerGov.CDR.TermDictionary;
+using CancerGov.Common.ErrorHandling;
 using MobileCancerGov.Web.SnippetTemplates;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
@@ -172,38 +173,53 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            String cdrId = Strings.Clean(Request.QueryString["cdrid"]);
-            //String languageParam = Strings.Clean(Request.QueryString["language"]);
-            String languageParam = ""; // disable langauge selection by query parameter
+            string startingUrl = "";
 
-
-            // determine langauge PageAssemblyContext.Current.PageAssemblyInstruction.Language and 
-            // looking at a language query parameter - currently language selection by query parameter
-            // is turned off
-            string pageTitle; // output parameter 
-            string buttonText; // output parameter 
-            MobileTermDictionary.DetermineLanguage(languageParam, out _language, out pageTitle, out buttonText);
-
-            if (!String.IsNullOrEmpty(cdrId))
+            try
             {
-                _di = TermDictionaryManager.GetDefinitionByTermID(_language, cdrId, "", 1);
-                dissectMediaHTML(_di.MediaHTML);
+                startingUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
+                string cdrId = Strings.Clean(Request.QueryString["cdrid"]);
+
+                //String languageParam = Strings.Clean(Request.QueryString["language"]);
+                String languageParam = ""; // disable langauge selection by query parameter
+
+                // Determine langauge based PageAssemblyContext.Current.PageAssemblyInstruction.Language and 
+                // looking at a language query parameter - currently language selection by query parameter
+                // is turned off
+                string pageTitle; // output parameter 
+                string buttonText; // output parameter 
+                MobileTermDictionary.DetermineLanguage(languageParam, out _language, out pageTitle, out buttonText);
+
+                if (!String.IsNullOrEmpty(cdrId))
+                {
+                    _di = TermDictionaryManager.GetDefinitionByTermID(_language, cdrId, "", 1);
+                    if (_di != null)
+                    {
+                        dissectMediaHTML(_di.MediaHTML);
+
+                        // Setup Url Filters 
+                        PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+                        {
+                            url.QueryParameters.Add("cdrid", cdrId);
+                        });
+
+                        PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
+                        {
+                            url.QueryParameters.Add("cdrid", cdrId);
+                        });
+
+                        litPageUrl.Text = startingUrl;
+                        litSearchBlock.Text = MobileTermDictionary.SearchBlock(startingUrl, "", _language, pageTitle, buttonText, true);
+                    }
+                    else
+                        Page.Response.Redirect(startingUrl); // if no data returned - redirect to base page
+                }
             }
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), "", _language, pageTitle, buttonText, true);
-            //litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-            
-            // Setup Url Filters 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+            catch (Exception ex)
             {
-                url.QueryParameters.Add("cdrid", cdrId);
-            });
-
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
-            {
-                url.QueryParameters.Add("cdrid", cdrId);
-            });
-            litPageUrl.Text = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), "", _language, pageTitle, buttonText, true);
+                CancerGovError.LogError("MobileTermDictionaryDefinitionView", 2, ex);
+                Page.Response.Redirect(startingUrl); // if error - redirect to base page
+            }
         }
 
         private void dissectMediaHTML(string mediaHTML)

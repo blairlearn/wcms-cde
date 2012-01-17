@@ -74,56 +74,35 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Setup private variables 
+            // Dictionary query parameters
+            string expandParam = Strings.Clean(Request.QueryString["expand"]);
+            //string languageParam = Strings.Clean(Request.QueryString["language"]);
+            string languageParam = ""; //disable language selection by query parameter 
             _searchStr = Strings.Clean(Request.QueryString["search"]);
-            _currentPage = Strings.ToInt(Request.Params["PageNum"], 1);
-            _recordsPerPage = Strings.ToInt(Request.Params["RecordsPerPage"], 10);
-            _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
-/*
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
-            {
-                if (_currentPage != 1)
-                    url.QueryParameters.Add("PageNum", _currentPage);
-                if (_recordsPerPage != 10)
-                    url.QueryParameters.Add("RecordsPerPage", _recordsPerPage);
-                if (_offSet != 0)
-                    url.QueryParameters.Add("OffSet", _offSet);
-
-                //Search or Expand
-            }); 
-*/            
-
-
-            _dictionaryURL = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-
             if (!String.IsNullOrEmpty(_searchStr))
                 _searchStr = _searchStr.Replace("[", "[[]"); 
 
-            // Setup local variables
-            //string languageParam = Strings.Clean(Request.QueryString["language"]);
-            string languageParam = ""; //disable language selection by query parameter 
-            string expandParam = Strings.Clean(Request.QueryString["expand"]);
-            // Pager variables 
-            int maxrows = 0;
-            int rowsPerPage = 10; 
-
-
-            // Define canonical URL
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
-            {
-                url.SetUrl(Page.Request.RawUrl);
-            }); 
-
+            // Pager query parameter variables
+            _currentPage = Strings.ToInt(Request.Params["PageNum"], 1);
+            _recordsPerPage = Strings.ToInt(Request.Params["RecordsPerPage"], 10);
+            _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
+  
             //Determine Language - set language related values
             string pageTitle;
             string buttonText;
             string language;
             MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
             _language = language;
-           
-            // Add search block (search input and button)
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), SearchString,language, pageTitle, buttonText, true);
-            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
+
+            _dictionaryURL = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
+            litPageUrl.Text = _dictionaryURL;
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(_dictionaryURL, SearchString, language, pageTitle, buttonText, true);
+
+            // Setup Pager variables  
+            int pager_StartRecord = 0;
+            int pager_EndRecord = 0;
+            int pager_MaxRows = 0;
+            int pager_RowsPerPage = 10;
 
             TermDictionaryCollection dataCollection = null;
             if (!String.IsNullOrEmpty(SearchString)) // SearchString provided, do a term search
@@ -131,55 +110,58 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
                 {
                     url.QueryParameters.Add("search", SearchString);                    
-                }); 
-
-                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, SearchString, false, rowsPerPage, _currentPage, ref maxrows);
+                });
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+                {
+                    url.QueryParameters.Add("search", SearchString); 
+                });
+                 
+                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, SearchString, false, pager_RowsPerPage, _currentPage, ref pager_MaxRows);
             }
             else if (!String.IsNullOrEmpty(expandParam)) // A-Z expand provided - do an A-Z search
             {
-                _expand = true;
                 _showDefinition = false;
-
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
-                {
-                    url.SetUrl(url.ToString() + "?expand=" + _expandText.Trim());
-                }); 
-                
+                _expand = true;
                 _expandText = expandParam;
                 if (_expandText == "#")
                 {
                     _expandText = "[0-9]";
-                }
-                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, _expandText.Trim().ToUpper(), false, rowsPerPage, _currentPage, ref maxrows);
- 
+                } 
+                
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
+                {
+                    url.QueryParameters.Add("expand", _expandText);
+                });
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+                {
+                    url.QueryParameters.Add("expand", _expandText);
+                });
+
+                dataCollection = TermDictionaryManager.GetTermDictionaryList(language, _expandText.Trim().ToUpper(), false, pager_RowsPerPage, _currentPage, ref pager_MaxRows);
             }
 
             if (dataCollection != null)
             {
                 if (dataCollection.Count == 1 && !Expand) //if there is only 1 record - go directly to definition view
                 {
-                    string itemDefinitionUrl = DictionaryURL + "?cdrid=" + dataCollection[0].GlossaryTermID + "&language=" + Language;
+                    //string itemDefinitionUrl = DictionaryURL + "?cdrid=" + dataCollection[0].GlossaryTermID + "&language=" + Language;
+                    string itemDefinitionUrl = DictionaryURL + "?cdrid=" + dataCollection[0].GlossaryTermID;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
-                else
+                else // bind results 
                 {
                     resultListView.DataSource = dataCollection;
                     resultListView.DataBind();
                 }
 
-                // Setup Pager 
-                int startRecord = 0;
-                int endRecord = 0;
-                SimplePager.GetFirstItemLastItem(_currentPage, rowsPerPage, maxrows, out startRecord, out endRecord);
-                spPager.RecordCount = maxrows;
-                spPager.RecordsPerPage = rowsPerPage;
+                SimplePager.GetFirstItemLastItem(_currentPage, pager_RowsPerPage, pager_MaxRows, out pager_StartRecord, out pager_EndRecord);
+                spPager.RecordCount = pager_MaxRows;
+                spPager.RecordsPerPage = pager_RowsPerPage;
                 spPager.CurrentPage = _currentPage;
                 if (Expand)
-                    spPager.BaseUrl = litPageUrl.Text + "?expand=" + _expandText;
-                    //NciUrl url = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL");
-                    //url.QueryParameters.Remove("PageNum");
+                    spPager.BaseUrl = DictionaryURL + "?expand=" + _expandText;
                 else
-                    spPager.BaseUrl = litPageUrl.Text + "?search=" + SearchString;
+                    spPager.BaseUrl = DictionaryURL + "?search=" + SearchString;
             }
         }
 

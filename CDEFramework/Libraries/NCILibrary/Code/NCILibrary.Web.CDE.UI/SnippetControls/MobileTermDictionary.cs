@@ -21,14 +21,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
         {
 
             ArrayList azList;
-            string languageAtribute = "";
 
             if (language.Trim().ToUpper() == MobileTermDictionary.ENGLISH)
                 azList = azListLettersWithData;
             else
             {
                 azList = azListLettersWithDataSpanish;
-                languageAtribute = "&language=" + language;
             }
 
 
@@ -40,7 +38,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             //if (azListLettersWithData.IndexOf("#") > -1)
             if (azList.IndexOf("#") > -1)
-                    azBlock.AppendLine("    <td><strong><a onclick=\"NCIAnalytics.TermsDictionarySearchAlphaList(this,'#')\" href=\"" + url + "?expand=%23" + languageAtribute + "\" >#</a></strong></td> ");
+                azBlock.AppendLine("    <td><strong><a onclick=\"NCIAnalytics.TermsDictionarySearchAlphaList(this,'#')\" href=\"" + url + "?expand=%23\" >#</a></strong></td> ");
             else
                 azBlock.AppendLine("    <td><strong>#</strong></td> ");
             
@@ -54,7 +52,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     addOn = "";
 
                 if (azList.IndexOf(letter.ToString().ToUpper()) > -1)
-                    azBlock.AppendLine("    <td><strong><a onclick=\"NCIAnalytics.TermsDictionarySearchAlphaList(this,'" + letter.ToString() + "')\" href=\"" + url + "?expand=" + letter.ToString() + languageAtribute + "\" >" + letter.ToString() + "</a></strong></td>" + addOn);
+                    azBlock.AppendLine("    <td><strong><a onclick=\"NCIAnalytics.TermsDictionarySearchAlphaList(this,'" + letter.ToString() + "')\" href=\"" + url + "?expand=" + letter.ToString() +  "\" >" + letter.ToString() + "</a></strong></td>" + addOn);
                 else
                     azBlock.AppendLine("    <td><strong>" + letter.ToString() + "</strong></td>" + addOn);
 
@@ -80,10 +78,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         public static string SearchBlock(string url, string searchString, string language, string heading, string buttonText, bool showAZlink)
         {
-            //string languageAtribute = "";
-            //if (language.Trim().ToLower() != MobileTermDictionary.ENGLISH)
-            //    languageAtribute = "?language=" + language;
-
             StringBuilder searchBlock = new StringBuilder();
             searchBlock.AppendLine("<script src=\"/js/sw-mtd-autocomplete.js\" type=\"text/javascript\"></script>");
             searchBlock.AppendLine("<script type=\"text/javascript\">");
@@ -94,9 +88,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
             else
             {
-                if (language.Trim().ToLower() != MobileTermDictionary.ENGLISH)
-                    searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val()+ \"&language=" + language + "\";");
-                else
+                // Language selection by query parameter disabled 
+                //if (language != MobileTermDictionary.ENGLISH)
+                //    searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val()+ \"&language=" + language + "\";");
+                //else
                     searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
             }
             searchBlock.AppendLine("       $(location).attr('href',url);");
@@ -109,9 +104,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("<input class=\"searchString\" id=\"searchString\" maxlength=\"255\" name=\"searchString\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\" onkeypress=\"if(event.keyCode==13) DoSearch();\" value=\"" + searchString + "\" /> ");
             searchBlock.AppendLine("</td>");
             searchBlock.AppendLine("<td width=\"40\">");
-            if (language == MobileTermDictionary.SPANISH)
-                searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Buscar\" />");
-            else
+
+            // Language selection by query parameter disabled 
+            //if (language == MobileTermDictionary.SPANISH)
+            //    searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Buscar\" />");
+            //else
                 searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Search\" />");
             searchBlock.AppendLine("</td>");
             searchBlock.AppendLine("</tr>");
@@ -119,7 +116,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
             if (showAZlink)
             {
                 searchBlock.AppendLine("<td>");
-                //searchBlock.AppendLine("<a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + languageAtribute + "\">A-Z</a>");
                 searchBlock.AppendLine("<a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + "\">A-Z</a>");
                 searchBlock.AppendLine("</td>");
             }
