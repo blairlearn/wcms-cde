@@ -27,7 +27,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
         {
             try
             {
-                string languageParam = Strings.Clean(Request.QueryString["language"]);
+                //string languageParam = Strings.Clean(Request.QueryString["language"]);
+                string languageParam = ""; // disable langauge selection by query parameter
                 string pageTitle = "";
                 string buttonText = "";
                 string language = "";

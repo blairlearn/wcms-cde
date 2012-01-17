@@ -81,7 +81,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
             _dictionaryURL = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
 
             // Setup local variables
-            string languageParam = Strings.Clean(Request.QueryString["language"]);  
+            //string languageParam = Strings.Clean(Request.QueryString["language"]);
+            string languageParam = ""; //disable language selection by query parameter 
             string expandParam = Strings.Clean(Request.QueryString["expand"]);
             // Pager variables 
             int maxrows = 0;
@@ -101,13 +102,18 @@ namespace MobileCancerGov.Web.SnippetTemplates
             MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
             _language = language;
 
-            // At search block (search input and button)
+            // Add search block (search input and button)
             litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), SearchString,language, pageTitle, buttonText, true);
             litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-            
+
             TermDictionaryCollection dataCollection = null;
             if (!String.IsNullOrEmpty(SearchString)) // SearchString provided, do a term search
             {
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
+                {
+                    url.SetUrl(url.ToString() + "?search=" + SearchString);
+                }); 
+
                 dataCollection = TermDictionaryManager.GetTermDictionaryList(language, SearchString, false, rowsPerPage, _currentPage, ref maxrows);
             }
             else if (!String.IsNullOrEmpty(expandParam)) // A-Z expand provided - do an A-Z search
@@ -115,17 +121,23 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 _expand = true;
                 _showDefinition = false;
 
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
+                {
+                    url.SetUrl(url.ToString() + "?expand=" + _expandText.Trim());
+                }); 
+                
                 _expandText = expandParam;
                 if (_expandText == "#")
                 {
                     _expandText = "[0-9]";
                 }
                 dataCollection = TermDictionaryManager.GetTermDictionaryList(language, _expandText.Trim().ToUpper(), false, rowsPerPage, _currentPage, ref maxrows);
+ 
             }
 
             if (dataCollection != null)
             {
-                if (dataCollection.Count == 1) //if there is only 1 record - go directly to definition view
+                if (dataCollection.Count == 1 && !Expand) //if there is only 1 record - go directly to definition view
                 {
                     string itemDefinitionUrl = DictionaryURL + "?cdrid=" + dataCollection[0].GlossaryTermID + "&language=" + Language;
                     Page.Response.Redirect(itemDefinitionUrl);

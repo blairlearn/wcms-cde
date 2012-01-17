@@ -90,7 +90,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("function DoSearch()");
             searchBlock.AppendLine("{");
             searchBlock.AppendLine("    if($('#searchString').val() != \"\") {");
-            searchBlock.AppendLine("       $.mobile.showPageLoadingMsg();");
             if (String.IsNullOrEmpty(language))
                 searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
             else

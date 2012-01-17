@@ -27,6 +27,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
         private string _imageLarge = "";
         private string _imageAlt = "";
         private string _imageCaption = "";
+        private string _language = "";
 
         // Properties 
         public string AudioMediaHTML
@@ -50,10 +51,20 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 if (_di != null)
                 {
-                    if (!String.IsNullOrEmpty(_di.AudioMediaHTML))
-                        return "<span class=\"CDR_audiofile\">" + AudioMediaHTML + "</span>&nbsp;&nbsp;<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
+                    if (!String.IsNullOrEmpty(AudioMediaHTML))
+                    {
+                        if (String.IsNullOrEmpty(TermPronunciation))
+                            return "<span class=\"CDR_audiofile\">" + AudioMediaHTML + "</span>";
+                        else
+                            return "<span class=\"CDR_audiofile\">" + AudioMediaHTML + "</span>&nbsp;&nbsp;<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
+                    }
                     else
-                        return "<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
+                    {
+                        if (String.IsNullOrEmpty(TermPronunciation))
+                           return "";
+                        else
+                            return "<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
+                    }
                 }
                 else
                     return "";
@@ -113,6 +124,11 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     return "";
             }
         }
+        public string Language
+        {
+            get { return _language; }
+            set { _language = value; }
+        }
         public string MediaHTML
         {
             get
@@ -140,7 +156,12 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 if (_di != null)
                 {
                     if (!String.IsNullOrEmpty(_di.TermPronunciation))
-                        return _di.TermPronunciation;
+                    {
+                        if (Language == MobileTermDictionary.SPANISH)
+                            return "";
+                        else
+                            return _di.TermPronunciation;
+                    }
                     else
                         return "";
                 }
@@ -152,27 +173,32 @@ namespace MobileCancerGov.Web.SnippetTemplates
         protected void Page_Load(object sender, EventArgs e)
         {
             String cdrId = Strings.Clean(Request.QueryString["cdrid"]);
-            String languageParam = Strings.Clean(Request.QueryString["language"]);
+            //String languageParam = Strings.Clean(Request.QueryString["language"]);
+            String languageParam = ""; // disable langauge selection by query parameter
             String lastSearch = "";
 
             string pageTitle;
             string buttonText;
-            string language;
-            MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
+            MobileTermDictionary.DetermineLanguage(languageParam, out _language, out pageTitle, out buttonText);
+
+            if (!String.IsNullOrEmpty(cdrId))
+            {
+                _di = TermDictionaryManager.GetDefinitionByTermID(_language, cdrId, "", 1);
+                dissectMediaHTML(_di.MediaHTML);
+                lastSearch = _di.TermName;
+            }
+            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch, _language, pageTitle, buttonText, true);
+            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
+            
+            // Setup Url Filters 
             PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
             {
                 url.SetUrl(Page.Request.RawUrl);
             }); 
-
-            if (!String.IsNullOrEmpty(cdrId))
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
             {
-                _di = TermDictionaryManager.GetDefinitionByTermID(language, cdrId, "", 1);
-                dissectMediaHTML(_di.MediaHTML);
-                lastSearch = _di.TermName;
-            }
-            litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), lastSearch, language, pageTitle, buttonText, true);
-            litPageUrl.Text = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
-
+                url.SetUrl(url.ToString() + "?cdrid=" + cdrId.Trim());
+            }); 
         }
 
         private void dissectMediaHTML(string mediaHTML)
