@@ -90,7 +90,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                         spPager.RecordCount = (int)results.TotalNumResults;
                         spPager.RecordsPerPage = _recordsPerPage;
                         spPager.CurrentPage = _currentPage;
-                        spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
+                        spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Server.HtmlEncode(Keyword);
 
                         if (PageDisplayInformation.Language == DisplayLanguage.Spanish)
                         {
@@ -99,8 +99,6 @@ namespace MobileCancerGov.Web.SnippetTemplates
                             lnkSearchInDeskTop.Text = "Buscar en la versión completa de Cancer.gov/español";
                         }
 
-                        // Set the link for desktop search or full site search
-                        lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + PrettyUrl + "?swKeyword=" + Keyword;
 
                         //// Web Analytics *************************************************
                         this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.NumberOfSearchResults, wbField =>
@@ -120,6 +118,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
                         Logger.LogError("SiteWideSearch", NCIErrorLevel.Error, ex);
                     }
 
+                    // Set the link for desktop search or full site search
+                    lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + PrettyUrl + "?swKeyword=" + Server.HtmlEncode(Keyword);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
         {
             get
             {
-                string keyword = Strings.Clean(Request.Params["swKeyword"]);
+                string keyword = Strings.Clean(Server.HtmlDecode(Request.Params["swKeyword"]));
                 if (string.IsNullOrEmpty(keyword))
                     keyword = Strings.Clean(Request.Params["swKeywordQuery"]);
                 return keyword;

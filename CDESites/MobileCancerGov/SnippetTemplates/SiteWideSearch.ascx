@@ -17,10 +17,9 @@
      {%>
    <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" />
   <br />
-  <p><asp:HyperLink runat="server" ID="lnkSearchInDeskTop" >Search The Full Site</asp:HyperLink></p>
-    <%}
-     else
-     { %>
+    <%}%>
+      <p><asp:HyperLink runat="server" ID="lnkSearchInDeskTop" >Search The Full Site</asp:HyperLink></p>
+    <% if (!ResultsFound){%>
         <p><strong><% =ResultsText %></strong></p>
     <% } %>
     </div>
