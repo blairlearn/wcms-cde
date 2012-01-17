@@ -120,6 +120,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
                     // Set the link for desktop search or full site search
                     lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + PrettyUrl + "?swKeyword=" + Server.HtmlEncode(Keyword);
+                    lnkSearchInDeskTop.Visible = true;
                 }
                 else
                 {
