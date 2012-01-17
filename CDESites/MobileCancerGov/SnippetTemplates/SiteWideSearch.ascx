@@ -18,10 +18,10 @@
    <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" />
   <br />
     <%}%>
-      <p><asp:HyperLink runat="server" ID="lnkSearchInDeskTop" Visible="false" >Search The Full Site</asp:HyperLink></p>
     <% if (!ResultsFound){%>
         <p><strong><% =ResultsText %></strong></p>
     <% } %>
+    <p><asp:HyperLink runat="server" ID="lnkSearchInDeskTop" Visible="false" >Search The Full Site</asp:HyperLink></p>    
     </div>
 <asp:HiddenField ID="itemsPerPage" Value="5" runat="server" />
 </form>
