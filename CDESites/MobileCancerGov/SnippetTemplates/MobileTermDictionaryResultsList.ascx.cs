@@ -80,6 +80,9 @@ namespace MobileCancerGov.Web.SnippetTemplates
             _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
             _dictionaryURL = MobileTermDictionary.RawUrlClean(Page.Request.RawUrl);
 
+            if (!String.IsNullOrEmpty(_searchStr))
+                _searchStr = _searchStr.Replace("[", "[[]"); 
+
             // Setup local variables
             //string languageParam = Strings.Clean(Request.QueryString["language"]);
             string languageParam = ""; //disable language selection by query parameter 
