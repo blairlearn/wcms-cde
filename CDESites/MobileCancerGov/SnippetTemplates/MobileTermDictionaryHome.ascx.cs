@@ -32,7 +32,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 string pageTitle = "";
                 string buttonText = "";
                 string language = "";
-                MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
+                string reDirect = "";
+                MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText, out reDirect);
                 litSearchBlock.Text = MobileTermDictionary.SearchBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), "", language, pageTitle, buttonText,false);
                 litAZList.Text = MobileTermDictionary.AZBlock(MobileTermDictionary.RawUrlClean(Page.Request.RawUrl), language);
             }

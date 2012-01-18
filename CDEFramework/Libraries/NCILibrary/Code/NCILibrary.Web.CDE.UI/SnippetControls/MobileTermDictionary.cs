@@ -125,11 +125,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
         }
 
 
-        public static void DetermineLanguage(string langParam, out string language, out string pageTitle, out string buttonText)
+        public static void DetermineLanguage(string langParam, out string language, out string pageTitle, out string buttonText, out string reDirect)
         {
 
             if (langParam == null)
                 langParam = "";
+
+            reDirect="";
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction == null)
             {
@@ -154,6 +156,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     language = SPANISH;
                     pageTitle = "Diccionario de cáncer";
                     buttonText = "Buscar";
+                    if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+                    {
+                        NciUrl redirectTo = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.AltLanguage);
+                        reDirect = redirectTo.UriStem.ToString();
+                    }
+
                 }
                 else
                 {
@@ -162,6 +170,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     buttonText = "Search";
 
                 }
+
             }
         }
     }

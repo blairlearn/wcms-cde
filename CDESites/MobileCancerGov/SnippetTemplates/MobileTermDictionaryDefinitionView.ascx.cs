@@ -179,16 +179,27 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 startingUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
                 string cdrId = Strings.Clean(Request.QueryString["cdrid"]);
+                string id = Strings.Clean(Request.QueryString["id"]);
 
-                //String languageParam = Strings.Clean(Request.QueryString["language"]);
-                String languageParam = ""; // disable langauge selection by query parameter
+                if (String.IsNullOrEmpty(cdrId) && (!String.IsNullOrEmpty(id)))
+                    cdrId = id;
+
+                String languageParam = Strings.Clean(Request.QueryString["language"]).ToLower();
 
                 // Determine langauge based PageAssemblyContext.Current.PageAssemblyInstruction.Language and 
                 // looking at a language query parameter - currently language selection by query parameter
                 // is turned off
                 string pageTitle; // output parameter 
                 string buttonText; // output parameter 
-                MobileTermDictionary.DetermineLanguage(languageParam, out _language, out pageTitle, out buttonText);
+                string reDirect; // output parameter 
+                MobileTermDictionary.DetermineLanguage(languageParam, out _language, out pageTitle, out buttonText, out reDirect);
+
+
+                //if (!String.IsNullOrEmpty(reDirect))
+                //{
+                //    string reDirectUrl = "http://" + Page.Request.Url.Authority.ToString() + reDirect + "?cdrid=" + cdrId;
+                //    Page.Response.Redirect(reDirectUrl);
+                //}
 
                 if (!String.IsNullOrEmpty(cdrId))
                 {

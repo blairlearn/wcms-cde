@@ -40,11 +40,11 @@ namespace NCI.Web.CDE
                 mobileDevice = true;
 
             //For TESTING 
-            //mobileDevice = true;
+            mobileDevice = true;
             
             //If mobile device
-            if(mobileDevice)
-            {
+            if (mobileDevice)
+                {
 
                 if (context.Response.StatusCode == 404) // Page not found
                 {

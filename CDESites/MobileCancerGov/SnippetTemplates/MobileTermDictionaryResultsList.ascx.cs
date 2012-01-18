@@ -91,7 +91,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
             string pageTitle;
             string buttonText;
             string language;
-            MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText);
+            string reDirect;
+            MobileTermDictionary.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText, out reDirect);
             _language = language;
 
             _dictionaryURL = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
