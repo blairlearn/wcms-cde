@@ -105,10 +105,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("</td>");
             searchBlock.AppendLine("<td width=\"40\">");
 
-            // Language selection by query parameter disabled 
-            //if (language == MobileTermDictionary.SPANISH)
-            //    searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Buscar\" />");
-            //else
+
+            if (language == MobileTermDictionary.SPANISH)
+                searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Buscar\" />");
+            else
                 searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Search\" />");
             searchBlock.AppendLine("</td>");
             searchBlock.AppendLine("</tr>");

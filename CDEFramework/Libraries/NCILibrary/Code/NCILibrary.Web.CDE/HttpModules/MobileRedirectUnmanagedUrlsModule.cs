@@ -115,7 +115,10 @@ namespace NCI.Web.CDE
                             string redirectUrl = InformationRequestConfig.DesktopHost + context.Request.Url.AbsolutePath + context.Request.Url.Query;
                             InformationRequestProcessor irPro = new InformationRequestProcessor(redirectUrl);
                             //if page not found (404), exception will be thrown - else redirect to the page on desktop
-                            context.Response.Redirect(redirectUrl, true);
+                            if (irPro.ReturnMessage == InformationRequestMessages.MobileUrlFound)
+                                context.Response.Redirect(redirectUrl, true);
+                            else
+                                return;
                         }
                     }
                     catch (ThreadAbortException)

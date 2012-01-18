@@ -180,11 +180,13 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 startingUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
                 string cdrId = Strings.Clean(Request.QueryString["cdrid"]);
                 string id = Strings.Clean(Request.QueryString["id"]);
+                string languageParam = Strings.Clean(Request.QueryString["language"]);
 
                 if (String.IsNullOrEmpty(cdrId) && (!String.IsNullOrEmpty(id)))
                     cdrId = id;
 
-                String languageParam = Strings.Clean(Request.QueryString["language"]).ToLower();
+                if (cdrId.Contains("CDR"))
+                    cdrId = cdrId.Replace("CDR", "");
 
                 // Determine langauge based PageAssemblyContext.Current.PageAssemblyInstruction.Language and 
                 // looking at a language query parameter - currently language selection by query parameter
