@@ -77,7 +77,8 @@ namespace NCI.Web.CDE
                             context.Response.Cookies.Add(responseCookie); 
                             
                             NciUrl mobileUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");
-                            context.Response.Redirect(mobileUrl.ToString(), true);
+                            string redirectUrl = InformationRequestConfig.MobileHost + mobileUrl.ToString();
+                            context.Response.Redirect(redirectUrl, true);
                         }
                     }
                 }
