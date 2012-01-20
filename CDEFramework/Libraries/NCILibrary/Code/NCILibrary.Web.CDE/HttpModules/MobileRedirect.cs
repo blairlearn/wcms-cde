@@ -4,6 +4,7 @@ using System.Web.SessionState;
 using System.Globalization;
 using System.Configuration;
 using System.IO;
+using NCI.Web.CDE.InformationRequest;
 using NCI.Web.CDE.Configuration;
 using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Logging;
@@ -77,7 +78,7 @@ namespace NCI.Web.CDE
                             context.Response.Cookies.Add(responseCookie); 
                             
                             NciUrl mobileUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");
-                            string redirectUrl = InformationRequestConfig.MobileHost + mobileUrl.ToString();
+                            string redirectUrl = InformationRequestConfig.MobileHost + mobileUrl.ToString() + context.Request.Url.Query;
                             context.Response.Redirect(redirectUrl, true);
                         }
                     }
