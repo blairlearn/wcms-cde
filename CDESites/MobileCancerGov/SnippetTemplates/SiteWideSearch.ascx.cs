@@ -90,7 +90,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                         spPager.RecordCount = (int)results.TotalNumResults;
                         spPager.RecordsPerPage = _recordsPerPage;
                         spPager.CurrentPage = _currentPage;
-                        spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Server.HtmlEncode(Keyword);
+                        spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Server.UrlEncode(Keyword);
 
                         if (PageDisplayInformation.Language == DisplayLanguage.Spanish)
                         {
@@ -119,7 +119,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     }
 
                     // Set the link for desktop search or full site search
-                    lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + PrettyUrl + "?swKeyword=" + Server.HtmlEncode(Keyword);
+                    lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + PrettyUrl + "?swKeyword=" + Server.UrlEncode(Keyword);
                     lnkSearchInDeskTop.Visible = true;
                 }
                 else
