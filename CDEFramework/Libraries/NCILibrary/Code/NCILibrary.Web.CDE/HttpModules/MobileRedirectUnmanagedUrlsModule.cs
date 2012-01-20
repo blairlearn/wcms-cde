@@ -33,16 +33,13 @@ namespace NCI.Web.CDE
             String key = context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture);
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
             String mobilePage = "";
-            bool mobileDevice = false;
+            bool mobileDevice = true; // This is not just for mobile devices 
 
-            if ((DisplayDeviceDetector.DisplayDevice == DisplayDevices.BasicMobile) ||
-                (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile))
-                mobileDevice = true;
+            //if ((DisplayDeviceDetector.DisplayDevice == DisplayDevices.BasicMobile) ||
+            //    (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile))
+            //    mobileDevice = true;
 
-            //For TESTING 
-            mobileDevice = true;
-            
-            //If mobile device
+
             if (mobileDevice)
                 {
 

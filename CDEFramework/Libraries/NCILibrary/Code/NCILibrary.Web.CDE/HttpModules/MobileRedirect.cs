@@ -78,6 +78,9 @@ namespace NCI.Web.CDE
                             context.Response.Cookies.Add(responseCookie); 
                             
                             NciUrl mobileUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");
+                            // We are adding query parameter to the mobile URL for the page to accommodate 
+                            // the dictionary of cancer terms - so a link to a term dictionary definition 
+                            // actually goes to the mobile dictionary definition, not just the dictionary home.
                             string redirectUrl = InformationRequestConfig.MobileHost + mobileUrl.ToString() + context.Request.Url.Query;
                             context.Response.Redirect(redirectUrl, true);
                         }
