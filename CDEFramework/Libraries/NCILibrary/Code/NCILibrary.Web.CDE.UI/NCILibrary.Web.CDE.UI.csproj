@@ -83,7 +83,6 @@
     <Compile Include="SnippetControls\ContentSearchSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\MobileTermDictionary.cs" />
     <Compile Include="SnippetControls\PublicArchiveBanner.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

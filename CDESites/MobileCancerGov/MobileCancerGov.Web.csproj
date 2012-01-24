@@ -94,6 +94,7 @@
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.designer.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\MobileTermDictionary.cs" />
     <Compile Include="SnippetTemplates\MobileTermDictionaryHome.ascx.cs">
       <DependentUpon>MobileTermDictionaryHome.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
