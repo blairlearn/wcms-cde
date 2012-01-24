@@ -84,16 +84,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("function DoSearch()");
             searchBlock.AppendLine("{");
             searchBlock.AppendLine("    if($('#searchString').val() != \"\") {");
-            if (String.IsNullOrEmpty(language))
-                searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
+            if (language == MobileTermDictionary.SPANISH)
+                searchBlock.AppendLine("       NCIAnalytics.TermsDictionarySearchMobile(this,$('#searchString').val(), true);");
             else
-            {
-                // Language selection by query parameter disabled 
-                //if (language != MobileTermDictionary.ENGLISH)
-                //    searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val()+ \"&language=" + language + "\";");
-                //else
-                    searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
-            }
+                searchBlock.AppendLine("       NCIAnalytics.TermsDictionarySearchMobile(this,$('#searchString').val(), false);");
+            searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
             searchBlock.AppendLine("       $(location).attr('href',url);");
             searchBlock.AppendLine("    }");
             searchBlock.AppendLine("}");

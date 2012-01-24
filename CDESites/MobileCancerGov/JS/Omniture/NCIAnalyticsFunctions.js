@@ -314,7 +314,14 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             'TermsDictionarySearch',
             isSpanish); 
 	},
-
+//******************************************************************************************************	
+	TermsDictionarySearchMobile : function(sender, searchStr, isSpanish) {
+        NCIAnalytics.TermsDictionarySearchCore(sender,
+            searchStr,
+            'starts with',
+            'TermsDictionarySearchMobile',
+            isSpanish); 
+	},
 //******************************************************************************************************	
 	TermsDictionarySearchAlphaList : function(sender, value) {
 	
