@@ -15,7 +15,7 @@
         </ul>
   <% if (ResultsFound)
      {%>
-   <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" />
+   <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" CssClass="SimplePager" />
   <br />
     <%}%>
     <% if (!ResultsFound){%>
