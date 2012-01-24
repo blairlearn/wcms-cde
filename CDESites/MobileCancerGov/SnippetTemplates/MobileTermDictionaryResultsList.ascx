@@ -47,6 +47,6 @@
             </EmptyDataTemplate>
         </asp:ListView>
         <br />
-        <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" />
+        <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" class="simplePager" />
     </ul>
 </div>

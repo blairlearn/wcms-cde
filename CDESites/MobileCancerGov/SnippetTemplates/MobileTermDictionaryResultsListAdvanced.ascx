@@ -1,8 +1,40 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MobileTermDictionaryResultsListAdvanced.ascx.cs" Inherits="MobileCancerGov.Web.SnippetTemplates.MobileTermDictionaryResultsListAdvanced" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-   <script type="text/javascript" src="test_js/js/jquery-1.4.2.min.js"></script>
-   <script type="text/javascript" src="test_js/js/jquery.scrollExtend.min.js"></script>
+<%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="NCI" %>
+<asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
+<asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
+<asp:Literal runat="server" ID="litSearchStr" Visible="false"></asp:Literal>
+
+   <script type="text/javascript" src="http://localhost:7069/test_js/js/jquery.scrollExtend.min.js"></script>
+   <style type="text/css">
+
+	div.scroll_container {
+		background-color: #EEEEEE;
+		width: 500px;
+		margin-left: auto;
+		margin-right: auto;
+		border: 1px solid #CCCCCC;
+		text-align: center;
+	}
+
+
+	div.list_item {
+		height: 200px;
+		background-color: #FEFEFE;
+		margin-bottom: 5px;
+		width: 90%;
+		border: 1px solid #999999;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	div.more_content {
+		height: 100px;
+		width: 500px;
+		background-color: #E1ABCE;
+		border: 1px solid blue;
+	}
+
+   </style>
    <script type="text/javascript">
 
 	jQuery(document).ready(
@@ -33,7 +65,7 @@
 							$('.scroll_container').data().pageNumber++;
 						},
 						'dataType': 'json',
-						'url': 'http://localhost:7001/TermDictionary.svc/GetTermDictionaryListJSON/English?searchTerm=tumor&Contains=false&MaxRows=10&PageNumber=' + $('.scroll_container').data().pageNumber,
+						'url': 'http://localhost:7069/TermDictionary.svc/GetTermDictionaryListJSON/English?searchTerm=tumor&Contains=false&MaxRows=10&PageNumber=' + $('.scroll_container').data().pageNumber,
 					}
 					
 					jQuery.ajax( ajaxSettings );
@@ -43,136 +75,67 @@
 		}
 	);			
    </script>
-<div class="scroll_container">
 
-    <ul>
-                <li><a name="tumor"></a>
+  <div class="scroll_container" style="max-height:200px;">
+     <div id="scroll_items">
+        <div class="list_item">
+	        Scroll beyond this container to automatically load more content
+     	</div>
+        <div class="list_item">
+	        <a name="tumor"></a>
                 <a href="/mtd?cdrid=46634&language=english"
                 onclick="NCIAnalytics.TermsDictionaryResults(this,'1');">
                 tumor</a>
                 </br>
                 An abnormal
           mass of tissue that results when cells divide more than
-          they should or do not die when...</li>
-                
-                <li><a name="tumor antigen vaccine"></a>
+          they should or do not die when...
+     	</div>
+
+        <div class="list_item">
+	        <a name="tumor antigen vaccine"></a>
 
                 <a href="/mtd?cdrid=44927&language=english"
                 onclick="NCIAnalytics.TermsDictionaryResults(this,'2');">
                 tumor antigen vaccine</a>
                 </br>
-                A vaccine made of cancer cells, parts of cancer cells, or pure tumor antigens (substances isolated from...</li>
+                A vaccine made of cancer cells, parts of cancer cells, or pure tumor antigens (substances isolated from...
                 
-                <li><a name="tumor board review"></a>
+	</div>
+
+        <div class="list_item">
+	  <a name="tumor board review"></a>
                 <a href="/mtd?cdrid=322893&language=english"
                 onclick="NCIAnalytics.TermsDictionaryResults(this,'3');">
                 tumor board review</a>
 
                 </br>
-                A treatment planning approach in which a number of doctors who are experts in different specialties...</li>
-                
-                <li><a name="tumor burden"></a>
+                A treatment planning approach in which a number of doctors who are experts in different specialties...
+
+     	</div>
+
+        <div class="list_item">
+	       <a name="tumor burden"></a>
                 <a href="/mtd?cdrid=44627&language=english"
                 onclick="NCIAnalytics.TermsDictionaryResults(this,'4');">
                 tumor burden</a>
                 </br>
-                Refers to the number of cancer cells, the size of a tumor, or the amount of cancer in the body. Also called tumor...</li>
+                Refers to the number of cancer cells, the size of a tumor, or the amount of cancer in the body. Also called tumor...
 
-                
-                <li><a name="tumor debulking"></a>
-                <a href="/mtd?cdrid=46635&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'5');">
-                tumor debulking</a>
-                </br>
-                Surgical removal of as much of a tumor as possible. Tumor debulking may increase the chance that chemotherapy...</li>
-                
-                <li><a name="tumor infiltrating lymphocyte"></a>
-                <a href="/mtd?cdrid=45329&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'6');">
-                tumor infiltrating lymphocyte</a>
+     	</div>
 
-                </br>
-                A white blood cell that has left the bloodstream and migrated into a tumor.</li>
-                
-                <li><a name="tumor initiation"></a>
-                <a href="/mtd?cdrid=390314&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'7');">
-                tumor initiation</a>
-                </br>
-                A process in which normal cells are changed so that they are able to form tumors. Substances that cause...</li>
-
-                
-                <li><a name="tumor load"></a>
-                <a href="/mtd?cdrid=44804&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'8');">
-                tumor load</a>
-                </br>
-                Refers to the number of cancer cells, the size of a tumor, or the amount of cancer in the body. Also called tumor...</li>
-                
-                <li><a name="tumor lysis syndrome"></a>
+        <div class="list_item">
+	       <a name="tumor lysis syndrome"></a>
                 <a href="/mtd?cdrid=626342&language=english"
                 onclick="NCIAnalytics.TermsDictionaryResults(this,'9');">
                 tumor lysis syndrome</a>
 
                 </br>
-                A condition that can occur after treatment of a fast-growing cancer, especially certain leukemias and...</li>
-                
-                <li><a name="tumor marker"></a>
-                <a href="/mtd?cdrid=46636&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'10');">
-                tumor marker</a>
-                </br>
-                A substance that may be found in tumor tissue or released from a tumor into the blood or other body fluids. A...</li>
+                A condition that can occur after treatment of a fast-growing cancer, especially certain leukemias and...
 
-                <li><a name="tumor debulking"></a>
-                <a href="/mtd?cdrid=46635&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'5');">
-                tumor debulking</a>
-                </br>
-                Surgical removal of as much of a tumor as possible. Tumor debulking may increase the chance that chemotherapy...</li>
-                
-                <li><a name="tumor infiltrating lymphocyte"></a>
-                <a href="/mtd?cdrid=45329&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'6');">
-                tumor infiltrating lymphocyte</a>
+     	</div>
 
-                </br>
-                A white blood cell that has left the bloodstream and migrated into a tumor.</li>
-                
-                <li><a name="tumor initiation"></a>
-                <a href="/mtd?cdrid=390314&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'7');">
-                tumor initiation</a>
-                </br>
-                A process in which normal cells are changed so that they are able to form tumors. Substances that cause...</li>
-
-                
-                <li><a name="tumor load"></a>
-                <a href="/mtd?cdrid=44804&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'8');">
-                tumor load</a>
-                </br>
-                Refers to the number of cancer cells, the size of a tumor, or the amount of cancer in the body. Also called tumor...</li>
-                
-                <li><a name="tumor lysis syndrome"></a>
-                <a href="/mtd?cdrid=626342&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'9');">
-                tumor lysis syndrome</a>
-
-                </br>
-                A condition that can occur after treatment of a fast-growing cancer, especially certain leukemias and...</li>
-                
-                <li><a name="tumor marker"></a>
-                <a href="/mtd?cdrid=46636&language=english"
-                onclick="NCIAnalytics.TermsDictionaryResults(this,'10');">
-                tumor marker</a>
-                </br>
-                A substance that may be found in tumor tissue or released from a tumor into the blood or other body fluids. A...</li>
-
-                
-            
-        <br />
-    </ul>
-</div>
-<div style="clear:both;"></div>
+     </div>
+  </div>
+    <div style="clear:both;"></div>
 
