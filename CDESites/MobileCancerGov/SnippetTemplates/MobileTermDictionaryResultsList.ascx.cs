@@ -163,6 +163,13 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     spPager.BaseUrl = DictionaryURL + "?expand=" + _expandText;
                 else
                     spPager.BaseUrl = DictionaryURL + "?search=" + SearchString;
+
+                if (IsSpanish)
+                {
+                    spPager.PagerStyleSettings.NextPageText = "Siguiente&nbsp;&gt;";
+                    spPager.PagerStyleSettings.PrevPageText = "&lt;&nbsp;Anterior";
+                }
+
             }
         }
 
