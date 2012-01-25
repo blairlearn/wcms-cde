@@ -84,13 +84,25 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("function DoSearch()");
             searchBlock.AppendLine("{");
             searchBlock.AppendLine("    if($('#searchString').val() != \"\") {");
+            searchBlock.AppendLine("           var localSearhString = htmlEscape($('#searchString').val());");
             if (language == MobileTermDictionary.SPANISH)
-                searchBlock.AppendLine("       NCIAnalytics.TermsDictionarySearchMobile(this,$('#searchString').val(), true);");
+                searchBlock.AppendLine("       NCIAnalytics.TermsDictionarySearchMobile(this,localSearhString, true);");
             else
-                searchBlock.AppendLine("       NCIAnalytics.TermsDictionarySearchMobile(this,$('#searchString').val(), false);");
-            searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + $('#searchString').val();");
+                searchBlock.AppendLine("       NCIAnalytics.TermsDictionarySearchMobile(this,localSearhString, false);");
+            searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + localSearhString;");
             searchBlock.AppendLine("       $(location).attr('href',url);");
             searchBlock.AppendLine("    }");
+            searchBlock.AppendLine("}");
+            searchBlock.AppendLine("function htmlEscape(str) {");
+            searchBlock.AppendLine("    return String(str)");
+            searchBlock.AppendLine("    .replace(/&/g, '&amp;')");
+            searchBlock.AppendLine("    .replace(/\"/g, '&quot;')");
+            searchBlock.AppendLine("    .replace(/'/g, '&#39;')");
+            searchBlock.AppendLine("    .replace(/[(]/g, '&#28;')");
+            searchBlock.AppendLine("    .replace(/[)]/g, '&#29;')");
+            searchBlock.AppendLine("    .replace(/[?]/g, '&#3f;')");
+            searchBlock.AppendLine("    .replace(/</g, '&lt;')");
+            searchBlock.AppendLine("    .replace(/>/g, '&gt;');");
             searchBlock.AppendLine("}");
             searchBlock.AppendLine("</script>");
             searchBlock.AppendLine("<table width=\"100%\">");
