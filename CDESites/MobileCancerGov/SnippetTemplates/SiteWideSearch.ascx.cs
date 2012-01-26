@@ -119,7 +119,15 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     }
 
                     // Set the link for desktop search or full site search
-                    lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + PrettyUrl + "?swKeyword=" + Server.UrlEncode(Keyword);
+                    string prettyUrl = ConfigurationManager.AppSettings["CGovEnglishSiteWideSearchResultPage"];
+
+                    if (PageDisplayInformation.Language == DisplayLanguage.Spanish)
+                        prettyUrl = ConfigurationManager.AppSettings["CGovSpanishSiteWideSearchResultPage"];
+
+                    if (string.IsNullOrEmpty(prettyUrl))
+                        prettyUrl = PrettyUrl;
+
+                    lnkSearchInDeskTop.NavigateUrl = InformationRequestConfig.DesktopHost + prettyUrl + "?swKeyword=" + Server.UrlEncode(Keyword);
                     lnkSearchInDeskTop.Visible = true;
                 }
                 else
