@@ -72,7 +72,6 @@
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="TermDictionary.svc" />
-    <Content Include="TermDictionaryTest-O-Matic.aspx" />
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -136,13 +135,6 @@
     </Compile>
     <Compile Include="SnippetTemplates\SiteWideSearch.ascx.designer.cs">
       <DependentUpon>SiteWideSearch.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="TermDictionaryTest-O-Matic.aspx.cs">
-      <DependentUpon>TermDictionaryTest-O-Matic.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TermDictionaryTest-O-Matic.aspx.designer.cs">
-      <DependentUpon>TermDictionaryTest-O-Matic.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
