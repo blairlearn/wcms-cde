@@ -35,17 +35,18 @@ namespace NCI.Web.CDE
             String mobilePage = "";
             bool mobileDevice = true; // This is not just for mobile devices 
 
-            //if ((DisplayDeviceDetector.DisplayDevice == DisplayDevices.BasicMobile) ||
-            //    (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile))
-            //    mobileDevice = true;
-
-
             if (mobileDevice)
                 {
 
                 if (context.Response.StatusCode == 404) // Page not found
                 {
-                    if (url.ToLower().IndexOf(".ico") != -1 || url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
+                    if (url.IndexOf(".ico") != -1 ||
+                        url.IndexOf(".css") != -1 ||
+                        url.IndexOf(".gif") != -1 ||
+                        url.IndexOf(".jpg") != -1 ||
+                        url.IndexOf(".js") != -1 ||
+                        url.IndexOf(".axd") != -1 ||
+                        url.IndexOf(".png") != -1)
                         return;
 
                     try
@@ -93,7 +94,13 @@ namespace NCI.Web.CDE
 
                 if (context.Response.StatusCode == 302) // a redirect was returned 
                 {
-                    if (url.ToLower().IndexOf(".ico") != -1 || url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
+                    if (url.IndexOf(".ico") != -1 || 
+                        url.IndexOf(".css") != -1 || 
+                        url.IndexOf(".gif") != -1 || 
+                        url.IndexOf(".jpg") != -1 || 
+                        url.IndexOf(".js") != -1 || 
+                        url.IndexOf(".axd") != -1 || 
+                        url.IndexOf(".png") != -1)
                         return;
 
                     try

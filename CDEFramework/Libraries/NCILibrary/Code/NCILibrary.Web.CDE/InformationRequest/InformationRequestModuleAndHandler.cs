@@ -33,6 +33,17 @@ namespace NCI.Web.CDE
         public void OnMapRequestHandler(object sender, EventArgs args)
         {
             HttpContext context = ((HttpApplication)sender).Context;
+            String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture)).ToLower();
+
+            if (url.IndexOf(".ico") != -1 ||
+                url.IndexOf(".css") != -1 ||
+                url.IndexOf(".gif") != -1 ||
+                url.IndexOf(".jpg") != -1 ||
+                url.IndexOf(".js") != -1 ||
+                url.IndexOf(".axd") != -1 ||
+                url.IndexOf(".png") != -1)
+                return;
+
             
             string[] request = { "" };
             String command = (string)context.Request.QueryString[InformationRequestConstants.InformationRequestToken];
