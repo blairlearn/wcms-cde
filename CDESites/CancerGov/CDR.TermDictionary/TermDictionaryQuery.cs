@@ -371,7 +371,7 @@ namespace CancerGov.CDR.TermDictionary
                 returnvalue.Add(rows[2]); // Pronounciation
                 returnvalue.Add(rows[3]); // Definition
                 returnvalue.Add(rows[4]); // MediaHtml
-                returnvalue.Add(rows[5]); // AudioMediaHtml
+                returnvalue.Add(rows[7]); // AudioMediaHtml
                 rows.Close();
                 dbh.Close();
             }
