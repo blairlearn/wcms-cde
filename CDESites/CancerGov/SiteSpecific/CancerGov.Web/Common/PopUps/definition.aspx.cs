@@ -139,9 +139,9 @@ namespace CancerGov.Web.Common.PopUps
                     mediaHtml = result[3].ToString();
                     mediaHtml = mediaHtml.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
 
-                    if (result[4] != null)
+                    if (result[7] != null)
                     {
-                        audioMediaHTML = result[4].ToString();
+                        audioMediaHTML = result[7].ToString();
                         audioMediaHTML = audioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
                     }
                 }
