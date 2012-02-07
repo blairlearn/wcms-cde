@@ -651,6 +651,32 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         clickParams.LogToOmniture();
     },
 //******************************************************************************************************	
+    ClickLink : function(sender, linkName)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','Link-' + linkName );
+        clickParams.Props = {
+            36 : linkName};
+        clickParams.Evars = {
+            36 : linkName};
+        clickParams.Events = [16]; 
+        clickParams.LogToOmniture();
+    },
+   
+//******************************************************************************************************	
+    ClickLink21 : function(sender, linkName)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','o','Link-' + linkName );
+        clickParams.Props = {
+            28 : linkName};
+        clickParams.Evars = {
+            43 : linkName};
+        clickParams.Events = [21]; 
+        clickParams.LogToOmniture();
+    },
+   
+//******************************************************************************************************	
     BulletinSubscription : function(sender)  {
         
         clickParams = new NCIAnalytics.ClickParams(sender,
@@ -875,6 +901,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
     },
 //******************************************************************************************************	
 	SPLF_Hier1 : function()  {
+	    // Special Page-Load Function 
 	    // URL structure
 	    // element 0 = blank
 	    // element 1 = "Cancertopics"
@@ -912,8 +939,39 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 	        }
 	    }
     },
+//******************************************************************************************************	
+	SPLF_Hier2 : function()  {
+	    // Special Page-Load Function 
+	    // puts the 2nd, 3rd, and 4th in prop30, prop44, and prop45 for English 
+	    // puts the 3nd, 4rd, and 5th in prop30, prop44, and prop45 for Spanish
+	    // builds hier variable  
+	    delimiter = "|";
+		pathArray = window.location.pathname.split( '/' );
+		ptr = 2;
+	    
+        if(pathArray.length >= 1) {
+            if (pathArray[1] == 'es')
+                ptr++;
+        }
+        
+	    s.hier2 = s.channel;
+        if(pathArray.length >= (ptr + 1)) {
+            s.prop30 = pathArray[ptr];
+            s.hier2 += delimiter + s.prop30;
+            ptr ++;
+            if(pathArray.length >= (ptr + 1)) {
+                s.prop44 = pathArray[ptr];
+                s.hier2 += delimiter + s.prop44;
+                ptr++;
+                if(pathArray.length >= (ptr + 1)) {
+                    s.prop45 = pathArray[ptr];
+                    s.hier2 += delimiter + s.prop45;
+                }  
+            }
+	    }
+    },
     
-	SPLF_Lang : function()  {
+    SPLF_Lang : function()  {
 	    //alert('Lang');
     }
     

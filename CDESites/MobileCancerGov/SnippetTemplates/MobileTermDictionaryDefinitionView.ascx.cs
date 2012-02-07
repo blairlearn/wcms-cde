@@ -221,6 +221,11 @@ namespace MobileCancerGov.Web.SnippetTemplates
                             url.QueryParameters.Add("cdrid", cdrId);
                         });
 
+                        PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.DictionaryTermView, wbField =>
+                        {
+                            wbField.Value = "";
+                        });
+
                         litPageUrl.Text = startingUrl;
                         litSearchBlock.Text = MobileTermDictionary.SearchBlock(startingUrl, "", _language, pageTitle, buttonText, true);
                     }

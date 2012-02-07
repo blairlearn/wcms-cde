@@ -97,7 +97,11 @@ namespace MobileCancerGov.Web.SnippetTemplates
                             spPager.PagerStyleSettings.NextPageText = "Siguiente&nbsp;&gt;";
                             spPager.PagerStyleSettings.PrevPageText = "&lt;&nbsp;Anterior";
                             lnkSearchInDeskTop.Text = "Buscar en la versión completa de Cancer.gov en español";
+                            lnkSearchInDeskTop.Attributes.Add("onclick", "NCIAnalytics.ClickLink21(this,'Buscar en la version completa');");
                         }
+                        else
+                            lnkSearchInDeskTop.Attributes.Add("onclick", "NCIAnalytics.ClickLink21(this,'Search The Full Site');");
+
 
 
                         //// Web Analytics *************************************************
