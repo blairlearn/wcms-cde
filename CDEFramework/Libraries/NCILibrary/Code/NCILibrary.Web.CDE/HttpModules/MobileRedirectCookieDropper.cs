@@ -67,6 +67,7 @@ namespace NCI.Web.CDE
 
                     HttpCookie redirectCookie = new HttpCookie(_cookieName, "true");
                     redirectCookie.Expires = DateTime.MinValue; // Make this a session cookie
+                    redirectCookie.Domain = "cancer.gov";
                     context.Response.Cookies.Add(redirectCookie);
                 }
                 catch (Exception ex)
