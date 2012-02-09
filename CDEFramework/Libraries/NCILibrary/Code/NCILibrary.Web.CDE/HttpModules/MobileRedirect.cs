@@ -15,8 +15,8 @@ namespace NCI.Web.CDE
     public class MobileRedirect : IHttpModule
     {
         private static readonly object REQUEST_URL_KEY = new object();
-        private const string _cookieName = "mobile_redirect";
-        
+        private static readonly string _cookieName =
+            System.Configuration.ConfigurationManager.AppSettings["MobileRedirectCookieName"];
         
         /// <summary>
         /// You will need to configure this module in the web.config file of your
@@ -75,6 +75,7 @@ namespace NCI.Web.CDE
                             //drop a cookie so mobile redirect happens only once per session
                             HttpCookie responseCookie = new HttpCookie(_cookieName,"true");
                             responseCookie.Expires = DateTime.MinValue; // Make this a session cookie
+                            responseCookie.Domain = "cancer.gov";
                             context.Response.Cookies.Add(responseCookie); 
                             
                             NciUrl mobileUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");

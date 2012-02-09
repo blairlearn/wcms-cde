@@ -76,6 +76,7 @@
     <Compile Include="HttpHandlers\FlashSetCookieHandler.cs" />
     <Compile Include="HttpHandlers\FormEmailerHandler.cs" />
     <Compile Include="HttpHandlers\ListservSubscriptionHandler.cs" />
+    <Compile Include="HttpModules\MobileRedirectCookieDropper.cs" />
     <Compile Include="HttpModules\MobileRedirectUnmanagedUrlsModule.cs" />
     <Compile Include="HttpModules\FileInstructionLoader.cs" />
     <Compile Include="HttpModules\MobileRedirect.cs" />
