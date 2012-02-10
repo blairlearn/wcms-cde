@@ -528,8 +528,28 @@ namespace NCI.Web.CDE
                         }
                     }
                 }
+
                 if (AlternateContentVersions.AltLanguage)
                     keysList.Add("altlanguage");
+
+                //Set Mobile URL
+                if (PageMetadata.MobileURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.MobileURL.Trim()))
+                    {
+                        keysList.Add("mobileurl");
+                    }
+                }
+  
+                //Set Desktop URL
+                if (PageMetadata.DesktopURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.DesktopURL.Trim()))
+                    {
+                        keysList.Add("desktopurl");
+                    }
+                }
+                
 
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
@@ -793,6 +813,74 @@ namespace NCI.Web.CDE
                 url.SetUrl(PrettyUrl);
             });
 
+            #region MobileURL
+            // Mobule URL filter 
+            if (_currentPageIndex == -1)
+            {
+                if (PageMetadata.MobileURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.MobileURL.ToString().Trim()))
+                    {
+                        AddUrlFilter("mobileurl", (name, url) =>
+                        {
+                            url.SetUrl(PageMetadata.MobileURL);
+                        });
+                    }
+                }
+            }
+            else
+            {
+                if (_pages._Pages[_currentPageIndex].PageMetadata.MobileURL == null)
+                {
+                    AddUrlFilter("mobileurl", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.MobileURL);
+                    });
+                }
+                else
+                {
+                    AddUrlFilter("mobileurl", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.MobileURL + _pages._Pages[_currentPageIndex].PageMetadata.MobileURL);
+                    });
+                }
+            }
+
+            #endregion
+
+            #region DesktopURL
+            if (_currentPageIndex == -1)
+            {
+                if (PageMetadata.DesktopURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.DesktopURL.ToString().Trim()))
+                    {
+                        AddUrlFilter("desktopurl", (name, url) =>
+                        {
+                            url.SetUrl(PageMetadata.DesktopURL);
+                        });
+                    }
+                }
+            }
+            else
+            {
+                if (_pages._Pages[_currentPageIndex].PageMetadata.DesktopURL == null)
+                {
+                    AddUrlFilter("desktopurl", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.DesktopURL);
+                    });
+                }
+                else
+                {
+                    AddUrlFilter("desktopurl", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.DesktopURL + _pages._Pages[_currentPageIndex].PageMetadata.DesktopURL);
+                    });
+                }
+            }
+            #endregion
+            
             #region AltLanguageURL
             // Alt Language URL filter 
             if (_currentPageIndex == -1)
