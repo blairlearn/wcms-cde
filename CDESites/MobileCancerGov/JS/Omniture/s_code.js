@@ -6,7 +6,7 @@ More info available at http://www.omniture.com */
 var s=s_gi(s_account);
 
 /************************** CONFIG SECTION **************************/
-/* Config Section Version - CancerGov_5_18_2011 */
+/* Config Section Version - CancerGov_2_10_2012 */
 /* Specify the life time of the cookie in seconds, or */
 /* set to "Session" to turn off persistent cookies.   */
 s.cookieLifetime="";
@@ -19,7 +19,7 @@ s.trackDownloadLinks=true;
 s.trackExternalLinks=true;
 s.trackInlineStats=true;
 s.linkDownloadFileTypes="gif,jpg,png,ics,pdf,exe,zip,wav,mp3,mov,mpg,avi,wmv,doc,docx,xls,xlsx,ppt,pptx";
-s.linkInternalFilters="javascript:,cancer.gov";
+s.linkInternalFilters="javascript:,m.cancer.gov";
 s.linkLeaveQueryString=false;
 s.linkTrackVars="None";
 s.linkTrackEvents="None";
@@ -29,7 +29,7 @@ var cdrid = caseInsensitiveGetQueryParm('cdrid');
 if(cdrid)
     s.prop16=s.eVar16=cdrid; 
 
-var localPageName = "www.cancer.gov" + location.pathname.toLowerCase();
+var localPageName = "m.cancer.gov" + location.pathname.toLowerCase();
 if (typeof pageNameOverride!="undefined")
     localPageName = pageNameOverride;
 
