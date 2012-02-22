@@ -56,7 +56,16 @@ namespace CancerGov.Web.SnippetTemplates
                     TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, mPBO.CDRId, null, 5);
                     if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
                     {
-                        definitionText = "<strong>Definition of " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                        if (language == "English")
+                        {
+
+                            definitionText = "<strong>Definition of " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                        }
+                        else if(language == "Spanish")
+                        {
+                            definitionText = "<strong>Definición de " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;                     
+                        }
+                            
                         if (mPBO.charLimit > 0)
                         {
                             moreLink.Visible = true;
@@ -67,7 +76,16 @@ namespace CancerGov.Web.SnippetTemplates
                     }
                     else
                     {
-                        definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                        if (language == "English")
+                        {
+
+                            definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                        }
+                        else if (language == "Spanish")
+                        {
+                            definitionText = "<strong>Definición de " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                        
+                        }
                         if (mPBO.charLimit > 0)
                         {
                             moreLink.Visible = true;

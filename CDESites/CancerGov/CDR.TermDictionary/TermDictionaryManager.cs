@@ -17,6 +17,7 @@ namespace CancerGov.CDR.TermDictionary
     /// </summary>
     public static class TermDictionaryManager
     {
+
         /// <summary>
         /// This methods filters the information passed to it in order to refine the query
         /// that will be called in the database layer.
@@ -60,6 +61,73 @@ namespace CancerGov.CDR.TermDictionary
                             language.ToString(),
                             criteria,
                             maxRows);
+
+                    // use Linq to move information from the dataTable
+                    // into the TermDictionaryCollection
+                    dc.AddRange(
+                        from entry in dt.AsEnumerable()
+                        select GetEntryFromDR(entry)
+                    );
+
+                }
+                catch (Exception ex)
+                {
+                    CancerGovError.LogError("TermDictionatyManager", 2, ex);
+                    throw ex;
+                }
+            }
+
+            return dc;
+        }
+
+        /// <summary>
+        /// This methods filters the information passed to it in order to refine the query
+        /// that will be called in the database layer.
+        /// </summary>
+        /// <param name="language">enumeration indicating language</param>
+        /// <param name="criteria">The partial text used to query the database</param>
+        /// <param name="maxRows">The maximum number of rows that the database will return. a value of zero will return the entire set</param>
+        /// <param name="contains">indicator as to whether the text is to be searched starting from the beginning or anywhere
+        /// in the string</param>
+        /// <param name="pageNumber">The page for which the records should be returned.The records returned 
+        /// will always equal maxRows in every page.</param>
+        /// <returns>Returns the search results</returns>
+        public static TermDictionaryCollection GetTermDictionaryList(string language, string criteria, bool contains, int maxRows, int pageNumber, ref int totalRecordCount)
+        {
+            TermDictionaryCollection dc = new TermDictionaryCollection();
+            totalRecordCount = 0;
+
+            // Find out how we should search for the string
+            if (Strings.Clean(criteria) != null)
+            {
+                // replace any '[' with '[[]'
+                //criteria = criteria.Replace("[", "[[]");
+
+                // put the '%' at the end to indicate that the search starts
+                // with the criteria passed.
+                criteria += "%";
+
+                // put the '%' at the beginning to indicate that the search
+                // data contains the criteria passed
+                if (contains)
+                    criteria = "%" + criteria;
+
+                // Find out the field we need to get to build our list
+                string fieldName = "TermName";
+                if (language == "Spanish")
+                {
+                    fieldName = language.ToString() + fieldName;
+                }
+
+                try
+                {
+                    // Call the database layer and get data
+                    DataTable dt = TermDictionaryQuery.GetTermDictionaryList(
+                            language.ToString(),
+                            criteria,
+                            maxRows,
+                            pageNumber,
+                            ref totalRecordCount);
 
                     // use Linq to move information from the dataTable
                     // into the TermDictionaryCollection
@@ -126,6 +194,40 @@ namespace CancerGov.CDR.TermDictionary
 
             return di;
         }
+
+
+        /// <summary>
+        /// Method will return a all letters that have items that start with the specific letter 
+        /// </summary>
+        /// <param name="language"></param>
+
+        /// <returns></returns>
+        public static ArrayList GetAZListLettersWithData(string language)
+        {
+            DataTable dt = null;
+            ArrayList al = null;
+
+            try
+            {
+                // Call the database layer and get data
+                dt = TermDictionaryQuery.AZListLettersWithData(language);
+                al = new ArrayList(dt.Rows.Count);
+                foreach (DataRow row in dt.Rows)
+                {
+                        al.Add(row[0].ToString().ToUpper());
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                CancerGovError.LogError("TermDictionaryManager.GetAZListLettersWithData", 2, ex);
+                throw ex;
+            }
+
+            return al;
+        }
+
+
 
         /// <summary>
         /// Method will return a single TermDictionaryItem with its associated
@@ -230,6 +332,8 @@ namespace CancerGov.CDR.TermDictionary
                 Strings.Clean(dr["TermPronunciation"]),
                 Strings.Clean(dr["DefinitionHTML"]),
                 Strings.Clean(dr["MediaHTML"]),
+                Strings.Clean(dr["MediaCaption"]),
+                Strings.ToInt(dr["MediaID"]),
                 Strings.Clean(dr["AudioMediaHTML"]),
                 Strings.Clean(dr["RelatedInformationHtml"])
              );

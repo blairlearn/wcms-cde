@@ -25,5 +25,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 return base.SearchList;
             }
         }
+
     }
 }

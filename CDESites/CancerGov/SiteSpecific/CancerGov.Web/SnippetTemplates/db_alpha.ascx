@@ -9,7 +9,29 @@
     function ACOnSubmit() {
         document.getElementById('<%=btnGo.ClientID%>').click();
     }
-           
+
+    //Hookup JPlayer for Audio
+    if (jQuery.jPlayer) {
+        jQuery(document).ready(function($) {
+            var my_jPlayer = $("#dictionary_jPlayer");
+
+            my_jPlayer.jPlayer({
+                swfPath: "/PublishedContent/files/global/flash/", //Path to SWF File Used by jPlayer
+                //errorAlerts: true,
+                supplied: "mp3" //The types of files which will be used.
+            });
+
+            //Attach a click event to the audio link
+            $(".CDR_audiofile").click(function() {
+                my_jPlayer.jPlayer("setMedia", {
+                    mp3: $(this).attr("href") // Defines the m4v url
+                }).jPlayer("play");
+
+                return false;
+            });
+        });
+    }
+       
 </script>
 
 <script type="text/javascript">
@@ -33,6 +55,7 @@
 <!-- Main Area -->
 <form name="aspnetForm" method="post" action="/dictionary/" id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);"
 runat="server">
+<div id="dictionary_jPlayer"></div>
 <a name="top"></a>
 <!--<div style="margin-right: auto;margin-left: auto;">-->
 <table width="100%" cellspacing="0" cellpadding="0" border="0">

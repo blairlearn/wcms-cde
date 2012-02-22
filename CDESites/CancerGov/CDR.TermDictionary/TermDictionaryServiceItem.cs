@@ -25,11 +25,17 @@ namespace CancerGov.CDR.TermDictionary
         public int id;
 
         [DataMember]
-        public string item;
+        public string item = string.Empty;
 
         [DataMember]
-        public string info;
+        public string info=string.Empty;
 
+        [DataMember]
+        public TermDictionaryDataItem TermDictionaryDetail
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// Constructor requires that all item be accounted for when created. This ensures
         /// that any new items or removal of items is address in all places that use this

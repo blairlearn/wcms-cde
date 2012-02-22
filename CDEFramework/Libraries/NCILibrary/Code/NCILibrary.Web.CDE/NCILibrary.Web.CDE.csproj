@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -55,6 +55,8 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CapabilitiesDetection\CapabilitiesDetector.cs" />
+    <Compile Include="CapabilitiesDetection\DisplayDeviceDetector.cs" />
     <Compile Include="Configuration\canonicalHostNameElement.cs" />
     <Compile Include="Configuration\CanonicalHostNameInformationElement.cs" />
     <Compile Include="Configuration\ContentDeliveryEngineConfig.cs" />
@@ -74,11 +76,23 @@
     <Compile Include="HttpHandlers\FlashSetCookieHandler.cs" />
     <Compile Include="HttpHandlers\FormEmailerHandler.cs" />
     <Compile Include="HttpHandlers\ListservSubscriptionHandler.cs" />
+    <Compile Include="HttpModules\MobileRedirectCookieDropper.cs" />
+    <Compile Include="HttpModules\MobileRedirectUnmanagedUrlsModule.cs" />
     <Compile Include="HttpModules\FileInstructionLoader.cs" />
+    <Compile Include="HttpModules\MobileRedirect.cs" />
     <Compile Include="HttpModules\PageAssemblyInstructionLoader.cs" />
     <Compile Include="Configuration\PageAssemblyElement.cs" />
     <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />
     <Compile Include="HttpModules\Utility.cs" />
+    <Compile Include="InformationRequest\Configuration\MappedPage.cs" />
+    <Compile Include="InformationRequest\Configuration\MappedPageCollection.cs" />
+    <Compile Include="InformationRequest\Configuration\HostElement.cs" />
+    <Compile Include="InformationRequest\Configuration\HostElementCollection.cs" />
+    <Compile Include="InformationRequest\Configuration\InformationRequestSection.cs" />
+    <Compile Include="InformationRequest\InformationRequestConfig.cs" />
+    <Compile Include="InformationRequest\InformationRequestMessages.cs" />
+    <Compile Include="InformationRequest\InformationRequestModuleAndHandler.cs" />
+    <Compile Include="InformationRequest\InformationRequestProcessor.cs" />
     <Compile Include="Modules\ContentSearchList.cs" />
     <Compile Include="Modules\DictionaryURL.cs" />
     <Compile Include="Modules\DockTitleBlock.cs" />
@@ -94,6 +108,7 @@
     <Compile Include="PageAssembly\ContentDates.cs" />
     <Compile Include="PageAssembly\ContentItemInfo.cs" />
     <Compile Include="PageAssembly\DisplayDateModes.cs" />
+    <Compile Include="PageAssembly\DisplayDevices.cs" />
     <Compile Include="PageAssembly\DisplayVersions.cs" />
     <Compile Include="PageAssembly\GenericFileInstruction.cs" />
     <Compile Include="PageAssembly\FileInstructionException.cs" />
@@ -169,6 +184,10 @@
     <ProjectReference Include="..\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.Web\NCILibrary.Web.csproj">
+      <Project>{1FA9B9C2-0E20-4256-A00B-989B33154EBB}</Project>
+      <Name>NCILibrary.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

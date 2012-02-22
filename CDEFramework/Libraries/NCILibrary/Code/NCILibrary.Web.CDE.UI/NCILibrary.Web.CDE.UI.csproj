@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -50,12 +51,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddThis\AddThisButton.cs" />
+    <Compile Include="AddThis\AddThisButtonCollection.cs" />
+    <Compile Include="AddThis\AddThisButtonLanguageItem.cs" />
+    <Compile Include="AddThis\AddThisButtonListControl.cs" />
+    <Compile Include="AddThis\AddThisLanguageCollection.cs" />
+    <Compile Include="AddThis\CustomAddThisButtonItem.cs" />
     <Compile Include="BaseTemplates\SnippetControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BaseTemplates\TemplateSlot.cs" />
     <Compile Include="BaseTemplates\TemplateSlotCollection.cs" />
     <Compile Include="BaseTemplates\TemplateSlotItem.cs" />
+    <Compile Include="Configuration\MobileLanguageToggle.cs" />
+    <Compile Include="Configuration\MobileLanguageToggleCollection.cs" />
+    <Compile Include="MobileLanguageToggleControl.cs" />
     <Compile Include="Configuration\Settings.cs" />
     <Compile Include="enums.cs" />
     <Compile Include="PageAssemblers\IPageAssembler.cs" />
@@ -73,6 +83,9 @@
     <Compile Include="SnippetControls\ContentSearchSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\PublicArchiveBanner.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\DynamicListSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -88,6 +101,10 @@
     <Compile Include="WebAnalytics\WebAnalyticsControl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\CDESites\CancerGov\CDR.TermDictionary\CDR.TermDictionary.csproj">
+      <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
+      <Name>CDR.TermDictionary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>

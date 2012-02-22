@@ -63,6 +63,7 @@
     <Compile Include="TermDictionaryService.cs" />
     <Compile Include="TermDictionaryServiceCollection.cs" />
     <Compile Include="TermDictionaryServiceItem.cs" />
+    <Compile Include="TermDictionaryServiceList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">

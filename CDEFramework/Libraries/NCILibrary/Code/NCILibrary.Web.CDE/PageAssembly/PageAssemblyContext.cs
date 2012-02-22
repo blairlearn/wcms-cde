@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.Configuration;
+using NCI.Web.CDE.CapabilitiesDetection;
 using System.Globalization;
 
 
@@ -20,6 +21,7 @@ namespace NCI.Web.CDE
         private static object PAGE_ASSEMBLY_CONTEXT_KEY = new object();
 
         private static object PAGE_ASSEMBLY_DISPLAYVERSION_KEY = new object();
+        private static object PAGE_ASSEMBLY_DISPLAYDEVICE_KEY = new object();
         public string requestedUrl { get; set; }
 
         /// <summary>
@@ -73,6 +75,20 @@ namespace NCI.Web.CDE
                     HttpContext.Current.Items.Add(PAGE_ASSEMBLY_DISPLAYVERSION_KEY, value);
             }
         }
+        public static DisplayDevices DisplayDevice
+        {
+            get
+            {
+                if (HttpContext.Current.Items.Contains(PAGE_ASSEMBLY_DISPLAYDEVICE_KEY))
+                    return (DisplayDevices)HttpContext.Current.Items[PAGE_ASSEMBLY_DISPLAYVERSION_KEY];
+                else
+                    HttpContext.Current.Items[PAGE_ASSEMBLY_DISPLAYVERSION_KEY] = DisplayDeviceDetector.DisplayDevice;
+                return (DisplayDevices)HttpContext.Current.Items[PAGE_ASSEMBLY_DISPLAYVERSION_KEY];
+            }
+        }
+
+
+
         #endregion
 
         public static PageAssemblyContext Current

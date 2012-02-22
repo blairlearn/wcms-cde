@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using NCI.Web.CDE.Configuration;
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Util;
 using NCI.Core;
 
@@ -332,7 +333,11 @@ namespace NCI.Web.CDE
                 if (AlternateContentVersions.IsShareBookmarkAvailable)
                     keysList.Add("bookmarkshare");
                 if (AlternateContentVersions.IsEmailAvailable)
-                    keysList.Add("email");
+                    keysList.Add("email"); 
+                if (AlternateContentVersions.IsMobileShareAvailable)
+                    keysList.Add("mobileShare");
+                if (AlternateContentVersions.IsPublicArchive)
+                    keysList.Add("publicArchive");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
                 //Set Alt Language URL
@@ -341,6 +346,20 @@ namespace NCI.Web.CDE
                     if (!string.IsNullOrEmpty(PageMetadata.AltLanguageURL.Trim()))
                     {
                         keysList.Add("altlanguage");
+                    }
+                }
+                if (PageMetadata.MobileURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.MobileURL.Trim()))
+                    {
+                        keysList.Add("mobileurl");
+                    }
+                }
+                if (PageMetadata.DesktopURL != null)
+                {
+                    if (!string.IsNullOrEmpty(PageMetadata.DesktopURL.Trim()))
+                    {
+                        keysList.Add("desktopurl");
                     }
                 }
 
@@ -574,6 +593,16 @@ namespace NCI.Web.CDE
                 data.Value = GetField("meta_keywords");
             });
 
+            AddFieldFilter("add_this_title", (name, data) =>
+            {
+                data.Value = this.PageMetadata.ShortTitle;
+            });
+
+            AddFieldFilter("add_this_description", (name, data) =>
+            {
+                data.Value = this.PageMetadata.ShortDescription;
+            });
+
         }
 
         /// <summary>
@@ -634,6 +663,31 @@ namespace NCI.Web.CDE
                     });
                 }
             }
+            if (PageMetadata.DesktopURL != null)
+            {
+                if (!string.IsNullOrEmpty(PageMetadata.DesktopURL))
+                {
+                    AddUrlFilter("DeskTopUrl", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.DesktopURL, true);
+                    });
+                }
+            }
+            if (PageMetadata.MobileURL != null)
+            {
+                if (!string.IsNullOrEmpty(PageMetadata.MobileURL))
+                {
+                    AddUrlFilter("MobileUrl", (name, url) =>
+                    {
+                        url.SetUrl(PageMetadata.MobileURL,true);
+                    });
+                }
+            }
+
+            AddUrlFilter("add_this_url", (name, url) =>
+            {
+                url.SetUrl(PrettyUrl);
+            });
         }
 
 

@@ -47,6 +47,14 @@ namespace NCI.Web.CDE
         [ConfigurationProperty("value", DefaultValue = "")]
         public string AltLanguageURL { get; set; }
 
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        [ConfigurationProperty("value", DefaultValue = "")]
+        public string DesktopURL { get; set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        [ConfigurationProperty("value", DefaultValue = "")]
+        public string MobileURL { get; set; }
+
         /// <summary>
         /// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
         /// </summary>

@@ -131,6 +131,12 @@ namespace NCI.Web.CDE.UI
                     case HtmlMetaDataType.ContentLanguage:
                         metaData = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
                         break;
+                    case HtmlMetaDataType.EnglishLinkingPolicy:
+                        metaData = ContentDeliveryEngineConfig.PathInformation.EnglishLinkingPolicyPath.Path;
+                        break;
+                    case HtmlMetaDataType.EspanolLinkingPolicy:
+                        metaData = ContentDeliveryEngineConfig.PathInformation.EspanolLinkingPolicyPath.Path;
+                        break;
                 }
 
             }
@@ -153,6 +159,10 @@ namespace NCI.Web.CDE.UI
                 hm.Name = "content-language";
             else if (htmlMetaDataType == HtmlMetaDataType.ContentType)
                 hm.Name = "content-type";
+            else if (htmlMetaDataType == HtmlMetaDataType.EnglishLinkingPolicy)
+                hm.Name = "english-linking-policy";
+            else if (htmlMetaDataType == HtmlMetaDataType.EspanolLinkingPolicy)
+                hm.Name = "espanol-linking-policy";
             hm.Content = getMetaData(htmlMetaDataType);
             htmlHead.Controls.Add(hm);
         }
@@ -281,6 +291,8 @@ namespace NCI.Web.CDE.UI
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.KeyWords);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Description);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.ContentLanguage);
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EnglishLinkingPolicy); 
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EspanolLinkingPolicy);
             }
         }
 

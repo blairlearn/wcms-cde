@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.UI.WebContro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imaging.Web", "CDESites\Imaging\SiteSpecific\Imaging.Web\Imaging.Web.csproj", "{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web\NCILibrary.Web.csproj", "{1FA9B9C2-0E20-4256-A00B-989B33154EBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +82,6 @@ Global
 		{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF} = {028BA2C0-6D26-4784-94E7-55767BCF8839}
 		{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD} = {028BA2C0-6D26-4784-94E7-55767BCF8839}
 		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6} = {028BA2C0-6D26-4784-94E7-55767BCF8839}
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB} = {028BA2C0-6D26-4784-94E7-55767BCF8839}
 	EndGlobalSection
 EndGlobal

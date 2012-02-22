@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDR.TermDictionary", "CDESi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CancerGovCommon", "CDESites\CancerGov\CancerGovCommon\CancerGovCommon.csproj", "{6F797B18-FF7E-4963-8E13-5EA26E910198}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web\NCILibrary.Web.csproj", "{1FA9B9C2-0E20-4256-A00B-989B33154EBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{6F797B18-FF7E-4963-8E13-5EA26E910198}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F797B18-FF7E-4963-8E13-5EA26E910198}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F797B18-FF7E-4963-8E13-5EA26E910198}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,5 +89,6 @@ Global
 		{5ADEF930-6ED8-485E-83DB-A9E14A4182F6} = {B06AAF96-852B-4321-879B-A2BC4FB5C699}
 		{ADF8D268-685C-4444-9C9C-0BE6C4C1C492} = {B06AAF96-852B-4321-879B-A2BC4FB5C699}
 		{6F797B18-FF7E-4963-8E13-5EA26E910198} = {B06AAF96-852B-4321-879B-A2BC4FB5C699}
+		{1FA9B9C2-0E20-4256-A00B-989B33154EBB} = {B06AAF96-852B-4321-879B-A2BC4FB5C699}
 	EndGlobalSection
 EndGlobal

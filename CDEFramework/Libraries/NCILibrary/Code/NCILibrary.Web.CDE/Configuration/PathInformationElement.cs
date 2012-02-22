@@ -47,5 +47,17 @@ namespace NCI.Web.CDE.Configuration
             get { return (PathElement)base["bestBetsResultPath"]; }
         }
 
+        [ConfigurationProperty("englishLinkingPolicyPath")]
+        public PathElement EnglishLinkingPolicyPath
+        {
+            get { return (PathElement)base["englishLinkingPolicyPath"]; }
+        }
+
+        [ConfigurationProperty("espanolLinkingPolicyPath")]
+        public PathElement EspanolLinkingPolicyPath
+        {
+            get { return (PathElement)base["espanolLinkingPolicyPath"]; }
+        }
+
     }
 }

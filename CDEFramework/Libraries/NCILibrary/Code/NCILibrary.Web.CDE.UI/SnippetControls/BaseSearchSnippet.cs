@@ -38,6 +38,20 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         #region Protected
         /// <summary>
+        /// SitePath is a search criteria used in searching
+        /// </summary>
+
+        protected string SiteName
+        {
+            get
+            {
+                if (this.SearchList.SearchParameters == null)
+                    return string.Empty;
+                return this.SearchList.SearchParameters.SiteName;
+            }
+        }
+
+        /// <summary>
         /// Keyword is a search criteria used in searching
         /// </summary>
         virtual protected string KeyWords
@@ -106,6 +120,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     DateTime startDate = StartDate, endDate = EndDate;
                     string keyWord = KeyWords;
+                    string siteName = SiteName;
                     if (this.SearchList.SearchType == "keyword")
                     {
                         startDate = DateTime.MinValue;
@@ -120,13 +135,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     ICollection<SearchResult> searchResults =
                                 SearchDataManager.Execute(CurrentPage, startDate, endDate, keyWord,
                                     this.SearchList.RecordsPerPage, this.SearchList.MaxResults, this.SearchList.SearchFilter,
-                                    this.SearchList.ExcludeSearchFilter, this.SearchList.ResultsSortOrder, this.SearchList.Language, Settings.IsLive, out actualMaxResult);
+                                    this.SearchList.ExcludeSearchFilter, this.SearchList.ResultsSortOrder, this.SearchList.Language, Settings.IsLive, out actualMaxResult, siteName);
 
                     DynamicSearch dynamicSearch = new DynamicSearch();
                     dynamicSearch.Results = searchResults;
                     dynamicSearch.StartDate = String.Format("{0:MM/dd/yyyy}", startDate);
                     dynamicSearch.EndDate = String.Format("{0:MM/dd/yyyy}", endDate);
                     dynamicSearch.KeyWord = keyWord;
+                    dynamicSearch.SiteName = siteName;
+
 
                     if (actualMaxResult > 0)
                     {

@@ -14,6 +14,9 @@ namespace NCI.Web.CDE.Modules
     public class SearchParameters
     {
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string SiteName { get; set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string Keyword { get; set; }
 
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
