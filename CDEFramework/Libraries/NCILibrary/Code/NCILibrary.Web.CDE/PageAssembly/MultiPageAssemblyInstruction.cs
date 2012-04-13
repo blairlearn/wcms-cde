@@ -504,6 +504,8 @@ namespace NCI.Web.CDE
                     keysList.Add("mobileShare");
                 if (AlternateContentVersions.IsPublicArchive)
                     keysList.Add("publicArchive");
+                if (AlternateContentVersions.IsPublicUse)
+                    keysList.Add("publicUse");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
 

@@ -234,6 +234,21 @@ namespace NCI.Web.CDE.UI.WebControls
             foreach (AddThisButtonItem button in _itemsCollection[PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language")].ButtonsCollection)
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_button_" + button.Service);
+              
+                // Support for GoogleAddThisButtonItem 
+                if (button.GetType().Name.Equals("GoogleAddThisButtonItem"))
+                {
+                    if (!string.IsNullOrEmpty(((GoogleAddThisButtonItem)button).Size))
+                    {
+                        writer.AddAttribute("g:plusone:size", ((GoogleAddThisButtonItem)button).Size);
+                    }
+
+                    if (!string.IsNullOrEmpty(((GoogleAddThisButtonItem)button).Count))
+                    {
+                        writer.AddAttribute("g:plusone:count", ((GoogleAddThisButtonItem)button).Count);
+                    }
+                }
+
                 writer.RenderBeginTag(HtmlTextWriterTag.A);
                 writer.RenderEndTag();
             }

@@ -1643,6 +1643,15 @@
           </documentation>
         </annotation>
       </element>
+	  <element name="IsPublicUse" type="boolean"
+	    minOccurs="1" maxOccurs="1">
+		<annotation>
+		  <documentation>
+			Defines if this Page Assembly Instruction should 
+			display the Public Use notice.
+		  </documentation>
+		</annotation>
+	  </element>
       <element name="OrderCopyURL" type="string"
         minOccurs="0" maxOccurs="1">
         <annotation>

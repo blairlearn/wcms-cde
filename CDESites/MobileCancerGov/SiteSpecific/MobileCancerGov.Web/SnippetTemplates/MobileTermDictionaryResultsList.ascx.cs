@@ -32,6 +32,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
         private int _recordsPerPage = 0;
         private int _offSet = 0;
         private string _dictionaryURL = "";
+        private string _version = "";
+        private string _term = "";
 
         // Property variables 
         private string _language = "";
@@ -50,10 +52,20 @@ namespace MobileCancerGov.Web.SnippetTemplates
             get { return _searchStr; }
             set { _searchStr = value; }
         }
+        public string Term
+        {
+            get { return _term; }
+            set { _term = value; }
+        }
         public string Language
         {
             get { return _language; }
             set { _language = value; }
+        }
+        public string Version
+        {
+            get { return _version; }
+            set { _version = value; }
         }
         public bool ShowDefinition
         {
@@ -79,6 +91,9 @@ namespace MobileCancerGov.Web.SnippetTemplates
             //string languageParam = Strings.Clean(Request.QueryString["language"]);
             string languageParam = ""; //disable language selection by query parameter 
             _searchStr = Strings.Clean(Request.QueryString["search"]);
+            _term = Strings.Clean(Request.QueryString["term"]);
+            _version = Strings.Clean(Request.QueryString["version"]);
+                        
             if (!String.IsNullOrEmpty(_searchStr))
                 _searchStr = _searchStr.Replace("[", "[[]"); 
 
@@ -118,6 +133,19 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 });
                  
                 dataCollection = TermDictionaryManager.GetTermDictionaryList(language, SearchString, false, pager_RowsPerPage, _currentPage, ref pager_MaxRows);
+            }
+            else if (!String.IsNullOrEmpty(Term))
+            {
+                DisplayLanguage dl;
+                if(Language.ToLower().Trim() == "spanish")
+                    dl = DisplayLanguage.Spanish;
+                else
+                    dl = DisplayLanguage.English;
+
+                TermDictionaryDataItem di = TermDictionaryManager.GetDefinitionByTermName(dl, Term, Version, 2);
+                string itemDefinitionUrl = DictionaryURL + "?cdrid=" + di.GlossaryTermID;
+                Page.Response.Redirect(itemDefinitionUrl);
+
             }
             else if (!String.IsNullOrEmpty(expandParam)) // A-Z expand provided - do an A-Z search
             {

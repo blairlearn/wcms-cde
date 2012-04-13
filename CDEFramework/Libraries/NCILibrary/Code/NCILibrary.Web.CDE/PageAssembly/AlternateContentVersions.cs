@@ -57,11 +57,16 @@ namespace NCI.Web.CDE
         public bool IsMobileShareAvailable { get; set; }
 
         /// <summary>
-        /// If true displays the mobile share "add this" box.
+        /// If true displays the public archive banner.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool IsPublicArchive { get; set; }
 
+        /// <summary>
+        /// If true displays the public use statement.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool IsPublicUse { get; set; }
 
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool AltLanguage { get; set; }

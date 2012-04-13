@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileCancerGov.Web", "CDESites\MobileCancerGov\MobileCancerGov.Web.csproj", "{85C3C6DF-ED06-4BE2-AC85-67E8F3FCF9CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileCancerGov.Web", "CDESites\MobileCancerGov\SiteSpecific\MobileCancerGov.Web\MobileCancerGov.Web.csproj", "{85C3C6DF-ED06-4BE2-AC85-67E8F3FCF9CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NCILibrary", "NCILibrary", "{CB1681E6-ADC5-4785-A733-610815AB62FA}"
 EndProject

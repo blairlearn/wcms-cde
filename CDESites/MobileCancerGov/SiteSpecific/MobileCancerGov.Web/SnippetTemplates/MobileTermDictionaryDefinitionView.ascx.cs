@@ -90,7 +90,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
             get
             {
                 if (!String.IsNullOrEmpty(_imageCaption))
-                    return "<span class=\"imageCaption\">" + _imageCaption + "</span>";
+                    return _imageCaption;
                 else
                     return "";
             }
@@ -179,6 +179,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 startingUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
                 string cdrId = Strings.Clean(Request.QueryString["cdrid"]);
+                string term = Strings.Clean(Request.QueryString["term"]);
                 string id = Strings.Clean(Request.QueryString["id"]);
                 string languageParam = Strings.Clean(Request.QueryString["language"]);
 

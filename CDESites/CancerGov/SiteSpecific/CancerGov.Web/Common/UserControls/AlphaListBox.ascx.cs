@@ -149,25 +149,27 @@
         /// <param name="e"></param>
         protected void Page_Load(object sender, System.EventArgs e)
         {
-            alphaListItems += "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"98%\">\n";
-            alphaListItems += "	<tbody><tr>\n";
+            //alphaListItems += "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"98%\">\n";
+            //alphaListItems += "	<tbody><tr>\n";
+
+            alphaListItems = "<ul>\n";
 
             if (boxItems == null || boxItems.Length == 0)
             {
                 if (numericItems)
                 {
                     if (doWebAnalytics)
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'#') >#</a></td>\n";
+                        alphaListItems += "<li><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'#') >#</a></li>\n";
                     else
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\">#</a></td>\n";
+                        alphaListItems += "<li><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\">#</a></li>\n";
                 }
 
                 for (int i = 65; i < 91; i++)
                 {
                     if (doWebAnalytics)
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + (char)i + "') >" + (char)i + "</a></td>\n";
+                        alphaListItems += "<li><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + (char)i + "') >" + (char)i + "</a></li>\n";
                     else
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\">" + (char)i + "</a></td>\n";
+                        alphaListItems += "<li><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\">" + (char)i + "</a></li>\n";
                 }
             }
             else
@@ -175,23 +177,24 @@
                 foreach (string item in boxItems)
                 {
                     if (doWebAnalytics)
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + item + "') >" + item + "</a></td>\n";
+                        alphaListItems += "<li><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + item + "') >" + item + "</a></li>\n";
                     else
-                        alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\">" + item + "</a></td>\n";
+                        alphaListItems += "<li><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\">" + item + "</a></li>\n";
                 }
             }
 
             if (showAll)
             {
                 if (doWebAnalytics)
-                    alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'ALL') >" + "All" + "</a></td>\n";
+                    alphaListItems += "<li><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'ALL') >" + "All" + "</a></li>\n";
                 else
-                    alphaListItems += "<td><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\">" + "All" + "</a></td>\n";
+                    alphaListItems += "<li><a class=\"dictionary-alpha-list\" href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\">" + "All" + "</a></li>\n";
             }
 
-            //alphaListItems += "	<td width=\"1\"><img src=\"/images/spacer.gif\" alt=\"\" border=\"0\" width=\"1\" height=\"30\"></td>\n";
-            alphaListItems += "	</tr></tbody>\n";
-            alphaListItems += "</table>\n";
+            ////alphaListItems += "	<td width=\"1\"><img src=\"/images/spacer.gif\" alt=\"\" border=\"0\" width=\"1\" height=\"30\"></td>\n";
+            //alphaListItems += "	</tr></tbody>\n";
+            //alphaListItems += "</table>\n";
+            alphaListItems += "</ul>\n";
         }
 
         protected void Page_Init(object sender, EventArgs e)

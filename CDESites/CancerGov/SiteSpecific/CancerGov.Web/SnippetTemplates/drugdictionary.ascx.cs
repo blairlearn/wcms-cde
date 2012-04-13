@@ -20,10 +20,10 @@ using System.Text.RegularExpressions;
 
 namespace Www.Templates
 {
-    
+
     public partial class drugdictionary : SnippetControl
     {
-        
+
         protected AlphaListBox alphaListBox;
 
         //These are the QueryString related variables
@@ -133,7 +133,7 @@ namespace Www.Templates
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);            
+            base.OnLoad(e);
             GetQueryParams();
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString(); //ConfigurationSettings.AppSettings["DrugDictionaryURL"];
 
@@ -177,8 +177,8 @@ namespace Www.Templates
             // base URL for the A-Z links
             btnGo.PostBackUrl = DictionaryURL;
             alphaListBox.BaseUrl = DictionaryURL;
-            Page.Form.Action = DictionaryURL;
-            
+            //Page.Form.Action = DictionaryURL;
+
             lblNumResults.Text = NumResults.ToString();
             lblWord.Text = SearchStr.Replace("[[]", "[");
 
@@ -309,7 +309,7 @@ namespace Www.Templates
 
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
             {
-                pnlDrugSearch.Visible = false;
+                pnlDrugSearch2.Visible = false;
                 //pnlSendToPrinter.Visible = true;
             }
             else
@@ -317,10 +317,10 @@ namespace Www.Templates
                 alphaListBox.TextOnly = (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web) ? true : false;
                 alphaListBox.Title = string.Empty;
 
-                if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Image)
-                    searchboxContainer.Attributes.Add("style", "width:296px");
-                else
-                    searchboxContainer.Attributes.Add("style", "width:289px");
+                //if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Image)
+                //    searchboxContainer.Attributes.Add("style", "width:296px");
+                //else
+                //    searchboxContainer.Attributes.Add("style", "width:289px");
 
             }
 
@@ -603,7 +603,7 @@ namespace Www.Templates
                 if (Expand.Trim() == "#")
                 {
                     PagePrintUrl += "&expand=%23";
-                    PageUrl += "&expand=%23"; 
+                    PageUrl += "&expand=%23";
                 }
                 else
                 {
@@ -636,7 +636,7 @@ namespace Www.Templates
 
         private void SetupUrlFilters()
         {
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url ) =>
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url) =>
             {
                 url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
             });

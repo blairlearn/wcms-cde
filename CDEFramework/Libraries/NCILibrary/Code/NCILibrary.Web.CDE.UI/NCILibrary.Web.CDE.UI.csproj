@@ -57,6 +57,7 @@
     <Compile Include="AddThis\AddThisButtonListControl.cs" />
     <Compile Include="AddThis\AddThisLanguageCollection.cs" />
     <Compile Include="AddThis\CustomAddThisButtonItem.cs" />
+    <Compile Include="AddThis\GoogleAddThisButtonItem.cs" />
     <Compile Include="BaseTemplates\SnippetControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -95,16 +96,15 @@
     <Compile Include="SnippetControls\PageOptionsDisplay.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\PublicUseBanner.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\SideWideSearch.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WebAnalytics\WebAnalyticsControl.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\CDESites\CancerGov\CDR.TermDictionary\CDR.TermDictionary.csproj">
-      <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
-      <Name>CDR.TermDictionary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>

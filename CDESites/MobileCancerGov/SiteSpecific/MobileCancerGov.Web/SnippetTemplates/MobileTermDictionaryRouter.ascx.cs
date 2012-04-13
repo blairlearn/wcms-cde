@@ -26,11 +26,17 @@ namespace MobileCancerGov.Web.SnippetTemplates
         protected void Page_Load(object sender, EventArgs e)
         {
             String searchString = Strings.Clean(Request.QueryString["search"]);
+            String term = Strings.Clean(Request.QueryString["term"]);
             String cdrId = Strings.Clean(Request.QueryString["cdrid"]);
             String id = Strings.Clean(Request.QueryString["id"]);
             String expand = Strings.Clean(Request.QueryString["expand"]);
             String language = Strings.Clean(Request.QueryString["language"]);
             Control localControl = null;
+
+            if (!String.IsNullOrEmpty(term))
+            {
+                searchString = term;
+            }
 
             // Redirect if language parameter is not the same as language of the Page Assembly 
             if (!String.IsNullOrEmpty(language))
@@ -57,6 +63,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 localControl = Page.LoadControl("~/SnippetTemplates/MobileTermDictionaryResultsList.ascx");
             else if (!String.IsNullOrEmpty(cdrId) || !String.IsNullOrEmpty(id))
                 localControl = Page.LoadControl("~/SnippetTemplates/MobileTermDictionaryDefinitionView.ascx");
+            else if (!String.IsNullOrEmpty(expand))
+                localControl = Page.LoadControl("~/SnippetTemplates/MobileTermDictionaryResultsList.ascx");
             else if (!String.IsNullOrEmpty(expand))
                 localControl = Page.LoadControl("~/SnippetTemplates/MobileTermDictionaryResultsList.ascx");
             else

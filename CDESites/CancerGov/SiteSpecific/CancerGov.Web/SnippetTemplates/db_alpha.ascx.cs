@@ -124,6 +124,7 @@ namespace Www.Templates
         #endregion
               private void ResetControls()
         {
+              
             radioContains.Checked = BContains;
             AutoComplete1.Text = (string.IsNullOrEmpty(Expand)) ? SearchStr.Replace("[[]", "[") : string.Empty;
             AutoComplete1.SearchCriteria = (BContains) ? AutoComplete.SearchCriteriaEnum.Contains : AutoComplete.SearchCriteriaEnum.BeginsWith;
@@ -454,14 +455,19 @@ namespace Www.Templates
         {
             _isSpanish = true;
             //Controls
-            lblStrSearch.Text = String.Empty;
-            lblAccessSearch.Text = "Cuadro de búsqueda de texto";
+            //lblStrSearch.Text = String.Empty;
+            //lblAccessSearch.Text = "Cuadro de búsqueda de texto";
 
             //lblStarts.Text = "Empieza con";
             //lblContains.Text = "Contiene";
             lblResultsFor.Text = "resultados de:";
-            radioStarts.Text = "Empieza con";
-            radioContains.Text = "Contiene";
+            
+            //radioStarts.Text = "Empieza con";
+            //radioContains.Text = "Contiene";
+
+            lblStartsWith.Text = "Empieza con";
+            lblContains.Text = "Contiene";
+
             pnlIntroEnglish.Visible = false;
             pnlIntroSpanish.Visible = true;
 
@@ -470,11 +476,11 @@ namespace Www.Templates
             //btnGo.ToolTip = "Botón de búsqueda";
             btnGo.AlternateText = "Buscar";
             btnGo.ToolTip = "Buscar";
-            btnGo.CssClass = "btnBuscar";
+            //btnGo.CssClass = "btnBuscar";
 
             AutoComplete1.CloseLinkText = "cerrar";
-            searchboxBtn.Attributes.Add("style", "width:64px;");
-            searchboxStarts.Attributes.Add("style", "margin-right:6px");
+            //searchboxBtn.Attributes.Add("style", "width:64px;");
+            //searchboxStarts.Attributes.Add("style", "margin-right:6px");
             //searchboxStarts.Attributes.Add("style", "width:95px;");
 
             //alphaListBox.UrlArgs = "lang=spanish";
@@ -507,10 +513,10 @@ namespace Www.Templates
         private void SetupEnglish()
         {
             //Controls            
-            lblStrSearch.Text = "Search for";
+            //lblStrSearch.Text = "Search for";
 
             lblResultsFor.Text = "results found for:";
-            btnGo.CssClass = "btnGo";
+            //btnGo.CssClass = "btnGo";
             pnlIntroEnglish.Visible = true;
             pnlIntroSpanish.Visible = false;
 

@@ -43,14 +43,13 @@
 <br />
 
 <% if(!String.IsNullOrEmpty(ImageLink)) { %>
-<div class="imageLink">
-<% =ImageLink %>
-</div>
-<br />
-<% } %>
-
-<% if(!String.IsNullOrEmpty(ImageCaption)) { %>
-<div class="imageCaption">
-<% =ImageCaption %>
-</div>
+   <div class="imageLink">
+      <% =ImageLink %>
+      <br />
+      <% if(!String.IsNullOrEmpty(ImageCaption)) { %>
+         <div class="caption">
+            <% =ImageCaption %>
+         </div>
+      <% } %>
+   </div>
 <% } %>
