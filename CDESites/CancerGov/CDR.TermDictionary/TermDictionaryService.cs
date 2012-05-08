@@ -323,9 +323,9 @@ namespace CancerGov.CDR.TermDictionary
                 TermDictionaryDataItem termDicDataItem = null;
 
                 if (byType == TermDefinitionByType.ById)
-                    termDicDataItem = TermDictionaryManager.GetDefinitionByTermID(language, termId.ToString(), audience, 0);
+                    termDicDataItem = TermDictionaryManager.GetDefinitionByTermID(language, termId.ToString(), audience, 1);
                 else
-                    termDicDataItem = TermDictionaryManager.GetDefinitionByTermName(displayLanguage, termName, audience, 0);
+                    termDicDataItem = TermDictionaryManager.GetDefinitionByTermName(displayLanguage, termName, audience, 1);
 
                 if (termDicDataItem != null)
                     termDicSvcItem = createTermDictionarySvcItem(termDicDataItem);
