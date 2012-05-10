@@ -18,7 +18,7 @@ a, a:active, a:visited, a:hover {
 h1.title {
      background: url("nci-logo.gif") no-repeat scroll 0% 0% transparent;
      margin: 0pt;
-     padding: 5px;
+     padding: 10px;
      text-indent: -9999px;
 }
 
@@ -65,7 +65,7 @@ h1.title {
 }
 
 .ui-menu {
-     background-color: #E7E8ED;
+     background-color: #fff;
      border: thin solid #999999;
      color: #000000;
      display: block;
@@ -74,6 +74,8 @@ h1.title {
      margin: 0pt;
      padding: 2px;
      z-index: 9999;
+	 font-family:Arial, Helvetica, sans-serif;
+	 font-size:12px;
 }
 
 .ui-menu .ui-menu {
@@ -102,3 +104,19 @@ h1.title {
      color: #FFFFFF;
      font-weight: normal;
 }
+
+#disclaimer 
+{
+	background-color:White;
+	top: 15px;
+	left: 15px;
+	height: 282px;
+	width: 205px;
+	border: thin solid #999999;
+	text-align:center;
+		
+	visibility:hidden;
+	position: absolute;
+}
+	
+	

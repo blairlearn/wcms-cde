@@ -47,9 +47,8 @@ jQuery(document).ready(function($) {
     $keywordElem.keyup(function(event) {	
        if ( event.which == 13 ) {
           event.preventDefault();
-          $(".ui-autocomplete").css({"display":"none"});
-          $('#Go').focus();
-	      doSearch(null);
+          enterPressed();
+
        }       
     });
 

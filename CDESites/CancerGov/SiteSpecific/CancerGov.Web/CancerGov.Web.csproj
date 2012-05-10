@@ -570,6 +570,7 @@
     <Content Include="JS\NetTracker\ntpagetag.js" />
     <Content Include="JS\Search\CDEResultsClinicalTrials.js" />
     <Content Include="JS\Search\CDESearchClinicalTrials.js" />
+    <Content Include="JS\Widgets\nci-logo.gif" />
     <Content Include="JS\Widgets\TermDictionaryWidget.htm" />
     <Content Include="JS\Widgets\TermDictionaryWidget.js" />
     <Content Include="JS\Widgets\TermDictionaryWidgetEnglish.js" />
