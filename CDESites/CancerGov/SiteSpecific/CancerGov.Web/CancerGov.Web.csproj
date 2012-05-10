@@ -573,7 +573,10 @@
     <Content Include="JS\Widgets\TermDictionaryWidget.htm" />
     <Content Include="JS\Widgets\TermDictionaryWidget.js" />
     <Content Include="JS\Widgets\TermDictionaryWidgetEnglish.js" />
+    <Content Include="JS\Widgets\TermDictionaryWidgetInnards.js" />
     <Content Include="JS\Widgets\TermDictionaryWidgetSpanish.js" />
+    <Content Include="JS\Widgets\termdictWidget-autocomplete.js" />
+    <Content Include="JS\Widgets\widget.css" />
     <Content Include="JS\Widgets\WidgetStyle.css" />
     <Content Include="MobileTester.aspx" />
     <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
