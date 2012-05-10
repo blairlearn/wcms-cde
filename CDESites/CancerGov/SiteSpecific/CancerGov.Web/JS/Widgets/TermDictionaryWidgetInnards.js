@@ -23,7 +23,10 @@ function loadResults(searchTerm) {
             else
             {   
                 var terms = '<ul>';
-                terms += '<li>' + someJSON.length + ' results found for: <b>' + searchTerm + '</b></li>';
+                if ($('meta[name="content-language"]').attr("content") == "es")
+                    terms += '<li>' + someJSON.length + ' (es)results found for: <b>' + searchTerm + '</b></li>';
+                else
+                    terms += '<li>' + someJSON.length + ' results found for: <b>' + searchTerm + '</b></li>';
           
                 for (x in someJSON) {
                 
@@ -69,10 +72,20 @@ function loadDefinition(id) {
             var AJAXReturned = "[" + xmlhttp2.responseText +"]";
             var someJSON = eval(AJAXReturned);
             
-            var definition = '<p><b>' + someJSON[0].item + '</b> ' + someJSON[0].TermDictionaryDetail.TermPronunciation + 
-                '</p><p>' + someJSON[0].TermDictionaryDetail.DefinitionHTML + '</p><p>' +
-                '<a href="http://www.cancer.gov/dictionary?CdrID=' + someJSON[0].id + '" target="_blank">' +
-                'Read this definition on the National Cancer Institute\’s website</a></p>';
+            if ($('meta[name="content-language"]').attr("content") == "es")
+            {
+                var definition = '<p><b>' + someJSON[0].item + '</b> ' + someJSON[0].TermDictionaryDetail.TermPronunciation + 
+                    '</p><p>' + someJSON[0].TermDictionaryDetail.DefinitionHTML + '</p><p>' +
+                    '<a href="http://www.cancer.gov/diccionario?CdrID=' + someJSON[0].id + '" target="_blank">' +
+                    '(es) Read this definition on the National Cancer Institute&#39;s website</a></p>';
+             }
+             else
+             {
+                var definition = '<p><b>' + someJSON[0].item + '</b> ' + someJSON[0].TermDictionaryDetail.TermPronunciation + 
+                    '</p><p>' + someJSON[0].TermDictionaryDetail.DefinitionHTML + '</p><p>' +
+                    '<a href="http://www.cancer.gov/dictionary?CdrID=' + someJSON[0].id + '" target="_blank">' +
+                    'Read this definition on the National Cancer Institute&#39;s website</a></p>';
+             }
             
             $('#output').scrollTop(0);    
             document.getElementById('output').innerHTML=definition;
