@@ -16,7 +16,7 @@ a, a:active, a:visited, a:hover {
 }
 
 h1.title {
-     background: url("nci-logo.gif") no-repeat scroll 0% 0% transparent;
+     background: url("/PublishedContent/images/nci-logo.gif") no-repeat scroll 0% 0% transparent;
      margin: 0pt;
      padding: 10px;
      text-indent: -9999px;
