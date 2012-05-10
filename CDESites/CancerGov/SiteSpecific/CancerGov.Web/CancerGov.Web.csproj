@@ -570,6 +570,11 @@
     <Content Include="JS\NetTracker\ntpagetag.js" />
     <Content Include="JS\Search\CDEResultsClinicalTrials.js" />
     <Content Include="JS\Search\CDESearchClinicalTrials.js" />
+    <Content Include="JS\Widgets\TermDictionaryWidget.htm" />
+    <Content Include="JS\Widgets\TermDictionaryWidget.js" />
+    <Content Include="JS\Widgets\TermDictionaryWidgetEnglish.js" />
+    <Content Include="JS\Widgets\TermDictionaryWidgetSpanish.js" />
+    <Content Include="JS\Widgets\WidgetStyle.css" />
     <Content Include="MobileTester.aspx" />
     <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate-NoLeftNav.aspx" />
@@ -614,6 +619,7 @@
     <Content Include="sysimages\tile-slider-spanish-previous.gif" />
     <Content Include="TermDictionary.svc" />
     <Content Include="UserControls\CTCustomSelection.ascx" />
+    <Content Include="AjaxTest.html" />
     <EmbeddedResource Include="Archive\arch_dictionary.aspx.resx">
       <DependentUpon>arch_dictionary.aspx.cs</DependentUpon>
       <SubType>Designer</SubType>

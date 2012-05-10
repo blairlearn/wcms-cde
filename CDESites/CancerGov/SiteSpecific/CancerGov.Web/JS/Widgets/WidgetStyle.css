@@ -1,0 +1,23 @@
+﻿
+#container {width:220px; border:#999 solid thin; overflow:hidden; }
+a, a:active, a:visited, a:hover{ color:#9C3303}
+.header {
+	background: #F4F4F4;	
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#ebebea');
+	background: -webkit-gradient(linear, left top, left bottom, from(#F4F4F4), to(#EBEBEA));
+	background: -moz-linear-gradient(top, #F4F4F4, #EBEBEA); 
+	border-bottom: thin solid #4d4d4d;
+	}
+	
+h1.title {text-indent:-9999px; background:url(nci-logo.gif) no-repeat; padding: 5px; margin:0; }
+
+.content {
+	padding: 5px; 
+	height:210px;
+	border-bottom: thin solid #b52f2f;
+	-webkit-box-shadow:  0 2px 2px 2px #d9d9d9;
+	-moz-box-shadow:  0 2px 2px 2px #d9d9d9;
+	box-shadow: 0 2px 2px 2px #d9d9d9;
+
+}
+.footer{border-top: #4d4d4d sold thin; text-align:center; padding:5px;}

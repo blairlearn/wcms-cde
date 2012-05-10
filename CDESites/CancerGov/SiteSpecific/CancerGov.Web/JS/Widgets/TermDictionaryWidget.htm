@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="content-language" content="en" />
+<title>Untitled Document</title>
+
+<style type="text/css">
+    
+#container {width:220px; border:#999 solid thin; overflow:hidden; }
+a, a:active, a:visited, a:hover{ color:#9C3303}
+.header {
+	background: #F4F4F4;	
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f4f4f4', endColorstr='#ebebea');
+	background: -webkit-gradient(linear, left top, left bottom, from(#F4F4F4), to(#EBEBEA));
+	background: -moz-linear-gradient(top, #F4F4F4, #EBEBEA); 
+	border-bottom: thin solid #4d4d4d;
+	}
+	
+h1.title {text-indent:-9999px; background:url(nci-logo.gif) no-repeat; padding: 5px; margin:0; }
+
+.content {
+	padding: 5px; 
+	height:210px;
+	border-bottom: thin solid #b52f2f;
+	-webkit-box-shadow:  0 2px 2px 2px #d9d9d9;
+	-moz-box-shadow:  0 2px 2px 2px #d9d9d9;
+	box-shadow: 0 2px 2px 2px #d9d9d9;
+
+}
+.footer{border-top: #4d4d4d sold thin; text-align:center; padding:5px;}
+
+/*
+* jQuery UI Autocomplete 1.8.13
+*
+* Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
+* Dual licensed under the MIT or GPL Version 2 licenses.
+* http://jquery.org/license
+*
+* http://docs.jquery.com/UI/Autocomplete#theming
+*/
+.ui-autocomplete { position:absolute; cursor: default; }     
+
+/* workarounds */
+* html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
+
+/*
+* jQuery UI Menu 1.8.13
+*
+* Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
+* Dual licensed under the MIT or GPL Version 2 licenses.
+* http://jquery.org/license
+*
+* http://docs.jquery.com/UI/Menu#theming
+*/
+.ui-menu{
+        list-style:none;
+        padding: 2px;
+        margin: 0;
+        display:block;
+        float: right;
+        color:#000;
+        background-color:#e7e8ed;
+        border: #999 thin solid;
+        z-index: 9999;
+}
+.ui-menu .ui-menu {
+        margin-top: -3px;
+}
+.ui-menu .ui-menu-item {
+        list-style:none;
+        margin:0;
+        padding: 0;
+        zoom: 1;
+        float: left;
+        clear: left;
+        width: 100%;
+}
+.ui-menu .ui-menu-item a {
+        text-decoration:none;
+        display:block;
+        color:#000;
+        padding:.2em .4em;
+        line-height:1.5;
+        zoom:1;
+}
+.ui-menu .ui-menu-item a.ui-state-hover,
+.ui-menu .ui-menu-item a.ui-state-active {
+        font-weight: normal;
+        color:#fff;
+        background:#444444;
+}
+
+
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="/PublishedContent/js/jquery-ui-1.8.5.custom.min.js" type="text/javascript"></script>
+<script src="/PublishedContent/js/termdictWidget-autocomplete.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+function bebop() {
+    alert('do search');
+}
+
+function loadResults(searchTerm) {
+    var language;
+    var xmlhttp;
+    
+    if (window.XMLHttpRequest)  {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }
+    else  {
+        // code for IE6, IE5
+        xmlhttp=new ActiveXObject('Microsoft.XMLHTTP');
+    }
+
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)  {
+            var AJAXReturned = xmlhttp.responseText;
+            var someJSON = eval(AJAXReturned);
+            if(someJSON.length == 1) 
+            {
+                loadDefinition(someJSON[0].id);
+            }
+            else
+            {   
+                var terms = '<ul>';
+                terms += '<li>' + someJSON.length + ' results found for: <b>' + searchTerm + '</b></li>';
+          
+                for (x in someJSON) {
+                
+                    terms += '<li><a href="javascript:;" onclick="loadDefinition(' + 
+                    someJSON[x].id + ',\''+ language + '\');">' +  someJSON[x].item + '</a></li>';
+                    
+                }
+                terms += '</ul>';    
+                document.getElementById('output').innerHTML=terms;
+            }
+        }
+    }
+    if ($('meta[name="content-language"]').attr("content") == "es")
+    {
+        language = "Spanish";
+        xmlhttp.open("GET","/TermDictionary.svc/SearchJSON/Spanish?searchTerm=" + searchTerm ,true);
+    }
+    else
+    {
+        language = "English";
+        xmlhttp.open("GET","/TermDictionary.svc/SearchJSON/English?searchTerm=" + searchTerm ,true);
+    }
+
+    xmlhttp.send();
+}
+
+function loadDefinition(id) {
+    var xmlhttp2;
+    if (window.XMLHttpRequest)  {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp2=new XMLHttpRequest();
+    }
+    else  {
+        // code for IE6, IE5
+        xmlhttp2=new ActiveXObject('Microsoft.XMLHTTP');
+    }
+
+    xmlhttp2.onreadystatechange=function() {
+        if (xmlhttp2.readyState==4 && xmlhttp2.status==200)  {
+            // The added square bracket are to accomidate some 
+            // funkiness in the JSON returned - needs to be addresed
+            // in the service 
+            var AJAXReturned = "[" + xmlhttp2.responseText +"]";
+            var someJSON = eval(AJAXReturned);
+            
+            var definition = '<p><b>' + someJSON[0].item + '</b> ' + someJSON[0].TermDictionaryDetail.TermPronunciation + 
+                '</p><p>' + someJSON[0].TermDictionaryDetail.DefinitionHTML + '</p><p>' +
+                '<a href="http://www.cancer.gov/dictionary?CdrID=' + someJSON[0].id + '" target="_blank">' +
+                'Read this definition on the National Cancer Institute\’s website</a></p>';
+                
+            document.getElementById('output').innerHTML=definition;
+        }
+    }
+    if ($('meta[name="content-language"]').attr("content") == "es")
+        xmlhttp2.open("GET","/TermDictionary.svc/GetTermDictionaryByIdJSON/Spanish?TermId=" + id + "&Audience=Patient", true);
+    else
+        xmlhttp2.open("GET","/TermDictionary.svc/GetTermDictionaryByIdJSON/English?TermId=" + id + "&Audience=Patient", true);
+       
+    xmlhttp2.send();
+}
+
+function doSearch(e){
+    var doit = false;
+
+    if(e!=null)  {
+        if (e.keyCode ==13)
+            doit = true;
+    }
+    else
+    doit = true;
+
+    if(doit)
+        loadResults(document.getElementById('search').value);
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div id="container">
+	<div class="header">
+	  <h1 class="title">NCI Dictionary of Cancer Terms</h1>
+	</div>
+    
+    <div id="form" class="content">
+        <div id="searchBlock">
+            <input type="text" name="search" id="search" onkeypress="doSearch(event)" />
+            <input type="submit" name="Go" id="Go" value="Go" onclick="doSearch(null)" />
+        </div>
+        <div id="output">
+        From the National Cancer Institute: Search for more than 4,000 terms related to cancer and medicine.
+        </div>
+    </div>
+    
+    <div class="footer"><a href="http://www.cancer.gov" target="_blank">www.cancer.gov</a> | <a href="#">Disclaimer</a></div>
+</div>
+
+</body>
+</html>
