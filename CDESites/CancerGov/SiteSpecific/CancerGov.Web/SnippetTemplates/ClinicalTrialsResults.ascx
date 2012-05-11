@@ -149,15 +149,15 @@
         <asp:Panel ID="topControlArea" runat="server" CssClass="clinicaltrials-filledbox"
             Style="width:682px; color: #000000; font-weight: bold; padding: 8px 8px 8px 8px;">
             <span style="float: left;">
-                <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllTop" Text="Select All on Page" />
+                <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllTop" Text="Select All on Page" onclick="checkAll_ClickHandler(this)" />
 
-                <script type="text/javascript">
+<%--                <script type="text/javascript">
                     document.observe("dom:loaded", function() {
                         if ($("<%=checkAllTop.ClientID %>") != null)
                             Event.observe($("<%=checkAllTop.ClientID %>"), "click", checkAll_ClickHandler.bindAsEventListener(this));
                     });
                 </script>
-
+--%>
                 &nbsp;&nbsp;
                 <label for="<%=sortOrder.ClientID%>">
                     Sort by:</label>&nbsp;
@@ -180,15 +180,15 @@
             Style="padding: 8px;">
             <div style="float: left;">
                 <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllBottom" CssClass="black-text-b"
-                    Text="Select All on Page" />
+                    Text="Select All on Page" onclick="checkAll_ClickHandler(this)" />
 
-                <script type="text/javascript">
+ <%--               <script type="text/javascript">
                     document.observe("dom:loaded", function() {
                         if ($("<% =checkAllBottom.ClientID %>") != null)
                             Event.observe($("<% =checkAllBottom.ClientID %>"), "click", checkAll_ClickHandler.bindAsEventListener(this));
                     });
                 </script>
-
+--%>
             </div>
             <div style="float: right;">
                 <cgov:postbackbuttonpager id="pager" runat="server" cssclass="clinicaltrials-pager"
@@ -214,6 +214,7 @@
                             Event.observe($("<%=BottomPrintButton.ClientID%>"), "click", submitPrint_ClickHandler.bindAsEventListener(this));
                     });
                 </script>
+
 
                 <a id="newSearch" href="<% =SearchPageInfo.SearchPagePrettyUrl %>">
                     <img alt="New Search" border="0" height="15" width="70" src="/images/grey_start_over_btn.gif" /></a>
