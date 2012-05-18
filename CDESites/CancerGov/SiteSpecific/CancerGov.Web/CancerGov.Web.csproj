@@ -266,6 +266,13 @@
     <Compile Include="Common\UserControls\LangSwitch.ascx.designer.cs">
       <DependentUpon>LangSwitch.ascx</DependentUpon>
     </Compile>
+    <Compile Include="DictionaryOfGeneticsTermsTester.aspx.cs">
+      <DependentUpon>DictionaryOfGeneticsTermsTester.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DictionaryOfGeneticsTermsTester.aspx.designer.cs">
+      <DependentUpon>DictionaryOfGeneticsTermsTester.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -391,6 +398,35 @@
     </Compile>
     <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.designer.cs">
       <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionaryResultsList.ascx.cs">
+      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionaryResultsList.ascx.designer.cs">
+      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionaryDefinitionView.ascx.cs">
+      <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionaryDefinitionView.ascx.designer.cs">
+      <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionaryHelper.cs" />
+    <Compile Include="SnippetTemplates\GeneticsTermDictionaryHome.ascx.cs">
+      <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionaryHome.ascx.designer.cs">
+      <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionaryRouter.ascx.cs">
+      <DependentUpon>GeneticsTermDictionaryRouter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionaryRouter.ascx.designer.cs">
+      <DependentUpon>GeneticsTermDictionaryRouter.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.cs">
       <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
@@ -564,6 +600,7 @@
       <LastGenOutput>SiteWideSearch.es.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="DictionaryOfGeneticsTermsTester.aspx" />
     <Content Include="DrugDictionary.svc" />
     <Content Include="JS\imgEvents.js" />
     <Content Include="JS\JSLoader\JSLoader.js" />
@@ -602,6 +639,10 @@
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
     <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionaryResultsList.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionaryDefinitionView.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionaryHome.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\GlossaryTerms.ascx" />
     <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />
     <Content Include="SnippetTemplates\PublicArchiveBanner.ascx" />
