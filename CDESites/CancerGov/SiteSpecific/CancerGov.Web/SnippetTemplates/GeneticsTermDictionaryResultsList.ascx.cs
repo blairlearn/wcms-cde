@@ -137,7 +137,7 @@ namespace CancerGov.Web.SnippetTemplates
                 //});
                 
                 //_dc = TermDictionaryManager.GetTermDictionaryList(language, SearchString, false, pager_RowsPerPage, _currentPage, ref pager_MaxRows);
-                _dc = TermDictionaryManager.Search(language, SearchString, 0, false);
+                _dc = TermDictionaryManager.Search(language, SearchString, 0, false, "Genetics", "Health professional");
 
             }
             else if (!String.IsNullOrEmpty(Term))
@@ -175,7 +175,7 @@ namespace CancerGov.Web.SnippetTemplates
                 //});
 
                 //_dc = TermDictionaryManager.GetTermDictionaryList(language, _expandText.Trim().ToUpper(), false, pager_RowsPerPage, _currentPage, ref pager_MaxRows);
-                _dc = TermDictionaryManager.Search(language,_expandText.Trim().ToUpper(),0,false);
+                _dc = TermDictionaryManager.Search(language, _expandText.Trim().ToUpper(), 0, false, "Genetics", "Health professional");
             
             }
 

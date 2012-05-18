@@ -27,8 +27,29 @@ namespace CancerGov.CDR.TermDictionary
         /// <param name="maxRows">The maximum number of rows that the database will return. a value of zero will return the entire set</param>
         /// <param name="contains">indicator as to whether the text is to be searched starting from the beginning or anywhere
         ///                        in the string</param>
+        /// <param name="dictionary">The maximum number of rows that the database will return. a value of zero will return the entire set</param>
+
         /// <returns>Returns the search results</returns>
         public static TermDictionaryCollection Search(string language, string criteria, int maxRows, bool contains)
+        {
+            return Search(language, criteria, maxRows, contains, "Cancer.gov", "Patient");
+
+        }
+
+
+        /// <summary>
+        /// This methods filters the information passed to it in order to refine the query
+        /// that will be called in the database layer.
+        /// </summary>
+        /// <param name="language">enumeration indicating language</param>
+        /// <param name="criteria">The partial text used to query the database</param>
+        /// <param name="maxRows">The maximum number of rows that the database will return. a value of zero will return the entire set</param>
+        /// <param name="contains">indicator as to whether the text is to be searched starting from the beginning or anywhere
+        ///                        in the string</param>
+        /// <param name="dictionary">Which Term dicitonary to search - Cancer.gov or Genetics</param>
+        /// <param name="audience">Definition audience - Patient or Health professional</param>
+        /// <returns>Returns the search results</returns>
+        public static TermDictionaryCollection Search(string language, string criteria, int maxRows, bool contains, string dictionary, string audience)
         {
             TermDictionaryCollection dc = new TermDictionaryCollection();
 
@@ -60,7 +81,9 @@ namespace CancerGov.CDR.TermDictionary
                     DataTable dt = TermDictionaryQuery.Search(
                             language.ToString(),
                             criteria,
-                            maxRows);
+                            maxRows,
+                            dictionary,
+                            audience);
 
                     // use Linq to move information from the dataTable
                     // into the TermDictionaryCollection

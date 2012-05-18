@@ -18,6 +18,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         public static string SearchBlock()
         {
+
             StringBuilder searchBlock = new StringBuilder();
             searchBlock.AppendLine("<div class='dictionary-box'>");
             searchBlock.AppendLine("<input id='AutoComplete1' class='dictionary' Name='AutoComplete1' type='text' />");

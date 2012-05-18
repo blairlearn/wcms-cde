@@ -185,11 +185,12 @@ namespace CancerGov.Web.SnippetTemplates
 
             try
             {
-                //startingUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
+                startingUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
                 string cdrId = Strings.Clean(Request.QueryString["cdrid"]);
                 string term = Strings.Clean(Request.QueryString["term"]);
                 string id = Strings.Clean(Request.QueryString["id"]);
                 string languageParam = Strings.Clean(Request.QueryString["language"]);
+
 
                 if (String.IsNullOrEmpty(cdrId) && (!String.IsNullOrEmpty(id)))
                     cdrId = id;
@@ -214,25 +215,25 @@ namespace CancerGov.Web.SnippetTemplates
                     {
                         dissectMediaHTML(_di.MediaHTML);
 
-//Commented out for testing 
-                        //// Setup Url Filters 
-                        //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
-                        //{
-                        //    url.QueryParameters.Add("cdrid", cdrId);
-                        //});
+                        // Setup Url Filters 
+                        PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+                        {
+                            url.QueryParameters.Add("cdrid", cdrId);
+                        });
 
-                        //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
-                        //{
-                        //    url.QueryParameters.Add("cdrid", cdrId);
-                        //});
+                        PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
+                        {
+                            url.QueryParameters.Add("cdrid", cdrId);
+                        });
 
-                        //PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.DictionaryTermView, wbField =>
-                        //{
-                        //    wbField.Value = "";
-                        //});
+                        PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.DictionaryTermView, wbField =>
+                        {
+                            wbField.Value = "";
+                        });
 
-                        //litPageUrl.Text = startingUrl;
-                        //litSearchBlock.Text = MobileTermDictionary.SearchBlock(startingUrl, "", _language, pageTitle, buttonText, true);
+                        litPageUrl.Text = startingUrl;
+                        //litSearchBlock.Text = GeneticsTermDictionaryHelper.SearchBlock(startingUrl, "", _language, pageTitle, buttonText, true);
+                        litSearchBlock.Text = GeneticsTermDictionaryHelper.SearchBlock();
                     }
                     else
                         Page.Response.Redirect(startingUrl); // if no data returned - redirect to base page

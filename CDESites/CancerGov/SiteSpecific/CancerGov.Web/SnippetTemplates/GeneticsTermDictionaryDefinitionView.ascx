@@ -3,6 +3,7 @@
 
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
+<asp:PlaceHolder ID="phSearchBox" runat="server" />
 <h3><% =TermName %></h3>
 <% if(!String.IsNullOrEmpty(AudioPronounceLink)) { %>
 <div class="audioPronounceLink">
