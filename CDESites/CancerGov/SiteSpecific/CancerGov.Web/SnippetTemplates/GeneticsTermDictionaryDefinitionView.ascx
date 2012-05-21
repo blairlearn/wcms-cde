@@ -17,6 +17,11 @@
 </div>
 <br />
 
+<div class="relatedInfo">
+<% =RelatedInfoHTML%>
+</div>
+<br />
+
 <% if(!String.IsNullOrEmpty(ImageLink)) { %>
    <div class="imageLink">
       <% =ImageLink %>

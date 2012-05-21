@@ -3,7 +3,7 @@ function loadResults(searchTerm) {
     var language;
     var xmlhttp;
     
-    searchTerm = searchTerm.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+    //searchTerm = searchTerm.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
     
     if (window.XMLHttpRequest)  {
         // code for IE7+, Firefox, Chrome, Opera, Safari

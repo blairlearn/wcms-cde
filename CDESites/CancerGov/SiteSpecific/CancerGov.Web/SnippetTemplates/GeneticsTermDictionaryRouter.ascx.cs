@@ -27,15 +27,6 @@ namespace CancerGov.Web.SnippetTemplates
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           //Control localControl = null;
-
-           // //localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionaryHome.ascx");
-           // localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionaryResultsList.ascx");
-           // //localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionaryDefinitionView.ascx");
-            
-           // if (localControl != null)
-           //     phGeneticsTermDictionary.Controls.Add(localControl);
-
             String searchString = Strings.Clean(Request.QueryString["search"]);
             String term = Strings.Clean(Request.QueryString["term"]);
             String cdrId = Strings.Clean(Request.QueryString["cdrid"]);
@@ -49,24 +40,24 @@ namespace CancerGov.Web.SnippetTemplates
                 searchString = term;
             }
 
-            // Redirect if language parameter is not the same as language of the Page Assembly 
-            if (!String.IsNullOrEmpty(language))
-                language = language.ToLower();
+            //// Redirect if language parameter is not the same as language of the Page Assembly 
+            //if (!String.IsNullOrEmpty(language))
+            //    language = language.ToLower();
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en" &&
-                language == GeneticsTermDictionaryHelper.SPANISH)
-            {
-                //redirect to Spanish site
-                string reDirectUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.AltLanguage) + "?" + Page.Request.QueryString.ToString();
-                Page.Response.Redirect(reDirectUrl);
-            }
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es" &&
-                language == GeneticsTermDictionaryHelper.ENGLISH)
-            {
-                //redirect to English site
-                string reDirectUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.AltLanguage) + "?" + Page.Request.QueryString.ToString();
-                Page.Response.Redirect(reDirectUrl);
-            }
+            //if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en" &&
+            //    language == GeneticsTermDictionaryHelper.SPANISH)
+            //{
+            //    ////redirect to Spanish site
+            //    //string reDirectUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.AltLanguage) + "?" + Page.Request.QueryString.ToString();
+            //    //Page.Response.Redirect(reDirectUrl);
+            //}
+            //if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es" &&
+            //    language == GeneticsTermDictionaryHelper.ENGLISH)
+            //{
+            //    //redirect to English site
+            //    string reDirectUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.AltLanguage) + "?" + Page.Request.QueryString.ToString();
+            //    Page.Response.Redirect(reDirectUrl);
+            //}
 
 
             // Load appropriate control 

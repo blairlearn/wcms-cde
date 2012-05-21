@@ -56,11 +56,6 @@ namespace CancerGov.Web.SnippetTemplates
             get { return _term; }
             set { _term = value; }
         }
-        public string Language
-        {
-            get { return _language; }
-            set { _language = value; }
-        }
         public string Version
         {
             get { return _version; }
@@ -82,10 +77,16 @@ namespace CancerGov.Web.SnippetTemplates
         {
             get { return _results; }
         }
-        public bool IsSpanish
-        {
-            get { return (Language == GeneticsTermDictionaryHelper.SPANISH); }
-        }
+
+        //public string Language
+        //{
+        //    get { return _language; }
+        //    set { _language = value; }
+        //}
+        //public bool IsSpanish
+        //{
+        //    get { return (Language == GeneticsTermDictionaryHelper.SPANISH); }
+        //}
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -97,13 +98,18 @@ namespace CancerGov.Web.SnippetTemplates
             _term = Strings.Clean(Request.QueryString["term"]);
             _version = Strings.Clean(Request.QueryString["version"]);
 
+            bool contains = false;
+            string containsParam = Strings.Clean(Request.QueryString["contains"]);
+            if (!String.IsNullOrEmpty(containsParam) && containsParam.ToLower() == "true")
+                contains = true;
+
             if (!String.IsNullOrEmpty(_searchStr))
                 _searchStr = _searchStr.Replace("[", "[[]");
 
             // Pager query parameter variables
-            _currentPage = Strings.ToInt(Request.Params["PageNum"], 1);
-            _recordsPerPage = Strings.ToInt(Request.Params["RecordsPerPage"], 10);
-            _offSet = Strings.ToInt(Request.Params["OffSet"], 0);
+            //_currentPage = Strings.ToInt(Request.Params["PageNum"], 1);
+            //_recordsPerPage = Strings.ToInt(Request.Params["RecordsPerPage"], 10);
+            //_offSet = Strings.ToInt(Request.Params["OffSet"], 0);
 
             //Determine Language - set language related values
             string pageTitle;
@@ -113,46 +119,44 @@ namespace CancerGov.Web.SnippetTemplates
             GeneticsTermDictionaryHelper.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText, out reDirect);
             _language = language;
 
-
-//Commented out for testing 
-            //_dictionaryURL = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
+            _dictionaryURL = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
+            litPageUrl.Text = _dictionaryURL;
+            litSearchBlock.Text = GeneticsTermDictionaryHelper.SearchBlock(_dictionaryURL, SearchString, language, pageTitle, buttonText, contains);
 
             // Setup Pager variables  
-            int pager_StartRecord = 0;
-            int pager_EndRecord = 0;
-            int pager_MaxRows = 0;
-            int pager_RowsPerPage = 0;
+            //int pager_StartRecord = 0;
+            //int pager_EndRecord = 0;
+            //int pager_MaxRows = 0;
+            //int pager_RowsPerPage = 0;
 
             TermDictionaryCollection _dc = null;
             if (!String.IsNullOrEmpty(SearchString)) // SearchString provided, do a term search
             {
-//Commented out for Testing 
-                //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
-                //{
-                //    url.QueryParameters.Add("search", SearchString);
-                //});
-                //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
-                //{
-                //    url.QueryParameters.Add("search", SearchString);
-                //});
-                
-                //_dc = TermDictionaryManager.GetTermDictionaryList(language, SearchString, false, pager_RowsPerPage, _currentPage, ref pager_MaxRows);
-                _dc = TermDictionaryManager.Search(language, SearchString, 0, false, "Genetics", "Health professional");
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
+                {
+                    url.QueryParameters.Add("search", SearchString);
+                });
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+                {
+                    url.QueryParameters.Add("search", SearchString);
+                });
+
+                _dc = TermDictionaryManager.Search(language, SearchString, 0, contains, "Genetics", "Health professional");
 
             }
-            else if (!String.IsNullOrEmpty(Term))
-            {
-                NCI.Web.CDE.DisplayLanguage dl;
-                if (Language.ToLower().Trim() == "spanish")
-                    dl = NCI.Web.CDE.DisplayLanguage.Spanish;
-                else
-                    dl = NCI.Web.CDE.DisplayLanguage.English;
+            //else if (!String.IsNullOrEmpty(Term))
+            //{
+            //    NCI.Web.CDE.DisplayLanguage dl;
+            //    if (Language.ToLower().Trim() == "spanish")
+            //        dl = NCI.Web.CDE.DisplayLanguage.Spanish;
+            //    else
+            //        dl = NCI.Web.CDE.DisplayLanguage.English;
 
-                TermDictionaryDataItem di = TermDictionaryManager.GetDefinitionByTermName(dl, Term, Version, 2);
-                string itemDefinitionUrl = DictionaryURL + "?cdrid=" + di.GlossaryTermID;
-                Page.Response.Redirect(itemDefinitionUrl);
+            //    TermDictionaryDataItem di = TermDictionaryManager.GetDefinitionByTermName(dl, Term, Version, 2);
+            //    string itemDefinitionUrl = DictionaryURL + "?cdrid=" + di.GlossaryTermID;
+            //    Page.Response.Redirect(itemDefinitionUrl);
 
-            }
+            //}
             else if (!String.IsNullOrEmpty(expandParam)) // A-Z expand provided - do an A-Z search
             {
                 _showDefinition = true;
@@ -164,18 +168,19 @@ namespace CancerGov.Web.SnippetTemplates
                     _expandText = "[0-9]";
                 }
                 
-//Commented out for Testing 
-                //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
-                //{
-                //    url.QueryParameters.Add("expand", _expandText);
-                //});
-                //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
-                //{
-                //    url.QueryParameters.Add("expand", _expandText);
-                //});
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
+                {
+                    url.QueryParameters.Add("expand", _expandText);
+                });
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+                {
+                    url.QueryParameters.Add("expand", _expandText);
+                });
 
-                //_dc = TermDictionaryManager.GetTermDictionaryList(language, _expandText.Trim().ToUpper(), false, pager_RowsPerPage, _currentPage, ref pager_MaxRows);
-                _dc = TermDictionaryManager.Search(language, _expandText.Trim().ToUpper(), 0, false, "Genetics", "Health professional");
+                if(expandParam.ToLower()=="all")
+                    _dc = TermDictionaryManager.Search(language, "%", 0, false, "Genetics", "Health professional");
+                else
+                    _dc = TermDictionaryManager.Search(language, _expandText.Trim().ToUpper(), 0, contains, "Genetics", "Health professional");
             
             }
 
@@ -194,7 +199,6 @@ namespace CancerGov.Web.SnippetTemplates
                     resultListView.DataBind();
                 }
 
-//Commented out for Testing 
                 //SimplePager.GetFirstItemLastItem(_currentPage, pager_RowsPerPage, pager_MaxRows, out pager_StartRecord, out pager_EndRecord);
                 //spPager.RecordCount = pager_MaxRows;
                 //spPager.RecordsPerPage = pager_RowsPerPage;

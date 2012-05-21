@@ -133,11 +133,6 @@ namespace CancerGov.Web.SnippetTemplates
                     return "";
             }
         }
-        public string Language
-        {
-            get { return _language; }
-            set { _language = value; }
-        }
         public string MediaHTML
         {
             get
@@ -154,6 +149,15 @@ namespace CancerGov.Web.SnippetTemplates
                     return "";
             }
         }
+
+        public string RelatedInfoHTML
+        {
+            get { return (_di == null ? "" : _di.RelatedInfoHTML); }
+        }
+
+
+
+
         public string TermName
         {
             get { return (_di == null ? "" : _di.TermName); }
@@ -166,9 +170,9 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     if (!String.IsNullOrEmpty(_di.TermPronunciation))
                     {
-                        if (Language == GeneticsTermDictionaryHelper.SPANISH)
-                            return "";
-                        else
+                        //if (Language == GeneticsTermDictionaryHelper.SPANISH)
+                        //    return "";
+                        //else
                             return _di.TermPronunciation;
                     }
                     else
@@ -178,6 +182,11 @@ namespace CancerGov.Web.SnippetTemplates
                     return "";
             }
         }
+        //public string Language
+        //{
+        //    get { return _language; }
+        //    set { _language = value; }
+        //}
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -189,8 +198,8 @@ namespace CancerGov.Web.SnippetTemplates
                 string cdrId = Strings.Clean(Request.QueryString["cdrid"]);
                 string term = Strings.Clean(Request.QueryString["term"]);
                 string id = Strings.Clean(Request.QueryString["id"]);
-                string languageParam = Strings.Clean(Request.QueryString["language"]);
-
+                //string languageParam = Strings.Clean(Request.QueryString["language"]);
+                string languageParam = ""; //disable language selection by query parameter 
 
                 if (String.IsNullOrEmpty(cdrId) && (!String.IsNullOrEmpty(id)))
                     cdrId = id;
@@ -232,8 +241,7 @@ namespace CancerGov.Web.SnippetTemplates
                         });
 
                         litPageUrl.Text = startingUrl;
-                        //litSearchBlock.Text = GeneticsTermDictionaryHelper.SearchBlock(startingUrl, "", _language, pageTitle, buttonText, true);
-                        litSearchBlock.Text = GeneticsTermDictionaryHelper.SearchBlock();
+                        litSearchBlock.Text = GeneticsTermDictionaryHelper.SearchBlock(startingUrl, "", _language, pageTitle, buttonText, false);
                     }
                     else
                         Page.Response.Redirect(startingUrl); // if no data returned - redirect to base page
