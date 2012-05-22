@@ -14,84 +14,21 @@ namespace CancerGov.Web.SnippetTemplates {
     public partial class GeneticsTermDictionaryHome {
         
         /// <summary>
-        /// pnlTermSearch control.
+        /// litPageUrl control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlTermSearch;
+        protected global::System.Web.UI.WebControls.Literal litPageUrl;
         
         /// <summary>
-        /// aspnetForm control.
+        /// litSearchBlock control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm aspnetForm;
-        
-        /// <summary>
-        /// AutoComplete1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::NCI.Web.UI.WebControls.FormControls.AutoComplete AutoComplete1;
-        
-        /// <summary>
-        /// btnGo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton btnGo;
-        
-        /// <summary>
-        /// radioStarts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radioStarts;
-        
-        /// <summary>
-        /// lblStartsWith control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStartsWith;
-        
-        /// <summary>
-        /// radioContains control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton radioContains;
-        
-        /// <summary>
-        /// lblContains control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblContains;
-        
-        /// <summary>
-        /// alphaListBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Www.Common.UserControls.AlphaListBox alphaListBox;
+        protected global::System.Web.UI.WebControls.Literal litSearchBlock;
     }
 }

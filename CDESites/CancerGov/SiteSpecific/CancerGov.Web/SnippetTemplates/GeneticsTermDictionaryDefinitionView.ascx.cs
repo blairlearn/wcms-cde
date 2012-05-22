@@ -10,22 +10,17 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
-using CancerGov.Text;
-using CancerGov.Common;
-using CancerGov.CDR.TermDictionary;
-using CancerGov.Web.SnippetTemplates;
 using NCI.Web.CDE.UI.SnippetControls;
 using NCI.Web.UI.WebControls;
 using NCI.Web.CDE;
 using NCI.Web;
+using CancerGov.Text;
+using CancerGov.Common;
+using CancerGov.CDR.TermDictionary;
+using CancerGov.Web.SnippetTemplates;
+using CancerGov.Common.ErrorHandling;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -149,15 +144,10 @@ namespace CancerGov.Web.SnippetTemplates
                     return "";
             }
         }
-
         public string RelatedInfoHTML
         {
             get { return (_di == null ? "" : _di.RelatedInfoHTML); }
         }
-
-
-
-
         public string TermName
         {
             get { return (_di == null ? "" : _di.TermName); }
@@ -182,6 +172,7 @@ namespace CancerGov.Web.SnippetTemplates
                     return "";
             }
         }
+        
         //public string Language
         //{
         //    get { return _language; }
@@ -249,8 +240,8 @@ namespace CancerGov.Web.SnippetTemplates
             }
             catch (Exception ex)
             {
-                //CancerGovError.LogError("MobileTermDictionaryDefinitionView", 2, ex);
-                //Page.Response.Redirect(startingUrl); // if error - redirect to base page
+                CancerGovError.LogError("GeneticsTermDictionaryDefinitionView", 2, ex);
+                Page.Response.Redirect(startingUrl); // if error - redirect to base page
             }
         }
 

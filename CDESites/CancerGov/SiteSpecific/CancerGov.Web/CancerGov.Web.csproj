@@ -602,6 +602,7 @@
     </Content>
     <Content Include="DictionaryOfGeneticsTermsTester.aspx" />
     <Content Include="DrugDictionary.svc" />
+    <Content Include="JS\geneticsTermDictionary.js" />
     <Content Include="JS\imgEvents.js" />
     <Content Include="JS\JSLoader\JSLoader.js" />
     <Content Include="JS\NetTracker\ntpagetag.js" />

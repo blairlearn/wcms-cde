@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GeneticsTermDictionaryResultsList.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.GenerticsTermDictionaryResultsList" %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="NCI" %>
+<asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
+<asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
 <div class="searchResults">
-    <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
-    <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
     <div class="resultsFound"><% =Results %> results found for: <% =SearchString %></div>
     <ul>
         <asp:ListView ID="resultListView" runat="server" Visible="true">

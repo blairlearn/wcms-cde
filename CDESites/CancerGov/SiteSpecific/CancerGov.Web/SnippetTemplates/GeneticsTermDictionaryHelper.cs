@@ -21,36 +21,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             StringBuilder searchBlock = new StringBuilder();
 
-            searchBlock.AppendLine("<script type=\"text/javascript\">");
-            searchBlock.AppendLine("function DoSearch()");
-            searchBlock.AppendLine("{");
-            searchBlock.AppendLine("   if($('#searchString').val() != \"\") {");
-            searchBlock.AppendLine("      var localSearhString = htmlEscape($('#searchString').val());");
-            searchBlock.AppendLine("      var isContains=false;");
-            searchBlock.AppendLine("      if($(\"#radioContains\").attr(\"checked\")!= \"undefined\")");
-            searchBlock.AppendLine("         if($(\"#radioContains\").attr(\"checked\"))");
-            searchBlock.AppendLine("           isContains=true;");
-            searchBlock.AppendLine("      if(isContains) {");
-            searchBlock.AppendLine("         var url = $('#litPageUrl').text() + \"?search=\" + localSearhString + \"&contains=true\";");
-            searchBlock.AppendLine("      } else {");
-            searchBlock.AppendLine("         var url = $('#litPageUrl').text() + \"?search=\" + localSearhString;");
-            searchBlock.AppendLine("      }");
-            searchBlock.AppendLine("      $(location).attr('href',url);");
-            searchBlock.AppendLine("   }");
-            searchBlock.AppendLine("}");
-            searchBlock.AppendLine("function htmlEscape(str) {");
-            searchBlock.AppendLine("    return String(str)");
-            searchBlock.AppendLine("    .replace(/&/g, '&amp;')");
-            searchBlock.AppendLine("    .replace(/\"/g, '&quot;')");
-            searchBlock.AppendLine("    .replace(/'/g, '&#39;')");
-            searchBlock.AppendLine("    .replace(/[(]/g, '&#28;')");
-            searchBlock.AppendLine("    .replace(/[)]/g, '&#29;')");
-            searchBlock.AppendLine("    .replace(/[?]/g, '&#3f;')");
-            searchBlock.AppendLine("    .replace(/</g, '&lt;')");
-            searchBlock.AppendLine("    .replace(/>/g, '&gt;');");
-            searchBlock.AppendLine("}");
-            searchBlock.AppendLine("</script>");
-
             searchBlock.AppendLine("<div class='dictionary-box'>");
             searchBlock.AppendLine("   <div class='row1'>");
             searchBlock.AppendLine("      <div id='dictionary_jPlayer'></div>");
@@ -58,17 +28,17 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("      <input type='image' name='btnGo' id='btnGo' title='Search' class='go-button' Name='btnGo' src='/PublishedContent/Images/Images/red_search_button.gif' alt='Search' style='border-width:0px;' onclick='DoSearch();' />");
             if (contains)
             {
-                searchBlock.AppendLine("      <span class='starts-with-radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' /></span>");
+                searchBlock.AppendLine("      <span class='starts-with-radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' onchange='autoFunc();' /></span>");
                 searchBlock.AppendLine("      <label for='radioStarts' id='lblStartsWith' class='starts-with-label'>Starts with</label>");
-                searchBlock.AppendLine("      <span class='contains-radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' checked='checked' /></span>");
+                searchBlock.AppendLine("      <span class='contains-radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' checked='checked' onchange='autoFunc();'  /></span>");
                 searchBlock.AppendLine("      <label for='radioContains' id='lblContains' class='contains-label'>Contains</label>");
 
             }
             else
             {
-                searchBlock.AppendLine("      <span class='starts-with-radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' checked='checked' /></span>");
+                searchBlock.AppendLine("      <span class='starts-with-radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' checked='checked' onchange='autoFunc();' /></span>");
                 searchBlock.AppendLine("      <label for='radioStarts' id='lblStartsWith' class='starts-with-label'>Starts with</label>");
-                searchBlock.AppendLine("      <span class='contains-radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' /></span>");
+                searchBlock.AppendLine("      <span class='contains-radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' onchange='autoFunc();' /></span>");
                 searchBlock.AppendLine("      <label for='radioContains' id='lblContains' class='contains-label'>Contains</label>");
             }
 
@@ -108,72 +78,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("	</div>");
             searchBlock.AppendLine("</div>");
 
-
-
- 
-
-
-
-
-
-
-
-
-
-            //searchBlock.AppendLine("<script src=\"/js/sw-mtd-autocomplete.js\" type=\"text/javascript\"></script>");
-            //searchBlock.AppendLine("<script type=\"text/javascript\">");
-            //searchBlock.AppendLine("function DoSearch()");
-            //searchBlock.AppendLine("{");
-            //searchBlock.AppendLine("    if($('#searchString').val() != \"\") {");
-            //searchBlock.AppendLine("           var localSearhString = htmlEscape($('#searchString').val());");
-            //if (language == MobileTermDictionary.SPANISH)
-            //    searchBlock.AppendLine("       NCIAnalytics.TermsDictionarySearchMobile(this,localSearhString, true);");
-            //else
-            //    searchBlock.AppendLine("       NCIAnalytics.TermsDictionarySearchMobile(this,localSearhString, false);");
-            //searchBlock.AppendLine("       var url = $('#litPageUrl').text() + \"?search=\" + localSearhString;");
-            //searchBlock.AppendLine("       $(location).attr('href',url);");
-            //searchBlock.AppendLine("    }");
-            //searchBlock.AppendLine("}");
-            //searchBlock.AppendLine("function htmlEscape(str) {");
-            //searchBlock.AppendLine("    return String(str)");
-            //searchBlock.AppendLine("    .replace(/&/g, '&amp;')");
-            //searchBlock.AppendLine("    .replace(/\"/g, '&quot;')");
-            //searchBlock.AppendLine("    .replace(/'/g, '&#39;')");
-            //searchBlock.AppendLine("    .replace(/[(]/g, '&#28;')");
-            //searchBlock.AppendLine("    .replace(/[)]/g, '&#29;')");
-            //searchBlock.AppendLine("    .replace(/[?]/g, '&#3f;')");
-            //searchBlock.AppendLine("    .replace(/</g, '&lt;')");
-            //searchBlock.AppendLine("    .replace(/>/g, '&gt;');");
-            //searchBlock.AppendLine("}");
-            //searchBlock.AppendLine("</script>");
-            //searchBlock.AppendLine("<table width=\"100%\">");
-            //searchBlock.AppendLine("<tr>");
-            //searchBlock.AppendLine("<td>");
-            //searchBlock.AppendLine("<input class=\"searchString\" id=\"searchString\" maxlength=\"255\" name=\"searchString\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\" onkeypress=\"if(event.keyCode==13) DoSearch();\" value=\"" + searchString + "\" /> ");
-            //searchBlock.AppendLine("</td>");
-            //searchBlock.AppendLine("<td width=\"40\">");
-
-
-            //if (language == MobileTermDictionary.SPANISH)
-            //    searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Buscar\" />");
-            //else
-            //    searchBlock.AppendLine("<input alt=\"Search\" data-theme=\"a\" class=\"searchSubmit\" id=\"dctSearch\" onclick=\"DoSearch();\" type=\"submit\" value=\"Search\" />");
-            //searchBlock.AppendLine("</td>");
-            //searchBlock.AppendLine("</tr>");
-            //searchBlock.AppendLine("<tr>");
-            //if (showAZlink)
-            //{
-            //    searchBlock.AppendLine("<td>");
-            //    searchBlock.AppendLine("<a id=\"azLink\" class=\"mtd_az\" name=\"azLink\" visible=\"false\" href=\"" + url + "\">A-Z</a>");
-            //    searchBlock.AppendLine("</td>");
-            //}
-            //searchBlock.AppendLine("</tr>");
-            //searchBlock.AppendLine("</table>");
             return searchBlock.ToString();
         }
-
+      
         public static void DetermineLanguage(string langParam, out string language, out string pageTitle, out string buttonText, out string reDirect)
         {
+            //Currently the Genetics Term Dictionary is only in English 
 
             if (langParam == null)
                 langParam = "";

@@ -1,93 +1,26 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GeneticsTermDictionaryHome.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.GeneticsTermDictionaryHome" %>
-<%@ Register TagPrefix="CancerGovWww" TagName="AlphaListBox" Src="/Common/UserControls/AlphaListBox.ascx" %>
-<%@ Register TagPrefix="CancerGovWww" TagName="LangSwitch" Src="/Common/UserControls/LangSwitch.ascx" %>
-<%@ Register TagPrefix="CGov" Assembly="NCILibrary.Web.UI.WebControls" Namespace="NCI.Web.UI.WebControls.FormControls" %>
+<asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
+<asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
+<div class="searchHome">
+    <p>
+        Welcome to the NCI Dictionary of Genetics Terms
+    </p>
+    <p>
+        <b>Tips on Looking Up a Word or Phrase</b></p>
+    <ul>
+        <li>In the search box, type the word or phrase you are looking for and click the "Search"
+            button.</li><br />
 
-
-
-<script type="text/javascript">
-    // function used by AutoComplete to submit to server when user
-    // selects an item
-    function ACOnSubmit() {
-        document.getElementById('<%=btnGo.ClientID%>').click();
-    }
-
-    //Hookup JPlayer for Audio
-    if (jQuery.jPlayer) {
-        jQuery(document).ready(function($) {
-            var my_jPlayer = $("#dictionary_jPlayer");
-
-            my_jPlayer.jPlayer({
-                swfPath: "/PublishedContent/files/global/flash/", //Path to SWF File Used by jPlayer
-                //errorAlerts: true,
-                supplied: "mp3" //The types of files which will be used.
-            });
-
-            //Attach a click event to the audio link
-            $(".CDR_audiofile").click(function() {
-                my_jPlayer.jPlayer("setMedia", {
-                    mp3: $(this).attr("href") // Defines the m4v url
-                }).jPlayer("play");
-
-                return false;
-            });
-        });
-    }
-       
-</script>
-
-<script type="text/javascript">
-    var ids = {
-        radioStarts: "<%=radioStarts.ClientID %>"
-    , AutoComplete1: "<%=AutoComplete1.ClientID %>"
-    }
-</script>
-
-<div class="hidden">
-    The search textbox has an autosuggest feature. When you enter three or more characters,
-    a list of up to 10 suggestions will popup under the textbox. Use the arrow keys
-    to move through the suggestions. To select a suggestion, hit the enter key. Using
-    the escape key closes the listbox and puts you back at the textbox. The radio buttons
-    allow you to toggle between having all search items start with or contain the text
-    you entered in the search box.
+        <li>Click the radio button in front of the word "Contains" when you want to find all
+            terms in the dictionary that <b>include</b> a word or set of letters. For example,
+            if you type "lung" and select "Contains," the search will find terms such as "small
+            cell lung cancer" as well as "lung cancer."</li><br />
+        <li>You can also click on a letter of the alphabet to browse through the dictionary.</li><br />
+        <li>The search box has an <b>autosuggest</b> feature. When you type three or more letters,
+            a list of up to 10 suggestions will pop up below the box. Click on a suggestion
+            with your mouse or use the arrow keys on your keyboard to move through the suggestions
+            and then hit the Enter key to choose one.</li><br />
+        <li>Using the Escape closes the box 
+            and turns off the feature until you start a new search.</li><br />
+    </ul>
 </div>
-
-<asp:Panel ID="pnlTermSearch" runat="server">
-<div class="dictionary-box">
-	<div class="row1">
-        <!-- Table needed for proper functing of asp:AutoComplete control -->
-        <table width="100%">
-        <tr>
-        <td>
-            <form name="aspnetForm" method="post" action="/dictionary/" id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);"
-                runat="server">
-                <div id="dictionary_jPlayer"></div>
-
-
-                 <CGov:AutoComplete CssClass="dictionary" Name="AutoComplete1" ID="AutoComplete1"
-                    runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" MinWidth="333" />
-
-                <asp:ImageButton class="go-button" Name="btnGo" ID="btnGo" runat="server" ImageUrl="/PublishedContent/Images/Images/red_search_button.gif"
-                    AlternateText="Search" ToolTip="Search" />
-
-                    
-                <asp:RadioButton ID="radioStarts" Name="radioStarts" CssClass="starts-with-radio" runat="server" Checked="True" GroupName="sgroup" />
-                <asp:Label ID="lblStartsWith" CssClass="starts-with-label" runat="server" Text="Starts with"
-                    AssociatedControlID="radioStarts"></asp:Label>
-               
-                <asp:RadioButton  ID="radioContains" Name="radioContains" CssClass="contains-radio" runat="server" GroupName="sgroup" />
-                <asp:Label ID="lblContains" CssClass="contains-label" runat="server" Text="Contains" 
-                    AssociatedControlID="radioContains"></asp:Label>  
-
-            </form>
-        </td>
-        </tr>
-        </table>
-	</div>
-	<div class="row2">
-	    <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
-            NumericItems="true" ShowAll="true" />
-	</div>
-</div>
-</asp:Panel>
-

@@ -42,7 +42,17 @@ namespace CancerGov.CDR.TermDictionary
         {
             return Search(language, criteria, maxRows, contains);
         }
-        
+
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "SearchGeneticsJSON/{language}?searchTerm={criteria}&MaxRows={maxRows}&Contains={contains}")]
+        [OperationContract]
+        public TermDictionaryServiceCollection SearchGeneticsJSON(string language, string criteria, int maxRows, bool contains)
+        {
+            return Search(language, criteria, maxRows, contains,"Genetics", "Health professional");
+        }
+
+
+
         [WebGet(ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "SuggestJSON/{language}?term={criteria}")]
         [OperationContract]
@@ -55,7 +65,33 @@ namespace CancerGov.CDR.TermDictionary
 
             return Search(language, criteria, maxRows, contains);
         }
-        
+
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "SuggestGeneticsStartsJSON/{language}?term={criteria}")]
+        [OperationContract]
+        public TermDictionaryServiceCollection SuggestGeneticsStartsJSON(string language, string criteria)
+        {
+            // The below values not used by the system. Retained so it can used in the future for 
+            // customization.
+            int maxRows = 10;
+            bool contains = false;
+
+            return Search(language, criteria, maxRows, contains, "Genetics", "Health professional");
+        }
+
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "SuggestGeneticsContainsJSON/{language}?term={criteria}")]
+        [OperationContract]
+        public TermDictionaryServiceCollection SuggestGeneticsContainsJSON(string language, string criteria)
+        {
+            // The below values not used by the system. Retained so it can used in the future for 
+            // customization.
+            int maxRows = 10;
+            bool contains = true;
+
+            return Search(language, criteria, maxRows, contains, "Genetics", "Health professional");
+        }
+
         /// <summary>
         /// Method to interface through the WCF do get results from a database query.
         /// This will return the data in XML format
@@ -268,6 +304,23 @@ namespace CancerGov.CDR.TermDictionary
         /// <returns>Returns the search results</returns>
         private TermDictionaryServiceCollection Search(string language, string criteria, int maxRows, bool contains)
         {
+            return Search(language, criteria, maxRows, contains, "Cancer.gov", "Patient");
+        }
+
+        /// <summary>
+        /// Method used to query database for English language results. This will return the
+        /// data in XML format. There is no way to create an additional WebGet so that we
+        /// can return the same data in JSON format.
+        /// </summary>
+        /// <param name="language">The language needed to do the lookup</param>
+        /// <param name="criteria">The partial text used to query the database</param>
+        /// <param name="maxRows">The maximum number of rows that the database will return. a value of zero will return the entire set</param>
+        /// <param name="contains">Indicator on whether the text is to be search from the beginning of the text or anywhere in the string</param>
+        /// <param name="dictionary">Which Term dicitonary to search - Cancer.gov or Genetics</param>
+        /// <param name="audience">Definition audience - Patient or Health professional</param>
+        /// <returns>Returns the search results</returns>
+        private TermDictionaryServiceCollection Search(string language, string criteria, int maxRows, bool contains, string dictionary, string audience)
+        {
             // create the collection variable
             TermDictionaryServiceCollection sc = new TermDictionaryServiceCollection();
 
@@ -279,7 +332,7 @@ namespace CancerGov.CDR.TermDictionary
 
                 // Call the database query
                 TermDictionaryCollection dc =
-                    TermDictionaryManager.Search(language, criteria, maxRows, contains);
+                    TermDictionaryManager.Search(language, criteria, maxRows, contains,dictionary, audience);
 
                 // Use Linq to extract the data from the business layer and create 
                 // the service data objects

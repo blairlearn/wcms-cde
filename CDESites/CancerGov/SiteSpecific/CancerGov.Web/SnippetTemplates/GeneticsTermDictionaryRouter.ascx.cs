@@ -40,6 +40,7 @@ namespace CancerGov.Web.SnippetTemplates
                 searchString = term;
             }
 
+            // Genetics Term Dictionary is currently only in English
             //// Redirect if language parameter is not the same as language of the Page Assembly 
             //if (!String.IsNullOrEmpty(language))
             //    language = language.ToLower();
