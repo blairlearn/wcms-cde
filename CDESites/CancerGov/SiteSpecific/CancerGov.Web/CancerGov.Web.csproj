@@ -266,13 +266,6 @@
     <Compile Include="Common\UserControls\LangSwitch.ascx.designer.cs">
       <DependentUpon>LangSwitch.ascx</DependentUpon>
     </Compile>
-    <Compile Include="DictionaryOfGeneticsTermsTester.aspx.cs">
-      <DependentUpon>DictionaryOfGeneticsTermsTester.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DictionaryOfGeneticsTermsTester.aspx.designer.cs">
-      <DependentUpon>DictionaryOfGeneticsTermsTester.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -600,7 +593,6 @@
       <LastGenOutput>SiteWideSearch.es.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="DictionaryOfGeneticsTermsTester.aspx" />
     <Content Include="DrugDictionary.svc" />
     <Content Include="JS\geneticsTermDictionary.js" />
     <Content Include="JS\imgEvents.js" />
@@ -665,7 +657,6 @@
     <Content Include="sysimages\tile-slider-spanish-previous.gif" />
     <Content Include="TermDictionary.svc" />
     <Content Include="UserControls\CTCustomSelection.ascx" />
-    <Content Include="AjaxTest.html" />
     <EmbeddedResource Include="Archive\arch_dictionary.aspx.resx">
       <DependentUpon>arch_dictionary.aspx.cs</DependentUpon>
       <SubType>Designer</SubType>
