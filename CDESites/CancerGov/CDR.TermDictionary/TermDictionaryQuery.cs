@@ -303,8 +303,7 @@ namespace CancerGov.CDR.TermDictionary
             // Set the values on the parameters
             parms[0].Value = termName;
             parms[1].Value = termID;
-            //parms[2].Value = audience;
-            parms[2].Value = "Health professional";
+            parms[2].Value = audience;
             parms[3].Value = language;
 
             try

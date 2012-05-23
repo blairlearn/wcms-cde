@@ -210,7 +210,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                 if (!String.IsNullOrEmpty(cdrId))
                 {
-                    _di = TermDictionaryManager.GetDefinitionByTermID(_language, cdrId, "", 1);
+                    _di = TermDictionaryManager.GetDefinitionByTermID(_language, cdrId, "Health professional", 1);
                     if (_di != null)
                     {
                         dissectMediaHTML(_di.MediaHTML);
