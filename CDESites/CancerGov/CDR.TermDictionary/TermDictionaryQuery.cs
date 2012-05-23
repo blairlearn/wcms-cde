@@ -40,7 +40,7 @@ namespace CancerGov.CDR.TermDictionary
         /// <param name="dictionary"></param>
         /// <param name="audience"></param>
         /// <returns></returns>
-        [UsesSProc("usp_GetGlossary2")]
+        [UsesSProc("usp_GetGlossary")]
         public static DataTable Search(string language, string criteria, int rows, string dictionary, string audience)
         {
             // create our null object
@@ -72,7 +72,7 @@ namespace CancerGov.CDR.TermDictionary
                 dt = SqlHelper.ExecuteDatatable(
                     ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
                     CommandType.StoredProcedure,
-                    "usp_GetGlossary2",
+                    "usp_GetGlossary",
                     parms);
 
             }
@@ -286,7 +286,7 @@ namespace CancerGov.CDR.TermDictionary
         /// <param name="termID"></param>
         /// <param name="audience"></param>
         /// <returns></returns>
-        [UsesSProc("usp_GetGlossaryDefinition2")]
+        [UsesSProc("usp_GetGlossaryDefinition")]
         private static DataTable GetDefinition(string language, string termName, string termID, string audience)
         {
             // create our null object
@@ -313,7 +313,7 @@ namespace CancerGov.CDR.TermDictionary
                 dt = SqlHelper.ExecuteDatatable(
                     ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString,
                     CommandType.StoredProcedure,
-                    "usp_GetGlossaryDefinition2",
+                    "usp_GetGlossaryDefinition",
                     parms);
 
                 // Let's add the SpanishTermName so we don't break in the manager
