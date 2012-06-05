@@ -34,7 +34,17 @@
         <ItemTemplate>
             <li>
                 <div class="citation">
-                    <%# Eval("isTCGANetworkType")%>&nbsp;<%# Eval("description")%>&nbsp;(<%# Eval("publicationDate")%>)&nbsp;<%# Eval("journalTitle")%>&nbsp<%# Eval("associatedLink")%>
+                    <%# Eval("isTCGANetworkType")%>
+                    <%# Eval("description")%>
+                    (<%# Eval("publicationDate")%>)
+                    <strong>             
+                        <%# Eval("articleTitle").ToString() != "" ? Eval("articleTitle") + "." : ""%>    
+                    </strong>
+                    <em>
+                        <%# Eval("journalTitle").ToString() != "" ? Eval("journalTitle") + "." : ""%>    
+                    </em>
+                    <strong><%# Eval("volumeNumber")%></strong><%# Eval("issueNumber").ToString() != "" ? "(" + Eval("issueNumber") + "):" : "" %><%# Eval("pageNumbers").ToString() != "" ? Eval("pageNumbers") : ""%><%# Eval("volumeNumber").ToString() != "" || Eval("issueNumber").ToString() != "" || Eval("pageNumbers").ToString() != "" ? "." : "" %>
+                    <%# Eval("associatedLink")%>
                 </div>
             </li>
         </ItemTemplate>
@@ -44,7 +54,7 @@
     </asp:Repeater>
     
     <TCGA:PostBackButtonPager id="pager" runat="server" cssclass="pager"
-        onpagechanged="pager_PageChanged" ShowNumPages="5">
+        onpagechanged="pager_PageChanged" ShowNumPages="2">
         <pagerstylesettings nextpagetext="Next &gt;" prevpagetext="&lt; Prev" />
     </TCGA:PostBackButtonPager>
     <asp:HiddenField ID="itemsPerPage" Value="10" runat="server" />

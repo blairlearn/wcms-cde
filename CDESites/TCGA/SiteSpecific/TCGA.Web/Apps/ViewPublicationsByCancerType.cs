@@ -68,7 +68,12 @@ namespace TCGA.Web.SnippetTemplates
                                                     Description=(string)publication.Element("Description").Value,    
                                                     JournalTitle=(string)publication.Element("JournalTitle").Value,
 					                                LinkText=(string)publication.Element("LinkText").Value,
-                                                    Link=(string)publication.Element("Link").Value
+                                                    Link = (string)publication.Element("Link").Value,
+                                                    ArticleTitle=(string)publication.Element("ArticleTitle").Value,
+                                                    VolumeNumber=(string)publication.Element("VolumeNumber").Value,
+                                                    IssueNumber=(string)publication.Element("IssueNumber").Value,
+                                                    PageNumbers=(string)publication.Element("PageNumbers").Value
+
                                             } into grp
                                    select
                                        new
@@ -77,7 +82,11 @@ namespace TCGA.Web.SnippetTemplates
                                            isTCGANetworkType = getTCGAIdentifier(grp.First().Element("IsTCGANetworkType").Value),
                                            description = grp.First().Element("Description").Value,
                                            journalTitle = grp.First().Element("JournalTitle").Value,
-                                           associatedLink = getAssociatedLink(grp.First().Element("LinkText").Value, grp.First().Element("Link").Value)
+                                           associatedLink = getAssociatedLink(grp.First().Element("LinkText").Value, grp.First().Element("Link").Value),
+                                           articleTitle = grp.First().Element("ArticleTitle").Value,
+                                           volumeNumber = grp.First().Element("VolumeNumber").Value,
+                                           issueNumber = grp.First().Element("IssueNumber").Value,
+                                           pageNumbers = grp.First().Element("PageNumbers").Value
                                        };
 
                 totalResults = publications.Count();
