@@ -97,6 +97,8 @@ namespace NCI.DataManager
                                     searchResult.OtherlanguageUrl = sqlFVReader.GetString("otherlanguageURL");
                                     searchResult.DateDisplayMode = sqlFVReader.GetString("Date_Display_Mode");
                                     searchResult.SubHeader = sqlFVReader.GetString("subheader");
+                                    searchResult.ImageSource = sqlFVReader.GetString("imagesource");
+                                    searchResult.AltText = sqlFVReader.GetString("alttext");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
@@ -218,6 +220,8 @@ namespace NCI.DataManager
                                     searchResult.OtherlanguageUrl = sqlFVReader.GetString("otherlanguageURL");
                                     searchResult.DateDisplayMode = sqlFVReader.GetString("Date_Display_Mode");
                                     searchResult.SubHeader = sqlFVReader.GetString("subheader");
+                                    searchResult.ImageSource = sqlFVReader.GetString("imagesource");
+                                    searchResult.AltText = sqlFVReader.GetString("alttext");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)

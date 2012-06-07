@@ -88,6 +88,15 @@ namespace NCI.DataManager
         /// subheader
         /// </summary>
         public string SubHeader { get; set; }
+        /// <summary>
+        /// Source Path of dynamic list item image
+        /// </summary>
+        public string ImageSource { get; set; }
+        /// <summary>
+        /// Alt Text for dynamic list item image
+        /// </summary>
+        public string AltText { get; set; }
+        
         public SearchResult()
         {
             ShortDescription = string.Empty;
