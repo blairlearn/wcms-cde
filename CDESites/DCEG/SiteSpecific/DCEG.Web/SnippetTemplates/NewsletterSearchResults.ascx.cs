@@ -7,6 +7,7 @@ using NCI.Logging;
 using NCI.Search.Endeca;
 using NCI.Util;
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Search;
 
 using DCEG.Web.Apps;
 
