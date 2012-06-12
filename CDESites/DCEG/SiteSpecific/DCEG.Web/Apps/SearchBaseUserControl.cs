@@ -10,11 +10,11 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.UI.WebControls;
 using NCI.Logging;
 using NCI.Search.Endeca;
-using CancerGov.Modules.Search.Endeca;
+//using CancerGov.Modules.Search.Endeca;
 using NCI.Web.CDE;
-using NCI.Web.CancerGov.Apps;
+//using NCI.Web.CancerGov.Apps;
 
-namespace CancerGov.Web.SnippetTemplates
+namespace DCEG.Web.Apps
 {
     public class SearchBaseUserControl:AppsBaseUserControl
     {

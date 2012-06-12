@@ -1,13 +1,38 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewsletterSearch.ascx.cs"
-    Inherits="CancerGov.Web.SnippetTemplates.CancerBulletin.CancerBulletinSearch" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewsletterSearch.ascx.cs" %>
 
-<script type="text/javascript">    var searchType = 0; /* 0 = Search All 1 = Search Date Range */ </script>
+<script type="text/javascript"> 
+var searchType = 0; /* 0 = Search All 1 = Search Date Range */
+
+function NewsletterSearchSubmit()
+{
+	if(trim(document.NewsletterSearchForm.cbkeyword.value) == "" || document.NewsletterSearchForm.cbkeyword.value =="Enter Keyword")
+	{
+		alert("You must enter a search value.");
+		document.NewsletterSearchForm.cbkeyword.value="";
+		document.NewsletterSearchForm.cbkeyword.focus();
+		return false;		
+	}
+	else{
+	    return true; 
+	}
+}
+
+function CBSetSearchType(e)
+{
+        // if search is performed by hitting enter in the keyword textbox, set searchType 
+        if (window.event) { e = window.event; }
+        if (e.keyCode == 13)
+        {
+                searchType=0;
+        }
+}
+</script>
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tbody>
         <tr>
             <td valign="top">
-                <form onsubmit="<% =SubmitScript %>" method="post" name="CBSearchForm" action="<% =PostBackUrl %>">
+                <form onsubmit="<% =SubmitScript %>" method="post" name="NewsletterSearchForm" action="<% =PostBackUrl %>">
                 <table border="0" cellspacing="0" cellpadding="0" bgcolor="#e9e9e9">
                     <tbody>
                         <tr>

@@ -13,9 +13,9 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.UI.WebControls;
 using NCI.Logging;
 using NCI.Search.Endeca;
-using CancerGov.Modules.Search.Endeca;
 using NCI.Web.CDE;
-using NCI.Web.CancerGov.Apps;
+
+using DCEG.Web.Apps;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
@@ -23,17 +23,17 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            JSManager.AddExternalScript(this.Page, "/scripts/imgevents.js");
+            //JSManager.AddExternalScript(this.Page, "/scripts/imgevents.js");
         }
 
         protected string SubmitScript
         {
             get
             {
-                string onsubmitString = "return CBSearchSubmit();";
+                string onsubmitString = "return NewsletterSearchSubmit();";
                 // Web Analytics *************************************************
                 if (WebAnalyticsOptions.IsEnabled)
-                    onsubmitString = " return CBSearchSubmit() && NCIAnalytics.BulletinSearch(this, searchType);";
+                    onsubmitString = " return NewsletterSearchSubmit() && NCIAnalytics.NewsletterSearch(this, searchType);";
                 // End Web Analytics *********************************************
                 return onsubmitString;
             }
@@ -42,9 +42,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         protected string GetMonthListItems(string monthType)
         {
             string html = String.Empty;
-            string [] monthNameLookup = {"Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."};
+            string[] monthNameLookup = { "Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sept.", "Oct.", "Nov.", "Dec." };
             for (int i = 1; i <= 12; i++)
-                html += string.Format("<option {0} value=\"{1}\">{2}</option>", i == DateTime.Now.Month ? "selected" : String.Empty, i, monthNameLookup[i-1]);
+                html += string.Format("<option {0} value=\"{1}\">{2}</option>", i == DateTime.Now.Month ? "selected" : String.Empty, i, monthNameLookup[i - 1]);
             return html;
         }
 
@@ -56,8 +56,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
             while (startYear <= DateTime.Now.Year)
             {
-                if ( (string.Compare("startYear", yearType, true) == 0 && startYear ==  DateTime.Now.Year - yearsAgo) ||
-                     (string.Compare("endYear", yearType, true) == 0 && startYear == DateTime.Now.Year ))
+                if ((string.Compare("startYear", yearType, true) == 0 && startYear == DateTime.Now.Year - yearsAgo) ||
+                     (string.Compare("endYear", yearType, true) == 0 && startYear == DateTime.Now.Year))
                     html += string.Format("<option selected value=\"{0}\">{0}</option>", startYear.ToString());
                 else
                     html += string.Format("<option value=\"{0}\">{0}</option>", startYear.ToString());
@@ -69,9 +69,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
         protected string PostBackUrl
         {
-            get 
+            get
             {
-                return this.SearchPageInfo.SearchResultsPrettyUrl;                              
+                return this.SearchPageInfo.SearchResultsPrettyUrl;
             }
         }
     }
