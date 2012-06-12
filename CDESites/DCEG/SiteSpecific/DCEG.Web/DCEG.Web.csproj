@@ -56,7 +56,7 @@
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
-    <Content Include="Web.config" />
+    <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apps\AppsBaseUserControl.cs">
@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="SnippetTemplates\NewsletterSearchResults.ascx.cs">
       <DependentUpon>NewsletterSearchResults.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetTemplates\NewsletterSearchResults.ascx.designer.cs">
       <DependentUpon>NewsletterSearchResults.ascx</DependentUpon>
@@ -126,6 +127,7 @@
     </Content>
     <Content Include="SnippetTemplates\NewsletterSearch.ascx" />
     <Content Include="SnippetTemplates\NewsletterSearchResults.ascx" />
+    <Content Include="SnippetTemplates\wc.ascx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

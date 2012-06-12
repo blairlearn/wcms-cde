@@ -1,14 +1,13 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewsletterSearchResults.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.CancerBulletin.ResultsCancerBulletin" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewsletterSearchResults.ascx.cs" Inherits="DCEG.Web.SnippetTemplates.NewsletterSearchResults"  %>
     <!-- Main Content Area -->
 				   
-				   <!-- Nam's html -->
 				   <table width="100%" cellspacing="0" cellpadding="0" border="0">
 							<tr>
 							<td valign="top">
 
 							<table border="0" cellpadding="2" cellspacing="0" width="100%">
 							<tr>
-							<td><span class="page-title"><i>NCI Cancer Bulletin</i> Archive Results</span></td>
+							<td><span class="page-title">Linkage Newsletter Search Results</span></td>
 							</tr>
 							<tr>
 							<td><img src="/images/spacer.gif" alt="" width="1" height="10"></td>
@@ -27,9 +26,7 @@
 							<tr>
 							<td><img src="/images/spacer.gif" width="1" height="10" alt="" border="0"></td></tr>
 							</table>
-							
-				    <!-- Nam's html -->
-						
+					
 					</td></tr>
 					</table>
 					
@@ -73,9 +70,7 @@
 						<p>
 						<!---- end repeater -->
 				   
-					<!---------------- cancer bulletin content -->
 						<%=Pager%>
-					<!---------------- end cancer bulletin content -->
 					</p>
 							
 	<!-- End Main Area -->

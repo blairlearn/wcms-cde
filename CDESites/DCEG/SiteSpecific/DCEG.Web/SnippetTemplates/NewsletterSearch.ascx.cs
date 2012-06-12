@@ -17,9 +17,9 @@ using NCI.Web.CDE;
 
 using DCEG.Web.Apps;
 
-namespace CancerGov.Web.SnippetTemplates.CancerBulletin
+namespace DCEG.Web.SnippetTemplates
 {
-    public partial class CancerBulletinSearch : SearchBaseUserControl
+    public partial class NewsletterSearch : SearchBaseUserControl
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -50,7 +50,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
         protected string GetYearListItems(string yearType)
         {
-            int yearsAgo = Int32.Parse(ConfigurationSettings.AppSettings["CBSearchYearsAgo"].ToString());
+            int yearsAgo = Int32.Parse(ConfigurationSettings.AppSettings["NewsletterSearchYearsAgo"].ToString());
             string html = String.Empty;
             int startYear = DateTime.Now.Year - yearsAgo;
 

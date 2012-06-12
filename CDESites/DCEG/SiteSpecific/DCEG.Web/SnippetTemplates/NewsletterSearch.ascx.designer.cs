@@ -8,10 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CancerGov.Web.SnippetTemplates.CancerBulletin {
-    
-    
-    public partial class CancerBulletinSearch {
+namespace DCEG.Web.SnippetTemplates
+{
+
+
+    public partial class NewsletterSearch
+    {
         
         /// <summary>
         /// searchAllButton control.

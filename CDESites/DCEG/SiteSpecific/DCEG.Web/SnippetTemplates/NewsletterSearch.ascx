@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewsletterSearch.ascx.cs" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewsletterSearch.ascx.cs" Inherits="DCEG.Web.SnippetTemplates.NewsletterSearch" %>
 
 <script type="text/javascript"> 
 var searchType = 0; /* 0 = Search All 1 = Search Date Range */
@@ -28,6 +28,46 @@ function CBSetSearchType(e)
 }
 </script>
 
+<style type="text/css">
+
+table.table-default {
+    border: 1px solid #BDBDBD;
+    border-collapse: collapse;
+}
+table.table-default th {
+    background-color: #ECECEC;
+    border: 1px solid #BDBDBD;
+    padding: 2px 4px;
+}
+table.table-default td {
+    border: 1px solid #BDBDBD;
+    padding: 4px;
+}
+table.table-default-center-td td {
+    text-align: center;
+}
+table.border {
+    border: 1px solid #BDBDBD;
+    border-collapse: collapse;
+}
+table.border th {
+    border: 1px solid #BDBDBD;
+    border-collapse: collapse;
+}
+table.border td {
+    border: 1px solid #BDBDBD;
+    border-collapse: collapse;
+}
+.hidden {
+    height: 1px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: -500px;
+    width: 1px;
+}
+</style>
+
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
     <tbody>
         <tr>
@@ -36,7 +76,7 @@ function CBSetSearchType(e)
                 <table border="0" cellspacing="0" cellpadding="0" bgcolor="#e9e9e9">
                     <tbody>
                         <tr>
-                            <td colspan="2" bgcolor="#CCCCCC" width="100%"><img src="/images/spacer.gif" width="1" height="1" alt="" /></td>
+                            <td colspan="2" bgcolor="#CCCCCC" width="100%"><img src="/PublishedContent/images/spacer.gif" width="1" height="1" alt="" /></td>
                         </tr>
                     </tbody>
                 </table>
@@ -44,15 +84,15 @@ function CBSetSearchType(e)
                     <tbody>
                         <tr>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td width="100%">
-                                <img alt="" src="/images/spacer.gif" width="1" height="5" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="1" height="5" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td>
                                 <label style="color: #333333; font-size: 13px; font-weight: bold" id="searchAllIssues"
@@ -66,14 +106,14 @@ function CBSetSearchType(e)
                     <tbody>
                         <tr>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td>
                                 <input id="cbkeyword" onkeyup="CBSetSearchType(event);" value="Enter Keyword" size="28"
                                     name="cbkeyword">
                             </td>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="3" height="1" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="3" height="1" />
                             </td>
                             <td width="100%">
                                 <input id="searchAllButton" onclick="searchType=0;" alt="search all" src="/images/searchAll.gif"
@@ -82,7 +122,7 @@ function CBSetSearchType(e)
                         </tr>
                         <tr>
                             <td colspan="4">
-                                <img alt="" src="/images/spacer.gif" width="1" height="1" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="1" height="1" />
                             </td>
                         </tr>
                     </tbody>
@@ -91,7 +131,7 @@ function CBSetSearchType(e)
                     <tbody>
                         <tr>
                             <td width="1">
-                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td colspan="6">
                                 <span style="color: #333333; font-size: 11px; font-weight: normal">Or search between
@@ -100,7 +140,7 @@ function CBSetSearchType(e)
                         </tr>
                         <tr>
                             <td>
-                                <img alt="" src="/images/spacer.gif" width="5" height="1" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="5" height="1" />
                             </td>
                             <td width="40">
                                 <label class="hidden" for="startMonth">
@@ -155,12 +195,12 @@ function CBSetSearchType(e)
                     <tbody>
                         <tr>
                             <td bgcolor="#e9e9e9" colspan="7">
-                                <img alt="" src="/images/spacer.gif" width="1" height="5" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="1" height="5" />
                             </td>
                         </tr>
                         <tr>
                             <td bgcolor="#ffffff" colspan="7">
-                                <img alt="" src="/images/spacer.gif" width="1" height="1" />
+                                <img alt="" src="/PublishedContent/images/spacer.gif" width="1" height="1" />
                             </td>
                         </tr>
                     </tbody>

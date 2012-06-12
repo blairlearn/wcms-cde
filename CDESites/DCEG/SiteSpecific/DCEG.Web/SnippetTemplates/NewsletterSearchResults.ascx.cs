@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Configuration;
 using System.Web.UI;
-//using CancerGov.Common;
+
 using NCI.Logging;
 using NCI.Search.Endeca;
 using NCI.Util;
@@ -11,12 +11,12 @@ using NCI.Search;
 
 using DCEG.Web.Apps;
 
-namespace CancerGov.Web.SnippetTemplates.CancerBulletin
+namespace DCEG.Web.SnippetTemplates
 {
     /// <summary>
-    /// Summary description for ResultsCancerBulletin.
+    /// Summary description for Newsletter Search Results.
     /// </summary>
-    public partial class ResultsCancerBulletin : SearchBaseUserControl
+    public partial class NewsletterSearchResults : SearchBaseUserControl
     {
         protected ArrayList eSearchResults = new ArrayList();
 
@@ -91,11 +91,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             int endYear = Strings.ToInt(Strings.Clean(Request.Params["endYear"]));
             keyword = Strings.Clean(Request.Params["cbkeyword"]);
             int currentPage = Strings.ToInt(Strings.Clean(Request.Params["page"]));
-
-            //Updating this logic for SCR 30608 where a previous release introduced an
-            //error where when the initial post for a date range search works, but on
-            //subsequent searches bSearchRange is always false. (I.E. forgets that a
-            //date range search is happening.)
             bool bSearchRange = false;
 
             if (Page.Request.HttpMethod == "POST")
@@ -128,14 +123,14 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 recordIndex = firstRecord;
 
                 //Get Endeca Search Results
-                string doc_type = ConfigurationSettings.AppSettings["EndecaCancerBulletinDocs"];
+                string doc_type = ConfigurationSettings.AppSettings["EndecaDCEGNewsletter"];
                 //CancerGov.Search.EndecaSearching.EndecaSearch eSearch;
                 EndecaSearch eSearch;
                 if (bSearchRange)
                 {
                     if (startMonth < 0 || startMonth > 12 || endMonth < 0 || endMonth > 12 || startYear < 0 || endYear < 0)
                     {
-                        NCI.Logging.Logger.LogError("Invalid date range parameters","ResultCancerBulletin", NCIErrorLevel.Error);
+                        NCI.Logging.Logger.LogError("Invalid date range parameters", "NewsletterSearchResults", NCIErrorLevel.Error);
                         this.RaiseErrorPage("Invalid date range parameters");
                     }
 
@@ -161,7 +156,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 }
                 catch (Exception ex)
                 {
-                    NCI.Logging.Logger.LogError( "ResultsCancerBulletin" ,PrettyUrl, NCIErrorLevel.Error, ex);
+                    NCI.Logging.Logger.LogError( "NewsletterSearchResults" ,PrettyUrl, NCIErrorLevel.Error, ex);
                     this.RaiseErrorPage();
                 }
 
@@ -203,7 +198,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             
             this.PageInstruction.AddFieldFilter("channelName", (fieldName, data) =>
             {
-                data.Value = "Bulletin";
+                data.Value = "Newsletter";
             });
 
             
