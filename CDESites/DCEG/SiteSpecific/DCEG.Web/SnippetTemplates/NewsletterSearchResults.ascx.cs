@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Configuration;
 using System.Web.UI;
-using CancerGov.Common;
+//using CancerGov.Common;
 using NCI.Logging;
 using NCI.Search.Endeca;
 using NCI.Util;
 using NCI.Web.CDE.WebAnalytics;
+
+using DCEG.Web.Apps;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {

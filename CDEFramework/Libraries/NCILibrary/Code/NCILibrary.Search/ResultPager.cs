@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace CancerGov.Common
+namespace NCI.Search
 {
     ///<summary>
     ///Construct to manage the navigation and paging of search results<br/>

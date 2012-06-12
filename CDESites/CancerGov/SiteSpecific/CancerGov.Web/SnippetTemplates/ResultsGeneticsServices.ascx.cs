@@ -20,6 +20,7 @@ using NCI.Web.CDE.WebAnalytics;
 using CancerGov.CDR.DataManager;
 using NCI.Web.CDE.UI;
 using System.Collections.Specialized;
+using NCI.Search;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -205,7 +206,7 @@ namespace CancerGov.Web.SnippetTemplates
                 firstRec = selectedPage;
                 lastRec = (selectedPage + (recordsPerPage - 1)) < Convert.ToInt32(resultCount) ? (selectedPage + (recordsPerPage - 1)) : Convert.ToInt32(resultCount);
 
-                CancerGov.Common.ResultPager objPager = new CancerGov.Common.ResultPager();
+                ResultPager objPager = new ResultPager();
                 objPager.CurrentPage = (selectedPage / recordsPerPage) + ((selectedPage % recordsPerPage) > 0 ? 1 : 0);
                 objPager.RecordCount = Convert.ToInt32(resultCount);
                 objPager.RecordsPerPage = recordsPerPage;
