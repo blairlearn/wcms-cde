@@ -15,9 +15,11 @@ namespace NCI.Web.CDE
     public class MobileRedirect : IHttpModule
     {
         private static readonly object REQUEST_URL_KEY = new object();
-        private static readonly string _cookieName =
-            System.Configuration.ConfigurationManager.AppSettings["MobileRedirectCookieName"];
-        
+        private string _cookieName = "";
+        private string _domain = "";
+        private long _cookieTimeoutMinutes = 0;
+
+
         /// <summary>
         /// You will need to configure this module in the web.config file of your
         /// web and register it with IIS before being able to use it. For more information
@@ -36,6 +38,16 @@ namespace NCI.Web.CDE
         {
             context.BeginRequest += new EventHandler(OnBeginRequest);
 
+            _cookieName = ContentDeliveryEngineConfig.MobileRedirector.CookieName.Value;
+            _domain = ContentDeliveryEngineConfig.MobileRedirector.Domain.Value;
+
+            string cookieTimeoutMinutes = ContentDeliveryEngineConfig.MobileRedirector.TimeoutMinutes.Value;
+            long result;
+            if (Int64.TryParse(cookieTimeoutMinutes, out result))
+                _cookieTimeoutMinutes = result;
+            else
+                _cookieTimeoutMinutes = 0;
+ 
         }
 
         void OnBeginRequest(object sender, EventArgs e)
@@ -44,16 +56,15 @@ namespace NCI.Web.CDE
             HttpContext context = ((HttpApplication)sender).Context;
 
             // if page assembly instructions are loaded
-            if (PageAssemblyContext.Current.PageAssemblyInstruction != null) 
-            {   
-                
-                // if mobile device and mobile url exist, redirect to it
-                if ((DisplayDeviceDetector.DisplayDevice == DisplayDevices.BasicMobile) ||
-                    (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile))
-                {
+            if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
+            {
 
+                // if mobile device and mobile url exist, redirect to it
+                //if ((DisplayDeviceDetector.DisplayDevice == DisplayDevices.BasicMobile) ||
+                //    (DisplayDeviceDetector.DisplayDevice == DisplayDevices.AdvancedMobile))
+                if (true)
+                {
                     string[] alternateContentVersionsKeys;
-                    //NciUrl mUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");
 
                     alternateContentVersionsKeys = PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys;
 
@@ -64,20 +75,24 @@ namespace NCI.Web.CDE
 
                         if (mobileRedirectCookie != null)
                         {
-                            if (mobileRedirectCookie.Value != "true")
+                            //MobileRedirectTimeoutMinutes
+                            if (DateTime.Now.Ticks > (Convert.ToInt64(mobileRedirectCookie.Value) + (TimeSpan.TicksPerMinute * _cookieTimeoutMinutes)))
                                 doRedirect = true;
                         }
-                        else 
+                        else
                             doRedirect = true;
 
-                        if(doRedirect)
+                        if (doRedirect)
                         {
                             //drop a cookie so mobile redirect happens only once per session
-                            HttpCookie responseCookie = new HttpCookie(_cookieName,"true");
+                            HttpCookie responseCookie = new HttpCookie(_cookieName,
+                                DateTime.Now.Ticks.ToString());
                             responseCookie.Expires = DateTime.MinValue; // Make this a session cookie
-                            responseCookie.Domain = "cancer.gov";
-                            context.Response.Cookies.Add(responseCookie); 
-                            
+
+                            //responseCookie.Domain = "cancer.gov";
+                            responseCookie.Domain = _domain;
+                            context.Response.Cookies.Add(responseCookie);
+
                             NciUrl mobileUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("mobileurl");
                             // We are adding query parameter to the mobile URL for the page to accommodate 
                             // the dictionary of cancer terms - so a link to a term dictionary definition 
