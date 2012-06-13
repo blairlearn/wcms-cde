@@ -75,7 +75,6 @@ namespace NCI.Web.CDE
 
                         if (mobileRedirectCookie != null)
                         {
-                            //MobileRedirectTimeoutMinutes
                             if (DateTime.Now.Ticks > (Convert.ToInt64(mobileRedirectCookie.Value) + (TimeSpan.TicksPerMinute * _cookieTimeoutMinutes)))
                                 doRedirect = true;
                         }
