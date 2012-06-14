@@ -39,14 +39,14 @@ namespace NCI.Web.CDE
             context.BeginRequest += new EventHandler(OnBeginRequest);
 
             _cookieName = ContentDeliveryEngineConfig.MobileRedirector.CookieName.Value;
-            _domain = ContentDeliveryEngineConfig.MobileRedirector.Domain.Value;
+            _domain = ContentDeliveryEngineConfig.MobileRedirector.CookieDomain.Value;
 
             string cookieTimeoutMinutes = ContentDeliveryEngineConfig.MobileRedirector.TimeoutMinutes.Value;
             long result;
             if (Int64.TryParse(cookieTimeoutMinutes, out result))
                 _cookieTimeoutMinutes = result;
             else
-                _cookieTimeoutMinutes = 0;
+                _cookieTimeoutMinutes = 0; // default to 0 if cookieTimeoutMinutes is not a number
  
         }
 
@@ -87,8 +87,6 @@ namespace NCI.Web.CDE
                             HttpCookie responseCookie = new HttpCookie(_cookieName,
                                 DateTime.Now.Ticks.ToString());
                             responseCookie.Expires = DateTime.MinValue; // Make this a session cookie
-
-                            //responseCookie.Domain = "cancer.gov";
                             responseCookie.Domain = _domain;
                             context.Response.Cookies.Add(responseCookie);
 

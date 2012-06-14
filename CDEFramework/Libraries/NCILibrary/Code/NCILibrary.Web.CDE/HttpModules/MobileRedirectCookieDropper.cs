@@ -20,7 +20,7 @@ namespace NCI.Web.CDE
         // since we are already on the mobile site
 
         private string _cookieName = "";
-        private string _domain = "";
+        private string _cookieDomain = "";
         private bool _refreshOnPageView = true;
          
         /// <summary>
@@ -43,21 +43,21 @@ namespace NCI.Web.CDE
             context.BeginRequest += new EventHandler(OnBeginRequest);
 
             _cookieName = ContentDeliveryEngineConfig.MobileRedirector.CookieName.Value;
-            _domain = ContentDeliveryEngineConfig.MobileRedirector.Domain.Value;
+            _cookieDomain = ContentDeliveryEngineConfig.MobileRedirector.CookieDomain.Value;
             
             string refreshOnPageView = ContentDeliveryEngineConfig.MobileRedirector.RefreshOnPageView.Value;
             bool result; 
             if (bool.TryParse(refreshOnPageView, out result))
                 _refreshOnPageView = result;
             else
-                _refreshOnPageView = true;
+                _refreshOnPageView = true; //default to true if refreshOnPageView is not a boolean
        
         }
 
         void OnBeginRequest(object sender, EventArgs e)
         {
-            //drop a cookie so mobile redirect will never happen in this session 
-            //since we are already on the mobile site
+            //if refreshOnPageView is true, drop a cookie so mobile redirect will never 
+            //happen in this session since we are already on the mobile site
 
             if (string.IsNullOrEmpty(_cookieName))
                 Logger.LogError("CDE:MobileRedirectCookieDropper.cs", "nci/web/cde/mobileRedirector/cookieName was not found", NCIErrorLevel.Error);
@@ -79,14 +79,9 @@ namespace NCI.Web.CDE
                             url.IndexOf(".png") != -1)
                             return;
 
-                        //HttpCookie redirectCookie = new HttpCookie(_cookieName, "true");
                         HttpCookie redirectCookie = new HttpCookie(_cookieName, DateTime.Now.Ticks.ToString());
-
-
-
                         redirectCookie.Expires = DateTime.MinValue; // Make this a session cookie
-                        redirectCookie.Domain = _domain;
-                        //redirectCookie.Domain = "localhost";
+                        redirectCookie.Domain = _cookieDomain;
                         context.Response.Cookies.Add(redirectCookie);
                     }
                 }

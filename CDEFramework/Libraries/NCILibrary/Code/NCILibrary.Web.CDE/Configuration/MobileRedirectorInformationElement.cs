@@ -26,10 +26,10 @@ namespace NCI.Web.CDE.Configuration
             get { return (MobileRedirectorElement)base["refreshOnPageView"]; }
         }
 
-        [ConfigurationProperty("domain")]
-        public MobileRedirectorElement Domain 
+        [ConfigurationProperty("cookieDomain")]
+        public MobileRedirectorElement CookieDomain 
         {
-            get { return (MobileRedirectorElement)base["domain"]; }
+            get { return (MobileRedirectorElement)base["cookieDomain"]; }
         }
 
 
