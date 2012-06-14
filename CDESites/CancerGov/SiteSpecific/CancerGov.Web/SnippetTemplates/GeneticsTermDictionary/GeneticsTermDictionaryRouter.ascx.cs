@@ -40,36 +40,15 @@ namespace CancerGov.Web.SnippetTemplates
                 searchString = term;
             }
 
-            // Genetics Term Dictionary is currently only in English
-            //// Redirect if language parameter is not the same as language of the Page Assembly 
-            //if (!String.IsNullOrEmpty(language))
-            //    language = language.ToLower();
-
-            //if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en" &&
-            //    language == GeneticsTermDictionaryHelper.SPANISH)
-            //{
-            //    ////redirect to Spanish site
-            //    //string reDirectUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.AltLanguage) + "?" + Page.Request.QueryString.ToString();
-            //    //Page.Response.Redirect(reDirectUrl);
-            //}
-            //if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es" &&
-            //    language == GeneticsTermDictionaryHelper.ENGLISH)
-            //{
-            //    //redirect to English site
-            //    string reDirectUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.AltLanguage) + "?" + Page.Request.QueryString.ToString();
-            //    Page.Response.Redirect(reDirectUrl);
-            //}
-
-
             // Load appropriate control 
             if (!String.IsNullOrEmpty(searchString))
-                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionaryResultsList.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/GeneticsTermDictionaryResultsList.ascx");
             else if (!String.IsNullOrEmpty(cdrId) || !String.IsNullOrEmpty(id))
-                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionaryDefinitionView.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/GeneticsTermDictionaryDefinitionView.ascx");
             else if (!String.IsNullOrEmpty(expand))
-                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionaryResultsList.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/GeneticsTermDictionaryResultsList.ascx");
             else
-                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionaryHome.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/GeneticsTermDictionaryHome.ascx");
 
             if (localControl != null)
                 phGeneticsTermDictionary.Controls.Add(localControl);

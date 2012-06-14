@@ -451,6 +451,31 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
             clickParams.LogToOmniture(); 
         }
     },
+//******************************************************************************************************	
+    NewsletterSearch : function(sender, bulletinSearchType)  {
+        var keyword = document.getElementById('cbkeyword').value;
+        var searchType = 'linkage_newsletter';
+        
+        if (bulletinSearchType == 1)  { // Search by keyword and date range 
+            var startDate = document.getElementById('startMonth').options[document.getElementById('startMonth').selectedIndex].text.replace(/^\s+|\s+$/g, '') + ' ' 
+                + document.getElementById('startYear').value;
+            var endDate = document.getElementById('endMonth').options[document.getElementById('endMonth').selectedIndex].text + ' ' 
+                + document.getElementById('endYear').value;
+            NCIAnalytics.KeywordDateRangeSearch(sender, searchType, keyword, startDate, endDate);
+        }
+        else  {  // Search by Keyword
+             clickParams = new NCIAnalytics.ClickParams(sender,
+                'nciglobal','o','KeywordSearch');
+            clickParams.Props = {
+                11 : searchType,
+                22 : keyword};
+            clickParams.Evars = {
+                11 : searchType,
+                13 : '+1'};
+            clickParams.Events = [2]; 
+            clickParams.LogToOmniture(); 
+        }
+    },
 
 //******************************************************************************************************	
     NewsSearch : function(sender, searchType)  {

@@ -8,20 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DCEG.Web.SnippetTemplates
-{
-
-
-    public partial class NewsletterSearch
-    {
-        
-        /// <summary>
-        /// searchAllButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputImage searchAllButton;
+namespace DCEG.Web.SnippetTemplates {
+    
+    
+    public partial class NewsletterSearch {
     }
 }
