@@ -69,7 +69,7 @@ table.border td {
 </style>
 <form action="<% =PostBackUrl %>" name="NewsletterSearchForm" method="post" onsubmit="<% =SubmitScript %>">
     <label for="cbkeyword" id="searchAllIssues" >Search All Issues for:<br /></label>
-    <input name="cbkeyword" size="28" value="Enter Keyword" onkeyup="CBSetSearchType(event);" id="cbkeyword" />
+    <input name="cbkeyword" size="28" value="Enter Keyword" onfocus="value=''" onkeyup="CBSetSearchType(event);" id="cbkeyword" />
     <input type="image" alt="search all" onclick="searchType=0;" id="ctl10_searchAllButton" name="ctl10$searchAllButton" src="/images/searchAll.gif" />   
     <p> Or search between these dates: </p>
     <table width="100%" border="0" cellpadding="2" cellspacing="0">
