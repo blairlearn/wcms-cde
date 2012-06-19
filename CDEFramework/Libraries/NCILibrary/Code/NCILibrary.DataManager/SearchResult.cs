@@ -78,6 +78,11 @@ namespace NCI.DataManager
         public string PostedDate { get; set; }
 
         /// <summary>
+        /// Posted date of the content in long form (June 19, 2012)
+        /// </summary>
+        public string PostedDate_NewsPortalFormat { get; set; }
+
+        /// <summary>
         /// Posted date of the content.
         /// </summary>
         public string DateDisplayMode { get; set; }
@@ -96,7 +101,12 @@ namespace NCI.DataManager
         /// Alt Text for dynamic list item image
         /// </summary>
         public string AltText { get; set; }
-        
+
+        /// <summary>
+        /// the abbreviated source field from the external news link
+        /// </summary>
+        public string AbbreviatedSource { get; set; }
+
         public SearchResult()
         {
             ShortDescription = string.Empty;
