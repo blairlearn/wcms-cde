@@ -232,6 +232,10 @@ namespace NCI.DataManager
                                     if (dt != DateTime.MinValue)
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
 
+									dt = sqlFVReader.GetDateTime("Date_first_published");
+                                    if (dt != DateTime.MinValue)
+                                        searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dt);
+										
                                     dt = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dt != DateTime.MinValue)
                                         searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dt);
