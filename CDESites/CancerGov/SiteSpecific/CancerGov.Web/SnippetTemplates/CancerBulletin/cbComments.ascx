@@ -40,8 +40,7 @@
                         &nbsp;
                     </td>
                     <td>
-                        <div style="font-family: Arial; margin-bottom: 3px; margin-top: 0px;">
-                            Share your comments about the <i>NCI Cancer Bulletin</i>.</div>
+                        <div style="font-family: Arial; margin-bottom: 3px; margin-top: 0px;"><% =ShareText %></div>
                         <p>
                             <!-- We welcome your ideas and suggestions for the Director's Updates. Please use the form below to submit your comments, including topics you would like addressed in future Director's Updates.-->
                         </p>
@@ -54,7 +53,7 @@
                         <textarea name="txtComment" id="txtComment" rows="15" wrap="soft" cols="65" style="font-size: 12px;
                             width: 550px;"></textarea>
                         <br />
-                        <input type="submit" value="Submit" style="font-size: 12px;">
+                        <input type="submit" value="<% =SubmitButtonText %>" style="font-size: 12px;">
                         </form>
                     </td>
                 </tr>

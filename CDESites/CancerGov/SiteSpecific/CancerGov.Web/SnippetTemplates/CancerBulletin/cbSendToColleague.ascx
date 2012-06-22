@@ -48,15 +48,14 @@
                                 </td>
                                 <td valign="top" width="100%">
                                     <div class="HeaderText" style="font-family: Arial; color: #4d4d4d;">
-                                        <%=strHeader%></div>
+                                        <% =strHeader %></div>
                                     <br />
                                     <%=strMessageBody%><br />
                                     <form name="frmSendToFriend" action="<% =PrettyUrl %>" method="post">
                                     <table runat="server" id="tableSend" style="font-family: Arial;">
                                         <tr>
                                             <td>
-                                                <label for="toemail" style="text-decoration: none;">
-                                                    Send the <i>NCI Cancer Bulletin</i> to:</label><br>
+                                                <label for="toemail" style="text-decoration: none;"><% =SendText %></label><br>
                                             </td>
                                         </tr>
                                         <tr>
@@ -67,8 +66,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label for="fromemail" style="text-decoration: none;">
-                                                    Your e-mail address:</label>
+                                                <label for="fromemail" style="text-decoration: none;"><% =EmailText %></label>
                                             </td>
                                         </tr>
                                         <tr>
@@ -79,8 +77,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label for="fromname" style="text-decoration: none;">
-                                                    Your name:</label>
+                                                <label for="fromname" style="text-decoration: none;"><% =NameText %></label>
                                             </td>
                                         </tr>
                                         <tr>
@@ -95,14 +92,14 @@
                                         </tr>
                                         <tr>
                                             <td style="text-align: right">
-                                                <input type="submit" value="Submit">
+                                                <input type="submit" value="<% =SubmitButtonText %>" />
                                             </td>
                                         </tr>
                                     </table>
                                     </form>
                                 </td>
                                 <td valign="top" width="22">
-                                    <img src="/images/spacer.gif" width="22" height="1" alt="" border="0">
+                                    <img src="/images/spacer.gif" width="22" height="1" alt="" border="0" />
                                 </td>
                             </tr>
                         </table>

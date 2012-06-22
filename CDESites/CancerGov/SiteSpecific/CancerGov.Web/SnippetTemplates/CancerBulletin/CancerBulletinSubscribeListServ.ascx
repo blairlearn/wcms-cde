@@ -35,26 +35,6 @@
         <tr>
             <td valign="top" height="100%">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" valign="top">
-                    <%--<tr>
-                    <td valign="top" height="61">
-                        <table width="100%" cellspacing="0" cellpadding="20" border="0" bgcolor="#E1E0DE"
-                            id="tblImgHeader" runat="server">
-                            <tr>
-                                <td valign="top" width="771" style="color: #b50000; height: 61px; vertical-align: baseline;
-                                    font-family: Arial; font-weight: bold; font-size: 22px;">
-                                    Subscribe to the <i>NCI Cancer Bulletin</i>
-                                </td>
-                            </tr>
-                        </table>
-                        <table width="100%" bgcolor="#cddeee" cellpadding="0" border="0" cellspacing="0"
-                            runat="server" id="tblTextHeader">
-                            <tr>
-                                <td>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>--%>
                     <tr>
                         <!-- Start of questionable content cut -->
                         <td valign="top">
@@ -88,10 +68,9 @@
                                                                             <tr>
                                                                                 <td>
                                                                                 <br />
-                                                                                    <label for="email">
-                                                                                        E-mail address:</label>
+                                                                                    <label for="email"><% =EmailAddressText %></label>
                                                                                     <input type="text" id="email" name="email" style="width: 200px;" />
-                                                                                     <input type="submit" value="Submit" />
+                                                                                     <input type="submit" value="<% =SubmitButtonText %>" />
                                                                                     
                                                                                 </td>
                                                                                         
@@ -130,13 +109,13 @@
 											category.</asp:Label><br />
                                             <br />
                                             <!-- Probably need the user ID? -->
-                                            <strong>I learned about the <i>NCI Cancer Bulletin</i> through:</strong><br />
+                                            <strong><% =LearnedQuestionText %></strong><br />
                                             <asp:PlaceHolder ID="phLearnedQuestions" runat="server" />
                                             <br />
                                             <strong>I am a:</strong><br />
                                             <asp:PlaceHolder ID="phProfQuestions" runat="server" />
                                             <br />
-                                            <input type="submit" value="Submit" />
+                                            <input type="submit" value="<% =SubmitButtonText %>" />
                                             </form>
                                         </div>
                                     </td>

@@ -95,7 +95,7 @@ namespace DCEG.Web.SnippetTemplates
 
             if (Page.Request.HttpMethod == "POST")
             {
-                bSearchRange = (Request.Params["searchRangeButton.x"] != null);
+                bSearchRange = (Request.Params["searchRangeButton"] != null);
             }
             else
             {
