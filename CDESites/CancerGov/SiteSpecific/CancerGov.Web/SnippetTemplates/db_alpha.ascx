@@ -74,7 +74,8 @@
                 runat="server">
                 <div id="dictionary_jPlayer"></div>
 
-
+                <asp:Label ID="lblAutoComplete1" style="position:absolute;left:-5000px" runat="server" Text="Search for" 
+                    AssociatedControlID="AutoComplete1"></asp:Label>  
                  <CGov:AutoComplete CssClass="dictionary" Name="AutoComplete1" ID="AutoComplete1"
                     runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" MinWidth="333" />
 

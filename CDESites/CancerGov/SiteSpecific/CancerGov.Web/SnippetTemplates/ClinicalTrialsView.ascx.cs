@@ -184,7 +184,7 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 string printContent = "";
 
-                //***Disable Glossary Terms and Links extraction*** 
+                //***Disable Glossary Terms and Footnote extraction*** 
                 //string glossaryTableTitle = "Glossary Terms";
                 //string linksTableTitle = "Table of Links";
                 //if (this.PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish)
@@ -198,7 +198,7 @@ namespace CancerGov.Web.SnippetTemplates
                 fe.ExcludeList = new string[] { "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?" };
                 fe.RemoveReturnToTopBar = false;
 
-                //***Disable Glossary Terms and Links extraction*** 
+                //***Disable Glossary Terms and Footnote extraction*** 
                 printContent = strContent;
                 //printContent = gte.ExtractGlossaryTerms(strContent);
                 //printContent = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, printContent);

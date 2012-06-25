@@ -162,7 +162,9 @@ namespace Www.Templates
 
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+            {
                 SetupSpanish();
+            }
             else
             {
                 SetupEnglish();
@@ -454,6 +456,7 @@ namespace Www.Templates
         private void SetupSpanish()
         {
             _isSpanish = true;
+            lblAutoComplete1.Text = "buscar";
             //Controls
             //lblStrSearch.Text = String.Empty;
             //lblAccessSearch.Text = "Cuadro de búsqueda de texto";
@@ -513,10 +516,9 @@ namespace Www.Templates
         private void SetupEnglish()
         {
             //Controls            
-            //lblStrSearch.Text = "Search for";
-
+            lblAutoComplete1.Text = "Search for";
             lblResultsFor.Text = "results found for:";
-            //btnGo.CssClass = "btnGo";
+
             pnlIntroEnglish.Visible = true;
             pnlIntroSpanish.Visible = false;
 
