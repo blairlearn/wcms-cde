@@ -75,9 +75,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         //THANK YOU
                         if (isSpanish)
                         {
-                            strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Gracias</div>" +
+                            strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Gracias</div><br />" +
                                 "			<div>Sus opiniones y comentarios han sido enviados al equipo editorial del <i>Boletín del Instituto Nacional del Cáncer</i>. " +
-                                "                   Muchas gracias. <br /><a href=\"http://www.cancer.gov/boletin\">Vaya a la página principal del <i>Boletín del Instituto Nacional del Cáncer</i></a><br>" +
+                                "                   Muchas gracias. <br /><br /><a href=\"http://www.cancer.gov/boletin\">Vaya a la página principal del <i>Boletín del Instituto Nacional del Cáncer</i></a><br>" +
                                 "			</div>";
                         }
                         else
