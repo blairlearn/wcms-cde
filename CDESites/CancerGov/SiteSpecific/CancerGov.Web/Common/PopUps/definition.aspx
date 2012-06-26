@@ -18,12 +18,34 @@
 <script src="/PublishedContent/js/modernizr-1.7.min.js" type="text/javascript"></script>
 <script src="/PublishedContent/js/jquery.ui.position.js" type="text/javascript"></script>
 <script src="/PublishedContent/js/jquery.ui.autocomplete.js" type="text/javascript"></script>
-<script src="/PublishedContent/js/sw-autocomplete.js" type="text/javascript"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
 <script src="/PublishedContent/js/NCIGeneralJS.js" type="text/javascript"></script>
 <script src="/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
 
 
+<script type="text/javascript">
+    //Hookup JPlayer for Audio
+    if (jQuery.jPlayer) {
+        jQuery(document).ready(function($) {
+            var my_jPlayer = $("#dictionary_jPlayer");
+
+            my_jPlayer.jPlayer({
+                swfPath: "/PublishedContent/files/global/flash/", //Path to SWF File Used by jPlayer
+                //errorAlerts: true,
+                supplied: "mp3" //The types of files which will be used.
+            });
+
+            //Attach a click event to the audio link
+            $(".CDR_audiofile").click(function() {
+                my_jPlayer.jPlayer("setMedia", {
+                    mp3: $(this).attr("href") // Defines the m4v url
+                }).jPlayer("play");
+
+                return false;
+            });
+        });
+    }
+       
+</script>
 
 
 </head>
@@ -37,9 +59,11 @@
                     <td align="left" valign="top">
                         <div style="width: 100%;">
                             <%=strHeading%>
+                            <div class="audioPronounceLink">
                             <span class="CDR_audiofile">
                             <%=this.Content.Render()%>
                             </span>
+                            </div>
                         </div>
                     </td>
                 </tr>

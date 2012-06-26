@@ -77,6 +77,16 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     return "Submit";
             }
         }
+        public string SurveyText
+        {
+            get
+            {
+                if (isSpanish)
+                    return "En un esfuerzo por conocer mejor a nuestra audiencia y mejorar nuestra publicación, lo invitamos a que conteste este breve cuestionario. Por favor marque al menos una casilla en cada categoría.";
+                else
+                    return "In an effort to better understand our audience and improve the newsletter, we invite you to submit answers to this brief questionnaire. Please check at least one box in each category.";
+            }
+        }
 
         public string LearnedQuestionText
         {
@@ -154,12 +164,21 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         }
                         else
                         {
-                            ShowMessage(
-                                "Sorry, Invalid E-mail Address",
-                                "BadText",
-                                "Re-enter Address",
-                                "This is an invalid e-mail address. Please enter a new address and resubmit.<br/>"
-                                );
+                            if(isSpanish)
+                                ShowMessage(
+                                    "Lo sentimos, pero la dirección de correo electrónico es inválida",
+                                    "BadText",
+                                    "Re-enter Address",
+                                    "Esta dirección de correo electrónico no es válida. Por favor escriba una nueva dirección y vuelva a enviar.<br/>"
+                                    );
+                            else
+                                ShowMessage(
+                                    "Sorry, Invalid E-mail Address",
+                                    "BadText",
+                                    "Re-enter Address",
+                                    "This is an invalid e-mail address. Please enter a new address and resubmit.<br/>"
+                                    );
+
                             divSubscribe.Visible = true;
                         }
                     }

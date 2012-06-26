@@ -36,7 +36,7 @@
             <a name="skiptocontent"></a>
             <br>
             <form name="frmUnSubscribe" id="frmUnSubscribe" method="post" runat="server">
-            <table width="450" cellspacing="0" cellpadding="1" border="0">
+            <table width="600" cellspacing="0" cellpadding="1" border="0">
                 <tr>
                     <td valign="top">
                         <div runat="server" id="ErrorMsg" visible="false">

@@ -91,7 +91,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             if (isSpanish)
             {
                 strDownloadLink = @"http://www.cancer.gov/boletin";
-                strImage = ConfigurationSettings.AppSettings["RootUrl"] + ConfigurationSettings.AppSettings["DCIssueImg"];
+                strImage = ConfigurationSettings.AppSettings["RootUrl"] + ConfigurationSettings.AppSettings["DCIssueImgSpanish"];
             }
             else
             {
@@ -110,7 +110,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         if (isSpanish)
                         {
                             this.strMessageBody = "La edición actual del <i>Boletín del Instituto Nacional del Cáncer</i> ha sido enviada al correo electrónico que usted solicitó. " +
-                                "Le agradecemos su interés en nuestra publicación.<br>" +
+                                "Le agradecemos su interés en nuestra publicación.<br /><br />" +
                                 "<a href=\"/ncicancerbulletin\">Vaya a la página principal del <i>Boletín del Instituto Nacional del Cáncer</i></a><br><br>";
                             this.strTextClass = "GoodText";
                             this.strHeader = "Edición enviada";
@@ -136,7 +136,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                         if (isSpanish)
                         {
-                            mailMsg.Subject = strFromName + " le ha enviado el <i>Boletín del Instituto Nacional del Cáncer</i>";
+                            mailMsg.Subject = strFromName + " le ha enviado el Boletín del Instituto Nacional del Cáncer";
                             mailMsg.Body += "<html>" +
                                 "<head>\n" +
                                 "	<title>Boletín del Instituto Nacional del Cáncer</title>\n" +
@@ -196,9 +196,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 "<p>" +
                                 "Suscríbase gratis hoy al <i>Boletín del Instituto Nacional del Cáncer</i> para recibir esta valiosa información." +
                                 "	</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td valign=\"top\"><hr>\n" +
-                                "	Should you wish to receive this publication every other week, <a href=\"http://www.cancer.gov/ncicancerbulletin#Subscribe\">click here</a> or visit <a href=\"http://www.cancer.gov/ncicancerbulletin#Subscribe\">http://www.cancer.gov/ncicancerbulletin</a>." +
                                 "	<p>" +
-                                "	¿Conoce a alguien que estuviera interesado en recibir este recurso informativa? Para enviar una copia de la última edición del Boletín del Instituto Nacional del Cáncer visite la página  <a href=\"http://cancer.gov/boletin/enviarcolega-amigo\">http://cancer.gov/boletin/enviarcolega</a>." +
+                                "	¿Conoce a alguien que estuviera interesado en recibir este recurso informativa? Para enviar una copia de la última edición del <i>Boletín del Instituto Nacional del Cáncer</i> visite la página  <a href=\"http://cancer.gov/boletin/enviarcolega-amigo\">http://cancer.gov/boletin/enviarcolega</a>." +
                                 "	</td>\n" +
                                 "  </tr>" +
                                 "</table>" +
@@ -288,21 +287,45 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     else
                     {
                         //invalid from email
-                        this.strMessageBody = "Please check \"your e-mail address\" below. Enter a new address and resubmit." +
-                            "<br>";
-                        this.strTextClass = "BadText";
-                        this.strInfo = "Re-enter Address";
-                        this.strHeader = "Sorry, Invalid E-mail Address";
+                        if (isSpanish)
+                        {
+                            this.strMessageBody = "[Su correo electrónico] Esta dirección de correo electrónico no es válida. Por favor escriba una nueva dirección y vuelva a enviar." +
+                                    "<br>";
+                            this.strTextClass = "BadText";
+                            this.strInfo = "Re-enter Address";
+                            this.strHeader = "Lo sentimos, pero la dirección de correo electrónico es inválida";
+                        }
+                        else
+                        {
+                            this.strMessageBody = "Please check \"your e-mail address\" below. Enter a new address and resubmit." +
+                                "<br>";
+                            this.strTextClass = "BadText";
+                            this.strInfo = "Re-enter Address";
+                            this.strHeader = "Sorry, Invalid E-mail Address";
+                        }
                     }
                 }
                 else
                 {
-                    //invalid to email
-                    this.strMessageBody = "This is an invalid \"send to\" e-mail address. Please enter a new address and resubmit." +
-                        "<br>";
-                    this.strTextClass = "BadText";
-                    this.strInfo = "Re-enter Address";
-                    this.strHeader = "Sorry, Invalid \"Send To\" E-mail Address";
+                    if (isSpanish)
+                    {
+                        //invalid to email
+                        this.strMessageBody = "[Envíe el Boletín del NCI a] Esta dirección de correo electrónico no es válida. Por favor escriba una nueva dirección y vuelva a enviar." +
+                            "<br>";
+                        this.strTextClass = "BadText";
+                        this.strInfo = "Re-enter Address";
+                        this.strHeader = "Lo sentimos, pero la dirección de correo electrónico es inválida";
+                    }
+                    else
+                    {
+                        //invalid to email
+                        this.strMessageBody = "This is an invalid \"send to\" e-mail address. Please enter a new address and resubmit." +
+                            "<br>";
+                        this.strTextClass = "BadText";
+                        this.strInfo = "Re-enter Address";
+                        this.strHeader = "Sorry, Invalid \"Send To\" E-mail Address";
+                    }
+
 
                 }
             }

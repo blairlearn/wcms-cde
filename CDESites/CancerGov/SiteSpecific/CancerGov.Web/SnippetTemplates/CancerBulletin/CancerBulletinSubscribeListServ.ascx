@@ -31,7 +31,7 @@
 <script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>
 
 <!--div align="center"-->
-    <table width="571" align="Left" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
+    <table width="700" align="Left" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
         <tr>
             <td valign="top" height="100%">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" valign="top">
@@ -102,11 +102,7 @@
                                         <div id="divSurvey" runat="server" style="padding-left: 10px;">
                                             <form name="frmSurvey" action="<% =PrettyUrl %>" method="post">
                                             <input type="hidden" name="hdnSurvey" value="1" />
-                                            <asp:Label ID="lblSurveyMessage" runat="server">
-	                                       In an effort to better 
-											understand our audience and improve the newsletter, we invite you to submit 
-											answers to this brief questionnaire. Please check at least one box in each 
-											category.</asp:Label><br />
+                                            <asp:Label ID="lblSurveyMessage" runat="server"><% =SurveyText  %></asp:Label><br />
                                             <br />
                                             <!-- Probably need the user ID? -->
                                             <strong><% =LearnedQuestionText %></strong><br />
