@@ -66,31 +66,32 @@ namespace CancerGov.UI.CDR {
                 (pProtocol.ProtocolType == ProtocolTypes.Protocol))
             {
 
-                if (pProtocol.DateLastModified != DateTime.MinValue)
+                if (pProtocol.DateFirstPublished != DateTime.MinValue)
                 {
-                    sbContent.Append("<span class=\"protocol-date-label\">Last Modified: </span>");
+                    sbContent.Append("<span class=\"protocol-date-label\">yFirst Published: </span>");
                     sbContent.Append("<span class=\"protocol-dates\">");
-                    sbContent.Append(pProtocol.DateLastModified.ToString("d"));
+                    sbContent.Append(pProtocol.DateFirstPublished.ToString("d"));
                     sbContent.Append("</span>");
-
-                    if (pProtocol.DateFirstPublished != new DateTime(0))
+                    if (pProtocol.DateLastModified != new DateTime(0))
                     {
                         sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp");
                     }
                     else
                     {
                         sbContent.Append("&nbsp;&nbsp;");
-                    }
+                    }                    
                 }
 
-                if (pProtocol.DateFirstPublished != DateTime.MinValue)
+                if (pProtocol.DateLastModified != DateTime.MinValue)
                 {
-                    sbContent.Append("<span class=\"protocol-date-label\">First Published: </span>");
+                    sbContent.Append("<span class=\"protocol-date-label\">Last Modified: </span>");
                     sbContent.Append("<span class=\"protocol-dates\">");
-                    sbContent.Append(pProtocol.DateFirstPublished.ToString("d"));
+                    sbContent.Append(pProtocol.DateLastModified.ToString("d"));
                     sbContent.Append("</span>");
                     sbContent.Append("&nbsp;&nbsp;");
+ 
                 }
+
             }
 
             sbContent.Append("</td>");

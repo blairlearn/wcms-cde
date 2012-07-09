@@ -92,7 +92,12 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         trForm.Visible = false;
 
                         //Also send email
-                        string toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                        string toAddress;
+                        if (isSpanish)
+                            toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipientSpanish"];
+                        else 
+                            toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                        
                         string fromAddress = "misc@mail.nih.gov";
                         System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
                         if (isSpanish)

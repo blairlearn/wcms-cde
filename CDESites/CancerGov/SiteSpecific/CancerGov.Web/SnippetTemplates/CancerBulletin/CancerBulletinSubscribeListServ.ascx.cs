@@ -184,13 +184,27 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     }
                     else
                     {
-                        //The email address has not been supplied.
-                        ShowMessage(
-                            "Sorry, Address Is Empty",
-                            "BadText",
-                            "Re-enter Address",
-                            "You have not submitted an e-mail address. Please enter a new address and resubmit.<br/>"
-                            );
+                        if (isSpanish)
+                        {
+                            //The email address has not been supplied.
+                            ShowMessage(
+                                "Lo sentimos, pero el espacio para la dirección de correo electrónico está vacío",
+                                "BadText",
+                                "Vuelva a escribir la dirección de correo electrónico",
+                                "Usted no ha enviado una dirección de correo electrónico. Por favor escriba una nueva dirección y vuelva a enviar.<br/>"
+                                );
+                        }
+                        else
+                        {
+                            //The email address has not been supplied.
+                            ShowMessage(
+                                "Sorry, Address Is Empty",
+                                "BadText",
+                                "Re-enter Address",
+                                "You have not submitted an e-mail address. Please enter a new address and resubmit.<br/>"
+                                );
+                        } 
+                        
                         divSubscribe.Visible = true;
                     }
                 }

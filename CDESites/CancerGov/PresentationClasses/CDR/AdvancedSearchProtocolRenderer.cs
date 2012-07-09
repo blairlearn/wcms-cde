@@ -91,7 +91,7 @@ namespace CancerGov.UI.CDR
 
                 if (pProtocol.DateFirstPublished != DateTime.MinValue)
                 {
-                    sbContent.Append("<span class=\"protocol-date-label\">First Published: </span>");
+                    sbContent.Append("<span class=\"protocol-date-label\">xFirst Published: </span>");
                     sbContent.Append("<span class=\"protocol-dates\">");
                     sbContent.Append(pProtocol.DateFirstPublished.ToString("d"));
                     sbContent.Append("</span>");
