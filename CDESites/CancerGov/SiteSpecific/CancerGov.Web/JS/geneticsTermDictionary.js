@@ -110,7 +110,7 @@ function autoFunc() {
 
 	    return $("<li></li>")
 				.data("item.autocomplete", item)
-				.append("<a>" + word + "</a>")
+				.append("<a onclick=\"SelectIt();\">" + word + "</a>")
 				.appendTo(ul);
 	};
 
@@ -120,6 +120,10 @@ function autoFunc() {
 	      DoSearch();
        }
     });
+}
+
+function SelectIt()  {
+    $("#btnGo").click()
 }
 
 function IsContains() {

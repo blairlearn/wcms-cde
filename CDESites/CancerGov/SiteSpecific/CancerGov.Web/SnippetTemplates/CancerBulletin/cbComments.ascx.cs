@@ -63,7 +63,13 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 if ((strComment == null) || ((strComment = strComment.Trim()) == ""))
                 {
                     //Note this also trims the comment...
-                    strError = "<font color=red>Please enter a message.<br></font>";
+                    if (isSpanish)
+                        strError = "<font color=red>Por favor escriba un mensaje.<br></font>";
+                    else
+                        strError = "<font color=red>Please enter a message.<br></font>";
+
+
+                    
                 }
                 else
                 {

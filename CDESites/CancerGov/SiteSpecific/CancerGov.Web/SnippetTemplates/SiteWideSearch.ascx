@@ -9,7 +9,7 @@
 
 
 	<!-- Main Area -->
-	<div>
+	<div class="sw-search-results">
 		<table width="100%" cellspacing="0" cellpadding="0" border="0">
 			<tr>		
 				<td valign="top">
@@ -79,42 +79,44 @@
                         <p></p>
                         
                         <!-- pager and selection -->
-                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-							<tr>
-								<td colspan="5"><asp:Label CssClass="header-A" ID="lblBottomResultsXofY" runat="server" /></td>
-							</tr>
-				            <tr>
-		                        <td align="left" nowrap="nowrap" valign="middle" colspan="5"><img src="/images/spacer.gif" width="1" height="5" alt="" border="0" /></td>
-					        </tr>
-				            <tr>
-								<td valign="middle" style="color:#4d4d4d;"><asp:Label id="lblDDLPageUnitShowText" Text="Show" runat="server" style="margin-right:5px"/></td>
-								<td nowrap="nowrap" valign="middle" style="color:#4d4d4d;">
-								    <asp:Label ID="lblPageUnit" runat="server" CssClass="hidden" Text="Number of results to show on a page" AssociatedControlID="ddlPageUnit" />
-								    <asp:DropDownList
-								        id="ddlPageUnit"
-								        AutoPostBack="true"
-								        OnSelectedIndexChanged="ChangePageUnit"
-								        runat="server">
-								        <asp:ListItem Text="10" Value="10" />
-								        <asp:ListItem Text="20" Value="20" />
-								        <asp:ListItem Text="50" Value="50" />
-								    </asp:DropDownList>
-								    <noscript>
-								        <asp:Button 
-								            ID="btnTextChangePageUnit" 
-								            Text="Go"
-								            OnClick="ChangePageUnitBtnClick"
-								            runat="server" />
-								    </noscript>
-								</td>
-								<td nowrap="nowrap" valign="middle" width="100%"><asp:Label id="lblDDLPageUnitResultsPPText" Text="results per page." runat="server" style="margin-left:5px"/></td>
-								<td nowrap="nowrap">&nbsp;&nbsp;</td>
-								<td valign="middle" align="right">
-                                    <cc1:simplepager 
-								ID="spPager" runat="server">								    
-								</cc1:simplepager></td>
-							</tr>						
-						</table>
+                        <div class="sw-search-results-pager">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+							    <tr>
+								    <td colspan="5"><asp:Label CssClass="header-A" ID="lblBottomResultsXofY" runat="server" /></td>
+							    </tr>
+				                <tr>
+		                            <td align="left" nowrap="nowrap" valign="middle" colspan="5"><img src="/images/spacer.gif" width="1" height="5" alt="" border="0" /></td>
+					            </tr>
+				                <tr>
+								    <td valign="middle" style="color:#4d4d4d;"><asp:Label id="lblDDLPageUnitShowText" Text="Show" runat="server" style="margin-right:5px"/></td>
+								    <td nowrap="nowrap" valign="middle" style="color:#4d4d4d;">
+								        <asp:Label ID="lblPageUnit" runat="server" CssClass="hidden" Text="Number of results to show on a page" AssociatedControlID="ddlPageUnit" />
+								        <asp:DropDownList
+								            id="ddlPageUnit"
+								            AutoPostBack="true"
+								            OnSelectedIndexChanged="ChangePageUnit"
+								            runat="server">
+								            <asp:ListItem Text="10" Value="10" />
+								            <asp:ListItem Text="20" Value="20" />
+								            <asp:ListItem Text="50" Value="50" />
+								        </asp:DropDownList>
+								        <noscript>
+								            <asp:Button 
+								                ID="btnTextChangePageUnit" 
+								                Text="Go"
+								                OnClick="ChangePageUnitBtnClick"
+								                runat="server" />
+								        </noscript>
+								    </td>
+								    <td nowrap="nowrap" valign="middle" width="100%"><asp:Label id="lblDDLPageUnitResultsPPText" Text="results per page." runat="server" style="margin-left:5px"/></td>
+								    <td nowrap="nowrap">&nbsp;&nbsp;</td>
+								    <td valign="middle" align="right">
+                                        <cc1:simplepager 
+								    ID="spPager" runat="server">								    
+								    </cc1:simplepager></td>
+							    </tr>						
+						    </table>
+						</div>
 						    <div style="border: 1px solid #bdbdbd; padding: 5px 5px 18px 5px; margin: 28px 0 12px 0;">
                                 <asp:Label CssClass="header-A" ID="lblSearchWithinResultsFound" runat="server" />
                                 <asp:Label ID="lblSearchWithinResultKeyword" runat="server" />

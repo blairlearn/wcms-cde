@@ -111,7 +111,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         {
                             this.strMessageBody = "La edición actual del <i>Boletín del Instituto Nacional del Cáncer</i> ha sido enviada al correo electrónico que usted solicitó. " +
                                 "Le agradecemos su interés en nuestra publicación.<br /><br />" +
-                                "<a href=\"/ncicancerbulletin\">Vaya a la página principal del <i>Boletín del Instituto Nacional del Cáncer</i></a><br><br>";
+                                "<a href=\"/boletin\">Vaya a la página principal del <i>Boletín del Instituto Nacional del Cáncer</i></a><br><br>";
                             this.strTextClass = "GoodText";
                             this.strHeader = "Edición enviada";
                         }
