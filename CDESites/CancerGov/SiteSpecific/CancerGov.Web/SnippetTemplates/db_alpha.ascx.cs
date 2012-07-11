@@ -38,6 +38,7 @@ namespace Www.Templates
         private string _dictionaryURL = string.Empty;
         private string _dictionaryURLSpanish = string.Empty;
         private string _dictionaryURLEnglish = string.Empty;
+        private int _totalCount = 0;
 
         #region Page properties
 
@@ -120,6 +121,11 @@ namespace Www.Templates
             get { return _dictionaryURLEnglish; }
             set { _dictionaryURLEnglish = value; }
         }
+        public string TotalCount
+        {
+            get { return _totalCount.ToString("N0"); }
+        }
+
 
         #endregion
               private void ResetControls()
@@ -399,7 +405,18 @@ namespace Www.Templates
 
         private void ActivateDefaultView()
         {
+            string language = "";
+
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+                language = "English";
+            else
+                language = "Spanish";
+
+            TermDictionaryCollection dataCollection = TermDictionaryManager.Search(language, "_", 0, false);
+            _totalCount = dataCollection.Count;
+ 
             MultiView1.ActiveViewIndex = 0;
+
         }
 
         private void ActivateResultsListView()
