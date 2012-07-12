@@ -32,8 +32,10 @@ function DoSearch()
            isContains=true;
       if(isContains) {
          var url = $('#litPageUrl').text() + "?search=" + localSearhString + "&contains=true";
+         NCIAnalytics.GeneticsDictionarySearch(this,localSearhString,true);
       } else {
          var url = $('#litPageUrl').text() + "?search=" + localSearhString;
+         NCIAnalytics.GeneticsDictionarySearch(this,localSearhString,false);
       }
       $(location).attr('href',url);
    }

@@ -243,7 +243,7 @@ namespace CancerGov.Web.SnippetTemplates
         protected string ResultListViewHrefOnclick(ListViewDataItem dataItemList)
         {
             if (WebAnalyticsOptions.IsEnabled)
-                return "onclick=\"NCIAnalytics.TermsDictionaryResults(this,'" + (dataItemList.DataItemIndex + 1).ToString() + "');\""; // Load results onclick script
+                return "onclick=\"NCIAnalytics.GeneticsDictionaryResults(this,'" + (dataItemList.DataItemIndex + 1).ToString() + "');\""; // Load results onclick script
             else
                 return "";
         }
@@ -283,5 +283,6 @@ namespace CancerGov.Web.SnippetTemplates
 
             return definition;
         }
+
     }
 }

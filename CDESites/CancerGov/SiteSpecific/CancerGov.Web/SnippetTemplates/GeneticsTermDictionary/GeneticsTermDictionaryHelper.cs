@@ -46,41 +46,46 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("   </div>");
             searchBlock.AppendLine("   <div class='row2'>");
             searchBlock.AppendLine("      <ul>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=%23'>#</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=A'>A</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=B'>B</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=C'>C</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=D'>D</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=E'>E</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=F'>F</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=G'>G</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=H'>H</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=I'>I</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=J'>J</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=K'>K</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=L'>L</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=M'>M</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=N'>N</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=O'>O</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=P'>P</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=Q'>Q</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=R'>R</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=S'>S</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=T'>T</a></li>");
-            searchBlock.AppendLine("            <li><a class='dictionary-alpha-list' href='" + url + "?expand=U'>U</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=V'>V</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=W'>W</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=X'>X</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=Y'>Y</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=Z'>Z</a></li>");
-            searchBlock.AppendLine("			<li><a class='dictionary-alpha-list' href='" + url + "?expand=All'>All</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=%23\" " + insertWA("#") + " >#</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=A\" " + insertWA("A") + " >A</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=B\" " + insertWA("B") + " >B</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=C\" " + insertWA("C") + " >C</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=D\" " + insertWA("D") + " >D</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=E\" " + insertWA("E") + " >E</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=F\" " + insertWA("F") + " >F</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=G\" " + insertWA("G") + " >G</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=H\" " + insertWA("H") + " >H</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=I\" " + insertWA("I") + " >I</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=J\" " + insertWA("J") + " >J</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=K\" " + insertWA("K") + " >K</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=L\" " + insertWA("L") + " >L</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=M\" " + insertWA("M") + " >M</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=N\" " + insertWA("N") + " >N</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=O\" " + insertWA("O") + " >O</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=P\" " + insertWA("P") + " >P</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=Q\" " + insertWA("Q") + " >Q</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=R\" " + insertWA("R") + " >R</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=S\" " + insertWA("S") + " >S</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=T\" " + insertWA("T") + " >T</a></li>");
+            searchBlock.AppendLine("            <li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=U\" " + insertWA("U") + " >U</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=V\" " + insertWA("V") + " >V</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=W\" " + insertWA("W") + " >W</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=X\" " + insertWA("X") + " >X</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=Y\" " + insertWA("Y") + " >Y</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=Z\" " + insertWA("Z") + " >Z</a></li>");
+            searchBlock.AppendLine("			<li><a class=\"dictionary-alpha-list\" href=\"" + url + "?expand=All\" " + insertWA("ALL") + " >All</a></li>");
             searchBlock.AppendLine("		</ul>");
             searchBlock.AppendLine("	</div>");
             searchBlock.AppendLine("</div>");
 
             return searchBlock.ToString();
         }
-      
+
+        private static string insertWA(string letter)
+        {
+            return "onclick=\"NCIAnalytics.GeneticsDictionarySearchAlphaList(this,'" + letter + "');\"";
+        }
+
         public static void DetermineLanguage(string langParam, out string language, out string pageTitle, out string buttonText, out string reDirect)
         {
             //Currently the Genetics Term Dictionary is only in English 
