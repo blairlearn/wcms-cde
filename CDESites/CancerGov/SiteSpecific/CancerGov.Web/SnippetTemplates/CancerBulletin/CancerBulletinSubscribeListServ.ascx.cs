@@ -98,6 +98,16 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     return "I learned about the <i>NCI Cancer Bulletin</i> through:";
             }
         }
+        public string IamAText
+        {
+            get
+            {
+                if (isSpanish)
+                    return "Soy:";
+                else
+                    return "I am a:";
+            }
+        }
 
 
         protected void Page_Load(object sender, System.EventArgs e)
@@ -223,7 +233,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 {
                     divSubscribe.Visible = true;
                     if(isSpanish)
-                        lblMessage.Text = "Para iniciar su subscrición gratuita al Boletín del Instituto Nacional del Cáncer, escriba su dirección de correo electrónico:";
+                        lblMessage.Text = "Para iniciar su suscripción gratuita al Boletín del Instituto Nacional del Cáncer, escriba su dirección de correo electrónico:";
                     else
                         lblMessage.Text = "To begin your free subscription to the <i>NCI Cancer Bulletin</i>, enter your e-mail address:";
                 }
@@ -698,11 +708,11 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             else
             {
                 //Need to keep checks?
-                ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
-                    "GoodText",
-                    "Address Received",
-                    "You will receive an e-mail shortly asking you to verify your e-mail address.  To start your subscription to the <i>NCI Cancer Bulletin</i>, simply respond to the confirmation e-mail.<br/>"
-                    );
+                //ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
+                //    "GoodText",
+                //    "Address Received",
+                //    "You will receive an e-mail shortly asking you to verify your e-mail address.  To start your subscription to the <i>NCI Cancer Bulletin</i>, simply respond to the confirmation e-mail.<br/>"
+                //    );
 
                 divSurvey.Visible = true;
                 lblSurveyMessage.CssClass = "BadText";
@@ -813,7 +823,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                 if (isSpanish)
                 {
-                    ShowMessage("Gracias por subscribirse al <i><b>Boletín del Instituto Nacional del Cáncer</b></i>!", 
+                    ShowMessage("Gracias por suscribirse al <i><b>Boletín del Instituto Nacional del Cáncer</b></i>!", 
                         "GoodText",
                         "Address Received",
                         ""

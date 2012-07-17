@@ -108,7 +108,7 @@
                                             <strong><% =LearnedQuestionText %></strong><br />
                                             <asp:PlaceHolder ID="phLearnedQuestions" runat="server" />
                                             <br />
-                                            <strong>I am a:</strong><br />
+                                            <strong><% =IamAText %></strong><br />
                                             <asp:PlaceHolder ID="phProfQuestions" runat="server" />
                                             <br />
                                             <input type="submit" value="<% =SubmitButtonText %>" />

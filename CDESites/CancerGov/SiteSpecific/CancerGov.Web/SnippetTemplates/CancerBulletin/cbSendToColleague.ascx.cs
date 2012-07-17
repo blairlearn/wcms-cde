@@ -126,7 +126,11 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                         if ((strFromName == null) || (strFromName.Trim() == ""))
                         {
-                            strFromName = "A colleague";
+                            if (isSpanish)
+                                strFromName = "Un colega";
+                            else 
+                                strFromName = "A colleague";
+                            
                         }
 
                         string toAddress = strToEmail;
@@ -194,10 +198,10 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 "<a href=\"" + strDownloadLink + "\"><img src=\"" + strImage + "\" alt=\"NCI Cancer Bulletin Cover\" border=\"0\" align=\"right\"></a>" +
                                 strFromName + " le ha enviado el <a href=\"" + strDownloadLink + "\"><i>Boletín del Instituto Nacional del Cáncer</i></a>. Esta publicación electrónica mensual ofrece las últimas noticias e información sobre la investigación del cáncer y los programas e iniciativas del NCI." +
                                 "<p>" +
-                                "Suscríbase gratis hoy al <i>Boletín del Instituto Nacional del Cáncer</i> para recibir esta valiosa información." +
+                                "<a href=\"" + strDownloadLink + "\">Suscríbase</a> gratis al <i>Boletín del Instituto Nacional del Cáncer</i> para recibir esta valiosa información." +
                                 "	</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td valign=\"top\"><hr>\n" +
                                 "	<p>" +
-                                "	¿Conoce a alguien que estuviera interesado en recibir este recurso informativa? Para enviar una copia de la última edición del <i>Boletín del Instituto Nacional del Cáncer</i> visite la página  <a href=\"http://cancer.gov/boletin/enviarcolega-amigo\">http://cancer.gov/boletin/enviarcolega</a>." +
+                                "	¿Conoce a alguien que estuviera interesado en recibir este recurso informativo? Para enviar una copia de la última edición del <i>Boletín del Instituto Nacional del Cáncer</i> visite la página  <a href=\"http://cancer.gov/boletin/enviarcolega-amigo\">http://cancer.gov/boletin/enviarcolega</a>." +
                                 "	</td>\n" +
                                 "  </tr>" +
                                 "</table>" +
@@ -289,7 +293,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         //invalid from email
                         if (isSpanish)
                         {
-                            this.strMessageBody = "[Su correo electrónico] Esta dirección de correo electrónico no es válida. Por favor escriba una nueva dirección y vuelva a enviar." +
+                            this.strMessageBody = "La dirección de correo electrónico en el campo “Su correo electrónico” no es válida. Por favor escriba una nueva dirección y vuelva a enviar." +
                                     "<br>";
                             this.strTextClass = "BadText";
                             this.strInfo = "Re-enter Address";
@@ -310,7 +314,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     if (isSpanish)
                     {
                         //invalid to email
-                        this.strMessageBody = "[Envíe el Boletín del NCI a] Esta dirección de correo electrónico no es válida. Por favor escriba una nueva dirección y vuelva a enviar." +
+                        this.strMessageBody = "La dirección de correo electrónico en el campo “Envíe el Boletín del NCI a” no es válida. " +
                             "<br>";
                         this.strTextClass = "BadText";
                         this.strInfo = "Re-enter Address";
