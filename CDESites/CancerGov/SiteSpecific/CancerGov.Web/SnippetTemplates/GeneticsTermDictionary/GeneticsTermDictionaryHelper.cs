@@ -21,7 +21,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             StringBuilder searchBlock = new StringBuilder();
 
-            searchBlock.AppendLine("<div class='dictionary-box'>");
+            searchBlock.AppendLine("<div class='dictionary-box' id='genetics-terms-dictionary'>");
             searchBlock.AppendLine("   <div class='row1'>");
             searchBlock.AppendLine("      <div id='dictionary_jPlayer'></div>");
             searchBlock.AppendLine("      <input class=\"dictionary\" id=\"searchString\" maxlength=\"255\" name=\"searchString\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\" onkeypress=\"if(event.keyCode==13) DoSearch();\" value=\"" + searchString + "\" /> ");

@@ -83,7 +83,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         {
                             strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Gracias</div><br />" +
                                 "			<div>Sus opiniones y comentarios han sido enviados al equipo editorial del <i>Boletín del Instituto Nacional del Cáncer</i>. " +
-                                "                   Muchas gracias. <br /><br /><a href=\"http://www.cancer.gov/boletin\">Vaya a la página principal del <i>Boletín del Instituto Nacional del Cáncer</i></a><br>" +
+                                "           <br /><br /><a href=\"http://www.cancer.gov/boletin\">Vaya a la página principal del <i>Boletín del Instituto Nacional del Cáncer</i></a><br>" +
                                 "			</div>";
                         }
                         else

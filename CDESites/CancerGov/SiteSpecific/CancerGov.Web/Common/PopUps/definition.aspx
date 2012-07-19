@@ -7,7 +7,7 @@
     <script src="/PublishedContent/js/popEvents.js" type="text/javascript"></script>
     <script type="text/javascript" language="JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script src="/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="/stylesheets/nci.css" type="text/css" />
+    <link href="/PublishedContent/Styles/nci.css" rel="stylesheet" />
 
     <script type="text/javascript">
         //Hookup JPlayer for Audio

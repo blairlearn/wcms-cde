@@ -127,7 +127,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         if ((strFromName == null) || (strFromName.Trim() == ""))
                         {
                             if (isSpanish)
-                                strFromName = "Un colega";
+                                strFromName = "un colega, familiar o amigo";
                             else 
                                 strFromName = "A colleague";
                             
@@ -314,7 +314,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     if (isSpanish)
                     {
                         //invalid to email
-                        this.strMessageBody = "La dirección de correo electrónico en el campo “Envíe el Boletín del NCI a” no es válida. " +
+                        this.strMessageBody = "La dirección de correo electrónico en el campo “Envíe el Boletín del NCI a” no es válida.  Por favor escriba una nueva dirección y vuelva a enviar." +
                             "<br>";
                         this.strTextClass = "BadText";
                         this.strInfo = "Re-enter Address";

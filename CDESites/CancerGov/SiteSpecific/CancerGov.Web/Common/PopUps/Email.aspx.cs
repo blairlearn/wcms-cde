@@ -151,7 +151,7 @@ namespace CancerGov.Web
                         strConfirm = "<br><br>The link has been sent.<br>Thank you for using the NCI's Web site.";
                         if (blnIsSpanish)
                         {
-                            strConfirm = "<br><br>El enlace ha sido enviado.<br>Gracias por visitar el portal de Internet del NCI.<br><br>(The link has been sent.<br>Thank you for using the NCI's Web site.)";
+                            strConfirm = "<br><br>El enlace ha sido enviado.<br>¡Gracias por visitar el portal de Internet del NCI.<br><br>(The link has been sent.<br>Thank you for using the NCI's Web site.)";
                         }
                     }
                     else

@@ -823,7 +823,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                 if (isSpanish)
                 {
-                    ShowMessage("Gracias por suscribirse al <i><b>Boletín del Instituto Nacional del Cáncer</b></i>!", 
+                    ShowMessage("¡Gracias por suscribirse al <i><b>Boletín del Instituto Nacional del Cáncer</b></i>!", 
                         "GoodText",
                         "Address Received",
                         ""
