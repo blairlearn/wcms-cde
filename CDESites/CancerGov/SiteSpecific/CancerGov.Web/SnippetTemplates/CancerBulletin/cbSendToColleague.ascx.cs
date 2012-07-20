@@ -127,7 +127,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         if ((strFromName == null) || (strFromName.Trim() == ""))
                         {
                             if (isSpanish)
-                                strFromName = "un colega, familiar o amigo";
+                                strFromName = "Le han enviado el";
                             else 
                                 strFromName = "A colleague";
                             
@@ -140,7 +140,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
                         if (isSpanish)
                         {
-                            mailMsg.Subject = strFromName + " le ha enviado el Boletín del Instituto Nacional del Cáncer";
+                            mailMsg.Subject = strFromName + " Boletín del Instituto Nacional del Cáncer";
                             mailMsg.Body += "<html>" +
                                 "<head>\n" +
                                 "	<title>Boletín del Instituto Nacional del Cáncer</title>\n" +
@@ -196,12 +196,12 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                                 "	<td valign=\"top\">\n" +
                                 "<br><br>\n" +
                                 "<a href=\"" + strDownloadLink + "\"><img src=\"" + strImage + "\" alt=\"NCI Cancer Bulletin Cover\" border=\"0\" align=\"right\"></a>" +
-                                strFromName + " le ha enviado el <a href=\"" + strDownloadLink + "\"><i>Boletín del Instituto Nacional del Cáncer</i></a>. Esta publicación electrónica mensual ofrece las últimas noticias e información sobre la investigación del cáncer y los programas e iniciativas del NCI." +
+                                strFromName + " <a href=\"" + strDownloadLink + "\"><i>Boletín del Instituto Nacional del Cáncer</i></a>. Esta publicación electrónica mensual ofrece las últimas noticias e información sobre la investigación del cáncer y los programas e iniciativas del NCI." +
                                 "<p>" +
                                 "<a href=\"" + strDownloadLink + "\">Suscríbase</a> gratis al <i>Boletín del Instituto Nacional del Cáncer</i> para recibir esta valiosa información." +
                                 "	</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td valign=\"top\"><hr>\n" +
                                 "	<p>" +
-                                "	¿Conoce a alguien que estuviera interesado en recibir este recurso informativo? Para enviar una copia de la última edición del <i>Boletín del Instituto Nacional del Cáncer</i> visite la página  <a href=\"http://cancer.gov/boletin/enviarcolega-amigo\">http://cancer.gov/boletin/enviarcolega</a>." +
+                                "	¿Conoce a alguien que estuviera interesado en recibir este recurso informativo? Para enviar una copia de la última edición del <i>Boletín del Instituto Nacional del Cáncer</i> visite la página  <a href=\"http://cancer.gov/boletin/enviarcolega\">http://cancer.gov/boletin/enviarcolega</a>." +
                                 "	</td>\n" +
                                 "  </tr>" +
                                 "</table>" +
