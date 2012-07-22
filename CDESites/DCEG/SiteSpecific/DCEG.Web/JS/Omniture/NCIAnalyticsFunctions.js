@@ -102,7 +102,7 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 //*********************** onclick functions ************************************************************	
 	SiteWideSearch : function(sender)  {
         var searchType = 'sitewide';
-        var keyword = document.getElementById('swKeyword').value;
+        var keyword = document.getElementById('swKeywordQuery').value;
     
         if (s.prop8.toLowerCase() == 'spanish')
             searchType += '_spanish';
