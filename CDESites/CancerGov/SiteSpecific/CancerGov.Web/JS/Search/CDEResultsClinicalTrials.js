@@ -1,7 +1,8 @@
 ﻿function checkAll_ClickHandler(e) {
     topCheckbox = $(ids.checkAllTop);
     bottomCheckbox = $(ids.checkAllBottom);
-    var blnChecked = e.target.checked;
+    // var blnChecked = e.target.checked;
+    var blnChecked = e.checked;
 
     if ( $(ids.advResultForm).cdrid == null) {
         alert("There are no trials to display.");

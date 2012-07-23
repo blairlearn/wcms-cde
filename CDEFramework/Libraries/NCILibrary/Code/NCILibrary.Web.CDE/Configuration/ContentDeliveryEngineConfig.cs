@@ -58,6 +58,15 @@ namespace NCI.Web.CDE.Configuration
             }
         }
 
+        public static MobileRedirectorInformationElement MobileRedirector
+        {
+            get
+            {
+                return ContentDeliveryEngine.MobileRedirector;
+            }
+        }
+
+
         public static DefaultHomePageElement DefaultHomePage
         {
             get

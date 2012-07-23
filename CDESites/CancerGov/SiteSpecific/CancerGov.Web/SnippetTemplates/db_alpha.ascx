@@ -74,7 +74,8 @@
                 runat="server">
                 <div id="dictionary_jPlayer"></div>
 
-
+                <asp:Label ID="lblAutoComplete1" style="position:absolute;left:-5000px" runat="server" Text="Search for" 
+                    AssociatedControlID="AutoComplete1"></asp:Label>  
                  <CGov:AutoComplete CssClass="dictionary" Name="AutoComplete1" ID="AutoComplete1"
                     runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" MinWidth="333" />
 
@@ -97,7 +98,7 @@
 	</div>
 	<div class="row2">
 	    <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
-            NumericItems="true" ShowAll="true" />
+            NumericItems="true" ShowAll="false" />
 	</div>
 </div>
 </asp:Panel>	
@@ -107,7 +108,7 @@
         <img src="/images/spacer.gif" width="10" height="1" alt="" border="0" />
         <asp:Panel ID="pnlIntroEnglish" runat="server" EnableViewState="false">
             <p>
-                Welcome to the NCI Dictionary of Cancer Terms, a resource with more than 6,000 terms
+                Welcome to the NCI Dictionary of Cancer Terms, a resource with <strong><% =TotalCount %></strong> terms
                 related to cancer and medicine.</p>
             <p>
                 <b>Tips on Looking Up a Word or Phrase</b></p>
@@ -146,7 +147,7 @@
         </asp:Panel>
         <asp:Panel ID="pnlIntroSpanish" runat="server" Visible="false" EnableViewState="false">
             <p>
-                Bienvenidos al Diccionario de cáncer del NCI, un recurso con más de 6.000 términos
+                Bienvenidos al Diccionario de cáncer del NCI, un recurso con <strong><% =TotalCount %></strong> términos
                 relacionados con el cáncer y la medicina.</p>
             <p>
                 <b>Consejos para buscar una palabra o frase</b></p>

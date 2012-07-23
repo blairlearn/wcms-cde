@@ -12,9 +12,10 @@ using System.Configuration;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using System.Net.Mail;
 using NCI.Logging;
 using NCI.Web.CDE.Modules;
-using System.Net.Mail;
+using NCI.Web.CDE;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
@@ -43,6 +44,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             Nurse = 8
         }
 
+        private bool isSpanish = false;
+        private string languageCode;
         private string strEmailAddr = "";
         private Guid gEmailID = Guid.Empty;
         private Guid gNewsletterID = Guid.Empty;
@@ -54,9 +57,65 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 return ConfigurationManager.ConnectionStrings["NewsLetterDB"].ConnectionString;
             }
         }
+        public string EmailAddressText
+        {
+            get
+            {
+                if (isSpanish)
+                    return "Correo electrónico:";
+                else
+                    return "E-mail address:";
+            }
+        }
+        public string SubmitButtonText
+        {
+            get
+            {
+                if (isSpanish)
+                    return "Enviar";
+                else
+                    return "Submit";
+            }
+        }
+        public string SurveyText
+        {
+            get
+            {
+                if (isSpanish)
+                    return "En un esfuerzo por conocer mejor a nuestra audiencia y mejorar nuestra publicación, lo invitamos a que conteste este breve cuestionario. Por favor marque al menos una casilla en cada categoría.";
+                else
+                    return "In an effort to better understand our audience and improve the newsletter, we invite you to submit answers to this brief questionnaire. Please check at least one box in each category.";
+            }
+        }
+
+        public string LearnedQuestionText
+        {
+            get
+            {
+                if (isSpanish)
+                    return "¿Cómo supo de la existencia del Boletín?";
+                else
+                    return "I learned about the <i>NCI Cancer Bulletin</i> through:";
+            }
+        }
+        public string IamAText
+        {
+            get
+            {
+                if (isSpanish)
+                    return "Soy:";
+                else
+                    return "I am a:";
+            }
+        }
+
 
         protected void Page_Load(object sender, System.EventArgs e)
         {
+
+            languageCode = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
+            if (languageCode != "en")
+                isSpanish = true;
 
             divSubscribe.Visible = false;
             divSurvey.Visible = false;
@@ -115,24 +174,47 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         }
                         else
                         {
-                            ShowMessage(
-                                "Sorry, Invalid E-mail Address",
-                                "BadText",
-                                "Re-enter Address",
-                                "This is an invalid e-mail address. Please enter a new address and resubmit.<br/>"
-                                );
+                            if(isSpanish)
+                                ShowMessage(
+                                    "Lo sentimos, pero la dirección de correo electrónico es inválida",
+                                    "BadText",
+                                    "Re-enter Address",
+                                    "Esta dirección de correo electrónico no es válida. Por favor escriba una nueva dirección y vuelva a enviar.<br/>"
+                                    );
+                            else
+                                ShowMessage(
+                                    "Sorry, Invalid E-mail Address",
+                                    "BadText",
+                                    "Re-enter Address",
+                                    "This is an invalid e-mail address. Please enter a new address and resubmit.<br/>"
+                                    );
+
                             divSubscribe.Visible = true;
                         }
                     }
                     else
                     {
-                        //The email address has not been supplied.
-                        ShowMessage(
-                            "Sorry, Address Is Empty",
-                            "BadText",
-                            "Re-enter Address",
-                            "You have not submitted an e-mail address. Please enter a new address and resubmit.<br/>"
-                            );
+                        if (isSpanish)
+                        {
+                            //The email address has not been supplied.
+                            ShowMessage(
+                                "Lo sentimos, pero el espacio para la dirección de correo electrónico está vacío",
+                                "BadText",
+                                "Vuelva a escribir la dirección de correo electrónico",
+                                "Usted no ha enviado una dirección de correo electrónico. Por favor escriba una nueva dirección y vuelva a enviar.<br/>"
+                                );
+                        }
+                        else
+                        {
+                            //The email address has not been supplied.
+                            ShowMessage(
+                                "Sorry, Address Is Empty",
+                                "BadText",
+                                "Re-enter Address",
+                                "You have not submitted an e-mail address. Please enter a new address and resubmit.<br/>"
+                                );
+                        } 
+                        
                         divSubscribe.Visible = true;
                     }
                 }
@@ -150,19 +232,12 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 else
                 {
                     divSubscribe.Visible = true;
-                    lblMessage.Text = "To begin your free subscription to the <i>NCI Cancer Bulletin</i>, enter your e-mail address:";
+                    if(isSpanish)
+                        lblMessage.Text = "Para iniciar su suscripción gratuita al Boletín del Instituto Nacional del Cáncer, escriba su dirección de correo electrónico:";
+                    else
+                        lblMessage.Text = "To begin your free subscription to the <i>NCI Cancer Bulletin</i>, enter your e-mail address:";
                 }
             }
-
-            // Web Analytics *************************************************
-            //if (WebAnalyticsOptions.IsEnabled)
-            //{
-            //    this.WebAnalyticsPageLoad.SetChannel("NCI Cancer Bulletin");
-            //    this.WebAnalyticsPageLoad.SetLanguage(WebAnalyticsOptions.Language.English);
-            //    litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
-            //}
-            // End Web Analytics **********************************************
-
         }
 
 
@@ -176,29 +251,61 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
         private string GetLearnedAnswerString(LearnedAnswers answer)
         {
-            switch (answer)
+            if(isSpanish)
             {
-                case LearnedAnswers.Colleague: return "Colleague";
-                case LearnedAnswers.NCIWebSite: return "NCI Web site (www.cancer.gov)";
-                case LearnedAnswers.Association: return "Association/organization";
-                case LearnedAnswers.Postcard: return "Postcard";
-                case LearnedAnswers.Other: return "Other";
+                switch (answer)
+                {
+                    case LearnedAnswers.Colleague: return "Colega";
+                    case LearnedAnswers.NCIWebSite: return "Sitio web del NCI (www.cancer.gov/espanol)";
+                    case LearnedAnswers.Association: return "Asociación/organización";
+                    case LearnedAnswers.Postcard: return "Aviso impreso";
+                    case LearnedAnswers.Other: return "Otra";
+                }
             }
+            else
+            {
+                switch (answer)
+                {
+                    case LearnedAnswers.Colleague: return "Colleague";
+                    case LearnedAnswers.NCIWebSite: return "NCI Web site (www.cancer.gov)";
+                    case LearnedAnswers.Association: return "Association/organization";
+                    case LearnedAnswers.Postcard: return "Postcard";
+                    case LearnedAnswers.Other: return "Other";
+                }
+            }
+
             return "";
         }
 
         private string GetProfAnswerString(ProfAnswers answer)
         {
-            switch (answer)
+            if (isSpanish)
             {
-                case ProfAnswers.Researcher: return "Researcher";
-                case ProfAnswers.Physician: return "Physician";
-                case ProfAnswers.Nurse: return "Nurse or Nurse Practitioner";
-                case ProfAnswers.OtherMed: return "Other medical professional";
-                case ProfAnswers.Patient: return "Cancer patient/survivor";
-                case ProfAnswers.Family: return "Cancer patient family member/friend";
-                case ProfAnswers.Advocate: return "Advocate";
-                case ProfAnswers.Other: return "Other";
+                switch (answer)
+                {
+                    case ProfAnswers.Researcher: return "Investigador";
+                    case ProfAnswers.Physician: return "Médico";
+                    case ProfAnswers.Nurse: return "Enfermero o enfermera con práctica médica";
+                    case ProfAnswers.OtherMed: return "Otro profesional médico";
+                    case ProfAnswers.Patient: return "Paciente con cáncer o superviviente";
+                    case ProfAnswers.Family: return "Familiar o amigo de un paciente con cáncer";
+                    case ProfAnswers.Advocate: return "Defensor del paciente";
+                    case ProfAnswers.Other: return "Otro";
+                }
+            }
+            else
+            {
+                switch (answer)
+                {
+                    case ProfAnswers.Researcher: return "Researcher";
+                    case ProfAnswers.Physician: return "Physician";
+                    case ProfAnswers.Nurse: return "Nurse or Nurse Practitioner";
+                    case ProfAnswers.OtherMed: return "Other medical professional";
+                    case ProfAnswers.Patient: return "Cancer patient/survivor";
+                    case ProfAnswers.Family: return "Cancer patient family member/friend";
+                    case ProfAnswers.Advocate: return "Advocate";
+                    case ProfAnswers.Other: return "Other";
+                }
             }
             return "";
         }
@@ -485,6 +592,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         new SqlParameter("@Question1", question1));
                     scSurvey.Parameters.Add(
                         new SqlParameter("@Question2", question2));
+                    scSurvey.Parameters.Add(
+                        new SqlParameter("@languageCode", languageCode));
 
                     scSurvey.Connection.Open();
                     scSurvey.ExecuteNonQuery();
@@ -552,22 +661,45 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 {
                     SaveSurvey(learnedItems, profItems);
                     //divMessageBox.Visible = false;
-                    ShowMessage("Thank You for your response.",
-                    "GoodText",
-                    "",
-                    "Your response helps us better understand our readers."
-                    );
+                    if (isSpanish)
+                    {
+                        ShowMessage("Gracias por su respuesta.",
+                        "GoodText",
+                        "",
+                        "Su respuesta nos ayuda a entender mejor a nuestros lectores."
+                        );
+                    }
+                    else
+                    {
+                        ShowMessage("Thank You for your response.",
+                        "GoodText",
+                        "",
+                        "Your response helps us better understand our readers."
+                        );
+                    }
                     //lblHeader.Text = "<br/><br/>&nbsp;&nbsp;&nbsp;Thank You for your response.<br/><br/>Your response helps us better understand our readers.";
                 }
                 catch (System.Data.SqlClient.SqlException sqlE)
                 {
                     //Other Error
-                    ShowMessage(
-                        "Error",
-                        "BadText",
-                        "Error",
-                        "There was an error processing your request<br/>"
-                        );
+                    if (isSpanish)
+                    {
+                        ShowMessage(
+                            "Error",
+                            "BadText",
+                            "Error",
+                            "Se presentó un error al procesar su solicitud<br/>"
+                            );
+                    }
+                    else
+                    {
+                        ShowMessage(
+                            "Error",
+                            "BadText",
+                            "Error",
+                            "There was an error processing your request<br/>"
+                            );
+                    }
 
                     NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleSurvey", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
 
@@ -576,11 +708,11 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             else
             {
                 //Need to keep checks?
-                ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
-                    "GoodText",
-                    "Address Received",
-                    "You will receive an e-mail shortly asking you to verify your e-mail address.  To start your subscription to the <i>NCI Cancer Bulletin</i>, simply respond to the confirmation e-mail.<br/>"
-                    );
+                //ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
+                //    "GoodText",
+                //    "Address Received",
+                //    "You will receive an e-mail shortly asking you to verify your e-mail address.  To start your subscription to the <i>NCI Cancer Bulletin</i>, simply respond to the confirmation e-mail.<br/>"
+                //    );
 
                 divSurvey.Visible = true;
                 lblSurveyMessage.CssClass = "BadText";
@@ -641,13 +773,24 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         else
                         {
                             //Other Error
-                            ShowMessage(
-                                "Error",
-                                "BadText",
-                                "Error",
-                                "There was an error processing your request<br/>"
-                                );
-
+                            if (isSpanish)
+                            {
+                                ShowMessage(
+                                    "Error",
+                                    "BadText",
+                                    "Error",
+                                    "Se presentó un error al procesar su solicitud<br/>"
+                                    );
+                            }
+                            else
+                            {
+                                ShowMessage(
+                                    "Error",
+                                    "BadText",
+                                    "Error",
+                                    "There was an error processing your request<br/>"
+                                    );
+                            }
                             NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleConfirmation", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
 
                         }
@@ -659,7 +802,8 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         {
             string toAddress = ConfigurationSettings.AppSettings["ListServe"];
             string fromAddress = strEmailAddr;
-            string eMailbody = "quiet subscribe NCI-Bulletin no name";
+            string eMailbody = (isSpanish ? "quiet subscribe nci-boletin no name" : "quiet subscribe NCI-Bulletin no name");
+
             try
             {
                 using (MailMessage mess = new MailMessage(fromAddress, toAddress, string.Empty, eMailbody))
@@ -677,11 +821,23 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 //System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
                 //smtpClient.Send(mailMsg);
 
-                ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
-                    "GoodText",
-                    "Address Received",
-                    ""
-                    );
+                if (isSpanish)
+                {
+                    ShowMessage("¡Gracias por suscribirse al <i><b>Boletín del Instituto Nacional del Cáncer</b></i>!", 
+                        "GoodText",
+                        "Address Received",
+                        ""
+                        );
+                }
+                else
+                {
+                    ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
+                        "GoodText",
+                        "Address Received",
+                        ""
+                        );
+                }
+
                 // Web Analytics *************************************************
                 if (WebAnalyticsOptions.IsEnabled)
                     this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.Subscription, wbField =>

@@ -57,7 +57,7 @@
     <Content Include="JS\Omniture\s_code.js" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
-    <Content Include="Web.config" />
+    <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

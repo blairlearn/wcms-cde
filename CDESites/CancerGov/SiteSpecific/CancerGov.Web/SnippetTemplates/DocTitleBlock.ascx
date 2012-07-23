@@ -33,7 +33,7 @@
         <% } %>
         <span class="document-title">
             <asp:Literal ID="litAudienceTitle" runat="server" /></span>
-        <div style="float: right">
+        <div class="document-dates">
             <asp:Literal ID="litPrintDate" runat="server" />
         </div>
     </div>

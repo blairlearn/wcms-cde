@@ -183,24 +183,27 @@ namespace CancerGov.Web.SnippetTemplates
             if (this.PageDisplayInformation.Version == DisplayVersions.Print)
             {
                 string printContent = "";
-                string glossaryTableTitle = "Glossary Terms";
-                string linksTableTitle = "Table of Links";
 
-                if (this.PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish)
-                {
-                    glossaryTableTitle = "Glosario";
-                    linksTableTitle = "Lista de Enlaces";
-                }
+                //***Disable Glossary Terms and Footnote extraction*** 
+                //string glossaryTableTitle = "Glossary Terms";
+                //string linksTableTitle = "Table of Links";
+                //if (this.PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish)
+                //{
+                //    glossaryTableTitle = "Glosario";
+                //    linksTableTitle = "Lista de Enlaces";
+                //}
 
                 CancerGov.Common.Extraction.GlossaryTermExtractor gte = new CancerGov.Common.Extraction.GlossaryTermExtractor();
                 CancerGov.Common.Extraction.FootnoteExtractor fe = new CancerGov.Common.Extraction.FootnoteExtractor();
                 fe.ExcludeList = new string[] { "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?" };
                 fe.RemoveReturnToTopBar = false;
 
-                printContent = gte.ExtractGlossaryTerms(strContent);
-                printContent = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, printContent);
-                printContent += gte.BuildGlossaryTable(glossaryTableTitle);
-                printContent += fe.GetFootnotes(linksTableTitle, 80);
+                //***Disable Glossary Terms and Footnote extraction*** 
+                printContent = strContent;
+                //printContent = gte.ExtractGlossaryTerms(strContent);
+                //printContent = fe.Extract(new Regex("<a\\s+?(?:class=\".*?\"\\s+?)*?href=\"(?<extractValue>.*?)\"(?:\\s+?\\w+?=\"(?:.*?)\")*?\\s*?>(?<linkText>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline), "extractValue", CancerGov.Common.Extraction.ExtractionTypes.URL, printContent);
+                //printContent += gte.BuildGlossaryTable(glossaryTableTitle);
+                //printContent += fe.GetFootnotes(linksTableTitle, 80);
 
                 this.strContent = "<table cellspacing=\"0\" width=\"650\" cellpadding=\"0\" border=\"0\"><tr><td width=\"650\">" + printContent + "</td></tr></table>\n";
             }

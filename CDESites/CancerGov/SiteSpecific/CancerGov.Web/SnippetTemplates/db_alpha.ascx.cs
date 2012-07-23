@@ -38,6 +38,7 @@ namespace Www.Templates
         private string _dictionaryURL = string.Empty;
         private string _dictionaryURLSpanish = string.Empty;
         private string _dictionaryURLEnglish = string.Empty;
+        private int _totalCount = 0;
 
         #region Page properties
 
@@ -120,6 +121,11 @@ namespace Www.Templates
             get { return _dictionaryURLEnglish; }
             set { _dictionaryURLEnglish = value; }
         }
+        public string TotalCount
+        {
+            get { return _totalCount.ToString("N0"); }
+        }
+
 
         #endregion
               private void ResetControls()
@@ -162,7 +168,9 @@ namespace Www.Templates
 
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+            {
                 SetupSpanish();
+            }
             else
             {
                 SetupEnglish();
@@ -397,7 +405,18 @@ namespace Www.Templates
 
         private void ActivateDefaultView()
         {
+            string language = "";
+
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+                language = "English";
+            else
+                language = "Spanish";
+
+            TermDictionaryCollection dataCollection = TermDictionaryManager.Search(language, "_", 0, false);
+            _totalCount = dataCollection.Count;
+ 
             MultiView1.ActiveViewIndex = 0;
+
         }
 
         private void ActivateResultsListView()
@@ -454,6 +473,7 @@ namespace Www.Templates
         private void SetupSpanish()
         {
             _isSpanish = true;
+            lblAutoComplete1.Text = "buscar";
             //Controls
             //lblStrSearch.Text = String.Empty;
             //lblAccessSearch.Text = "Cuadro de búsqueda de texto";
@@ -513,10 +533,9 @@ namespace Www.Templates
         private void SetupEnglish()
         {
             //Controls            
-            //lblStrSearch.Text = "Search for";
-
+            lblAutoComplete1.Text = "Search for";
             lblResultsFor.Text = "results found for:";
-            //btnGo.CssClass = "btnGo";
+
             pnlIntroEnglish.Visible = true;
             pnlIntroSpanish.Visible = false;
 

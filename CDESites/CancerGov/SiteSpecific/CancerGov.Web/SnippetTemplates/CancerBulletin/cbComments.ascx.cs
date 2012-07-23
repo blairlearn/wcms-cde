@@ -12,6 +12,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using NCI.Web.CancerGov.Apps;
 using NCI.Data;
+using NCI.Web.CDE;
 
 namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 {
@@ -20,11 +21,36 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         
         protected string strPostResponse = "";
         protected string strError = "";
+        private bool isSpanish = false;
 
+        public string ShareText
+        {
+            get
+            {
+                if (isSpanish)
+                    return "Comparta con nosotros sus opiniones o comentarios sobre el <i>Boletín del Instituto Nacional del Cáncer</i>.";
+                else
+                    return "Share your story ideas and comments about the <i>NCI Cancer Bulletin</i>.";
+            }
+        }
+
+        public string SubmitButtonText
+        {
+            get
+            {
+                if (isSpanish)
+                    return "Enviar";
+                else
+                    return "Submit";
+            }
+        }
 
         protected void Page_Load(object Source, EventArgs e)
         {
-            
+                       
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+                isSpanish = true;
+
             string strComment = "";
 
             trThanks.Visible = false;
@@ -37,7 +63,13 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 if ((strComment == null) || ((strComment = strComment.Trim()) == ""))
                 {
                     //Note this also trims the comment...
-                    strError = "<font color=red>Please enter a message.<br></font>";
+                    if (isSpanish)
+                        strError = "<font color=red>Por favor escriba un mensaje.<br></font>";
+                    else
+                        strError = "<font color=red>Please enter a message.<br></font>";
+
+
+                    
                 }
                 else
                 {
@@ -47,19 +79,37 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         CancerGov.DataManager.GeneralCommentsDataManager.AddComments(strComment, "CancerBulletin");
 
                         //THANK YOU
-                        strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Thank You</div>" +
-                            "			<div>Your feedback was sent to the <i>NCI Cancer Bulletin</i> team. " +
-                            "                   We thank you. <br /><a href=\"/ncicancerbulletin\">View the <i>NCI Cancer Bulletin</i> home page</a><br>" +
-                            "			</div>";
+                        if (isSpanish)
+                        {
+                            strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Gracias</div><br />" +
+                                "			<div>Sus opiniones y comentarios han sido enviados al equipo editorial del <i>Boletín del Instituto Nacional del Cáncer</i>. " +
+                                "           <br /><br /><a href=\"http://www.cancer.gov/boletin\">Vaya a la página principal del <i>Boletín del Instituto Nacional del Cáncer</i></a><br>" +
+                                "			</div>";
+                        }
+                        else
+                        {
+                            strPostResponse = "<div  style=\"font-family:Arial; color:#4d4d4d; font-size:20px;\">Thank You</div>" +
+                                "			<div>Your feedback was sent to the <i>NCI Cancer Bulletin</i> team. " +
+                                "                   We thank you. <br /><a href=\"/ncicancerbulletin\">View the <i>NCI Cancer Bulletin</i> home page</a><br>" +
+                                "			</div>";
+                        }
 
                         trThanks.Visible = true;
                         trForm.Visible = false;
 
                         //Also send email
-                        string toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                        string toAddress;
+                        if (isSpanish)
+                            toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipientSpanish"];
+                        else 
+                            toAddress = ConfigurationSettings.AppSettings["DCIdeasEmailRecipient"];
+                        
                         string fromAddress = "misc@mail.nih.gov";
                         System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
-                        mailMsg.Subject = "Cancer Bulletin";
+                        if (isSpanish)
+                            mailMsg.Subject = "Boletín del Instituto Nacional del Cáncer";
+                        else
+                            mailMsg.Subject = "NCI Cancer Bulletin";
                         mailMsg.Body += strComment;
                         System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
                         smtpClient.Send(mailMsg);

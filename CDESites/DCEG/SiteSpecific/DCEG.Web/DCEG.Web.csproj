@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5AF3E5C9-B4B8-41FC-8BD1-676477D6C41F}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -56,13 +56,33 @@
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
-    <Content Include="Web.config" />
+    <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apps\AppsBaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Apps\SearchBaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnippetTemplates\NewsletterSearch.ascx.cs">
+      <DependentUpon>NewsletterSearch.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\NewsletterSearch.ascx.designer.cs">
+      <DependentUpon>NewsletterSearch.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\NewsletterSearchResults.ascx.cs">
+      <DependentUpon>NewsletterSearchResults.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\NewsletterSearchResults.ascx.designer.cs">
+      <DependentUpon>NewsletterSearchResults.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
@@ -105,9 +125,11 @@
     <Content Include="Schema\CDESchema.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="SnippetTemplates\NewsletterSearch.ascx" />
+    <Content Include="SnippetTemplates\NewsletterSearchResults.ascx" />
+    <Content Include="SnippetTemplates\wc.ascx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Apps\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -127,11 +149,8 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>22417</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:7073</IISUrl>
+          <IISUrl>http://localhost:7084</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

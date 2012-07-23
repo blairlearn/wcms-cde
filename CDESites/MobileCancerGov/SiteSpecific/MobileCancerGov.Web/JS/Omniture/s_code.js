@@ -25,7 +25,11 @@ s.linkTrackVars="None";
 s.linkTrackEvents="None";
 
 // If the cid query parameter exists - set prop16 and eVar16 to value of cid
-var cdrid = caseInsensitiveGetQueryParm('cdrid');
+var cdrid = caseInsensitiveGetQueryParm('cdrid'); // cdrid overrides if both cdrid and id as present
+
+if(!cdrid)
+    cdrid = caseInsensitiveGetQueryParm('id');
+
 if(cdrid)
     s.prop16=s.eVar16=cdrid; 
 

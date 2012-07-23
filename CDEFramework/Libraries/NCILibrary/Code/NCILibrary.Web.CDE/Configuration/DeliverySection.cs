@@ -34,6 +34,12 @@ namespace NCI.Web.CDE.Configuration
             get { return (CanonicalHostNameInformationElement)base["canonicalHostName"]; }
         }
 
+        [ConfigurationProperty("mobileRedirector")]
+        public MobileRedirectorInformationElement MobileRedirector
+        {
+            get { return (MobileRedirectorInformationElement)base["mobileRedirector"]; }
+        }
+
         [ConfigurationProperty("defaultHomePage")]
         public DefaultHomePageElement DefaultHomePage
         {

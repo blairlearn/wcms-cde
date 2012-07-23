@@ -152,15 +152,15 @@ namespace CancerGov.UI.CDR
             if ((this.displayInfo.Version == DisplayVersions.Print) && (this.pProtocol.ProtocolType == ProtocolTypes.Protocol))
 			{
 				sbContent.Append("<BR>");
-				
-				if (pProtocol.DateLastModified != new DateTime(0)) 
+
+                if (pProtocol.DateFirstPublished != new DateTime(0)) 
 				{
-					sbContent.Append("<span class=\"protocol-date-label\">Last Modified: </span>");
-					sbContent.Append("<span class=\"protocol-dates\">");
-					sbContent.Append(pProtocol.DateLastModified.ToString("d"));
-					sbContent.Append("</span>");
-			
-					if (pProtocol.DateFirstPublished != new DateTime(0)) 
+                    sbContent.Append("<span class=\"protocol-date-label\">First Published: </span>");
+                    sbContent.Append("<span class=\"protocol-dates\">");
+                    sbContent.Append(pProtocol.DateFirstPublished.ToString("d"));
+                    sbContent.Append("</span>");
+
+                    if (pProtocol.DateLastModified != new DateTime(0)) 
 					{
 						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp");
 					} 
@@ -170,12 +170,12 @@ namespace CancerGov.UI.CDR
 					}
 				}
 
-				if (pProtocol.DateFirstPublished != new DateTime(0)) 
+                if (pProtocol.DateLastModified != new DateTime(0)) 
 				{
-					sbContent.Append("<span class=\"protocol-date-label\">First Published: </span>");
-					sbContent.Append("<span class=\"protocol-dates\">");
-					sbContent.Append(pProtocol.DateFirstPublished.ToString("d"));
-					sbContent.Append("</span>");
+                    sbContent.Append("<span class=\"protocol-date-label\">Last Modified: </span>");
+                    sbContent.Append("<span class=\"protocol-dates\">");
+                    sbContent.Append(pProtocol.DateLastModified.ToString("d"));
+                    sbContent.Append("</span>");
 					sbContent.Append("&nbsp;&nbsp;");
 				}
 			}

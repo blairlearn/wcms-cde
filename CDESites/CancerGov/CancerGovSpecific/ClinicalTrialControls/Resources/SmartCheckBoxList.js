@@ -52,7 +52,9 @@ Object.extend(SmartCheckBoxList.prototype, {
                             output += " " + delimiter + " ";
                         }
                         item = this.select("label[for=" +  listItems[i].id + "]");
-                        output += item[0].innerHTML;
+                        if(item[0] !== undefined)
+                            output += item[0].innerHTML;
+                        
                     }
                     return output; 
                 }       

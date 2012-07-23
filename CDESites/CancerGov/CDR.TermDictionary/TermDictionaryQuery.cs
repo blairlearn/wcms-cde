@@ -25,8 +25,23 @@ namespace CancerGov.CDR.TermDictionary
         /// <param name="language"></param>
         /// <param name="rows"></param>
         /// <returns></returns>
-        [UsesSProc("usp_GetGlossary")]
         public static DataTable Search(string language, string criteria, int rows)
+        {
+            return Search(language, criteria, rows, "Cancer.gov", "Patient");
+        }
+        
+        /// <summary>
+        /// This is a method that will query the database and return a list of glossary terms
+        /// based on the criteria and the language needed
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <param name="language"></param>
+        /// <param name="rows"></param>
+        /// <param name="dictionary"></param>
+        /// <param name="audience"></param>
+        /// <returns></returns>
+        [UsesSProc("usp_GetGlossary")]
+        public static DataTable Search(string language, string criteria, int rows, string dictionary, string audience)
         {
             // create our null object
             DataTable dt = null;
@@ -39,6 +54,8 @@ namespace CancerGov.CDR.TermDictionary
                                        new SqlParameter("@Criteria", SqlDbType.VarChar),
                                        new SqlParameter("@Language", SqlDbType.VarChar),
                                        new SqlParameter("@topN", SqlDbType.Int),
+                                       new SqlParameter("@dictionary", SqlDbType.VarChar),
+                                       new SqlParameter("@audience", SqlDbType.VarChar),
                                        outputParam
                                    };
 
@@ -46,6 +63,8 @@ namespace CancerGov.CDR.TermDictionary
             parms[0].Value = criteria;
             parms[1].Value = language;
             parms[2].Value = rows;
+            parms[3].Value = dictionary;
+            parms[4].Value = audience;
 
             try
             {

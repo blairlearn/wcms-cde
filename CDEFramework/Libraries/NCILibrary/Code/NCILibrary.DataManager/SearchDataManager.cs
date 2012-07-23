@@ -97,10 +97,17 @@ namespace NCI.DataManager
                                     searchResult.OtherlanguageUrl = sqlFVReader.GetString("otherlanguageURL");
                                     searchResult.DateDisplayMode = sqlFVReader.GetString("Date_Display_Mode");
                                     searchResult.SubHeader = sqlFVReader.GetString("subheader");
+                                    searchResult.ImageSource = sqlFVReader.GetString("imagesource");
+                                    searchResult.AltText = sqlFVReader.GetString("alttext");
+                                    searchResult.AbbreviatedSource = sqlFVReader.GetString("abbreviatedsource");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
+
+                                    dt = sqlFVReader.GetDateTime("Date_first_published");
+                                    if (dt != DateTime.MinValue)
+                                        searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dt);
 
                                     dt = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dt != DateTime.MinValue)
@@ -218,11 +225,18 @@ namespace NCI.DataManager
                                     searchResult.OtherlanguageUrl = sqlFVReader.GetString("otherlanguageURL");
                                     searchResult.DateDisplayMode = sqlFVReader.GetString("Date_Display_Mode");
                                     searchResult.SubHeader = sqlFVReader.GetString("subheader");
+                                    searchResult.ImageSource = sqlFVReader.GetString("imagesource");
+                                    searchResult.AltText = sqlFVReader.GetString("alttext");
+                                    searchResult.AbbreviatedSource = sqlFVReader.GetString("abbreviatedsource");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
 
+									dt = sqlFVReader.GetDateTime("Date_first_published");
+                                    if (dt != DateTime.MinValue)
+                                        searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dt);
+										
                                     dt = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dt != DateTime.MinValue)
                                         searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dt);

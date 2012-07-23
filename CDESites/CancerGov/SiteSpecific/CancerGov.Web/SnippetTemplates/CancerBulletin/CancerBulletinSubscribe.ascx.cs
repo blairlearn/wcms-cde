@@ -150,16 +150,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     lblMessage.Text = "To begin your free subscription to the <i>NCI Cancer Bulletin</i>, enter your e-mail address below:";
                 }
             }
-
-            // Web Analytics *************************************************
-            //if (WebAnalyticsOptions.IsEnabled)
-            //{
-            //    this.WebAnalyticsPageLoad.SetChannel("NCI Cancer Bulletin");
-            //    this.WebAnalyticsPageLoad.SetLanguage(WebAnalyticsOptions.Language.English);
-            //    litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
-            //}
-            // End Web Analytics **********************************************
-
         }
 
 

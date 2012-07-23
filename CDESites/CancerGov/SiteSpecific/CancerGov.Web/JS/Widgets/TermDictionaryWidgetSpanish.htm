@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="content-language" content="es" />
+<title>NCI Dictionary of Cancer Terms</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="/PublishedContent/js/jquery-ui-1.8.5.custom.min.js" type="text/javascript"></script>
+
+<script src="TermDictionaryWidgetInnards.js" type="text/javascript"></script> 
+<link href="widget.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+<div id="container">
+	<div class="header">
+	  <h1 class="title">NCI Dictionary of Cancer Terms</h1>
+	</div>
+    
+    <div id="form" class="content">
+        <div id="searchBlock">
+            <input type="text" name="search" id="search" onkeypress="doSearch(event)" />
+            <input type="submit" name="Go" id="Go" value="Go" onclick="doSearch(null)" />
+        </div>
+        <div id="output">
+        From the National Cancer Institute: Search for more than 4,000 terms related to cancer and medicine.
+        </div>
+    </div>
+    
+    <div class="footer"><a href="http://www.cancer.gov" target="_blank" onclick="alert(window.top.location.href);">www.cancer.gov</a>
+     | <a href="#" onclick="$('#disclaimer').css({'visibility':'visible'});">Disclaimer</a></div>
+</div>
+<div id="disclaimer" >
+<p>El disclaimer goes here</p> 
+<input type="button" value="Hide" onclick="$('#disclaimer').css({'visibility':'hidden'});" />
+</div>
+
+</body>
+</html>

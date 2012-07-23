@@ -4,24 +4,51 @@
 <html>
 <head id="header" runat="server">
 
-    <script type="text/javascript" language="JavaScript" src="/JS/imgEvents.js"></script>
-    <script type="text/javascript" language="JavaScript" src="/JS/popEvents.js"></script>
+    <script src="/PublishedContent/js/popEvents.js" type="text/javascript"></script>
     <script type="text/javascript" language="JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-    <script type="text/javascript" language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
-    <script type="text/javascript" language="JavaScript" src="/PublishedContent/js/modernizr-1.7.min.js"></script>
-    <script type="text/javascript" language="JavaScript" src="/PublishedContent/js/wcmsAudio.js"></script>
-    <link rel="stylesheet" href="/stylesheets/nci.css" type="text/css" />
+    <script src="/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
+    <link href="/PublishedContent/Styles/nci.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        //Hookup JPlayer for Audio
+        if (jQuery.jPlayer) {
+            jQuery(document).ready(function($) {
+                var my_jPlayer = $("#dictionary_jPlayer");
+
+                my_jPlayer.jPlayer({
+                    swfPath: "/PublishedContent/files/global/flash/", //Path to SWF File Used by jPlayer
+                    //errorAlerts: true,
+                    supplied: "mp3" //The types of files which will be used.
+                });
+
+                //Attach a click event to the audio link
+                $("a.CDR_audiofile").click(function() {
+                    my_jPlayer.jPlayer("setMedia", {
+                        mp3: $(this).attr("href") // Defines the m4v url
+                    }).jPlayer("play");
+
+                    return false;
+                });
+            });
+        }
+           
+    </script>
+
+
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="popup">
     <div align="center">
+    <div id='dictionary_jPlayer'></div>
         <p>
             <table border="0" cellpadding="10" cellspacing="0" width="100%">
                 <tr>
                     <td align="left" valign="top">
                         <div style="width: 100%;">
                             <%=strHeading%>
+                            <div class="audioPronounceLink">
                             <%=this.Content.Render()%>
+                            </div>
                         </div>
                     </td>
                 </tr>

@@ -17,6 +17,7 @@ using NCI.Web.UI.WebControls.FormControls;
 using CancerGov.CDR.DrugDictionary;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using NCI.Search;
 
 namespace Www.Templates
 {
@@ -208,7 +209,7 @@ namespace Www.Templates
             //set up pager stuff
             if (NumResults > 0 && PageAssemblyContext.Current.DisplayVersion != DisplayVersions.Print)
             {
-                CancerGov.Common.ResultPager objPager = new CancerGov.Common.ResultPager(DictionaryURL + PageUrl, CurrentPageIndex, PageSize, 2, NumResults);
+                ResultPager objPager = new ResultPager(DictionaryURL + PageUrl, CurrentPageIndex, PageSize, 2, NumResults);
                 PagerHtml = "<p>" + objPager.RenderPager() + "</p>";
             }
             litPager.Text = PagerHtml;

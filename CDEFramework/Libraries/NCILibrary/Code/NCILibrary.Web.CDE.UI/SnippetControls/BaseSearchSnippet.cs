@@ -131,6 +131,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         keyWord = string.Empty;
                     }
 
+                    
+
                     // Call the  datamanger to perform the search
                     ICollection<SearchResult> searchResults =
                                 SearchDataManager.Execute(CurrentPage, startDate, endDate, keyWord,
@@ -144,6 +146,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     dynamicSearch.KeyWord = keyWord;
                     dynamicSearch.SiteName = siteName;
 
+                    this.PageInstruction.AddUrlFilter("Print", (name, url) =>
+                    {
+                        url.QueryParameters.Add("keyword", keyWord);
+                        url.QueryParameters.Add("startmonth", startDate.Month.ToString());
+                        url.QueryParameters.Add("startyear", startDate.Year.ToString());
+                        url.QueryParameters.Add("endmonth", endDate.Month.ToString());
+                        url.QueryParameters.Add("endyear", endDate.Year.ToString());
+
+                    });
 
                     if (actualMaxResult > 0)
                     {

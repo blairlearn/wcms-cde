@@ -316,6 +316,51 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
 	},
 
 //******************************************************************************************************	
+	GeneticsDictionarySearch : function(sender, searchString, isStartsWith) {
+        var prop24Contents = (isStartsWith) ? 'starts with' : 'contains';
+   
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            '','o','GeneticsDictionarySearch');
+        clickParams.Props = {
+            11 : 'dictionary_genetics',
+            22 : searchString,
+            24 : prop24Contents};
+        clickParams.Evars = {
+            11 : 'dictionary_genetics',
+            13 : '+1',
+            26 : prop24Contents};
+        clickParams.Events = [2]; 
+        clickParams.LogToOmniture();     
+	},
+
+//******************************************************************************************************	
+	GeneticsDictionarySearchAlphaList : function(sender, value) {
+
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            '','o','GeneticsDictionarySearchAlphaList');
+        clickParams.Props = {
+            11 : 'dictionary_genetics',
+            22 : value,
+            24 : 'starts with'};
+        clickParams.Evars = {
+            11 : 'dictionary_genetics',
+            13 : '+1',
+            26 : 'starts with'};
+        clickParams.Events = [2]; 
+        clickParams.LogToOmniture();     
+	},
+	
+//******************************************************************************************************	
+	GeneticsDictionaryResults : function(sender,resultIndex) {
+    
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            '','o','GeneticsDictionaryResults');
+        clickParams.Props = {
+            13 : resultIndex};
+        clickParams.LogToOmniture();
+	},
+
+//******************************************************************************************************	
 	TermsDictionarySearchAlphaList : function(sender, value) {
 	
         NCIAnalytics.TermsDictionarySearchCore(sender,
