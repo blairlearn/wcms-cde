@@ -87,13 +87,13 @@
                 <td valign="top" width="100%">
                 <div class="popup-add-selected">
                 <form>
-      <input type="image" src="/images/ctsearch/add-selected-btn.gif" name="selectchecked" onClick="doSubmit('ctl19_drug');" alt="Add Selected" title="Add Selected" />
+      <input type="image" src="/images/ctsearch/add-selected-btn.gif" name="selectchecked" onClick="doSubmit('<%=Request.Params["type"]%>');" alt="Add Selected" title="Add Selected" />
      </form>
 </div>
      </td>
    </tr> 
      <tr><td bgcolor="#e4e4e3" width="100%">
-                 <a href="#" onClick="javascript:window.parent.close();"><img src="/images/pop_close.gif" width="117" height="26" alt="Close Window" border="0"></a>
+                 <a href="#" onclick="javascript:window.parent.close();"><img src="/images/pop_close.gif" width="117" height="26" alt="Close Window" border="0"></a>
 
      </td></tr>
 
