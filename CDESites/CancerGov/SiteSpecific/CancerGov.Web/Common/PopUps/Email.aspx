@@ -47,5 +47,9 @@
 		</TABLE>
 		<p>
 	</div>
+    <script language="JavaScript" type="text/javascript">
+        document.getElementById('To').focus();
+    </script>
+
   </body>
 </HTML>
