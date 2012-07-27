@@ -149,11 +149,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     this.PageInstruction.AddUrlFilter("Print", (name, url) =>
                     {
                         url.QueryParameters.Add("keyword", keyWord);
-                        url.QueryParameters.Add("startmonth", startDate.Month.ToString());
-                        url.QueryParameters.Add("startyear", startDate.Year.ToString());
-                        url.QueryParameters.Add("endmonth", endDate.Month.ToString());
-                        url.QueryParameters.Add("endyear", endDate.Year.ToString());
-
+                        if (!((dynamicSearch.StartDate == "01/01/0001") || (dynamicSearch.EndDate == "12/31/9999")))
+                        {
+                            url.QueryParameters.Add("startmonth", startDate.Month.ToString());
+                            url.QueryParameters.Add("startyear", startDate.Year.ToString());
+                            url.QueryParameters.Add("endmonth", endDate.Month.ToString());
+                            url.QueryParameters.Add("endyear", endDate.Year.ToString());
+                        }
                     });
 
                     if (actualMaxResult > 0)
