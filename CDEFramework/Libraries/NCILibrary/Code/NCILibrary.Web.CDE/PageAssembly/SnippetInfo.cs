@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.XPath;
+using NCI.Logging;
 namespace NCI.Web.CDE
 {
     /// <summary>
@@ -13,6 +14,7 @@ namespace NCI.Web.CDE
     public class SnippetInfo : IXmlSerializable
     {
         private string _snippetData = null;
+        private Dictionary<string, string> _configStrings = null;
         private bool correctedCDATA = false;
         private List<DisplayVersions> listOnlyDisplayFor = new List<DisplayVersions>();
         /// <summary>
@@ -38,6 +40,16 @@ namespace NCI.Web.CDE
                 return _snippetData; 
             }
             set { _snippetData = value; } 
+        }
+        /// <summary>
+        /// Dictionary (string, string) of config strings
+        /// </summary>
+        public Dictionary<string, string> ConfigStrings
+        {
+            get
+            {
+                return _configStrings;
+            }
         }
         /// <summary>
         /// Slot to be used on the page rendered
@@ -115,6 +127,28 @@ namespace NCI.Web.CDE
                     case "Data":
                         {
                             Data = reader.ReadString();
+                        }
+                        break;
+                    case "ConfigTextItem":
+                        {
+                            if (_configStrings == null)
+                                _configStrings = new Dictionary<string,string>();
+
+                            if (reader.GetAttribute("Name") == null)
+                            {
+                                NCI.Logging.Logger.LogError("SnippetInfo", "Invalid ConfigTextItem - Name cannot be empty", NCIErrorLevel.Error);
+                                break;
+                            }
+                                                         
+                            try
+                            {
+                                _configStrings.Add(reader.GetAttribute("Name"), reader.ReadString());
+                            }
+                            catch (Exception ex)
+                            {
+                                NCI.Logging.Logger.LogError("SnippetInfo", "Invalid ConfigTextItem", NCIErrorLevel.Error, ex);
+                                break;
+                            }
                         }
                         break;
                     case "SnippetTemplatePath":
