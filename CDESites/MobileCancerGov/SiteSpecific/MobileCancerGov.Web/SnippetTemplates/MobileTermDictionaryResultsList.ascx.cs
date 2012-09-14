@@ -151,11 +151,16 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 _showDefinition = false;
                 _expand = true;
-                _expandText = expandParam;
-                if (_expandText == "#")
+                if (expandParam.Length > 0)
                 {
-                    _expandText = "[0-9]";
-                } 
+                    _expandText = expandParam.Substring(0, 1);
+                    if (_expandText == "#")
+                    {
+                        _expandText = "[0-9]";
+                    }
+                }
+                else
+                    _expandText = "";
                 
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
                 {
