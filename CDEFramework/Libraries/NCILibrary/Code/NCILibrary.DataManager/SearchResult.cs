@@ -107,6 +107,11 @@ namespace NCI.DataManager
         /// </summary>
         public string AbbreviatedSource { get; set; }
 
+        /// <summary>
+        /// Used with external news links.  Does external resource require a subscription?
+        /// </summary>
+        public Boolean SubscriptionRequired { get; set; }
+
         public SearchResult()
         {
             ShortDescription = string.Empty;
