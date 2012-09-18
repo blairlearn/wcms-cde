@@ -57,6 +57,10 @@
   <ItemGroup>
     <Compile Include="CapabilitiesDetection\CapabilitiesDetector.cs" />
     <Compile Include="CapabilitiesDetection\DisplayDeviceDetector.cs" />
+    <Compile Include="Conditional\ConditionalConfig.cs" />
+    <Compile Include="Conditional\Configuration\BooleanConditionElementCollection.cs" />
+    <Compile Include="Conditional\Configuration\ConditionalSection.cs" />
+    <Compile Include="Conditional\Configuration\BooleanConditionElement.cs" />
     <Compile Include="Configuration\canonicalHostNameElement.cs" />
     <Compile Include="Configuration\CanonicalHostNameInformationElement.cs" />
     <Compile Include="Configuration\ContentDeliveryEngineConfig.cs" />

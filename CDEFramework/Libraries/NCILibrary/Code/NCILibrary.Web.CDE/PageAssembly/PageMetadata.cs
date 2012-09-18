@@ -7,6 +7,12 @@ namespace NCI.Web.CDE
     public class PageMetadata
     {
         /// <summary>
+        /// Gets the browser title of the requested page
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string BrowserTitle { get; set; }
+
+        /// <summary>
         /// Gets the title of the requested page
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
@@ -29,7 +35,6 @@ namespace NCI.Web.CDE
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string LongDescription { get; set; }
-
 
         /// <summary>
         /// Gets the text that should be used for the meta name="description" tag.
