@@ -63,7 +63,7 @@
                                                                 <div id="divMessageBox" runat="server">
                                                                     <asp:Label ID="lblMessage" runat="server" Width="100%" />
                                                                     <div id="divSubscribe" runat="server">
-                                                                        <form name="frmSubscribe" action="<% =PrettyUrl %>" method="post">
+                                                                        <form name="frmSubscribe" action="<% =PrettyUrl %>" method="post" onsubmit="NCIAnalytics.BulletinSubscription(this);">
                                                                         <table>
                                                                             <tr>
                                                                                 <td>

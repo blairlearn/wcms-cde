@@ -1105,6 +1105,11 @@
           <documentation>A long description for a Page Assembly Instruction.</documentation>
         </annotation>
       </element>
+      <element name="BrowserTitle" type="string" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>The document title to display in the browser's title bar.</documentation>
+        </annotation>
+      </element>
       <element name="MetaDescription" type="string" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>A description for a Page Assembly Instruction which will be used for a HTML description meta tag.</documentation>
@@ -1643,6 +1648,15 @@
           </documentation>
         </annotation>
       </element>
+	  <element name="IsPublicUse" type="boolean"
+	    minOccurs="1" maxOccurs="1">
+		<annotation>
+		  <documentation>
+			Defines if this Page Assembly Instruction should 
+			display the Public Use notice.
+		  </documentation>
+		</annotation>
+	  </element>
       <element name="OrderCopyURL" type="string"
         minOccurs="0" maxOccurs="1">
         <annotation>
