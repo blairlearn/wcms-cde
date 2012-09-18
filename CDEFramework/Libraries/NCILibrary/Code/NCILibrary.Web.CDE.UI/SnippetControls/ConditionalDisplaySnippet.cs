@@ -13,23 +13,20 @@ using NCI.Web.CDE.Conditional;
 namespace NCI.Web.CDE.UI.SnippetControls
 {
     /// <summary>
-    /// This Snippet Template is for displaying conditional message based on state of a web.config 
+    /// This Snippet Template is for displaying conditional message based 
+    /// on the state of booleanCondition atColo in web.config nci/web/conditional 
     /// </summary>
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:ConditionalDisplaySnippet runat=server></{0}:ConditionalDisplaySnippet>")]
     public class ConditionalDisplaySnippet : GenericHtmlContentSnippet
     {
-        public override void RenderControl(HtmlTextWriter writer)
+        public override bool Visible
         {
-            if (ConditionalConfig.AtColo)
+            get
             {
-                base.RenderControl(writer);
+                return ConditionalConfig.AtColo;
             }
-            else
-            {
-                base.Visible = false;
-            }
+            set { }
         }
-
     }
 }
