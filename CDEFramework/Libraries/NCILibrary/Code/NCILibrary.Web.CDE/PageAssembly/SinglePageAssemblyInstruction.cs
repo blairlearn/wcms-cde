@@ -546,7 +546,8 @@ namespace NCI.Web.CDE
             AddFieldFilter("browser_title", (name, data) =>
             {
                 // BrowserTitle is optional  
-                if(this.PageMetadata.BrowserTitle != null)
+                if(this.PageMetadata.BrowserTitle != null &&
+                   this.PageMetadata.BrowserTitle != "")
                     data.Value = this.PageMetadata.BrowserTitle;
                 else
                     data.Value = this.PageMetadata.ShortTitle;
