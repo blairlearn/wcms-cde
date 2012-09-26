@@ -69,7 +69,7 @@ table.border td {
 </style>
 
 <div class="newsletterSearchFormContainer">
-<form action="/news-events/linkage-newsletter/results" name="NewsletterSearchForm" method="post" onsubmit="<% =SubmitScript %>" >
+<form action="/news-events/linkage-newsletter/search-archive/results" name="NewsletterSearchForm" method="post" onsubmit="<% =SubmitScript %>" >
 	<label for="cbkeyword" id="searchAllIssues" ><h2>Search All Issues for:</h2></label>
 	<input name="cbkeyword" size="28"onkeyup="CBSetSearchType(event);" id="cbkeyword" value="Enter Keyword" onfocus="value =''" />
 	<input type="submit" value="Search all" onclick="searchType=0;" id="ctl10_searchAllButton" name="ctl10$searchAllButton" />
