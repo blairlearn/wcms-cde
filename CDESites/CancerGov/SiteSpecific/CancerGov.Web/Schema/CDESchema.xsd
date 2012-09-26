@@ -1105,7 +1105,7 @@
           <documentation>A long description for a Page Assembly Instruction.</documentation>
         </annotation>
       </element>
-      <element name="BrowserTitle" type="string" minOccurs="1" maxOccurs="1">
+      <element name="BrowserTitle" type="string" minOccurs="0" maxOccurs="1">
         <annotation>
           <documentation>The document title to display in the browser's title bar.</documentation>
         </annotation>

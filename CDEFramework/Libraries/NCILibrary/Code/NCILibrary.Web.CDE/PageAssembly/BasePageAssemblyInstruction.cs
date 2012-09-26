@@ -50,18 +50,6 @@ namespace NCI.Web.CDE
             {
                 string languageValue = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
                 field.Value = languageValue;
-                //switch (languageValue.ToLower())
-                //{
-                //    case "en":
-                //        field.Value = "english";
-                //        break;
-                //    case "es":
-                //        field.Value = "spanish";
-                //        break;
-                //    default:
-                //        field.Value = "english";
-                //        break;
-                //}
             });
 
             // URL filters 

@@ -545,7 +545,12 @@ namespace NCI.Web.CDE
 
             AddFieldFilter("browser_title", (name, data) =>
             {
-                data.Value = this.PageMetadata.BrowserTitle;
+                // BrowserTitle is optional  
+                if(this.PageMetadata.BrowserTitle != null)
+                    data.Value = this.PageMetadata.BrowserTitle;
+                else
+                    data.Value = this.PageMetadata.ShortTitle;
+
             });
 
             AddFieldFilter("long_title", (name, data) =>
@@ -585,8 +590,6 @@ namespace NCI.Web.CDE
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, (name, data) =>
             {
-                //Site Name should be a configuration setting.
-                //data.Value = GetField("short_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
                 data.Value = GetField("browser_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
             });
 

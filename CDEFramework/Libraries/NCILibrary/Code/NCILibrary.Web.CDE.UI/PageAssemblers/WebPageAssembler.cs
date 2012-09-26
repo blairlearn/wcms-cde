@@ -163,6 +163,9 @@ namespace NCI.Web.CDE.UI
                 hm.Name = "english-linking-policy";
             else if (htmlMetaDataType == HtmlMetaDataType.EspanolLinkingPolicy)
                 hm.Name = "espanol-linking-policy";
+            else if (htmlMetaDataType == HtmlMetaDataType.RobotsNoIndexNoFollow)
+                hm.Name = "espanol-linking-policy";
+
             hm.Content = getMetaData(htmlMetaDataType);
             htmlHead.Controls.Add(hm);
         }
@@ -293,6 +296,11 @@ namespace NCI.Web.CDE.UI
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.ContentLanguage);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EnglishLinkingPolicy); 
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EspanolLinkingPolicy);
+                if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
+                    addMetaDataItem(CurrentPageHead, HtmlMetaDataType.RobotsNoIndexNoFollow);
+
+
+
             }
         }
 
