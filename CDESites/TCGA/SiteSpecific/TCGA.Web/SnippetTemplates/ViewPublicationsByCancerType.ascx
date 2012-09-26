@@ -44,7 +44,7 @@
                         <%# Eval("journalTitle").ToString() != "" ? Eval("journalTitle") + "." : ""%>    
                     </em>
                     <strong><%# Eval("volumeNumber")%></strong><%# Eval("issueNumber").ToString() != "" ? "(" + Eval("issueNumber") + "):" : "" %><%# Eval("pageNumbers").ToString() != "" ? Eval("pageNumbers") : ""%><%# Eval("volumeNumber").ToString() != "" || Eval("issueNumber").ToString() != "" || Eval("pageNumbers").ToString() != "" ? "." : "" %>
-                    <%# Eval("associatedLink")%> <%# Eval("associatedLink2")%>
+                    <%# Eval("associatedLink")%> | <%# Eval("associatedLink2")%>
                 </div>
             </li>
         </ItemTemplate>

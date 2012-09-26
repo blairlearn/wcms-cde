@@ -17,7 +17,7 @@ namespace NCI.Web.CDE.UI
         Title,
         EnglishLinkingPolicy,
         EspanolLinkingPolicy,
-        RobotsNoIndexNoFollow
+        Robots
     }
 
     /// <summary>

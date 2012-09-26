@@ -48,6 +48,13 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string MetaKeywords { get; set; }
 
+        /// <summary>
+        /// Gets the content of the robots meta tag.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string MetaRebots { get; set; }
+
+
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         [ConfigurationProperty("value", DefaultValue = "")]
         public string AltLanguageURL { get; set; }

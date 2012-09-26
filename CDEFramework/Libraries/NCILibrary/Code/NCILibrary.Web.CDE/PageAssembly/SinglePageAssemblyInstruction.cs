@@ -579,6 +579,19 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.MetaDescription;
             });
 
+            AddFieldFilter("meta_robots", (name, data) =>
+            {
+                if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
+                    data.Value = "noindex, nofollow";
+                else
+                    data.Value = "";
+            });
+
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaRobots, (name, data) =>
+            {
+                data.Value = GetField("meta_robots");
+            });
+            
             AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = this.PageMetadata.MetaKeywords;
@@ -598,6 +611,11 @@ namespace NCI.Web.CDE
             {
                 string metaDescription = GetMetaDescription();
                 data.Value = metaDescription;
+            });
+
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, (name, data) =>
+            {
+                data.Value = GetField("meta_keywords");
             });
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, (name, data) =>

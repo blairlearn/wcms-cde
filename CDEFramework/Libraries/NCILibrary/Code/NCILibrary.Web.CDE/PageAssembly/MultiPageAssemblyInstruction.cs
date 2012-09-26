@@ -741,6 +741,19 @@ namespace NCI.Web.CDE
                 data.Value = GetField("meta_keywords");
             });
 
+            AddFieldFilter("meta_robots", (name, data) =>
+            {
+                if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
+                    data.Value = "noindex, nofollow";
+                else
+                    data.Value = "";
+            });
+
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaRobots, (name, data) =>
+            {
+                data.Value = GetField("meta_robots");
+            });
+
             AddFieldFilter("channelName", (name, data) =>
             {
                 data.Value = this.SectionPath;
