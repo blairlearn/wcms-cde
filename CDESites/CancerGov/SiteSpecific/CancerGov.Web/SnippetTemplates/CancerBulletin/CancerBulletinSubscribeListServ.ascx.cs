@@ -54,7 +54,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         {
             get
             {
-                return ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
+                return ConfigurationManager.ConnectionStrings["NewsLetterDB"].ConnectionString;
             }
         }
         public string EmailAddressText
