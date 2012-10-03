@@ -70,9 +70,11 @@ table.border td {
 
 <div class="newsletterSearchFormContainer">
 <form action="/news-events/linkage-newsletter/search-archive/results" name="NewsletterSearchForm" method="post" onsubmit="<% =SubmitScript %>" >
-	<label for="cbkeyword" id="searchAllIssues" ><h2>Search All Issues for:</h2></label>
+	<h2>Search Linkage</h2>
+	<p>Find specific newsletter articles</p><br />
+	<label for="cbkeyword" id="Label1" >Enter keyword(s):</label><br />
 	<input name="cbkeyword" size="28"onkeyup="CBSetSearchType(event);" id="cbkeyword" value="Enter Keyword" onfocus="value =''" />
-	<input type="submit" value="Search all" onclick="searchType=0;" id="ctl10_searchAllButton" name="ctl10$searchAllButton" />
+	<input type="submit" value="Search" onclick="searchType=0;" id="ctl10_searchAllButton" name="ctl10$searchAllButton" />
 	<p> Or search between these dates: </p>
 	<table width="100%" border="0" cellpadding="2" cellspacing="0">
 	<tbody>
