@@ -128,6 +128,10 @@ namespace NCI.Web.CDE.UI
                         metaData = asmInstr.GetField(PageAssemblyInstructionFields.HTML_MetaKeywords);
                         break;
 
+                    case HtmlMetaDataType.Robots:
+                        metaData = asmInstr.GetField(PageAssemblyInstructionFields.HTML_MetaRobots);
+                        break;
+
                     case HtmlMetaDataType.ContentLanguage:
                         metaData = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
                         break;
@@ -155,6 +159,8 @@ namespace NCI.Web.CDE.UI
         {
             HtmlMeta hm = new HtmlMeta();
             hm.Name = htmlMetaDataType.ToString().ToLower();
+            hm.Content = getMetaData(htmlMetaDataType); 
+
             if (htmlMetaDataType == HtmlMetaDataType.ContentLanguage)
                 hm.Name = "content-language";
             else if (htmlMetaDataType == HtmlMetaDataType.ContentType)
@@ -163,7 +169,15 @@ namespace NCI.Web.CDE.UI
                 hm.Name = "english-linking-policy";
             else if (htmlMetaDataType == HtmlMetaDataType.EspanolLinkingPolicy)
                 hm.Name = "espanol-linking-policy";
-            hm.Content = getMetaData(htmlMetaDataType);
+            else if (htmlMetaDataType == HtmlMetaDataType.Robots)
+            {
+                // If robots content has not been set, do not create robots meta tag
+                if (hm.Content == "")
+                    return;
+                else
+                    hm.Name = "robots";
+            }
+
             htmlHead.Controls.Add(hm);
         }
 
@@ -293,6 +307,7 @@ namespace NCI.Web.CDE.UI
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.ContentLanguage);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EnglishLinkingPolicy); 
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EspanolLinkingPolicy);
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Robots);
             }
         }
 

@@ -169,8 +169,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         if (IsEmailValid(strEmailAddr))
                         {
                             HandleSubscription();
-                            //Response.Redirect(surveyUrl.cbSurveyUrl.ToString());
-                            //HandleInitialSubscription(); //This is a valid email so we may continue
                         }
                         else
                         {
@@ -224,19 +222,12 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                 gNewsletterID = Strings.ToGuid(ConfigurationSettings.AppSettings["DCNewsletterID"]);
                 gUserID = Strings.ToGuid(Request.Params["userid"]);
 
-                if (gUserID != Guid.Empty)
-                {
-                    //Confirming the EMAIL
-                    HandleConfirmation();
-                }
+                divSubscribe.Visible = true;
+                if(isSpanish)
+                    lblMessage.Text = "Para iniciar su suscripción gratuita al Boletín del Instituto Nacional del Cáncer, escriba su dirección de correo electrónico:";
                 else
-                {
-                    divSubscribe.Visible = true;
-                    if(isSpanish)
-                        lblMessage.Text = "Para iniciar su suscripción gratuita al Boletín del Instituto Nacional del Cáncer, escriba su dirección de correo electrónico:";
-                    else
-                        lblMessage.Text = "To begin your free subscription to the <i>NCI Cancer Bulletin</i>, enter your e-mail address:";
-                }
+                    lblMessage.Text = "To begin your free subscription to the <i>NCI Cancer Bulletin</i>, enter your e-mail address:";
+
             }
         }
 
@@ -655,12 +646,9 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
             if (learnedItems.Count > 0 && profItems.Count > 0)
             {
-                //Insert Into DB
-                //throw new Exception(Request.Form["chkSurveyLearned"] + "<br />" + Request.Form["chkSurveyProf"]);
                 try
                 {
                     SaveSurvey(learnedItems, profItems);
-                    //divMessageBox.Visible = false;
                     if (isSpanish)
                     {
                         ShowMessage("Gracias por su respuesta.",
@@ -677,7 +665,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                         "Your response helps us better understand our readers."
                         );
                     }
-                    //lblHeader.Text = "<br/><br/>&nbsp;&nbsp;&nbsp;Thank You for your response.<br/><br/>Your response helps us better understand our readers.";
                 }
                 catch (System.Data.SqlClient.SqlException sqlE)
                 {
@@ -707,97 +694,12 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
             }
             else
             {
-                //Need to keep checks?
-                //ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
-                //    "GoodText",
-                //    "Address Received",
-                //    "You will receive an e-mail shortly asking you to verify your e-mail address.  To start your subscription to the <i>NCI Cancer Bulletin</i>, simply respond to the confirmation e-mail.<br/>"
-                //    );
-
                 divSurvey.Visible = true;
                 lblSurveyMessage.CssClass = "BadText";
                 DrawSurvey(learnedItems, profItems);
             }
         }
 
-        private void HandleConfirmation()
-        {
-            //This is the link from the validation email			
-
-            //We have a userid and a Newsletterid
-
-            //Try and subscribe the user
-            using (SqlConnection scnEmail = new SqlConnection(NewsLetterDBConnection))
-            {
-                using (SqlCommand scEmail = new SqlCommand("usp_Newsletter_AddSubscription", scnEmail))
-                {
-
-                    scEmail.CommandType = CommandType.StoredProcedure;
-
-                    scEmail.Parameters.Add(
-                        new SqlParameter("@UserID", gUserID));
-                    scEmail.Parameters.Add(
-                        new SqlParameter("@NewsletterID", gNewsletterID));
-                    scEmail.Parameters.Add(
-                        new SqlParameter("@Format", "HTML"));
-                    scEmail.Parameters.Add(
-                        new SqlParameter("@KeywordList", ""));
-
-                    try
-                    {
-                        scEmail.Connection.Open();
-                        scEmail.ExecuteNonQuery();
-
-                        ShowMessage(
-                            "Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
-                            "GoodText",
-                            "Subscription Confirmed",
-                            "<p>Thank you for subscribing to the <i>NCI Cancer Bulletin</i>. With each issue, " +
-                            "you can expect to receive by e-mail the most timely and relevant information about the cancer community.</p>" +
-                            "<p>We trust that the <i>NCI Cancer Bulletin</i> will soon be a must-read for you and your colleagues.</p>" +
-                            "<a href=\"/ncicancerbulletin\">View the <i>NCI Cancer Bulletin</i> home page</a><br/>"
-                            );
-                    }
-                    catch (System.Data.SqlClient.SqlException sqlE)
-                    {
-                        if (sqlE.Number == 2627)
-                        {
-                            ShowMessage(
-                                "This e-mail address has already been confirmed.<br>",
-                                "BadText",
-                                "Address Already Confirmed",
-                                "Address Already Confirmed<br/>"
-                                );
-
-                        }
-                        else
-                        {
-                            //Other Error
-                            if (isSpanish)
-                            {
-                                ShowMessage(
-                                    "Error",
-                                    "BadText",
-                                    "Error",
-                                    "Se presentó un error al procesar su solicitud<br/>"
-                                    );
-                            }
-                            else
-                            {
-                                ShowMessage(
-                                    "Error",
-                                    "BadText",
-                                    "Error",
-                                    "There was an error processing your request<br/>"
-                                    );
-                            }
-                            NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleConfirmation", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
-
-                        }
-                    }
-                }
-            }
-        }
         private void HandleSubscription()
         {
             string toAddress = ConfigurationSettings.AppSettings["ListServe"];
@@ -811,15 +713,6 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
                     SmtpClient client = new SmtpClient();
                     client.Send(mess);
                 }
-
-                //System.Net.Mail.MailMessage mailMsg = new System.Net.Mail.MailMessage(fromAddress, toAddress);
-                ////mailMsg.BodyEncoding = System.Text.Encoding.UTF8;
-                ////mailMsg.Subject = "Confirm Your Subscription";
-                ////mailMsg.IsBodyHtml = true;
-                //mailMsg.Body += ConfigurationSettings.AppSettings["ListServeMessageBody"];
-
-                //System.Net.Mail.SmtpClient smtpClient = new System.Net.Mail.SmtpClient();
-                //smtpClient.Send(mailMsg);
 
                 if (isSpanish)
                 {
@@ -854,116 +747,11 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
 
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleInitialSubscription", "There was an error processing your request", NCIErrorLevel.Error, ex);
+                NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleSubscription", "There was an error processing your request", NCIErrorLevel.Error, ex);
 
             }
 
         }
-
-        private void HandleInitialSubscription()
-        {
-
-            using (SqlConnection scnEmail = new SqlConnection(NewsLetterDBConnection))
-            {
-                using (SqlCommand scEmail = new SqlCommand("usp_Newsletter_AddUser2", scnEmail))
-                {
-
-                    scEmail.CommandType = CommandType.StoredProcedure;
-                    scEmail.Parameters.Add(
-                        new SqlParameter("@Email", strEmailAddr));
-                    scEmail.Parameters.Add(
-                        new SqlParameter("@NewsletterID", gNewsletterID));
-
-                    try
-                    {
-
-                        scEmail.Connection.Open();
-
-                        object objTmpUserID = scEmail.ExecuteScalar();
-
-                        //Close the connection so it is still not open while waiting for the email
-                        scEmail.Connection.Close();
-
-                        //Since we say to send, then userid should be good
-                        if ((objTmpUserID != null) && (objTmpUserID != System.DBNull.Value))
-                        {
-                            Guid tmpUserID = Strings.ToGuid(objTmpUserID.ToString());
-
-                            if (tmpUserID != Guid.Empty)
-                            {
-                                SendValidationEmail(tmpUserID, gNewsletterID, strEmailAddr);
-
-                                ShowMessage("Thank you for subscribing to the <i><b>NCI Cancer Bulletin</b></i>!",
-                                    "GoodText",
-                                    "Address Received",
-                                    "You will receive an e-mail shortly asking you to verify your e-mail address.  To start your subscription to the <i>NCI Cancer Bulletin</i>, simply respond to the confirmation e-mail.<br/>"
-                                    );
-
-                                // Web Analytics *************************************************
-                                if (WebAnalyticsOptions.IsEnabled)
-                                    this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.Subscription, wbField =>
-                                    {
-                                        wbField.Value = "";
-                                    });
-
-                                // End Web Analytics **********************************************
-
-                                lblSurveyMessage.CssClass = "GoodText";
-                                divSurvey.Visible = true;
-                                DrawSurvey(new Hashtable(), new Hashtable());
-
-                            }
-                            else
-                            {
-                                //Invalid UserID
-                                ShowMessage(
-                                    "Error",
-                                    "BadText",
-                                    "Error",
-                                    "There was an error processing your request"
-                                    );
-                            }
-                        }
-                        else
-                        {
-                            ShowMessage(
-                                "Error",
-                                "BadText",
-                                "Error",
-                                "There was an error processing your request"
-                                );
-
-                        }
-                    }
-                    catch (System.Data.SqlClient.SqlException sqlE)
-                    {
-                        if (sqlE.Number == 50000)
-                        {
-                            ShowMessage(
-                                "Sorry, Address Is Already Subscribed",
-                                "BadText",
-                                "Re-enter Address",
-                                "This e-mail address is already subscribed, please enter a new address and resubmit.<br/>"
-                                );
-                            divSubscribe.Visible = true;
-                        }
-                        else
-                        {
-                            ShowMessage(
-                                "Error",
-                                "BadText",
-                                "Error",
-                                "There was an error processing your request"
-                                );
-
-                            NCI.Logging.Logger.LogError("CancerBulletinSubscribe:HandleInitialSubscription", "There was an error processing your request", NCIErrorLevel.Error, sqlE);
-
-                        }
-                    }
-                }
-            }
-        }
-
         #endregion
 
         private void ShowMessage(string header, string className, string info, string message)

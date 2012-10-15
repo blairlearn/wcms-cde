@@ -22,5 +22,9 @@ namespace NCI.Web.CDE
         /// The text that should be used for the meta name="keywords" tag.
         /// </summary>
         public static readonly string HTML_MetaKeywords="HTML_MetaKeywords";
+        /// <summary>
+        /// The content of the robots meta tag.
+        /// </summary>
+        public static readonly string HTML_MetaRobots = "HTML_MetaRobots";
     }
 }

@@ -23,11 +23,9 @@ namespace NCI.Web.CDE.UI
         /// </summary>
         public SnippetControl SnippetControl
         {
-            get {
-                if (Controls.Count > 0)
-                    return (SnippetControl)Controls[0];
-                else
-                    return null;
+            get 
+            {
+                return Controls.Cast<SnippetControl>().FirstOrDefault();
             }
         }
 

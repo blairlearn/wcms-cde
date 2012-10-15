@@ -542,7 +542,18 @@ namespace NCI.Web.CDE
                     data.Value = _localFields[name].Value;
                 });
             }
-            
+
+            AddFieldFilter("browser_title", (name, data) =>
+            {
+                // BrowserTitle is optional  
+                if(this.PageMetadata.BrowserTitle != null &&
+                   this.PageMetadata.BrowserTitle != "")
+                    data.Value = this.PageMetadata.BrowserTitle;
+                else
+                    data.Value = this.PageMetadata.ShortTitle;
+
+            });
+
             AddFieldFilter("long_title", (name, data) =>
             {
                 data.Value = this.PageMetadata.LongTitle;
@@ -568,6 +579,19 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.MetaDescription;
             });
 
+            AddFieldFilter("meta_robots", (name, data) =>
+            {
+                if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
+                    data.Value = "noindex, nofollow";
+                else
+                    data.Value = "";
+            });
+
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaRobots, (name, data) =>
+            {
+                data.Value = GetField("meta_robots");
+            });
+            
             AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = this.PageMetadata.MetaKeywords;
@@ -580,14 +604,18 @@ namespace NCI.Web.CDE
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_Title, (name, data) =>
             {
-                //Site Name should be a configuration setting.
-                data.Value = GetField("short_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
+                data.Value = GetField("browser_title") + ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
             });
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaDescription, (name, data) =>
             {
                 string metaDescription = GetMetaDescription();
                 data.Value = metaDescription;
+            });
+
+            AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, (name, data) =>
+            {
+                data.Value = GetField("meta_keywords");
             });
 
             AddFieldFilter(PageAssemblyInstructionFields.HTML_MetaKeywords, (name, data) =>

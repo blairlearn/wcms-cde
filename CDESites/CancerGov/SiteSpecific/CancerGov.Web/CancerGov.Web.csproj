@@ -598,6 +598,36 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="DrugDictionary.svc" />
+    <Content Include="JS\ForeSee\cancel.gif" />
+    <Content Include="JS\ForeSee\cancel.html" />
+    <Content Include="JS\ForeSee\closebtn.gif" />
+    <Content Include="JS\ForeSee\decoder.html" />
+    <Content Include="JS\ForeSee\foresee-alive.js" />
+    <Content Include="JS\ForeSee\foresee-dhtml-mobile.css" />
+    <Content Include="JS\ForeSee\foresee-dhtml.css" />
+    <Content Include="JS\ForeSee\foresee-invite-mobile.css" />
+    <Content Include="JS\ForeSee\foresee-invite.js" />
+    <Content Include="JS\ForeSee\foresee-qualifier.css" />
+    <Content Include="JS\ForeSee\foresee-qualifier.js" />
+    <Content Include="JS\ForeSee\foresee-surveydef.js" />
+    <Content Include="JS\ForeSee\foresee-test.css" />
+    <Content Include="JS\ForeSee\foresee-test.js" />
+    <Content Include="JS\ForeSee\foresee-tracker.css" />
+    <Content Include="JS\ForeSee\foresee-tracker.js" />
+    <Content Include="JS\ForeSee\foresee-transport.swf" />
+    <Content Include="JS\ForeSee\foresee-trigger.js" />
+    <Content Include="JS\ForeSee\fsrlogo.gif" />
+    <Content Include="JS\ForeSee\fsroptout.html" />
+    <Content Include="JS\ForeSee\fsrtest.html" />
+    <Content Include="JS\ForeSee\invite-mobile.html" />
+    <Content Include="JS\ForeSee\invite.html" />
+    <Content Include="JS\ForeSee\qualifying.html" />
+    <Content Include="JS\ForeSee\shim.gif" />
+    <Content Include="JS\ForeSee\sitelogo.gif" />
+    <Content Include="JS\ForeSee\submit.gif" />
+    <Content Include="JS\ForeSee\tracker.html" />
+    <Content Include="JS\ForeSee\tracker_sp.html" />
+    <Content Include="JS\ForeSee\truste.png" />
     <Content Include="JS\geneticsTermDictionary.js" />
     <Content Include="JS\imgEvents.js" />
     <Content Include="JS\JSLoader\JSLoader.js" />
@@ -631,6 +661,7 @@
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsView.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx" />
+    <Content Include="SnippetTemplates\ConditionalDisplaySnippet.ascx" />
     <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />

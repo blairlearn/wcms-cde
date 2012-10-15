@@ -76,11 +76,12 @@ namespace NCI.Web.CDE.UI
         /// <param name="writer">The <see cref="T:System.Web.UI.HtmlTextWriter"/> object that receives the control content.</param>
         protected override void Render(HtmlTextWriter writer)
         {
-            // If the control count is empty the template slot then do not draw 
-            // unless forced to draw using RenderIfEmpty set to true.
-            if (this.Controls.Count == 0 && !this.RenderIfEmpty)
+            // If none of the snippet controls in the template slot are visible, 
+            // do not render - unless RenderIfEmpty is true
+            if (this.Controls.Cast<TemplateSlotItem>().Where(c => c.SnippetControl.Visible).Count() == 0 &&
+                !this.RenderIfEmpty)
                 return;
-            
+
             if (!String.IsNullOrEmpty(HeaderHtml))
                 writer.Write(HeaderHtml);
 
@@ -96,41 +97,43 @@ namespace NCI.Web.CDE.UI
         /// <param name="writer">A <see cref="T:System.Web.UI.HtmlTextWriter"/> that represents the output stream to render HTML content on the client.</param>
         protected override void RenderContents(HtmlTextWriter writer)
         {
+
+            List<TemplateSlotItem> visibleItems = new List<TemplateSlotItem>();
+            visibleItems.AddRange(this.Controls.Cast<TemplateSlotItem>().Where(c => c.SnippetControl.Visible));
+
             //Currently I am assuming this will only contain template slot items
-            foreach (Control c in this.Controls)
+            foreach (TemplateSlotItem item in visibleItems)
             {
-                TemplateSlotItem templateslotItem = c as TemplateSlotItem;
-                if (templateslotItem != null)
+
+                //Cannot have the snippet info object to be null.
+                if (item.SnippetControl != null && item.SnippetControl.SnippetInfo != null)
                 {
-                    //Cannot have the snippet info object to be null.
-                    if (templateslotItem.SnippetControl != null && templateslotItem.SnippetControl.SnippetInfo != null)
-                    {
-                        //Additional Information is added to the class attribute  
-                        //to help QA team to identify the slots.
-                        templateslotItem.CssClass += templateslotItem.SnippetControl.SnippetInfo.SlotName
-                            + templateslotItem.SnippetControl.SnippetInfo.ContentID == null ? "" : "contentid-" +templateslotItem.SnippetControl.SnippetInfo.ContentID;
-                    }
+                    //Additional Information is added to the class attribute  
+                    //to help QA team to identify the slots.
+                    item.CssClass += item.SnippetControl.SnippetInfo.SlotName
+                        + item.SnippetControl.SnippetInfo.ContentID == null ? "" : "contentid-" + item.SnippetControl.SnippetInfo.ContentID;
+                
+                
+                }
+                //TODO: Else What??? - Handle this exception.  Log Error then Break??
+
+                item.CssClass += " slot-item";
+
+                if (visibleItems.Count == 1)
+                {
+                    item.CssClass += " only-SI";
+                }
+                else if (item == visibleItems[0])
+                {
+                    item.CssClass += " first-SI";
+                }
+                if (item == visibleItems[visibleItems.Count - 1] && visibleItems.Count != 1)
+                {
+                    item.CssClass += " last-SI";
                 }
 
-                if (c is TemplateSlotItem)
-                {
-                    ((TemplateSlotItem)c).CssClass += " slot-item";
+                item.RenderControl(writer);
 
-                    if (this.Controls.Count == 1)
-                    {
-                        ((TemplateSlotItem)c).CssClass += " only-SI";
-                    }
-                    else if (c == this.Controls[0])
-                    {
-                        ((TemplateSlotItem)c).CssClass += " first-SI";
-                    }
-                    if (c == this.Controls[this.Controls.Count - 1] && this.Controls.Count!=1)
-                    {
-                        ((TemplateSlotItem)c).CssClass += " last-SI";
-                    }
-                }
-
-                c.RenderControl(writer);
             }
         }
     }

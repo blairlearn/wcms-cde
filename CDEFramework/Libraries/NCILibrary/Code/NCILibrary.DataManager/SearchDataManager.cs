@@ -228,6 +228,7 @@ namespace NCI.DataManager
                                     searchResult.ImageSource = sqlFVReader.GetString("imagesource");
                                     searchResult.AltText = sqlFVReader.GetString("alttext");
                                     searchResult.AbbreviatedSource = sqlFVReader.GetString("abbreviatedsource");
+                                    searchResult.SubscriptionRequired = sqlFVReader.GetBoolean("subscription_required");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
