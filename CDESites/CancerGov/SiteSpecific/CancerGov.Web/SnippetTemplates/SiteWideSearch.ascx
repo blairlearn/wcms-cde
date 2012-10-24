@@ -20,7 +20,7 @@
             <!-- Best Bets Here -->
             <asp:Repeater ID="rptBestBets" EnableViewState="false" runat="server">
                 <ItemTemplate>
-                    <div class="searchResultsHeader>
+                    <div class="searchResultsHeader">
                         <asp:Label CssClass="header-A" 
                             ID="lblBBCatName" 
                             Text='<%# (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish ? "Mejores resultados para " : "Best Bets for ") + Eval("CategoryName")%>'
@@ -38,7 +38,7 @@
             </asp:PlaceHolder>
             
             <!-- Results x-y of z for: Keyword -->
-            <div class="searchResultsHeader>
+            <div class="searchResultsHeader">
                 <asp:Label CssClass="header-A" ID="lblTopResultsXofY" runat="server" /> <asp:Label ID="lblTopResultsXofYKeyword" runat="server" />
             </div>
             
