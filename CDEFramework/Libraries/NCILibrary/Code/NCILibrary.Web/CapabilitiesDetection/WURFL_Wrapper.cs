@@ -10,6 +10,9 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+
+using NCILibrary.Web.CapabilitiesDetection;
+
 using WURFL;
 using Wurfl.AspNet.DeviceBrowser.Helpers;
 
@@ -18,12 +21,32 @@ namespace NCI.Web
 {
     public class WURFL_Wrapper
     {
-        private WurflLoader _WurflLoader = new WurflLoader();
         private WURFL.IDevice _device = null;
         private IWURFLManager _manager = null;
         private Dictionary<string, string> _capabilityDictionary = null;
         private bool _loaded = false;
         private HttpRequest _httpRequest = null;
+
+        /// <summary>
+        /// One-time setup for the wrapper.
+        /// </summary>
+        static WURFL_Wrapper()
+        {
+            // Load configuration data.  If a config section exists, set the location of the WURFL
+            // data and patch files.
+            //
+            // WurflLoader is a static class with the sole exception of the
+            // SetDataPath method.  Because it was created externally, we don't
+            // want to refactor it, but because we only reference it via WURFL_Wrapper,
+            // we can safely initialize it in a static constructor and override the
+            // default data and patch file locations.
+            CapabilitiesDetectionSection config = (CapabilitiesDetectionSection)ConfigurationManager.GetSection("nci/web/capabilities");
+            if (config != null)
+            {
+                WurflLoader loader = new WurflLoader();
+                loader.SetDataPath(config.DeviceData.dataFile, config.DeviceData.patchFile);
+            }
+        }
 
         public HttpRequest HttpRequest
         {
