@@ -6,7 +6,7 @@ var $$FSR = {
    'sessionreplay': true,
    'auto' : true,
    'encode' : true,
-   'files': '/scripts/foresee/',
+   'files': '/PublishedContent/Files/Configuration/js/Foresee/',
    'id': 'ZdykBhX9f5FYknEDsngaKg==',
    'definition': 'foresee-surveydef.js',
    'embedded': false,
