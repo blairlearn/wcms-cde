@@ -7,6 +7,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Globalization;
 using NCI.Web.CDE.Configuration;
+using NCI.Web.CDE.HttpHeaders;
 using NCI.Util;
 using NCI.Logging;
 using NCI.Web.Extensions;
@@ -221,6 +222,13 @@ namespace NCI.Web.CDE.UI
         {
             base.OnInit(e);
             InsertStyleSheetsJavascriptsReferences();
+
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            SetCustomHttpHeaders();
         }
 
         /// <summary>
@@ -438,7 +446,16 @@ namespace NCI.Web.CDE.UI
                 }
             }
         }
-     
+
+        /// <summary>
+        /// Add custom headers to the HTTP Response.
+        /// List of header names and values loaded from web.config in nci/web/httpHeaders/headers
+        /// </summary>
+        protected virtual void SetCustomHttpHeaders()
+        {
+            HttpHeaders.HttpHeaders.SetCustomHeaders(HttpContext.Current);
+        }
+
         #endregion
     }
 }
