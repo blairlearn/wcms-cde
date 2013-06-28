@@ -38,8 +38,8 @@
 							</tr>
 							<tr><td>&nbsp;</td></tr>
 							<tr valign="middle">
-								<td align="right" valign="middle" nowrap><label for="FromName"><%=strName%></label></td>
-								<td align="left" valign="middle"><recaptcha:RecaptchaControl
+								
+								<td align="left" valign="middle" colspan="2"><recaptcha:RecaptchaControl
                                                                     ID="recaptcha"
                                                                     runat="server"
                                                                     PublicKey="6LcQe-MSAAAAAAG-lHJXWqCfOQQVVx9JMkv0rzDO"
