@@ -95,7 +95,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                                     pgoBase = new LinkPageOption();
                                     ((LinkPageOption)pgoBase).Href = pgInstruction.GetUrl("email").ToString();
                                     ((LinkPageOption)pgoBase).OnClick = pgOptionItem.WebAnalyticsFunction;
-                                    ((LinkPageOption)pgoBase).OnClick += " " + "dynPopWindow('" + ((LinkPageOption)pgoBase).Href.Replace("'", "%27").Replace("(", "%28").Replace(")", "%29") + "', 'emailPopUp', 'height=365,width=525'); return false;";
+                                    ((LinkPageOption)pgoBase).OnClick += " " + "dynPopWindow('" + ((LinkPageOption)pgoBase).Href.Replace("'", "%27").Replace("(", "%28").Replace(")", "%29") + "', 'emailPopUp', 'height=525,width=492'); return false;";
                                 }
                                 else if (String.Compare(pgOptionItem.OptionType, PageOptionType.BookMarkShare.ToString()) == 0)
                                 {
