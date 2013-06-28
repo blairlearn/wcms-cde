@@ -1,4 +1,5 @@
 ﻿<%@ Page language="c#" trace="false" Codebehind="Email.aspx.cs" AutoEventWireup="True" Inherits="CancerGov.Web.Email" %>
+<%@ Register TagPrefix="recaptcha" Namespace="Recaptcha" Assembly="Recaptcha" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
   <HEAD id="header" runat="server">
@@ -33,6 +34,16 @@
 								<td align="right" valign="middle" nowrap><label for="FromName"><%=strName%></label></td>
 								<td align="left" valign="middle"><input type="text" id="FromName" runat="server"></td><td>&nbsp;</td>
 							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr valign="middle">
+								<td align="right" valign="middle" nowrap><label for="FromName"><%=strName%></label></td>
+								<td align="left" valign="middle"><recaptcha:RecaptchaControl
+                                                                    ID="recaptcha"
+                                                                    runat="server"
+                                                                    PublicKey="6LdBe-MSAAAAAF6kF0RkRnH3jSaYhiDguCgcSTmW"
+                                                                    PrivateKey="6LcQe-MSAAAAALjG1vwiC_iSkbNKjQMYXUA9B69p"/></td><td>&nbsp;</td>
+							</tr>
+
 						</table>
 						<p>
 						<input type="submit" value="<%=strSend%>">

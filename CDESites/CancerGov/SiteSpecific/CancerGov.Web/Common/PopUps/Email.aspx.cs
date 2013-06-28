@@ -87,9 +87,10 @@ namespace CancerGov.Web
 
                 toValid.Validate();
                 fromValid.Validate();
+                recaptcha.Validate();
 
                 //Send Email Required Controls Are Valid
-                if (toValid.IsValid && fromValid.IsValid)
+                if (toValid.IsValid && fromValid.IsValid && recaptcha.IsValid)
                 {
                     confirmDiv.Visible = true;
                     formDiv.Visible = false;
