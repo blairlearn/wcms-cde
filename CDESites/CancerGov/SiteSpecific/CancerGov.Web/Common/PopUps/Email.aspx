@@ -36,17 +36,13 @@
 								<asp:RegularExpressionValidator ID="revFromName" ControlToValidate="FromName" runat="server" Display="Dynamic" ValidationExpression="^[^<>:/\\=]{0,100}$" Text="Invalid entry" />
 								</td><td>&nbsp;</td>
 							</tr>
-							<tr><td>&nbsp;</td></tr>
-							<tr valign="middle">
-								
-								<td align="left" valign="middle" colspan="2"><recaptcha:RecaptchaControl
-                                                                    ID="recaptcha"
-                                                                    runat="server"
-                                                                    PublicKey="6LcQe-MSAAAAAAG-lHJXWqCfOQQVVx9JMkv0rzDO"
-                                                                    PrivateKey="6LcQe-MSAAAAALjG1vwiC_iSkbNKjQMYXUA9B69p"/></td><td>&nbsp;</td>
-							</tr>
-
 						</table>
+						<p>
+						<recaptcha:RecaptchaControl
+                            ID="recaptcha"
+                            runat="server"
+                            PublicKey="6LcQe-MSAAAAAAG-lHJXWqCfOQQVVx9JMkv0rzDO"
+                            PrivateKey="6LcQe-MSAAAAALjG1vwiC_iSkbNKjQMYXUA9B69p"/>
 						<p>
 						<input type="submit" value="<%=strSend%>">
 					</form>
