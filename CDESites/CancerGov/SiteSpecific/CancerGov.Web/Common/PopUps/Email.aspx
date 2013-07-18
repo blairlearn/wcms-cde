@@ -1,4 +1,5 @@
 ﻿<%@ Page language="c#" trace="false" Codebehind="Email.aspx.cs" AutoEventWireup="True" Inherits="CancerGov.Web.Email" %>
+<%@ Register TagPrefix="recaptcha" Namespace="Recaptcha" Assembly="Recaptcha" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
   <HEAD id="header" runat="server">
@@ -31,9 +32,17 @@
 							<tr><td>&nbsp;</td></tr>
 							<tr valign="middle">
 								<td align="right" valign="middle" nowrap><label for="FromName"><%=strName%></label></td>
-								<td align="left" valign="middle"><input type="text" id="FromName" runat="server"></td><td>&nbsp;</td>
+								<td align="left" valign="middle"><input type="text" id="FromName" runat="server">
+								<asp:RegularExpressionValidator ID="revFromName" ControlToValidate="FromName" runat="server" Display="Dynamic" ValidationExpression="^[^<>:/\\=]{0,100}$" Text="Invalid entry" />
+								</td><td>&nbsp;</td>
 							</tr>
 						</table>
+						<p>
+						<recaptcha:RecaptchaControl
+                            ID="recaptcha"
+                            runat="server"
+                            PublicKey="6LcQe-MSAAAAAAG-lHJXWqCfOQQVVx9JMkv0rzDO"
+                            PrivateKey="6LcQe-MSAAAAALjG1vwiC_iSkbNKjQMYXUA9B69p"/>
 						<p>
 						<input type="submit" value="<%=strSend%>">
 					</form>
