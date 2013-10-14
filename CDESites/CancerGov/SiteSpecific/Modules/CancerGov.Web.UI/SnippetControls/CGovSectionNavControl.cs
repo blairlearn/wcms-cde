@@ -9,8 +9,10 @@ using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
 
 using NCI.Text;
+using NCI.Web.CDE.UI;
+using NCI.Web.CDE;
 
-namespace NCI.Web.CDE.UI.SnippetControls
+namespace CancerGov.Web.UI.SnippetControls
 {
     /// <summary>
     /// This Snippet Template is for displaying blobs of HTML that Percussion has generated.
@@ -20,25 +22,26 @@ namespace NCI.Web.CDE.UI.SnippetControls
     public class CGovSectionNavControl : SnippetControl
     {
         //My Nav Here
-        string _htmlData = String.Empty;
+        NavigationItem _navItem = null;
 
         //Property for My Nav
-        public string HtmlData
+        public NavigationItem NavigationItem
         {
-            get { return _htmlData; }
-            set { _htmlData = value; }
+            get { return _navItem; }
+            set { _navItem = value; }
         }
 
         public void Page_Load(object sender, EventArgs e)
         {
-            HtmlData = SnippetInfo.Data;
+           // _navItem = NavigationItem.ParseTree(SnippetInfo.Data);
         }
 
         public override void RenderControl(HtmlTextWriter writer)
         {
             base.RenderControl(writer);
-            LiteralControl lit = new LiteralControl(HtmlData);
-            lit.RenderControl(writer);
+            //oops!
+            //LiteralControl lit = new LiteralControl(NavigationItem.ToString());
+            //lit.RenderControl(writer);
         }
     }
 }

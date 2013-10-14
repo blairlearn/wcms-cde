@@ -1,1 +1,1 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Web.UI.SnippetTemplates.CGovMainNavControl" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Web.UI.SnippetControls.CGovMainNavControl" %>
