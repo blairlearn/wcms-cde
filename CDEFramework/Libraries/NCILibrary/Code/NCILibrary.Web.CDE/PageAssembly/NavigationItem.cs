@@ -59,7 +59,7 @@ namespace NCI.Web.CDE
 
             NavigationItem result = new NavigationItem(titleNode.InnerText, urlNode.InnerText, sectionPathNode.InnerText);
 
-            XmlNodeList Children = node.SelectNodes("./NavigationItems/NavigationItem");
+            XmlNodeList Children = node.SelectNodes("./NavItems/NavItem");
 
             if (Children == null)
             {
