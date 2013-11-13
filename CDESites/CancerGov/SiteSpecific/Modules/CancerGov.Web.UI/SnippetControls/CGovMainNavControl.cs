@@ -183,10 +183,13 @@ namespace CancerGov.Web.UI.SnippetControls
                     if (path.Contains(item.URL))
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Class, "current");
+                       
+
                     }
                 }
             }
 
+            writer.AddAttribute(HtmlTextWriterAttribute.Headers, path+"here" );
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
             
             writer.RenderBeginTag(HtmlTextWriterTag.A);
@@ -205,7 +208,14 @@ namespace CancerGov.Web.UI.SnippetControls
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                 foreach (NavigationItem subitem in item.ChildItems)
                 {
-                    RenderNavItem(subitem, writer, itemNum++, numItems);
+                    if (item.Title == "Site Root" || item.URL == "/espanol")
+                    {
+
+                    }
+                    else
+                    {
+                        RenderNavItem(subitem, writer, itemNum++, numItems);
+                    }
                 }
                 writer.RenderEndTag();
             }
