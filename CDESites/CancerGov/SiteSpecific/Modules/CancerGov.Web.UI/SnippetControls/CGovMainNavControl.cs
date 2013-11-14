@@ -84,16 +84,60 @@ namespace CancerGov.Web.UI.SnippetControls
             int size = root.ChildItems.Length;
             int count = 1;
             //writer.Write("Test"+size); //testing to see if it gets here
-
+            String path = Request.RawUrl;
             // writer.RenderBeginTag(HtmlTextWriterTag.Div);
             if (root.ChildItems.Length > 0)
             {
                 //writer.Write("test if childitems");//tests to see if it gets here
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, path);
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
+
+                //This generates the homepage tab for the root in the Spanish site.s
+                if(path.Contains("/espanol")){
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "first nav-item-1");
+
+                        writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                        
+                        //checks to see if the current page is the homepage of Spanish and 
+                        if (root.URL.Equals("/espanol") && path.Equals("/espanol"))
+                        {
+                            writer.AddAttribute(HtmlTextWriterAttribute.Class, "first current");
+                        }
+                        else
+                        {
+                            writer.AddAttribute(HtmlTextWriterAttribute.Class, "first");
+                        }
+                        
+                        writer.AddAttribute(HtmlTextWriterAttribute.Href, root.URL);
+                        writer.RenderBeginTag(HtmlTextWriterTag.A);
+
+                        writer.RenderBeginTag(HtmlTextWriterTag.Span);
+
+                        writer.Write(root.Title);
+
+                        writer.RenderEndTag();
+
+                        writer.RenderEndTag();
+                        count++;
+                }
                 foreach (NavigationItem item in root.ChildItems)
                 {
-                    RenderNavItem(item, writer, count, size);
-                    count++;
+                    //if statement to check if the item is Spanish so it doesn't get placed in with English tabs
+                    //but this generates the tab for the Spanish homepage because it is before the NavItems tag
+                    if (path.Contains("/espanol"))
+                    {
+                        RenderNavItem(item, writer, count, size+1);
+                        count++;
+                    }
+
+                    else if(item.SectionPath.Equals("/espanol"))
+                    {
+                       
+                    }
+                    else{
+                        RenderNavItem(item, writer, count, size);
+                        count++;
+                    }
                 }
                 writer.RenderEndTag();
             }
@@ -127,7 +171,14 @@ namespace CancerGov.Web.UI.SnippetControls
 
             //This block of code checks the URL path against the Item but since the home page has a path of '/'
             //First check to make sure it is the url path is not equal to the item url path
-            if (!path.Equals(item.URL))
+
+            //The following if statement checks to see 
+            if (path=="/" && item.SectionPath.Equals("/homepage"))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "first current");
+            }
+
+            else if (!path.Equals(item.URL))
             {
                 if (itemNum == 1)
                 {
@@ -161,7 +212,7 @@ namespace CancerGov.Web.UI.SnippetControls
             {
                 if (itemNum == 1)
                 {
-                    if (path.Contains(item.SectionPath))
+                    if (path.Contains(item.URL))
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Class, "first current");
                     }
@@ -189,7 +240,7 @@ namespace CancerGov.Web.UI.SnippetControls
                 }
             }
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Headers, path+"here" );
+            
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
             
             writer.RenderBeginTag(HtmlTextWriterTag.A);
@@ -223,7 +274,7 @@ namespace CancerGov.Web.UI.SnippetControls
             
             
             writer.RenderEndTag();
-            //writer.Write("getting here?");
+            
         }
 
     }
