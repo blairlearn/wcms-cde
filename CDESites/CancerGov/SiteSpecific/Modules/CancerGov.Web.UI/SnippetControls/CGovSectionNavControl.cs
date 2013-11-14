@@ -135,12 +135,15 @@ namespace CancerGov.Web.UI.SnippetControls
             
             if (item.ChildItems.Length > 0)
             {
-                writer.RenderBeginTag(HtmlTextWriterTag.Ul);
-                foreach (NavigationItem subitem in item.ChildItems)
+                if (path.Contains(item.URL))
                 {
-                    RenderNavItem(subitem, writer);
+                    writer.RenderBeginTag(HtmlTextWriterTag.Ul);
+                    foreach (NavigationItem subitem in item.ChildItems)
+                    {
+                        RenderNavItem(subitem, writer);
+                    }
+                    writer.RenderEndTag();
                 }
-                writer.RenderEndTag();
             }
 
             
