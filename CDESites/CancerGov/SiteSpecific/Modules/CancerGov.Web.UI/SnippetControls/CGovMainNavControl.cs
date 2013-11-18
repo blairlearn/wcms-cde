@@ -35,28 +35,21 @@ namespace CancerGov.Web.UI.SnippetControls
 
         public void Page_Load(object sender, EventArgs e)
         {
-            //Fix ParseTree so it checks to make sure a variable is not null before calling a property or method
-            //so, Foo myvar = DoSomething(); myvar.whatever();  without checking if DoSomething did not return
-            //null is bad.  The only time it is ok is if you absolutely know DoSomething will never return 
-            //null.  Either because of the MSDN documentation or you specifically made sure it would not be.
+            //this calls the ParseTree method in NavigationItem.cs which loads up the xml from the templates in Rhythmyx
             _navItem = NavigationItem.ParseTree(SnippetInfo.Data);
             
         }
 
         public override void RenderControl(HtmlTextWriter writer)
         {
+            
+            //This method renders the control that starts out the generation of the html for the Navigation of the Main Navigation
             base.RenderControl(writer);
-            //Let's render out a basic div tag with hello world in it.
-
-            //Ok let's add a class attribute.  Now, the way the HTMLWriter works is that it is a big stack.
-            //So a stack is first in last out, and in ordr to add a class to the div, we need to do it
-            //before we render the tag.
-
-            //We can do this by adding an attribute.  Note this takes a HtmlTextWriter*Attribute*
-            //not a HtmlTextWriter*Tag*.
+            //This path is the url path that would be on the current page and is used to figure out if something would be selected or not
+            //example: for http://www.cancer.gov/aboutnci/globalhealth the variable would be "/aboutnci/globalhealth"
             String path = Request.RawUrl;
           
-
+            //This code will be taken out or generated a differently way once I figure out how, leaving for now though for testing purposes
             if (path.Contains("espanol"))
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "genSiteMainNav genSiteMainNavSpanish");
@@ -65,10 +58,9 @@ namespace CancerGov.Web.UI.SnippetControls
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "genSiteMainNav genSiteMainNavEnglish");
             }
 
-           
+            //calls the RenderNavTree Method on the navigation item passed in and uses the html writer that was 
             RenderNavTree(_navItem, writer);
-            //This ends the </div>.  The number of RenderEndTags must match the number of RenderBeginTags
-          //  writer.RenderEndTag();
+          
 
 
             
@@ -76,23 +68,24 @@ namespace CancerGov.Web.UI.SnippetControls
 
         private void RenderNavTree(NavigationItem root, HtmlTextWriter writer)
         {
-            //This will be the "anchor" html.  Probably the opening div, and the main ul tag.
-            //remember that for the MainNav we don't draw the root information...
-            // base.RenderControl(writer);
-            //also remember that the RenderEndTag must be called when you want to "output" the closing tag.
-            //I will put a placeholder div in for right now to help illustrate what I am getting at...
+            //this method generates the main navigation html and sets the classes for the tags accordingly from the html on live site
+            //this is similar to the structure of the percussion templates that generate the xml
+
+            //gets the number of children
             int size = root.ChildItems.Length;
             int count = 1;
-            //writer.Write("Test"+size); //testing to see if it gets here
+            
+            //once again getting the path from the url page currently open
             String path = Request.RawUrl;
-            // writer.RenderBeginTag(HtmlTextWriterTag.Div);
+           
+            //checks to make sure the current navon has children
             if (root.ChildItems.Length > 0)
             {
-                //writer.Write("test if childitems");//tests to see if it gets here
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, path);
+                
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
 
                 //This generates the homepage tab for the root in the Spanish site.s
+                //changing because I shouldn't be checking for "/espanol" but this will have the 
                 if(path.Contains("/espanol")){
                     writer.AddAttribute(HtmlTextWriterAttribute.Class, "first nav-item-1");
 
@@ -124,6 +117,8 @@ namespace CancerGov.Web.UI.SnippetControls
                 {
                     //if statement to check if the item is Spanish so it doesn't get placed in with English tabs
                     //but this generates the tab for the Spanish homepage because it is before the NavItems tag
+                    //These will be taken out and will just be the code that is in them, handling the spanish tab that gets generated in english in 
+                    //the percussion template
                     if (path.Contains("/espanol"))
                     {
                         RenderNavItem(item, writer, count, size+1);
@@ -141,16 +136,19 @@ namespace CancerGov.Web.UI.SnippetControls
                 }
                 writer.RenderEndTag();
             }
-           // writer.RenderEndTag();
         }
 
         private void RenderNavItem(NavigationItem item, HtmlTextWriter writer, int itemNum, int numItems)
         {
-            //base.RenderControl(writer);
-            //Add in appropriate classes
-            //detect if we the element is open/on/etc.
-            String  path = Request.RawUrl;
+            //This method is similar to the RenderNavTree method above but this one generates class attributes based on which item is being passed
             
+
+            //the path is gotten again for comparison to the section paths of items to have items be selected or not on the webpage
+
+            String  path = Request.RawUrl;
+
+
+            //some logic for whether the item is first or last in the children based on parameters passed fromt he previous method
             if (itemNum == 1)
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "first nav-item-"+itemNum);
@@ -164,15 +162,13 @@ namespace CancerGov.Web.UI.SnippetControls
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item-" + itemNum);
             }
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
-            //render the element information, matching the current HTML - so you may need more than writer.write() statements for that
-            //actually, you will because you need the link!!
-            
-            //the following needs to be before the if statement in case there is another list of items\
+           
 
             //This block of code checks the URL path against the Item but since the home page has a path of '/'
             //First check to make sure it is the url path is not equal to the item url path
 
-            //The following if statement checks to see 
+            //The following if statement checks to see if the path is equal to the homepage and the item has a section path of /homepage
+            //may be taking this out and changing the logic so I'm not looking for specific names
             if (path=="/" && item.SectionPath.Equals("/homepage"))
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "first current");
@@ -239,7 +235,7 @@ namespace CancerGov.Web.UI.SnippetControls
                     }
                 }
             }
-
+            //these are links and what is displayed that are generated html
             
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
             
@@ -253,12 +249,14 @@ namespace CancerGov.Web.UI.SnippetControls
             
             writer.RenderEndTag();
             
-            
+            //this checks to see if there are child items for the current nav itemand if there is it goes on to render the children
+            //this logic came from the CGovSectionNav Control but this may be needed in the future for evolution if there are drop down menus
             if (item.ChildItems.Length > 0)
             {
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                 foreach (NavigationItem subitem in item.ChildItems)
                 {
+                    //might have to change this as well to make sure it doesn't use strings
                     if (item.Title == "Site Root" || item.URL == "/espanol")
                     {
 
