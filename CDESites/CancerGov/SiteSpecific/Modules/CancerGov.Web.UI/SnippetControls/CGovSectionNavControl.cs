@@ -33,20 +33,20 @@ namespace CancerGov.Web.UI.SnippetControls
 
         public void Page_Load(object sender, EventArgs e)
         {
+            //loads the xml structure from the snippet infos
            _navItem = NavigationItem.ParseTree(SnippetInfo.Data);
         }
 
         public override void RenderControl(HtmlTextWriter writer)
         {
+            //renders the control for the html output
             base.RenderControl(writer);
             if (_navItem == null)
             {
                 throw new Exception("Item is null");
             }
 
-
-            //The section navigation has a beginning div tag which is why it is added here.
-       
+            //generates the start of the html by creating a div with the class to shade the area
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "leftnav-shaded-box");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
 
@@ -58,8 +58,9 @@ namespace CancerGov.Web.UI.SnippetControls
             writer.RenderEndTag();
             writer.RenderEndTag();
 
+            //then calls the renderNavtree method with the nav item
             RenderNavTree(_navItem, writer);
-            //This ends the </div>.  The number of RenderEndTags must match the number of RenderBeginTags
+         
             writer.RenderEndTag();
 
 
@@ -68,18 +69,15 @@ namespace CancerGov.Web.UI.SnippetControls
 
         private void RenderNavTree(NavigationItem root, HtmlTextWriter writer)
         {
-            //This will be the "anchor" html.  Probably the opening div, and the main ul tag.
-            //remember that for the MainNav we don't draw the root information...
-            // base.RenderControl(writer);
-            //also remember that the RenderEndTag must be called when you want to "output" the closing tag.
-            //I will put a placeholder div in for right now to help illustrate what I am getting at...
-           
-            //writer.Write("Test"+size); //testing to see if it gets here
+            //this method starts the rendering on the root navitem html from xml
 
-            // writer.RenderBeginTag(HtmlTextWriterTag.Div);
+           
+            
+
+            //calls RenderNavItem assuming there are child nodes for the root and calls it on each child
             if (root.ChildItems.Length > 0)
             {
-                //writer.Write("test if childitems");//tests to see if it gets here
+                
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                 foreach (NavigationItem item in root.ChildItems)
                 {
@@ -93,20 +91,12 @@ namespace CancerGov.Web.UI.SnippetControls
 
         private void RenderNavItem(NavigationItem item, HtmlTextWriter writer)
         {
-            //base.RenderControl(writer);
-            //Add in appropriate classes
-            //detect if we the element is open/on/etc.
+            //gets the current webpage path to use for comparisons
             String  path = Request.RawUrl;
             
            
             
-            //render the element information, matching the current HTML - so you may need more than writer.write() statements for that
-            //actually, you will because you need the link!!
-            
-            //the following needs to be before the if statement in case there is another list of items\
-
-            //This block of code checks the URL path against the Item but since the home page has a path of '/'
-            //First check to make sure it is the url path is not equal to the item url path
+            //this checks the path against the url of the item and determines if it needs to be selected or open
             if (path.Equals(item.URL))
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "leftnav-on");
@@ -132,7 +122,7 @@ namespace CancerGov.Web.UI.SnippetControls
             
             writer.RenderEndTag();
             
-            
+            //this checks if there are children for the node and if there is checks to see if the path contains the url and then renders it if it does
             if (item.ChildItems.Length > 0)
             {
                 if (path.Contains(item.URL))
@@ -149,7 +139,7 @@ namespace CancerGov.Web.UI.SnippetControls
             
             
             writer.RenderEndTag();
-            //writer.Write("getting here?");
+            
         }
 
     }
