@@ -130,6 +130,7 @@
     <Compile Include="PageAssembly\Module_PageOptionsBox.cs" />
     <Compile Include="PageAssembly\MultiPageAssemblyInstruction.cs" />
     <Compile Include="PageAssembly\MultiPage.cs" />
+    <Compile Include="PageAssembly\NavigationDisplayParams.cs" />
     <Compile Include="PageAssembly\NavigationItem.cs" />
     <Compile Include="PageAssembly\PageAssemblyContext.cs" />
     <Compile Include="PageAssembly\PageAssemblyException.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="PageAssembly\MultiPageCollection.cs" />
     <Compile Include="PageAssembly\PageMetadata.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\JavascriptInfo.cs" />
+    <Compile Include="PageAssembly\NavigationDisplayInfo.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateCollection.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateConfiguration.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\PageTemplateInfo.cs" />

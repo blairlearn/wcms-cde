@@ -58,7 +58,7 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <param name="node">the element passed in</param>
         /// <returns>the Navigation Item</returns>
-        private static NavigationItem ParseTree(XmlNode node)
+        public static NavigationItem ParseTree(XmlNode node)
         {
             //gets sets the nodes to what they are in the xml document
             XmlNode titleNode = node.SelectSingleNode("./Title");

@@ -24,19 +24,19 @@ namespace CancerGov.Web.UI.SnippetControls
     public class CGovMainNavControl : SnippetControl
     {
         //My Nav Here
-        NavigationItem _navItem = null;
+        NavigationDisplayInfo _navInfo = null;
 
         //Property for My Nav
-        public NavigationItem NavigationItem
+        public NavigationDisplayInfo NavigationDisplayInfo
         {
-            get { return _navItem; }
-            set { _navItem = value; }
+            get { return _navInfo; }
+            set { _navInfo = value; }
         }
 
         public void Page_Load(object sender, EventArgs e)
         {
             //this calls the ParseTree method in NavigationItem.cs which loads up the xml from the templates in Rhythmyx
-            _navItem = NavigationItem.ParseTree(SnippetInfo.Data);
+            _navInfo = NavigationDisplayInfo.ParseTree(SnippetInfo.Data);
             
         }
 
@@ -50,16 +50,13 @@ namespace CancerGov.Web.UI.SnippetControls
             String path = Request.RawUrl;
           
             //This code will be taken out or generated a differently way once I figure out how, leaving for now though for testing purposes
-            if (path.Contains("espanol"))
-            {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "genSiteMainNav genSiteMainNavSpanish");
-            }
-            else{
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "genSiteMainNav genSiteMainNavEnglish");
-            }
+           
+            
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, _navInfo.displayParams.CSSClasses);
+            
 
             //calls the RenderNavTree Method on the navigation item passed in and uses the html writer that was 
-            RenderNavTree(_navItem, writer);
+            RenderNavTree(_navInfo.rootNavItem, writer);
           
 
 
@@ -86,53 +83,16 @@ namespace CancerGov.Web.UI.SnippetControls
 
                 //This generates the homepage tab for the root in the Spanish site.s
                 //changing because I shouldn't be checking for "/espanol" but this will have the 
-                if(path.Contains("/espanol")){
-                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "first nav-item-1");
-
-                        writer.RenderBeginTag(HtmlTextWriterTag.Li);
-                        
-                        //checks to see if the current page is the homepage of Spanish and 
-                        if (root.URL.Equals("/espanol") && path.Equals("/espanol"))
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Class, "first current");
-                        }
-                        else
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Class, "first");
-                        }
-                        
-                        writer.AddAttribute(HtmlTextWriterAttribute.Href, root.URL);
-                        writer.RenderBeginTag(HtmlTextWriterTag.A);
-
-                        writer.RenderBeginTag(HtmlTextWriterTag.Span);
-
-                        writer.Write(root.Title);
-
-                        writer.RenderEndTag();
-
-                        writer.RenderEndTag();
-                        count++;
-                }
+  
+                    
+                
                 foreach (NavigationItem item in root.ChildItems)
                 {
-                    //if statement to check if the item is Spanish so it doesn't get placed in with English tabs
-                    //but this generates the tab for the Spanish homepage because it is before the NavItems tag
-                    //These will be taken out and will just be the code that is in them, handling the spanish tab that gets generated in english in 
-                    //the percussion template
-                    if (path.Contains("/espanol"))
-                    {
-                        RenderNavItem(item, writer, count, size+1);
-                        count++;
-                    }
-
-                    else if(item.SectionPath.Equals("/espanol"))
-                    {
-                       
-                    }
-                    else{
+                    
+                   
                         RenderNavItem(item, writer, count, size);
                         count++;
-                    }
+                   
                 }
                 writer.RenderEndTag();
             }
@@ -257,14 +217,10 @@ namespace CancerGov.Web.UI.SnippetControls
                 foreach (NavigationItem subitem in item.ChildItems)
                 {
                     //might have to change this as well to make sure it doesn't use strings
-                    if (item.Title == "Site Root" || item.URL == "/espanol")
-                    {
-
-                    }
-                    else
-                    {
+                    
+                    
                         RenderNavItem(subitem, writer, itemNum++, numItems);
-                    }
+                   
                 }
                 writer.RenderEndTag();
             }
