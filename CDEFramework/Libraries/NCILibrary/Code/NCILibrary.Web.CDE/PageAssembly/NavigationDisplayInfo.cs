@@ -16,7 +16,8 @@ namespace NCI.Web.CDE
         public NavigationItem rootNavItem { get; private set; }
 
         /// <summary>
-        /// Constructor for NavigationDisplayInfo
+        /// Internal Constructor for NavigationDisplayInfo
+        /// Use ParseTree to get the item
         /// </summary>
         /// <param name="item">Navigation Item</param>
         /// <param name="display">NavigationDisplayParams</param>
@@ -25,6 +26,7 @@ namespace NCI.Web.CDE
             displayParams = display;
             rootNavItem = item;
         }
+
         /// <summary>
         /// Inititates the parse to get the xml from the snippet infos
         /// </summary>
@@ -34,11 +36,18 @@ namespace NCI.Web.CDE
         {
 
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-
+            try
+            {
+                doc.LoadXml(xml);
+            }
+            catch (Exception ex)
+            {
+                //log error
+            }
 
             return ParseTree(doc.DocumentElement); ;
         }
+
         /// <summary>
         /// This method gets the nodes from the xml nodes which are the fields needed for the NaviationDisplayInfo
         /// </summary>

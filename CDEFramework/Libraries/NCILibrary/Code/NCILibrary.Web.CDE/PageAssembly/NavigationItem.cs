@@ -53,12 +53,13 @@ namespace NCI.Web.CDE
 
             return ParseTree(doc.DocumentElement); ;
         }
+
         /// <summary>
         /// parses the elements from the xml doc
         /// </summary>
         /// <param name="node">the element passed in</param>
         /// <returns>the Navigation Item</returns>
-        public static NavigationItem ParseTree(XmlNode node)
+        internal static NavigationItem ParseTree(XmlNode node)
         {
             //gets sets the nodes to what they are in the xml document
             XmlNode titleNode = node.SelectSingleNode("./Title");

@@ -26,13 +26,6 @@ namespace CancerGov.Web.UI.SnippetControls
         //My Nav Here
         NavigationDisplayInfo _navInfo = null;
 
-        //Property for My Nav
-        public NavigationDisplayInfo NavigationDisplayInfo
-        {
-            get { return _navInfo; }
-            set { _navInfo = value; }
-        }
-
         public void Page_Load(object sender, EventArgs e)
         {
             //this calls the ParseTree method in NavigationItem.cs which loads up the xml from the templates in Rhythmyx
@@ -45,22 +38,10 @@ namespace CancerGov.Web.UI.SnippetControls
             
             //This method renders the control that starts out the generation of the html for the Navigation of the Main Navigation
             base.RenderControl(writer);
-            //This path is the url path that would be on the current page and is used to figure out if something would be selected or not
-            //example: for http://www.cancer.gov/aboutnci/globalhealth the variable would be "/aboutnci/globalhealth"
-            String path = Request.RawUrl;
-          
-            //This code will be taken out or generated a differently way once I figure out how, leaving for now though for testing purposes
-           
             
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, _navInfo.displayParams.CSSClasses);
-            
-
             //calls the RenderNavTree Method on the navigation item passed in and uses the html writer that was 
             RenderNavTree(_navInfo.rootNavItem, writer);
           
-
-
-            
         }
 
         private void RenderNavTree(NavigationItem root, HtmlTextWriter writer)
@@ -68,30 +49,23 @@ namespace CancerGov.Web.UI.SnippetControls
             //this method generates the main navigation html and sets the classes for the tags accordingly from the html on live site
             //this is similar to the structure of the percussion templates that generate the xml
 
-            //gets the number of children
-            int size = root.ChildItems.Length;
-            int count = 1;
-            
-            //once again getting the path from the url page currently open
-            String path = Request.RawUrl;
            
             //checks to make sure the current navon has children
             if (root.ChildItems.Length > 0)
             {
-                
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, _navInfo.displayParams.CSSClasses);
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
 
                 //This generates the homepage tab for the root in the Spanish site.s
                 //changing because I shouldn't be checking for "/espanol" but this will have the 
   
-                    
+                int count = 1;
                 
                 foreach (NavigationItem item in root.ChildItems)
                 {
-                    
-                   
-                        RenderNavItem(item, writer, count, size);
-                        count++;
+
+                    RenderNavItem(item, writer, count, root.ChildItems.Length);
+                    count++;
                    
                 }
                 writer.RenderEndTag();
@@ -102,25 +76,23 @@ namespace CancerGov.Web.UI.SnippetControls
         {
             //This method is similar to the RenderNavTree method above but this one generates class attributes based on which item is being passed
             
+            //This path is the url path that would be on the current page and is used to figure out if something would be selected or not
+            //example: for http://www.cancer.gov/aboutnci/globalhealth the variable would be "/aboutnci/globalhealth"
+            String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
 
-            //the path is gotten again for comparison to the section paths of items to have items be selected or not on the webpage
-
-            String  path = Request.RawUrl;
-
+            String LiClass = "nav-item-"+itemNum;
 
             //some logic for whether the item is first or last in the children based on parameters passed fromt he previous method
             if (itemNum == 1)
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "first nav-item-"+itemNum);
+                LiClass = "first " + LiClass;
             }
             else if (itemNum == numItems)
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "last nav-item-" + numItems);
+                LiClass = "last " + LiClass;
             }
-            else
-            {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item-" + itemNum);
-            }
+            
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, LiClass);
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
            
 
@@ -128,86 +100,51 @@ namespace CancerGov.Web.UI.SnippetControls
             //First check to make sure it is the url path is not equal to the item url path
 
             //The following if statement checks to see if the path is equal to the homepage and the item has a section path of /homepage
-            //may be taking this out and changing the logic so I'm not looking for specific names
-            if (path=="/" && item.SectionPath.Equals("/homepage"))
-            {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "first current");
-            }
+            //may be taking this out and changing the logic so I'm not looking for specific names\
+            //get rid of this
 
-            else if (!path.Equals(item.URL))
+            String aClass = "";
+            
+           
+            if (itemNum == 1)
             {
-                if (itemNum == 1)
+                if (path.Equals(item.SectionPath))
                 {
-                    if (path.Contains(item.SectionPath))
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "first current");
-                    }
-                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "first");
-                }
-                else if (itemNum == numItems)
-                {
-                    if (path.Contains(item.URL))
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "last current");
-                    }
-                    else
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "last");
-                    }
+                    aClass = "first current";
                 }
                 else
                 {
-                    if (path.Contains(item.URL))
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "current");
-                    }
+                    aClass = "first";
                 }
             }
-
+            else if (itemNum == numItems)
+            {
+                if (path.Contains(item.URL))
+                {
+                    aClass="last current";
+                }
+                else
+                {
+                    aClass="last";
+                }
+            }
             else
             {
-                if (itemNum == 1)
+                if (path.Contains(item.URL))
                 {
-                    if (path.Contains(item.URL))
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "first current");
-                    }
-                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "first");
-                }
-                else if (itemNum == numItems)
-                {
-                    if (path.Contains(item.URL))
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "last current");
-                    }
-                    else
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "last");
-                    }
-                }
-                else
-                {
-                    if (path.Contains(item.URL))
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "current");
-                       
-
-                    }
+                   aClass="current";
                 }
             }
+           
+           
             //these are links and what is displayed that are generated html
-            
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, aClass);
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
-            
             writer.RenderBeginTag(HtmlTextWriterTag.A);
-
             writer.RenderBeginTag(HtmlTextWriterTag.Span);
-            
             writer.Write(item.Title);
-            
-            writer.RenderEndTag();
-            
-            writer.RenderEndTag();
+            writer.RenderEndTag();//end Span
+            writer.RenderEndTag();//end A
             
             //this checks to see if there are child items for the current nav itemand if there is it goes on to render the children
             //this logic came from the CGovSectionNav Control but this may be needed in the future for evolution if there are drop down menus
@@ -216,18 +153,14 @@ namespace CancerGov.Web.UI.SnippetControls
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                 foreach (NavigationItem subitem in item.ChildItems)
                 {
-                    //might have to change this as well to make sure it doesn't use strings
-                    
                     
                         RenderNavItem(subitem, writer, itemNum++, numItems);
                    
                 }
-                writer.RenderEndTag();
+                writer.RenderEndTag();//End UL
             }
 
-            
-            
-            writer.RenderEndTag();
+            writer.RenderEndTag();//end Li
             
         }
 

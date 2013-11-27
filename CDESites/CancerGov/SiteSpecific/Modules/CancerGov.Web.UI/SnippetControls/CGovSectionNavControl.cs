@@ -22,19 +22,14 @@ namespace CancerGov.Web.UI.SnippetControls
     public class CGovSectionNavControl : SnippetControl
     {
         //My Nav Here
-        NavigationItem _navItem = null;
+        NavigationDisplayInfo _navItem = null;
 
-        //Property for My Nav
-        public NavigationItem NavigationItem
-        {
-            get { return _navItem; }
-            set { _navItem = value; }
-        }
+        
 
         public void Page_Load(object sender, EventArgs e)
         {
             //loads the xml structure from the snippet infos
-           _navItem = NavigationItem.ParseTree(SnippetInfo.Data);
+           _navItem = NavigationDisplayInfo.ParseTree(SnippetInfo.Data);
         }
 
         public override void RenderControl(HtmlTextWriter writer)
@@ -49,19 +44,17 @@ namespace CancerGov.Web.UI.SnippetControls
             //generates the start of the html by creating a div with the class to shade the area
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "leftnav-shaded-box");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
-
             writer.RenderBeginTag(HtmlTextWriterTag.H1);
-
-            writer.AddAttribute(HtmlTextWriterAttribute.Href, _navItem.URL);
+            writer.AddAttribute(HtmlTextWriterAttribute.Href, _navItem.rootNavItem.URL);
             writer.RenderBeginTag(HtmlTextWriterTag.A);
-            writer.Write(_navItem.Title);
-            writer.RenderEndTag();
-            writer.RenderEndTag();
+            writer.Write(_navItem.rootNavItem.Title);
+            writer.RenderEndTag();//end A
+            writer.RenderEndTag();//end H1
 
             //then calls the renderNavtree method with the nav item
-            RenderNavTree(_navItem, writer);
+            RenderNavTree(_navItem.rootNavItem, writer);
          
-            writer.RenderEndTag();
+            writer.RenderEndTag();//End Div
 
 
             
@@ -69,11 +62,7 @@ namespace CancerGov.Web.UI.SnippetControls
 
         private void RenderNavTree(NavigationItem root, HtmlTextWriter writer)
         {
-            //this method starts the rendering on the root navitem html from xml
-
            
-            
-
             //calls RenderNavItem assuming there are child nodes for the root and calls it on each child
             if (root.ChildItems.Length > 0)
             {
@@ -84,43 +73,33 @@ namespace CancerGov.Web.UI.SnippetControls
                     RenderNavItem(item, writer);
             
                 }
-                writer.RenderEndTag();
+                writer.RenderEndTag();//end Ul
             }
-           // writer.RenderEndTag();
+          
         }
 
         private void RenderNavItem(NavigationItem item, HtmlTextWriter writer)
         {
-            //gets the current webpage path to use for comparisons
-            String  path = Request.RawUrl;
-            
-           
+            //gets the current webpage Section path to use for comparisons
+            String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
+            String liClass = "";
             
             //this checks the path against the url of the item and determines if it needs to be selected or open
-            if (path.Equals(item.URL))
+            if(path.Equals(item.URL))
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "leftnav-on");
+                liClass="leftnav-on";
             }
             else if (path.Contains(item.URL))
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "leftnav-open");
+                liClass="leftnav-open";
             }
 
-            
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, liClass);
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
-            
-            
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
-            
             writer.RenderBeginTag(HtmlTextWriterTag.A);
-
-          
-            
             writer.Write(item.Title);
-            
-         
-            
-            writer.RenderEndTag();
+            writer.RenderEndTag();//end A tag
             
             //this checks if there are children for the node and if there is checks to see if the path contains the url and then renders it if it does
             if (item.ChildItems.Length > 0)
@@ -132,13 +111,10 @@ namespace CancerGov.Web.UI.SnippetControls
                     {
                         RenderNavItem(subitem, writer);
                     }
-                    writer.RenderEndTag();
+                    writer.RenderEndTag();//end ul
                 }
             }
-
-            
-            
-            writer.RenderEndTag();
+            writer.RenderEndTag();//end li
             
         }
 
