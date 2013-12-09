@@ -44,29 +44,27 @@ namespace CancerGov.Web.UI.SnippetControls
           
         }
 
+        /// <summary>
+        /// Generates the main navigation html and sets the classes for the tags accordingly from the html on live site.
+        /// This is similar to the structure of the percussion templates that generate the xml.
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="writer"></param>
         private void RenderNavTree(NavigationItem root, HtmlTextWriter writer)
         {
-            //this method generates the main navigation html and sets the classes for the tags accordingly from the html on live site
-            //this is similar to the structure of the percussion templates that generate the xml
-
-           
-            //checks to make sure the current navon has children
-            if (root.ChildItems.Length > 0)
+            //checks to make sure we have something to render and that has children
+            if (root != null && root.ChildItems.Length > 0)
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, _navInfo.displayParams.CSSClasses);
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
 
                 //This generates the homepage tab for the root in the Spanish site.s
                 //changing because I shouldn't be checking for "/espanol" but this will have the 
-  
                 int count = 1;
-                
                 foreach (NavigationItem item in root.ChildItems)
                 {
-
                     RenderNavItem(item, writer, count, root.ChildItems.Length);
                     count++;
-                   
                 }
                 writer.RenderEndTag();
             }

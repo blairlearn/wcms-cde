@@ -5,6 +5,8 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 
+using NCI.Logging;
+
 namespace NCI.Web.CDE
 {
     /// <summary>
@@ -36,16 +38,29 @@ namespace NCI.Web.CDE
         {
 
             XmlDocument doc = new XmlDocument();
+            bool docLoaded = false;
+
             try
             {
                 doc.LoadXml(xml);
+                docLoaded = true;   // Won't hit this line if there's an error loading.
             }
             catch (Exception ex)
             {
-                //log error
+                // Swallow the exception. We still get an error recorded, and
+                // the user still gets content, just without the navigation element.
+                Logger.LogError("NCI.Web.CDE.NavigationDisplayInfo.NavigationDisplayInfo", "Unable to load XML document" + xml, NCIErrorLevel.Error, ex);
             }
 
-            return ParseTree(doc.DocumentElement); ;
+            // If the XML string wasn't valid, don't try parsing the string.  Just return an empty
+            // NavigationDisplayInfo structure.
+            NavigationDisplayInfo tree = null;
+            if(docLoaded )
+                tree = ParseTree(doc.DocumentElement);
+            else
+                tree = new NavigationDisplayInfo(null, null);
+
+            return tree;
         }
 
         /// <summary>
@@ -58,14 +73,18 @@ namespace NCI.Web.CDE
             XmlNode navDisplayParamNode = xml.SelectSingleNode("./DisplayParams");
             XmlNode navItemNode = xml.SelectSingleNode("./NavItem");
 
-            if (navDisplayParamNode == null || navItemNode == null)
+            if (navDisplayParamNode == null)
             {
-                throw new Exception("Error: One or both DisplayParams or NavItem is null");
+                Logger.LogError("NCI.Web.CDE.NavigationDisplayInfo.NavigationDisplayInfo", "DisplayParams is null.", NCIErrorLevel.Error);
+                Logger.LogError("NCI.Web.CDE.NavigationDisplayInfo.NavigationDisplayInfo", xml.OuterXml, NCIErrorLevel.Error);
+                throw new Exception("Error: DisplayParams is null");
             }
 
-            //I made the NavigationItem.ParseTree public so that I could just call straight into to the parse tree method
-            //of with the node
-            NavigationItem item = NavigationItem.ParseTree(navItemNode);
+            // Load details (if any) of the Navigation Item.
+            NavigationItem item = null;
+            if (navItemNode != null)
+                item = NavigationItem.ParseTree(navItemNode);
+
             NavigationDisplayParams display = NavigationDisplayParams.ParseElement(navDisplayParamNode);
 
             NavigationDisplayInfo result = new NavigationDisplayInfo(item, display);

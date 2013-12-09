@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
 
+using NCI.Logging;
 using NCI.Text;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE;
@@ -23,7 +24,6 @@ namespace CancerGov.Web.UI.SnippetControls
     {
         //My Nav Here
         NavigationDisplayInfo _navItem = null;
-
         
 
         public void Page_Load(object sender, EventArgs e)
@@ -32,32 +32,44 @@ namespace CancerGov.Web.UI.SnippetControls
            _navItem = NavigationDisplayInfo.ParseTree(SnippetInfo.Data);
         }
 
+        /// <summary>
+        /// Renders the navigation control's HTML.
+        /// </summary>
+        /// <param name="writer"></param>
         public override void RenderControl(HtmlTextWriter writer)
         {
-            //renders the control for the html output
             base.RenderControl(writer);
-            if (_navItem == null)
+
+            // If the navigation item exists, go ahead and render it.  Otherwise, log an error, but
+            // allow the page to render.
+            if (_navItem != null)
             {
-                throw new Exception("Item is null");
+                // Tricky piece -- it's legitimate for _navItem to exist, but with a NULL _navItem.rootNavItem.
+                // The case in point for this is where an empty Main Nav is being used (e.g. Cancer Bulletin.)
+                // Since the rootNavItem is what's actually being rendered, we also need to check whether it
+                // exists, however no error is logged in that case.
+                if (_navItem.rootNavItem != null)
+                {
+                    //generates the start of the html by creating a div with the class to shade the area
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "leftnav-shaded-box");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Div);
+                    writer.RenderBeginTag(HtmlTextWriterTag.H1);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Href, _navItem.rootNavItem.URL);
+                    writer.RenderBeginTag(HtmlTextWriterTag.A);
+                    writer.Write(_navItem.rootNavItem.Title);
+                    writer.RenderEndTag();  //end A
+                    writer.RenderEndTag();  //end H1
+
+                    //then calls the renderNavtree method with the nav item
+                    RenderNavTree(_navItem.rootNavItem, writer);
+
+                    writer.RenderEndTag();  //End Div
+                }
             }
-
-            //generates the start of the html by creating a div with the class to shade the area
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "leftnav-shaded-box");
-            writer.RenderBeginTag(HtmlTextWriterTag.Div);
-            writer.RenderBeginTag(HtmlTextWriterTag.H1);
-            writer.AddAttribute(HtmlTextWriterAttribute.Href, _navItem.rootNavItem.URL);
-            writer.RenderBeginTag(HtmlTextWriterTag.A);
-            writer.Write(_navItem.rootNavItem.Title);
-            writer.RenderEndTag();//end A
-            writer.RenderEndTag();//end H1
-
-            //then calls the renderNavtree method with the nav item
-            RenderNavTree(_navItem.rootNavItem, writer);
-         
-            writer.RenderEndTag();//End Div
-
-
-            
+            else
+            {
+                Logger.LogError("CancerGov.Web.UI.SnippetControls.CGovSectionNavControl", "Navigation item is unexpectedly null.", NCIErrorLevel.Error);
+            }
         }
 
         private void RenderNavTree(NavigationItem root, HtmlTextWriter writer)
@@ -84,7 +96,7 @@ namespace CancerGov.Web.UI.SnippetControls
             String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
             String liClass = "";
             
-            //this checks the path against the url of the item and determines if it needs to be selected or open
+            // Checks the section path against the page url and determines if it needs to be selected or open
             if(path.Equals(item.URL))
             {
                 liClass="leftnav-on";
@@ -101,7 +113,8 @@ namespace CancerGov.Web.UI.SnippetControls
             writer.Write(item.Title);
             writer.RenderEndTag();//end A tag
             
-            //this checks if there are children for the node and if there is checks to see if the path contains the url and then renders it if it does
+            // Checks if there are children for the node and
+            // then whether the section path contains the page url and then renders it if it does
             if (item.ChildItems.Length > 0)
             {
                 if (path.Contains(item.URL))
