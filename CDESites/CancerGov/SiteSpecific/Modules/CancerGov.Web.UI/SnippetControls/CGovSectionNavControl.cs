@@ -97,11 +97,11 @@ namespace CancerGov.Web.UI.SnippetControls
             String liClass = "";
             
             // Checks the section path against the page url and determines if it needs to be selected or open
-            if(path.Equals(item.URL))
+            if(path.Equals(item.SectionPath))
             {
                 liClass="leftnav-on";
             }
-            else if (path.Contains(item.URL))
+            else if (path.Contains(item.SectionPath))
             {
                 liClass="leftnav-open";
             }
@@ -117,7 +117,7 @@ namespace CancerGov.Web.UI.SnippetControls
             // then whether the section path contains the page url and then renders it if it does
             if (item.ChildItems.Length > 0)
             {
-                if (path.Contains(item.URL))
+                if (path.Contains(item.SectionPath))
                 {
                     writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                     foreach (NavigationItem subitem in item.ChildItems)
