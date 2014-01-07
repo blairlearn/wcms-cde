@@ -14,7 +14,7 @@
 <form id="frmResults" runat="server">
 
     <div>
-        <input onchange="trackTextChange(this)" type="text" id="txtKeyword1" name="txtKeyword1" size="75"; value="<% =Keyword %>" />&nbsp;&nbsp;<input type="image" class="schImg" src="images/general/content-search.gif" alt="Search" />
+        <input onchange="trackTextChange(this)" type="text" id="txtKeyword1" name="txtKeyword1" size="75"; value="<% =System.Web.HttpContext.Current.Server.HtmlEncode(Keyword) %>"/>&nbsp;&nbsp;<input type="image" class="schImg" src="images/general/content-search.gif" alt="Search" />
         <% if (!string.IsNullOrEmpty(ResultsText))
            { %>
         <br />

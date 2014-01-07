@@ -56,7 +56,7 @@
                 <a  class="question" href="javascript:dynPopWindow('/Common/PopUps/popHelp.aspx','popup','width=500,height=700,scrollbars=1,resizable=1,menubar=0,location=0,status=0,toolbar=0')">
                     <img src="/images/drug-dictionary-help.gif" width="13" height="13" alt="" border="0" >
                 </a> 
-                </td>
+                &nbsp;&nbsp;</td>
                 </tr>
                 </table>
                         
@@ -79,8 +79,8 @@
         <div id="welcomeDiv">
                 <p>The NCI Drug Dictionary contains technical definitions and synonyms for drugs/agents
                 used to treat patients with cancer or conditions related to cancer. Each drug entry
-                includes links to check for clinical trials listed in NCI's PDQ® Cancer Clinical
-                Trials Registry.</p>
+                includes links to check for clinical trials listed in NCI's List of Cancer Clinical
+                Trials.</p>
             <p><b>Tips on Looking Up a Drug</b></p>
             <ul>
                 <li>In the search box, type the name or part of the name of the drug/agent you are looking
@@ -94,7 +94,7 @@
                     doxorubicin, and epirubicin).</li>
                 <li>Use the
                     <img src="/images/drug-dictionary-help.gif" width="13" height="13" alt="Help icon"
-                        border="0" align="absmiddle">
+                        border="0" align="absmiddle"/>
                     icon to get more help.</li>
                 <li>The search box has an <strong>autosuggest</strong> feature. When you type three
                     or more letters, a list of up to 10 suggestions will pop up below the box. Click
@@ -110,10 +110,9 @@
             <!-- shaded box-->
             <div style="background: #EFEFEF; padding: 17px;">
                 Information in the NCI Drug Dictionary is from the <a href="http://ncit.nci.nih.gov/">
-                    NCI Thesaurus</a>, which is produced by NCI's Enterprise Vocabulary Services,
-                a collaboration involving NCI's Office of Communications and Education and NCI's Center for Bioinformatics.
-                Each drug entry includes a link to additional information available from the full
-                NCI Thesaurus database, which contains many drugs and other terms not included here.
+                    NCI Thesaurus</a>, which is produced by NCI's Enterprise Vocabulary Services. Each drug 
+                    entry includes a link to additional information available from the full NCI Thesaurus 
+                    database, which contains many drugs and other terms not included here.
             </div>
             <!-- end shaded box-->
         </div>

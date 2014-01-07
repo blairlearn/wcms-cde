@@ -4,7 +4,7 @@
 <form id="frmResults" runat="server">
 
     <div>
-        <input type="text" id="txtKeyword1" name="txtKeyword1"  size="50"; value="<% =Keyword %>" />&nbsp;<input id="swSearchButton" type="submit" value="Search"/>
+        <input type="text" id="txtKeyword1" name="txtKeyword1"  size="50"; value="<% =System.Web.HttpContext.Current.Server.HtmlEncode(Keyword) %>" />&nbsp;<input id="swSearchButton" type="submit" value="Search"/>
         <% if (!string.IsNullOrEmpty(ResultsText))
            { %>
         <br />

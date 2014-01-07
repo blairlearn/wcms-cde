@@ -221,8 +221,7 @@ namespace NCI.Web.CDE.UI
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            InsertStyleSheetsJavascriptsReferences();
-
+            InsertLeadingStyleSheetsJavascriptsReferences();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -238,6 +237,12 @@ namespace NCI.Web.CDE.UI
         /// <param name="e">Not used</param>
         protected override void OnPreRenderComplete(EventArgs e)
         {
+            // Ideally we would load the trailing Stylesheests and JavaScript in OnInitComplete
+            // or similar.  The problem is, we can't guarantee that all the other code will get
+            // it right.  So we set up the trailing stuff here instead.
+            InsertTrailingStyleSheetsJavascriptsReferences();
+
+
             base.OnPreRenderComplete(e);            
             SetTitle();
             InsertCanonicalURL();
@@ -338,30 +343,15 @@ namespace NCI.Web.CDE.UI
         }
 
         /// <summary>
-        /// Inserts the .css resources to the page. There can be one or more 
-        /// css resource for each page template. This information is found in 
-        /// the PageTemplateInfo object of the PageAssembleyContext.Current
+        /// Inserts .css and .js resources at the start of the page's block of CSS and JavaScript files.
+        /// There can be one or more css or js resource for each page template.
+        /// This information is found in the PageTemplateInfo object of the
+        /// PageAssembleyContext.Current
+        /// 
+        /// This method inserts those resources marked as "Beginning" as well as resources
+        /// which have no location specified.
         /// </summary>
-        protected virtual void InsertStyleSheetsReferences()
-        {
-            if (CurrentPageHead != null)
-            {
-                PageTemplateInfo pgTemplateInfo = PageAssemblyContext.Current.PageTemplateInfo;
-                if (pgTemplateInfo != null)
-                {
-                    // Loop thru all css resources and add css resource
-                    foreach (StyleSheetInfo ssInfo in pgTemplateInfo.StyleSheets)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath, ssInfo.Media);
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Inserts the .css and .js resources to the page. There can be one or more 
-        /// css or js resource for each page template. This information is found in 
-        /// the PageTemplateInfo object of the PageAssembleyContext.Current
-        /// </summary>
-        protected virtual void InsertStyleSheetsJavascriptsReferences()
+        protected virtual void InsertLeadingStyleSheetsJavascriptsReferences()
         {
             if (CurrentPageHead != null)
             {
@@ -371,52 +361,66 @@ namespace NCI.Web.CDE.UI
                     StyleSheetInfo[] colCss = pgTemplateInfo.StyleSheets;                    
                     JavascriptInfo[] colJs = pgTemplateInfo.Javascripts;
 
+                    // Capture all items marked as going at the start of the block.
                     IEnumerable<StyleSheetInfo> firstStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning =="true");
                     IEnumerable<JavascriptInfo> firstJavaScript = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning == "true");
-                    IEnumerable<StyleSheetInfo> lastStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.End == "true");
-                    IEnumerable<JavascriptInfo> lastJavaScript = System.Linq.Enumerable.Where(colJs, fjs => fjs.End == "true");
 
-                    IEnumerable<StyleSheetInfo> remainingStylesheets = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning != "true" && fcss.End != "true");
-                    IEnumerable<JavascriptInfo> remainingJavaScripts = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning != "true" && fjs.End != "true");
+                    // Capture all items which aren't marked for a particular location.
+                    IEnumerable<StyleSheetInfo> unspecifiedStylesheets = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning != "true" && fcss.End != "true");
+                    IEnumerable<JavascriptInfo> unspecifiedJavaScripts = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning != "true" && fjs.End != "true");
 
 
                     //Load first Javascript
-                    //if (firstJavaScript.Any())
                     foreach (JavascriptInfo jsBeginningInfo in firstJavaScript)
                         NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsBeginningInfo.JavascriptPath); 
-
                     
                     //Load first Stylesheet
-                    //if (firstStylesheet.Any())
-                    //NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, firstStylesheet.FirstOrDefault().StyleSheetPath);
                     foreach (StyleSheetInfo cssBeginningInfo in firstStylesheet)
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssBeginningInfo.StyleSheetPath, cssBeginningInfo.Media);
 
-                     
-
                     
-                    // Loop thru remaining css resources and js resource
-                    foreach (StyleSheetInfo ssInfo in remainingStylesheets)
+                    // Load the css resources and js resource with no specified location
+                    foreach (StyleSheetInfo ssInfo in unspecifiedStylesheets)
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath, ssInfo.Media);
 
-                    foreach (JavascriptInfo jsInfo in remainingJavaScripts)
+                    foreach (JavascriptInfo jsInfo in unspecifiedJavaScripts)
                         NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsInfo.JavascriptPath);
+                }
+            }
+        }
 
+        /// <summary>
+        /// Inserts .css and .js resources at the end of the page's block of CSS and JavaScript files.
+        /// There can be one or more css or js resource for each page template.
+        /// This information is found in the PageTemplateInfo object of the
+        /// PageAssembleyContext.Current
+        /// 
+        /// This method inserts onoly those resources marked as "End".
+        /// </summary>
+        protected virtual void InsertTrailingStyleSheetsJavascriptsReferences()
+        {
+            if (CurrentPageHead != null)
+            {
+                PageTemplateInfo pgTemplateInfo = PageAssemblyContext.Current.PageTemplateInfo;
+                if (pgTemplateInfo != null)
+                {
+                    StyleSheetInfo[] colCss = pgTemplateInfo.StyleSheets;
+                    JavascriptInfo[] colJs = pgTemplateInfo.Javascripts;
 
-                    //Load last Stylesheet
-                    //if (lastStylesheet.Any())
-                    //    NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, lastStylesheet.FirstOrDefault().StyleSheetPath);
+                    // Capture all items which are marked exclusively as going at the end of the block.
+                    // The present UI allows an item to be specified as both beginning and end, however
+                    // this is a UI error. Items marked as "Beginning" are only loaded via
+                    // InsertLeadingStyleSheetsJavascriptsReferences().
+                    IEnumerable<StyleSheetInfo> lastStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning != "true" && fcss.End == "true");
+                    IEnumerable<JavascriptInfo> lastJavaScript = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning != "true" && fjs.End == "true");
 
+                    //Load Stylesheets marked as "End"
                     foreach (StyleSheetInfo cssLastInfo in lastStylesheet)
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssLastInfo.StyleSheetPath, cssLastInfo.Media);
 
-                    //Load last Javascript
-                    //if (lastJavaScript.Any())
-                    //    NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, lastJavaScript.FirstOrDefault().JavaScriptPath); 
-
+                    //Load Javascript marked as "End"
                     foreach (JavascriptInfo jsLastInfo in lastJavaScript)
                         NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsLastInfo.JavascriptPath);
-
                 }
             }
         }

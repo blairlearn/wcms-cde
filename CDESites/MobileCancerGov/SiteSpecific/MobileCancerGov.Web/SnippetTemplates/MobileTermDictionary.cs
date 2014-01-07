@@ -108,7 +108,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("<table width=\"100%\">");
             searchBlock.AppendLine("<tr>");
             searchBlock.AppendLine("<td>");
-            searchBlock.AppendLine("<input class=\"searchString\" id=\"searchString\" maxlength=\"255\" name=\"searchString\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\" onkeypress=\"if(event.keyCode==13) DoSearch();\" value=\"" + searchString + "\" /> ");
+            searchBlock.AppendLine("<input class=\"searchString\" id=\"searchString\" maxlength=\"255\" name=\"searchString\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\" onkeypress=\"if(event.keyCode==13) DoSearch();\" value=\"" + System.Web.HttpContext.Current.Server.HtmlEncode(searchString) + "\" /> ");
             searchBlock.AppendLine("</td>");
             searchBlock.AppendLine("<td width=\"40\">");
 

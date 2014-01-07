@@ -121,7 +121,7 @@
     <value>Buscar</value>
   </data>
   <data name="bottomResultsXofYFormatter" xml:space="preserve">
-    <value>"Resultados {0}-{1} de {2}.</value>
+    <value>Resultados {0}-{1} de {2}.</value>
   </data>
   <data name="DidYouMeanText" xml:space="preserve">
     <value>Quiz&amp;aacute;s quiso decir</value>
