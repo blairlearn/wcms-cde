@@ -640,6 +640,31 @@ ClickParams : function(sender, reportSuites, linkType, linkName) {
         clickParams.Events = [6]; 
         clickParams.LogToOmniture(); 
     },
+	
+	//******************************************************************************************************
+	
+    DownloadKindleClick : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','d','DownloadKindleClick');
+		clickParams.Evars = {
+            30 : '+1'};
+        clickParams.Events = [22]; 
+        clickParams.LogToOmniture(); 
+    },
+    
+//******************************************************************************************************
+	
+    DownloadOtherEReaderClick : function(sender)  {
+        
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal','d','DownloadOtherEReaderClick');
+		clickParams.Evars = {
+            30 : '+1'};
+        clickParams.Events = [23]; 
+        clickParams.LogToOmniture(); 
+    },
+    
     
 //******************************************************************************************************	
     eMailLink : function(sender)  {
