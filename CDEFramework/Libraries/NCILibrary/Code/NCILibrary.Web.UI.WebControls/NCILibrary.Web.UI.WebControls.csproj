@@ -75,6 +75,7 @@
     <Compile Include="CustomSortingGridView.cs" />
     <Compile Include="DHtmlCollapsiblePanel.cs" />
     <Compile Include="DHtmlModalPopup.cs" />
+    <Compile Include="DisqusWebControl.cs" />
     <Compile Include="DropDownBoundField.cs" />
     <Compile Include="DropDownListItem.cs" />
     <Compile Include="DropDownListItemCollection.cs" />
