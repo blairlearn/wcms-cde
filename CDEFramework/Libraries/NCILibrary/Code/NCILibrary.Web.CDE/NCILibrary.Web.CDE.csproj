@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -117,6 +117,7 @@
     <Compile Include="PageAssembly\CDRDefinition.cs" />
     <Compile Include="PageAssembly\ContentDates.cs" />
     <Compile Include="PageAssembly\ContentItemInfo.cs" />
+    <Compile Include="PageAssembly\SocialMetadata.cs" />
     <Compile Include="PageAssembly\DisplayDateModes.cs" />
     <Compile Include="PageAssembly\DisplayDevices.cs" />
     <Compile Include="PageAssembly\DisplayVersions.cs" />
