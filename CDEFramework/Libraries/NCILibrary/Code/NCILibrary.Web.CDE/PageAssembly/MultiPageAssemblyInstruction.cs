@@ -63,6 +63,7 @@ namespace NCI.Web.CDE
             _snippets = new SnippetInfoCollection();
             _pages = new MultiPageCollection();
             PageMetadata = new PageMetadata();
+            SocialMetadata = new SocialMetadata();
             _localFields = new LocalFieldCollection();
 
             //base.Initialize();
@@ -210,6 +211,13 @@ namespace NCI.Web.CDE
         /// <value>The page metadata.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public PageMetadata PageMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the social metadata.
+        /// </summary>
+        /// <value>The social metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public SocialMetadata SocialMetadata { get; set; }
 
         /// <summary>
         /// Gets or sets the content dates for the page.
@@ -550,7 +558,12 @@ namespace NCI.Web.CDE
                         keysList.Add("desktopurl");
                     }
                 }
-                
+
+                // Set comments enabled
+                if (SocialMetadata.IsCommentingAvailable != null)
+                {
+                    keysList.Add("commentsavailable");
+                }
 
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
@@ -783,6 +796,10 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.ShortDescription;
             });
 
+            AddFieldFilter("is_commenting_available", (name, data) =>
+            {
+                data.Value = this.SocialMetadata.IsCommentingAvailable.ToString();
+            });
         }
 
         /// <summary>

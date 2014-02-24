@@ -15,6 +15,7 @@ using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Util;
 using NCI.Core;
+using NCI.Logging;
 
 
 namespace NCI.Web.CDE
@@ -51,7 +52,11 @@ namespace NCI.Web.CDE
             // Initialize sub objects.
             _snippets = new SnippetInfoCollection();
             PageMetadata = new PageMetadata();
+            SocialMetadata = new SocialMetadata();
             _localFields = new LocalFieldCollection();
+
+            Logger.LogError("CDE:SinglePageAssemblyInstructions.cs:SinglePageAssemblyInstruction", "PageMetadata short title value is " + PageMetadata.ShortTitle, NCIErrorLevel.Debug);
+            Logger.LogError("CDE:SinglePageAssemblyInstructions.cs:SinglePageAssemblyInstruction", "SocialMetadata commenting value is " + SocialMetadata.IsCommentingAvailable, NCIErrorLevel.Debug);
 
             //base.Initialize();
         }
@@ -148,6 +153,13 @@ namespace NCI.Web.CDE
         /// <value>The page metadata.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public PageMetadata PageMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page metadata.
+        /// </summary>
+        /// <value>The page metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public SocialMetadata SocialMetadata { get; set; }
 
         /// <summary>
         /// Gets or sets the content dates for the page.
@@ -365,6 +377,11 @@ namespace NCI.Web.CDE
                     }
                 }
 
+                if (SocialMetadata.IsCommentingAvailable != null)
+                {
+                    keysList.Add("commentsavailable");
+                }
+
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
                 {
@@ -577,6 +594,11 @@ namespace NCI.Web.CDE
             AddFieldFilter("meta_description", (name, data) =>
             {
                 data.Value = this.PageMetadata.MetaDescription;
+            });
+
+            AddFieldFilter("is_commenting_available", (name, data) =>
+            {
+                data.Value = this.SocialMetadata.IsCommentingAvailable.ToString();
             });
 
             AddFieldFilter("meta_robots", (name, data) =>
