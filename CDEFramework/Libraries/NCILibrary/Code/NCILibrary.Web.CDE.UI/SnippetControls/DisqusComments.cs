@@ -46,11 +46,9 @@ namespace NCI.Web.CDE.UI.Modules
 
             Logger.LogError("CDE:DisqusComments.cs:Page_Load", "SocialMetadata isCommentingAvailable value is " + isCommentingAvailable, NCIErrorLevel.Debug);
 
-            // pseudocode
-
-            // skip everything above if not showing comments
-
-            // end pseudocode
+            // if commenting is not available, then done with processing
+            if (!isCommentingAvailable)
+                return;
 
             // initialize the control
             theControl = new DisqusWebControl();
