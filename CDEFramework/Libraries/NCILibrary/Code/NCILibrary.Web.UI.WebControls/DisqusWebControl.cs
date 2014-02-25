@@ -9,8 +9,9 @@ using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
 using NCI.Logging;
 using NCI.Text;
+using NCI.Web.UI.WebControls.Disqus;
 
-namespace CancerGov.Web.UI.SnippetControls
+namespace NCI.Web.UI.WebControls
 {
     /// <summary>
     /// This is a web control for the Disqus javascript to be inserted on webpages if needed
@@ -88,8 +89,11 @@ namespace CancerGov.Web.UI.SnippetControls
             output.RenderBeginTag(HtmlTextWriterTag.Div);
             output.RenderEndTag();//end div
 
+            bool isProd = DisqusConfig.IsProd;
+            String snSuffix = isProd ? "-prod" : "-dev";
+
             string disqusScript =
-@"    var disqus_shortname = '" + this.Shortname + @"';
+@"    var disqus_shortname = '" + this.Shortname + snSuffix +@"';
     var disqus_identifier = '" + this.Identifier + @"';
     var disqus_url = '" + this.URL + @"';
     var disqus_title = '" + this.Title + @"';

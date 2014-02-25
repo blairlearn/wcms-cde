@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
-using NCI.Web.CDE.UI;
-using NCI.Web.CDE;
-using NCI.Web.CDE.Modules;
-using System.Configuration;
-using CancerGov.Web.UI.SnippetControls;
 using NCI.Logging;
+using NCI.Web.CDE.Modules;
+using NCI.Web.UI.WebControls;
 
 namespace NCI.Web.CDE.UI.Modules
 {

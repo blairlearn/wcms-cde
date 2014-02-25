@@ -70,6 +70,10 @@
   <ItemGroup>
     <Compile Include="CheckBoxBoundField.cs" />
     <Compile Include="CollapsiblePanel.cs" />
+    <Compile Include="Disqus\DisqusConfig.cs" />
+    <Compile Include="Disqus\Configuration\BooleanDisqusElement.cs" />
+    <Compile Include="Disqus\Configuration\BooleanDisqusElementCollection.cs" />
+    <Compile Include="Disqus\Configuration\DisqusSection.cs" />
     <Compile Include="CssBrowserSelectorManager.cs" />
     <Compile Include="CssManager.cs" />
     <Compile Include="CustomSortingGridView.cs" />
