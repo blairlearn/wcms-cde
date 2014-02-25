@@ -55,9 +55,6 @@ namespace NCI.Web.CDE
             SocialMetadata = new SocialMetadata();
             _localFields = new LocalFieldCollection();
 
-            Logger.LogError("CDE:SinglePageAssemblyInstructions.cs:SinglePageAssemblyInstruction", "PageMetadata short title value is " + PageMetadata.ShortTitle, NCIErrorLevel.Debug);
-            Logger.LogError("CDE:SinglePageAssemblyInstructions.cs:SinglePageAssemblyInstruction", "SocialMetadata commenting value is " + SocialMetadata.IsCommentingAvailable, NCIErrorLevel.Debug);
-
             //base.Initialize();
         }
 
