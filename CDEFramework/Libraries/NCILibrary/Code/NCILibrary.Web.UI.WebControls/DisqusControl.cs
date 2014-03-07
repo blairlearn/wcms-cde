@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
 using NCI.Logging;
 using NCI.Text;
-using NCI.Web.UI.WebControls.Disqus;
 
 namespace NCI.Web.UI.WebControls
 {
@@ -18,8 +17,18 @@ namespace NCI.Web.UI.WebControls
     /// </summary>
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:DisqusWebControl runat=server></{0}:DisqusWebControl>")]
-    public class DisqusWebControl : WebControl
+    public class DisqusControl : WebControl
     {
+        public DisqusControl()
+        {
+            Shortname = string.Empty;
+            Identifier = string.Empty;
+            Title = string.Empty;
+            URL = string.Empty;
+            Category = "General";
+            Disable_mobile = "false";
+        }
+
         [Bindable(true)]
         [Category("Appearance")]
         [DefaultValue("")]
@@ -89,11 +98,8 @@ namespace NCI.Web.UI.WebControls
             output.RenderBeginTag(HtmlTextWriterTag.Div);
             output.RenderEndTag();//end div
 
-            bool isProd = DisqusConfig.IsProd;
-            String snSuffix = isProd ? "-prod" : "-dev";
-
             string disqusScript =
-@"    var disqus_shortname = '" + this.Shortname + snSuffix +@"';
+@"    var disqus_shortname = '" + this.Shortname +@"';
     var disqus_identifier = '" + this.Identifier + @"';
     var disqus_url = '" + this.URL + @"';
     var disqus_title = '" + this.Title + @"';
@@ -121,7 +127,8 @@ namespace NCI.Web.UI.WebControls
             output.RenderEndTag();//end noscript
 
             output.AddAttribute(HtmlTextWriterAttribute.Href, "http://disqus.com");
-            output.AddAttribute(HtmlTextWriterAttribute.Class, "dsq-brlink");
+            // ADDED CLASS TO AVOID EXIT LINK NOTIFICATION
+            output.AddAttribute(HtmlTextWriterAttribute.Class, "dsq-brlink no-exit-notification");
             output.RenderBeginTag(HtmlTextWriterTag.A);
             output.Write("blog comments powered by ");
             output.AddAttribute(HtmlTextWriterAttribute.Class, "logo-disqus");

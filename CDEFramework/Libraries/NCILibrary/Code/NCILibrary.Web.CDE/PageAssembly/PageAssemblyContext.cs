@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
+using NCI.Logging;
 using NCI.Web.CDE;
-using NCI.Web.CDE.Configuration;
 using NCI.Web.CDE.CapabilitiesDetection;
-using System.Globalization;
+using NCI.Web.CDE.Configuration;
+using NCI.Web.ProductionHost;
 
 
 namespace NCI.Web.CDE
@@ -51,6 +53,23 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <value>The page template info.</value>
         public PageTemplateInfo PageTemplateInfo { get; private set; }
+
+        /// <summary>
+        /// Gets the production state of the current site.
+        /// </summary>
+        /// <value>The display version.</value>
+        public bool IsProd
+        {
+            get
+            {
+                string prodHost = ProductionHostConfig.Hostname;
+                string requestHost = HttpContext.Current.Request.Url.Host;
+                Logger.LogError("NCI:PageAssemblyContext.cs:IsProd",
+                        "Prod hostname = " + prodHost + ", request hostname = " + requestHost,
+                        NCIErrorLevel.Debug);
+                return !String.IsNullOrEmpty(prodHost) && String.Compare(prodHost, requestHost, StringComparison.OrdinalIgnoreCase) == 0;
+            }
+        }
 
         /// <summary>
         /// Private constructor to prevent external creation of PageAssemblyContext instances.

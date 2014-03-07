@@ -6,6 +6,12 @@ namespace NCI.Web.CDE
 {
     public class SocialMetadata
     {
+        public SocialMetadata()
+        {
+            // default to false in the case of no entry in XML
+            IsCommentingAvailable = false;
+        }
+
         /// <summary>
         /// Gets the enabled state of comments on the page.
         /// </summary>

@@ -5,6 +5,7 @@ using System.Web.UI;
 using NCI.Logging;
 using NCI.Web.CDE.Modules;
 using NCI.Web.UI.WebControls;
+using NCI.Util;
 
 namespace NCI.Web.CDE.UI.Modules
 {
@@ -15,25 +16,16 @@ namespace NCI.Web.CDE.UI.Modules
     [ToolboxData("<{0}:DisqusComments runat=server></{0}:DisqusComments>")]
     public class DisqusComments : SnippetControl
     {
-        protected DisqusWebControl theControl = null;
+        protected DisqusControl theControl = null;
 
         public void Page_Load(object sender, EventArgs e)
         {
-            // check if comments are enabled
-            BasePageAssemblyInstruction basePage = ((BasePageAssemblyInstruction)PageAssemblyContext.Current.PageAssemblyInstruction);
-            
-            bool isCommentingAvailable = false;
+            // FIX THIS COMMENT
+            BasePageAssemblyInstruction basePage = PageAssemblyContext.Current.PageAssemblyInstruction as BasePageAssemblyInstruction;
+            if (basePage == null)
+                return;
 
-            if (basePage is SinglePageAssemblyInstruction)
-            {                
-                // convert string to boolean for IsCommentingEnabled
-                isCommentingAvailable = ((SinglePageAssemblyInstruction)basePage).SocialMetadata.IsCommentingAvailable;
-            }
-            else if (basePage is MultiPageAssemblyInstruction)
-            {
-                // convert string to boolean for IsCommentingEnabled
-                isCommentingAvailable = ((MultiPageAssemblyInstruction)basePage).SocialMetadata.IsCommentingAvailable;
-            }
+            bool isCommentingAvailable = Strings.ToBoolean(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("is_commenting_available"), false, false);
 
             Logger.LogError("CDE:DisqusComments.cs:Page_Load", "SocialMetadata isCommentingAvailable value is " + isCommentingAvailable, NCIErrorLevel.Debug);
 
@@ -42,14 +34,19 @@ namespace NCI.Web.CDE.UI.Modules
                 return;
 
             // initialize the control
-            theControl = new DisqusWebControl();
+            theControl = new DisqusControl();
             this.Controls.Add(theControl);
 
             // load the shortname from settings
             DisqusCommentsSettings disqusCommentsSettings = ModuleObjectFactory<DisqusCommentsSettings>.GetModuleObject(SnippetInfo.Data);
             if (disqusCommentsSettings != null)
             {
-                theControl.Shortname = disqusCommentsSettings.Shortname;
+                string shortname = disqusCommentsSettings.Shortname;
+
+                // check if the site is in production
+                bool isProd = PageAssemblyContext.Current.IsProd;
+                // append a shortname prefix based on the production state
+                theControl.Shortname = disqusCommentsSettings.Shortname + (isProd ? "-prod" : "-dev");
             }
 
             // begin setting the control's properties
@@ -60,22 +57,14 @@ namespace NCI.Web.CDE.UI.Modules
             theControl.Identifier = contentType + "-" + contentId;
 
             // split based on multipage or singlepage
-            if (basePage is SinglePageAssemblyInstruction)
-            {
-                theControl.Title = ((SinglePageAssemblyInstruction)basePage).PageMetadata.ShortTitle;
-                theControl.URL = HttpContext.Current.Request.Url.Scheme
+
+            theControl.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+
+            theControl.URL = HttpContext.Current.Request.Url.Scheme
                 + "://"
-                + HttpContext.Current.Request.Url.Authority 
-                + ((SinglePageAssemblyInstruction)basePage).PrettyUrl;
-            }
-            else if (basePage is MultiPageAssemblyInstruction)
-            {
-                theControl.Title = ((MultiPageAssemblyInstruction)basePage).PageMetadata.ShortTitle;
-                theControl.URL = HttpContext.Current.Request.Url.Scheme
-                + "://"
-                + HttpContext.Current.Request.Url.Authority 
-                + ((MultiPageAssemblyInstruction)basePage).PrettyUrl;
-            }
+                + HttpContext.Current.Request.Url.Authority
+                + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("PrettyUrl");
+
         }
 
     }
