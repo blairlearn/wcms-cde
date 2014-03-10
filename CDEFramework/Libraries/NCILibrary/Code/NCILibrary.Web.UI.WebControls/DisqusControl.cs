@@ -25,8 +25,8 @@ namespace NCI.Web.UI.WebControls
             Identifier = string.Empty;
             Title = string.Empty;
             URL = string.Empty;
-            Category = "General";
-            Disable_mobile = "false";
+            Category = int.MinValue;
+            DisableMobile = false;
         }
 
         [Bindable(true)]
@@ -74,22 +74,22 @@ namespace NCI.Web.UI.WebControls
 
         [Bindable(true)]
         [Category("Appearance")]
-        [DefaultValue("General")]
+        [DefaultValue(int.MinValue)]
         [Localizable(true)]
-        public string Category
+        public int Category
         {
-            get { return (String)ViewState["Category"] ?? string.Empty; }
+            get { return (int)(ViewState["Category"] ?? int.MinValue); }
             set { ViewState["Category"] = value; }
         }
 
         [Bindable(true)]
         [Category("Appearance")]
-        [DefaultValue("false")]
+        [DefaultValue(false)]
         [Localizable(true)]
-        public string Disable_mobile
+        public bool DisableMobile
         {
-            get { return (string)ViewState["Disable_mobile"] ?? null; }
-            set { ViewState["Disable_mobile"] = value; }
+            get { return (bool)(ViewState["DisableMobile"] ?? false); }
+            set { ViewState["DisableMobile"] = value; }
         }
 
         protected override void RenderContents(HtmlTextWriter output)
@@ -98,13 +98,28 @@ namespace NCI.Web.UI.WebControls
             output.RenderBeginTag(HtmlTextWriterTag.Div);
             output.RenderEndTag();//end div
 
+            string catId = String.Empty;
+            if (this.Category > 0)
+            {
+                catId = @"var disqus_category_id = '" + this.Category + @"';
+    ";
+            }
+
+            string disableMobile = String.Empty;
+            if (this.DisableMobile)
+            {
+                disableMobile = @"var disqus_disable_mobile = true;
+    ";
+            }
+
             string disqusScript =
-@"    var disqus_shortname = '" + this.Shortname +@"';
+                @"
+    var disqus_shortname = '" + this.Shortname +@"';
     var disqus_identifier = '" + this.Identifier + @"';
     var disqus_url = '" + this.URL + @"';
     var disqus_title = '" + this.Title + @"';
-    var disqus_category_id = '" + this.Category + @"';
-    var disqus_disable_mobile = '" + this.Disable_mobile + @"';
+    " + catId + 
+   disableMobile + @"
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

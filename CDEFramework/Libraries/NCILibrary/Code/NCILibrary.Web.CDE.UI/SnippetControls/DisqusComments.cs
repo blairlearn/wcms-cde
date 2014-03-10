@@ -35,7 +35,6 @@ namespace NCI.Web.CDE.UI.Modules
 
             // initialize the control
             theControl = new DisqusControl();
-            this.Controls.Add(theControl);
 
             // load the shortname from settings
             DisqusCommentsSettings disqusCommentsSettings = ModuleObjectFactory<DisqusCommentsSettings>.GetModuleObject(SnippetInfo.Data);
@@ -43,11 +42,22 @@ namespace NCI.Web.CDE.UI.Modules
             {
                 string shortname = disqusCommentsSettings.Shortname;
 
+                // do not configure the control if no shortname available
+                if (String.IsNullOrEmpty(shortname))
+                {
+                    theControl.Dispose();
+                    theControl = null;
+                    return;
+                }
+
                 // check if the site is in production
                 bool isProd = PageAssemblyContext.Current.IsProd;
                 // append a shortname prefix based on the production state
                 theControl.Shortname = disqusCommentsSettings.Shortname + (isProd ? "-prod" : "-dev");
             }
+
+            // add the control
+            this.Controls.Add(theControl);
 
             // begin setting the control's properties
 
