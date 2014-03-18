@@ -8,15 +8,16 @@ namespace NCI.Web.ProductionHost
     public static class ProductionHostConfig
     {
         private static string _hostname = String.Empty;
-
-        public static bool IsProd
-        {
-            get { return false; }
-        }
+        private static string _sitename = String.Empty;
 
         public static string Hostname
         {
             get { return _hostname; }
+        }
+
+        public static string Sitename
+        {
+            get { return _sitename; }
         }
 
         static ProductionHostConfig()
@@ -32,15 +33,21 @@ namespace NCI.Web.ProductionHost
 
                     foreach (StringProductionHostElement elem in section.StringConditions)
                     {
-                        Logger.LogError("NCI:ProductionHostConfig.cs:ProductionHostConfig",
-                            "Found ProductionHostSection string element " + elem.Name,
-                            NCIErrorLevel.Debug);
-
                         if (elem.Name == "hostname")
                         {
                             _hostname = elem.Value;
                         }
+
+                        if (elem.Name == "sitename")
+                        {
+                            _sitename = elem.Value;
+                        }
                     }
+
+                    Logger.LogError("NCI:ProductionHostConfig.cs:ProductionHostConfig",
+                            "members after searching StringConditions - _hostname = " + _hostname + 
+                            ", _sitename = " + _sitename,
+                            NCIErrorLevel.Debug);
                 }
                 else
                 {
@@ -51,8 +58,8 @@ namespace NCI.Web.ProductionHost
             }
             catch (Exception e)
             {
-                Logger.LogError("NCI:ProductionHostConfig.cs:ProductionHostConfig", 
-                    "Error encountered while loading configuration.", 
+                Logger.LogError("NCI:ProductionHostConfig.cs:ProductionHostConfig",
+                    "Error encountered while loading configuration.",
                     NCIErrorLevel.Error, e);
             }
         }
