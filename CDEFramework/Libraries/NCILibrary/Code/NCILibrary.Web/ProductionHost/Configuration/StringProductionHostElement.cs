@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Configuration;
 
-namespace NCI.Web.UI.WebControls.Disqus.Configuration
+namespace NCI.Web.ProductionHost.Configuration
 {
-    public class BooleanDisqusElement : ConfigurationElement
+    public class StringProductionHostElement : ConfigurationElement
     {
         [ConfigurationProperty("name", IsRequired = true)]
         public string Name
@@ -12,9 +12,9 @@ namespace NCI.Web.UI.WebControls.Disqus.Configuration
         }
 
         [ConfigurationProperty("value", IsRequired = true)]
-        public bool Value
+        public string Value
         {
-            get { return (bool)base["value"]; }
+            get { return (string)base["value"]; }
         }
     }
 }

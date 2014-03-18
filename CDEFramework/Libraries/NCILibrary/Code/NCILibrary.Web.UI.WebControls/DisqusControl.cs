@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
 using NCI.Logging;
 using NCI.Text;
-using NCI.Web.UI.WebControls.Disqus;
 
 namespace NCI.Web.UI.WebControls
 {
@@ -18,8 +17,18 @@ namespace NCI.Web.UI.WebControls
     /// </summary>
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:DisqusWebControl runat=server></{0}:DisqusWebControl>")]
-    public class DisqusWebControl : WebControl
+    public class DisqusControl : WebControl
     {
+        public DisqusControl()
+        {
+            Shortname = string.Empty;
+            Identifier = string.Empty;
+            Title = string.Empty;
+            URL = string.Empty;
+            Category = int.MinValue;
+            DisableMobile = false;
+        }
+
         [Bindable(true)]
         [Category("Appearance")]
         [DefaultValue("")]
@@ -65,22 +74,22 @@ namespace NCI.Web.UI.WebControls
 
         [Bindable(true)]
         [Category("Appearance")]
-        [DefaultValue("General")]
+        [DefaultValue(int.MinValue)]
         [Localizable(true)]
-        public string Category
+        public int Category
         {
-            get { return (String)ViewState["Category"] ?? string.Empty; }
+            get { return (int)(ViewState["Category"] ?? int.MinValue); }
             set { ViewState["Category"] = value; }
         }
 
         [Bindable(true)]
         [Category("Appearance")]
-        [DefaultValue("false")]
+        [DefaultValue(false)]
         [Localizable(true)]
-        public string Disable_mobile
+        public bool DisableMobile
         {
-            get { return (string)ViewState["Disable_mobile"] ?? null; }
-            set { ViewState["Disable_mobile"] = value; }
+            get { return (bool)(ViewState["DisableMobile"] ?? false); }
+            set { ViewState["DisableMobile"] = value; }
         }
 
         protected override void RenderContents(HtmlTextWriter output)
@@ -89,16 +98,28 @@ namespace NCI.Web.UI.WebControls
             output.RenderBeginTag(HtmlTextWriterTag.Div);
             output.RenderEndTag();//end div
 
-            bool isProd = DisqusConfig.IsProd;
-            String snSuffix = isProd ? "-prod" : "-dev";
+            string catId = String.Empty;
+            if (this.Category > 0)
+            {
+                catId = @"var disqus_category_id = '" + this.Category + @"';
+    ";
+            }
+
+            string disableMobile = String.Empty;
+            if (this.DisableMobile)
+            {
+                disableMobile = @"var disqus_disable_mobile = true;
+    ";
+            }
 
             string disqusScript =
-@"    var disqus_shortname = '" + this.Shortname + snSuffix +@"';
+                @"
+    var disqus_shortname = '" + this.Shortname +@"';
     var disqus_identifier = '" + this.Identifier + @"';
     var disqus_url = '" + this.URL + @"';
     var disqus_title = '" + this.Title + @"';
-    var disqus_category_id = '" + this.Category + @"';
-    var disqus_disable_mobile = '" + this.Disable_mobile + @"';
+    " + catId + 
+   disableMobile + @"
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {
@@ -121,7 +142,8 @@ namespace NCI.Web.UI.WebControls
             output.RenderEndTag();//end noscript
 
             output.AddAttribute(HtmlTextWriterAttribute.Href, "http://disqus.com");
-            output.AddAttribute(HtmlTextWriterAttribute.Class, "dsq-brlink");
+            // ADDED CLASS TO AVOID EXIT LINK NOTIFICATION
+            output.AddAttribute(HtmlTextWriterAttribute.Class, "dsq-brlink no-exit-notification");
             output.RenderBeginTag(HtmlTextWriterTag.A);
             output.Write("blog comments powered by ");
             output.AddAttribute(HtmlTextWriterAttribute.Class, "logo-disqus");
