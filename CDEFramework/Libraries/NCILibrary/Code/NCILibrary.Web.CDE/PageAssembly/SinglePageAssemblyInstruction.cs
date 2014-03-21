@@ -16,6 +16,7 @@ using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Util;
 using NCI.Core;
 using NCI.Logging;
+using NCI.Web.ProductionHost;
 
 
 namespace NCI.Web.CDE
@@ -406,6 +407,15 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
+        /// Provides a list of all SocialMetaTag objects defined for the current assembly.
+        /// </summary>
+        /// <returns>A potentially-empty array of SocialMetaTag objects.</returns>
+        public SocialMetaTag[] GetSocialMetaTags()
+        {
+            return SocialMetadata.Tags;
+        }
+
+        /// <summary>
         /// A web analytics data point(props, eVars, Events) value is set using this method. The FieldFilter delegate 
         /// on this method allows registered callback with the same data point name to modfiy the 
         /// same value.
@@ -593,11 +603,6 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.MetaDescription;
             });
 
-            AddFieldFilter("is_commenting_available", (name, data) =>
-            {
-                data.Value = this.SocialMetadata.IsCommentingAvailable.ToString();
-            });
-
             AddFieldFilter("meta_robots", (name, data) =>
             {
                 if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
@@ -652,6 +657,13 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.ShortDescription;
             });
 
+            AddFieldFilter("site_name", (name, data) =>
+            {
+                data.Value = ProductionHostConfig.Sitename;
+            });
+
+            // also initialize social metadata field filters
+            SocialMetadata.InitializeFieldFilters(this);
         }
 
         /// <summary>

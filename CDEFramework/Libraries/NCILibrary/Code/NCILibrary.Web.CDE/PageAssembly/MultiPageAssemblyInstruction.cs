@@ -14,6 +14,7 @@ using NCI.Web.CDE.Configuration;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Util;
 using NCI.Core;
+using NCI.Web.ProductionHost;
 
 namespace NCI.Web.CDE
 {
@@ -118,7 +119,7 @@ namespace NCI.Web.CDE
         /// <value>The blocked slot names.</value>
         public string[] BlockedSlotNames
         {
-            get 
+            get
             {
                 var names = from slot in BlockedSlots
                             select slot.Name;
@@ -138,11 +139,11 @@ namespace NCI.Web.CDE
                 }
 
                 //temporary fix to add cgvSiteBannerPrint to blocked slots if cgvSiteBanner is blocked.
-                if(names.Contains("cgvSiteBanner"))
+                if (names.Contains("cgvSiteBanner"))
                     names = names.Union(blockCgvBannerPrint);
 
 
-               return names.ToArray();
+                return names.ToArray();
             }
         }
 
@@ -152,8 +153,9 @@ namespace NCI.Web.CDE
         /// <value>The name of the page template.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         [XmlIgnore()]
-        public string PageTemplateName { 
-            get 
+        public string PageTemplateName
+        {
+            get
             {
                 if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll ||
                     PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
@@ -173,14 +175,14 @@ namespace NCI.Web.CDE
                         return _pages._Pages[_currentPageIndex].PageTemplateName;
                     }
                 }
-            } 
+            }
         }
 
         /// <summary>
         /// Gets the name of the page template i.e the actual aspx page to be loaded.
         /// </summary>
         /// <value>The name of the page template.</value>
-        [XmlElement(ElementName = "PageTemplateName", Form = XmlSchemaForm.Unqualified)]        
+        [XmlElement(ElementName = "PageTemplateName", Form = XmlSchemaForm.Unqualified)]
         public string InternalPageTemplateName { get; set; }
 
 
@@ -272,7 +274,7 @@ namespace NCI.Web.CDE
 
                         }
                     }
-                } 
+                }
                 else
                 {
                     //Load current Page snippets
@@ -292,7 +294,7 @@ namespace NCI.Web.CDE
                 // Add all local snippets to the list to return.
                 foreach (SnippetInfo snipt in _snippets)
                 {
-                    if (snipt.OnlyDisplayFor.Count()==0 || snipt.OnlyDisplayFor.Contains(PageAssemblyContext.Current.DisplayVersion))
+                    if (snipt.OnlyDisplayFor.Count() == 0 || snipt.OnlyDisplayFor.Contains(PageAssemblyContext.Current.DisplayVersion))
                     {
                         snippets.Add(snipt);
                     }
@@ -402,7 +404,7 @@ namespace NCI.Web.CDE
 
                 //Call delegate, all delegates will modify the FieldData string of the
                 //FieldFilterData object we are passing in.
-                del(fieldName,data);
+                del(fieldName, data);
 
                 //set the return value to the processed value of the FieldFilterData
                 rtnValue = data.Value;
@@ -450,7 +452,7 @@ namespace NCI.Web.CDE
             if (UrlFilterDelegates.ContainsKey(linkTypeKey) == true)
             {
                 UrlFilterDelegate UrlfilterLinkDelegate = UrlFilterDelegates[linkTypeKey];
-                UrlfilterLinkDelegate(linkTypeKey,nciUrl);
+                UrlfilterLinkDelegate(linkTypeKey, nciUrl);
             }
             else
             {
@@ -500,7 +502,7 @@ namespace NCI.Web.CDE
                         keysList.Add("printall");
                 }
 
-                if ( PageAssemblyContext.Current.DisplayVersion != DisplayVersions.ViewAll )
+                if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.ViewAll)
                     keysList.Add("viewall");
 
                 if (AlternateContentVersions.IsShareBookmarkAvailable)
@@ -549,7 +551,7 @@ namespace NCI.Web.CDE
                         keysList.Add("mobileurl");
                     }
                 }
-  
+
                 //Set Desktop URL
                 if (PageMetadata.DesktopURL != null)
                 {
@@ -589,6 +591,15 @@ namespace NCI.Web.CDE
         public override WebAnalyticsSettings GetWebAnalytics()
         {
             return base.GetWebAnalytics();
+        }
+
+        /// <summary>
+        /// Provides a list of all SocialMetaTag objects defined for the current assembly.
+        /// </summary>
+        /// <returns>A potentially-empty array of SocialMetaTag objects.</returns>
+        public SocialMetaTag[] GetSocialMetaTags()
+        {
+            return SocialMetadata.Tags;
         }
 
         /// <summary>
@@ -661,7 +672,8 @@ namespace NCI.Web.CDE
         {
             List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
 
-            if (_pages._Pages.Count > 0) {
+            if (_pages._Pages.Count > 0)
+            {
                 int tmpPageIndex = _currentPageIndex;
 
                 if (tmpPageIndex == -1)
@@ -673,7 +685,7 @@ namespace NCI.Web.CDE
 
             return pageSnippets;
         }
-        
+
         /// <summary>
         /// Gets all page snippets.
         /// </summary>
@@ -683,8 +695,8 @@ namespace NCI.Web.CDE
             List<SnippetInfo> pageSnippets = new List<SnippetInfo>();
             string URL = PageAssemblyContext.Current.requestedUrl;
             int pageCount = _pages._Pages.Count;
-            string requestedPage = URL.Substring(URL.LastIndexOf('/'));            
-            for (int i = 0; i <= pageCount-1; i++)
+            string requestedPage = URL.Substring(URL.LastIndexOf('/'));
+            for (int i = 0; i <= pageCount - 1; i++)
             {
                 pageSnippets.AddRange(_pages._Pages[i].SnippetInfos);
             }
@@ -701,7 +713,7 @@ namespace NCI.Web.CDE
         }
 
         #region InitializeFunctions
-        
+
         /// <summary>
         /// Registers the field filters        
         /// </summary> 
@@ -711,7 +723,7 @@ namespace NCI.Web.CDE
             {
                 data.Value = this.PageMetadata.LongTitle;
             });
-            
+
             AddFieldFilter("short_title", (name, data) =>
             {
                 data.Value = this.PageMetadata.ShortTitle;
@@ -796,10 +808,13 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.ShortDescription;
             });
 
-            AddFieldFilter("is_commenting_available", (name, data) =>
+            AddFieldFilter("site_name", (name, data) =>
             {
-                data.Value = this.SocialMetadata.IsCommentingAvailable.ToString();
+                data.Value = ProductionHostConfig.Sitename;
             });
+
+            // also initialize social metadata field filters
+            SocialMetadata.InitializeFieldFilters(this);
         }
 
         /// <summary>
@@ -911,7 +926,7 @@ namespace NCI.Web.CDE
                 }
             }
             #endregion
-            
+
             #region AltLanguageURL
             // Alt Language URL filter 
             if (_currentPageIndex == -1)
@@ -942,7 +957,7 @@ namespace NCI.Web.CDE
                 }
             }
             #endregion
-            
+
             #region AddFilter For PageOptions
             // URL Filter specifically for PageOptions
 
@@ -1020,7 +1035,7 @@ namespace NCI.Web.CDE
                 });
             }
         }
-        
+
         #endregion
     }
 }

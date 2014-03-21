@@ -2112,6 +2112,7 @@
     <restriction base="string">
       <enumeration value="field"/>
       <enumeration value="static"/>
+      <enumeration value="url"/>
     </restriction>
   </simpleType>
 

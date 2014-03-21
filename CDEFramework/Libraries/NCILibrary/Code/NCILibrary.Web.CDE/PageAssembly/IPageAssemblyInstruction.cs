@@ -88,5 +88,11 @@ namespace NCI.Web.CDE
         void SetWebAnalytics(WebAnalyticsOptions.eVars webAnalyticType, WebAnalyticsDataPointDelegate filter);
         void SetWebAnalytics(WebAnalyticsOptions.Props webAnalyticType, WebAnalyticsDataPointDelegate filter);
         void Initialize();
+
+        /// <summary>
+        /// Provides a list of all SocialMetaTag objects defined for the current assembly.
+        /// </summary>
+        /// <returns>A potentially-empty array of SocialMetaTag objects.</returns>
+        SocialMetaTag[] GetSocialMetaTags();
     }
 }

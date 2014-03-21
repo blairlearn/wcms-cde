@@ -75,10 +75,10 @@ namespace NCI.Web.CDE.UI
                                 // The controls which implement ISupportingSnippet will provide additional 
                                 // snippet control that are required for the complete functionality.
                                 // Add them to a collection that will be processed later.
-                                if( snippetControl is ISupportingSnippet )
+                                if (snippetControl is ISupportingSnippet)
                                 {
                                     SnippetControl[] supportingcontrols = ((ISupportingSnippet)snippetControl).GetSupportingSnippets();
-                                    if( supportingcontrols != null )
+                                    if (supportingcontrols != null)
                                         supportingSnippets.AddRange(supportingcontrols);
                                 }
                             }
@@ -100,7 +100,7 @@ namespace NCI.Web.CDE.UI
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogError("CDE:WebPageAssembler.cs:WebPageAssembler", "Failed to add supporting snippet control",NCIErrorLevel.Error, ex);
+                        Logger.LogError("CDE:WebPageAssembler.cs:WebPageAssembler", "Failed to add supporting snippet control", NCIErrorLevel.Error, ex);
                     }
                 }
 
@@ -160,7 +160,7 @@ namespace NCI.Web.CDE.UI
         {
             HtmlMeta hm = new HtmlMeta();
             hm.Name = htmlMetaDataType.ToString().ToLower();
-            hm.Content = getMetaData(htmlMetaDataType); 
+            hm.Content = getMetaData(htmlMetaDataType);
 
             if (htmlMetaDataType == HtmlMetaDataType.ContentLanguage)
                 hm.Name = "content-language";
@@ -178,6 +178,35 @@ namespace NCI.Web.CDE.UI
                 else
                     hm.Name = "robots";
             }
+
+            htmlHead.Controls.Add(hm);
+        }
+
+        /// <summary>
+        /// Every time this method is called, a single social metadata element is added to the 
+        /// head of the page.
+        /// </summary>
+        /// <param name="htmlHead">The html header control of the page.The head html tag should have runat="server"</param>
+        /// <param name="tag">A SocialMetaTag object representing the meta tag to add</param>
+        private void addSocialMetaDataItem(HtmlHead htmlHead, SocialMetaTag tag)
+        {
+            HtmlMeta hm = new HtmlMeta();
+            if (tag.Type == "name")
+            {
+                hm.Name = tag.Id;
+            }
+            else
+            {
+                hm.Attributes.Add(tag.Type, tag.Id);
+            }
+
+            string content = PageAssemblyInstruction.GetField(tag.Id);
+            if (tag.Source == "url")
+            {
+                content = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + content;
+            }
+
+            hm.Content = content;
 
             htmlHead.Controls.Add(hm);
         }
@@ -215,7 +244,7 @@ namespace NCI.Web.CDE.UI
         {
             base.OnPreInit(e);
             loadTemplateSlots();
-            loadSnippetsIntoTemplateSlots();            
+            loadSnippetsIntoTemplateSlots();
         }
 
         protected override void OnInit(EventArgs e)
@@ -243,7 +272,7 @@ namespace NCI.Web.CDE.UI
             InsertTrailingStyleSheetsJavascriptsReferences();
 
 
-            base.OnPreRenderComplete(e);            
+            base.OnPreRenderComplete(e);
             SetTitle();
             InsertCanonicalURL();
             InsertPageMetaData();
@@ -261,7 +290,7 @@ namespace NCI.Web.CDE.UI
                 else
                 {
                     this.Form.Action = formAction.ToString();
-                }                
+                }
             }
         }
 
@@ -296,7 +325,7 @@ namespace NCI.Web.CDE.UI
             if (CurrentPageHead != null)
             {
                 string title = PageAssemblyInstruction.GetField(PageAssemblyInstructionFields.HTML_Title);
-                CurrentPageHead.Title = title.Replace("<i>","").Replace("</i>","");
+                CurrentPageHead.Title = title.Replace("<i>", "").Replace("</i>", "");
             }
         }
 
@@ -318,9 +347,15 @@ namespace NCI.Web.CDE.UI
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.KeyWords);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Description);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.ContentLanguage);
-                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EnglishLinkingPolicy); 
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EnglishLinkingPolicy);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EspanolLinkingPolicy);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Robots);
+            }
+
+            SocialMetaTag[] tags = PageAssemblyInstruction.GetSocialMetaTags();
+            foreach (SocialMetaTag tag in tags)
+            {
+                addSocialMetaDataItem(CurrentPageHead, tag);
             }
         }
 
@@ -358,11 +393,11 @@ namespace NCI.Web.CDE.UI
                 PageTemplateInfo pgTemplateInfo = PageAssemblyContext.Current.PageTemplateInfo;
                 if (pgTemplateInfo != null)
                 {
-                    StyleSheetInfo[] colCss = pgTemplateInfo.StyleSheets;                    
+                    StyleSheetInfo[] colCss = pgTemplateInfo.StyleSheets;
                     JavascriptInfo[] colJs = pgTemplateInfo.Javascripts;
 
                     // Capture all items marked as going at the start of the block.
-                    IEnumerable<StyleSheetInfo> firstStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning =="true");
+                    IEnumerable<StyleSheetInfo> firstStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning == "true");
                     IEnumerable<JavascriptInfo> firstJavaScript = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning == "true");
 
                     // Capture all items which aren't marked for a particular location.
@@ -372,13 +407,13 @@ namespace NCI.Web.CDE.UI
 
                     //Load first Javascript
                     foreach (JavascriptInfo jsBeginningInfo in firstJavaScript)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsBeginningInfo.JavascriptPath); 
-                    
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsBeginningInfo.JavascriptPath);
+
                     //Load first Stylesheet
                     foreach (StyleSheetInfo cssBeginningInfo in firstStylesheet)
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssBeginningInfo.StyleSheetPath, cssBeginningInfo.Media);
 
-                    
+
                     // Load the css resources and js resource with no specified location
                     foreach (StyleSheetInfo ssInfo in unspecifiedStylesheets)
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath, ssInfo.Media);
@@ -437,8 +472,8 @@ namespace NCI.Web.CDE.UI
                 string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
                 if (htmlTag.Equals("body"))
                 {
-                    string contentType =  ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
-                    contentType = string.IsNullOrEmpty(contentType) ? String.Empty :  contentType.ToLower();
+                    string contentType = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
+                    contentType = string.IsNullOrEmpty(contentType) ? String.Empty : contentType.ToLower();
 
                     if (contentType != String.Empty)
                     {
