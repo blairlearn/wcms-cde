@@ -85,6 +85,8 @@ namespace NCI.Web.CDE
         {
             // default to false in the case of no entry in XML
             IsCommentingAvailable = false;
+
+            Tags = new SocialMetaTag[0];
         }
 
         /// <summary>
@@ -106,26 +108,39 @@ namespace NCI.Web.CDE
         /// <param name="pai">An available PageAssemblyInstruction object to receive the field filters.</param>
         public void InitializeFieldFilters(IPageAssemblyInstruction pai)
         {
-            // check provided PageAssemblyInstruction
-            if (pai == null)
+
+            try
+            {
+                // check provided PageAssemblyInstruction
+                if (pai == null)
+                {
+                    Logger.LogError("CDE:SocialMetadata.cs:InitializeFieldFilters()",
+                        "null PageAssemblyInstruction provided.",
+                        NCIErrorLevel.Warning);
+
+                    return;
+                }
+
+                // add commenting available field filter
+                pai.AddFieldFilter("is_commenting_available", (name, data) =>
+                {
+                    data.Value = IsCommentingAvailable.ToString();
+                });
+
+                // add field filters for any tags
+                if (Tags != null)
+                {
+                    foreach (SocialMetaTag tag in Tags)
+                    {
+                        tag.InitializeFieldFilter(pai);
+                    }
+                }
+            }
+            catch (Exception e)
             {
                 Logger.LogError("CDE:SocialMetadata.cs:InitializeFieldFilters()",
-                    "null PageAssemblyInstruction provided.",
-                    NCIErrorLevel.Warning);
-
-                return;
-            }
-
-            // add commenting available field filter
-            pai.AddFieldFilter("is_commenting_available", (name, data) =>
-            {
-                data.Value = IsCommentingAvailable.ToString();
-            });
-
-            // add field filters for any tags
-            foreach (SocialMetaTag tag in Tags)
-            {
-                tag.InitializeFieldFilter(pai);
+                       "Exception encountered while initializing field filters.",
+                       NCIErrorLevel.Error, e);
             }
         }
     }
