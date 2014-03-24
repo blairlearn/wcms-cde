@@ -191,12 +191,19 @@ namespace NCI.Web.CDE.UI
         private void addSocialMetaDataItem(HtmlHead htmlHead, SocialMetaTag tag)
         {
             HtmlMeta hm = new HtmlMeta();
-            if (tag.Type == "name")
+            if(String.IsNullOrEmpty(tag.Type))
             {
+                // abort immediately if no type available
+                return;
+            }
+            else if (tag.Type == "name")
+            {
+                // else, add the name
                 hm.Name = tag.Id;
             }
-            else
+            else 
             {
+                // else, add an attribute
                 hm.Attributes.Add(tag.Type, tag.Id);
             }
 
@@ -207,9 +214,13 @@ namespace NCI.Web.CDE.UI
                 content = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + content;
             }
 
-            hm.Content = content;
+            // only add this tag if the content exists.
+            if (!String.IsNullOrEmpty(content))
+            {
+                hm.Content = content;
 
-            htmlHead.Controls.Add(hm);
+                htmlHead.Controls.Add(hm);
+            }
         }
 
         #endregion
