@@ -201,7 +201,8 @@ namespace NCI.Web.CDE.UI
             }
 
             string content = PageAssemblyInstruction.GetField(tag.Id);
-            if (tag.Source == "url")
+            // for url or file types, append the latest field into the hostname.
+            if (tag.Source == "url" || tag.Source == "file")
             {
                 content = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + content;
             }

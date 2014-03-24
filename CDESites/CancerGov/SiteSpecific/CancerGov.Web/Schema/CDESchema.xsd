@@ -2113,6 +2113,7 @@
       <enumeration value="field"/>
       <enumeration value="static"/>
       <enumeration value="url"/>
+      <enumeration value="file"/>
     </restriction>
   </simpleType>
 
