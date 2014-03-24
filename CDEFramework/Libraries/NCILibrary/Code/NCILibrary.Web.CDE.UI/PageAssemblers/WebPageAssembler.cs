@@ -209,7 +209,7 @@ namespace NCI.Web.CDE.UI
 
             string content = PageAssemblyInstruction.GetField(tag.Id);
             // for url or file types, append the latest field into the hostname.
-            if (tag.Source == "url" || tag.Source == "file")
+            if (tag.Source == "url" || (tag.Source == "file" && content.Length > 1))
             {
                 content = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + content;
             }
