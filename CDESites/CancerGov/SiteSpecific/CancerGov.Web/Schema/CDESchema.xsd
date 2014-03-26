@@ -2121,9 +2121,9 @@
     </annotation>
     <restriction base="string">
       <enumeration value="field"/>
-      <enumeration value="static"/>
+      <enumeration value="literal"/>
       <enumeration value="url"/>
-      <enumeration value="file"/>
+      <enumeration value="literalUrl"/>
     </restriction>
   </simpleType>
 
