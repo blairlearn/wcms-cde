@@ -117,6 +117,8 @@
     <Compile Include="PageAssembly\CDRDefinition.cs" />
     <Compile Include="PageAssembly\ContentDates.cs" />
     <Compile Include="PageAssembly\ContentItemInfo.cs" />
+    <Compile Include="PageAssembly\SocialMetaTag.cs" />
+    <Compile Include="PageAssembly\SocialMetaTagData.cs" />
     <Compile Include="PageAssembly\SocialMetadata.cs" />
     <Compile Include="PageAssembly\DisplayDateModes.cs" />
     <Compile Include="PageAssembly\DisplayDevices.cs" />

@@ -599,7 +599,7 @@ namespace NCI.Web.CDE
         /// <returns>A potentially-empty array of SocialMetaTag objects.</returns>
         public SocialMetaTag[] GetSocialMetaTags()
         {
-            return SocialMetadata.Tags;
+            return GenerateSocialMetaTags(SocialMetadata.Tags);
         }
 
         /// <summary>
@@ -814,7 +814,7 @@ namespace NCI.Web.CDE
             });
 
             // also initialize social metadata field filters
-            SocialMetadata.InitializeFieldFilters(this);
+            RegisterSocialMetadataFieldFilters(this, SocialMetadata);
         }
 
         /// <summary>

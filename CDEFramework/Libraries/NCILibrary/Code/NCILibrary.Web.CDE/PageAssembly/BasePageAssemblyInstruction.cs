@@ -11,6 +11,7 @@ using NCI.Web.CDE.WebAnalytics;
 using NCI.Core;
 using NCI.Text;
 using NCI.Util;
+using NCI.Logging;
 
 namespace NCI.Web.CDE
 {
@@ -29,6 +30,36 @@ namespace NCI.Web.CDE
         #endregion
 
         #region Private Methods
+
+        /// <summary>
+        /// Adds an appropriate FieldFilter to the given PageAssemblyInstruction object, based on the Tag's
+        /// current settings.
+        /// </summary>
+        /// <param name="pai">The IPageAssemblyInstruction object to receive the new FieldFilter.</param>
+        private void RegisterSocialMetaTagFieldFilter(IPageAssemblyInstruction pai, SocialMetaTagData socialMetaTag)
+        {
+            // add a field filter for each tag
+            pai.AddFieldFilter(socialMetaTag.Id, (name, data) =>
+            {
+                string content = String.Empty;
+                switch (socialMetaTag.Source)
+                {
+                    case SocialMetaTagSources.field:
+                        content = pai.GetField(socialMetaTag.Content);
+                        break;
+                    case SocialMetaTagSources.url:
+                        content = pai.GetUrl(socialMetaTag.Content).ToString();
+                        break;
+                    // both literal types just use the content directly
+                    default:
+                        content = socialMetaTag.Content;
+                        break;
+                }
+
+                data.Value = content;
+            });
+        }
+
         #endregion
 
         #region Protected Members
@@ -185,6 +216,59 @@ namespace NCI.Web.CDE
                 wbField.Value = pgInst.GetUrl("RootPrettyURL").ToString();
             });
         }
+
+        /// <summary>
+        /// Creates field filters for the given SocialMetadata object.
+        /// </summary>
+        /// <param name="pai">An available PageAssemblyInstruction object to receive the field filters.</param>
+        /// <param name="socialMetadata">The SocialMetadata object to provide the fields.</param>
+        protected virtual void RegisterSocialMetadataFieldFilters(IPageAssemblyInstruction pai, SocialMetadata socialMetadata)
+        {
+            try
+            {
+                // check provided PageAssemblyInstruction
+                if (pai == null)
+                {
+                    Logger.LogError("CDE:BasePageAssemblyInstruction.cs:RegisterSocialMetadataFieldFilters()",
+                        "null PageAssemblyInstruction provided.",
+                        NCIErrorLevel.Warning);
+
+                    return;
+                }
+
+                // add commenting available field filter
+                pai.AddFieldFilter("is_commenting_available", (name, data) =>
+                {
+                    data.Value = socialMetadata.IsCommentingAvailable.ToString();
+                });
+
+                // add field filters for any tags
+                if (socialMetadata.Tags != null)
+                {
+                    foreach (SocialMetaTagData tag in socialMetadata.Tags)
+                    {
+                        RegisterSocialMetaTagFieldFilter(pai, tag);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError("CDE:SocialMetadata.cs:InitializeFieldFilters()",
+                       "Exception encountered while initializing field filters.",
+                       NCIErrorLevel.Error, e);
+            }
+        }
+
+        /// <summary>
+        /// Provides a list of all SocialMetaTag objects defined for the current assembly.
+        /// </summary>
+        /// <returns>A potentially-empty array of SocialMetaTag objects.</returns>
+        protected SocialMetaTag[] GenerateSocialMetaTags(SocialMetaTagData[] SocialMetaTagData)
+        {
+            return (from datum in SocialMetaTagData
+                select new SocialMetaTag(datum)).ToArray();
+        }
+
         #endregion
 
         #region Public 

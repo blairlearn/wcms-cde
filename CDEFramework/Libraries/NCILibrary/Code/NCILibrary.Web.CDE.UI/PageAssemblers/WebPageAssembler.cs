@@ -191,36 +191,29 @@ namespace NCI.Web.CDE.UI
         private void addSocialMetaDataItem(HtmlHead htmlHead, SocialMetaTag tag)
         {
             HtmlMeta hm = new HtmlMeta();
-            if(String.IsNullOrEmpty(tag.Type))
+            switch (tag.Type)
             {
-                // abort immediately if no type available
+                case SocialMetaTagTypes.property:
+                    hm.Attributes.Add(tag.Type.ToString(), tag.Key);
+                    break;
+                case SocialMetaTagTypes.name:
+                    hm.Name = tag.Key;
+                    break;
+                default:
+                    // abort immediately if no type available
+                    return;
+            }
+
+            string content = tag.ResolveContent(PageAssemblyInstruction);
+            // reject null content (empty content is permitted)
+            if (content == null)
+            {
                 return;
             }
-            else if (tag.Type == "name")
-            {
-                // else, add the name
-                hm.Name = tag.Id;
-            }
-            else 
-            {
-                // else, add an attribute
-                hm.Attributes.Add(tag.Type, tag.Id);
-            }
 
-            string content = PageAssemblyInstruction.GetField(tag.Id);
-            // for url or file types, append the latest field into the hostname.
-            if (tag.Source == "url" || (tag.Source == "file" && content.Length > 1))
-            {
-                content = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + content;
-            }
+            hm.Content = content;
 
-            // only add this tag if the content exists.
-            if (!String.IsNullOrEmpty(content))
-            {
-                hm.Content = content;
-
-                htmlHead.Controls.Add(hm);
-            }
+            htmlHead.Controls.Add(hm);
         }
 
         #endregion

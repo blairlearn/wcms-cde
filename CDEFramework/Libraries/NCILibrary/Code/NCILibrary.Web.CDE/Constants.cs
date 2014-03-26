@@ -71,4 +71,28 @@ namespace NCI.Web.CDE
     //    HealthProfessional = 1
     //}
 
+    /// <summary>
+    /// The defined types of possible social media meta tags.  Case matches
+    /// that found in the XML document.
+    /// </summary>
+    public enum SocialMetaTagTypes
+    {
+        Unknown = -1,
+        name = 0,
+        property = 1
+    }
+
+    /// <summary>
+    /// The defined sources of possible social media meta tag content.  Case matches
+    /// that found in the XML document.
+    /// </summary>
+    public enum SocialMetaTagSources 
+    { 
+        Unknown = -1,
+        literal = 0, 
+        field = 1, 
+        url = 2, 
+        literalUrl = 3
+    }
+
 }
