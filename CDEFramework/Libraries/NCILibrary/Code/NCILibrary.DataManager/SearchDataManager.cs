@@ -101,6 +101,11 @@ namespace NCI.DataManager
                                     searchResult.AltText = sqlFVReader.GetString("alttext");
                                     searchResult.AbbreviatedSource = sqlFVReader.GetString("abbreviatedsource");
 
+                                    searchResult.Alt = sqlFVReader.GetString("alt");
+                                    searchResult.BlogBody = sqlFVReader.GetString("blogparagraph");
+                                    searchResult.ThumbnailURL = sqlFVReader.GetString("thumbnailurl");
+
+
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
@@ -230,6 +235,12 @@ namespace NCI.DataManager
                                     searchResult.AbbreviatedSource = sqlFVReader.GetString("abbreviatedsource");
                                     searchResult.SubscriptionRequired = sqlFVReader.GetBoolean("subscription_required");
 
+                                    searchResult.Alt = sqlFVReader.GetString("alt");
+                                    searchResult.BlogBody = sqlFVReader.GetString("blogparagraph");
+                                    searchResult.ThumbnailURL = sqlFVReader.GetString("thumbnailurl");
+
+
+
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
@@ -260,7 +271,7 @@ namespace NCI.DataManager
             catch (Exception ex)
             {
                 Logger.LogError("SearchDataManager:Execute", "Failed in DataManager", NCIErrorLevel.Error);
-                throw ex;
+                throw;
             }
         }
     }

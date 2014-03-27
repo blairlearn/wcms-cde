@@ -108,6 +108,21 @@ namespace NCI.DataManager
         public string AbbreviatedSource { get; set; }
 
         /// <summary>
+        /// alt text of an image in gloImageSl 
+        /// </summary>
+        public string Alt { get; set; }
+
+        /// <summary>
+        /// First two paragraphs of the blog body field
+        /// </summary>
+        public string BlogBody { get; set; }
+
+        /// <summary>
+        /// Url of Thumbnail image of a Global Image
+        /// </summary>
+        public string ThumbnailURL { get; set; }
+
+        /// <summary>
         /// Used with external news links.  Does external resource require a subscription?
         /// </summary>
         public Boolean SubscriptionRequired { get; set; }
@@ -120,6 +135,9 @@ namespace NCI.DataManager
             UpdatedDate = string.Empty;
             PostedDate = string.Empty;
             HRef = string.Empty;
+            ThumbnailURL = string.Empty;
+            Alt = string.Empty;
+            BlogBody = string.Empty;
         }
     }
 }
