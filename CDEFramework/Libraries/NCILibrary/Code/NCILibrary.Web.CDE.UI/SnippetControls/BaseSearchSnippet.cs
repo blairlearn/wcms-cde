@@ -206,7 +206,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// <summary>
         /// Helper method to setup the pager
         /// </summary>
-        private void SetupPager(int recordsPerPage, int totalRecordCount)
+        protected virtual void SetupPager(int recordsPerPage, int totalRecordCount)
         {
             SimplePager pager = new SimplePager();
             pager.RecordCount = totalRecordCount;
