@@ -40,6 +40,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             blogLandingPager.CurrentPage = currentPage;
             blogLandingPager.BaseUrl = PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
             blogLandingPager.PageParamName = "page";
+            blogLandingPager.CssClass = "blog-pager";
             blogLandingPager.PagerStyleSettings.NextPageCssClass = "older";
             blogLandingPager.PagerStyleSettings.NextPageText = "< Older Posts";
             blogLandingPager.PagerStyleSettings.PrevPageCssClass = "newer";
