@@ -691,7 +691,7 @@
     <Content Include="SnippetTemplates\SearchGeneticsServices.ascx" />
     <Content Include="SnippetTemplates\TableofLinks.ascx" />
     <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
-    <Content Include="SnippetTemplates\NextPrevious.ascx" />
+    <Content Include="SnippetTemplates\BlogPostNewerOlder.ascx" />
     <Content Include="sysimages\li-selected-last.gif" />
     <Content Include="sysimages\li-selected.gif" />
     <Content Include="sysimages\li-unselected-last.gif" />

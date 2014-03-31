@@ -28,7 +28,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
     {
         protected override void SetupPager(int recordsPerPage, int totalRecordCount)
         {
-            SimplePager blogLandingPager = new SimplePager();
+            BlogPager blogLandingPager = new BlogPager();
             int currentPage = 0;
 
             blogLandingPager.RecordCount = totalRecordCount;
@@ -40,13 +40,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
             blogLandingPager.CurrentPage = currentPage;
             blogLandingPager.BaseUrl = PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
             blogLandingPager.PageParamName = "page";
-            blogLandingPager.CssClass = "blog-pager";
+            blogLandingPager.CssClass = "blog-pager clearfix";
             blogLandingPager.PagerStyleSettings.NextPageCssClass = "older";
             blogLandingPager.PagerStyleSettings.NextPageText = "< Older Posts";
             blogLandingPager.PagerStyleSettings.PrevPageCssClass = "newer";
             blogLandingPager.PagerStyleSettings.PrevPageText = "Newer Posts >";
-            blogLandingPager.ShowNumPages = 1;
-            blogLandingPager.PagerStyleSettings.SelectedIndexCssClass = "hidden";
            
 
             string searchQueryParams = string.Empty;

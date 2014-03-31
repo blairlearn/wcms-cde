@@ -123,6 +123,11 @@ namespace NCI.DataManager
         public string ThumbnailURL { get; set; }
 
         /// <summary>
+        /// Author of Blog Post
+        /// </summary>
+        public string Author { get; set; }
+
+        /// <summary>
         /// Used with external news links.  Does external resource require a subscription?
         /// </summary>
         public Boolean SubscriptionRequired { get; set; }
@@ -138,6 +143,7 @@ namespace NCI.DataManager
             ThumbnailURL = string.Empty;
             Alt = string.Empty;
             BlogBody = string.Empty;
+            Author = string.Empty;
         }
     }
 }

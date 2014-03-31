@@ -46,9 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogSearchDataManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchDataManager.cs" />
     <Compile Include="SearchResult.cs" />
+    <Compile Include="SeriesPrevNextResult.cs" />
     <Compile Include="SqlReaderHelper.cs" />
   </ItemGroup>
   <ItemGroup>
