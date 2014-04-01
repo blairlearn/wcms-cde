@@ -29,6 +29,14 @@ namespace NCI.Web.UI.WebControls
             DisableMobile = false;
         }
 
+        protected override HtmlTextWriterTag TagKey
+        {
+            get
+            {
+                return HtmlTextWriterTag.Div;
+            }
+        }
+
         [Bindable(true)]
         [Category("Appearance")]
         [DefaultValue("")]
@@ -96,6 +104,7 @@ namespace NCI.Web.UI.WebControls
         {
             output.AddAttribute(HtmlTextWriterAttribute.Id, "disqus_thread");
             output.RenderBeginTag(HtmlTextWriterTag.Div);
+            output.Write("<!-- Disqus Content Here -->");
             output.RenderEndTag();//end div
 
             string catId = String.Empty;
