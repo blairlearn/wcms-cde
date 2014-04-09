@@ -105,8 +105,9 @@ namespace NCI.DataManager
                                     searchResult.BlogBody = sqlFVReader.GetString("blogparagraph");
                                     searchResult.ThumbnailURL = sqlFVReader.GetString("thumbnailurl");
                                     searchResult.Author = sqlFVReader.GetString("author");
-                                    
 
+                                    searchResult.ContentType = sqlFVReader.GetString("contenttype");
+                                    searchResult.ContentID = sqlFVReader.GetString("contentid");
 
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
@@ -242,7 +243,8 @@ namespace NCI.DataManager
                                     searchResult.BlogBody = sqlFVReader.GetString("blogparagraph");
                                     searchResult.ThumbnailURL = sqlFVReader.GetString("thumbnailurl");
                                     searchResult.Author = sqlFVReader.GetString("author");
-
+                                    searchResult.ContentType = sqlFVReader.GetString("contenttype");
+                                    searchResult.ContentID = sqlFVReader.GetString("contentid");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)

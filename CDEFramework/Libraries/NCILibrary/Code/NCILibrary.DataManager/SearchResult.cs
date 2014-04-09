@@ -123,9 +123,17 @@ namespace NCI.DataManager
         public string ThumbnailURL { get; set; }
 
         /// <summary>
-        /// Author of Blog Post
+        /// Author of Content
         /// </summary>
         public string Author { get; set; }
+
+        /// <summary>
+        /// Content Type
+        /// </summary>
+        public string ContentType { get; set; }
+
+
+        public string ContentID { get; set; }
 
         /// <summary>
         /// Used with external news links.  Does external resource require a subscription?
