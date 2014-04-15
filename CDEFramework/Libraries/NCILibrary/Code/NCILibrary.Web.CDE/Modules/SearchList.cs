@@ -82,6 +82,12 @@ namespace NCI.Web.CDE.Modules
         public string SearchType { get; set; }
 
         /// <summary>
+        /// Disqus shortname
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string DisqusShortname { get; set; }
+
+        /// <summary>
         /// Search parameters like Keyword, StartDate, EndDate
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
