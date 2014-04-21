@@ -183,7 +183,7 @@ namespace NCI.DataManager
                             }
                             if (ds.Tables[0].Rows.Count != 0)
                             {
-                               previous = new SeriesPrevNextResult.SeriesItem(ds.Tables[0].Rows[0].Field<string>("prettyurl"), ds.Tables[0].Rows[0].Field<string>("short_title"));
+                               previous = new SeriesPrevNextResult.SeriesItem(ds.Tables[0].Rows[0].Field<string>("prettyurl"), ds.Tables[0].Rows[0].Field<string>("long_title"));
                             
                             }
                             
@@ -197,7 +197,7 @@ namespace NCI.DataManager
 
                             if (ds.Tables[1].Rows.Count != 0)
                             {
-                                next = new SeriesPrevNextResult.SeriesItem(ds.Tables[1].Rows[0].Field<string>("prettyurl"), ds.Tables[1].Rows[0].Field<string>("short_title"));
+                                next = new SeriesPrevNextResult.SeriesItem(ds.Tables[1].Rows[0].Field<string>("prettyurl"), ds.Tables[1].Rows[0].Field<string>("long_title"));
                             }
                        
 
