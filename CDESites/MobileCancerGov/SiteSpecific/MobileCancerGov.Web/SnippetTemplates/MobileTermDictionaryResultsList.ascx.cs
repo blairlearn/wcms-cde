@@ -27,7 +27,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
     public partial class MobileTermDictionaryResultsList : SnippetControl
     {
         // Query parameter values
-        private string _searchStr = "";
+       
         private int _currentPage = 0;
         private int _recordsPerPage = 0;
         private int _offSet = 0;
@@ -49,8 +49,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
         }
         public string SearchString
         {
-            get { return _searchStr; }
-            set { _searchStr = value; }
+            get;
+            set;
         }
         public string Term
         {
@@ -90,12 +90,14 @@ namespace MobileCancerGov.Web.SnippetTemplates
             string expandParam = Strings.Clean(Request.QueryString["expand"]);
             //string languageParam = Strings.Clean(Request.QueryString["language"]);
             string languageParam = ""; //disable language selection by query parameter 
-            _searchStr = Strings.Clean(Request.QueryString["search"]);
+            SearchString = Strings.Clean(Request.QueryString["search"]);
+            //Create a safe search string to be passed to the URL
+            string _safeSearchString = System.Web.HttpContext.Current.Server.UrlEncode(SearchString);
             _term = Strings.Clean(Request.QueryString["term"]);
             _version = Strings.Clean(Request.QueryString["version"]);
-                        
-            if (!String.IsNullOrEmpty(_searchStr))
-                _searchStr = _searchStr.Replace("[", "[[]"); 
+
+            if (!String.IsNullOrEmpty(SearchString))
+                SearchString = SearchString.Replace("[", "[[]"); 
 
             // Pager query parameter variables
             _currentPage = Strings.ToInt(Request.Params["PageNum"], 1);
@@ -125,11 +127,11 @@ namespace MobileCancerGov.Web.SnippetTemplates
             {
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
                 {
-                    url.QueryParameters.Add("search", SearchString);                    
+                    url.QueryParameters.Add("search", _safeSearchString);                    
                 });
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
                 {
-                    url.QueryParameters.Add("search", SearchString); 
+                    url.QueryParameters.Add("search", _safeSearchString); 
                 });
                  
                 dataCollection = TermDictionaryManager.GetTermDictionaryList(language, SearchString, false, pager_RowsPerPage, _currentPage, ref pager_MaxRows);
@@ -195,7 +197,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 if (Expand)
                     spPager.BaseUrl = DictionaryURL + "?expand=" + _expandText;
                 else
-                    spPager.BaseUrl = DictionaryURL + "?search=" + SearchString;
+                    spPager.BaseUrl = DictionaryURL + "?search=" + _safeSearchString;
 
                 if (IsSpanish)
                 {
