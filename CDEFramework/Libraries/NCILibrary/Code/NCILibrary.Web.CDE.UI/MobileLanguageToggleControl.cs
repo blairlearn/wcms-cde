@@ -94,7 +94,7 @@ namespace NCI.Web.CDE.UI
                     {
                         throw;
                     }
-                    writer.Write(HttpUtility.UrlDecode(formattedUrl));
+                    writer.Write(formattedUrl);
                     
                 }
             }
