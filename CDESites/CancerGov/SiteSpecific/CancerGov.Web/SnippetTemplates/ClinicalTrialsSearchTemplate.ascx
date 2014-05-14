@@ -176,7 +176,13 @@ span.gray-text
         clinical trials now accepting participants, or use more search options to search
         the set of
         <asp:Literal ID="CTCountClosed" runat="server"></asp:Literal>
-        clinical trials that are no longer recruiting.</p>
+        clinical trials that are no longer recruiting.
+    </p>
+    <p>
+        Initial search results include only NCI-sponsored clinical trials. To search all trials, 
+        scroll down to the Trial ID/Sponsor section, click the "Show Search Options" link and 
+        select the "All" check box in the Sponsor of Trial section.
+    </p>
     <p>
         <strong>Search Tip:</strong> Skip any items that are unknown or not applicable.</p>
     <table width="100%" cellpadding="0" cellspacing="0" border="0" class="cttable">

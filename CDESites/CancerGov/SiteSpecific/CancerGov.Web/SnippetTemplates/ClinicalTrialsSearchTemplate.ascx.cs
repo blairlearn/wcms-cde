@@ -409,8 +409,17 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (savedSearch == null)
             {
-                // Default selection to "All"
-                sponsor.SelectedIndex = 0;
+                // if no search yet specified, search for "NCI" and select that item if found
+                ListItem item = sponsor.Items.FindByText("NCI");
+                if (item != null)
+                {
+                    item.Selected = true;
+                }
+                else
+                {
+                    // Default selection to "All"
+                    sponsor.SelectedIndex = 0;
+                }
             }
             else
             {
