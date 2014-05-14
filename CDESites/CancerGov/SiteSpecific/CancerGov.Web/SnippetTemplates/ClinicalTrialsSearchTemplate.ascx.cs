@@ -190,6 +190,8 @@ namespace CancerGov.Web.SnippetTemplates
                 if (savedSearch != null)
                     cancerTypeID = savedSearch.CancerType.Value;
 
+                FillNCISponsorLiteral(savedSearch);
+
                 FillCancerTypeSelectBox(savedSearch);
                 FillCancerStageSelectBox(cancerTypeID, savedSearch);
 
@@ -393,6 +395,18 @@ namespace CancerGov.Web.SnippetTemplates
                     else // No states were specified.
                         state.SelectedIndex = 0;
                 }
+            }
+        }
+
+        private void FillNCISponsorLiteral(CTSearchDefinition savedSearch)
+        {
+            if (savedSearch == null)
+            {
+                CTNCISponsorText.Text = "Initial search results include only NCI-sponsored clinical trials. To search all trials, scroll down to the Trial ID/Sponsor section, click the \"Show Search Options\" link and select the \"All\" check box in the Sponsor of Trial section.";
+            }
+            else
+            {
+                CTNCISponsorText.Text = "Initial search results include only NCI-sponsored clinical trials. To search all trials, scroll down to the Trial ID/Sponsor section and select the \"All\" check box in the Sponsor of Trial section.";
             }
         }
 

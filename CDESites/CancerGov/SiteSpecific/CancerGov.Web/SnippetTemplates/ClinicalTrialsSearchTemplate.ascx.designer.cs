@@ -50,6 +50,15 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.Literal CTCountClosed;
         
         /// <summary>
+        /// CTNCISponsorText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal CTNCISponsorText;
+        
+        /// <summary>
         /// cancerType control.
         /// </summary>
         /// <remarks>

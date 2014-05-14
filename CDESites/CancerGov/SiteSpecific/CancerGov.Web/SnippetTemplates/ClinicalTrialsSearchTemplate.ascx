@@ -179,9 +179,7 @@ span.gray-text
         clinical trials that are no longer recruiting.
     </p>
     <p>
-        Initial search results include only NCI-sponsored clinical trials. To search all trials, 
-        scroll down to the Trial ID/Sponsor section, click the "Show Search Options" link and 
-        select the "All" check box in the Sponsor of Trial section.
+    <asp:Literal ID="CTNCISponsorText" runat="server"></asp:Literal>
     </p>
     <p>
         <strong>Search Tip:</strong> Skip any items that are unknown or not applicable.</p>
