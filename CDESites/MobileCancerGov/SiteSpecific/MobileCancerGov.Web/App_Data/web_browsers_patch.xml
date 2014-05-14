@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<wurfl_patch>
+  <version>
+    <last_updated>April 8, 2011</last_updated>
+  </version>
+  <!-- This file was originally used by the WURFL to define
+       capability information for desktop browsers, but that
+	   data was subsequently integrated into the main data file.
+	   
+	   The patch file capability is maintained in order to allow
+	   devices to be added without modifying the core data file. -->
+  <devices>
+  </devices>
+</wurfl_patch>

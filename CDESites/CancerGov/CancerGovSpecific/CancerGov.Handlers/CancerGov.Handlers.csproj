@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F3414554-93F7-4116-88B2-637A3ABA050E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CancerGov.Handlers</RootNamespace>
+    <AssemblyName>CancerGov.Handlers</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <Compile Include="ClinicalTrialsLinkHandler.cs" />
+    <Compile Include="NewDrugInformationSummaryRSSHandler.cs" />
+    <Compile Include="NewProtocolRSSHandler.cs" />
+    <Compile Include="NewSummaryRSSHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Argotic.Common, Version=2008.0.2.0, Culture=neutral, PublicKeyToken=84b2ce808fb02469, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CDEFramework\Libraries\NCILibrary\ThirdPartyDlls\Argotic Syndication Framework\0.2.0\Argotic.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Argotic.Core, Version=2008.0.2.0, Culture=neutral, PublicKeyToken=84b2ce808fb02469, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CDEFramework\Libraries\NCILibrary\ThirdPartyDlls\Argotic Syndication Framework\0.2.0\Argotic.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Argotic.Extensions, Version=2008.0.2.0, Culture=neutral, PublicKeyToken=84b2ce808fb02469, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CDEFramework\Libraries\NCILibrary\ThirdPartyDlls\Argotic Syndication Framework\0.2.0\Argotic.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Argotic.Web, Version=2008.0.2.0, Culture=neutral, PublicKeyToken=84b2ce808fb02469, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CDEFramework\Libraries\NCILibrary\ThirdPartyDlls\Argotic Syndication Framework\0.2.0\Argotic.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CancerGovCommon\CancerGovCommon.csproj">
+      <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
+      <Name>CancerGovCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
+      <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
+      <Name>CDR.ClinicalTrials</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDR.Common\CDR.Common.csproj">
+      <Project>{0614DB16-1CB1-40E7-BAE8-112E3A290331}</Project>
+      <Name>CDR.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDR.DrugInformationSummary\CDR.DrugInformationSummary.csproj">
+      <Project>{9F0C47FE-B1FC-4C82-8FAC-89400CBC3830}</Project>
+      <Name>CDR.DrugInformationSummary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CDR.Summary\CDR.Summary.csproj">
+      <Project>{32A3E812-40FA-49F5-8B7A-962AAAE8E2EE}</Project>
+      <Name>CDR.Summary</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

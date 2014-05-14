@@ -1,0 +1,14 @@
+# Microsoft Developer Studio Project File - Database Project
+Begin DataProject = "CancerGov.Database"
+   MSDTVersion = "80"
+   Begin Folder = "Change Scripts"
+   End
+   Begin Folder = "Create Scripts"
+      Script = "dbo.usp_GeneralComments_Add.sql"
+      Script = "dbo.usp_GetProtocolIdByOldID.sql"
+   End
+   Begin DBRefFolder = "Database References"
+   End
+   Begin Folder = "Queries"
+   End
+End
