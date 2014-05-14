@@ -667,7 +667,12 @@
       </element>
       <element name="AlternateContentVersions" type="cde:alternateContentVersions" maxOccurs="1" minOccurs="1">
         <annotation>
-          <documentation>Defines the alternate content versions for a Single Page Assembly Instruction.</documentation>
+          <documentation>Defines the alternate content versions for a Multi Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+      <element name="SocialMetadata" type="cde:socialMetadata" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the social metadata for a Multi Page Assembly Instruction.</documentation>
         </annotation>
       </element>
     </all>
@@ -1011,6 +1016,11 @@
       <element name="AlternateContentVersions" type="cde:alternateContentVersions" maxOccurs="1" minOccurs="1">
         <annotation>
           <documentation>Defines the alternate content versions for a Single Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+      <element name="SocialMetadata" type="cde:socialMetadata" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the social metadata for a Single Page Assembly Instruction.</documentation>
         </annotation>
       </element>
     </all>
@@ -2020,6 +2030,113 @@
       </element>
     </all>
   </complexType>
+
+  <complexType name="socialMetadata">
+    <annotation>
+      <documentation>
+        Defines settings and veriables pertaining to social 
+        media, resharing, and comments.
+      </documentation>
+    </annotation>
+    <all>
+      <element name="IsCommentingAvailable" type="boolean"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Defines if commenting is available at this level of the site.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="SocialMetaTags" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>A collection of zero or more meta tags for implementing various social media standards.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more meta tags for implementing various social media standards.</documentation>
+          </annotation>
+          <sequence>
+            <element name="SocialMetaTag" type="cde:socialMetaTag" maxOccurs="unbounded" minOccurs="0">
+              <annotation>
+                <documentation>A single meta tag in the overall collection.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="socialMetaTag">
+    <annotation>
+      <documentation>
+        Defines a single meta tag for use with social media standards.
+      </documentation>
+    </annotation>
+    <attribute name="Type" type="cde:metaType" use="required">
+      <annotation>
+        <documentation>The type of the meta tag (name or property)</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Id" type="cde:metaId" use="required">
+      <annotation>
+        <documentation>The name or property of the mime tag.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Source" type="cde:metaContentSource" use="required">
+      <annotation>
+        <documentation>The source of the tag's content.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Content" type="string" use="required">
+      <annotation>
+        <documentation>Either the content to use for the meta tag directly, or the name of the PageAssembly field to read, based on the Source attribute.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="PrependHost" type="boolean">
+      <annotation>
+        <documentation>Flag to add the hostname to the beginning of the field, only used for url and literalUrl types.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="AllowEmptyContent" type="boolean">
+      <annotation>
+        <documentation>Flag to allow empty content to generate a resulting meta tag.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <simpleType name="metaType">
+    <annotation>
+      <documentation>The type of a meta tag.</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="name"/>
+      <enumeration value="property"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="metaContentSource">
+    <annotation>
+      <documentation>The source of the content for the meta tag.</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="field"/>
+      <enumeration value="literal"/>
+      <enumeration value="url"/>
+      <enumeration value="literalUrl"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="metaId">
+    <annotation>
+      <documentation>The name or property of the meta tag to be generated.</documentation>
+    </annotation>
+    <restriction base="string">
+      <pattern value=".+" />
+    </restriction>
+  </simpleType>
+
+
 </schema>
 
 

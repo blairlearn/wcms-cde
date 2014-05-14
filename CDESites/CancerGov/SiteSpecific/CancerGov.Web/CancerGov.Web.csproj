@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2E572059-B868-45B5-AD56-DB8687EF4DD6}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
@@ -656,6 +656,7 @@
     <Content Include="PageTemplates\DefaultCancerGovTemplate-NoLeftNav.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
+    <Content Include="SnippetTemplates\BlogLandingDynamicList.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx" />
     <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx" />
@@ -674,6 +675,7 @@
     <Content Include="SnippetTemplates\ConditionalDisplaySnippet.ascx" />
     <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
+    <Content Include="SnippetTemplates\DisqusComments.ascx" />
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
     <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
@@ -689,6 +691,7 @@
     <Content Include="SnippetTemplates\SearchGeneticsServices.ascx" />
     <Content Include="SnippetTemplates\TableofLinks.ascx" />
     <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
+    <Content Include="SnippetTemplates\BlogPostNewerOlder.ascx" />
     <Content Include="sysimages\li-selected-last.gif" />
     <Content Include="sysimages\li-selected.gif" />
     <Content Include="sysimages\li-unselected-last.gif" />

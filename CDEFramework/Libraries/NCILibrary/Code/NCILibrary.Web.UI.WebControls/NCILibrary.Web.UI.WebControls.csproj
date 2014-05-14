@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogPager.cs" />
     <Compile Include="CheckBoxBoundField.cs" />
     <Compile Include="CollapsiblePanel.cs" />
     <Compile Include="CssBrowserSelectorManager.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="CustomSortingGridView.cs" />
     <Compile Include="DHtmlCollapsiblePanel.cs" />
     <Compile Include="DHtmlModalPopup.cs" />
+    <Compile Include="DisqusControl.cs" />
     <Compile Include="DropDownBoundField.cs" />
     <Compile Include="DropDownListItem.cs" />
     <Compile Include="DropDownListItemCollection.cs" />
@@ -158,6 +160,10 @@
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.Web\NCILibrary.Web.csproj">
+      <Project>{1FA9B9C2-0E20-4256-A00B-989B33154EBB}</Project>
+      <Name>NCILibrary.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

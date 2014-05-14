@@ -15,6 +15,8 @@ using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Util;
 using NCI.Core;
+using NCI.Logging;
+using NCI.Web.ProductionHost;
 
 
 namespace NCI.Web.CDE
@@ -51,6 +53,7 @@ namespace NCI.Web.CDE
             // Initialize sub objects.
             _snippets = new SnippetInfoCollection();
             PageMetadata = new PageMetadata();
+            SocialMetadata = new SocialMetadata();
             _localFields = new LocalFieldCollection();
 
             //base.Initialize();
@@ -148,6 +151,13 @@ namespace NCI.Web.CDE
         /// <value>The page metadata.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public PageMetadata PageMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page metadata.
+        /// </summary>
+        /// <value>The page metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public SocialMetadata SocialMetadata { get; set; }
 
         /// <summary>
         /// Gets or sets the content dates for the page.
@@ -365,6 +375,11 @@ namespace NCI.Web.CDE
                     }
                 }
 
+                if (SocialMetadata.IsCommentingAvailable != null)
+                {
+                    keysList.Add("commentsavailable");
+                }
+
                 // Enumerate the Files and set an URL filter.
                 foreach (AlternateContentFile acFile in AlternateContentVersions.Files)
                 {
@@ -389,6 +404,15 @@ namespace NCI.Web.CDE
         public override WebAnalyticsSettings GetWebAnalytics()
         { 
             return base.GetWebAnalytics();
+        }
+
+        /// <summary>
+        /// Provides a list of all SocialMetaTag objects defined for the current assembly.
+        /// </summary>
+        /// <returns>A potentially-empty array of SocialMetaTag objects.</returns>
+        public SocialMetaTag[] GetSocialMetaTags()
+        {
+            return GenerateSocialMetaTags(SocialMetadata.Tags);
         }
 
         /// <summary>
@@ -633,6 +657,13 @@ namespace NCI.Web.CDE
                 data.Value = this.PageMetadata.ShortDescription;
             });
 
+            AddFieldFilter("site_name", (name, data) =>
+            {
+                data.Value = ProductionHostConfig.Sitename;
+            });
+
+            // also initialize social metadata field filters
+            RegisterSocialMetadataFieldFilters(this, SocialMetadata);
         }
 
         /// <summary>

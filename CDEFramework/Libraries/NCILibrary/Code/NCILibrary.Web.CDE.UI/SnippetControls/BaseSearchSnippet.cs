@@ -145,6 +145,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     dynamicSearch.EndDate = String.Format("{0:MM/dd/yyyy}", endDate);
                     dynamicSearch.KeyWord = keyWord;
                     dynamicSearch.SiteName = siteName;
+                    dynamicSearch.DisqusShortname = this.SearchList.DisqusShortname;
+
+                    // check if the site is in production
+                    bool isProd = PageAssemblyContext.Current.IsProd;
+                    // append a shortname prefix based on the production state
+                    dynamicSearch.DisqusShortname = dynamicSearch.DisqusShortname + (isProd ? "-prod" : "-dev");
 
                     this.PageInstruction.AddUrlFilter("Print", (name, url) =>
                     {
@@ -206,7 +212,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// <summary>
         /// Helper method to setup the pager
         /// </summary>
-        private void SetupPager(int recordsPerPage, int totalRecordCount)
+        protected virtual void SetupPager(int recordsPerPage, int totalRecordCount)
         {
             SimplePager pager = new SimplePager();
             pager.RecordCount = totalRecordCount;
