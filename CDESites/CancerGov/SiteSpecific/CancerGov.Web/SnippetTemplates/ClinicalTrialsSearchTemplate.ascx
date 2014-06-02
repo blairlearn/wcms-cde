@@ -176,7 +176,11 @@ span.gray-text
         clinical trials now accepting participants, or use more search options to search
         the set of
         <asp:Literal ID="CTCountClosed" runat="server"></asp:Literal>
-        clinical trials that are no longer recruiting.</p>
+        clinical trials that are no longer recruiting.
+    </p>
+    <p>
+    <asp:Literal ID="CTNCISponsorText" runat="server"></asp:Literal>
+    </p>
     <p>
         <strong>Search Tip:</strong> Skip any items that are unknown or not applicable.</p>
     <table width="100%" cellpadding="0" cellspacing="0" border="0" class="cttable">
