@@ -65,6 +65,7 @@ namespace NCI.Web.CDE
             _pages = new MultiPageCollection();
             PageMetadata = new PageMetadata();
             SocialMetadata = new SocialMetadata();
+            PageResources = new PageResources();
             _localFields = new LocalFieldCollection();
 
             //base.Initialize();
@@ -220,6 +221,13 @@ namespace NCI.Web.CDE
         /// <value>The social metadata.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public SocialMetadata SocialMetadata { get; set; }
+
+        /// <summary>
+        /// Gets the page resources (JS and CSS)
+        /// </summary>
+        /// <value>The social metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public PageResources PageResources { get; set; }
 
         /// <summary>
         /// Gets or sets the content dates for the page.
@@ -600,6 +608,15 @@ namespace NCI.Web.CDE
         public SocialMetaTag[] GetSocialMetaTags()
         {
             return GenerateSocialMetaTags(SocialMetadata.Tags);
+        }
+
+        /// <summary>
+        /// Provides the PageResources object encapsulating CSS and JS for the page.
+        /// </summary>
+        /// <returns>A PageResources object.</returns>
+        public PageResources GetPageResources()
+        {
+            return PageResources;
         }
 
         /// <summary>
