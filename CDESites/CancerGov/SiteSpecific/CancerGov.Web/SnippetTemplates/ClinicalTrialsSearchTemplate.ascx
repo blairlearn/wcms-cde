@@ -178,7 +178,7 @@ span.gray-text
         <asp:Literal ID="CTCountClosed" runat="server"></asp:Literal>
         clinical trials that are no longer recruiting.
     </p>
-    <p>
+    <p class="clinical-trials-strong-text">
     <asp:Literal ID="CTNCISponsorText" runat="server"></asp:Literal>
     </p>
     <p>
