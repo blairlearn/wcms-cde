@@ -147,7 +147,10 @@ namespace CancerGov.Web.SnippetTemplates
                     #region Web Version
                     phWeb.Visible = true;
                     // Image displayed only for web version.
-                    imgImage.ImageUrl = ModuleData.ImageUrl;
+                    if (!String.IsNullOrEmpty(ModuleData.ImageUrl))
+                    {
+                        imgImage.ImageUrl = ModuleData.ImageUrl;
+                    }
                     #endregion
                 }
 

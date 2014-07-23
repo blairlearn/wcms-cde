@@ -401,6 +401,13 @@ namespace NCI.Web.CDE.UI
                     StyleSheetInfo[] colCss = pgTemplateInfo.StyleSheets;
                     JavascriptInfo[] colJs = pgTemplateInfo.Javascripts;
 
+                    PageResources pgResources = PageAssemblyContext.Current.PageAssemblyInstruction.GetPageResources();
+                    if (pgResources != null)
+                    {
+                        colCss = colCss.Concat(pgResources.StyleSheets).ToArray();
+                        colJs = colJs.Concat(pgResources.Javascripts).ToArray();
+                    }
+
                     // Capture all items marked as going at the start of the block.
                     IEnumerable<StyleSheetInfo> firstStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning == "true");
                     IEnumerable<JavascriptInfo> firstJavaScript = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning == "true");
@@ -446,6 +453,13 @@ namespace NCI.Web.CDE.UI
                 {
                     StyleSheetInfo[] colCss = pgTemplateInfo.StyleSheets;
                     JavascriptInfo[] colJs = pgTemplateInfo.Javascripts;
+
+                    PageResources pgResources = PageAssemblyContext.Current.PageAssemblyInstruction.GetPageResources();
+                    if (pgResources != null)
+                    {
+                        colCss = colCss.Concat(pgResources.StyleSheets).ToArray();
+                        colJs = colJs.Concat(pgResources.Javascripts).ToArray();
+                    }
 
                     // Capture all items which are marked exclusively as going at the end of the block.
                     // The present UI allows an item to be specified as both beginning and end, however

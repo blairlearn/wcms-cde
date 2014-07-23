@@ -675,6 +675,11 @@
           <documentation>Defines the social metadata for a Multi Page Assembly Instruction.</documentation>
         </annotation>
       </element>
+      <element name="PageResources" type="cde:pageResourcesInfo" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines page-level JS and CSS resources.</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1021,6 +1026,11 @@
       <element name="SocialMetadata" type="cde:socialMetadata" maxOccurs="1" minOccurs="0">
         <annotation>
           <documentation>Defines the social metadata for a Single Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+      <element name="PageResources" type="cde:pageResourcesInfo" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines page-level JS and CSS resources.</documentation>
         </annotation>
       </element>
     </all>
@@ -1514,6 +1524,26 @@
         <documentation>The display version this PageTemplateInfo is for.</documentation>
       </annotation>
     </attribute>
+  </complexType>
+
+  <complexType name="pageResourcesInfo">
+    <annotation>
+      <documentation>Represents Javascript and Style Sheets attatched at a page level.</documentation>
+    </annotation>
+    <all>
+      <element name="StyleSheets" type="cde:styleSheetCollection"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The collection of CDE Stylesheets for this PageTemplateInfo.</documentation>
+        </annotation>
+      </element>
+      <element name="Javascripts" type="cde:javascriptCollection"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The collection of CDE Javascripts for this PageTemplateInfo.</documentation>
+        </annotation>
+      </element>
+    </all>
   </complexType>
 
   <complexType name="styleSheetInfo">

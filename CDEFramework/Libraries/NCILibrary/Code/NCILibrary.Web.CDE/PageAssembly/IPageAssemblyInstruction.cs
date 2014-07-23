@@ -94,5 +94,12 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <returns>A potentially-empty array of SocialMetaTag objects.</returns>
         SocialMetaTag[] GetSocialMetaTags();
+
+        /// <summary>
+        /// Provides the PageResources object encapsulating CSS and JS for the page.
+        /// </summary>
+        /// <returns>A PageResources object.</returns>
+        PageResources GetPageResources();
+
     }
 }
