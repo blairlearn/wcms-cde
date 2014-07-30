@@ -242,9 +242,24 @@ namespace NCI.Web.CDE
             //set the page assembly context with the assemblyInfo, dispayVersion and pageTemplateInfo
             PageAssemblyContext.Current.InitializePageAssemblyInfo(assemblyInfo, displayVersion, pageTemplateInfo, url);
 
+            // Set culture for selected content.
+			// The language and culture are formatted as xx-yy (eg. "en-us") when a locale is chosen in Percussion. 			
+            // The hyphenated four-letter code is then trimmed to a 2-character neutral culture (eg. "en") by the Velocity
+			// user macros file and is added to the XML file to be published in /PublishedContent/PageInstructions. The 
+			// assemblyInfo object uses the neutral culture (found in the <Language> tag in the XML file) for page assembly.
+			// The only exception to this is the Chinese language, in which the culture MUST be specified as either
+			// "zh-hans" (Simplified Chinese) or "zh-hant" (Traditional Chinese). There is no support for a 2-character "zh" 
+			// culture - see http://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo(v=vs.90).aspx for
+            // details. The logic below is a workaround to catch the "zh" and convert it to the full "zh-hans" culture.
             if (!string.IsNullOrEmpty(assemblyInfo.Language))
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(assemblyInfo.Language);
-
+                if (assemblyInfo.Language == "zh")
+                {
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("zh-hans");
+                }
+                else
+                {
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(assemblyInfo.Language);
+                }
             string rewriteUrl = PageAssemblyContext.Current.PageTemplateInfo.PageTemplatePath;
 
             // Append original parameters in the request URL
