@@ -68,8 +68,7 @@ namespace CancerGov.Web
                         case "spanish":
                         case "es":
                             return DisplayLanguage.Spanish;
-                        case "english":
-                        case "en":
+                        default:
                             return DisplayLanguage.English;
                     }
                 }

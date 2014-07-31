@@ -16,6 +16,8 @@ namespace CancerGov.Web
     public enum DisplayLanguage
     {
         English = 1,
-        Spanish = 2
+        Spanish = 2,
+        Portuguese = 3,
+        Chinese_Simplified = 4
     }
 }

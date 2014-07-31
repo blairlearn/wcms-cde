@@ -347,13 +347,13 @@ namespace Www.Templates
         private void LoadData()
         {
             string language = string.Empty;
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                language = "English";
+                language = "Spanish";
             }
             else
             {
-                language = "Spanish";
+                language = "English";
             }
 
             if (!string.IsNullOrEmpty(CdrID)) //this is a cdrid lookup for one term
@@ -407,10 +407,10 @@ namespace Www.Templates
         {
             string language = "";
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
-                language = "English";
-            else
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 language = "Spanish";
+            else
+                language = "English";
 
             TermDictionaryCollection dataCollection = TermDictionaryManager.Search(language, "_", 0, false);
             _totalCount = dataCollection.Count;
@@ -553,13 +553,13 @@ namespace Www.Templates
         private void SetupCommon()
         {
             string language = string.Empty;
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                language = "English";
+                language = "Spanish";
             }
             else
             {
-                language = "Spanish";
+                language = "English";
             }
             // This sets the url and link text for close
             AutoComplete1.SearchURL = "/TermDictionary.svc/SearchJSON/" + language + "?searchTerm=";
