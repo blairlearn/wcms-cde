@@ -28,15 +28,15 @@ namespace NCI.Web.CancerGov.Apps
             string linksTableTitle;
             string glossaryTerms = "";
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
-            {
-                language = "English";
-                linksTableTitle = "Glossary Terms";
-            }
-            else
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
                 language = "Spanish";
                 linksTableTitle = "Glosario";
+            }
+            else
+            {
+                language = "English";
+                linksTableTitle = "Glossary Terms";
             }
 
             GlossaryTermExtractor gte = new GlossaryTermExtractor();

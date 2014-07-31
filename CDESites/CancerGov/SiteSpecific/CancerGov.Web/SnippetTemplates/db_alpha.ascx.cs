@@ -163,11 +163,11 @@ namespace Www.Templates
                 
             }
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 DictionaryURL = DictionaryURLSpanish;
 
             //Set display props according to lang
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
                 SetupSpanish();
             }
@@ -186,7 +186,7 @@ namespace Www.Templates
 
                 Page.Form.Action = Page.Request.Path;
 
-                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                     Page.Form.Action += "?lang=spanish";
             }
             else
@@ -619,13 +619,13 @@ namespace Www.Templates
         private void ActivateDefinitionView(TermDictionaryDataItem dataItem)
         {
             string language = string.Empty;
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                language = "English";
+                language = "Spanish";
             }
             else
             {
-                language = "Spanish";
+                language = "English";
             }
 
             MultiView1.ActiveViewIndex = 2;

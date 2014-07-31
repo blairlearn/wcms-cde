@@ -60,13 +60,13 @@ namespace www.Common.UserControls
         protected void Page_Load(object sender, EventArgs e)
         {
             string language = string.Empty;
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                language = "English";
+                language = "Spanish";
             }
             else
             {
-                language = "Spanish";
+                language = "English";
             }
 
             if (language == "Spanish")

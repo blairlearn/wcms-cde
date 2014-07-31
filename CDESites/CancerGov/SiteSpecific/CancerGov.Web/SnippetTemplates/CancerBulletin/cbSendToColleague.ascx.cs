@@ -69,7 +69,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         {
             base.OnLoad(e);
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 isSpanish = true;
 
 
