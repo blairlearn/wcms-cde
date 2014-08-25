@@ -88,6 +88,7 @@
     <Compile Include="FormControls\PhoneNumberValidator.cs" />
     <Compile Include="FormControls\TextAreaMaxLengthValidator.cs" />
     <Compile Include="FormControls\TwoListSelect.cs" />
+    <Compile Include="Infrastructure\HtmlEncoder.cs" />
     <Compile Include="ITemplatedDataItem.cs" />
     <Compile Include="ITemplatedTreeNode.cs" />
     <Compile Include="JavascriptDetectionControl.cs" />

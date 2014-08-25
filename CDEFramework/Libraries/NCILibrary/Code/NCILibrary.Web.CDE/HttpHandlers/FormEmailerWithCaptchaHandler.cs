@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 
 using Recaptcha;
 
+using NCI.Web.UI.WebControls.Infrastructure;
+
 namespace NCI.Web.CDE.HttpHandlers
 {
     /// <summary>
@@ -23,11 +25,13 @@ namespace NCI.Web.CDE.HttpHandlers
         private string from, to, subject, body, redirect, requiredFields, splitFields;
 
         // Re-Captcha
-        private string recaptchaChallengeField, recaptchaResponseField;
+        private string recaptchaChallengeField = string.Empty,
+            recaptchaResponseField = string.Empty;
 
         // For outputting errors
-        private string content;
         private bool error_p;
+
+        private List<String> errorList = new List<string>();
 
         public string Content { get; private set; }
 
@@ -66,7 +70,7 @@ namespace NCI.Web.CDE.HttpHandlers
                         from = context.Request.Params[key];
                         if (!EmailSyntaxValidator.Valid(from, true))
                         {
-                            Content += "Error: from email '" + from + "' is invalid. Please go back and enter a valid email address.<br>\n";
+                            errorList.Add("Error: from email '" + from + "' is invalid. Please go back and enter a valid email address.");
                             error_p = true;
                         }
                         break;
@@ -75,7 +79,7 @@ namespace NCI.Web.CDE.HttpHandlers
                         to = ConfigurationSettings.AppSettings[context.Request.Params[key]];
                         if ((to == null) || (to == ""))
                         {
-                            Content += "Error: recipient '" + context.Request.Params[key] + "' is not configured.<br>\n";
+                            errorList.Add("Error: recipient '" + context.Request.Params[key] + "' is not configured.");
                             error_p = true;
                         }
                         break;
@@ -119,7 +123,7 @@ namespace NCI.Web.CDE.HttpHandlers
                 {
                     if ((context.Request.Params[field] == null) || (context.Request.Params[field].Trim() == ""))
                     {
-                        Content += "Required field missing: " + field + "<br>\n";
+                        errorList.Add("Required field missing: " + field);
                         error_p = true;
                     }
                 }
@@ -130,7 +134,7 @@ namespace NCI.Web.CDE.HttpHandlers
                     recaptchaResponseField, context.Request.UserHostAddress);
             if (!captcha.IsValid)
             {
-                Content += captcha.ErrorMessage + "<br>\n";
+                errorList.Add(captcha.ErrorMessage);
                 error_p = true;
             }
 
@@ -142,7 +146,7 @@ namespace NCI.Web.CDE.HttpHandlers
                 }
                 catch (Exception exception)
                 {
-                    Content = "Error: " + exception.Message + "<br>\n";
+                    errorList.Add("Error: " + exception.Message);
                     error_p = true;
                 }
 
@@ -154,6 +158,11 @@ namespace NCI.Web.CDE.HttpHandlers
 
             if (error_p)
             {
+                Content = string.Empty;
+                errorList.ForEach(entry => {
+                    Content += HtmlEncoder.HtmlEncode(entry) + "<br>\n";
+                });
+
                 context.Response.Write(Content);
             }
 
