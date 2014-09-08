@@ -25,8 +25,14 @@ namespace NCI.Web.CDE
         public static readonly string AltLanguage = "AltLanguage";
 
         public static readonly string DesktopUrl = "DeskopUrl";
-        
+
         public static readonly string MobileUrl = "MobileUrl";
 
+        public static readonly string TranslationUrls = "TranslationUrls";
+
+        public static readonly string TranslationUrlsEn = "TranslationUrlsEn";
+        public static readonly string TranslationUrlsEs = "TranslationUrlsEs";
+        public static readonly string TranslationUrlsPt = "TranslationUrlsPt";
+        public static readonly string TranslationUrlsZh = "TranslationUrlsZh";
     }
 }

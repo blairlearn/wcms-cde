@@ -53,6 +53,7 @@ namespace NCI.Web.CDE
             // Initialize sub objects.
             _snippets = new SnippetInfoCollection();
             PageMetadata = new PageMetadata();
+            Translations = new Translations();
             SocialMetadata = new SocialMetadata();
             PageResources = new PageResources();
             _localFields = new LocalFieldCollection();
@@ -152,6 +153,13 @@ namespace NCI.Web.CDE
         /// <value>The page metadata.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public PageMetadata PageMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page metadata.
+        /// </summary>
+        /// <value>The page metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public Translations Translations { get; set; }
 
         /// <summary>
         /// Gets or sets the page metadata.
@@ -306,11 +314,10 @@ namespace NCI.Web.CDE
                 UrlFilterDelegate UrlfilterLinkDelegate = UrlFilterDelegates[linkTypeKey];
                 UrlfilterLinkDelegate(linkTypeKey, nciUrl);
             }
-            else
+            /*else
             {
                 throw new PageAssemblyException(String.Format("Unknown link type \"{0}\"", urlType));
-            }
-
+            }*/
             return nciUrl;
         }
 
@@ -351,7 +358,7 @@ namespace NCI.Web.CDE
                 if (AlternateContentVersions.IsShareBookmarkAvailable)
                     keysList.Add("bookmarkshare");
                 if (AlternateContentVersions.IsEmailAvailable)
-                    keysList.Add("email"); 
+                    keysList.Add("email");
                 if (AlternateContentVersions.IsMobileShareAvailable)
                     keysList.Add("mobileShare");
                 if (AlternateContentVersions.IsPublicArchive)
@@ -410,7 +417,7 @@ namespace NCI.Web.CDE
         /// This method returns the web analytics settings for Event, Props and eVars data points.
         /// </summary>
         public override WebAnalyticsSettings GetWebAnalytics()
-        { 
+        {
             return base.GetWebAnalytics();
         }
 
@@ -587,7 +594,7 @@ namespace NCI.Web.CDE
             AddFieldFilter("browser_title", (name, data) =>
             {
                 // BrowserTitle is optional  
-                if(this.PageMetadata.BrowserTitle != null &&
+                if (this.PageMetadata.BrowserTitle != null &&
                    this.PageMetadata.BrowserTitle != "")
                     data.Value = this.PageMetadata.BrowserTitle;
                 else
@@ -632,7 +639,7 @@ namespace NCI.Web.CDE
             {
                 data.Value = GetField("meta_robots");
             });
-            
+
             AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = this.PageMetadata.MetaKeywords;
@@ -757,11 +764,53 @@ namespace NCI.Web.CDE
                 {
                     AddUrlFilter("MobileUrl", (name, url) =>
                     {
-                        url.SetUrl(PageMetadata.MobileURL,true);
+                        url.SetUrl(PageMetadata.MobileURL, true);
                     });
                 }
             }
+            if (Translations.Tags != null)
+            {
+                AddUrlFilter("TranslationUrls", (name, url) =>
+                {
+                    url.SetUrl("/", true);
+                });
 
+                for (int i = 0; i < Translations.Tags.Length; i++)
+                {
+                    if (Translations.Tags[i].Locale == "en-us")
+                    {
+                        string en = Translations.Tags[i].Url;
+                        AddUrlFilter(("TranslationUrlsEn"), (name, url) =>
+                        {
+                            url.SetUrl(en, true);
+                        });
+                    }
+                    if (Translations.Tags[i].Locale == "es-us")
+                    {
+                        string es = Translations.Tags[i].Url;
+                        AddUrlFilter(("TranslationUrlsEs"), (name, url) =>
+                        {
+                            url.SetUrl(es, true);
+                        });
+                    }
+                    if (Translations.Tags[i].Locale == "pt-br")
+                    {
+                        string pt = Translations.Tags[i].Url;
+                        AddUrlFilter(("TranslationUrlsPt"), (name, url) =>
+                        {
+                            url.SetUrl(pt, true);
+                        });
+                    }
+                    if (Translations.Tags[i].Locale == "zh-cn")
+                    {
+                        string zh = Translations.Tags[i].Url;
+                        AddUrlFilter(("TranslationUrlsZh"), (name, url) =>
+                        {
+                            url.SetUrl(zh, true);
+                        });
+                    }
+                }
+            }
             AddUrlFilter("add_this_url", (name, url) =>
             {
                 url.SetUrl(PrettyUrl);

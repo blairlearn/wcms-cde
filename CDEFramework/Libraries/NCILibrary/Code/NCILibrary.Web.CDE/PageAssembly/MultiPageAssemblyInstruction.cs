@@ -65,6 +65,7 @@ namespace NCI.Web.CDE
             _pages = new MultiPageCollection();
             PageMetadata = new PageMetadata();
             SocialMetadata = new SocialMetadata();
+            Translations = new Translations();
             PageResources = new PageResources();
             _localFields = new LocalFieldCollection();
 
@@ -221,6 +222,13 @@ namespace NCI.Web.CDE
         /// <value>The social metadata.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public SocialMetadata SocialMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the page metadata.
+        /// </summary>
+        /// <value>The page metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public Translations Translations { get; set; }
 
         /// <summary>
         /// Gets the page resources (JS and CSS)
@@ -461,11 +469,13 @@ namespace NCI.Web.CDE
             {
                 UrlFilterDelegate UrlfilterLinkDelegate = UrlFilterDelegates[linkTypeKey];
                 UrlfilterLinkDelegate(linkTypeKey, nciUrl);
-            }
+
+            }/*
             else
             {
                 throw new PageAssemblyException(String.Format("Unknown link type \"{0}\"", urlType));
-            }
+
+            }*/
 
             return nciUrl;
         }
@@ -973,6 +983,55 @@ namespace NCI.Web.CDE
                     }
                 }
             }
+            #endregion
+
+            #region Translations
+            // Translations filter 
+
+            if (Translations.Tags != null)
+            {
+                AddUrlFilter("TranslationUrls", (name, url) =>
+                {
+                    url.SetUrl("/", true);
+                });
+
+                for (int i = 0; i < Translations.Tags.Length; i++)
+                {
+                    if (Translations.Tags[i].Locale == "en-us")
+                    {
+                        string en = Translations.Tags[i].Url;
+                        AddUrlFilter(("TranslationUrlsEn"), (name, url) =>
+                        {
+                            url.SetUrl(en, true);
+                        });
+                    }
+                    if (Translations.Tags[i].Locale == "es-us")
+                    {
+                        string es = Translations.Tags[i].Url;
+                        AddUrlFilter(("TranslationUrlsEs"), (name, url) =>
+                        {
+                            url.SetUrl(es, true);
+                        });
+                    }
+                    if (Translations.Tags[i].Locale == "pt-br")
+                    {
+                        string pt = Translations.Tags[i].Url;
+                        AddUrlFilter(("TranslationUrlsPt"), (name, url) =>
+                        {
+                            url.SetUrl(pt, true);
+                        });
+                    }
+                    if (Translations.Tags[i].Locale == "zh-cn")
+                    {
+                        string zh = Translations.Tags[i].Url;
+                        AddUrlFilter(("TranslationUrlsZh"), (name, url) =>
+                        {
+                            url.SetUrl(zh, true);
+                        });
+                    }
+                }
+            }
+
             #endregion
 
             #region AddFilter For PageOptions
