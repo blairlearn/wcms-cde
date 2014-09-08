@@ -163,6 +163,8 @@
     <Compile Include="PageAssembly\PageAssemblyInstructionUrls.cs" />
     <Compile Include="PageAssembly\SnippetInfo.cs" />
     <Compile Include="PageAssembly\SnippetInfoCollection.cs" />
+    <Compile Include="PageAssembly\TranslationMetaTag.cs" />
+    <Compile Include="PageAssembly\Translations.cs" />
     <Compile Include="PageAssembly\UrlFilterDelegate.cs" />
     <Compile Include="PageAssembly\WebAnalyticsDataPointDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
