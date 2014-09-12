@@ -38,6 +38,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ThirdPartyDlls\nVelocity\NVelocity.dll</HintPath>
     </Reference>
+    <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ThirdPartyDlls\reCaptcha\1.0.5.0\Recaptcha.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -81,6 +85,7 @@
     <Compile Include="HttpHandlers\FlashGetCookieHandler.cs" />
     <Compile Include="HttpHandlers\FlashSetCookieHandler.cs" />
     <Compile Include="HttpHandlers\FormEmailerHandler.cs" />
+    <Compile Include="HttpHandlers\FormEmailerWithCaptchaHandler.cs" />
     <Compile Include="HttpHandlers\ListservSubscriptionHandler.cs" />
     <Compile Include="HttpHeaders\Configuration\HttpHeaderElement.cs" />
     <Compile Include="HttpHeaders\Configuration\HttpHeaderListElement.cs" />
