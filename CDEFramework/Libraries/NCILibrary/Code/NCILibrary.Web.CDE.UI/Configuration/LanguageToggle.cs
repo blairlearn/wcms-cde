@@ -11,10 +11,28 @@ namespace NCI.Web.CDE.UI.Configuration
 
         private bool _trackViewState = false;
 
-
+        private string _language;
         private string _template;
+        private string _url;
+        private bool _alwaysShow;
 
-
+        public string Language
+        {
+            get
+            {
+                return (string)this.ViewState["Language"] ?? string.Empty;
+            }
+            set
+            {
+                //If the text is the same, just ignore and don't set dirtyness
+                //or fire any events.
+                if (!object.Equals(value, this.ViewState["Language"]))
+                {
+                    this.ViewState["Language"] = value;
+                    this.OnLangToggleChanged();
+                }
+            }
+        }
 
         [PersistenceMode(PersistenceMode.InnerProperty)]
         public string Template
@@ -30,6 +48,24 @@ namespace NCI.Web.CDE.UI.Configuration
                 if (!object.Equals(value, this.ViewState["Template"]))
                 {
                     this.ViewState["Template"] = value;
+                    this.OnLangToggleChanged();
+                }
+            }
+        }
+
+        public string Url
+        {
+            get
+            {
+                return (string)this.ViewState["Url"] ?? string.Empty;
+            }
+            set
+            {
+                //If the text is the same, just ignore and don't set dirtyness
+                //or fire any events.
+                if (!object.Equals(value, this.ViewState["Url"]))
+                {
+                    this.ViewState["Url"] = value;
                     this.OnLangToggleChanged();
                 }
             }
@@ -64,7 +100,9 @@ namespace NCI.Web.CDE.UI.Configuration
 
         protected void CopyProperties(LanguageToggle newLangToggle)
         {
+            ((LanguageToggle)newLangToggle).Language = this.Language;
             ((LanguageToggle)newLangToggle).Template = this.Template;
+            ((LanguageToggle)newLangToggle).Url = this.Url;
         }
 
         protected LanguageToggle CreateLanguageToggle()
@@ -167,7 +205,6 @@ namespace NCI.Web.CDE.UI.Configuration
         }
 
         #endregion
-
 
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,12 +23,26 @@ namespace NCI.Web.CDE
     /// </summary>
     abstract public class BasePageAssemblyInstruction
     {
-        #region Private 
+        #region Private
         /// <summary>
         /// Collection of FieldFilter delegates for Web analytics fields.
         /// </summary>
         private Dictionary<string, WebAnalyticsDataPointDelegate> _webAnalyticsFieldFilterDelegates = new Dictionary<string, WebAnalyticsDataPointDelegate>();
         private WebAnalyticsSettings webAnalyticsSettings = null;
+        private Dictionary<string, UrlFilterDelegate> _TranslationFilterDelegates = new Dictionary<string, UrlFilterDelegate>();
+
+        /// <summary>
+        /// Gets the translation filter delegates.
+        /// </summary>
+        /// <value>The translation filter delegates.</value>
+        private Dictionary<string, UrlFilterDelegate> TranslationFilterDelegates
+        {
+            get
+            {
+                return _TranslationFilterDelegates;
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -111,7 +127,7 @@ namespace NCI.Web.CDE
             {
                 url.SetUrl(pgInst.GetUrl("CurrentURL").ToString());
             });
-                        
+
             pgInst.AddUrlFilter("PostBackURL", (name, url) =>
             {
                 url.SetUrl(pgInst.GetUrl("CurrentURL") + "?" + HttpContext.Current.Request.QueryString);
@@ -139,7 +155,7 @@ namespace NCI.Web.CDE
 
         protected WebAnalyticsSettings WebAnalyticsSettings
         {
-            get 
+            get
             {
                 if (webAnalyticsSettings == null)
                     webAnalyticsSettings = new WebAnalyticsSettings();
@@ -266,12 +282,17 @@ namespace NCI.Web.CDE
         protected SocialMetaTag[] GenerateSocialMetaTags(SocialMetaTagData[] SocialMetaTagData)
         {
             return (from datum in SocialMetaTagData
-                select new SocialMetaTag(datum)).ToArray();
+                    select new SocialMetaTag(datum)).ToArray();
         }
 
         #endregion
 
-        #region Public 
+        #region Public
+        public BasePageAssemblyInstruction()
+        {
+            Translations = new Translations();
+        }
+
         public ContentDates ContentDates
         {
             get
@@ -288,6 +309,107 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public ContentItemInfo ContentItemInfo { get; set; }
 
-        #endregion
-    }
+
+        /// <summary>
+        /// Gets or sets the page metadata.
+        /// </summary>
+        /// <value>The page metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public Translations Translations { get; set; }
+
+        /// <summary>
+        /// Gets the URL referenced by "String" with all translation URL filters.
+        /// </summary>
+        /// <param name="urlType"></param>
+        /// <returns></returns>
+        public NciUrl GetTranslationUrl(string urlType)
+        {
+            NciUrl nciTranslationUrl = new NciUrl();
+            string linkTypeKey = urlType.ToLower();
+
+            if (TranslationFilterDelegates.ContainsKey(linkTypeKey) == true)
+            {
+                UrlFilterDelegate translationFilterLinkDelegate = TranslationFilterDelegates[linkTypeKey];
+                translationFilterLinkDelegate(linkTypeKey, nciTranslationUrl);
+            }
+            return nciTranslationUrl;
+        }
+
+        /// <summary>
+        /// Adds a translation URL filter which modifies the URL referenced by "string" when GetTranslationUrl is called.
+        /// </summary>
+        /// <param name="translationType">Pretty translation URL</param>
+        /// <param name="fieldFilter"></param>
+        public void AddTranslationFilter(string translationType, UrlFilterDelegate fieldFilter)
+        {
+            if (string.IsNullOrEmpty(translationType))
+                throw new ArgumentException("The urlType parameter may not be null or empty.");
+
+            string linkTypeKey = translationType.ToLower();
+
+            if (TranslationFilterDelegates.ContainsKey(linkTypeKey) == false)
+            {
+                TranslationFilterDelegates.Add(linkTypeKey, fieldFilter);
+            }
+            else
+            {
+                TranslationFilterDelegates[linkTypeKey] += fieldFilter;
+            }
+        }
+
+		/// <summary>
+        /// This property returns the keys which represent the available translations for this content item. 
+        /// </summary>
+        /// <value>A string array which are the keys to the translations.</value>
+        public string[] TranslationKeys
+        {
+            get
+            {
+                ArrayList keysList = new ArrayList();
+                // Enumerate the Files and set a URL filter.
+                foreach (TranslationMetaTag tmt in Translations.Tags)
+                {
+                    keysList.Add(tmt.Locale.ToLower());
+                    AddTranslationFilter(tmt.Locale.ToLower(), (name, url) =>
+                    {
+                        foreach (TranslationMetaTag tmtu in Translations.Tags)
+                        {
+                            if (tmtu.Locale.ToLower() == name.ToLower())
+                                url.SetUrl(tmtu.Url);
+                        }
+                    });
+                }
+                return (string[])keysList.ToArray(typeof(string));
+            }
+        }
+
+        /// <summary>
+        /// Registers the translation filters.
+        /// </summary>
+        public virtual void RegisterTranslationFilters()
+        {
+            // Add translations using AddTranslationFilter() instead of AddUrlFilter()
+            if (Translations.Tags != null)
+            {
+                AddTranslationFilter("TranslationUrls", (name, url) =>
+                {
+                    url.SetUrl("/", true);
+                });
+
+                foreach (TranslationMetaTag tmt in Translations.Tags)
+                {
+                    AddTranslationFilter(tmt.Locale.ToLower(), (name, url) =>
+                    {
+                        foreach (TranslationMetaTag tmtu in Translations.Tags)
+                        {
+                            if (tmtu.Locale.ToLower() == name.ToLower())
+                                url.SetUrl(tmtu.Url);
+                        }
+                    });
+                } // End foreach
+            } // End if-statement for translations
+        } // End register method
+		#endregion
+		
+	}
 }

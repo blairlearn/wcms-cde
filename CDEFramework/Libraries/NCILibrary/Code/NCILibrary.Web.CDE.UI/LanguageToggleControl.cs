@@ -53,14 +53,14 @@ namespace NCI.Web.CDE.UI
             //If the page has no AltLanguage URL
             try
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrls");
+                PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("TranslationUrls");
             }
             catch (PageAssemblyException)
             {
                 this.Visible = false;
                 return;
             }
-            if (String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrls").ToString()))
+            if (String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("TranslationUrls").ToString()))
             {
                 this.Visible = false;
                 return;
@@ -81,7 +81,7 @@ namespace NCI.Web.CDE.UI
 
             if (langToggle != null)
             {
-                if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrls").ToString()))
+                if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("TranslationUrls").ToString()))
                 {
                     string formattedUrl;
 
@@ -89,13 +89,13 @@ namespace NCI.Web.CDE.UI
                     {
                         try
                         {
-                            if (String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrlsEn").ToString()))
+                            if (String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("en-us").ToString()))
                             {
                                 formattedUrl = String.Format(langToggle.Template, "/", "English");
                             }
                             else
                             {
-                                formattedUrl = String.Format(langToggle.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrlsEn").ToString(), "English");
+                                formattedUrl = String.Format(langToggle.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("en-us").ToString(), "English");
                             }
                         }
                         catch (ArgumentNullException)
@@ -113,13 +113,13 @@ namespace NCI.Web.CDE.UI
                     {
                         try
                         {
-                            if (String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrlsEs").ToString()))
+                            if (String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("es-us").ToString()))
                             {
                                 formattedUrl = String.Format(langToggle.Template, "/espanol", "Español");
                             }
                             else
                             {
-                                formattedUrl = String.Format(langToggle.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrlsEs").ToString(), "Español");
+                                formattedUrl = String.Format(langToggle.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("es-us").ToString(), "Español");
                             }
                         }
                         catch (ArgumentNullException)
@@ -133,12 +133,12 @@ namespace NCI.Web.CDE.UI
                         writer.Write(formattedUrl);
                     }
 
-                    if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrlsPt").ToString()))
+                    if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("pt-br").ToString()))
                     {
 
                         try
                         {
-                            formattedUrl = String.Format(langToggle.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrlsPt").ToString(), "Português");
+                            formattedUrl = String.Format(langToggle.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("pt-br").ToString(), "Português");
                         }
                         catch (ArgumentNullException)
                         {
@@ -152,11 +152,11 @@ namespace NCI.Web.CDE.UI
                     }
 
 
-                    if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrlsZh").ToString()))
+                    if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("zh-cn").ToString()))
                     {
                         try
                         {
-                            formattedUrl = String.Format(langToggle.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("TranslationUrlsZh").ToString(), "中文");
+                            formattedUrl = String.Format(langToggle.Template, PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("zh-cn").ToString(), "中文");
                         }
                         catch (ArgumentNullException)
                         {

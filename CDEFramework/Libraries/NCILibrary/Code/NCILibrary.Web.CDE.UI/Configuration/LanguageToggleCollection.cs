@@ -37,7 +37,10 @@ namespace NCI.Web.CDE.UI.Configuration
             {
                 foreach (LanguageToggle langToggle in this)
                 {
-                    return langToggle;
+                    if (langToggle.Language.Equals(index))
+                    {
+                        return langToggle;
+                    }
                 }
                 return null;
             }
@@ -50,7 +53,12 @@ namespace NCI.Web.CDE.UI.Configuration
             {
                 foreach (LanguageToggle langToggle in this)
                 {
-                    return langToggle;
+                    // langtoggle.language = hardcoded culture in .aspx
+                    // culture = culture of content
+                    if (langToggle.Language.Equals(culture.TwoLetterISOLanguageName))
+                    {
+                        return langToggle;
+                    }
                 }
                 return null;
             }
