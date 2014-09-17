@@ -263,31 +263,33 @@ namespace NCI.Web.CDE.UI.WebControls
                 writer.RenderEndTag();
             }
 
-
-            foreach (AddThisButtonItem button in _itemsCollection[PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language")].ButtonsCollection)
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys.Contains("bookmarkshare"))
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_button_" + button.Service);
-
-                // Support for GoogleAddThisButtonItem 
-                if (button.GetType().Name.Equals("GoogleAddThisButtonItem"))
+                foreach (AddThisButtonItem button in _itemsCollection[PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language")].ButtonsCollection)
                 {
-                    if (!string.IsNullOrEmpty(((GoogleAddThisButtonItem)button).Size))
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_button_" + button.Service);
+
+                    // Support for GoogleAddThisButtonItem 
+                    if (button.GetType().Name.Equals("GoogleAddThisButtonItem"))
                     {
-                        writer.AddAttribute("g:plusone:size", ((GoogleAddThisButtonItem)button).Size);
+                        if (!string.IsNullOrEmpty(((GoogleAddThisButtonItem)button).Size))
+                        {
+                            writer.AddAttribute("g:plusone:size", ((GoogleAddThisButtonItem)button).Size);
+                        }
+
+                        if (!string.IsNullOrEmpty(((GoogleAddThisButtonItem)button).Count))
+                        {
+                            writer.AddAttribute("g:plusone:count", ((GoogleAddThisButtonItem)button).Count);
+                        }
                     }
 
-                    if (!string.IsNullOrEmpty(((GoogleAddThisButtonItem)button).Count))
-                    {
-                        writer.AddAttribute("g:plusone:count", ((GoogleAddThisButtonItem)button).Count);
-                    }
+                    writer.RenderBeginTag(HtmlTextWriterTag.A);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/design-elements/logos/" +
+                        button.Service.ToString() + ".png");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Img);
+                    writer.RenderEndTag();
+                    writer.RenderEndTag();
                 }
-
-                writer.RenderBeginTag(HtmlTextWriterTag.A);
-                writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/design-elements/logos/" +
-                    button.Service.ToString() + ".png");
-                writer.RenderBeginTag(HtmlTextWriterTag.Img);
-                writer.RenderEndTag();
-                writer.RenderEndTag();
             }
         }
         public override void RenderEndTag(HtmlTextWriter writer)
