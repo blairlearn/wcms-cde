@@ -233,7 +233,7 @@ namespace NCI.Web.CDE.UI.WebControls
 
         protected override void RenderContents(HtmlTextWriter writer)
         {
-            //TODO: replace .png icons with sprite
+
             if (PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys.Contains("viewall"))
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Href, PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("viewall").ToString());
@@ -267,10 +267,25 @@ namespace NCI.Web.CDE.UI.WebControls
             {
                 foreach (AddThisButtonItem button in _itemsCollection[PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language")].ButtonsCollection)
                 {
-                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_button_" + button.Title);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "addthis_button_" + button.Service);
+
+                    // Support for GoogleAddThisButtonItem 
+                    if (button.GetType().Name.Equals("GoogleAddThisButtonItem"))
+                    {
+                        if (!string.IsNullOrEmpty(((GoogleAddThisButtonItem)button).Size))
+                        {
+                            writer.AddAttribute("g:plusone:size", ((GoogleAddThisButtonItem)button).Size);
+                        }
+
+                        if (!string.IsNullOrEmpty(((GoogleAddThisButtonItem)button).Count))
+                        {
+                            writer.AddAttribute("g:plusone:count", ((GoogleAddThisButtonItem)button).Count);
+                        }
+                    }
+
                     writer.RenderBeginTag(HtmlTextWriterTag.A);
                     writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/design-elements/logos/" +
-                        button.Title.ToString() + ".png");
+                        button.Service.ToString() + ".png");
                     writer.RenderBeginTag(HtmlTextWriterTag.Img);
                     writer.RenderEndTag();
                     writer.RenderEndTag();
