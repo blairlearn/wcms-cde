@@ -667,12 +667,22 @@
       </element>
       <element name="AlternateContentVersions" type="cde:alternateContentVersions" maxOccurs="1" minOccurs="1">
         <annotation>
-          <documentation>Defines the alternate content versions for a Single Page Assembly Instruction.</documentation>
+          <documentation>Defines the alternate content versions for a Multi Page Assembly Instruction.</documentation>
         </annotation>
       </element>
       <element name="SocialMetadata" type="cde:socialMetadata" maxOccurs="1" minOccurs="0">
         <annotation>
-          <documentation>Defines the social metadata for a Single Page Assembly Instruction.</documentation>
+          <documentation>Defines the social metadata for a Multi Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+      <element name="PageResources" type="cde:pageResourcesInfo" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines page-level JS and CSS resources.</documentation>
+        </annotation>
+      </element>
+      <element name="Translations" type="cde:translations" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the data for the content item's translation(s).</documentation>
         </annotation>
       </element>
     </all>
@@ -1023,9 +1033,18 @@
           <documentation>Defines the social metadata for a Single Page Assembly Instruction.</documentation>
         </annotation>
       </element>
+      <element name="PageResources" type="cde:pageResourcesInfo" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines page-level JS and CSS resources.</documentation>
+        </annotation>
+      </element>
+      <element name="Translations" type="cde:translations" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the data for the content item's translation(s).</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
-
   <simpleType name="path">
     <annotation>
       <documentation>The path to a file or url</documentation>
@@ -1113,6 +1132,11 @@
       <element name="LongDescription" type="string" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>A long description for a Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+      <element name="BrowserTitle" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The document title to display in the browser's title bar.</documentation>
         </annotation>
       </element>
       <element name="MetaDescription" type="string" minOccurs="1" maxOccurs="1">
@@ -1511,6 +1535,26 @@
     </attribute>
   </complexType>
 
+  <complexType name="pageResourcesInfo">
+    <annotation>
+      <documentation>Represents Javascript and Style Sheets attatched at a page level.</documentation>
+    </annotation>
+    <all>
+      <element name="StyleSheets" type="cde:styleSheetCollection"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The collection of CDE Stylesheets for this PageTemplateInfo.</documentation>
+        </annotation>
+      </element>
+      <element name="Javascripts" type="cde:javascriptCollection"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The collection of CDE Javascripts for this PageTemplateInfo.</documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+
   <complexType name="styleSheetInfo">
     <annotation>
       <documentation>Represents a Stylesheet for a page template for use by the CDE.</documentation>
@@ -1653,6 +1697,15 @@
           </documentation>
         </annotation>
       </element>
+	  <element name="IsPublicUse" type="boolean"
+	    minOccurs="1" maxOccurs="1">
+		<annotation>
+		  <documentation>
+			Defines if this Page Assembly Instruction should 
+			display the Public Use notice.
+		  </documentation>
+		</annotation>
+	  </element>
       <element name="OrderCopyURL" type="string"
         minOccurs="0" maxOccurs="1">
         <annotation>
@@ -2121,7 +2174,43 @@
       <pattern value=".+" />
     </restriction>
   </simpleType>
+
+  <complexType name="translations">
+    <annotation>
+      <documentation>The data for the content item's translation(s).</documentation>
+    </annotation>
+    <all>
+	  <element name="TranslationData" minOccurs="0" maxOccurs="1">
+        <complexType>
+          <sequence>
+            <element name="TranslationMetaTag" type="cde:translationMetaTag" minOccurs="0" maxOccurs="unbounded" />
+          </sequence>
+        </complexType>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="translationMetaTag">
+    <annotation>
+      <documentation>
+        Defines a single meta tag to retrieve translation information.
+      </documentation>
+    </annotation>
+    <attribute name="Locale" type="string" use="required">
+      <annotation>
+        <documentation>Translation locale.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Id" type="string" use="required">
+      <annotation>
+        <documentation>Content ID of translation.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Url" type="string" use="required">
+      <annotation>
+        <documentation>Translation URL.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>  
   
 </schema>
-
-
