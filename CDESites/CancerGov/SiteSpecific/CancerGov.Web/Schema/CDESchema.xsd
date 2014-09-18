@@ -680,6 +680,11 @@
           <documentation>Defines page-level JS and CSS resources.</documentation>
         </annotation>
       </element>
+      <element name="Translations" type="cde:translations" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the data for the content item's translation(s).</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1031,6 +1036,11 @@
       <element name="PageResources" type="cde:pageResourcesInfo" maxOccurs="1" minOccurs="0">
         <annotation>
           <documentation>Defines page-level JS and CSS resources.</documentation>
+        </annotation>
+      </element>
+      <element name="Translations" type="cde:translations" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the data for the content item's translation(s).</documentation>
         </annotation>
       </element>
     </all>
@@ -2166,7 +2176,42 @@
     </restriction>
   </simpleType>
 
+  <complexType name="translations">
+    <annotation>
+      <documentation>The data for the content item's translation(s).</documentation>
+    </annotation>
+    <all>
+	  <element name="TranslationData" minOccurs="0" maxOccurs="1">
+        <complexType>
+          <sequence>
+            <element name="TranslationMetaTag" type="cde:translationMetaTag" minOccurs="0" maxOccurs="unbounded" />
+          </sequence>
+        </complexType>
+      </element>
+    </all>
+  </complexType>
 
+  <complexType name="translationMetaTag">
+    <annotation>
+      <documentation>
+        Defines a single meta tag to retrieve translation information.
+      </documentation>
+    </annotation>
+    <attribute name="Locale" type="string" use="required">
+      <annotation>
+        <documentation>Translation locale.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Id" type="string" use="required">
+      <annotation>
+        <documentation>Content ID of translation.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Url" type="string" use="required">
+      <annotation>
+        <documentation>Translation URL.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>  
+  
 </schema>
-
-
