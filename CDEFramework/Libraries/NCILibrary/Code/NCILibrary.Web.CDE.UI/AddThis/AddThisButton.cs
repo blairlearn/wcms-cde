@@ -12,6 +12,8 @@ namespace NCI.Web.CDE.UI.WebControls
         private bool _trackViewState = false;
 
         private string _service;
+        private string _title;
+
         public string Service
         {
             get
@@ -25,6 +27,22 @@ namespace NCI.Web.CDE.UI.WebControls
                 if (!object.Equals(value, this.ViewState["Service"]))
                 {
                     this.ViewState["Service"] = value;
+                    this.OnButtonItemChanged();
+                }
+            }
+        }
+
+        public string Title
+        {
+            get
+            {
+                return (string)this.ViewState["Title"] ?? string.Empty;
+            }
+            set
+            {
+                if (!object.Equals(value, this.ViewState["Title"]))
+                {
+                    this.ViewState["Title"] = value;
                     this.OnButtonItemChanged();
                 }
             }
@@ -59,6 +77,7 @@ namespace NCI.Web.CDE.UI.WebControls
         protected void CopyProperties(AddThisButtonItem newAddThisButtonItem)
         {
             ((AddThisButtonItem)newAddThisButtonItem).Service = this.Service;
+            ((AddThisButtonItem)newAddThisButtonItem).Title = this.Title;
         }
 
         protected AddThisButtonItem CreateAddThisButtonItem()
