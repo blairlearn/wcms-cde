@@ -252,72 +252,17 @@ namespace NCI.Web.CDE.UI.WebControls
 
                     if (button is PageOptionsAddThisButtonItem)
                     {
-                        PageOptionsAddThisButtonItem addThisButtonItem = (PageOptionsAddThisButtonItem)button;
-
-                        string btnClass = string.Empty;
-                        btnClass += " addthis_button_" + addThisButtonItem.Service;
-                        btnClass += " add_this_btn";
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, btnClass);
-                        if (!string.IsNullOrEmpty(addThisButtonItem.Title.Trim()))
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Title, addThisButtonItem.Title);
-                        }
-                        if (!string.IsNullOrEmpty(button.WebAnalytics.Trim()))
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Onclick, button.WebAnalytics);
-                        }
-
-                        writer.AddAttribute(HtmlTextWriterAttribute.Href, "#");
-                        writer.RenderBeginTag(HtmlTextWriterTag.A);
-                        writer.AddAttribute(HtmlTextWriterAttribute.Alt, string.Empty);
-                        writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
-                        writer.RenderBeginTag(HtmlTextWriterTag.Img);
-                        writer.RenderEndTag();
-                        writer.RenderEndTag();
+                        RenderPageOptionsAddThisButton(writer, (PageOptionsAddThisButtonItem)button);
                     }
 
                     if (button is EmailButtonItem)
                     {
-                        EmailButtonItem emailButtonItem = (EmailButtonItem)button;
-
-                        if (!string.IsNullOrEmpty(emailButtonItem.Title.Trim()))
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Title, emailButtonItem.Title);
-                        }
-                        writer.AddAttribute(HtmlTextWriterAttribute.Href, pgInstruction.GetUrl("email").ToString());
-                        string emailOnClick = string.Empty;
-                        if (!string.IsNullOrEmpty(emailButtonItem.WebAnalytics.Trim()))
-                        {
-                            emailOnClick += button.WebAnalytics;
-                        }
-                        emailOnClick += " " + "dynPopWindow('" + pgInstruction.GetUrl("email").ToString().Replace("'", "%27").Replace("(", "%28").Replace(")", "%29") + "', 'emailPopUp', 'height=525,width=492'); return false;";
-                        writer.AddAttribute(HtmlTextWriterAttribute.Onclick, emailOnClick);
-                        writer.RenderBeginTag(HtmlTextWriterTag.A);
-                        writer.AddAttribute(HtmlTextWriterAttribute.Alt, string.Empty);
-                        writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
-                        writer.RenderBeginTag(HtmlTextWriterTag.Img);
-                        writer.RenderEndTag();
-                        writer.RenderEndTag();
+                        RenderEmailButtonItem(writer, (EmailButtonItem)button);
                     }
 
                     if (button is LinkButtonItem)
                     {
-                        LinkButtonItem linkButtonItem = (LinkButtonItem)button;
-
-                        if (!string.IsNullOrEmpty(linkButtonItem.Title.Trim()))
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Title, linkButtonItem.Title);
-                        }
-                        if (!string.IsNullOrEmpty(linkButtonItem.WebAnalytics.Trim()))
-                        {
-                            writer.AddAttribute(HtmlTextWriterAttribute.Onclick, button.WebAnalytics);
-                        }
-                        writer.RenderBeginTag(HtmlTextWriterTag.A);
-                        writer.AddAttribute(HtmlTextWriterAttribute.Alt, string.Empty);
-                        writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
-                        writer.RenderBeginTag(HtmlTextWriterTag.Img);
-                        writer.RenderEndTag();
-                        writer.RenderEndTag();
+                        RenderLinkButtonItem(writer, (LinkButtonItem)button);
                     }
                     writer.RenderEndTag(); // li
                 }
@@ -326,6 +271,73 @@ namespace NCI.Web.CDE.UI.WebControls
             writer.RenderEndTag(); // ul
             
         }
+
+        private static void RenderPageOptionsAddThisButton(HtmlTextWriter writer, PageOptionsAddThisButtonItem button)
+        {
+            string btnClass = string.Empty;
+            btnClass += "addthis_button_" + button.Service;
+            btnClass += " add_this_btn";
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, btnClass);
+            if (!string.IsNullOrEmpty(button.Title.Trim()))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Title, button.Title);
+            }
+            if (!string.IsNullOrEmpty(button.WebAnalytics.Trim()))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Onclick, button.WebAnalytics);
+            }
+            writer.AddAttribute(HtmlTextWriterAttribute.Href, "#");
+            writer.RenderBeginTag(HtmlTextWriterTag.A);
+
+            writer.AddAttribute(HtmlTextWriterAttribute.Alt, string.Empty);
+            writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
+            writer.RenderBeginTag(HtmlTextWriterTag.Img);
+
+            writer.RenderEndTag(); // img
+            writer.RenderEndTag(); // a
+        }
+
+        private void RenderEmailButtonItem(HtmlTextWriter writer, EmailButtonItem button)
+        {
+            if (!string.IsNullOrEmpty(button.Title.Trim()))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Title, button.Title);
+            }
+            writer.AddAttribute(HtmlTextWriterAttribute.Href, pgInstruction.GetUrl("email").ToString());
+            string emailOnClick = string.Empty;
+            if (!string.IsNullOrEmpty(button.WebAnalytics.Trim()))
+            {
+                emailOnClick += button.WebAnalytics;
+            }
+            emailOnClick += " " + "dynPopWindow('" + pgInstruction.GetUrl("email").ToString().Replace("'", "%27").Replace("(", "%28").Replace(")", "%29") + "', 'emailPopUp', 'height=525,width=492'); return false;";
+            writer.AddAttribute(HtmlTextWriterAttribute.Onclick, emailOnClick);
+            writer.RenderBeginTag(HtmlTextWriterTag.A);
+            writer.AddAttribute(HtmlTextWriterAttribute.Alt, string.Empty);
+            writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
+            writer.RenderBeginTag(HtmlTextWriterTag.Img);
+            writer.RenderEndTag(); // img
+            writer.RenderEndTag(); // a
+        }
+
+        private void RenderLinkButtonItem(HtmlTextWriter writer, LinkButtonItem button)
+        {
+            if (!string.IsNullOrEmpty(button.Title.Trim()))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Title, button.Title);
+            }
+            if (!string.IsNullOrEmpty(button.WebAnalytics.Trim()))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Onclick, button.WebAnalytics);
+            }
+            writer.AddAttribute(HtmlTextWriterAttribute.Href, pgInstruction.GetUrl(button.AlternateContentVersionKey).ToString());
+            writer.RenderBeginTag(HtmlTextWriterTag.A);
+            writer.AddAttribute(HtmlTextWriterAttribute.Alt, string.Empty);
+            writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
+            writer.RenderBeginTag(HtmlTextWriterTag.Img);
+            writer.RenderEndTag(); // img
+            writer.RenderEndTag(); // a
+        }
+
         public override void RenderEndTag(HtmlTextWriter writer)
         {
             base.RenderEndTag(writer);
