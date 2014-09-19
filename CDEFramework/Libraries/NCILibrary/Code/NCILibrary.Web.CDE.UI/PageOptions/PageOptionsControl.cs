@@ -64,13 +64,9 @@ namespace NCI.Web.CDE.UI.WebControls
                 this.Visible = false;
                 return;
             }
-            /*
-            if (!PageAssemblyContext.Current.PageAssemblyInstruction.AlternateContentVersionsKeys.Contains("mobileShare"))
-            {
-                this.Visible = false;
-                return;
-            }
-            */
+
+            this.CssClass = "page-options";
+
             base.Render(writer);
         }
 
@@ -244,6 +240,8 @@ namespace NCI.Web.CDE.UI.WebControls
                 buttonLanguageItem = _itemsCollection["es"];
             }
 
+            writer.RenderBeginTag(HtmlTextWriterTag.Ul);
+
             foreach (PageOptionsButtonItem button in buttonLanguageItem.ButtonsCollection)
             {
 
@@ -326,7 +324,9 @@ namespace NCI.Web.CDE.UI.WebControls
                     writer.RenderEndTag(); // li
                 }
             }
-            //}
+
+            writer.RenderEndTag(); // ul
+            
         }
         public override void RenderEndTag(HtmlTextWriter writer)
         {
