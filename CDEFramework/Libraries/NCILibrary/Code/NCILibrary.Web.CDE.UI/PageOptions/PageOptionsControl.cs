@@ -65,8 +65,6 @@ namespace NCI.Web.CDE.UI.WebControls
                 return;
             }
 
-            this.CssClass = "page-options";
-
             base.Render(writer);
         }
 
