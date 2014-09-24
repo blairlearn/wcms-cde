@@ -1,107 +1,111 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Web;
 using System.Web.UI;
+using System.ComponentModel;
 
 namespace NCI.Web.CDE.UI.WebControls
 {
-    public class LanguageToggle : IStateManager
+    public class LanguageToggleLanguageItem : IStateManager
     {
-        private string _name; // Name of translation item in English
-        private string _locale; // 4-character country-culture code
-        private string _url; // Default URL for translation item
-        private string _class; // CSS class for language toggle
-        private string _title; // Name of translation item in native language
-        private string _onclick; // Analytics JS input
+
+        private LanguageToggleCollection _langsCollection;
+        [PersistenceMode(PersistenceMode.InnerProperty), MergableProperty(false), DefaultValue((string)null), Description("DataControls_Columns"), Category("Default")]
+        public LanguageToggleCollection LangsCollection
+        {
+            get
+            {
+                if (this._langsCollection == null)
+                {
+                    this._langsCollection = new LanguageToggleCollection();
+                    if (this.IsTrackingViewState)
+                    {
+                        ((IStateManager)this._langsCollection).TrackViewState();
+                    }
+                }
+                return this._langsCollection;
+            }
+            set
+            {
+                _langsCollection = value;
+            }
+        }
+
         private bool _trackViewState = false;
 
-        public string Name
+        private string _language;
+        public string Language
         {
             get
             {
-                return (string)this.ViewState["Name"] ?? string.Empty;
+                return (string)this.ViewState["Language"] ?? string.Empty;
             }
             set
             {
                 //If the text is the same, just ignore and don't set dirtyness
                 //or fire any events.
-                if (!object.Equals(value, this.ViewState["Name"]))
+                if (!object.Equals(value, this.ViewState["Language"]))
                 {
-                    this.ViewState["Name"] = value;
-                    this.OnLangItemChanged();
+                    this.ViewState["Language"] = value;
+                    this.OnLanguageItemChanged();
                 }
             }
         }
 
-        public string Locale
+        private string _compact;
+        public string Compact
         {
             get
             {
-                return (string)this.ViewState["Locale"] ?? string.Empty;
+                return (string)this.ViewState["Compact"] ?? string.Empty;
             }
             set
             {
                 //If the text is the same, just ignore and don't set dirtyness
                 //or fire any events.
-                if (!object.Equals(value, this.ViewState["Locale"]))
+                if (!object.Equals(value, this.ViewState["Compact"]))
                 {
-                    this.ViewState["Locale"] = value;
-                    this.OnLangItemChanged();
+                    this.ViewState["Compact"] = value;
+                    this.OnLanguageItemChanged();
                 }
             }
         }
 
-        public string Url
+        private string _expanded;
+        public string Expanded
         {
             get
             {
-                return (string)this.ViewState["Url"] ?? string.Empty;
+                return (string)this.ViewState["Expanded"] ?? string.Empty;
             }
             set
             {
                 //If the text is the same, just ignore and don't set dirtyness
                 //or fire any events.
-                if (!object.Equals(value, this.ViewState["Url"]))
+                if (!object.Equals(value, this.ViewState["Expanded"]))
                 {
-                    this.ViewState["Url"] = value;
-                    this.OnLangItemChanged();
+                    this.ViewState["Expanded"] = value;
+                    this.OnLanguageItemChanged();
                 }
             }
         }
 
-        public string Class
+        private string _account;
+        public string Account
         {
             get
             {
-                return (string)this.ViewState["Class"] ?? string.Empty;
+                return (string)this.ViewState["Account"] ?? string.Empty;
             }
             set
             {
                 //If the text is the same, just ignore and don't set dirtyness
                 //or fire any events.
-                if (!object.Equals(value, this.ViewState["Class"]))
+                if (!object.Equals(value, this.ViewState["Account"]))
                 {
-                    this.ViewState["Class"] = value;
-                    this.OnLangItemChanged();
-                }
-            }
-        }
-
-        public string Title
-        {
-            get
-            {
-                return (string)this.ViewState["Title"] ?? string.Empty;
-            }
-            set
-            {
-                //If the text is the same, just ignore and don't set dirtyness
-                //or fire any events.
-                if (!object.Equals(value, this.ViewState["Title"]))
-                {
-                    this.ViewState["Title"] = value;
-                    this.OnLangItemChanged();
+                    this.ViewState["Account"] = value;
+                    this.OnLanguageItemChanged();
                 }
             }
         }
@@ -115,31 +119,32 @@ namespace NCI.Web.CDE.UI.WebControls
             }
         }
 
-        internal event EventHandler LangItemChanged;
+        internal event EventHandler LanguageItemChanged;
 
-        protected internal void OnLangItemChanged()
+        protected internal void OnLanguageItemChanged()
         {
-            if (this.LangItemChanged != null)
+            if (this.LanguageItemChanged != null)
             {
-                this.LangItemChanged(this, EventArgs.Empty);
+                this.LanguageItemChanged(this, EventArgs.Empty);
             }
         }
 
-        protected internal LanguageToggle CloneLanguageToggle()
+        protected internal LanguageToggleLanguageItem CloneLanguageToggleLanguageItem()
         {
-            LanguageToggle newLanguageToggle = this.CreateLanguageToggle();
-            this.CopyProperties(newLanguageToggle);
-            return newLanguageToggle;
+            LanguageToggleLanguageItem newLanguageToggleItem = this.CreateLanguageToggleLanguageItem();
+            this.CopyProperties(newLanguageToggleItem);
+            return newLanguageToggleItem;
         }
 
-        protected void CopyProperties(LanguageToggle newLanguageToggle)
+        protected void CopyProperties(LanguageToggleLanguageItem newLanguageToggleItems)
         {
-            ((LanguageToggle)newLanguageToggle).Name = this.Name;
+            ((LanguageToggleLanguageItem)newLanguageToggleItems).LangsCollection = this.LangsCollection;
+            ((LanguageToggleLanguageItem)newLanguageToggleItems).Language = this.Language;
         }
 
-        protected LanguageToggle CreateLanguageToggle()
+        protected LanguageToggleLanguageItem CreateLanguageToggleLanguageItem()
         {
-            return new LanguageToggle();
+            return new LanguageToggleLanguageItem();
         }
 
         protected void LoadViewState(object savedState)
@@ -147,20 +152,27 @@ namespace NCI.Web.CDE.UI.WebControls
             if (savedState != null)
             {
                 object[] objArray = (object[])savedState;
-
+                //check to see that viewstate is an array with 2 elements
                 if (objArray[0] != null)
-                    ((IStateManager)this.ViewState).LoadViewState(objArray[0]);
+                    ((IStateManager)this.ViewState).LoadViewState(((object[])savedState)[0]);
+
+                if ((objArray.Length > 1) && (objArray[1] != null))
+                {
+                    ((IStateManager)LangsCollection).LoadViewState(objArray[1]);
+                }
             }
         }
 
         protected object SaveViewState()
         {
             object obj1 = ((IStateManager)this.ViewState).SaveViewState();
+            object obj2 = ((IStateManager)this.LangsCollection).SaveViewState();
 
             if (obj1 == null)
+            {
                 return null;
-
-            return new object[] { obj1 };
+            }
+            return new object[] { obj1, obj2 };
 
         }
 
@@ -168,7 +180,11 @@ namespace NCI.Web.CDE.UI.WebControls
         {
             this._trackViewState = true;
             ((IStateManager)this.ViewState).TrackViewState();
-            //If there are any sub IStateManager items, start tracking view state for them as well.
+
+            if (LangsCollection != null)
+            {
+                ((IStateManager)LangsCollection).TrackViewState();
+            }
         }
 
         public virtual string OnClick
@@ -184,7 +200,7 @@ namespace NCI.Web.CDE.UI.WebControls
                 if (!object.Equals(value, this.ViewState["OnClick"]))
                 {
                     this.ViewState["OnClick"] = value;
-                    this.OnLangItemChanged();
+                    this.OnLanguageItemChanged();
                 }
             }
         }
@@ -194,7 +210,12 @@ namespace NCI.Web.CDE.UI.WebControls
             this._statebag.SetDirty(true);
 
             //If there are any sub IStateManager items, set them dirty as well.
+            if (_langsCollection != null)
+            {
+                _langsCollection.SetDirty();
+            }
         }
+
         #region IStateManager Members
 
         /// <summary>
@@ -237,6 +258,8 @@ namespace NCI.Web.CDE.UI.WebControls
         }
 
         #endregion
+
+
 
 
     }

@@ -4,22 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Collections;
-using System.Globalization;
 using System.ComponentModel;
 
-namespace NCI.Web.CDE.UI.Configuration
+namespace NCI.Web.CDE.UI.WebControls
 {
-
     public class LanguageToggleCollection : StateManagedCollection
     {
-        //These are the types of AddThis items that can be in this collection.
-        //If there needs to be a new type, then add a class and then
-        //add it to this list.
         private static readonly Type[] knownTypes = new Type[] { 
-            typeof(LanguageToggle)
+            typeof(LanguageToggle),
         };
 
-        public event EventHandler LanguageToggleCollectionChanged;
+        public event EventHandler LangItemCollectionChanged;
 
         [Browsable(false)]
         public LanguageToggle this[int index]
@@ -35,53 +30,35 @@ namespace NCI.Web.CDE.UI.Configuration
         {
             get
             {
-                foreach (LanguageToggle langToggle in this)
+                foreach (LanguageToggle langItem in this)
                 {
-                    if (langToggle.Language.Equals(index))
+                    if (langItem.Name.Equals(index))
                     {
-                        return langToggle;
+                        return langItem;
                     }
                 }
                 return null;
             }
         }
 
-        [Browsable(false)]
-        public LanguageToggle this[CultureInfo culture]
+        public void Add(LanguageToggle langItem)
         {
-            get
-            {
-                foreach (LanguageToggle langToggle in this)
-                {
-                    // langtoggle.language = hardcoded culture in .aspx
-                    // culture = culture of content
-                    if (langToggle.Language.Equals(culture.TwoLetterISOLanguageName))
-                    {
-                        return langToggle;
-                    }
-                }
-                return null;
-            }
-        }
-
-        public void Add(LanguageToggle langToggle)
-        {
-            ((IList)this).Add(langToggle);
+            ((IList)this).Add(langItem);
         }
 
         public LanguageToggleCollection CloneFields()
         {
-            LanguageToggleCollection langTogglesItems = new LanguageToggleCollection();
-            foreach (LanguageToggle langToggle in this)
+            LanguageToggleCollection langItems = new LanguageToggleCollection();
+            foreach (LanguageToggle langItem in this)
             {
-                langTogglesItems.Add(langToggle.CloneLanguageToggle());
+                langItems.Add(langItem.CloneLanguageToggle());
             }
-            return langTogglesItems;
+            return langItems;
         }
 
-        public bool Contains(LanguageToggle langToggle)
+        public bool Contains(LanguageToggle langItem)
         {
-            return ((IList)this).Contains(langToggle);
+            return ((IList)this).Contains(langItem);
         }
 
         public void CopyTo(LanguageToggle[] array, int index)
@@ -89,19 +66,19 @@ namespace NCI.Web.CDE.UI.Configuration
             this.CopyTo(array, index);
         }
 
-        public int IndexOf(LanguageToggle langToggle)
+        public int IndexOf(LanguageToggle langItem)
         {
-            return ((IList)this).IndexOf(langToggle);
+            return ((IList)this).IndexOf(langItem);
         }
 
-        public void Insert(int index, LanguageToggle langToggle)
+        public void Insert(int index, LanguageToggle langItem)
         {
-            ((IList)this).Insert(index, langToggle);
+            ((IList)this).Insert(index, langItem);
         }
 
-        public void Removed(LanguageToggle langToggle)
+        public void Removed(LanguageToggle langItem)
         {
-            ((IList)this).Remove(langToggle);
+            ((IList)this).Remove(langItem);
         }
 
         public void RemoveAt(int index)
@@ -111,7 +88,7 @@ namespace NCI.Web.CDE.UI.Configuration
 
         protected override void OnClearComplete()
         {
-            this.OnLanguageToggleCollectionChanged();
+            this.OnLangItemCollectionChanged();
         }
 
         protected override object CreateKnownType(int index)
@@ -121,19 +98,18 @@ namespace NCI.Web.CDE.UI.Configuration
                 case 0:
                     return new LanguageToggle();
             }
-
             throw new ArgumentOutOfRangeException("Incorrect type");
         }
 
         protected override void OnRemoveComplete(int index, object value)
         {
-            LanguageToggle langToggle = value as LanguageToggle;
-            if (langToggle != null)
+            LanguageToggle langItem = value as LanguageToggle;
+            if (langItem != null)
             {
-                langToggle.LangToggleChanged += new EventHandler(this.LanguageToggleCollectionChanged);
+                langItem.LangItemChanged += new EventHandler(this.LangItemCollectionChanged);
             }
 
-            this.OnLanguageToggleCollectionChanged();
+            this.OnLangItemCollectionChanged();
         }
 
         protected override void OnValidate(object value)
@@ -155,16 +131,16 @@ namespace NCI.Web.CDE.UI.Configuration
             ((LanguageToggleCollection)b).SetDirty();
         }
 
-        private void OnLanguageToggleCollectionChanged(object sender, EventArgs e)
+        private void OnLangItemCollectionChanged(object sender, EventArgs e)
         {
-            this.OnLanguageToggleCollectionChanged();
+            this.OnLangItemCollectionChanged();
         }
 
-        private void OnLanguageToggleCollectionChanged()
+        private void OnLangItemCollectionChanged()
         {
-            if (this.LanguageToggleCollectionChanged != null)
+            if (this.LangItemCollectionChanged != null)
             {
-                this.LanguageToggleCollectionChanged(this, EventArgs.Empty);
+                this.LangItemCollectionChanged(this, EventArgs.Empty);
             }
         }
 
