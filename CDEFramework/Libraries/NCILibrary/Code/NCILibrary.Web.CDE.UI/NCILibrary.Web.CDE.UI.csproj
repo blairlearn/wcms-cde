@@ -67,9 +67,11 @@
     <Compile Include="BaseTemplates\TemplateSlotItem.cs" />
     <Compile Include="Configuration\LanguageToggle.cs" />
     <Compile Include="Configuration\LanguageToggleCollection.cs" />
+    <Compile Include="Configuration\LanguageToggleControl.cs" />
+    <Compile Include="Configuration\LanguageToggleLanguageCollection.cs" />
+    <Compile Include="Configuration\LanguageToggleLanguageItem.cs" />
     <Compile Include="Configuration\MobileLanguageToggle.cs" />
     <Compile Include="Configuration\MobileLanguageToggleCollection.cs" />
-    <Compile Include="LanguageToggleControl.cs" />
     <Compile Include="MobileLanguageToggleControl.cs" />
     <Compile Include="Configuration\Settings.cs" />
     <Compile Include="enums.cs" />
