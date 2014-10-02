@@ -674,6 +674,7 @@
     <Content Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx" />
     <Content Include="SnippetTemplates\ConditionalDisplaySnippet.ascx" />
     <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
+    <Content Include="SnippetTemplates\BreadCrumbSnippet.ascx" />
     <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="SnippetTemplates\DisqusComments.ascx" />
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
