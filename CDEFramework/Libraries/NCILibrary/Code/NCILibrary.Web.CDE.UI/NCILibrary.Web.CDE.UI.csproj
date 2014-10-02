@@ -65,6 +65,7 @@
     <Compile Include="BaseTemplates\TemplateSlot.cs" />
     <Compile Include="BaseTemplates\TemplateSlotCollection.cs" />
     <Compile Include="BaseTemplates\TemplateSlotItem.cs" />
+    <Compile Include="CDEField.cs" />
     <Compile Include="Configuration\LanguageToggle.cs" />
     <Compile Include="Configuration\LanguageToggleCollection.cs" />
     <Compile Include="Configuration\LanguageToggleControl.cs" />
