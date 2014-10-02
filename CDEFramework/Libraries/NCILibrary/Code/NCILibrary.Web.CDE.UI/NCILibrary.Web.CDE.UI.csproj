@@ -100,6 +100,7 @@
     <Compile Include="SnippetControls\BlogPostNewerOlder.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\BreadCrumbSnippet.cs" />
     <Compile Include="SnippetControls\ConditionalDisplaySnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
