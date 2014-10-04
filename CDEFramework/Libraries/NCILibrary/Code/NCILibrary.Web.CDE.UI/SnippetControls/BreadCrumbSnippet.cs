@@ -12,15 +12,16 @@ using NCI.Text;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
-    class BreadCrumbSnippet : SnippetControl
+    public class BreadCrumbSnippet : SnippetControl
     {
         protected string RootPath { get; set; }
 
         protected string CurrUrl { get { return PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("PrettyUrl").ToString(); } }
 
-        protected void RenderContents(HtmlTextWriter writer)
+
+        public override void RenderControl(HtmlTextWriter writer)
         {
-            /*
+
             string sectionPath = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
             SectionDetail details = SectionDetailFactory.GetSectionDetail(sectionPath);
 
@@ -35,14 +36,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 return;
             }
-            */
 
-            //Opening UL tag
+
+            //Opening UL tag 
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "breadcrumbs");
             writer.RenderBeginTag(HtmlTextWriterTag.Ul);
-            writer.Write("test breadcrumb text");
 
-            /*
+
             //Draw parents
             RenderBreadcrumbSections(details, writer);
 
@@ -53,7 +53,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 writer.Write(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title"));
                 writer.RenderEndTag();
             }
-            */
+
             writer.RenderEndTag();
         }
 
@@ -68,7 +68,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
             //If the section has a parent, attempt to draw it first.        
             if (section.ParentPath != null)
             {
-                RenderBreadcrumbSections(section, writer);
+                writer.Write(section.Parent);
+                //RenderBreadcrumbSections(section, writer);
                 // RenderBreadcrumbLink(section.parent, writer);
             }
 
