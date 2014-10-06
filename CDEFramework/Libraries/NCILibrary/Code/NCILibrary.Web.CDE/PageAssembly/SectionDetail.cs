@@ -106,6 +106,22 @@ namespace NCI.Web.CDE
             }
         }
 
+        private string _fullpath;
+        /// <summary>Gets or sets the landing page URL.</summary>
+        /// <value>Landing page URL string.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string FullPath
+        {
+            get
+            {
+                return _fullpath;
+            }
+            set
+            {
+                _fullpath = value;
+            }
+        }
+
 
         private SnippetInfoCollection _snippets = new SnippetInfoCollection();
          
