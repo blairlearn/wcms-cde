@@ -8,25 +8,32 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
 
+using NCI.Logging;
 using NCI.Text;
 
 
-/*
- * TODO:
- * fix root path - get code to pull root path from xml instead of using canonical url 
- *  - check for double forward slash on path & remove as necessary
- * fix publishing issues 
- *  - fix snippet DisplayVersion (web / viewall only)
- * update CDE templates
- * create test cases 
- * update CSS
- */
 namespace NCI.Web.CDE.UI.SnippetControls
 {
     public class BreadCrumbSnippet : SnippetControl
     {
+        // Get root path from SectionDetails.xml
+        public string _breadcrumbData = String.Empty;
+        public string BreadcrumbData
+        {
+            get { return _breadcrumbData; }
+            set { _breadcrumbData = value; }
+        }
 
-        protected string RootPath { get { return PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString(); } }
+        public string GetRootPath()
+        {
+            if (SnippetInfo.SlotName == "cgvSlBreadcrumb")
+            {
+                BreadcrumbData = SnippetInfo.Data;
+            }
+            return BreadcrumbData;
+        }
+
+        protected string RootPath { get { return GetRootPath(); } }
         protected string CurrUrl { get { return PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("PrettyUrl").ToString(); } }
 
         public override void RenderControl(HtmlTextWriter writer)
@@ -37,7 +44,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             if (details == null)
             {
-                // log error message
+                NCI.Logging.Logger.LogError("BreadCrumbSnippet", "Section detail cannot be null.", NCIErrorLevel.Error);
                 return;
             }
 
@@ -51,12 +58,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "breadcrumbs");
             writer.RenderBeginTag(HtmlTextWriterTag.Ul);
 
-
             //Draw parents
             RenderBreadcrumbSections(details, writer);
 
             //Draw this item if not the landing page of the folder
-            if (details.LandingPageURL != CurrUrl)
+            if ((details.LandingPageURL != CurrUrl) && !String.IsNullOrEmpty(details.NavTitle))
             {
                 writer.RenderBeginTag(HtmlTextWriterTag.Li);
                 writer.Write(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title"));
@@ -83,9 +89,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     RenderBreadcrumbSections(section.Parent, writer);
                 }
 
-
                 //If the LandingPageURL is not set, DO NOT DRAW A BAD LINK!!!
-                if (section.LandingPageURL != null && section.NavTitle != null)
+                if (!String.IsNullOrEmpty(section.LandingPageURL) &&
+                    !String.IsNullOrEmpty(section.NavTitle))
                 {
                     //Draw this item
                     if (section.LandingPageURL == CurrUrl)
@@ -115,3 +121,4 @@ namespace NCI.Web.CDE.UI.SnippetControls
         } // RenderBreadCrumbSections()
     } // BreadCrumbSnippet class
 }
+
