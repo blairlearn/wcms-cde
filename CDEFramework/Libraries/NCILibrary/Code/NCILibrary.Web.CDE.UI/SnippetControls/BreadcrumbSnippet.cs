@@ -14,7 +14,7 @@ using NCI.Text;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
-    public class BreadCrumbSnippet : SnippetControl
+    public class BreadcrumbSnippet : SnippetControl
     {
         // Get root path from SectionDetails.xml
         public string _breadcrumbData = String.Empty;
@@ -24,16 +24,18 @@ namespace NCI.Web.CDE.UI.SnippetControls
             set { _breadcrumbData = value; }
         }
 
-        public string GetRootPath()
+        protected string RootPath
         {
-            if (SnippetInfo.SlotName == "cgvSlBreadcrumb")
+            get
             {
-                BreadcrumbData = SnippetInfo.Data;
+                if (!String.IsNullOrEmpty(SnippetInfo.Data))
+                {
+                    BreadcrumbData = SnippetInfo.Data;
+                }
+                return BreadcrumbData;
             }
-            return BreadcrumbData;
         }
 
-        protected string RootPath { get { return GetRootPath(); } }
         protected string CurrUrl { get { return PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("PrettyUrl").ToString(); } }
 
         public override void RenderControl(HtmlTextWriter writer)
@@ -44,7 +46,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             if (details == null)
             {
-                NCI.Logging.Logger.LogError("BreadCrumbSnippet", "Section detail cannot be null.", NCIErrorLevel.Error);
+                NCI.Logging.Logger.LogError("BreadcrumbSnippet", "Section detail cannot be null.", NCIErrorLevel.Error);
                 return;
             }
 
@@ -60,14 +62,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             //Draw parents
             RenderBreadcrumbSections(details, writer);
-
-            //Draw this item if not the landing page of the folder
-            if ((details.LandingPageURL != CurrUrl) && !String.IsNullOrEmpty(details.NavTitle))
-            {
-                writer.RenderBeginTag(HtmlTextWriterTag.Li);
-                writer.Write(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title"));
-                writer.RenderEndTag();
-            }
 
             writer.RenderEndTag();
         }
@@ -93,32 +87,20 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 if (!String.IsNullOrEmpty(section.LandingPageURL) &&
                     !String.IsNullOrEmpty(section.NavTitle))
                 {
-                    //Draw this item
-                    if (section.LandingPageURL == CurrUrl)
-                    {
-                        writer.RenderBeginTag(HtmlTextWriterTag.Li);
-                        writer.Write(" > ");
-                        writer.Write(section.NavTitle);
-                        writer.RenderEndTag();
-                    }
-                    else
-                    {
-                        writer.RenderBeginTag(HtmlTextWriterTag.Li);
-                        writer.AddAttribute(HtmlTextWriterAttribute.Href, section.LandingPageURL);
-                        writer.RenderBeginTag(HtmlTextWriterTag.A);
-                        writer.Write(section.NavTitle);
-                        writer.RenderEndTag();
-                        writer.Write(" > ");
-                        writer.RenderEndTag();
-                    }
+                    writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Href, section.LandingPageURL);
+                    writer.RenderBeginTag(HtmlTextWriterTag.A);
+                    writer.Write(section.NavTitle);
+                    writer.RenderEndTag();
+                    writer.RenderEndTag();
+
                 }
             }
             else
             {
                 return;
             }
-
-        } // RenderBreadCrumbSections()
-    } // BreadCrumbSnippet class
+        } // RenderBreadbrumbSections()
+    } // BreadcrumbSnippet class
 }
 
