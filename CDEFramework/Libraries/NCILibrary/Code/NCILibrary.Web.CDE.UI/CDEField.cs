@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Globalization;
 using NCI.Web.CDE.UI.Configuration;
+using NCI.Logging;
 
 namespace NCI.Web.CDE.UI
 {
@@ -33,10 +34,17 @@ namespace NCI.Web.CDE.UI
     
     public class CDEField : WebControl
     {
+
+        private CDEFieldScope _scope = CDEFieldScope.Page;
+
         /// <summary>
         /// Automated getting and setting of CDEFieldScope
         /// </summary>
-        public CDEFieldScope Scope { get; set; }
+        public CDEFieldScope Scope 
+        {
+            get { return _scope; }
+            set {this._scope = value; }
+        }
 
         /// <summary>
         /// Automated getting and setting of FieldName
@@ -50,43 +58,31 @@ namespace NCI.Web.CDE.UI
        
         protected override void RenderContents(HtmlTextWriter writer)
         {
+            if (String.IsNullOrEmpty(this.FieldName))
+                throw new ArgumentException("Property FieldName cannot be null or empty.");
+
             string DesiredField = null;
 
-            try
-            {
-                if (this.Scope == CDEFieldScope.Page)
+            if (this.Scope == CDEFieldScope.Page)
                     DesiredField = PageAssemblyContext.Current.PageAssemblyInstruction.GetField(this.FieldName);
-            }
-            catch (ArgumentException e)
-            {
-            }
 
-            try
+            if (this.Scope == CDEFieldScope.Snippet)
             {
-                if (this.Scope == CDEFieldScope.Snippet)
+                Control parent = this.Parent;
+                while (parent != null)
                 {
-                    Control parent = this.Parent;
-                    while (parent != null)
+                    if (parent is SnippetControl)
                     {
-                        if (parent is SnippetControl)
-                        {
-                            DesiredField = ((SnippetControl)parent).GetField(this.FieldName);
-                            break;
-                        }
-                        else
-                        {
-                            parent = parent.Parent;
-                        }
+                        DesiredField = ((SnippetControl)parent).GetField(this.FieldName);
+                        break;
+                    }
+                    else
+                    {
+                        parent = parent.Parent;
                     }
                 }
             }
-            catch (ArgumentException e)
-            {
-            }
             
-
-            try
-            {
             if (DesiredField != null)
             {
                 writer.Write(DesiredField);
@@ -95,12 +91,6 @@ namespace NCI.Web.CDE.UI
             {
                 writer.Write("");
             }
-            }
-            catch
-            {
-            }
-
         }
     }
-
 }
