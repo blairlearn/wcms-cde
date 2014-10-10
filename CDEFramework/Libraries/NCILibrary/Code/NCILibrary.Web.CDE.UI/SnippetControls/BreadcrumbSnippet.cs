@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Linq;
 
 using NCI.Logging;
 using NCI.Text;
@@ -30,7 +32,20 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 if (!String.IsNullOrEmpty(SnippetInfo.Data))
                 {
-                    BreadcrumbData = SnippetInfo.Data;
+                    XmlDocument doc = new XmlDocument();
+                    string xml = SnippetInfo.Data;
+
+                    try
+                    {
+                        doc.LoadXml(xml);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError("NCI.Web.CDE.SectionDetail", "Unable to load XML document", NCIErrorLevel.Error, ex);
+                    }
+
+                    XmlNode rootPathNode = doc.DocumentElement;
+                    BreadcrumbData = rootPathNode.InnerText.ToString();
                 }
                 return BreadcrumbData;
             }
@@ -68,14 +83,14 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         private void RenderBreadcrumbSections(SectionDetail section, HtmlTextWriter writer)
         {
-            /*
-             * Need to add FullPath to section details... this should combine ParentPath with SectionName (including a path separator between them)
+            string fullPath = section.ParentPath + "/" + section.SectionName;
+
+            /* 
+             * Add "FullPath" that combines ParentPath with SectionName (including a path separator between them)
              * Basically we need to check if we should draw this section in the bread crumbs, and the reason we would is because this
-             * section is within the section that is the root of the navon.  Luckily we can do this with string comparisons...
-            */
-            // if (The current "section" is within the folder structure of the RootPath of the breadcrumb)
-            if (RootPath != null &&
-                System.Text.RegularExpressions.Regex.IsMatch(RootPath, section.FullPath, System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+             * section is within the section that is the root of the navon. 
+             */
+            if (RootPath != null && RootPath.IndexOf(fullPath) != -1)
             {
                 //If the section has a parent, attempt to draw it first.        
                 if (section.ParentPath != null)
@@ -93,7 +108,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     writer.Write(section.NavTitle);
                     writer.RenderEndTag();
                     writer.RenderEndTag();
-
                 }
             }
             else
