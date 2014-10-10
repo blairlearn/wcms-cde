@@ -90,7 +90,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
              * Basically we need to check if we should draw this section in the bread crumbs, and the reason we would is because this
              * section is within the section that is the root of the navon. 
              */
-            if (RootPath != null && RootPath.IndexOf(fullPath) != -1)
+            if (RootPath != null && fullPath.IndexOf(RootPath) != -1)
             {
                 //If the section has a parent, attempt to draw it first.        
                 if (section.ParentPath != null)
