@@ -18,6 +18,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
 {
     public class BreadcrumbSnippet : SnippetControl
     {
+        public int totalCount = 0;
+        public int recurseCount = 0;
+
         // Get root path from SectionDetails.xml
         public string _breadcrumbData = String.Empty;
         public string BreadcrumbData
@@ -78,20 +81,27 @@ namespace NCI.Web.CDE.UI.SnippetControls
             //Draw parents
             RenderBreadcrumbSections(details, writer);
 
+            //Close UL tag
             writer.RenderEndTag();
         }
 
-        private void RenderBreadcrumbSections(SectionDetail section, HtmlTextWriter writer)
+        protected void RenderBreadcrumbSections(SectionDetail section, HtmlTextWriter writer)
         {
-            string fullPath = section.ParentPath + "/" + section.SectionName;
+            // Get the total number of items in the breadcrumb; this will be used to determine the li for the final breadcrumb item
+            if (!String.IsNullOrEmpty(section.LandingPageURL) && !String.IsNullOrEmpty(section.NavTitle) && section.LandingPageURL != CurrUrl)
+            {
+                totalCount++;
+            }
 
             /* 
              * Add "FullPath" that combines ParentPath with SectionName (including a path separator between them)
              * Basically we need to check if we should draw this section in the bread crumbs, and the reason we would is because this
              * section is within the section that is the root of the navon. 
              */
+            string fullPath = section.ParentPath + "/" + section.SectionName;
             if (RootPath != null && fullPath.IndexOf(RootPath) != -1)
             {
+
                 //If the section has a parent, attempt to draw it first.        
                 if (section.ParentPath != null)
                 {
@@ -99,9 +109,14 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 }
 
                 //If the LandingPageURL is not set, DO NOT DRAW A BAD LINK!!!
-                if (!String.IsNullOrEmpty(section.LandingPageURL) &&
-                    !String.IsNullOrEmpty(section.NavTitle))
+                if (!String.IsNullOrEmpty(section.LandingPageURL) && !String.IsNullOrEmpty(section.NavTitle) && section.LandingPageURL != CurrUrl)
                 {
+                    // Increment the count with each pass through the method and update the <li> tag on the last item
+                    recurseCount++;
+                    if (recurseCount == totalCount)
+                    {
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "last-breadcrumb");
+                    }
                     writer.RenderBeginTag(HtmlTextWriterTag.Li);
                     writer.AddAttribute(HtmlTextWriterAttribute.Href, section.LandingPageURL);
                     writer.RenderBeginTag(HtmlTextWriterTag.A);
@@ -109,11 +124,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     writer.RenderEndTag();
                     writer.RenderEndTag();
                 }
+                else
+                {
+                    return;
+                }
             }
             else
             {
                 return;
-            }
+            } // drawing html
+			
         } // RenderBreadbrumbSections()
     } // BreadcrumbSnippet class
 }
