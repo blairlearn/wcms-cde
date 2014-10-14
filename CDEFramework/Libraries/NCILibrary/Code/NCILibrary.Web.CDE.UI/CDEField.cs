@@ -52,7 +52,9 @@ namespace NCI.Web.CDE.UI
         public string FieldName { get; set; }
         
         /// <summary>
-        /// Renders contents for 
+        /// Renders contents for DesiredField: the field the user wishes to find and use. If the current
+        /// scope is Page level, the field is found using the current page assembly. If the current scope
+        /// is snippet level, the parent SnippetControl is found, and the field is returned from there.
         /// </summary>
         /// <param name="writer"></param>
        
