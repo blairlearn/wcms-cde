@@ -78,6 +78,8 @@ namespace NCI.Web.CDE.UI.WebControls
         /// </summary>
         protected override void RenderContents(HtmlTextWriter writer)
         {
+            string dictionaryUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
+
             if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("TranslationUrls").ToString()))
             {
                 foreach (LanguageToggle lang in _itemsCollection[PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language")].LangsCollection)
@@ -116,10 +118,24 @@ namespace NCI.Web.CDE.UI.WebControls
                         if (lang.Locale == key)
                         {
                             writer.Write("&nbsp;&nbsp;&nbsp;");
+                            if (!string.IsNullOrEmpty(lang.OnClick.Trim()))
                             {
                                 writer.AddAttribute(HtmlTextWriterAttribute.Onclick, lang.OnClick);
                             }
-                            writer.AddAttribute(HtmlTextWriterAttribute.Href, PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(key).ToString());
+
+                            // If this is a Cancer Terms Dictionary page, the language toggle should link to the selected dictionary item, not home
+                            if ((lang.Locale == "es-us") && (dictionaryUrl.IndexOf("/dictionary?") > -1))
+                            {
+                                writer.AddAttribute(HtmlTextWriterAttribute.Href, dictionaryUrl.Replace("/dictionary?","/diccionario?"));
+                            }
+                            else if ((lang.Locale == "en-us") && (dictionaryUrl.IndexOf("/diccionario?") > -1))
+                            {
+                                writer.AddAttribute(HtmlTextWriterAttribute.Href, dictionaryUrl.Replace("/diccionario?", "/dictionary?"));
+                            }
+                            else
+                            {
+                                writer.AddAttribute(HtmlTextWriterAttribute.Href, PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(key).ToString());
+                            }
                             writer.RenderBeginTag(HtmlTextWriterTag.A);
                             writer.Write(lang.Title);
                             writer.RenderEndTag();
