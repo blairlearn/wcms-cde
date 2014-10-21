@@ -331,7 +331,7 @@ namespace Www.Templates
                 if (CdrID != "")
                     url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
                 else if (Expand != "")
-                    url.SetUrl(url.ToString() + "?expland=" + Expand);
+                    url.SetUrl(url.ToString() + "?expand=" + Expand);
                 else 
                     url.SetUrl(url.ToString());
             });
