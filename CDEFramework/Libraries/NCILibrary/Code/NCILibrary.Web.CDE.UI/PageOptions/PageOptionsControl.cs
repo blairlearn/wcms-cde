@@ -269,18 +269,20 @@ namespace NCI.Web.CDE.UI.WebControls
             }
 
             writer.RenderEndTag(); // ul
-            
+
         }
 
         private static void RenderPageOptionsAddThisButton(HtmlTextWriter writer, PageOptionsAddThisButtonItem button)
         {
             string btnClass = string.Empty;
+            string btnAlt = string.Empty;
             btnClass += "addthis_button_" + button.Service;
             btnClass += " add_this_btn";
             writer.AddAttribute(HtmlTextWriterAttribute.Class, btnClass);
             if (!string.IsNullOrEmpty(button.Title.Trim()))
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Title, button.Title);
+                btnAlt = button.Title;
             }
             if (!string.IsNullOrEmpty(button.WebAnalytics.Trim()))
             {
@@ -289,7 +291,7 @@ namespace NCI.Web.CDE.UI.WebControls
             writer.AddAttribute(HtmlTextWriterAttribute.Href, "#");
             writer.RenderBeginTag(HtmlTextWriterTag.A);
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Alt, string.Empty);
+            writer.AddAttribute(HtmlTextWriterAttribute.Alt, btnAlt);
             writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
             writer.RenderBeginTag(HtmlTextWriterTag.Img);
 
@@ -299,9 +301,11 @@ namespace NCI.Web.CDE.UI.WebControls
 
         private void RenderEmailButtonItem(HtmlTextWriter writer, EmailButtonItem button)
         {
+            string btnAlt = string.Empty;
             if (!string.IsNullOrEmpty(button.Title.Trim()))
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Title, button.Title);
+                btnAlt = button.Title;
             }
             writer.AddAttribute(HtmlTextWriterAttribute.Href, pgInstruction.GetUrl("email").ToString());
             string emailOnClick = string.Empty;
@@ -312,7 +316,7 @@ namespace NCI.Web.CDE.UI.WebControls
             emailOnClick += " " + "dynPopWindow('" + pgInstruction.GetUrl("email").ToString().Replace("'", "%27").Replace("(", "%28").Replace(")", "%29") + "', 'emailPopUp', 'height=525,width=492'); return false;";
             writer.AddAttribute(HtmlTextWriterAttribute.Onclick, emailOnClick);
             writer.RenderBeginTag(HtmlTextWriterTag.A);
-            writer.AddAttribute(HtmlTextWriterAttribute.Alt, string.Empty);
+            writer.AddAttribute(HtmlTextWriterAttribute.Alt, btnAlt);
             writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
             writer.RenderBeginTag(HtmlTextWriterTag.Img);
             writer.RenderEndTag(); // img
@@ -321,9 +325,11 @@ namespace NCI.Web.CDE.UI.WebControls
 
         private void RenderLinkButtonItem(HtmlTextWriter writer, LinkButtonItem button)
         {
+            string btnAlt = string.Empty;
             if (!string.IsNullOrEmpty(button.Title.Trim()))
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Title, button.Title);
+                btnAlt = button.Title;
             }
             if (!string.IsNullOrEmpty(button.WebAnalytics.Trim()))
             {
@@ -331,7 +337,7 @@ namespace NCI.Web.CDE.UI.WebControls
             }
             writer.AddAttribute(HtmlTextWriterAttribute.Href, pgInstruction.GetUrl(button.AlternateContentVersionKey).ToString());
             writer.RenderBeginTag(HtmlTextWriterTag.A);
-            writer.AddAttribute(HtmlTextWriterAttribute.Alt, string.Empty);
+            writer.AddAttribute(HtmlTextWriterAttribute.Alt, btnAlt);
             writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
             writer.RenderBeginTag(HtmlTextWriterTag.Img);
             writer.RenderEndTag(); // img
