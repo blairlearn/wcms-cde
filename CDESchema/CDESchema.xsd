@@ -1197,6 +1197,33 @@
           </sequence>
         </complexType>
       </element>
+      <element name="Snippets" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            An optional collection of all of the snippets
+            associated with this sub-layout snippet.
+          </documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>
+              Defines a collection of one or more Snippets
+              associated with this sub-layout snippet.
+            </documentation>
+          </annotation>
+          <sequence>
+            <element name="SnippetInfo"
+              type="cde:snippetInfo" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>
+                  A Snippet in the collection of snippets
+                  associated with this sub-layout snippet.
+                </documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
     </all>
   </complexType>
 

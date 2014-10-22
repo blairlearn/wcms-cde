@@ -134,6 +134,10 @@
     <Compile Include="SnippetControls\SideWideSearch.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\SubLayoutControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\SublayoutInfo.cs" />
     <Compile Include="WebAnalytics\WebAnalyticsControl.cs" />
   </ItemGroup>
   <ItemGroup>

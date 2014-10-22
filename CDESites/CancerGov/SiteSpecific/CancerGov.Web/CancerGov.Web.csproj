@@ -693,6 +693,11 @@
     <Content Include="SnippetTemplates\TableofLinks.ascx" />
     <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
     <Content Include="SnippetTemplates\BlogPostNewerOlder.ascx" />
+    <Content Include="Sublayouts\SubLayout_Feature_Primary.ascx" />
+    <Content Include="Sublayouts\SubLayout_Guide_With_Title.ascx" />
+    <Content Include="Sublayouts\SubLayout_Home_Guide.ascx" />
+    <Content Include="Sublayouts\SubLayout_Multimedia_With_Thumbs.ascx" />
+    <Content Include="Sublayouts\SubLayout_News_and_Events.ascx" />
     <Content Include="sysimages\li-selected-last.gif" />
     <Content Include="sysimages\li-selected.gif" />
     <Content Include="sysimages\li-unselected-last.gif" />
