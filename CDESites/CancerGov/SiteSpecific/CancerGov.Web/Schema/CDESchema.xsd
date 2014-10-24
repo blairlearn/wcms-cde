@@ -1309,7 +1309,7 @@
           </documentation>
         </annotation>
       </element>
-      <element name="SubSnippets" minOccurs="1" maxOccurs="1">
+      <element name="Snippets" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>
             A collection of all of the snippets for the
