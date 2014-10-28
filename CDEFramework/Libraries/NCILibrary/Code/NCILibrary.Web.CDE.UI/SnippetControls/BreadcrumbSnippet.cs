@@ -18,11 +18,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
 {
     public class BreadcrumbSnippet : SnippetControl
     {
-        public int totalCount = 0;
-        public int recurseCount = 0;
 
         // Get root path from SectionDetails.xml
         public string _breadcrumbData = String.Empty;
+
         public string BreadcrumbData
         {
             get { return _breadcrumbData; }
@@ -55,6 +54,25 @@ namespace NCI.Web.CDE.UI.SnippetControls
         }
 
         protected string CurrUrl { get { return PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("PrettyUrl").ToString(); } }
+
+        protected int totalCount = 0; // Content depth relative to root
+        protected int recurseCount = 0; // Number of visible breadcrumb elements
+
+        // Total depth (to site root) of the navon for the content item's breadcrumb. This will be subtracted from the total depth of the content
+        // item to determine the relative level of its navon.
+        protected int NavTreeDepth
+        {
+            get
+            {
+                int count = 0;
+                if (!String.IsNullOrEmpty(BreadcrumbData))
+                {
+                    count = BreadcrumbData.Split('/').Length - 2;
+                }
+                return count;
+            }
+        }
+
 
         public override void RenderControl(HtmlTextWriter writer)
         {
@@ -98,7 +116,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
              * Basically we need to check if we should draw this section in the bread crumbs, and the reason we would is because this
              * section is within the section that is the root of the navon. 
              */
-            string fullPath = section.ParentPath + "/" + section.SectionName;
+            string fullPath = section.ParentPath + "/" + section.SectionName + "/";
             if (RootPath != null && fullPath.IndexOf(RootPath) != -1)
             {
 
@@ -108,12 +126,14 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     RenderBreadcrumbSections(section.Parent, writer);
                 }
 
+                //Get relative depth to this content's nav root (not necessarily the site root)
+                int navItemDepth = totalCount - NavTreeDepth;
                 //If the LandingPageURL is not set, DO NOT DRAW A BAD LINK!!!
-                if (!String.IsNullOrEmpty(section.LandingPageURL) && !String.IsNullOrEmpty(section.NavTitle) && section.LandingPageURL != CurrUrl)
+                if (!String.IsNullOrEmpty(section.LandingPageURL) && !String.IsNullOrEmpty(section.NavTitle) && section.LandingPageURL != CurrUrl && navItemDepth > 1)
                 {
                     // Increment the count with each pass through the method and update the <li> tag on the last item
                     recurseCount++;
-                    if (recurseCount == totalCount)
+                    if (recurseCount == navItemDepth)
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Class, "last-breadcrumb");
                     }
@@ -133,7 +153,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 return;
             } // drawing html
-			
         } // RenderBreadbrumbSections()
     } // BreadcrumbSnippet class
 }
