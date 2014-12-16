@@ -34,17 +34,15 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 try
                 {
                     string snippetXmlData = string.Empty;
-                    if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+                    if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                     {
-                        language = "English";
-                        spDefinitionHeader.InnerText = "Definition"; 
-                        
+                        language = "Spanish";
+                        spDefinitionHeader.InnerText = "Definición";   
                     }
                     else
                     {
-                        language = "Spanish";
-                        spDefinitionHeader.InnerText = "Definición";
-
+                        language = "English";
+                        spDefinitionHeader.InnerText = "Definition"; 
                     }
 
                     

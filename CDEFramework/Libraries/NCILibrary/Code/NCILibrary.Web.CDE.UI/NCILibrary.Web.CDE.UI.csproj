@@ -56,6 +56,7 @@
     <Compile Include="AddThis\AddThisButtonLanguageItem.cs" />
     <Compile Include="AddThis\AddThisButtonListControl.cs" />
     <Compile Include="AddThis\AddThisLanguageCollection.cs" />
+    <Compile Include="AddThis\PageOptionsButtonListControl.cs" />
     <Compile Include="AddThis\CustomAddThisButtonItem.cs" />
     <Compile Include="AddThis\GoogleAddThisButtonItem.cs" />
     <Compile Include="BaseTemplates\SnippetControl.cs">
@@ -64,6 +65,12 @@
     <Compile Include="BaseTemplates\TemplateSlot.cs" />
     <Compile Include="BaseTemplates\TemplateSlotCollection.cs" />
     <Compile Include="BaseTemplates\TemplateSlotItem.cs" />
+    <Compile Include="CDEField.cs" />
+    <Compile Include="Configuration\LanguageToggle.cs" />
+    <Compile Include="Configuration\LanguageToggleCollection.cs" />
+    <Compile Include="Configuration\LanguageToggleControl.cs" />
+    <Compile Include="Configuration\LanguageToggleLanguageCollection.cs" />
+    <Compile Include="Configuration\LanguageToggleLanguageItem.cs" />
     <Compile Include="Configuration\MobileLanguageToggle.cs" />
     <Compile Include="Configuration\MobileLanguageToggleCollection.cs" />
     <Compile Include="MobileLanguageToggleControl.cs" />
@@ -74,6 +81,15 @@
     <Compile Include="PageAssemblers\WebPageAssembler.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="PageOptions\PageOptionsButtonLanguageItem.cs" />
+    <Compile Include="PageOptions\PageOptionsLanguageCollection.cs" />
+    <Compile Include="PageOptions\EmailButtonItem.cs" />
+    <Compile Include="PageOptions\LinkButtonItem.cs" />
+    <Compile Include="PageOptions\PageOptionsButtonItemCollection.cs" />
+    <Compile Include="PageOptions\PageOptionsAddThisButtonItem.cs" />
+    <Compile Include="PageOptions\PageOptionsButtonItem.cs" />
+    <Compile Include="PageOptions\PageOptionsControl.cs" />
+    <Compile Include="PageOptions\PageOptionsButtonCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnippetControls\AppsBaseSnippetControl.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -82,6 +98,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetControls\BlogPostNewerOlder.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\BreadcrumbSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetControls\ConditionalDisplaySnippet.cs">
@@ -115,6 +134,10 @@
     <Compile Include="SnippetControls\SideWideSearch.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\SubLayoutControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\SublayoutInfo.cs" />
     <Compile Include="WebAnalytics\WebAnalyticsControl.cs" />
   </ItemGroup>
   <ItemGroup>

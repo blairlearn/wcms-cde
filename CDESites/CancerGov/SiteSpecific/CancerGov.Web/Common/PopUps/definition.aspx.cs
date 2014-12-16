@@ -225,13 +225,13 @@ namespace CancerGov.Web.Common.PopUps
         private ArrayList get_definition(string type, string param, PDQVersion pdqVersion, DisplayLanguage language)
         {
             string lng = string.Empty;
-            if (language == DisplayLanguage.English)
+            if (language == DisplayLanguage.Spanish)
             {
-                lng = "English";
+                lng = "Spanish";
             }
             else
             {
-                lng = "Spanish";
+                lng = "English";
             }
 
             ArrayList returnvalue = new ArrayList(3);

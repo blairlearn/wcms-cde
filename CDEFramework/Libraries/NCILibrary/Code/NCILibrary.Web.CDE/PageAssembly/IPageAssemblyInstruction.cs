@@ -35,6 +35,7 @@ namespace NCI.Web.CDE
         /// <param name="fieldName"></param>
         /// <returns></returns>
         string GetField(string fieldName);
+
         /// <summary>
         /// Provides components of system with a URL for a page.
         /// </summary>
@@ -42,12 +43,19 @@ namespace NCI.Web.CDE
         /// <returns></returns>
         NciUrl GetUrl(string urlType);
 
+        /// <summary>
+        /// Provides components of system with translation URLs for a page.
+        /// </summary>
+        /// <param name="urlType"></param>
+        /// <returns></returns>
+        NciUrl GetTranslationUrl(string urlType);
+
         /// <summary>        
         ///  When a component needs to modify the metadata of a page a field filter is added for that field name using AddFieldFilter.
         /// </summary>
         /// <param name="fieldname"></param>
         /// <param name="filter"></param>
-        void AddFieldFilter(string fieldname,FieldFilterDelegate filter);
+        void AddFieldFilter(string fieldname, FieldFilterDelegate filter);
 
         /// <summary>
         ///  When a component needs to modify the URL of a page a URL filter is added for that URL name using AddUrlFilter.
@@ -55,7 +63,14 @@ namespace NCI.Web.CDE
         /// <param name="urlType"></param>
         /// <param name="fieldFilter"></param>
         void AddUrlFilter(string urlType, UrlFilterDelegate fieldFilter);
-        
+
+        /// <summary>
+        ///  When a component needs to modify the URL of a page a URL filter is added for that URL name using AddTranslationFilter.
+        /// </summary>
+        /// <param name="urlType"></param>
+        /// <param name="fieldFilter"></param>
+        void AddTranslationFilter(string urlType, UrlFilterDelegate fieldFilter);
+
         /// <summary>
         /// Gets or sets the language for the page displayed.
         /// </summary>
@@ -73,6 +88,12 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <value>A string array which are the keys to the alternate content versions.</value>
         string[] AlternateContentVersionsKeys { get; }
+
+        /// <summary>
+        /// This property returns the keys which represent the available translations. 
+        /// </summary>
+        /// <value>A string array which are the keys to the alternate content versions.</value>
+        string[] TranslationKeys { get; }
 
         /// <summary>
         /// This method returns the web analytics settings.

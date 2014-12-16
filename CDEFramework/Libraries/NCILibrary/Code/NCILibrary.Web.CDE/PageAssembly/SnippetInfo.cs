@@ -6,6 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Xml.XPath;
 using NCI.Logging;
+using System.Xml.Schema;
 namespace NCI.Web.CDE
 {
     /// <summary>
@@ -17,6 +18,8 @@ namespace NCI.Web.CDE
         private Dictionary<string, string> _configStrings = null;
         private bool correctedCDATA = false;
         private List<DisplayVersions> listOnlyDisplayFor = new List<DisplayVersions>();
+        private SnippetInfoCollection _snippets;
+
         /// <summary>
         /// Gets and sets the path to the user control that will render this
         /// snippet.
@@ -64,6 +67,44 @@ namespace NCI.Web.CDE
             {
 
                 return listOnlyDisplayFor.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Gets the collections of the snippets
+        /// </summary>
+        /// <value>The snippet infos.</value>
+        [System.Xml.Serialization.XmlArray(ElementName = "Snippets", Form = XmlSchemaForm.Unqualified)]
+        [System.Xml.Serialization.XmlArrayItem("SnippetInfo", Form = XmlSchemaForm.Unqualified)]
+        public SnippetInfoCollection SnippetInfos
+        {
+            get 
+            { 
+                return _snippets; 
+            }
+        }
+
+        /// <summary>
+        /// A collection of SnippetInfo objects for the sub-layout control which are needed
+        /// to render a sub-layout.
+        /// </summary>
+        /// <value></value>
+        [System.Xml.Serialization.XmlIgnore()]
+        public IEnumerable<SnippetInfo> Snippets
+        {
+            get
+            {
+                List<SnippetInfo> snippets = new List<SnippetInfo>();
+
+                // Add all local snippets to the list to return.
+                foreach (SnippetInfo snipt in _snippets)
+                {
+                    if (snipt.OnlyDisplayFor.Count() == 0 || snipt.OnlyDisplayFor.Contains(PageAssemblyContext.Current.DisplayVersion))
+                    {
+                        snippets.Add(snipt);
+                    }
+                }
+                return snippets;
             }
         }
 
@@ -175,13 +216,24 @@ namespace NCI.Web.CDE
                     //case "CDRDefinitionName":
                     //    CDRDefinitionName = reader.ReadString();
                     //    break;
-
                     case "DisplayVersion":
                         {
                             listOnlyDisplayFor.Add((DisplayVersions)Enum.Parse(typeof(DisplayVersions), reader.ReadString()));
                         }
                         break;
+                    case "Snippets":
+                        {
+                            //using (XmlTextReader snippetReader = new XmlTextReader(snippetXmlData.Trim(), XmlNodeType.Element, null))
+                            //{
+                            //    XmlSerializer serializer = new XmlSerializer(typeof(SnippetInfoCollection));
+                            //    this._snippets = (SnippetInfoCollection)serializer.Deserialize(reader);
+                            //}
 
+                            
+                            XmlSerializer mySerializer = new XmlSerializer(typeof(SnippetInfoCollection),new XmlRootAttribute("Snippets"));
+                            _snippets = (SnippetInfoCollection)mySerializer.Deserialize(reader);
+                        }
+                    break;
 
                 }
             }

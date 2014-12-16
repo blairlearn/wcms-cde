@@ -114,7 +114,7 @@ namespace CancerGov.Web.SnippetTemplates.CancerBulletin
         {
 
             languageCode = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
-            if (languageCode != "en")
+            if (languageCode == "es")
                 isSpanish = true;
 
             divSubscribe.Visible = false;

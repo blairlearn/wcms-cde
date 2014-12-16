@@ -265,7 +265,7 @@ namespace NCI.Web.CancerGov.Apps
             phError.Visible = false;
 
             //Setup if we are allowed to show DYM
-            _allowedToShowDYM = Strings.ToBoolean((string)ConfigurationSettings.AppSettings["EndecaDidYouMean"]) && PageDisplayInformation.Language == DisplayLanguage.English;
+            _allowedToShowDYM = Strings.ToBoolean((string)ConfigurationSettings.AppSettings["EndecaDidYouMean"]) && PageDisplayInformation.Language != DisplayLanguage.Spanish;
 
             btnSWRImgSearch.Attributes.Add("src","/images/search_site.gif"); 
 

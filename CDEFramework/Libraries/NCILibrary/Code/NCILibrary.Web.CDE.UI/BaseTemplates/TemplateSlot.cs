@@ -22,6 +22,8 @@ namespace NCI.Web.CDE.UI
         [DefaultValue(false)]
         public bool RenderIfEmpty { get; set; }
 
+        
+
         /// <summary>
         /// Gets the <see cref="T:System.Web.UI.HtmlTextWriterTag"/> value that corresponds to this Web server control. This property is used primarily by control developers.
         /// </summary>
@@ -29,7 +31,7 @@ namespace NCI.Web.CDE.UI
         /// <returns>
         /// One of the <see cref="T:System.Web.UI.HtmlTextWriterTag"/> enumeration values.
         /// </returns>
-        protected override HtmlTextWriterTag TagKey
+        protected override HtmlTextWriterTag TagKey 
         {
             get
             {
@@ -58,6 +60,10 @@ namespace NCI.Web.CDE.UI
         [PersistenceMode(PersistenceMode.InnerProperty)]
         public string FooterHtml { get; set; }
 
+        /// <summary>
+        /// Gets the Additional Css Classes xml element to add to a specific slot item
+        /// </summary>
+        public string AdditionalSnippetClasses { get; set; }
 
         /// <summary>
         /// Adds a Snippet Control to this TemplateSlot.
@@ -130,6 +136,11 @@ namespace NCI.Web.CDE.UI
                 if (item == visibleItems[visibleItems.Count - 1] && visibleItems.Count != 1)
                 {
                     item.CssClass += " last-SI";
+                }
+
+                if (!String.IsNullOrEmpty(this.AdditionalSnippetClasses))
+                {
+                    item.CssClass += " " + this.AdditionalSnippetClasses;
                 }
 
                 item.RenderControl(writer);

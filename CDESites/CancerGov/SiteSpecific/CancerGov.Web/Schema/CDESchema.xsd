@@ -680,6 +680,11 @@
           <documentation>Defines page-level JS and CSS resources.</documentation>
         </annotation>
       </element>
+      <element name="Translations" type="cde:translations" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the data for the content item's translation(s).</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1033,6 +1038,11 @@
           <documentation>Defines page-level JS and CSS resources.</documentation>
         </annotation>
       </element>
+      <element name="Translations" type="cde:translations" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the data for the content item's translation(s).</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1237,6 +1247,33 @@
           </sequence>
         </complexType>
       </element>
+      <element name="Snippets" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            An optional collection of all of the snippets 
+            associated with this sub-layout snippet.
+          </documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>
+              Defines a collection of one or more Snippets
+              associated with this sub-layout snippet.
+            </documentation>
+          </annotation>
+          <sequence>
+            <element name="SnippetInfo"
+              type="cde:snippetInfo" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>
+                  A Snippet in the collection of snippets
+                  associated with this sub-layout snippet.
+                </documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
     </all>
   </complexType>
 
@@ -1372,6 +1409,21 @@
           <documentation>Defines the ParentPath for this SectionDetail.  It should only be empty or not exist if this is the root SectionDetail.</documentation>
         </annotation>
       </element>
+      <element name="LandingPageURL" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines URL for the content item's landing page.</documentation>
+        </annotation>
+      </element>
+      <element name="NavTitle" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the title for the content item's landing page.</documentation>
+        </annotation>
+      </element>	  
+      <element name="FullPath" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the Full Path for a content item.</documentation>
+        </annotation>
+      </element>	  
     </all>
   </complexType>
 
@@ -2166,7 +2218,42 @@
     </restriction>
   </simpleType>
 
+  <complexType name="translations">
+    <annotation>
+      <documentation>The data for the content item's translation(s).</documentation>
+    </annotation>
+    <all>
+	  <element name="TranslationData" minOccurs="0" maxOccurs="1">
+        <complexType>
+          <sequence>
+            <element name="TranslationMetaTag" type="cde:translationMetaTag" minOccurs="0" maxOccurs="unbounded" />
+          </sequence>
+        </complexType>
+      </element>
+    </all>
+  </complexType>
 
+  <complexType name="translationMetaTag">
+    <annotation>
+      <documentation>
+        Defines a single meta tag to retrieve translation information.
+      </documentation>
+    </annotation>
+    <attribute name="Locale" type="string" use="required">
+      <annotation>
+        <documentation>Translation locale.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Id" type="string" use="required">
+      <annotation>
+        <documentation>Content ID of translation.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Url" type="string" use="required">
+      <annotation>
+        <documentation>Translation URL.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>  
+  
 </schema>
-
-

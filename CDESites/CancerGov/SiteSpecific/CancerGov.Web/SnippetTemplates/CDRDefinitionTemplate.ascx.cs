@@ -32,17 +32,15 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     string language = string.Empty;
                     string snippetXmlData = string.Empty;
-                    if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
-                    {
-                        language = "English";
-                        moreLink.InnerText = "More";
-
-                    }
-                    else
+                    if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                     {
                         language = "Spanish";
                         moreLink.InnerHtml = "M&aacute;s";
-
+                    }
+                    else
+                    {
+                        language = "English";
+                        moreLink.InnerText = "More";
                     }
 
 
@@ -56,15 +54,15 @@ namespace CancerGov.Web.SnippetTemplates
                     TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(language, mPBO.CDRId, null, 5);
                     if (!String.IsNullOrEmpty(mPBO.CDRDefinitionName))
                     {
-                        if (language == "English")
-                        {
-
-                            definitionText = "<strong>Definition of " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
-                        }
-                        else if(language == "Spanish")
+                        if(language == "Spanish")
                         {
                             definitionText = "<strong>Definición de " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;                     
                         }
+                        else
+                        {
+                            definitionText = "<strong>Definition of " + mPBO.CDRDefinitionName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                        }
+
                             
                         if (mPBO.charLimit > 0)
                         {
@@ -76,16 +74,15 @@ namespace CancerGov.Web.SnippetTemplates
                     }
                     else
                     {
-                        if (language == "English")
-                        {
-
-                            definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
-                        }
-                        else if (language == "Spanish")
+                        if (language == "Spanish")
                         {
                             definitionText = "<strong>Definición de " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
-                        
                         }
+                        else
+                        {
+                            definitionText = "<strong>Definition of " + dataItem.TermName + "</strong>" + ": " + dataItem.DefinitionHTML;
+                        }
+
                         if (mPBO.charLimit > 0)
                         {
                             moreLink.Visible = true;

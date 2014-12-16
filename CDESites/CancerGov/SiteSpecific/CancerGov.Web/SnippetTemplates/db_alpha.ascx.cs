@@ -163,11 +163,11 @@ namespace Www.Templates
                 
             }
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 DictionaryURL = DictionaryURLSpanish;
 
             //Set display props according to lang
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
                 SetupSpanish();
             }
@@ -186,7 +186,7 @@ namespace Www.Templates
 
                 Page.Form.Action = Page.Request.Path;
 
-                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language != "en")
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                     Page.Form.Action += "?lang=spanish";
             }
             else
@@ -331,7 +331,7 @@ namespace Www.Templates
                 if (CdrID != "")
                     url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
                 else if (Expand != "")
-                    url.SetUrl(url.ToString() + "?expland=" + Expand);
+                    url.SetUrl(url.ToString() + "?expand=" + Expand);
                 else 
                     url.SetUrl(url.ToString());
             });
@@ -347,13 +347,13 @@ namespace Www.Templates
         private void LoadData()
         {
             string language = string.Empty;
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                language = "English";
+                language = "Spanish";
             }
             else
             {
-                language = "Spanish";
+                language = "English";
             }
 
             if (!string.IsNullOrEmpty(CdrID)) //this is a cdrid lookup for one term
@@ -407,10 +407,10 @@ namespace Www.Templates
         {
             string language = "";
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
-                language = "English";
-            else
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 language = "Spanish";
+            else
+                language = "English";
 
             TermDictionaryCollection dataCollection = TermDictionaryManager.Search(language, "_", 0, false);
             _totalCount = dataCollection.Count;
@@ -553,13 +553,13 @@ namespace Www.Templates
         private void SetupCommon()
         {
             string language = string.Empty;
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                language = "English";
+                language = "Spanish";
             }
             else
             {
-                language = "Spanish";
+                language = "English";
             }
             // This sets the url and link text for close
             AutoComplete1.SearchURL = "/TermDictionary.svc/SearchJSON/" + language + "?searchTerm=";
@@ -619,13 +619,13 @@ namespace Www.Templates
         private void ActivateDefinitionView(TermDictionaryDataItem dataItem)
         {
             string language = string.Empty;
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                language = "English";
+                language = "Spanish";
             }
             else
             {
-                language = "Spanish";
+                language = "English";
             }
 
             MultiView1.ActiveViewIndex = 2;

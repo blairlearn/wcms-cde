@@ -6,7 +6,7 @@ using System.Text;
 namespace NCI.Web.CDE
 {
     /// <summary>
-    /// This class contains the fields which can be used to get the pretty URL 
+    /// This class contains the fields which can be used to get the pretty URL  
     ///and canonical URL for the Page requested.
     /// </summary>
     public class PageAssemblyInstructionUrls
@@ -25,8 +25,9 @@ namespace NCI.Web.CDE
         public static readonly string AltLanguage = "AltLanguage";
 
         public static readonly string DesktopUrl = "DeskopUrl";
-        
+
         public static readonly string MobileUrl = "MobileUrl";
 
+        public static readonly string TranslationUrls = "TranslationUrls";
     }
 }

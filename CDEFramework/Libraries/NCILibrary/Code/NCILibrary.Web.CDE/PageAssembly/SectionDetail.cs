@@ -74,6 +74,54 @@ namespace NCI.Web.CDE
             }
         }
 
+        private string _landingpageurl;
+        /// <summary>Gets or sets the landing page URL.</summary>
+        /// <value>Landing page URL string.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string LandingPageURL
+        {
+            get
+            {
+                return _landingpageurl;
+            }
+            set
+            {
+                _landingpageurl = value;
+            }
+        }
+
+        private string _navtitle;
+        /// <summary>Gets or sets the landing page URL.</summary>
+        /// <value>Landing page URL string.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string NavTitle
+        {
+            get
+            {
+                return _navtitle;
+            }
+            set
+            {
+                _navtitle = value;
+            }
+        }
+
+        private string _fullpath;
+        /// <summary>Gets or sets the landing page URL.</summary>
+        /// <value>Landing page URL string.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string FullPath
+        {
+            get
+            {
+                return _fullpath;
+            }
+            set
+            {
+                _fullpath = value;
+            }
+        }
+
 
         private SnippetInfoCollection _snippets = new SnippetInfoCollection();
          

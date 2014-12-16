@@ -63,17 +63,17 @@ namespace CancerGov.Web.SnippetTemplates
 
 
                         //make code better
-                        if (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.English)
-                        {
-                            postedTxt = "Posted: ";
-                            updatedTxt = "Last Modified: ";
-                            reviewedTxt = "Reviewed: ";
-                        }
-                        else if (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish)
+                        if (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish)
                         {
                             postedTxt = "Publicaci&oacute;n: ";
                             updatedTxt = "Actualizado: ";
                             reviewedTxt = "Revisi&oacute;n: ";
+                        }
+                        else
+                        {
+                            postedTxt = "Posted: ";
+                            updatedTxt = "Last Modified: ";
+                            reviewedTxt = "Reviewed: ";
                         }
                         string posted;
                         string reviewed;

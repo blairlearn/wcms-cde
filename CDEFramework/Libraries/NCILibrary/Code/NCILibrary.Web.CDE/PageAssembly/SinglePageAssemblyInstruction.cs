@@ -351,7 +351,7 @@ namespace NCI.Web.CDE
                 if (AlternateContentVersions.IsShareBookmarkAvailable)
                     keysList.Add("bookmarkshare");
                 if (AlternateContentVersions.IsEmailAvailable)
-                    keysList.Add("email"); 
+                    keysList.Add("email");
                 if (AlternateContentVersions.IsMobileShareAvailable)
                     keysList.Add("mobileShare");
                 if (AlternateContentVersions.IsPublicArchive)
@@ -410,7 +410,7 @@ namespace NCI.Web.CDE
         /// This method returns the web analytics settings for Event, Props and eVars data points.
         /// </summary>
         public override WebAnalyticsSettings GetWebAnalytics()
-        { 
+        {
             return base.GetWebAnalytics();
         }
 
@@ -566,6 +566,7 @@ namespace NCI.Web.CDE
             RegisterFieldFilters();
             RegisterUrlFilters();
             RegisterWebAnalyticsFieldFilters();
+            base.RegisterTranslationFilters();
         }
 
         #region InitializeFunctions
@@ -587,7 +588,7 @@ namespace NCI.Web.CDE
             AddFieldFilter("browser_title", (name, data) =>
             {
                 // BrowserTitle is optional  
-                if(this.PageMetadata.BrowserTitle != null &&
+                if (this.PageMetadata.BrowserTitle != null &&
                    this.PageMetadata.BrowserTitle != "")
                     data.Value = this.PageMetadata.BrowserTitle;
                 else
@@ -632,7 +633,7 @@ namespace NCI.Web.CDE
             {
                 data.Value = GetField("meta_robots");
             });
-            
+
             AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = this.PageMetadata.MetaKeywords;
@@ -757,7 +758,7 @@ namespace NCI.Web.CDE
                 {
                     AddUrlFilter("MobileUrl", (name, url) =>
                     {
-                        url.SetUrl(PageMetadata.MobileURL,true);
+                        url.SetUrl(PageMetadata.MobileURL, true);
                     });
                 }
             }

@@ -507,7 +507,7 @@ namespace NCI.Web.CDE
                     if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.ViewAll)
                         keysList.Add("print");
                     if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.PrintAll)
-                        keysList.Add("printall");
+                        keysList.Add("print");
                 }
 
                 if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.ViewAll)
@@ -727,6 +727,7 @@ namespace NCI.Web.CDE
             RegisterFieldFilters();
             RegisterUrlFilters();
             RegisterWebAnalyticsFieldFilters();
+            base.RegisterTranslationFilters();
         }
 
         #region InitializeFunctions

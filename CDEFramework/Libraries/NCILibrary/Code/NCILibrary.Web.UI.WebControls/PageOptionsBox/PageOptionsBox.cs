@@ -17,6 +17,8 @@ namespace NCI.Web.UI.WebControls
     {
         PageOptionsCollection _optionCollection;
 
+        private static bool ShowPageOptionsBox = false;
+
         /// <summary>
         /// Gets the <see cref="T:System.Web.UI.HtmlTextWriterTag"/> value that corresponds to this Web server control. This property is used primarily by control developers.
         /// </summary>
@@ -72,7 +74,12 @@ namespace NCI.Web.UI.WebControls
         {
             //Don't render the box if there is nothing to render.
             if (PageOptions.Count > 0)
-                base.Render(writer);
+            {
+                if (ShowPageOptionsBox == true)
+                {
+                    base.Render(writer);
+                }
+            }
         }
 
         /// <summary>
@@ -80,7 +87,7 @@ namespace NCI.Web.UI.WebControls
         /// </summary>
         /// <param name="writer">A <see cref="T:System.Web.UI.HtmlTextWriter"/> that represents the output stream to render HTML content on the client.</param>
         public override void RenderBeginTag(HtmlTextWriter writer)
-        {            
+        {
             base.RenderBeginTag(writer);
 
             writer.RenderBeginTag(HtmlTextWriterTag.H4);
@@ -150,7 +157,8 @@ namespace NCI.Web.UI.WebControls
                         bool hasMoreThanOneOption = false;
                         writer.Write("var addthis_config = {");
 
-                        if (!string.IsNullOrEmpty(((AddThisPageOption)option).Settings.UserName)) {
+                        if (!string.IsNullOrEmpty(((AddThisPageOption)option).Settings.UserName))
+                        {
                             if (hasMoreThanOneOption)
                                 writer.Write(", ");
                             else
@@ -161,7 +169,8 @@ namespace NCI.Web.UI.WebControls
                         }
 
                         //Language should either not be set for english or es for spanish
-                        if (!string.IsNullOrEmpty(((AddThisPageOption)option).Settings.Language)) {
+                        if (!string.IsNullOrEmpty(((AddThisPageOption)option).Settings.Language))
+                        {
                             if (hasMoreThanOneOption)
                                 writer.Write(", ");
                             else
@@ -171,7 +180,8 @@ namespace NCI.Web.UI.WebControls
                             writer.Write("'");
                         }
 
-                        if (!string.IsNullOrEmpty(((AddThisPageOption)option).Settings.CompactServicesList)) {
+                        if (!string.IsNullOrEmpty(((AddThisPageOption)option).Settings.CompactServicesList))
+                        {
                             if (hasMoreThanOneOption)
                                 writer.Write(", ");
                             else

@@ -30,15 +30,15 @@ namespace CancerGov.Web.SnippetTemplates
                 string language = string.Empty;
                 string snippetXmlData = string.Empty;
                 string linksTableTitle;
-                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "en")
-                {
-                    language = "English";
-                    linksTableTitle = "Table of Links";
-                }
-                else
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 {
                     language = "Spanish";
                     linksTableTitle = "Lista de Enlaces";
+                }
+                else
+                {
+                    language = "English";
+                    linksTableTitle = "Table of Links";
                 }
 
                 string tableofLinks = string.Empty;
