@@ -282,6 +282,7 @@ namespace NCI.Web.CDE.UI
             InsertCanonicalURL();
             InsertPageMetaData();
             InsertBodyTagAttributes();
+            InsertHTMLTagAttributes();
 
             //Set the form action so it does not post back to the page template path.
             if (this.Form != null)
@@ -505,6 +506,23 @@ namespace NCI.Web.CDE.UI
             }
         }
 
+        /// <summary>
+        /// Adds a lang attribute to the html tag and assigns the 
+        /// language of the pageinstructions as the value
+        /// </summary>
+        protected virtual void InsertHTMLTagAttributes()
+        {
+            foreach (HtmlContainerControl htmlCtl in this.FindControlByType<HtmlContainerControl>())
+            {
+                string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
+                if (htmlTag.Equals("html"))
+                {
+                    htmlCtl.Attributes.Add("lang", CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);                    
+                }
+            }
+        }
+
+ 
         /// <summary>
         /// Add custom headers to the HTTP Response.
         /// List of header names and values loaded from web.config in nci/web/httpHeaders/headers
