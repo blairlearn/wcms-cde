@@ -9,12 +9,14 @@
     runat="server" />
 <!-- END Row Title -->
 <!-- BEGIN GUIDE CARDS ROW -->
-<NCI:TemplateSlot
-    id="nvcgSlLayoutGuideB"
-    CssClass="row guide-card"
-    AdditionalSnippetClasses="equalheight medium-4 columns card gutter"
-    runat="server"
-    data-match-height="" />
+<div id="accordion">
+    <NCI:TemplateSlot
+        id="nvcgSlLayoutGuideB"
+        CssClass="row guide-card"
+        AdditionalSnippetClasses="equalheight medium-4 columns card gutter"
+        runat="server"
+        data-match-height="" />
+</div>
 <!-- END GUIDE CARDS ROW -->
 <!-- BEGIN FEATURE SECONDARY CARDS ROW -->
 <NCI:TemplateSlot
