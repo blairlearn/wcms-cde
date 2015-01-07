@@ -99,15 +99,17 @@ namespace CancerGov.Web.UI.SnippetControls
 
 
 
-            if (path.Contains(item.SectionPath))
-            {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
-            }
+           
 
 
 
             //these are links and what is displayed that are generated html
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item-title");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
+            if (path.Contains(item.SectionPath))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
+            }
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
             writer.AddAttribute(HtmlTextWriterAttribute.Id, item.PathName);
             writer.RenderBeginTag(HtmlTextWriterTag.A);
@@ -193,7 +195,12 @@ namespace CancerGov.Web.UI.SnippetControls
 
 
             //these are links and what is displayed that are generated html
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item-title");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
+            if (path.Contains(item.SectionPath))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
+            }
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
             writer.AddAttribute(HtmlTextWriterAttribute.Id, item.PathName);
             writer.RenderBeginTag(HtmlTextWriterTag.A);
