@@ -20,7 +20,7 @@ namespace CancerGov.Web.UI.SnippetControls
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:CGovMainNavControl runat=server></{0}:CGovMainNavControl>")]
     public class CGovMainNavControl : SnippetControl
-    {
+    { 
         //My Nav Here
         NavigationDisplayInfo _navInfo = null;
 
@@ -107,20 +107,35 @@ namespace CancerGov.Web.UI.SnippetControls
 
 
             //these are links and what is displayed that are generated html
-
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
             writer.AddAttribute(HtmlTextWriterAttribute.Id, item.PathName);
             writer.RenderBeginTag(HtmlTextWriterTag.A);
             writer.Write(item.Title);
-            writer.RenderEndTag();//end A
-            writer.RenderEndTag();//end Div
+            writer.RenderEndTag();//end A\
+
+            
+            
+          
 
             //this checks to see if there are child items for the current nav itemand if there is it goes on to render the children
             //this logic came from the CGovSectionNav Control but this may be needed in the future for evolution if there are drop down menus
             if (item.ChildItems.Length > 0)
             {
+                writer.AddAttribute("aria-expanded", "false");
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "toggle");
+                writer.AddAttribute(HtmlTextWriterAttribute.Type, "button");
+                writer.RenderBeginTag(HtmlTextWriterTag.Button);
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "hidden");
+                writer.RenderBeginTag(HtmlTextWriterTag.P);
+                writer.Write("Open child elements");
+                writer.RenderEndTag();//p tag
+                writer.RenderEndTag();//button
+                writer.RenderEndTag();//div if child items
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "mobile-item");
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
+
                 foreach (NavigationItem subitem in item.ChildItems)
                 {
 
@@ -128,6 +143,10 @@ namespace CancerGov.Web.UI.SnippetControls
 
                 }
                 writer.RenderEndTag();//End UL
+            }
+            else
+            {
+                writer.RenderEndTag();//div if no child items
             }
 
             writer.AddAttribute("aria-expanded", "false");
