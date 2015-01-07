@@ -3,12 +3,12 @@
 <div class="content-bottom-slot">
     <div class="row multimedia">
         <NCI:TemplateSlot
-            id="TemplateSlot1"
+            id="nvcgSlLayoutMultimediaA"
             CssClass="equalheight large-8 columns card"
             runat="server"
             data-match-height="" />
         <NCI:TemplateSlot
-            id="TemplateSlot2"
+            id="nvcgSlLayoutFeatureB"
             CssClass="equalheight large-4 columns card"
             runat="server"
             data-match-height="" />
