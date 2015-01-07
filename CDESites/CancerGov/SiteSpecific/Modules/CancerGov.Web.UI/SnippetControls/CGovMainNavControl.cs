@@ -140,9 +140,13 @@ namespace CancerGov.Web.UI.SnippetControls
 
                 foreach (NavigationItem subitem in item.ChildItems)
                 {
-
+                    if (subitem.ChildItems.Length > 0)
+                    {
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children");
+                    }
+                    writer.RenderBeginTag(HtmlTextWriterTag.Li);
                     RenderSubItem(subitem, writer, itemNum++, numItems);
-
+                    writer.RenderEndTag();
                 }
                 writer.RenderEndTag();//End UL
             }
