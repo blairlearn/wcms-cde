@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SubLayoutControl" %>
 <!-- BEGIN MULTIMEDIA, SECONDARY FEATURE ROW -->
-<div class="content-bottom-slot">
+<div class="multimedia-slot">
     <div class="row multimedia">
         <NCI:TemplateSlot
             id="nvcgSlLayoutMultimediaA"
