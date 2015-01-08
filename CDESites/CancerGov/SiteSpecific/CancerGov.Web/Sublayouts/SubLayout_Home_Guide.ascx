@@ -8,7 +8,7 @@
         runat="server"
         data-match-height="" />
     <NCI:TemplateSlot
-        id="nvcgSlLayoutGuideA"
+        id="nvcgSlLayoutGuideB"
         CssClass="row guide-card-row"
         AdditionalSnippetClasses="equalheight medium-4 columns card card gutter"
         runat="server"
