@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SubLayoutControl" %>
 <!-- BEGIN CARDS ROW -->
-<div id="accordion" class="row guide-card">
+<div id="accordion">
+    <div class="row guide-card">
         <NCI:TemplateSlot
             id="nvcgSlLayoutGuideA"
             CssClass="equalheight medium-4 columns card featured-card gutter"
@@ -8,8 +9,9 @@
             data-match-height="" />
         <NCI:TemplateSlot
             id="nvcgSlLayoutGuideB"
-            CssClass="equalheight medium-4 columns card card gutter"
+            CssClass="equalheight medium-4 columns card gutter"
             runat="server"
             data-match-height="" />
+    </div>
 </div>
 <!-- END CARDS ROW -->
