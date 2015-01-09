@@ -111,7 +111,7 @@ namespace CancerGov.Web.UI.SnippetControls
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
             }
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
-            writer.AddAttribute(HtmlTextWriterAttribute.Id, item.PathName);
+            //writer.AddAttribute(HtmlTextWriterAttribute.Id, item.PathName);
             writer.RenderBeginTag(HtmlTextWriterTag.A);
             writer.Write(item.Title);
             writer.RenderEndTag();//end A\
