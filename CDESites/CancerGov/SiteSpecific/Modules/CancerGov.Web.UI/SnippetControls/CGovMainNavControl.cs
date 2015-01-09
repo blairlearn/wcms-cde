@@ -129,7 +129,7 @@ namespace CancerGov.Web.UI.SnippetControls
                 writer.AddAttribute(HtmlTextWriterAttribute.Type, "button");
                 writer.RenderBeginTag(HtmlTextWriterTag.Button);
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "hidden");
-                writer.RenderBeginTag(HtmlTextWriterTag.P);
+                writer.RenderBeginTag(HtmlTextWriterTag.Span);
                 writer.Write("Open child elements");
                 writer.RenderEndTag();//p tag
                 writer.RenderEndTag();//button
@@ -206,7 +206,7 @@ namespace CancerGov.Web.UI.SnippetControls
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
             }
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
-            writer.AddAttribute(HtmlTextWriterAttribute.Id, item.PathName);
+            //writer.AddAttribute(HtmlTextWriterAttribute.Id, item.PathName);
             writer.RenderBeginTag(HtmlTextWriterTag.A);
             writer.Write(item.Title);
             writer.RenderEndTag();//end A\
