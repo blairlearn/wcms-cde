@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SubLayoutControl" %>
 <!-- BEGIN CARDS ROW -->
-<div id="accordion">
+<div class="accordion">
     <div class="row guide-card">
         <NCI:TemplateSlot
             id="nvcgSlLayoutGuideA"

@@ -13,7 +13,7 @@
 </div>
 <!-- END Row Title -->
 <!-- BEGIN GUIDE CARDS ROW -->
-<div id="accordion">
+<div class="accordion">
     <NCI:TemplateSlot
         id="nvcgSlLayoutGuideB"
         CssClass="row guide-card"
