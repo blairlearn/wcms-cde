@@ -1,14 +1,16 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SubLayoutControl" %>
 <!-- BEGIN Row Title -->
-<h2>
-    <NCI:CDEField
-        Scope="Snippet"
-        FieldName="sublayout_title"
-        id="CDEField1"
-        CssClass="row collapse"
-        AdditionalSnippetClasses="large-12 columns"
-        runat="server" />
-</h2>
+<div class="row collapse">
+    <div class="large-12 columns">
+        <h2>
+            <NCI:CDEField
+                Scope="Snippet"
+                FieldName="sublayout_title"
+                id="CDEField1"
+                runat="server" />
+        </h2>
+    </div>
+</div>
 <!-- END Row Title -->
 <!-- BEGIN GUIDE CARDS ROW -->
 <div id="accordion">
