@@ -78,7 +78,7 @@ namespace NCI.Web.CDE
             }
 
             //creates the navigation item based on the nodes above
-            NavigationItem result = new NavigationItem(titleNode.InnerText, urlNode.InnerText, sectionPathNode.InnerText, megaMenuNode.InnerText, pathName.InnerText);
+            NavigationItem result = new NavigationItem(titleNode.InnerText, urlNode.InnerText, sectionPathNode.InnerText, megaMenuNode.InnerXml, pathName.InnerText);
 
             //if there are children of a node it gets set here
             XmlNodeList Children = node.SelectNodes("./NavItems/NavItem");
