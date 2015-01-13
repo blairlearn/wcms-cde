@@ -82,13 +82,14 @@ namespace NCI.Web.CDE.UI.WebControls
 
             if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("TranslationUrls").ToString()))
             {
+                writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                 foreach (LanguageToggle lang in _itemsCollection[PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language")].LangsCollection)
                 {
                     if (PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys.Length < 1)
                     {
                         if (!String.IsNullOrEmpty(lang.Url))
                         {
-                            writer.Write("&nbsp;&nbsp;&nbsp;");
+                            writer.RenderBeginTag(HtmlTextWriterTag.Li);
                             if (!string.IsNullOrEmpty(lang.OnClick.Trim()))
                             {
                                 writer.AddAttribute(HtmlTextWriterAttribute.Onclick, lang.OnClick);
@@ -96,7 +97,8 @@ namespace NCI.Web.CDE.UI.WebControls
                             writer.AddAttribute(HtmlTextWriterAttribute.Href, lang.Url);
                             writer.RenderBeginTag(HtmlTextWriterTag.A);
                             writer.Write(lang.Title);
-                            writer.RenderEndTag();
+                            writer.RenderEndTag(); //</a>
+                            writer.RenderEndTag(); //</li>
                         }
                     }
 
@@ -104,7 +106,7 @@ namespace NCI.Web.CDE.UI.WebControls
                     {
                         if ((lang.Locale == "en-us" || lang.Locale == "es-us")&& String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(lang.Locale).ToString()))
                         {
-                            writer.Write("&nbsp;&nbsp;&nbsp;");
+                            writer.RenderBeginTag(HtmlTextWriterTag.Li);
                             if (!string.IsNullOrEmpty(lang.OnClick.Trim()))
                             {
                                 writer.AddAttribute(HtmlTextWriterAttribute.Onclick, lang.OnClick);
@@ -112,12 +114,13 @@ namespace NCI.Web.CDE.UI.WebControls
                             writer.AddAttribute(HtmlTextWriterAttribute.Href, lang.Url);
                             writer.RenderBeginTag(HtmlTextWriterTag.A);
                             writer.Write(lang.Title);
-                            writer.RenderEndTag();
+                            writer.RenderEndTag(); //</a>
+                            writer.RenderEndTag(); //</li>
                         }
 
                         if (lang.Locale == key)
                         {
-                            writer.Write("&nbsp;&nbsp;&nbsp;");
+                            writer.RenderBeginTag(HtmlTextWriterTag.Li);
                             if (!string.IsNullOrEmpty(lang.OnClick.Trim()))
                             {
                                 writer.AddAttribute(HtmlTextWriterAttribute.Onclick, lang.OnClick);
@@ -138,10 +141,12 @@ namespace NCI.Web.CDE.UI.WebControls
                             }
                             writer.RenderBeginTag(HtmlTextWriterTag.A);
                             writer.Write(lang.Title);
-                            writer.RenderEndTag();
+                            writer.RenderEndTag(); //</a>
+                            writer.RenderEndTag(); //</li>
                         }
                     } // foreach translation key
                 } // foreach template language toggle item
+                writer.RenderEndTag();
             } // if translation keys exist 
         } // RenderContents()
 
