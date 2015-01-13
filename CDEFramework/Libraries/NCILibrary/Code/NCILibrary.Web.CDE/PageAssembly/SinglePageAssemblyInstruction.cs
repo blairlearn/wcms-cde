@@ -382,6 +382,14 @@ namespace NCI.Web.CDE
                         keysList.Add("desktopurl");
                     }
                 }
+                // TODO: un-hardcode NVCG value for font resizer
+                if (PageTemplateName != null)
+                {
+                    if (!string.IsNullOrEmpty(PageTemplateName.Trim()) && PageTemplateName.Contains("NVCG"))
+                    {
+                        keysList.Add("fontResize");
+                    }
+                }
 
                 if (SocialMetadata.IsCommentingAvailable != null)
                 {
@@ -717,6 +725,12 @@ namespace NCI.Web.CDE
                 {
                     url.UriStem += "/print";
                 }
+            });
+
+            AddUrlFilter("fontResize", (name, url) =>
+            {
+                url.SetUrl(GetUrl("CurrentURL").ToString());
+                url.UriStem += "#";
             });
 
             AddUrlFilter("Email", (name, url) =>
