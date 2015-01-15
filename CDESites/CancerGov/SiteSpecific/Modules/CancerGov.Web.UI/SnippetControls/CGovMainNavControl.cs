@@ -55,6 +55,7 @@ namespace CancerGov.Web.UI.SnippetControls
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "navigation");
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
+                writer.Write(_navInfo.displayParams.MobileNav);
                 writer.AddAttribute(HtmlTextWriterAttribute.Id, "mega-nav");
                 writer.AddAttribute("role", "navigation");
                 writer.RenderBeginTag("nav");
