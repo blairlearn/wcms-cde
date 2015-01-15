@@ -37,7 +37,7 @@ namespace NCI.Web.CDE
                 throw new Exception("Error: MobileNav is null");
             }
 
-            NavigationDisplayParams result = new NavigationDisplayParams(mobileNav.InnerText);
+            NavigationDisplayParams result = new NavigationDisplayParams(mobileNav.InnerXml);
             
             
             return result;
