@@ -53,7 +53,7 @@ namespace CancerGov.Web.UI.SnippetControls
             //checks to make sure we have something to render and that has children
             if (root != null && root.ChildItems.Length > 0)
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "navigation mobile-menu-bar");
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "navigation");
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
                 writer.AddAttribute(HtmlTextWriterAttribute.Id, "mega-nav");
                 writer.AddAttribute("role", "navigation");
