@@ -149,8 +149,9 @@ namespace CancerGov.Web.UI.SnippetControls
             // then whether the section path contains the page url and then renders it if it does
             if (item.ChildItems.Length > 0)
             {
-                if (path.Contains(item.SectionPath))
-                {
+                //Taken out because of missing child items when rendering section nav on NVCG
+                //if (path.Contains(item.SectionPath))
+                
                     level++;
                     writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                     foreach (NavigationItem subitem in item.ChildItems)
@@ -159,7 +160,7 @@ namespace CancerGov.Web.UI.SnippetControls
                     }
                     writer.RenderEndTag();//end ul
                     level--;
-                }
+                
             }
             writer.RenderEndTag();//end li
 
