@@ -150,11 +150,16 @@ namespace CancerGov.Web.UI.SnippetControls
             if (item.ChildItems.Length > 0)
             {
                 //Taken out because of missing child items when rendering section nav on NVCG
-                //if (path.Contains(item.SectionPath))
-                
-                    level++;
+                if (path.Contains(item.SectionPath))
+                {
+                    writer.AddAttribute(HtmlTextWriterAttribute.Style, "display:block;");
+                }
+                else
+                {
                     writer.AddAttribute(HtmlTextWriterAttribute.Style, "display:none;");
+                }
                     writer.RenderBeginTag(HtmlTextWriterTag.Ul);
+                    level++;
                     foreach (NavigationItem subitem in item.ChildItems)
                     {
                         RenderNavItem(subitem, writer);
