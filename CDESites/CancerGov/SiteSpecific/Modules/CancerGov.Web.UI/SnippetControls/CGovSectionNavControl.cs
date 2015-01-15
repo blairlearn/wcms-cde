@@ -153,6 +153,7 @@ namespace CancerGov.Web.UI.SnippetControls
                 //if (path.Contains(item.SectionPath))
                 
                     level++;
+                    writer.AddAttribute(HtmlTextWriterAttribute.Style, "display:none;");
                     writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                     foreach (NavigationItem subitem in item.ChildItems)
                     {
