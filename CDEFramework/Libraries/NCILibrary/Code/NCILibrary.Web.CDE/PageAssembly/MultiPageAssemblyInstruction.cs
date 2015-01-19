@@ -512,13 +512,14 @@ namespace NCI.Web.CDE
 
                 if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.ViewAll)
                     keysList.Add("viewall");
-
                 if (AlternateContentVersions.IsShareBookmarkAvailable)
                     keysList.Add("bookmarkshare");
                 if (AlternateContentVersions.IsEmailAvailable)
                     keysList.Add("email");
                 if (AlternateContentVersions.IsMobileShareAvailable)
                     keysList.Add("mobileShare");
+                if (AlternateContentVersions.IsFontResizeAvailable)
+                    keysList.Add("fontResize");
                 if (AlternateContentVersions.IsPublicArchive)
                     keysList.Add("publicArchive");
                 if (AlternateContentVersions.IsPublicUse)
@@ -876,6 +877,13 @@ namespace NCI.Web.CDE
                 PrettyUrl = _pages._Pages[pageIndex].PrettyUrl;
                 url.SetUrl(PrettyUrl);
             });
+			
+			AddUrlFilter("fontResize", (name, url) =>
+            {
+                url.SetUrl(GetUrl("CurrentURL").ToString());
+                url.UriStem += "#";
+            });
+
 
             #region MobileURL
             // Mobule URL filter 

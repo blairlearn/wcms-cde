@@ -358,6 +358,8 @@ namespace NCI.Web.CDE
                     keysList.Add("publicArchive");
                 if (AlternateContentVersions.IsPublicUse)
                     keysList.Add("publicUse");
+                if (AlternateContentVersions.IsFontResizeAvailable)
+                    keysList.Add("fontResize");				
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
                 //Set Alt Language URL
@@ -382,15 +384,6 @@ namespace NCI.Web.CDE
                         keysList.Add("desktopurl");
                     }
                 }
-                // TODO: un-hardcode NVCG value for font resizer
-                if (PageTemplateName != null)
-                {
-                    if (!string.IsNullOrEmpty(PageTemplateName.Trim()) && PageTemplateName.Contains("NVCG"))
-                    {
-                        keysList.Add("fontResize");
-                    }
-                }
-
                 if (SocialMetadata.IsCommentingAvailable != null)
                 {
                     keysList.Add("commentsavailable");

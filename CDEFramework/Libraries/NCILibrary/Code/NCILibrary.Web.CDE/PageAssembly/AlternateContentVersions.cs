@@ -51,6 +51,12 @@ namespace NCI.Web.CDE
         public bool IsShareBookmarkAvailable { get; set; }
 
         /// <summary>
+        /// If true, displays font resizer on Page Options.
+        /// </summary>		
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool IsFontResizeAvailable { get; set; }
+
+        /// <summary>
         /// If true displays the mobile share "add this" box.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
