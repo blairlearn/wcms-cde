@@ -51,9 +51,8 @@ namespace CancerGov.Web.UI.SnippetControls
                 if (_navItem.rootNavItem != null)
                 {
                     //generates the start of the html by creating a div with the class to shade the area
-                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "fixedtotop-section section-nav");
-                    writer.RenderBeginTag(HtmlTextWriterTag.Div);
                     writer.AddAttribute(HtmlTextWriterAttribute.Class, "section-nav");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Div);
                     writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                     writer.AddAttribute(HtmlTextWriterAttribute.Class, "level-" + level + " has-children");
                     writer.RenderBeginTag(HtmlTextWriterTag.Li);
@@ -106,16 +105,19 @@ namespace CancerGov.Web.UI.SnippetControls
             String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
             String liClass = "";
             String divClass = "";
+            String ariaClass = "false";
 
             // Checks the section path against the page url and determines if it needs to be selected 
             if (path.Equals(item.SectionPath))
             {
                 liClass = " contains-current";
                 divClass = "current-page";
+                ariaClass = "true";
             }
             else if (path.Contains(item.SectionPath))
             {
                 liClass = " contains-current";
+                ariaClass = "true";
             }
 
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "level-" + level + liClass);
@@ -133,7 +135,7 @@ namespace CancerGov.Web.UI.SnippetControls
             //outputs the button for expanding section nav if there are items to be shown
             if (item.ChildItems.Length > 0)
             {
-                writer.AddAttribute("aria-expanded", "false");
+                writer.AddAttribute("aria-expanded", ariaClass);
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "toggle");
                 writer.AddAttribute(HtmlTextWriterAttribute.Type, "button");
                 writer.RenderBeginTag(HtmlTextWriterTag.Button);
