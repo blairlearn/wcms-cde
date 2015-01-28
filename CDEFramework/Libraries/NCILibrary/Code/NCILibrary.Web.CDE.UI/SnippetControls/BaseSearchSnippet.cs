@@ -155,7 +155,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     this.PageInstruction.AddUrlFilter("Print", (name, url) =>
                     {
 					
-						if (UrlFilterDelegates.ContainsKey("keyword") == false)
+						if (QueryParameters.ContainsKey("keyword") == false)
 						{
 							url.QueryParameters.Add("keyword", keyWord);
 						}
