@@ -154,7 +154,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     this.PageInstruction.AddUrlFilter("Print", (name, url) =>
                     {
-                        url.QueryParameters.Add("keyword", keyWord);
+					
+						if (UrlFilterDelegates.ContainsKey("keyword") == false)
+						{
+							url.QueryParameters.Add("keyword", keyWord);
+						}
                         if (!((dynamicSearch.StartDate == "01/01/0001") || (dynamicSearch.EndDate == "12/31/9999")))
                         {
                             url.QueryParameters.Add("startmonth", startDate.Month.ToString());
