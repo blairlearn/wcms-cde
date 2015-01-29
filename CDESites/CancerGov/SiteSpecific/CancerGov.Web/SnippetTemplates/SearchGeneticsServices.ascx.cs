@@ -22,16 +22,7 @@ namespace CancerGov.Web.SnippetTemplates
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web)
-            {
-                this.textClear.Visible = false;
-                this.textSubmit.Visible = false;
-            }
-            else
-            {
-                this.clearBtn.Visible = false;
-                this.searchBtn.Visible = false;
-            }
+            
             GeneticProfessional gp = new GeneticProfessional();
             DataSet dbSet;
             dbSet = gp.GetSearchFormMasterData();
@@ -71,20 +62,12 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (WebAnalyticsOptions.IsEnabled)
             {
-
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.PageName, wbField =>
                 {
                     wbField.Value = ConfigurationSettings.AppSettings["HostName"] + SearchPageInfo.SearchResultsPrettyUrl;
                 });
 
             }
-            else
-            {
-                litOnSubmitHandlerAdder.Visible = false;
-            }
-
-            NCI.Web.UI.WebControls.JSManager.AddExternalScript(this.Page, "/scripts/popEvents.js");
-            PrototypeManager.Load(this.Page);
         }
     }
 }
