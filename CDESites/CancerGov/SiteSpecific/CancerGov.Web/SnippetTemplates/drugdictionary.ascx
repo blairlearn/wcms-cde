@@ -133,7 +133,6 @@
                 <div class="result">
                     <dl class="dictionary-list">
                         <dt>
-                            <h2>
                                 <dfn>
                                     <a name="<%#DataBinder.Eval(Container.DataItem, "PreferredName")%>"></a><a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "TermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
                                         <%#HiLite(DataBinder.Eval(Container.DataItem, "PreferredName"))%></a> &nbsp;
@@ -141,7 +140,6 @@
                                         <%#AddBrackets(DataBinder.Eval(Container.DataItem, "OtherName"))%>
                                     </span>
                                 </dfn>
-                            </h2>
                         </dt>
                         <dd class="definition">
                                     <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
