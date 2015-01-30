@@ -690,6 +690,7 @@
     <Content Include="SnippetTemplates\PublicUseBanner.ascx" />
     <Content Include="SnippetTemplates\ResultsGeneticsServices.ascx" />
     <Content Include="SnippetTemplates\SearchGeneticsServices.ascx" />
+    <Content Include="SnippetTemplates\SyndicationNotice.ascx" />
     <Content Include="SnippetTemplates\TableofLinks.ascx" />
     <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
     <Content Include="SnippetTemplates\BlogPostNewerOlder.ascx" />

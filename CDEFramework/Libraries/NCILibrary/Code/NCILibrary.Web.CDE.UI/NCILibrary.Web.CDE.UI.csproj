@@ -138,6 +138,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetControls\SublayoutInfo.cs" />
+    <Compile Include="SnippetControls\SyndicationNotice.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="WebAnalytics\WebAnalyticsControl.cs" />
   </ItemGroup>
   <ItemGroup>
