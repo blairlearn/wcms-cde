@@ -29,49 +29,46 @@
     you entered in the search box.
 </div>
 
-<asp:Panel ID="pnlDrugSearch2" runat="server" CssClass="pnlDrugSearch">
-    <div class="drug-dictionary-box">
-        <div class="row1">
+<asp:Panel ID="pnlDrugSearch2" runat="server" CssClass="dictionary-search">
+
             <form id="drugForm" runat="server">
-            
-                <!-- Table needed for proper functing of asp:AutoComplete control -->
-                <table width="100%">
-                <tr>
-                <td>
-                <label for="AutoComplete1" class="search-label">Search for</label> 
-                <CGov:AutoComplete CssClass="drug-dictionary" ID="AutoComplete1" Name="AutoComplete1" 
-                   runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" MinWidth="384" />
-                <asp:Label ID="lblAccessSearch" CssClass="hidden" runat="server" Text="Search text box"
-                    AssociatedControlID="AutoComplete1"></asp:Label>
-                <asp:ImageButton ID="btnGo" CssClass="go-button" Name="btnGo" runat="server" ImageUrl="/images/red_go_button.gif" 
-                    AlternateText="Search" ToolTip="Search" />
-                
-                <asp:RadioButton ID="radioStarts" CssClass="starts-with-radio" runat="server" Checked="True" GroupName="sgroup" />
-                <asp:Label ID="lblStartsWith" CssClass="starts-with-label" runat="server" Text="Starts with"
-                    AssociatedControlID="radioStarts"></asp:Label>
-                <asp:RadioButton  Name="radioContains" CssClass="contains-radio" ID="radioContains" runat="server" GroupName="sgroup" />
-                <asp:Label ID="lblContains" CssClass="contains-label" runat="server" Text="Contains" 
-                    AssociatedControlID="radioContains"></asp:Label>  
+                <div class="row">
+                    <!-- Table needed for proper functing of asp:AutoComplete control -->
+                    <div class="small-6 columns">
+                        <CGov:AutoComplete CssClass="drug-dictionary" ID="AutoComplete1" Name="AutoComplete1" 
+                           runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" aria-label="Enter keywords or phrases" aria-autocomplete="list" MinWidth="384" placeholder="Enter keywords or phrases" />
+                        <!-- <asp:Label ID="lblAccessSearch" CssClass="hidden" runat="server" Text="Search text box"
+                           AssociatedControlID="AutoComplete1"></asp:Label> -->
+                    </div>
                     
-                <a  class="question" href="javascript:dynPopWindow('/Common/PopUps/popHelp.aspx','popup','width=500,height=700,scrollbars=1,resizable=1,menubar=0,location=0,status=0,toolbar=0')">
-                    <img src="/images/drug-dictionary-help.gif" width="13" height="13" alt="" border="0" >
-                </a> 
-                &nbsp;&nbsp;</td>
-                </tr>
-                </table>
-                        
+                    <div class="small-2 columns">
+                        <asp:ImageButton ID="btnGo" CssClass="go-button" Name="btnGo" runat="server" ImageUrl="/images/red_go_button.gif" 
+                            AlternateText="Search" ToolTip="Search" />
+                    </div>
+                    
+                    <div class="small-2 columns">
+                        <asp:RadioButton ID="radioStarts" CssClass="starts-with-radio" runat="server" Checked="True" GroupName="sgroup" />
+                        <asp:Label ID="lblStartsWith" CssClass="starts-with-label" runat="server" Text="Starts with"
+                            AssociatedControlID="radioStarts"></asp:Label>
+                    </div>
+                    <div class="small-2 columns">
+                        <asp:RadioButton  Name="radioContains" CssClass="contains-radio" ID="radioContains" runat="server" GroupName="sgroup" />
+                        <asp:Label ID="lblContains" CssClass="contains-label" runat="server" Text="Contains" 
+                            AssociatedControlID="radioContains"></asp:Label> 
+                    </div>
+                    <a  class="question" href="javascript:dynPopWindow('/Common/PopUps/popHelp.aspx','popup','width=500,height=700,scrollbars=1,resizable=1,menubar=0,location=0,status=0,toolbar=0')">
+                        <img src="/images/drug-dictionary-help.gif" width="13" height="13" alt="" border="0" >
+                    </a> 
+                </div>
             </form>
-        </div>
-
-        <div class="row2">
-            <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
-             NumericItems="true" ShowAll="true" />
-       </div>
-
-        
-    </div>
+       
 </asp:Panel>
 
+
+<div class="row2">
+            <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
+             NumericItems="true" ShowAll="true" />
+</div>
 
 <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
     <asp:View ID="ViewDefault" runat="server" EnableViewState="false">
@@ -119,35 +116,38 @@
     </asp:View>
     <asp:View ID="ViewResultList" runat="server" EnableViewState="false">
         <!-- Number of results -->
-        <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
+        
         <asp:Panel ID="numResDiv" runat="server">
             <span class="page-title">
                 <asp:Label ID="lblNumResults" CssClass="page-title" runat="server"></asp:Label>
                 <asp:Label ID="lblResultsFor" CssClass="page-title" Text="result found for:" runat="server"></asp:Label>
-            </span>&nbsp;&nbsp; &nbsp;&nbsp;
-            <asp:Label ID="lblWord" CssClass="search-result" runat="server"></asp:Label><br />
-            <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
-            <img src="/images/gray_spacer.gif" width="571" height="1" alt="" border="0" /><br />
-            <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
+            </span>
+            <asp:Label ID="lblWord" CssClass="search-result" runat="server"></asp:Label>
+            
         </asp:Panel>
         <asp:ListView ID="resultListView" runat="server">
             <LayoutTemplate>
                 <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
             </LayoutTemplate>
             <ItemTemplate>
-                <a name="<%#DataBinder.Eval(Container.DataItem, "PreferredName")%>"></a><a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "TermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
-                    <%#HiLite(DataBinder.Eval(Container.DataItem, "PreferredName"))%></a> &nbsp;
-                <span class="dictionary-partial-match-n">
-                    <%#AddBrackets(DataBinder.Eval(Container.DataItem, "OtherName"))%>
-                </span>
-                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                    <tr>
-                        <td width="100%" align="left">
-                            <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
-                        </td>
-                    </tr>
-                </table>
-                <br>
+                <div class="result">
+                    <dl class="dictionary-list">
+                        <dt>
+                            <h2>
+                                <dfn>
+                                    <a name="<%#DataBinder.Eval(Container.DataItem, "PreferredName")%>"></a><a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "TermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
+                                        <%#HiLite(DataBinder.Eval(Container.DataItem, "PreferredName"))%></a> &nbsp;
+                                    <span class="dictionary-partial-match-n">
+                                        <%#AddBrackets(DataBinder.Eval(Container.DataItem, "OtherName"))%>
+                                    </span>
+                                </dfn>
+                            </h2>
+                        </dt>
+                        <dd class="definition">
+                                    <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
+                        </dd>
+                    </dl>
+                </div>
             </ItemTemplate>
             <EmptyDataTemplate>
                 <asp:Panel ID="pnlNoData" runat="server">
@@ -166,20 +166,19 @@
         </asp:ListView>
     </asp:View>
     <asp:View ID="ViewDefinition" runat="server" EnableViewState="false">
-        <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
+        
         <!-- Term and def -->
         <b>
-            <asp:Label ID="lblTermName" runat="server"></asp:Label></b>&nbsp;
+            <asp:Label ID="lblTermName" runat="server"></asp:Label></b>
         <asp:ImageButton ID="ibtnPatientInfo" CssClass="btn-patient-info" ImageUrl="/images/btn-patient-info.gif"
             runat="server" Visible="false" AlternateText="Patient Information" ToolTip="Patient Information"
             ImageAlign="AbsMiddle" Height="20" Width="139" />
         <asp:HyperLink ID="hlPatientInfo" runat="server" Visible="false">
                 <img src="/images/btn-patient-info.gif" alt="Patient Information" title="Patient Information" width="139" height="20" hspace="12" border="0"  align="absmiddle" />
         </asp:HyperLink>
-        <br />
+
         <asp:Literal ID="litDefHtml" runat="server"></asp:Literal>
-        <br />
-        <img src="/images/spacer.gif" width="10" height="22" alt="" border="0" />
+        
         <asp:Literal ID="litOtherNames" runat="server"></asp:Literal>
         <!-- <asp:Panel ID="pnlDefImages" runat="server">
                 <img src="/images/spacer.gif" width="10" height="25" alt="" border="0"/><br/>
