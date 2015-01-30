@@ -42,18 +42,18 @@
                     </div>
                     
                     <div class="small-2 columns">
-                        <asp:ImageButton ID="btnGo" CssClass="go-button" Name="btnGo" runat="server" ImageUrl="/images/red_go_button.gif" 
-                            AlternateText="Search" ToolTip="Search" />
+                        <asp:Button ID="btnGo" CssClass="submit button postfix" Name="btnGo" runat="server" ToolTip="Search"
+                            Text="Search" />
                     </div>
                     
                     <div class="small-2 columns">
-                        <asp:RadioButton ID="radioStarts" CssClass="starts-with-radio" runat="server" Checked="True" GroupName="sgroup" />
-                        <asp:Label ID="lblStartsWith" CssClass="starts-with-label" runat="server" Text="Starts with"
+                        <asp:RadioButton ID="radioStarts" CssClass="radio" runat="server" Checked="True" GroupName="sgroup" />
+                        <asp:Label ID="lblStartsWith" runat="server" Text="Starts with"
                             AssociatedControlID="radioStarts"></asp:Label>
                     </div>
                     <div class="small-2 columns">
-                        <asp:RadioButton  Name="radioContains" CssClass="contains-radio" ID="radioContains" runat="server" GroupName="sgroup" />
-                        <asp:Label ID="lblContains" CssClass="contains-label" runat="server" Text="Contains" 
+                        <asp:RadioButton  Name="radioContains" CssClass="radio" ID="radioContains" runat="server" GroupName="sgroup" />
+                        <asp:Label ID="lblContains" runat="server" Text="Contains" 
                             AssociatedControlID="radioContains"></asp:Label> 
                     </div>
                     <a  class="question" href="javascript:dynPopWindow('/Common/PopUps/popHelp.aspx','popup','width=500,height=700,scrollbars=1,resizable=1,menubar=0,location=0,status=0,toolbar=0')">
@@ -65,7 +65,7 @@
 </asp:Panel>
 
 
-<div class="row2">
+<div class="az-list">
             <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
              NumericItems="true" ShowAll="true" />
 </div>
