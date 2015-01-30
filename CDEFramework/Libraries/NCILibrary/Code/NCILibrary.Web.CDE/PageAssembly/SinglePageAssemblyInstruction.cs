@@ -359,7 +359,9 @@ namespace NCI.Web.CDE
                 if (AlternateContentVersions.IsPublicUse)
                     keysList.Add("publicUse");
                 if (AlternateContentVersions.IsFontResizeAvailable)
-                    keysList.Add("fontResize");				
+                    keysList.Add("fontResize");
+                if (!string.IsNullOrEmpty(AlternateContentVersions.SyndicationURL))
+                    keysList.Add("syndicated");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
                 //Set Alt Language URL
@@ -729,6 +731,16 @@ namespace NCI.Web.CDE
             AddUrlFilter("Email", (name, url) =>
             {
                 url.SetUrl(GetEmailUrl());
+            });
+
+            AddUrlFilter("syndicated", (name, url) =>
+            {
+                string syndicationUrl = string.Empty;
+                if (!string.IsNullOrEmpty(AlternateContentVersions.SyndicationURL))
+                {
+                    syndicationUrl = AlternateContentVersions.SyndicationURL.Trim();
+                }
+                url.SetUrl(syndicationUrl, true);
             });
 
             AddUrlFilter("free", (name, url) =>

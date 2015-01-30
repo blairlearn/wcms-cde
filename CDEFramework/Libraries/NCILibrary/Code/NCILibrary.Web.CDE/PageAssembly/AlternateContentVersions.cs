@@ -78,6 +78,12 @@ namespace NCI.Web.CDE
         public bool AltLanguage { get; set; }
 
         /// <summary>
+        /// If true displays the displays the Syndication notice.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string SyndicationURL { get; set; }
+
+        /// <summary>
         /// If true displays the order copy Page Option
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]

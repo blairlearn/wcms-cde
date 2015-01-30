@@ -524,6 +524,8 @@ namespace NCI.Web.CDE
                     keysList.Add("publicArchive");
                 if (AlternateContentVersions.IsPublicUse)
                     keysList.Add("publicUse");
+                if (!string.IsNullOrEmpty(AlternateContentVersions.SyndicationURL))
+                    keysList.Add("syndicated");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
 
@@ -884,6 +886,15 @@ namespace NCI.Web.CDE
                 url.UriStem += "#";
             });
 
+            AddUrlFilter("syndicated", (name, url) =>
+            {
+                string syndicationUrl = string.Empty;
+                if (!string.IsNullOrEmpty(AlternateContentVersions.SyndicationURL))
+                {
+                    syndicationUrl = AlternateContentVersions.SyndicationURL.Trim();
+                }
+                url.SetUrl(syndicationUrl, true);
+            });
 
             #region MobileURL
             // Mobule URL filter 
