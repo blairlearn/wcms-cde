@@ -248,7 +248,7 @@ namespace Www.Templates
             else
             {
                 litBackToTop.Visible = true;
-                litBackToTop.Text = "<a href=\"#top\" class=\"backtotop-link\"><img src=\"/images/backtotop_red.gif\" alt=\"Back to Top\" border=\"0\">Back to Top</a>";
+                litBackToTop.Text = "";
 
             }
         }
