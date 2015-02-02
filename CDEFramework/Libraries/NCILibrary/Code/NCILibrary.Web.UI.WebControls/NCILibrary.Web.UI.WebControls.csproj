@@ -140,6 +140,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleAtoZList.cs" />
     <Compile Include="SimplePager.cs" />
+    <Compile Include="SimpleUlPager.cs" />
     <Compile Include="TemplatedDataItem.cs" />
     <Compile Include="TemplatedTreeNode.cs" />
     <Compile Include="TemplatedTreeNodeContainer.cs" />
