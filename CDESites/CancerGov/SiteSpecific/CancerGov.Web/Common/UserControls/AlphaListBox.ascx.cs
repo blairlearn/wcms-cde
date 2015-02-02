@@ -152,7 +152,7 @@
             //alphaListItems += "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"98%\">\n";
             //alphaListItems += "	<tbody><tr>\n";
 
-            alphaListItems = "<ul>\n";
+            alphaListItems = "<ul class='horizontal no-bullets'>\n";
 
             if (boxItems == null || boxItems.Length == 0)
             {
