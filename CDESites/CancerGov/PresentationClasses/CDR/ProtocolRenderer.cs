@@ -58,25 +58,30 @@ namespace CancerGov.UI.CDR
 							break;
 
 						case ProtocolSectionTypes.InfoBox : 
-							sbContent.Append("<p>\n");
-							sbContent.Append("<a name=\"StudyIdInfo_");
-							sbContent.Append(pProtocol.FullCdrId);
-							sbContent.Append("\"></a>");
-							sbContent.Append("<span class=\"Protocol-Section-Heading\">Basic Trial Information</span>\n");
-							sbContent.Append("<p>\n");
-
+                            //sbContent.Append("<p>\n");
+                            //sbContent.Append("<a name=\"StudyIdInfo_");
+                            //sbContent.Append(pProtocol.FullCdrId);
+                            //sbContent.Append("\"></a>");
+                            //sbContent.Append("<span class=\"Protocol-Section-Heading\">Basic Trial Information</span>\n");
+                            //sbContent.Append("<p>\n");
+                            sbContent.Append("<h2 id=\"StudyIdInfo_");
+                            sbContent.Append(pProtocol.FullCdrId);
+                            sbContent.Append("\">Basic Trial Information</h2>\n");
 							sbContent.Append(this.RenderInfoBox());
 							break;
 						
 						case ProtocolSectionTypes.StudySites : 
 							if ((pProtocol.Sites != null) && (pProtocol.Sites.SiteTable != null)) {
 								if (!bDrawnTCI) {
-									sbContent.Append("<p>\n");
-									sbContent.Append("<a name=\"ContactInfo_");
-									sbContent.Append(pProtocol.FullCdrId);
-									sbContent.Append("\"></a>");
-									sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
-									sbContent.Append("<p>\n");
+                                    //sbContent.Append("<p>\n");
+                                    //sbContent.Append("<a name=\"ContactInfo_");
+                                    //sbContent.Append(pProtocol.FullCdrId);
+                                    //sbContent.Append("\"></a>");
+                                    //sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
+                                    //sbContent.Append("<p>\n");
+                                    sbContent.Append("<h2 id=\"ContactInfo_");
+                                    sbContent.Append(pProtocol.FullCdrId);
+                                    sbContent.Append("\">Trial Contact Information</h2>\n");
 
 									bDrawnTCI = true;
 								}
@@ -87,12 +92,15 @@ namespace CancerGov.UI.CDR
 						case ProtocolSectionTypes.CTGovLeadOrgs : 
 						case ProtocolSectionTypes.LeadOrgs : 
 							if (!bDrawnTCI) {
-								sbContent.Append("<p>\n");
-								sbContent.Append("<a name=\"ContactInfo_");
-								sbContent.Append(pProtocol.FullCdrId);
-								sbContent.Append("\"></a>");
-								sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
-								sbContent.Append("<p>\n");
+                                //sbContent.Append("<p>\n");
+                                //sbContent.Append("<a name=\"ContactInfo_");
+                                //sbContent.Append(pProtocol.FullCdrId);
+                                //sbContent.Append("\"></a>");
+                                //sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
+                                //sbContent.Append("<p>\n");
+                                sbContent.Append("<h2 id=\"ContactInfo_");
+                                sbContent.Append(pProtocol.FullCdrId);
+                                sbContent.Append("\">Trial Contact Information</h2>\n");
 
 								bDrawnTCI = true;
 							}
@@ -107,12 +115,15 @@ namespace CancerGov.UI.CDR
 							if (pProtocol.Sections.Contains(iSection)) {
 
 								if (!bWroteTrialDesc) {
-									sbContent.Append("<p>\n");
-									sbContent.Append("<a name=\"TrialDescription_");
-									sbContent.Append(pProtocol.FullCdrId);
-									sbContent.Append("\"></a>");
-									sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Description</span>\n");
-									sbContent.Append("<p>\n");	
+                                    //sbContent.Append("<p>\n");
+                                    //sbContent.Append("<a name=\"TrialDescription_");
+                                    //sbContent.Append(pProtocol.FullCdrId);
+                                    //sbContent.Append("\"></a>");
+                                    //sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Description</span>\n");
+                                    //sbContent.Append("<p>\n");
+                                    sbContent.Append("<h2 id=\"TrialDescription_");
+                                    sbContent.Append(pProtocol.FullCdrId);
+                                    sbContent.Append("\">Trial Description</h2>\n");
 									bWroteTrialDesc = true;
 								}
 							
@@ -143,9 +154,9 @@ namespace CancerGov.UI.CDR
 
 			//Draw the title, Everything has to have some title
 		
-			sbContent.Append("<span class=\"Protocol-Title\">");
+			sbContent.Append("<h1>");
 			sbContent.Append(pProtocol.ProtocolTitle);
-			sbContent.Append("</span>\n");
+			sbContent.Append("</h1>\n");
 
 			// for some reason this is drawn in a separate place when it's not a printable version
 			// also, don't show the dates for CTGov Protocols, since they are mostly wrong
@@ -180,7 +191,7 @@ namespace CancerGov.UI.CDR
 				}
 			}
 
-			sbContent.Append("<p>\n"); //<---- note we draw <p> tags after a section has been drawn
+			//sbContent.Append("<p>\n"); //<---- note we draw <p> tags after a section has been drawn
 
 			return sbContent.ToString();
 		}
@@ -193,12 +204,15 @@ namespace CancerGov.UI.CDR
 			//Now for the alternate title... We only show  if we have one.
 			if ((pProtocol.AlternateTitle != null) && (pProtocol.AlternateTitle != "") && (pProtocol.AlternateTitle != pProtocol.ProtocolTitle)) {
 
-				sbContent.Append("<a name=\"AlternateTitle_");
-				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\"></a><span class=\"Protocol-Section-Heading\">Alternate Title</span>\n");
-				sbContent.Append("<p>\n");
+                //sbContent.Append("<a name=\"AlternateTitle_");
+                //sbContent.Append(pProtocol.FullCdrId);
+                //sbContent.Append("\"></a><span class=\"Protocol-Section-Heading\">Alternate Title</span>\n");
+                //sbContent.Append("<p>\n");
+                sbContent.Append("<h2 id=\"AlternateTitle_");
+                sbContent.Append(pProtocol.FullCdrId);
+                sbContent.Append("\">Alternate Title</h2>\n");
 				sbContent.Append(pProtocol.AlternateTitle);
-				sbContent.Append("<p>\n");
+				sbContent.Append("\n");
 
 
 			} //else the titles are the same so don't show them
@@ -211,103 +225,136 @@ namespace CancerGov.UI.CDR
 
 			StringBuilder sbContent = new StringBuilder();
 
-			//sbContent.Append("<p><h1>Table of Contents</h1>");
+            sbContent.Append("<div class=\"on-this-page\">");
+            sbContent.Append("<h6>ON THIS PAGE</h6>");
+            sbContent.Append("<ul>");
+            			
 			if ((pProtocol.AlternateTitle != null) && (pProtocol.AlternateTitle != "") && (pProtocol.AlternateTitle != pProtocol.ProtocolTitle)) 
 			{
+                sbContent.Append("<li>");
 				sbContent.Append("<a href=\"#AlternateTitle_");
 				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\" class=\"protocol-toc-link\">Alternate Title</a><br />");
+				sbContent.Append("\">Alternate Title</a>");
+                sbContent.Append("</li>");
 			}
 
+            sbContent.Append("<li>");
 			sbContent.Append("<a href=\"#StudyIdInfo_");
 			sbContent.Append(pProtocol.FullCdrId);
-			sbContent.Append("\" class=\"protocol-toc-link\">Basic Trial Information</a><br />");
+			sbContent.Append("\">Basic Trial Information</a>");
+            sbContent.Append("</li>");
 
 			if (pProtocol.ProtocolVersion == ProtocolVersions.HealthProfessional) 
 			{
 				 
 				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.Objectives)) 
 				{
-					sbContent.Append("<a href=\"#Objectives_");
+                    sbContent.Append("<li>");
+                    sbContent.Append("<a href=\"#Objectives_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Objectives</a><br />");
+					sbContent.Append("\">Objectives</a>");
+                    sbContent.Append("</li>");
 				}
 
 				if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
 				{
 
-
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#TrialDescription_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Trial Description</a><br />");
+					sbContent.Append("\">Trial Description</a>");
 
-					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
-					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-						sbContent.Append("<a href=\"#Objectives_");
-						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Summary</a><br />");	
-					}
+
+                    if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary)))
+                    {
+                        sbContent.Append("<ul>");
+                        sbContent.Append("<li>");
+                        sbContent.Append("<a href=\"#Objectives_");
+                        sbContent.Append(pProtocol.FullCdrId);
+                        sbContent.Append("\">Summary</a>");
+                        sbContent.Append("</li>");
+                        sbContent.Append("</ul>");
+                    }
 					
 					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription))) 
 					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                        sbContent.Append("<ul>");
+                        sbContent.Append("<li>");
 						sbContent.Append("<a href=\"#Outline_");
 						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Further Trial Information</a><br />");	
+						sbContent.Append("\">Further Trial Information</a>");
+                        sbContent.Append("</li>");
+                        sbContent.Append("</ul>");
 					}
 
 					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria))) 
 					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                        sbContent.Append("<ul>");
+                        sbContent.Append("<li>");
 						sbContent.Append("<a href=\"#EntryCriteria_");
 						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Eligibility Criteria</a><br />");	
+						sbContent.Append("\">Eligibility Criteria</a>");
+                        sbContent.Append("</li>");
+                        sbContent.Append("</ul>");
 					}
+
+                    sbContent.Append("</li>");
 
 
 				}
 
 				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.EntryCriteria)) 
 				{
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#EntryCriteria_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Entry Criteria</a><br />");
+					sbContent.Append("\">Entry Criteria</a>");
+                    sbContent.Append("</li>");
 				}
 
 				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.ExpectedEnrollment)) 
 				{
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#ExpectedEnrollment_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Expected Enrollment</a><br />");
+					sbContent.Append("\">Expected Enrollment</a>");
+                    sbContent.Append("</li>");
 				}
 
 				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.Outcomes)) 
 				{
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#Outcomes_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Outcomes</a><br />");
+					sbContent.Append("\">Outcomes</a>");
+                    sbContent.Append("</li>");
 				}
 
 				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.Outline)) 
 				{
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#Outline_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Outline</a><br />");
+					sbContent.Append("\">Outline</a>");
+                    sbContent.Append("</li>");
 				}
 
 				if ((pProtocol.Sections != null) && (pProtocol.Sections.Contains((int)ProtocolSectionTypes.PublishedResults))) 
 				{
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#PublishedResults_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Published Results</a><br />");
+					sbContent.Append("\">Published Results</a>");
+                    sbContent.Append("</li>");
 				}
 
 				if ((pProtocol.Sections != null) && (pProtocol.Sections.Contains((int)ProtocolSectionTypes.RelatedPublications))) 
 				{
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#RelatedPublications_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Related Publications</a><br />");
+					sbContent.Append("\">Related Publications</a>");
+                    sbContent.Append("</li>");
 				}
 
 			} 
@@ -317,59 +364,81 @@ namespace CancerGov.UI.CDR
 
 				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.PatientAbstract)) 
 				{
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#TrialDescription_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Trial Description</a><br />");
+					sbContent.Append("\">Trial Description</a>");
 
 
-					//Sub links, ah, tab in 5 places?
-					sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    sbContent.Append("<ul>");
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#Purpose_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Purpose</a><br />");
+					sbContent.Append("\">Purpose</a>");
+                    sbContent.Append("</li>");
+                    sbContent.Append("</ul>");
 
-					sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    sbContent.Append("<ul>");
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#Eligibility_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Eligibility</a><br />");
+					sbContent.Append("\">Eligibility</a>");
+                    sbContent.Append("</li>");
+                    sbContent.Append("</ul>");
 
-					sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                    sbContent.Append("<ul>");
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#TreatmentIntervention_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Treatment/Intervention</a><br />");
+					sbContent.Append("\">Treatment/Intervention</a>");
+                    sbContent.Append("</li>");
+                    sbContent.Append("</ul>");
+
+                    sbContent.Append("</li>");
 				}
 
 				if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
 				{
 
-
+                    sbContent.Append("<li>");
 					sbContent.Append("<a href=\"#TrialDescription_");
 					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Trial Description</a><br />");
-
+					sbContent.Append("\">Trial Description</a>");
+                    
 					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
 					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                        sbContent.Append("<ul>");
+                        sbContent.Append("<li>");
 						sbContent.Append("<a href=\"#Objectives_");
 						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Summary</a><br />");	
+						sbContent.Append("\">Summary</a>");
+                        sbContent.Append("</li>");
+                        sbContent.Append("</ul>");
 					}
 					
 					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription))) 
 					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                        sbContent.Append("<ul>");
+                        sbContent.Append("<li>");
 						sbContent.Append("<a href=\"#Outline_");
 						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Further Trial Information</a><br />");	
+						sbContent.Append("\">Further Trial Information</a>");
+                        sbContent.Append("</li>");
+                        sbContent.Append("</ul>");
 					}
 
 					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria))) 
 					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                        sbContent.Append("<ul>");
+                        sbContent.Append("<li>");
 						sbContent.Append("<a href=\"#EntryCriteria_");
 						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Eligibility Criteria</a><br />");	
+						sbContent.Append("\">Eligibility Criteria</a>");
+                        sbContent.Append("</li>");
+                        sbContent.Append("</ul>");
 					}
+
+                    sbContent.Append("</li>");
 
 
 				}
@@ -377,26 +446,35 @@ namespace CancerGov.UI.CDR
 			}
 
 			//New Requirements, Draw Trial Contact Information to link above lead orgs and study sites
+            sbContent.Append("<li>");
 			sbContent.Append("<a href=\"#ContactInfo_");
 			sbContent.Append(pProtocol.FullCdrId);
-			sbContent.Append("\" class=\"protocol-toc-link\">Trial Contact Information</a><br />");
+			sbContent.Append("\">Trial Contact Information</a>");
+            sbContent.Append("</li>");
 			
 			//SCR 850
 			if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.PatientRelatedInformation)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.HPRelatedInformation))) 
 			{
+                sbContent.Append("<li>");
 				sbContent.Append("<a href=\"#ProtocolRelatedLinks_");
 				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\" class=\"protocol-toc-link\">Related Information</a><br />");
+				sbContent.Append("\">Related Information</a>");
+                sbContent.Append("</li>");
 			}
 
 			//registry info 
-			if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.RegistryInformation)){ 
+			if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.RegistryInformation)){
+                sbContent.Append("<li>");
 				sbContent.Append("<a href=\"#RegistryInfo_");
 				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\" class=\"protocol-toc-link\">Registry Information</a><br />");
+				sbContent.Append("\">Registry Information</a>");
+                sbContent.Append("</li>");
 			}
 
-			sbContent.Append("<p>");
+            sbContent.Append("</ul>");
+            sbContent.Append("</div>");
+
+			//sbContent.Append("<p>");
 
 			return sbContent.ToString();
 		}
@@ -411,11 +489,14 @@ namespace CancerGov.UI.CDR
 
 			if (dvStudySites.Count > 0) {
 
-				sbContent.Append("<a name=\"SitesAndContacts_");
-				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\"></a>");
-				sbContent.Append("<span class=\"Protocol-Section-SubHeading\">Trial Sites</span>\n");
-                sbContent.Append("<p>\n");
+                //sbContent.Append("<a name=\"SitesAndContacts_");
+                //sbContent.Append(pProtocol.FullCdrId);
+                //sbContent.Append("\"></a>");
+                //sbContent.Append("<span class=\"Protocol-Section-SubHeading\">Trial Sites</span>\n");
+                //sbContent.Append("<p>\n");
+                sbContent.Append("<h3 id=\"SitesAndContacts_");
+                sbContent.Append(pProtocol.FullCdrId);
+                sbContent.Append("\">Trial Sites</h3>\n");
 
 				sbContent.Append("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
 				sbContent.Append("<tr>\n");
@@ -660,22 +741,22 @@ namespace CancerGov.UI.CDR
             if (drawAsTable)
             {
                 //Draw Study info box
-                sbContent.Append("<table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" border=\"0\" class=\"Protocol-info-box\">");
-                sbContent.Append("<tr style=\"background: #e7e6e2\">");
-                sbContent.Append("<th valign=\"top\" class=\"phaseCol label\">Phase</th>");
-                sbContent.Append("<th valign=\"top\" class=\"typeCol label\">Type</th>");
-                sbContent.Append("<th valign=\"top\" class=\"statusCol label\">Status</th>");
-                sbContent.Append("<th valign=\"top\" class=\"ageCol label\">Age</th>");
-                sbContent.Append("<th valign=\"top\" class=\"sponsorCol label\">Sponsor</th>");
-                sbContent.Append("<th valign=\"top\" class=\"protocolIDCol label\">Protocol IDs</th>");
+                sbContent.Append("<table class=\"table-default\">");
+                sbContent.Append("<tr>");
+                sbContent.Append("<th>Phase</th>");
+                sbContent.Append("<th>Type</th>");
+                sbContent.Append("<th>Status</th>");
+                sbContent.Append("<th>Age</th>");
+                sbContent.Append("<th>Sponsor</th>");
+                sbContent.Append("<th>Protocol IDs</th>");
                 sbContent.Append("</tr>");
                 sbContent.AppendFormat("<tr>");
-                sbContent.AppendFormat("<td valign=\"top\" class=\"phaseCol\">{0}</td>", pProtocol.Phase);
-                sbContent.AppendFormat("<td valign=\"top\" class=\"typeCol\">{0}</td>", pProtocol.TrialType);
-                sbContent.AppendFormat("<td valign=\"top\" class=\"statusCol\">{0}</td>", pProtocol.CurrentStatus);
-                sbContent.AppendFormat("<td valign=\"top\" class=\"ageCol\">{0}</td>", pProtocol.AgeRange);
-                sbContent.AppendFormat("<td valign=\"top\" class=\"sponsorCol\">{0}</td>", pProtocol.TrialSponsor.Replace("/", " / "));
-                sbContent.AppendFormat("<td valign=\"top\" class=\"protocolIDCol\"><span class=\"protocol-primaryprotocolid\">{0}</span><br>{1}</td>", pProtocol.PrimaryProtocolID, pProtocol.AlternateProtocolIDs);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.Phase);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.TrialType);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.CurrentStatus);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.AgeRange);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.TrialSponsor.Replace("/", " / "));
+                sbContent.AppendFormat("<td><strong>{0}</strong><br>{1}</td>", pProtocol.PrimaryProtocolID, pProtocol.AlternateProtocolIDs);
                 sbContent.AppendFormat("</tr>");
                 sbContent.Append("</table>");
             }
