@@ -34,14 +34,14 @@
             <form id="drugForm" runat="server">
                 <div class="row">
                     
-                     <div class="small-2 columns">
+                     <div class="medium-2 columns">
                         <asp:RadioButton ID="radioStarts" CssClass="radio" runat="server" Checked="True" GroupName="sgroup" />
                         <asp:Label ID="lblStartsWith" runat="server" Text="Starts with" class="inline"
                             AssociatedControlID="radioStarts"></asp:Label>
                     </div>
                     
                     
-                    <div class="small-2 columns left">
+                    <div class="medium-2 columns left">
                         <asp:RadioButton  Name="radioContains" CssClass="radio" ID="radioContains" runat="server" GroupName="sgroup" />
                         <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline"
                             AssociatedControlID="radioContains"></asp:Label> 
@@ -49,21 +49,21 @@
                     </div>
                     <div class="row">
                             <!-- Table needed for proper functing of asp:AutoComplete control -->
-                    <div class="small-6 columns">
+                    <div class="medium-6 columns">
                         <CGov:AutoComplete CssClass="drug-dictionary" ID="AutoComplete1" Name="AutoComplete1" 
                            runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" aria-label="Enter keywords or phrases" aria-autocomplete="list" MinWidth="384" placeholder="Enter keywords or phrases" />
                         <!-- <asp:Label ID="lblAccessSearch" CssClass="hidden" runat="server" Text="Search text box"
                            AssociatedControlID="AutoComplete1"></asp:Label> -->
                     </div>
                     
-                    <div class="small-2 columns">
+                    <div class="medium-2 columns">
                         <asp:Button ID="btnGo" CssClass="submit button postfix" Name="btnGo" runat="server" ToolTip="Search"
                             Text="Search" />
                     </div>
                     
-                    <div class="small-1 columns left">
-                        <a  class="question" href="javascript:dynPopWindow('/Common/PopUps/popHelp.aspx','popup','width=500,height=700,scrollbars=1,resizable=1,menubar=0,location=0,status=0,toolbar=0')">
-                            <img src="/images/drug-dictionary-help.gif" width="13" height="13" alt="" border="0" >
+                    <div class="medium-1 columns left">
+                        <a  class="text-icon-help" aria-label="Help"  href="javascript:dynPopWindow('/Common/PopUps/popHelp.aspx','popup','width=500,height=700,scrollbars=1,resizable=1,menubar=0,location=0,status=0,toolbar=0')">
+                            ?
                         </a> 
                     </div>
                 </div>
