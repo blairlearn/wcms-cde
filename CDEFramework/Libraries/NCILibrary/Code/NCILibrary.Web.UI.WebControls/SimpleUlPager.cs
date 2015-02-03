@@ -174,7 +174,7 @@ namespace NCI.Web.UI.WebControls
 
         }
 
-        private void RenderPageNumbers(HtmlTextWriter output, int startIndex, int endIndex)
+        protected virtual void RenderPageNumbers(HtmlTextWriter output, int startIndex, int endIndex)
         {
             //Loop through page numbers and draw page links
             for (int pageNumber = startIndex; pageNumber <= endIndex; pageNumber++)
