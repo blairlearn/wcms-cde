@@ -54,171 +54,111 @@
 	</div> 
 -->
 
-<div class="hidden">
-    The search textbox has an autosuggest feature. When you enter three or more characters,
-    a list of up to 10 suggestions will popup under the textbox. Use the arrow keys
-    to move through the suggestions. To select a suggestion, hit the enter key. Using
-    the escape key closes the listbox and puts you back at the textbox. The radio buttons
-    allow you to toggle between having all search items start with or contain the text
-    you entered in the search box.
-</div>
+<asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
+    <asp:View ID="ViewDefault" runat="server" EnableViewState="false">
+        <asp:Panel ID="pnlIntroEnglish" runat="server" EnableViewState="false">
+            <p>
+                Cancer terminology is often complicated. The NCI Dictionary of Cancer Terms features
+                <strong><% =TotalCount %></strong> terms related to cancer and medicine.
+            </p>
+            <p>
+                Browse the dictionary by selecting a letter of the alphabet or by entering a cancer-related
+                word or phrase in the search box.
+            </p>
+        </asp:Panel>
+        <asp:Panel ID="pnlIntroSpanish" runat="server" Visible="false" EnableViewState="false">
+            <p>
+                Bienvenidos al Diccionario de cáncer del NCI, un recurso con <strong><% =TotalCount %></strong> términos
+                relacionados con el cáncer y la medicina.
+            </p>
+        </asp:Panel>
+    </asp:View>
+</asp:MultiView>
 
-<asp:Panel ID="pnlTermSearch" runat="server">
-<div class="dictionary-box">
-	<div class="row1">
-        <!-- Table needed for proper functing of asp:AutoComplete control -->
-        <table width="100%">
-        <tr>
-        <td>
-            <form name="aspnetForm" method="post" action="/dictionary/" id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);"
-                runat="server">
-                <div id="dictionary_jPlayer"></div>
-
-                <asp:Label ID="lblAutoComplete1" style="position:absolute;left:-5000px" runat="server" Text="Search for" 
-                    AssociatedControlID="AutoComplete1"></asp:Label>  
-                 <CGov:AutoComplete CssClass="dictionary" Name="AutoComplete1" ID="AutoComplete1"
-                    runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" MinWidth="333" />
-
-                <asp:ImageButton class="go-button" Name="btnGo" ID="btnGo" runat="server" ImageUrl="/PublishedContent/Images/Images/red_search_button.gif"
-                    AlternateText="Search" ToolTip="Search" />
-
-                    
-                <asp:RadioButton ID="radioStarts" Name="radioStarts" CssClass="starts-with-radio" runat="server" Checked="True" GroupName="sgroup" />
-                <asp:Label ID="lblStartsWith" CssClass="starts-with-label" runat="server" Text="Starts with"
+<asp:Panel ID="pnlTermSearch" name="pnlTermSearch" runat="server">
+<div class="dictionary-search">
+    <div class="hidden">
+        The search textbox has an autosuggest feature. When you enter three or more characters,
+        a list of up to 10 suggestions will popup under the textbox. Use the arrow keys
+        to move through the suggestions. To select a suggestion, hit the enter key. Using
+        the escape key closes the listbox and puts you back at the textbox. The radio buttons
+        allow you to toggle between having all search items start with or contain the text
+        you entered in the search box.
+    </div>
+	<form name="aspnetForm" method="post" action="/dictionary/" id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);"
+        role="search" aria-label="Search the Dictionary of Cancer Terms" runat="server">
+    
+        <div id="dictionary_jPlayer"></div>
+        
+        <div class="row">
+            <div class="medium-2 columns">              
+                <asp:RadioButton ID="radioStarts" Name="radioStarts" CssClass="radio" runat="server" Checked="True" GroupName="sgroup" />
+                <asp:Label ID="lblStartsWith" class="inline" runat="server" Text="Starts with"
                     AssociatedControlID="radioStarts"></asp:Label>
-               
-                <asp:RadioButton  ID="radioContains" Name="radioContains" CssClass="contains-radio" runat="server" GroupName="sgroup" />
-                <asp:Label ID="lblContains" CssClass="contains-label" runat="server" Text="Contains" 
+            </div>
+            <div class="medium-2 columns left">   
+                <asp:RadioButton ID="radioContains" Name="radioContains" CssClass="radio" runat="server" GroupName="sgroup" />
+                <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline" 
                     AssociatedControlID="radioContains"></asp:Label>  
-
-            </form>
-        </td>
-        </tr>
-        </table>
-	</div>
-	<div class="row2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-6 columns">
+                <!-- <asp:Label ID="lblAutoComplete1" runat="server" Text="Search for" 
+                    AssociatedControlID="AutoComplete1"></asp:Label> -->
+                <CGov:AutoComplete CssClass="dictionary-search-input" Name="AutoComplete1" ID="AutoComplete1"
+                    placeholder="Enter keywords or phrases" inputmode="latin" aria-autocomplete="list"
+                    aria-label="Enter keywords or phrases" runat="server" CallbackFunc="ACOnSubmit"
+                    autocomplete="off" MinWidth="333"/>
+            </div>
+            <div class="medium-2 columns left">        
+                <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
+                    ToolTip="Search" />
+            </div>
+        </div>
+    </form>
+</div>
+	<div class="az-list">
 	    <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
             NumericItems="true" ShowAll="false" />
 	</div>
 </div>
 </asp:Panel>	
 
-<asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
-    <asp:View ID="ViewDefault" runat="server" EnableViewState="false">
-        <img src="/images/spacer.gif" width="10" height="1" alt="" border="0" />
-        <asp:Panel ID="pnlIntroEnglish" runat="server" EnableViewState="false">
-            <p>
-                Welcome to the NCI Dictionary of Cancer Terms, a resource with <strong><% =TotalCount %></strong> terms
-                related to cancer and medicine.</p>
-            <p>
-                <b>Tips on Looking Up a Word or Phrase</b></p>
-            <ul>
-                <li>In the search box, type the word or phrase you are looking for and click the "Go"
-                    button.</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>Click the radio button in front of the word "Contains" when you want to find all
-                    terms in the dictionary that <b>include</b> a word or set of letters. For example,
-                    if you type "lung" and select "Contains," the search will find terms such as "small
-                    cell lung cancer" as well as "lung cancer."</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>You can also click on a letter of the alphabet to browse through the dictionary.</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>The search box has an <b>autosuggest</b> feature. When you type three or more letters,
-                    a list of up to 10 suggestions will pop up below the box. Click on a suggestion
-                    with your mouse or use the arrow keys on your keyboard to move through the suggestions
-                    and then hit the Enter key to choose one.</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>Using the Escape key or clicking "close" within the autosuggest box closes the box
-                    and turns off the feature until you start a new search.</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>After you find your word or phrase, use the tabs under the search box to toggle
-                    between definitions in English and Spanish.</li>
-            </ul>
-        </asp:Panel>
-        <asp:Panel ID="pnlIntroSpanish" runat="server" Visible="false" EnableViewState="false">
-            <p>
-                Bienvenidos al Diccionario de cáncer del NCI, un recurso con <strong><% =TotalCount %></strong> términos
-                relacionados con el cáncer y la medicina.</p>
-            <p>
-                <b>Consejos para buscar una palabra o frase</b></p>
-            <ul>
-                <li>En la ventanilla para buscar, escriba la palabra o frase que busca y presione el
-                    botón que dice "Buscar".</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>Presione el espacio que está frente a la palabra "Contiene" si quiere encontrar
-                    todos los términos del diccionario que <b>incluyen</b> una palabra o conjunto de
-                    palabras. Por ejemplo, si usted escribe "pulmón" y selecciona "Contiene", la búsqueda
-                    encontrará términos tales como "cáncer de pulmón de células no pequeñas" al igual
-                    que "cáncer de pulmón".</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>Usted también puede presionar en cualquier letra del abecedario para hojear todo
-                    el diccionario.</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>La ventanilla para buscar contiene una función llamada <b>sugerencia.</b> Cuando
-                    usted escribe más de tres letras, le aparecerá una lista de hasta diez sugerencias
-                    debajo de la ventanilla. Presione con el ratón sobre la sugerencia que le interesa
-                    o utilice las teclas con flechas para ver todas las opciones y luego presione la
-                    tecla Enter para elegir una.</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>Cuando usted usa la tecla Esc o presiona "cerrar" dentro del espacio de sugerencia,
-                    este espacio se cierra apagando dicha función hasta que se inicie una nueva búsqueda.</li><br />
-                <!--[if IE]>
-                        <br />
-                    <![endif]-->
-                <li>Una vez que encuentre la palabra o frase que le interesa, use los letreros debajo
-                    de la ventanilla para buscar si quiere alternar entre definiciones en inglés o español.</li><br />
-            </ul>
-        </asp:Panel>
-    </asp:View>
+<asp:MultiView ID="MultiView2" runat="server" ActiveViewIndex="0">
     <asp:View ID="ViewResultList" runat="server" EnableViewState="false">
         <!-- Number of results -->
         <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
-            <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
             <span class="page-title">
                 <asp:Label ID="lblNumResults" CssClass="page-title" runat="server"></asp:Label>
                 <asp:Label ID="lblResultsFor" CssClass="page-title" runat="server"></asp:Label>
-            </span>&nbsp;&nbsp; &nbsp;&nbsp;
-            <asp:Label ID="lblWord" CssClass="search-result" runat="server"></asp:Label><br />
-            <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
-            <img src="/images/gray_spacer.gif" width="571" height="1" alt="" border="0" /><br />
-            <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
+            </span>
+            <asp:Label ID="lblWord" CssClass="search-result" runat="server"></asp:Label>
         </asp:Panel>
+        
         <asp:ListView ID="resultListView" runat="server">
             <LayoutTemplate>
                 <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
             </LayoutTemplate>
             <ItemTemplate>
-                <a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a><a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%><%=QueryStringLang%>"
-                    <%# ResultListViewHrefOnclick(Container)%>>
-                    <%# Eval("TermName")%></a> &nbsp;&nbsp;
-                <%# AudioMediaHTML(DataBinder.Eval(Container.DataItem, "AudioMediaHTML")) %>&nbsp;&nbsp;
-                <%#DataBinder.Eval(Container.DataItem, "TermPronunciation")%>
-                <table cellpadding="0" cellspacing="0" border="0" width="100%">
-                    <tr>
-                        <td width="100%" align="left">
+                <div class="result">
+                    <dl class="dictionary-list">
+                        <dt>
+                            <dfn>
+                                <a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
+                                <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%><%=QueryStringLang%>" <%# ResultListViewHrefOnclick(Container)%>>
+                                <%# Eval("TermName")%></a> &nbsp;&nbsp;
+                            </dfn>
+                        </dt>
+                        <dd class="pronunciation">
+                                <%# AudioMediaHTML(DataBinder.Eval(Container.DataItem, "AudioMediaHTML")) %>&nbsp;&nbsp;
+                                <span><%#DataBinder.Eval(Container.DataItem, "TermPronunciation")%></span>
+                        </dd>
+                        <dd class="definition">
                             <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
-                        </td>
-                    </tr>
-                </table>
-                <br>
+                        </dd>
+                    </dl>
+                </div>
             </ItemTemplate>
             <EmptyDataTemplate>
                 <asp:Panel ID="pnlNoDataEnglish" runat="server" Visible="false">
@@ -240,28 +180,27 @@
         <!-- Language buttons -->
         <CancerGovWww:LangSwitch ID="langSwitch" runat="server">
         </CancerGovWww:LangSwitch>
-        <img src="/images/spacer.gif" width="10" height="19" alt="" border="0" /><br />
         <!-- Term and def -->
-        <span class="header-A">
-            <asp:Label ID="lblTermName" runat="server"></asp:Label></span>&nbsp;
-        <asp:Literal ID="litAudioMediaHtml" runat="server"></asp:Literal>&nbsp;
-        <asp:Label ID="lblTermPronun" runat="server"></asp:Label><br />
-        <img src="/images/spacer.gif" width="10" height="5" alt="" border="0" /><br />
-        <table width="" cellspacing="0" cellpadding="0" border="0">
-            <tr>
-                <td valign="top">
-                    &nbsp;
-                </td>
-                <td valign="top">
+        <div class="result">
+            <dl class="dictionary-list">
+                <dt>
+                    <dfn>
+                        <asp:Label ID="lblTermName" runat="server"></asp:Label>
+                    </dfn>
+                </dt>
+                <dd class="pronunciation">
+                    <asp:Literal ID="litAudioMediaHtml" runat="server"></asp:Literal>
+                    <asp:Label ID="lblTermPronun" runat="server"></asp:Label>
+                </dd>
+                <dd class="definition">
                     <asp:Literal ID="litDefHtml" runat="server"></asp:Literal>
                     <asp:Panel runat="server" ID="pnlRelatedInfo">
-                        <br />
                         <asp:Literal ID="litRelatedLinkInfo" runat="server"></asp:Literal>
                     </asp:Panel>
                     <asp:Literal ID="litImageHtml" runat="server"></asp:Literal>
-                </td>
-            </tr>
-        </table>
+                </dd>
+            </dl>
+        </div>
         <!-- <asp:Panel ID="pnlDefImages" runat="server">
                 <img src="/images/spacer.gif" width="10" height="25" alt="" border="0"/><br/>
 	            <img src="/images/gray_spacer.gif" width="571" height="1" alt="" border="0"/><br/>

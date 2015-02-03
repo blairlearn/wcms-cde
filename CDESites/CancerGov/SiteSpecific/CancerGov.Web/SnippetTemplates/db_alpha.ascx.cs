@@ -416,12 +416,14 @@ namespace Www.Templates
             _totalCount = dataCollection.Count;
  
             MultiView1.ActiveViewIndex = 0;
+            numResDiv.Visible = (NumResults > 0);
 
         }
 
         private void ActivateResultsListView()
         {
-            MultiView1.ActiveViewIndex = 1;
+            ActivateDefaultView();
+            MultiView2.ActiveViewIndex = 0;
             litBackToTop.Visible = (NumResults > 1);
             if (NumResults == 0)
             {
@@ -473,7 +475,7 @@ namespace Www.Templates
         private void SetupSpanish()
         {
             _isSpanish = true;
-            lblAutoComplete1.Text = "buscar";
+            AutoComplete1.Text = "buscar";
             //Controls
             //lblStrSearch.Text = String.Empty;
             //lblAccessSearch.Text = "Cuadro de búsqueda de texto";
@@ -491,10 +493,10 @@ namespace Www.Templates
             pnlIntroEnglish.Visible = false;
             pnlIntroSpanish.Visible = true;
 
-            btnGo.ImageUrl = @"/images/red_buscar_button.gif";
+            
             //btnGo.AlternateText = "Botón de búsqueda";
             //btnGo.ToolTip = "Botón de búsqueda";
-            btnGo.AlternateText = "Buscar";
+            btnGo.Text = "Buscar";
             btnGo.ToolTip = "Buscar";
             //btnGo.CssClass = "btnBuscar";
 
@@ -533,8 +535,9 @@ namespace Www.Templates
         private void SetupEnglish()
         {
             //Controls            
-            lblAutoComplete1.Text = "Search for";
+            //lblAutoComplete1.Text = "Search for";
             lblResultsFor.Text = "results found for:";
+            btnGo.Text = "Search";
 
             pnlIntroEnglish.Visible = true;
             pnlIntroSpanish.Visible = false;
@@ -609,7 +612,7 @@ namespace Www.Templates
         }
         private void RenderGutter()
         {
-
+           
             //gutterLangSwitch.DisplayInfo = this.PageDisplayInformation;
             gutterLangSwitch.EnglishUrl = "/dictionary/";
             gutterLangSwitch.SpanishUrl = "/diccionario/";
@@ -628,7 +631,8 @@ namespace Www.Templates
                 language = "English";
             }
 
-            MultiView1.ActiveViewIndex = 2;
+            ActivateDefaultView();
+            MultiView2.ActiveViewIndex = 1;
             pnlPrevNext.Visible = true;
 
             string termName = string.Empty;
