@@ -4,32 +4,31 @@
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
 <asp:PlaceHolder ID="phSearchBox" runat="server" />
-<h3><% =TermName %></h3>
+<dl><dt><dfn><% =TermName %></dfn></dt>
 <% if(!String.IsNullOrEmpty(AudioPronounceLink)) { %>
-<div class="audioPronounceLink">
+<dd class="audioPronounceLink">
 <% =AudioPronounceLink %>
-</div>
-<br />
+</dd>
 <% } %>
 
-<div class="definition">
+<dd class="definition">
 <% =DefinitionHTML %>
-</div>
-<br />
+</dd>
 
-<div class="relatedInfo">
+
+<dd class="relatedInfo">
 <% =RelatedInfoHTML%>
-</div>
-<br />
+</dd>
+
 
 <% if(!String.IsNullOrEmpty(ImageLink)) { %>
-   <div class="imageLink">
+   <dd class="imageLink">
       <% =ImageLink %>
-      <br />
       <% if(!String.IsNullOrEmpty(ImageCaption)) { %>
          <div class="caption">
             <% =ImageCaption %>
          </div>
       <% } %>
-   </div>
+   </dd>
 <% } %>
+</dl>

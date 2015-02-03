@@ -2,37 +2,31 @@
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="NCI" %>
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
-<div class="searchResults">
-    <span class="page-title">
-        <br />
-        <span class="page-title" id="lblNumResults"><% =Results %></span> 
-        <span class="page-title" id="lblResultsFor">results found for:</span> 
-        <span class="page-title" id="Span1"><% =SearchString %></span>
-        <br />
-        <img width="10" height="19" border="0" alt="" src="/images/spacer.gif">
-        <br>
-        <img width="571" height="1" border="0" alt="" src="/images/gray_spacer.gif">
-         <br />
-        <img width="10" height="19" border="0" alt="" src="/images/spacer.gif">
-        <br />
-    </span>
-    <ul class="no-bullets">
+<div class="results">
+    <h3>
+        
+        <span class="results-count" id="lblNumResults"><% =Results %></span> 
+        <span class="results-count" id="lblResultsFor">results found for:</span> 
+        <span class="term" id="Span1"><% =SearchString %></span>
+    </h3>
+    
+    <dl class="dictionary-list">
         <asp:ListView ID="resultListView" runat="server" Visible="true">
             <LayoutTemplate>
                 <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
             </LayoutTemplate>
             <ItemTemplate>
-                <li style="list-style-type: none;">
+                <dt style="list-style-type: none;">
                 <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>"
                 <%# ResultListViewHrefOnclick(Container)%>>
-                <%# Eval("TermName")%></a>&nbsp;
-                <%#AudioPronounceLink(Container)%>
-                <br />
+                <dfn><%# Eval("TermName")%></dfn></a>
+                <dd><%#AudioPronounceLink(Container)%></dd>
+            
                 <% if (ShowDefinition){ %>
-                <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
+                <dd><%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%></dd>
                 <% } %>
-                </li>
-                <br />
+                </dt>
+                
             </ItemTemplate>
             <EmptyDataTemplate>
                 <asp:Panel ID="noMatched" runat="server" Visible="true" >
@@ -43,7 +37,7 @@
                 </asp:Panel>
             </EmptyDataTemplate>
         </asp:ListView>
-        <br />
+       
         <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" class="simplePager" />
-    </ul>
+    </dl>
 </div>
