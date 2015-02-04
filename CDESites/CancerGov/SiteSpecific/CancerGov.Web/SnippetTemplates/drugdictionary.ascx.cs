@@ -134,6 +134,8 @@ namespace Www.Templates
 
         protected override void OnLoad(EventArgs e)
         {
+            radioStarts.InputAttributes.Add("class", "radio");
+            radioContains.InputAttributes.Add("class", "radio");
             base.OnLoad(e);
             GetQueryParams();
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString(); //ConfigurationSettings.AppSettings["DrugDictionaryURL"];
@@ -276,14 +278,14 @@ namespace Www.Templates
             // This sets the url and link text for close
             AutoComplete1.SearchURL = "/DrugDictionary.svc/SearchJSON?searchTerm=";
 
-            radioStarts.Attributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
-            radioContains.Attributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
+            radioStarts.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
+            radioContains.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
 
-            radioStarts.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioStarts.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            radioStarts.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            radioStarts.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
-            radioContains.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioContains.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            radioContains.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            radioContains.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = SrcGroup.Equals("Contains");
