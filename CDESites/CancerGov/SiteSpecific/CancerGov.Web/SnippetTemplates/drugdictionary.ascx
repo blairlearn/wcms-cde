@@ -40,16 +40,20 @@
                 <div class="row">
                     
                      <div class="medium-2 columns">
+                        <span class="radio">
                         <asp:RadioButton ID="radioStarts" runat="server" GroupName="sgroup"   />
                         <asp:Label ID="lblStartsWith" runat="server" Text="Starts with" class="inline"
                             AssociatedControlID="radioStarts"></asp:Label>
+                        </span>
                     </div>
                     
                     
                     <div class="medium-2 columns left">
+                        <span class="radio">
                         <asp:RadioButton  ID="radioContains" runat="server" GroupName="sgroup" />
                         <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline"
                             AssociatedControlID="radioContains"></asp:Label> 
+                        </span>
                     </div>
                     </div>
                     <div class="row">
