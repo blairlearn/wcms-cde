@@ -2,6 +2,9 @@
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
 <div id="welcomeDiv">
     <p>Welcome to the NCI Dictionary of Genetics Terms, which contains technical definitions for more than 150 terms related to genetics. These definitions were developed by the <a href="http://www.cancer.gov/cancertopics/pdq/cancer-genetics-board">PDQ® Cancer Genetics Editorial Board</a> to support the evidence-based, peer-reviewed <a href="http://www.cancer.gov/cancertopics/pdq/genetics">PDQ cancer genetics information summaries</a>.</p>
+</div>
+<asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
+<div> 
     <h3>Tips on Looking Up a Word or Phrase</h3>
     <ul>
         <li>In the search box, type the word or part of the word you are looking for and click the "Go" button.</li>
@@ -11,4 +14,3 @@
         <li>Additional genetics terms and definitions are available in the <a href="http://www.genome.gov/Glossary/">Talking Glossary of Genetics Terms</a> on the <a href="http://www.genome.gov/">National Human Genome Research Institute’s website</a>. Many terms in the Talking Glossary of Genetics Terms are accompanied by illustrations, animations, and descriptions by specialists in the field of genetics.</li>
     </ul>
 </div>
-<asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
