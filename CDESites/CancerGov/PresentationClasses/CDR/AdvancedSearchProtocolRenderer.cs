@@ -152,12 +152,7 @@ namespace CancerGov.UI.CDR
 								
 								if (!bDrawnTCI) { //For stupid Trial Contact Information
 									bDrawnTCI = true;
-                                    //sbContent.Append("<p>\n");
-                                    //sbContent.Append("<a name=\"ContactInfo_");
-                                    //sbContent.Append(pProtocol.FullCdrId);
-                                    //sbContent.Append("\"></a>");
-                                    //sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
-                                    //sbContent.Append("<p>\n");
+                                    
                                     sbContent.Append("<h2 id=\"ContactInfo_");
                                     sbContent.Append(pProtocol.FullCdrId);
                                     sbContent.Append("\">Trial Contact Information</h2>\n");
@@ -176,12 +171,7 @@ namespace CancerGov.UI.CDR
 							if (pProtocol.Sections.Contains(iSection)) {
 
 								if (!bWroteTrialDesc) {
-                                    //sbContent.Append("<p>\n");
-                                    //sbContent.Append("<a name=\"TrialDescription_");
-                                    //sbContent.Append(pProtocol.FullCdrId);
-                                    //sbContent.Append("\"></a>");
-                                    //sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Description</span>\n");
-                                    //sbContent.Append("<p>\n");	
+                                    	
                                     sbContent.Append("<h2 id=\"TrialDescription_");
                                     sbContent.Append(pProtocol.FullCdrId);
                                     sbContent.Append("\">Trial Description</h2>\n");
@@ -200,13 +190,7 @@ namespace CancerGov.UI.CDR
 							if ((pProtocol.Sites != null) && (pProtocol.Sites.SiteTable != null)) {
 								bDrawnStudySites = true;
 								if (!bDrawnTCI) { //For stupid Trial Contact Information
-                                    //sbContent.Append("<p>\n");
-                                    //sbContent.Append("<a name=\"ContactInfo_");
-                                    //sbContent.Append(pProtocol.FullCdrId);
-                                    //sbContent.Append("\"></a>");
-                                    //sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
-                                    //sbContent.Append("<p>\n");
-
+                                    
                                     sbContent.Append("<h2 id=\"ContactInfo_");
                                     sbContent.Append(pProtocol.FullCdrId);
                                     sbContent.Append("\">Trial Contact Information</h2>\n");
