@@ -141,8 +141,8 @@
                     <dl class="dictionary-list">
                         <dt>
                                 <dfn>
-                                    <a name="<%#DataBinder.Eval(Container.DataItem, "PreferredName")%>"></a><a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "TermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
-                                        <%#HiLite(DataBinder.Eval(Container.DataItem, "PreferredName"))%></a> &nbsp;
+                                    <a id="<%#DataBinder.Eval(Container.DataItem, "PreferredName")%>" href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "TermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
+                                        <%#HiLite(DataBinder.Eval(Container.DataItem, "PreferredName"))%></a> 
                                     <span class="dictionary-partial-match-n">
                                         <%#AddBrackets(DataBinder.Eval(Container.DataItem, "OtherName"))%>
                                     </span>
