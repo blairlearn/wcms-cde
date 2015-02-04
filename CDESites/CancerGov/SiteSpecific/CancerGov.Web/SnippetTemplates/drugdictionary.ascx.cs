@@ -134,8 +134,6 @@ namespace Www.Templates
 
         protected override void OnLoad(EventArgs e)
         {
-            radioStarts.InputAttributes.Add("class", "radio");
-            radioContains.InputAttributes.Add("class", "radio");
             base.OnLoad(e);
             GetQueryParams();
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString(); //ConfigurationSettings.AppSettings["DrugDictionaryURL"];
