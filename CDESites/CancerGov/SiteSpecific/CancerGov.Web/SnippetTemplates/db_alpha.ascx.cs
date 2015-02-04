@@ -567,14 +567,14 @@ namespace Www.Templates
             // This sets the url and link text for close
             AutoComplete1.SearchURL = "/TermDictionary.svc/SearchJSON/" + language + "?searchTerm=";
 
-            radioStarts.Attributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
-            radioContains.Attributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
+            radioStarts.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
+            radioContains.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
 
-            radioStarts.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioStarts.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            radioStarts.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            radioStarts.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
-            radioContains.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioContains.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            radioContains.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            radioContains.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
             //lblStarts.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
             //lblStarts.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";

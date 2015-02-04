@@ -92,14 +92,18 @@
         
         <div class="row">
             <div class="medium-2 columns">              
-                <asp:RadioButton ID="radioStarts" Name="radioStarts" CssClass="radio" runat="server" Checked="True" GroupName="sgroup" />
-                <asp:Label ID="lblStartsWith" class="inline" runat="server" Text="Starts with"
-                    AssociatedControlID="radioStarts"></asp:Label>
+                <span class="radio">
+                    <asp:RadioButton ID="radioStarts" runat="server" Checked="true" GroupName="sgroup" />
+                    <asp:Label ID="lblStartsWith" class="inline" runat="server" Text="Starts with"
+                        AssociatedControlID="radioStarts"></asp:Label>
+                </span>
             </div>
-            <div class="medium-2 columns left">   
-                <asp:RadioButton ID="radioContains" Name="radioContains" CssClass="radio" runat="server" GroupName="sgroup" />
-                <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline" 
-                    AssociatedControlID="radioContains"></asp:Label>  
+            <div class="medium-2 columns left">
+                <span class="radio">
+                    <asp:RadioButton ID="radioContains" runat="server" GroupName="sgroup" />
+                    <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline" 
+                        AssociatedControlID="radioContains"></asp:Label>
+                </span>
             </div>
         </div>
         <div class="row">
