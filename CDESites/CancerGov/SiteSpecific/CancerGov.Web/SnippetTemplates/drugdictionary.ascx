@@ -85,10 +85,6 @@
 <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
     <asp:View ID="ViewDefault" runat="server" EnableViewState="false">
         <div id="welcomeDiv">
-                <p>The NCI Drug Dictionary contains technical definitions and synonyms for drugs/agents
-                used to treat patients with cancer or conditions related to cancer. Each drug entry
-                includes links to check for clinical trials listed in NCI's List of Cancer Clinical
-                Trials.</p>
             <p><b>Tips on Looking Up a Drug</b></p>
             <ul>
                 <li>In the search box, type the name or part of the name of the drug/agent you are looking
