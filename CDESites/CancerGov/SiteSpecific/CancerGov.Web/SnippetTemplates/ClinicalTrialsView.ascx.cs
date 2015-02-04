@@ -207,11 +207,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                 this.strContent = "<table cellspacing=\"0\" width=\"650\" cellpadding=\"0\" border=\"0\"><tr><td width=\"650\">" + printContent + "</td></tr></table>\n";
             }
-            else
-            {
-                this.strContent += new ReturnToTopAnchor(this.PageDisplayInformation).Render();
-            }
-
+            
             //// Web Analytics *************************************************
             //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinicaltrials", this.Request.Url.OriginalString.ToString());
             this.PageInstruction.AddFieldFilter("channelName", (name, data) =>
