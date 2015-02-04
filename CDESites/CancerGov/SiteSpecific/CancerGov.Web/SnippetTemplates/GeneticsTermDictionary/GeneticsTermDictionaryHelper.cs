@@ -27,18 +27,18 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("      <div class='row'>");
             if (contains)
             {
-                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='starts-with-radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' onchange='autoFunc();' /></span>");
-                searchBlock.AppendLine("      <label for='radioStarts' id='lblStartsWith' class='starts-with-label'>Starts with</label></div>");
-                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='contains-radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' checked='checked' onchange='autoFunc();'  /></span>");
-                searchBlock.AppendLine("      <label for='radioContains' id='lblContains' class='contains-label'>Contains</label></div>");
+                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' onchange='autoFunc();' /></span>");
+                searchBlock.AppendLine("      <label for='radioStarts' id='lblStartsWith'>Starts with</label></div>");
+                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' checked='checked' onchange='autoFunc();'  /></span>");
+                searchBlock.AppendLine("      <label for='radioContains' id='lblContains'>Contains</label></div>");
 
             }
             else
             {
-                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='starts-with-radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' checked='checked' onchange='autoFunc();' /></span>");
-                searchBlock.AppendLine("      <label for='radioStarts' id='lblStartsWith' class='starts-with-label'>Starts with</label></div>");
-                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='contains-radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' onchange='autoFunc();' /></span>");
-                searchBlock.AppendLine("      <label for='radioContains' id='lblContains' class='contains-label'>Contains</label></div>");
+                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' checked='checked' onchange='autoFunc();' /></span>");
+                searchBlock.AppendLine("      <label for='radioStarts' id='lblStartsWith' >Starts with</label></div>");
+                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' onchange='autoFunc();' /></span>");
+                searchBlock.AppendLine("      <label for='radioContains' id='lblContains'>Contains</label></div>");
             }
             searchBlock.AppendLine("   </div>");
             searchBlock.AppendLine("      <div class='row'>");
