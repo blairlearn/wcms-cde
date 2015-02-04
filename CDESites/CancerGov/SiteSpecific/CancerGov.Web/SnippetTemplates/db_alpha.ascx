@@ -127,38 +127,36 @@
 
 <asp:MultiView ID="MultiView2" runat="server" ActiveViewIndex="0">
     <asp:View ID="ViewResultList" runat="server" EnableViewState="false">
+    <div class="results">
         <!-- Number of results -->
         <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
-            <span class="page-title">
-                <asp:Label ID="lblNumResults" CssClass="page-title" runat="server"></asp:Label>
-                <asp:Label ID="lblResultsFor" CssClass="page-title" runat="server"></asp:Label>
+            <span class="results-count">
+                <asp:Label ID="lblNumResults" CssClass="results-num" runat="server"></asp:Label>
+                <asp:Label ID="lblResultsFor" runat="server"></asp:Label>
+                <asp:Label ID="lblWord" CssClass="term" runat="server"></asp:Label>
             </span>
-            <asp:Label ID="lblWord" CssClass="search-result" runat="server"></asp:Label>
         </asp:Panel>
         
         <asp:ListView ID="resultListView" runat="server">
             <LayoutTemplate>
-                <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
+                <dl class="dictionary-list">
+                    <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
+                </dl>
             </LayoutTemplate>
             <ItemTemplate>
-                <div class="result">
-                    <dl class="dictionary-list">
-                        <dt>
-                            <dfn>
-                                <a name="<%#DataBinder.Eval(Container.DataItem, "TermName")%>"></a>
-                                <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%><%=QueryStringLang%>" <%# ResultListViewHrefOnclick(Container)%>>
-                                <%# Eval("TermName")%></a> &nbsp;&nbsp;
-                            </dfn>
-                        </dt>
-                        <dd class="pronunciation">
-                                <%# AudioMediaHTML(DataBinder.Eval(Container.DataItem, "AudioMediaHTML")) %>&nbsp;&nbsp;
-                                <span><%#DataBinder.Eval(Container.DataItem, "TermPronunciation")%></span>
-                        </dd>
-                        <dd class="definition">
-                            <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
-                        </dd>
-                    </dl>
-                </div>
+                <dt>
+                    <dfn>
+                         <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%><%=QueryStringLang%>" <%# ResultListViewHrefOnclick(Container)%>>
+                         <%# Eval("TermName")%></a>
+                    </dfn>
+                </dt>
+                <dd class="pronunciation">
+                    <%# AudioMediaHTML(DataBinder.Eval(Container.DataItem, "AudioMediaHTML")) %>
+                    <span><%#DataBinder.Eval(Container.DataItem, "TermPronunciation")%></span>
+                </dd>
+                <dd class="definition">
+                    <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
+                </dd>
             </ItemTemplate>
             <EmptyDataTemplate>
                 <asp:Panel ID="pnlNoDataEnglish" runat="server" Visible="false">
@@ -175,13 +173,14 @@
                 </asp:Panel>
             </EmptyDataTemplate>
         </asp:ListView>
+    </div>
     </asp:View>
     <asp:View ID="ViewDefinition" runat="server" EnableViewState="false">
         <!-- Language buttons -->
         <CancerGovWww:LangSwitch ID="langSwitch" runat="server">
         </CancerGovWww:LangSwitch>
         <!-- Term and def -->
-        <div class="result">
+        <div class="results">
             <dl class="dictionary-list">
                 <dt>
                     <dfn>
