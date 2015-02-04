@@ -3,12 +3,11 @@
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
 <div class="results">
-    <h3>
-        
-        <span class="results-count" id="lblNumResults"><% =Results %></span> 
-        <span class="results-count" id="lblResultsFor">results found for:</span> 
+    <span class="results-count">
+        <span class="results-num" id="lblNumResults"><% =Results %></span> 
+        results found for: 
         <span class="term" id="Span1"><% =SearchString %></span>
-    </h3>
+    </span>
     
     <dl class="dictionary-list">
         <asp:ListView ID="resultListView" runat="server" Visible="true">
