@@ -48,7 +48,7 @@
                     </div>
                     </div>
                     <div class="row">
-                            <!-- Table needed for proper functing of asp:AutoComplete control -->
+                            
                     <div class="medium-6 columns">
                         <CGov:AutoComplete CssClass="drug-dictionary" ID="AutoComplete1" Name="AutoComplete1" 
                            runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" aria-label="Enter keywords or phrases" aria-autocomplete="list" MinWidth="384" placeholder="Enter keywords or phrases" />
