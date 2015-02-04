@@ -30,19 +30,24 @@
 </div>
 
 <asp:Panel ID="pnlDrugSearch2" runat="server" CssClass="dictionary-search">
-
+    <div>
+        <p>The NCI Drug Dictionary contains technical definitions and synonyms for drugs/agents
+                used to treat patients with cancer or conditions related to cancer. Each drug entry
+                includes links to check for clinical trials listed in NCI's List of Cancer Clinical
+                Trials.</p>
+    </div>
             <form id="drugForm" runat="server">
                 <div class="row">
                     
                      <div class="medium-2 columns">
-                        <asp:RadioButton ID="radioStarts" CssClass="radio" runat="server" Checked="True" GroupName="sgroup" />
+                        <asp:RadioButton ID="radioStarts" runat="server" GroupName="sgroup"   />
                         <asp:Label ID="lblStartsWith" runat="server" Text="Starts with" class="inline"
                             AssociatedControlID="radioStarts"></asp:Label>
                     </div>
                     
                     
                     <div class="medium-2 columns left">
-                        <asp:RadioButton  Name="radioContains" CssClass="radio" ID="radioContains" runat="server" GroupName="sgroup" />
+                        <asp:RadioButton  ID="radioContains" runat="server" GroupName="sgroup" />
                         <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline"
                             AssociatedControlID="radioContains"></asp:Label> 
                     </div>
@@ -79,7 +84,6 @@
 
 <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
     <asp:View ID="ViewDefault" runat="server" EnableViewState="false">
-        <img src="/images/spacer.gif" width="10" height="1" alt="" border="0" />
         <div id="welcomeDiv">
                 <p>The NCI Drug Dictionary contains technical definitions and synonyms for drugs/agents
                 used to treat patients with cancer or conditions related to cancer. Each drug entry
