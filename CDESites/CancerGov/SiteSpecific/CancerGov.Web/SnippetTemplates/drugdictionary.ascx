@@ -139,11 +139,14 @@
         </asp:Panel>
         <asp:ListView ID="resultListView" runat="server">
             <LayoutTemplate>
-                <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
+            <div class="result">
+                <dl class="dictionary-list">
+                    <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
+                </dl>
+            </div>
             </LayoutTemplate>
             <ItemTemplate>
-                <div class="result">
-                    <dl class="dictionary-list">
+                
                         <dt>
                                 <dfn>
                                     <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "TermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
@@ -156,8 +159,7 @@
                         <dd class="definition">
                                     <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
                         </dd>
-                    </dl>
-                </div>
+                    
             </ItemTemplate>
             <EmptyDataTemplate>
                 <asp:Panel ID="pnlNoData" runat="server">
