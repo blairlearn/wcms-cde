@@ -58,7 +58,7 @@
     <asp:View ID="ViewDefault" runat="server" EnableViewState="false">
         <asp:Panel ID="pnlIntroEnglish" runat="server" EnableViewState="false">
             <p>
-                Cancer terminology is often complicated. The NCI Dictionary of Cancer Terms features
+                Cancer terminology is often complicated. The NCI Dictionary of Cancer Terms features 
                 <strong><% =TotalCount %></strong> terms related to cancer and medicine.
             </p>
             <p>
@@ -68,12 +68,12 @@
         </asp:Panel>
         <asp:Panel ID="pnlIntroSpanish" runat="server" Visible="false" EnableViewState="false">
             <p>
-                El diccionario de cáncer del NCI contiene <strong><% =TotalCount %></strong> términos
+                El diccionario de cáncer del NCI contiene <strong><% =TotalCount %></strong> términos 
                 relacionados con el cáncer y la medicina.
             </p>
             <p>
-                Para buscar un término en el diccionario presione en cualquier letra del alfabeto o escriba
-                una palabra o frase relacionada con el cáncer en el cuadro de búsqueda.
+                Para buscar un término en el diccionario presione en cualquier letra del alfabeto o escriba 
+                una palabra o frase relacionada con el cáncer en la casilla de búsqueda.
             </p>
         </asp:Panel>
     </asp:View>
