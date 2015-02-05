@@ -4,8 +4,8 @@
     <p>Welcome to the NCI Dictionary of Genetics Terms, which contains technical definitions for more than 150 terms related to genetics. These definitions were developed by the <a href="http://www.cancer.gov/cancertopics/pdq/cancer-genetics-board">PDQ® Cancer Genetics Editorial Board</a> to support the evidence-based, peer-reviewed <a href="http://www.cancer.gov/cancertopics/pdq/genetics">PDQ cancer genetics information summaries</a>.</p>
 </div>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
-<div> 
-    <h3>Tips on Looking Up a Word or Phrase</h3>
+<div class="welcome-div"> 
+    <p><b>Tips on Looking Up a Word or Phrase</b></p>
     <ul>
         <li>In the search box, type the word or part of the word you are looking for and click the "Go" button.</li>
         <li>Change the search from “Starts with” to “Contains” to find all terms in the dictionary that include a word or set of letters.  For example, type “mutation” to find “de novo mutation” and “deleterious mutation”.</li>
