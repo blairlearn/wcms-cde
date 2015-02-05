@@ -20,22 +20,23 @@
     }
 </script>    
 
-<div class="hidden">
-    The search textbox has an autosuggest feature. When you enter three or more characters,
-    a list of up to 10 suggestions will popup under the textbox. Use the arrow keys
-    to move through the suggestions. To select a suggestion, hit the enter key. Using
-    the escape key closes the listbox and puts you back at the textbox. The radio buttons
-    allow you to toggle between having all search items start with or contain the text
-    you entered in the search box.
-</div>
-
-<asp:Panel ID="pnlDrugSearch2" runat="server" CssClass="dictionary-search">
-    <div>
+ <div>
         <p>The NCI Drug Dictionary contains technical definitions and synonyms for drugs/agents
                 used to treat patients with cancer or conditions related to cancer. Each drug entry
                 includes links to check for clinical trials listed in NCI's List of Cancer Clinical
                 Trials.</p>
     </div>
+    <div class="hidden">
+         The search textbox has an autosuggest feature. When you enter three or more characters,
+         a list of up to 10 suggestions will popup under the textbox. Use the arrow keys
+         to move through the suggestions. To select a suggestion, hit the enter key. Using
+         the escape key closes the listbox and puts you back at the textbox. The radio buttons
+         allow you to toggle between having all search items start with or contain the text
+         you entered in the search box.
+     </div>
+
+<asp:Panel ID="pnlDrugSearch2" runat="server" CssClass="dictionary-search">
+   
             <form id="drugForm" runat="server">
                 <div class="row">
                     
