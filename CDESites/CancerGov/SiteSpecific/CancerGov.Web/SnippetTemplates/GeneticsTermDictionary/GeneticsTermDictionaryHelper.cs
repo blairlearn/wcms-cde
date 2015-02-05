@@ -24,7 +24,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("<div class='dictionary-box' id='genetics-terms-dictionary'>");
            
             searchBlock.AppendLine("      <div id='dictionary_jPlayer'></div>");
-            searchBlock.AppendLine("     <form> <div class='row'>");
+            searchBlock.AppendLine("     <div class='row'>");
             if (contains)
             {
                 searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' onchange='autoFunc();' />");
@@ -44,7 +44,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("      <div class='row'>");
             searchBlock.AppendLine("      <div class=\"medium-6 columns\"><input placeholder=\"Enter keywords or phrases\" autocomplete=\"off\" aria-label=\"Enter keywords or phrases\" aria-autocomplete=\"list\" type=\"text\" class=\"genetics-dictionary\" id=\"searchString\" maxlength=\"255\" name=\"searchString\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\" onkeypress=\"if(event.keyCode==13) DoSearch();\" value=\"" + searchString + "\" /> </div>");
             searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><input type='submit' name='btnGo' id='btnGo' title='Search' class='submit button postfix' Name='btnGo' onclick='DoSearch();' /></div>");
-            searchBlock.AppendLine("      </div></form>");
+            searchBlock.AppendLine("      </div>");
 
 
 

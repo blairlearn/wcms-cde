@@ -130,16 +130,18 @@
         <!-- Number of results -->
         
         <asp:Panel ID="numResDiv" runat="server">
-            <span class="page-title">
-                <asp:Label ID="lblNumResults" CssClass="page-title" runat="server"></asp:Label>
-                <asp:Label ID="lblResultsFor" CssClass="page-title" Text="result found for:" runat="server"></asp:Label>
+            <span class="results-count">
+                <asp:Label ID="lblNumResults" CssClass="results-num"  runat="server"></asp:Label>
+                <asp:Label ID="lblResultsFor"  Text="result found for: " runat="server"></asp:Label>
+                <asp:Label ID="lblWord" CssClass="term" runat="server"></asp:Label>
             </span>
-            <asp:Label ID="lblWord" CssClass="search-result" runat="server"></asp:Label>
+            
+           
             
         </asp:Panel>
         <asp:ListView ID="resultListView" runat="server">
             <LayoutTemplate>
-            <div class="result">
+            <div class="results">
                 <dl class="dictionary-list">
                     <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
                 </dl>
