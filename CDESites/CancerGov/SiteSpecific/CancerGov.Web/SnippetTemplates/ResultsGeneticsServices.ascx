@@ -2,13 +2,13 @@
     Inherits="CancerGov.Web.SnippetTemplates.ResultsGeneticsServices" %>
 <!-- Main Content Area -->
 <!--div align="center"-->
-
+ 
 <script language="javascript">
 			function page(first)
 			{
 				document.searchParamForm.selectedPage.value=first;
 				document.searchParamForm.action='<%=SearchPageInfo.SearchResultsPrettyUrl%>';
-				document.searchParamForm.submit();			
+				document.searchParamForm.submit();
 			}
 			
 			function doSubmit()
@@ -54,80 +54,56 @@
 
 
 
-    <table width="100%" cellspacing="0" cellpadding="0" border="0">
-        <tr>
-            <!-- Main Content Area --> 
-            <td id="contentzone" valign="top" width="100%">
 
-                <form name="searchParamForm" method="post">
-                                
-<input type="hidden" name="selCancerType" value="<%=CancerType%>">                 
-                <input type="hidden" name="selCancerFamily" value="<%=CancerFamily%>">
-                <input type="hidden" name="txtCity" value="<%=Request.Form["txtCity"]%>">
-                <input type="hidden" name="selState" value="<%=State%>">
-                <input type="hidden" name="selCountry" value="<%=Country%>">
-                <input type="hidden" name="txtLastName" value="<%=Request.Form["txtLastName"]%>">
-                <input type="hidden" name="selectedPage" value="">
-                </form>
-                <form id="resultForm" name="resultForm" method="post" action="<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>">
-                <!-- Search Result Summary Section -->
-                <%=SearchSummary%>
-                <p>
-                    <!-- Result Search Display Section -->
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                        <tr>
-                            <td>
-                                <span class="header-A">
-                                    <%=ResultLabel%></span>
-                                <p>
-                                    <asp:DataGrid runat="server" GridLines="None" ShowHeader="False" ItemStyle-BackColor="#f5f5f3"
-                                        AlternatingItemStyle-BackColor="#ffffff" BorderWidth="0" ItemStyle-BorderStyle="None"
-                                        AlternatingItemStyle-BorderStyle="None" Visible="False" ID="resultGrid" AutoGenerateColumns="False"
-                                        CellPadding="3" BorderStyle="None" Width="100%">
-                                        <Columns>
-                                            <asp:TemplateColumn>
-                                                <ItemTemplate>
-                                                    <input type="checkbox" name="personid" id="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>"
-                                                        height="2" value="<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
-                                                </ItemTemplate>
-                                            </asp:TemplateColumn>
-                                            <asp:TemplateColumn ItemStyle-VerticalAlign="Top" ItemStyle-Width="100%">
-                                                <ItemTemplate>
-                                                    <label for="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
-                                                        <a href="<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>?personid=<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
-                                                            <%#DataBinder.Eval(Container.DataItem, "FullName")%>
-                                                            <%#DataBinder.Eval(Container.DataItem, "Degree")%></a></label>
-                                                </ItemTemplate>
-                                            </asp:TemplateColumn>
-                                        </Columns>
-                                    </asp:DataGrid>
-                            </td>
-                        </tr>
-                    </table>
-                    <p>
-                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                            <tr>
-                                <td valign="top">
-                                    <span class="header-A">
-                                        <%=ResultLabel%>
-                                        shown.</span>
-                                </td>
-                                <td height="30" valign="top" align="right">
-                                    <%=Pager%>
-                                </td>
-                            </tr>
-                        </table>
-                        <table>
-                            <tr>
-                                <td align="left" valign="bottom">
-									<a href="javascript:doSubmit();" id="submit" runat="server"><img src="/images/form_checked_button.gif" alt="display checked results" border="0"></a><input type="submit" id="textSubmit" value="Display Checked Results" runat="server">
-									&nbsp;&nbsp;&nbsp;&nbsp;
-									<a href="<%=SearchPageInfo.SearchPagePrettyUrl%>" alt="New Genetics Services Search"><img src="/images/new_search_red.gif" border="0" alt="New Search"></a>
-								</td>
-                            </tr>
-                        </table>
-                </form>
-            </td>
-        </tr>
-    </table>
-
+<form name="searchParamForm" method="post">
+    <input type="hidden" name="selCancerType" value="<%=CancerType%>">
+    <input type="hidden" name="selCancerFamily" value="<%=CancerFamily%>">
+    <input type="hidden" name="txtCity" value="<%=Request.Form["txtCity"]%>">
+    <input type="hidden" name="selState" value="<%=State%>">
+    <input type="hidden" name="selCountry" value="<%=Country%>">
+    <input type="hidden" name="txtLastName" value="<%=Request.Form["txtLastName"]%>">
+    <input type="hidden" name="selectedPage" value="">
+</form>
+<div class="results">
+    <form id="resultForm" name="resultForm" method="post" action="<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>">
+    <!-- Search Result Summary Section -->
+    <%=SearchSummary%>
+    
+    <div class="results-listing">
+        <span><%=ResultLabel%></span>
+        <asp:Repeater runat="server" ID="resultGrid">
+            <HeaderTemplate>
+                <ul class="no-bullets">
+            </HeaderTemplate>
+            <ItemTemplate>
+                <li>
+                    <input type="checkbox" name="personid" id="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>"
+                        value="<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
+                                            
+                    <label for="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>" class="inline">
+                        <a href="<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>?personid=<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
+                            <%#DataBinder.Eval(Container.DataItem, "FullName")%>
+                            <%#DataBinder.Eval(Container.DataItem, "Degree")%>
+                        </a>
+                    </label>
+                </li>
+            </ItemTemplate>
+            <FooterTemplate>
+                </ul>
+            </FooterTemplate>
+        </asp:Repeater>
+                
+        <span><%=ResultLabel%> shown.</span>
+        
+        <asp:Literal ID="ulPager" runat="server" />
+        
+        </div>
+        
+        <button id="submit" type="button" onclick="doSubmit();" class="button" runat="server">
+            Display checked results</button>
+        		
+        <button id="reset" type="button" onclick="window.location.href='<%=SearchPageInfo.SearchPagePrettyUrl%>'" class="button">
+            New search</button>
+  </form>
+</div>
+		
