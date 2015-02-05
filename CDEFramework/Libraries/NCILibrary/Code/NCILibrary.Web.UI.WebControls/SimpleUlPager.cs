@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.UI;
+using NCI.Logging;
 
 namespace NCI.Web.UI.WebControls
 {
-    class SimpleUlPager : SimplePager
+    public class SimpleUlPager : SimplePager
     {
-        protected virtual void RenderNextLink(HtmlTextWriter output)
+        protected override void RenderNextLink(HtmlTextWriter output)
         {
             //If there is no image, and there is not text, then there is nothing to write.
             if (this.PagerStyleSettings.NextPageText != string.Empty || this.PagerStyleSettings.NextPageImageUrl != string.Empty)
@@ -91,7 +92,7 @@ namespace NCI.Web.UI.WebControls
             }
         }
 
-        protected virtual void RenderPrevLink(HtmlTextWriter output)
+        protected override void RenderPrevLink(HtmlTextWriter output)
         {
             //If there is no image, and there is not text, then there is nothing to write.
             if (this.PagerStyleSettings.PrevPageText != string.Empty || this.PagerStyleSettings.PrevPageImageUrl != string.Empty)
@@ -174,7 +175,7 @@ namespace NCI.Web.UI.WebControls
 
         }
 
-        protected virtual void RenderPageNumbers(HtmlTextWriter output, int startIndex, int endIndex)
+        protected override void RenderPageNumbers(HtmlTextWriter output, int startIndex, int endIndex)
         {
             //Loop through page numbers and draw page links
             for (int pageNumber = startIndex; pageNumber <= endIndex; pageNumber++)
@@ -257,6 +258,37 @@ namespace NCI.Web.UI.WebControls
 
                 // close li
                 output.RenderEndTag();
+            }
+        }
+
+        /// <summary>
+        /// Renders the contents of this control.
+        /// </summary>
+        /// <param name="output">A HtmlTextWriter to render the contents to.</param>
+        protected override void RenderContents(HtmlTextWriter output)
+        {
+            try
+            {
+                // Get number of pages
+                int pages = 0;
+                if (this.RecordsPerPage > 0)
+                {
+                    pages = (this.RecordCount / this.RecordsPerPage) + ((this.RecordCount % this.RecordsPerPage > 0) ? 1 : 0);
+                }
+
+                if (pages > 1)
+                {
+                    // wrap output in ul
+                    output.RenderBeginTag(HtmlTextWriterTag.Ul);
+                    base.RenderContents(output);
+                    output.RenderEndTag();
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError("NCI:SimpleUlPager.cs:RenderContents",
+                            "encountered error while rendering",
+                            NCIErrorLevel.Error, e);
             }
         }
     }
