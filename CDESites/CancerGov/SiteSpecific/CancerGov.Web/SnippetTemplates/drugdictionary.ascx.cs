@@ -18,12 +18,126 @@ using CancerGov.CDR.DrugDictionary;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using NCI.Search;
+using CancerGov.Web.SnippetTemplates;
 
 namespace Www.Templates
 {
 
     public partial class drugdictionary : SnippetControl
     {
+        protected class DrugPager
+        {
+            private int showPages = 10;
+            private int currentPage = 0;
+            private int recordsPerPage = 10;
+            private int recordCount = 0;
+            private string pageBaseUrlFormat = "javascript:page('{0}');";
+
+            #region Properties
+
+            /// <summary>
+            /// Property sets index of current page view
+            /// </summary>
+            public int CurrentPage
+            {
+                get { return currentPage; }
+                set { currentPage = value; }
+            }
+
+            /// <summary>
+            /// Property sets number of records per page view
+            /// </summary>
+            public int RecordsPerPage
+            {
+                get { return recordsPerPage; }
+                set { recordsPerPage = value; }
+            }
+
+            /// <summary>
+            /// Property sets total number of records
+            /// </summary>
+            public int RecordCount
+            {
+                get { return recordCount; }
+                set { recordCount = value; }
+            }
+
+            public int ShowPages
+            {
+                get { return showPages; }
+                set { showPages = value; }
+            }
+
+            #endregion
+
+            /// <summary>
+            /// Default class constructor
+            /// </summary>
+            public DrugPager() { }
+
+            public DrugPager(string pageBaseUrl, int pageIndex, int pageSize, int pageCount, int itemCount)
+            {
+                this.currentPage = pageIndex;
+                this.recordCount = itemCount;
+                this.recordsPerPage = pageSize;
+                this.showPages = pageCount;
+                this.pageBaseUrlFormat = pageBaseUrl + "&first={0}&page={1}";
+            }
+
+            /// <summary>
+            /// Method that builds HTML paging constructs based on class properties
+            /// </summary>
+            /// <returns>Paging HTML links</returns>
+            public string RenderPager()
+            {
+                string result = "";
+                int startIndex = 0;
+                int endIndex = 0;
+                int pages = 0;
+
+                //Get number of pages
+                if (recordsPerPage > 0)
+                {
+                    pages = recordCount / recordsPerPage;
+                    if (recordCount % recordsPerPage > 0)
+                    {
+                        pages += 1;
+                    }
+                }
+
+                if (pages > 1)
+                {
+                    startIndex = currentPage - showPages > 0 ? currentPage - showPages : 1;
+                    endIndex = currentPage + showPages > pages ? pages : currentPage + showPages;
+
+                    for (int i = startIndex; i <= endIndex; i++)
+                    {
+                        if (currentPage != i)
+                        {
+                            result += "<li><a href=\"" + String.Format(pageBaseUrlFormat, (((i - 1) * this.recordsPerPage) + 1).ToString(), i) + "\">" + i.ToString() + "</a></li>";
+                        }
+                        else
+                        {
+                            result += "<li class='current'>" + i.ToString() + "</li>";
+                        }
+                    }
+
+                    if (currentPage > 1)
+                    {
+                        result = "<li class='previous'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage - 2) * this.recordsPerPage) + 1).ToString(), (currentPage - 1).ToString()) + "\">Previous</a></li>" + result;
+                    }
+                    if (currentPage < pages)
+                    {
+                        result += "<li class='next'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage) * this.recordsPerPage) + 1).ToString(), (currentPage + 1).ToString()) + "\">Next</a></li>";
+                    }
+
+                    result = "<div class='pagination'><ul class='no-bullets'>" + result + "</ul></div>";
+                }
+
+                return result;
+            }
+        }
+         
 
         protected AlphaListBox alphaListBox;
 
@@ -209,8 +323,8 @@ namespace Www.Templates
             //set up pager stuff
             if (NumResults > 0 && PageAssemblyContext.Current.DisplayVersion != DisplayVersions.Print)
             {
-                ResultPager objPager = new ResultPager(DictionaryURL + PageUrl, CurrentPageIndex, PageSize, 2, NumResults);
-                PagerHtml = "<p>" + objPager.RenderPager() + "</p>";
+                DrugPager objPager = new DrugPager(DictionaryURL + PageUrl, CurrentPageIndex, PageSize, 2, NumResults);
+                PagerHtml =  objPager.RenderPager();
             }
             litPager.Text = PagerHtml;
 
