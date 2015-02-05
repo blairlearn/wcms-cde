@@ -68,8 +68,12 @@
         </asp:Panel>
         <asp:Panel ID="pnlIntroSpanish" runat="server" Visible="false" EnableViewState="false">
             <p>
-                Bienvenidos al Diccionario de cáncer del NCI, un recurso con <strong><% =TotalCount %></strong> términos
+                El diccionario de cáncer del NCI contiene <strong><% =TotalCount %></strong> términos
                 relacionados con el cáncer y la medicina.
+            </p>
+            <p>
+                Para buscar un término en el diccionario presione en cualquier letra del alfabeto o escriba
+                una palabra o frase relacionada con el cáncer en el cuadro de búsqueda.
             </p>
         </asp:Panel>
     </asp:View>

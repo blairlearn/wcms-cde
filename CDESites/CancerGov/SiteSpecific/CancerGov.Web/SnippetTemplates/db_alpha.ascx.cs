@@ -475,7 +475,9 @@ namespace Www.Templates
         private void SetupSpanish()
         {
             _isSpanish = true;
-            AutoComplete1.Text = "buscar";
+            //AutoComplete1.Text = "Buscar";
+            AutoComplete1.Attributes.Add("aria-label", "Escriba frase o palabra clave");
+            AutoComplete1.Attributes.Add("placeholder", "Escriba frase o palabra clave");
             //Controls
             //lblStrSearch.Text = String.Empty;
             //lblAccessSearch.Text = "Cuadro de búsqueda de texto";
@@ -536,6 +538,9 @@ namespace Www.Templates
         {
             //Controls            
             //lblAutoComplete1.Text = "Search for";
+            AutoComplete1.Attributes.Add("aria-label", "Enter keywords or phrases");
+            AutoComplete1.Attributes.Add("placeholder", "Enter keywords or phrases");
+
             lblResultsFor.Text = "results found for:";
             btnGo.Text = "Search";
 
