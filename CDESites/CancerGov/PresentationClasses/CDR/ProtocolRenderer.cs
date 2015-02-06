@@ -129,11 +129,12 @@ namespace CancerGov.UI.CDR
 
 			StringBuilder sbContent = new StringBuilder();
 
-			//Draw the title, Everything has to have some title
-		
-			sbContent.Append("<h1>");
-			sbContent.Append(pProtocol.ProtocolTitle);
-			sbContent.Append("</h1>\n");
+			//Title is being set in the ClinicalTrialsView.ascx.cs control 
+            //and should not being rendered here.
+
+            //sbContent.Append("<h1>");
+            //sbContent.Append(pProtocol.ProtocolTitle);
+            //sbContent.Append("</h1>\n");
 
 			// for some reason this is drawn in a separate place when it's not a printable version
 			// also, don't show the dates for CTGov Protocols, since they are mostly wrong
@@ -736,19 +737,19 @@ namespace CancerGov.UI.CDR
             }
             else
             {
-                string InfoBoxFormat = "<span class=\"label\">{0}: </span>{1}<br>";
+                string InfoBoxFormat = "<strong>{0}: </strong>{1}<br/>";
 
                 // build protocol list with a comma separation instead of the linebreak used in
                 // the tabular layout.
                 string protocolList;
                 if( string.IsNullOrEmpty(pProtocol.AlternateProtocolIDs))
-                    protocolList = string.Format("<span class=\"protocol-primaryprotocolid\">{0}</span>",
+                    protocolList = string.Format("<strong>{0}</strong>",
                         pProtocol.PrimaryProtocolID);
                 else
-                    protocolList = string.Format("<span class=\"protocol-primaryprotocolid\">{0}</span>, {1}",
+                    protocolList = string.Format("<strong>{0}</strong>, {1}",
                         pProtocol.PrimaryProtocolID, pProtocol.AlternateProtocolIDs);
 
-                sbContent.Append("<div class=\"Protocol-info-box-list\">\n");
+                sbContent.Append("<div>\n");
                 sbContent.AppendFormat(InfoBoxFormat, "Phase", pProtocol.Phase);
                 sbContent.AppendFormat(InfoBoxFormat, "Type", pProtocol.TrialType);
                 sbContent.AppendFormat(InfoBoxFormat, "Status", pProtocol.CurrentStatus);
