@@ -20,6 +20,9 @@
     }
 </script>    
 
+<script src="/JS/popEvents.js" type="text/javascript"></script>
+
+
  <div>
         <p>The NCI Drug Dictionary contains technical definitions and synonyms for drugs/agents
                 used to treat patients with cancer or conditions related to cancer. Each drug entry
