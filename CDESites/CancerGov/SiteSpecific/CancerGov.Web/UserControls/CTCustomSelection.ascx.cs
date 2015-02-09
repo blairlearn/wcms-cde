@@ -152,7 +152,7 @@ namespace www.Search.UserControls
             ViewState["SelectedIDs"] = _selectedIDs;
         }
 
-        protected void imgBtnSelect_Click(object sender, ImageClickEventArgs e)
+        protected void imgBtnSelect_Click(object sender, EventArgs e)
         {
             GetSelection();
             OnSelectionsChanged(EventArgs.Empty);
