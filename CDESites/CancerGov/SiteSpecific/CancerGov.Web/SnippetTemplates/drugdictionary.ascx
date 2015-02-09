@@ -196,7 +196,7 @@
         <asp:HyperLink ID="hlPatientInfo" runat="server" Visible="false">
                 <img src="/images/btn-patient-info.gif" alt="Patient Information" title="Patient Information" width="139" height="20" hspace="12" border="0"  align="absmiddle" />
         </asp:HyperLink></dd></dl>
-   
+    </asp:View>
 <!-- Footer -->
 <div id="footerzone" align="center">
     <asp:Literal ID="litPageFooter" runat="server"></asp:Literal>
