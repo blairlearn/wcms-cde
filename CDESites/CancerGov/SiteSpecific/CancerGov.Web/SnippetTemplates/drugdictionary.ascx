@@ -45,7 +45,7 @@
                     
                      <div class="medium-2 columns">
                         <span class="radio">
-                        <asp:RadioButton ID="radioStarts" runat="server" GroupName="sgroup"   />
+                        <asp:RadioButton ID="radioStarts" runat="server" GroupName="sgroup" checked="true"   />
                         <asp:Label ID="lblStartsWith" runat="server" Text="Starts with" class="inline"
                             AssociatedControlID="radioStarts"></asp:Label>
                         </span>
