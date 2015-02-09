@@ -615,7 +615,6 @@ namespace Www.Templates
             htmlT.Append("<tr><td valign=\"top\" width=\"28%\"><b>");
             htmlT.Append(dispName);
             htmlT.Append(":</b></td>");
-            htmlT.Append("<td valign=\"top\" width=\"10\"><img src=\"/images/spacer.gif\" width=\"10\" height=\"1\"  border=\"0\" alt=\"\"></td>");
 
             htmlT.Append("<td valign=\"top\" width=\"68%\">");
             if (dispName.Trim().ToLower().StartsWith("chemical structure name"))
@@ -639,7 +638,6 @@ namespace Www.Templates
 
             htmlT.Append("<td valign=\"top\" width=\"10\"></td>");
             //htmlT.Append("<tr> ");
-            htmlT.Append("<tr><td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"10\" height=\"6\"  border=\"0\" alt=\"\"></td></tr>");
         }
 
         #endregion

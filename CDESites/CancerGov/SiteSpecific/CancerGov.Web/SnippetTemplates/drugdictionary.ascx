@@ -120,7 +120,7 @@
                     button that links to a drug information summary page.</li>
             </ul>
             <!-- shaded box-->
-            <div style="background: #EFEFEF; padding: 17px;">
+            <div>
                 Information in the NCI Drug Dictionary is from the <a href="http://ncit.nci.nih.gov/">
                     NCI Thesaurus</a>, which is produced by NCI's Enterprise Vocabulary Services. Each drug 
                     entry includes a link to additional information available from the full NCI Thesaurus 
@@ -185,32 +185,18 @@
     <asp:View ID="ViewDefinition" runat="server" EnableViewState="false">
         
         <!-- Term and def -->
-        <b>
-            <asp:Label ID="lblTermName" runat="server"></asp:Label></b>
-        <asp:ImageButton ID="ibtnPatientInfo" CssClass="btn-patient-info" ImageUrl="/images/btn-patient-info.gif"
+        <dl>
+            <dt>
+            
+            <dfn><asp:Label ID="lblTermName" runat="server"></asp:Label></dfn></dt>
+        
+        <dd class="test"><asp:ImageButton ID="ibtnPatientInfo" CssClass="btn-patient-info" ImageUrl="/images/btn-patient-info.gif"
             runat="server" Visible="false" AlternateText="Patient Information" ToolTip="Patient Information"
             ImageAlign="AbsMiddle" Height="20" Width="139" />
         <asp:HyperLink ID="hlPatientInfo" runat="server" Visible="false">
                 <img src="/images/btn-patient-info.gif" alt="Patient Information" title="Patient Information" width="139" height="20" hspace="12" border="0"  align="absmiddle" />
-        </asp:HyperLink>
-
-        <asp:Literal ID="litDefHtml" runat="server"></asp:Literal>
-        
-        <asp:Literal ID="litOtherNames" runat="server"></asp:Literal>
-        <!-- <asp:Panel ID="pnlDefImages" runat="server">
-                <img src="/images/spacer.gif" width="10" height="25" alt="" border="0"/><br/>
-                <img src="/images/gray_spacer.gif" width="571" height="1" alt="" border="0"/><br/>
-                <img src="/images/spacer.gif" width="1" height="25" alt="" border="0"/><br/>
-            </asp:Panel> -->
-        <asp:Panel ID="pnlDefPrint" runat="server" Visible="false">
-            <p>
-            </p>
-        </asp:Panel>
-    </asp:View>
-</asp:MultiView>
-<asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal>
-<asp:Literal ID="litPager" runat="server"></asp:Literal>
-
+        </asp:HyperLink></dd></dl>
+   
 <!-- Footer -->
 <div id="footerzone" align="center">
     <asp:Literal ID="litPageFooter" runat="server"></asp:Literal>

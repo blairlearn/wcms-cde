@@ -60,7 +60,7 @@ namespace CancerGov.Web.SnippetTemplates
                         if (String.IsNullOrEmpty(TermPronunciation))
                             return "<span class=\"CDR_audiofile\">" + AudioMediaHTML + "</span>";
                         else
-                            return "<span class=\"CDR_audiofile\">" + AudioMediaHTML + "</span>&nbsp;&nbsp;<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
+                            return "<span class=\"CDR_audiofile\">" + AudioMediaHTML + "</span><span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
                     }
                     else
                     {

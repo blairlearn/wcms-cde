@@ -22,10 +22,10 @@
                 <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>"
                 <%# ResultListViewHrefOnclick(Container)%>>
                 <dfn><%# Eval("TermName")%></dfn></a>
-                <dd><%#AudioPronounceLink(Container)%></dd>
+                <dd class="pronunciation"><%#AudioPronounceLink(Container)%></dd>
             
                 <% if (ShowDefinition){ %>
-                <dd><%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%></dd>
+                <dd class="definition"><%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%></dd>
                 <% } %>
                 </dt>
                 

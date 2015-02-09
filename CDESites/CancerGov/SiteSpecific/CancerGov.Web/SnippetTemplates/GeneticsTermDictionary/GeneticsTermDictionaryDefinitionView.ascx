@@ -9,7 +9,7 @@
 <asp:PlaceHolder ID="phSearchBox" runat="server" />
 <dl><dt><dfn><% =TermName %></dfn></dt>
 <% if(!String.IsNullOrEmpty(AudioPronounceLink)) { %>
-<dd class="audioPronounceLink">
+<dd class="pronunciation">
 <% =AudioPronounceLink %>
 </dd>
 <% } %>
