@@ -35,42 +35,51 @@ namespace CancerGov.UI.CDR
             StringBuilder sbContent = new StringBuilder();
             bool isFirstProtocol = true;
 
-            sbContent.Append("<table width=\"100%\" cellspacing=\"8\" cellpadding=\"0\" class=\"clinicaltrials-resultTable\">\n");
+            //sbContent.Append("<table width=\"100%\" cellspacing=\"8\" cellpadding=\"0\" class=\"clinicaltrials-resultTable\">\n");
+            sbContent.Append("<div class=\"row\">\n");
 
             foreach (Protocol pProto in this.pcProtocols)
             {
                 if (!isFirstProtocol)
                 {
-                    sbContent.Append("<tr>\n");
-                    sbContent.Append("<td colspan=\"2\" valign=\"top\"><hr></td>\n");
-                    sbContent.Append("</tr>\n");
+                    //sbContent.Append("<tr>\n");
+                    //sbContent.Append("<td colspan=\"2\" valign=\"top\"><hr></td>\n");
+                    //sbContent.Append("</tr>\n");
+                    
                 }
                 else
                 {
                     isFirstProtocol = false;
                 }
 
-                sbContent.Append("<tr>\n");
+                //sbContent.Append("<tr>\n");
 
-                sbContent.AppendFormat("<td class=\"selectColumn\"><span>{0}.</span><br /><input type=\"checkbox\" name=\"cdrid\" class=\"cdridbox\" id=\"cdrid{1}\" value=\"{1}\" {2} ></td>\n",
+                //sbContent.AppendFormat("<td class=\"selectColumn\"><span>{0}.</span><br /><input type=\"checkbox\" name=\"cdrid\" class=\"cdridbox\" id=\"cdrid{1}\" value=\"{1}\" {2} ></td>\n",
+                //    pProto.ResultNumber, pProto.CdrId, alCDRIDs.Contains(pProto.CdrId) ? "checked" : "");
+                sbContent.AppendFormat("<div class=\"medium-1 columns\"><div class=\"checkbox\"><input type=\"checkbox\" name=\"cdrid\" class=\"cdridbox\" id=\"cdrid{1}\" value=\"{1}\" {2} ><label for=\"cdrid{1}\">{0}.</label></div></div>\n",
                     pProto.ResultNumber, pProto.CdrId, alCDRIDs.Contains(pProto.CdrId) ? "checked" : "");
 
-                sbContent.Append("<td width=\"100%\">\n");
+
+                //sbContent.Append("<td width=\"100%\">\n");
+                sbContent.Append("<div class=\"medium-11 columns clinical-trial-individual-result\">");
                 sbContent.Append(new AdvancedSearchProtocolRenderer(displayInfo, pProto, this.alCDRIDs, displayFormat, detailedViewPage).Render());
-                sbContent.Append("</td>\n");
-                sbContent.Append("</tr>\n");
+                sbContent.Append("</div>");
+                //sbContent.Append("</td>\n");
+                //sbContent.Append("</tr>\n");
 
                 // Only allow the "Select Trial Above" checkbox for formats other than Short/Title-only. [FR9255-050]
                 if (displayFormat != ProtocolDisplayFormats.Short)
                 {
                     sbContent.AppendFormat("<tr id=\"cdrid_mirror_row{0}\" class=\"cdrid_mirror_row\" style=\"display:none;\"><td valign=\"top\" colspan=\"2\">", pProto.CdrId);
+                    sbContent.Append("<div class=\"checkbox\">");
                     sbContent.AppendFormat("<input type=\"checkbox\" name=\"cdrid_mirror\"  id=\"cdrid_mirror{0}\" value=\"{0}\" {1} >\n",
                         pProto.CdrId, alCDRIDs.Contains(pProto.CdrId) ? "checked" : "");
                     sbContent.AppendFormat("<label for=\"cdrid_mirror{0}\"><strong>Select Trial Above</strong></label></td></tr>\n", pProto.CdrId);
+                    sbContent.Append("</div>");
                 }
             }
 
-            sbContent.Append("</table>\n");
+            sbContent.Append("</div>\n");
 
             // Only allow the "Select Trial Above" checkbox for formats other than Short/Title-only. [FR9255-050]
             if (displayFormat != ProtocolDisplayFormats.Short)

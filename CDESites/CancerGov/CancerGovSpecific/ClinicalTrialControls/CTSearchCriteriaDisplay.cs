@@ -161,8 +161,9 @@ namespace NCI.Web.UI.WebControls.FormControls
         {
             if (!string.IsNullOrEmpty(label) && !string.IsNullOrEmpty(value))
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "item-label");
-                writer.RenderBeginTag(HtmlTextWriterTag.Span);
+                //writer.AddAttribute(HtmlTextWriterAttribute.Class, "item-label");
+                //change this to a strong tag for NVCG
+                writer.RenderBeginTag(HtmlTextWriterTag.Strong);
                 writer.Write("{0}:", label);    // Label comes from within this class.  We can trust it.
                 writer.RenderEndTag();
 

@@ -138,9 +138,12 @@ namespace CancerGov.Web.SnippetTemplates
 
             }
 
-            //SCR30153
-            //this.PageHtmlHead.Title = pProtocol.ProtocolTitle;
-
+            //set the page title as the protocol title
+            PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
+            {
+                data.Value = pProtocol.ProtocolTitle;
+            });
+            
             StringBuilder sbPageUrl = new StringBuilder();
             sbPageUrl.Append(SearchPageInfo.DetailedViewSearchResultPagePrettyUrl);
             sbPageUrl.Append("?cdrid=");
