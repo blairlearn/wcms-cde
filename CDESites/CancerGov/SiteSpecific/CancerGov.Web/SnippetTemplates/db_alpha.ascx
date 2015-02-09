@@ -80,57 +80,56 @@
 </asp:MultiView>
 
 <asp:Panel ID="pnlTermSearch" name="pnlTermSearch" runat="server">
-<div class="dictionary-search">
-    <div class="hidden">
-        The search textbox has an autosuggest feature. When you enter three or more characters,
-        a list of up to 10 suggestions will popup under the textbox. Use the arrow keys
-        to move through the suggestions. To select a suggestion, hit the enter key. Using
-        the escape key closes the listbox and puts you back at the textbox. The radio buttons
-        allow you to toggle between having all search items start with or contain the text
-        you entered in the search box.
-    </div>
-	<form name="aspnetForm" method="post" action="/dictionary/" id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);"
-        role="search" aria-label="Search the Dictionary of Cancer Terms" runat="server">
-    
-        <div id="dictionary_jPlayer"></div>
+    <div class="dictionary-search">
+        <div class="hidden">
+            The search textbox has an autosuggest feature. When you enter three or more characters,
+            a list of up to 10 suggestions will popup under the textbox. Use the arrow keys
+            to move through the suggestions. To select a suggestion, hit the enter key. Using
+            the escape key closes the listbox and puts you back at the textbox. The radio buttons
+            allow you to toggle between having all search items start with or contain the text
+            you entered in the search box.
+        </div>
+	    <form name="aspnetForm" method="post" action="/dictionary/" id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);"
+            role="search" aria-label="Search the Dictionary of Cancer Terms" runat="server">
         
-        <div class="row">
-            <div class="medium-2 columns">              
-                <span class="radio">
-                    <asp:RadioButton ID="radioStarts" runat="server" Checked="true" GroupName="sgroup" />
-                    <asp:Label ID="lblStartsWith" class="inline" runat="server" Text="Starts with"
-                        AssociatedControlID="radioStarts"></asp:Label>
-                </span>
+            <div id="dictionary_jPlayer"></div>
+            
+            <div class="row">
+                <div class="medium-2 columns">              
+                    <span class="radio">
+                        <asp:RadioButton ID="radioStarts" runat="server" Checked="true" GroupName="sgroup" />
+                        <asp:Label ID="lblStartsWith" class="inline" runat="server" Text="Starts with"
+                            AssociatedControlID="radioStarts"></asp:Label>
+                    </span>
+                </div>
+                <div class="medium-2 columns left">
+                    <span class="radio">
+                        <asp:RadioButton ID="radioContains" runat="server" GroupName="sgroup" />
+                        <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline" 
+                            AssociatedControlID="radioContains"></asp:Label>
+                    </span>
+                </div>
             </div>
-            <div class="medium-2 columns left">
-                <span class="radio">
-                    <asp:RadioButton ID="radioContains" runat="server" GroupName="sgroup" />
-                    <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline" 
-                        AssociatedControlID="radioContains"></asp:Label>
-                </span>
+            <div class="row">
+                <div class="medium-6 columns">
+                    <!-- <asp:Label ID="lblAutoComplete1" runat="server" Text="Search for" 
+                        AssociatedControlID="AutoComplete1"></asp:Label> -->
+                    <CGov:AutoComplete CssClass="dictionary-search-input" Name="AutoComplete1" ID="AutoComplete1"
+                        placeholder="Enter keywords or phrases" inputmode="latin" aria-autocomplete="list"
+                        aria-label="Enter keywords or phrases" runat="server" CallbackFunc="ACOnSubmit"
+                        autocomplete="off" MinWidth="333"/>
+                </div>
+                <div class="medium-2 columns left">        
+                    <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
+                        ToolTip="Search" />
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="medium-6 columns">
-                <!-- <asp:Label ID="lblAutoComplete1" runat="server" Text="Search for" 
-                    AssociatedControlID="AutoComplete1"></asp:Label> -->
-                <CGov:AutoComplete CssClass="dictionary-search-input" Name="AutoComplete1" ID="AutoComplete1"
-                    placeholder="Enter keywords or phrases" inputmode="latin" aria-autocomplete="list"
-                    aria-label="Enter keywords or phrases" runat="server" CallbackFunc="ACOnSubmit"
-                    autocomplete="off" MinWidth="333"/>
-            </div>
-            <div class="medium-2 columns left">        
-                <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
-                    ToolTip="Search" />
-            </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 	<div class="az-list">
 	    <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
             NumericItems="true" ShowAll="false" />
 	</div>
-</div>
 </asp:Panel>	
 
 <asp:MultiView ID="MultiView2" runat="server" ActiveViewIndex="0">
@@ -239,11 +238,9 @@
             </asp:Panel> -->
     </asp:View>
 </asp:MultiView>
-<!-- <img src="/images/spacer.gif" width="10" height="19" alt="" border="0"><br>-->
-<asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal>
+<!-- <img src="/images/spacer.gif" width="10" height="19" alt="" border="0"><br>
+<asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal>-->
 
-
-</form>
 <!-- Footer -->
 <div id="footerzone" align="center">
     <asp:Literal ID="litPageFooter" runat="server"></asp:Literal>
