@@ -487,28 +487,40 @@ namespace CancerGov.UI.CDR
 
                                     if (strPrevOrgname != (string)drvSite.Row["OrganizationName"])
                                     {
-                                        sbUSA.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                        sbUSA.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                         strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
                                     }
 									sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 					
-								} else {
+								} else { // new city
 
+                                    if(!string.IsNullOrEmpty(strPrevCity) && sbUSA.Length > 0)
+                                        sbUSA.Append("</div>"); // Close previous city.
+
+                                    sbUSA.Append("<div class=\"study-site-city\">");
 									sbUSA.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
-                                    sbUSA.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                    sbUSA.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                     sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
                                     strPrevCity = drvSite.Row["City"].ToString();
                                     strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
 								}
 
-							} else {
-								if (drvSite.Row["State"].ToString() != "") {
+							} else {  // new state
 
+                                if (!string.IsNullOrEmpty(strPrevCity) && sbUSA.Length > 0)
+                                    sbUSA.Append("</div>"); // Close previous city.
+                                if (!string.IsNullOrEmpty(strPrevState) && sbUSA.Length > 0)
+                                    sbUSA.Append("</div>"); // Close previous state.
+
+                                sbUSA.Append("<div class=\"study-site-state\">");
+                                if (drvSite.Row["State"].ToString() != "")
+                                {
                                     sbUSA.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 								}
+                                sbUSA.Append("<div class=\"study-site-city\">");
                                 sbUSA.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
-                                sbUSA.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                sbUSA.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                 sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
 								strPrevState = drvSite.Row["State"].ToString();
@@ -516,15 +528,23 @@ namespace CancerGov.UI.CDR
                                 strPrevCity = drvSite.Row["City"].ToString();
 							}
 
-						} else {
+						} else { // Change country.
+                            if (!string.IsNullOrEmpty(strPrevCity) && sbUSA.Length > 0)
+                                sbUSA.Append("</div>"); // Close previous city.
+                            if (!string.IsNullOrEmpty(strPrevState) && sbUSA.Length > 0)
+                                sbUSA.Append("</div>"); // Close previous state.
+
                             sbUSA.AppendFormat("<h4>{0}</h4>\n", drvSite.Row["Country"].ToString());
 
-							if (drvSite.Row["State"].ToString() != "") {
+                            sbUSA.Append("<div class=\"study-site-state\">");
+                            if (drvSite.Row["State"].ToString() != "")
+                            {
                                 sbUSA.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 							}
 
+                            sbUSA.Append("<div class=\"study-site-city\">");
                             sbUSA.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
-                            sbUSA.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                            sbUSA.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                             sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 						
 							strPrevCountry = drvSite.Row["Country"].ToString();
@@ -532,31 +552,46 @@ namespace CancerGov.UI.CDR
 							strPrevCity = drvSite.Row["City"].ToString();
                             strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
                         }
-					} else {
+					} else { // NON-USA
 						if (strPrevCountry == (string)drvSite.Row["Country"]) { //do not draw country
 							if (strPrevState == (string)drvSite.Row["State"]) { //do not draw state
 								if (strPrevCity == (string)drvSite.Row["City"]) { //do not draw city
                                     if (strPrevOrgname != (string)drvSite.Row["OrganizationName"])
                                     {
-                                        sbWorld.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                        sbWorld.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                         strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
                                     }
                                     sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
-								} else {
+								} else { // new city
+
+                                    if (!string.IsNullOrEmpty(strPrevCity) && sbWorld.Length > 0)
+                                        sbWorld.Append("</div>"); // Close previous city.
+
+                                    sbWorld.Append("<div class=\"study-site-city\">");
+
                                     sbWorld.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
-                                    sbWorld.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                    sbWorld.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                     sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
 									strPrevCity = drvSite.Row["City"].ToString();
                                     strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
                                 }
 
-							} else {
-								if (drvSite.Row["State"].ToString() != "") {
+							} else { // new state
+
+                                if (!string.IsNullOrEmpty(strPrevCity) && sbWorld.Length > 0)
+                                    sbWorld.Append("</div>"); // Close previous city.
+                                if (!string.IsNullOrEmpty(strPrevState) && sbWorld.Length > 0)
+                                    sbWorld.Append("</div>"); // Close previous state.
+
+                                sbWorld.Append("<div class=\"study-site-state\">");
+                                if (drvSite.Row["State"].ToString() != "")
+                                {
                                     sbWorld.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 								}
+                                sbWorld.Append("<div class=\"study-site-city\">");
                                 sbWorld.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
-                                sbWorld.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                sbWorld.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                 sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
 								strPrevState = drvSite.Row["State"].ToString();
@@ -564,15 +599,22 @@ namespace CancerGov.UI.CDR
                                 strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
                             }
 
-						} else {
+						} else { // Change country.
+                            if (!string.IsNullOrEmpty(strPrevCity) && sbWorld.Length > 0)
+                                sbWorld.Append("</div>"); // Close previous city.
+                            if (!string.IsNullOrEmpty(strPrevState) && sbWorld.Length > 0)
+                                sbWorld.Append("</div>"); // Close previous state.
+
                             sbWorld.AppendFormat("<h4>{0}</h4>\n", drvSite.Row["Country"].ToString());
 
+                            sbWorld.Append("<div class=\"study-site-state\">");
 							if (drvSite.Row["State"].ToString() != "") {
                                 sbWorld.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 							}
 
+                            sbWorld.Append("<div class=\"study-site-city\">");
                             sbWorld.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
-                            sbWorld.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                            sbWorld.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                             sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 						
 							strPrevCountry = drvSite.Row["Country"].ToString();
@@ -582,6 +624,13 @@ namespace CancerGov.UI.CDR
                         }
 					}
 				}
+
+                // Close out city and state.
+                if(sbUSA.Length > 0)
+                    sbUSA.Append("</div></div>\n");
+                if(sbWorld.Length > 0)
+                    sbWorld.Append("</div></div>\n");
+
 				sbContent.Append(sbUSA.ToString());
 				sbContent.Append(sbWorld.ToString());
 
