@@ -470,9 +470,10 @@ namespace CancerGov.UI.CDR
 
                 sbContent.Append("<h3>Trial Sites</h3>\n");
 
-				string strPrevCountry = "";
-				string strPrevState = "";
-				string strPrevCity = "";
+                string strPrevOrgname = string.Empty;
+                string strPrevCountry = string.Empty;
+                string strPrevState = string.Empty;
+                string strPrevCity = string.Empty;
 				
 				foreach (DataRowView drvSite in dvStudySites) {
 
@@ -483,16 +484,22 @@ namespace CancerGov.UI.CDR
 							if (strPrevState == (string)drvSite.Row["State"]) { //do not draw state
 
 								if (strPrevCity == (string)drvSite.Row["City"]) { //do not draw city
-					
+
+                                    if (strPrevOrgname != (string)drvSite.Row["OrganizationName"])
+                                    {
+                                        sbUSA.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                        strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                                    }
 									sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 					
 								} else {
 
 									sbUSA.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                                    sbUSA.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                     sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
-									strPrevCity = drvSite.Row["City"].ToString();
-
+                                    strPrevCity = drvSite.Row["City"].ToString();
+                                    strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
 								}
 
 							} else {
@@ -501,10 +508,12 @@ namespace CancerGov.UI.CDR
                                     sbUSA.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 								}
                                 sbUSA.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                                sbUSA.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                 sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
 								strPrevState = drvSite.Row["State"].ToString();
-								strPrevCity = drvSite.Row["City"].ToString();
+                                strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                                strPrevCity = drvSite.Row["City"].ToString();
 							}
 
 						} else {
@@ -515,49 +524,62 @@ namespace CancerGov.UI.CDR
 							}
 
                             sbUSA.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                            sbUSA.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                             sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 						
 							strPrevCountry = drvSite.Row["Country"].ToString();
 							strPrevState = drvSite.Row["State"].ToString();
 							strPrevCity = drvSite.Row["City"].ToString();
-						}
+                            strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                        }
 					} else {
 						if (strPrevCountry == (string)drvSite.Row["Country"]) { //do not draw country
 							if (strPrevState == (string)drvSite.Row["State"]) { //do not draw state
 								if (strPrevCity == (string)drvSite.Row["City"]) { //do not draw city
+                                    if (strPrevOrgname != (string)drvSite.Row["OrganizationName"])
+                                    {
+                                        sbWorld.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                        strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                                    }
                                     sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 								} else {
                                     sbWorld.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                                    sbWorld.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                     sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
 									strPrevCity = drvSite.Row["City"].ToString();
-								}
+                                    strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                                }
 
 							} else {
 								if (drvSite.Row["State"].ToString() != "") {
                                     sbWorld.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 								}
                                 sbWorld.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                                sbWorld.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                                 sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
 								strPrevState = drvSite.Row["State"].ToString();
 								strPrevCity = drvSite.Row["City"].ToString();
-							}
+                                strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                            }
 
 						} else {
-                            sbWorld.AppendFormat("<h4>{0}</h4}\n", drvSite.Row["Country"].ToString());
+                            sbWorld.AppendFormat("<h4>{0}</h4>\n", drvSite.Row["Country"].ToString());
 
 							if (drvSite.Row["State"].ToString() != "") {
                                 sbWorld.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 							}
 
                             sbWorld.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                            sbWorld.AppendFormat("<p class=\"StudySiteName\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
                             sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 						
 							strPrevCountry = drvSite.Row["Country"].ToString();
 							strPrevState = drvSite.Row["State"].ToString();
 							strPrevCity = drvSite.Row["City"].ToString();
-						}
+                            strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                        }
 					}
 				}
 				sbContent.Append(sbUSA.ToString());
