@@ -68,14 +68,7 @@ namespace CancerGov.Web.SnippetTemplates
                     {
                         geneticPro = new GeneticProfessional(id);
 
-                        content += "<table border=\"0\" cellpadding=\"1\" cellspacing=\"0\" style=\"border: 1px solid #bdbdbd;\" width=\"100%\"><tr><td>";
-                        content += "<table border=\"0\" cellpadding=\"10\" cellspacing=\"0\" bgcolor=\"#ffffff\" width=\"100%\"><tr><td>";
                         content += geneticPro.GetHtml(Server.MapPath("/Stylesheets"));
-                        content += "</td></tr></table>";
-                        content += "</td></tr></table>";
-                        content += "<p>";
-                        content += new ReturnToTopAnchor(this.PageDisplayInformation).Render();
-                        content += "<p>";
                         content = content.Replace("/search/search_geneticsservices.aspx", SearchPageInfo.SearchPagePrettyUrl);
                     }
                 }
@@ -83,6 +76,11 @@ namespace CancerGov.Web.SnippetTemplates
                 if (Strings.Clean(content) == null)
                 {
                     content = "The cancer genetic professional(s) you selected was not found.";
+                }
+                else
+                {
+                    // wrap in ul element
+                    content = "<div class='slot-item'><div class='results'>" + content + "</div></div>";
                 }
             }
             else
