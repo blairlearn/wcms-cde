@@ -112,8 +112,6 @@
             </div>
             <div class="row">
                 <div class="medium-6 columns">
-                    <!-- <asp:Label ID="lblAutoComplete1" runat="server" Text="Search for" 
-                        AssociatedControlID="AutoComplete1"></asp:Label> -->
                     <CGov:AutoComplete CssClass="dictionary-search-input" Name="AutoComplete1" ID="AutoComplete1"
                         placeholder="Enter keywords or phrases" inputmode="latin" aria-autocomplete="list"
                         aria-label="Enter keywords or phrases" runat="server" CallbackFunc="ACOnSubmit"
@@ -207,39 +205,13 @@
                 </dd>
             </dl>
         </div>
-        <!-- <asp:Panel ID="pnlDefImages" runat="server">
-                <img src="/images/spacer.gif" width="10" height="25" alt="" border="0"/><br/>
-	            <img src="/images/gray_spacer.gif" width="571" height="1" alt="" border="0"/><br/>
-	            <img src="/images/spacer.gif" width="1" height="25" alt="" border="0"/><br/>
-            </asp:Panel> -->
+
         <asp:Panel ID="pnlDefPrint" runat="server" Visible="false">
             <p>
             </p>
         </asp:Panel>
-        <!-- <asp:Panel ID="pnlPrevNext" runat="server" Visible="false">
-                <table width="100%"  border="0" cellspacing="0" cellpadding="2">
-                    <tr>
-                        <td class="col1" valign="top"><b>
-                            <asp:Label ID="lblPrevText" runat="server" Visible="false"></asp:Label></b>
-                        </td>
-                        <td class="col2" valign="top">
-                            <asp:Literal ID="litPrevTerms" runat="server"></asp:Literal>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col1" valign="top"><b>
-                            <asp:Label ID="lblNextText" runat="server" Visible="false"></asp:Label></b>
-                        </td>
-                        <td class="col2" valign="top">
-                            <asp:Literal ID="litNextTerms" runat="server"></asp:Literal>
-                        </td>
-                    </tr>
-                </table>
-            </asp:Panel> -->
     </asp:View>
 </asp:MultiView>
-<!-- <img src="/images/spacer.gif" width="10" height="19" alt="" border="0"><br>
-<asp:Literal ID="litBackToTop" runat="server" Visible="false"></asp:Literal>-->
 
 <!-- Footer -->
 <div id="footerzone" align="center">

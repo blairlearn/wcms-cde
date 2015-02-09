@@ -113,15 +113,6 @@ namespace Www.Templates {
         protected global::System.Web.UI.WebControls.Label lblContains;
         
         /// <summary>
-        /// lblAutoComplete1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAutoComplete1;
-        
-        /// <summary>
         /// AutoComplete1 control.
         /// </summary>
         /// <remarks>
@@ -284,15 +275,6 @@ namespace Www.Templates {
         protected global::System.Web.UI.WebControls.Literal litImageHtml;
         
         /// <summary>
-        /// pnlDefImages control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlDefImages;
-        
-        /// <summary>
         /// pnlDefPrint control.
         /// </summary>
         /// <remarks>
@@ -300,60 +282,6 @@ namespace Www.Templates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlDefPrint;
-        
-        /// <summary>
-        /// pnlPrevNext control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlPrevNext;
-        
-        /// <summary>
-        /// lblPrevText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPrevText;
-        
-        /// <summary>
-        /// litPrevTerms control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litPrevTerms;
-        
-        /// <summary>
-        /// lblNextText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNextText;
-        
-        /// <summary>
-        /// litNextTerms control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litNextTerms;
-        
-        /// <summary>
-        /// litBackToTop control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litBackToTop;
         
         /// <summary>
         /// litPageFooter control.

@@ -20,7 +20,6 @@ namespace Www.Templates
     public partial class DbAlpha : SnippetControl
     {
         protected AlphaListBox alphaListBox;
-        //private TitleBlock _titleBl;
 
         //These are the QueryString related variables
         private string _searchStr = string.Empty;
@@ -142,9 +141,6 @@ namespace Www.Templates
             ValidateParams();
             GetQueryParams();
 
-            //DictionaryURLSpanish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("dictionary", "diccionario"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLSpanish"];
-            //DictionaryURLEnglish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("diccionario", "dictionary"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLEnglish"];
-            
             //Setup URLS
             string snippetXmlData = string.Empty;
             snippetXmlData = SnippetInfo.Data;
@@ -424,7 +420,7 @@ namespace Www.Templates
         {
             ActivateDefaultView();
             MultiView2.ActiveViewIndex = 0;
-            litBackToTop.Visible = (NumResults > 1);
+            //litBackToTop.Visible = (NumResults > 1);
             if (NumResults == 0)
             {
                 RenderNoResults();
@@ -475,58 +471,28 @@ namespace Www.Templates
         private void SetupSpanish()
         {
             _isSpanish = true;
-            //AutoComplete1.Text = "Buscar";
+
+            //Controls
             AutoComplete1.Attributes.Add("aria-label", "Escriba frase o palabra clave");
             AutoComplete1.Attributes.Add("placeholder", "Escriba frase o palabra clave");
-            //Controls
-            //lblStrSearch.Text = String.Empty;
-            //lblAccessSearch.Text = "Cuadro de búsqueda de texto";
-
-            //lblStarts.Text = "Empieza con";
-            //lblContains.Text = "Contiene";
-            lblResultsFor.Text = "resultados de:";
             
-            //radioStarts.Text = "Empieza con";
-            //radioContains.Text = "Contiene";
-
+            lblResultsFor.Text = "resultados de:";
             lblStartsWith.Text = "Empieza con";
             lblContains.Text = "Contiene";
 
             pnlIntroEnglish.Visible = false;
             pnlIntroSpanish.Visible = true;
 
-            
-            //btnGo.AlternateText = "Botón de búsqueda";
-            //btnGo.ToolTip = "Botón de búsqueda";
             btnGo.Text = "Buscar";
             btnGo.ToolTip = "Buscar";
-            //btnGo.CssClass = "btnBuscar";
 
             AutoComplete1.CloseLinkText = "cerrar";
-            //searchboxBtn.Attributes.Add("style", "width:64px;");
-            //searchboxStarts.Attributes.Add("style", "margin-right:6px");
-            //searchboxStarts.Attributes.Add("style", "width:95px;");
-
-            //alphaListBox.UrlArgs = "lang=spanish";
 
             //Page Properties
             PageOptionsBoxTitle = "Opciones";
             PrevText = "Definiciones anteriores:";
             NextText = "Definiciones siguientes:";
-            //QueryStringLang = "&lang=spanish";
-
-            //// Get the image we need to display
-            //CancerGov.UI.HTML.HtmlImage himage = null;
-            //if (this.PageDisplayInformation.Version == DisplayVersion.Image)
-            //    himage = new CancerGov.UI.HTML.HtmlImage("/images/title-default-spanish.jpg", "");
-
-            ////Title block
-            //this.PageHtmlHead.Title = "Diccionario de c&aacute;ncer - National Cancer Institute";
-            ////_titleBl = new TitleBlock("Diccionario de c&aacute;ncer", new CancerGov.UI.HTML.HtmlImage("/images/title-default-spanish.jpg", "", "165", "58"), this.PageDisplayInformation);
-            //_titleBl = new TitleBlock("Diccionario de c&aacute;ncer", himage, this.PageDisplayInformation);
-            //this.PageHeaders.Add(_titleBl);
-            //this.PageLeftColumn = new LeftNavColumn(this, Strings.ToGuid(ConfigurationSettings.AppSettings["SpanishDictionaryLeftViewID"]));
-
+            
             ////common display features
             SetupCommon();
         }
@@ -537,7 +503,6 @@ namespace Www.Templates
         private void SetupEnglish()
         {
             //Controls            
-            //lblAutoComplete1.Text = "Search for";
             AutoComplete1.Attributes.Add("aria-label", "Enter keywords or phrases");
             AutoComplete1.Attributes.Add("placeholder", "Enter keywords or phrases");
 
@@ -638,7 +603,6 @@ namespace Www.Templates
 
             ActivateDefaultView();
             MultiView2.ActiveViewIndex = 1;
-            pnlPrevNext.Visible = true;
 
             string termName = string.Empty;
             string termPronun = string.Empty;
