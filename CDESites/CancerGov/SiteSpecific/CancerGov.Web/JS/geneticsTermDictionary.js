@@ -26,10 +26,7 @@ function DoSearch()
 {
    if($('#searchString').val() != "") {
       var localSearhString = htmlEscape($('#searchString').val());
-      var isContains=false;
-      if($("#radioContains").attr("checked")!= "undefined")
-         if($("#radioContains").attr("checked"))
-           isContains=true;
+      var isContains = IsContains();
       if(isContains) {
          var url = $('#litPageUrl').text() + "?search=" + localSearhString + "&contains=true";
          NCIAnalytics.GeneticsDictionarySearch(this,localSearhString,true);
@@ -97,7 +94,7 @@ function autoFunc() {
 		$("#searchString").val(ui.item.item);
 		return false;
 	    }
-	}).data("autocomplete")._renderItem = function(ul, item) {
+	}).data("ui-autocomplete")._renderItem = function(ul, item) {
 	    //Escape bad characters
 	    var lterm = this.term.replace(/[-[\]{}()*+?.,\^$|#\s]/g, "\$&");
 	    
@@ -111,7 +108,7 @@ function autoFunc() {
 	    var word = item.item.replace(regexBold, "<strong>$&</strong>");
 
 	    return $("<li></li>")
-				.data("item.autocomplete", item)
+				.data("ui-autocomplete-item", item)
 				.append("<a onclick=\"SelectIt();\">" + word + "</a>")
 				.appendTo(ul);
 	};
@@ -131,8 +128,7 @@ function SelectIt()  {
 function IsContains() {
     var ret = false;
     
-    if($("#radioContains").attr("checked")!= "undefined")
-      if($("#radioContains").attr("checked"))
+    if($("#radioContains").prop("checked"))
          ret = true;
 
     return ret; 
