@@ -546,7 +546,7 @@ namespace Www.Templates
                         bool chemStruct = displayName.Trim().ToLower().StartsWith("chemical structure name");
                         if (chemStruct)
                         {
-                            syn.Append("<li style=\"margin-left:-25px;\">");
+                            syn.Append("<li>");
                         }
                         syn.Append(otherName);
                         if (displayPair.Value.Count > 1 && !chemStruct)
@@ -621,7 +621,7 @@ namespace Www.Templates
             {
                 if (synCnt > 1)
                 {
-                    htmlT.Append("<ul style=\"margin-bottom:0px;margin-top:0px;\">");
+                    htmlT.Append("<ul>");
                     htmlT.Append(syn);
                     htmlT.Append("</ul>");
                 }

@@ -120,7 +120,7 @@
                     button that links to a drug information summary page.</li>
             </ul>
             <!-- shaded box-->
-            <div style="background: #EFEFEF; padding: 17px;">
+            <div>
                 Information in the NCI Drug Dictionary is from the <a href="http://ncit.nci.nih.gov/">
                     NCI Thesaurus</a>, which is produced by NCI's Enterprise Vocabulary Services. Each drug 
                     entry includes a link to additional information available from the full NCI Thesaurus 

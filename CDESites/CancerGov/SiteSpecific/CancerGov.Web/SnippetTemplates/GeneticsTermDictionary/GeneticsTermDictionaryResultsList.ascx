@@ -18,7 +18,7 @@
                 <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
             </LayoutTemplate>
             <ItemTemplate>
-                <dt style="list-style-type: none;">
+                <dt>
                 <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>"
                 <%# ResultListViewHrefOnclick(Container)%>>
                 <dfn><%# Eval("TermName")%></dfn></a>
