@@ -12,7 +12,6 @@
         document.getElementById('<%=btnGo.ClientID%>').click();
     }
 </script>
-
 <script type="text/javascript">
     var ids = {
     radioStarts: "<%=radioStarts.ClientID %>"
@@ -21,6 +20,7 @@
 </script>    
 
 <script src="/JS/popEvents.js" type="text/javascript"></script>
+<script src="/JS/drugDictionary.js" type="text/javascript"></script>
 
 
  <div>
@@ -63,8 +63,8 @@
                     <div class="row">
                             
                     <div class="medium-6 columns">
-                        <CGov:AutoComplete CssClass="drug-dictionary" ID="AutoComplete1" Name="AutoComplete1" 
-                           runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" aria-label="Enter keywords or phrases" aria-autocomplete="list" MinWidth="384" placeholder="Enter keywords or phrases" />
+                        <asp:TextBox CssClass="drug-dictionary" ID="AutoComplete1" Name="AutoComplete1" 
+                           runat="server" />
                         <!-- <asp:Label ID="lblAccessSearch" CssClass="hidden" runat="server" Text="Search text box"
                            AssociatedControlID="AutoComplete1"></asp:Label> -->
                     </div>
@@ -92,42 +92,7 @@
 
 <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
     <asp:View ID="ViewDefault" runat="server" EnableViewState="false">
-        <div id="welcomeDiv">
-            <p><b>Tips on Looking Up a Drug</b></p>
-            <ul>
-                <li>In the search box, type the name or part of the name of the drug/agent you are looking
-                    for and click the “Go” button.</li>
-                <li>You can use the generic name (e.g., doxorubicin), U.S. brand names (e.g., Rubex),
-                    NSC number, chemical structure names, or other names to find the drug.</li>
-                <li>Click on a letter of the alphabet to browse through the dictionary or click on "All"
-                    to see a listing of all drugs in the dictionary.</li>
-                <li>Change the search from "Starts with" to "Contains" to find all drugs in the dictionary
-                    that include a word or set of letters or numbers (e.g., "rubicin" to find daunorubicin,
-                    doxorubicin, and epirubicin).</li>
-                <li>Use the
-                    <img src="/images/drug-dictionary-help.gif" width="13" height="13" alt="Help icon"
-                        border="0" align="absmiddle"/>
-                    icon to get more help.</li>
-                <li>The search box has an <strong>autosuggest</strong> feature. When you type three
-                    or more letters, a list of up to 10 suggestions will pop up below the box. Click
-                    on a suggestion with your mouse or use the arrow keys on your keyboard to move through
-                    the suggestions and then hit the Enter key to choose one.</li>
-                <li>Using the Escape key or clicking "close" within the autosuggest box closes the box
-                    and turns off the feature until you start a new search.</li>
-                <li>Some drug entries include a
-                    <img src="http://www.cancer.gov/images/btn-patient-info.gif" alt="Patient Information"
-                        title="Patient Information" width="139" height="20" border="0" align="absmiddle" />
-                    button that links to a drug information summary page.</li>
-            </ul>
-            <!-- shaded box-->
-            <div>
-                Information in the NCI Drug Dictionary is from the <a href="http://ncit.nci.nih.gov/">
-                    NCI Thesaurus</a>, which is produced by NCI's Enterprise Vocabulary Services. Each drug 
-                    entry includes a link to additional information available from the full NCI Thesaurus 
-                    database, which contains many drugs and other terms not included here.
-            </div>
-            <!-- end shaded box-->
-        </div>
+        <%-- No Longer Exists but view needed --%>
     </asp:View>
     <asp:View ID="ViewResultList" runat="server" EnableViewState="false">
         <!-- Number of results -->

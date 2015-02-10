@@ -607,6 +607,7 @@
     </Content>
     <Content Include="DrugDictionary.svc" />
     <Content Include="DynamicListTemplates\DynamicListNoDescNoImgDate.ascx" />
+    <Content Include="JS\drugDictionary.js" />
     <Content Include="JS\ForeSee\cancel.gif" />
     <Content Include="JS\ForeSee\cancel.html" />
     <Content Include="JS\ForeSee\closebtn.gif" />

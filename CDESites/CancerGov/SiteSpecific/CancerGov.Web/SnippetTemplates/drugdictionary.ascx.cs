@@ -255,7 +255,7 @@ namespace Www.Templates
             SetupCommon();
 
             //Set is IE property to determine if browser is IE 
-            AutoComplete1.IsIE = (Request.Browser.Browser.ToUpper() == "IE" ? true : false);
+            //AutoComplete1.IsIE = (Request.Browser.Browser.ToUpper() == "IE" ? true : false);
 
             //ConfigControlls();
 
@@ -385,19 +385,22 @@ namespace Www.Templates
 
         private void SetupCommon()
         {
+
+            radioStarts.InputAttributes.Add("onchange", "autoFunc();");
+            radioContains.InputAttributes.Add("onchange", "autoFunc();");
             //litSendToPrinter.Text = "Send to Printer";
 
             // This sets the url and link text for close
-            AutoComplete1.SearchURL = "/DrugDictionary.svc/SearchJSON?searchTerm=";
+            //AutoComplete1.SearchURL = "/DrugDictionary.svc/SearchJSON?searchTerm=";
 
-            radioStarts.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
-            radioContains.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioStarts.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioContains.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
 
-            radioStarts.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioStarts.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioStarts.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioStarts.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
-            radioContains.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioContains.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioContains.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioContains.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = SrcGroup.Equals("Contains");
@@ -651,7 +654,7 @@ namespace Www.Templates
         {
             radioContains.Checked = BContains;
             AutoComplete1.Text = (string.IsNullOrEmpty(Expand)) ? SearchStr.Replace("[[]", "[") : string.Empty;
-            AutoComplete1.SearchCriteria = (BContains) ? AutoComplete.SearchCriteriaEnum.Contains : AutoComplete.SearchCriteriaEnum.BeginsWith;
+            //AutoComplete1.SearchCriteria = (BContains) ? AutoComplete.SearchCriteriaEnum.Contains : AutoComplete.SearchCriteriaEnum.BeginsWith;
         }
 
         #region Utility methods

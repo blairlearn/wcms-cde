@@ -74,7 +74,7 @@ namespace Www.Templates {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::NCI.Web.UI.WebControls.FormControls.AutoComplete AutoComplete1;
+        protected global::System.Web.UI.WebControls.TextBox AutoComplete1;
         
         /// <summary>
         /// lblAccessSearch control.
