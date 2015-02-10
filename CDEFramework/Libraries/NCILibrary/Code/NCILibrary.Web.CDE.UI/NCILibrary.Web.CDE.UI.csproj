@@ -116,6 +116,7 @@
     <Compile Include="SnippetControls\BlogLandingDynamicList.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\DynamicListFactorySnippet.cs" />
     <Compile Include="SnippetControls\PublicArchiveBanner.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
