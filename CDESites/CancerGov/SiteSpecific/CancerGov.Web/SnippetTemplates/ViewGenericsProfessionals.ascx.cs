@@ -70,8 +70,10 @@ namespace CancerGov.Web.SnippetTemplates
                         geneticPro = new GeneticProfessional(id);
                         geneticProHtml = geneticPro.GetHtml(Server.MapPath("/Stylesheets"));
                         geneticProHtml = geneticProHtml.Replace("/search/search_geneticsservices.aspx", SearchPageInfo.SearchPagePrettyUrl);
+                        geneticProHtml = geneticProHtml.Replace("<GeneticsProfessional>", "");
+                        geneticProHtml = geneticProHtml.Replace("</GeneticsProfessional>", "");
 
-                        content += "<li>" + geneticProHtml + "</li>";
+                        content += "<li><div class='result'>" + geneticProHtml + "</div></li>";
                     }
                 }
 
