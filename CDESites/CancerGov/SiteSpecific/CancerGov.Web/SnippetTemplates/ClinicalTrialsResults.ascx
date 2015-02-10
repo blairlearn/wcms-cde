@@ -109,11 +109,11 @@
         
         <div class="row search-criteria-box">
         <div class="medium-8 columns">
-         <div id="hideCriteriaLink" style="display: none; padding: 0px 8px 0px;">
-            <a class="clinicaltrials-collapseLink" href="javascript:toggleSearchCriteria()">Hide
+         <div id="hideCriteriaLink" class="hide-criteria-link">
+            <a href="javascript:toggleSearchCriteria()">Hide
                 Search Criteria</a></div>
-        <div id="showCriteriaLink" style="display: none; padding: 8px 8px 0px;">
-            <a class="clinicaltrials-expansionLink" href="javascript:toggleSearchCriteria()">Show
+        <div id="showCriteriaLink" class="show-criteria-link">
+            <a href="javascript:toggleSearchCriteria()">Show
                 Search Criteria</a></div>
 
         <div>
