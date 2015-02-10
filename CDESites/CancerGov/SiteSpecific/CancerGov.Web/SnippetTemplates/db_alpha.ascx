@@ -95,14 +95,14 @@
             <div id="dictionary_jPlayer"></div>
             
             <div class="row">
-                <div class="medium-2 columns">              
+                <div class="small-2 columns">              
                     <span class="radio">
                         <asp:RadioButton ID="radioStarts" runat="server" Checked="true" GroupName="sgroup" />
                         <asp:Label ID="lblStartsWith" class="inline" runat="server" Text="Starts with"
                             AssociatedControlID="radioStarts"></asp:Label>
                     </span>
                 </div>
-                <div class="medium-2 columns left">
+                <div class="small-2 columns left">
                     <span class="radio">
                         <asp:RadioButton ID="radioContains" runat="server" GroupName="sgroup" />
                         <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline" 
@@ -117,93 +117,99 @@
                         aria-label="Enter keywords or phrases" runat="server" CallbackFunc="ACOnSubmit"
                         autocomplete="off" MinWidth="333"/>
                 </div>
-                <div class="medium-2 columns left">        
+                <div class="small-2 columns left">        
                     <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
                         ToolTip="Search" />
                 </div>
             </div>
         </form>
     </div>
-	<div class="az-list">
-	    <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
-            NumericItems="true" ShowAll="false" />
+    <div class="row">
+	    <div class="az-list">
+	        <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
+                NumericItems="true" ShowAll="false" />
+	    </div>
 	</div>
 </asp:Panel>	
 
 <asp:MultiView ID="MultiView2" runat="server" ActiveViewIndex="0">
     <asp:View ID="ViewResultList" runat="server" EnableViewState="false">
-    <div class="results">
-        <!-- Number of results -->
-        <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
-            <span class="results-count">
-                <asp:Label ID="lblNumResults" CssClass="results-num" runat="server"></asp:Label>
-                <asp:Label ID="lblResultsFor" runat="server"></asp:Label>
-                <asp:Label ID="lblWord" CssClass="term" runat="server"></asp:Label>
-            </span>
-        </asp:Panel>
-        
-        <asp:ListView ID="resultListView" runat="server">
-            <LayoutTemplate>
-                <dl class="dictionary-list">
-                    <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
-                </dl>
-            </LayoutTemplate>
-            <ItemTemplate>
-                <dt>
-                    <dfn>
-                         <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%><%=QueryStringLang%>" <%# ResultListViewHrefOnclick(Container)%>>
-                         <%# Eval("TermName")%></a>
-                    </dfn>
-                </dt>
-                <dd class="pronunciation">
-                    <%# AudioMediaHTML(DataBinder.Eval(Container.DataItem, "AudioMediaHTML")) %>
-                    <span><%#DataBinder.Eval(Container.DataItem, "TermPronunciation")%></span>
-                </dd>
-                <dd class="definition">
-                    <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
-                </dd>
-            </ItemTemplate>
-            <EmptyDataTemplate>
-                <asp:Panel ID="pnlNoDataEnglish" runat="server" Visible="false">
-                    No matches were found for the word or phrase you entered. Please check your spelling,
-                    and try searching again. You can also type the first few letters of your word or
-                    phrase, or click a letter in the alphabet and browse through the list of terms that
-                    begin with that letter.
+        <div class="row">
+            <div class="results">
+                <!-- Number of results -->
+                <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
+                    <span class="results-count">
+                        <asp:Label ID="lblNumResults" CssClass="results-num" runat="server"></asp:Label>
+                        <asp:Label ID="lblResultsFor" runat="server"></asp:Label>
+                        <asp:Label ID="lblWord" CssClass="term" runat="server"></asp:Label>
+                    </span>
                 </asp:Panel>
-                <asp:Panel ID="pnlNoDataSpanish" runat="server" Visible="false">
-                    No se encontraron resultados para lo que usted busca. Revise si escribi&oacute;
-                    correctamente e inténtelo de nuevo. También puede escribir las primeras letras de
-                    la palabra o frase que busca o hacer clic en la letra del alfabeto y revisar la
-                    lista de términos que empiezan con esa letra.
-                </asp:Panel>
-            </EmptyDataTemplate>
-        </asp:ListView>
-    </div>
+                
+                <asp:ListView ID="resultListView" runat="server">
+                    <LayoutTemplate>
+                        <dl class="dictionary-list">
+                            <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
+                        </dl>
+                    </LayoutTemplate>
+                    <ItemTemplate>
+                        <dt>
+                            <dfn>
+                                 <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%><%=QueryStringLang%>" <%# ResultListViewHrefOnclick(Container)%>>
+                                 <%# Eval("TermName")%></a>
+                            </dfn>
+                        </dt>
+                        <dd class="pronunciation">
+                            <%# AudioMediaHTML(DataBinder.Eval(Container.DataItem, "AudioMediaHTML")) %>
+                            <span><%#DataBinder.Eval(Container.DataItem, "TermPronunciation")%></span>
+                        </dd>
+                        <dd class="definition">
+                            <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
+                        </dd>
+                    </ItemTemplate>
+                    <EmptyDataTemplate>
+                        <asp:Panel ID="pnlNoDataEnglish" runat="server" Visible="false">
+                            No matches were found for the word or phrase you entered. Please check your spelling,
+                            and try searching again. You can also type the first few letters of your word or
+                            phrase, or click a letter in the alphabet and browse through the list of terms that
+                            begin with that letter.
+                        </asp:Panel>
+                        <asp:Panel ID="pnlNoDataSpanish" runat="server" Visible="false">
+                            No se encontraron resultados para lo que usted busca. Revise si escribi&oacute;
+                            correctamente e inténtelo de nuevo. También puede escribir las primeras letras de
+                            la palabra o frase que busca o hacer clic en la letra del alfabeto y revisar la
+                            lista de términos que empiezan con esa letra.
+                        </asp:Panel>
+                    </EmptyDataTemplate>
+                </asp:ListView>
+            </div>
+        </div>
     </asp:View>
     <asp:View ID="ViewDefinition" runat="server" EnableViewState="false">
         <!-- Language buttons -->
         <CancerGovWww:LangSwitch ID="langSwitch" runat="server">
         </CancerGovWww:LangSwitch>
         <!-- Term and def -->
-        <div class="results">
-            <dl class="dictionary-list">
-                <dt>
-                    <dfn>
-                        <asp:Label ID="lblTermName" runat="server"></asp:Label>
-                    </dfn>
-                </dt>
-                <dd class="pronunciation">
-                    <asp:Literal ID="litAudioMediaHtml" runat="server"></asp:Literal>
-                    <asp:Label ID="lblTermPronun" runat="server"></asp:Label>
-                </dd>
-                <dd class="definition">
-                    <asp:Literal ID="litDefHtml" runat="server"></asp:Literal>
-                    <asp:Panel runat="server" ID="pnlRelatedInfo">
-                        <asp:Literal ID="litRelatedLinkInfo" runat="server"></asp:Literal>
-                    </asp:Panel>
-                    <asp:Literal ID="litImageHtml" runat="server"></asp:Literal>
-                </dd>
-            </dl>
+        <div class="row">
+            <div class="results">
+                <dl class="dictionary-list">
+                    <dt>
+                        <dfn>
+                            <asp:Label ID="lblTermName" runat="server"></asp:Label>
+                        </dfn>
+                    </dt>
+                    <dd class="pronunciation">
+                        <asp:Literal ID="litAudioMediaHtml" runat="server"></asp:Literal>
+                        <asp:Label ID="lblTermPronun" runat="server"></asp:Label>
+                    </dd>
+                    <dd class="definition">
+                        <asp:Literal ID="litDefHtml" runat="server"></asp:Literal>
+                        <asp:Panel runat="server" ID="pnlRelatedInfo">
+                            <asp:Literal ID="litRelatedLinkInfo" runat="server"></asp:Literal>
+                        </asp:Panel>
+                        <asp:Literal ID="litImageHtml" runat="server"></asp:Literal>
+                    </dd>
+                </dl>
+            </div>
         </div>
 
         <asp:Panel ID="pnlDefPrint" runat="server" Visible="false">
