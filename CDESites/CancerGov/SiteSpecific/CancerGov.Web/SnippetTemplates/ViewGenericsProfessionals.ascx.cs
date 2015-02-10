@@ -61,15 +61,17 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 string[] personids = args.Split(',');
                 GeneticProfessional geneticPro;
+                String geneticProHtml;
 
                 foreach (string id in personids)
                 {
                     if (Strings.Clean(id) != null)
                     {
                         geneticPro = new GeneticProfessional(id);
+                        geneticProHtml = geneticPro.GetHtml(Server.MapPath("/Stylesheets"));
+                        geneticProHtml = geneticProHtml.Replace("/search/search_geneticsservices.aspx", SearchPageInfo.SearchPagePrettyUrl);
 
-                        content += geneticPro.GetHtml(Server.MapPath("/Stylesheets"));
-                        content = content.Replace("/search/search_geneticsservices.aspx", SearchPageInfo.SearchPagePrettyUrl);
+                        content += "<li>" + geneticProHtml + "</li>";
                     }
                 }
 
@@ -80,7 +82,7 @@ namespace CancerGov.Web.SnippetTemplates
                 else
                 {
                     // wrap in ul element
-                    content = "<div class='slot-item'><div class='results'>" + content + "</div></div>";
+                    content = "<div class='slot-item'><div class='results'><ul class='no-bullets'>" + content + "</ul></div></div>";
                 }
             }
             else

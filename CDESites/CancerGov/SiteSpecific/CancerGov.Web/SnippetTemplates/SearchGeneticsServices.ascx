@@ -31,7 +31,7 @@ function doWebAnalyticsStuff() {
                     </label>
                 </div>
                 <div class="medium-8 columns">
-                    <select id="selCancerType" multiple name="selCancerType" runat="server" size="3">
+                    <select id="selCancerType" class="full-width" multiple name="selCancerType" runat="server" size="3">
                     </select>
                  </div>
             </div>
@@ -42,7 +42,7 @@ function doWebAnalyticsStuff() {
                     </label>
                 </div>
                 <div class="medium-8 columns">
-                    <select id="selCancerFamily" multiple name="selCancerFamily" runat="server" size="3">
+                    <select id="selCancerFamily" class="full-width" multiple name="selCancerFamily" runat="server" size="3">
                     </select>
                 </div>
             </div>
@@ -64,7 +64,7 @@ function doWebAnalyticsStuff() {
                     </label>
                 </div>
                 <div class="medium-8 columns">
-                    <select id="selState" multiple name="selState" runat="server" size="3">
+                    <select id="selState" class="full-width" multiple name="selState" runat="server" size="3">
                     </select>
                 </div>
             </div>
@@ -74,7 +74,7 @@ function doWebAnalyticsStuff() {
                     </label>
                 </div>
                 <div class="medium-8 columns">
-                    <select id="selCountry" multiple name="selCountry" runat="server" size="3">
+                    <select id="selCountry" class="full-width" multiple name="selCountry" runat="server" size="3">
                     </select>
                 </div>
             </div>
@@ -93,7 +93,7 @@ function doWebAnalyticsStuff() {
             </div>
         </fieldset>
         
-        <button type="submit" name="searchBtn" class="button">Search</button>
-        <button type="reset" name="clearBtn" class="button">Clear</button>
+        <button type="submit" name="searchBtn" class="submit button">Search</button>
+        <button type="reset" name="clearBtn" class="reset button">Clear</button>
     </form>
 </div>

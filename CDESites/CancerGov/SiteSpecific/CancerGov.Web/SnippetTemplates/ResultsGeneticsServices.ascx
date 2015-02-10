@@ -77,15 +77,17 @@
             </HeaderTemplate>
             <ItemTemplate>
                 <li>
-                    <input type="checkbox" name="personid" id="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>"
-                        value="<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
-                                            
-                    <label for="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>" class="inline">
-                        <a href="<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>?personid=<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
-                            <%#DataBinder.Eval(Container.DataItem, "FullName")%>
-                            <%#DataBinder.Eval(Container.DataItem, "Degree")%>
-                        </a>
-                    </label>
+                    <span class="checkbox">
+                        <input type="checkbox" name="personid" id="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>"
+                            value="<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
+                                                
+                        <label for="personid<%#DataBinder.Eval(Container.DataItem, "PersonID")%>" class="inline">
+                            <a href="<%=SearchPageInfo.DetailedViewSearchResultPagePrettyUrl%>?personid=<%#DataBinder.Eval(Container.DataItem, "PersonID")%>">
+                                <%#DataBinder.Eval(Container.DataItem, "FullName")%>
+                                <%#DataBinder.Eval(Container.DataItem, "Degree")%>
+                            </a>
+                        </label>
+                    </span>
                 </li>
             </ItemTemplate>
             <FooterTemplate>
