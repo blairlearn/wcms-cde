@@ -13,8 +13,8 @@ using NCI.Web.UI.WebControls;
 namespace NCI.Web.CDE.UI.SnippetControls
 {
     [DefaultProperty("Text")]
-    [ToolboxData("<{0}:DynamicListNoDescNoImgDate runat=server></{0}:DynamicListNoDescNoImgDate>")]
-    public class DynamicListNoDescNoImgDate : BaseSearchSnippet
+    [ToolboxData("<{0}:DynamicListNoDescImgDate runat=server></{0}:DynamicListNoDescImgDate>")]
+    public class DynamicListNoDescImgDate : BaseSearchSnippet
     {
         override protected SearchList SearchList
         {
@@ -28,7 +28,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     //fixed in a future release. --BryanP 2/10/2015
                     base.SearchList.ResultsTemplate = @" 
                         #foreach($resultItem in $DynamicSearch.Results)
-	                        no desc, no image # $resultItem.RecNumber<br />
+	                        no desc, image # $resultItem.RecNumber<br />
                         #end
                     ";
                 }

@@ -109,6 +109,12 @@
     <Compile Include="SnippetControls\ContentSearchSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\DynamicListDescNoImgDate.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\DynamicListNoDescImgDate.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\DisqusComments.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -116,8 +122,15 @@
     <Compile Include="SnippetControls\BlogLandingDynamicList.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\DynamicListFactorySnippet.cs" />
-    <Compile Include="SnippetControls\DynamicListNoDescNoImgDate.cs" />
+    <Compile Include="SnippetControls\DynamicListDescImgDate.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\DynamicListFactorySnippet.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\DynamicListNoDescNoImgDate.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\PublicArchiveBanner.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
