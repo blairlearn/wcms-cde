@@ -61,57 +61,25 @@ autoFunc();
 function autoFunc() {
     var language = "English";
 
-    if ($('meta[name="content-language"]').attr("content") == "es") {
+    if ($('html').attr("lang") === "es") {
         language = "Spanish"
     }
 
     var $keywordElem = $("#searchString")
 
-    if ($keywordElem.length == 0)
+    if ($keywordElem.length === 0)
         return;
-        
 
-    var isContains = IsContains() 
+
+    var isContains = IsContains();
     var svcUrl = "";
-    if (IsContains())  
+    if (isContains)  
         svcUrl = "/TermDictionary.svc/SuggestGeneticsContainsJSON/";
     else
         svcUrl = "/TermDictionary.svc/SuggestGeneticsStartsJSON/";
 
-	$keywordElem.autocomplete({
-        
-        // Set AJAX service source 
-	    source: svcUrl + language,
-
-        // Start autocomplete only after three characters are typed 
-	    minLength: 3,
-	    
-	    focus: function(event, ui) {
-		$("#searchString").val(ui.item.item);
-		return false;
-	    },
-	    select: function(event, ui) {
-		$("#searchString").val(ui.item.item);
-		return false;
-	    }
-	}).data("ui-autocomplete")._renderItem = function(ul, item) {
-	    //Escape bad characters
-	    var lterm = this.term.replace(/[-[\]{}()*+?.,\^$|#\s]/g, "\$&");
-	    
-	    if(isContains)
-	        // highlight autocomplete item if it appears anywhere 
-	        var regexBold = new RegExp("(" + lterm + "|\s+" + lterm + "i)","i");
-	    else
-	        // hightlight autocomplete item if it appears at the beginning
-            var regexBold = new RegExp("(^" + lterm + "|\\s+" + lterm + ")");
-
-	    var word = item.item.replace(regexBold, "<strong>$&</strong>");
-
-	    return $("<li></li>")
-				.data("ui-autocomplete-item", item)
-				.append("<a onclick=\"SelectIt();\">" + word + "</a>")
-				.appendTo(ul);
-	};
+    svcUrl += language;
+    NCI.doAutocomplete("#searchString", svcUrl, isContains);
 
     $keywordElem.keyup(function(event) {
        if ( event.which == 13 ) {

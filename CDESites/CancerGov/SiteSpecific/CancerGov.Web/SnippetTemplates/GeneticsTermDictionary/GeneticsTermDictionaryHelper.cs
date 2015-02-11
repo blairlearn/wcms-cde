@@ -24,21 +24,21 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("<div class='dictionary-box' id='genetics-terms-dictionary'>");
            
             searchBlock.AppendLine("      <div id='dictionary_jPlayer'></div>");
-            searchBlock.AppendLine("     <form id=\"aspnetForm\" name=\"aspnetForm\" method=\"get\" action=\"/geneticsdictionary\" >");
+            searchBlock.AppendLine("     <form id=\"aspnetForm\" name=\"aspnetForm\" method=\"get\" action=\"/geneticsdictionary\" onsubmit=\"DoSearch();\" >");
             searchBlock.AppendLine("     <div class='row'>");
             if (contains)
             {
-                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='contains'  type='radio' onchange='autoFunc();' />");
+                searchBlock.AppendLine("      <div class=\"small-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='contains'  type='radio' onchange='autoFunc();' />");
                 searchBlock.AppendLine("      <label for='radioStarts' class=\"inline\" id='lblStartsWith'>Starts with</label></span></div>");
-                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' value=\"true\" name='contains' type='radio' checked='checked' onchange='autoFunc();'  />");
+                searchBlock.AppendLine("      <div class=\"small-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' value=\"true\" name='contains' type='radio' checked='checked' onchange='autoFunc();'  />");
                 searchBlock.AppendLine("      <label for='radioContains' class=\"inline\" id='lblContains'>Contains</label></span></div>");
 
             }
             else 
             {
-                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='contains' type='radio'  checked='checked' onchange='autoFunc();' />");
+                searchBlock.AppendLine("      <div class=\"small-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='contains' type='radio'  checked='checked' onchange='autoFunc();' />");
                 searchBlock.AppendLine("      <label for='radioStarts' class=\"inline\" id='lblStartsWith' >Starts with</label></span></div>");
-                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' name='contains' value=\"true\" type='radio' onchange='autoFunc();' />");
+                searchBlock.AppendLine("      <div class=\"small-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' name='contains' value=\"true\" type='radio' onchange='autoFunc();' />");
                 searchBlock.AppendLine("      <label for='radioContains' class=\"inline\" id='lblContains'>Contains</label></span></div>"); 
            } 
             searchBlock.AppendLine("   </div>");
