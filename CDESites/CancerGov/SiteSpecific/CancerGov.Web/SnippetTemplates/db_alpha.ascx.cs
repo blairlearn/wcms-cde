@@ -132,7 +132,6 @@ namespace Www.Templates
               
             radioContains.Checked = BContains;
             AutoComplete1.Text = (string.IsNullOrEmpty(Expand)) ? SearchStr.Replace("[[]", "[") : string.Empty;
-            AutoComplete1.SearchCriteria = (BContains) ? AutoComplete.SearchCriteriaEnum.Contains : AutoComplete.SearchCriteriaEnum.BeginsWith;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -192,13 +191,10 @@ namespace Www.Templates
 
             alphaListBox.BaseUrl = DictionaryURL;
 
-            //Set is IE property to determine if browser is IE 
-            AutoComplete1.IsIE = (Request.Browser.Browser.ToUpper() == "IE" ? true : false);
-
             if (Page.Request.RequestType.Equals("POST")) //This is a POST(back)
             {
-                
-                SearchStr = Request.Form["AutoComplete1"];
+
+                SearchStr = Request.Form[AutoComplete1.UniqueID];
                 SearchStr = SearchStr.Replace("[", "[[]");
                 CdrID = string.Empty;
                 Expand = string.Empty;
@@ -258,35 +254,9 @@ namespace Www.Templates
 
 
             }
-
-            //BackTopLink();
-
-
         }
-        /*
-        protected void BackTopLink()
-        {
-            //		RawUrl	"/drugdictionary?CdrID=42766"	string
-
-            if (Request.RawUrl.Contains("?") == false && NumResults<1)
-            {
-
-                litBackToTop.Visible = false;
-            } 
-            else if (Request.RawUrl.ToLower().Contains("?cdrid") == true)
-            {
-                litBackToTop.Visible = false;
-            }
-            else
-            {
-                litBackToTop.Visible = true;
-                litBackToTop.Text = "<a href=\"#top\" class=\"backtotop-link\"><img src=\"/images/backtotop_red.gif\" alt=\"Back to Top\" border=\"0\">Back to Top</a>";
-
-            }
-        }*/
         private void SetupPrintUrl()
         {
-            //PagePrintUrl = "db_alpha.aspx?print=1";
             PagePrintUrl = "?print=1";
 
             //add expand
@@ -420,7 +390,6 @@ namespace Www.Templates
         {
             ActivateDefaultView();
             MultiView2.ActiveViewIndex = 0;
-            //litBackToTop.Visible = (NumResults > 1);
             if (NumResults == 0)
             {
                 RenderNoResults();
@@ -486,8 +455,6 @@ namespace Www.Templates
             btnGo.Text = "Buscar";
             btnGo.ToolTip = "Buscar";
 
-            AutoComplete1.CloseLinkText = "cerrar";
-
             //Page Properties
             PageOptionsBoxTitle = "Opciones";
             PrevText = "Definiciones anteriores:";
@@ -534,8 +501,6 @@ namespace Www.Templates
             {
                 language = "English";
             }
-            // This sets the url and link text for close
-            AutoComplete1.SearchURL = "/TermDictionary.svc/SearchJSON/" + language + "?searchTerm=";
 
             radioStarts.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
             radioContains.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
@@ -545,12 +510,6 @@ namespace Www.Templates
 
             radioContains.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
             radioContains.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
-
-            //lblStarts.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            //lblStarts.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
-
-            //lblContains.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            //lblContains.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = SrcGroup.Equals("Contains");
@@ -582,8 +541,6 @@ namespace Www.Templates
         }
         private void RenderGutter()
         {
-           
-            //gutterLangSwitch.DisplayInfo = this.PageDisplayInformation;
             gutterLangSwitch.EnglishUrl = "/dictionary/";
             gutterLangSwitch.SpanishUrl = "/diccionario/";
             gutterLangSwitch.Visible = true;

@@ -31,13 +31,41 @@
             });
         });
     }
-       
 </script>
 
 <script type="text/javascript">
     var ids = {
-        radioStarts: "<%=radioStarts.ClientID %>"
+        radioStarts: "<%=radioStarts.ClientID %>",
+        radioContains: "<%=radioContains.ClientID %>"
     , AutoComplete1: "<%=AutoComplete1.ClientID %>"
+    }
+
+    $(document).ready(function() {
+        autoFunc();
+    });
+
+    function autoFunc() {
+        var language = "English";
+        if ($("html").attr("lang") === "es")
+            language = "Spanish";
+            
+        var isContains = IsContains();
+        var svcUrl = "";
+        if (isContains)
+            svcUrl = "/TermDictionary.svc/SearchJSON/" + language + "?contains=true";
+        else
+            svcUrl = "/TermDictionary.svc/SearchJSON/" + language;
+
+        NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
+    }
+
+    function IsContains() {
+        var ret = false;
+
+        if ($("#"+ids.radioContains).prop("checked"))
+            ret = true;
+
+        return ret;
     }
 </script>
 
@@ -112,16 +140,15 @@
             </div>
             <div class="row">
                 <div class="medium-6 columns">
-                    <CGov:AutoComplete CssClass="dictionary-search-input" Name="AutoComplete1" ID="AutoComplete1"
-                        placeholder="Enter keywords or phrases" inputmode="latin" aria-autocomplete="list"
-                        aria-label="Enter keywords or phrases" runat="server" CallbackFunc="ACOnSubmit"
-                        autocomplete="off" MinWidth="333"/>
+                    <asp:TextBox CssClass="dictionary-search-input" ID="AutoComplete1"
+                        inputmode="latin" aria-autocomplete="list"
+                        runat="server" CallbackFunc="ACOnSubmit"
+                        autocomplete="off" />
                 </div>
                 <div class="small-2 columns left">        
                     <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
                         ToolTip="Search" />
                 </div>
-            </div>
         </form>
     </div>
 	<div class="az-list">
@@ -198,9 +225,9 @@
                 </dd>
                 <dd class="definition">
                     <asp:Literal ID="litDefHtml" runat="server"></asp:Literal>
-                        <asp:Panel runat="server" ID="pnlRelatedInfo">
-                            <asp:Literal ID="litRelatedLinkInfo" runat="server"></asp:Literal>
-                        </asp:Panel>
+                    <asp:Panel runat="server" ID="pnlRelatedInfo">
+                        <asp:Literal ID="litRelatedLinkInfo" runat="server"></asp:Literal>
+                    </asp:Panel>
                     <asp:Literal ID="litImageHtml" runat="server"></asp:Literal>
                 </dd>
             </dl>
