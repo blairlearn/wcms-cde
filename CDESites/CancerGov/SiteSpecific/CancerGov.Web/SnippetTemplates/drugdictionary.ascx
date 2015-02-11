@@ -15,6 +15,7 @@
 <script type="text/javascript">
     var ids = {
     radioStarts: "<%=radioStarts.ClientID %>"
+    ,radioContains: "<%=radioContains.ClientID %>"
     ,AutoComplete1:"<%=AutoComplete1.ClientID %>"
     }
 </script>    

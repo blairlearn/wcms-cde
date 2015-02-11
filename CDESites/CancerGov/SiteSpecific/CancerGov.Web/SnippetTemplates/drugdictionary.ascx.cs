@@ -385,7 +385,9 @@ namespace Www.Templates
 
         private void SetupCommon()
         {
-
+            AutoComplete1.Attributes.Add("placeholder", "Enter keywords or phrases");
+            AutoComplete1.Attributes.Add("aria-label", "Enter keywords or phrases");
+            AutoComplete1.Attributes.Add("aria-autocomplete", "list");
             radioStarts.InputAttributes.Add("onchange", "autoFunc();");
             radioContains.InputAttributes.Add("onchange", "autoFunc();");
             //litSendToPrinter.Text = "Send to Printer";
