@@ -1,5 +1,5 @@
 ﻿// JavaScript for Genetics Term Dictionary
-
+ 
 //Hookup JPlayer for Audio
 if (jQuery.jPlayer) {
     jQuery(document).ready(function($) {
