@@ -606,6 +606,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="DrugDictionary.svc" />
+    <Content Include="DynamicListTemplates\DynamicListDescNoImgDate.ascx" />
+    <Content Include="DynamicListTemplates\DynamicListDescImgDate.ascx" />
+    <Content Include="DynamicListTemplates\DynamicListNoDescImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListNoDescNoImgDate.ascx" />
     <Content Include="JS\drugDictionary.js" />
     <Content Include="JS\ForeSee\cancel.gif" />
