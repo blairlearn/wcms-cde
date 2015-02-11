@@ -24,9 +24,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
         override protected void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            //SnippetControl localControl = (SnippetControl)Page.LoadControl("~/DynamicListTemplates/DynamicListNoDescNoImgDate.ascx");
-
             DynamicList info = ModuleObjectFactory<DynamicList>.GetModuleObject(SnippetInfo.Data);
+
+            // Need to add exception handling here
             SnippetControl localControl = (SnippetControl)Page.LoadControl(info.ResultsTemplate);
 
             localControl.SnippetInfo = this.SnippetInfo;
