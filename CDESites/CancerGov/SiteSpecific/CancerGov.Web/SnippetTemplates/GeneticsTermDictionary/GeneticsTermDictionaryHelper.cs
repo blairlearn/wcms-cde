@@ -24,29 +24,30 @@ namespace NCI.Web.CDE.UI.SnippetControls
             searchBlock.AppendLine("<div class='dictionary-box' id='genetics-terms-dictionary'>");
            
             searchBlock.AppendLine("      <div id='dictionary_jPlayer'></div>");
+            searchBlock.AppendLine("     <form id=\"aspnetForm\" name=\"aspnetForm\" method=\"get\" action=\"/geneticsdictionary\" >");
             searchBlock.AppendLine("     <div class='row'>");
             if (contains)
             {
-                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' onchange='autoFunc();' />");
+                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='contains'  type='radio' onchange='autoFunc();' />");
                 searchBlock.AppendLine("      <label for='radioStarts' class=\"inline\" id='lblStartsWith'>Starts with</label></span></div>");
-                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' checked='checked' onchange='autoFunc();'  />");
+                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' value=\"true\" name='contains' type='radio' checked='checked' onchange='autoFunc();'  />");
                 searchBlock.AppendLine("      <label for='radioContains' class=\"inline\" id='lblContains'>Contains</label></span></div>");
 
             }
-            else
+            else 
             {
-                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='radioGroup' type='radio' checked='checked' onchange='autoFunc();' />");
+                searchBlock.AppendLine("      <div class=\"medium-2 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='contains' type='radio'  checked='checked' onchange='autoFunc();' />");
                 searchBlock.AppendLine("      <label for='radioStarts' class=\"inline\" id='lblStartsWith' >Starts with</label></span></div>");
-                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' name='radioGroup' type='radio' onchange='autoFunc();' />");
+                searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><span class='radio' Name='radioContains'><input id='radioContains' name='contains' value=\"true\" type='radio' onchange='autoFunc();' />");
                 searchBlock.AppendLine("      <label for='radioContains' class=\"inline\" id='lblContains'>Contains</label></span></div>"); 
            } 
             searchBlock.AppendLine("   </div>");
             searchBlock.AppendLine("      <div class='row'>");
-            searchBlock.AppendLine("      <div class=\"medium-6 columns\"><input placeholder=\"Enter keywords or phrases\" autocomplete=\"off\" aria-label=\"Enter keywords or phrases\" aria-autocomplete=\"list\" type=\"text\" class=\"genetics-dictionary\" id=\"searchString\" maxlength=\"255\" name=\"searchString\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\" onkeypress=\"if(event.keyCode==13) DoSearch();\" value=\"" + searchString + "\" /> </div>");
-            searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><input type='submit' name='btnGo' id='btnGo' title='Search' class='submit button postfix' Name='btnGo' onclick='DoSearch();' /></div>");
+            searchBlock.AppendLine("      <div class=\"medium-6 columns\"><input placeholder=\"Enter keywords or phrases\" autocomplete=\"off\" aria-label=\"Enter keywords or phrases\" aria-autocomplete=\"list\" type=\"text\" class=\"genetics-dictionary\" id=\"searchString\" maxlength=\"255\" name=\"search\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\"  value=\"" + searchString + "\" /> </div>");
+            searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><input type='submit'  id='btnGo' title='Search' class='submit button postfix'  /></div>");
             searchBlock.AppendLine("      </div>");
 
-
+            searchBlock.AppendLine("     </form>");
 
             
             searchBlock.AppendLine("   <div class='az-list'>");
