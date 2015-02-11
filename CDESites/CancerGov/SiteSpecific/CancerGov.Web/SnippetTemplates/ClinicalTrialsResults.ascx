@@ -8,20 +8,20 @@
 
 <script type="text/javascript">
     var ids = {
-    checkAllTop:"<%=checkAllTop.ClientID %>"
-    ,checkAllBottom:"<%=checkAllBottom.ClientID %>"
-    ,pageSize:"<%=pageSize.ClientID %>"
-    ,OffPageSelectionsExist:"<%=OffPageSelectionsExist.ClientID%>"
-    ,customFormat:"<%=customFormat.ClientID%>"
-    ,titleFormat:"<%=titleFormat.ClientID%>"
-    ,healthProfAudience:"<%=healthProfAudience.ClientID%>"
-    ,includeLocations:"<%=includeLocations.ClientID%>"
-    ,includeEligibility:"<%=includeEligibility.ClientID%>"
-    ,descriptionFormat:"<%=descriptionFormat.ClientID%>"
-    ,DisplaySearchCriteriaCollapsed:"<%=DisplaySearchCriteriaCollapsed.ClientID%>"
+        checkAllTop: "<%=checkAllTop.ClientID %>"
+    , checkAllBottom: "<%=checkAllBottom.ClientID %>"
+    , pageSize: "<%=pageSize.ClientID %>"
+    , OffPageSelectionsExist: "<%=OffPageSelectionsExist.ClientID%>"
+    , customFormat: "<%=customFormat.ClientID%>"
+    , titleFormat: "<%=titleFormat.ClientID%>"
+    , healthProfAudience: "<%=healthProfAudience.ClientID%>"
+    , includeLocations: "<%=includeLocations.ClientID%>"
+    , includeEligibility: "<%=includeEligibility.ClientID%>"
+    , descriptionFormat: "<%=descriptionFormat.ClientID%>"
+    , DisplaySearchCriteriaCollapsed: "<%=DisplaySearchCriteriaCollapsed.ClientID%>"
     , CriteriaDisplay: "<%=CriteriaDisplay.ClientID%>"
     , advResultForm: "<%=advResultForm.ClientID%>"
-        }
+    }
 </script>
     
 
@@ -107,8 +107,8 @@
                  </div> 
         </div>
         
-        <div class="row search-criteria-box">
-        <div class="medium-8 columns">
+        <div class="search-criteria-box">
+        
          <div id="hideCriteriaLink" class="hide-criteria-link">
             <a href="javascript:toggleSearchCriteria()">Hide
                 Search Criteria</a></div>
@@ -121,20 +121,20 @@
         </div>
         <asp:HiddenField ID="DisplaySearchCriteriaCollapsed" runat="server" />
          <script type="text/javascript" language="javascript">             document.observe("dom:loaded", function() { SetSearchCriteriaDisplay(); });</script>
-        </div>
+        
        </div>
-       <div>
+       
                 <h5>
                     <asp:Literal ID="ResultsCountText" runat="server" /></h5>
-            </div>
+            
         <!-- Top View Content For box -->
         <asp:Panel ID="NoResultsMessage" Visible="false" runat="server">
             <p>
                 There were no clinical trials that matched the search criteria that you entered.
                 Remember that the more criteria you enter, the fewer results you are likely to get.</p>
         </asp:Panel>
-        <div class="row">
-            <div class="medium-8 columns">
+        
+            <div>
                 <asp:Button ID="TopPrintButton" class="action button" runat="server" AlternateText="Print Selected" Text="Print Selected" OnClick="DisplayForPrint_ClickHandler" />
                 <input id="refineSearch1" class="action button" runat="server" alt="Refine Search"
                     value="Refine Search" onserverclick="refineSearch_ServerClick"
@@ -151,15 +151,13 @@
                     Start Over</a>
             </div>
            
-            <div style="clear: both;">
-            </div>
-        </div>
-        <asp:Panel ID="topControlArea" runat="server" class="row">
+            
+        <asp:Panel ID="topControlArea" runat="server">
            
-           <div class=\"medium-1 columns\">
-            <div class="checkbox">
+           <span class="checkbox">
+            
                 <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllTop" Text="<strong>Select All on Page</strong>" onclick="checkAll_ClickHandler(this)" />
-               </div>
+               
 
 <%--                <script type="text/javascript">
                     document.observe("dom:loaded", function() {
@@ -168,13 +166,13 @@
                     });
                 </script>
 --%>
-              </div> 
-               <div class=\"medium-11 columns\">
+              </span> 
+               
                 <label for="<%=sortOrder.ClientID%>">
                     <strong>Sort by:</strong></label>
                 <asp:DropDownList ID="sortOrder" runat="server" AutoPostBack="false">
                 </asp:DropDownList>
-                 <strong>Show</strong>
+                 <label><strong>Show</strong></label>
                 <asp:DropDownList ID="resultsPerPage" runat="server" AutoPostBack="false">
                 </asp:DropDownList>
                 <label for="<%=resultsPerPage.ClientID%>">
@@ -182,10 +180,10 @@
            
                 <asp:Button ID="Button1" runat="server" CssClass="submit button"
                     AlternateText="Go" Text="Go" OnClick="UpdateSortOrderAndPageSize_Click" />
-               </div>
+               
            
             
-            <div style="clear: both;" />
+            
  
         </asp:Panel>
         <asp:Literal runat="server" ID="ProtocolContent" EnableViewState="false" />
@@ -202,17 +200,16 @@
                 </script>
 --%>
             </div>
-            <div style="float: right;">
+            <div>
                 <cgov:postbackbuttonpager id="pager" runat="server" cssclass="pagination"
                     onpagechanged="PageChanged" shownumpages="3">
                                             <PagerStyleSettings NextPageText="Next &gt;" PrevPageText="&lt; Prev" />
                                         </cgov:postbackbuttonpager>
             </div>
-            <div style="clear: both;">
-            </div>
+            
         </asp:Panel>
-        <asp:Panel ID="BottomActionControls" runat="server" CssClass="row">
-            <div class="medium-8 columns">
+        <asp:Panel ID="BottomActionControls" runat="server">
+            
                 <asp:Button ID="BottomPrintButton" class="action button" runat="server" AlternateText="Print Selected" Text="Print Selected" OnClick="DisplayForPrint_ClickHandler" />
                 <input id="refineSearch" class="action button" runat="server" alt="Refine Search"
                     value="Refine Search" onserverclick="refineSearch_ServerClick"
@@ -228,10 +225,8 @@
 
                 <a id="newSearch" href="<% =SearchPageInfo.SearchPagePrettyUrl %>" class="reset startover button">
                     Start Over</a>
-            </div>
+            
            
-            <div style="clear: both;">
-            </div>
         </asp:Panel>
     </asp:Panel>
     <!--start new form footnote-->
