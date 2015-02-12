@@ -18,10 +18,10 @@
                 <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
             </LayoutTemplate>
             <ItemTemplate>
-                <dt>
+                <dt><dfn>
                 <a href="<%# DictionaryURL %>?cdrid=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>"
                 <%# ResultListViewHrefOnclick(Container)%>>
-                <dfn><%# Eval("TermName")%></dfn></a>
+                <%# Eval("TermName")%></a></dfn>
                 <dd class="pronunciation"><%#AudioPronounceLink(Container)%></dd>
             
                 <% if (ShowDefinition){ %>
