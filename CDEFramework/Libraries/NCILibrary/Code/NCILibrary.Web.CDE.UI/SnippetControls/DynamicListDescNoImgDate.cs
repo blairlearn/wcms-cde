@@ -29,15 +29,36 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     base.SearchList.ResultsTemplate = base.SearchList.ResultsTemplate = @" 
                     <ul class=""list no-bullets"">##
                     #foreach($resultItem in $DynamicSearch.Results)
+                	#set($language = $resultItem.Language)##
                         <li class=""general-list-item general"">##
-	                        ##
-	                        ## Display title, dates, and description
-	                        ##
                             <div class=""title-and-desc title desc container"">##
-                                <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""title"">$resultItem.LongTitle</a>##
+                                ##
+                                ## Display title
+                                ##
+                                <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""title"">
+                                    $resultItem.LongTitle
+								    #if($language == ""es"") ##SPANISH
+										#set($videoContent = ""Video"")##
+										#set($carouselContent = ""Lista de reproducci&oacute;n"")##
+										#set($infographicContent = ""Infograf&iacute;a"")##
+									#else##
+										#set($videoContent = ""Video"")##
+										#set($carouselContent = ""Video Playlist"")##
+										#set($infographicContent = ""Infographic"")##
+                                    #end
+                                    #if($resultItem.ContentType == ""rx:gloVideo"")##
+                                        ($videoContent)##
+                                    #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
+                                        ($carouselContent)##
+                                    #elseif($resultItem.ContentType == ""rx:cgvInfographic"")##
+                                        ($infographicContent)##
+                                    #end##
+                                </a>##
+	                            ##
+	                            ## Display dates
+    	                        ##
                                 <p class=""description"">
                                     <span class=""date"">
-										#set($language = $resultItem.Language)##
 									    #if($language == ""es"") ##SPANISH
 											#set($postedString = ""Publicaci&oacute;n"")##
 											#set($updatedString = ""Actualizaci&oacute;n"")##
@@ -62,8 +83,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
 										#elseif ($resultItem.DateDisplayMode == 7)##
 											($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate)##
 										#end
-									</span>
-	                                $resultItem.LongDescription
+									</span>##
+                                    ##
+	                                ## Display description
+	                                ##
+                                    <span>##
+    	                                $resultItem.LongDescription##
+                                    </span>##
                                 </p>
                             </div>
                         </li>
