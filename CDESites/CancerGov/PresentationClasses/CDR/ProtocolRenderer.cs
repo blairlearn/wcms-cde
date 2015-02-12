@@ -469,7 +469,7 @@ namespace CancerGov.UI.CDR
 
 			if (dvStudySites.Count > 0) {
 
-                sbContent.Append("<h3>Trial Sites</h3>\n");
+                sbContent.Append("<h3 do-not-show=\"toc\">Trial Sites</h3>\n");
 
                 string strPrevOrgname = string.Empty;
                 string strPrevCountry = string.Empty;
@@ -535,7 +535,7 @@ namespace CancerGov.UI.CDR
                             if (!string.IsNullOrEmpty(strPrevState) && sbUSA.Length > 0)
                                 sbUSA.Append("</div>"); // Close previous state.
 
-                            sbUSA.AppendFormat("<h4>{0}</h4>\n", drvSite.Row["Country"].ToString());
+                            sbUSA.AppendFormat("<h4 do-not-show=\"toc\">{0}</h4>\n", drvSite.Row["Country"].ToString());
 
                             sbUSA.Append("<div class=\"study-site-state\">");
                             if (drvSite.Row["State"].ToString() != "")
@@ -606,7 +606,7 @@ namespace CancerGov.UI.CDR
                             if (!string.IsNullOrEmpty(strPrevState) && sbWorld.Length > 0)
                                 sbWorld.Append("</div>"); // Close previous state.
 
-                            sbWorld.AppendFormat("<h4>{0}</h4>\n", drvSite.Row["Country"].ToString());
+                            sbWorld.AppendFormat("<h4 do-not-show=\"toc\">{0}</h4>\n", drvSite.Row["Country"].ToString());
 
                             sbWorld.Append("<div class=\"study-site-state\">");
 							if (drvSite.Row["State"].ToString() != "") {
