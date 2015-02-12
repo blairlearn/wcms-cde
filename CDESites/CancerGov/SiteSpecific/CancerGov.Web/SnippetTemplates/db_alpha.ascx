@@ -34,10 +34,11 @@
 </script>
 
 <script type="text/javascript">
+// Autocomplete functionality
     var ids = {
         radioStarts: "<%=radioStarts.ClientID %>",
-        radioContains: "<%=radioContains.ClientID %>"
-    , AutoComplete1: "<%=AutoComplete1.ClientID %>"
+        radioContains: "<%=radioContains.ClientID %>",
+        AutoComplete1: "<%=AutoComplete1.ClientID %>"
     }
 
     $(document).ready(function() {
@@ -141,9 +142,8 @@
             <div class="row">
                 <div class="medium-6 columns">
                     <asp:TextBox CssClass="dictionary-search-input" ID="AutoComplete1"
-                        inputmode="latin" aria-autocomplete="list"
-                        runat="server" CallbackFunc="ACOnSubmit"
-                        autocomplete="off" />
+                        inputmode="latin" aria-autocomplete="list" runat="server" 
+                        CallbackFunc="ACOnSubmit" autocomplete="off" />
                 </div>
                 <div class="small-2 columns left">        
                     <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
@@ -234,8 +234,6 @@
         </div>
         
         <asp:Panel ID="pnlDefPrint" runat="server" Visible="false">
-            <p>
-            </p>
         </asp:Panel>
     </asp:View>
 </asp:MultiView>

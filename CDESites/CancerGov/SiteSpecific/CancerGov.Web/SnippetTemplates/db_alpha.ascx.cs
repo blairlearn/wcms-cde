@@ -104,7 +104,6 @@ namespace Www.Templates
             get { return _numResults; }
             set { _numResults = value; }
         }
-
         public string DictionaryURL
         {
             get { return _dictionaryURL; }
@@ -124,12 +123,10 @@ namespace Www.Templates
         {
             get { return _totalCount.ToString("N0"); }
         }
-
-
         #endregion
-              private void ResetControls()
+
+        private void ResetControls()
         {
-              
             radioContains.Checked = BContains;
             AutoComplete1.Text = (string.IsNullOrEmpty(Expand)) ? SearchStr.Replace("[[]", "[") : string.Empty;
         }
@@ -149,13 +146,11 @@ namespace Www.Templates
             DictionaryURLSpanish = dUrl.DictionarySpanishURL;
             DictionaryURLEnglish = dUrl.DictionaryEnglishURL;
 
-
             DictionaryURL = DictionaryURLEnglish;
 
             if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish"))
             {
-                Response.Redirect("/diccionario" + Request.Url.Query);
-                
+                Response.Redirect("/diccionario" + Request.Url.Query); 
             }
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -171,14 +166,12 @@ namespace Www.Templates
                 SetupEnglish();
             }
 
-
             //Action must be set this way and not by adding the location to the action 
             //attribute of the form tag or it will generate Validation of viewstate MAC failed error
             //because we have virtual directories and don't know the location 
 
             if (Page.Request.Path.StartsWith("/templates/", StringComparison.OrdinalIgnoreCase))
             {
-
                 Page.Form.Action = Page.Request.Path;
 
                 if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -193,7 +186,6 @@ namespace Www.Templates
 
             if (Page.Request.RequestType.Equals("POST")) //This is a POST(back)
             {
-
                 SearchStr = Request.Form[AutoComplete1.UniqueID];
                 SearchStr = SearchStr.Replace("[", "[[]");
                 CdrID = string.Empty;
@@ -207,8 +199,7 @@ namespace Www.Templates
                 if (string.IsNullOrEmpty(SearchStr))
                 {
                     ActivateDefaultView();
-                }
-                    
+                }  
                 else
                 {
                     LoadData();
@@ -231,7 +222,6 @@ namespace Www.Templates
 
             ResetControls();
 
-
             if (WebAnalyticsOptions.IsEnabled)
             {
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.PageName, wbField =>
@@ -249,12 +239,9 @@ namespace Www.Templates
                     alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaListSpanish"; // Load A-Z list onclick script
                 else
                     alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaList"; // Load A-Z list onclick script
-
-
-
-
             }
         }
+
         private void SetupPrintUrl()
         {
             PagePrintUrl = "?print=1";
@@ -298,13 +285,10 @@ namespace Www.Templates
                     url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
                 else if (Expand != "")
                     url.SetUrl(url.ToString() + "?expand=" + Expand);
-                else 
+                else
                     url.SetUrl(url.ToString());
-            });
-
-            
+            });   
         }
-
 
         #region Data-related
         /// <summary>
@@ -337,9 +321,7 @@ namespace Www.Templates
                         {
                             wbField.Value = null;
                         });
-
                     }
-
                 }
                 else
                 {
@@ -383,7 +365,6 @@ namespace Www.Templates
  
             MultiView1.ActiveViewIndex = 0;
             numResDiv.Visible = (NumResults > 0);
-
         }
 
         private void ActivateResultsListView()
@@ -487,6 +468,7 @@ namespace Www.Templates
             //common display features
             SetupCommon();
         }
+
         /// <summary>
         /// Setup shared by English and Spanish versions
         /// </summary>
@@ -502,14 +484,17 @@ namespace Www.Templates
                 language = "English";
             }
 
-            radioStarts.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
-            radioContains.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioStarts.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioContains.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
 
-            radioStarts.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioStarts.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioStarts.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioStarts.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
-            radioContains.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioContains.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioContains.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioContains.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+
+            radioStarts.InputAttributes.Add("onchange", "autoFunc();");
+            radioContains.InputAttributes.Add("onchange", "autoFunc();");
 
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = SrcGroup.Equals("Contains");
@@ -539,6 +524,7 @@ namespace Www.Templates
                 alphaListBox.Title = string.Empty;
             }
         }
+
         private void RenderGutter()
         {
             gutterLangSwitch.EnglishUrl = "/dictionary/";
@@ -592,12 +578,10 @@ namespace Www.Templates
             }
             else
             {
-
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
                         {
                             data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                         });
-
 
                 this.Page.Header.Title=PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
                 lblTermPronun.Text = termPronun;
@@ -612,10 +596,7 @@ namespace Www.Templates
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = termName + ", definition";
-
             });
-
-           
 
             if (imageHtml != string.Empty)
                 imageHtml = "<p>" + imageHtml;
@@ -661,6 +642,5 @@ namespace Www.Templates
             else
                 return "";
         }
-
     }
 }
