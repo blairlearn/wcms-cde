@@ -145,7 +145,7 @@
                         inputmode="latin" aria-autocomplete="list" runat="server" 
                         CallbackFunc="ACOnSubmit" autocomplete="off" />
                 </div>
-                <div class="small-2 columns left">        
+                <div class="medium-2 columns left">        
                     <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
                         ToolTip="Search" />
                 </div>
