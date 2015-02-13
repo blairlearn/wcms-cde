@@ -35,9 +35,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
 	                        ## Display image
 	                        ##
                             <div class=""list-item-image image container"">##
-                            #if($resultItem.ThumbnailURL != ""null"")##
-	                            <img src=""$resultItem.ThumbnailURL"" class=""item-image image"" align=""left"">
-                            #end##
+                                #if($resultItem.ThumbnailURL)## 
+	                                <img src=""$resultItem.ThumbnailURL"" class=""item-image image"" align=""left"">
+                                #else##
+                                    &nbsp;##
+                                #end##
                             </div>##
                             <div class=""title-and-desc title desc container"">##
                                 ##
@@ -77,19 +79,19 @@ namespace NCI.Web.CDE.UI.SnippetControls
 											#set($reviewedString = ""Reviewed"")##
 										#end##
 										#if ($resultItem.DateDisplayMode == 1)##
-											($postedString: $resultItem.PostedDate)##	
+											($postedString: $resultItem.PostedDate) ##	
 										#elseif ($resultItem.DateDisplayMode == 2)##
-											($updatedString: $resultItem.UpdatedDate)##	
+											($updatedString: $resultItem.UpdatedDate) ##	
 										#elseif ($resultItem.DateDisplayMode == 3)##
-											($postedString: $resultItem.PostedDate, Updated: $resultItem.UpdatedDate)##
+											($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate) ##
 										#elseif ($resultItem.DateDisplayMode == 4)##
-											($reviewedString: $resultItem.ReviewedDate)##	
+											($reviewedString: $resultItem.ReviewedDate) ##	
 										#elseif ($resultItem.DateDisplayMode == 5)##
-											($postedString: $resultItem.PostedDate, $reviewedString: $resultItem.ReviewedDate)##
+											($postedString: $resultItem.PostedDate, $reviewedString: $resultItem.ReviewedDate) ##
 										#elseif ($resultItem.DateDisplayMode == 6)##
-											($updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate)##
+											($updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate) ##
 										#elseif ($resultItem.DateDisplayMode == 7)##
-											($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate)##
+											($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate) ##
 										#end
 									</span>##
                                     ##
