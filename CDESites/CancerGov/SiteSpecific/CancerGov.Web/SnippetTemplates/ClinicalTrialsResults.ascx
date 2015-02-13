@@ -39,8 +39,8 @@
         button, scroll down to the Trial ID/Sponsor section and select the "All" check box in the Sponsor of Trial section.
         </p>
         <!-- Top View Content for box -->
-        <div class="row">
-            <asp:Panel runat="server" ID="ResultsFormatControl" CssClass="medium-11 columns">
+        <div class="row collapse">
+            <asp:Panel runat="server" ID="ResultsFormatControl" CssClass="medium-11 columns ct-results-form">
                 <div class="row view-content-for-container">
                   
                         <div class="medium-4 columns">
@@ -102,7 +102,7 @@
                 </div>
                        
             </asp:Panel>
-             <div class="medium-1 columns">
+             <div class="medium-1 columns ct-results-help">
                   <a class="text-icon-help" aria-label="Help" target="new" href="/clinicaltrials/search-form-help/page3#1">?</a>
                  </div> 
         </div>
@@ -152,9 +152,9 @@
             </div>
            
             
-        <asp:Panel ID="topControlArea" runat="server">
+        <asp:Panel ID="topControlArea" runat="server" CssClass="ct-results-top-control">
            
-           <span class="checkbox">
+           <span class="checkbox ct-results-select-all">
             
                 <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllTop" Text="<strong>Select All on Page</strong>" onclick="checkAll_ClickHandler(this)" />
                
@@ -167,28 +167,31 @@
                 </script>
 --%>
               </span> 
-               
+               <span class="ct-results-sort">
                 <label for="<%=sortOrder.ClientID%>">
                     <strong>Sort by:</strong></label>
                 <asp:DropDownList ID="sortOrder" runat="server" AutoPostBack="false">
                 </asp:DropDownList>
+                </span>
+                 <span class="ct-results-show">
                  <label><strong>Show</strong></label>
                 <asp:DropDownList ID="resultsPerPage" runat="server" AutoPostBack="false">
                 </asp:DropDownList>
                 <label for="<%=resultsPerPage.ClientID%>">
                      <strong>Results per Page</strong></label>
-           
+                </span>
+                 <span class="ct-results-go">
                 <asp:Button ID="Button1" runat="server" CssClass="submit button"
                     AlternateText="Go" Text="Go" OnClick="UpdateSortOrderAndPageSize_Click" />
-               
+               </span>
            
             
             
  
         </asp:Panel>
         <asp:Literal runat="server" ID="ProtocolContent" EnableViewState="false" />
-        <asp:Panel ID="lowerControlArea" runat="server">
-            <div class="checkbox">
+        <asp:Panel ID="lowerControlArea" runat="server" CssClass="ct-results-lower-control">
+            <span class="checkbox">
                 <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllBottom"
                     Text="<strong>Select All on Page</strong>" onclick="checkAll_ClickHandler(this)" />
 
@@ -199,16 +202,16 @@
                     });
                 </script>
 --%>
-            </div>
-            <div>
+            </span>
+            
                 <cgov:postbackbuttonpager id="pager" runat="server" cssclass="pagination"
                     onpagechanged="PageChanged" shownumpages="3">
                                             <PagerStyleSettings NextPageText="Next &gt;" PrevPageText="&lt; Prev" />
                                         </cgov:postbackbuttonpager>
-            </div>
+           
             
         </asp:Panel>
-        <asp:Panel ID="BottomActionControls" runat="server">
+        <asp:Panel ID="BottomActionControls" runat="server" CssClass="ct-results-bottom-action">
             
                 <asp:Button ID="BottomPrintButton" class="action button" runat="server" AlternateText="Print Selected" Text="Print Selected" OnClick="DisplayForPrint_ClickHandler" />
                 <input id="refineSearch" class="action button" runat="server" alt="Refine Search"

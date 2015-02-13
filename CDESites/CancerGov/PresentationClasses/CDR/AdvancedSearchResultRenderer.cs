@@ -49,7 +49,7 @@ namespace CancerGov.UI.CDR
                     isFirstProtocol = false;
                 }
 
-                sbContent.Append("<div class=\"row\">\n");
+                sbContent.Append("<div class=\"row collapse\">\n");
                 sbContent.AppendFormat("<div class=\"medium-1 columns\"><div class=\"checkbox\"><input type=\"checkbox\" name=\"cdrid\" class=\"cdridbox\" id=\"cdrid{1}\" value=\"{1}\" {2} ><label for=\"cdrid{1}\">{0}.</label></div></div>\n",
                     pProto.ResultNumber, pProto.CdrId, alCDRIDs.Contains(pProto.CdrId) ? "checked" : "");
 
