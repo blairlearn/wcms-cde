@@ -134,7 +134,7 @@
                 Remember that the more criteria you enter, the fewer results you are likely to get.</p>
         </asp:Panel>
         
-            <div>
+            <div class="ct-results-top-search-options">
                 <asp:Button ID="TopPrintButton" class="action button" runat="server" AlternateText="Print Selected" Text="Print Selected" OnClick="DisplayForPrint_ClickHandler" />
                 <input id="refineSearch1" class="action button" runat="server" alt="Refine Search"
                     value="Refine Search" onserverclick="refineSearch_ServerClick"
