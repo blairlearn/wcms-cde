@@ -40,7 +40,7 @@
         </p>
         <!-- Top View Content for box -->
         <div class="row collapse ct-results-form">
-            <asp:Panel runat="server" ID="ResultsFormatControl" CssClass="medium-11 columns ct-results-form">
+            <asp:Panel runat="server" ID="ResultsFormatControl" CssClass="medium-11 columns">
                 <div class="row view-content-for-container">
                   
                         <div class="medium-4 columns">
