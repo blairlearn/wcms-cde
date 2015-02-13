@@ -39,7 +39,7 @@
         button, scroll down to the Trial ID/Sponsor section and select the "All" check box in the Sponsor of Trial section.
         </p>
         <!-- Top View Content for box -->
-        <div class="row collapse">
+        <div class="row collapse ct-results-form">
             <asp:Panel runat="server" ID="ResultsFormatControl" CssClass="medium-11 columns ct-results-form">
                 <div class="row view-content-for-container">
                   
