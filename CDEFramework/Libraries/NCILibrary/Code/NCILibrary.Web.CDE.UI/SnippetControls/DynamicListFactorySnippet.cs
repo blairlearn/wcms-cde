@@ -20,15 +20,31 @@ namespace NCI.Web.CDE.UI.SnippetControls
 {
     public class DynamicListFactorySnippet : BaseSearchSnippet
     {
-
+        /// <summary>
+        /// Gets the snippet info for a Dynamic List content item and selects the correct control
+        /// based on the ResultsTemplate element in the page instructions. If the selected control
+        /// cannot be found, a template with no description or image is selected.
+        /// </summary>
+        /// <param name="e"></param>
         override protected void OnInit(EventArgs e)
         {
             base.OnInit(e);
             DynamicList info = ModuleObjectFactory<DynamicList>.GetModuleObject(SnippetInfo.Data);
+            String defaultTemplate = ("~/DynamicListTemplates/DynamicListNoDescNoImgDate.ascx");
+            SnippetControl localControl;
 
-            // Need to add exception handling here
-            SnippetControl localControl = (SnippetControl)Page.LoadControl(info.ResultsTemplate);
-
+            try
+            {
+                localControl = (SnippetControl)Page.LoadControl(info.ResultsTemplate);
+            }
+            catch (HttpException ex)
+            {
+                localControl = (SnippetControl)Page.LoadControl(defaultTemplate);
+            }
+            catch (ArgumentNullException ex)
+            {
+                localControl = (SnippetControl)Page.LoadControl(defaultTemplate);
+            }
             localControl.SnippetInfo = this.SnippetInfo;
             this.Controls.Add(localControl);
         }
