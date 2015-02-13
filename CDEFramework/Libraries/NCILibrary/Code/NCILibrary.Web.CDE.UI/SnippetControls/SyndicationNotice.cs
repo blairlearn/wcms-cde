@@ -29,8 +29,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         public void Page_Load(object sender, EventArgs e)
         {
-            if (displaySyndicationNotice() == "true")
+            if (displaySyndicationNotice())
+            {
                 HtmlData = SnippetInfo.Data;
+            }
             else
                 HtmlData = String.Empty;
         }
@@ -46,21 +48,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// Process the syndication XML field - determines if the syndication notice
         /// should display or not
         /// </summary>
-        /// <param name="snippetXmlData">The xml fragment which contains pageoptions information.</param>
-        private string displaySyndicationNotice()
+        private bool displaySyndicationNotice()
         {
-
             IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
             // If AlternateContentVersions information is not in the instructions then do not create 
             // the PageOptions box.
             string[] acvKeys = pgInstruction.AlternateContentVersionsKeys;
-            string isSyndicated = "false";
-            if (acvKeys != null)
+            bool isSyndicated = false;
+            if (acvKeys != null && acvKeys.Contains("syndicated"))
             {
-                if (pgInstruction.AlternateContentVersionsKeys.Contains("syndicated"))
-                {
-                    isSyndicated = "true";
-                }
+                isSyndicated = true;
             }
             return isSyndicated;
         }
