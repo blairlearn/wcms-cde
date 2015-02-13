@@ -60,7 +60,7 @@ namespace CancerGov.EmergencyAlert
                 output.RenderBeginTag(HtmlTextWriterTag.Span);
                 output.AddAttribute(HtmlTextWriterAttribute.Href, this.eContext.EmergencyUrl);
                 output.RenderBeginTag(HtmlTextWriterTag.A);
-                output.Write("Emergency Information");
+                output.Write("Emergency Information: ");
                 output.Write(this.eContext.BannerText);
                 output.RenderEndTag();
                 output.RenderEndTag();

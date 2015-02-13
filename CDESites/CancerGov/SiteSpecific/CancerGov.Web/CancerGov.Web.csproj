@@ -389,6 +389,13 @@
     <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
       <DependentUpon>drugdictionary.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\EmergencyBanner.ascx.cs">
+      <DependentUpon>EmergencyBanner.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\EmergencyBanner.ascx.designer.cs">
+      <DependentUpon>EmergencyBanner.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.cs">
       <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -684,6 +691,7 @@
     <Content Include="SnippetTemplates\DisqusComments.ascx" />
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
+    <Content Include="SnippetTemplates\EmergencyBanner.ascx" />
     <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryDefinitionView.ascx" />
