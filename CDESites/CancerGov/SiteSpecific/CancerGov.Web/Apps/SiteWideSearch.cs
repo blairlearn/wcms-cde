@@ -48,12 +48,11 @@ namespace NCI.Web.CancerGov.Apps
         protected RadioButtonList rblSWRSearchType;
         protected Label lblSWRKeywordLabel;
         protected TextBox txtSWRKeyword;
-        protected ImageButton btnSWRImgSearch;
         protected Button btnSWRTxtSearch;
         protected Label lblDDLPageUnitResultsPPText;
         protected Button btnTextChangePageUnit;
         protected JavascriptProbeControl jsProbe;
-        protected SimplePager spPager;
+        protected SimpleUlPager spPager;
         #endregion
 
         #region Private Memebers
@@ -267,11 +266,6 @@ namespace NCI.Web.CancerGov.Apps
             //Setup if we are allowed to show DYM
             _allowedToShowDYM = Strings.ToBoolean((string)ConfigurationSettings.AppSettings["EndecaDidYouMean"]) && PageDisplayInformation.Language != DisplayLanguage.Spanish;
 
-            btnSWRImgSearch.Attributes.Add("src","/images/search_site.gif"); 
-
-            btnSWRImgSearch.Visible = true;
-            btnSWRTxtSearch.Visible = false; 
-
             if (Page.Request.RequestType == "POST")
             {
                 if (!IsPostBack)
@@ -302,8 +296,7 @@ namespace NCI.Web.CancerGov.Apps
                     if (Strings.Clean(Request.Params["__EVENTTARGET"]) == null
                         && Strings.Clean(Request.Params["__EVENTARGUMENT"]) == null
                         && Strings.Clean(Request.Params[btnTextChangePageUnit.UniqueID]) == null
-                        && Strings.Clean(Request.Params[btnSWRTxtSearch.UniqueID]) == null
-                        && Strings.Clean(Request.Params[btnSWRImgSearch.UniqueID + ".x"]) == null)
+                        && Strings.Clean(Request.Params[btnSWRTxtSearch.UniqueID]) == null)
                     {
                         //THIS IS FOR IE with no JS.  Oddly in most ways it is more broken than firefox, but
                         //is so broken that we can easily tell that the user hit enter on the only
@@ -376,7 +369,6 @@ namespace NCI.Web.CancerGov.Apps
                 siteResultSearchSubmitCall += "&& NCIAnalytics.SiteWideSearchResultsSearch(this,'" + txtSWRKeyword.ClientID + "','" + rblSWRSearchType.UniqueID + "')";
             // End Web Analytics *********************************************
             siteResultSearchSubmitCall += ";";
-            btnSWRImgSearch.OnClientClick = siteResultSearchSubmitCall;
             btnSWRTxtSearch.OnClientClick = siteResultSearchSubmitCall;
 
         }
@@ -391,10 +383,7 @@ namespace NCI.Web.CancerGov.Apps
 
             base.OnPreRender(e);
 
-            if (PageDisplayInformation.Version == DisplayVersions.Image)
-                pnlSWR.DefaultButton = btnSWRImgSearch.ID;
-            else
-                pnlSWR.DefaultButton = btnSWRTxtSearch.ID;
+            pnlSWR.DefaultButton = btnSWRTxtSearch.ID;
         }
 
         protected string BestBetResultsHyperlinkOnclick(RepeaterItem result)
@@ -518,7 +507,7 @@ namespace NCI.Web.CancerGov.Apps
             //So we should know the current page number, it was part of the postback.
             //we do have to know what the old page unit was, that will give us the first record.
             int firstItem, lastItem;
-            SimplePager.GetFirstItemLastItem(CurrentPage, PreviousItemsPerPage, (int)TotalNumberOfResults, out firstItem, out lastItem);
+            SimpleUlPager.GetFirstItemLastItem(CurrentPage, PreviousItemsPerPage, (int)TotalNumberOfResults, out firstItem, out lastItem);
 
             //Set the current page.                
             CurrentPage = firstItem / ItemsPerPage + (firstItem % ItemsPerPage > 0 ? 1 : 0);
@@ -576,8 +565,9 @@ namespace NCI.Web.CancerGov.Apps
         private void SetupCancerGovPageStuff()
         {
             this.Page.Header.Title = GetResource("Title");
-            //                this.PageHeaders.Add(new TitleBlock("Resultados ", null, this.PageDisplayInformation));
-            //                this.PageLeftColumn = new LeftNavColumn(this, Strings.ToGuid(ConfigurationSettings.AppSettings["SpanishSearchViewID"]));
+
+            this.txtSWRKeyword.Attributes.Add("placeholder", "Enter keywords or phrases");
+            this.txtSWRKeyword.Attributes.Add("aria-label", "Enter keywords or phrases");
         }
 
         /// <summary>
@@ -607,9 +597,6 @@ namespace NCI.Web.CancerGov.Apps
             }
 
             //Search within results button
-            btnSWRImgSearch.AlternateText = GetResource("AlternateText");// "Buscar";
-            btnSWRImgSearch.ImageUrl = GetResource("imageURL"); //"/images/buscar-left-nav.gif";
-
             btnSWRTxtSearch.Text = GetResource("Search");  //"Buscar";
 
             //Error message
@@ -701,7 +688,7 @@ namespace NCI.Web.CancerGov.Apps
             int firstIndex, lastIndex;
 
             //Get first index and last index
-            SimplePager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.TotalNumResults, out firstIndex, out lastIndex);
+            SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.TotalNumResults, out firstIndex, out lastIndex);
             _resultOffset = firstIndex;
 
             rptResults.DataSource = results;

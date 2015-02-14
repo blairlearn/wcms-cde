@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlternateText" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="bottomResultsXofYFormatter" xml:space="preserve">
-    <value>Results {0}-{1} of {2}.</value>
-  </data>
   <data name="DidYouMeanText" xml:space="preserve">
     <value>Did you mean</value>
   </data>
@@ -166,6 +160,9 @@
     <value>Search Results - National Cancer Institute</value>
   </data>
   <data name="topResultsXofYFormatter" xml:space="preserve">
-    <value>Results {0}-{1} of {2} for:</value>
+    <value>Results &lt;span class='results-range'&gt;{0}&amp;ndash;{1}&lt;/span&gt; of &lt;span class='results-num'&gt;{2}&lt;/span&gt; for:</value>
+  </data>
+  <data name="bottomResultsXofYFormatter" xml:space="preserve">
+    <value>Results &lt;span class='results-range'&gt;{0}&amp;ndash;{1}&lt;/span&gt; of &lt;span class='results-num'&gt;{2}&lt;/span&gt;.</value>
   </data>
 </root>
