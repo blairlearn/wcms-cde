@@ -1,19 +1,6 @@
 ﻿// JavaScript for Drug Dictionary
 
-function DoSearch() {
-    if ($('#AutoComplete1').val() != "") {
-        var localSearhString = htmlEscape($('#AutoComplete1').val());
-        var isContains = IsContains();
-        if (isContains) {
-            var url = $('#litPageUrl').text() + "?search=" + localSearhString + "&contains=true";
-            NCIAnalytics.GeneticsDictionarySearch(this, localSearhString, true);
-        } else {
-            var url = $('#litPageUrl').text() + "?search=" + localSearhString;
-            NCIAnalytics.GeneticsDictionarySearch(this, localSearhString, false);
-        }
-        $(location).attr('href', url);
-    }
-}
+
 
 function htmlEscape(str) {
     return String(str)
@@ -52,12 +39,7 @@ function autoFunc() {
 
     NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
 
-    $keywordElem.keyup(function(event) {
-        if (event.which == 13) {
-            event.preventDefault();
-            DoSearch();
-        }
-    });
+    
 }
 
 function SelectIt() {

@@ -261,7 +261,7 @@ namespace Www.Templates
 
             if (Page.Request.RequestType.Equals("POST")) //This is a POST(back)
             {
-                SearchStr = Request.Params["AutoComplete1"];
+                SearchStr = Request.Params[AutoComplete1.UniqueID];
                 SearchStr = SearchStr.Replace("[", "[[]");
                 CdrID = string.Empty;
                 Expand = string.Empty;
