@@ -26,10 +26,32 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     //This is completely dirty and really a hack, but it gets this done.  This should be
                     //fixed in a future release. --BryanP 2/10/2015
-                    base.SearchList.ResultsTemplate = base.SearchList.ResultsTemplate = @" 
+
+                    //Set content type and date labels according to locale of page, not the search results
+                    String pageLanguage = @"
+					#set($videoContent = ""Video"")##
+					#set($carouselContent = ""Video Playlist"")##
+					#set($infographicContent = ""Infographic"")##
+					#set($postedString = ""Posted"")##
+					#set($updatedString = ""Updated"")##
+					#set($reviewedString = ""Reviewed"")##
+					";
+                    if (PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language") == "es")
+                    {
+                        pageLanguage = @"
+						#set($videoContent = ""Video"")##
+						#set($carouselContent = ""Lista de reproducci&oacute;n"")##
+						#set($infographicContent = ""Infograf&iacute;a"")##
+						#set($postedString = ""Publicaci&oacute;n"")##
+						#set($updatedString = ""Actualizaci&oacute;n"")##
+						#set($reviewedString = ""Revisi&oacute;n"")##
+						";
+                    }
+
+                    base.SearchList.ResultsTemplate = base.SearchList.ResultsTemplate = pageLanguage +
+                    @" 
                     <ul class=""list no-bullets"">##
                     #foreach($resultItem in $DynamicSearch.Results)
-                	#set($language = $resultItem.Language)##
                         <li class=""general-list-item general"">##
 	                        ##
 	                        ## Display image
@@ -47,15 +69,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
                                 ##
                                 <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""title"">
                                     $resultItem.LongTitle
-								    #if($language == ""es"") ##SPANISH
-										#set($videoContent = ""Video"")##
-										#set($carouselContent = ""Lista de reproducci&oacute;n"")##
-										#set($infographicContent = ""Infograf&iacute;a"")##
-									#else##
-										#set($videoContent = ""Video"")##
-										#set($carouselContent = ""Video Playlist"")##
-										#set($infographicContent = ""Infographic"")##
-                                    #end
                                     #if($resultItem.ContentType == ""rx:gloVideo"")##
                                         ($videoContent)##
                                     #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
@@ -69,15 +82,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
     	                        ##
                                 <p class=""description"">
                                     <span class=""date"">
-									    #if($language == ""es"") ##SPANISH
-											#set($postedString = ""Publicaci&oacute;n"")##
-											#set($updatedString = ""Actualizaci&oacute;n"")##
-											#set($reviewedString = ""Revisi&oacute;n"")##
-										#else##
-											#set($postedString = ""Posted"")##
-											#set($updatedString = ""Updated"")##
-											#set($reviewedString = ""Reviewed"")##
-										#end##
 										#if ($resultItem.DateDisplayMode == 1)##
 											($postedString: $resultItem.PostedDate) ##	
 										#elseif ($resultItem.DateDisplayMode == 2)##
