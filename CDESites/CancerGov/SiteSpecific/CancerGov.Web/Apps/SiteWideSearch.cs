@@ -618,7 +618,10 @@ namespace NCI.Web.CancerGov.Apps
                 if (rblSWRSearchType.SelectedValue == "2") //Search Within Results
                 {
                     //Add the last keyword to the old keywords
-                    OldKeywords.Add(Keyword);
+                    if (!String.IsNullOrEmpty(Keyword))
+                    {
+                        OldKeywords.Add(Keyword);
+                    }
 
                     //Set the current keyword
                     Keyword = Strings.Clean(txtSWRKeyword.Text);
