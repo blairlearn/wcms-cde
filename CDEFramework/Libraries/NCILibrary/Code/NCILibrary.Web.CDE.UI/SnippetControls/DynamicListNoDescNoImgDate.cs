@@ -48,8 +48,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
 						";
                     }
 
-                    base.SearchList.ResultsTemplate = base.SearchList.ResultsTemplate = pageLanguage +
-                    @" 
+                    String listTitle = "<h3>" + base.SearchList.SearchTitle + "</h3>";
+                    base.SearchList.ResultsTemplate = base.SearchList.ResultsTemplate = pageLanguage + listTitle +
+                    @"
                     <ul class=""list no-bullets"">##
                     #foreach($resultItem in $DynamicSearch.Results)
                         <li class=""general-list-item general"">##
