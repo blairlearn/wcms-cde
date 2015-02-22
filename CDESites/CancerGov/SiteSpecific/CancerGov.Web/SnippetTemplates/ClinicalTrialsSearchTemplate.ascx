@@ -8,6 +8,11 @@
         margin-top: 40px;
     }
     
+    fieldset div.row 
+    {
+        padding-bottom: 20px;
+    }
+    
     .cts-location 
     {
         padding: 0;
