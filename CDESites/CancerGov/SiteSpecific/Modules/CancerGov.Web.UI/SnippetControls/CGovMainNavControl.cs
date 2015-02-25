@@ -85,7 +85,11 @@ namespace CancerGov.Web.UI.SnippetControls
             //example: for http://www.cancer.gov/aboutnci/globalhealth the variable would be "/aboutnci/globalhealth"
             String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
 
-
+            String[] paths = path.Split('/');
+            String file = paths[paths.Length - 1];
+            String[] sectionPath = item.SectionPath.Split('/');
+            String sectionFile = sectionPath[sectionPath.Length - 1];
+            Boolean isSectionPath = path.Contains(item.SectionPath) && file.Equals(sectionFile);
 
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item");
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
@@ -107,7 +111,7 @@ namespace CancerGov.Web.UI.SnippetControls
             //these are links and what is displayed that are generated html
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item-title");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
-            if (path.Contains(item.SectionPath))
+            if (isSectionPath)
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
             }
@@ -170,7 +174,11 @@ namespace CancerGov.Web.UI.SnippetControls
             //example: for http://www.cancer.gov/aboutnci/globalhealth the variable would be "/aboutnci/globalhealth"
             String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
 
-
+            String[] paths = path.Split('/');
+            String file = paths[paths.Length - 1];
+            String[] sectionPath = item.SectionPath.Split('/');
+            String sectionFile = sectionPath[sectionPath.Length - 1];
+            Boolean isSectionPath = path.Contains(item.SectionPath) && file.Equals(sectionFile);
 
 
 
@@ -184,7 +192,7 @@ namespace CancerGov.Web.UI.SnippetControls
 
 
 
-            if (path.Contains(item.SectionPath))
+            if (isSectionPath)
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
             }
@@ -194,7 +202,7 @@ namespace CancerGov.Web.UI.SnippetControls
             //these are links and what is displayed that are generated html
             writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item-title");
             writer.RenderBeginTag(HtmlTextWriterTag.Div);
-            if (path.Contains(item.SectionPath))
+            if (isSectionPath)
             {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "active");
             }

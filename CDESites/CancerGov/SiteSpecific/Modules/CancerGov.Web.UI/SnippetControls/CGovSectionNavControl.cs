@@ -106,7 +106,11 @@ namespace CancerGov.Web.UI.SnippetControls
             String liClass = "";
             String divClass = "";
             String ariaClass = "false";
-
+            String[] paths = path.Split('/');
+            String file = paths[paths.Length-1];
+            String[] sectionPath = item.SectionPath.Split('/');
+            String sectionFile = sectionPath[sectionPath.Length-1];
+            Boolean isSectionPath = path.Contains(item.SectionPath) && file.Equals(sectionFile);
             // Checks the section path against the page url and determines if it needs to be selected 
             if (path.Equals(item.SectionPath))
             {
@@ -114,7 +118,7 @@ namespace CancerGov.Web.UI.SnippetControls
                 divClass = "current-page";
                 ariaClass = "true";
             }
-            else if (path.Contains(item.SectionPath))
+            else if (isSectionPath)
             {
                 liClass = " contains-current";
                 ariaClass = "true";
@@ -138,7 +142,7 @@ namespace CancerGov.Web.UI.SnippetControls
             if (item.ChildItems.Length > 0)
             {
                 //Taken out because of missing child items when rendering section nav on NVCG
-                if (path.Contains(item.SectionPath))
+                if (isSectionPath)
                 {
                     writer.AddAttribute(HtmlTextWriterAttribute.Style, "display:block;");
                 }
