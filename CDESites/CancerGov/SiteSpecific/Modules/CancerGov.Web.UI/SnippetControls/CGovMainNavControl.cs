@@ -20,7 +20,7 @@ namespace CancerGov.Web.UI.SnippetControls
     [DefaultProperty("Text")]
     [ToolboxData("<{0}:CGovMainNavControl runat=server></{0}:CGovMainNavControl>")]
     public class CGovMainNavControl : SnippetControl
-    { 
+    {
         //My Nav Here
         NavigationDisplayInfo _navInfo = null;
 
@@ -100,7 +100,7 @@ namespace CancerGov.Web.UI.SnippetControls
 
 
 
-           
+
 
 
 
@@ -117,23 +117,15 @@ namespace CancerGov.Web.UI.SnippetControls
             writer.Write(item.Title);
             writer.RenderEndTag();//end A\
 
-            
-            
-          
+
+
+
 
             //this checks to see if there are child items for the current nav itemand if there is it goes on to render the children
             //this logic came from the CGovSectionNav Control but this may be needed in the future for evolution if there are drop down menus
             if (item.ChildItems.Length > 0)
             {
-                writer.AddAttribute("aria-expanded", "false");
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "toggle");
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "button");
-                writer.RenderBeginTag(HtmlTextWriterTag.Button);
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "hidden");
-                writer.RenderBeginTag(HtmlTextWriterTag.Span);
-                writer.Write("Open child elements");
-                writer.RenderEndTag();//p tag
-                writer.RenderEndTag();//button
+
                 writer.RenderEndTag();//div if child items
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "mobile-item");
@@ -180,7 +172,7 @@ namespace CancerGov.Web.UI.SnippetControls
 
 
 
-            
+
 
 
             //This block of code checks the URL path against the Item but since the home page has a path of '/'
@@ -220,15 +212,7 @@ namespace CancerGov.Web.UI.SnippetControls
             //this logic came from the CGovSectionNav Control but this may be needed in the future for evolution if there are drop down menus
             if (item.ChildItems.Length > 0)
             {
-                writer.AddAttribute("aria-expanded", "false");
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "toggle");
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "button");
-                writer.RenderBeginTag(HtmlTextWriterTag.Button);
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "hidden");
-                writer.RenderBeginTag(HtmlTextWriterTag.Span);
-                writer.Write("Open child elements");
-                writer.RenderEndTag();//p tag
-                writer.RenderEndTag();//button
+
                 writer.RenderEndTag();//div if child items
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "mobile-item");

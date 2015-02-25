@@ -131,20 +131,6 @@ namespace CancerGov.Web.UI.SnippetControls
             writer.RenderBeginTag(HtmlTextWriterTag.A);
             writer.Write(item.Title);
             writer.RenderEndTag();//end A tag
-
-            //outputs the button for expanding section nav if there are items to be shown
-            if (item.ChildItems.Length > 0)
-            {
-                writer.AddAttribute("aria-expanded", ariaClass);
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "toggle");
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "button");
-                writer.RenderBeginTag(HtmlTextWriterTag.Button);
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "hidden");
-                writer.RenderBeginTag(HtmlTextWriterTag.Span);
-                writer.Write("Open child elements");
-                writer.RenderEndTag();//end Span tag
-                writer.RenderEndTag();//end button
-            }
             writer.RenderEndTag();//end Div
 
             // Checks if there are children for the node and
@@ -160,15 +146,15 @@ namespace CancerGov.Web.UI.SnippetControls
                 {
                     writer.AddAttribute(HtmlTextWriterAttribute.Style, "display:none;");
                 }
-                    writer.RenderBeginTag(HtmlTextWriterTag.Ul);
-                    level++;
-                    foreach (NavigationItem subitem in item.ChildItems)
-                    {
-                        RenderNavItem(subitem, writer);
-                    }
-                    writer.RenderEndTag();//end ul
-                    level--;
-                
+                writer.RenderBeginTag(HtmlTextWriterTag.Ul);
+                level++;
+                foreach (NavigationItem subitem in item.ChildItems)
+                {
+                    RenderNavItem(subitem, writer);
+                }
+                writer.RenderEndTag();//end ul
+                level--;
+
             }
             writer.RenderEndTag();//end li
 
