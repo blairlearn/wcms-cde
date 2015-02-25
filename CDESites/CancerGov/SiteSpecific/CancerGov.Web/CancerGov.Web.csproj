@@ -274,55 +274,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx.cs">
-      <DependentUpon>CancerBulletinSearch.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx.designer.cs">
-      <DependentUpon>CancerBulletinSearch.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx.cs">
-      <DependentUpon>CancerBulletinSubscribe.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx.designer.cs">
-      <DependentUpon>CancerBulletinSubscribe.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx.cs">
-      <DependentUpon>CancerBulletinSubscribeListServ.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx.designer.cs">
-      <DependentUpon>CancerBulletinSubscribeListServ.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx.cs">
-      <DependentUpon>CancerBulletinUnSubscribe.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx.designer.cs">
-      <DependentUpon>CancerBulletinUnSubscribe.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\cbComments.ascx.cs">
-      <DependentUpon>cbComments.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\cbComments.ascx.designer.cs">
-      <DependentUpon>cbComments.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx.cs">
-      <DependentUpon>cbSendToColleague.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx.designer.cs">
-      <DependentUpon>cbSendToColleague.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx.cs">
-      <DependentUpon>ResultsCancerBulletin.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx.designer.cs">
-      <DependentUpon>ResultsCancerBulletin.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -669,13 +620,6 @@
     <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
     <Content Include="SnippetTemplates\BlogLandingDynamicList.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\cbComments.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\CGovMainNavControl.ascx" />
     <Content Include="SnippetTemplates\CGovSectionNavControl.ascx" />
