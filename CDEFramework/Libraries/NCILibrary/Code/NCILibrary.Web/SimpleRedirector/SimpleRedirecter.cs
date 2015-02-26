@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 
+using NCILibrary.Web.SimpleRedirector.Configuration;
+
 namespace NCI.Web.SimpleRedirector
 {
     /// <summary>
     /// Simple tool for redirecting URLs based on a comma-delimited list of old and new URLs.
     /// </summary>
-    public class SimpleRedirect : IHttpModule
+    public class SimpleRedirecter : IHttpModule
     {
-        static Log log = new Log(typeof(SimpleRedirect));
+        static Log log = new Log(typeof(SimpleRedirecter));
 
         #region IHttpModule Members
 
@@ -52,8 +54,9 @@ namespace NCI.Web.SimpleRedirector
         {
             String redirect = null;
 
-            //RedirectionMap urlMap = LoadUrlMap(context);
-            String datafile = HttpContext.Current.Server.MapPath("~/datafile.txt");
+            SimpleRedirectorConfigurationSection config = SimpleRedirectorConfigurationSection.Get();
+
+            String datafile = HttpContext.Current.Server.MapPath(config.DataSource.DataFile);
             RedirectionMap urlMap = RedirectionMap.GetMap(datafile, context);
 
             if (urlMap.Contains(url))

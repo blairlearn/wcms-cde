@@ -4,6 +4,8 @@ using System.IO;
 using System.Web;
 using System.Web.Caching;
 
+using NCILibrary.Web.SimpleRedirector.Configuration;
+
 namespace NCI.Web.SimpleRedirector
 {
     /// <summary>
@@ -25,8 +27,6 @@ namespace NCI.Web.SimpleRedirector
         public static RedirectionMap GetMap(String datafile, HttpContext context)
         {
             log.trace("Enter GetMap().");
-
-            char[] separators = { ',' };
 
             RedirectionMap map;
             Cache cache = context.Cache;
@@ -85,7 +85,10 @@ namespace NCI.Web.SimpleRedirector
         {
             log.trace("Enter LoadMapFromFile().");
 
-            char[] separators = { ',' };
+            SimpleRedirectorConfigurationSection config = SimpleRedirectorConfigurationSection.Get();
+
+            char[] separators = new char[1];
+            separators[0] = config.DataSource.Separator;
 
             RedirectionMap map = new RedirectionMap();
 
@@ -100,11 +103,14 @@ namespace NCI.Web.SimpleRedirector
                 String[] listOfUrlPairs = File.ReadAllLines(datafile);
                 foreach (String urlPair in listOfUrlPairs)
                 {
-                    String[] urls = urlPair.Split(separators);
+                    String[] urls = urlPair.Trim().Split(separators);
                     if (urls.Length >= 2)
                         map.Add(urls[0].Trim().ToLowerInvariant(), urls[1].Trim().ToLowerInvariant());
                     if (urls.Length != 2)
+                    {
+                        // We can recover from this problem. No exception needed.
                         log.warning(String.Format("Expected only two urls, found {0} in '{1}'.", urls.Length, urlPair));
+                    }
                 }
             }
             catch (Exception ex)

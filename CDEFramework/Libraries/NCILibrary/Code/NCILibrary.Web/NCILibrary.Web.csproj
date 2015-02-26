@@ -60,6 +60,8 @@
     <Compile Include="ProductionHost\Configuration\ProductionHostSection.cs" />
     <Compile Include="ProductionHost\ProductionHostConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleRedirector\Configuration\DataSourceElement.cs" />
+    <Compile Include="SimpleRedirector\Configuration\SimpleRedirectorConfigurationSection.cs" />
     <Compile Include="SimpleRedirector\Log.cs" />
     <Compile Include="SimpleRedirector\RedirectionMap.cs" />
     <Compile Include="SimpleRedirector\SimpleRedirecter.cs" />
