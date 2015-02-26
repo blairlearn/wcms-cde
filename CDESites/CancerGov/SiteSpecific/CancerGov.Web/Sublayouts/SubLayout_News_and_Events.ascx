@@ -5,7 +5,7 @@
 <NCI:TemplateSlot
     id="nvcgSlLayoutFeatureA"
     CssClass="row feature-primary"
-    AdditionalSnippetClasses="equalheight large-12 columns card"
+    AdditionalSnippetClasses="equalheight large-4 columns card gutter"
     runat="server"
     data-match-height="" />
 </div>
