@@ -35,6 +35,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 					#set($postedString = ""Posted"")##
 					#set($updatedString = ""Updated"")##
 					#set($reviewedString = ""Reviewed"")##
+                    #set($newsString = ""All NCI news"")##
 					";
                     if (PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language") == "es")
                     {
@@ -45,6 +46,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 						#set($postedString = ""Publicaci&oacute;n"")##
 						#set($updatedString = ""Actualizaci&oacute;n"")##
 						#set($reviewedString = ""Revisi&oacute;n"")##
+                        #set($newsString = ""Noticias del NCI"")##
 						";
                     }
 
@@ -113,6 +115,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                             </div>
                         </li>
                     #end
+                    <li><a class=""arrow-link"" href=""#"">$newsString</a></li>
                     </ul>
                     ";
                 }
