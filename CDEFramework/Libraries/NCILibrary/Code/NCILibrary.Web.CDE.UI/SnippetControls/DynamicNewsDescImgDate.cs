@@ -46,7 +46,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 						#set($postedString = ""Publicaci&oacute;n"")##
 						#set($updatedString = ""Actualizaci&oacute;n"")##
 						#set($reviewedString = ""Revisi&oacute;n"")##
-                        #set($newsString = ""Noticias del NCI"")##
+                        #set($newsString = ""Todas las noticias del NCI"")##
 						";
                     }
 
@@ -115,7 +115,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                             </div>
                         </li>
                     #end
-                    <li><a class=""arrow-link"" href=""#"">$newsString</a></li>
+                    <li><a class=""arrow-link news-footer"" href=""#"">$newsString</a></li>
                     </ul>
                     ";
                 }
