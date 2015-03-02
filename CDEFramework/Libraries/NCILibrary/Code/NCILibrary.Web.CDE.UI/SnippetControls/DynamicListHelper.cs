@@ -49,7 +49,53 @@ namespace NCI.Web.CDE.UI.SnippetControls
             string open = @"
             <ul class=""list no-bullets"">##
             #foreach($resultItem in $DynamicSearch.Results)
-                <li class=""general-list-item general"">##";
+				#if($resultItem.ContentType == ""rx:nciFile"")##
+					##
+					## Set file size
+					##
+					#if($resultItem.FileSize < 1000)##
+						#set($fileSize = ""($resultItem.FileSize B)"")##
+					#else##
+						#set($kbFileSize = ($resultItem.FileSize / 1000))##
+						#if($kbFileSize < 1000)##
+							#set($fileSize = ""($kbFileSize KB)"")##
+						#else##
+							#set($mbFileSize = ($kbFileSize / 1000))##
+							#set($fileSize = ""($mbFileSize MB)"")##
+						#end##
+					#end##
+					##
+					## Set mime type
+					##							
+					#set($printOutExt="""")##
+					#set($fileType = $resultItem.MimeType)##
+					#if($fileType == ""application/vnd.ms-excel"" || $fileType==""application/excel"" )##
+					#set($fileClass = ""list-excel"")##
+					#set($fileType_safe = ""excel"")##
+					#elseif($fileType == ""application/mspowerpoint"" || $fileType==""application/vnd.ms-powerpoint"")##
+					#set($fileClass = ""list-powerpoint"")##
+					#set($fileType_safe = ""ppt"")##
+					#elseif($fileType == ""text/xml"")##
+					#set($fileClass = ""list-powerpoint"")##
+					#set($fileType_safe = ""ppt"")##
+					#elseif($fileType == ""application/msword"")##
+					#set($fileClass = ""list-word"")##
+					#set($fileType_safe = ""word"")##
+					#elseif($fileType == ""application/pdf"")##
+					#set($fileClass = ""list-pdf"")##
+					#set($fileType_safe = ""pdf"")##
+					#elseif($fileType == ""application/octet-stream"" || $fileType==""application/x-compressed"")##
+					#set($fileClass = ""list-execute"")##
+					#set($fileType_safe = ""exe"")##
+					#elseif($fileType == ""application/epub+zip"" || $fileType == ""application/x-mobipocket-ebook"")##
+					#set($fileClass = ""list-ebook"")##
+					#set($fileType_safe = ""ebook"")##
+					#else##
+					#set($fileClass = ""list-item-link link"")##
+					#set($printOutExt = $fileType)##
+					#end##
+				#end##			
+				<li class=""general-list-item file exe list-item list-execute"">##";
             return open;
         }
 
@@ -76,9 +122,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         ##
                         ## Display title
                         ##
-                        <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""title"">
-                            #if($resultItem.ContentType == ""rx:nciFile"")##
-                                $fileContent $resultItem.LongTitle $resultItem.MimeType $resultItem.FileSize##
+						###### move and copy
+                        <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""list-pdf title"">##						
+								##
+								## Output title for file content types
+								##
+							#if($resultItem.ContentType == ""rx:nciFile"")##
+								$fileContent $resultItem.LongTitle $fileSize <span class=""filetype pdf""><span class=""accessibility-text"">pdf file</span></span>##
                             #else
                                 $resultItem.LongTitle##
                                 #if($resultItem.ContentType == ""rx:gloVideo"")##
@@ -100,7 +150,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         ##
                         ## Display dates
                         ##
-
                             <span class=""date"">
 								#if ($resultItem.DateDisplayMode == 1)##
 									($postedString: $resultItem.PostedDate) ##	
