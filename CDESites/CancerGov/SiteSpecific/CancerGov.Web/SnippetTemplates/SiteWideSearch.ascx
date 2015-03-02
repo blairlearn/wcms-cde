@@ -48,12 +48,36 @@
                 </div>
             </asp:PlaceHolder>
             
-            <asp:Repeater ID="rptResults" EnableViewState="false" runat="server">
+            <cc1:MultiTemplatedRepeater ID="rptResults" EnableViewState="false" runat=server>
                 <HeaderTemplate>
                     <div class="sitewide-list" >
                         <ul class="no-bullets">
                 </HeaderTemplate>
-                <ItemTemplate>
+                <ItemTemplates>
+                    <cc1:TemplateItem TemplateType="Default">
+                        <Template>
+                            <li>
+                                <div>
+                                <asp:HyperLink
+                                    id="HyperLink1"
+                                    runat="server"
+                                    onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
+                                    NavigateUrl='<%# Eval("Url") %>'
+                                    Text='<%# Eval("Title") %>' />
+                                </div>
+                                <div>
+		                            <cite class="url">
+		                            <%# Eval("DisplayUrl") %>
+		                            </cite>
+		                        </div>
+		                        <div class="description">
+		                            <%# Eval("Description") %>
+		                        </div>
+		                    </li>                    
+                        </Template>		                    
+                    </cc1:TemplateItem>
+                    <cc1:TemplateItem TemplateType="Media">
+                        <Template>
                             <li>
                                 <div>
                                 <asp:HyperLink
@@ -62,22 +86,28 @@
                                     onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
                                     NavigateUrl='<%# Eval("Url") %>'
                                     Text='<%# Eval("Title") %>' />
+                                    (<%# Eval("Label") %>)
                                 </div>
                                 <div>
-			                        <cite class="url">
-			                        <%# Eval("DisplayUrl") %>
-			                        </cite>
-			                    </div>
-			                    <div class="description">
-			                        <%# Eval("Description") %>
-			                    </div>
-			                </li>
-                </ItemTemplate>    
+		                            <cite class="url">
+		                            <%# Eval("DisplayUrl") %>
+		                            </cite>
+		                        </div>
+		                        <div class="description">
+		                            <%# Eval("Description") %>
+		                        </div>
+		                    </li>
+                        </Template>		                    
+                    </cc1:TemplateItem>                                            
+                </ItemTemplates>
                 <FooterTemplate>
                         </ul>
                     </div>
                 </FooterTemplate>
-            </asp:Repeater>
+            </cc1:MultiTemplatedRepeater>
+
+
+            
         </div>
         
         <form id="resultForm" runat="server" class="sitewide-search-results">

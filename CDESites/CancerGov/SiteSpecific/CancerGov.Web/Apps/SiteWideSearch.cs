@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI.HtmlControls;
 using System.Web.UI;
@@ -38,7 +39,7 @@ namespace NCI.Web.CancerGov.Apps
         protected HyperLink lnkDym;
         protected Label lblTopResultsXofY;
         protected Literal litError;
-        protected Repeater rptResults;
+        protected NCI.Web.UI.WebControls.MultiTemplatedRepeater rptResults;
         protected Label lblBottomResultsXofY;
         protected Label lblDDLPageUnitShowText;
         protected Label lblPageUnit;
@@ -408,11 +409,11 @@ namespace NCI.Web.CancerGov.Apps
 
             return "";
         }
-            
-        protected string ResultsHyperlinkOnclick(RepeaterItem result)
-        {
+
+        protected string ResultsHyperlinkOnclick(IDataItemContainer result)
+        {            
             if (WebAnalyticsOptions.IsEnabled)
-                return "NCIAnalytics.SiteWideSearchResults(this," + "false" + ",'" + (result.ItemIndex + _resultOffset).ToString() + "');"; // Load results onclick script
+                return "NCIAnalytics.SiteWideSearchResults(this," + "false" + ",'" + (result.DisplayIndex + _resultOffset).ToString() + "');"; // Load results onclick script
             else
                 return "";
         }
@@ -694,7 +695,16 @@ namespace NCI.Web.CancerGov.Apps
             SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.TotalNumResults, out firstIndex, out lastIndex);
             _resultOffset = firstIndex;
 
-            rptResults.DataSource = results;
+            rptResults.DataSource = from res in results
+                                    select new NCI.Web.UI.WebControls.TemplatedDataItem(
+                                        GetSearchResultTemplate(res),
+                                        new {
+                                            URL = res.Url,
+                                            Title = res.Title,
+                                            DisplayUrl = res.DisplayUrl,
+                                            Description = res.Description,
+                                            Label = GetSearchResultLabel(res),
+                                        });
             rptResults.DataBind();
 
             //Set Keywords in labels
@@ -730,6 +740,50 @@ namespace NCI.Web.CancerGov.Apps
                 });
             }
             //// End Web Analytics *************************************************
+        }
+
+        /// <summary>
+        /// Returns an appropriate content-type label for the given EndecaResult.
+        /// </summary>
+        /// <param name="res">The source EndecaResult used to generate the label.</param>
+        /// <returns>A language-specific label for the result.</returns>
+        private String GetSearchResultLabel(EndecaResult res)
+        {
+            string language = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
+            string label = res.ContentType;
+
+            switch (res.ContentType)
+            {
+                case "cgvInfographic":
+                    label = language == "es" ? "Infografía" : "Infographic";
+                    break;
+                case "gloVideo":
+                    label = language == "es" ? "Video" : "Video";
+                    break;
+                case "gloVideoCarousel":
+                    label = language == "es" ? "Lista de reproducción de videos" : "Video Playlist";
+                    break;
+            }
+
+            return label;
+        }
+
+        /// <summary>
+        /// Generates an appropriate template name for the given search result.
+        /// </summary>
+        /// <param name="res">The source EndecaResult.</param>
+        /// <returns>A String template name.</returns>
+        private string GetSearchResultTemplate(EndecaResult res)
+        {
+            switch (res.ContentType)
+            {
+                case "cgvInfographic":
+                case "gloVideo":
+                case "gloVideoCarousel":
+                    return "Media";
+                default:
+                    return "Default";
+            }
         }
 
         private void ShowErrorMessage()

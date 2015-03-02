@@ -48,6 +48,16 @@ namespace NCI.Search.Endeca
 			get { return volumeNumber; }
 		}
 
+        /// <summary>
+        /// The ContentType property of the record
+        /// Used in Site-Wide Search results
+        /// </summary>
+        private string contentType = "";
+        public string ContentType
+        {
+            get { return contentType; }
+        }
+
 
 		/// <summary>
 		/// Creates a new instance of the CancerGov.Search.EndecaSearching class by getting data from an ERec
@@ -111,6 +121,15 @@ namespace NCI.Search.Endeca
 				volumeNumber = (string)record.Properties["NCI.VolumeNumber"];
 			}
 
+            //Set VolumeNumber
+            if (record.Properties.Contains("ContentType"))
+            {
+                contentType = (string)record.Properties["ContentType"];
+                if (contentType.StartsWith("rx:"))
+                {
+                    contentType = contentType.Substring(3);
+                }
+            }
 		}
 	}
 }
