@@ -31,7 +31,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     helper.titleString() +
                     helper.dateString() +
                     helper.descString() +
-                    helper.closeNews();
+                    helper.closeList();
                 }
                 return base.SearchList;
             }

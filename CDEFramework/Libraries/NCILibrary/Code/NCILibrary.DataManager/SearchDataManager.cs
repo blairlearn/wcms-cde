@@ -108,7 +108,8 @@ namespace NCI.DataManager
 
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
-
+                                    searchResult.FileSize = sqlFVReader.GetInt32("item_size");
+                                    searchResult.MimeType = sqlFVReader.GetString("item_type");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)
@@ -245,6 +246,8 @@ namespace NCI.DataManager
                                     searchResult.Author = sqlFVReader.GetString("author");
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
+                                    searchResult.FileSize = sqlFVReader.GetInt32("item_size");
+                                    searchResult.MimeType = sqlFVReader.GetString("item_type");
 
                                     DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
                                     if (dt != DateTime.MinValue)

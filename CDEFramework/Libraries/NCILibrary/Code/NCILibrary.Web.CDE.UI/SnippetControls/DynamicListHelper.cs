@@ -78,15 +78,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         ##
                         <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""title"">
                             #if($resultItem.ContentType == ""rx:nciFile"")##
-                                $fileContent  ##
-                            #end##
-                            $resultItem.LongTitle
-                            #if($resultItem.ContentType == ""rx:gloVideo"")##
-                                ($videoContent)##
-                            #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
-                                ($carouselContent)##
-                            #elseif($resultItem.ContentType == ""rx:cgvInfographic"")##
-                                ($infographicContent)##
+                                $fileContent $resultItem.LongTitle $resultItem.MimeType $resultItem.FileSize##
+                            #else
+                                $resultItem.LongTitle##
+                                #if($resultItem.ContentType == ""rx:gloVideo"")##
+                                    ($videoContent)##
+                                #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
+                                    ($carouselContent)##
+                                #elseif($resultItem.ContentType == ""rx:cgvInfographic"")##
+                                    ($infographicContent)##
+                                #end##
                             #end##
                         </a>##
                         <p class=""description date"">";

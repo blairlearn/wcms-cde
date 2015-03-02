@@ -140,6 +140,16 @@ namespace NCI.DataManager
         /// </summary>
         public Boolean SubscriptionRequired { get; set; }
 
+        /// <summary>
+        /// File size
+        /// </summary>
+        public int FileSize { get; set; }
+
+        /// <summary>
+        /// File's media type
+        /// </summary>
+        public String MimeType { get; set; }
+
         public SearchResult()
         {
             ShortDescription = string.Empty;
@@ -152,6 +162,8 @@ namespace NCI.DataManager
             Alt = string.Empty;
             BlogBody = string.Empty;
             Author = string.Empty;
+            MimeType = string.Empty;
+            FileSize = 0;
         }
     }
 }
