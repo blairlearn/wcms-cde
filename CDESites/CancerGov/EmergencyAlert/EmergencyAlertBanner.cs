@@ -56,12 +56,18 @@ namespace CancerGov.EmergencyAlert
         {
             if (this.eContext != null)
             {
+                output.AddAttribute(HtmlTextWriterAttribute.Class, "site-notification");
+                output.RenderBeginTag(HtmlTextWriterTag.Div);
+                output.AddAttribute(HtmlTextWriterAttribute.Class, "row");
+                output.RenderBeginTag(HtmlTextWriterTag.Div);
                 output.AddAttribute(HtmlTextWriterAttribute.Class, "notification");
                 output.RenderBeginTag(HtmlTextWriterTag.Span);
                 output.AddAttribute(HtmlTextWriterAttribute.Href, this.eContext.EmergencyUrl);
                 output.RenderBeginTag(HtmlTextWriterTag.A);
                 output.Write("Emergency Information: ");
                 output.Write(this.eContext.BannerText);
+                output.RenderEndTag();
+                output.RenderEndTag();
                 output.RenderEndTag();
                 output.RenderEndTag();
             }
