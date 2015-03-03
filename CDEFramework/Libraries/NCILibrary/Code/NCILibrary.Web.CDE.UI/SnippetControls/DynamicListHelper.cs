@@ -70,29 +70,32 @@ namespace NCI.Web.CDE.UI.SnippetControls
 					#set($printOutExt="""")##
 					#set($fileType = $resultItem.MimeType)##
 					#if($fileType == ""application/vnd.ms-excel"" || $fileType==""application/excel"" )##
-					#set($fileClass = ""list-excel"")##
-					#set($fileType_safe = ""excel"")##
+					    #set($fileClass = ""list-excel"")##
+					    #set($fileType_safe = ""excel"")##
 					#elseif($fileType == ""application/mspowerpoint"" || $fileType==""application/vnd.ms-powerpoint"")##
-					#set($fileClass = ""list-powerpoint"")##
-					#set($fileType_safe = ""ppt"")##
-					#elseif($fileType == ""text/xml"")##
-					#set($fileClass = ""list-powerpoint"")##
-					#set($fileType_safe = ""ppt"")##
+						#set($fileClass = ""list-powerpoint"")##
+						#set($fileType_safe = ""ppt"")##
 					#elseif($fileType == ""application/msword"")##
-					#set($fileClass = ""list-word"")##
-					#set($fileType_safe = ""word"")##
+						#set($fileClass = ""list-word"")##
+						#set($fileType_safe = ""word"")##
 					#elseif($fileType == ""application/pdf"")##
-					#set($fileClass = ""list-pdf"")##
-					#set($fileType_safe = ""pdf"")##
+						#set($fileClass = ""list-pdf"")##
+						#set($fileType_safe = ""pdf"")##
 					#elseif($fileType == ""application/octet-stream"" || $fileType==""application/x-compressed"")##
-					#set($fileClass = ""list-execute"")##
-					#set($fileType_safe = ""exe"")##
-					#elseif($fileType == ""application/epub+zip"" || $fileType == ""application/x-mobipocket-ebook"")##
-					#set($fileClass = ""list-ebook"")##
-					#set($fileType_safe = ""ebook"")##
+						#set($fileClass = ""list-execute"")##
+						#set($fileType_safe = ""exe"")##
+					#elseif($fileType == ""application/epub+zip"")##
+						#set($fileClass = ""list-ebook"")##
+						#set($fileType_safe = ""ebook"")##
+					#elseif($fileType == ""application/x-mobipocket-ebook"")##
+						#set($fileClass = ""list-mobi"")##
+						#set($fileType_safe = ""mobi"")##
+					#elseif($fileType == ""text/plain"")##
+						#set($fileClass = ""list-txt"")##
+						#set($fileType_safe = ""txt"")##
 					#else##
-					#set($fileClass = ""list-item-link link"")##
-					#set($printOutExt = $fileType)##
+						#set($fileClass = ""list-item-link link"")##
+						#set($printOutExt = $fileType)##
 					#end##
 				#end##			
 				<li class=""general-list-item file exe list-item list-execute"">##";
@@ -123,12 +126,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         ## Display title
                         ##
 						###### move and copy
-                        <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""list-pdf title"">##						
+                        <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""$fileClass title"">##						
 								##
 								## Output title for file content types
 								##
 							#if($resultItem.ContentType == ""rx:nciFile"")##
-								$fileContent $resultItem.LongTitle $fileSize <span class=""filetype pdf""><span class=""accessibility-text"">pdf file</span></span>##
+								$fileContent $resultItem.LongTitle <span class=""filesize"">$fileSize $printOutExt</span><span class=""filetype $fileType_safe""><span class=""accessibility-text"">$fileType_safe file</span></span>##
                             #else
                                 $resultItem.LongTitle##
                                 #if($resultItem.ContentType == ""rx:gloVideo"")##
