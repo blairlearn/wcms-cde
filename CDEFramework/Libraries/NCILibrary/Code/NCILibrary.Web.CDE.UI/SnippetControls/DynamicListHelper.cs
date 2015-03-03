@@ -100,8 +100,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         #set($fileType_safe = """")##
                         #set($printOutExt = $fileType)##
 					#end##
-				#end##			
-				<li class=""general-list-item file exe list-item list-execute"">##";
+				<li class=""general-list-item file $fileType_safe list-item $fileClass"">##
+				#else##
+				<li class=""general-list-item list-item"">##
+				#end##";
             return open;
         }
 
@@ -209,17 +211,17 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public string closeList()
         {
             string close = @"
-                        </p>
-                    </div>
-                </li>
-            #end
-            </ul>
+                        </p>## Close description date class
+                    </div>## Close description and title div class
+                </li>## End list item
+            #end## End foreach search results loop
+            </ul>## End list
             ";
             return close;
         }
 
         /*
-         * Closing tags for News/Events Dynamic list.
+         * Closing tags for News/Events Dynamic list. Same a closeList() but with tag for "show all" link
          */
         public string closeNews()
         {
@@ -228,7 +230,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     </div>
                 </li>
             #end
-            <li><a class=""arrow-link news-footer"" href=""#"">$newsString</a></li>
+				<li>
+					<div class=""image container"">&nbsp;</div>
+					<div class=""title container"">
+						  <a class=""arrow-link news-footer"" href=""#"">$newsString</a>
+					</div>
+				</li>
             </ul>
             ";
             return close;
