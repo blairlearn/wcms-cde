@@ -14,13 +14,18 @@ namespace NCI.Web.CDE.UI.SnippetControls
 {
     public class DynamicListHelper : BaseSearchSnippet
     {
+        ///This is completely dirty and really a hack, but it gets this done.  This should be
+        ///fixed in a future release. --BryanP 2/10/2015
+
+        /*
+         * Sets text according to the language of the containing page.
+         */
         public string languageStrings()
         {
             String pageLanguage = @"
 			#set($videoContent = ""Video"")##
 			#set($carouselContent = ""Video Playlist"")##
 			#set($infographicContent = ""Infographic"")##
-			#set($fileContent = ""File"")##
 			#set($postedString = ""Posted"")##
 			#set($updatedString = ""Updated"")##
 			#set($reviewedString = ""Reviewed"")##
@@ -32,7 +37,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
 				#set($videoContent = ""Video"")##
 				#set($carouselContent = ""Lista de reproducci&oacute;n"")##
 				#set($infographicContent = ""Infograf&iacute;a"")##
-    			#set($fileContent = ""Fila"")##
 				#set($postedString = ""Publicaci&oacute;n"")##
 				#set($updatedString = ""Actualizaci&oacute;n"")##
 				#set($reviewedString = ""Revisi&oacute;n"")##
@@ -42,8 +46,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
             return pageLanguage;
         }
 
-        //This is completely dirty and really a hack, but it gets this done.  This should be
-        //fixed in a future release. --BryanP 2/10/2015
+        /*
+         * Opening tags for dynamic list. Also sets variables for any File Content Type data.
+         */
         public string openList()
         {
             string open = @"
@@ -69,39 +74,40 @@ namespace NCI.Web.CDE.UI.SnippetControls
 					##							
 					#set($printOutExt="""")##
 					#set($fileType = $resultItem.MimeType)##
-					#if($fileType == ""application/vnd.ms-excel"" || $fileType==""application/excel"" )##
+					#if($fileType == ""application/vnd.ms-excel"" || $fileType == ""application/excel"" || $fileType == ""application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"")##
 					    #set($fileClass = ""list-excel"")##
 					    #set($fileType_safe = ""excel"")##
-					#elseif($fileType == ""application/mspowerpoint"" || $fileType==""application/vnd.ms-powerpoint"")##
+					#elseif($fileType == ""application/mspowerpoint"" || $fileType== ""application/vnd.ms-powerpoint"" || $fileType == ""application/vnd.openxmlformats-officedocument.presentationml.presentation"")##
 						#set($fileClass = ""list-powerpoint"")##
 						#set($fileType_safe = ""ppt"")##
-					#elseif($fileType == ""application/msword"")##
+					#elseif($fileType == ""application/msword"" || $fileType == ""application/vnd.openxmlformats-officedocument.wordprocessingml.document"")##
 						#set($fileClass = ""list-word"")##
 						#set($fileType_safe = ""word"")##
 					#elseif($fileType == ""application/pdf"")##
 						#set($fileClass = ""list-pdf"")##
 						#set($fileType_safe = ""pdf"")##
-					#elseif($fileType == ""application/octet-stream"" || $fileType==""application/x-compressed"")##
+					#elseif($fileType == ""application/octet-stream"" || $fileType == ""application/x-compressed"" || $fileType == ""application/x-msdownload"")##
 						#set($fileClass = ""list-execute"")##
 						#set($fileType_safe = ""exe"")##
-					#elseif($fileType == ""application/epub+zip"")##
+					#elseif($fileType == ""application/epub+zip"" || $fileType == ""application/x-mobipocket-ebook"")##
 						#set($fileClass = ""list-ebook"")##
 						#set($fileType_safe = ""ebook"")##
-					#elseif($fileType == ""application/x-mobipocket-ebook"")##
-						#set($fileClass = ""list-mobi"")##
-						#set($fileType_safe = ""mobi"")##
 					#elseif($fileType == ""text/plain"")##
 						#set($fileClass = ""list-txt"")##
 						#set($fileType_safe = ""txt"")##
 					#else##
-						#set($fileClass = ""list-item-link link"")##
-						#set($printOutExt = $fileType)##
+                        #set($fileClass = ""list-item-link link"")##
+                        #set($fileType_safe = """")##
+                        #set($printOutExt = $fileType)##
 					#end##
 				#end##			
 				<li class=""general-list-item file exe list-item list-execute"">##";
             return open;
         }
 
+        /*
+         * Output image if attached to content item.
+         */
         public string imageString()
         {
             string image = @"
@@ -118,77 +124,88 @@ namespace NCI.Web.CDE.UI.SnippetControls
             return image;
         }
 
+        /*
+         * Output Long Title of content item plus additional info for file and media types.
+         */
         public string titleString()
         {
             string title = @"
-                    <div class=""title-and-desc title desc container"">##
-                        ##
-                        ## Display title
-                        ##
-						###### move and copy
-                        <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""$fileClass title"">##						
-								##
-								## Output title for file content types
-								##
-							#if($resultItem.ContentType == ""rx:nciFile"")##
-								$fileContent $resultItem.LongTitle <span class=""filesize"">$fileSize $printOutExt</span><span class=""filetype $fileType_safe""><span class=""accessibility-text"">$fileType_safe file</span></span>##
-                            #else
-                                $resultItem.LongTitle##
-                                #if($resultItem.ContentType == ""rx:gloVideo"")##
-                                    ($videoContent)##
-                                #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
-                                    ($carouselContent)##
-                                #elseif($resultItem.ContentType == ""rx:cgvInfographic"")##
-                                    ($infographicContent)##
-                                #end##
-                            #end##
-                        </a>##
-                        <p class=""description date"">";
+                <div class=""title-and-desc title desc container"">##
+                    ##
+                    ## Display title
+                    ##
+					###### move and copy
+                    <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""$fileClass title"">##						
+						##
+						## Output title for file content types
+						##
+                        $resultItem.LongTitle##
+                        #if($resultItem.ContentType == ""rx:gloVideo"")##
+                            ($videoContent)##
+                        #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
+                            ($carouselContent)##
+                        #elseif($resultItem.ContentType == ""rx:cgvInfographic"")##
+                            ($infographicContent)##
+                        #elseif($resultItem.ContentType == ""rx:nciFile"")##
+                            <span class=""filesize"">$fileSize $printOutExt</span><span class=""filetype $fileType_safe""><span class=""accessibility-text"">$fileType_safe file</span></span>##
+                        #end##
+                    </a>##
+                    <p class=""description date"">";
             return title;
         }
 
+        /*
+         * Output dates.
+         * TODO: this needs to be updated to display only the most recent date of the three. 
+         */
         public string dateString()
         {
             string dates = @"
-                        ##
-                        ## Display dates
-                        ##
-                            <span class=""date"">
-								#if ($resultItem.DateDisplayMode == 1)##
-									($postedString: $resultItem.PostedDate) ##	
-								#elseif ($resultItem.DateDisplayMode == 2)##
-									($updatedString: $resultItem.UpdatedDate) ##	
-								#elseif ($resultItem.DateDisplayMode == 3)##
-									($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate) ##
-								#elseif ($resultItem.DateDisplayMode == 4)##
-									($reviewedString: $resultItem.ReviewedDate) ##	
-								#elseif ($resultItem.DateDisplayMode == 5)##
-									($postedString: $resultItem.PostedDate, $reviewedString: $resultItem.ReviewedDate) ##
-								#elseif ($resultItem.DateDisplayMode == 6)##
-									($updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate) ##
-								#elseif ($resultItem.DateDisplayMode == 7)##
-									($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate) ##
-								#end
-							</span><br/>##";
+                ##
+                ## Display dates
+                ##
+                    <span class=""date"">
+						#if ($resultItem.DateDisplayMode == 1)##
+							($postedString: $resultItem.PostedDate) ##	
+						#elseif ($resultItem.DateDisplayMode == 2)##
+							($updatedString: $resultItem.UpdatedDate) ##	
+						#elseif ($resultItem.DateDisplayMode == 3)##
+							($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate) ##
+						#elseif ($resultItem.DateDisplayMode == 4)##
+							($reviewedString: $resultItem.ReviewedDate) ##	
+						#elseif ($resultItem.DateDisplayMode == 5)##
+							($postedString: $resultItem.PostedDate, $reviewedString: $resultItem.ReviewedDate) ##
+						#elseif ($resultItem.DateDisplayMode == 6)##
+							($updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate) ##
+						#elseif ($resultItem.DateDisplayMode == 7)##
+							($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate) ##
+						#end
+					</span><br/>##";
             return dates;
         }
 
+        /*
+         * Output long description if exists.
+         */
         public string descString()
         {
             string desc = @"
-                            ##
-                            ## Display description
-                            ##
-                            <span>##
-                                #if($resultItem.LongDescription)##
-                                    $resultItem.LongDescription ##
-                                #else##
-                                    &nbsp;##
-                                #end##
-                            </span>##";
+                ##
+                ## Display description
+                ##
+                <span>##
+                    #if($resultItem.LongDescription)##
+                        $resultItem.LongDescription ##
+                    #else##
+                        &nbsp;##
+                    #end##
+                </span>##";
             return desc;
         }
 
+        /*
+         * Closing tags for Dynamic list.
+         */
         public string closeList()
         {
             string close = @"
@@ -201,6 +218,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
             return close;
         }
 
+        /*
+         * Closing tags for News/Events Dynamic list.
+         */
         public string closeNews()
         {
             string close = @"
