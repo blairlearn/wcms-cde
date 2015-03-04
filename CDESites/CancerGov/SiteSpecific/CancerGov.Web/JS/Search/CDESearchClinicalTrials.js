@@ -44,7 +44,7 @@ function doSubmit(webAnalyticsOptions) {
 }
 
 function InitializeLocationBox() {
-	var $chooserButtons = $('[name="ctl21$LocationChooser"]'); // TODO: get this more dynamically!
+	var $chooserButtons = $('[name$="$LocationChooser"]');
 
 	// Reveal the dynamic location radio buttons.
 	// Hide the buttons for the static display.
@@ -123,8 +123,8 @@ function InitializeLocationBox() {
 
 	var $button = $chooserButtons.filter('input[type="radio"]:checked');
 	switch ($button.prop('value')) {
-		case "zip":
 		default:
+		case "zip":
 			$zipCodeBox.show();
 			break;
 		case "hospital":
@@ -138,10 +138,10 @@ function InitializeLocationBox() {
 			break;
 	}
 
-	$zipCodeBox.on('click', $('#' + ids.zipCodeLocationButton), function(e) { UpdateLocationDisplay(e) });
-	$hospitalBox.on('click', $('#' + ids.hospitalLocationButton), function(e) { UpdateLocationDisplay(e) });
-	$cityStateZipBox.on('click', $('#' + ids.cityStateLocationButton), function(e) { UpdateLocationDisplay(e) });
-	$nihOnlyBox.on('click', $('#' + ids.atNihLocationButton), function(e) { UpdateLocationDisplay(e) });
+	$zipCodeBox.on('click', $('#' + ids.zipCodeLocationButton), function(e) { UpdateLocationDisplay(e); });
+	$hospitalBox.on('click', $('#' + ids.hospitalLocationButton), function(e) { UpdateLocationDisplay(e); });
+	$cityStateZipBox.on('click', $('#' + ids.cityStateLocationButton), function(e) { UpdateLocationDisplay(e); });
+	$nihOnlyBox.on('click', $('#' + ids.atNihLocationButton), function(e) { UpdateLocationDisplay(e); });
 
 	InitializeInstitutionListSubBox();
 }
@@ -151,7 +151,7 @@ function UpdateLocationDisplay(event) {
 	$('#zipCodeBox', '#' + ids.hospitalBox, '#cityStateZipBox', '#nihOnlyBox').hide();
 
 	// Preserve selection in case back-arrow causes the page's scripts to re-run.
-	if (event.target != null)
+	if (event.target !== null)
 		$('#' + ids.LocationSelection).value = event.target.value;
 
 	this.show();
@@ -161,7 +161,7 @@ function InitializeInstitutionListSubBox() {
 	if ($('#' + ids.institutionListExpanded).prop('value') === 'N') {
 		$('+' + ids.showInstitutionListButton).show();
 		$('+' + ids.institutionListSubBox).hide();
-		$('#' + ids.showInstitutionListButton).on('click', function(e) { InstitutionListButtonClickHandler(e) });
+		$('#' + ids.showInstitutionListButton).on('click', function(e) { InstitutionListButtonClickHandler(e); });
 	} else {
 		showInstitutionList();
 	}
@@ -326,7 +326,7 @@ function InitializeLeadOrgListSubBox() {
 	if ($('#'+ids.leadOrgListExpanded).prop('value') === 'N') {
 		$('#showLeadOrgListButtonArea').show();
 		$('#leadOrgListSubBox').hide();
-		$('#showLeadOrgListButton').on('click', function(e) { LeadOrgListButtonClickHandler(e) });
+		$('#showLeadOrgListButton').on('click', function(e) { LeadOrgListButtonClickHandler(e); });
 	} else {
 		showLeadOrgList();
 	}
