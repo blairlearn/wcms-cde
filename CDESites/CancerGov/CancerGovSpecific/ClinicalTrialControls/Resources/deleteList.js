@@ -1,198 +1,170 @@
-﻿DeleteList = Class.create();
-Object.extend(DeleteList,{
-    _deleteListsOnPage : {},
-    // Static fields and methods
-    _valueListRoot : "ValueList",       // Hidden list of values
-    _textListRoot : "NameList",         // Hidden list of item names.
-    _deletedListRoot : "DeletedList",   // Hidden list of flags for which item to delete.
-    _emptyListMessageRoot : "EmptyMessage",
-    _displayListRoot : "DisplayList",   // The visible list of items.
-    
+$.widget('nci.deletelist', {
+	version: "0.1",
+	defaultElement: '<div>',
+	options: {
+		valueSeparator: '|',
+		nameSeparator: '_',
+		emptyListMessage: "Select \"Add More\"",
+		emptyListMessageRoot: 'EmptyMessage',
+		displayListRoot: 'DisplayList', // The visible list of items
+		valueListRoot: 'ValueList', // Hidden list of values
+		nameListRoot: 'NameList', // Hidden list of item names
+		deletedListRoot: 'DeletedList', // Hidden list of flags for which item to delete
+		deleteText: 'Delete'
+	},
 
-    _deleteButtonRoot : "Delete",
+	_create: function () {
+		var deleteListId = this.element.attr('id');
+		this.ids = {
+			element: deleteListId,
+			emptyListMessage: deleteListId + this.options.nameSeparator + this.options.emptyListMessageRoot,
+			displayList: deleteListId + this.options.nameSeparator + this.options.displayListRoot,
+			valueList: deleteListId + this.options.nameSeparator + this.options.valueListRoot,
+			nameList: deleteListId + this.options.nameSeparator + this.options.nameListRoot,
+			deletedList: deleteListId + this.options.nameSeparator + this.options.deletedListRoot
+		};
 
-    _valueSeparator : "|",
-    _nameSeparator : "_",
+		this.element.addClass('nci-deletelist');
 
-    BuildMarkerButton : function(parentID, offset, deleteIconUrl)
-    {
-        var buttonName = parentID + DeleteList._nameSeparator + DeleteList._deleteButtonRoot;
-        var buttonHtml = "<input alt=\"Delete.\" name=\"" + buttonName + "\" src=\"" + deleteIconUrl + "\" type=\"image\" value=\"" + offset + "\" />";
-        return buttonHtml;
-    },
+		// initialize empty list message
+		this.emptyListMessage = $('<div>')
+			.attr('id', this.ids.emptyListMessage)
+			.text(this.options.emptyListMessage)
+			.appendTo(this.element)
+			.hide();
 
-    ClearAll : function(controlID)
-    {
-        control = eval(controlID + DeleteList._nameSeparator + "obj");
-        control.ClearAll();
-    },
-    
-    GetInstance : function(controlID) {
-        return DeleteList._deleteListsOnPage[controlID];
-    },
+		// initialize <ul>
+		this.displayList = $('<ul>')
+			.attr('id', this.ids.displayList)
+			.appendTo(this.element);
 
-    RegisterInstance : function(controlID, instance) {
-        DeleteList._deleteListsOnPage[controlID] = instance;
-    }
+		// initialize <input> list
+		this.valueList = $('<input>')
+			.attr({
+				'type': 'hidden',
+				'value': '',
+				'id': this.ids.valueList,
+				'name': this.ids.valueList
+			}).appendTo(this.element);
 
-});
+		this.nameList = $('<input>')
+			.attr({
+				'type': 'hidden',
+				'value': '',
+				'id': this.ids.nameList,
+				'name': this.ids.nameList
+			}).appendTo(this.element);
 
-Object.extend(DeleteList.prototype, {
-    _control : false,
-    _deleteIconUrl : false,
+		this.deletedList = $('<input>')
+			.attr({
+				'type': 'hidden',
+				'value': '',
+				'id': this.ids.deletedList,
+				'name': this.ids.deletedList
+			}).appendTo(this.element);
 
-    // Instance fields and methods.
-    _valueListField : false,    // Hidden list of values
-    _textListField : false,     // Hidden list of item names.
-    _deletedListField : false,  // Hidden list of flags for which item to delete.
-    _emptyListMessageField : false,
-    _displayList : false,       // The visible list of items.
-    _itemCount : false,
+		this.items = [];
+	},
 
-    initialize : function(controlID, deleteIconUrl)
-    {        
-        this._control = $(controlID);
-        
-        DeleteList.RegisterInstance(controlID, this);
-        
-        //In order to make things easier in getting the selected text,
-        //we are going to add a method to the instance of the HTML element
-        //we converting into a DeleteList.  This is just a helper method that
-        //queries the DeleteList "static" object to get the instance of the
-        //DeleteList object we want to get the selected text for.
-        Object.extend(this._control, {
-            SelectedTextList : function(delimiter)  {
-                var instance = DeleteList.GetInstance(this.id);
-                if (instance) {
-                    return instance.SelectedTextListInternal(delimiter);
-                } else {
-                    return '';
-                }
-            }
-        });
+	_renderItem: function (ul, item) {
+		var deleteButton = $('<button>')
+			.attr('type', 'button')
+			.addClass('pseudo-icon-deletelist')
+			.append($('<div>')
+				.addClass('hidden')
+				.text(this.options.deleteText)
+			);
 
-        
-        this._deleteIconUrl = deleteIconUrl;
+		var listItem = $('<li>')
+			.text(item.name)
+			.prepend(deleteButton)
+			.appendTo(ul)
+			.on('click', deleteButton, function (e) {
+				this.deleteItem($(e.target));
+			});
 
-        this._valueListField = $(controlID + DeleteList._nameSeparator + DeleteList._valueListRoot);
-        this._textListField = $(controlID + DeleteList._nameSeparator + DeleteList._textListRoot);
-        this._deletedListField = $(controlID + DeleteList._nameSeparator + DeleteList._deletedListRoot);
-        this._emptyListMessageField = $(controlID + DeleteList._nameSeparator + DeleteList._emptyListMessageRoot);
-        this._displayList = $(controlID + DeleteList._nameSeparator + DeleteList._displayListRoot);
+		return listItem;
+	},
 
-        // Attach handlers for deletion clicks.
-        var listItems = $(controlID).select("li");
-        var length = listItems.length;
-        this._itemCount = listItems.length;
-        for(var i = 0; i < length; ++i)
-        {
-            // If it exists (and it should) itemMarker is an array of at least one span.
-            // The first span (and this is tied to the rendering code) contains the marker
-            // for deleting the item.
-            var itemMarker = listItems[i].down().down();
-            if(itemMarker)
-                itemMarker.observe("click", this.ClickHandler.bindAsEventListener(this, listItems[i], i));
-        }
-        
-        // If the list is empty, activate the empty list message.
-        if( length < 0 )
-            this._emptyListMessageField.show();
-    },
+	addItem: function (item) {
+		if (typeof item === 'object' && typeof item.name !== 'undefined' && typeof item.value !== 'undefined') {
+			// set the item's visibility to true
+			item.visible = true;
 
-    AddEntry : function (text, value)
-    {
-        if(!value)
-            value = text;
+			// render the item
+			this._renderItem(this.displayList, item)
+				.data("nci-deletelist-item", item);
 
-        var itemEntry = this._BuildItemEntry(text);
-        this._AddToList(itemEntry, text, value);
-        ++this._itemCount;
+			// add the item to the hidden <input> elements
+			var separator = this.options.valueSeparator;
+			if (this.nameList.prop('value') === '')
+				separator = '';
+			this.valueList.prop('value', this.valueList.prop('value') + separator + item.value);
+			this.nameList.prop('value', this.nameList.prop('value') + separator + item.name);
+			this.deletedList.prop('value', this.deletedList.prop('value') + separator + "false");
 
-        // Definitely don't need to show this.
-        this._emptyListMessageField.hide();
-    },
+			this.items.push(item);
+			if (this.displayList.children('li:visible').length === 1) {
+				this.emptyListMessage.hide();
+			}
+		}
+	},
 
-    ClearAll : function()
-    {
-        var deletionFlags = this._deletedListField.value.split(DeleteList._valueSeparator);
-        var itemList = this._displayList.childElements();
-        var size = deletionFlags.length;
-        for( var i = 0; i < size; i++)
-        {
-            deletionFlags[i] = true;
-            itemList[i].hide();
-        }
-        this._deletedListField.value = deletionFlags.join(DeleteList._valueSeparator);
+	deleteItem: function (item) {
+		if (typeof item === 'string' || (typeof item === 'object' && typeof item.name !== 'undefined')) {
 
-        // List is empty.
-        this._itemCount = 0;
-        this._emptyListMessageField.show();
-    },
+			// find the item
+			var itemName,
+			    itemIndex;
+			if (typeof item === 'string') {
+				itemName = item;
+			} else if (typeof item === 'object' && typeof item.name !== 'undefined') {
+				itemName = item.name;
+			}
+			var thisLi = $(this.displayList).children('li:data("nci-deletelist-item")')
+				.filter(function (i, el) {
+					return $(el).data('nci-deletelist-item').name === itemName;
+				});
 
-    // "private" methods.
+			// set the item's "visible" data attribute
+			var thisLiData = thisLi.data('nci-deletelist-item');
+			thisLiData.visible = false;
+			thisLi.data('nci-deletelist-item', thisLiData);
 
-    _BuildItemEntry : function(text)
-    {
-        var itemOffset = this._displayList.childElements().length;
-        var markerContent = DeleteList.BuildMarkerButton(this._control.identify(), itemOffset, this._deleteIconUrl);
-        var itemMarker = new Element("span").update(markerContent);
-        var itemEntry = new Element("li").update(itemMarker);
-        itemEntry.insert(" " + text);
+			// set the item's "deleted" flag in the deleteList
+			var deletionFlags = this.deletedList.prop('value').split(this.options.valueSeparator);
+			deletionFlags[thisLi.index()] = "true";
+			this.deletedList.prop('value', deletionFlags.join(this.options.valueSeparator));
 
-        Event.observe(itemMarker, "click", this.ClickHandler.bindAsEventListener(this, itemEntry, itemOffset));
+			// actually hide the item, and show the empty list message if all are hidden
+			thisLi.hide();
+			if (this.displayList.children('li:visible').length === 0) {
+				this.emptyListMessage.show();
+			}
+		}
+	},
 
-        return itemEntry;
-    },
+	clearAll: function () {
+		for (var i = 0; i < this.items.length; i++) {
+			this.deleteItem(this.items[i]);
+		}
+	},
 
-    _AddToList : function(itemEntry, text, value)
-    {
-        // Update the visual elements
-        this._displayList.insert(itemEntry);
+	getItems: function () {
+		return this.items;
+	},
 
-        // Update hidden fields.
-        var separator = "|"
-        if(this._valueListField.value == "")
-            separator = "";
-        this._valueListField.value += separator + value;
-        this._textListField.value += separator + text;
-        this._deletedListField.value += separator + "false";
-    },
-
-    // Event Handler
-
-    ClickHandler : function (event, listItem, offset)
-    {
-        listItem.hide();
-        var deletionFlags = this._deletedListField.value.split(DeleteList._valueSeparator);
-        deletionFlags[offset] = true;
-
-        // Check whether the list still has any active items.
-        // If all items have been deleted, display the empty message.
-        this._itemCount--;
-        if(this._itemCount < 1)
-            this._emptyListMessageField.show();
-
-        this._deletedListField.value = deletionFlags.join(DeleteList._valueSeparator);
-        Event.stop(event);
-    },
-    
-    SelectedTextListInternal : function(delimiter)  {
-    
-	    var textlist = this._textListField.value.split('|');
-	    var deletedlist = this._deletedListField.value.split('|');
-	    var output = '';
-	    
-	    if (delimiter == null) 
-	        delimiter = ','; 
-	    
-	    for (var i=0; i < textlist.length; i++) {
-	        if (deletedlist[i] == 'false')  {
-	            if (output.length > 0)
-	                output += ' ' + delimiter + ' ';
-	            output += textlist[i];
-	        }
-	    }
-        return output; 
-    }
+	_destroy: function () {
+		this.element.removeClass('nci-deletelist');
+		$.each([
+			this.emptyListMessage,
+			this.displayList,
+			this.valueList,
+			this.nameList,
+			this.deletedList
+		], function (i, thing) {
+			thing.remove();
+		});
+	}
 
 });
