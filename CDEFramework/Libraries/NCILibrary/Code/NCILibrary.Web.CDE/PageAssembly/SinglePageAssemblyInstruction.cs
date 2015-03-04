@@ -707,7 +707,7 @@ namespace NCI.Web.CDE
                 url.SetUrl(GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString());
                 if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
                 {
-                    url.UriStem += "/print";
+                    url.UriStem += "#print";
                 }
             });
 
@@ -718,7 +718,7 @@ namespace NCI.Web.CDE
                 //If we are in the print version we do not want to generate a URL /foo/print/print
                 if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.Print)
                 {
-                    url.UriStem += "/print";
+                    url.UriStem += "#print";
                 }
             });
 

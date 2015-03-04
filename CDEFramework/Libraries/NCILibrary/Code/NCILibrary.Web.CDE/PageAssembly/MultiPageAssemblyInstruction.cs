@@ -851,9 +851,9 @@ namespace NCI.Web.CDE
                 if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
                     currentURL += "/AllPages";
                 else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
-                    currentURL += "/Print";
+                    currentURL += "#Print";
                 else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
-                    currentURL += "/AllPages/Print";
+                    currentURL += "/AllPages#Print";
 
                 url.SetUrl(currentURL);
 
@@ -1002,7 +1002,7 @@ namespace NCI.Web.CDE
             {
                 string printURL = GetUrl("CurrentURL").ToString();
                 if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.Print)
-                    printURL += "/print";
+                    printURL += "#print";
                 url.SetUrl(printURL);
             });
 
@@ -1031,7 +1031,7 @@ namespace NCI.Web.CDE
 
             AddUrlFilter("PrintAll", (name, url) =>
             {
-                url.SetUrl(GetUrl("ViewAll").ToString() + "/Print");
+                url.SetUrl(GetUrl("ViewAll").ToString() + "#Print");
             });
 
             #endregion
