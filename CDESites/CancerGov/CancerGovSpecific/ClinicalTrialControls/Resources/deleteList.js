@@ -70,7 +70,7 @@ $.widget('nci.deletelist', {
 		var deleteButton = $('<button>')
 			.attr('type', 'button')
 			.addClass('pseudo-icon-deletelist')
-			.append($('<div>')
+			.append($('<span>')
 				.addClass('hidden')
 				.text(this.options.deleteText)
 			);
