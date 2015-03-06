@@ -183,7 +183,11 @@ function s_doPlugins(s) {
 	s.Integrate.onLoad=function(s,m){
 		s.socialAuthors();
 		//add other integration module dependent functions here
-	};
+    };
+
+    /* Previous Page */
+    s.prop61 = s.getPreviousValue(s.pageName, 'gpv_pn', "");
+    //s.prop61=s.getPreviousValue(s.pageName,'gpv_pn','event1');
 
 }
 s.doPlugins=s_doPlugins	
@@ -393,6 +397,18 @@ s.m_Media_c="var m=s.m_i('Media');if(m.completeByCloseOffset==undefined)m.comple
 +"&&m.s.d.getElementsByTagName){l=m.s.d.getElementsByTagName(m.s.isie?\"OBJECT\":\"EMBED\");if(l)for(n=0;n<l.length;n++)m.a(l[n]);}');if(s.wd.attachEvent)s.wd.attachEvent('onload',m.as);else if(s.wd."
 +"addEventListener)s.wd.addEventListener('load',m.as,false);if(m.onLoad)m.onLoad(s,m)";s.m_i("Media");
 **** END Media MODULE COMMENT ***/
+
+/*
+* Plugin: getPreviousValue_v1.0 - return previous value of designated
+*   variable (requires split utility)
+*/
+s.getPreviousValue = new Function("v", "c", "el", ""
++ "var s=this,t=new Date,i,j,r='';t.setTime(t.getTime()+1800000);if(el"
++ "){if(s.events){i=s.split(el,',');j=s.split(s.events,',');for(x in i"
++ "){for(y in j){if(i[x]==j[y]){if(s.c_r(c)) r=s.c_r(c);v?s.c_w(c,v,t)"
++ ":s.c_w(c,'no value',t);return r}}}}}else{if(s.c_r(c)) r=s.c_r(c);v?"
++ "s.c_w(c,v,t):s.c_w(c,'no value',t);return r}");
+
 
 /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
 var s_code = '', s_objectID; function s_gi(un, pg, ss) {
