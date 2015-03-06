@@ -251,6 +251,26 @@ function semphonicGetQueryParm(qp)
 	return unescape(document.URL.substring(pos, endPos));
 }
 
+/** Custom Plugin: Dynamically Create s.hier variable*/
+function set_hier1() {
+    h1 = new String(document.location.host + document.location.pathname);
+    if (h1.charAt(h1.length - 1) == "/") {
+        var temp = new String();
+        for (var i = 0; i < h1.length - 1; i++) {
+            temp += h1.charAt(i);
+        }
+        h1 = temp;
+    }
+    var intMatch = h1.indexOf("/");
+    while (intMatch != -1) {
+        h1 = h1.replace("/", "|");
+        intMatch = h1.indexOf("/");
+    }
+    return h1;
+}
+
+/* Dynamically Capture Hierarchy Variable via Custom Plugin */
+s.hier1 = set_hier1();
 
 /************************** PLUGINS SECTION *************************/
 /* You may insert any plugins you wish to use here.                 */
