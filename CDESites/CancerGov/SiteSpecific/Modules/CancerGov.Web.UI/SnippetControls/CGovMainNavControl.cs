@@ -65,9 +65,10 @@ namespace CancerGov.Web.UI.SnippetControls
                 //This generates the homepage tab for the root in the Spanish site.s
                 //changing because I shouldn't be checking for "/espanol" but this will have the 
                 int count = 1;
+                int level = 1;
                 foreach (NavigationItem item in root.ChildItems)
                 {
-                    RenderNavItem(item, writer, count, root.ChildItems.Length);
+                    RenderNavItem(item, writer, count, root.ChildItems.Length, level);
                     count++;
                 }
 
@@ -77,7 +78,7 @@ namespace CancerGov.Web.UI.SnippetControls
             }
         }
 
-        private void RenderNavItem(NavigationItem item, HtmlTextWriter writer, int itemNum, int numItems)
+        private void RenderNavItem(NavigationItem item, HtmlTextWriter writer, int itemNum, int numItems, int level)
         {
             //This method is similar to the RenderNavTree method above but this one generates class attributes based on which item is being passed
 
@@ -91,7 +92,7 @@ namespace CancerGov.Web.UI.SnippetControls
             String sectionFile = sectionPath[sectionPath.Length - 1];
             Boolean isSectionPath = path.Contains(item.SectionPath) && file.Equals(sectionFile);
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item");
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item lvl-"+level);
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
 
 
@@ -129,7 +130,7 @@ namespace CancerGov.Web.UI.SnippetControls
             //this logic came from the CGovSectionNav Control but this may be needed in the future for evolution if there are drop down menus
             if (item.ChildItems.Length > 0)
             {
-
+                level++;
                 writer.RenderEndTag();//div if child items
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "mobile-item");
@@ -139,10 +140,14 @@ namespace CancerGov.Web.UI.SnippetControls
                 {
                     if (subitem.ChildItems.Length > 0)
                     {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children");
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children level-" + level);
+                    }
+                    else
+                    {
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "lvl-" + level);
                     }
                     writer.RenderBeginTag(HtmlTextWriterTag.Li);
-                    RenderSubItem(subitem, writer, itemNum++, numItems);
+                    RenderSubItem(subitem, writer, itemNum++, numItems, level);
                     writer.RenderEndTag();
                 }
                 writer.RenderEndTag();//End UL
@@ -166,7 +171,7 @@ namespace CancerGov.Web.UI.SnippetControls
 
         }
 
-        private void RenderSubItem(NavigationItem item, HtmlTextWriter writer, int itemNum, int numItems)
+        private void RenderSubItem(NavigationItem item, HtmlTextWriter writer, int itemNum, int numItems, int level)
         {
             //This method is similar to the RenderNavItem method above but this one doesn't generate megamenu info
 
@@ -220,7 +225,7 @@ namespace CancerGov.Web.UI.SnippetControls
             //this logic came from the CGovSectionNav Control but this may be needed in the future for evolution if there are drop down menus
             if (item.ChildItems.Length > 0)
             {
-
+                level++;
                 writer.RenderEndTag();//div if child items
 
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "mobile-item");
@@ -230,10 +235,14 @@ namespace CancerGov.Web.UI.SnippetControls
                 {
                     if (subitem.ChildItems.Length > 0)
                     {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children");
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children lvl-" + level);
+                    }
+                    else
+                    {
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "lvl-" + level);
                     }
                     writer.RenderBeginTag(HtmlTextWriterTag.Li);
-                    RenderSubItem(subitem, writer, itemNum++, numItems);
+                    RenderSubItem(subitem, writer, itemNum++, numItems, level);
                     writer.RenderEndTag();
                 }
                 writer.RenderEndTag();//End UL
