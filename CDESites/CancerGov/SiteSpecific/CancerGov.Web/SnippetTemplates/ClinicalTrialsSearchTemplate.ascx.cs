@@ -23,6 +23,14 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class ClinicalTrialsSearchTemplate : SearchBaseUserControl
     {
+        #region Constants
+
+        // The only allowed values for marking a section as collapsed/expanded.
+        protected const string COLLAPSED = "N";
+        protected const string EXPANDED = "Y";
+
+        #endregion
+
         protected void Page_Init(object sender, EventArgs e)
         {
             //Need to add ARIA tags to location controls - this has nothing to do with the state of the form,
@@ -70,6 +78,8 @@ namespace CancerGov.Web.SnippetTemplates
                 FillNihLocationSelectBox(savedSearch);
 
                 FillSponsorsSelectBox(savedSearch);
+
+                FillInterventionSelectionList(savedSearch);
 
                 FillKeywordText(savedSearch);
                 FillSpecialCategorySelectBox(savedSearch);
@@ -121,6 +131,70 @@ namespace CancerGov.Web.SnippetTemplates
                 else
                     nihOnly.Checked = false;
             }
+        }
+
+        private void FillInterventionSelectionList(CTSearchDefinition savedSearch)
+        {
+            interventionListExpanded.Value = COLLAPSED;
+            if (savedSearch != null)
+            {
+                // CTSearchDefinition guarantees that InterventionList will never be null.
+                FillDeletableSelectionList(savedSearch.InterventionList, intervention, interventionListExpanded);
+            }
+
+            // If the list is still collapsed, hide it.
+            if (interventionListExpanded.Value == COLLAPSED)
+                interventionListArea.Style.Add(HtmlTextWriterStyle.Display, "none");
+        }
+
+        /// <summary>
+        /// Click handler for the Intervention list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void InterventionListClearAll_ClickHandler(object sender, EventArgs e)
+        {
+            intervention.Items.Clear();
+        }
+
+        /// <summary>
+        /// Click handler for the Institution list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void InstutionListClearAll_ClickHandler(object sender, EventArgs e)
+        {
+            institution.Items.Clear();
+        }
+
+        /// <summary>
+        /// Click handler for the Drug list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void DrugListClearAll_ClickHandler(object sender, EventArgs e)
+        {
+            drug.Items.Clear();
+        }
+
+        /// <summary>
+        /// Click handler for the Investigator list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void InvestigatorListClearAll_ClickHandler(object sender, EventArgs e)
+        {
+            investigator.Items.Clear();
+        }
+
+        /// <summary>
+        /// Click handler for the Lead Organization list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void LeadOrgClearAll_ClickHandler(object sender, EventArgs e)
+        {
+            leadOrg.Items.Clear();
         }
 
         private void FillKeywordText(CTSearchDefinition savedSearch)
@@ -499,7 +573,28 @@ namespace CancerGov.Web.SnippetTemplates
             }
         }
 
-
+        /// <summary>
+        /// Helper method for populating and determining whether to display one of the collapsible lists.
+        /// </summary>
+        /// <param name="savedSearch"></param>
+        /// <param name="list"></param>
+        /// <param name="collapseState"></param>
+        private void FillDeletableSelectionList(IList<KeyValuePair<string, int>> selections, DeleteList list, HiddenField expandedState)
+        {
+            // If there are values, draw the list in an expanded condition.
+            if (selections.Count > 0)
+            {
+                foreach (KeyValuePair<string, int> item in selections)
+                {
+                    list.Items.Add(new ListItem(item.Key.Trim(), HashMaster.SaltedHashCompoundString(item.Key.Trim(), item.Value.ToString())));
+                }
+                expandedState.Value = EXPANDED;
+            }
+            else
+            {
+                expandedState.Value = COLLAPSED;
+            }
+        }
 
 
 
@@ -514,6 +609,319 @@ namespace CancerGov.Web.SnippetTemplates
             if (ddlCancerType.SelectedIndex > 0)
                 cancerTypeID = int.Parse(ddlCancerType.SelectedValue);
             FillCancerStageSelectBox(cancerTypeID, null);
+        }
+
+        public void SubmitButton_Click(object sender, ImageClickEventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                int searchID = 0;
+
+                // Gather all search criteria.
+                CTSearchDefinition criteria = BuildSearchCriteria();
+
+                // Save and Execute the search, yielding a protocol search ID.
+                searchID = CTSearchManager.SaveAndExecuteSearch(criteria);
+
+                // If a valid search ID is returned.
+                if (searchID > 0)
+                {
+                    // Redirect to the search results page.
+                    Response.Redirect(String.Format("{0}?protocolsearchid={1}", SearchPageInfo.SearchResultsPrettyUrl, searchID), true);
+                }
+                else
+                {
+                    // Otherwise, log an error.
+                    EventLog eLog = new EventLog("CancerGov");
+                    eLog.Source = "CancerGov";
+                    eLog.WriteEntry("Unable to perform SaveAndExecuteSearch().", EventLogEntryType.Error);
+                    eLog.Close();
+                }
+            }
+        }
+
+        private CTSearchDefinition BuildSearchCriteria()
+        {
+            string value;
+            CTSearchDefinition criteria = new CTSearchDefinition();
+
+            // Mark how this search was launched (used for logging purposes).
+            criteria.SearchInvocationType = SearchInvocationType.FromSearchForm;
+
+            // Cancer type, if present.
+            if (SelectionIsPresent(ddlCancerType))
+            {
+                criteria.CancerType = new KeyValuePair<string, int>(ddlCancerType.SelectedItem.Text,
+                    int.Parse(ddlCancerType.SelectedItem.Value));
+            }
+            else
+                criteria.CancerType = new KeyValuePair<string, int>(string.Empty, 0);
+
+            // Cancer subtype, if present
+            if (SelectionIsPresent(cancerStage))
+            {
+                foreach (System.Web.UI.WebControls.ListItem item in cancerStage.Items)
+                {
+                    if (item.Selected)
+                    {
+                        criteria.CancerSubtypeIDList.Add(Strings.ToInt(item.Value));
+                        criteria.CancerSubtypeNameList.Add(Strings.Clean(item.Text));
+                    }
+                }
+            }
+
+            // Trial type list, if present
+            if (SelectionIsPresent(trialType))
+            {
+                // This is very, very ugly.  But the data and stored procs
+                // all deal with treatment types as strings.  But by retrieving the
+                // display text from the control instead of using values returned from
+                // the form, we're guaranteed to get text which hasn't been tampered with.
+                foreach (System.Web.UI.WebControls.ListItem item in trialType.Items)
+                {
+                    if (item.Selected)
+                    {
+                        criteria.TrialTypeList.Add(item.Text);
+                    }
+                }
+            }
+
+            // Drug List
+            if (drug.Items.Count > 0)
+            {
+                foreach (System.Web.UI.WebControls.ListItem item in drug.Items)
+                {
+                    // Check validity of item.Text via hash code contained in item.Value (CDRID+HashMaster hash and salt strings) - if valid, set value to CDRIF and add to criteria                    
+                    if (HashMaster.SaltedHashCompareCompound(item.Text, item.Value, out value))
+                        criteria.DrugList.Add(new KeyValuePair<string, int>(item.Text, int.Parse(value)));
+                }
+            }
+
+            // Should drugs use AND or OR?
+            if (drugListAllOrAny.Text.ToLower() == "all")
+                criteria.RequireAllDrugsMatch = true;
+            else
+                criteria.RequireAllDrugsMatch = false;
+
+            // Treatment/intervention list
+            if (intervention.Items.Count > 0)
+            {
+                foreach (ListItem item in intervention.Items)
+                {
+                    // Check validity of item.Text via hash code contained in item.Value (CDRID+HashMaster hash and salt strings) - if valid, set value to CDRIF and add to criteria                    
+                    if (HashMaster.SaltedHashCompareCompound(item.Text, item.Value, out value))
+                        criteria.InterventionList.Add(new KeyValuePair<string, int>(item.Text, int.Parse(value)));
+                }
+            }
+
+            // List of Trial Investigators
+            if (investigator.Items.Count > 0)
+            {
+                foreach (ListItem item in investigator.Items)
+                {
+                    // Check validity of item.Text via hash code contained in item.Value (CDRID+HashMaster hash and salt strings) - if valid, set value to CDRIF and add to criteria                    
+                    if (HashMaster.SaltedHashCompareCompound(item.Text, item.Value, out value))
+                        criteria.InvestigatorList.Add(new KeyValuePair<string, int>(item.Text, int.Parse(value)));
+                }
+            }
+
+            // Lead organization list
+            if (leadOrg.Items.Count > 0)
+            {
+                foreach (ListItem item in leadOrg.Items)
+                {
+                    // Check validity of item.Text via hash code contained in item.Value (CDRID+HashMaster hash and salt strings) - if valid, set value to CDRIF and add to criteria                    
+                    if (HashMaster.SaltedHashCompareCompound(item.Text, item.Value, out value))
+                        criteria.LeadOrganizationList.Add(new KeyValuePair<string, int>(item.Text, int.Parse(value)));
+                }
+            }
+
+            // Determine which location to use.  It isn't possible to have no buttons checked.
+            if (zipCodeLocationButton.Checked)
+            {
+                // Don't attempt to set a ZIP location unless ZIP is numeric and greater than 0.
+                int zip = Strings.ToInt(zipCode.Text, 0);
+                if (zip > 0)
+                {
+                    criteria.LocationSearchType = LocationSearchType.Zip;
+                    criteria.SetLocationZipCriteria(zipCode.Text, zipCodeProximity.SelectedValue);
+                }
+            }
+            else if (hospitalLocationButton.Checked)
+            {
+                criteria.LocationSearchType = LocationSearchType.Institution;
+                foreach (ListItem item in institution.Items)
+                {
+                    // Check validity of item.Text via hash code contained in item.Value (CDRID+HashMaster hash and salt strings) - if valid, set value to CDRIF and add to criteria                    
+                    if (HashMaster.SaltedHashCompareCompound(item.Text, item.Value, out value))
+                        criteria.LocationInstitutions.Add(new KeyValuePair<string, int>(item.Text, int.Parse(value)));
+                }
+            }
+            else if (cityStateLocationButton.Checked)
+            {
+                criteria.LocationSearchType = LocationSearchType.City;
+                criteria.LocationCity = city.Value;
+
+                // If the selected country is anything other than "All" or "U.S.A.",
+                // then the state list is ignored.
+                // Index 0 == "All"; Index 1 == "U.S.A."
+                if (country.SelectedIndex == 0 || country.SelectedIndex == 1)
+                {
+                    if (SelectionIsPresent(state))
+                    {
+                        foreach (ListItem item in state.Items)
+                        {
+                            if (item.Selected && !string.IsNullOrEmpty(item.Value))
+                            {
+                                criteria.LocationStateIDList.Add(item.Value);
+                                criteria.LocationStateNameList.Add(item.Text);
+                            }
+                        }
+                    }
+                }
+
+                // If "All" was selected (selected country was null or empty) and
+                // one or more states were selected, then force the country selection to
+                // be U.S.A.
+                if (country.SelectedIndex == 0 && criteria.LocationStateIDList.Count > 0)
+                {
+                    criteria.LocationCountry = country.Items[1].Value;
+                }
+                else
+                {
+                    // Otherwise, use whatever country was selected.
+                    int index = country.SelectedIndex;
+                    if (index >= 0)
+                        criteria.LocationCountry = country.Items[index].Value;
+                }
+
+            }
+            else if (atNihLocationButton.Checked)
+            {
+                criteria.LocationSearchType = LocationSearchType.NIH;
+                criteria.LocationNihOnly = nihOnly.Checked;
+            }
+
+            // Keywords
+            if (!string.IsNullOrEmpty(txtKeywords.Text))
+                criteria.Keywords = txtKeywords.Text;
+
+            // Trial Status
+            if (trialPhase.SelectedIndex == 1)
+                criteria.TrialStatusRestriction = TrialStatusType.OpenOnly;
+            else
+                criteria.TrialStatusRestriction = TrialStatusType.ClosedOnly;
+
+            // Trial Phase
+            if (SelectionIsPresent(trialPhase))
+            {
+                foreach (ListItem item in trialPhase.Items)
+                {
+                    // This is very, very ugly.  But the data and stored procs
+                    // all deal with strings of the "Phase I", "Phase II", etc.
+                    // variety.  But by retrieving the display text from the control
+                    // instead of using values returned from the form, we're
+                    // guaranteed to get text which hasn't been tampered with.
+                    if (item.Selected && !string.IsNullOrEmpty(item.Value))
+                    {
+                        criteria.TrialPhase.Add(item.Text.Trim());
+                    }
+                }
+            }
+
+            // Last 30 days.
+            if (newOnly.Checked)
+                criteria.RestrictToRecent = true;
+            else
+                criteria.RestrictToRecent = false;
+
+            // Specific Protocol ID
+            if (!string.IsNullOrEmpty(protocolID.Text))
+            {
+                string[] idList = protocolID.Text.Split(',', ';');
+                foreach (string id in idList)
+                {
+                    criteria.SpecificProtocolIDList.Add(id);
+                }
+            }
+
+            // Sponsor List
+            if (SelectionIsPresent(sponsor))
+            {
+                foreach (ListItem item in sponsor.Items)
+                {
+                    if (item.Selected && !string.IsNullOrEmpty(item.Value))
+                    {
+                        criteria.SponsorIDList.Add(item.Value);
+                    }
+                }
+            }
+
+            // Special Categories
+            if (SelectionIsPresent(specialCategory))
+            {
+                foreach (ListItem item in specialCategory.Items)
+                {
+                    if (item.Selected && !string.IsNullOrEmpty(item.Value))
+                    {
+                        criteria.SpecialCategoryList.Add(item.Value);
+                    }
+                }
+            }
+
+            return criteria;
+        }
+
+        /// <summary>
+        /// Helper function to encapsulate the logic for verifying that a list has a selection.
+        /// In addition to having a selected value, the selection must be at an index other
+        /// than 0.  (Index zero is used throughout the page to mean "All.")
+        /// </summary>
+        /// <param name="selection"></param>
+        /// <returns></returns>
+        private bool SelectionIsPresent(ListControl selection)
+        {
+            bool selectionIsPresent = false;
+
+            if (selection != null &&
+                SelectionIsPresent(selection))
+            {
+                selectionIsPresent = true;
+            }
+
+            return selectionIsPresent;
+        }
+
+        /// <summary>
+        /// Helper function to encapsulate the logic for verifying that a list has a selection.
+        /// In addition to having a selected value, the selection must be at an index other
+        /// than 0.  (Index zero is used throughout the page to mean "All.")
+        /// </summary>
+        /// <param name="selection"></param>
+        /// <returns></returns>
+        private bool SelectionIsPresent(AccessibleCheckBoxList selection)
+        {
+            bool selectionIsPresent = false;
+
+            if (selection != null &&
+                SelectionIsPresent(selection))
+            {
+                selectionIsPresent = true;
+            }
+
+            return selectionIsPresent;
+        }
+
+        /// <summary>
+        /// Base helper function to encapsulate the logic for verifying that a selection index 
+        /// is valid. The selection must be at an index other than 0.  (Index zero is used 
+        /// throughout the page to mean "All.")
+        /// </summary>
+        /// <param name="selection"></param>
+        /// <returns></returns>
+        private bool SelectionIsPresent(int selectedIndex)
+        {
+            return selectedIndex > 0;
         }
     }
 }

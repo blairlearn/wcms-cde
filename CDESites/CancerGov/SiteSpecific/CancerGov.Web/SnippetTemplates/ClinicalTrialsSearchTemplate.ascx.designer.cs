@@ -149,6 +149,60 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl hospitalLocationFieldset;
         
         /// <summary>
+        /// showInstitutionListButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton showInstitutionListButton;
+        
+        /// <summary>
+        /// institutionListExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden institutionListExpanded;
+        
+        /// <summary>
+        /// institutionid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden institutionid;
+        
+        /// <summary>
+        /// institutionListSubBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl institutionListSubBox;
+        
+        /// <summary>
+        /// institution control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NCI.Web.UI.WebControls.FormControls.DeleteList institution;
+        
+        /// <summary>
+        /// institutionClearAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button institutionClearAll;
+        
+        /// <summary>
         /// cityStateLocationFieldset control.
         /// </summary>
         /// <remarks>
@@ -212,6 +266,96 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::NCI.Web.UI.WebControls.FormControls.AccessibleCheckBoxList trialType;
         
         /// <summary>
+        /// drugListExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField drugListExpanded;
+        
+        /// <summary>
+        /// drugListAllOrAny control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList drugListAllOrAny;
+        
+        /// <summary>
+        /// drugid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden drugid;
+        
+        /// <summary>
+        /// drug control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NCI.Web.UI.WebControls.FormControls.DeleteList drug;
+        
+        /// <summary>
+        /// druglistClearAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button druglistClearAll;
+        
+        /// <summary>
+        /// interventionListArea control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl interventionListArea;
+        
+        /// <summary>
+        /// interventionListExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField interventionListExpanded;
+        
+        /// <summary>
+        /// interventionid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden interventionid;
+        
+        /// <summary>
+        /// intervention control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NCI.Web.UI.WebControls.FormControls.DeleteList intervention;
+        
+        /// <summary>
+        /// interventionlistClearAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button interventionlistClearAll;
+        
+        /// <summary>
         /// txtKeywords control.
         /// </summary>
         /// <remarks>
@@ -264,6 +408,78 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::NCI.Web.UI.WebControls.FormControls.AccessibleCheckBoxList sponsor;
+        
+        /// <summary>
+        /// investigatorListExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField investigatorListExpanded;
+        
+        /// <summary>
+        /// investigatorid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden investigatorid;
+        
+        /// <summary>
+        /// investigator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NCI.Web.UI.WebControls.FormControls.DeleteList investigator;
+        
+        /// <summary>
+        /// investigatorListAddButtonClearAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button investigatorListAddButtonClearAll;
+        
+        /// <summary>
+        /// leadOrgListExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField leadOrgListExpanded;
+        
+        /// <summary>
+        /// leadOrgid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden leadOrgid;
+        
+        /// <summary>
+        /// leadOrg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::NCI.Web.UI.WebControls.FormControls.DeleteList leadOrg;
+        
+        /// <summary>
+        /// leadOrgClearAll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button leadOrgClearAll;
         
         /// <summary>
         /// specialCategory control.

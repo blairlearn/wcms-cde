@@ -260,8 +260,8 @@
                     runat="server"
                     EmptyText="Select cancer type/condition first."
                     CssClass="scrolling-list roundy-box groupedCheckBoxList"
-                    />            
-            </div>            
+                    />
+            </div>
         </div>
     </fieldset>
     <%-- ------------------------ END Cancer Types -------------------- --%>
@@ -305,7 +305,22 @@
                         <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row" role="region">
                             <div class="column">
                                 <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
-                                <div>Stuff</div>
+                                <div>
+                                    <button id="showInstitutionListButton" runat="server">Choose From List</button>
+                                    <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
+                                    <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
+                                    <div id="institutionListSubBox" runat="server">
+                                        <cancergov:deletelist id="institution" deleteiconurl="~/Images/delete_item.gif" 
+                                            runat="server" emptylisttext='Select "Add More" to see hospital names.' />
+                                        <span id="institutionAddButton" style="display: none;"><a class="button"
+                                            href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                            Add More</a>
+                                        </span>
+                                        <asp:Button ID="institutionClearAll" runat="server" Text="Clear All" CssClass="button"
+                                            OnClick="InstutionListClearAll_ClickHandler" 
+                                            OnClientClick="DeleteList.ClearAll(ids.institution);Event.stop(event)"/>
+                                    </div>
+                                </div>
                             </div>
                         </fieldset>
                         <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" role="region">
@@ -367,17 +382,51 @@
                     <label>Drug</label>
                 </div>
                 <div class="medium-7 left columns">
-                    Pick List Control
+                    <div id="showDrugListButtonArea" style="display: none;">
+                        <button id="showDrugListButton">Choose From List</button>
+                    </div>
+                    <asp:HiddenField runat="server" ID="drugListExpanded" />
+                    <div id="drugListSubBox">
+                        Find trials that include<br />
+                        <asp:RadioButtonList ID="drugListAllOrAny" RepeatDirection="Horizontal" runat="server">
+                            <asp:ListItem Selected="True" Value="any" Text="Any drugs shown" />
+                            <asp:ListItem Selected="False" Value="all" Text="All drugs shown" />
+                        </asp:RadioButtonList>
+                        <input id="drugid" type="hidden" size="18" name="drugid" runat="server" />
+                        <cancergov:deletelist id="drug" deleteiconurl="~/Images/delete_item.gif" runat="server" 
+                            emptylisttext='Select "Add More" to see drug names.' />
+                        <span id="druglistAddButton" style="display: none;">
+                            <a class="button" href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =drug.ClientID %>&amp;fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                            Add More</a>
+                        </span>
+                        <asp:Button ID="druglistClearAll" runat="server" Text="Clear All" OnClick="DrugListClearAll_ClickHandler"
+                            OnClientClick="DeleteList.ClearAll(ids.drug);Event.stop(event)" CssClass="button"/>
+                    </div>
                 </div>
             </div>
             
-            <div class="row">
+            <div id="interventionListArea" class="row" runat="server">
                 <div class="medium-4 columns">
                     <label>Treatment/Intervention</label>
                 </div>
                 <div class="medium-7 left columns">
                     <em>Examples: chemotherapy, adjuvant therapy, colonoscopy</em><br />
-                    Pick List Control
+                    <div id="showInterventionListButtonArea" style="display: none; margin: 5px 0px;">
+                        <button id="showInterventionListButton">Choose From List</button>
+                    </div>
+                    <asp:HiddenField runat="server" ID="interventionListExpanded" />
+                    <div id="interventionListSubBox">
+                        <input id="interventionid" type="hidden" size="18" name="interventionid" runat="server" />
+                        <cancergov:deletelist id="intervention" deleteiconurl="~/Images/delete_item.gif"
+                            runat="server" emptylisttext='Select "Add More" to see treatment/intervention names.' />
+                        <span id="interventionlistAddButton" style="display: none;"><a class="button" 
+                            href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =intervention.ClientID %>&amp;fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                            Add More</a>
+                        </span>
+                        <asp:Button ID="interventionlistClearAll" runat="server" Text="Clear All"
+                            OnClick="InterventionListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll(ids.intervention);Event.stop(event)"
+                            CssClass="button"/>
+                    </div>
                 </div>
             </div>
         </div>    
@@ -459,11 +508,48 @@
             </div>
             <div class="row">
                 <div class="medium-4 columns"><label>Trial Investigators</label></div>
-                <div class="medium-7 left columns">PICKLIST</div>
+                <div class="medium-7 left columns">
+                    <div id="showInvestigatorListButtonArea" style="display: none;">
+                        <button id="showInvestigatorListButton">Choose From List</button>
+                    </div>
+                    <asp:HiddenField runat="server" ID="investigatorListExpanded" />
+                    <div id="investigatorListSubBox">
+                        Trial Investigators Selected:<br />
+                        <input id="investigatorid" type="hidden" size="18" name="investigatorid" runat="server" />
+                        <cancergov:deletelist id="investigator" deleteiconurl="~/Images/delete_item.gif"
+                            runat="server" emptylisttext='Select "Add More" to see investigator names.'>
+			            </cancergov:deletelist>
+                        <span id="investigatorListAddButton" style="display: none;"><a class="button"
+                            href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =investigator.ClientID %>&amp;fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                            Add More</a>
+                        </span>
+                        <asp:Button ID="investigatorListAddButtonClearAll" runat="server" Text="Clear All"
+                            OnClick="InvestigatorListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll(ids.investigator);Event.stop(event)"
+                            CssClass="button" />
+                    </div>
+                </div>
             </div>        
             <div class="row">
                 <div class="medium-4 columns"><label>Lead Organization/ Cooperative Group</label></div>
-                <div class="medium-7 left columns">PICKLIST</div>
+                <div class="medium-7 left columns">
+                    <div id="showLeadOrgListButtonArea" style="display: none; margin: 5px 0px;">
+                        <button id="showLeadOrgListButton">Choose From List</button>
+                    </div>
+                    <asp:HiddenField runat="server" ID="leadOrgListExpanded" />
+                    <div id="leadOrgListSubBox">
+                        Lead Organizations or Cooperative Groups Selected:<br />
+                        <input id="leadOrgid" type="hidden" size="18" name="leadOrgid" runat="server" />
+                        <cancergov:deletelist id="leadOrg" deleteiconurl="~/Images/delete_item.gif"
+                            runat="server" emptylisttext='Select "Add More" to see lead organization names.' />
+                        <span id="leadOrgAddButton" style="display: none;"><a class="button" 
+                            href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =leadOrg.ClientID %>&amp;fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                            Add More</a>
+                        </span>
+                        <asp:Button ID="leadOrgClearAll" runat="server" Text="Clear All" OnClick="LeadOrgClearAll_ClickHandler"
+                            OnClientClick="DeleteList.ClearAll(ids.leadOrg);Event.stop(event)" 
+                            CssClass="button"/>
+                    </div>
+                </div>
             </div>        
             <div class="row">
                 <div class="medium-4 columns"><label>Special Category</label></div>
@@ -478,7 +564,7 @@
     <%-- ................... END Trial ID/Sponsor ................... --%>
 
     <div class="row">
-        <input class="submit button" type="submit" />
+        <input class="submit button" type="submit" OnClick="SubmitButton_Click"/>
         <input class="reset start-over button" type="reset" />
     </div>
 

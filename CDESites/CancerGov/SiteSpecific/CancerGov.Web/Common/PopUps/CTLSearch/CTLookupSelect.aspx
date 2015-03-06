@@ -6,79 +6,55 @@
         <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" />
 		<title>lookup_select</title>				
 		<script language="javascript">
-			function doSubmit(fld)
-			{
-			    var itemsSelected = false;
-				var returnControl = eval('window.parent.opener.window.' + fld + "_obj");
-                var selectedText;
-                var selectedValue;
+		    function doSubmit(fld) {
+		        var parentDeleteList = window.parent.opener.window.jQuery(fld);
+		        var chkInputs = window.parent['results'].document.forms['resultsForm'].elements['chkItem'];
 
-			    var chkIds='';
-				var chkValues = '';
-				var chkInputs = window.parent.results.document.forms[0].elements;
-				
-				for(i = 0; i < chkInputs.length; i++)
-				{
-					if(chkInputs[i] != null)
-					{
-						if(chkInputs[i].checked == true)
-						{
-							if(chkInputs[i].value != '')
-							{
-//								if(chkValues != '')
-//								{
-//									chkIds +=	",";							
-//									chkValues += "; ";
-//								}
+		        for (var i = 0; i < chkInputs.length; i++) {
+		            if (chkInputs[i].checked && chkInputs[i].value !== '') {
+		                // check if the deletelist has already been created
+		                if (typeof parentDeleteList.data('nci-deletelist') === 'undefined') {
+		                    parentDeleteList.deletelist();
+		                }
 
+		                var selectedArray = checkedItems[i].value.split(/[{}]/),
+			                deleteListItem = {};
 
-					    		var fIndex = chkInputs[i].value.indexOf("{");
-				    			var lIndex = chkInputs[i].value.indexOf("}");
-			    				if (fIndex > 0)
-		    					{
-	    						    selectedText = chkInputs[i].value.substring(0,fIndex);
-        							selectedValue = chkInputs[i].value.substring(fIndex+1,lIndex);
-//								    chkValues += chkInputs[i].value.substring(0,fIndex);
-//							    	chkIds += chkInputs[i].value.substring(fIndex+1,lIndex);
-								}
-						    	else
-					    		{
-				    			    selectedText = chkInputs[i].value;
-			    				    selectedValue = "0";
-//		    						chkValues += chkInputs[i].value;
-//	    							chkIds += "0";
-			    				}
-								returnControl.AddEntry(selectedText, selectedValue);
-								itemsSelected = true;
-							}
-						}
-					}
-				}
-				
-				if(itemsSelected)
-    				RevealParentListArea('<%=Request.Params["fld"]%>');
+		                if (selectedArray.length === 3) {
+		                    deleteListItem.name = selectedArray[0];
+		                    deleteListItem.value = selectedArray[1];
+		                } else {
+		                    deleteListItem.name = selectedArray[0];
+		                    deleteListItem.value = '0';
+		                }
 
-				window.parent.window.close();				
-			}
+		                parentDeleteList.deletelist('addItem', deleteListItem);
+		                RevealParentListArea('<%=Request.Params["fld"]%>');
+		            }
+		        }
 
-            function RevealParentListArea(field){
-			    switch(field){
-			        case "drug":
-			            window.parent.opener.window.showDrugList();
-                        break;
-                    case "intervention":
-			            window.parent.opener.window.showInterventionList();
-                        break;
-                    case "investigator":
-			            window.parent.opener.window.showInvestigatorList();
-                        break;
-                    case "leadOrg":
-			            window.parent.opener.window.showLeadOrgList();
-                        break;
-                    case "institution":
-			            window.parent.opener.window.showInstitutionList();
-			    }
-            }
+		        window.parent.window.close();
+		    }
+
+		    function RevealParentListArea(field) {
+		        switch (field) {
+		            case "drug":
+		                window.parent.opener.window.showDrugList();
+		                break;
+		            case "intervention":
+		                window.parent.opener.window.showInterventionList();
+		                break;
+		            case "investigator":
+		                window.parent.opener.window.showInvestigatorList();
+		                break;
+		            case "leadOrg":
+		                window.parent.opener.window.showLeadOrgList();
+		                break;
+		            case "institution":
+		                window.parent.opener.window.showInstitutionList();
+		        }
+		    }
+
 		</script>	
   </head>
   <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="background:none">

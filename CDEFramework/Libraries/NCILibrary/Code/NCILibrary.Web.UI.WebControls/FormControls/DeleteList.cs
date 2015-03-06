@@ -50,7 +50,7 @@ namespace NCI.Web.UI.WebControls.FormControls
             {
                 string url = (string)ViewState["DeleteIconUrl"];
                 if (url == null)
-                    url = Page.ClientScript.GetWebResourceUrl(typeof(DeleteList), "CancerGovUIControls.Resources.delete.gif");
+                    url = Page.ClientScript.GetWebResourceUrl(typeof(DeleteList), "NCI.Web.UI.WebControls.FormControls.Resources.delete.gif");
                 return url;
             }
             set { ViewState["DeleteIconUrl"] = value; }
@@ -242,7 +242,7 @@ namespace NCI.Web.UI.WebControls.FormControls
             /// Set up JavaScript resources. Order is important.  Because the control's script uses prototype, we need
             /// to register that one first.
             PrototypeManager.Load(this.Page);
-            JSManager.AddResource(this.Page, typeof(DeleteList), "CancerGovUIControls.Resources.deleteList.js");
+            JSManager.AddResource(this.Page, typeof(DeleteList), "NCI.Web.UI.WebControls.FormControls.Resources.deleteList.js");
 
             Page.RegisterRequiresPostBack(this);
             base.OnPreRender(e);
@@ -269,19 +269,19 @@ namespace NCI.Web.UI.WebControls.FormControls
                 ListItem item = Items[i];
 
                 writer.RenderBeginTag(HtmlTextWriterTag.Li);
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Type, "button");
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "pseudo-icon-deletelist");
+                writer.RenderBeginTag(HtmlTextWriterTag.Button);
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "hidden");
                 writer.RenderBeginTag(HtmlTextWriterTag.Span);
-
-                writer.AddAttribute(HtmlTextWriterAttribute.Alt, "Delete.");
-                writer.AddAttribute(HtmlTextWriterAttribute.Name, BuildUniqueControlName(_deleteButtonName));
-                writer.AddAttribute(HtmlTextWriterAttribute.Src, ResolveClientUrl(DeleteIconUrl));
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "image");
-                writer.AddAttribute(HtmlTextWriterAttribute.Value, i.ToString()); 
-                writer.RenderBeginTag(HtmlTextWriterTag.Input);
+                writer.Write("Delete");
                 writer.RenderEndTag();
 
                 writer.RenderEndTag();
-                writer.Write(" ");
                 writer.Write(item.Text);
+
                 writer.RenderEndTag();
             }
 
