@@ -25,7 +25,7 @@ namespace CancerGov.Web.UI.SnippetControls
         //My Nav Here
         NavigationDisplayInfo _navItem = null;
         int level = 0;  // level counter for section navigation
-
+        Boolean pastCurrentPage = false;
         public void Page_Load(object sender, EventArgs e)
         {
             //loads the xml structure from the snippet infos
@@ -110,15 +110,30 @@ namespace CancerGov.Web.UI.SnippetControls
             String file = paths[paths.Length-1];
             String[] sectionPath = item.SectionPath.Split('/');
             String sectionFile = sectionPath[sectionPath.Length-1];
-            Boolean isSectionPath = path.Contains(item.SectionPath) && file.Equals(sectionFile);
+            Boolean isSectionPath = false;
             // Checks the section path against the page url and determines if it needs to be selected 
+            for (int i = 0; i < paths.Length && i < sectionPath.Length; i++)
+            {
+                if (paths[i].Equals(sectionPath[i]))
+                {
+                    isSectionPath = true;
+                }
+                else
+                {
+                    isSectionPath = false;
+                    break;
+                }
+
+            }
+            
             if (path.Equals(item.SectionPath))
             {
                 liClass = " contains-current";
                 divClass = "current-page";
                 ariaClass = "true";
+                pastCurrentPage = true;
             }
-            else if (isSectionPath)
+            else if (isSectionPath && pastCurrentPage == false)
             {
                 liClass = " contains-current";
                 ariaClass = "true";

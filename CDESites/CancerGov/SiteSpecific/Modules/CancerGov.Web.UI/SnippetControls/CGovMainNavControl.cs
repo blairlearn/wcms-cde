@@ -23,6 +23,7 @@ namespace CancerGov.Web.UI.SnippetControls
     {
         //My Nav Here
         NavigationDisplayInfo _navInfo = null;
+        Boolean pastCurrentPage = false;
 
         public void Page_Load(object sender, EventArgs e)
         {
@@ -85,14 +86,39 @@ namespace CancerGov.Web.UI.SnippetControls
             //This path is the url path that would be on the current page and is used to figure out if something would be selected or not
             //example: for http://www.cancer.gov/aboutnci/globalhealth the variable would be "/aboutnci/globalhealth"
             String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
-
+            String liClass = "";
             String[] paths = path.Split('/');
             String file = paths[paths.Length - 1];
             String[] sectionPath = item.SectionPath.Split('/');
             String sectionFile = sectionPath[sectionPath.Length - 1];
-            Boolean isSectionPath = path.Contains(item.SectionPath) && file.Equals(sectionFile);
+            Boolean isSectionPath = false;
+           
+                for (int i = 0; i < paths.Length && i < sectionPath.Length; i++)
+                {
+                    if (paths[i].Equals(sectionPath[i]))
+                    {
+                        isSectionPath = true;
+                    }
+                    else
+                    {
+                        isSectionPath = false;
+                        break;
+                    }
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item lvl-"+level);
+                }
+          
+                if (path.Equals(item.SectionPath))
+                {
+                    liClass = " current-page";
+                    pastCurrentPage = true;
+
+                }
+                else if (isSectionPath && pastCurrentPage==false)
+                {
+                    liClass = " contains-current";
+
+                }
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item lvl-"+level+ liClass);
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
 
 
@@ -138,17 +164,9 @@ namespace CancerGov.Web.UI.SnippetControls
 
                 foreach (NavigationItem subitem in item.ChildItems)
                 {
-                    if (subitem.ChildItems.Length > 0)
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children level-" + level);
-                    }
-                    else
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "lvl-" + level);
-                    }
-                    writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                   
                     RenderSubItem(subitem, writer, itemNum++, numItems, level);
-                    writer.RenderEndTag();
+                
                 }
                 writer.RenderEndTag();//End UL
             }
@@ -178,16 +196,47 @@ namespace CancerGov.Web.UI.SnippetControls
             //This path is the url path that would be on the current page and is used to figure out if something would be selected or not
             //example: for http://www.cancer.gov/aboutnci/globalhealth the variable would be "/aboutnci/globalhealth"
             String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
-
+            String liClass = "";
             String[] paths = path.Split('/');
             String file = paths[paths.Length - 1];
             String[] sectionPath = item.SectionPath.Split('/');
             String sectionFile = sectionPath[sectionPath.Length - 1];
-            Boolean isSectionPath = path.Contains(item.SectionPath) && file.Equals(sectionFile);
+            Boolean isSectionPath = false;
+            for (int i = 0; i < paths.Length && i < sectionPath.Length; i++)
+            {
+                if (paths[i].Equals(sectionPath[i]))
+                {
+                    isSectionPath = true;
+                }
+                else
+                {
+                    isSectionPath = false;
+                    break;
+                }
+
+            }
+            if (path.Equals(item.SectionPath))
+            {
+                liClass = " current-page";
+                pastCurrentPage = true;
+
+            }
+            else if (isSectionPath && pastCurrentPage == false)
+            {
+                liClass = " contains-current";
+
+            }
 
 
-
-
+            if (item.ChildItems.Length > 0)
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children lvl-" + level + liClass);
+            }
+            else
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "lvl-" + level + liClass);
+            }
+            writer.RenderBeginTag(HtmlTextWriterTag.Li);
             //This block of code checks the URL path against the Item but since the home page has a path of '/'
             //First check to make sure it is the url path is not equal to the item url path
 
@@ -233,17 +282,8 @@ namespace CancerGov.Web.UI.SnippetControls
 
                 foreach (NavigationItem subitem in item.ChildItems)
                 {
-                    if (subitem.ChildItems.Length > 0)
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children lvl-" + level);
-                    }
-                    else
-                    {
-                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "lvl-" + level);
-                    }
-                    writer.RenderBeginTag(HtmlTextWriterTag.Li);
                     RenderSubItem(subitem, writer, itemNum++, numItems, level);
-                    writer.RenderEndTag();
+                    
                 }
                 writer.RenderEndTag();//End UL
             }
@@ -252,7 +292,7 @@ namespace CancerGov.Web.UI.SnippetControls
                 writer.RenderEndTag();//div if no child items
             }
 
-
+            writer.RenderEndTag();//endLi
 
 
 
