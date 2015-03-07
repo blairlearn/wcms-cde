@@ -15,7 +15,6 @@ using CancerGov.Common.HashMaster;
 using NCI.Util;
 using NCI.Web.UI.WebControls;
 using NCI.Web.UI.WebControls.FormControls;
-using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Logging;
 using NCI.Web.CDE.Modules; 
 
@@ -57,43 +56,83 @@ namespace CancerGov.Web.SnippetTemplates
             atNihLocationFieldset.Attributes.Add("aria-labelledby", atNihLocationButton.ClientID);
 
 
-            txtKeywords.Attributes.Add("placeholder", "Examples: PSA, HER-2, &quot;Paget disease&quot;");
+            txtKeywords.Attributes.Add("placeholder", "Examples: PSA, HER-2, \"Paget disease\"");
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+                // On initial page load, check for a protocol search ID. If one is found, load the
+                // saved criteria and initialize the page's controls.
                 CTSearchDefinition savedSearch = null;
 
+                string rawSearchID = Strings.Clean(Request.Params["protocolsearchid"]);
+                int iProtocolSearchID = Strings.ToInt(rawSearchID);
+
+                if (string.IsNullOrEmpty(rawSearchID))
+                {
+                    // No protocol search was specified, so collapse all display areas
+                    treatmentTypeAreaExpanded.Value = COLLAPSED;
+                    //trialStatusExpanded.Value = COLLAPSED;
+                    //trialSponsorExpanded.Value = COLLAPSED;
+                }
+                else if (iProtocolSearchID > 0)
+                {
+                    try
+                    {
+                        savedSearch = CTSearchManager.LoadSavedCriteria(iProtocolSearchID);
+                    }
+                    catch (Exception ex)
+                    {
+                        NCI.Logging.Logger.LogError("", "CTSearchManager.LoadSavedCriteria", NCIErrorLevel.Error, ex);
+                        this.RaiseErrorPage("InvalidSearchID");
+                    }
+
+                    // A protocol search was specified, so expand all display areas
+                    treatmentTypeAreaExpanded.Value = EXPANDED;
+                    //trialStatusExpanded.Value = EXPANDED;
+                    //trialSponsorExpanded.Value = EXPANDED;
+                }
+                else
+                {
+                    // An invalid search ID was specified.  Redirect to error.
+                }
+
+                // Determine what cancer type to use.  Needed for the cancer stage list.
                 int cancerTypeID = 0;
-                //Get Saved Search ID
+                if (savedSearch != null)
+                    cancerTypeID = savedSearch.CancerType.Value;
 
-                FillCancerTypeSelectBox(savedSearch);
-                FillCancerStageSelectBox(cancerTypeID, savedSearch);
+                FillCancerTypeSelectBox(savedSearch); 
+                FillCancerStageSelectBox(cancerTypeID, savedSearch); 
 
-                FillZipLocationSelectBox(savedSearch);
+                FillZipLocationSelectBox(savedSearch); 
+                FillInstitutionSelectBox(savedSearch); 
+                FillCountryAndState(savedSearch); 
+                FillNihLocationSelectBox(savedSearch); 
 
-                FillCountryAndState(savedSearch);
-                FillNihLocationSelectBox(savedSearch);
+                FillDrugSelectionList(savedSearch);
+                FillInterventionSelectionList(savedSearch); 
 
-                FillSponsorsSelectBox(savedSearch);
-
-                FillInterventionSelectionList(savedSearch);
-
-                FillKeywordText(savedSearch);
-                FillSpecialCategorySelectBox(savedSearch);
-                FillPhase(savedSearch);
-                FillTrialType(savedSearch);
+                FillKeywordText(savedSearch); 
+                FillTrialStatus(savedSearch);
                 FillNewTrialBox(savedSearch);
+                FillProtocolIDBox(savedSearch);
 
-                SetLocationButtons(savedSearch);
+                FillSponsorsSelectBox(savedSearch); 
+                FillTrialInvestigatorBox(savedSearch);
+                FillLeadOrganzationBox(savedSearch);
+
+                FillSpecialCategorySelectBox(savedSearch); 
+                FillPhase(savedSearch); 
+                FillTrialType(savedSearch); 
+
+                SetLocationButtons(savedSearch); 
             }
 
-            
-
-
-
+            JSManager.AddExternalScript(this.Page, "/JS/Search/CDESearchClinicalTrials.js");
+            JSManager.AddExternalScript(this.Page, "/JS/popEvents.js");
         }
 
         private void SetLocationButtons(CTSearchDefinition savedSearch)
@@ -506,6 +545,44 @@ namespace CancerGov.Web.SnippetTemplates
             }
         }
 
+        private void FillInstitutionSelectBox(CTSearchDefinition savedSearch)
+        {
+            bool showAsCollapsed = true;
+
+            /// We only initialize the hospital list to an expanded state if
+            ///     a) This is an existing search.
+            ///     b) The location type is Hospital.
+            ///     c) The list of institutions is non-empty.
+            if (savedSearch != null &&
+                savedSearch.LocationSearchType == LocationSearchType.Institution &&
+                savedSearch.LocationInstitutions.Count > 0)
+            {
+                showAsCollapsed = false;
+            }
+
+            if (showAsCollapsed)
+            {
+                institutionListExpanded.Value = COLLAPSED;
+                hospitalLocationFieldset.Style.Add(HtmlTextWriterStyle.Display, "none");
+                institutionListSubBox.Style.Add(HtmlTextWriterStyle.Display, "none");
+            }
+            else
+            {
+                showInstitutionListButton.Style.Add(HtmlTextWriterStyle.Display, "none");
+                institutionListExpanded.Value = EXPANDED;
+
+                // Create a checksum for each name and append it to the values to assure
+                // strings aren't altered.  This allows us to use the same codepath for building
+                // criteria sets via popups and values which were already in the list.
+                CTLookupListItem encodedItem;
+                foreach (KeyValuePair<string, int> item in savedSearch.LocationInstitutions)
+                {
+                    encodedItem = new CTLookupListItem(item.Value.ToString("d"), item.Key, "");
+                    institution.Items.Add(new ListItem(encodedItem.Name, encodedItem.HashedCDRID));
+                }
+            }
+        }
+
         private void FillCountryAndState(CTSearchDefinition savedSearch)
         {
             CTSearchFieldList<string> countryList;
@@ -570,6 +647,60 @@ namespace CancerGov.Web.SnippetTemplates
                     else // No states were specified.
                         state.SelectedIndex = 0;
                 }
+            }
+        }
+
+        private void FillDrugSelectionList(CTSearchDefinition savedSearch)
+        {
+            drugListExpanded.Value = COLLAPSED;
+            if (savedSearch != null)
+            {
+                // CTSearchDefinition guarantees that DrugList will never be null.
+                FillDeletableSelectionList(savedSearch.DrugList, drug, drugListExpanded);
+                drugListAllOrAny.SelectedValue = savedSearch.RequireAllDrugsMatch ? "all" : "any";
+            }
+
+            // If the list is still collapsed, hide it.
+            if (drugListExpanded.Value == COLLAPSED)
+                drugListArea.Style.Add(HtmlTextWriterStyle.Display, "none");
+        }
+
+        private void FillTrialInvestigatorBox(CTSearchDefinition savedSearch)
+        {
+            investigatorListExpanded.Value = COLLAPSED;
+            if (savedSearch != null)
+            {
+                // CTSearchDefinition guarantees that InvestigatorList will never be null.
+                FillDeletableSelectionList(savedSearch.InvestigatorList, investigator, investigatorListExpanded);
+            }
+
+            // If the list is still collapsed, hide it.
+            if (investigatorListExpanded.Value == COLLAPSED)
+                trialInvestigatorsRow.Style.Add(HtmlTextWriterStyle.Display, "none");
+        }
+
+        private void FillLeadOrganzationBox(CTSearchDefinition savedSearch)
+        {
+            leadOrgListExpanded.Value = COLLAPSED;
+            if (savedSearch != null)
+            {
+                // CTSearchDefinition guarantees that LeadOrganizationList will never be null.
+                FillDeletableSelectionList(savedSearch.LeadOrganizationList, leadOrg, leadOrgListExpanded);
+            }
+
+            // If the list is still collapsed, hide it.
+            if (leadOrgListExpanded.Value == COLLAPSED)
+                trialLeadOrganizationRow.Style.Add(HtmlTextWriterStyle.Display, "none");
+        }
+
+        private void FillTrialStatus(CTSearchDefinition savedSearch)
+        {
+            if (savedSearch != null)
+            {
+                if (savedSearch.TrialStatusRestriction == TrialStatusType.OpenOnly)
+                    trialStatus.SelectedIndex = 0;  // Open/Active
+                else
+                    trialStatus.SelectedIndex = 1;  // Closed/Inactive
             }
         }
 

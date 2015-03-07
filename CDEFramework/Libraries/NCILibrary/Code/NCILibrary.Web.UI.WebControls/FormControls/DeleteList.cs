@@ -9,7 +9,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using NCI.Util;
-using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 
 namespace NCI.Web.UI.WebControls.FormControls
 {
@@ -31,30 +30,6 @@ namespace NCI.Web.UI.WebControls.FormControls
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// The number of rows to display in each of the control's list boxes.
-        /// Both lists display with the same number of rows.
-        /// </summary>
-        [
-        Bindable(true),
-        Category("Layout"),
-        DefaultValue(""),
-        Description("The image to show for items which may be deleted."),
-        Localizable(true),
-        PersistenceMode(PersistenceMode.Attribute)
-        ]
-        public virtual string DeleteIconUrl
-        {
-            get
-            {
-                string url = (string)ViewState["DeleteIconUrl"];
-                if (url == null)
-                    url = Page.ClientScript.GetWebResourceUrl(typeof(DeleteList), "NCI.Web.UI.WebControls.FormControls.Resources.delete.gif");
-                return url;
-            }
-            set { ViewState["DeleteIconUrl"] = value; }
-        }
 
         /// <summary>
         /// The text to display when the control's list is empty.
@@ -239,9 +214,7 @@ namespace NCI.Web.UI.WebControls.FormControls
         /// <param name="e"></param>
         protected override void OnPreRender(EventArgs e)
         {
-            /// Set up JavaScript resources. Order is important.  Because the control's script uses prototype, we need
-            /// to register that one first.
-            PrototypeManager.Load(this.Page);
+            /// Set up JavaScript resources.
             JSManager.AddResource(this.Page, typeof(DeleteList), "NCI.Web.UI.WebControls.FormControls.Resources.deleteList.js");
 
             Page.RegisterRequiresPostBack(this);
@@ -292,7 +265,7 @@ namespace NCI.Web.UI.WebControls.FormControls
             // Setup Javascript.
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
             writer.RenderBeginTag(HtmlTextWriterTag.Script);
-            writer.Write("var " + this.ClientID + this.ClientIDSeparator + string.Format(@"obj = new DeleteList(""{0}"", ""{1}"");", this.ClientID, ResolveClientUrl(DeleteIconUrl)));
+            writer.Write("$('#" + this.ClientID + "').deletelist();");
             writer.RenderEndTag();
         }
 

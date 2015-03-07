@@ -297,7 +297,6 @@
     <EmbeddedResource Include="FormControls\Resources\AutoComplete.js" />
     <EmbeddedResource Include="FormControls\Resources\AutoComplete.css" />
     <EmbeddedResource Include="FormControls\Resources\deleteList.js" />
-    <EmbeddedResource Include="FormControls\Resources\delete.gif" />
     <Content Include="Resources\spacer.gif" />
     <Content Include="Resources\TemplatedTreeView.js" />
   </ItemGroup>

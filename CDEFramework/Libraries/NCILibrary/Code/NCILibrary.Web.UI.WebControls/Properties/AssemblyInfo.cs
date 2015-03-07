@@ -129,6 +129,10 @@ using System.Web.UI;
 [assembly: WebResource("NCI.Web.UI.WebControls.FormControls.Resources.AutoComplete.css", "text/css")]
 /**************************************************************/
 
+/************************ DeleteList **************************/
+[assembly: WebResource("NCI.Web.UI.WebControls.FormControls.Resources.deleteList.js", "text/javascript")]
+/**************************************************************/
+
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.

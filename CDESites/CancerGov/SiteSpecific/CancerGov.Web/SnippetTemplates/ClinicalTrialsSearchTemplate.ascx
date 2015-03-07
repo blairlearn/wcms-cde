@@ -310,8 +310,8 @@
                                     <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
                                     <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
                                     <div id="institutionListSubBox" runat="server">
-                                        <cancergov:deletelist id="institution" deleteiconurl="~/Images/delete_item.gif" 
-                                            runat="server" emptylisttext='Select "Add More" to see hospital names.' />
+                                        <cancergov:deletelist id="institution" runat="server" 
+                                            emptylisttext='Select "Add More" to see hospital names.' />
                                         <span id="institutionAddButton" style="display: none;"><a class="button"
                                             href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');">
                                             Add More</a>
@@ -361,6 +361,10 @@
         <div class="row">
             <div id="legend-trialtreatment" class="medium-4 columns legend">Trial/Treatment Type</div>
             <div class="medium-7 columns">Search by trial type, drug, or treatment/intervention</div>
+            <div id="showDrugSearchOptionsButton" style="display: none;">
+                    <a class="clinicaltrials-expansionLink" href="javascript:showDrugInterventionOptions()">
+                        Show Search Options</a></div>
+                <input type="hidden" id="treatmentTypeAreaExpanded" runat="server" />
             <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>        
         <div class="collapsible">
@@ -377,7 +381,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div id="drugListArea" runat="server" class="row">
                 <div class="medium-4 columns">
                     <label>Drug</label>
                 </div>
@@ -393,7 +397,7 @@
                             <asp:ListItem Selected="False" Value="all" Text="All drugs shown" />
                         </asp:RadioButtonList>
                         <input id="drugid" type="hidden" size="18" name="drugid" runat="server" />
-                        <cancergov:deletelist id="drug" deleteiconurl="~/Images/delete_item.gif" runat="server" 
+                        <cancergov:deletelist id="drug" runat="server" 
                             emptylisttext='Select "Add More" to see drug names.' />
                         <span id="druglistAddButton" style="display: none;">
                             <a class="button" href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =drug.ClientID %>&amp;fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');">
@@ -417,8 +421,8 @@
                     <asp:HiddenField runat="server" ID="interventionListExpanded" />
                     <div id="interventionListSubBox">
                         <input id="interventionid" type="hidden" size="18" name="interventionid" runat="server" />
-                        <cancergov:deletelist id="intervention" deleteiconurl="~/Images/delete_item.gif"
-                            runat="server" emptylisttext='Select "Add More" to see treatment/intervention names.' />
+                        <cancergov:deletelist id="intervention" runat="server" 
+                            emptylisttext='Select "Add More" to see treatment/intervention names.' />
                         <span id="interventionlistAddButton" style="display: none;"><a class="button" 
                             href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =intervention.ClientID %>&amp;fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');">
                             Add More</a>
@@ -461,7 +465,12 @@
         <div class="collapsible">
             <div class="row">
                 <div class="medium-4 columns"><label>Trial Status</label></div>
-                <div class="medium-7 left columns"></div>                
+                <div class="medium-7 left columns">
+                    <asp:RadioButtonList runat="server" ID="trialStatus" RepeatDirection="Vertical" RepeatLayout="Flow">
+                                <asp:ListItem Value="1" Selected="True">Active (currently accepting patients)</asp:ListItem>
+                                <asp:ListItem Value="0">Closed (not accepting patients)</asp:ListItem>
+                            </asp:RadioButtonList>
+                </div>                
             </div>
             <div class="row">
                 <div class="medium-4 columns"><label>Trial Phase</label></div>
@@ -506,7 +515,7 @@
                         CssClass="scrolling-list roundy-box groupedCheckBoxList"
                      /></div>
             </div>
-            <div class="row">
+            <div id="trialInvestigatorsRow" runat="server" class="row">
                 <div class="medium-4 columns"><label>Trial Investigators</label></div>
                 <div class="medium-7 left columns">
                     <div id="showInvestigatorListButtonArea" style="display: none;">
@@ -516,9 +525,8 @@
                     <div id="investigatorListSubBox">
                         Trial Investigators Selected:<br />
                         <input id="investigatorid" type="hidden" size="18" name="investigatorid" runat="server" />
-                        <cancergov:deletelist id="investigator" deleteiconurl="~/Images/delete_item.gif"
-                            runat="server" emptylisttext='Select "Add More" to see investigator names.'>
-			            </cancergov:deletelist>
+                        <cancergov:deletelist id="investigator" runat="server" 
+                            emptylisttext='Select "Add More" to see investigator names.' />
                         <span id="investigatorListAddButton" style="display: none;"><a class="button"
                             href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =investigator.ClientID %>&amp;fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');">
                             Add More</a>
@@ -529,7 +537,7 @@
                     </div>
                 </div>
             </div>        
-            <div class="row">
+            <div id="trialLeadOrganizationRow" runat="server" class="row">
                 <div class="medium-4 columns"><label>Lead Organization/ Cooperative Group</label></div>
                 <div class="medium-7 left columns">
                     <div id="showLeadOrgListButtonArea" style="display: none; margin: 5px 0px;">
@@ -539,8 +547,8 @@
                     <div id="leadOrgListSubBox">
                         Lead Organizations or Cooperative Groups Selected:<br />
                         <input id="leadOrgid" type="hidden" size="18" name="leadOrgid" runat="server" />
-                        <cancergov:deletelist id="leadOrg" deleteiconurl="~/Images/delete_item.gif"
-                            runat="server" emptylisttext='Select "Add More" to see lead organization names.' />
+                        <cancergov:deletelist id="leadOrg" runat="server" 
+                            emptylisttext='Select "Add More" to see lead organization names.' />
                         <span id="leadOrgAddButton" style="display: none;"><a class="button" 
                             href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =leadOrg.ClientID %>&amp;fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');">
                             Add More</a>

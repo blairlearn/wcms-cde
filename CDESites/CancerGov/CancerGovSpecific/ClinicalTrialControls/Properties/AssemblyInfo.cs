@@ -39,9 +39,5 @@ using System.Web.UI;
 // Resources for HelpTextInput control
 [assembly: WebResource("CancerGovUIControls.Resources.HelpTextInput.js", "text/javascript")]
 
-// Resources for the DeleteList
-[assembly: WebResource("CancerGovUIControls.Resources.delete.gif", "image/gif")]
-[assembly: WebResource("CancerGovUIControls.Resources.deleteList.js", "text/javascript")]
-
 // Resources for the SmartCheckBoxList
 [assembly: WebResource("CancerGovUIControls.Resources.SmartCheckBoxList.js", "text/javascript")]
