@@ -798,7 +798,7 @@
     },
 
     //******************************************************************************************************
-    MegaMenuClick: function(sender, tree) {
+    MegaMenuClick: function(sender, tree, pageName) {
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'MegaMenuClick');
 
@@ -811,7 +811,8 @@
         if (typeof tree[1] === 'undefined') {
             clickParams.Props = {
                 10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
-                53: tree[0].text
+                53: tree[0].text,
+                56: pageName
             };
             clickParams.Evars = {
                 53: tree[0].text
@@ -823,7 +824,8 @@
             clickParams.Props = {
                 10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
                 53: tree[1].text,
-                54: tree[0].text
+                54: tree[0].text,
+                56: pageName
             };
             clickParams.Evars = {
                 53: tree[1].text
@@ -836,7 +838,8 @@
                 10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
                 53: tree[2].text,
                 54: tree[1].text,
-                55: tree[0].text
+                55: tree[0].text,
+                56: pageName
             };
             clickParams.Evars = {
                 53: tree[2].text
@@ -849,13 +852,13 @@
     },
 
     //******************************************************************************************************
-    LogoClick: function(sender) {
+    LogoClick: function(sender, pageName) {
         clickParams = new NCIAnalytics.ClickParams(sender,
 			'nciglobal', 'o', 'Logolick');
 
         clickParams.Props = {
-            53: 'NCI Logo'
-            //56: 'pagename'
+            53: 'NCI Logo',
+            56: pageName
         };
 
         clickParams.Evars = {
@@ -868,13 +871,13 @@
     },
 
     //******************************************************************************************************
-    UtilityBarClick: function(sender, linkText) {
+    UtilityBarClick: function(sender, linkText, pageName) {
         clickParams = new NCIAnalytics.ClickParams(sender,
 			'nciglobal', 'o', 'UtilityBarDictionaryClick');
 
         clickParams.Props = {
-            53: linkText
-            //56: 'pagename'
+            53: linkText,
+            56: pageName
         };
 
         clickParams.Evars = {
@@ -887,16 +890,17 @@
     },
 
     //******************************************************************************************************	
-    CardClick: function(sender, cardTitle, linkText, container, containerIndex) {
+    CardClick: function(sender, cardTitle, linkText, container, containerIndex, pageName) {
         clickParams = new NCIAnalytics.ClickParams(sender,
                 'nciglobal', 'o', 'FeatureCardClick');
 
         var position = container + ":" + containerIndex;
 
         clickParams.Props = {
-            56: cardTitle,
-            57: linkText,
-            58: position
+            57: cardTitle,
+            58: linkText,
+            59: position,
+            60: pageName
         };
 
         clickParams.Events = [27];
@@ -1136,24 +1140,41 @@
 	        var tree = [];
 	        var treeParents = $this.parent('li').parents('li');
 	        tree.push($this[0]);
-	        if (treeParents.children('a').length > 0)
+	        if (treeParents.children('a').length > 0) {
 	            tree.push(treeParents.children('a')[0]);
-	        if (treeParents.children('div').children('a').length > 0)
+	        }
+	        if (treeParents.children('div').children('a').length > 0) {
 	            tree.push(treeParents.children('div').children('a')[0]);
+	        }
+	        var pageName = $('h1').text();
+	        if ($('h1').length === 0) {
+	            pageName = 'Homepage';
+	        }
 
-	        NCIAnalytics.MegaMenuClick(this, tree);
+	        NCIAnalytics.MegaMenuClick(this, tree, pageName);
 	    });
 
-	$('.utility a').each(function(i, el) {
-	    $(el).on('click', function(event) {
-	        var $this = $(this);
-	        var linkText = $this.text();
+    $('.utility a').each(function(i, el) {
+        $(el).on('click', function(event) {
+            var $this = $(this);
+            var linkText = $this.text();
+            var pageName = $('h1').text();
+            if ($('h1').length === 0) {
+                pageName = 'Homepage';
+            }
 
-            NCIAnalytics.UtilityBarClick(this, linkText);
+            NCIAnalytics.UtilityBarClick(this, linkText, pageName);
         });
-	});
+    });
 
-	$('.nci-logo a').on('click', function(event) { NCIAnalytics.LogoClick(this) });
+    $('.nci-logo a')
+	    .on('click', function(event) {
+            var pageName = $('h1').text();
+            if ($('h1').length === 0) {
+                pageName = 'Homepage';
+            }
+	        NCIAnalytics.LogoClick(this, pageName)
+	    });
 
     $('.feature-primary .feature-card').each(function(i, el) {
         $(el).on('click', 'a', function(event) {
@@ -1162,8 +1183,12 @@
             var linkText = $this.children('h3').text();
             var container = 'Feature';
             var containerIndex = i + 1;
+            var pageName = $('h1').text();
+            if ($('h1').length === 0) {
+                pageName = 'Homepage';
+            }
 
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex, pageName);
         });
     });
 
@@ -1174,8 +1199,12 @@
             var linkText = $this.text();
             var container = 'Guide';
             var containerIndex = i + 1;
+            var pageName = $('h1').text();
+            if ($('h1').length === 0) {
+                pageName = 'Homepage';
+            }
 
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex, pageName);
         });
     });
 
@@ -1186,8 +1215,12 @@
             var linkText = $this.children('h3').text();
             var container = 'Multimedia';
             var containerIndex = i + 1;
+            var pageName = $('h1').text();
+            if ($('h1').length === 0) {
+                pageName = 'Homepage';
+            }
 
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex, pageName);
         });
     });
 
@@ -1198,9 +1231,23 @@
             var linkText = $this.text();
             var container = 'CTHP';
             var containerIndex = i + 1;
+            var pageName = $('h1').text();
+            if ($('h1').length === 0) {
+                pageName = 'Homepage';
+            }
 
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex, pageName);
         });
     });
 
 })(jQuery);
+
+// AddThis overrides the 'onclick' event handlers, so re-bind analytics after AddThis loads.
+addthis.addEventListener('addthis.ready', function() {
+    var atBtns = document.getElementsByClassName('add_this_btn');
+    for (var i = 0; i < atBtns.length; i++) {
+        atBtns[i].addEventListener('click', function(e) {
+            NCIAnalytics.BookmarkShareClick(this);
+        });
+    } 
+});
