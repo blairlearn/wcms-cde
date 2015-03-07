@@ -257,15 +257,6 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.CheckBox nihOnly;
         
         /// <summary>
-        /// treatmentTypeAreaExpanded control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden treatmentTypeAreaExpanded;
-        
-        /// <summary>
         /// trialType control.
         /// </summary>
         /// <remarks>

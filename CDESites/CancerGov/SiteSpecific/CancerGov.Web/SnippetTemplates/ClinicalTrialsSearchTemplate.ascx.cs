@@ -73,7 +73,7 @@ namespace CancerGov.Web.SnippetTemplates
                 if (string.IsNullOrEmpty(rawSearchID))
                 {
                     // No protocol search was specified, so collapse all display areas
-                    treatmentTypeAreaExpanded.Value = COLLAPSED;
+                    //treatmentTypeAreaExpanded.Value = COLLAPSED;
                     //trialStatusExpanded.Value = COLLAPSED;
                     //trialSponsorExpanded.Value = COLLAPSED;
                 }
@@ -90,7 +90,7 @@ namespace CancerGov.Web.SnippetTemplates
                     }
 
                     // A protocol search was specified, so expand all display areas
-                    treatmentTypeAreaExpanded.Value = EXPANDED;
+                    //treatmentTypeAreaExpanded.Value = EXPANDED;
                     //trialStatusExpanded.Value = EXPANDED;
                     //trialSponsorExpanded.Value = EXPANDED;
                 }

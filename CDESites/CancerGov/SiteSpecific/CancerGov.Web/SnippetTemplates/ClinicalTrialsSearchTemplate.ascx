@@ -318,7 +318,7 @@
                                         </span>
                                         <asp:Button ID="institutionClearAll" runat="server" Text="Clear All" CssClass="button"
                                             OnClick="InstutionListClearAll_ClickHandler" 
-                                            OnClientClick="DeleteList.ClearAll(ids.institution);Event.stop(event)"/>
+                                            OnClientClick="$(ids.institution).clearAll();Event.stop(event)"/>
                                     </div>
                                 </div>
                             </div>
@@ -362,9 +362,8 @@
             <div id="legend-trialtreatment" class="medium-4 columns legend">Trial/Treatment Type</div>
             <div class="medium-7 columns">Search by trial type, drug, or treatment/intervention</div>
             <div id="showDrugSearchOptionsButton" style="display: none;">
-                    <a class="clinicaltrials-expansionLink" href="javascript:showDrugInterventionOptions()">
-                        Show Search Options</a></div>
-                <input type="hidden" id="treatmentTypeAreaExpanded" runat="server" />
+                <a class="clinicaltrials-expansionLink" href="javascript:showDrugInterventionOptions()">
+                    Show Search Options</a></div>
             <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>        
         <div class="collapsible">
@@ -404,7 +403,7 @@
                             Add More</a>
                         </span>
                         <asp:Button ID="druglistClearAll" runat="server" Text="Clear All" OnClick="DrugListClearAll_ClickHandler"
-                            OnClientClick="DeleteList.ClearAll(ids.drug);Event.stop(event)" CssClass="button"/>
+                            OnClientClick="$(ids.drug).clearAll();Event.stop(event)" CssClass="button"/>
                     </div>
                 </div>
             </div>
@@ -428,7 +427,7 @@
                             Add More</a>
                         </span>
                         <asp:Button ID="interventionlistClearAll" runat="server" Text="Clear All"
-                            OnClick="InterventionListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll(ids.intervention);Event.stop(event)"
+                            OnClick="InterventionListClearAll_ClickHandler" OnClientClick="$(ids.intervention).clearAll();Event.stop(event)"
                             CssClass="button"/>
                     </div>
                 </div>
@@ -532,7 +531,7 @@
                             Add More</a>
                         </span>
                         <asp:Button ID="investigatorListAddButtonClearAll" runat="server" Text="Clear All"
-                            OnClick="InvestigatorListClearAll_ClickHandler" OnClientClick="DeleteList.ClearAll(ids.investigator);Event.stop(event)"
+                            OnClick="InvestigatorListClearAll_ClickHandler" OnClientClick="$(ids.investigator).clearAll();Event.stop(event)"
                             CssClass="button" />
                     </div>
                 </div>
@@ -554,7 +553,7 @@
                             Add More</a>
                         </span>
                         <asp:Button ID="leadOrgClearAll" runat="server" Text="Clear All" OnClick="LeadOrgClearAll_ClickHandler"
-                            OnClientClick="DeleteList.ClearAll(ids.leadOrg);Event.stop(event)" 
+                            OnClientClick="$(ids.leadOrg).clearAll();Event.stop(event)" 
                             CssClass="button"/>
                     </div>
                 </div>
