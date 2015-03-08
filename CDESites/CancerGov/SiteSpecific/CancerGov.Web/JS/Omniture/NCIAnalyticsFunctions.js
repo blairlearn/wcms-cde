@@ -1167,14 +1167,14 @@
         });
     });
 
-    $('.nci-logo a')
+    $('.nci-logo')
 	    .on('click', function(event) {
             var pageName = $('h1').text();
             if ($('h1').length === 0) {
                 pageName = 'Homepage';
             }
 	        NCIAnalytics.LogoClick(this, pageName)
-	    });
+	});
 
     $('.feature-primary .feature-card').each(function(i, el) {
         $(el).on('click', 'a', function(event) {
