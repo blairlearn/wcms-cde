@@ -810,7 +810,7 @@
 
         if (typeof tree[1] === 'undefined') {
             clickParams.Props = {
-                10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
+                //10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
                 53: tree[0].text,
                 56: pageName
             };
@@ -822,7 +822,7 @@
         if (typeof tree[1] !== 'undefined') {
             // click was sub-section or link-level
             clickParams.Props = {
-                10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
+                //10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
                 53: tree[1].text,
                 54: tree[0].text,
                 56: pageName
@@ -835,7 +835,7 @@
         if (typeof tree[2] !== 'undefined') {
             // click was link-level
             clickParams.Props = {
-                10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
+                //10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
                 53: tree[2].text,
                 54: tree[1].text,
                 55: tree[0].text,
