@@ -95,7 +95,7 @@ namespace CancerGov.Web.UI.SnippetControls
            
                 for (int i = 0; i < paths.Length && i < sectionPath.Length; i++)
                 {
-                    if (paths[i].Equals(sectionPath[i]))
+                    if (paths[i].Equals(sectionPath[i]) && paths.Length >= sectionPath.Length)
                     {
                         isSectionPath = true;
                     }
