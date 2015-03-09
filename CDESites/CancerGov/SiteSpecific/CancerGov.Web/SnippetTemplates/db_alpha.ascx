@@ -124,14 +124,12 @@
             <div id="dictionary_jPlayer"></div>
             
             <div class="row">
-                <div class="small-2 columns">              
+                <div class="small-12 columns">              
                     <span class="radio">
                         <asp:RadioButton ID="radioStarts" runat="server" Checked="true" GroupName="sgroup" />
                         <asp:Label ID="lblStartsWith" class="inline" runat="server" Text="Starts with"
                             AssociatedControlID="radioStarts"></asp:Label>
                     </span>
-                </div>
-                <div class="small-2 columns left">
                     <span class="radio">
                         <asp:RadioButton ID="radioContains" runat="server" GroupName="sgroup" />
                         <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline" 
@@ -149,6 +147,7 @@
                     <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
                         ToolTip="Search" />
                 </div>
+            </div>
         </form>
     </div>
 	<div class="az-list">
