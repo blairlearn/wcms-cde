@@ -161,13 +161,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
          */
         public string dateString()
         {
+            string dateForLists = @"$resultItem.DateForLists";
+            if(PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                dateForLists = @"$resultItem.DateForListsEs";
+
             string dates = @"
                 ##
                 ## Display dates
                 ##
-                    <span class=""date""> 
-                        $resultItem.DateForLists##
-					</span><br/>##";
+                <span class=""date"">" + dateForLists + 
+                @"</span><br/>##";
             return dates;
         }
 

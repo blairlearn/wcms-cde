@@ -114,7 +114,6 @@ namespace NCI.DataManager
 
                                     // Keep original published/modified/reviewed values, but also compare each value
                                     // and return the most recent of the three for use in lists.
-                                    /// TODO: Add cultureInfo for Spanish
                                     DateTime dfp = sqlFVReader.GetDateTime("Date_first_published");
                                     DateTime listDate = dfp;
                                     if (dfp != DateTime.MinValue)
@@ -136,7 +135,7 @@ namespace NCI.DataManager
                                         listDate = dlr;
 
                                     searchResult.DateForLists = String.Format("{0:MMMM d, yyyy}", listDate);
-                                    //searchResult.DateForLists = listDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
+                                    searchResult.DateForListsEs = listDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
 
                                     searchResults.Add(searchResult);
                                 }
@@ -262,7 +261,6 @@ namespace NCI.DataManager
 
                                     // Keep original published/modified/reviewed values, but also compare each value
                                     // and return the most recent of the three for use in lists.
-                                    /// TODO: Add cultureInfo for Spanish
                                     DateTime dfp = sqlFVReader.GetDateTime("Date_first_published");
                                     DateTime listDate = dfp;
                                     if (dfp != DateTime.MinValue)
@@ -284,7 +282,7 @@ namespace NCI.DataManager
                                         listDate = dlr;
 
                                     searchResult.DateForLists = String.Format("{0:MMMM d, yyyy}", listDate);
-                                    //searchResult.DateForLists = listDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
+                                    searchResult.DateForListsEs = listDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
 
                                     searchResults.Add(searchResult);
                                 }

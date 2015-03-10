@@ -154,6 +154,11 @@ namespace NCI.DataManager
         /// Most recent date to show on lists
         /// </summary>
         public String DateForLists { get; set; }
+        
+        /// <summary>
+        /// Most recent date to show on lists in Spanish
+        /// </summary>
+        public String DateForListsEs { get; set; }
 
         public SearchResult()
         {
@@ -170,6 +175,7 @@ namespace NCI.DataManager
             MimeType = string.Empty;
             FileSize = 0;
             DateForLists = string.Empty;
+            DateForListsEs = string.Empty;
         }
     }
 }
