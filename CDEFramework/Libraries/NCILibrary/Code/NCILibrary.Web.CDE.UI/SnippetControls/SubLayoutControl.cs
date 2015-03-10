@@ -171,6 +171,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 CurrentPageHead.Title = title;
             }
         }
+
+        /// <summary>
+        /// Retrieves the language of the current page.
+        /// </summary>
+        protected string CurrentLanguage()
+        {
+            string language = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
+            return language;
+        }
+
         #endregion
 
         #region Page Overrides
