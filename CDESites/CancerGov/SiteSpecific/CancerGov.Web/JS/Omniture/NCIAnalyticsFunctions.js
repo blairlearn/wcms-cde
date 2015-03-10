@@ -798,10 +798,14 @@
     },
 
     //******************************************************************************************************
-    MegaMenuClick: function(sender, tree, pageName) {
+    MegaMenuClick: function(sender, tree) {
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'MegaMenuClick');
 
+        var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
+        if (typeof pageNameOverride != "undefined")
+            localPageName = pageNameOverride;
+            
         /*
         * tree.length == 1 : section/tab level
         * tree.length == 2 : subsection level
@@ -852,10 +856,14 @@
     },
 
     //******************************************************************************************************
-    LogoClick: function(sender, pageName) {
+    LogoClick: function(sender) {
         clickParams = new NCIAnalytics.ClickParams(sender,
 			'nciglobal', 'o', 'Logolick');
 
+        var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
+        if (typeof pageNameOverride != "undefined")
+            localPageName = pageNameOverride;
+            
         clickParams.Props = {
             53: 'NCI Logo',
             56: pageName
@@ -871,10 +879,14 @@
     },
 
     //******************************************************************************************************
-    UtilityBarClick: function(sender, linkText, pageName) {
+    UtilityBarClick: function(sender, linkText) {
         clickParams = new NCIAnalytics.ClickParams(sender,
 			'nciglobal', 'o', 'UtilityBarDictionaryClick');
 
+        var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
+        if (typeof pageNameOverride != "undefined")
+            localPageName = pageNameOverride;
+            
         clickParams.Props = {
             53: linkText,
             56: pageName
@@ -890,9 +902,13 @@
     },
 
     //******************************************************************************************************	
-    CardClick: function(sender, cardTitle, linkText, container, containerIndex, pageName) {
+    CardClick: function(sender, cardTitle, linkText, container, containerIndex) {
         clickParams = new NCIAnalytics.ClickParams(sender,
                 'nciglobal', 'o', 'FeatureCardClick');
+
+        var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
+        if (typeof pageNameOverride != "undefined")
+            localPageName = pageNameOverride;    
 
         var position = container + ":" + containerIndex;
 
@@ -1086,46 +1102,47 @@
         }
         return target;
     },
+    
     //******************************************************************************************************	
     /* SPLF_Hier1: function() {
-        // URL structure
-        // element 0 = blank
-        // element 1 = "Cancertopics"
-        // element 2 = "types"
-        // element 3 = type of cancer
-        // element 4 = Patient/Health Professional
-        // element 5 = topic
-        // element 6 = sub-topic
+    // URL structure
+    // element 0 = blank
+    // element 1 = "Cancertopics"
+    // element 2 = "types"
+    // element 3 = type of cancer
+    // element 4 = Patient/Health Professional
+    // element 5 = topic
+    // element 6 = sub-topic
 
         delimiter = "|";
-        pathArray = window.location.pathname.split('/');
-        out = "[" + pathArray.length.toString() + "] ";
-        for (i = 0; i < pathArray.length; i++)
-            out = out + " - (" + i.toString() + ") " + pathArray[i];
-        //alert(out); 
-        s.hier1 = s.channel;
-        if (pathArray.length >= 4) {
-            if (pathArray[1].toLowerCase() == "cancertopics") {
-                if (pathArray[2].toLowerCase() == "types") {
-                    s.prop30 = pathArray[3];
-                    s.hier1 += delimiter + s.prop30;
-                    if (pathArray.length >= 5) {
-                        s.prop43 = pathArray[4];
-                        s.hier1 += delimiter + s.prop43;
-                        if (pathArray.length >= 6) {
-                            s.prop44 = pathArray[5];
-                            s.hier1 += delimiter + s.prop44;
-                            if (pathArray.length >= 7) {
-                                s.prop45 = pathArray[6];
-                                s.hier1 += delimiter + s.prop45;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    pathArray = window.location.pathname.split('/');
+    out = "[" + pathArray.length.toString() + "] ";
+    for (i = 0; i < pathArray.length; i++)
+    out = out + " - (" + i.toString() + ") " + pathArray[i];
+    //alert(out); 
+    s.hier1 = s.channel;
+    if (pathArray.length >= 4) {
+    if (pathArray[1].toLowerCase() == "cancertopics") {
+    if (pathArray[2].toLowerCase() == "types") {
+    s.prop30 = pathArray[3];
+    s.hier1 += delimiter + s.prop30;
+    if (pathArray.length >= 5) {
+    s.prop43 = pathArray[4];
+    s.hier1 += delimiter + s.prop43;
+    if (pathArray.length >= 6) {
+    s.prop44 = pathArray[5];
+    s.hier1 += delimiter + s.prop44;
+    if (pathArray.length >= 7) {
+    s.prop45 = pathArray[6];
+    s.hier1 += delimiter + s.prop45;
+    }
+    }
+    }
+    }
+    }
+    }
     },
-     */
+    */
 
     SPLF_Lang: function() {
         //alert('Lang');
@@ -1146,35 +1163,23 @@
 	        if (treeParents.children('div').children('a').length > 0) {
 	            tree.push(treeParents.children('div').children('a')[0]);
 	        }
-	        var pageName = $('h1').text();
-	        if ($('h1').length === 0) {
-	            pageName = 'Homepage';
-	        }
 
-	        NCIAnalytics.MegaMenuClick(this, tree, pageName);
+	        NCIAnalytics.MegaMenuClick(this, tree);
 	    });
 
     $('.utility a').each(function(i, el) {
         $(el).on('click', function(event) {
             var $this = $(this);
             var linkText = $this.text();
-            var pageName = $('h1').text();
-            if ($('h1').length === 0) {
-                pageName = 'Homepage';
-            }
 
-            NCIAnalytics.UtilityBarClick(this, linkText, pageName);
+            NCIAnalytics.UtilityBarClick(this, linkText);
         });
     });
 
     $('.nci-logo')
 	    .on('click', function(event) {
-            var pageName = $('h1').text();
-            if ($('h1').length === 0) {
-                pageName = 'Homepage';
-            }
-	        NCIAnalytics.LogoClick(this, pageName)
-	});
+	        NCIAnalytics.LogoClick(this)
+	    });
 
     $('.feature-primary .feature-card').each(function(i, el) {
         $(el).on('click', 'a', function(event) {
@@ -1183,12 +1188,8 @@
             var linkText = $this.children('h3').text();
             var container = 'Feature';
             var containerIndex = i + 1;
-            var pageName = $('h1').text();
-            if ($('h1').length === 0) {
-                pageName = 'Homepage';
-            }
 
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex, pageName);
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
         });
     });
 
@@ -1199,12 +1200,8 @@
             var linkText = $this.text();
             var container = 'Guide';
             var containerIndex = i + 1;
-            var pageName = $('h1').text();
-            if ($('h1').length === 0) {
-                pageName = 'Homepage';
-            }
 
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex, pageName);
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
         });
     });
 
@@ -1215,12 +1212,8 @@
             var linkText = $this.children('h3').text();
             var container = 'Multimedia';
             var containerIndex = i + 1;
-            var pageName = $('h1').text();
-            if ($('h1').length === 0) {
-                pageName = 'Homepage';
-            }
 
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex, pageName);
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
         });
     });
 
@@ -1231,12 +1224,8 @@
             var linkText = $this.text();
             var container = 'CTHP';
             var containerIndex = i + 1;
-            var pageName = $('h1').text();
-            if ($('h1').length === 0) {
-                pageName = 'Homepage';
-            }
 
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex, pageName);
+            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
         });
     });
 
