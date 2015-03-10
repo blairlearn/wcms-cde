@@ -3,11 +3,11 @@
 
 <html>
   <head>
-        <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" />
+        <link rel="stylesheet" href="/PublishedContent/Styles/nvcg.css" />
 		<title>lookup_select</title>				
 		<script language="javascript">
 		    function doSubmit(fld) {
-		        var parentDeleteList = window.parent.opener.window.jQuery(fld);
+		        var parentDeleteList = window.parent.opener.window.jQuery('#' + fld);
 		        var chkInputs = window.parent['results'].document.forms['resultsForm'].elements['chkItem'];
 
 		        for (var i = 0; i < chkInputs.length; i++) {
@@ -17,7 +17,7 @@
 		                    parentDeleteList.deletelist();
 		                }
 
-		                var selectedArray = checkedItems[i].value.split(/[{}]/),
+		                var selectedArray = chkInputs[i].value.split(/[{}]/),
 			                deleteListItem = {};
 
 		                if (selectedArray.length === 3) {
@@ -29,7 +29,7 @@
 		                }
 
 		                parentDeleteList.deletelist('addItem', deleteListItem);
-		                RevealParentListArea('<%=Request.Params["fld"]%>');
+		                //RevealParentListArea('<%=Request.Params["fld"]%>');
 		            }
 		        }
 
@@ -57,23 +57,15 @@
 
 		</script>	
   </head>
-  <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="background:none">
-                
-                <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <td valign="top" width="100%">
-                <div class="popup-add-selected">
-                <form>
-      <input type="image" src="/images/ctsearch/add-selected-btn.gif" name="selectchecked" onClick="doSubmit('<%=Request.Params["type"]%>');" alt="Add Selected" title="Add Selected" />
-     </form>
-</div>
-     </td>
-   </tr> 
-     <tr><td bgcolor="#e4e4e3" width="100%">
-                 <a href="#" onclick="javascript:window.parent.close();"><img src="/images/pop_close.gif" width="117" height="26" alt="Close Window" border="0"></a>
-
-     </td></tr>
-
-                </table>
+    <body>
+        <form>
+            <div class="row">
+                <div class="small-12 columns">
+                    <button name="selectchecked" onclick="doSubmit('<%=Request.Params["type"]%>');">Add Selected</button>
+                    <button onclick="window.parent.close();">Close Window</button>
+                </div>
+            </div>
+        </form>
   </body>
 
 </html>

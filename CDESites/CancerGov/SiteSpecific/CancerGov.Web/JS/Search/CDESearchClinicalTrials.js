@@ -263,7 +263,7 @@ function InterventionListButtonClickHandler(event) {
 function showInterventionList() {
 	$('#showInterventionListButtonArea').hide();
 	$('#interventionListSubBox').show();
-	$('#'+ids.interventionListExpanded).prop('value', 'Y');
+	//$('#'+ids.interventionListExpanded).prop('value', 'Y');
 }
 
 function InitializeTrialStatusBox() {
