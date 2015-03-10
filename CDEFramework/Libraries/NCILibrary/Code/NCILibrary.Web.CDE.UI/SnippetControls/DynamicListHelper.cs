@@ -158,7 +158,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         /*
          * Output dates.
-         * TODO: this needs to be updated to display only the most recent date of the three. 
          */
         public string dateString()
         {
@@ -166,22 +165,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 ##
                 ## Display dates
                 ##
-                    <span class=""date"">
-						#if ($resultItem.DateDisplayMode == 1)##
-							($postedString: $resultItem.PostedDate) ##	
-						#elseif ($resultItem.DateDisplayMode == 2)##
-							($updatedString: $resultItem.UpdatedDate) ##	
-						#elseif ($resultItem.DateDisplayMode == 3)##
-							($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate) ##
-						#elseif ($resultItem.DateDisplayMode == 4)##
-							($reviewedString: $resultItem.ReviewedDate) ##	
-						#elseif ($resultItem.DateDisplayMode == 5)##
-							($postedString: $resultItem.PostedDate, $reviewedString: $resultItem.ReviewedDate) ##
-						#elseif ($resultItem.DateDisplayMode == 6)##
-							($updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate) ##
-						#elseif ($resultItem.DateDisplayMode == 7)##
-							($postedString: $resultItem.PostedDate, $updatedString: $resultItem.UpdatedDate, $reviewedString: $resultItem.ReviewedDate) ##
-						#end
+                    <span class=""date""> 
+                        $resultItem.DateForLists##
 					</span><br/>##";
             return dates;
         }

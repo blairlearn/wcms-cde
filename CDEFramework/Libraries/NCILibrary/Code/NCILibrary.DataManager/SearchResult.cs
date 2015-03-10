@@ -150,6 +150,11 @@ namespace NCI.DataManager
         /// </summary>
         public String MimeType { get; set; }
 
+        /// <summary>
+        /// Most recent date to show on lists
+        /// </summary>
+        public String DateForLists { get; set; }
+
         public SearchResult()
         {
             ShortDescription = string.Empty;
@@ -164,6 +169,7 @@ namespace NCI.DataManager
             Author = string.Empty;
             MimeType = string.Empty;
             FileSize = 0;
+            DateForLists = string.Empty;
         }
     }
 }
