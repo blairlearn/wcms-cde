@@ -207,6 +207,14 @@
 </script>
 
     <script type="text/javascript">
+        var ids = {
+              intervention:"<%=intervention.ClientID%>"
+            , investigator: "<%=investigator.ClientID%>"
+            , leadOrg: "<%=leadOrg.ClientID%>"
+            , drug: "<%=drug.ClientID%>"
+            , institution: "<%=institution.ClientID%>"
+        }
+    
         $(document).ready(function() {
             $("select").selectmenu({
                 change: function(event, ui) {
@@ -230,12 +238,8 @@
     <%-- --------------------- Begin Cancer Types ------------------------ --%>
     <fieldset aria-labelledby="legend-condition">
         <div class="row">
-            <div id="legend-condition" class="medium-4 columns legend">Cancer Type/Condition</div>
-            <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>       
-        </div>
-        <div class="row">
             <div class="medium-4 columns">
-                <asp:Label ID="lblCancerType" AssociatedControlID="ddlCancerType" runat="server">Cancer Type/Condition</asp:Label>
+                <asp:Label CssClass="right" ID="lblCancerType" AssociatedControlID="ddlCancerType" runat="server">Cancer Type/Condition</asp:Label>
             </div>
             <div class="medium-7 left columns">
                  <asp:DropDownList 
@@ -248,11 +252,12 @@
                     ValidationGroup="v1">
                 </asp:DropDownList>
             </div>
+            <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>
                 
         <div class="row">
             <div class="medium-4 columns">
-                <label>Stage/Subtype</label>
+                <label class="right">Stage/Subtype</label>
             </div>
             <div class="medium-7 left columns">
                 <CancerGov:AccessibleCheckBoxList 
@@ -260,8 +265,8 @@
                     runat="server"
                     EmptyText="Select cancer type/condition first."
                     CssClass="scrolling-list roundy-box groupedCheckBoxList"
-                    />
-            </div>
+                    />            
+            </div>            
         </div>
     </fieldset>
     <%-- ------------------------ END Cancer Types -------------------- --%>
@@ -306,19 +311,20 @@
                             <div class="column">
                                 <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
                                 <div>
-                                    <button id="showInstitutionListButton" runat="server">Choose From List</button>
-                                    <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
                                     <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
                                     <div id="institutionListSubBox" runat="server">
                                         <cancergov:deletelist id="institution" runat="server" 
-                                            emptylisttext='Select "Add More" to see hospital names.' />
-                                        <span id="institutionAddButton" style="display: none;"><a class="button"
-                                            href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');">
-                                            Add More</a>
+                                            emptylisttext="Select &quot;Add More&quot; to see hospital names." />
+                                        <span id="institutionAddButton">
+                                            <button class="button action" type="button"
+                                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                                Add More
+                                            </button>
                                         </span>
-                                        <asp:Button ID="institutionClearAll" runat="server" Text="Clear All" CssClass="button"
+                                        <asp:Button ID="institutionClearAll" runat="server" Text="Clear All"
                                             OnClick="InstutionListClearAll_ClickHandler" 
-                                            OnClientClick="$(ids.institution).clearAll();Event.stop(event)"/>
+                                            OnClientClick="$('#' + ids.institution)deletelist('clearAll');return false;"
+                                            CssClass="button reset" />
                                     </div>
                                 </div>
                             </div>
@@ -327,8 +333,8 @@
                             <div class="column">
                                 <div class="legend" id="legend-location-citystate">In City/State/Country</div>
                                 <div>                                    
-                                    <select id="country" onchange="country_onChange(this);" name="country" runat="server" />                                
                                     <label for="<%=country.ClientID%>">Country:</label>
+                                    <select id="country" onchange="country_onChange(this);" name="country" runat="server" />                                
                                     <label for="<%=city.ClientID%>">City:</label>
                                     <input id="city" type="text" size="14" name="city" style="width: 100%;" runat="server" />
                         
@@ -360,16 +366,19 @@
     <fieldset aria-labelledby="legend-trialtreatment">
         <div class="row">
             <div id="legend-trialtreatment" class="medium-4 columns legend">Trial/Treatment Type</div>
-            <div class="medium-7 columns">Search by trial type, drug, or treatment/intervention</div>
-            <div id="showDrugSearchOptionsButton" style="display: none;">
-                <a class="clinicaltrials-expansionLink" href="javascript:showDrugInterventionOptions()">
-                    Show Search Options</a></div>
+            <div class="medium-7 columns">
+                Search by trial type, drug, or treatment/intervention
+                <div id="showDrugSearchOptionsButton" style="display: none;">
+                    <a class="clinicaltrials-expansionLink" href="javascript:showDrugInterventionOptions()">
+                        Show Search Options</a></div>
+                <input type="hidden" id="treatmentTypeAreaExpanded" runat="server" />
+            </div>
             <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>        
         <div class="collapsible">
             <div class="row">
                 <div class="medium-4 columns">
-                    <label>Type of Trial</label>
+                    <label class="right">Type of Trial</label>
                 </div>
                 <div class="medium-7 left columns">
                     <CancerGov:AccessibleCheckBoxList 
@@ -380,55 +389,55 @@
                 </div>
             </div>
 
-            <div id="drugListArea" runat="server" class="row">
+            <div class="row">
                 <div class="medium-4 columns">
-                    <label>Drug</label>
+                    <label class="right">Drug</label>
                 </div>
                 <div class="medium-7 left columns">
-                    <div id="showDrugListButtonArea" style="display: none;">
-                        <button id="showDrugListButton">Choose From List</button>
-                    </div>
-                    <asp:HiddenField runat="server" ID="drugListExpanded" />
                     <div id="drugListSubBox">
                         Find trials that include<br />
-                        <asp:RadioButtonList ID="drugListAllOrAny" RepeatDirection="Horizontal" runat="server">
+                        <asp:RadioButtonList CssClass="radio" ID="drugListAllOrAny" RepeatDirection="Horizontal" runat="server">
                             <asp:ListItem Selected="True" Value="any" Text="Any drugs shown" />
                             <asp:ListItem Selected="False" Value="all" Text="All drugs shown" />
                         </asp:RadioButtonList>
                         <input id="drugid" type="hidden" size="18" name="drugid" runat="server" />
                         <cancergov:deletelist id="drug" runat="server" 
-                            emptylisttext='Select "Add More" to see drug names.' />
-                        <span id="druglistAddButton" style="display: none;">
-                            <a class="button" href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =drug.ClientID %>&amp;fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');">
-                            Add More</a>
+                            emptylisttext="Select &quot;Add More&quot; to see drug names." />
+                        <span id="druglistAddButton" >
+                            <button class="button action" type="button"
+                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =drug.ClientID %>&amp;fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                Add More
+                            </button>
                         </span>
-                        <asp:Button ID="druglistClearAll" runat="server" Text="Clear All" OnClick="DrugListClearAll_ClickHandler"
-                            OnClientClick="$(ids.drug).clearAll();Event.stop(event)" CssClass="button"/>
+                        <asp:Button ID="druglistClearAll" runat="server" Text="Clear All" 
+                            OnClick="DrugListClearAll_ClickHandler"
+                            OnClientClick="$('#' + ids.drug).deletelist('clearAll');return false;"
+                            CssClass="button reset" />
                     </div>
                 </div>
             </div>
             
-            <div id="interventionListArea" class="row" runat="server">
+            <div class="row">
                 <div class="medium-4 columns">
-                    <label>Treatment/Intervention</label>
+                    <label class="right">Treatment/Intervention</label>
                 </div>
                 <div class="medium-7 left columns">
                     <em>Examples: chemotherapy, adjuvant therapy, colonoscopy</em><br />
-                    <div id="showInterventionListButtonArea" style="display: none; margin: 5px 0px;">
-                        <button id="showInterventionListButton">Choose From List</button>
-                    </div>
-                    <asp:HiddenField runat="server" ID="interventionListExpanded" />
                     <div id="interventionListSubBox">
                         <input id="interventionid" type="hidden" size="18" name="interventionid" runat="server" />
-                        <cancergov:deletelist id="intervention" runat="server" 
-                            emptylisttext='Select "Add More" to see treatment/intervention names.' />
-                        <span id="interventionlistAddButton" style="display: none;"><a class="button" 
-                            href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =intervention.ClientID %>&amp;fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');">
-                            Add More</a>
+                        <cancergov:deletelist id="intervention" 
+                            runat="server" 
+                            emptylisttext="Select &quot;Add More&quot; to see treatment/intervention names." />
+                        <span id="interventionlistAddButton">
+                        <button class="button action" type="button"
+                            onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =intervention.ClientID %>&amp;fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                            Add More
+                        </button>
                         </span>
                         <asp:Button ID="interventionlistClearAll" runat="server" Text="Clear All"
-                            OnClick="InterventionListClearAll_ClickHandler" OnClientClick="$(ids.intervention).clearAll();Event.stop(event)"
-                            CssClass="button"/>
+                            OnClick="InterventionListClearAll_ClickHandler" 
+                            OnClientClick="$('#' + ids.intervention).deletelist('clearAll');return false;"
+                            CssClass="button reset" />
                     </div>
                 </div>
             </div>
@@ -463,16 +472,16 @@
         </div>
         <div class="collapsible">
             <div class="row">
-                <div class="medium-4 columns"><label>Trial Status</label></div>
+                <div class="medium-4 columns"><label class="right">Trial Status</label></div>
                 <div class="medium-7 left columns">
                     <asp:RadioButtonList runat="server" ID="trialStatus" RepeatDirection="Vertical" RepeatLayout="Flow">
-                                <asp:ListItem Value="1" Selected="True">Active (currently accepting patients)</asp:ListItem>
-                                <asp:ListItem Value="0">Closed (not accepting patients)</asp:ListItem>
-                            </asp:RadioButtonList>
+                        <asp:ListItem Value="1" Selected="True">Active (currently accepting patients)</asp:ListItem>
+                        <asp:ListItem Value="0">Closed (not accepting patients)</asp:ListItem>
+                    </asp:RadioButtonList>
                 </div>                
             </div>
             <div class="row">
-                <div class="medium-4 columns"><label>Trial Phase</label></div>
+                <div class="medium-4 columns"><label class="right">Trial Phase</label></div>
                 <div class="medium-7 left columns">
                     <CancerGov:AccessibleCheckBoxList
                         ID="trialPhase"
@@ -482,7 +491,7 @@
                 </div>                
             </div>
             <div class="row">
-                <div class="medium-4 columns"><label>New Trials?</label></div>
+                <div class="medium-4 columns"><label class="right">New Trials?</label></div>
                 <div class="medium-7 left columns"><div class="checkbox"><asp:CheckBox ID="newOnly" runat="server" Text="Added in last 30 days" /></div></div>
             </div>        
         </div>
@@ -499,7 +508,7 @@
         <div class="collapsible">
             <div>
                 <div class="row">
-                    <div class="medium-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID">Protocol ID</asp:Label></div>
+                    <div class="medium-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID" CssClass="right" >Protocol ID</asp:Label></div>
                     <div class="medium-7 left columns">
                         <div class="row">Separate multiple IDs with commas or semicolon</div>
                         <div class="row"><asp:TextBox ID="protocolID" Width="100%" MaxLength="50" runat="server" /></div>
@@ -507,59 +516,56 @@
                 </div>                       
             </div>
             <div class="row">
-                <div class="medium-4 columns"><label>Sponsor of Trial</label></div>
+                <div class="medium-4 columns"><label class="right">Sponsor of Trial</label></div>
                 <div class="medium-7 left columns"><CancerGov:AccessibleCheckBoxList 
                         ID="sponsor" 
                         runat="server" 
                         CssClass="scrolling-list roundy-box groupedCheckBoxList"
                      /></div>
             </div>
-            <div id="trialInvestigatorsRow" runat="server" class="row">
-                <div class="medium-4 columns"><label>Trial Investigators</label></div>
+            <div class="row">
+                <div class="medium-4 columns"><label class="right">Trial Investigators</label></div>
                 <div class="medium-7 left columns">
-                    <div id="showInvestigatorListButtonArea" style="display: none;">
-                        <button id="showInvestigatorListButton">Choose From List</button>
-                    </div>
-                    <asp:HiddenField runat="server" ID="investigatorListExpanded" />
                     <div id="investigatorListSubBox">
                         Trial Investigators Selected:<br />
                         <input id="investigatorid" type="hidden" size="18" name="investigatorid" runat="server" />
-                        <cancergov:deletelist id="investigator" runat="server" 
-                            emptylisttext='Select "Add More" to see investigator names.' />
-                        <span id="investigatorListAddButton" style="display: none;"><a class="button"
-                            href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =investigator.ClientID %>&amp;fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');">
-                            Add More</a>
+                        <cancergov:deletelist id="investigator"
+                            runat="server" emptylisttext="Select &quot;Add More&quot; to see investigator names." />
+                        <span id="investigatorListAddButton">
+                            <button class="button action" type="button"
+                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =investigator.ClientID %>&amp;fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                Add More
+                            </button>
                         </span>
                         <asp:Button ID="investigatorListAddButtonClearAll" runat="server" Text="Clear All"
-                            OnClick="InvestigatorListClearAll_ClickHandler" OnClientClick="$(ids.investigator).clearAll();Event.stop(event)"
-                            CssClass="button" />
-                    </div>
-                </div>
-            </div>        
-            <div id="trialLeadOrganizationRow" runat="server" class="row">
-                <div class="medium-4 columns"><label>Lead Organization/ Cooperative Group</label></div>
-                <div class="medium-7 left columns">
-                    <div id="showLeadOrgListButtonArea" style="display: none; margin: 5px 0px;">
-                        <button id="showLeadOrgListButton">Choose From List</button>
-                    </div>
-                    <asp:HiddenField runat="server" ID="leadOrgListExpanded" />
-                    <div id="leadOrgListSubBox">
-                        Lead Organizations or Cooperative Groups Selected:<br />
-                        <input id="leadOrgid" type="hidden" size="18" name="leadOrgid" runat="server" />
-                        <cancergov:deletelist id="leadOrg" runat="server" 
-                            emptylisttext='Select "Add More" to see lead organization names.' />
-                        <span id="leadOrgAddButton" style="display: none;"><a class="button" 
-                            href="javascript:dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =leadOrg.ClientID %>&amp;fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');">
-                            Add More</a>
-                        </span>
-                        <asp:Button ID="leadOrgClearAll" runat="server" Text="Clear All" OnClick="LeadOrgClearAll_ClickHandler"
-                            OnClientClick="$(ids.leadOrg).clearAll();Event.stop(event)" 
-                            CssClass="button"/>
+                            OnClick="InvestigatorListClearAll_ClickHandler" 
+                            OnClientClick="$('#' + ids.investigator).deletelist('clearAll);return false;"
+                            CssClass="button reset" />
                     </div>
                 </div>
             </div>        
             <div class="row">
-                <div class="medium-4 columns"><label>Special Category</label></div>
+                <div class="medium-4 columns"><label class="right">Lead Organization/ Cooperative Group</label></div>
+                <div class="medium-7 left columns">
+                    <div id="leadOrgListSubBox">
+                        Lead Organizations or Cooperative Groups Selected:<br />
+                        <input id="leadOrgid" type="hidden" size="18" name="leadOrgid" runat="server" />
+                        <cancergov:deletelist id="leadOrg" 
+                            runat="server" emptylisttext="Select &quot;Add More&quot; to see lead organization names." />
+                        <span id="leadOrgAddButton">
+                            <button class="button action" type="button"
+                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =leadOrg.ClientID %>&amp;fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                Add More
+                            </button>
+                        </span>
+                        <asp:Button ID="leadOrgClearAll" runat="server" Text="Clear All" OnClick="LeadOrgClearAll_ClickHandler"
+                            OnClientClick="$('#' + ids.leadOrg).deletelist('clearAll');return false;"
+                            CssClass="button reset" />
+                    </div>
+                </div>
+            </div>        
+            <div class="row">
+                <div class="medium-4 columns"><label class="right">Special Category</label></div>
                 <div class="medium-7 left columns"><CancerGov:AccessibleCheckBoxList 
                         ID="specialCategory" 
                         runat="server" 
@@ -571,8 +577,11 @@
     <%-- ................... END Trial ID/Sponsor ................... --%>
 
     <div class="row">
-        <input class="submit button" type="submit" OnClick="SubmitButton_Click"/>
-        <input class="reset start-over button" type="reset" />
+        <div class="medium-8 columns right">
+            <asp:button CssClass="submit button" Text="Search" runat="server"
+                OnClick="SubmitButton_Click" />
+            <input class="reset startover button" type="reset" value="Start Over" />
+        </div>
     </div>
 
 </form>

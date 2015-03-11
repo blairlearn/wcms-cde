@@ -66,15 +66,14 @@ $.widget('nci.deletelist', {
 			.append($('<span>')
 				.addClass('hidden')
 				.text(this.options.deleteText)
-			);
+			).on('click', function(e) {
+			    that.deleteItem(item.name);
+			});
 
         var listItem = $('<li>')
 			.text(item.name)
 			.prepend(deleteButton)
-			.appendTo(ul)
-			.on('click', deleteButton, function(e) {
-			    that.deleteItem(item.name);
-			});
+			.appendTo(ul);
 
         return listItem;
     },
