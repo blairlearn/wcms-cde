@@ -702,7 +702,12 @@
 
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'eMailLink');
-        clickParams.Events = [7];
+            
+        clickParams.Props = {
+            43: 'Email'
+        };
+            
+        clickParams.Events = [17];
         clickParams.LogToOmniture();
     },
 
@@ -720,7 +725,12 @@
 
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'PrintLink');
-        clickParams.Events = [3];
+            
+        clickParams.Props = {
+            43: 'Print'
+        };    
+        
+        clickParams.Events = [17];
         clickParams.LogToOmniture();
     },
 
@@ -793,6 +803,11 @@
 
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'BookmarkShareClick');
+            
+        clickParams.Props = {
+            43: sender.title
+        };
+            
         clickParams.Events = [17];
         clickParams.LogToOmniture();
     },
@@ -803,7 +818,7 @@
             'nciglobal', 'o', 'MegaMenuClick');
 
         var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
-        if (typeof pageNameOverride != "undefined")
+        if (typeof pageNameOverride !== 'undefined')
             localPageName = pageNameOverride;
             
         /*
@@ -814,7 +829,6 @@
 
         if (typeof tree[1] === 'undefined') {
             clickParams.Props = {
-                //10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
                 53: tree[0].text,
                 56: pageName
             };
@@ -826,7 +840,6 @@
         if (typeof tree[1] !== 'undefined') {
             // click was sub-section or link-level
             clickParams.Props = {
-                //10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
                 53: tree[1].text,
                 54: tree[0].text,
                 56: pageName
@@ -839,7 +852,6 @@
         if (typeof tree[2] !== 'undefined') {
             // click was link-level
             clickParams.Props = {
-                //10: sender.ownerDocument.location.protocol + "//" + sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname, // this is the URL
                 53: tree[2].text,
                 54: tree[1].text,
                 55: tree[0].text,
@@ -851,7 +863,6 @@
         }
 
         clickParams.Events = [26];
-        //console.dir(clickParams);
         clickParams.LogToOmniture();
     },
 
@@ -861,7 +872,7 @@
 			'nciglobal', 'o', 'Logolick');
 
         var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
-        if (typeof pageNameOverride != "undefined")
+        if (typeof pageNameOverride !== 'undefined')
             localPageName = pageNameOverride;
             
         clickParams.Props = {
@@ -874,7 +885,6 @@
         };
 
         clickParams.Events = [26];
-        //console.dir(clickParams);
         clickParams.LogToOmniture();
     },
 
@@ -884,7 +894,7 @@
 			'nciglobal', 'o', 'UtilityBarDictionaryClick');
 
         var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
-        if (typeof pageNameOverride != "undefined")
+        if (typeof pageNameOverride !== 'undefined')
             localPageName = pageNameOverride;
             
         clickParams.Props = {
@@ -897,7 +907,6 @@
         };
 
         clickParams.Events = [26];
-        //console.dir(clickParams);
         clickParams.LogToOmniture();
     },
 
@@ -907,7 +916,7 @@
                 'nciglobal', 'o', 'FeatureCardClick');
 
         var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
-        if (typeof pageNameOverride != "undefined")
+        if (typeof pageNameOverride !== 'undefined')
             localPageName = pageNameOverride;    
 
         var position = container + ":" + containerIndex;
@@ -920,7 +929,6 @@
         };
 
         clickParams.Events = [27];
-        //console.dir(clickParams);
         clickParams.LogToOmniture();
     },
 
