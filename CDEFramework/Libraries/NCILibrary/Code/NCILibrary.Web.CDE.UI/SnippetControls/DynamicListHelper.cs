@@ -132,26 +132,22 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public string titleString()
         {
             string title = @"
-                <div class=""title container"">##
-                    ##
-                    ## Display title
-                    ##
-					###### move and copy
-                    <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""$fileClass title"">##						
-						##
-						## Output title for file content types
-						##
-                        $resultItem.LongTitle##
-                        #if($resultItem.ContentType == ""rx:gloVideo"")##
-                            ($videoContent)##
-                        #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
-                            ($carouselContent)##
-                        #elseif($resultItem.ContentType == ""rx:cgvInfographic"")##
-                            ($infographicContent)##
-                        #elseif($resultItem.ContentType == ""rx:nciFile"")##
-                            <span class=""filesize"">$fileSize $printOutExt</span><span class=""filetype $fileType_safe""><span class=""accessibility-text"">$fileType_safe file</span></span>##
-                        #end##
-                    </a>";
+            <div class=""title container"">##
+                ##
+                ## Display title
+                ##
+                <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""$fileClass title"">##						
+                $resultItem.LongTitle##
+                #if($resultItem.ContentType == ""rx:gloVideo"")##
+                    ($videoContent)##
+                #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
+                    ($carouselContent)##
+                #elseif($resultItem.ContentType == ""rx:cgvInfographic"")##
+                    ($infographicContent)##
+                #elseif($resultItem.ContentType == ""rx:nciFile"")##
+                    <span class=""filesize"">$fileSize $printOutExt</span><span class=""filetype $fileType_safe""><span class=""accessibility-text"">$fileType_safe file</span></span>##
+                #end##
+                </a>";
             return title;
         }
 
