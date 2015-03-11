@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
+using System.Web; 
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.ComponentModel;
@@ -132,7 +132,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public string titleString()
         {
             string title = @"
-                <div class=""title-and-desc title desc container"">##
+                <div class=""title container"">##
                     ##
                     ## Display title
                     ##
@@ -151,8 +151,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         #elseif($resultItem.ContentType == ""rx:nciFile"")##
                             <span class=""filesize"">$fileSize $printOutExt</span><span class=""filetype $fileType_safe""><span class=""accessibility-text"">$fileType_safe file</span></span>##
                         #end##
-                    </a>##
-                    <p class=""description date"">";
+                    </a>";
             return title;
         }
 
@@ -166,11 +165,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 dateForLists = @"$resultItem.DateForListsEs";
 
             string dates = @"
+                <p class=""date dynamic-date"">##
                 ##
                 ## Display dates
                 ##
-                <span class=""date"">" + dateForLists + 
-                @"</span><br/>##";
+                " + dateForLists + 
+                @"</p>##";
             return dates;
         }
 
@@ -180,16 +180,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public string descString()
         {
             string desc = @"
+                <p class=""description dynamic-description"">
                 ##
                 ## Display description
                 ##
-                <span>##
                     #if($resultItem.LongDescription)##
                         $resultItem.LongDescription ##
                     #else##
                         &nbsp;##
                     #end##
-                </span>##";
+                </p>##";
             return desc;
         }
 
@@ -199,7 +199,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public string closeList()
         {
             string close = @"
-                        </p>## Close description date class
                     </div>## Close description and title div class
                 </li>## End list item
             #end## End foreach search results loop
@@ -214,7 +213,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public string closeNews()
         {
             string close = @"
-                        </p>
                     </div>
                 </li>
             #end
