@@ -36,6 +36,9 @@ namespace CancerGov.UI.CDR
 			bool bWroteTrialDesc = false;
 			bool bDrawnTCI = false;
 
+            //add this div for accordion to work on mobile
+            sbContent.Append("<div class=\"accordion\">");
+
 			foreach (string strSectionType in pProtocol.SectionList.Split(',')) {
 				
 				int iSection = 0;
@@ -43,6 +46,7 @@ namespace CancerGov.UI.CDR
 				iSection = Strings.ToInt(strSectionType);
 				
 				if (iSection > 0) {
+                    
 					switch ((ProtocolSectionTypes)iSection) {
 						
 						case ProtocolSectionTypes.Title : 
@@ -58,8 +62,7 @@ namespace CancerGov.UI.CDR
 							break;
 
 						case ProtocolSectionTypes.InfoBox :
-                            //add this div for accordion to work on mobile
-                            sbContent.Append("<div class=\"accordion\">");
+                             
                             sbContent.Append("<h2 id=\"StudyIdInfo_");
                             sbContent.Append(pProtocol.FullCdrId);
                             sbContent.Append("\">Basic Trial Information</h2>\n");
@@ -118,8 +121,11 @@ namespace CancerGov.UI.CDR
 							break;
 
 					}
+                   
 				}
 			}
+
+            sbContent.Append("</div>");
 			
 			return sbContent.ToString();
 		}
@@ -185,7 +191,7 @@ namespace CancerGov.UI.CDR
                 sbContent.Append("<h2 id=\"AlternateTitle_");
                 sbContent.Append(pProtocol.FullCdrId);
                 sbContent.Append("\">Alternate Title</h2>\n");
-                sbContent.Append(pProtocol.AlternateTitle);
+                sbContent.Append("<p>" + pProtocol.AlternateTitle + "</p>");
                 sbContent.Append("\n");
 
 
@@ -201,260 +207,6 @@ namespace CancerGov.UI.CDR
 
             //create an empty div to add the CTGovProtocol table of contents using Javascript
             sbContent.Append("<div id=\"pdq-toc-protocol\"></div>");
-
-            //Keeping this commented out code for now until we decide for sure that we are using 
-            //javascript to build table of contents
-
-            //sbContent.Append("<div class=\"on-this-page\">");
-            //sbContent.Append("<h6>ON THIS PAGE</h6>");
-            //sbContent.Append("<ul>");
-            			
-            //if ((pProtocol.AlternateTitle != null) && (pProtocol.AlternateTitle != "") && (pProtocol.AlternateTitle != pProtocol.ProtocolTitle)) 
-            //{
-            //    sbContent.Append("<li>");
-            //    sbContent.Append("<a href=\"#AlternateTitle_");
-            //    sbContent.Append(pProtocol.FullCdrId);
-            //    sbContent.Append("\">Alternate Title</a>");
-            //    sbContent.Append("</li>");
-            //}
-
-            //sbContent.Append("<li>");
-            //sbContent.Append("<a href=\"#StudyIdInfo_");
-            //sbContent.Append(pProtocol.FullCdrId);
-            //sbContent.Append("\">Basic Trial Information</a>");
-            //sbContent.Append("</li>");
-
-            //if (pProtocol.ProtocolVersion == ProtocolVersions.HealthProfessional) 
-            //{
-				 
-            //    if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.Objectives)) 
-            //    {
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#Objectives_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Objectives</a>");
-            //        sbContent.Append("</li>");
-            //    }
-
-            //    if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
-            //    {
-
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#TrialDescription_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Trial Description</a>");
-
-
-            //        if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary)))
-            //        {
-            //            sbContent.Append("<ul>");
-            //            sbContent.Append("<li>");
-            //            sbContent.Append("<a href=\"#Objectives_");
-            //            sbContent.Append(pProtocol.FullCdrId);
-            //            sbContent.Append("\">Summary</a>");
-            //            sbContent.Append("</li>");
-            //            sbContent.Append("</ul>");
-            //        }
-					
-            //        if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription))) 
-            //        {
-            //            sbContent.Append("<ul>");
-            //            sbContent.Append("<li>");
-            //            sbContent.Append("<a href=\"#Outline_");
-            //            sbContent.Append(pProtocol.FullCdrId);
-            //            sbContent.Append("\">Further Trial Information</a>");
-            //            sbContent.Append("</li>");
-            //            sbContent.Append("</ul>");
-            //        }
-
-            //        if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria))) 
-            //        {
-            //            sbContent.Append("<ul>");
-            //            sbContent.Append("<li>");
-            //            sbContent.Append("<a href=\"#EntryCriteria_");
-            //            sbContent.Append(pProtocol.FullCdrId);
-            //            sbContent.Append("\">Eligibility Criteria</a>");
-            //            sbContent.Append("</li>");
-            //            sbContent.Append("</ul>");
-            //        }
-
-            //        sbContent.Append("</li>");
-
-
-            //    }
-
-            //    if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.EntryCriteria)) 
-            //    {
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#EntryCriteria_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Entry Criteria</a>");
-            //        sbContent.Append("</li>");
-            //    }
-
-            //    if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.ExpectedEnrollment)) 
-            //    {
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#ExpectedEnrollment_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Expected Enrollment</a>");
-            //        sbContent.Append("</li>");
-            //    }
-
-            //    if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.Outcomes)) 
-            //    {
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#Outcomes_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Outcomes</a>");
-            //        sbContent.Append("</li>");
-            //    }
-
-            //    if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.Outline)) 
-            //    {
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#Outline_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Outline</a>");
-            //        sbContent.Append("</li>");
-            //    }
-
-            //    if ((pProtocol.Sections != null) && (pProtocol.Sections.Contains((int)ProtocolSectionTypes.PublishedResults))) 
-            //    {
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#PublishedResults_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Published Results</a>");
-            //        sbContent.Append("</li>");
-            //    }
-
-            //    if ((pProtocol.Sections != null) && (pProtocol.Sections.Contains((int)ProtocolSectionTypes.RelatedPublications))) 
-            //    {
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#RelatedPublications_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Related Publications</a>");
-            //        sbContent.Append("</li>");
-            //    }
-
-            //} 
-            //else 
-            //{
-
-
-            //    if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.PatientAbstract)) 
-            //    {
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#TrialDescription_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Trial Description</a>");
-
-
-            //        sbContent.Append("<ul>");
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#Purpose_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Purpose</a>");
-            //        sbContent.Append("</li>");
-            //        sbContent.Append("</ul>");
-
-            //        sbContent.Append("<ul>");
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#Eligibility_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Eligibility</a>");
-            //        sbContent.Append("</li>");
-            //        sbContent.Append("</ul>");
-
-            //        sbContent.Append("<ul>");
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#TreatmentIntervention_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Treatment/Intervention</a>");
-            //        sbContent.Append("</li>");
-            //        sbContent.Append("</ul>");
-
-            //        sbContent.Append("</li>");
-            //    }
-
-            //    if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
-            //    {
-
-            //        sbContent.Append("<li>");
-            //        sbContent.Append("<a href=\"#TrialDescription_");
-            //        sbContent.Append(pProtocol.FullCdrId);
-            //        sbContent.Append("\">Trial Description</a>");
-                    
-            //        if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
-            //        {
-            //            sbContent.Append("<ul>");
-            //            sbContent.Append("<li>");
-            //            sbContent.Append("<a href=\"#Objectives_");
-            //            sbContent.Append(pProtocol.FullCdrId);
-            //            sbContent.Append("\">Summary</a>");
-            //            sbContent.Append("</li>");
-            //            sbContent.Append("</ul>");
-            //        }
-					
-            //        if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription))) 
-            //        {
-            //            sbContent.Append("<ul>");
-            //            sbContent.Append("<li>");
-            //            sbContent.Append("<a href=\"#Outline_");
-            //            sbContent.Append(pProtocol.FullCdrId);
-            //            sbContent.Append("\">Further Trial Information</a>");
-            //            sbContent.Append("</li>");
-            //            sbContent.Append("</ul>");
-            //        }
-
-            //        if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria))) 
-            //        {
-            //            sbContent.Append("<ul>");
-            //            sbContent.Append("<li>");
-            //            sbContent.Append("<a href=\"#EntryCriteria_");
-            //            sbContent.Append(pProtocol.FullCdrId);
-            //            sbContent.Append("\">Eligibility Criteria</a>");
-            //            sbContent.Append("</li>");
-            //            sbContent.Append("</ul>");
-            //        }
-
-            //        sbContent.Append("</li>");
-
-
-            //    }
-
-            //}
-
-            ////New Requirements, Draw Trial Contact Information to link above lead orgs and study sites
-            //sbContent.Append("<li>");
-            //sbContent.Append("<a href=\"#ContactInfo_");
-            //sbContent.Append(pProtocol.FullCdrId);
-            //sbContent.Append("\">Trial Contact Information</a>");
-            //sbContent.Append("</li>");
-			
-            ////SCR 850
-            //if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.PatientRelatedInformation)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.HPRelatedInformation))) 
-            //{
-            //    sbContent.Append("<li>");
-            //    sbContent.Append("<a href=\"#ProtocolRelatedLinks_");
-            //    sbContent.Append(pProtocol.FullCdrId);
-            //    sbContent.Append("\">Related Information</a>");
-            //    sbContent.Append("</li>");
-            //}
-
-            ////registry info 
-            //if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.RegistryInformation)){
-            //    sbContent.Append("<li>");
-            //    sbContent.Append("<a href=\"#RegistryInfo_");
-            //    sbContent.Append(pProtocol.FullCdrId);
-            //    sbContent.Append("\">Registry Information</a>");
-            //    sbContent.Append("</li>");
-            //}
-
-            //sbContent.Append("</ul>");
-            //sbContent.Append("</div>");
-
-			//sbContent.Append("<p>");
 
 			return sbContent.ToString();
 		}
