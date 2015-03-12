@@ -35,7 +35,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 pageLanguage = @"
 				#set($videoContent = ""Video"")##
-				#set($carouselContent = ""Lista de reproducci&oacute;n"")##
+				#set($carouselContent = ""Lista de reproducci&oacute;n de videos"")##
 				#set($infographicContent = ""Infograf&iacute;a"")##
 				#set($postedString = ""Publicaci&oacute;n"")##
 				#set($updatedString = ""Actualizaci&oacute;n"")##
