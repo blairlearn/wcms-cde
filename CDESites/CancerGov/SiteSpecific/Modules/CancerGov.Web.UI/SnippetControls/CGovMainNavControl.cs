@@ -92,7 +92,8 @@ namespace CancerGov.Web.UI.SnippetControls
             String[] sectionPath = item.SectionPath.Split('/');
             String sectionFile = sectionPath[sectionPath.Length - 1];
             Boolean isSectionPath = false;
-           
+            String hasChildren = "";
+
                 for (int i = 0; i < paths.Length && i < sectionPath.Length; i++)
                 {
                     if (paths[i].Equals(sectionPath[i]) && paths.Length >= sectionPath.Length)
@@ -118,7 +119,12 @@ namespace CancerGov.Web.UI.SnippetControls
                     liClass = " contains-current";
 
                 }
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item lvl-"+level+ liClass);
+                if (item.ChildItems.Length > 0)
+                {
+                    hasChildren = " has-children";
+                }
+
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item lvl-"+level+ liClass + hasChildren);
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
 
 
@@ -202,6 +208,7 @@ namespace CancerGov.Web.UI.SnippetControls
             String[] sectionPath = item.SectionPath.Split('/');
             String sectionFile = sectionPath[sectionPath.Length - 1];
             Boolean isSectionPath = false;
+            String hasChildren = "";
             for (int i = 0; i < paths.Length && i < sectionPath.Length; i++)
             {
                 if (paths[i].Equals(sectionPath[i]))
@@ -226,15 +233,19 @@ namespace CancerGov.Web.UI.SnippetControls
                 liClass = " contains-current";
 
             }
+            if (item.ChildItems.Length > 0)
+            {
+                hasChildren = " has-children";
+            }
 
 
             if (item.ChildItems.Length > 0)
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children lvl-" + level + liClass);
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children lvl-" + level + liClass + hasChildren);
             }
             else
             {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "lvl-" + level + liClass);
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "lvl-" + level + liClass+ hasChildren);
             }
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
             //This block of code checks the URL path against the Item but since the home page has a path of '/'
