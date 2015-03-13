@@ -7,7 +7,7 @@
     <script src="/PublishedContent/js/popEvents.js" type="text/javascript"></script>
     <script type="text/javascript" language="JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script src="/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
-    <link href="/PublishedContent/Styles/nci.css" rel="stylesheet" />
+    <link href="/PublishedContent/Styles/nvcg.css" rel="stylesheet" />
 
     <script type="text/javascript">
         //Hookup JPlayer for Audio
@@ -37,31 +37,13 @@
 
 </head>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" class="popup">
-    <div align="center">
+<body>
     <div id='dictionary_jPlayer'></div>
-        <p>
-            <table border="0" cellpadding="10" cellspacing="0" width="100%">
-                <tr>
-                    <td align="left" valign="top">
-                        <div style="width: 100%;">
-                            <%=strHeading%>
-                            <div class="audioPronounceLink">
-                            <%=this.Content.Render()%>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td valign="top">
-                        <div style="width: 100%;">
-                            <a href="Javascript:window.print();">
-                                <%=strSendPrinter%></a>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <p>
+    <div class="heading">
+        <%=strHeading%>
+    </div>
+    <div class="audioPronounceLink">
+        <%=this.Content.Render()%>
     </div>
     <asp:Literal ID="litOmniturePageLoad" Mode="PassThrough" runat="server" />
 </body>
