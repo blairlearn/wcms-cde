@@ -2,17 +2,7 @@
     Inherits="CancerGov.Web.SnippetTemplates.ClinicalTrialsSearchTemplate" %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls.FormControls" tagprefix="CancerGov" %>
 
-<style>
-    form fieldset 
-    {
-        margin-top: 40px;
-    }
-    
-    fieldset div.row 
-    {
-        padding-bottom: 20px;
-    }
-    
+<style>    
     .cts-location 
     {
         padding: 0;
@@ -22,18 +12,7 @@
     {
         border-top: 3px solid #00B5BC;
         padding: 12px;
-    }
-        
-    .roundy-box 
-    {
-        border: 1px solid;
-        border-color: rgb(0, 0, 0);
-        border-color: rgba(0, 0, 0, 0.1);
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-    }
-    
+    }   
 
     fieldset fieldset 
     {
@@ -42,39 +21,11 @@
         padding: 18px;
     }
     
-    fieldset fieldset>div 
-    {
-    }
-    
     fieldset fieldset .legend 
     {   
         font-size: 1.2em;
         color: #606060;
         background: transparent;
-    }
-    
-    form fieldset div.row 
-    {
-        /*margin-top:20px !important;*/
-    }
-    
-    a.icon-help,
-    a.icon-help:hover,
-    a.icon-help:active 
-    {                
-        padding: 0 .6em 0 .6em;
-        font-size: 1.4em;
-        line-height: 1.3em;
-        background: #186e88;
-        color: #FFFFFF;
-        font-weight: bold;
-        text-decoration: none;
-    }
-    
-    .scrolling-list 
-    {        
-        overflow: scroll;
-        white-space: nowrap;
     }
         
 </style>
@@ -252,7 +203,7 @@
                     ValidationGroup="v1">
                 </asp:DropDownList>
             </div>
-            <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>
                 
         <div class="row">
@@ -293,16 +244,18 @@
                                 <div class="legend" id="legend-location-zip">Near ZIP Code</div>
                                 <div>
                                     <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat=server>Show trials located within:</asp:Label>
-                                    <asp:DropDownList ID="zipCodeProximity" runat="server">
-                                        <asp:ListItem Value="20">20 miles</asp:ListItem>
-                                        <asp:ListItem Value="50">50 miles</asp:ListItem>
-                                        <asp:ListItem Value="100" Selected="True">100 miles</asp:ListItem>
-                                        <asp:ListItem Value="200">200 miles</asp:ListItem>
-                                        <asp:ListItem Value="500">500 miles</asp:ListItem>
-                                    </asp:DropDownList>
-                                    of
-                                    <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code:</asp:Label>
-                                    <asp:TextBox ID="zipCode" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
+                                    <div class="row">
+                                        <asp:DropDownList ID="zipCodeProximity" runat="server">
+                                            <asp:ListItem Value="20">20 miles</asp:ListItem>
+                                            <asp:ListItem Value="50">50 miles</asp:ListItem>
+                                            <asp:ListItem Value="100" Selected="True">100 miles</asp:ListItem>
+                                            <asp:ListItem Value="200">200 miles</asp:ListItem>
+                                            <asp:ListItem Value="500">500 miles</asp:ListItem>
+                                        </asp:DropDownList>
+                                        of
+                                        <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code</asp:Label>
+                                        <asp:TextBox ID="zipCode" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
+                                    </div>
                                     <!-- Add validator -->
                                 </div>
                             </div>
@@ -355,7 +308,7 @@
                     </div>                       
                 </div>
             </div>
-            <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>
     </fieldset>
     <%-- ************************* End Location ******************************** --%>
@@ -368,12 +321,8 @@
             <div id="legend-trialtreatment" class="medium-4 columns legend">Trial/Treatment Type</div>
             <div class="medium-7 columns">
                 Search by trial type, drug, or treatment/intervention
-                <div id="showDrugSearchOptionsButton" style="display: none;">
-                    <a class="clinicaltrials-expansionLink" href="javascript:showDrugInterventionOptions()">
-                        Show Search Options</a></div>
-                <input type="hidden" id="treatmentTypeAreaExpanded" runat="server" />
             </div>
-            <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>        
         <div class="collapsible">
             <div class="row">
@@ -396,7 +345,8 @@
                 <div class="medium-7 left columns">
                     <div id="drugListSubBox">
                         Find trials that include<br />
-                        <asp:RadioButtonList CssClass="radio" ID="drugListAllOrAny" RepeatDirection="Horizontal" runat="server">
+                        <asp:RadioButtonList CssClass="radio" ID="drugListAllOrAny" RepeatDirection="Vertical" 
+                            RepeatLayout="Flow" runat="server">
                             <asp:ListItem Selected="True" Value="any" Text="Any drugs shown" />
                             <asp:ListItem Selected="False" Value="all" Text="All drugs shown" />
                         </asp:RadioButtonList>
@@ -457,7 +407,7 @@
                     name="txtKeywords" runat="server" />
                 </div>
             </div>
-            <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>
     </fieldset>
     <%-- *******************  End Keywords/Phrase ****************** --%>
@@ -468,13 +418,13 @@
         <div class="row">
             <div id="legend-trialstatus" class="medium-4 columns legend">Trial Status/Phase</div>
             <div class="medium-7 columns">Search by trial status, phase, or trials added in the last 30 days</div>
-            <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>
         <div class="collapsible">
             <div class="row">
                 <div class="medium-4 columns"><label class="right">Trial Status</label></div>
                 <div class="medium-7 left columns">
-                    <asp:RadioButtonList runat="server" ID="trialStatus" RepeatDirection="Vertical" RepeatLayout="Flow">
+                    <asp:RadioButtonList CssClass="radio" runat="server" ID="trialStatus" RepeatDirection="Vertical" RepeatLayout="Flow">
                         <asp:ListItem Value="1" Selected="True">Active (currently accepting patients)</asp:ListItem>
                         <asp:ListItem Value="0">Closed (not accepting patients)</asp:ListItem>
                     </asp:RadioButtonList>
@@ -503,7 +453,7 @@
         <div class="row">
             <div id="legend-trialsponsor" class="medium-4 columns legend">Trial ID/Sponsor</div>
             <div class="medium-7 columns">Search by protocol ID, sponsor, investigators, lead organization/cooperative group, or special category</div>
-            <div class="medium-1 columns"><a href="" class="icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>        
         <div class="collapsible">
             <div>
@@ -580,7 +530,7 @@
         <div class="medium-8 columns right">
             <asp:button CssClass="submit button" Text="Search" runat="server"
                 OnClick="SubmitButton_Click" />
-            <input class="reset startover button" type="reset" value="Start Over" />
+            <a id="clear" class="reset startover button" href="#" runat="server">Start Over</a>
         </div>
     </div>
 

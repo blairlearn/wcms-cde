@@ -43,32 +43,33 @@ $.widget('nci.deletelist', {
         var prerenderedList = this.displayList.children('li');
         var prerenderedLength = prerenderedList.length;
         if (prerenderedLength > 0) {
-            var thisLi,
-                item = {};
+            var thisLi, item;
             var prerenderedValues = this.valueList.prop('value').split(this.options.valueSeparator);
             var prerenderedNames = this.nameList.prop('value').split(this.options.valueSeparator);
             for (var i = 0; i < prerenderedLength; i++) {
-                thisLi = prerenderedList[i];
+                thisLi = $(prerenderedList[i]);
+                item = {};
                 item.value = prerenderedValues[i];
                 item.name = prerenderedNames[i];
                 thisLi.data("nci-deletelist-item", item);
                 this.items.push(item);
+
+                // attach the delete functionality
+                this._wireDeleteEvent(thisLi.children('button.pseudo-icon-deletelist'), this);
             }
         }
     },
 
     _renderItem: function(ul, item) {
-        var that = this;
-
         var deleteButton = $('<button>')
 			.attr('type', 'button')
 			.addClass('pseudo-icon-deletelist')
 			.append($('<span>')
 				.addClass('hidden')
 				.text(this.options.deleteText)
-			).on('click', function(e) {
-			    that.deleteItem(item.name);
-			});
+			);
+
+        this._wireDeleteEvent(deleteButton, this);
 
         var listItem = $('<li>')
 			.text(item.name)
@@ -76,6 +77,13 @@ $.widget('nci.deletelist', {
 			.appendTo(ul);
 
         return listItem;
+    },
+
+    _wireDeleteEvent: function(btn, deletelist) {
+        btn.on('click', function(e) {
+            var item = $(this).parent('li').data("nci-deletelist-item");
+            deletelist.deleteItem(item.name);
+        });
     },
 
     addItem: function(item) {

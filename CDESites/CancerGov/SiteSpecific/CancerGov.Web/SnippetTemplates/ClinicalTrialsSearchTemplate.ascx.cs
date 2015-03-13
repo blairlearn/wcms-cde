@@ -57,17 +57,44 @@ namespace CancerGov.Web.SnippetTemplates
             atNihLocationFieldset.Attributes.Add("aria-labelledby", atNihLocationButton.ClientID);
 
 
-            txtKeywords.Attributes.Add("placeholder", "Examples: PSA, HER-2, &quot;Paget disease&quot;");
+            txtKeywords.Attributes.Add("placeholder", "Examples: PSA, HER-2, \"Paget disease\"");
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Force "Start Over" link to come back to whatever URL this page was invoked as.
+            clear.HRef = PageInstruction.GetUrl(NCI.Web.CDE.PageAssemblyInstructionUrls.PrettyUrl).ToString();
+
             if (!IsPostBack)
             {
+                // On initial page load, check for a protocol search ID. If one is found, load the
+                // saved criteria and initialize the page's controls.
                 CTSearchDefinition savedSearch = null;
 
+                string rawSearchID = Strings.Clean(Request.Params["protocolsearchid"]);
+                int iProtocolSearchID = Strings.ToInt(rawSearchID);
+
+                if (!string.IsNullOrEmpty(rawSearchID) &&iProtocolSearchID > 0)
+                {
+                    try
+                    {
+                        savedSearch = CTSearchManager.LoadSavedCriteria(iProtocolSearchID);
+                    }
+                    catch (Exception ex)
+                    {
+                        NCI.Logging.Logger.LogError("", "CTSearchManager.LoadSavedCriteria", NCIErrorLevel.Error, ex);
+                        this.RaiseErrorPage("InvalidSearchID");
+                    }
+                }
+                else
+                {
+                    // An invalid search ID was specified.  Redirect to error.
+                }
+
+                // Determine what cancer type to use.  Needed for the cancer stage list.
                 int cancerTypeID = 0;
-                //Get Saved Search ID
+                if (savedSearch != null)
+                    cancerTypeID = savedSearch.CancerType.Value;
 
                 FillCancerTypeSelectBox(savedSearch);
                 FillCancerStageSelectBox(cancerTypeID, savedSearch);
