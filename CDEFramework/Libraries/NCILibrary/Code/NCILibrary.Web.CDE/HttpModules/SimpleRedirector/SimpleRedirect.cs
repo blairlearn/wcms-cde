@@ -37,6 +37,16 @@ namespace NCI.Web.CDE
 
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
+
+            // Can we ignore this file?
+            if (Utility.IgnoreWebResource(url))
+                return;
+
+            // If the PageAssemblyInstruction is not null, then a page is being served
+            // and we can ignore this request.
+            if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
+                return;
+
             String redirectUrl = GetRedirectUrl(url, context);
 
             if(!String.IsNullOrEmpty(redirectUrl))
