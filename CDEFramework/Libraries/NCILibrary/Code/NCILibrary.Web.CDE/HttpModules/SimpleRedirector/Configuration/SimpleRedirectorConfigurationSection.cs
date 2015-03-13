@@ -1,7 +1,6 @@
-﻿using System;
-using System.Configuration;
+﻿using System.Configuration;
 
-namespace NCILibrary.Web.SimpleRedirector.Configuration
+namespace NCI.Web.CDE.SimpleRedirector.Configuration
 {
     public class SimpleRedirectorConfigurationSection : ConfigurationSection
     {

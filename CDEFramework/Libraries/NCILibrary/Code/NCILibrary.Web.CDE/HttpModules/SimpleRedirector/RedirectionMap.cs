@@ -4,9 +4,9 @@ using System.IO;
 using System.Web;
 using System.Web.Caching;
 
-using NCILibrary.Web.SimpleRedirector.Configuration;
+using NCI.Web.CDE.SimpleRedirector.Configuration;
 
-namespace NCI.Web.SimpleRedirector
+namespace NCI.Web.CDE.SimpleRedirector
 {
     /// <summary>
     /// Maps a collection of old URLs to new URLs. All lookups ignore case as well as

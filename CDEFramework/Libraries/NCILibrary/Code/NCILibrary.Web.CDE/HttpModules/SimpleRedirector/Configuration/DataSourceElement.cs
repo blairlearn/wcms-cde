@@ -2,7 +2,7 @@
 using System.Configuration;
 
 
-namespace NCILibrary.Web.SimpleRedirector.Configuration
+namespace NCI.Web.CDE.SimpleRedirector.Configuration
 {
     public class DataSourceConfigurationElement : ConfigurationElement
     {

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Web;
 
-using NCILibrary.Web.SimpleRedirector.Configuration;
+using NCI.Web.CDE.SimpleRedirector;
+using NCI.Web.CDE.SimpleRedirector.Configuration;
 
-namespace NCI.Web.SimpleRedirector
+namespace NCI.Web.CDE
 {
     /// <summary>
     /// Simple tool for redirecting URLs based on a comma-delimited list of old and new URLs.

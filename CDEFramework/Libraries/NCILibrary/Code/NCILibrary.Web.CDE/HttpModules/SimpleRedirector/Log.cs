@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 using NCI.Logging;
 
-namespace NCI.Web.SimpleRedirector
+namespace NCI.Web.CDE.SimpleRedirector
 {
     // Wrapper for the NCI Logging classes to provide a simple interface,
     // similar to log4net.
