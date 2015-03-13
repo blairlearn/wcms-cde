@@ -9,9 +9,9 @@ namespace NCI.Web.CDE
     /// <summary>
     /// Simple tool for redirecting URLs based on a comma-delimited list of old and new URLs.
     /// </summary>
-    public class SimpleRedirecter : IHttpModule
+    public class SimpleRedirect : IHttpModule
     {
-        static Log log = new Log(typeof(SimpleRedirecter));
+        static Log log = new Log(typeof(SimpleRedirect));
 
         #region IHttpModule Members
 

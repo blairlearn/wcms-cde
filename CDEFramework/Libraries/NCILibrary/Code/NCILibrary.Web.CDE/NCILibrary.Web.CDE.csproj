@@ -102,7 +102,7 @@
     <Compile Include="HttpModules\SimpleRedirector\Configuration\SimpleRedirectorConfigurationSection.cs" />
     <Compile Include="HttpModules\SimpleRedirector\Log.cs" />
     <Compile Include="HttpModules\SimpleRedirector\RedirectionMap.cs" />
-    <Compile Include="HttpModules\SimpleRedirector\SimpleRedirecter.cs" />
+    <Compile Include="HttpModules\SimpleRedirector\SimpleRedirect.cs" />
     <Compile Include="HttpModules\Utility.cs" />
     <Compile Include="InformationRequest\Configuration\MappedPage.cs" />
     <Compile Include="InformationRequest\Configuration\MappedPageCollection.cs" />
