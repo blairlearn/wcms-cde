@@ -38,12 +38,10 @@
 </head>
 
 <body>
-    <div id='dictionary_jPlayer'></div>
-    <div class="heading">
-        <%=strHeading%>
-    </div>
-    <div class="audioPronounceLink">
-        <%=this.Content.Render()%>
+    <div class="popup">
+        <div id='dictionary_jPlayer'></div>
+            <%=strHeading%>
+            <%=this.Content.Render()%>
     </div>
     <asp:Literal ID="litOmniturePageLoad" Mode="PassThrough" runat="server" />
 </body>
