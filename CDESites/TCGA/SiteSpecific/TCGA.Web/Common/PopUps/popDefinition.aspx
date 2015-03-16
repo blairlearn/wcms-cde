@@ -4,7 +4,6 @@
 <HTML>
   <HEAD id="header" runat="server">
 	<TITLE>Dictionary of Cancer Terms</TITLE>
-	+
   </HEAD>
   <FRAMESET border=0 frameSpacing=0 rows="55,*" frameBorder=no>
 	<FRAME name="Header" title="Header" src="/Common/PopUps/<%=Header%>" noResize scrolling=no>
