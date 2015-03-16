@@ -238,15 +238,8 @@ namespace CancerGov.Web.UI.SnippetControls
                 hasChildren = " has-children";
             }
 
-
-            if (item.ChildItems.Length > 0)
-            {
-                writer.AddAttribute(HtmlTextWriterAttribute.Class, "has-children lvl-" + level + liClass + hasChildren);
-            }
-            else
-            {
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "lvl-" + level + liClass+ hasChildren);
-            }
+            
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
             //This block of code checks the URL path against the Item but since the home page has a path of '/'
             //First check to make sure it is the url path is not equal to the item url path
