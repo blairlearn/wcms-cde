@@ -5,7 +5,7 @@
 	<TITLE>Dictionary of Cancer Terms</TITLE>
 	
   </HEAD>
-  <FRAMESET border=0 frameSpacing=0 rows="75,*" frameBorder=no>
+  <FRAMESET border=0 frameSpacing=0 rows="50,*" frameBorder=no>
 	<FRAME name="Header" title="Header" src="/Common/PopUps/<%=Header%>" noResize scrolling=no>
 	<FRAME name="Definition" title="Definition" src="/Common/PopUps/definition.aspx?<%=UrlArgs%>" noResize>
 	<!--
