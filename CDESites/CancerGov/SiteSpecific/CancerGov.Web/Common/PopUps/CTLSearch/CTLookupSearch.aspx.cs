@@ -101,22 +101,26 @@ namespace CancerGov.Web
                     break;
 			}
 
+            alphaIndexLinks = "<div class='az-list inline narrow'><ul>";
+
             if ("[^a-zA-Z]" == inputAlphaIndex.Trim())
-                {
-                alphaIndexLinks += "<b>#</b>&nbsp;&nbsp;";
+            {
+                alphaIndexLinks += "<li>#</li>";
 			}
 			else {
-                alphaIndexLinks += "<a href=\"javascript: document.forms[0].alphaIndex.value = '[^a-zA-Z]'; document.forms[0].keyword.value = ''; doSubmit();\">#</a>&nbsp;&nbsp;";
+                alphaIndexLinks += "<li><a href=\"javascript: document.forms[0].alphaIndex.value = '[^a-zA-Z]'; document.forms[0].keyword.value = ''; doSubmit();\">#</a></li>";
             }
 
 			for(int i = Convert.ToInt16('A'); i <= Convert.ToInt16('Z'); i++) {
 				if(((char)i).ToString() == inputAlphaIndex.Trim().ToUpper()) {
-					alphaIndexLinks += "<b>" + (char)i + "</b>&nbsp;&nbsp;";
+					alphaIndexLinks += "<li>" + (char)i + "</li>";
 				}
 				else {
-					alphaIndexLinks += "<a href=\"javascript: document.forms[0].alphaIndex.value = '" + (char)i + "'; document.forms[0].keyword.value = ''; doSubmit();\">" + (char)i + "</a>&nbsp;&nbsp;";
+					alphaIndexLinks += "<li><a href=\"javascript: document.forms[0].alphaIndex.value = '" + (char)i + "'; document.forms[0].keyword.value = ''; doSubmit();\">" + (char)i + "</a></li>";
 				}
 			}
+
+            alphaIndexLinks += "</ul></div>";
 		}
 
 		#region Web Form Designer generated code

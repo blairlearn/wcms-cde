@@ -4,29 +4,28 @@
 <html>
 <head>
     <title>CTLookupResults</title>
-    <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" />
+    <link rel="stylesheet" href="/PublishedContent/Styles/nvcg.css" />
+    <script src="/PublishedContent/js/modernizr.custom.2.7.1.js" type="text/javascript"></script>
 </head>
 <body style="background:none">
     <form id="resultsForm" runat="server" method="post" > 
-        <h1 style="font-size: 14px;  padding-left: 4px"><%=Caption%></h1> 
-        <asp:DataGrid CssClass="cts-az-results" ID="results" Runat="server" ShowHeader="False" 
-            ItemStyle-BackColor="#F5F5F3" AlternatingItemStyle-BackColor="#ffffff" 
-            Visible="False" AutoGenerateColumns="False">
-		    <Columns>
-			    <asp:TemplateColumn ItemStyle-CssClass="cts-az-results-checkbox">
-				    <ItemTemplate>
-					    <input type="checkbox" name="chkItem" 
-					        value="<%#DataBinder.Eval(Container.DataItem, "Name")%>{<%#DataBinder.Eval(Container.DataItem, "HashedCDRID")%>}" 
-					        id="<%#DataBinder.Eval(Container.DataItem, "DisplayName")%>{<%#DataBinder.Eval(Container.DataItem, "HashedCDRID")%>}"> 
-				    </ItemTemplate>
-			    </asp:TemplateColumn>
-			    <asp:TemplateColumn ItemStyle-CssClass="cts-az-results-label">
-				    <ItemTemplate>
-					    <label for="<%#DataBinder.Eval(Container.DataItem, "DisplayName")%>{<%#DataBinder.Eval(Container.DataItem, "HashedCDRID")%>}"><%#DataBinder.Eval(Container.DataItem, "DisplayName")%></label>
-				    </ItemTemplate>
-			    </asp:TemplateColumn>
-		    </Columns>
-	    </asp:DataGrid>		
+        <h6 style="font-size: 14px;  padding-left: 4px"><%=Caption%></h6> 
+        <asp:Repeater ID="results" Runat="server" Visible="False">
+            <HeaderTemplate>
+                <div class="scrolling-list tall groupedCheckBoxList">
+            </HeaderTemplate>
+		    <ItemTemplate>
+		        <div class="checkbox">
+			        <input type="checkbox" name="chkItem" 
+			            value="<%#DataBinder.Eval(Container.DataItem, "Name")%>{<%#DataBinder.Eval(Container.DataItem, "HashedCDRID")%>}" 
+			            id="<%#DataBinder.Eval(Container.DataItem, "DisplayName")%>{<%#DataBinder.Eval(Container.DataItem, "HashedCDRID")%>}"> 
+			        <label for="<%#DataBinder.Eval(Container.DataItem, "DisplayName")%>{<%#DataBinder.Eval(Container.DataItem, "HashedCDRID")%>}"><%#DataBinder.Eval(Container.DataItem, "DisplayName")%></label>
+			    </div>
+		    </ItemTemplate>
+		    <FooterTemplate>
+		        </div>
+		    </FooterTemplate>
+	    </asp:Repeater>
     </form>
 </body>
 </html>

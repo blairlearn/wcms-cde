@@ -234,6 +234,7 @@ namespace NCI.Web.UI.WebControls.FormControls
 
             //writer.AddStyleAttribute(HtmlTextWriterStyle.ListStyleType, "none");
             writer.AddAttribute(HtmlTextWriterAttribute.Id, BuildUniqueControlName(_displayListName));
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "no-bullets");
             writer.RenderBeginTag(HtmlTextWriterTag.Ul);
 
             //foreach (ListItem item in Items)

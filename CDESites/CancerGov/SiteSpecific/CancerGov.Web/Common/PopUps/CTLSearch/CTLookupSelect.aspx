@@ -61,8 +61,8 @@
         <form>
             <div class="row">
                 <div class="small-12 columns">
-                    <button name="selectchecked" onclick="doSubmit('<%=Request.Params["type"]%>');">Add Selected</button>
-                    <button onclick="window.parent.close();">Close Window</button>
+                    <button name="selectchecked" class="button submit" onclick="doSubmit('<%=Request.Params["type"]%>');">Add Selected</button>
+                    <button class="button reset"onclick="window.parent.close();">Close Window</button>
                 </div>
             </div>
         </form>
