@@ -85,8 +85,7 @@
                                     runat="server"
                                     onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
                                     NavigateUrl='<%# Eval("Url") %>'
-                                    Text='<%# Eval("Title") %>' />
-                                    (<%# Eval("Label") %>)
+                                    Text='<%# String.Format("{0} ({1})", Eval("Title"), Eval("Label")) %>' />
                                 </div>
                                 <div>
 		                            <cite class="url">
