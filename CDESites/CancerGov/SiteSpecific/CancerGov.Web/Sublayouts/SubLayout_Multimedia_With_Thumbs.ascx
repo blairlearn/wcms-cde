@@ -4,11 +4,11 @@
     <div class="row multimedia" data-match-height="">
         <NCI:TemplateSlot
             id="nvcgSlLayoutMultimediaA"
-            CssClass="equalheight large-8 columns card"
+            CssClass="equalheight small-8 columns card"
             runat="server" />
         <NCI:TemplateSlot
             id="nvcgSlLayoutFeatureB"
-            CssClass="equalheight large-4 columns card"
+            CssClass="equalheight small-4 columns card"
             runat="server" />
     </div>
 </div>
