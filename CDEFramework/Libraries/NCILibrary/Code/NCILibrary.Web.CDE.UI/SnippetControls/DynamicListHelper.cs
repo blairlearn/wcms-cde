@@ -97,7 +97,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 						#set($fileType_safe = ""txt"")##
 					#else##
                         #set($fileClass = ""list-item-link link"")##
-                        #set($fileType_safe = """")##
+                        #set($fileType_safe = ""unknown"")##
                         #set($printOutExt = $fileType)##
 					#end##
 				<li class=""general-list-item file $fileType_safe list-item $fileClass"">##
@@ -136,18 +136,22 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 ##
                 ## Display title
                 ##
-                <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""$fileClass title"">##						
-                $resultItem.LongTitle##
-                #if($resultItem.ContentType == ""rx:gloVideo"")##
-                    ($videoContent)##
-                #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
-                    ($carouselContent)##
-                #elseif($resultItem.ContentType == ""rx:cgvInfographic"")##
-                    ($infographicContent)##
-                #elseif($resultItem.ContentType == ""rx:nciFile"")##
-                    <span class=""filesize"">$fileSize $printOutExt</span><span class=""filetype $fileType_safe""><span class=""accessibility-text"">$fileType_safe file</span></span>##
-                #end##
-                </a>";
+                <span class=""title"">##
+                    <a href=""$resultItem.Href"" onclick=""NCIAnalytics.SearchResults(this,$resultItem.RecNumber);"" class=""$fileClass title"">##						
+                    $resultItem.LongTitle##
+                    #if($resultItem.ContentType == ""rx:gloVideo"")##
+                        </a> ($videoContent)##
+                    #elseif($resultItem.ContentType == ""rx:gloVideoCarousel"")##
+                        </a> ($carouselContent)##
+                    #elseif($resultItem.ContentType == ""rx:cgvInfographic"")##
+                        </a> ($infographicContent)##
+                    #elseif($resultItem.ContentType == ""rx:nciFile"")##
+                        <span class=""filesize"">$fileSize $printOutExt</span><span class=""filetype $fileType_safe""><span class=""hidden"">$fileType_safe file</span></span></a>##
+                    #else##
+                        </a>##
+                    #end##
+                </span>##
+            ";
             return title;
         }
 
