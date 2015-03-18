@@ -109,8 +109,20 @@ namespace NCI.DataManager
 
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
-                                    searchResult.FileSize = sqlFVReader.GetInt32("item_size");
-                                    searchResult.MimeType = sqlFVReader.GetString("item_type");
+
+                                    // File size and mime type are only used for file content types. If the database column 
+                                    // does not exist for the searched item (i.e. blogs), catch indexfOutOfRangeException and 
+                                    // populate the search result with default values.
+                                    try
+                                    {
+                                        searchResult.FileSize = sqlFVReader.GetInt32("item_size");
+                                        searchResult.MimeType = sqlFVReader.GetString("item_type");
+                                    }
+                                    catch (IndexOutOfRangeException e)
+                                    {
+                                        searchResult.FileSize = 0;
+                                        searchResult.MimeType = null;
+                                    }
 
                                     // Keep original published/modified/reviewed values, but also compare each value
                                     // and return the most recent of the three for use in lists.
@@ -121,7 +133,6 @@ namespace NCI.DataManager
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dfp);
                                         searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dfp);
                                     }
-
                                     DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dlm != DateTime.MinValue)
                                         searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dlm);
@@ -256,8 +267,20 @@ namespace NCI.DataManager
                                     searchResult.Author = sqlFVReader.GetString("author");
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
-                                    searchResult.FileSize = sqlFVReader.GetInt32("item_size");
-                                    searchResult.MimeType = sqlFVReader.GetString("item_type");
+
+                                    // File size and mime type are only used for file content types. If the database column 
+                                    // does not exist for the searched item (i.e. blogs), catch indexfOutOfRangeException and 
+                                    // populate the search result with default values.
+                                    try
+                                    {
+                                        searchResult.FileSize = sqlFVReader.GetInt32("item_size");
+                                        searchResult.MimeType = sqlFVReader.GetString("item_type");
+                                    }
+                                    catch (IndexOutOfRangeException e)
+                                    {
+                                        searchResult.FileSize = 0;
+                                        searchResult.MimeType = null;
+                                    }
 
                                     // Keep original published/modified/reviewed values, but also compare each value
                                     // and return the most recent of the three for use in lists.
@@ -268,7 +291,6 @@ namespace NCI.DataManager
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dfp);
                                         searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dfp);
                                     }
-
                                     DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dlm != DateTime.MinValue)
                                         searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dlm);
