@@ -19,7 +19,7 @@ using CancerGov.UI.CDR;
 
 using NCI.Web.UI.WebControls;
 using NCI.Util;
-using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
+//using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Web.UI.WebControls.FormControls;  // For the CTSearchCriteriaDisplay object.
 using NCI.Web.CancerGov.Apps;
 using NCI.Logging;
@@ -354,7 +354,7 @@ namespace CancerGov.Web.SnippetTemplates
             OnLoadComplete();
             /// Set up JavaScript resources. Order is important.  Because the page's script
             /// uses prototype, we need to register that one first.
-            PrototypeManager.Load(this.Page);
+            //PrototypeManager.Load(this.Page);
 
             if (_pageRenderingState == PageRenderingState.Results && _pageRenderer != null)
             {
