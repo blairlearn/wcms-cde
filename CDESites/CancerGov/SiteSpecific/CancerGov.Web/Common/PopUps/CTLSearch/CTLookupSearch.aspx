@@ -31,17 +31,29 @@
 	        <input type="hidden" name="alphaIndex" value="<%=InputAlphaIndex%>">
 	        <input type="hidden" name="fld" value="<%=Request.Params["fld"]%>">
 
-            <h5><%=Title%></h5>   
             <div class="row">
-                <p id="caption"><%=Caption%></p>
+                <div class="small-12 columns">
+                    <h5><%=Title%></h5>
+                </div>
             </div>
             <div class="row">
-                <span id="alphaSearch">Click a Letter/#:</span><%=AlphaIndexLinks%>
+                <div class="small-12 columns">
+                    <p id="caption"><%=Caption%></p>
+                </div>
             </div>
             <div class="row">
-                <label for="SearchBox"><%=TextInputPrompt%>:</label>
-                <input type="text" id="SearchBox" name="keyword" size="20" value="<%=InputKeyword%>" />
-                <button class="button action">Search</button>
+                <div class="small-12 columns">
+                    <span id="alphaSearch">Click a Letter/#:</span><%=AlphaIndexLinks%>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+                    <p>
+                        <label for="SearchBox"><%=TextInputPrompt%>:</label>
+                        <input type="text" id="SearchBox" name="keyword" size="20" value="<%=InputKeyword%>" />
+                        <button class="button action">Search</button>
+                    </p>
+                </div>
             </div>
          </form>
 	</body>

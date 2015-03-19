@@ -23,6 +23,15 @@ namespace CancerGov.Web {
         protected global::System.Web.UI.HtmlControls.HtmlForm resultsForm;
         
         /// <summary>
+        /// resultsCaption control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl resultsCaption;
+        
+        /// <summary>
         /// results control.
         /// </summary>
         /// <remarks>

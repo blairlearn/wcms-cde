@@ -41,8 +41,8 @@
     if ($.fn.groupedCheckBoxList === undefined) {
 
         $.groupedCheckBoxList = {
-            default: { }
-        }
+            "default": { }
+        };
 
         $.fn.groupedCheckBoxList = function () {
             //Loop through each element we are trying to make a checkbox list.  This element should contain checkboxes.
@@ -92,8 +92,8 @@
     if ($.fn.radioToggleBlocks === undefined) {
 
         $.radioToggleBlocks = {
-            default: { }
-        }
+            "default": { }
+        };
 
         $.fn.radioToggleBlocks = function () {
             //Loop through each element we are trying to make a radioToggleBlock.  Each element should contain controllers.
@@ -243,7 +243,7 @@
                             <div class="column">
                                 <div class="legend" id="legend-location-zip">Near ZIP Code</div>
                                 <div>
-                                    <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat=server>Show trials located within:</asp:Label>
+                                    <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat="server">Show trials located within:</asp:Label>
                                     <div class="row">
                                         <asp:DropDownList ID="zipCodeProximity" runat="server">
                                             <asp:ListItem Value="20">20 miles</asp:ListItem>
@@ -270,7 +270,7 @@
                                             emptylisttext="Select &quot;Add More&quot; to see hospital names." />
                                         <span id="institutionAddButton">
                                             <button class="button action" type="button"
-                                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=725px,menubar=no,location=no,height=675px');">
                                                 Add More
                                             </button>
                                         </span>
@@ -302,7 +302,7 @@
                         <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" role="region">
                             <div class="column">
                                 <div class="legend" id="legend-location-NIH">At NIH</div>
-                                <div><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked=true></asp:Checkbox></div>
+                                <div><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
                             </div>
                         </fieldset>
                     </div>                       
@@ -355,7 +355,7 @@
                             emptylisttext="Select &quot;Add More&quot; to see drug names." />
                         <span id="druglistAddButton" >
                             <button class="button action" type="button"
-                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =drug.ClientID %>&amp;fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =drug.ClientID %>&amp;fld=drug&amp;title=Find+Drug', 'DrugLookup', 'width=725px,menubar=no,location=no,height=675px');">
                                 Add More
                             </button>
                         </span>
@@ -380,7 +380,7 @@
                             emptylisttext="Select &quot;Add More&quot; to see treatment/intervention names." />
                         <span id="interventionlistAddButton">
                         <button class="button action" type="button"
-                            onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =intervention.ClientID %>&amp;fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                            onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =intervention.ClientID %>&amp;fld=intervention&amp;title=Treatment/Intervention', 'InterventionLookup', 'width=725px,menubar=no,location=no,height=675px');">
                             Add More
                         </button>
                         </span>
@@ -483,7 +483,7 @@
                             runat="server" emptylisttext="Select &quot;Add More&quot; to see investigator names." />
                         <span id="investigatorListAddButton">
                             <button class="button action" type="button"
-                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =investigator.ClientID %>&amp;fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =investigator.ClientID %>&amp;fld=investigator&amp;title=Find+Trial+Investigators', 'InvestigatorLookup', 'width=725px,menubar=no,location=no,height=675px');">
                                 Add More
                             </button>
                         </span>
@@ -504,7 +504,7 @@
                             runat="server" emptylisttext="Select &quot;Add More&quot; to see lead organization names." />
                         <span id="leadOrgAddButton">
                             <button class="button action" type="button"
-                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =leadOrg.ClientID %>&amp;fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=681px,menubar=no,location=no,height=580px');">
+                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =leadOrg.ClientID %>&amp;fld=leadOrg&amp;title=Find+Lead+Organizations', 'LeadOrgLookup', 'width=725px,menubar=no,location=no,height=675px');">
                                 Add More
                             </button>
                         </span>

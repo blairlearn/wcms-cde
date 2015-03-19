@@ -6,7 +6,7 @@
     <title>Cancer.gov</title>
     <link rel="stylesheet" href="/PublishedContent/Styles/nvcg.css" />
   </head>
-  <frameset rows="250,*,45" id="Lookup" frameborder="no" border="0">
+  <frameset rows="325,*,50" id="Lookup" frameborder="no" border="0">
 	<frame name="search" title="Search" src="/Common/PopUps/CTLSearch/CTLookupSearch.aspx?fld=<%=Request.Params["fld"]%>&type=<%=Request.Params["type"]%>&title=<%=Title%>" scrolling="no" noresize/>
     <frame name="results" title="Results" src="/Common/PopUps/CTLSearch/CTLookupResults.aspx?fld=<%=Request.Params["fld"]%>" scrolling="auto" frameborder="0" />
     <frame name="footer" title="Footer" src="/Common/PopUps/CTLSearch/CTFooter.htm" scrolling="no" noresize>
