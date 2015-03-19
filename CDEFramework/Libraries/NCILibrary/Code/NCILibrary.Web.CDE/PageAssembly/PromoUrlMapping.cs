@@ -74,10 +74,13 @@ namespace NCI.Web.CDE
                     string key = reader.GetAttribute("Name");
                     if (!string.IsNullOrEmpty(key))
                     {
-                        key = key.ToLower();
+                        key = key.ToLower().Trim();
                         promoUrl.Name = key;
                         reader.Read();
-                        promoUrl.MappedTo = reader.ReadString();
+                        String mappedUrl = reader.ReadString();
+                        if(string.IsNullOrEmpty(mappedUrl)) // If the mapped URL is missing, skip this one.
+                            continue;
+                        promoUrl.MappedTo = mappedUrl.Trim();
                         if (!PromoUrls.ContainsKey(key))
                             PromoUrls.Add(key, promoUrl);
                         reader.ReadEndElement();
