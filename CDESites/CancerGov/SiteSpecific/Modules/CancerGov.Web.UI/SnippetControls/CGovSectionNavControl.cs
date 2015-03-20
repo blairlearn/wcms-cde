@@ -111,6 +111,7 @@ namespace CancerGov.Web.UI.SnippetControls
             String[] sectionPath = item.SectionPath.Split('/');
             String sectionFile = sectionPath[sectionPath.Length-1];
             Boolean isSectionPath = false;
+            String hasChildren = "";
             // Checks the section path against the page url and determines if it needs to be selected 
             for (int i = 0; i < paths.Length && i < sectionPath.Length; i++)
             {
@@ -125,7 +126,10 @@ namespace CancerGov.Web.UI.SnippetControls
                 }
 
             }
-            
+            if(item.ChildItems.Length>0)
+            {
+                hasChildren = "has-children";
+            }
             if (path.Equals(item.SectionPath))
             {
                 liClass = " contains-current";
@@ -138,8 +142,8 @@ namespace CancerGov.Web.UI.SnippetControls
                 liClass = " contains-current";
                 ariaClass = "true";
             }
-
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "level-" + level + liClass);
+            
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "level-" + level + liClass + hasChildren);
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
             if (divClass != "")
             {
