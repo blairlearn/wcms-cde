@@ -4,6 +4,11 @@
 <HTML>
   <HEAD id="header" runat="server">
 	
+	<script src="/PublishedContent/js/popEvents.js" type="text/javascript"></script>
+    <script type="text/javascript" language="JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script src="/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
+    <link href="/PublishedContent/Styles/nvcg.css" rel="stylesheet" />
+	
   </HEAD>
 	<body>
 	    <div class="popup">
