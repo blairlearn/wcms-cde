@@ -193,14 +193,6 @@
         }
     
         $(document).ready(function() {
-            $("select").selectmenu({
-                change: function(event, ui) {
-                    //This calls the parent change event so that .NET dropdowns can
-                    //autopostback.
-                    ui.item.element.parent().change();
-                }
-            });
-
             $(".groupedCheckBoxList").groupedCheckBoxList();
             $("#locationFieldset").radioToggleBlocks();
         });
