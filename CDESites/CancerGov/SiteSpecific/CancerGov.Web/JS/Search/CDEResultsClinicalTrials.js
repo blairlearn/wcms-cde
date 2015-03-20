@@ -111,19 +111,16 @@ function AudienceType_clickhandler(e) {
             if (cancelChange) {
                 $(ids.titleFormat).checked = true;
                 customButton.disabled = true;
-                customButton.up().removeClassName("black-text");
-                customButton.up().addClassName("gray-text");
+                customButton.parent().removeClass("black-text").addClass("gray-text");
             }
             else {
-                $(ids.healthProfAudience).checked = true;
-                $(ids.healthProfAudience).focus();
+                $(ids.healthProfAudience).prop('checked', true).focus();
             }
         }
         else {
             // The custom button wasn't previously checked, disable it.
             customButton.disabled = true;
-            customButton.up().removeClassName("black-text");
-            customButton.up().addClassName("gray-text");
+            customButton.parent().removeClassName("black-text").addClassName("gray-text");
         }
     }
 }
@@ -134,33 +131,33 @@ function FormatType_clickhandler(e) {
     var locations = $(ids.includeLocations);
     var eligibility = $(ids.includeEligibility);
 
-    locations.checked = (e.target.value == "descriptionFormat");
-    eligibility.checked = (e.target.value == "descriptionFormat");
+    locations.checked = (e.target.value === "descriptionFormat");
+    eligibility.checked = (e.target.value === "descriptionFormat");
 }
 
 // Handler for clicks on the Locations or Eligibility check boxes.
 function DescriptionSubtype_clickhandler(e) {
     if (e.target.checked)
-        $(ids.descriptionFormat).checked = true;
+        $(ids.descriptionFormat).prop('checked', true);
 }
 
 // Controls the collapse and expansion of the search criteria.
 // SetSearchCriteriaDisplay() is called on page load, and again each
 // time the display is toggled.
 function SetSearchCriteriaDisplay() {
-    if ($F(ids.DisplaySearchCriteriaCollapsed) == "N") {
-        $(ids.CriteriaDisplay).hide();
-        $("hideCriteriaLink").hide();
-        $("showCriteriaLink").show();
+    if ($('#'+ids.DisplaySearchCriteriaCollapsed).prop('value') === "N") {
+        $('#'+ids.CriteriaDisplay).hide();
+        $("#hideCriteriaLink").hide();
+        $("#showCriteriaLink").show();
     } else {
-        $(ids.CriteriaDisplay).show();
-        $("hideCriteriaLink").show();
-        $("showCriteriaLink").hide();
+        $('#'+ids.CriteriaDisplay).show();
+        $("#hideCriteriaLink").show();
+        $("#showCriteriaLink").hide();
     }
 }
 function toggleSearchCriteria() {
-    var settingField = $(ids.DisplaySearchCriteriaCollapsed);
-    settingField.value = (settingField.value == "N") ? "Y" : "N";
+    var settingField = $('#'+ids.DisplaySearchCriteriaCollapsed);
+    settingField.prop('value', (settingField.prop('value') === "N") ? "Y" : "N");
     SetSearchCriteriaDisplay();
 }
 
@@ -170,7 +167,7 @@ function toggleSearchCriteria() {
 // prevent that from occuring.
 function SetupTitleClickHandler() {
     // The protocol-abstract-link class is only applied to the protocol links.
-    $$(".protocol-abstract-link").each(function(item) {
+    $(".protocol-abstract-link").each(function(item) {
         Event.observe(item, "click", ProtocolTitleClickHandler.bindAsEventListener(item));
     });
 }
