@@ -80,15 +80,15 @@
                             
 
                             <script type="text/javascript">
-                                document.observe("dom:loaded", function() {
-                                    Event.observe($("<% =patientAudience.ClientID%>"), "click", AudienceType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =healthProfAudience.ClientID%>"), "click", AudienceType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =titleFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =descriptionFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =fullDescriptionFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =customFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =includeLocations.ClientID%>"), "click", DescriptionSubtype_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =includeEligibility.ClientID%>"), "click", DescriptionSubtype_clickhandler.bindAsEventListener(this));
+                                $(document).ready(function() {
+                                    $("#<% =patientAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler() });
+                                    $("#<% =healthProfAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler() });
+                                    $("#<% =titleFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler() });
+                                    $("#<% =descriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler() });
+                                    $("#<% =fullDescriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler() });
+                                    $("#<% =customFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler() });
+                                    $("#<% =includeLocations.ClientID%>").on("click", function(e) { DescriptionSubtype_clickhandler() });
+                                    $("#<% =includeEligibility.ClientID%>").on("click", function(e) { DescriptionSubtype_clickhandler() });
                                 });
                             </script>
                             <br />
@@ -120,7 +120,9 @@
             <cgov:ctsearchcriteriadisplay runat="server" id="CriteriaDisplay" cssclass="clinicaltrials-results-criteria-display" />
         </div>
         <asp:HiddenField ID="DisplaySearchCriteriaCollapsed" runat="server" />
-         <script type="text/javascript" language="javascript">             document.observe("dom:loaded", function() { SetSearchCriteriaDisplay(); });</script>
+         <script type="text/javascript" language="javascript">
+             $(document).ready(function() { SetSearchCriteriaDisplay(); });
+		</script>
         
        </div>
        
@@ -141,9 +143,9 @@
                     type="submit" />
 
                 <script type="text/javascript">
-                    document.observe("dom:loaded", function() {
-                        if ($("<% =TopPrintButton.ClientID %>") != null)
-                            Event.observe($("<% =TopPrintButton.ClientID %>"), "click", submitPrint_ClickHandler.bindAsEventListener(this));
+                    $(document).ready(function() {
+                        if ($("#<% =TopPrintButton.ClientID %>").length > 0)
+                            $("#<% =TopPrintButton.ClientID%>").on("click", function(e) { submitPrint_ClickHandler() });
                     });
                 </script>
 
@@ -159,7 +161,8 @@
                 <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllTop" Text="<strong>Select All on Page</strong>" onclick="checkAll_ClickHandler(this)" />
                
 
-<%--                <script type="text/javascript">
+<%--            // TODO: Commented out Prototype script - do we still need this?
+                <script type="text/javascript">
                     document.observe("dom:loaded", function() {
                         if ($("<%=checkAllTop.ClientID %>") != null)
                             Event.observe($("<%=checkAllTop.ClientID %>"), "click", checkAll_ClickHandler.bindAsEventListener(this));
@@ -195,12 +198,13 @@
                 <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllBottom"
                     Text="<strong>Select All on Page</strong>" onclick="checkAll_ClickHandler(this)" />
 
- <%--               <script type="text/javascript">
+<%--             // TODO: Commented out Prototype script - do we still need this?
+                 <script type="text/javascript">
                     document.observe("dom:loaded", function() {
                         if ($("<% =checkAllBottom.ClientID %>") != null)
                             Event.observe($("<% =checkAllBottom.ClientID %>"), "click", checkAll_ClickHandler.bindAsEventListener(this));
                     });
-                </script>
+                 </script>
 --%>
             </span>
             
@@ -219,9 +223,9 @@
                     type="submit" />
 
                 <script type="text/javascript">
-                    document.observe("dom:loaded", function() {
-                        if ($("<%=BottomPrintButton.ClientID%>") != null)
-                            Event.observe($("<%=BottomPrintButton.ClientID%>"), "click", submitPrint_ClickHandler.bindAsEventListener(this));
+                    $(document).ready(function() {
+                        if ($("#<%=BottomPrintButton.ClientID%>").length > 0)
+                            $("#<% =BottomPrintButton.ClientID%>").on("click", function(e) { submitPrint_ClickHandler() });
                     });
                 </script>
 

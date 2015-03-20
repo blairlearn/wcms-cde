@@ -19,7 +19,6 @@ using CancerGov.UI.CDR;
 
 using NCI.Web.UI.WebControls;
 using NCI.Util;
-//using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Web.UI.WebControls.FormControls;  // For the CTSearchCriteriaDisplay object.
 using NCI.Web.CancerGov.Apps;
 using NCI.Logging;
