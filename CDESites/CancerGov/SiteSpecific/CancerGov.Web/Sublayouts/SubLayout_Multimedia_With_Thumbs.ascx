@@ -17,5 +17,5 @@
     id="nvcgSlLayoutThumbnailA"
     CssClass="row card-thumbnail"
     runat="server"
-    data-match-height="" />
+     />
 <!-- END THUMBNAIL SECTION -->
