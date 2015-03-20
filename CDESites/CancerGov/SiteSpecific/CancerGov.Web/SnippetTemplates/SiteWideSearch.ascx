@@ -148,13 +148,11 @@
                     <asp:ListItem Text="Search Within Results" Value="2" />
                 </asp:RadioButtonList>
           
-                <div class="row">
-                    <div class="small-6 columns">
+                <div class="row collapse">
+                    <div class="small-12">
                         <asp:Label AssociatedControlID="txtSWRKeyword" ID="lblSWRKeywordLabel" runat="server" CssClass="hidden">Keyword</asp:Label>
-                        <asp:TextBox CssClass="input" ID="txtSWRKeyword" Rows="40" MaxLength="40" runat="server" />
-                    </div>
-                    <div class="small-2 columns left">
-                        <asp:Button CssClass="button postfix" id="btnSWRTxtSearch" text="Search" runat="server" OnClick="SearchWithinResults" />
+                        <asp:TextBox CssClass="input" ID="txtSWRKeyword" size=40 Rows="40" MaxLength="40" runat="server" />
+                        <asp:Button CssClass="button submit" id="btnSWRTxtSearch" text="Search" runat="server" OnClick="SearchWithinResults" />
                     </div>
                 </div>
 
