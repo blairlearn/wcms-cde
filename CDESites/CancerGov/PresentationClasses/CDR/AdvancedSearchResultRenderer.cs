@@ -34,7 +34,9 @@ namespace CancerGov.UI.CDR
         {
             StringBuilder sbContent = new StringBuilder();
             bool isFirstProtocol = true;
-                        
+
+            sbContent.Append("<div class=\"cts-results-container\">\n");
+
             foreach (Protocol pProto in this.pcProtocols)
             {
                 if (!isFirstProtocol)
@@ -98,6 +100,8 @@ namespace CancerGov.UI.CDR
                 sbContent.Append("SetupTitleClickHandler();");
                 sbContent.Append("});</script>\n");
             }
+
+            sbContent.Append("</div>\n");
 
             return sbContent.ToString();
         }
