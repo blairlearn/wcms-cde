@@ -128,7 +128,7 @@ namespace CancerGov.Web.UI.SnippetControls
             }
             if(item.ChildItems.Length>0)
             {
-                hasChildren = "has-children";
+                hasChildren = " has-children";
             }
             if (path.Equals(item.SectionPath))
             {
