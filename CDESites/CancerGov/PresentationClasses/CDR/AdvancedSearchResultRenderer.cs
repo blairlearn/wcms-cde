@@ -83,7 +83,7 @@ namespace CancerGov.UI.CDR
                 StringBuilder sbCdrids = new StringBuilder();
                 isFirstProtocol = true;
 
-                sbContent.Append("<script type=\"text/javascript\">\ndocument.observe(\"dom:loaded\", function() {\n");
+                sbContent.Append("<script type=\"text/javascript\">\n$(document).ready(function() {\n");
                 
                 // Reveal the mirror rows
                 sbContent.Append("$$(\".cdrid_mirror_row\").invoke(\"show\");\n");
@@ -96,7 +96,7 @@ namespace CancerGov.UI.CDR
 
             if (this.pcProtocols.Count > 0)
             {
-                sbContent.Append("<script type=\"text/javascript\">document.observe(\"dom:loaded\", function() {");
+                sbContent.Append("<script type=\"text/javascript\">$(document).ready(function() {");
                 sbContent.Append("SetupTitleClickHandler();");
                 sbContent.Append("});</script>\n");
             }
