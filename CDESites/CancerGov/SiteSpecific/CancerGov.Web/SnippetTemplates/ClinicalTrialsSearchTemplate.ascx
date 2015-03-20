@@ -164,6 +164,32 @@
             , leadOrg: "<%=leadOrg.ClientID%>"
             , drug: "<%=drug.ClientID%>"
             , institution: "<%=institution.ClientID%>"
+            
+            , hospitalLocationButton: "<%=hospitalLocationButton.ClientID %>"
+            , zipCodeLocationButton: "<%=zipCodeLocationButton.ClientID %>"
+            , cityStateLocationButton:"<%=cityStateLocationButton.ClientID %>"
+            , atNihLocationButton:"<%=atNihLocationButton.ClientID %>"
+            , country:"<%=country.ClientID %>"
+            , city:"<%=city.ClientID %>"
+            , state:"<%=state.ClientID %>"
+            , investigatorid:"<%=investigatorid.ClientID %>"
+            , institutionListSubBox: "<%=institutionListSubBox.ClientID %>"
+            , cancerType: "<%=ddlCancerType.ClientID%>"
+            , newOnly: "<%=newOnly.ClientID%>"
+            , txtKeywords: "<%=txtKeywords.ClientID%>"
+            , txtKeywords_state: "<%=txtKeywords.ClientID%>_state"
+            , trialStatus: "<%=trialStatus.ClientID%>"
+            , trialStatus_0: "<%=trialStatus.ClientID%>_0"
+            , trialStatus_1: "<%=trialStatus.ClientID%>_1"
+            , trialPhase: "<%=trialPhase.ClientID%>"
+            , trialPhase_0: "<%=trialPhase.ClientID%>_0"
+            , trialPhase_1: "<%=trialPhase.ClientID%>_1"
+            , trialPhase_2: "<%=trialPhase.ClientID%>_2"
+            , trialPhase_3: "<%=trialPhase.ClientID%>_3"
+            , trialPhase_4: "<%=trialPhase.ClientID%>_4"
+            , trialPhase_5: "<%=trialPhase.ClientID%>_5"
+            , protocolID: "<%=protocolID.ClientID%>"
+            , nihOnly: "<%=nihOnly.ClientID%>"
         }
     
         $(document).ready(function() {
@@ -528,7 +554,7 @@
 
     <div class="row">
         <div class="medium-8 columns right">
-            <asp:button CssClass="submit button" Text="Search" runat="server"
+            <asp:button id="submit" CssClass="submit button" Text="Search" runat="server"
                 OnClick="SubmitButton_Click" />
             <a id="clear" class="reset startover button" href="#" runat="server">Start Over</a>
         </div>

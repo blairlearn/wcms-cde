@@ -4,6 +4,17 @@
     stringDelimiter: '|',
     fieldDelimiter: '~',
 
+    SelectedTextList: function(listId, delimiter) {
+        return (
+            $("#" + listId + " input:checked") // get all checked inputs under tbhe given id
+                .siblings("label")  // find all adjacent labels
+                .map(function() {
+                    return $(this).text();  // return the text of each label
+                })
+                .get()  // get as JS array
+                .join(delimiter));  // join array with delimiter
+    },
+
     ClickParams: function(sender, reportSuites, linkType, linkName) {
         /* 
         The facility for defining report suites by the parameter reportSuites 
@@ -194,15 +205,8 @@
         var sponsor = '';
         var special = '';
         var keyword = '';
-        var cancerTypeCondition = $(ids.cancerType).options[$(ids.cancerType).selectedIndex].text;
 
-        var typeOfTrialControl = document.getElementById(webAnalyticsOptions.typeOfTrialControlID);
-        var drugControl = document.getElementById(webAnalyticsOptions.drugControlID);
-        var treatnentInterventionControl = document.getElementById(webAnalyticsOptions.treatnentInterventionControlID);
-        var trialInvestigatorsControl = document.getElementById(webAnalyticsOptions.trialInvestigatorsControlID);
-        var leadOrganizationCooperativeGroupControl = document.getElementById(webAnalyticsOptions.leadOrganizationCooperativeGroupControlID);
-        var sponsorOfTrialControl = document.getElementById(webAnalyticsOptions.sponsorOfTrialControlID);
-        var specialCategoryControl = document.getElementById(webAnalyticsOptions.specialCategoryControlID);
+        var cancerTypeCondition = $('#' + ids.cancerType + " option:selected").text();
 
         //Location 
         // - zip code
@@ -243,32 +247,46 @@
             statusPhase += 'New Trials';
         }
 
-        // Trial / Treatment Type 
-        trialType = typeOfTrialControl.SelectedTextList(NCIAnalytics.stringDelimiter);
+        // Trial / Treatment Type
+        trialType = NCIAnalytics.SelectedTextList(
+            webAnalyticsOptions.typeOfTrialControlID, 
+            NCIAnalytics.stringDelimiter);
         if ((trialType != '') && (trialType != 'All'))
             treatmentType += 'Type of Trial';
         treatmentType += NCIAnalytics.fieldDelimiter;
-        if (drugControl.SelectedTextList(NCIAnalytics.stringDelimiter) != '')
+        if (NCIAnalytics.SelectedTextList(
+                webAnalyticsOptions.drugControlID, 
+                NCIAnalytics.stringDelimiter) != '')
             treatmentType += 'Drug';
         treatmentType += NCIAnalytics.fieldDelimiter;
-        if (treatnentInterventionControl.SelectedTextList(NCIAnalytics.stringDelimiter) != '')
+        if (NCIAnalytics.SelectedTextList(
+                webAnalyticsOptions.treatnentInterventionControlID,
+                NCIAnalytics.stringDelimiter) != '')
             treatmentType += 'Treatment/Intervention';
 
         // Trial ID / Sponsor
         if ($(ids.protocolID).value != '')
             trialIdSponsor += 'Protocol ID';
         trialIdSponsor += NCIAnalytics.fieldDelimiter;
-        sponsor = sponsorOfTrialControl.SelectedTextList(NCIAnalytics.stringDelimiter);
+        sponsor = NCIAnalytics.SelectedTextList(
+            webAnalyticsOptions.sponsorOfTrialControlID,
+            NCIAnalytics.stringDelimiter);
         if ((sponsor != '') && (sponsor != 'All'))
             trialIdSponsor += 'Sponsor of Trial';
         trialIdSponsor += NCIAnalytics.fieldDelimiter;
-        if (trialInvestigatorsControl.SelectedTextList(NCIAnalytics.stringDelimiter) != '')
+        if (NCIAnalytics.SelectedTextList(
+                webAnalyticsOptions.trialInvestigatorsControlID,
+                NCIAnalytics.stringDelimiter) != '')
             trialIdSponsor += 'Trial Investigators';
         trialIdSponsor += NCIAnalytics.fieldDelimiter;
-        if (leadOrganizationCooperativeGroupControl.SelectedTextList(NCIAnalytics.stringDelimiter) != '')
+        if (NCIAnalytics.SelectedTextList(
+                webAnalyticsOptions.leadOrganizationCooperativeGroupControlID,
+                NCIAnalytics.stringDelimiter) != '')
             trialIdSponsor += 'Lead Organization';
         trialIdSponsor += NCIAnalytics.fieldDelimiter;
-        special = specialCategoryControl.SelectedTextList(NCIAnalytics.stringDelimiter);
+        special = NCIAnalytics.SelectedTextList(
+            webAnalyticsOptions.specialCategoryControlID,
+            NCIAnalytics.stringDelimiter);
         if ((special != '') && (special != 'All'))
             trialIdSponsor += 'Special Category';
 
@@ -702,11 +720,11 @@
 
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'eMailLink');
-            
+
         clickParams.Props = {
             43: 'Email'
         };
-            
+
         clickParams.Events = [17];
         clickParams.LogToOmniture();
     },
@@ -725,11 +743,11 @@
 
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'PrintLink');
-            
+
         clickParams.Props = {
             43: 'Print'
-        };    
-        
+        };
+
         clickParams.Events = [17];
         clickParams.LogToOmniture();
     },
@@ -803,11 +821,11 @@
 
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'BookmarkShareClick');
-            
+
         clickParams.Props = {
             43: sender.title
         };
-            
+
         clickParams.Events = [17];
         clickParams.LogToOmniture();
     },
@@ -820,7 +838,7 @@
         var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
         if (typeof pageNameOverride !== 'undefined')
             localPageName = pageNameOverride;
-            
+
         /*
         * tree.length == 1 : section/tab level
         * tree.length == 2 : subsection level
@@ -874,7 +892,7 @@
         var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
         if (typeof pageNameOverride !== 'undefined')
             localPageName = pageNameOverride;
-            
+
         clickParams.Props = {
             53: 'NCI Logo',
             56: pageName
@@ -896,7 +914,7 @@
         var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
         if (typeof pageNameOverride !== 'undefined')
             localPageName = pageNameOverride;
-            
+
         clickParams.Props = {
             53: linkText,
             56: pageName
@@ -917,7 +935,7 @@
 
         var pageName = sender.ownerDocument.location.hostname + sender.ownerDocument.location.pathname; // this is the URL
         if (typeof pageNameOverride !== 'undefined')
-            localPageName = pageNameOverride;    
+            localPageName = pageNameOverride;
 
         var position = container + ":" + containerIndex;
 
@@ -1110,7 +1128,7 @@
         }
         return target;
     },
-    
+
     //******************************************************************************************************	
     /* SPLF_Hier1: function() {
     // URL structure

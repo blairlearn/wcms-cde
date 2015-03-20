@@ -15,7 +15,6 @@ using CancerGov.Common.HashMaster;
 using NCI.Util;
 using NCI.Web.UI.WebControls;
 using NCI.Web.UI.WebControls.FormControls;
-using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Logging;
 using NCI.Web.CDE.Modules; 
 
@@ -124,8 +123,22 @@ namespace CancerGov.Web.SnippetTemplates
                 SetLocationButtons(savedSearch);
             }
 
+            string webAnalyticsParameters =
+                String.Format(
+                    "{{typeOfTrialControlID : '{0}',drugControlID : '{1}',treatnentInterventionControlID : '{2}',sponsorOfTrialControlID : '{3}',trialInvestigatorsControlID : '{4}',leadOrganizationCooperativeGroupControlID : '{5}', specialCategoryControlID : '{6}'}}",
+                    trialType.ClientID,
+                    drug.ClientID,
+                    intervention.ClientID,
+                    sponsor.ClientID,
+                    investigator.ClientID,
+                    leadOrg.ClientID,
+                    specialCategory.ClientID
+                );
+
+            submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
+
             JSManager.AddExternalScript(this.Page, "/JS/Search/CDESearchClinicalTrials.js");
-            JSManager.AddExternalScript(this.Page, "/JS/popEvents.js");
+            //JSManager.AddExternalScript(this.Page, "/JS/popEvents.js");
 
         }
 
