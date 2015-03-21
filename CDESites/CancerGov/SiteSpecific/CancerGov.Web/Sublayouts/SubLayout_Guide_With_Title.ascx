@@ -17,7 +17,7 @@
     <NCI:TemplateSlot
         id="nvcgSlLayoutGuideB"
         CssClass="row guide-card"
-        AdditionalSnippetClasses="equalheight medium-4 columns card gutter"
+        AdditionalSnippetClasses="equalheight large-4 columns card gutter"
         runat="server"
         data-match-height="" />
 </div>
