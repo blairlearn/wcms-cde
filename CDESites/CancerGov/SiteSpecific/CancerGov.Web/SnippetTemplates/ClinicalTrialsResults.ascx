@@ -41,7 +41,7 @@
         <!-- Top View Content for box -->
         <div class="row collapse ct-results-form">
             <asp:Panel runat="server" ID="ResultsFormatControl" CssClass="medium-11 columns">
-                <div class="row view-content-for-container">
+                <div class="row view-content-for-container roundy-box">
                   
                         <div class="medium-4 columns">
                             <strong>View Content for:</strong>
@@ -105,7 +105,7 @@
                  </div> 
         </div>
         
-        <div class="search-criteria-box">
+        <div class="search-criteria-box roundy-box">
         
          <div id="hideCriteriaLink" class="hide-criteria-link">
             <a href="javascript:toggleSearchCriteria()">Hide
