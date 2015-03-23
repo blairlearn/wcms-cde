@@ -44,11 +44,11 @@
                 <div class="row view-content-for-container">
                   
                         <div class="medium-4 columns">
-                            <strong>View Content for:</strong><br />
+                            <strong>View Content for:</strong>
                             <div class="radio">
                                     <asp:RadioButton runat="server" ID="patientAudience" GroupName="AudienceType" Text="Patients"
                                         AutoPostBack="false" CssClass="black-text" />
-                             </div><br />
+                             </div>
                               <div class="radio"> 
                                     <asp:RadioButton runat="server" ID="healthProfAudience" GroupName="AudienceType"
                                         Text="Health Professionals" AutoPostBack="false" CssClass="black-text" />
@@ -56,11 +56,11 @@
                             
                         </div>
                         <div class="medium-8 columns">
-                            <strong>Display:</strong><br />
+                            <strong>Display:</strong>
                             
                                 <div class="radio">
                                     <asp:RadioButton runat="server" ID="titleFormat" GroupName="DisplayFormat" Text="Title"
-                                        CssClass="black-text" /></div><br />
+                                        CssClass="black-text" /></div>
                                   <div>
                                  <span class="radio">
                                     <asp:RadioButton runat="server" ID="descriptionFormat" GroupName="DisplayFormat"
@@ -71,12 +71,11 @@
                                         CssClass="black-text" /></span>
                                       
                                 </div>
-                                <br />
-                                     <div class="radio"><asp:RadioButton runat="server" ID="fullDescriptionFormat" GroupName="DisplayFormat"
-                                        Text="Full Trial Description" CssClass="black-text" /></div><br />
-                                
-                                     <div class="radio"><asp:RadioButton runat="server" ID="customFormat" GroupName="DisplayFormat" Text="Custom"
-                                        CssClass="black-text" /></div>
+                                 <div class="radio"><asp:RadioButton runat="server" ID="fullDescriptionFormat" GroupName="DisplayFormat"
+                                    Text="Full Trial Description" CssClass="black-text" /></div>
+                            
+                                 <div class="radio"><asp:RadioButton runat="server" ID="customFormat" GroupName="DisplayFormat" Text="Custom"
+                                    CssClass="black-text" /></div>
                             
 
                             <script type="text/javascript">
@@ -91,7 +90,6 @@
                                     $("#<% =includeEligibility.ClientID%>").on("click", function(e) { DescriptionSubtype_clickhandler() });
                                 });
                             </script>
-                            <br />
                             <div style="float: right">
                             <asp:Button ID="UpdateAudienceAndDisplay" runat="server"
                                 CssClass="submit button" Text="Go" AlternateText="Go" OnClick="UpdateAudienceAndDisplay_Click" />
