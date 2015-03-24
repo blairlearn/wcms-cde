@@ -92,57 +92,51 @@
         <%-- No Longer Exists but view needed --%>
     </asp:View>
     <asp:View ID="ViewResultList" runat="server" EnableViewState="false">
-        <!-- Number of results -->
-        
-        <asp:Panel ID="numResDiv" runat="server">
-            <span class="results-count">
-                <asp:Label ID="lblNumResults" CssClass="results-num"  runat="server"></asp:Label>
-                <asp:Label ID="lblResultsFor"  Text="result found for: " runat="server"></asp:Label>
-                <asp:Label ID="lblWord" CssClass="term" runat="server"></asp:Label>
-            </span>
-            
-           
-            
-        </asp:Panel>
-        <asp:ListView ID="resultListView" runat="server">
-            <LayoutTemplate>
-            <div class="results">
-                <dl class="dictionary-list">
-                    <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
-                </dl>
-            </div>
-            </LayoutTemplate>
-            <ItemTemplate>
-                
-                        <dt>
-                                <dfn>
-                                    <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "TermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
-                                        <%#HiLite(DataBinder.Eval(Container.DataItem, "PreferredName"))%></a> 
-                                    <span class="dictionary-partial-match-n">
-                                        <%#AddBrackets(DataBinder.Eval(Container.DataItem, "OtherName"))%>
-                                    </span>
-                                </dfn>
-                        </dt>
-                        <dd class="definition">
-                                    <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
-                        </dd>
-                    
-            </ItemTemplate>
-            <EmptyDataTemplate>
-                <asp:Panel ID="pnlNoData" runat="server">
-                    <div id="noMatchDiv" runat="server">
-                        No matches were found for the word or phrase you entered. Please check your spelling,
-                        and try searching again. You can also type the first few letters of your word or
-                        phrase, or click a letter in the alphabet and browse through the list of terms that
-                        begin with that letter. You can also search the <a href="http://nciterms.nci.nih.gov/NCIBrowser/">
-                            NCI Thesaurus</a>, which is the source of the information in the NCI Drug Dictionary.
-                        NCI Thesaurus is produced by NCI’s Enterprise Vocabulary Services, a collaboration
-                        involving NCI’s Office of Communications and NCI’s Center for Bioinformatics. NCI
-                        Thesaurus includes information about several thousand additional drugs.
-                    </div>
-                </asp:Panel>
-            </EmptyDataTemplate>
-        </asp:ListView>
+        <div class="results">
+            <!-- Number of results -->
+            <asp:Panel ID="numResDiv" runat="server">
+                <span class="results-count">
+                    <asp:Label ID="lblNumResults" CssClass="results-num"  runat="server"></asp:Label>
+                    <asp:Label ID="lblResultsFor"  Text="result found for: " runat="server"></asp:Label>
+                    <asp:Label ID="lblWord" CssClass="term" runat="server"></asp:Label>
+                </span>
+            </asp:Panel>
+            <asp:ListView ID="resultListView" runat="server">
+                <LayoutTemplate>
+                    <dl class="dictionary-list">
+                        <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
+                    </dl>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <dt>
+                        <dfn>
+                            <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "TermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
+                                     <%#HiLite(DataBinder.Eval(Container.DataItem, "PreferredName"))%></a> 
+                            <span class="dictionary-partial-match-n">
+                                     <%#AddBrackets(DataBinder.Eval(Container.DataItem, "OtherName"))%>
+                            </span>
+                        </dfn>
+                    </dt>
+                    <dd class="definition">
+                        <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
+                    </dd>
+                </ItemTemplate>
+                <EmptyDataTemplate>
+                    <asp:Panel ID="pnlNoData" runat="server">
+                        <div id="noMatchDiv" runat="server">
+                            No matches were found for the word or phrase you entered. Please check your spelling,
+                            and try searching again. You can also type the first few letters of your word or
+                            phrase, or click a letter in the alphabet and browse through the list of terms that
+                            begin with that letter. You can also search the <a href="http://nciterms.nci.nih.gov/NCIBrowser/">
+                                NCI Thesaurus</a>, which is the source of the information in the NCI Drug Dictionary.
+                            NCI Thesaurus is produced by NCI’s Enterprise Vocabulary Services, a collaboration
+                            involving NCI’s Office of Communications and NCI’s Center for Bioinformatics. NCI
+                            Thesaurus includes information about several thousand additional drugs.
+                        </div>
+                    </asp:Panel>
+                </EmptyDataTemplate>
+            </asp:ListView>
+        </div>
     </asp:View>
     <asp:View ID="ViewDefinition" runat="server" EnableViewState="false">
         
