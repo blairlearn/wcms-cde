@@ -21,7 +21,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             StringBuilder searchBlock = new StringBuilder();
 
-            searchBlock.AppendLine("<div class='dictionary-box' id='genetics-terms-dictionary'>");
+            searchBlock.AppendLine("<div class='dictionary-search' id='genetics-terms-dictionary'>");
            
             searchBlock.AppendLine("      <div id='dictionary_jPlayer'></div>");
             searchBlock.AppendLine("     <form id=\"aspnetForm\" name=\"aspnetForm\" method=\"get\" action=\"/geneticsdictionary\" onsubmit=\"DoSearch();\" >");
