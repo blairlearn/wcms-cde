@@ -59,6 +59,7 @@ namespace CancerGov.Web.UI.SnippetControls
                     if (_navItem.rootNavItem.SectionPath.Equals(path))
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Class, "current-page");
+                        pastCurrentPage = true;
                     }
                     writer.RenderBeginTag(HtmlTextWriterTag.Div);
                     writer.AddAttribute(HtmlTextWriterAttribute.Href, _navItem.rootNavItem.URL);
