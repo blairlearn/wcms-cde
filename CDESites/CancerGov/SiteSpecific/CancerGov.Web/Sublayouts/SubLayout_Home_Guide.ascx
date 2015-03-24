@@ -4,12 +4,12 @@
     <NCI:TemplateSlot
         id="nvcgSlLayoutGuideA"
         class="nvcgSlLayoutGuideA"
-        AdditionalSnippetClasses="equalheight medium-4 columns card featured-card gutter"
+        AdditionalSnippetClasses="equalheight large-4 columns card featured-card gutter"
         runat="server" />
     <NCI:TemplateSlot
         id="nvcgSlLayoutGuideB"
         class="nvcgSlLayoutGuideB"
-        AdditionalSnippetClasses="equalheight medium-4 columns card gutter"
+        AdditionalSnippetClasses="equalheight large-4 columns card gutter"
         runat="server" />
 </div>
 <!-- END CARDS ROW -->
