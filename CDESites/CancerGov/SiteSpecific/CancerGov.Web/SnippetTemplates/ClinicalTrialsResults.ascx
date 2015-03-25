@@ -39,8 +39,9 @@
         button, scroll down to the Trial ID/Sponsor section and select the "All" check box in the Sponsor of Trial section.
         </p>
         <!-- Top View Content for box -->
+        <asp:Panel runat="server" ID="ResultsFormatControl">
         <div class="row collapse ct-results-form">
-            <asp:Panel runat="server" ID="ResultsFormatControl" CssClass="medium-11 columns">
+            <div class="medium-11 columns">
                 <div class="row view-content-for-container roundy-box">
                   
                         <div class="medium-4 columns">
@@ -98,13 +99,13 @@
                         
                   
                 </div>
-                       
-            </asp:Panel>
+                 </div>      
+            
              <div class="medium-1 columns ct-results-help">
                   <a class="text-icon-help" aria-label="Help" target="new" href="/clinicaltrials/search-form-help/page3#1">?</a>
                  </div> 
         </div>
-        
+        </asp:Panel>
         <div class="search-criteria-box roundy-box">
         
          <div id="hideCriteriaLink" class="hide-criteria-link">
