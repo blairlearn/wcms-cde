@@ -36,15 +36,15 @@
  This jQuery plugin is for making a checkbox list that can be a single input (i.e. name attr is the same) but
  the checkboxes can be mutually exclusive of each other.
  */
-(function ( $ ) {
+(function($) {
 
     if ($.fn.groupedCheckBoxList === undefined) {
 
         $.groupedCheckBoxList = {
-            "default": { }
+            "default": {}
         };
 
-        $.fn.groupedCheckBoxList = function () {
+        $.fn.groupedCheckBoxList = function() {
             //Loop through each element we are trying to make a checkbox list.  This element should contain checkboxes.
             return this.each(function() {
                 var cbl = $(this);
@@ -54,7 +54,7 @@
                     //Initial setup function
                     var el = $(this); //This is the checkbox
 
-                    el.click(function () {
+                    el.click(function() {
                         console.log("Clicked: " + this.id);
                         if (this.checked == true) {
                             //Only do something if this item becomes checked.
@@ -62,7 +62,7 @@
                             var target_group = target.data("cbgroup");
 
                             //Loop through checkboxes to uncheck if needed
-                            checkboxes.each(function () {
+                            checkboxes.each(function() {
                                 var curr_cb = $(this);
                                 var curr_group = curr_cb.data("cbgroup");
 
@@ -76,7 +76,7 @@
                     });
                 });
             });
-        }
+        };
 
     }
 
@@ -87,15 +87,15 @@
 
 <%-- Radio Toggle Blocks --%>
 <script type="text/javascript">
-(function ( $ ) {
+(function($) {
 
     if ($.fn.radioToggleBlocks === undefined) {
 
         $.radioToggleBlocks = {
-            "default": { }
+            "default": {}
         };
 
-        $.fn.radioToggleBlocks = function () {
+        $.fn.radioToggleBlocks = function() {
             //Loop through each element we are trying to make a radioToggleBlock.  Each element should contain controllers.
             return this.each(function() {
                 var cbl = $(this);
@@ -122,7 +122,7 @@
                     }
 
 
-                    el.on('click', regions , function () {
+                    el.on('click', regions, function() {
 
                         //Only do this if we are selecting the radio
                         if (this.checked === true) {
@@ -130,7 +130,7 @@
                             var curr_el = $(this);
 
                             var selected_region = false;
-                            for(var i=0; i< regions.length; i++) {
+                            for (var i = 0; i < regions.length; i++) {
                                 if (regions[i].attr('id') === curr_el.attr('aria-controls')) {
                                     regions[i].show().attr("aria-expanded", "true");
                                     selected_region = regions[i];
@@ -148,7 +148,7 @@
 
                 });
             });
-        }
+        };
 
     }
 
@@ -159,20 +159,20 @@
 
     <script type="text/javascript">
         var ids = {
-              intervention:"<%=intervention.ClientID%>"
+            intervention: "<%=intervention.ClientID%>"
             , investigator: "<%=investigator.ClientID%>"
             , leadOrg: "<%=leadOrg.ClientID%>"
             , drug: "<%=drug.ClientID%>"
             , institution: "<%=institution.ClientID%>"
-            
+
             , hospitalLocationButton: "<%=hospitalLocationButton.ClientID %>"
             , zipCodeLocationButton: "<%=zipCodeLocationButton.ClientID %>"
-            , cityStateLocationButton:"<%=cityStateLocationButton.ClientID %>"
-            , atNihLocationButton:"<%=atNihLocationButton.ClientID %>"
-            , country:"<%=country.ClientID %>"
-            , city:"<%=city.ClientID %>"
-            , state:"<%=state.ClientID %>"
-            , investigatorid:"<%=investigatorid.ClientID %>"
+            , cityStateLocationButton: "<%=cityStateLocationButton.ClientID %>"
+            , atNihLocationButton: "<%=atNihLocationButton.ClientID %>"
+            , country: "<%=country.ClientID %>"
+            , city: "<%=city.ClientID %>"
+            , state: "<%=state.ClientID %>"
+            , investigatorid: "<%=investigatorid.ClientID %>"
             , institutionListSubBox: "<%=institutionListSubBox.ClientID %>"
             , cancerType: "<%=ddlCancerType.ClientID%>"
             , newOnly: "<%=newOnly.ClientID%>"
@@ -190,7 +190,7 @@
             , trialPhase_5: "<%=trialPhase.ClientID%>_5"
             , protocolID: "<%=protocolID.ClientID%>"
             , nihOnly: "<%=nihOnly.ClientID%>"
-        }
+        };
     
         $(document).ready(function() {
             $(".groupedCheckBoxList").groupedCheckBoxList();
@@ -294,7 +294,7 @@
                                         </span>
                                         <asp:Button ID="institutionClearAll" runat="server" Text="Clear All"
                                             OnClick="InstutionListClearAll_ClickHandler" 
-                                            OnClientClick="$('#' + ids.institution)deletelist('clearAll');return false;"
+                                            OnClientClick="$('#' + ids.institution).deletelist('clearAll');return false;"
                                             CssClass="button reset" />
                                     </div>
                                 </div>
@@ -507,7 +507,7 @@
                         </span>
                         <asp:Button ID="investigatorListAddButtonClearAll" runat="server" Text="Clear All"
                             OnClick="InvestigatorListClearAll_ClickHandler" 
-                            OnClientClick="$('#' + ids.investigator).deletelist('clearAll);return false;"
+                            OnClientClick="$('#' + ids.investigator).deletelist('clearAll');return false;"
                             CssClass="button reset" />
                     </div>
                 </div>
