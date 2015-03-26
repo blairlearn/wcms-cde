@@ -73,7 +73,14 @@ namespace CancerGov.Web.SnippetTemplates
                 string rawSearchID = Strings.Clean(Request.Params["protocolsearchid"]);
                 int iProtocolSearchID = Strings.ToInt(rawSearchID);
 
-                if (!string.IsNullOrEmpty(rawSearchID) &&iProtocolSearchID > 0)
+                if (string.IsNullOrEmpty(rawSearchID))
+                {
+                    // No protocol search was specified, so collapse all display areas
+                    treatmentTypeAreaExpanded.Value = COLLAPSED;
+                    trialStatusExpanded.Value = COLLAPSED;
+                    //trialSponsorExpanded.Value = COLLAPSED;
+                }
+                else if (iProtocolSearchID > 0)
                 {
                     try
                     {
@@ -84,6 +91,11 @@ namespace CancerGov.Web.SnippetTemplates
                         NCI.Logging.Logger.LogError("", "CTSearchManager.LoadSavedCriteria", NCIErrorLevel.Error, ex);
                         this.RaiseErrorPage("InvalidSearchID");
                     }
+
+                    // A protocol search was specified, so expand all display areas
+                    treatmentTypeAreaExpanded.Value = EXPANDED;
+                    trialStatusExpanded.Value = EXPANDED;
+                    //trialSponsorExpanded.Value = EXPANDED;
                 }
                 else
                 {

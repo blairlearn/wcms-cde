@@ -192,7 +192,7 @@ function InitializeDrugInterventionBox() {
 
 	if ($('#'+ids.treatmentTypeAreaExpanded).prop('value') === 'N') {
 		$('#showDrugSearchOptionsButton').show();
-		$('#interventionTable').hide();
+		$('#interventionArea').hide();
 	} else {
 		showDrugInterventionOptions();
 	}
@@ -200,7 +200,7 @@ function InitializeDrugInterventionBox() {
 
 function showDrugInterventionOptions() {
 	$('#showDrugSearchOptionsButton').hide();
-	$('#interventionTable').show();
+	$('#interventionArea').show();
 	$('#'+ids.treatmentTypeAreaExpanded).prop('value', 'Y');
 }
 
@@ -269,7 +269,7 @@ function showInterventionList() {
 function InitializeTrialStatusBox() {
 	if ($('#'+ids.trialStatusExpanded).prop('value') === 'N') {
 		$('#showTrialStatusSearchOptionsButton').show();
-		$('#trialStatusTable').hide();
+		$('#trialStatusArea').hide();
 	} else {
 		showTrialStatusSearchOptions();
 	}
@@ -277,7 +277,7 @@ function InitializeTrialStatusBox() {
 
 function showTrialStatusSearchOptions() {
 	$('#showTrialStatusSearchOptionsButton').hide();
-	$('#trialStatusTable').show();
+	$('#trialStatusArea').show();
 	$('#'+ids.trialStatusExpanded).prop('value', 'Y');
 }
 

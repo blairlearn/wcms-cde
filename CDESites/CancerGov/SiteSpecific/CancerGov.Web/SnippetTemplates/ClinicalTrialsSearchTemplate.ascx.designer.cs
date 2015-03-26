@@ -239,6 +239,15 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.CheckBox nihOnly;
         
         /// <summary>
+        /// treatmentTypeAreaExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden treatmentTypeAreaExpanded;
+        
+        /// <summary>
         /// trialType control.
         /// </summary>
         /// <remarks>
@@ -246,6 +255,24 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::NCI.Web.UI.WebControls.FormControls.AccessibleCheckBoxList trialType;
+        
+        /// <summary>
+        /// drugListArea control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl drugListArea;
+        
+        /// <summary>
+        /// drugListExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField drugListExpanded;
         
         /// <summary>
         /// drugListAllOrAny control.
@@ -318,6 +345,15 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtKeywords;
+        
+        /// <summary>
+        /// trialStatusExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden trialStatusExpanded;
         
         /// <summary>
         /// trialStatus control.
