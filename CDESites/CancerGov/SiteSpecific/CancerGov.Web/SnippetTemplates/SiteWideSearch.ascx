@@ -65,13 +65,13 @@
                                     NavigateUrl='<%# Eval("Url") %>'
                                     Text='<%# Eval("Title") %>' />
                                 </div>
-                                <div>
+                                <div class="description">
+		                            <%# Eval("Description") %>
+		                        </div> 
+		                        <div>
 		                            <cite class="url">
 		                            <%# Eval("DisplayUrl") %>
 		                            </cite>
-		                        </div>
-		                        <div class="description">
-		                            <%# Eval("Description") %>
 		                        </div>
 		                    </li>                    
                         </Template>		                    
