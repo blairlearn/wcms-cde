@@ -78,7 +78,7 @@ namespace CancerGov.Web.SnippetTemplates
                     // No protocol search was specified, so collapse all display areas
                     treatmentTypeAreaExpanded.Value = COLLAPSED;
                     trialStatusExpanded.Value = COLLAPSED;
-                    //trialSponsorExpanded.Value = COLLAPSED;
+                    trialSponsorExpanded.Value = COLLAPSED;
                 }
                 else if (iProtocolSearchID > 0)
                 {
@@ -95,7 +95,7 @@ namespace CancerGov.Web.SnippetTemplates
                     // A protocol search was specified, so expand all display areas
                     treatmentTypeAreaExpanded.Value = EXPANDED;
                     trialStatusExpanded.Value = EXPANDED;
-                    //trialSponsorExpanded.Value = EXPANDED;
+                    trialSponsorExpanded.Value = EXPANDED;
                 }
                 else
                 {
@@ -714,7 +714,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         private void FillInstitutionSelectBox(CTSearchDefinition savedSearch)
         {
-            //bool showAsCollapsed = true;
+            bool showAsCollapsed = true;
 
             /// We only initialize the hospital list to an expanded state if
             ///     a) This is an existing search.
@@ -724,19 +724,19 @@ namespace CancerGov.Web.SnippetTemplates
                 savedSearch.LocationSearchType == LocationSearchType.Institution &&
                 savedSearch.LocationInstitutions.Count > 0)
             {
-            //    showAsCollapsed = false;
-            //}
+                showAsCollapsed = false;
+            }
 
-            //if (showAsCollapsed)
-            //
-            //    institutionListExpanded.Value = COLLAPSED;
-            //    hospitalBox.Style.Add(HtmlTextWriterStyle.Display, "none");
-            //    institutionListSubBox.Style.Add(HtmlTextWriterStyle.Display, "none");
-            //}
-            //else
-            //{
-                //showInstitutionListButton.Style.Add(HtmlTextWriterStyle.Display, "none");
-                //institutionListExpanded.Value = EXPANDED;
+            if (showAsCollapsed)
+            {
+                institutionListExpanded.Value = COLLAPSED;
+                hospitalLocationFieldset.Style.Add(HtmlTextWriterStyle.Display, "none");
+                institutionListSubBox.Style.Add(HtmlTextWriterStyle.Display, "none");
+            }
+            else
+            {
+                showInstitutionListButton.Style.Add(HtmlTextWriterStyle.Display, "none");
+                institutionListExpanded.Value = EXPANDED;
 
                 // Create a checksum for each name and append it to the values to assure
                 // strings aren't altered.  This allows us to use the same codepath for building

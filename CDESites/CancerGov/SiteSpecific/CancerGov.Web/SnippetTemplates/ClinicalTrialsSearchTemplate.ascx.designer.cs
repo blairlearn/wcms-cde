@@ -149,6 +149,24 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl hospitalLocationFieldset;
         
         /// <summary>
+        /// showInstitutionListButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton showInstitutionListButton;
+        
+        /// <summary>
+        /// institutionListExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden institutionListExpanded;
+        
+        /// <summary>
         /// institutionid control.
         /// </summary>
         /// <remarks>
@@ -383,6 +401,15 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.CheckBox newOnly;
         
         /// <summary>
+        /// trialSponsorExpanded control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden trialSponsorExpanded;
+        
+        /// <summary>
         /// lblProtocolID control.
         /// </summary>
         /// <remarks>
@@ -410,6 +437,15 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::NCI.Web.UI.WebControls.FormControls.AccessibleCheckBoxList sponsor;
         
         /// <summary>
+        /// trialInvestigatorsRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trialInvestigatorsRow;
+        
+        /// <summary>
         /// investigatorid control.
         /// </summary>
         /// <remarks>
@@ -435,6 +471,15 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button investigatorListAddButtonClearAll;
+        
+        /// <summary>
+        /// trialLeadOrganizationRow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl trialLeadOrganizationRow;
         
         /// <summary>
         /// leadOrgid control.

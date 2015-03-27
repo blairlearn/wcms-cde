@@ -159,8 +159,8 @@ function UpdateLocationDisplay(event) {
 
 function InitializeInstitutionListSubBox() {
 	if ($('#' + ids.institutionListExpanded).prop('value') === 'N') {
-		$('+' + ids.showInstitutionListButton).show();
-		$('+' + ids.institutionListSubBox).hide();
+		$('#' + ids.showInstitutionListButton).show();
+		$('#' + ids.institutionListSubBox).hide();
 		$('#' + ids.showInstitutionListButton).on('click', function(e) { InstitutionListButtonClickHandler(e); });
 	} else {
 		showInstitutionList();
@@ -289,7 +289,7 @@ function InitializeTrialSponsorBox() {
 
 	if ($('#'+ids.trialSponsorExpanded).prop('value') === 'N') {
 		$('#showTrialSponsorSearchOptionsButton').show();
-		$('#trialSponsorTable', '#'+ids.trialInvestigatorsRow, '#'+ids.trialLeadOrganizationRow).hide();
+		$('#trialSponsorArea, #' +ids.trialInvestigatorsRow + ', #' + ids.trialLeadOrganizationRow).hide();
 	} else {
 		showTrialSponsorSearchOptions();
 	}
@@ -351,6 +351,6 @@ function showLeadOrgList() {
 
 function showTrialSponsorSearchOptions() {
 	$('#showTrialSponsorSearchOptionsButton').hide();
-	$('#trialSponsorTable', '#'+ids.trialInvestigatorsRow, '#'+ids.trialLeadOrganizationRow).show();
+	$('#trialSponsorArea, #' + ids.trialInvestigatorsRow + ', #' + ids.trialLeadOrganizationRow).show();
 	$('#'+ids.trialSponsorExpanded).prop('value', 'Y');
 }

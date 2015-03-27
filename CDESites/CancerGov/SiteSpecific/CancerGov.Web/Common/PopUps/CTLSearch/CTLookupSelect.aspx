@@ -29,7 +29,7 @@
 		                }
 
 		                parentDeleteList.deletelist('addItem', deleteListItem);
-		                //RevealParentListArea('<%=Request.Params["fld"]%>');
+		                RevealParentListArea('<%=Request.Params["fld"]%>');
 		            }
 		        }
 

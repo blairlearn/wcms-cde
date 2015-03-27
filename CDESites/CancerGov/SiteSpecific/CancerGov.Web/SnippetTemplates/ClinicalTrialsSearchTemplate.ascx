@@ -163,7 +163,11 @@
             , investigator: "<%=investigator.ClientID%>"
             , leadOrg: "<%=leadOrg.ClientID%>"
             , drug: "<%=drug.ClientID%>"
+
             , institution: "<%=institution.ClientID%>"
+            , institutionListExpanded: "<%=institutionListExpanded.ClientID %>"
+            , institutionListSubBox: "<%=institutionListSubBox.ClientID %>"
+            , showInstitutionListButton: "<%=showInstitutionListButton.ClientID %>"
 
             , hospitalLocationButton: "<%=hospitalLocationButton.ClientID %>"
             , zipCodeLocationButton: "<%=zipCodeLocationButton.ClientID %>"
@@ -197,6 +201,10 @@
 
             , trialStatusExpanded: "<%=trialStatusExpanded.ClientID %>"
 
+            , trialSponsorExpanded: "<%=trialSponsorExpanded.ClientID %>"
+            , trialInvestigatorsRow: "<%=trialInvestigatorsRow.ClientID %>"
+            , trialLeadOrganizationRow: "<%=trialLeadOrganizationRow.ClientID %>"
+
         };
     
         $(document).ready(function() {
@@ -215,7 +223,7 @@
     <fieldset aria-labelledby="legend-condition">
         <div class="row">
             <div class="medium-4 columns">
-                <asp:Label CssClass="label" ID="lblCancerType" AssociatedControlID="ddlCancerType" runat="server">Cancer Type/Condition</asp:Label>
+                <asp:Label CssClass="field" ID="lblCancerType" AssociatedControlID="ddlCancerType" runat="server">Cancer Type/Condition</asp:Label>
             </div>
             <div class="medium-7 left columns">
                  <asp:DropDownList 
@@ -289,6 +297,8 @@
                             <div class="column">
                                 <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
                                 <div>
+                                    <button id="showInstitutionListButton" runat="server">Choose From List</button>
+                                    <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
                                     <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
                                     <div id="institutionListSubBox" runat="server">
                                         <cancergov:deletelist id="institution" runat="server" 
@@ -305,6 +315,11 @@
                                             CssClass="button reset" />
                                     </div>
                                 </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        InitializeInstitutionListSubBox();
+                                    });
+                                </script>
                             </div>
                         </fieldset>
                         <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" role="region">
@@ -503,13 +518,19 @@
     <fieldset aria-labelledby="legend-trialsponsor">
         <div class="row">
             <div id="legend-trialsponsor" class="medium-4 columns legend">Trial ID/Sponsor</div>
-            <div class="medium-7 columns">Search by protocol ID, sponsor, investigators, lead organization/cooperative group, or special category</div>
-            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-        </div>        
-        <div class="collapsible">
+            <div class="medium-1 small-1 columns right"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="medium-7 small-11 columns">
+                Search by protocol ID, sponsor, investigators, lead organization/cooperative group, or special category
+                <div id="showTrialSponsorSearchOptionsButton" class="show-criteria-link" style="display: none;">
+                    <a class="clinicaltrials-expansionLink" href="javascript:showTrialSponsorSearchOptions()">
+                        Show Search Options</a></div>
+                <input type="hidden" id="trialSponsorExpanded" runat="server" />
+            </div>
+        </div>
+        <div id="trialSponsorArea" class="collapsible">
             <div>
                 <div class="row">
-                    <div class="medium-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID" CssClass="label" >Protocol ID</asp:Label></div>
+                    <div class="medium-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID" CssClass="field" >Protocol ID</asp:Label></div>
                     <div class="medium-7 left columns">
                         <div class="row">Separate multiple IDs with commas or semicolon</div>
                         <div class="row"><asp:TextBox ID="protocolID" Width="100%" MaxLength="50" runat="server" /></div>
@@ -524,7 +545,7 @@
                         CssClass="scrolling-list roundy-box groupedCheckBoxList"
                      /></div>
             </div>
-            <div class="row">
+            <div id="trialInvestigatorsRow" runat="server" class="row">
                 <div class="medium-4 columns"><label class="field">Trial Investigators</label></div>
                 <div class="medium-7 left columns">
                     <div id="investigatorListSubBox">
@@ -545,7 +566,7 @@
                     </div>
                 </div>
             </div>        
-            <div class="row">
+            <div id="trialLeadOrganizationRow" runat="server" class="row">
                 <div class="medium-4 columns"><label class="field">Lead Organization/ Cooperative Group</label></div>
                 <div class="medium-7 left columns">
                     <div id="leadOrgListSubBox">
@@ -574,6 +595,8 @@
                      /></div>
             </div>        
         </div>
+        
+        <script language="javascript" type="text/javascript">$(document).ready(function() { InitializeTrialSponsorBox(); });</script>
     </fieldset>
     <%-- ................... END Trial ID/Sponsor ................... --%>
 
