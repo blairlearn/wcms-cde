@@ -1258,11 +1258,12 @@
 })(jQuery);
 
 // AddThis overrides the 'onclick' event handlers, so re-bind analytics after AddThis loads.
-addthis.addEventListener('addthis.ready', function() {
-    var atBtns = document.getElementsByClassName('add_this_btn');
-    for (var i = 0; i < atBtns.length; i++) {
-        atBtns[i].addEventListener('click', function(e) {
-            NCIAnalytics.BookmarkShareClick(this);
+(function($) {
+    $('.add_this_btn').each(function() {
+        var thisBtn = this;
+        var $this = $(this);
+        $this.parent().on('click', $this, function(e) {
+            NCIAnalytics.BookmarkShareClick(thisBtn);
         });
-    } 
-});
+    });
+})(jQuery);
