@@ -544,7 +544,7 @@
                     <div class="medium-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID" CssClass="field" >Protocol ID</asp:Label></div>
                     <div class="medium-7 left columns">
                         <div class="row">Separate multiple IDs with commas or semicolon</div>
-                        <div class="row"><asp:TextBox ID="protocolID" Width="100%" MaxLength="50" runat="server" /></div>
+                        <div class="row"><asp:TextBox ID="protocolID" MaxLength="50" runat="server" /></div>
                     </div>
                 </div>                       
             </div>
