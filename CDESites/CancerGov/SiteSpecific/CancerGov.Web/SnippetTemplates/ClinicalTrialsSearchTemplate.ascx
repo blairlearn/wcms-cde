@@ -200,10 +200,15 @@
             , drugListExpanded: "<%=drugListExpanded.ClientID %>"
 
             , trialStatusExpanded: "<%=trialStatusExpanded.ClientID %>"
+            , investigatorListExpanded: "<%=investigatorListExpanded.ClientID %>"
 
             , trialSponsorExpanded: "<%=trialSponsorExpanded.ClientID %>"
             , trialInvestigatorsRow: "<%=trialInvestigatorsRow.ClientID %>"
             , trialLeadOrganizationRow: "<%=trialLeadOrganizationRow.ClientID %>"
+            , leadOrgListExpanded: "<%=leadOrgListExpanded.ClientID %>"
+
+            , interventionListArea: "<%=interventionListArea.ClientID %>"
+            , interventionListExpanded: "<%=interventionListExpanded.ClientID %>"
 
         };
     
@@ -222,9 +227,10 @@
     <%-- --------------------- Begin Cancer Types ------------------------ --%>
     <fieldset aria-labelledby="legend-condition">
         <div class="row">
-            <div class="medium-4 columns">
+            <div class="medium-4 small-11 columns">
                 <asp:Label CssClass="field" ID="lblCancerType" AssociatedControlID="ddlCancerType" runat="server">Cancer Type/Condition</asp:Label>
             </div>
+            <div class="medium-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="medium-7 left columns">
                  <asp:DropDownList 
                     ID="ddlCancerType" 
@@ -236,7 +242,6 @@
                     ValidationGroup="v1">
                 </asp:DropDownList>
             </div>
-            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>
                 
         <div class="row">
@@ -258,7 +263,8 @@
     <%-- ************************ Location **************************** --%>
     <fieldset id="locationFieldset" aria-labelledby="legend-location">
         <div class="row">
-            <div id="legend-location" class="medium-4 columns legend">Location</div>
+            <div id="legend-location" class="medium-4 small-11 columns legend">Location</div>
+            <div class="medium-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="medium-7 columns cts-location roundy-box">
                 <div class="row">
                     <div class="column">
@@ -297,7 +303,7 @@
                             <div class="column">
                                 <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
                                 <div>
-                                    <button id="showInstitutionListButton" runat="server">Choose From List</button>
+                                    <button id="showInstitutionListButton" class="action" runat="server">Choose From List</button>
                                     <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
                                     <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
                                     <div id="institutionListSubBox" runat="server">
@@ -348,7 +354,6 @@
                     </div>                       
                 </div>
             </div>
-            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>
     </fieldset>
     <%-- ************************* End Location ******************************** --%>
@@ -358,9 +363,9 @@
     <%-- ------------------------- Trial/Treatment Type ------------------------ --%>
     <fieldset aria-labelledby="legend-trialtreatment">
         <div class="row">
-            <div id="legend-trialtreatment" class="medium-4 columns legend">Trial/Treatment Type</div>
+            <div id="legend-trialtreatment" class="medium-4 small-11 columns legend">Trial/Treatment Type</div>
             <div class="medium-1 small-1 columns right"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-            <div class="medium-7 small-11 columns">
+            <div class="medium-7 columns">
                 Search by trial type, drug, or treatment/intervention
                 
                 
@@ -392,7 +397,10 @@
                     <label class="field">Drug</label>
                 </div>
                 <div class="medium-7 left columns">
-                    <asp:HiddenField runat="server" ID="drugListExpanded" />
+                    <div id="showDrugListButtonArea" style="display: none;">
+                        <button class="action" id="showDrugListButton">Choose From List</button>
+                    </div>
+                    <asp:HiddenField runat="server" ID="drugListExpanded" value="N"/>
                     <div id="drugListSubBox">
                         Find trials that include<br />
                         <asp:RadioButtonList CssClass="radio" ID="drugListAllOrAny" RepeatDirection="Vertical" 
@@ -417,12 +425,15 @@
                 </div>
             </div>
             
-            <div class="row">
+            <div class="row" id="interventionListArea" runat="server">
                 <div class="medium-4 columns">
                     <label class="field">Treatment/Intervention</label>
                 </div>
                 <div class="medium-7 left columns">
                     <em>Examples: chemotherapy, adjuvant therapy, colonoscopy</em><br />
+                    <div id="showInterventionListButtonArea" style="display: none;">
+                        <button id="showInterventionListButton" class="action">Choose From List</button></div>
+                    <asp:HiddenField runat="server" ID="interventionListExpanded" value="N"/>
                     <div id="interventionListSubBox">
                         <input id="interventionid" type="hidden" size="18" name="interventionid" runat="server" />
                         <cancergov:deletelist id="intervention" 
@@ -455,15 +466,15 @@
     <%-- *******************  Keywords/Phrase ****************** --%>
     <fieldset aria-labelledby="legend-keyword">
         <div class="row">
-            <div id="legend-keyword" class="medium-4 columns legend">Keywords/Phrases</div>
+            <div id="legend-keyword" class="medium-4 small-11 columns legend">Keywords/Phrases</div>
+            <div class="medium-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="medium-7 columns">
                 <div class="row">Search by word or phrase (use quotation marks with phrases)</div>
                 <div class="row">
-                <asp:TextBox id="txtKeywords" size="50" maxlength="100"
+                <asp:TextBox id="txtKeywords" maxlength="100"
                     name="txtKeywords" runat="server" />
                 </div>
             </div>
-            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
         </div>
     </fieldset>
     <%-- *******************  End Keywords/Phrase ****************** --%>
@@ -472,15 +483,15 @@
     <%-- =================== Trial Status/Phase ==================== --%>
     <fieldset aria-labelledby="legend-trialstatus">
         <div class="row">
-            <div id="legend-trialstatus" class="medium-4 columns legend">Trial Status/Phase</div>
+            <div id="legend-trialstatus" class="medium-4 small-11 columns legend">Trial Status/Phase</div>
+            <div class="medium-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="medium-7 columns">
                 Search by trial status, phase, or trials added in the last 30 days
                 <div id="showTrialStatusSearchOptionsButton" class="show-criteria-link" style="display: none;">
                     <a href="javascript:showTrialStatusSearchOptions()">
                         Show Search Options</a></div>
                 <input type="hidden" id="trialStatusExpanded" runat="server" />
-            </div>
-            <div class="medium-1 columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            </div>            
         </div>
         <div id="trialStatusArea" class="collapsible">
             <div class="row">
@@ -517,9 +528,9 @@
     <%-- ................... Trial ID/Sponsor ....................... --%>
     <fieldset aria-labelledby="legend-trialsponsor">
         <div class="row">
-            <div id="legend-trialsponsor" class="medium-4 columns legend">Trial ID/Sponsor</div>
+            <div id="legend-trialsponsor" class="medium-4 small-11 columns legend">Trial ID/Sponsor</div>
             <div class="medium-1 small-1 columns right"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-            <div class="medium-7 small-11 columns">
+            <div class="medium-7 columns">
                 Search by protocol ID, sponsor, investigators, lead organization/cooperative group, or special category
                 <div id="showTrialSponsorSearchOptionsButton" class="show-criteria-link" style="display: none;">
                     <a class="clinicaltrials-expansionLink" href="javascript:showTrialSponsorSearchOptions()">
@@ -548,6 +559,9 @@
             <div id="trialInvestigatorsRow" runat="server" class="row">
                 <div class="medium-4 columns"><label class="field">Trial Investigators</label></div>
                 <div class="medium-7 left columns">
+                    <div id="showInvestigatorListButtonArea" style="display: none;">
+                        <button id="showInvestigatorListButton" class="action">Choose From List</button></div>
+                    <asp:HiddenField runat="server" ID="investigatorListExpanded" value="N"/>
                     <div id="investigatorListSubBox">
                         Trial Investigators Selected:<br />
                         <input id="investigatorid" type="hidden" size="18" name="investigatorid" runat="server" />
@@ -569,6 +583,9 @@
             <div id="trialLeadOrganizationRow" runat="server" class="row">
                 <div class="medium-4 columns"><label class="field">Lead Organization/ Cooperative Group</label></div>
                 <div class="medium-7 left columns">
+                    <div id="showLeadOrgListButtonArea" style="display: none;">
+                        <button id="showLeadOrgListButton" class="action">Choose From List</button></div>
+                    <asp:HiddenField runat="server" ID="leadOrgListExpanded" value="N"/>
                     <div id="leadOrgListSubBox">
                         Lead Organizations or Cooperative Groups Selected:<br />
                         <input id="leadOrgid" type="hidden" size="18" name="leadOrgid" runat="server" />

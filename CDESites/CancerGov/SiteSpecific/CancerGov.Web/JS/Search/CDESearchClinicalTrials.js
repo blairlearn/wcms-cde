@@ -209,7 +209,7 @@ function showDrugInterventionOptions() {
 function InitializeDrugListSubBox() {
 	$('#'+ids.drugListArea).show(); //Make visible.
 
-	if ($('#'+ids.drugListExpanded).value === 'N') {
+	if ($('#'+ids.drugListExpanded).prop('value') === 'N') {
 		$('#showDrugListButtonArea').show();
 		$('#drugListSubBox').hide();
 		$('#showDrugListButton').on('click', function(e) { DrugListButtonClickHandler(e); });

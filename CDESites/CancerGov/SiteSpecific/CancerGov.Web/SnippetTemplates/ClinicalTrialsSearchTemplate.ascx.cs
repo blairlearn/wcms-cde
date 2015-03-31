@@ -603,7 +603,7 @@ namespace CancerGov.Web.SnippetTemplates
             if (savedSearch != null)
             {
                 // CTSearchDefinition guarantees that InterventionList will never be null.
-                FillDeletableSelectionList(savedSearch.InterventionList, intervention);//, interventionListExpanded);
+                FillDeletableSelectionList(savedSearch.InterventionList, intervention, interventionListExpanded);
             }
         }
 
@@ -612,7 +612,7 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         /// <param name="savedSearch"></param>
         /// <param name="list"></param>
-        private void FillDeletableSelectionList(IList<KeyValuePair<string, int>> selections, DeleteList list)//, HiddenField expandedState)
+        private void FillDeletableSelectionList(IList<KeyValuePair<string, int>> selections, DeleteList list, HiddenField expandedState)
         {
             // If there are values, draw the list in an expanded condition.
             if (selections.Count > 0)
@@ -621,11 +621,11 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     list.Items.Add(new ListItem(item.Key.Trim(), HashMaster.SaltedHashCompoundString(item.Key.Trim(), item.Value.ToString())));
                 }
-                // expandedState.Value = EXPANDED;
+                expandedState.Value = EXPANDED;
             }
             else
             {
-                // expandedState.Value = COLLAPSED;
+                expandedState.Value = COLLAPSED;
             }
         }
 
@@ -641,16 +641,16 @@ namespace CancerGov.Web.SnippetTemplates
 
         private void FillTrialInvestigatorBox(CTSearchDefinition savedSearch)
         {
-            //investigatorListExpanded.Value = COLLAPSED;
+            investigatorListExpanded.Value = COLLAPSED;
             if (savedSearch != null)
             {
                 // CTSearchDefinition guarantees that InvestigatorList will never be null.
-                FillDeletableSelectionList(savedSearch.InvestigatorList, investigator);//, investigatorListExpanded);
+                FillDeletableSelectionList(savedSearch.InvestigatorList, investigator, investigatorListExpanded);
             }
 
             // If the list is still collapsed, hide it.
-            //if (investigatorListExpanded.Value == COLLAPSED)
-            //    trialInvestigatorsRow.Style.Add(HtmlTextWriterStyle.Display, "none");
+            if (investigatorListExpanded.Value == COLLAPSED)
+                trialInvestigatorsRow.Style.Add(HtmlTextWriterStyle.Display, "none");
         }
 
         /// <summary>
@@ -665,16 +665,16 @@ namespace CancerGov.Web.SnippetTemplates
 
         private void FillLeadOrganzationBox(CTSearchDefinition savedSearch)
         {
-            //leadOrgListExpanded.Value = COLLAPSED;
+            leadOrgListExpanded.Value = COLLAPSED;
             if (savedSearch != null)
             {
                 // CTSearchDefinition guarantees that LeadOrganizationList will never be null.
-                FillDeletableSelectionList(savedSearch.LeadOrganizationList, leadOrg);//, leadOrgListExpanded);
+                FillDeletableSelectionList(savedSearch.LeadOrganizationList, leadOrg, leadOrgListExpanded);
             }
 
             // If the list is still collapsed, hide it.
-            //if (leadOrgListExpanded.Value == COLLAPSED)
-            //    trialLeadOrganizationRow.Style.Add(HtmlTextWriterStyle.Display, "none");
+            if (leadOrgListExpanded.Value == COLLAPSED)
+                trialLeadOrganizationRow.Style.Add(HtmlTextWriterStyle.Display, "none");
         }
 
         /// <summary>
@@ -689,17 +689,17 @@ namespace CancerGov.Web.SnippetTemplates
 
         private void FillDrugSelectionList(CTSearchDefinition savedSearch)
         {
-            //drugListExpanded.Value = COLLAPSED;
+            drugListExpanded.Value = COLLAPSED;
             if (savedSearch != null)
             {
                 // CTSearchDefinition guarantees that DrugList will never be null.
-                FillDeletableSelectionList(savedSearch.DrugList, drug);//, drugListExpanded);
+                FillDeletableSelectionList(savedSearch.DrugList, drug, drugListExpanded);
                 drugListAllOrAny.SelectedValue = savedSearch.RequireAllDrugsMatch ? "all" : "any";
             }
 
             // If the list is still collapsed, hide it.
-            //if (drugListExpanded.Value == COLLAPSED)
-            //    drugListArea.Style.Add(HtmlTextWriterStyle.Display, "none");
+            if (drugListExpanded.Value == COLLAPSED)
+                drugListArea.Style.Add(HtmlTextWriterStyle.Display, "none");
         }
 
         /// <summary>
