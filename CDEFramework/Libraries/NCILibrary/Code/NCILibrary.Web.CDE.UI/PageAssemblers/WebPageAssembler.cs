@@ -487,7 +487,7 @@ namespace NCI.Web.CDE.UI
         protected virtual void InsertBodyTagAttributes()
         {
 
-            foreach (HtmlContainerControl htmlCtl in this.FindControlByType<HtmlContainerControl>())
+            foreach (HtmlContainerControl htmlCtl in this.FindAllControlsByType<HtmlContainerControl>())
             {
                 string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
                 if (htmlTag.Equals("body"))
