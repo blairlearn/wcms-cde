@@ -227,11 +227,11 @@
     <%-- --------------------- Begin Cancer Types ------------------------ --%>
     <fieldset aria-labelledby="legend-condition">
         <div class="row">
-            <div class="medium-4 small-11 columns">
+            <div class="large-4 small-11 columns">
                 <asp:Label CssClass="field" ID="lblCancerType" AssociatedControlID="ddlCancerType" runat="server">Cancer Type/Condition</asp:Label>
             </div>
-            <div class="medium-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-            <div class="medium-7 left columns">
+            <div class="large-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-7 left columns">
                  <asp:DropDownList 
                     ID="ddlCancerType" 
                     runat="server" 
@@ -245,10 +245,10 @@
         </div>
                 
         <div class="row">
-            <div class="medium-4 columns">
+            <div class="large-4 columns">
                 <label class="field">Stage/Subtype</label>
             </div>
-            <div class="medium-7 left columns">
+            <div class="large-7 left columns">
                 <CancerGov:AccessibleCheckBoxList 
                     ID="cancerStage"
                     runat="server"
@@ -263,95 +263,85 @@
     <%-- ************************ Location **************************** --%>
     <fieldset id="locationFieldset" aria-labelledby="legend-location">
         <div class="row">
-            <div id="legend-location" class="medium-4 small-11 columns legend">Location</div>
-            <div class="medium-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-            <div class="medium-7 columns cts-location roundy-box">
-                <div class="row">
-                    <div class="column">
-                        <div class="row">
-                            <div class="large-6 columns">
-                                <div class="radio"><asp:RadioButton ID="zipCodeLocationButton" value="zip" GroupName="LocationChooser" runat="server" Text="Near ZIP Code" /></div>
-                                <div class="radio"><asp:RadioButton ID="cityStateLocationButton" value="city" GroupName="LocationChooser" runat="server" Text="In City/State/Country" /></div>
-                            </div>                       
-                            <div class="large-6 columns">         
-                                <div class="radio"><asp:RadioButton ID="hospitalLocationButton" value="hospital" GroupName="LocationChooser" runat="server" Text="At Hospital/Institution" /></div>
-                                <div class="radio"><asp:RadioButton ID="atNihLocationButton" value="nih" GroupName="LocationChooser" runat="server" Text="At NIH" /></div>
-                            </div>                                
+            <div id="legend-location" class="large-4 small-11 columns legend">Location</div>
+            <div class="large-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-7 columns">
+                <div class="cts-location roundy-box">
+                    <div class="row">
+                        <div class="large-6 columns">
+                            <div class="radio"><asp:RadioButton ID="zipCodeLocationButton" value="zip" GroupName="LocationChooser" runat="server" Text="Near ZIP Code" /></div>
+                            <div class="radio"><asp:RadioButton ID="cityStateLocationButton" value="city" GroupName="LocationChooser" runat="server" Text="In City/State/Country" /></div>
+                        </div>                       
+                        <div class="large-6 columns">         
+                            <div class="radio"><asp:RadioButton ID="hospitalLocationButton" value="hospital" GroupName="LocationChooser" runat="server" Text="At Hospital/Institution" /></div>
+                            <div class="radio"><asp:RadioButton ID="atNihLocationButton" value="nih" GroupName="LocationChooser" runat="server" Text="At NIH" /></div>
+                        </div>                                
+                    </div>
+                    <fieldset ID="zipCodeLocationFieldset" runat="server" class="roundy-box row" role="region">
+                        <div class="legend" id="legend-location-zip">Near ZIP Code</div>
+                        <div>
+                            <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat="server">Show trials located within:</asp:Label>
+                            <div class="row">
+                                <asp:DropDownList ID="zipCodeProximity" runat="server">
+                                    <asp:ListItem Value="20">20 miles</asp:ListItem>
+                                    <asp:ListItem Value="50">50 miles</asp:ListItem>
+                                    <asp:ListItem Value="100" Selected="True">100 miles</asp:ListItem>
+                                    <asp:ListItem Value="200">200 miles</asp:ListItem>
+                                    <asp:ListItem Value="500">500 miles</asp:ListItem>
+                                </asp:DropDownList>
+                                of
+                                <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code</asp:Label>
+                                <asp:TextBox ID="zipCode" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
+                            </div>
+                            <!-- Add validator -->
                         </div>
-                        <fieldset ID="zipCodeLocationFieldset" runat="server" class="roundy-box row" role="region">
-                            <div class="column">
-                                <div class="legend" id="legend-location-zip">Near ZIP Code</div>
-                                <div>
-                                    <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat="server">Show trials located within:</asp:Label>
-                                    <div class="row">
-                                        <asp:DropDownList ID="zipCodeProximity" runat="server">
-                                            <asp:ListItem Value="20">20 miles</asp:ListItem>
-                                            <asp:ListItem Value="50">50 miles</asp:ListItem>
-                                            <asp:ListItem Value="100" Selected="True">100 miles</asp:ListItem>
-                                            <asp:ListItem Value="200">200 miles</asp:ListItem>
-                                            <asp:ListItem Value="500">500 miles</asp:ListItem>
-                                        </asp:DropDownList>
-                                        of
-                                        <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code</asp:Label>
-                                        <asp:TextBox ID="zipCode" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
-                                    </div>
-                                    <!-- Add validator -->
-                                </div>
+                    </fieldset>
+                    <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row" role="region">
+                        <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
+                        <div>
+                            <button id="showInstitutionListButton" class="action" runat="server">Choose From List</button>
+                            <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
+                            <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
+                            <div id="institutionListSubBox" runat="server">
+                                <cancergov:deletelist id="institution" runat="server" 
+                                    emptylisttext="Select &quot;Add More&quot; to see hospital names." />
+                                <span id="institutionAddButton">
+                                    <button class="button action" type="button"
+                                        onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=725px,menubar=no,location=no,height=675px');">
+                                        Add More
+                                    </button>
+                                </span>
+                                <asp:Button ID="institutionClearAll" runat="server" Text="Clear All"
+                                    OnClick="InstutionListClearAll_ClickHandler" 
+                                    OnClientClick="$('#' + ids.institution).deletelist('clearAll');return false;"
+                                    CssClass="button reset" />
                             </div>
-                        </fieldset>
-                        <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row" role="region">
-                            <div class="column">
-                                <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
-                                <div>
-                                    <button id="showInstitutionListButton" class="action" runat="server">Choose From List</button>
-                                    <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
-                                    <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
-                                    <div id="institutionListSubBox" runat="server">
-                                        <cancergov:deletelist id="institution" runat="server" 
-                                            emptylisttext="Select &quot;Add More&quot; to see hospital names." />
-                                        <span id="institutionAddButton">
-                                            <button class="button action" type="button"
-                                                onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=725px,menubar=no,location=no,height=675px');">
-                                                Add More
-                                            </button>
-                                        </span>
-                                        <asp:Button ID="institutionClearAll" runat="server" Text="Clear All"
-                                            OnClick="InstutionListClearAll_ClickHandler" 
-                                            OnClientClick="$('#' + ids.institution).deletelist('clearAll');return false;"
-                                            CssClass="button reset" />
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        InitializeInstitutionListSubBox();
-                                    });
-                                </script>
-                            </div>
-                        </fieldset>
-                        <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" role="region">
-                            <div class="column">
-                                <div class="legend" id="legend-location-citystate">In City/State/Country</div>
-                                <div>                                    
-                                    <label for="<%=country.ClientID%>">Country:</label>
-                                    <select id="country" onchange="country_onChange(this);" name="country" runat="server" />                                
-                                    <label for="<%=city.ClientID%>">City:</label>
-                                    <input id="city" type="text" size="14" name="city" runat="server" />
-                        
-                                    <label>State</label>
-                                    <CancerGov:AccessibleCheckBoxList
-                                        id="state"
-                                        runat="server"
-                                        CssClass="scrolling-list roundy-box groupedCheckBoxList" />                        
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" role="region">
-                            <div class="column">
-                                <div class="legend" id="legend-location-NIH">At NIH</div>
-                                <div><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
-                            </div>
-                        </fieldset>
-                    </div>                       
+                        </div>
+                        <script>
+                            $(document).ready(function() {
+                                InitializeInstitutionListSubBox();
+                            });
+                        </script>
+                    </fieldset>
+                    <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" role="region">
+                        <div class="legend" id="legend-location-citystate">In City/State/Country</div>
+                        <div>                                    
+                            <label for="<%=country.ClientID%>">Country:</label>
+                            <select id="country" onchange="country_onChange(this);" name="country" runat="server" />                                
+                            <label for="<%=city.ClientID%>">City:</label>
+                            <input id="city" type="text" size="14" name="city" runat="server" />
+                
+                            <label>State</label>
+                            <CancerGov:AccessibleCheckBoxList
+                                id="state"
+                                runat="server"
+                                CssClass="scrolling-list roundy-box groupedCheckBoxList" />                        
+                        </div>
+                    </fieldset>
+                    <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" role="region">
+                        <div class="legend" id="legend-location-NIH">At NIH</div>
+                        <div><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
+                    </fieldset>
                 </div>
             </div>
         </div>
@@ -363,9 +353,9 @@
     <%-- ------------------------- Trial/Treatment Type ------------------------ --%>
     <fieldset aria-labelledby="legend-trialtreatment">
         <div class="row">
-            <div id="legend-trialtreatment" class="medium-4 small-11 columns legend">Trial/Treatment Type</div>
-            <div class="medium-1 small-1 columns right"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-            <div class="medium-7 columns">
+            <div id="legend-trialtreatment" class="large-4 small-11 columns legend">Trial/Treatment Type</div>
+            <div class="large-1 small-1 columns right"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-7 columns">
                 Search by trial type, drug, or treatment/intervention
                 
                 
@@ -380,10 +370,10 @@
         </div>        
         <div id="interventionArea" class="collapsible">
             <div class="row">
-                <div class="medium-4 columns">
+                <div class="large-4 columns">
                     <label class="field">Type of Trial</label>
                 </div>
-                <div class="medium-7 left columns">
+                <div class="large-7 left columns">
                     <CancerGov:AccessibleCheckBoxList 
                         ID="trialType" 
                         runat="server" 
@@ -393,16 +383,16 @@
             </div>
 
             <div class="row" id="drugListArea" runat="server">
-                <div class="medium-4 columns">
+                <div class="large-4 columns">
                     <label class="field">Drug</label>
                 </div>
-                <div class="medium-7 left columns">
+                <div class="large-7 left columns">
                     <div id="showDrugListButtonArea" style="display: none;">
                         <button class="action" id="showDrugListButton">Choose From List</button>
                     </div>
                     <asp:HiddenField runat="server" ID="drugListExpanded" value="N"/>
                     <div id="drugListSubBox">
-                        Find trials that include<br />
+                        Find trials that include
                         <asp:RadioButtonList CssClass="radio" ID="drugListAllOrAny" RepeatDirection="Vertical" 
                             RepeatLayout="Flow" runat="server">
                             <asp:ListItem Selected="True" Value="any" Text="Any drugs shown" />
@@ -426,11 +416,11 @@
             </div>
             
             <div class="row" id="interventionListArea" runat="server">
-                <div class="medium-4 columns">
+                <div class="large-4 columns">
                     <label class="field">Treatment/Intervention</label>
                 </div>
-                <div class="medium-7 left columns">
-                    <em>Examples: chemotherapy, adjuvant therapy, colonoscopy</em><br />
+                <div class="large-7 left columns">
+                    <em>Examples: chemotherapy, adjuvant therapy, colonoscopy</em>
                     <div id="showInterventionListButtonArea" style="display: none;">
                         <button id="showInterventionListButton" class="action">Choose From List</button></div>
                     <asp:HiddenField runat="server" ID="interventionListExpanded" value="N"/>
@@ -466,9 +456,9 @@
     <%-- *******************  Keywords/Phrase ****************** --%>
     <fieldset aria-labelledby="legend-keyword">
         <div class="row">
-            <div id="legend-keyword" class="medium-4 small-11 columns legend">Keywords/Phrases</div>
-            <div class="medium-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-            <div class="medium-7 columns">
+            <div id="legend-keyword" class="large-4 small-11 columns legend">Keywords/Phrases</div>
+            <div class="large-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-7 columns">
                 <div class="row">Search by word or phrase (use quotation marks with phrases)</div>
                 <div class="row">
                 <asp:TextBox id="txtKeywords" maxlength="100"
@@ -483,9 +473,9 @@
     <%-- =================== Trial Status/Phase ==================== --%>
     <fieldset aria-labelledby="legend-trialstatus">
         <div class="row">
-            <div id="legend-trialstatus" class="medium-4 small-11 columns legend">Trial Status/Phase</div>
-            <div class="medium-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-            <div class="medium-7 columns">
+            <div id="legend-trialstatus" class="large-4 small-11 columns legend">Trial Status/Phase</div>
+            <div class="large-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-7 columns">
                 Search by trial status, phase, or trials added in the last 30 days
                 <div id="showTrialStatusSearchOptionsButton" class="show-criteria-link" style="display: none;">
                     <a href="javascript:showTrialStatusSearchOptions()">
@@ -495,8 +485,8 @@
         </div>
         <div id="trialStatusArea" class="collapsible">
             <div class="row">
-                <div class="medium-4 columns"><label class="field">Trial Status</label></div>
-                <div class="medium-7 left columns">
+                <div class="large-4 columns"><label class="field">Trial Status</label></div>
+                <div class="large-7 left columns">
                     <asp:RadioButtonList CssClass="radio" runat="server" ID="trialStatus" RepeatDirection="Vertical" RepeatLayout="Flow">
                         <asp:ListItem Value="1" Selected="True">Active (currently accepting patients)</asp:ListItem>
                         <asp:ListItem Value="0">Closed (not accepting patients)</asp:ListItem>
@@ -504,8 +494,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="medium-4 columns"><label class="field">Trial Phase</label></div>
-                <div class="medium-7 left columns">
+                <div class="large-4 columns"><label class="field">Trial Phase</label></div>
+                <div class="large-7 left columns">
                     <CancerGov:AccessibleCheckBoxList
                         ID="trialPhase"
                         runat="server" 
@@ -514,8 +504,8 @@
                 </div>                
             </div>
             <div class="row">
-                <div class="medium-4 columns"><label class="field">New Trials?</label></div>
-                <div class="medium-7 left columns"><div class="checkbox"><asp:CheckBox ID="newOnly" runat="server" Text="Added in last 30 days" /></div></div>
+                <div class="large-4 columns"><label class="field">New Trials?</label></div>
+                <div class="large-7 left columns"><div class="checkbox"><asp:CheckBox ID="newOnly" runat="server" Text="Added in last 30 days" /></div></div>
             </div>        
         </div>
         
@@ -528,9 +518,9 @@
     <%-- ................... Trial ID/Sponsor ....................... --%>
     <fieldset aria-labelledby="legend-trialsponsor">
         <div class="row">
-            <div id="legend-trialsponsor" class="medium-4 small-11 columns legend">Trial ID/Sponsor</div>
-            <div class="medium-1 small-1 columns right"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-            <div class="medium-7 columns">
+            <div id="legend-trialsponsor" class="large-4 small-11 columns legend">Trial ID/Sponsor</div>
+            <div class="large-1 small-1 columns right"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-7 columns">
                 Search by protocol ID, sponsor, investigators, lead organization/cooperative group, or special category
                 <div id="showTrialSponsorSearchOptionsButton" class="show-criteria-link" style="display: none;">
                     <a class="clinicaltrials-expansionLink" href="javascript:showTrialSponsorSearchOptions()">
@@ -541,29 +531,29 @@
         <div id="trialSponsorArea" class="collapsible">
             <div>
                 <div class="row">
-                    <div class="medium-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID" CssClass="field" >Protocol ID</asp:Label></div>
-                    <div class="medium-7 left columns">
+                    <div class="large-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID" CssClass="field" >Protocol ID</asp:Label></div>
+                    <div class="large-7 left columns">
                         <div class="row">Separate multiple IDs with commas or semicolon</div>
                         <div class="row"><asp:TextBox ID="protocolID" MaxLength="50" runat="server" /></div>
                     </div>
                 </div>                       
             </div>
             <div class="row">
-                <div class="medium-4 columns"><label class="field">Sponsor of Trial</label></div>
-                <div class="medium-7 left columns"><CancerGov:AccessibleCheckBoxList 
+                <div class="large-4 columns"><label class="field">Sponsor of Trial</label></div>
+                <div class="large-7 left columns"><CancerGov:AccessibleCheckBoxList 
                         ID="sponsor" 
                         runat="server" 
                         CssClass="scrolling-list roundy-box groupedCheckBoxList"
                      /></div>
             </div>
             <div id="trialInvestigatorsRow" runat="server" class="row">
-                <div class="medium-4 columns"><label class="field">Trial Investigators</label></div>
-                <div class="medium-7 left columns">
+                <div class="large-4 columns"><label class="field">Trial Investigators</label></div>
+                <div class="large-7 left columns">
                     <div id="showInvestigatorListButtonArea" style="display: none;">
                         <button id="showInvestigatorListButton" class="action">Choose From List</button></div>
                     <asp:HiddenField runat="server" ID="investigatorListExpanded" value="N"/>
                     <div id="investigatorListSubBox">
-                        Trial Investigators Selected:<br />
+                        Trial Investigators Selected:
                         <input id="investigatorid" type="hidden" size="18" name="investigatorid" runat="server" />
                         <cancergov:deletelist id="investigator"
                             runat="server" emptylisttext="Select &quot;Add More&quot; to see investigator names." />
@@ -581,13 +571,13 @@
                 </div>
             </div>        
             <div id="trialLeadOrganizationRow" runat="server" class="row">
-                <div class="medium-4 columns"><label class="field">Lead Organization/ Cooperative Group</label></div>
-                <div class="medium-7 left columns">
+                <div class="large-4 columns"><label class="field">Lead Organization/ Cooperative Group</label></div>
+                <div class="large-7 left columns">
                     <div id="showLeadOrgListButtonArea" style="display: none;">
                         <button id="showLeadOrgListButton" class="action">Choose From List</button></div>
                     <asp:HiddenField runat="server" ID="leadOrgListExpanded" value="N"/>
                     <div id="leadOrgListSubBox">
-                        Lead Organizations or Cooperative Groups Selected:<br />
+                        Lead Organizations or Cooperative Groups Selected:
                         <input id="leadOrgid" type="hidden" size="18" name="leadOrgid" runat="server" />
                         <cancergov:deletelist id="leadOrg" 
                             runat="server" emptylisttext="Select &quot;Add More&quot; to see lead organization names." />
@@ -604,8 +594,8 @@
                 </div>
             </div>        
             <div class="row">
-                <div class="medium-4 columns"><label class="field">Special Category</label></div>
-                <div class="medium-7 left columns"><CancerGov:AccessibleCheckBoxList 
+                <div class="large-4 columns"><label class="field">Special Category</label></div>
+                <div class="large-7 left columns"><CancerGov:AccessibleCheckBoxList 
                         ID="specialCategory" 
                         runat="server" 
                         CssClass="scrolling-list roundy-box groupedCheckBoxList"
@@ -618,7 +608,7 @@
     <%-- ................... END Trial ID/Sponsor ................... --%>
 
     <div class="row">
-        <div class="medium-8 columns right">
+        <div class="large-8 columns right">
             <asp:button id="submit" CssClass="submit button" Text="Search" runat="server"
                 OnClick="SubmitButton_Click" />
             <a id="clear" class="reset startover button" href="#" runat="server">Start Over</a>
