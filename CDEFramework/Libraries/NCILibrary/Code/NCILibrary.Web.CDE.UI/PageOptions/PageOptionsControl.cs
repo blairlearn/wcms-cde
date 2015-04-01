@@ -82,7 +82,8 @@ namespace NCI.Web.CDE.UI.WebControls
                 {
                     writer.Write(",\n");
                 }
-                writer.Write("title: \"" + pgInstruction.GetField("add_this_title") + "\"");
+                string titleField = pgInstruction.GetField("add_this_title").Replace("\"", "\\\"");
+                writer.Write("title: \"" + titleField + "\"");
                 multipleConfigItems = true;
             }
             //description
