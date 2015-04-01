@@ -230,7 +230,7 @@
             <div class="large-4 small-11 columns">
                 <asp:Label CssClass="field" ID="lblCancerType" AssociatedControlID="ddlCancerType" runat="server">Cancer Type/Condition</asp:Label>
             </div>
-            <div class="large-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#1" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 left columns">
                  <asp:DropDownList 
                     ID="ddlCancerType" 
@@ -264,7 +264,7 @@
     <fieldset id="locationFieldset" aria-labelledby="legend-location">
         <div class="row">
             <div id="legend-location" class="large-4 small-11 columns legend">Location</div>
-            <div class="large-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#2" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 <div class="cts-location roundy-box">
                     <div class="row">
@@ -354,7 +354,7 @@
     <fieldset aria-labelledby="legend-trialtreatment">
         <div class="row">
             <div id="legend-trialtreatment" class="large-4 small-11 columns legend">Trial/Treatment Type</div>
-            <div class="large-1 small-1 columns right"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>/page2#3" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 Search by trial type, drug, or treatment/intervention
                 
@@ -457,7 +457,7 @@
     <fieldset aria-labelledby="legend-keyword">
         <div class="row">
             <div id="legend-keyword" class="large-4 small-11 columns legend">Keywords/Phrases</div>
-            <div class="large-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#4" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 <div class="row">Search by word or phrase (use quotation marks with phrases)</div>
                 <div class="row">
@@ -474,7 +474,7 @@
     <fieldset aria-labelledby="legend-trialstatus">
         <div class="row">
             <div id="legend-trialstatus" class="large-4 small-11 columns legend">Trial Status/Phase</div>
-            <div class="large-1 small-1 right columns"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#5" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 Search by trial status, phase, or trials added in the last 30 days
                 <div id="showTrialStatusSearchOptionsButton" class="show-criteria-link" style="display: none;">
@@ -519,7 +519,7 @@
     <fieldset aria-labelledby="legend-trialsponsor">
         <div class="row">
             <div id="legend-trialsponsor" class="large-4 small-11 columns legend">Trial ID/Sponsor</div>
-            <div class="large-1 small-1 columns right"><a href="" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>/page2#6" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 Search by protocol ID, sponsor, investigators, lead organization/cooperative group, or special category
                 <div id="showTrialSponsorSearchOptionsButton" class="show-criteria-link" style="display: none;">
