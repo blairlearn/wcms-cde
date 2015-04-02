@@ -31,25 +31,39 @@ namespace NCI.Web.CDE.SimpleRedirector
             RedirectionMap map;
             Cache cache = context.Cache;
 
+            Object lockObj = new Object();
+
             try
             {
                 log.debug(String.Format("Load cache for '{0}'.", datafile));
-                if (cache[datafile] == null)
+                map = (RedirectionMap)cache[datafile];
+                if (map == null)
                 {
-                    // There was no cached redirection map.  Load it from the file system.
-                    log.debug(String.Format("Cache miss. Loading redirection map from '{0}'.", datafile));
+                    lock (lockObj)
+                    {
+                        // Check whether the cache was loaded while we waited for the lock.
+                        map = (RedirectionMap)cache[datafile];
+                        if (map == null)
+                        {
+                            // There was no cached redirection map.  Load it from the file system.
+                            log.debug(String.Format("Cache miss. Loading redirection map from '{0}'.", datafile));
 
-                    CacheItemRemovedCallback onRemove = new CacheItemRemovedCallback(RemovedItemCallback);
-                    CacheDependency fileDependency = new CacheDependency(datafile);
+                            CacheItemRemovedCallback onRemove = new CacheItemRemovedCallback(RemovedItemCallback);
+                            CacheDependency fileDependency = new CacheDependency(datafile);
 
-                    map = LoadMapFromFile(datafile);
-                    cache.Add(datafile, map, fileDependency, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.AboveNormal, onRemove);
+                            map = LoadMapFromFile(datafile);
+                            cache.Add(datafile, map, fileDependency, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.AboveNormal, onRemove);
+                        }
+                        else
+                        {
+                            log.debug("Cached redirection map found on second chance retrieval.");
+                        }
+                    }
                 }
                 else
                 {
                     // A cached redirection map was found. Return it.
-                    log.debug("Cache hit. Loading cached redirection map.");
-                    map = (RedirectionMap)cache[datafile];
+                    log.debug("Loading cached redirection map.");
                 }
             }
             catch (Exception ex)
