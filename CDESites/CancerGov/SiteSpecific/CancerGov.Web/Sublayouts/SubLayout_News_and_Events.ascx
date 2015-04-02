@@ -1,18 +1,16 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SubLayoutControl" %>
 <!-- BEGIN FEATURE PRIMARY CARDS ROW -->
-<div class="row">
-    <div class="feature-primary-title">
-        <h3>
-        <%= CurrentLanguage().Equals("en") ? "Featured News" : "Noticias destacadas"%>
-        </h3>
-    </div>
-    <NCI:TemplateSlot
-        id="nvcgSlLayoutFeatureA"
-        CssClass="row feature-primary"
-        AdditionalSnippetClasses="equalheight large-4 columns card gutter"
-        runat="server"
-        data-match-height="" />
+<div class="feature-primary-title">
+    <h3>
+    <%= CurrentLanguage().Equals("en") ? "Featured News" : "Noticias destacadas"%>
+    </h3>
 </div>
+<NCI:TemplateSlot
+    id="nvcgSlLayoutFeatureA"
+    CssClass="row feature-primary"
+    AdditionalSnippetClasses="equalheight large-4 columns card gutter"
+    runat="server"
+    data-match-height="" />
 <!-- END FEATURE PRIMARY CARDS CARDS ROW -->
 <!-- BEGIN GENERAL ROW -->
 <div class="row news" data-match-height="">
