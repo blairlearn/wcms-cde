@@ -2,7 +2,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN">
 <HTML>
   <HEAD id="header" runat="server">
-	<TITLE>E-Mail This Document - National Cancer Institute</TITLE>
+  <!-- TODO: Clean up, get Spanish translation, & add Javascript as needed -->
+	<TITLE>E-Mail This Page - National Cancer Institute</TITLE>
 		<script type="text/javascript">
 		    var callingUrl = opener.location.href;
 		</script>
