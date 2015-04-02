@@ -251,8 +251,8 @@
                         <div class="legend" id="legend-location-zip">Near ZIP Code</div>
                         <div>
                             <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat="server">Show trials located within:</asp:Label>
-                            <div class="row">
-                                <asp:DropDownList ID="zipCodeProximity" runat="server">
+                            <div class="row ct-zip-row">
+                                <asp:DropDownList ID="zipCodeProximity" CssClass="ct-radius" runat="server">
                                     <asp:ListItem Value="20">20 miles</asp:ListItem>
                                     <asp:ListItem Value="50">50 miles</asp:ListItem>
                                     <asp:ListItem Value="100" Selected="True">100 miles</asp:ListItem>
@@ -261,7 +261,9 @@
                                 </asp:DropDownList>
                                 of
                                 <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code</asp:Label>
-                                <asp:TextBox ID="zipCode" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
+                                <asp:TextBox ID="zipCode" CssClass="ct-zip" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
+                                <a class="ct-zip-lookup" onclick="javascript:dynPopWindow('http://zip4.usps.com/zip4/citytown.jsp', '', 'width=740px,menubar=no,location=no,height=465px,scrollbar=yes'); return(false);"
+                                    href="http://zip4.usps.com/zip4/citytown.jsp">ZIP Code Lookup</a>
                             </div>
                             <!-- Add validator -->
                         </div>
