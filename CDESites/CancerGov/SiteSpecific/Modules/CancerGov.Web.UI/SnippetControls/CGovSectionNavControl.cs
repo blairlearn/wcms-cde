@@ -162,7 +162,7 @@ namespace CancerGov.Web.UI.SnippetControls
             if (item.ChildItems.Length > 0)
             {
                 //Taken out because of missing child items when rendering section nav on NVCG
-                if (isSectionPath)
+                if (isSectionPath && pastCurrentPage == false)
                 {
                     writer.AddAttribute(HtmlTextWriterAttribute.Style, "display:block;");
                 }
