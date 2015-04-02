@@ -119,7 +119,7 @@ namespace NCI.Web.CDE.SimpleRedirector
                 {
                     String[] urls = urlPair.Trim().Split(separators);
                     if (urls.Length >= 2)
-                        map.Add(urls[0].Trim().ToLowerInvariant(), urls[1].Trim().ToLowerInvariant());
+                        map.Add(urls[0], urls[1]);
                     if (urls.Length != 2)
                     {
                         // We can recover from this problem. No exception needed.
@@ -137,6 +137,9 @@ namespace NCI.Web.CDE.SimpleRedirector
             return map;
         }
 
+
+        // The RedirectionMap is mainly a thin wrapper around Dictionary<string, string>.
+        // These are the Dictionary methods we expose.
         private Dictionary<string, string> map;
 
         public RedirectionMap()
@@ -146,6 +149,8 @@ namespace NCI.Web.CDE.SimpleRedirector
 
         public void Add(String oldUrl, String newUrl)
         {
+            oldUrl = oldUrl.Trim().ToLowerInvariant();
+            newUrl = newUrl.Trim().ToLowerInvariant();
             map.Add(oldUrl, newUrl);
         }
 
