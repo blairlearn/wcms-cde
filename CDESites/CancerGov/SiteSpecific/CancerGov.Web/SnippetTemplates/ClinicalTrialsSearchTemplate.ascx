@@ -2,34 +2,6 @@
     Inherits="CancerGov.Web.SnippetTemplates.ClinicalTrialsSearchTemplate" %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls.FormControls" tagprefix="CancerGov" %>
 
-<style>    
-    .cts-location 
-    {
-        padding: 0;
-    }
-    
-    .cts-location>div 
-    {
-        border-top: 3px solid #00B5BC;
-        padding: 12px;
-    }   
-
-    fieldset fieldset 
-    {
-        background: #E2F5F9;                
-        margin: 0;
-        padding: 18px;
-    }
-    
-    fieldset fieldset .legend 
-    {   
-        font-size: 1.2em;
-        color: #606060;
-        background: transparent;
-    }
-        
-</style>
-
 <%-- Grouped Check Box List --%>
 <script type="text/javascript">
 /*
