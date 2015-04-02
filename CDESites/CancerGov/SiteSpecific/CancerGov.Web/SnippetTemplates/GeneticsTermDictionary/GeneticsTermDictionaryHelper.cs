@@ -22,9 +22,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
             StringBuilder searchBlock = new StringBuilder();
 
             searchBlock.AppendLine("<div class='dictionary-search' id='genetics-terms-dictionary'>");
-           
+
             searchBlock.AppendLine("      <div id='dictionary_jPlayer'></div>");
-            searchBlock.AppendLine("     <form id=\"aspnetForm\" name=\"aspnetForm\" method=\"get\" action=\"/geneticsdictionary\" onsubmit=\"DoSearch();\" >");
+            searchBlock.AppendLine("     <form id=\"aspnetForm\" name=\"aspnetForm\" method=\"get\" action=\"/publications/dictionaries/genetics-dictionary\" onsubmit=\"DoSearch();\" >");
             searchBlock.AppendLine("     <div class='row'>");
             if (contains)
             {
@@ -34,13 +34,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 searchBlock.AppendLine("      <label for='radioContains' class=\"inline\" id='lblContains'>Contains</label></span></div>");
 
             }
-            else 
+            else
             {
                 searchBlock.AppendLine("      <div class=\"small-12 columns\"><span class='radio' Name='radioStarts'><input id='radioStarts' name='contains' type='radio'  checked='checked' onchange='autoFunc();' />");
                 searchBlock.AppendLine("      <label for='radioStarts' class=\"inline\" id='lblStartsWith' >Starts with</label></span>");
                 searchBlock.AppendLine("      <span class='radio' Name='radioContains'><input id='radioContains' name='contains' value=\"true\" type='radio' onchange='autoFunc();' />");
-                searchBlock.AppendLine("      <label for='radioContains' class=\"inline\" id='lblContains'>Contains</label></span></div>"); 
-           } 
+                searchBlock.AppendLine("      <label for='radioContains' class=\"inline\" id='lblContains'>Contains</label></span></div>");
+            }
             searchBlock.AppendLine("   </div>");
             searchBlock.AppendLine("      <div class='row'>");
             searchBlock.AppendLine("      <div class=\"medium-6 columns\"><input placeholder=\"Enter keywords or phrases\" autocomplete=\"off\" aria-label=\"Enter keywords or phrases\" aria-autocomplete=\"list\" type=\"text\" class=\"genetics-dictionary\" id=\"searchString\" maxlength=\"255\" name=\"search\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\"  value=\"" + searchString + "\" /> </div>");
@@ -49,7 +49,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             searchBlock.AppendLine("     </form>");
 
-            
+
             searchBlock.AppendLine("   <div class='az-list'>");
             searchBlock.AppendLine("      <ul>");
             searchBlock.AppendLine("            <li><a  href=\"" + url + "?expand=%23\" " + insertWA("#") + " >#</a></li>");
