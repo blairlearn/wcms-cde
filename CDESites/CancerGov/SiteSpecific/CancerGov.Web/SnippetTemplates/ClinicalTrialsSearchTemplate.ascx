@@ -227,9 +227,7 @@
     <%-- --------------------- Begin Cancer Types ------------------------ --%>
     <fieldset aria-labelledby="legend-condition">
         <div class="row">
-            <div class="large-4 small-11 columns">
-                <asp:Label CssClass="field" ID="lblCancerType" AssociatedControlID="ddlCancerType" runat="server">Cancer Type/Condition</asp:Label>
-            </div>
+            <div id="legend-condition" class="large-4 small-11 columns legend">Cancer Type/Condition</div>
             <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#1" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 left columns">
                  <asp:DropDownList 
