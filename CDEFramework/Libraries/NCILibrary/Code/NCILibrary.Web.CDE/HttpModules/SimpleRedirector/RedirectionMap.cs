@@ -157,7 +157,11 @@ namespace NCI.Web.CDE.SimpleRedirector
 
         public String this[String url]
         {
-            get { return map[url]; }
+            get
+            {
+                url = url.Trim().ToLowerInvariant();
+                return map[url];
+            }
         }
     }
 }
