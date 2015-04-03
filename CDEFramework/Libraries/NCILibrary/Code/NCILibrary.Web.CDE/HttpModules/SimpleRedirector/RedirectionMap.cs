@@ -31,25 +31,39 @@ namespace NCI.Web.CDE.SimpleRedirector
             RedirectionMap map;
             Cache cache = context.Cache;
 
+            Object lockObj = new Object();
+
             try
             {
                 log.debug(String.Format("Load cache for '{0}'.", datafile));
-                if (cache[datafile] == null)
+                map = (RedirectionMap)cache[datafile];
+                if (map == null)
                 {
-                    // There was no cached redirection map.  Load it from the file system.
-                    log.debug(String.Format("Cache miss. Loading redirection map from '{0}'.", datafile));
+                    lock (lockObj)
+                    {
+                        // Check whether the cache was loaded while we waited for the lock.
+                        map = (RedirectionMap)cache[datafile];
+                        if (map == null)
+                        {
+                            // There was no cached redirection map.  Load it from the file system.
+                            log.debug(String.Format("Cache miss. Loading redirection map from '{0}'.", datafile));
 
-                    CacheItemRemovedCallback onRemove = new CacheItemRemovedCallback(RemovedItemCallback);
-                    CacheDependency fileDependency = new CacheDependency(datafile);
+                            CacheItemRemovedCallback onRemove = new CacheItemRemovedCallback(RemovedItemCallback);
+                            CacheDependency fileDependency = new CacheDependency(datafile);
 
-                    map = LoadMapFromFile(datafile);
-                    cache.Add(datafile, map, fileDependency, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.AboveNormal, onRemove);
+                            map = LoadMapFromFile(datafile);
+                            cache.Add(datafile, map, fileDependency, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.AboveNormal, onRemove);
+                        }
+                        else
+                        {
+                            log.debug("Cached redirection map found on second chance retrieval.");
+                        }
+                    }
                 }
                 else
                 {
                     // A cached redirection map was found. Return it.
-                    log.debug("Cache hit. Loading cached redirection map.");
-                    map = (RedirectionMap)cache[datafile];
+                    log.debug("Loading cached redirection map.");
                 }
             }
             catch (Exception ex)
@@ -105,7 +119,7 @@ namespace NCI.Web.CDE.SimpleRedirector
                 {
                     String[] urls = urlPair.Trim().Split(separators);
                     if (urls.Length >= 2)
-                        map.Add(urls[0].Trim().ToLowerInvariant(), urls[1].Trim().ToLowerInvariant());
+                        map.Add(urls[0], urls[1]);
                     if (urls.Length != 2)
                     {
                         // We can recover from this problem. No exception needed.
@@ -123,6 +137,9 @@ namespace NCI.Web.CDE.SimpleRedirector
             return map;
         }
 
+
+        // The RedirectionMap is mainly a thin wrapper around Dictionary<string, string>.
+        // These are the Dictionary methods we expose.
         private Dictionary<string, string> map;
 
         public RedirectionMap()
@@ -132,6 +149,8 @@ namespace NCI.Web.CDE.SimpleRedirector
 
         public void Add(String oldUrl, String newUrl)
         {
+            oldUrl = oldUrl.Trim().ToLowerInvariant();
+            newUrl = newUrl.Trim().ToLowerInvariant();
             map.Add(oldUrl, newUrl);
         }
 
@@ -143,7 +162,11 @@ namespace NCI.Web.CDE.SimpleRedirector
 
         public String this[String url]
         {
-            get { return map[url]; }
+            get
+            {
+                url = url.Trim().ToLowerInvariant();
+                return map[url];
+            }
         }
     }
 }
