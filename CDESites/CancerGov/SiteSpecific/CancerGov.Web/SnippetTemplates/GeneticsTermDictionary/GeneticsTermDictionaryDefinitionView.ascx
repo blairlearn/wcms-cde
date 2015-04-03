@@ -24,14 +24,9 @@
 </dd>
 
 
-<% if(!String.IsNullOrEmpty(ImageLink)) { %>
+<% if(!String.IsNullOrEmpty(MediaHTML)) { %>
    <dd class="imageLink">
-      <% =ImageLink %>
-      <% if(!String.IsNullOrEmpty(ImageCaption)) { %>
-         <div class="caption">
-            <% =ImageCaption %>
-         </div>
-      <% } %>
+      <% =MediaHTML %>
    </dd>
 <% } %>
 </dl>
