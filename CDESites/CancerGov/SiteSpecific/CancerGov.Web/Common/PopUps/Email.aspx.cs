@@ -47,10 +47,11 @@ namespace CancerGov.Web
             confirmDiv.Visible = false;
             formDiv.Visible = true;
 
-            this.Header.Title = "E-Mail This Document - National Cancer Institute";
+            this.Header.Title = "E-Mail This Page - National Cancer Institute";
 
             if ( this.DisplayLanguage  == DisplayLanguage.Spanish)
             {
+                this.Header.Title = "Enviar esta p&aacute;gina por correo electr&oacute;nico - Instituto Nacional del C&amp;aacute;ncer";
                 strSendtoEmail = "Compartir este enlace con&nbsp;&nbsp;<br>(dirección de correo electrónico)&nbsp;&nbsp;<br>(Send to this e-mail)&nbsp;&nbsp;";
                 strFromEmail = "Su dirección de correo electrónico&nbsp;&nbsp;<br>(Your e-mail)&nbsp;&nbsp;";
                 strName = "Su nombre&nbsp;&nbsp;<br>(Your name)&nbsp;&nbsp;";

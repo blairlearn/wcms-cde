@@ -12,6 +12,7 @@ namespace CancerGov.Web
         private string urlArgs = "";
         private string header = "popHeader.htm";
         private string footer = "popFooter.htm";
+        private string browserTitle = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -36,15 +37,27 @@ namespace CancerGov.Web
             set { footer = value; }
         }
 
+        /// <summary>
+        /// Sets browser title based on language
+        /// </summary>
+        public string BrowserTitle
+        {
+            get { return browserTitle; }
+            set { browserTitle = value; }
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             header = "popTextHeader.htm";
             footer = "popTextFooter.htm";
+            browserTitle = "E-Mail This Page - National Cancer Institute";
+
             if (this.DisplayLanguage == DisplayLanguage.Spanish)
             {
                 header = "popTextHeaderSpanish.htm";
                 footer = "popTextFooterSpanish.htm";
+                browserTitle = "Enviar esta p&aacute;gina por correo electr&oacute;nico - Instituto Nacional del C&amp;aacute;ncer";
             }
 
         }
