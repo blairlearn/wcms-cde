@@ -59,14 +59,14 @@
                     </div>
                     <div class="row">
                             
-                    <div class="medium-6 columns">
+                    <div class="large-6 columns">
                         <asp:TextBox CssClass="drug-dictionary" ID="AutoComplete1" Name="AutoComplete1" 
                            runat="server" />
                         <!-- <asp:Label ID="lblAccessSearch" CssClass="hidden" runat="server" Text="Search text box"
                            AssociatedControlID="AutoComplete1"></asp:Label> -->
                     </div>
                     
-                    <div class="medium-2 columns">
+                    <div class="large-2 columns">
                         <asp:Button ID="btnGo" CssClass="submit button postfix" Name="btnGo" runat="server" ToolTip="Search"
                             Text="Search" />
                     </div>

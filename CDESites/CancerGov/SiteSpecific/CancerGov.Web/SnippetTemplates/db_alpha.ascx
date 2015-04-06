@@ -138,12 +138,12 @@
                 </div>
             </div>
             <div class="row">
-                <div class="medium-6 columns">
+                <div class="large-6 columns">
                     <asp:TextBox CssClass="dictionary-search-input" ID="AutoComplete1"
                         inputmode="latin" aria-autocomplete="list" runat="server" 
                         CallbackFunc="ACOnSubmit" autocomplete="off" />
                 </div>
-                <div class="medium-2 columns left">        
+                <div class="large-2 columns left">        
                     <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
                         ToolTip="Search" />
                 </div>

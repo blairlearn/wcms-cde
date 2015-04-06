@@ -43,8 +43,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
             }
             searchBlock.AppendLine("   </div>");
             searchBlock.AppendLine("      <div class='row'>");
-            searchBlock.AppendLine("      <div class=\"medium-6 columns\"><input placeholder=\"Enter keywords or phrases\" autocomplete=\"off\" aria-label=\"Enter keywords or phrases\" aria-autocomplete=\"list\" type=\"text\" class=\"genetics-dictionary\" id=\"searchString\" maxlength=\"255\" name=\"search\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\"  value=\"" + searchString + "\" /> </div>");
-            searchBlock.AppendLine("      <div class=\"medium-2 columns left\"><input type='submit'  id='btnGo' value='Search' title='Search' class='submit button postfix'  /></div>");
+            searchBlock.AppendLine("      <div class=\"large-6 columns\"><input placeholder=\"Enter keywords or phrases\" autocomplete=\"off\" aria-label=\"Enter keywords or phrases\" aria-autocomplete=\"list\" type=\"text\" class=\"genetics-dictionary\" id=\"searchString\" maxlength=\"255\" name=\"search\" onblur=\"bSearchBoxBool=false;\" onfocus=\"bSearchBoxBool=true;\"  value=\"" + searchString + "\" /> </div>");
+            searchBlock.AppendLine("      <div class=\"large-2 columns left\"><input type='submit'  id='btnGo' value='Search' title='Search' class='submit button postfix'  /></div>");
             searchBlock.AppendLine("      </div>");
 
             searchBlock.AppendLine("     </form>");
