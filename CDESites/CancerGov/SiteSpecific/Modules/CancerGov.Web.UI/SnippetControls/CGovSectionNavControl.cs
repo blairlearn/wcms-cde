@@ -104,6 +104,9 @@ namespace CancerGov.Web.UI.SnippetControls
         {
             //gets the current webpage Section path to use for comparisons
             String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
+
+            String url = PageAssemblyContext.Current.requestedUrl;
+            
             String liClass = "";
             String divClass = "";
             String ariaClass = "false";
@@ -134,7 +137,10 @@ namespace CancerGov.Web.UI.SnippetControls
             if (path.Equals(item.SectionPath))
             {
                 liClass = " contains-current";
-                divClass = "current-page";
+                if (item.URL == url)
+                {
+                    divClass = "current-page";
+                }
                 ariaClass = "true";
                 pastCurrentPage = true;
             }
