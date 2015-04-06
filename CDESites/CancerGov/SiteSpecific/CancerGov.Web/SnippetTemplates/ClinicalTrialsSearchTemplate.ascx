@@ -191,7 +191,7 @@
     </script>
 
 
-<form name="advSearchForm" id="advSearchForm" method="post" runat="server">
+<form name="advSearchForm" id="advSearchForm" class="clinical-trials-search-form" method="post" runat="server">
     
     <asp:ValidationSummary ID="ValidationSummary1" runat="server" DisplayMode="List"
         CssClass="clinicaltrials-errorMessage" ValidationGroup="v1" />
