@@ -303,17 +303,22 @@
                     </fieldset>
                     <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" role="region">
                         <div class="legend" id="legend-location-citystate">In City/State/Country</div>
-                        <div>                                    
-                            <label for="<%=country.ClientID%>">Country:</label>
-                            <select id="country" onchange="country_onChange(this);" name="country" runat="server" />                                
-                            <label for="<%=city.ClientID%>">City:</label>
-                            <input id="city" type="text" size="14" name="city" runat="server" />
-                
-                            <label>State</label>
-                            <CancerGov:AccessibleCheckBoxList
-                                id="state"
-                                runat="server"
-                                CssClass="scrolling-list roundy-box groupedCheckBoxList" />                        
+                        <div>
+                            <div class="ct-country-area">
+                                <label for="<%=country.ClientID%>" class="ct-country-label">Country:</label>
+                                <select id="country" onchange="country_onChange(this);" name="country" runat="server" />
+                            </div>
+                            <div class="ct-city-area">
+                                <label for="<%=city.ClientID%>" class="ct-city-label">City:</label>
+                                <input id="city" type="text" size="14" name="city" runat="server" />
+                            </div>
+                            <div class="ct-state-area">
+                                <label class="ct-state-label">State</label>
+                                <CancerGov:AccessibleCheckBoxList
+                                    id="state"
+                                    runat="server"
+                                    CssClass="scrolling-list roundy-box groupedCheckBoxList ct-state-list" />                        
+                            </div>
                         </div>
                     </fieldset>
                     <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" role="region">
