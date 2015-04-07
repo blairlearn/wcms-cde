@@ -120,6 +120,7 @@
                         id="ddlPageUnit"
                         AutoPostBack="true"
                         OnSelectedIndexChanged="ChangePageUnit"
+                        Style="width: 88px"
                         runat="server">
                         <asp:ListItem Text="10" Value="10" />
                         <asp:ListItem Text="20" Value="20" />
