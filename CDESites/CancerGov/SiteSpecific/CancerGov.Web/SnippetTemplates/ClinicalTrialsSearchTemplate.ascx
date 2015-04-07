@@ -323,7 +323,7 @@
                     </fieldset>
                     <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" role="region">
                         <div class="legend" id="legend-location-NIH">At NIH</div>
-                        <div><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
+                        <div class="checkbox"><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
                     </fieldset>
                 </div>
             </div>
