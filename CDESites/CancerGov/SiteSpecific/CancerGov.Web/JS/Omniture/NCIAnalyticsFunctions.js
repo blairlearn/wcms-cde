@@ -848,6 +848,8 @@
         if (typeof tree[1] === 'undefined') {
             clickParams.Props = {
                 53: tree[0].text,
+                54: tree[0].text,
+                55: tree[0].text,
                 56: pageName
             };
             clickParams.Evars = {
@@ -860,6 +862,7 @@
             clickParams.Props = {
                 53: tree[1].text,
                 54: tree[0].text,
+                55: tree[0].text,
                 56: pageName
             };
             clickParams.Evars = {
