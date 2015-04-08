@@ -16,11 +16,11 @@
 <div class="row news" data-match-height="">
 	<NCI:TemplateSlot
 		id="nvcgSlLayoutGeneralA"
-		CssClass="large-8 columns card"
+		CssClass="large-8 columns card gutter"
 		runat="server" />
 	<NCI:TemplateSlot
 		id="nvcgSlLayoutGeneralB"
-		CssClass="large-4 columns card accordion"
+		CssClass="large-4 columns gutter accordion"
 		runat="server" />
 </div>
 <!-- END GENERAL ROW -->
