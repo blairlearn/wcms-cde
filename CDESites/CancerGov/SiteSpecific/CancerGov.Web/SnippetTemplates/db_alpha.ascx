@@ -11,7 +11,7 @@
     }
 
     //Hookup JPlayer for Audio
-    if (jQuery.jPlayer) {
+    if (jQuery.jPlayer && !Modernizr.touch) {
         jQuery(document).ready(function($) {
             var my_jPlayer = $("#dictionary_jPlayer");
 
@@ -22,6 +22,7 @@
             });
 
             //Attach a click event to the audio link
+            
             $(".CDR_audiofile").click(function() {
                 my_jPlayer.jPlayer("setMedia", {
                     mp3: $(this).attr("href") // Defines the m4v url
