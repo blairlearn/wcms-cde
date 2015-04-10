@@ -26,34 +26,17 @@
 	    </div> 
         <!-- end Top Header Section -->
 
-        <form name="lookupSearch" method="get" action="/Common/PopUps/CTLSearch/CTLookupResults.aspx" target="results" onsubmit="javascript: document.forms[0].alphaIndex.value=''; doSubmit();">
+        <form name="lookupSearch" class="ct-popup-form" method="get" action="/Common/PopUps/CTLSearch/CTLookupResults.aspx" target="results" onsubmit="javascript: document.forms[0].alphaIndex.value=''; doSubmit();">
 	        <input type="hidden" name="title" value="<%=Title%>">
 	        <input type="hidden" name="alphaIndex" value="<%=InputAlphaIndex%>">
 	        <input type="hidden" name="fld" value="<%=Request.Params["fld"]%>">
-
-            <div class="row">
-                <div class="small-12 columns">
-                    <h5><%=Title%></h5>
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 columns">
-                    <p id="caption"><%=Caption%></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 columns">
-                    <span id="alphaSearch">Click a Letter/#:</span><%=AlphaIndexLinks%>
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 columns">
-                    <p>
-                        <label for="SearchBox"><%=TextInputPrompt%>:</label>
-                        <input type="text" id="SearchBox" name="keyword" size="20" value="<%=InputKeyword%>" />
-                        <button class="button action">Search</button>
-                    </p>
-                </div>
+            <h5><%=Title%></h5>
+            <p id="caption"><%=Caption%></p>
+            <div class="ct-popup-line"><span id="alphaSearch" class="ct-popup-label">Click a Letter/#:</span><%=AlphaIndexLinks%></div>
+            <div class="ct-popup-line">
+                <label class="ct-popup-label" for="SearchBox"><%=TextInputPrompt%>:</label>
+                <input type="text" id="SearchBox" name="keyword" size="20" value="<%=InputKeyword%>" />
+                <button class="button action">Search</button>
             </div>
          </form>
 	</body>

@@ -111,11 +111,11 @@ namespace NCI.Web.UI.WebControls
 
                     if (dataBinding)
                     {
-                        container = new TemplateItemContainer(item.ItemType, item.Data);                        
+                        container = new TemplateItemContainer(item.ItemType, item.Data, itemCount);                        
                     }
                     else
                     {
-                        container = new TemplateItemContainer(TemplateTypes[itemCount]);
+                        container = new TemplateItemContainer(TemplateTypes[itemCount], null, itemCount);
                     }
 
                     if (container != null)
