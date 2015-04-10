@@ -364,13 +364,17 @@ namespace NCI.Web.CancerGov.Apps
             var siteResultSearchSubmitParameter = "";
             if (PageDisplayInformation.Language == DisplayLanguage.Spanish)
                 siteResultSearchSubmitParameter = "true";
-            var siteResultSearchSubmitCall = "return siteResultSearchSubmit(" + siteResultSearchSubmitParameter + ")";
+            // removed search validation for now
+            var siteResultSearchSubmitCall = ""; //"return siteResultSearchSubmit(" + siteResultSearchSubmitParameter + ")";
             // Web Analytics *************************************************
             if (WebAnalyticsOptions.IsEnabled)
-                siteResultSearchSubmitCall += "&& NCIAnalytics.SiteWideSearchResultsSearch(this,'" + txtSWRKeyword.ClientID + "','" + rblSWRSearchType.UniqueID + "')";
+                siteResultSearchSubmitCall += "return NCIAnalytics.SiteWideSearchResultsSearch(this,'" + txtSWRKeyword.ClientID + "','" + rblSWRSearchType.UniqueID + "')";
             // End Web Analytics *********************************************
-            siteResultSearchSubmitCall += ";";
-            btnSWRTxtSearch.OnClientClick = siteResultSearchSubmitCall;
+            if (!String.IsNullOrEmpty(siteResultSearchSubmitCall))
+            {
+                siteResultSearchSubmitCall += ";";
+                btnSWRTxtSearch.OnClientClick = siteResultSearchSubmitCall;
+            }
 
         }
 
