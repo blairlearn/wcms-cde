@@ -761,6 +761,20 @@
         clickParams.LogToOmniture();
     },
     //******************************************************************************************************	
+    HeaderLink: function(sender, headerName) {
+
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal', 'o', 'HeaderLink-' + headerName);
+        clickParams.Props = {
+            36: headerName
+        };
+        clickParams.Evars = {
+            36: headerName
+        };
+        clickParams.Events = [16];
+        clickParams.LogToOmniture();
+    },
+    //******************************************************************************************************	
     FooterLink: function(sender, footerName) {
 
         clickParams = new NCIAnalytics.ClickParams(sender,
@@ -919,15 +933,17 @@
             localPageName = pageNameOverride;
 
         clickParams.Props = {
+            36: linkText,		
             53: linkText,
             56: pageName
         };
 
         clickParams.Evars = {
+            36: linkText,
             53: linkText
         };
 
-        clickParams.Events = [26];
+        clickParams.Events = [16];
         clickParams.LogToOmniture();
     },
 
