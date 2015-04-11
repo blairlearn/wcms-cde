@@ -265,11 +265,11 @@
                                     <asp:ListItem Value="200">200 miles</asp:ListItem>
                                     <asp:ListItem Value="500">500 miles</asp:ListItem>
                                 </asp:DropDownList>
-                                of
+                                <span class="ct-zip-area">of
                                 <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code</asp:Label>
                                 <asp:TextBox ID="zipCode" CssClass="ct-zip" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
                                 <a class="ct-zip-lookup" onclick="javascript:dynPopWindow('http://zip4.usps.com/zip4/citytown.jsp', '', 'width=740px,menubar=no,location=no,height=465px,scrollbar=yes'); return(false);"
-                                    href="http://zip4.usps.com/zip4/citytown.jsp">ZIP Code Lookup</a>
+                                    href="http://zip4.usps.com/zip4/citytown.jsp">ZIP Code Lookup</a></span>
                             </div>
                             <!-- Add validator -->
                         </div>

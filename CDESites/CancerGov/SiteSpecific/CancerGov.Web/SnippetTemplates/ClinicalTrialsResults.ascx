@@ -62,15 +62,16 @@
                                 <div class="radio">
                                     <asp:RadioButton runat="server" ID="titleFormat" GroupName="DisplayFormat" Text="Title"
                                         CssClass="black-text" /></div>
-                                  <div>
-                                 <span class="radio">
+                                 <div class="row collapse">
+                                 <span class="radio large-4 column">
                                     <asp:RadioButton runat="server" ID="descriptionFormat" GroupName="DisplayFormat"
                                         Text="Description with:" CssClass="black-text" /></span>
+                                    <span class="large-7 column left">
                                     <span class="checkbox"><asp:CheckBox runat="server" ID="includeLocations" Text="Locations"
                                         CssClass="black-text" /></span>
                                     <span class="checkbox"><asp:CheckBox runat="server" ID="includeEligibility" Text="Eligibility"
                                         CssClass="black-text" /></span>
-                                      
+                                      </span>
                                 </div>
                                  <div class="radio"><asp:RadioButton runat="server" ID="fullDescriptionFormat" GroupName="DisplayFormat"
                                     Text="Full Trial Description" CssClass="black-text" /></div>
@@ -81,14 +82,14 @@
 
                             <script type="text/javascript">
                                 $(document).ready(function() {
-                                    $("#<% =patientAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler() });
-                                    $("#<% =healthProfAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler() });
-                                    $("#<% =titleFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler() });
-                                    $("#<% =descriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler() });
-                                    $("#<% =fullDescriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler() });
-                                    $("#<% =customFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler() });
-                                    $("#<% =includeLocations.ClientID%>").on("click", function(e) { DescriptionSubtype_clickhandler() });
-                                    $("#<% =includeEligibility.ClientID%>").on("click", function(e) { DescriptionSubtype_clickhandler() });
+                                    $("#<% =patientAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler(e) });
+                                    $("#<% =healthProfAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler(e) });
+                                    $("#<% =titleFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
+                                    $("#<% =descriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
+                                    $("#<% =fullDescriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
+                                    $("#<% =customFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
+                                    $("#<% =includeLocations.ClientID%>").on("click", function(e) { DescriptionSubtype_clickhandler(e) });
+                                    $("#<% =includeEligibility.ClientID%>").on("click", function(e) { DescriptionSubtype_clickhandler(e) });
                                 });
                             </script>
                             <div style="float: right">
