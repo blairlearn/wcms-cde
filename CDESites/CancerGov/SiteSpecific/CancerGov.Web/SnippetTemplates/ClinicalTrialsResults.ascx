@@ -63,7 +63,7 @@
                                     <asp:RadioButton runat="server" ID="titleFormat" GroupName="DisplayFormat" Text="Title"
                                         CssClass="black-text" /></div>
                                  <div class="row collapse">
-                                 <span class="radio large-4 column">
+                                 <span class="radio large-5 column">
                                     <asp:RadioButton runat="server" ID="descriptionFormat" GroupName="DisplayFormat"
                                         Text="Description with:" CssClass="black-text" /></span>
                                     <span class="large-7 column left">
