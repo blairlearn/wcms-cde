@@ -65,7 +65,7 @@ namespace NCI.Web.CancerGov.Apps
         private bool _hasPageUnitChanged = false;
         private bool _isIENoJSAndHitEnderInTheSearchBox = false;
         private int _resultOffset = 1;
-        
+
         #endregion
         #region Properties
 
@@ -393,20 +393,42 @@ namespace NCI.Web.CancerGov.Apps
 
         protected string BestBetResultsHyperlinkOnclick(RepeaterItem result)
         {
-            string resultData="";
+            string resultData = "";
             if (WebAnalyticsOptions.IsEnabled)
             {
                 try
                 {
                     BestBetResult bbResultItem = (BestBetResult)result.DataItem;
                     resultData = bbResultItem.CategoryDisplay;
+
                     // Did not use html parser here, seemed like a overkill just to inject a simple string. 
                     int hrefIndex = resultData.IndexOf("<a");
 
                     if (hrefIndex != -1)
                     {
-                        return resultData.Replace("<a","<a onClick=NCIAnalytics.SiteWideSearchResults(this,true,'1'); " );
-                    }
+                        // The analytics rank was previously set to '1' for all listed items in best bets;
+                        // added some String methods to increment the value.
+                        // First, split the results string into an array based on the number of <a> tags found.
+                        int i = 1;
+                        string[] separators = new string[] { "<a" };
+                        string[] temp = resultData.Split(separators, StringSplitOptions.None);
+
+                        foreach (string t in temp)
+                        {
+                            // Add the BestBets arguments with the rank incrementing with each pass through 
+                            // the links in the results. Then smoosh the whole thing back together with the new opening
+                            // <a onClick="..."
+                            temp[i] = String.Concat("(this,true,'" + i.ToString() + "');\"", temp[i]);
+                            resultData = String.Join("<a onClick=\"NCIAnalytics.SiteWideSearchResults", temp);
+                            i++;
+
+                            // Return the re-assembled string once the rank and total number of links match.
+                            if (i == temp.Length)
+                            {
+                                return resultData;
+                            }
+                        } // End foreach
+                    } // End href index 'if' statement
                 }
                 catch { }
             }
@@ -415,7 +437,7 @@ namespace NCI.Web.CancerGov.Apps
         }
 
         protected string ResultsHyperlinkOnclick(IDataItemContainer result)
-        {            
+        {
             if (WebAnalyticsOptions.IsEnabled)
                 return "NCIAnalytics.SiteWideSearchResults(this," + "false" + ",'" + (result.DisplayIndex + _resultOffset).ToString() + "');"; // Load results onclick script
             else
@@ -702,7 +724,8 @@ namespace NCI.Web.CancerGov.Apps
             rptResults.DataSource = from res in results
                                     select new NCI.Web.UI.WebControls.TemplatedDataItem(
                                         GetSearchResultTemplate(res),
-                                        new {
+                                        new
+                                        {
                                             URL = res.Url,
                                             Title = res.Title,
                                             DisplayUrl = res.DisplayUrl,
@@ -726,7 +749,7 @@ namespace NCI.Web.CancerGov.Apps
             rblSWRSearchType.SelectedIndex = 0;
 
             //// Web Analytics *************************************************
-            this.PageInstruction.SetWebAnalytics( WebAnalyticsOptions.eVars.NumberOfSearchResults, wbField =>
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.NumberOfSearchResults, wbField =>
             {
                 wbField.Value = TotalNumberOfResults.ToString();
             });
