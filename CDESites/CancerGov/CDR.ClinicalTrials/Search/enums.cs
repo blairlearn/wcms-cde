@@ -75,8 +75,6 @@
         StatusDesc = 10,
         AgeRangeAsc = 11,
         AgeRangeDesc = 12,
-        SponsorAsc = 13,
-        SponsorDesc = 14,
         Relevance = 15,
         RelevanceAsc = 16
     }
