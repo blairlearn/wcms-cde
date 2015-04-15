@@ -95,7 +95,7 @@ namespace CancerGov.Web
                 if (System.Configuration.ConfigurationManager.AppSettings["EventLogName"] != null)
                     return System.Configuration.ConfigurationManager.AppSettings["EventLogName"];
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
             return "CancerGov";
@@ -112,7 +112,7 @@ namespace CancerGov.Web
                 if (System.Configuration.ConfigurationManager.AppSettings["EventLogSourceName"] != null)
                     return System.Configuration.ConfigurationManager.AppSettings["EventLogSourceName"];
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
             return "CancerGov";
