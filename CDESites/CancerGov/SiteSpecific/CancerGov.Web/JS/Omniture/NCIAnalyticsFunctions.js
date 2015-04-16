@@ -5,24 +5,49 @@
     fieldDelimiter: '~',
 
     SelectedTextList: function(listId, delimiter) {
-        return (
-            $("#" + listId + " input:checked") // get all checked inputs under tbhe given id
-                .siblings("label")  // find all adjacent labels
+        var checked = $("#" + listId + " input:checked"); // get all checked inputs under the given id
+
+        if (checked.length > 0) {
+            return (
+            checked.siblings("label")  // find all adjacent labels
                 .map(function() {
                     return $(this).text();  // return the text of each label
                 })
                 .get()  // get as JS array
                 .join(delimiter));  // join array with delimiter
+        }
+
+        return "";
+    },
+
+    SelectedOptionList: function(listId, delimiter) {
+        var selected = $("#" + listId + " option:selected"); // get all selected options under the given id
+
+        if (selected.length > 0) {
+            return (
+                selected.map(function() {
+                    return this.text;  // return the text of each option
+                })
+                .get()  // get as JS array
+                .join(delimiter));  // join array with delimiter
+        }
+
+        return "";
     },
 
     SelectedDeleteList: function(listId, delimiter) {
-        return (
-            $("#" + listId + " li:visible button") // find all visible buttons under the given id
-                .map(function() {
+        var buttons = $("#" + listId + " li:visible button"); // find all visible buttons under the given id
+
+        if (buttons.length > 0) {
+            return (
+                buttons.map(function() {
                     return this.nextSibling.nodeValue;  // the following node should be the text; return it
                 })
                 .get()  // get as JS array
                 .join(delimiter));  // join array with delimiter
+        }
+
+        return "";
     },
 
     ClickParams: function(sender, reportSuites, linkType, linkName) {
@@ -259,13 +284,13 @@
 
         // Trial / Treatment Type
         trialType = NCIAnalytics.SelectedTextList(
-            webAnalyticsOptions.typeOfTrialControlID, 
+            webAnalyticsOptions.typeOfTrialControlID,
             NCIAnalytics.stringDelimiter);
         if ((trialType != '') && (trialType != 'All'))
             treatmentType += 'Type of Trial';
         treatmentType += NCIAnalytics.fieldDelimiter;
         if (NCIAnalytics.SelectedDeleteList(
-                webAnalyticsOptions.drugControlID, 
+                webAnalyticsOptions.drugControlID,
                 NCIAnalytics.stringDelimiter) != '')
             treatmentType += 'Drug';
         treatmentType += NCIAnalytics.fieldDelimiter;
@@ -578,50 +603,25 @@
         var list;
 
         //get Type(s) of Cancer
-        list = $("#" + ids.selCancerType);
-        for (var i = 0; i < list.length; i++) {
-            if (list[i].selected) {
-                if (typeOfCancer.length > 0)
-                    typeOfCancer += NCIAnalytics.stringDelimiter;
-                typeOfCancer += list[i].text;
-            }
-        }
+        typeOfCancer = NCIAnalytics.SelectedOptionList(ids.selCancerType, 
+            NCIAnalytics.stringDelimiter);
+
         // get Family Cancer Syndrome
-        list = $("#" + ids.selCancerFamily);
-        for (var i = 0; i < list.length; i++) {
-            if (list[i].selected) {
-                if (familyCancerSyndrome.length > 0)
-                    familyCancerSyndrome += NCIAnalytics.stringDelimiter;
-                familyCancerSyndrome += list[i].text;
-            }
-        }
+        familyCancerSyndrome = NCIAnalytics.SelectedOptionList(ids.selCancerFamily, 
+            NCIAnalytics.stringDelimiter);
+
         //get State(s)
-        list = $("#" + ids.selState);
-        for (var i = 0; i < list.length; i++) {
-            if (list[i].selected) {
-                if (state.length > 0)
-                    state += NCIAnalytics.stringDelimiter;
-                state += list[i].value;
-            }
-        }
+        state = NCIAnalytics.SelectedOptionList(ids.selState, 
+            NCIAnalytics.stringDelimiter);
 
         //get Country(ies)
-        list = $("#" + ids.selCountry);
-        for (var i = 0; i < list.length; i++) {
-            if (list[i].selected) {
-                if (country.length > 0)
-                    country += NCIAnalytics.stringDelimiter;
-                country += list[i].value;
-            }
-        }
+        country = NCIAnalytics.SelectedOptionList(ids.selCountry, 
+            NCIAnalytics.stringDelimiter);
 
-        searchCriteria = typeOfCancer + NCIAnalytics.fieldDelimiter +
-            familyCancerSyndrome + NCIAnalytics.fieldDelimiter +
-            city + NCIAnalytics.fieldDelimiter +
-            state + NCIAnalytics.fieldDelimiter +
-            country + NCIAnalytics.fieldDelimiter +
-            lastName;
-        specialty = typeOfCancer + NCIAnalytics.fieldDelimiter + familyCancerSyndrome;
+        searchCriteria =
+            [typeOfCancer, familyCancerSyndrome, city, state, country, lastName]
+                .join(NCIAnalytics.fieldDelimiter);
+        specialty = [typeOfCancer, familyCancerSyndrome].join(NCIAnalytics.fieldDelimiter);
 
         clickParams = new NCIAnalytics.ClickParams(sender,
             'nciglobal', 'o', 'GeneticServicesDirectorySearch');
@@ -944,7 +944,7 @@
             localPageName = pageNameOverride;
 
         clickParams.Props = {
-            36: linkText,		
+            36: linkText,
             53: linkText,
             56: pageName
         };
