@@ -154,9 +154,9 @@
             , newOnly: "<%=newOnly.ClientID%>"
             , txtKeywords: "<%=txtKeywords.ClientID%>"
             , txtKeywords_state: "<%=txtKeywords.ClientID%>_state"
-            , trialStatus: "<%=trialStatus.ClientID%>"
-            , trialStatus_0: "<%=trialStatus.ClientID%>_0"
-            , trialStatus_1: "<%=trialStatus.ClientID%>_1"
+            , trialStatus: ""
+            , trialStatus_0: ""
+            , trialStatus_1: ""
             , trialPhase: "<%=trialPhase.ClientID%>"
             , trialPhase_0: "<%=trialPhase.ClientID%>_0"
             , trialPhase_1: "<%=trialPhase.ClientID%>_1"
@@ -456,10 +456,10 @@
     <%-- =================== Trial Status/Phase ==================== --%>
     <fieldset aria-labelledby="legend-trialstatus">
         <div class="row">
-            <div id="legend-trialstatus" class="large-4 small-11 columns legend">Trial Status/Phase</div>
+            <div id="legend-trialstatus" class="large-4 small-11 columns legend">Trial Phase</div>
             <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#5" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
-                Search by trial status, phase, or trials added in the last 30 days
+                Search by trial phase, or trials added in the last 30 days
                 <div id="showTrialStatusSearchOptionsButton" class="show-criteria-link" style="display: none;">
                     <a href="javascript:showTrialStatusSearchOptions()">
                         Show Search Options</a></div>
@@ -467,15 +467,6 @@
             </div>            
         </div>
         <div id="trialStatusArea" class="collapsible">
-            <div class="row">
-                <div class="large-4 columns"><label class="field">Trial Status</label></div>
-                <div class="large-7 left columns">
-                    <asp:RadioButtonList CssClass="radio" runat="server" ID="trialStatus" RepeatDirection="Vertical" RepeatLayout="Flow">
-                        <asp:ListItem Value="1" Selected="True">Active (currently accepting patients)</asp:ListItem>
-                        <asp:ListItem Value="0">Closed (not accepting patients)</asp:ListItem>
-                    </asp:RadioButtonList>
-                </div>
-            </div>
             <div class="row">
                 <div class="large-4 columns"><label class="field">Trial Phase</label></div>
                 <div class="large-7 left columns">
@@ -504,7 +495,7 @@
             <div id="legend-trialsponsor" class="large-4 small-11 columns legend">Trial ID/Sponsor</div>
             <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>/page2#6" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
-                Search by protocol ID, sponsor, investigators, lead organization/cooperative group, or special category
+                Search by protocol ID, investigators, lead organization/cooperative group, or special category
                 <div id="showTrialSponsorSearchOptionsButton" class="show-criteria-link" style="display: none;">
                     <a class="clinicaltrials-expansionLink" href="javascript:showTrialSponsorSearchOptions()">
                         Show Search Options</a></div>
@@ -520,14 +511,6 @@
                         <div class="row"><asp:TextBox ID="protocolID" MaxLength="50" runat="server" /></div>
                     </div>
                 </div>                       
-            </div>
-            <div class="row">
-                <div class="large-4 columns"><label class="field">Sponsor of Trial</label></div>
-                <div class="large-7 left columns"><CancerGov:AccessibleCheckBoxList 
-                        ID="sponsor" 
-                        runat="server" 
-                        CssClass="scrolling-list roundy-box groupedCheckBoxList"
-                     /></div>
             </div>
             <div id="trialInvestigatorsRow" runat="server" class="row">
                 <div class="large-4 columns"><label class="field">Trial Investigators</label></div>

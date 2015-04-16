@@ -119,11 +119,9 @@ namespace CancerGov.Web.SnippetTemplates
                 FillInterventionSelectionList(savedSearch);
 
                 FillKeywordText(savedSearch);
-                FillTrialStatus(savedSearch);
                 FillNewTrialBox(savedSearch);
                 FillProtocolIDBox(savedSearch);
 
-                FillSponsorsSelectBox(savedSearch);
                 FillTrialInvestigatorBox(savedSearch);
                 FillLeadOrganzationBox(savedSearch);
 
@@ -141,7 +139,7 @@ namespace CancerGov.Web.SnippetTemplates
                     trialType.ClientID,
                     drug.ClientID,
                     intervention.ClientID,
-                    sponsor.ClientID,
+                    "",
                     investigator.ClientID,
                     leadOrg.ClientID,
                     specialCategory.ClientID
@@ -412,63 +410,6 @@ namespace CancerGov.Web.SnippetTemplates
                 }
                 if (!matchFound)
                     specialCategory.SelectedIndex = 0;
-            }
-        }
-
-        private void FillSponsorsSelectBox(CTSearchDefinition savedSearch)
-        {
-            CTSearchFieldList<string> sponsorsList = CTSearchManager.LoadSponsorList();
-
-            sponsor.AppendDataBoundItems = true;
-            sponsor.Items.Add(new System.Web.UI.WebControls.ListItem("All", "All"));
-            sponsor.DefaultIndex = 0;
-            sponsor.DataSource = sponsorsList;
-            sponsor.DataValueField = "Value";
-            sponsor.DataTextField = "Key";
-            sponsor.DataBind();
-
-            if (savedSearch == null)
-            {
-                // if no search yet specified, search for "NCI" and select that item if found
-                ListItem item = sponsor.Items.FindByText("NCI");
-                if (item != null)
-                {
-                    sponsor.ClearSelection();
-                    item.Selected = true;
-                }
-                else
-                {
-                    // Default selection to "All"
-                    sponsor.SelectedIndex = 0;
-                }
-            }
-            else
-            {
-                bool matchFound = false;
-                foreach (string id in savedSearch.SponsorIDList)
-                {
-                    ListItem item = sponsor.Items.FindByValue(id);
-                    if (item != null)
-                    {
-                        item.Selected = true;
-                        matchFound = true;
-                    }
-                }
-                if (!matchFound)
-                {
-                    // if no search yet specified, search for "NCI" and select that item if found
-                    ListItem item = sponsor.Items.FindByText("NCI");
-                    if (item != null)
-                    {
-                        sponsor.ClearSelection();
-                        item.Selected = true;
-                    }
-                    else
-                    {
-                        // Default selection to "All"
-                        sponsor.SelectedIndex = 0;
-                    }
-                }
             }
         }
 
@@ -750,17 +691,6 @@ namespace CancerGov.Web.SnippetTemplates
             }
         }
 
-        private void FillTrialStatus(CTSearchDefinition savedSearch)
-        {
-            if (savedSearch != null)
-            {
-                if (savedSearch.TrialStatusRestriction == TrialStatusType.OpenOnly)
-                    trialStatus.SelectedIndex = 0;  // Open/Active
-                else
-                    trialStatus.SelectedIndex = 1;  // Closed/Inactive
-            }
-        }
-
         public void SubmitButton_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -957,10 +887,10 @@ namespace CancerGov.Web.SnippetTemplates
                 criteria.Keywords = txtKeywords.Text;
 
             // Trial Status
-            if (trialStatus.Text == "1")
-                criteria.TrialStatusRestriction = TrialStatusType.OpenOnly;
-            else
-                criteria.TrialStatusRestriction = TrialStatusType.ClosedOnly;
+            // Trial Status is no longer available in the search UI.
+            // All trials are assumed to be open.  This is just forcing
+            // the search.
+            criteria.TrialStatusRestriction = TrialStatusType.OpenOnly;
 
             // Trial Phase
             if (SelectionIsPresent(trialPhase))
@@ -992,18 +922,6 @@ namespace CancerGov.Web.SnippetTemplates
                 foreach (string id in idList)
                 {
                     criteria.SpecificProtocolIDList.Add(id);
-                }
-            }
-
-            // Sponsor List
-            if (SelectionIsPresent(sponsor))
-            {
-                foreach (ListItem item in sponsor.Items)
-                {
-                    if (item.Selected && !string.IsNullOrEmpty(item.Value))
-                    {
-                        criteria.SponsorIDList.Add(item.Value);
-                    }
                 }
             }
 

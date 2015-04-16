@@ -84,13 +84,10 @@ namespace NCI.Web.UI.WebControls.FormControls
                 RenderDrugList(writer, criteria);
                 RenderCriterion(writer, "Treatment/Intervention", criteria.InterventionList);
                 RenderCriterion(writer, "Keywords/Phrases", criteria.Keywords);
-                RenderCriterion(writer, "Trial Status",
-                    (criteria.TrialStatusRestriction == TrialStatusType.OpenOnly) ? "Active" : "Closed");
                 RenderCriterion(writer, "Trial Phase", criteria.TrialPhase);
                 if (criteria.RestrictToRecent)
                     RenderCriterion(writer, "Added in last 30 days?", "Yes");
                 RenderCriterion(writer, "Protocol ID", criteria.SpecificProtocolIDList);
-                RenderCriterion(writer, "Sponsor of Trial", criteria.SponsorNameList);
                 RenderCriterion(writer, "Trial Investigators", criteria.InvestigatorList);
                 RenderCriterion(writer, "Lead Organization/Cooperative Group", criteria.LeadOrganizationList);
                 RenderCriterion(writer, "Special Category", criteria.SpecialCategoryList);

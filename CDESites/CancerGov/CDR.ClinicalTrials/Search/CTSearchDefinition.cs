@@ -410,8 +410,10 @@ namespace CancerGov.CDR.ClinicalTrials.Search
         /// </summary>
         public TrialStatusType TrialStatusRestriction
         {
-            get { return _trialStatusRestriction; }
-            set { _trialStatusRestriction = value; }
+            // The system only contains open trials.  This forces all attempts at changing the status restriction
+            // to result in Open.
+            get { return TrialStatusType.OpenOnly; }
+            set { _trialStatusRestriction = TrialStatusType.OpenOnly; }
         }
 
         /// <summary>
@@ -541,10 +543,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                 }
                 
                 AddIDStringValue(strIdString, "intervention", _interventionList);   // Interventions
-
-                // Trial status Don't include anything to note open trials.
-                if (_trialStatusRestriction == TrialStatusType.ClosedOnly)
-                    AddIDStringValue(strIdString, "trialstatus", "n");
 
                 // Last 30 days only flag.  Don't include anything to indicate that when all are accepted.
                 if(_restrictToRecent)

@@ -63,15 +63,11 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
         string _keywords = null;
 
-        TrialStatusType _trialStatusRestriction = TrialStatusType.OpenOnly;
-
         NameList _trialPhase = null;
 
         bool _restrictToRecent = false;
 
         NameList _specificProtocolIDList = null;
-
-        NameList _sponsorNameList = null;
 
         NameList _specialCategoryList = null;
 
@@ -181,9 +177,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
             // Keyword search text.
             _keywords = searchDef.Keywords;
 
-            // Trial status
-            _trialStatusRestriction = searchDef.TrialStatusRestriction;
-
             // Trial phase
             if (searchDef.TrialPhase.Count > 0)
                 _trialPhase = new NameList(searchDef.TrialPhase);
@@ -194,10 +187,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
             // Alternate Protocol ID list.
             if (searchDef.SpecificProtocolIDList.Count > 0)
                 _specificProtocolIDList = new NameList(searchDef.SpecificProtocolIDList);
-
-            // Sponsor names
-            if (searchDef.SponsorIDList.Count > 0)
-                _sponsorNameList = new NameList(searchDef.SponsorIDList);
 
             // Special Category list.
             if (searchDef.SpecialCategoryList.Count > 0)
@@ -286,11 +275,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                             _trialPhase = new NameList();
                             ReadElement(reader, "TrialPhases", "TrialPhase", _trialPhase);
                         }
-                        else if (reader.Name == "Sponsors")
-                        {
-                            _sponsorNameList = new NameList();
-                            ReadElement(reader, "Sponsors", "Sponsor", _sponsorNameList);
-                        }
                         else if (reader.Name == "DrugInfo")
                         {
                             ReadDrugElement(reader);
@@ -322,11 +306,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                             // Empty Node.  Only present for location type of NIH with a value.
                             _locationSearchType = LocationSearchType.NIH;
                             _locationNihOnly = true;
-                        }
-                        else if (reader.Name == "ClosedTrials")
-                        {
-                            // Empty node.  Only present if trial status type is ClosedOnly.
-                            _trialStatusRestriction = TrialStatusType.ClosedOnly;
                         }
                     }
                 }
@@ -427,10 +406,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                 }
             }
 
-            // Open vs. Closed (only write a node for closed).
-            if (_trialStatusRestriction == TrialStatusType.ClosedOnly)
-                WriteElement(writer, "ClosedTrials");      // This node has no value.
-
             // List of alternate protocol IDs.
             WriteElement(writer, "ProtocolIDs", _specificProtocolIDList);
 
@@ -445,9 +420,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
             // Trial Phases
             WriteElement(writer, "TrialPhases", "TrialPhase", _trialPhase);
-
-            // Sponsors
-            WriteElement(writer, "Sponsors", "Sponsor", _sponsorNameList);
 
             // Drug list
             if (_drugList != null && _drugList.Count > 0)
@@ -978,14 +950,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
         }
 
         /// <summary>
-        /// Trial Status.  Meaningful values are TrialStatusType.OpenOnly or TrialStatusType.ClosedOnly.
-        /// </summary>
-        public TrialStatusType TrialStatusRestriction
-        {
-            get { return _trialStatusRestriction; }
-        }
-
-        /// <summary>
         /// List of trial phases.
         /// </summary>
         public NameList TrialPhase
@@ -1008,16 +972,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
         public NameList SpecificProtocolIDList
         {
             get { return _specificProtocolIDList; }
-        }
-
-        /// <summary>
-        /// List of sponsor IDs to search against.
-        /// </summary>
-        /// <remarks>This will require changes to usp_GetProtocolSponsors as well
-        /// as usp_ProtocolSearchExtended_IDadv1FullText (or its successor).</remarks>
-        public NameList SponsorNameList
-        {
-            get { return _sponsorNameList; }
         }
 
         /// <summary>
