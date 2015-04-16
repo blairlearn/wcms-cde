@@ -15,6 +15,16 @@
                 .join(delimiter));  // join array with delimiter
     },
 
+    SelectedDeleteList: function(listId, delimiter) {
+        return (
+            $("#" + listId + " li:visible button") // find all visible buttons under the given id
+                .map(function() {
+                    return this.nextSibling.nodeValue;  // the following node should be the text; return it
+                })
+                .get()  // get as JS array
+                .join(delimiter));  // join array with delimiter
+    },
+
     ClickParams: function(sender, reportSuites, linkType, linkName) {
         /* 
         The facility for defining report suites by the parameter reportSuites 
@@ -210,39 +220,39 @@
 
         //Location 
         // - zip code
-        if ($(ids.zipCodeLocationButton).checked)
+        if ($("#" + ids.zipCodeLocationButton)[0].checked)
             location = 'Near Zip Code';
         // - At NIH
-        else if ($(ids.atNihLocationButton).checked)
-            if ($(ids.nihOnly).checked)
+        else if ($("#" + ids.atNihLocationButton)[0].checked)
+            if ($("#" + ids.nihOnly)[0].checked)
             location = 'At NIH Only Bethesda, Md';
         else
             location = 'At NIH';
         // - City/State/Country
-        else if ($(ids.cityStateLocationButton).checked) {
+        else if ($("#" + ids.cityStateLocationButton)[0].checked) {
             location = 'In City/State/Country';
         }
-        else if ($(ids.hospitalLocationButton).checked) {
+        else if ($("#" + ids.hospitalLocationButton)[0].checked) {
             location = 'At Hospital/Institution';
         }
 
         // Trial Status/Phase
         // - Status
-        if ($(ids.trialStatus_0).checked) {
+        if ($("#" + ids.trialStatus_0)[0].checked) {
             statusPhase = 'Trial Status';
         }
-        else if ($(ids.trialStatus_1).checked) {
+        else if ($("#" + ids.trialStatus_1)[0].checked) {
             statusPhase = 'Trial Status';
         }
         statusPhase += NCIAnalytics.fieldDelimiter;
         // - Phase
-        if ($(ids.trialPhase_1).checked || $(ids.trialPhase_2).checked || $(ids.trialPhase_3).checked || $(ids.trialPhase_4).checked) {
+        if ($("#" + ids.trialPhase_1)[0].checked || $("#" + ids.trialPhase_2)[0].checked || $("#" + ids.trialPhase_3)[0].checked || $("#" + ids.trialPhase_4)[0].checked) {
             phaseList = 'Trial Phase';
         }
 
         statusPhase += phaseList + NCIAnalytics.fieldDelimiter;
         // - New Trial
-        if ($(ids.newOnly).checked) {
+        if ($("#" + ids.newOnly)[0].checked) {
             item = $('trialStatusTable').select("label[for=newOnly]");
             statusPhase += 'New Trials';
         }
@@ -254,18 +264,18 @@
         if ((trialType != '') && (trialType != 'All'))
             treatmentType += 'Type of Trial';
         treatmentType += NCIAnalytics.fieldDelimiter;
-        if (NCIAnalytics.SelectedTextList(
+        if (NCIAnalytics.SelectedDeleteList(
                 webAnalyticsOptions.drugControlID, 
                 NCIAnalytics.stringDelimiter) != '')
             treatmentType += 'Drug';
         treatmentType += NCIAnalytics.fieldDelimiter;
-        if (NCIAnalytics.SelectedTextList(
+        if (NCIAnalytics.SelectedDeleteList(
                 webAnalyticsOptions.treatnentInterventionControlID,
                 NCIAnalytics.stringDelimiter) != '')
             treatmentType += 'Treatment/Intervention';
 
         // Trial ID / Sponsor
-        if ($(ids.protocolID).value != '')
+        if ($("#" + ids.protocolID).val() != '')
             trialIdSponsor += 'Protocol ID';
         trialIdSponsor += NCIAnalytics.fieldDelimiter;
         sponsor = NCIAnalytics.SelectedTextList(
@@ -274,12 +284,12 @@
         if ((sponsor != '') && (sponsor != 'All'))
             trialIdSponsor += 'Sponsor of Trial';
         trialIdSponsor += NCIAnalytics.fieldDelimiter;
-        if (NCIAnalytics.SelectedTextList(
+        if (NCIAnalytics.SelectedDeleteList(
                 webAnalyticsOptions.trialInvestigatorsControlID,
                 NCIAnalytics.stringDelimiter) != '')
             trialIdSponsor += 'Trial Investigators';
         trialIdSponsor += NCIAnalytics.fieldDelimiter;
-        if (NCIAnalytics.SelectedTextList(
+        if (NCIAnalytics.SelectedDeleteList(
                 webAnalyticsOptions.leadOrganizationCooperativeGroupControlID,
                 NCIAnalytics.stringDelimiter) != '')
             trialIdSponsor += 'Lead Organization';
@@ -290,8 +300,9 @@
         if ((special != '') && (special != 'All'))
             trialIdSponsor += 'Special Category';
 
-        if ($(ids.txtKeywords_state).value == 'valid')
-            keyword = $(ids.txtKeywords).value;
+        //if ($("#" + ids.txtKeywords_state).val() == 'valid')
+        if ($("#" + ids.txtKeywords).val())
+            keyword = $("#" + ids.txtKeywords).val();
 
         clickParams = new NCIAnalytics.ClickParams(this,
             'nciglobal,nciclinicaltrials', 'o', 'CTSearch');
@@ -331,9 +342,9 @@
     //******************************************************************************************************	
     TermsDictionarySearch: function(sender, isSpanish) {
         //var prop24Contents = (document.getElementById('radioStarts').checked) ? 'starts with' : 'contains';
-        var prop24Contents = ($(ids.radioStarts).checked) ? 'starts with' : 'contains';
+        var prop24Contents = ($("#" + ids.radioStarts)[0].checked) ? 'starts with' : 'contains';
         NCIAnalytics.TermsDictionarySearchCore(sender,
-            $(ids.AutoComplete1).value,
+            $("#" + ids.AutoComplete1).val(),
             prop24Contents,
             'TermsDictionarySearch',
             isSpanish);
@@ -446,10 +457,10 @@
 
     //******************************************************************************************************	
     DrugDictionarySearch: function(sender) {
-        var prop24Contents = ($(ids.radioStarts).checked) ? 'starts with' : 'contains';
+        var prop24Contents = ($("#" + ids.radioStarts)[0].checked) ? 'starts with' : 'contains';
 
         NCIAnalytics.DrugDictionarySearchCore(sender,
-            $(ids.AutoComplete1).value,
+            $("#" + ids.AutoComplete1).val(),
             prop24Contents,
             'DrugDictionarySearch');
     },
@@ -557,17 +568,17 @@
         var searchType = 'genetics';
         var typeOfCancer = '';
         var familyCancerSyndrome = '';
-        var city = $(ids.txtCity).value;
+        var city = $("#" + ids.txtCity).val();
         var state = '';
         var country = '';
-        var lastName = $(ids.txtLastName).value;
+        var lastName = $("#" + ids.txtLastName).val();
         var searchCriteria = '';
         var specialty = '';
         var selected = '';
         var list;
 
         //get Type(s) of Cancer
-        list = $(ids.selCancerType);
+        list = $("#" + ids.selCancerType);
         for (var i = 0; i < list.length; i++) {
             if (list[i].selected) {
                 if (typeOfCancer.length > 0)
@@ -576,7 +587,7 @@
             }
         }
         // get Family Cancer Syndrome
-        list = $(ids.selCancerFamily);
+        list = $("#" + ids.selCancerFamily);
         for (var i = 0; i < list.length; i++) {
             if (list[i].selected) {
                 if (familyCancerSyndrome.length > 0)
@@ -585,7 +596,7 @@
             }
         }
         //get State(s)
-        list = $(ids.selState);
+        list = $("#" + ids.selState);
         for (var i = 0; i < list.length; i++) {
             if (list[i].selected) {
                 if (state.length > 0)
@@ -595,7 +606,7 @@
         }
 
         //get Country(ies)
-        list = $(ids.selCountry);
+        list = $("#" + ids.selCountry);
         for (var i = 0; i < list.length; i++) {
             if (list[i].selected) {
                 if (country.length > 0)
