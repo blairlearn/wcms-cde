@@ -188,9 +188,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                 LoadLeadOrganizations(criteria, searchDef);
 
                 // Special Catetgories
-                FillFromDelimitedList(criteria.SpecialCategoryList,
-                    Strings.Clean(searchDef["specialCategory"].ToString()),
-                    commaDelimiter);
+                criteria.SpecialCategoryList.Clear();   // Force the special category list to be empty.
             }
             else
             {

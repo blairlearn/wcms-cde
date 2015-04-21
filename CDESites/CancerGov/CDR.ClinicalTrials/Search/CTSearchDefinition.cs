@@ -64,8 +64,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
         string _keywords;
 
-        TrialStatusType _trialStatusRestriction = TrialStatusType.OpenOnly;
-
         List<string> _trialPhase = null;
 
         bool _restrictToRecent = false;
@@ -413,7 +411,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
             // The system only contains open trials.  This forces all attempts at changing the status restriction
             // to result in Open.
             get { return TrialStatusType.OpenOnly; }
-            set { _trialStatusRestriction = TrialStatusType.OpenOnly; }
+            set { /* Discard any attempts at assigning a value */; }
         }
 
         /// <summary>

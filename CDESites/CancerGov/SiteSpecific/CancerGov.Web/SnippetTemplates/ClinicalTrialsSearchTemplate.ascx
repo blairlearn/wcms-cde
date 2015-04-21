@@ -492,7 +492,7 @@
     <%-- ................... Trial ID/Sponsor ....................... --%>
     <fieldset aria-labelledby="legend-trialsponsor">
         <div class="row">
-            <div id="legend-trialsponsor" class="large-4 small-11 columns legend">Trial ID/Sponsor</div>
+            <div id="legend-trialsponsor" class="large-4 small-11 columns legend">Trial ID/Organizations</div>
             <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>/page2#6" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 Search by protocol ID, investigators, lead organization/cooperative group, or special category
@@ -558,14 +558,6 @@
                             CssClass="button reset" />
                     </div>
                 </div>
-            </div>        
-            <div class="row">
-                <div class="large-4 columns"><label class="field">Special Category</label></div>
-                <div class="large-7 left columns"><CancerGov:AccessibleCheckBoxList 
-                        ID="specialCategory" 
-                        runat="server" 
-                        CssClass="scrolling-list roundy-box groupedCheckBoxList"
-                     /></div>
             </div>        
         </div>
         

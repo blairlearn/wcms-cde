@@ -125,7 +125,6 @@ namespace CancerGov.Web.SnippetTemplates
                 FillTrialInvestigatorBox(savedSearch);
                 FillLeadOrganzationBox(savedSearch);
 
-                FillSpecialCategorySelectBox(savedSearch);
                 FillPhase(savedSearch);
                 FillTrialType(savedSearch);
                 
@@ -142,7 +141,7 @@ namespace CancerGov.Web.SnippetTemplates
                     "",
                     investigator.ClientID,
                     leadOrg.ClientID,
-                    specialCategory.ClientID
+                    ""
                 );
 
             submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
@@ -377,40 +376,6 @@ namespace CancerGov.Web.SnippetTemplates
                 cancerStage.Items.Clear();
             }
 
-        }
-
-        private void FillSpecialCategorySelectBox(CTSearchDefinition savedSearch)
-        {
-            CTSearchFieldList<string> specialCategoryList = CTSearchManager.LoadSpecialCategoryList();
-
-            specialCategory.AppendDataBoundItems = true;
-            specialCategory.Items.Add(new System.Web.UI.WebControls.ListItem("All", "All"));
-            specialCategory.DefaultIndex = 0;
-            specialCategory.DataSource = specialCategoryList;
-            specialCategory.DataValueField = "Value";
-            specialCategory.DataTextField = "Key";
-            specialCategory.DataBind();
-
-            if (savedSearch == null)
-            {
-                // Default selection to "All"
-                specialCategory.SelectedIndex = 0;
-            }
-            else
-            {
-                bool matchFound = false;
-                foreach (string value in savedSearch.SpecialCategoryList)
-                {
-                    ListItem item = specialCategory.Items.FindByValue(value);
-                    if (item != null)
-                    {
-                        item.Selected = true;
-                        matchFound = true;
-                    }
-                }
-                if (!matchFound)
-                    specialCategory.SelectedIndex = 0;
-            }
         }
 
         /// <summary>
@@ -922,18 +887,6 @@ namespace CancerGov.Web.SnippetTemplates
                 foreach (string id in idList)
                 {
                     criteria.SpecificProtocolIDList.Add(id);
-                }
-            }
-
-            // Special Categories
-            if (SelectionIsPresent(specialCategory))
-            {
-                foreach (ListItem item in specialCategory.Items)
-                {
-                    if (item.Selected && !string.IsNullOrEmpty(item.Value))
-                    {
-                        criteria.SpecialCategoryList.Add(item.Value);
-                    }
                 }
             }
 

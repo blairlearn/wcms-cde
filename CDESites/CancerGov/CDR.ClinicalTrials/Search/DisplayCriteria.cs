@@ -69,8 +69,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
         NameList _specificProtocolIDList = null;
 
-        NameList _specialCategoryList = null;
-
         #endregion
 
         #region Constructors
@@ -187,11 +185,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
             // Alternate Protocol ID list.
             if (searchDef.SpecificProtocolIDList.Count > 0)
                 _specificProtocolIDList = new NameList(searchDef.SpecificProtocolIDList);
-
-            // Special Category list.
-            if (searchDef.SpecialCategoryList.Count > 0)
-                _specialCategoryList = new NameList(searchDef.SpecialCategoryList);
-        }
+       }
 
         #endregion
 
@@ -283,11 +277,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                         {
                             _interventionList = new List<KeyValuePair<string, int>>();
                             ReadElement(reader, "Interventions", "Intervention", "ID", _interventionList);
-                        }
-                        else if (reader.Name == "SpecialCategorys")
-                        {
-                            _specialCategoryList = new NameList();
-                            ReadElement(reader, "SpecialCategorys", "SpecialCategory", _specialCategoryList);
                         }
                         else if (reader.Name == "Keywords")
                         {
@@ -432,9 +421,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
             // Intervention list
             WriteElement(writer, "Interventions", "Intervention", _interventionList);
-
-            // Special categorys
-            WriteElement(writer, "SpecialCategorys", "SpecialCategory", _specialCategoryList);
 
             // Keyword text
             WriteElement(writer, "Keywords", _keywords);
@@ -972,14 +958,6 @@ namespace CancerGov.CDR.ClinicalTrials.Search
         public NameList SpecificProtocolIDList
         {
             get { return _specificProtocolIDList; }
-        }
-
-        /// <summary>
-        /// List of special protocol category IDs.
-        /// </summary>
-        public NameList SpecialCategoryList
-        {
-            get { return _specialCategoryList; }
         }
 
         #endregion

@@ -90,7 +90,6 @@ namespace NCI.Web.UI.WebControls.FormControls
                 RenderCriterion(writer, "Protocol ID", criteria.SpecificProtocolIDList);
                 RenderCriterion(writer, "Trial Investigators", criteria.InvestigatorList);
                 RenderCriterion(writer, "Lead Organization/Cooperative Group", criteria.LeadOrganizationList);
-                RenderCriterion(writer, "Special Category", criteria.SpecialCategoryList);
             }
         }
 
