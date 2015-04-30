@@ -88,7 +88,7 @@ namespace CancerGov.UI.CDR
                 sbContent.Append("$('.cdrid_mirror_row').show();\n");
 
                 // Join the checkboxes to their mirrors
-                sbContent.Append("$('.cdridbox').each(function(item){CreateCheckboxMirror('cdrid' + this.value, 'cdrid_mirror' + this.value);});\n");
+                sbContent.Append("$('.cdridbox').each(function(item){CreateCheckboxMirror('#cdrid' + this.value, '#cdrid_mirror' + this.value);});\n");
 
                 sbContent.Append("});\n</script>\n");
             }
