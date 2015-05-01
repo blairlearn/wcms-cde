@@ -20,7 +20,6 @@ namespace Www.Templates
     public partial class DbAlpha : SnippetControl
     {
         protected AlphaListBox alphaListBox;
-        //private TitleBlock _titleBl;
 
         //These are the QueryString related variables
         private string _searchStr = string.Empty;
@@ -105,7 +104,6 @@ namespace Www.Templates
             get { return _numResults; }
             set { _numResults = value; }
         }
-
         public string DictionaryURL
         {
             get { return _dictionaryURL; }
@@ -125,15 +123,12 @@ namespace Www.Templates
         {
             get { return _totalCount.ToString("N0"); }
         }
-
-
         #endregion
-              private void ResetControls()
+
+        private void ResetControls()
         {
-              
             radioContains.Checked = BContains;
             AutoComplete1.Text = (string.IsNullOrEmpty(Expand)) ? SearchStr.Replace("[[]", "[") : string.Empty;
-            AutoComplete1.SearchCriteria = (BContains) ? AutoComplete.SearchCriteriaEnum.Contains : AutoComplete.SearchCriteriaEnum.BeginsWith;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -142,9 +137,6 @@ namespace Www.Templates
             ValidateParams();
             GetQueryParams();
 
-            //DictionaryURLSpanish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("dictionary", "diccionario"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLSpanish"];
-            //DictionaryURLEnglish = PageAssemblyContext.Current.requestedUrl.ToString().ToLower().Replace("diccionario", "dictionary"); //ConfigurationSettings.AppSettings["DictionaryOfCancerTermsURLEnglish"];
-            
             //Setup URLS
             string snippetXmlData = string.Empty;
             snippetXmlData = SnippetInfo.Data;
@@ -154,13 +146,11 @@ namespace Www.Templates
             DictionaryURLSpanish = dUrl.DictionarySpanishURL;
             DictionaryURLEnglish = dUrl.DictionaryEnglishURL;
 
-
             DictionaryURL = DictionaryURLEnglish;
 
             if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish"))
             {
-                Response.Redirect("/diccionario" + Request.Url.Query);
-                
+                Response.Redirect("/diccionario" + Request.Url.Query); 
             }
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -176,14 +166,12 @@ namespace Www.Templates
                 SetupEnglish();
             }
 
-
             //Action must be set this way and not by adding the location to the action 
             //attribute of the form tag or it will generate Validation of viewstate MAC failed error
             //because we have virtual directories and don't know the location 
 
             if (Page.Request.Path.StartsWith("/templates/", StringComparison.OrdinalIgnoreCase))
             {
-
                 Page.Form.Action = Page.Request.Path;
 
                 if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -196,13 +184,9 @@ namespace Www.Templates
 
             alphaListBox.BaseUrl = DictionaryURL;
 
-            //Set is IE property to determine if browser is IE 
-            AutoComplete1.IsIE = (Request.Browser.Browser.ToUpper() == "IE" ? true : false);
-
             if (Page.Request.RequestType.Equals("POST")) //This is a POST(back)
             {
-                
-                SearchStr = Request.Form["AutoComplete1"];
+                SearchStr = Request.Form[AutoComplete1.UniqueID];
                 SearchStr = SearchStr.Replace("[", "[[]");
                 CdrID = string.Empty;
                 Expand = string.Empty;
@@ -215,8 +199,7 @@ namespace Www.Templates
                 if (string.IsNullOrEmpty(SearchStr))
                 {
                     ActivateDefaultView();
-                }
-                    
+                }  
                 else
                 {
                     LoadData();
@@ -239,7 +222,6 @@ namespace Www.Templates
 
             ResetControls();
 
-
             if (WebAnalyticsOptions.IsEnabled)
             {
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.PageName, wbField =>
@@ -257,40 +239,11 @@ namespace Www.Templates
                     alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaListSpanish"; // Load A-Z list onclick script
                 else
                     alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaList"; // Load A-Z list onclick script
-
-
-
-
-            }
-
-            BackTopLink();
-
-
-        }
-
-        protected void BackTopLink()
-        {
-            //		RawUrl	"/drugdictionary?CdrID=42766"	string
-
-            if (Request.RawUrl.Contains("?") == false && NumResults<1)
-            {
-
-                litBackToTop.Visible = false;
-            } 
-            else if (Request.RawUrl.ToLower().Contains("?cdrid") == true)
-            {
-                litBackToTop.Visible = false;
-            }
-            else
-            {
-                litBackToTop.Visible = true;
-                litBackToTop.Text = "<a href=\"#top\" class=\"backtotop-link\"><img src=\"/images/backtotop_red.gif\" alt=\"Back to Top\" border=\"0\">Back to Top</a>";
-
             }
         }
+
         private void SetupPrintUrl()
         {
-            //PagePrintUrl = "db_alpha.aspx?print=1";
             PagePrintUrl = "?print=1";
 
             //add expand
@@ -332,13 +285,10 @@ namespace Www.Templates
                     url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
                 else if (Expand != "")
                     url.SetUrl(url.ToString() + "?expand=" + Expand);
-                else 
+                else
                     url.SetUrl(url.ToString());
-            });
-
-            
+            });   
         }
-
 
         #region Data-related
         /// <summary>
@@ -371,9 +321,7 @@ namespace Www.Templates
                         {
                             wbField.Value = null;
                         });
-
                     }
-
                 }
                 else
                 {
@@ -416,13 +364,13 @@ namespace Www.Templates
             _totalCount = dataCollection.Count;
  
             MultiView1.ActiveViewIndex = 0;
-
+            numResDiv.Visible = (NumResults > 0);
         }
 
         private void ActivateResultsListView()
         {
-            MultiView1.ActiveViewIndex = 1;
-            litBackToTop.Visible = (NumResults > 1);
+            ActivateDefaultView();
+            MultiView2.ActiveViewIndex = 0;
             if (NumResults == 0)
             {
                 RenderNoResults();
@@ -473,56 +421,26 @@ namespace Www.Templates
         private void SetupSpanish()
         {
             _isSpanish = true;
-            lblAutoComplete1.Text = "buscar";
+
             //Controls
-            //lblStrSearch.Text = String.Empty;
-            //lblAccessSearch.Text = "Cuadro de búsqueda de texto";
-
-            //lblStarts.Text = "Empieza con";
-            //lblContains.Text = "Contiene";
-            lblResultsFor.Text = "resultados de:";
+            AutoComplete1.Attributes.Add("aria-label", "Escriba frase o palabra clave");
+            AutoComplete1.Attributes.Add("placeholder", "Escriba frase o palabra clave");
             
-            //radioStarts.Text = "Empieza con";
-            //radioContains.Text = "Contiene";
-
+            lblResultsFor.Text = "resultados de:";
             lblStartsWith.Text = "Empieza con";
             lblContains.Text = "Contiene";
 
             pnlIntroEnglish.Visible = false;
             pnlIntroSpanish.Visible = true;
 
-            btnGo.ImageUrl = @"/images/red_buscar_button.gif";
-            //btnGo.AlternateText = "Botón de búsqueda";
-            //btnGo.ToolTip = "Botón de búsqueda";
-            btnGo.AlternateText = "Buscar";
+            btnGo.Text = "Buscar";
             btnGo.ToolTip = "Buscar";
-            //btnGo.CssClass = "btnBuscar";
-
-            AutoComplete1.CloseLinkText = "cerrar";
-            //searchboxBtn.Attributes.Add("style", "width:64px;");
-            //searchboxStarts.Attributes.Add("style", "margin-right:6px");
-            //searchboxStarts.Attributes.Add("style", "width:95px;");
-
-            //alphaListBox.UrlArgs = "lang=spanish";
 
             //Page Properties
             PageOptionsBoxTitle = "Opciones";
             PrevText = "Definiciones anteriores:";
             NextText = "Definiciones siguientes:";
-            //QueryStringLang = "&lang=spanish";
-
-            //// Get the image we need to display
-            //CancerGov.UI.HTML.HtmlImage himage = null;
-            //if (this.PageDisplayInformation.Version == DisplayVersion.Image)
-            //    himage = new CancerGov.UI.HTML.HtmlImage("/images/title-default-spanish.jpg", "");
-
-            ////Title block
-            //this.PageHtmlHead.Title = "Diccionario de c&aacute;ncer - National Cancer Institute";
-            ////_titleBl = new TitleBlock("Diccionario de c&aacute;ncer", new CancerGov.UI.HTML.HtmlImage("/images/title-default-spanish.jpg", "", "165", "58"), this.PageDisplayInformation);
-            //_titleBl = new TitleBlock("Diccionario de c&aacute;ncer", himage, this.PageDisplayInformation);
-            //this.PageHeaders.Add(_titleBl);
-            //this.PageLeftColumn = new LeftNavColumn(this, Strings.ToGuid(ConfigurationSettings.AppSettings["SpanishDictionaryLeftViewID"]));
-
+            
             ////common display features
             SetupCommon();
         }
@@ -533,8 +451,11 @@ namespace Www.Templates
         private void SetupEnglish()
         {
             //Controls            
-            lblAutoComplete1.Text = "Search for";
+            AutoComplete1.Attributes.Add("aria-label", "Enter keywords or phrases");
+            AutoComplete1.Attributes.Add("placeholder", "Enter keywords or phrases");
+
             lblResultsFor.Text = "results found for:";
+            btnGo.Text = "Search";
 
             pnlIntroEnglish.Visible = true;
             pnlIntroSpanish.Visible = false;
@@ -547,6 +468,7 @@ namespace Www.Templates
             //common display features
             SetupCommon();
         }
+
         /// <summary>
         /// Setup shared by English and Spanish versions
         /// </summary>
@@ -561,23 +483,18 @@ namespace Www.Templates
             {
                 language = "English";
             }
-            // This sets the url and link text for close
-            AutoComplete1.SearchURL = "/TermDictionary.svc/SearchJSON/" + language + "?searchTerm=";
 
-            radioStarts.Attributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
-            radioContains.Attributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioStarts.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioContains.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
 
-            radioStarts.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioStarts.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioStarts.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioStarts.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
-            radioContains.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioContains.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioContains.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioContains.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
-            //lblStarts.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            //lblStarts.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
-
-            //lblContains.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            //lblContains.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            radioStarts.InputAttributes.Add("onchange", "autoFunc();");
+            radioContains.InputAttributes.Add("onchange", "autoFunc();");
 
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = SrcGroup.Equals("Contains");
@@ -607,10 +524,9 @@ namespace Www.Templates
                 alphaListBox.Title = string.Empty;
             }
         }
+
         private void RenderGutter()
         {
-
-            //gutterLangSwitch.DisplayInfo = this.PageDisplayInformation;
             gutterLangSwitch.EnglishUrl = "/dictionary/";
             gutterLangSwitch.SpanishUrl = "/diccionario/";
             gutterLangSwitch.Visible = true;
@@ -628,8 +544,8 @@ namespace Www.Templates
                 language = "English";
             }
 
-            MultiView1.ActiveViewIndex = 2;
-            pnlPrevNext.Visible = true;
+            ActivateDefaultView();
+            MultiView2.ActiveViewIndex = 1;
 
             string termName = string.Empty;
             string termPronun = string.Empty;
@@ -662,12 +578,10 @@ namespace Www.Templates
             }
             else
             {
-
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
                         {
                             data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                         });
-
 
                 this.Page.Header.Title=PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
                 lblTermPronun.Text = termPronun;
@@ -682,10 +596,7 @@ namespace Www.Templates
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = termName + ", definition";
-
             });
-
-           
 
             if (imageHtml != string.Empty)
                 imageHtml = "<p>" + imageHtml;
@@ -731,6 +642,5 @@ namespace Www.Templates
             else
                 return "";
         }
-
     }
 }

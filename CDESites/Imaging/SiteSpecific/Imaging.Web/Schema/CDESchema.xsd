@@ -1707,6 +1707,23 @@
 		  </documentation>
 		</annotation>
 	  </element>
+	  <element name="IsFontResizeAvailable" type="boolean" 
+		minOccurs="0" maxOccurs="1">
+		<annotation>
+		  <documentation>
+			Defines if this Page Assembly Instruction can allow 
+			font resizing option.
+		  </documentation>
+		</annotation>
+	  </element>
+      <element name="SyndicationURL" type="string"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Links to another page to view syndication details.
+          </documentation>
+        </annotation>
+      </element>
       <element name="OrderCopyURL" type="string"
         minOccurs="0" maxOccurs="1">
         <annotation>

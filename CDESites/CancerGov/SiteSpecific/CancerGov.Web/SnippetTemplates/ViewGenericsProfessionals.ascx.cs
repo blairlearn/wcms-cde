@@ -61,28 +61,30 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 string[] personids = args.Split(',');
                 GeneticProfessional geneticPro;
+                String geneticProHtml;
 
                 foreach (string id in personids)
                 {
                     if (Strings.Clean(id) != null)
                     {
                         geneticPro = new GeneticProfessional(id);
+                        geneticProHtml = geneticPro.GetHtml(Server.MapPath("/Stylesheets"));
+                        geneticProHtml = geneticProHtml.Replace("/search/search_geneticsservices.aspx", SearchPageInfo.SearchPagePrettyUrl);
+                        geneticProHtml = geneticProHtml.Replace("<GeneticsProfessional>", "");
+                        geneticProHtml = geneticProHtml.Replace("</GeneticsProfessional>", "");
 
-                        content += "<table border=\"0\" cellpadding=\"1\" cellspacing=\"0\" style=\"border: 1px solid #bdbdbd;\" width=\"100%\"><tr><td>";
-                        content += "<table border=\"0\" cellpadding=\"10\" cellspacing=\"0\" bgcolor=\"#ffffff\" width=\"100%\"><tr><td>";
-                        content += geneticPro.GetHtml(Server.MapPath("/Stylesheets"));
-                        content += "</td></tr></table>";
-                        content += "</td></tr></table>";
-                        content += "<p>";
-                        content += new ReturnToTopAnchor(this.PageDisplayInformation).Render();
-                        content += "<p>";
-                        content = content.Replace("/search/search_geneticsservices.aspx", SearchPageInfo.SearchPagePrettyUrl);
+                        content += "<li><div class='result'>" + geneticProHtml + "</div></li>";
                     }
                 }
 
                 if (Strings.Clean(content) == null)
                 {
                     content = "The cancer genetic professional(s) you selected was not found.";
+                }
+                else
+                {
+                    // wrap in ul element
+                    content = "<div class='slot-item'><div class='results'><ul class='no-bullets'>" + content + "</ul></div></div>";
                 }
             }
             else

@@ -226,16 +226,16 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 audioMediaHTML = audioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
                 if (String.IsNullOrEmpty(termPronunciation))
-                    return "<span class=\"CDR_audiofile\">" + audioMediaHTML + "</span>";
+                    return  audioMediaHTML;
                 else
-                    return "<span class=\"CDR_audiofile\">" + audioMediaHTML + "</span>&nbsp;&nbsp;<span class=\"mtd_pronounce\">" + termPronunciation + "</span>";
+                    return  audioMediaHTML + "<span>" + termPronunciation + "</span>";
             }
             else
             {
                 if (String.IsNullOrEmpty(termPronunciation))
                     return "";
                 else
-                    return "<span class=\"mtd_pronounce\">" + termPronunciation + "</span>";
+                    return termPronunciation;
             }
         }
 

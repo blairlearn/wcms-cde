@@ -36,6 +36,9 @@ namespace CancerGov.UI.CDR
 			bool bWroteTrialDesc = false;
 			bool bDrawnTCI = false;
 
+            //add this div for accordion to work on mobile
+            sbContent.Append("<div class=\"accordion\">");
+
 			foreach (string strSectionType in pProtocol.SectionList.Split(',')) {
 				
 				int iSection = 0;
@@ -43,6 +46,7 @@ namespace CancerGov.UI.CDR
 				iSection = Strings.ToInt(strSectionType);
 				
 				if (iSection > 0) {
+                    
 					switch ((ProtocolSectionTypes)iSection) {
 						
 						case ProtocolSectionTypes.Title : 
@@ -57,26 +61,20 @@ namespace CancerGov.UI.CDR
 							sbContent.Append(RenderAlternateTitle());
 							break;
 
-						case ProtocolSectionTypes.InfoBox : 
-							sbContent.Append("<p>\n");
-							sbContent.Append("<a name=\"StudyIdInfo_");
-							sbContent.Append(pProtocol.FullCdrId);
-							sbContent.Append("\"></a>");
-							sbContent.Append("<span class=\"Protocol-Section-Heading\">Basic Trial Information</span>\n");
-							sbContent.Append("<p>\n");
-
+						case ProtocolSectionTypes.InfoBox :
+                             
+                            sbContent.Append("<h2 id=\"StudyIdInfo_");
+                            sbContent.Append(pProtocol.FullCdrId);
+                            sbContent.Append("\">Basic Trial Information</h2>\n");
 							sbContent.Append(this.RenderInfoBox());
 							break;
 						
 						case ProtocolSectionTypes.StudySites : 
 							if ((pProtocol.Sites != null) && (pProtocol.Sites.SiteTable != null)) {
 								if (!bDrawnTCI) {
-									sbContent.Append("<p>\n");
-									sbContent.Append("<a name=\"ContactInfo_");
-									sbContent.Append(pProtocol.FullCdrId);
-									sbContent.Append("\"></a>");
-									sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
-									sbContent.Append("<p>\n");
+                                    sbContent.Append("<h2 id=\"ContactInfo_");
+                                    sbContent.Append(pProtocol.FullCdrId);
+                                    sbContent.Append("\">Trial Contact Information</h2>\n");
 
 									bDrawnTCI = true;
 								}
@@ -87,12 +85,9 @@ namespace CancerGov.UI.CDR
 						case ProtocolSectionTypes.CTGovLeadOrgs : 
 						case ProtocolSectionTypes.LeadOrgs : 
 							if (!bDrawnTCI) {
-								sbContent.Append("<p>\n");
-								sbContent.Append("<a name=\"ContactInfo_");
-								sbContent.Append(pProtocol.FullCdrId);
-								sbContent.Append("\"></a>");
-								sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
-								sbContent.Append("<p>\n");
+                                sbContent.Append("<h2 id=\"ContactInfo_");
+                                sbContent.Append(pProtocol.FullCdrId);
+                                sbContent.Append("\">Trial Contact Information</h2>\n");
 
 								bDrawnTCI = true;
 							}
@@ -107,12 +102,9 @@ namespace CancerGov.UI.CDR
 							if (pProtocol.Sections.Contains(iSection)) {
 
 								if (!bWroteTrialDesc) {
-									sbContent.Append("<p>\n");
-									sbContent.Append("<a name=\"TrialDescription_");
-									sbContent.Append(pProtocol.FullCdrId);
-									sbContent.Append("\"></a>");
-									sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Description</span>\n");
-									sbContent.Append("<p>\n");	
+                                    sbContent.Append("<h2 id=\"TrialDescription_");
+                                    sbContent.Append(pProtocol.FullCdrId);
+                                    sbContent.Append("\">Trial Description</h2>\n");
 									bWroteTrialDesc = true;
 								}
 							
@@ -129,9 +121,11 @@ namespace CancerGov.UI.CDR
 							break;
 
 					}
+                   
 				}
-
 			}
+
+            sbContent.Append("</div>");
 			
 			return sbContent.ToString();
 		}
@@ -141,11 +135,12 @@ namespace CancerGov.UI.CDR
 
 			StringBuilder sbContent = new StringBuilder();
 
-			//Draw the title, Everything has to have some title
-		
-			sbContent.Append("<span class=\"Protocol-Title\">");
-			sbContent.Append(pProtocol.ProtocolTitle);
-			sbContent.Append("</span>\n");
+			//Title is being set in the ClinicalTrialsView.ascx.cs control 
+            //and should not being rendered here.
+
+            //sbContent.Append("<h1>");
+            //sbContent.Append(pProtocol.ProtocolTitle);
+            //sbContent.Append("</h1>\n");
 
 			// for some reason this is drawn in a separate place when it's not a printable version
 			// also, don't show the dates for CTGov Protocols, since they are mostly wrong
@@ -180,7 +175,7 @@ namespace CancerGov.UI.CDR
 				}
 			}
 
-			sbContent.Append("<p>\n"); //<---- note we draw <p> tags after a section has been drawn
+			//sbContent.Append("<p>\n"); //<---- note we draw <p> tags after a section has been drawn
 
 			return sbContent.ToString();
 		}
@@ -191,17 +186,16 @@ namespace CancerGov.UI.CDR
 			StringBuilder sbContent = new StringBuilder();
 
 			//Now for the alternate title... We only show  if we have one.
-			if ((pProtocol.AlternateTitle != null) && (pProtocol.AlternateTitle != "") && (pProtocol.AlternateTitle != pProtocol.ProtocolTitle)) {
+            if ((pProtocol.AlternateTitle != null) && (pProtocol.AlternateTitle != "") && (pProtocol.AlternateTitle != pProtocol.ProtocolTitle))
+            {
+                sbContent.Append("<h2 id=\"AlternateTitle_");
+                sbContent.Append(pProtocol.FullCdrId);
+                sbContent.Append("\">Alternate Title</h2>\n");
+                sbContent.Append("<p>" + pProtocol.AlternateTitle + "</p>");
+                sbContent.Append("\n");
 
-				sbContent.Append("<a name=\"AlternateTitle_");
-				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\"></a><span class=\"Protocol-Section-Heading\">Alternate Title</span>\n");
-				sbContent.Append("<p>\n");
-				sbContent.Append(pProtocol.AlternateTitle);
-				sbContent.Append("<p>\n");
 
-
-			} //else the titles are the same so don't show them
+            } //else the titles are the same so don't show them
 
 			return sbContent.ToString();
 		}
@@ -211,192 +205,8 @@ namespace CancerGov.UI.CDR
 
 			StringBuilder sbContent = new StringBuilder();
 
-			//sbContent.Append("<p><h1>Table of Contents</h1>");
-			if ((pProtocol.AlternateTitle != null) && (pProtocol.AlternateTitle != "") && (pProtocol.AlternateTitle != pProtocol.ProtocolTitle)) 
-			{
-				sbContent.Append("<a href=\"#AlternateTitle_");
-				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\" class=\"protocol-toc-link\">Alternate Title</a><br />");
-			}
-
-			sbContent.Append("<a href=\"#StudyIdInfo_");
-			sbContent.Append(pProtocol.FullCdrId);
-			sbContent.Append("\" class=\"protocol-toc-link\">Basic Trial Information</a><br />");
-
-			if (pProtocol.ProtocolVersion == ProtocolVersions.HealthProfessional) 
-			{
-				 
-				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.Objectives)) 
-				{
-					sbContent.Append("<a href=\"#Objectives_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Objectives</a><br />");
-				}
-
-				if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
-				{
-
-
-					sbContent.Append("<a href=\"#TrialDescription_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Trial Description</a><br />");
-
-					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
-					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-						sbContent.Append("<a href=\"#Objectives_");
-						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Summary</a><br />");	
-					}
-					
-					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription))) 
-					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-						sbContent.Append("<a href=\"#Outline_");
-						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Further Trial Information</a><br />");	
-					}
-
-					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria))) 
-					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-						sbContent.Append("<a href=\"#EntryCriteria_");
-						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Eligibility Criteria</a><br />");	
-					}
-
-
-				}
-
-				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.EntryCriteria)) 
-				{
-					sbContent.Append("<a href=\"#EntryCriteria_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Entry Criteria</a><br />");
-				}
-
-				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.ExpectedEnrollment)) 
-				{
-					sbContent.Append("<a href=\"#ExpectedEnrollment_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Expected Enrollment</a><br />");
-				}
-
-				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.Outcomes)) 
-				{
-					sbContent.Append("<a href=\"#Outcomes_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Outcomes</a><br />");
-				}
-
-				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.Outline)) 
-				{
-					sbContent.Append("<a href=\"#Outline_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Outline</a><br />");
-				}
-
-				if ((pProtocol.Sections != null) && (pProtocol.Sections.Contains((int)ProtocolSectionTypes.PublishedResults))) 
-				{
-					sbContent.Append("<a href=\"#PublishedResults_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Published Results</a><br />");
-				}
-
-				if ((pProtocol.Sections != null) && (pProtocol.Sections.Contains((int)ProtocolSectionTypes.RelatedPublications))) 
-				{
-					sbContent.Append("<a href=\"#RelatedPublications_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Related Publications</a><br />");
-				}
-
-			} 
-			else 
-			{
-
-
-				if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.PatientAbstract)) 
-				{
-					sbContent.Append("<a href=\"#TrialDescription_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Trial Description</a><br />");
-
-
-					//Sub links, ah, tab in 5 places?
-					sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-					sbContent.Append("<a href=\"#Purpose_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Purpose</a><br />");
-
-					sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-					sbContent.Append("<a href=\"#Eligibility_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Eligibility</a><br />");
-
-					sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-					sbContent.Append("<a href=\"#TreatmentIntervention_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Treatment/Intervention</a><br />");
-				}
-
-				if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
-				{
-
-
-					sbContent.Append("<a href=\"#TrialDescription_");
-					sbContent.Append(pProtocol.FullCdrId);
-					sbContent.Append("\" class=\"protocol-toc-link\">Trial Description</a><br />");
-
-					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovBriefSummary))) 
-					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-						sbContent.Append("<a href=\"#Objectives_");
-						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Summary</a><br />");	
-					}
-					
-					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovDetailedDescription))) 
-					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-						sbContent.Append("<a href=\"#Outline_");
-						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Further Trial Information</a><br />");	
-					}
-
-					if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.CTGovEntryCriteria))) 
-					{
-						sbContent.Append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-						sbContent.Append("<a href=\"#EntryCriteria_");
-						sbContent.Append(pProtocol.FullCdrId);
-						sbContent.Append("\" class=\"protocol-toc-link\">Eligibility Criteria</a><br />");	
-					}
-
-
-				}
-
-			}
-
-			//New Requirements, Draw Trial Contact Information to link above lead orgs and study sites
-			sbContent.Append("<a href=\"#ContactInfo_");
-			sbContent.Append(pProtocol.FullCdrId);
-			sbContent.Append("\" class=\"protocol-toc-link\">Trial Contact Information</a><br />");
-			
-			//SCR 850
-			if ((pProtocol.Sections.Contains((int)ProtocolSectionTypes.PatientRelatedInformation)) || (pProtocol.Sections.Contains((int)ProtocolSectionTypes.HPRelatedInformation))) 
-			{
-				sbContent.Append("<a href=\"#ProtocolRelatedLinks_");
-				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\" class=\"protocol-toc-link\">Related Information</a><br />");
-			}
-
-			//registry info 
-			if (pProtocol.Sections.Contains((int)ProtocolSectionTypes.RegistryInformation)){ 
-				sbContent.Append("<a href=\"#RegistryInfo_");
-				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\" class=\"protocol-toc-link\">Registry Information</a><br />");
-			}
-
-			sbContent.Append("<p>");
+            //create an empty div to add the CTGovProtocol table of contents using Javascript
+            sbContent.Append("<div id=\"pdq-toc-protocol\"></div>");
 
 			return sbContent.ToString();
 		}
@@ -411,24 +221,12 @@ namespace CancerGov.UI.CDR
 
 			if (dvStudySites.Count > 0) {
 
-				sbContent.Append("<a name=\"SitesAndContacts_");
-				sbContent.Append(pProtocol.FullCdrId);
-				sbContent.Append("\"></a>");
-				sbContent.Append("<span class=\"Protocol-Section-SubHeading\">Trial Sites</span>\n");
-                sbContent.Append("<p>\n");
+                sbContent.Append("<h3 do-not-show=\"toc\">Trial Sites</h3>\n");
 
-				sbContent.Append("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
-				sbContent.Append("<tr>\n");
-                sbContent.Append("<td valign=\"top\" width=\"7%\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"1\" alt=\"\" border=\"0\"></td>\n");
-                sbContent.Append("<td valign=\"top\" width=\"7%\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"1\" alt=\"\" border=\"0\"></td>\n");
-                sbContent.Append("<td valign=\"top\" width=\"33%\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"1\" alt=\"\" border=\"0\"></td>\n");
-                sbContent.Append("<td valign=\"top\" width=\"53%\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"1\" alt=\"\" border=\"0\"></td>\n");
-                sbContent.Append("</tr>\n");
-
-	
-				string strPrevCountry = "";
-				string strPrevState = "";
-				string strPrevCity = "";
+                string strPrevOrgname = string.Empty;
+                string strPrevCountry = string.Empty;
+                string strPrevState = string.Empty;
+                string strPrevCity = string.Empty;
 				
 				foreach (DataRowView drvSite in dvStudySites) {
 
@@ -439,191 +237,155 @@ namespace CancerGov.UI.CDR
 							if (strPrevState == (string)drvSite.Row["State"]) { //do not draw state
 
 								if (strPrevCity == (string)drvSite.Row["City"]) { //do not draw city
+
+                                    if (strPrevOrgname != (string)drvSite.Row["OrganizationName"])
+                                    {
+                                        sbUSA.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                        strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                                    }
+									sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 					
-									sbUSA.Append(drvSite.Row["HTML"].ToString());
-					
-								} else {
+								} else { // new city
 
-									sbUSA.Append("<tr>\n");
-									sbUSA.Append("<td valign=\"top\">&nbsp;</td>\n");
-									sbUSA.Append("<td valign=\"top\" colspan=\"3\" class=\"protocol-city\">");
-									sbUSA.Append(drvSite.Row["City"].ToString());
-									sbUSA.Append("</td>\n");
-									sbUSA.Append("</tr>\n");
-									sbUSA.Append("<tr>\n");
-									sbUSA.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-									sbUSA.Append("</tr>\n");
-									sbUSA.Append(drvSite.Row["HTML"].ToString());
+                                    if(!string.IsNullOrEmpty(strPrevCity) && sbUSA.Length > 0)
+                                        sbUSA.Append("</div>"); // Close previous city.
 
-									strPrevCity = drvSite.Row["City"].ToString();
+                                    sbUSA.Append("<div class=\"study-site-city\">");
+									sbUSA.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                                    sbUSA.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                    sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
+                                    strPrevCity = drvSite.Row["City"].ToString();
+                                    strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
 								}
 
-							} else {
-								if (drvSite.Row["State"].ToString() != "") {
-									sbUSA.Append("<tr>\n");
-									sbUSA.Append("<td valign=\"top\" colspan=\"4\" class=\"protocol-state\">");
-									sbUSA.Append(drvSite.Row["State"].ToString());
-									sbUSA.Append("</td>\n");
-									sbUSA.Append("</tr>\n");
-									sbUSA.Append("<tr>\n");
-									sbUSA.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-									sbUSA.Append("</tr>\n");
+							} else {  // new state
+
+                                if (!string.IsNullOrEmpty(strPrevCity) && sbUSA.Length > 0)
+                                    sbUSA.Append("</div>"); // Close previous city.
+                                if (!string.IsNullOrEmpty(strPrevState) && sbUSA.Length > 0)
+                                    sbUSA.Append("</div>"); // Close previous state.
+
+                                sbUSA.Append("<div class=\"study-site-state\">");
+                                if (drvSite.Row["State"].ToString() != "")
+                                {
+                                    sbUSA.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 								}
-								sbUSA.Append("<tr>\n");
-								sbUSA.Append("<td valign=\"top\">&nbsp;</td>\n");
-								sbUSA.Append("<td valign=\"top\" colspan=\"3\" class=\"protocol-city\">");
-								sbUSA.Append(drvSite.Row["City"].ToString());
-								sbUSA.Append("</td>\n");
-								sbUSA.Append("</tr>\n");
-								sbUSA.Append("<tr>\n");
-								sbUSA.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-								sbUSA.Append("</tr>\n");
-								
-								sbUSA.Append(drvSite.Row["HTML"].ToString());
+                                sbUSA.Append("<div class=\"study-site-city\">");
+                                sbUSA.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                                sbUSA.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
 								strPrevState = drvSite.Row["State"].ToString();
-								strPrevCity = drvSite.Row["City"].ToString();
-
+                                strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                                strPrevCity = drvSite.Row["City"].ToString();
 							}
 
-						} else {
-							sbUSA.Append("<tr>\n");
-							sbUSA.Append("<td valign=\"top\" colspan=\"4\" class=\"protocol-country\">");
-							sbUSA.Append(drvSite.Row["Country"].ToString());
-							sbUSA.Append("</td>\n");
-							sbUSA.Append("</tr>\n");
+						} else { // Change country.
+                            if (!string.IsNullOrEmpty(strPrevCity) && sbUSA.Length > 0)
+                                sbUSA.Append("</div>"); // Close previous city.
+                            if (!string.IsNullOrEmpty(strPrevState) && sbUSA.Length > 0)
+                                sbUSA.Append("</div>"); // Close previous state.
 
-							sbUSA.Append("<tr>\n");
-							sbUSA.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-							sbUSA.Append("</tr>\n");
+                            sbUSA.AppendFormat("<h4 do-not-show=\"toc\">{0}</h4>\n", drvSite.Row["Country"].ToString());
 
-							if (drvSite.Row["State"].ToString() != "") {
-								sbUSA.Append("<tr>\n");
-								sbUSA.Append("<td valign=\"top\" colspan=\"4\" class=\"protocol-state\">");
-								sbUSA.Append(drvSite.Row["State"].ToString());
-								sbUSA.Append("</td>\n");
-								sbUSA.Append("</tr>\n");
-								sbUSA.Append("<tr>\n");
-								sbUSA.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-								sbUSA.Append("</tr>\n");
+                            sbUSA.Append("<div class=\"study-site-state\">");
+                            if (drvSite.Row["State"].ToString() != "")
+                            {
+                                sbUSA.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 							}
 
-							sbUSA.Append("<tr>\n");
-							sbUSA.Append("<td valign=\"top\">&nbsp;</td>\n");
-							sbUSA.Append("<td valign=\"top\" colspan=\"3\" class=\"protocol-city\">");
-							sbUSA.Append(drvSite.Row["City"].ToString());
-							sbUSA.Append("</td>\n");
-							sbUSA.Append("</tr>\n");
-							sbUSA.Append("<tr>\n");
-							sbUSA.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-							sbUSA.Append("</tr>\n");
-							
-							sbUSA.Append(drvSite.Row["HTML"].ToString());
+                            sbUSA.Append("<div class=\"study-site-city\">");
+                            sbUSA.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                            sbUSA.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                            sbUSA.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 						
 							strPrevCountry = drvSite.Row["Country"].ToString();
 							strPrevState = drvSite.Row["State"].ToString();
 							strPrevCity = drvSite.Row["City"].ToString();
-
-						}
-					} else {
+                            strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                        }
+					} else { // NON-USA
 						if (strPrevCountry == (string)drvSite.Row["Country"]) { //do not draw country
-						
 							if (strPrevState == (string)drvSite.Row["State"]) { //do not draw state
-
 								if (strPrevCity == (string)drvSite.Row["City"]) { //do not draw city
-					
-									sbWorld.Append(drvSite.Row["HTML"].ToString());
-					
-								} else {
+                                    if (strPrevOrgname != (string)drvSite.Row["OrganizationName"])
+                                    {
+                                        sbWorld.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                        strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                                    }
+                                    sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
+								} else { // new city
 
-									sbWorld.Append("<tr>\n");
-									sbWorld.Append("<td valign=\"top\">&nbsp;</td>\n");
-									sbWorld.Append("<td valign=\"top\" colspan=\"3\" class=\"protocol-city\">");
-									sbWorld.Append(drvSite.Row["City"].ToString());
-									sbWorld.Append("</td>\n");
-									sbWorld.Append("</tr>\n");
-									sbWorld.Append("<tr>\n");
-									sbWorld.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-									sbWorld.Append("</tr>\n");
-									sbWorld.Append(drvSite.Row["HTML"].ToString());
+                                    if (!string.IsNullOrEmpty(strPrevCity) && sbWorld.Length > 0)
+                                        sbWorld.Append("</div>"); // Close previous city.
+
+                                    sbWorld.Append("<div class=\"study-site-city\">");
+
+                                    sbWorld.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                                    sbWorld.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                    sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
 									strPrevCity = drvSite.Row["City"].ToString();
+                                    strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                                }
 
-								}
+							} else { // new state
 
-							} else {
-								if (drvSite.Row["State"].ToString() != "") {
-									sbWorld.Append("<tr>\n");
-									sbWorld.Append("<td valign=\"top\" colspan=\"4\" class=\"protocol-state\">");
-									sbWorld.Append(drvSite.Row["State"].ToString());
-									sbWorld.Append("</td>\n");
-									sbWorld.Append("</tr>\n");
-									sbWorld.Append("<tr>\n");
-									sbWorld.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-									sbWorld.Append("</tr>\n");
+                                if (!string.IsNullOrEmpty(strPrevCity) && sbWorld.Length > 0)
+                                    sbWorld.Append("</div>"); // Close previous city.
+                                if (!string.IsNullOrEmpty(strPrevState) && sbWorld.Length > 0)
+                                    sbWorld.Append("</div>"); // Close previous state.
+
+                                sbWorld.Append("<div class=\"study-site-state\">");
+                                if (drvSite.Row["State"].ToString() != "")
+                                {
+                                    sbWorld.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 								}
-								sbWorld.Append("<tr>\n");
-								sbWorld.Append("<td valign=\"top\">&nbsp;</td>\n");
-								sbWorld.Append("<td valign=\"top\" colspan=\"3\" class=\"protocol-city\">");
-								sbWorld.Append(drvSite.Row["City"].ToString());
-								sbWorld.Append("</td>\n");
-								sbWorld.Append("</tr>\n");
-								sbWorld.Append("<tr>\n");
-								sbWorld.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-								sbWorld.Append("</tr>\n");
-								sbWorld.Append(drvSite.Row["HTML"].ToString());
+                                sbWorld.Append("<div class=\"study-site-city\">");
+                                sbWorld.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                                sbWorld.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                                sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 
 								strPrevState = drvSite.Row["State"].ToString();
 								strPrevCity = drvSite.Row["City"].ToString();
+                                strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                            }
 
-							}
+						} else { // Change country.
+                            if (!string.IsNullOrEmpty(strPrevCity) && sbWorld.Length > 0)
+                                sbWorld.Append("</div>"); // Close previous city.
+                            if (!string.IsNullOrEmpty(strPrevState) && sbWorld.Length > 0)
+                                sbWorld.Append("</div>"); // Close previous state.
 
-						} else {
-							sbWorld.Append("<tr>\n");
-							sbWorld.Append("<td valign=\"top\" colspan=\"4\" class=\"protocol-country\">");
-							sbWorld.Append(drvSite.Row["Country"].ToString());
-							sbWorld.Append("</td>\n");
-							sbWorld.Append("</tr>\n");
+                            sbWorld.AppendFormat("<h4 do-not-show=\"toc\">{0}</h4>\n", drvSite.Row["Country"].ToString());
 
-							sbWorld.Append("<tr>\n");
-							sbWorld.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-							sbWorld.Append("</tr>\n");
-
+                            sbWorld.Append("<div class=\"study-site-state\">");
 							if (drvSite.Row["State"].ToString() != "") {
-								sbWorld.Append("<tr>\n");
-								sbWorld.Append("<td valign=\"top\" colspan=\"4\" class=\"protocol-state\">");
-								sbWorld.Append(drvSite.Row["State"].ToString());
-								sbWorld.Append("</td>\n");
-								sbWorld.Append("</tr>\n");
-								sbWorld.Append("<tr>\n");
-								sbWorld.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-								sbWorld.Append("</tr>\n");
+                                sbWorld.AppendFormat("<h5>{0}</h5>\n", drvSite.Row["State"].ToString());
 							}
 
-							sbWorld.Append("<tr>\n");
-							sbWorld.Append("<td valign=\"top\">&nbsp;</td>\n");
-							sbWorld.Append("<td valign=\"top\" colspan=\"3\" class=\"protocol-city\">");
-							sbWorld.Append(drvSite.Row["City"].ToString());
-							sbWorld.Append("</td>\n");
-							sbWorld.Append("</tr>\n");
-							sbWorld.Append("<tr>\n");
-							sbWorld.Append("<td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"1\" height=\"5\" alt=\"\" border=\"0\"></td>\n");
-							sbWorld.Append("</tr>\n");
-							sbWorld.Append(drvSite.Row["HTML"].ToString());
+                            sbWorld.Append("<div class=\"study-site-city\">");
+                            sbWorld.AppendFormat("<h6>{0}</h6>\n", drvSite.Row["City"].ToString());
+                            sbWorld.AppendFormat("<p class=\"study-site-name\">{0}</p>\n", drvSite.Row["OrganizationName"].ToString());
+                            sbWorld.AppendFormat("<p>{0}</p>\n", drvSite.Row["HTML"].ToString());
 						
 							strPrevCountry = drvSite.Row["Country"].ToString();
 							strPrevState = drvSite.Row["State"].ToString();
 							strPrevCity = drvSite.Row["City"].ToString();
-
-						}
-
+                            strPrevOrgname = drvSite.Row["OrganizationName"].ToString();
+                        }
 					}
-				
 				}
+
+                // Close out city and state.
+                if(sbUSA.Length > 0)
+                    sbUSA.Append("</div></div>\n");
+                if(sbWorld.Length > 0)
+                    sbWorld.Append("</div></div>\n");
+
 				sbContent.Append(sbUSA.ToString());
 				sbContent.Append(sbWorld.ToString());
-				sbContent.Append("</table>\n");
 
                 // if prOptions is not null, check to see if TrialSitesSeeAllUrl and Text are set - if so, render link with anchor tag navigation
                 if (this.prOptions != null)
@@ -660,40 +422,40 @@ namespace CancerGov.UI.CDR
             if (drawAsTable)
             {
                 //Draw Study info box
-                sbContent.Append("<table width=\"100%\" cellpadding=\"5\" cellspacing=\"0\" border=\"0\" class=\"Protocol-info-box\">");
-                sbContent.Append("<tr style=\"background: #e7e6e2\">");
-                sbContent.Append("<th valign=\"top\" class=\"phaseCol label\">Phase</th>");
-                sbContent.Append("<th valign=\"top\" class=\"typeCol label\">Type</th>");
-                sbContent.Append("<th valign=\"top\" class=\"statusCol label\">Status</th>");
-                sbContent.Append("<th valign=\"top\" class=\"ageCol label\">Age</th>");
-                sbContent.Append("<th valign=\"top\" class=\"sponsorCol label\">Sponsor</th>");
-                sbContent.Append("<th valign=\"top\" class=\"protocolIDCol label\">Protocol IDs</th>");
+                sbContent.Append("<table class=\"table-default\">");
+                sbContent.Append("<tr>");
+                sbContent.Append("<th>Phase</th>");
+                sbContent.Append("<th>Type</th>");
+                sbContent.Append("<th>Status</th>");
+                sbContent.Append("<th>Age</th>");
+                sbContent.Append("<th>Sponsor</th>");
+                sbContent.Append("<th>Protocol IDs</th>");
                 sbContent.Append("</tr>");
                 sbContent.AppendFormat("<tr>");
-                sbContent.AppendFormat("<td valign=\"top\" class=\"phaseCol\">{0}</td>", pProtocol.Phase);
-                sbContent.AppendFormat("<td valign=\"top\" class=\"typeCol\">{0}</td>", pProtocol.TrialType);
-                sbContent.AppendFormat("<td valign=\"top\" class=\"statusCol\">{0}</td>", pProtocol.CurrentStatus);
-                sbContent.AppendFormat("<td valign=\"top\" class=\"ageCol\">{0}</td>", pProtocol.AgeRange);
-                sbContent.AppendFormat("<td valign=\"top\" class=\"sponsorCol\">{0}</td>", pProtocol.TrialSponsor.Replace("/", " / "));
-                sbContent.AppendFormat("<td valign=\"top\" class=\"protocolIDCol\"><span class=\"protocol-primaryprotocolid\">{0}</span><br>{1}</td>", pProtocol.PrimaryProtocolID, pProtocol.AlternateProtocolIDs);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.Phase);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.TrialType);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.CurrentStatus);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.AgeRange);
+                sbContent.AppendFormat("<td>{0}</td>", pProtocol.TrialSponsor.Replace("/", " / "));
+                sbContent.AppendFormat("<td><strong>{0}</strong><br>{1}</td>", pProtocol.PrimaryProtocolID, pProtocol.AlternateProtocolIDs);
                 sbContent.AppendFormat("</tr>");
                 sbContent.Append("</table>");
             }
             else
             {
-                string InfoBoxFormat = "<span class=\"label\">{0}: </span>{1}<br>";
+                string InfoBoxFormat = "<strong>{0}: </strong>{1}<br/>";
 
                 // build protocol list with a comma separation instead of the linebreak used in
                 // the tabular layout.
                 string protocolList;
                 if( string.IsNullOrEmpty(pProtocol.AlternateProtocolIDs))
-                    protocolList = string.Format("<span class=\"protocol-primaryprotocolid\">{0}</span>",
+                    protocolList = string.Format("<strong>{0}</strong>",
                         pProtocol.PrimaryProtocolID);
                 else
-                    protocolList = string.Format("<span class=\"protocol-primaryprotocolid\">{0}</span>, {1}",
+                    protocolList = string.Format("<strong>{0}</strong>, {1}",
                         pProtocol.PrimaryProtocolID, pProtocol.AlternateProtocolIDs);
 
-                sbContent.Append("<div class=\"Protocol-info-box-list\">\n");
+                sbContent.Append("<div>\n");
                 sbContent.AppendFormat(InfoBoxFormat, "Phase", pProtocol.Phase);
                 sbContent.AppendFormat(InfoBoxFormat, "Type", pProtocol.TrialType);
                 sbContent.AppendFormat(InfoBoxFormat, "Status", pProtocol.CurrentStatus);

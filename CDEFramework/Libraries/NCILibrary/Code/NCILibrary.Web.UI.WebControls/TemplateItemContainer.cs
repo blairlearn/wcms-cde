@@ -15,6 +15,7 @@ namespace NCI.Web.UI.WebControls
     {
         protected string _templateType;
         protected object _data;
+        protected int _displayIndex;
 
         /// <summary>
         /// Gets the template type of this TemplateItemContainer.
@@ -34,6 +35,13 @@ namespace NCI.Web.UI.WebControls
         {
             _data = data;
         }
+
+        public TemplateItemContainer(string templateType, object data, int displayIndex)
+            : this(templateType, data)
+        {
+            _displayIndex = displayIndex;
+        }
+
 
         /// <summary>
         /// Renders the control to the specified HTML writer.
@@ -59,7 +67,7 @@ namespace NCI.Web.UI.WebControls
 
         public int DisplayIndex
         {
-            get { return 0; }
+            get { return _displayIndex; }
         }
 
         #endregion

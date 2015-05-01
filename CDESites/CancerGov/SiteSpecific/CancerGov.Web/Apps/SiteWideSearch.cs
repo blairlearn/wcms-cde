@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.UI.HtmlControls;
 using System.Web.UI;
@@ -38,7 +39,7 @@ namespace NCI.Web.CancerGov.Apps
         protected HyperLink lnkDym;
         protected Label lblTopResultsXofY;
         protected Literal litError;
-        protected Repeater rptResults;
+        protected NCI.Web.UI.WebControls.MultiTemplatedRepeater rptResults;
         protected Label lblBottomResultsXofY;
         protected Label lblDDLPageUnitShowText;
         protected Label lblPageUnit;
@@ -48,12 +49,11 @@ namespace NCI.Web.CancerGov.Apps
         protected RadioButtonList rblSWRSearchType;
         protected Label lblSWRKeywordLabel;
         protected TextBox txtSWRKeyword;
-        protected ImageButton btnSWRImgSearch;
         protected Button btnSWRTxtSearch;
         protected Label lblDDLPageUnitResultsPPText;
         protected Button btnTextChangePageUnit;
         protected JavascriptProbeControl jsProbe;
-        protected SimplePager spPager;
+        protected SimpleUlPager spPager;
         #endregion
 
         #region Private Memebers
@@ -65,7 +65,7 @@ namespace NCI.Web.CancerGov.Apps
         private bool _hasPageUnitChanged = false;
         private bool _isIENoJSAndHitEnderInTheSearchBox = false;
         private int _resultOffset = 1;
-        
+
         #endregion
         #region Properties
 
@@ -267,11 +267,6 @@ namespace NCI.Web.CancerGov.Apps
             //Setup if we are allowed to show DYM
             _allowedToShowDYM = Strings.ToBoolean((string)ConfigurationSettings.AppSettings["EndecaDidYouMean"]) && PageDisplayInformation.Language != DisplayLanguage.Spanish;
 
-            btnSWRImgSearch.Attributes.Add("src","/images/search_site.gif"); 
-
-            btnSWRImgSearch.Visible = true;
-            btnSWRTxtSearch.Visible = false; 
-
             if (Page.Request.RequestType == "POST")
             {
                 if (!IsPostBack)
@@ -302,8 +297,7 @@ namespace NCI.Web.CancerGov.Apps
                     if (Strings.Clean(Request.Params["__EVENTTARGET"]) == null
                         && Strings.Clean(Request.Params["__EVENTARGUMENT"]) == null
                         && Strings.Clean(Request.Params[btnTextChangePageUnit.UniqueID]) == null
-                        && Strings.Clean(Request.Params[btnSWRTxtSearch.UniqueID]) == null
-                        && Strings.Clean(Request.Params[btnSWRImgSearch.UniqueID + ".x"]) == null)
+                        && Strings.Clean(Request.Params[btnSWRTxtSearch.UniqueID]) == null)
                     {
                         //THIS IS FOR IE with no JS.  Oddly in most ways it is more broken than firefox, but
                         //is so broken that we can easily tell that the user hit enter on the only
@@ -370,14 +364,17 @@ namespace NCI.Web.CancerGov.Apps
             var siteResultSearchSubmitParameter = "";
             if (PageDisplayInformation.Language == DisplayLanguage.Spanish)
                 siteResultSearchSubmitParameter = "true";
-            var siteResultSearchSubmitCall = "return siteResultSearchSubmit(" + siteResultSearchSubmitParameter + ")";
+            // removed search validation for now
+            var siteResultSearchSubmitCall = ""; //"return siteResultSearchSubmit(" + siteResultSearchSubmitParameter + ")";
             // Web Analytics *************************************************
             if (WebAnalyticsOptions.IsEnabled)
-                siteResultSearchSubmitCall += "&& NCIAnalytics.SiteWideSearchResultsSearch(this,'" + txtSWRKeyword.ClientID + "','" + rblSWRSearchType.UniqueID + "')";
+                siteResultSearchSubmitCall += "return NCIAnalytics.SiteWideSearchResultsSearch(this,'" + txtSWRKeyword.ClientID + "','" + rblSWRSearchType.UniqueID + "')";
             // End Web Analytics *********************************************
-            siteResultSearchSubmitCall += ";";
-            btnSWRImgSearch.OnClientClick = siteResultSearchSubmitCall;
-            btnSWRTxtSearch.OnClientClick = siteResultSearchSubmitCall;
+            if (!String.IsNullOrEmpty(siteResultSearchSubmitCall))
+            {
+                siteResultSearchSubmitCall += ";";
+                btnSWRTxtSearch.OnClientClick = siteResultSearchSubmitCall;
+            }
 
         }
 
@@ -391,39 +388,58 @@ namespace NCI.Web.CancerGov.Apps
 
             base.OnPreRender(e);
 
-            if (PageDisplayInformation.Version == DisplayVersions.Image)
-                pnlSWR.DefaultButton = btnSWRImgSearch.ID;
-            else
-                pnlSWR.DefaultButton = btnSWRTxtSearch.ID;
+            pnlSWR.DefaultButton = btnSWRTxtSearch.ID;
         }
 
         protected string BestBetResultsHyperlinkOnclick(RepeaterItem result)
         {
-            string resultData="";
+            string resultData = "";
             if (WebAnalyticsOptions.IsEnabled)
             {
                 try
                 {
                     BestBetResult bbResultItem = (BestBetResult)result.DataItem;
                     resultData = bbResultItem.CategoryDisplay;
+
                     // Did not use html parser here, seemed like a overkill just to inject a simple string. 
                     int hrefIndex = resultData.IndexOf("<a");
 
                     if (hrefIndex != -1)
                     {
-                        return resultData.Replace("<a","<a onClick=NCIAnalytics.SiteWideSearchResults(this,true,'1'); " );
-                    }
+                        // The analytics rank was previously set to '1' for all listed items in best bets;
+                        // added some String methods to increment the value.
+                        // First, split the results string into an array based on the number of <a> tags found.
+                        int i = 1;
+                        string[] separators = new string[] { "<a" };
+                        string[] temp = resultData.Split(separators, StringSplitOptions.None);
+
+                        foreach (string t in temp)
+                        {
+                            // Add the BestBets arguments with the rank incrementing with each pass through 
+                            // the links in the results. Then smoosh the whole thing back together with the new opening
+                            // <a onClick="..."
+                            temp[i] = String.Concat("(this,true,'" + i.ToString() + "');\"", temp[i]);
+                            resultData = String.Join("<a onClick=\"NCIAnalytics.SiteWideSearchResults", temp);
+                            i++;
+
+                            // Return the re-assembled string once the rank and total number of links match.
+                            if (i == temp.Length)
+                            {
+                                return resultData;
+                            }
+                        } // End foreach
+                    } // End href index 'if' statement
                 }
                 catch { }
             }
 
             return "";
         }
-            
-        protected string ResultsHyperlinkOnclick(RepeaterItem result)
+
+        protected string ResultsHyperlinkOnclick(IDataItemContainer result)
         {
             if (WebAnalyticsOptions.IsEnabled)
-                return "NCIAnalytics.SiteWideSearchResults(this," + "false" + ",'" + (result.ItemIndex + _resultOffset).ToString() + "');"; // Load results onclick script
+                return "NCIAnalytics.SiteWideSearchResults(this," + "false" + ",'" + (result.DisplayIndex + _resultOffset).ToString() + "');"; // Load results onclick script
             else
                 return "";
         }
@@ -518,7 +534,7 @@ namespace NCI.Web.CancerGov.Apps
             //So we should know the current page number, it was part of the postback.
             //we do have to know what the old page unit was, that will give us the first record.
             int firstItem, lastItem;
-            SimplePager.GetFirstItemLastItem(CurrentPage, PreviousItemsPerPage, (int)TotalNumberOfResults, out firstItem, out lastItem);
+            SimpleUlPager.GetFirstItemLastItem(CurrentPage, PreviousItemsPerPage, (int)TotalNumberOfResults, out firstItem, out lastItem);
 
             //Set the current page.                
             CurrentPage = firstItem / ItemsPerPage + (firstItem % ItemsPerPage > 0 ? 1 : 0);
@@ -576,8 +592,9 @@ namespace NCI.Web.CancerGov.Apps
         private void SetupCancerGovPageStuff()
         {
             this.Page.Header.Title = GetResource("Title");
-            //                this.PageHeaders.Add(new TitleBlock("Resultados ", null, this.PageDisplayInformation));
-            //                this.PageLeftColumn = new LeftNavColumn(this, Strings.ToGuid(ConfigurationSettings.AppSettings["SpanishSearchViewID"]));
+
+            this.txtSWRKeyword.Attributes.Add("placeholder", "Enter keywords or phrases");
+            this.txtSWRKeyword.Attributes.Add("aria-label", "Enter keywords or phrases");
         }
 
         /// <summary>
@@ -607,9 +624,6 @@ namespace NCI.Web.CancerGov.Apps
             }
 
             //Search within results button
-            btnSWRImgSearch.AlternateText = GetResource("AlternateText");// "Buscar";
-            btnSWRImgSearch.ImageUrl = GetResource("imageURL"); //"/images/buscar-left-nav.gif";
-
             btnSWRTxtSearch.Text = GetResource("Search");  //"Buscar";
 
             //Error message
@@ -631,7 +645,10 @@ namespace NCI.Web.CancerGov.Apps
                 if (rblSWRSearchType.SelectedValue == "2") //Search Within Results
                 {
                     //Add the last keyword to the old keywords
-                    OldKeywords.Add(Keyword);
+                    if (!String.IsNullOrEmpty(Keyword))
+                    {
+                        OldKeywords.Add(Keyword);
+                    }
 
                     //Set the current keyword
                     Keyword = Strings.Clean(txtSWRKeyword.Text);
@@ -701,10 +718,20 @@ namespace NCI.Web.CancerGov.Apps
             int firstIndex, lastIndex;
 
             //Get first index and last index
-            SimplePager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.TotalNumResults, out firstIndex, out lastIndex);
+            SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.TotalNumResults, out firstIndex, out lastIndex);
             _resultOffset = firstIndex;
 
-            rptResults.DataSource = results;
+            rptResults.DataSource = from res in results
+                                    select new NCI.Web.UI.WebControls.TemplatedDataItem(
+                                        GetSearchResultTemplate(res),
+                                        new
+                                        {
+                                            URL = res.Url,
+                                            Title = res.Title,
+                                            DisplayUrl = res.DisplayUrl,
+                                            Description = res.Description,
+                                            Label = GetSearchResultLabel(res),
+                                        });
             rptResults.DataBind();
 
             //Set Keywords in labels
@@ -722,7 +749,7 @@ namespace NCI.Web.CancerGov.Apps
             rblSWRSearchType.SelectedIndex = 0;
 
             //// Web Analytics *************************************************
-            this.PageInstruction.SetWebAnalytics( WebAnalyticsOptions.eVars.NumberOfSearchResults, wbField =>
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.NumberOfSearchResults, wbField =>
             {
                 wbField.Value = TotalNumberOfResults.ToString();
             });
@@ -740,6 +767,50 @@ namespace NCI.Web.CancerGov.Apps
                 });
             }
             //// End Web Analytics *************************************************
+        }
+
+        /// <summary>
+        /// Returns an appropriate content-type label for the given EndecaResult.
+        /// </summary>
+        /// <param name="res">The source EndecaResult used to generate the label.</param>
+        /// <returns>A language-specific label for the result.</returns>
+        private String GetSearchResultLabel(EndecaResult res)
+        {
+            string language = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
+            string label = res.ContentType;
+
+            switch (res.ContentType)
+            {
+                case "cgvInfographic":
+                    label = language == "es" ? "Infografía" : "Infographic";
+                    break;
+                case "gloVideo":
+                    label = language == "es" ? "Video" : "Video";
+                    break;
+                case "gloVideoCarousel":
+                    label = language == "es" ? "Lista de reproducción de videos" : "Video Playlist";
+                    break;
+            }
+
+            return label;
+        }
+
+        /// <summary>
+        /// Generates an appropriate template name for the given search result.
+        /// </summary>
+        /// <param name="res">The source EndecaResult.</param>
+        /// <returns>A String template name.</returns>
+        private string GetSearchResultTemplate(EndecaResult res)
+        {
+            switch (res.ContentType)
+            {
+                case "cgvInfographic":
+                case "gloVideo":
+                case "gloVideoCarousel":
+                    return "Media";
+                default:
+                    return "Default";
+            }
         }
 
         private void ShowErrorMessage()

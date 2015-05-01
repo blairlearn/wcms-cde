@@ -138,9 +138,12 @@ namespace CancerGov.Web.SnippetTemplates
 
             }
 
-            //SCR30153
-            //this.PageHtmlHead.Title = pProtocol.ProtocolTitle;
-
+            //set the page title as the protocol title
+            PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
+            {
+                data.Value = pProtocol.ProtocolTitle;
+            });
+            
             StringBuilder sbPageUrl = new StringBuilder();
             sbPageUrl.Append(SearchPageInfo.DetailedViewSearchResultPagePrettyUrl);
             sbPageUrl.Append("?cdrid=");
@@ -207,11 +210,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                 this.strContent = "<table cellspacing=\"0\" width=\"650\" cellpadding=\"0\" border=\"0\"><tr><td width=\"650\">" + printContent + "</td></tr></table>\n";
             }
-            else
-            {
-                this.strContent += new ReturnToTopAnchor(this.PageDisplayInformation).Render();
-            }
-
+            
             //// Web Analytics *************************************************
             //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinicaltrials", this.Request.Url.OriginalString.ToString());
             this.PageInstruction.AddFieldFilter("channelName", (name, data) =>

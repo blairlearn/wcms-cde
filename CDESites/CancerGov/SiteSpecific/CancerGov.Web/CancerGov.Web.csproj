@@ -274,55 +274,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx.cs">
-      <DependentUpon>CancerBulletinSearch.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx.designer.cs">
-      <DependentUpon>CancerBulletinSearch.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx.cs">
-      <DependentUpon>CancerBulletinSubscribe.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx.designer.cs">
-      <DependentUpon>CancerBulletinSubscribe.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx.cs">
-      <DependentUpon>CancerBulletinSubscribeListServ.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx.designer.cs">
-      <DependentUpon>CancerBulletinSubscribeListServ.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx.cs">
-      <DependentUpon>CancerBulletinUnSubscribe.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx.designer.cs">
-      <DependentUpon>CancerBulletinUnSubscribe.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\cbComments.ascx.cs">
-      <DependentUpon>cbComments.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\cbComments.ascx.designer.cs">
-      <DependentUpon>cbComments.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx.cs">
-      <DependentUpon>cbSendToColleague.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx.designer.cs">
-      <DependentUpon>cbSendToColleague.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx.cs">
-      <DependentUpon>ResultsCancerBulletin.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx.designer.cs">
-      <DependentUpon>ResultsCancerBulletin.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -388,6 +339,13 @@
     </Compile>
     <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
       <DependentUpon>drugdictionary.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\EmergencyBanner.ascx.cs">
+      <DependentUpon>EmergencyBanner.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\EmergencyBanner.ascx.designer.cs">
+      <DependentUpon>EmergencyBanner.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.cs">
       <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
@@ -606,6 +564,12 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="DrugDictionary.svc" />
+    <Content Include="DynamicListTemplates\DynamicListDescNoImgDate.ascx" />
+    <Content Include="DynamicListTemplates\DynamicListDescImgDate.ascx" />
+    <Content Include="DynamicListTemplates\DynamicListNoDescImgDate.ascx" />
+    <Content Include="DynamicListTemplates\DynamicListNoDescNoImgDate.ascx" />
+    <Content Include="DynamicListTemplates\DynamicNewsDescImgDate.ascx" />
+    <Content Include="JS\drugDictionary.js" />
     <Content Include="JS\ForeSee\cancel.gif" />
     <Content Include="JS\ForeSee\cancel.html" />
     <Content Include="JS\ForeSee\closebtn.gif" />
@@ -657,13 +621,6 @@
     <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
     <Content Include="SnippetTemplates\BlogLandingDynamicList.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSearch.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribe.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinSubscribeListServ.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\CancerBulletinUnSubscribe.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\cbComments.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\cbSendToColleague.ascx" />
-    <Content Include="SnippetTemplates\CancerBulletin\ResultsCancerBulletin.ascx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\CGovMainNavControl.ascx" />
     <Content Include="SnippetTemplates\CGovSectionNavControl.ascx" />
@@ -679,6 +636,7 @@
     <Content Include="SnippetTemplates\DisqusComments.ascx" />
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
+    <Content Include="SnippetTemplates\EmergencyBanner.ascx" />
     <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryDefinitionView.ascx" />
@@ -690,6 +648,7 @@
     <Content Include="SnippetTemplates\PublicUseBanner.ascx" />
     <Content Include="SnippetTemplates\ResultsGeneticsServices.ascx" />
     <Content Include="SnippetTemplates\SearchGeneticsServices.ascx" />
+    <Content Include="SnippetTemplates\SyndicationNotice.ascx" />
     <Content Include="SnippetTemplates\TableofLinks.ascx" />
     <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
     <Content Include="SnippetTemplates\BlogPostNewerOlder.ascx" />

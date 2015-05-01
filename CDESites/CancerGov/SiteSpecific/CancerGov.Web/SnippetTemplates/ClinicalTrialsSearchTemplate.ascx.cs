@@ -15,7 +15,6 @@ using CancerGov.Common.HashMaster;
 using NCI.Util;
 using NCI.Web.UI.WebControls;
 using NCI.Web.UI.WebControls.FormControls;
-using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Logging;
 using NCI.Web.CDE.Modules; 
 
@@ -23,7 +22,6 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class ClinicalTrialsSearchTemplate : SearchBaseUserControl
     {
-
         #region Constants
 
         // The only allowed values for marking a section as collapsed/expanded.
@@ -32,123 +30,42 @@ namespace CancerGov.Web.SnippetTemplates
 
         #endregion
 
-
-        public void SubmitButton_Click(object sender, ImageClickEventArgs e)
+        protected void Page_Init(object sender, EventArgs e)
         {
-            if (Page.IsValid)
-            {
-                int searchID = 0;
+            //Need to add ARIA tags to location controls - this has nothing to do with the state of the form,
+            //so we are doing it on init.
 
-                // Gather all search criteria.
-                CTSearchDefinition criteria = BuildSearchCriteria();
+            //Tell the radio which fieldset it controls
+            zipCodeLocationButton.InputAttributes.Add("aria-controls", zipCodeLocationFieldset.ClientID);
+            //Tell the fieldset which radio labels it
+            zipCodeLocationFieldset.Attributes.Add("aria-labelledby", zipCodeLocationButton.ClientID);
 
-                // Save and Execute the search, yielding a protocol search ID.
-                searchID = CTSearchManager.SaveAndExecuteSearch(criteria);
+            //Tell the radio which fieldset it controls
+            cityStateLocationButton.InputAttributes.Add("aria-controls", cityStateLocationFieldset.ClientID);
+            //Tell the fieldset which radio labels it
+            cityStateLocationFieldset.Attributes.Add("aria-labelledby", cityStateLocationButton.ClientID);
 
-                // If a valid search ID is returned.
-                if (searchID > 0)
-                {
-                    // Redirect to the search results page.
-                    Response.Redirect(String.Format("{0}?protocolsearchid={1}", SearchPageInfo.SearchResultsPrettyUrl, searchID), true);
-                }
-                else
-                {
-                    // Otherwise, log an error.
-                    EventLog eLog = new EventLog("CancerGov");
-                    eLog.Source = "CancerGov";
-                    eLog.WriteEntry("Unable to perform SaveAndExecuteSearch().", EventLogEntryType.Error);
-                    eLog.Close();
-                }
-            }
+            //Tell the radio which fieldset it controls
+            hospitalLocationButton.InputAttributes.Add("aria-controls", hospitalLocationFieldset.ClientID);
+            //Tell the fieldset which radio labels it
+            hospitalLocationFieldset.Attributes.Add("aria-labelledby", hospitalLocationButton.ClientID);
+
+            //Tell the radio which fieldset it controls
+            atNihLocationButton.InputAttributes.Add("aria-controls", atNihLocationFieldset.ClientID);
+            //Tell the fieldset which radio labels it
+            atNihLocationFieldset.Attributes.Add("aria-labelledby", atNihLocationButton.ClientID);
+
+
+            txtKeywords.Attributes.Add("placeholder", "Examples: PSA, HER-2, \"Paget disease\"");
         }
 
-
-        protected void cancerType_SelectedIndexChanged(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            int cancerTypeID = 0;
-            if (cancerType.SelectedIndex > 0)
-                cancerTypeID = int.Parse(cancerType.SelectedValue);
-            FillCancerStageSelectBox(cancerTypeID, null);
-        }
-
-        /// <summary>
-        /// Click handler for the Institution list's "Clear All" button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void InstutionListClearAll_ClickHandler(object sender, ImageClickEventArgs e)
-        {
-            institution.Items.Clear();
-        }
-
-        /// <summary>
-        /// Click handler for the Drug list's "Clear All" button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void DrugListClearAll_ClickHandler(object sender, ImageClickEventArgs e)
-        {
-            drug.Items.Clear();
-        }
-
-        /// <summary>
-        /// Click handler for the Intervention list's "Clear All" button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void InterventionListClearAll_ClickHandler(object sender, ImageClickEventArgs e)
-        {
-            intervention.Items.Clear();
-        }
-
-        /// <summary>
-        /// Click handler for the Investigator list's "Clear All" button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void InvestigatorListClearAll_ClickHandler(object sender, ImageClickEventArgs e)
-        {
-            investigator.Items.Clear();
-        }
-
-        /// <summary>
-        /// Click handler for the Lead Organization list's "Clear All" button.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void LeadOrgClearAll_ClickHandler(object sender, ImageClickEventArgs e)
-        {
-            leadOrg.Items.Clear();
-        }
-
-        #region Page Life Cycle Events
-
-        protected override void OnPreRender(EventArgs e)
-        {
-            /// Set up JavaScript resources. Order is important.  Because the page's script
-            /// uses prototype, we need to register that one first.
-            PrototypeManager.Load(this.Page);
-
-            base.OnPreRender(e);
-        }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-
             // Force "Start Over" link to come back to whatever URL this page was invoked as.
             clear.HRef = PageInstruction.GetUrl(NCI.Web.CDE.PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
-
-            HelpPageLink = Strings.IfNull(Strings.Clean(ConfigurationSettings.AppSettings["ClinicalTrialsAdvancedSearchHelpPage"]), "#");
-            CTCountOpen.Text = Strings.IfNull(Strings.Clean(ConfigurationSettings.AppSettings["ClinicalTrialsAdvancedSearchCountOpen"]), "5,000+");
-            CTCountClosed.Text = Strings.IfNull(Strings.Clean(ConfigurationSettings.AppSettings["ClinicalTrialsAdvancedSearchCountClosed"]), "16,000+");
-
-            SetLocationButtionsToStaticValues();
-
             if (!IsPostBack)
             {
-
                 // On initial page load, check for a protocol search ID. If one is found, load the
                 // saved criteria and initialize the page's controls.
                 CTSearchDefinition savedSearch = null;
@@ -190,8 +107,6 @@ namespace CancerGov.Web.SnippetTemplates
                 if (savedSearch != null)
                     cancerTypeID = savedSearch.CancerType.Value;
 
-                FillNCISponsorLiteral(savedSearch);
-
                 FillCancerTypeSelectBox(savedSearch);
                 FillCancerStageSelectBox(cancerTypeID, savedSearch);
 
@@ -215,20 +130,10 @@ namespace CancerGov.Web.SnippetTemplates
                 FillSpecialCategorySelectBox(savedSearch);
                 FillPhase(savedSearch);
                 FillTrialType(savedSearch);
+                
 
                 SetLocationButtons(savedSearch);
             }
-            else
-            {
-            }
-
-
-            //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinical Trial Search", this.Request.Url.OriginalString.ToString());
-            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.RootPrettyURL, "/clinicaltrials/search"); // prop3
-            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.ShortTitle, "Search for Clinical Trials"); // prop6
-            //this.WebAnalyticsPageLoad.AddProp(WebAnalyticsOptions.Props.PostedDate, ""); //prop25
-            //this.WebAnalyticsPageLoad.SetPageName(WebAnalyticsOptions.Hostname + "/clinicaltrials/search");
-            //litOmniturePageLoad.Text = this.WebAnalyticsPageLoad.Tag();
 
             string webAnalyticsParameters =
                 String.Format(
@@ -244,93 +149,360 @@ namespace CancerGov.Web.SnippetTemplates
 
             submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
 
-            JSManager.AddExternalScript( this.Page, "/JS/Search/CDESearchClinicalTrials.js");
-            JSManager.AddExternalScript(this.Page, "/JS/popEvents.js");
-            //JSManager.AddExternalScript(this.Page, "/Scripts/Omniture/NCIAnalyticsFunctions.js");
-            //JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
-            CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css", String.Empty);
+            JSManager.AddExternalScript(this.Page, "/JS/Search/CDESearchClinicalTrials.js");
+            //JSManager.AddExternalScript(this.Page, "/JS/popEvents.js");
+
         }
 
-        #endregion
-
-        #region SelectListItem method and overloads
-
-        private void SelectListItem(HtmlSelect selList, string selectedValue)
+        private void SetLocationButtons(CTSearchDefinition savedSearch)
         {
-            System.Web.UI.WebControls.ListItem selectedOption = null;
-
-            if (selectedValue != null)
+            if (savedSearch != null)
             {
-                foreach (System.Web.UI.WebControls.ListItem li in selList.Items)
+                switch (savedSearch.LocationSearchType)
                 {
-                    if (selectedValue.IndexOf(";") == -1 && li.Value.IndexOf(";") != -1)
+                    case LocationSearchType.Institution:
+                        hospitalLocationButton.Checked = true;
+                        break;
+                    case LocationSearchType.City:
+                        cityStateLocationButton.Checked = true;
+                        break;
+                    case LocationSearchType.NIH:
+                        atNihLocationButton.Checked = true;
+                        break;
+                    case LocationSearchType.Zip:
+                    default:
+                        zipCodeLocationButton.Checked = true;
+                        break;
+                }
+            }
+            else
+            {
+                zipCodeLocationButton.Checked = true;
+            }
+        }
+        private void FillNihLocationSelectBox(CTSearchDefinition savedSearch)
+        {
+            if (savedSearch != null && savedSearch.LocationSearchType == LocationSearchType.NIH)
+            {
+                if (savedSearch.LocationNihOnly)
+                    nihOnly.Checked = true;
+                else
+                    nihOnly.Checked = false;
+            }
+        }
+
+        private void FillKeywordText(CTSearchDefinition savedSearch)
+        {
+            if (savedSearch != null && !string.IsNullOrEmpty(savedSearch.Keywords))
+            {
+                txtKeywords.Text = savedSearch.Keywords;
+            }
+        }
+
+        private void FillNewTrialBox(CTSearchDefinition savedSearch)
+        {
+            if (savedSearch != null)
+            {
+                newOnly.Checked = savedSearch.RestrictToRecent;
+            }
+        }
+
+        private void FillProtocolIDBox(CTSearchDefinition savedSearch)
+        {
+            if (savedSearch != null)
+            {
+                foreach (string id in savedSearch.SpecificProtocolIDList)
+                {
+                    if (!(string.IsNullOrEmpty(protocolID.Text)))
                     {
-                        if (li.Value.Substring(li.Value.IndexOf(";") + 1).Trim().ToLower() == selectedValue.Trim().ToLower())
+                        protocolID.Text += ", ";
+                    }
+                    protocolID.Text += id;
+                }
+            }
+        }
+
+        private void FillCancerTypeSelectBox(CTSearchDefinition savedSearch)
+        {
+            CTSearchFieldList<int> cancerTypeList = CTSearchManager.LoadCancerTypeList();
+
+            ddlCancerType.AppendDataBoundItems = true;
+            ddlCancerType.Items.Add(new System.Web.UI.WebControls.ListItem("All", ""));
+
+            ddlCancerType.DataSource = cancerTypeList;
+            ddlCancerType.DataValueField = "Value";
+            ddlCancerType.DataTextField = "Key";
+            ddlCancerType.DataBind();
+            if (savedSearch == null)
+            {
+                // Default selection to "All"
+                ddlCancerType.SelectedIndex = 0;
+            }
+            else
+            {
+                // Because the list of cancer types includes synonyms, the cancer type values
+                // cannot be trusted to be unique.  The cancer type text however is.
+                ListItem item = ddlCancerType.Items.FindByText(savedSearch.CancerType.Key);
+                if (item != null)
+                    item.Selected = true;
+                else
+                {
+                    // If no match was found for the caner type text, then fail through
+                    // and attempt with the first cancer type matching the value.
+                    item = ddlCancerType.Items.FindByValue(savedSearch.CancerType.Value.ToString());
+                    if (item != null)
+                        item.Selected = true;
+                    else
+                        ddlCancerType.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void FillPhase(CTSearchDefinition savedSearch)
+        {
+            CTSearchFieldList<int> trialPhaseList = CTSearchManager.LoadTrialPhaseList();
+            trialPhase.Items.Clear();
+            trialPhase.Items.Add(new ListItem("All", "0"));
+            trialPhase.AppendDataBoundItems = true;
+            trialPhase.DataSource = trialPhaseList;
+            trialPhase.DataValueField = "Value";
+            trialPhase.DataTextField = "Key";
+            trialPhase.DefaultIndex = 0;
+            trialPhase.DataBind();
+
+            if (savedSearch == null)
+            {
+                // Default selection to "All"
+                trialPhase.SelectedIndex = 0;
+            }
+            else
+            {
+                bool matchFound = false;
+                foreach (string phase in savedSearch.TrialPhase)
+                {
+                    ListItem item = trialPhase.Items.FindByText(phase);
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                        matchFound = true;
+                    }
+                }
+                if (!matchFound)
+                    trialPhase.SelectedIndex = 0;
+            }
+        }
+
+
+        private void FillTrialType(CTSearchDefinition savedSearch)
+        {
+            CTSearchFieldList<int> trialTypeList = CTSearchManager.LoadTrialTypeList();
+            trialType.DataSource = trialTypeList;
+            trialType.DataValueField = "Value";
+            trialType.DataTextField = "Key";
+            trialType.DefaultIndex = 0;
+            trialType.DataBind();
+
+            if (savedSearch == null)
+            {
+                // Default selection to "All"
+                trialType.SelectedIndex = 0;
+            }
+            else
+            {
+                if (savedSearch.TrialTypeList.Count > 0)
+                {
+                    foreach (string text in savedSearch.TrialTypeList)
+                    {
+                        ListItem item = trialType.Items.FindByText(text);
+                        if (item != null)
+                            item.Selected = true;
+                    }
+                }
+                else
+                    trialType.SelectedIndex = 0;
+            }
+        }
+
+
+        private void FillCancerStageSelectBox(int cancerTypeID, CTSearchDefinition savedSearch)
+        {
+
+            if (cancerTypeID > 0)
+            {
+                CTSearchFieldList<int> cancerStageList = CTSearchManager.LoadCancerStageList(cancerTypeID);
+
+                // We need to clear the list either way because of postbacks.
+                cancerStage.Items.Clear();
+
+                //Only populate stages if a Cancer Type is selected.
+                if (ddlCancerType.SelectedIndex >= 1)
+                {
+                    cancerStage.AppendDataBoundItems = true;
+                    cancerStage.Items.Add(new System.Web.UI.WebControls.ListItem("All", ""));
+                    cancerStage.DefaultIndex = 0;
+                    cancerStage.DataSource = cancerStageList;
+                    cancerStage.DataValueField = "Value";
+                    cancerStage.DataTextField = "Key";
+                    cancerStage.DataBind();
+                    cancerStage.SelectedIndex = 0;
+                }
+
+                if (savedSearch != null)
+                {
+                    // It is possible for a saved search (particularly one via a search link)
+                    // to contain a cancer type, or subtype which is not available through
+                    // the user interface.
+                    bool subTypesPresent = (cancerStageList.Count > 0);
+
+                    // If any cancer subtypes were selected, then don't select "All."
+                    if (subTypesPresent && savedSearch.CancerSubtypeIDList.Count > 0)
+                        cancerStage.Items[0].Selected = false;
+
+                    bool matchFound = false;
+                    foreach (int subType in savedSearch.CancerSubtypeIDList)
+                    {
+                        ListItem item = cancerStage.Items.FindByValue(subType.ToString("d"));
+                        if (item != null)
                         {
-                            selectedOption = li;
+                            item.Selected = true;
+                            matchFound = true;
                         }
+                    }
+
+                    // If no matches were found, select "All."
+                    if (!matchFound)
+                        cancerStage.SelectedIndex = 0;
+                }
+            }
+            else
+            {
+                cancerStage.Items.Clear();
+            }
+
+        }
+
+        private void FillSpecialCategorySelectBox(CTSearchDefinition savedSearch)
+        {
+            CTSearchFieldList<string> specialCategoryList = CTSearchManager.LoadSpecialCategoryList();
+
+            specialCategory.AppendDataBoundItems = true;
+            specialCategory.Items.Add(new System.Web.UI.WebControls.ListItem("All", "All"));
+            specialCategory.DefaultIndex = 0;
+            specialCategory.DataSource = specialCategoryList;
+            specialCategory.DataValueField = "Value";
+            specialCategory.DataTextField = "Key";
+            specialCategory.DataBind();
+
+            if (savedSearch == null)
+            {
+                // Default selection to "All"
+                specialCategory.SelectedIndex = 0;
+            }
+            else
+            {
+                bool matchFound = false;
+                foreach (string value in savedSearch.SpecialCategoryList)
+                {
+                    ListItem item = specialCategory.Items.FindByValue(value);
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                        matchFound = true;
+                    }
+                }
+                if (!matchFound)
+                    specialCategory.SelectedIndex = 0;
+            }
+        }
+
+        private void FillSponsorsSelectBox(CTSearchDefinition savedSearch)
+        {
+            CTSearchFieldList<string> sponsorsList = CTSearchManager.LoadSponsorList();
+
+            sponsor.AppendDataBoundItems = true;
+            sponsor.Items.Add(new System.Web.UI.WebControls.ListItem("All", "All"));
+            sponsor.DefaultIndex = 0;
+            sponsor.DataSource = sponsorsList;
+            sponsor.DataValueField = "Value";
+            sponsor.DataTextField = "Key";
+            sponsor.DataBind();
+
+            if (savedSearch == null)
+            {
+                // if no search yet specified, search for "NCI" and select that item if found
+                ListItem item = sponsor.Items.FindByText("NCI");
+                if (item != null)
+                {
+                    sponsor.ClearSelection();
+                    item.Selected = true;
+                }
+                else
+                {
+                    // Default selection to "All"
+                    sponsor.SelectedIndex = 0;
+                }
+            }
+            else
+            {
+                bool matchFound = false;
+                foreach (string id in savedSearch.SponsorIDList)
+                {
+                    ListItem item = sponsor.Items.FindByValue(id);
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                        matchFound = true;
+                    }
+                }
+                if (!matchFound)
+                {
+                    // if no search yet specified, search for "NCI" and select that item if found
+                    ListItem item = sponsor.Items.FindByText("NCI");
+                    if (item != null)
+                    {
+                        sponsor.ClearSelection();
+                        item.Selected = true;
                     }
                     else
                     {
-                        if (li.Value.Trim().ToLower() == selectedValue.Trim().ToLower())
-                        {
-                            selectedOption = li;
-                        }
+                        // Default selection to "All"
+                        sponsor.SelectedIndex = 0;
                     }
-                }
-
-                if (selectedOption != null)
-                {
-                    if (!selList.Multiple && selList.Items[selList.SelectedIndex] != null)
-                    {
-                        selList.Items[selList.SelectedIndex].Selected = false;
-                    }
-
-                    selectedOption.Selected = true;
                 }
             }
         }
 
-        private void SelectListItem(HtmlSelect selList, string[] selectedValues)
+        /// <summary>
+        /// Initializes the "Near ZIP Code" location search.
+        /// </summary>
+        /// <param name="savedSearch">Saved search parameters</param>
+        private void FillZipLocationSelectBox(CTSearchDefinition savedSearch)
         {
-            System.Web.UI.WebControls.ListItem selectedOption = null;
+            // The ZIP Proximity list uses hardcoded values provided in the .ASPX.
 
-            if (selectedValues[0] != null)
+            if (savedSearch != null &&
+                savedSearch.LocationSearchType == LocationSearchType.Zip)
             {
-                foreach (System.Web.UI.WebControls.ListItem li in selList.Items)
+                int proximity = savedSearch.LocationZipProximity;
+                int zip = savedSearch.LocationZipCode;
+
+                if (zip > 0 && proximity > 0)
                 {
-                    foreach (string selectedValue in selectedValues)
+
+                    zipCode.Text = string.Format("{0:D5}", zip);
+
+                    // ZIP Proximity
+                    try
                     {
-                        if (selectedValue.IndexOf(";") == -1 && li.Value.IndexOf(";") != -1)
-                        {
-                            if (li.Value.Substring(li.Value.IndexOf(";") + 1) == selectedValue)
-                            {
-                                selectedOption = li;
-                            }
-                        }
-                        else
-                        {
-                            if (li.Value.Trim().ToLower() == selectedValue.ToLower())
-                            {
-                                selectedOption = li;
-                            }
-                        }
-
-                        if (selectedOption != null)
-                        {
-                            if (!selList.Multiple)
-                            {
-                                selList.Items[selList.SelectedIndex].Selected = false;
-                            }
-
-                            selectedOption.Selected = true;
-                        }
+                        zipCodeProximity.SelectedValue = proximity.ToString();
+                    }
+                    catch (Exception)
+                    {
+                        // Couldn't find the selected value?  Leave the default in place.
                     }
                 }
             }
         }
-
-        #endregion
 
         private void FillCountryAndState(CTSearchDefinition savedSearch)
         {
@@ -342,6 +514,7 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 state.AppendDataBoundItems = true;
                 state.Items.Add(new System.Web.UI.WebControls.ListItem("All", ""));
+                state.DefaultIndex = 0;
                 state.DataSource = stateList;
                 state.DataValueField = "Value";
                 state.DataTextField = "Key";
@@ -398,283 +571,146 @@ namespace CancerGov.Web.SnippetTemplates
             }
         }
 
-        private void FillNCISponsorLiteral(CTSearchDefinition savedSearch)
+
+
+
+
+        /// <summary>
+        /// Handler for Cancer Type Selection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void cancerType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (savedSearch == null)
-            {
-                CTNCISponsorText.Text = "Initial search results include only NCI-sponsored clinical trials. To search all trials, scroll down to the Trial ID/Sponsor section, click the \"Show Search Options\" link and select the \"All\" check box in the Sponsor of Trial section.";
-            }
-            else
-            {
-                CTNCISponsorText.Text = "Initial search results include only NCI-sponsored clinical trials. To search all trials, scroll down to the Trial ID/Sponsor section and select the \"All\" check box in the Sponsor of Trial section.";
-            }
+            int cancerTypeID = 0;
+            if (ddlCancerType.SelectedIndex > 0)
+                cancerTypeID = int.Parse(ddlCancerType.SelectedValue);
+            FillCancerStageSelectBox(cancerTypeID, null);
         }
 
-        private void FillSponsorsSelectBox(CTSearchDefinition savedSearch)
+        /// <summary>
+        /// Click handler for the Intervention list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void InterventionListClearAll_ClickHandler(object sender, EventArgs e)
         {
-            CTSearchFieldList<string> sponsorsList = CTSearchManager.LoadSponsorList();
-
-            sponsor.AppendDataBoundItems = true;
-            sponsor.Items.Add(new System.Web.UI.WebControls.ListItem("All", "All"));
-            sponsor.DataSource = sponsorsList;
-            sponsor.DataValueField = "Value";
-            sponsor.DataTextField = "Key";
-            sponsor.DataBind();
-
-            if (savedSearch == null)
-            {
-                // if no search yet specified, search for "NCI" and select that item if found
-                ListItem item = sponsor.Items.FindByText("NCI");
-                if (item != null)
-                {
-                    item.Selected = true;
-                }
-                else
-                {
-                    // Default selection to "All"
-                    sponsor.SelectedIndex = 0;
-                }
-            }
-            else
-            {
-                bool matchFound = false;
-                foreach (string id in savedSearch.SponsorIDList)
-                {
-                    ListItem item = sponsor.Items.FindByValue(id);
-                    if (item != null)
-                    {
-                        item.Selected = true;
-                        matchFound = true;
-                    }
-                }
-                if (!matchFound)
-                    sponsor.SelectedIndex = 0;
-            }
+            intervention.Items.Clear();
         }
 
-        private void FillSpecialCategorySelectBox(CTSearchDefinition savedSearch)
+        private void FillInterventionSelectionList(CTSearchDefinition savedSearch)
         {
-            CTSearchFieldList<string> specialCategoryList = CTSearchManager.LoadSpecialCategoryList();
-
-            specialCategory.AppendDataBoundItems = true;
-            specialCategory.Items.Add(new System.Web.UI.WebControls.ListItem("All", "All"));
-            specialCategory.DataSource = specialCategoryList;
-            specialCategory.DataValueField = "Value";
-            specialCategory.DataTextField = "Key";
-            specialCategory.DataBind();
-
-            if (savedSearch == null)
+            if (savedSearch != null)
             {
-                // Default selection to "All"
-                specialCategory.SelectedIndex = 0;
-            }
-            else
-            {
-                bool matchFound = false;
-                foreach (string value in savedSearch.SpecialCategoryList)
-                {
-                    ListItem item = specialCategory.Items.FindByValue(value);
-                    if (item != null)
-                    {
-                        item.Selected = true;
-                        matchFound = true;
-                    }
-                }
-                if (!matchFound)
-                    specialCategory.SelectedIndex = 0;
-            }
-        }
-
-        private void FillCancerStageSelectBox(int cancerTypeID, CTSearchDefinition savedSearch)
-        {
-            emptySubType.Visible = false;
-
-            if (cancerTypeID > 0)
-            {
-                CTSearchFieldList<int> cancerStageList = CTSearchManager.LoadCancerStageList(cancerTypeID);
-
-                // We need to clear the list either way because of postbacks.
-                cancerStage.Items.Clear();
-
-                if (cancerStageList.Count < 1 && cancerType.SelectedIndex < 1)
-                {
-                    emptySubType.Visible = true;
-                }
-                else
-                {
-                    cancerStage.AppendDataBoundItems = true;
-                    cancerStage.Items.Add(new System.Web.UI.WebControls.ListItem("All", ""));
-                    cancerStage.DataSource = cancerStageList;
-                    cancerStage.DataValueField = "Value";
-                    cancerStage.DataTextField = "Key";
-                    cancerStage.DataBind();
-                    cancerStage.SelectedIndex = 0;
-                }
-
-                if (savedSearch != null)
-                {
-                    // It is possible for a saved search (particularly one via a search link)
-                    // to contain a cancer type, or subtype which is not available through
-                    // the user interface.
-                    bool subTypesPresent = (cancerStageList.Count > 0);
-
-                    // If any cancer subtypes were selected, then don't select "All."
-                    if (subTypesPresent && savedSearch.CancerSubtypeIDList.Count > 0)
-                        cancerStage.Items[0].Selected = false;
-
-                    bool matchFound = false;
-                    foreach (int subType in savedSearch.CancerSubtypeIDList)
-                    {
-                        ListItem item = cancerStage.Items.FindByValue(subType.ToString("d"));
-                        if (item != null)
-                        {
-                            item.Selected = true;
-                            matchFound = true;
-                        }
-                    }
-
-                    // If no matches were found, select "All."
-                    if (!matchFound)
-                        cancerStage.SelectedIndex = 0;
-                }
-            }
-            else
-            {
-                cancerStage.Items.Clear();
-                emptySubType.Visible = true;
-            }
-
-        }
-
-        private void FillCancerTypeSelectBox(CTSearchDefinition savedSearch)
-        {
-            CTSearchFieldList<int> cancerTypeList = CTSearchManager.LoadCancerTypeList();
-
-            cancerType.AppendDataBoundItems = true;
-            cancerType.Items.Add(new System.Web.UI.WebControls.ListItem("All", ""));
-            cancerType.DataSource = cancerTypeList;
-            cancerType.DataValueField = "Value";
-            cancerType.DataTextField = "Key";
-            cancerType.DataBind();
-            if (savedSearch == null)
-            {
-                // Default selection to "All"
-                cancerType.SelectedIndex = 0;
-            }
-            else
-            {
-                // Because the list of cancer types includes synonyms, the cancer type values
-                // cannot be trusted to be unique.  The cancer type text however is.
-                ListItem item = cancerType.Items.FindByText(savedSearch.CancerType.Key);
-                if (item != null)
-                    item.Selected = true;
-                else
-                {
-                    // If no match was found for the caner type text, then fail through
-                    // and attempt with the first cancer type matching the value.
-                    item = cancerType.Items.FindByValue(savedSearch.CancerType.Value.ToString());
-                    if (item != null)
-                        item.Selected = true;
-                    else
-                        cancerType.SelectedIndex = 0;
-                }
-            }
-        }
-
-        private void FillTrialType(CTSearchDefinition savedSearch)
-        {
-            CTSearchFieldList<int> trialTypeList = CTSearchManager.LoadTrialTypeList();
-            trialType.DataSource = trialTypeList;
-            trialType.DataValueField = "Value";
-            trialType.DataTextField = "Key";
-            trialType.DataBind();
-
-            if (savedSearch == null)
-            {
-                // Default selection to "All"
-                trialType.SelectedIndex = 0;
-            }
-            else
-            {
-                if (savedSearch.TrialTypeList.Count > 0)
-                {
-                    foreach (string text in savedSearch.TrialTypeList)
-                    {
-                        ListItem item = trialType.Items.FindByText(text);
-                        if (item != null)
-                            item.Selected = true;
-                    }
-                }
-                else
-                    trialType.SelectedIndex = 0;
-            }
-        }
-
-        private void FillPhase(CTSearchDefinition savedSearch)
-        {
-            CTSearchFieldList<int> trialPhaseList = CTSearchManager.LoadTrialPhaseList();
-            trialPhase.Items.Clear();
-            trialPhase.Items.Add(new ListItem("All", "0"));
-            trialPhase.AppendDataBoundItems = true;
-            trialPhase.DataSource = trialPhaseList;
-            trialPhase.DataValueField = "Value";
-            trialPhase.DataTextField = "Key";
-            trialPhase.DataBind();
-
-            if (savedSearch == null)
-            {
-                // Default selection to "All"
-                trialPhase.SelectedIndex = 0;
-            }
-            else
-            {
-                bool matchFound = false;
-                foreach (string phase in savedSearch.TrialPhase)
-                {
-                    ListItem item = trialPhase.Items.FindByText(phase);
-                    if (item != null)
-                    {
-                        item.Selected = true;
-                        matchFound = true;
-                    }
-                }
-                if (!matchFound)
-                    trialPhase.SelectedIndex = 0;
+                // CTSearchDefinition guarantees that InterventionList will never be null.
+                FillDeletableSelectionList(savedSearch.InterventionList, intervention, interventionListExpanded);
             }
         }
 
         /// <summary>
-        /// Initializes the "Near ZIP Code" location search.
+        /// Helper method for populating and determining whether to display one of the collapsible lists.
         /// </summary>
-        /// <param name="savedSearch">Saved search parameters</param>
-        private void FillZipLocationSelectBox(CTSearchDefinition savedSearch)
+        /// <param name="savedSearch"></param>
+        /// <param name="list"></param>
+        private void FillDeletableSelectionList(IList<KeyValuePair<string, int>> selections, DeleteList list, HiddenField expandedState)
         {
-            // The ZIP Proximity list uses hardcoded values provided in the .ASPX.
-
-            if (savedSearch != null &&
-                savedSearch.LocationSearchType == LocationSearchType.Zip)
+            // If there are values, draw the list in an expanded condition.
+            if (selections.Count > 0)
             {
-                int proximity = savedSearch.LocationZipProximity;
-                int zip = savedSearch.LocationZipCode;
-
-                if (zip > 0 && proximity > 0)
+                foreach (KeyValuePair<string, int> item in selections)
                 {
-
-                    zipCode.Text = string.Format("{0:D5}", zip);
-
-                    // ZIP Proximity
-                    try
-                    {
-                        zipCodeProximity.SelectedValue = proximity.ToString();
-                    }
-                    catch (Exception)
-                    {
-                        // Couldn't find the selected value?  Leave the default in place.
-                    }
+                    list.Items.Add(new ListItem(item.Key.Trim(), HashMaster.SaltedHashCompoundString(item.Key.Trim(), item.Value.ToString())));
                 }
+                expandedState.Value = EXPANDED;
+            }
+            else
+            {
+                expandedState.Value = COLLAPSED;
             }
         }
 
+        /// <summary>
+        /// Click handler for the Investigator list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void InvestigatorListClearAll_ClickHandler(object sender, EventArgs e)
+        {
+            investigator.Items.Clear();
+        }
+
+        private void FillTrialInvestigatorBox(CTSearchDefinition savedSearch)
+        {
+            investigatorListExpanded.Value = COLLAPSED;
+            if (savedSearch != null)
+            {
+                // CTSearchDefinition guarantees that InvestigatorList will never be null.
+                FillDeletableSelectionList(savedSearch.InvestigatorList, investigator, investigatorListExpanded);
+            }
+
+            // If the list is still collapsed, hide it.
+            if (investigatorListExpanded.Value == COLLAPSED)
+                trialInvestigatorsRow.Style.Add(HtmlTextWriterStyle.Display, "none");
+        }
+
+        /// <summary>
+        /// Click handler for the Lead Organization list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void LeadOrgClearAll_ClickHandler(object sender, EventArgs e)
+        {
+            leadOrg.Items.Clear();
+        }
+
+        private void FillLeadOrganzationBox(CTSearchDefinition savedSearch)
+        {
+            leadOrgListExpanded.Value = COLLAPSED;
+            if (savedSearch != null)
+            {
+                // CTSearchDefinition guarantees that LeadOrganizationList will never be null.
+                FillDeletableSelectionList(savedSearch.LeadOrganizationList, leadOrg, leadOrgListExpanded);
+            }
+
+            // If the list is still collapsed, hide it.
+            if (leadOrgListExpanded.Value == COLLAPSED)
+                trialLeadOrganizationRow.Style.Add(HtmlTextWriterStyle.Display, "none");
+        }
+
+        /// <summary>
+        /// Click handler for the Drug list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void DrugListClearAll_ClickHandler(object sender, EventArgs e)
+        {
+            drug.Items.Clear();
+        }
+
+        private void FillDrugSelectionList(CTSearchDefinition savedSearch)
+        {
+            drugListExpanded.Value = COLLAPSED;
+            if (savedSearch != null)
+            {
+                // CTSearchDefinition guarantees that DrugList will never be null.
+                FillDeletableSelectionList(savedSearch.DrugList, drug, drugListExpanded);
+                drugListAllOrAny.SelectedValue = savedSearch.RequireAllDrugsMatch ? "all" : "any";
+            }
+
+            // If the list is still collapsed, hide it.
+            if (drugListExpanded.Value == COLLAPSED)
+                drugListArea.Style.Add(HtmlTextWriterStyle.Display, "none");
+        }
+
+        /// <summary>
+        /// Click handler for the Institution list's "Clear All" button.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void InstutionListClearAll_ClickHandler(object sender, EventArgs e)
+        {
+            institution.Items.Clear();
+        }
 
         private void FillInstitutionSelectBox(CTSearchDefinition savedSearch)
         {
@@ -694,7 +730,7 @@ namespace CancerGov.Web.SnippetTemplates
             if (showAsCollapsed)
             {
                 institutionListExpanded.Value = COLLAPSED;
-                hospitalBox.Style.Add(HtmlTextWriterStyle.Display, "none");
+                hospitalLocationFieldset.Style.Add(HtmlTextWriterStyle.Display, "none");
                 institutionListSubBox.Style.Add(HtmlTextWriterStyle.Display, "none");
             }
             else
@@ -714,83 +750,6 @@ namespace CancerGov.Web.SnippetTemplates
             }
         }
 
-        private void FillNihLocationSelectBox(CTSearchDefinition savedSearch)
-        {
-            if (savedSearch != null && savedSearch.LocationSearchType == LocationSearchType.NIH)
-            {
-                if (savedSearch.LocationNihOnly)
-                    nihOnly.Checked = true;
-                else
-                    nihOnly.Checked = false;
-            }
-        }
-
-        private void FillDrugSelectionList(CTSearchDefinition savedSearch)
-        {
-            drugListExpanded.Value = COLLAPSED;
-            if (savedSearch != null)
-            {
-                // CTSearchDefinition guarantees that DrugList will never be null.
-                FillDeletableSelectionList(savedSearch.DrugList, drug, drugListExpanded);
-                drugListAllOrAny.SelectedValue = savedSearch.RequireAllDrugsMatch ? "all" : "any";
-            }
-
-            // If the list is still collapsed, hide it.
-            if (drugListExpanded.Value == COLLAPSED)
-                drugListArea.Style.Add(HtmlTextWriterStyle.Display, "none");
-        }
-
-        private void FillInterventionSelectionList(CTSearchDefinition savedSearch)
-        {
-            interventionListExpanded.Value = COLLAPSED;
-            if (savedSearch != null)
-            {
-                // CTSearchDefinition guarantees that InterventionList will never be null.
-                FillDeletableSelectionList(savedSearch.InterventionList, intervention, interventionListExpanded);
-            }
-
-            // If the list is still collapsed, hide it.
-            if (interventionListExpanded.Value == COLLAPSED)
-                interventionListArea.Style.Add(HtmlTextWriterStyle.Display, "none");
-        }
-
-
-        private void FillTrialInvestigatorBox(CTSearchDefinition savedSearch)
-        {
-            investigatorListExpanded.Value = COLLAPSED;
-            if (savedSearch != null)
-            {
-                // CTSearchDefinition guarantees that InvestigatorList will never be null.
-                FillDeletableSelectionList(savedSearch.InvestigatorList, investigator, investigatorListExpanded);
-            }
-
-            // If the list is still collapsed, hide it.
-            if (investigatorListExpanded.Value == COLLAPSED)
-                trialInvestigatorsRow.Style.Add(HtmlTextWriterStyle.Display, "none");
-        }
-
-        private void FillLeadOrganzationBox(CTSearchDefinition savedSearch)
-        {
-            leadOrgListExpanded.Value = COLLAPSED;
-            if (savedSearch != null)
-            {
-                // CTSearchDefinition guarantees that LeadOrganizationList will never be null.
-                FillDeletableSelectionList(savedSearch.LeadOrganizationList, leadOrg, leadOrgListExpanded);
-            }
-
-            // If the list is still collapsed, hide it.
-            if (leadOrgListExpanded.Value == COLLAPSED)
-                trialLeadOrganizationRow.Style.Add(HtmlTextWriterStyle.Display, "none");
-        }
-
-        private void FillKeywordText(CTSearchDefinition savedSearch)
-        {
-            if (savedSearch != null && !string.IsNullOrEmpty(savedSearch.Keywords))
-            {
-                txtKeywords.Text = savedSearch.Keywords;
-            }
-        }
-
         private void FillTrialStatus(CTSearchDefinition savedSearch)
         {
             if (savedSearch != null)
@@ -802,241 +761,34 @@ namespace CancerGov.Web.SnippetTemplates
             }
         }
 
-        private void FillNewTrialBox(CTSearchDefinition savedSearch)
+        public void SubmitButton_Click(object sender, EventArgs e)
         {
-            if (savedSearch != null)
+            if (Page.IsValid)
             {
-                newOnly.Checked = savedSearch.RestrictToRecent;
-            }
-        }
+                int searchID = 0;
 
-        private void FillProtocolIDBox(CTSearchDefinition savedSearch)
-        {
-            if (savedSearch != null)
-            {
-                foreach (string id in savedSearch.SpecificProtocolIDList)
+                // Gather all search criteria.
+                CTSearchDefinition criteria = BuildSearchCriteria();
+
+                // Save and Execute the search, yielding a protocol search ID.
+                searchID = CTSearchManager.SaveAndExecuteSearch(criteria);
+
+                // If a valid search ID is returned.
+                if (searchID > 0)
                 {
-                    if (!(string.IsNullOrEmpty(protocolID.Text)))
-                    {
-                        protocolID.Text += ", ";
-                    }
-                    protocolID.Text += id;
+                    // Redirect to the search results page.
+                    Response.Redirect(String.Format("{0}?protocolsearchid={1}", SearchPageInfo.SearchResultsPrettyUrl, searchID), true);
+                }
+                else
+                {
+                    // Otherwise, log an error.
+                    EventLog eLog = new EventLog("CancerGov");
+                    eLog.Source = "CancerGov";
+                    eLog.WriteEntry("Unable to perform SaveAndExecuteSearch().", EventLogEntryType.Error);
+                    eLog.Close();
                 }
             }
         }
-
-        /// <summary>
-        /// Helper method for populating and determining whether to display one of the collapsible lists.
-        /// </summary>
-        /// <param name="savedSearch"></param>
-        /// <param name="list"></param>
-        /// <param name="collapseState"></param>
-        private void FillDeletableSelectionList(IList<KeyValuePair<string, int>> selections, DeleteList list, HiddenField expandedState)
-        {
-            // If there are values, draw the list in an expanded condition.
-            if (selections.Count > 0)
-            {
-                foreach (KeyValuePair<string, int> item in selections)
-                {
-                    list.Items.Add(new ListItem(item.Key.Trim(), HashMaster.SaltedHashCompoundString(item.Key.Trim(), item.Value.ToString())));
-                }
-                expandedState.Value = EXPANDED;
-            }
-            else
-            {
-                expandedState.Value = COLLAPSED;
-            }
-        }
-
-        /// <summary>
-        /// Sets the location buttons to their non-JavaScript (static page)
-        /// equivalents.  This is necessary because we have two sets of
-        /// buttons for the same functionality, and no way of knowing whether
-        /// JavaScript was active.
-        /// </summary>
-        private void SetLocationButtionsToStaticValues()
-        {
-            if (hospitalLocationButton.Checked)
-                hospitalLocationButtonStatic.Checked = true;
-            else if (cityStateLocationButton.Checked)
-                cityStateLocationButtonStatic.Checked = true;
-            else if (atNihLocationButton.Checked)
-                atNihLocationButtonStatic.Checked = true;
-            else if (zipCodeLocationButton.Checked)
-                zipCodeLocationButtonStatic.Checked = true;
-        }
-
-        private void SetLocationButtons(CTSearchDefinition savedSearch)
-        {
-            if (savedSearch != null)
-            {
-                // Because we don't know whether JavaScript is enabled, the middle tier can
-                // only set the location buttons for the static version of the page.
-                // If JavaScript is active, the client-side UI code is responsible for
-                // setting the dynamic location buttons appropriately.
-                switch (savedSearch.LocationSearchType)
-                {
-                    case LocationSearchType.Institution:
-                        hospitalLocationButtonStatic.Checked = true;
-                        break;
-                    case LocationSearchType.City:
-                        cityStateLocationButtonStatic.Checked = true;
-                        break;
-                    case LocationSearchType.NIH:
-                        atNihLocationButtonStatic.Checked = true;
-                        break;
-                    case LocationSearchType.Zip:
-                    default:
-                        zipCodeLocationButtonStatic.Checked = true;
-                        break;
-                }
-            }
-        }
-
-        #region SelectIndex... method overloads
-
-        private void SelectIndexByID(ref HtmlSelect select, int iID)
-        {
-
-            if (iID > 0)
-            {
-                foreach (System.Web.UI.WebControls.ListItem liItem in select.Items)
-                {
-                    string strTmp = HttpUtility.UrlDecode(liItem.Value);
-
-                    string[] starrKeyVal = strTmp.Split(';');
-
-                    if (starrKeyVal.Length == 2)
-                    {
-                        if (starrKeyVal[1] == iID.ToString())
-                        {
-                            select.Items[0].Selected = false;
-                            liItem.Selected = true;
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void SelectIndexByID(ref HtmlSelect select, ArrayList alList)
-        {
-
-            if (alList.Count > 0)
-            {
-                foreach (System.Web.UI.WebControls.ListItem liItem in select.Items)
-                {
-                    string strTmp = HttpUtility.UrlDecode(liItem.Value);
-
-                    string[] starrKeyVal = strTmp.Split(';');
-
-                    if (starrKeyVal.Length == 2)
-                    {
-                        if (alList.Contains(starrKeyVal[1]))
-                        {
-                            select.Items[0].Selected = false;
-                            liItem.Selected = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void SelectIndexByID(CheckBoxList list, ArrayList alList)
-        {
-
-            if (alList.Count > 0)
-            {
-                foreach (System.Web.UI.WebControls.ListItem liItem in list.Items)
-                {
-                    string strTmp = HttpUtility.UrlDecode(liItem.Value);
-
-                    string[] starrKeyVal = strTmp.Split(';');
-
-                    if (starrKeyVal.Length == 2)
-                    {
-                        if (alList.Contains(starrKeyVal[1]))
-                        {
-                            list.Items[0].Selected = false;
-                            liItem.Selected = true;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void SelectIndexByItem(CheckBoxList list, ArrayList alList)
-        {
-
-            if (alList.Count > 0)
-            {
-                foreach (string strItem in alList)
-                {
-                    System.Web.UI.WebControls.ListItem liItem = list.Items.FindByValue(strItem);
-
-                    if (liItem != null)
-                    {
-                        list.Items[0].Selected = false;
-                        liItem.Selected = true;
-                    }
-                }
-            }
-        }
-
-        private void SelectIndexByItem(ref HtmlSelect select, ArrayList alList)
-        {
-
-            if (alList.Count > 0)
-            {
-                foreach (string strItem in alList)
-                {
-
-                    System.Web.UI.WebControls.ListItem liItem = select.Items.FindByValue(strItem);
-
-                    if (liItem != null)
-                    {
-                        select.Items[0].Selected = false;
-                        liItem.Selected = true;
-                    }
-                }
-            }
-        }
-
-        private void SelectIndexByItem(ref HtmlSelect select, string strItem)
-        {
-
-            if (strItem != "")
-            {
-
-                System.Web.UI.WebControls.ListItem liItem = select.Items.FindByValue(strItem);
-
-                if (liItem != null)
-                {
-                    select.Items[0].Selected = false;
-                    liItem.Selected = true;
-                }
-
-            }
-        }
-
-        private void SelectIndexByItem(ref HtmlSelect select, int iItem)
-        {
-
-            if (iItem > 0)
-            {
-
-                System.Web.UI.WebControls.ListItem liItem = select.Items.FindByValue(iItem.ToString());
-
-                if (liItem != null)
-                {
-                    select.Items[0].Selected = false;
-                    liItem.Selected = true;
-                }
-
-            }
-        }
-
-        #endregion
 
         private CTSearchDefinition BuildSearchCriteria()
         {
@@ -1047,10 +799,10 @@ namespace CancerGov.Web.SnippetTemplates
             criteria.SearchInvocationType = SearchInvocationType.FromSearchForm;
 
             // Cancer type, if present.
-            if (SelectionIsPresent(cancerType))
+            if (SelectionIsPresent(ddlCancerType))
             {
-                criteria.CancerType = new KeyValuePair<string, int>(cancerType.SelectedItem.Text,
-                    int.Parse(cancerType.SelectedItem.Value));
+                criteria.CancerType = new KeyValuePair<string, int>(ddlCancerType.SelectedItem.Text,
+                    int.Parse(ddlCancerType.SelectedItem.Value));
             }
             else
                 criteria.CancerType = new KeyValuePair<string, int>(string.Empty, 0);
@@ -1135,7 +887,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             // Determine which location to use.  It isn't possible to have no buttons checked.
-            if (zipCodeLocationButton.Checked || zipCodeLocationButtonStatic.Checked)
+            if (zipCodeLocationButton.Checked)
             {
                 // Don't attempt to set a ZIP location unless ZIP is numeric and greater than 0.
                 int zip = Strings.ToInt(zipCode.Text, 0);
@@ -1145,7 +897,7 @@ namespace CancerGov.Web.SnippetTemplates
                     criteria.SetLocationZipCriteria(zipCode.Text, zipCodeProximity.SelectedValue);
                 }
             }
-            else if (hospitalLocationButton.Checked || hospitalLocationButtonStatic.Checked)
+            else if (hospitalLocationButton.Checked)
             {
                 criteria.LocationSearchType = LocationSearchType.Institution;
                 foreach (ListItem item in institution.Items)
@@ -1155,7 +907,7 @@ namespace CancerGov.Web.SnippetTemplates
                         criteria.LocationInstitutions.Add(new KeyValuePair<string, int>(item.Text, int.Parse(value)));
                 }
             }
-            else if (cityStateLocationButton.Checked || cityStateLocationButtonStatic.Checked)
+            else if (cityStateLocationButton.Checked)
             {
                 criteria.LocationSearchType = LocationSearchType.City;
                 criteria.LocationCity = city.Value;
@@ -1194,7 +946,7 @@ namespace CancerGov.Web.SnippetTemplates
                 }
 
             }
-            else if (atNihLocationButton.Checked || atNihLocationButtonStatic.Checked)
+            else if (atNihLocationButton.Checked)
             {
                 criteria.LocationSearchType = LocationSearchType.NIH;
                 criteria.LocationNihOnly = nihOnly.Checked;
@@ -1278,6 +1030,26 @@ namespace CancerGov.Web.SnippetTemplates
         /// <param name="selection"></param>
         /// <returns></returns>
         private bool SelectionIsPresent(ListControl selection)
+        {
+            bool selectionIsPresent = false;
+
+            if (selection != null &&
+                selection.SelectedIndex > 0)
+            {
+                selectionIsPresent = true;
+            }
+
+            return selectionIsPresent;
+        }
+
+        /// <summary>
+        /// Helper function to encapsulate the logic for verifying that a list has a selection.
+        /// In addition to having a selected value, the selection must be at an index other
+        /// than 0.  (Index zero is used throughout the page to mean "All.")
+        /// </summary>
+        /// <param name="selection"></param>
+        /// <returns></returns>
+        private bool SelectionIsPresent(AccessibleCheckBoxList selection)
         {
             bool selectionIsPresent = false;
 

@@ -7,11 +7,24 @@ using System.Linq;
 using CancerGov.Modules.CDR;
 using NCI.Web.CDE;
 using NCI.Logging;
+using System.Configuration;
 
 namespace CancerGov.Modules
 {
     public class CDRPrettyUrlModule : IHttpModule
     {
+        private string SearchResultsPrettyUrl
+        {
+            get {
+                if (!String.IsNullOrEmpty(ConfigurationSettings.AppSettings["ClinicalTrialsViewPage"]))
+                {
+                    return ConfigurationSettings.AppSettings["ClinicalTrialsViewPage"];
+                }
+
+                return "/about-cancer/treatment/clinical-trials/search/view";
+            }
+        }
+
         /// <summary>
         /// You will need to configure this module in the web.config file of your
         /// web and register it with IIS before being able to use it. For more information
@@ -73,7 +86,7 @@ namespace CancerGov.Modules
                             if (string.IsNullOrEmpty(version))
                                 version = "healthprofessional";
 
-                            string ctViewUrl = string.Format("/clinicaltrials/search/view?cdrid={0}&version={1}", cdrID, version);
+                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?cdrid={0}&version={1}", cdrID, version);
                             context.Response.Redirect(ctViewUrl, true);
                         }
                         else

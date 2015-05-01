@@ -2,34 +2,31 @@
 <%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls" TagPrefix="NCI" %>
 
 <asp:Literal runat="server" ID="litPageUrl" Visible="false"></asp:Literal>
+<div id="welcomeDiv">
+    <p>Welcome to the NCI Dictionary of Genetics Terms, which contains technical definitions for more than 150 terms related to genetics. These definitions were developed by the <a href="/cancertopics/pdq/cancer-genetics-board">PDQ® Cancer Genetics Editorial Board</a> to support the evidence-based, peer-reviewed <a href="/cancertopics/pdq/genetics">PDQ cancer genetics information summaries</a>.</p>
+</div>
 <asp:Literal runat="server" ID="litSearchBlock"></asp:Literal>
 <asp:PlaceHolder ID="phSearchBox" runat="server" />
-<h3><% =TermName %></h3>
+<dl><dt><dfn><% =TermName %></dfn></dt>
 <% if(!String.IsNullOrEmpty(AudioPronounceLink)) { %>
-<div class="audioPronounceLink">
+<dd class="pronunciation">
 <% =AudioPronounceLink %>
-</div>
-<br />
+</dd>
 <% } %>
 
-<div class="definition">
+<dd class="definition">
 <% =DefinitionHTML %>
-</div>
-<br />
+</dd>
 
-<div class="relatedInfo">
+
+<dd class="relatedInfo">
 <% =RelatedInfoHTML%>
-</div>
-<br />
+</dd>
 
-<% if(!String.IsNullOrEmpty(ImageLink)) { %>
-   <div class="imageLink">
-      <% =ImageLink %>
-      <br />
-      <% if(!String.IsNullOrEmpty(ImageCaption)) { %>
-         <div class="caption">
-            <% =ImageCaption %>
-         </div>
-      <% } %>
-   </div>
+
+<% if(!String.IsNullOrEmpty(MediaHTML)) { %>
+   <dd class="imageLink">
+      <% =MediaHTML %>
+   </dd>
 <% } %>
+</dl>

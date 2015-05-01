@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MobileTermDictionaryDefinitionView.ascx.cs" Inherits="MobileCancerGov.Web.SnippetTemplates.MobileTermDictionaryDefinitionView" %>
 <%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.WebControls" TagPrefix="NCI" %>
-<script src="http://wwwnewdev.cancer.gov/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
+<script src="/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     //Hookup JPlayer for Audio
     if (jQuery.jPlayer) {
@@ -8,7 +8,7 @@
             var my_jPlayer = $("#dictionary_jPlayer");
 
             my_jPlayer.jPlayer({
-                swfPath: "http://wwwnewdev.cancer.gov/PublishedContent/files/global/flash/", //Path to SWF File Used by jPlayer
+                swfPath: "/PublishedContent/files/global/flash/", //Path to SWF File Used by jPlayer
 				solution:"flash,html", 
 				wmode: "window", 
                 //errorAlerts: true,

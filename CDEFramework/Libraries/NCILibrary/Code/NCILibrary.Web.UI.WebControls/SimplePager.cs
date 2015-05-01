@@ -434,7 +434,7 @@ namespace NCI.Web.UI.WebControls
             }
         }
 
-        private void RenderPageNumbers(HtmlTextWriter output, int startIndex, int endIndex)
+        protected virtual void RenderPageNumbers(HtmlTextWriter output, int startIndex, int endIndex)
         {
             //Loop through page numbers and draw page links
             for (int pageNumber = startIndex; pageNumber <= endIndex; pageNumber++)
@@ -511,7 +511,7 @@ namespace NCI.Web.UI.WebControls
             }
         }
 
-        private string GetItemCssClass(string itemClass, int startIndex, int endIndex, int pageNumber)
+        protected string GetItemCssClass(string itemClass, int startIndex, int endIndex, int pageNumber)
         {
             //Draw classes
             string className = string.Empty;
@@ -540,7 +540,7 @@ namespace NCI.Web.UI.WebControls
         /// <param name="output">A HtmlTextWriter to render the contents to.</param>
         protected override void RenderContents(HtmlTextWriter output)
         {
-            int startIndex = 0;
+            int startIndex = 0; 
             int endIndex = 0;
             int pages = 0;
 

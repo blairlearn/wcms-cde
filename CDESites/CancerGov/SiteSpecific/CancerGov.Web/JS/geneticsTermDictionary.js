@@ -1,7 +1,7 @@
 ﻿// JavaScript for Genetics Term Dictionary
-
+ 
 //Hookup JPlayer for Audio
-if (jQuery.jPlayer) {
+if (jQuery.jPlayer && !Modernizr.touch) {
     jQuery(document).ready(function($) {
         var my_jPlayer = $("#dictionary_jPlayer");
 
@@ -26,10 +26,7 @@ function DoSearch()
 {
    if($('#searchString').val() != "") {
       var localSearhString = htmlEscape($('#searchString').val());
-      var isContains=false;
-      if($("#radioContains").attr("checked")!= "undefined")
-         if($("#radioContains").attr("checked"))
-           isContains=true;
+      var isContains = IsContains();
       if(isContains) {
          var url = $('#litPageUrl').text() + "?search=" + localSearhString + "&contains=true";
          NCIAnalytics.GeneticsDictionarySearch(this,localSearhString,true);
@@ -64,57 +61,25 @@ autoFunc();
 function autoFunc() {
     var language = "English";
 
-    if ($('meta[name="content-language"]').attr("content") == "es") {
+    if ($('html').attr("lang") === "es") {
         language = "Spanish"
     }
 
     var $keywordElem = $("#searchString")
 
-    if ($keywordElem.length == 0)
+    if ($keywordElem.length === 0)
         return;
-        
 
-    var isContains = IsContains() 
+
+    var isContains = IsContains();
     var svcUrl = "";
-    if (IsContains())  
+    if (isContains)  
         svcUrl = "/TermDictionary.svc/SuggestGeneticsContainsJSON/";
     else
         svcUrl = "/TermDictionary.svc/SuggestGeneticsStartsJSON/";
 
-	$keywordElem.autocomplete({
-        
-        // Set AJAX service source 
-	    source: svcUrl + language,
-
-        // Start autocomplete only after three characters are typed 
-	    minLength: 3,
-	    
-	    focus: function(event, ui) {
-		$("#searchString").val(ui.item.item);
-		return false;
-	    },
-	    select: function(event, ui) {
-		$("#searchString").val(ui.item.item);
-		return false;
-	    }
-	}).data("autocomplete")._renderItem = function(ul, item) {
-	    //Escape bad characters
-	    var lterm = this.term.replace(/[-[\]{}()*+?.,\^$|#\s]/g, "\$&");
-	    
-	    if(isContains)
-	        // highlight autocomplete item if it appears anywhere 
-	        var regexBold = new RegExp("(" + lterm + "|\s+" + lterm + "i)","i");
-	    else
-	        // hightlight autocomplete item if it appears at the beginning
-            var regexBold = new RegExp("(^" + lterm + "|\\s+" + lterm + ")");
-
-	    var word = item.item.replace(regexBold, "<strong>$&</strong>");
-
-	    return $("<li></li>")
-				.data("item.autocomplete", item)
-				.append("<a onclick=\"SelectIt();\">" + word + "</a>")
-				.appendTo(ul);
-	};
+    svcUrl += language;
+    NCI.doAutocomplete("#searchString", svcUrl, isContains);
 
     $keywordElem.keyup(function(event) {
        if ( event.which == 13 ) {
@@ -131,8 +96,7 @@ function SelectIt()  {
 function IsContains() {
     var ret = false;
     
-    if($("#radioContains").attr("checked")!= "undefined")
-      if($("#radioContains").attr("checked"))
+    if($("#radioContains").prop("checked"))
          ret = true;
 
     return ret; 

@@ -19,7 +19,6 @@ using CancerGov.UI.CDR;
 
 using NCI.Web.UI.WebControls;
 using NCI.Util;
-using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 using NCI.Web.UI.WebControls.FormControls;  // For the CTSearchCriteriaDisplay object.
 using NCI.Web.CancerGov.Apps;
 using NCI.Logging;
@@ -233,7 +232,7 @@ namespace CancerGov.Web.SnippetTemplates
             JSManager.AddExternalScript(this.Page, "/JS/Search/CDEResultsClinicalTrials.js");
             JSManager.AddExternalScript(this.Page, "/JS/popEvents.js");
             //JSManager.AddExternalScript(this.Page, "/scripts/JSLoader/JSLoader.js");
-            CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css", String.Empty);
+           // CssManager.AddStyleSheet(this.Page, "/StyleSheets/jquery.css", String.Empty);
             
         }
 
@@ -354,7 +353,7 @@ namespace CancerGov.Web.SnippetTemplates
             OnLoadComplete();
             /// Set up JavaScript resources. Order is important.  Because the page's script
             /// uses prototype, we need to register that one first.
-            PrototypeManager.Load(this.Page);
+            //PrototypeManager.Load(this.Page);
 
             if (_pageRenderingState == PageRenderingState.Results && _pageRenderer != null)
             {
@@ -568,7 +567,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         #region Event Handlers
 
-        protected void refineSearch_ServerClick(object sender, System.Web.UI.ImageClickEventArgs e)
+        protected void refineSearch_ServerClick(object sender, EventArgs e)
         {
             Response.Redirect(SearchPageInfo.SearchPagePrettyUrl + "?protocolsearchid=" + GetProtocolSearchID());
         }
@@ -601,7 +600,7 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void DisplayForPrint_ClickHandler(object sender, ImageClickEventArgs e)
+        protected void DisplayForPrint_ClickHandler(object sender, EventArgs e)
         {
             // Make certain the master list is up to date.
             ReconcileSelectedProtocolList();
@@ -801,7 +800,7 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void UpdateAudienceAndDisplay_Click(object sender, ImageClickEventArgs e)
+        protected void UpdateAudienceAndDisplay_Click(object sender, EventArgs e)
         {
             // Set the current audience according to the audience radio buttons.
             // This is the one and only place where the audience type
@@ -937,7 +936,7 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void UpdateSortOrderAndPageSize_Click(object sender, ImageClickEventArgs e)
+        protected void UpdateSortOrderAndPageSize_Click(object sender, EventArgs e)
         {
             // Update Sort Order.
             string selectedValue = sortOrder.SelectedValue;

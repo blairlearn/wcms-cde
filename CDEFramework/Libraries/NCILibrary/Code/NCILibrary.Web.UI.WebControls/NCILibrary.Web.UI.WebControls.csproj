@@ -81,7 +81,9 @@
     <Compile Include="DropDownListItem.cs" />
     <Compile Include="DropDownListItemCollection.cs" />
     <Compile Include="EditOnProControl.cs" />
+    <Compile Include="FormControls\AccessibleCheckBoxList.cs" />
     <Compile Include="FormControls\AutoComplete.cs" />
+    <Compile Include="FormControls\DeleteList.cs" />
     <Compile Include="FormControls\ListControlSelectionCountValidator.cs" />
     <Compile Include="FormControls\TextAreaMaxLengthControl.cs" />
     <Compile Include="FormControls\PhoneNumberControl.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleAtoZList.cs" />
     <Compile Include="SimplePager.cs" />
+    <Compile Include="SimpleUlPager.cs" />
     <Compile Include="TemplatedDataItem.cs" />
     <Compile Include="TemplatedTreeNode.cs" />
     <Compile Include="TemplatedTreeNodeContainer.cs" />
@@ -293,6 +296,7 @@
   <ItemGroup>
     <EmbeddedResource Include="FormControls\Resources\AutoComplete.js" />
     <EmbeddedResource Include="FormControls\Resources\AutoComplete.css" />
+    <EmbeddedResource Include="FormControls\Resources\deleteList.js" />
     <Content Include="Resources\spacer.gif" />
     <Content Include="Resources\TemplatedTreeView.js" />
   </ItemGroup>

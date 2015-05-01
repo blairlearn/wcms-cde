@@ -9,149 +9,155 @@
 
 
 	<!-- Main Area -->
-	<div class="sw-search-results">
+	<div class="results">
 		<!-- Main Content Area -->
-	    <a name="skiptocontent"></a>
-        <form id="resultForm" runat="server">
-            <cc1:JavascriptProbeControl ID="jsProbe" runat="server" />
-            <asp:Label CssClass="page-title" id="lblResultsForText" Text="Results for:" runat="server"/>&nbsp;&nbsp;<asp:Label CssClass="search-result" ID="lblResultsForKeyword" runat="server" />
-            <p></p>
-            
-            <!-- Best Bets Here -->
-            <asp:Repeater ID="rptBestBets" EnableViewState="false" runat="server">
-                <ItemTemplate>
-                    <div class="searchResultsHeader">
-                        <asp:Label CssClass="header-A" 
+
+        <cc1:JavascriptProbeControl ID="jsProbe" runat="server" />
+        <h3><asp:Label id="lblResultsForText" Text="Results for:" runat="server"/> <asp:Label CssClass="term" ID="lblResultsForKeyword" runat="server" /></h3>
+     
+        <!-- Best Bets Here -->
+        <asp:Repeater ID="rptBestBets" EnableViewState="false" runat="server">
+            <ItemTemplate>
+                <div class="featured sitewide-results">
+                    <h2>
+                        <asp:Label
                             ID="lblBBCatName" 
                             Text='<%# (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish ? "Mejores resultados para " : "Best Bets for ") + Eval("CategoryName")%>'
                             runat="server" />
-                    </div>    
+                    </h2>
                     <asp:Literal ID="Literal1" runat="server" Text='<%# BestBetResultsHyperlinkOnclick(Container) %>'>
                     </asp:Literal>
-                </ItemTemplate>
-            </asp:Repeater>
-            
-            <!-- DYM -->
-            <asp:PlaceHolder ID="phDYM" runat="server">
-                <b><asp:Literal ID="litDidYouMeanText" runat="server">Did you mean</asp:Literal>:  
-                </b><asp:HyperLink id="lnkDym" NavigateUrl="#" runat="server"><i><b> <asp:Literal ID="litDYMString" runat="server" /> </b></i></asp:HyperLink><p></p>
-            </asp:PlaceHolder>
-            
-            <!-- Results x-y of z for: Keyword -->
-            <div class="searchResultsHeader">
-                <asp:Label CssClass="header-A" ID="lblTopResultsXofY" runat="server" /> <asp:Label ID="lblTopResultsXofYKeyword" runat="server" />
-            </div>
-            
+                </div>    
+            </ItemTemplate>
+        </asp:Repeater>
+        
+        <!-- DYM -->
+        <asp:PlaceHolder ID="phDYM" runat="server">
+            <h2><asp:Literal ID="litDidYouMeanText" runat="server">Did you mean</asp:Literal>:</h2>
+            <asp:HyperLink id="lnkDym" NavigateUrl="#" runat="server"><span class="term"><asp:Literal ID="litDYMString" runat="server" /></span></asp:HyperLink><p></p>
+        </asp:PlaceHolder>
+        
+        <!-- Results x-y of z for: Keyword -->
+        <div class="sitewide-results">
+            <h4><asp:Label ID="lblTopResultsXofY" runat="server" /> <span class="term"><asp:Label ID="lblTopResultsXofYKeyword" runat="server" /></span></h4>
+        
             <!-- Error message, used to be ResultsView -->
             <asp:PlaceHolder ID="phError" runat="server">
-                <div style="margin: 24px 0 24px 0;">
+                <div>
                     <asp:Literal ID="litError" runat="server" Text="Please enter a search phrase." />
                 </div>
             </asp:PlaceHolder>
             
-            <asp:Repeater ID="rptResults" EnableViewState="false" runat="server">
+            <cc1:MultiTemplatedRepeater ID="rptResults" EnableViewState="false" runat=server>
                 <HeaderTemplate>
-                    <div class="searchResultsSection" >
+                    <div class="sitewide-list" >
                         <ul class="no-bullets">
                 </HeaderTemplate>
-                <ItemTemplate>
-                    <li>
-                    <div class="searchResultsLink">
-                    <asp:HyperLink
-                        id="lnkResultLink"
-                        runat="server"
-                        onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
-                        NavigateUrl='<%# Eval("Url") %>'
-                        Text='<%# Eval("Title") %>' />
-                    </div>
-				    <div class="searchResultsDescription">
-				    <%# Eval("Description") %>
-				    </div>
-				    <div class="searchResultsDisplayUrl">
-				    <%# Eval("DisplayUrl") %>
-				    </div>
-				    </li>
-                </ItemTemplate>    
+                <ItemTemplates>
+                    <cc1:TemplateItem TemplateType="Default">
+                        <Template>
+                            <li>
+                                <div>
+                                <asp:HyperLink
+                                    id="HyperLink1"
+                                    runat="server"
+                                    onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
+                                    NavigateUrl='<%# Eval("Url") %>'
+                                    Text='<%# Eval("Title") %>' />
+                                </div>
+                                <div class="description">
+		                            <%# Eval("Description") %>
+		                        </div> 
+		                        <div>
+		                            <cite class="url">
+		                            <%# Eval("DisplayUrl") %>
+		                            </cite>
+		                        </div>
+		                    </li>                    
+                        </Template>		                    
+                    </cc1:TemplateItem>
+                    <cc1:TemplateItem TemplateType="Media">
+                        <Template>
+                            <li>
+                                <div>
+                                <asp:HyperLink
+                                    id="lnkResultLink"
+                                    runat="server"
+                                    onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
+                                    NavigateUrl='<%# Eval("Url") %>'
+                                    Text='<%# String.Format("{0} ({1})", Eval("Title"), Eval("Label")) %>' />
+                                </div>
+                                <div>
+		                            <cite class="url">
+		                            <%# Eval("DisplayUrl") %>
+		                            </cite>
+		                        </div>
+		                        <div class="description">
+		                            <%# Eval("Description") %>
+		                        </div>
+		                    </li>
+                        </Template>		                    
+                    </cc1:TemplateItem>                                            
+                </ItemTemplates>
                 <FooterTemplate>
                         </ul>
                     </div>
                 </FooterTemplate>
-            </asp:Repeater>
-            <p></p>
+            </cc1:MultiTemplatedRepeater>
+
+
             
+        </div>
+        
+        <form id="resultForm" runat="server" class="sitewide-search-results">
             <!-- pager and selection -->
-            <div class="sw-search-results-pager">
-                <table border="0" cellpadding="0" cellspacing="0" width="100%">
-			        <tr>
-				        <td colspan="5"><asp:Label CssClass="header-A" ID="lblBottomResultsXofY" runat="server" /></td>
-			        </tr>
-                    <tr>
-                        <td align="left" nowrap="nowrap" valign="middle" colspan="5"><img src="/images/spacer.gif" width="1" height="5" alt="" border="0" /></td>
-	                </tr>
-                    <tr>
-				        <td valign="middle" style="color:#4d4d4d;"><asp:Label id="lblDDLPageUnitShowText" Text="Show" runat="server" style="margin-right:5px"/></td>
-				        <td nowrap="nowrap" valign="middle" style="color:#4d4d4d;">
-				            <asp:Label ID="lblPageUnit" runat="server" CssClass="hidden" Text="Number of results to show on a page" AssociatedControlID="ddlPageUnit" />
-				            <asp:DropDownList
-				                id="ddlPageUnit"
-				                AutoPostBack="true"
-				                OnSelectedIndexChanged="ChangePageUnit"
-				                runat="server">
-				                <asp:ListItem Text="10" Value="10" />
-				                <asp:ListItem Text="20" Value="20" />
-				                <asp:ListItem Text="50" Value="50" />
-				            </asp:DropDownList>
-				            <noscript>
-				                <asp:Button 
-				                    ID="btnTextChangePageUnit" 
-				                    Text="Go"
-				                    OnClick="ChangePageUnitBtnClick"
-				                    runat="server" />
-				            </noscript>
-				        </td>
-				        <td nowrap="nowrap" valign="middle" width="100%"><asp:Label id="lblDDLPageUnitResultsPPText" Text="results per page." runat="server" style="margin-left:5px"/></td>
-				        <td nowrap="nowrap">&nbsp;&nbsp;</td>
-				        <td valign="middle" align="right">
-                            <cc1:simplepager 
-				        ID="spPager" runat="server">								    
-				        </cc1:simplepager></td>
-			        </tr>						
-		        </table>
-		    </div>
-		        <div style="border: 1px solid #bdbdbd; padding: 5px 5px 18px 5px; margin: 28px 0 12px 0;">
-                    <asp:Label CssClass="header-A" ID="lblSearchWithinResultsFound" runat="server" />
-                    <asp:Label ID="lblSearchWithinResultKeyword" runat="server" />
-                    <p></p>
-				    <asp:Panel ID="pnlSWR" runat="server">
-                        <table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
-                            <tr>
-                                <td width="10%">&nbsp;</td>
-                                <td align="center">
-                                    <table cellpadding="0" cellspacing="0" border="0">
-	                                    <tr>
-		                                    <td valign="bottom" align="right" style="padding-bottom: 2px;">
-			                                    <asp:RadioButtonList ID="rblSWRSearchType" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow">
-			                                        <asp:ListItem Selected="True" Text="New Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" Value="1" />
-			                                        <asp:ListItem Text="Search Within Results" Value="2" />
-			                                    </asp:RadioButtonList>
-		                                    </td>
-		                                    <td><img src="/images/spacer.gif" border="0" width="1" height="20" alt=""></td>
-	                                    </tr>
-	                                    <tr>
-		                                    <td align="right">
-		                                    <asp:Label AssociatedControlID="txtSWRKeyword" ID="lblSWRKeywordLabel" runat="server" CssClass="hidden">Keyword</asp:Label>
-		                                    <asp:TextBox ID="txtSWRKeyword" Rows="40" MaxLength="40" style="WIDTH:420px" runat="server" /></td>
-		                                    <td align="left" valign="middle" nowrap>&nbsp;&nbsp;&nbsp;&nbsp;
-		                                        <asp:ImageButton id="btnSWRImgSearch" ImageUrl="/images/search_site.gif" AlternateText="Search" runat="server" OnClick="SearchWithinResults" />
-		                                        <asp:Button id="btnSWRTxtSearch" text="Search >" runat="server" OnClick="SearchWithinResults" /></td>
-	                                    </tr>
-                                    </table>
-                                </td>
-                                <td width="10%">&nbsp;</td>
-                            </tr>
-                        </table>
-   				    </asp:Panel>
-		        </div>
-            </form>                    				
+            <div class="results-pager">
+                <h2 class="results-count"><asp:Label ID="lblBottomResultsXofY" runat="server" /></h2>
+                <span>
+                    <asp:Label id="lblDDLPageUnitShowText" Text="Show" runat="server"/>
+                    <asp:Label ID="lblPageUnit" runat="server" CssClass="hidden" Text="Number of results to show on a page" AssociatedControlID="ddlPageUnit" />
+                    <asp:DropDownList
+                        id="ddlPageUnit"
+                        AutoPostBack="true"
+                        OnSelectedIndexChanged="ChangePageUnit"
+                        Style="width: 88px"
+                        runat="server">
+                        <asp:ListItem Text="10" Value="10" />
+                        <asp:ListItem Text="20" Value="20" />
+                        <asp:ListItem Text="50" Value="50" />
+                    </asp:DropDownList>
+                    <noscript>
+                        <asp:Button 
+                            ID="btnTextChangePageUnit" 
+                            Text="Go"
+                            OnClick="ChangePageUnitBtnClick"
+                            runat="server" />
+                    </noscript>
+			        <asp:Label id="lblDDLPageUnitResultsPPText" Text="results per page." runat="server"/>
+			    </span>
+                <cc1:simpleulpager ID="spPager" runat="server" CssClass="pagination"></cc1:simpleulpager>
+	        </div>
+	    
+	        <h4>
+                <asp:Label ID="lblSearchWithinResultsFound" runat="server" />
+                <asp:Label CssClass="term" ID="lblSearchWithinResultKeyword" runat="server" />
+            </h4>
+		    <asp:Panel ID="pnlSWR" runat="server">
+
+                <asp:RadioButtonList CssClass="radio" ID="rblSWRSearchType" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow">
+                    <asp:ListItem Selected="True" Text="New Search" Value="1" />
+                    <asp:ListItem Text="Search Within Results" Value="2" />
+                </asp:RadioButtonList>
+          
+                <div class="row collapse">
+                    <div class="small-12">
+                        <asp:Label AssociatedControlID="txtSWRKeyword" ID="lblSWRKeywordLabel" runat="server" CssClass="hidden">Keyword</asp:Label>
+                        <asp:TextBox CssClass="input" ID="txtSWRKeyword" size=40 Rows="40" MaxLength="40" runat="server" />
+                        <asp:Button CssClass="button submit" id="btnSWRTxtSearch" text="Search" runat="server" OnClick="SearchWithinResults" />
+                    </div>
+                </div>
+
+		    </asp:Panel>
+        </form>                    				
 	</div>
 	<!-- End Main Area -->

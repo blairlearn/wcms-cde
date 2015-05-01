@@ -9,7 +9,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using NCI.Util;
-using NCI.Web.UI.WebControls.JSLibraries;   // In order to reference Prototype.
 
 namespace NCI.Web.UI.WebControls.FormControls
 {
@@ -31,30 +30,6 @@ namespace NCI.Web.UI.WebControls.FormControls
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// The number of rows to display in each of the control's list boxes.
-        /// Both lists display with the same number of rows.
-        /// </summary>
-        [
-        Bindable(true),
-        Category("Layout"),
-        DefaultValue(""),
-        Description("The image to show for items which may be deleted."),
-        Localizable(true),
-        PersistenceMode(PersistenceMode.Attribute)
-        ]
-        public virtual string DeleteIconUrl
-        {
-            get
-            {
-                string url = (string)ViewState["DeleteIconUrl"];
-                if (url == null)
-                    url = Page.ClientScript.GetWebResourceUrl(typeof(DeleteList), "CancerGovUIControls.Resources.delete.gif");
-                return url;
-            }
-            set { ViewState["DeleteIconUrl"] = value; }
-        }
 
         /// <summary>
         /// The text to display when the control's list is empty.
@@ -239,10 +214,8 @@ namespace NCI.Web.UI.WebControls.FormControls
         /// <param name="e"></param>
         protected override void OnPreRender(EventArgs e)
         {
-            /// Set up JavaScript resources. Order is important.  Because the control's script uses prototype, we need
-            /// to register that one first.
-            PrototypeManager.Load(this.Page);
-            JSManager.AddResource(this.Page, typeof(DeleteList), "CancerGovUIControls.Resources.deleteList.js");
+            /// Set up JavaScript resources.
+            JSManager.AddResource(this.Page, typeof(DeleteList), "NCI.Web.UI.WebControls.FormControls.Resources.deleteList.js");
 
             Page.RegisterRequiresPostBack(this);
             base.OnPreRender(e);
@@ -261,6 +234,7 @@ namespace NCI.Web.UI.WebControls.FormControls
 
             //writer.AddStyleAttribute(HtmlTextWriterStyle.ListStyleType, "none");
             writer.AddAttribute(HtmlTextWriterAttribute.Id, BuildUniqueControlName(_displayListName));
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "no-bullets");
             writer.RenderBeginTag(HtmlTextWriterTag.Ul);
 
             //foreach (ListItem item in Items)
@@ -269,19 +243,19 @@ namespace NCI.Web.UI.WebControls.FormControls
                 ListItem item = Items[i];
 
                 writer.RenderBeginTag(HtmlTextWriterTag.Li);
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Type, "button");
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "pseudo-icon-deletelist");
+                writer.RenderBeginTag(HtmlTextWriterTag.Button);
+
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, "hidden");
                 writer.RenderBeginTag(HtmlTextWriterTag.Span);
-
-                writer.AddAttribute(HtmlTextWriterAttribute.Alt, "Delete.");
-                writer.AddAttribute(HtmlTextWriterAttribute.Name, BuildUniqueControlName(_deleteButtonName));
-                writer.AddAttribute(HtmlTextWriterAttribute.Src, ResolveClientUrl(DeleteIconUrl));
-                writer.AddAttribute(HtmlTextWriterAttribute.Type, "image");
-                writer.AddAttribute(HtmlTextWriterAttribute.Value, i.ToString()); 
-                writer.RenderBeginTag(HtmlTextWriterTag.Input);
+                writer.Write("Delete");
                 writer.RenderEndTag();
 
                 writer.RenderEndTag();
-                writer.Write(" ");
                 writer.Write(item.Text);
+
                 writer.RenderEndTag();
             }
 
@@ -292,7 +266,7 @@ namespace NCI.Web.UI.WebControls.FormControls
             // Setup Javascript.
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
             writer.RenderBeginTag(HtmlTextWriterTag.Script);
-            writer.Write("var " + this.ClientID + this.ClientIDSeparator + string.Format(@"obj = new DeleteList(""{0}"", ""{1}"");", this.ClientID, ResolveClientUrl(DeleteIconUrl)));
+            writer.Write("$('#" + this.ClientID + "').deletelist();");
             writer.RenderEndTag();
         }
 

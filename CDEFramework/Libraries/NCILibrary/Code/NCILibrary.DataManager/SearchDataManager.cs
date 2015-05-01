@@ -6,6 +6,7 @@ using System.Text;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using NCI.Data;
 using NCI.Logging;
 
@@ -109,22 +110,43 @@ namespace NCI.DataManager
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
 
+                                    // File size and mime type are only used for file content types. If the database column 
+                                    // does not exist for the searched item (i.e. blogs), catch indexfOutOfRangeException and 
+                                    // populate the search result with default values.
+                                    try
+                                    {
+                                        searchResult.FileSize = sqlFVReader.GetInt32("item_size");
+                                        searchResult.MimeType = sqlFVReader.GetString("item_type");
+                                    }
+                                    catch (IndexOutOfRangeException e)
+                                    {
+                                        searchResult.FileSize = 0;
+                                        searchResult.MimeType = null;
+                                    }
 
-                                    DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
-                                    if (dt != DateTime.MinValue)
-                                        searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
+                                    // Keep original published/modified/reviewed values, but also compare each value
+                                    // and return the most recent of the three for use in lists.
+                                    DateTime dfp = sqlFVReader.GetDateTime("Date_first_published");
+                                    DateTime listDate = dfp;
+                                    if (dfp != DateTime.MinValue)
+                                    {
+                                        searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dfp);
+                                        searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dfp);
+                                    }
+                                    DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
+                                    if (dlm != DateTime.MinValue)
+                                        searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dlm);
+                                    if (dlm > listDate)
+                                        listDate = dlm;
 
-                                    dt = sqlFVReader.GetDateTime("Date_first_published");
-                                    if (dt != DateTime.MinValue)
-                                        searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dt);
+                                    DateTime dlr = sqlFVReader.GetDateTime("date_last_reviewed");
+                                    if (dlr != DateTime.MinValue)
+                                        searchResult.ReviewedDate = String.Format("{0:MM/dd/yyyy}", dlr);
+                                    if (dlr > listDate)
+                                        listDate = dlr;
 
-                                    dt = sqlFVReader.GetDateTime("date_last_modified");
-                                    if (dt != DateTime.MinValue)
-                                        searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dt);
-
-                                    dt = sqlFVReader.GetDateTime("date_last_reviewed");
-                                    if (dt != DateTime.MinValue)
-                                        searchResult.ReviewedDate = String.Format("{0:MM/dd/yyyy}", dt);
+                                    searchResult.DateForLists = String.Format("{0:MMMM d, yyyy}", listDate);
+                                    searchResult.DateForListsEs = listDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
 
                                     searchResults.Add(searchResult);
                                 }
@@ -246,21 +268,43 @@ namespace NCI.DataManager
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
 
-                                    DateTime dt = sqlFVReader.GetDateTime("Date_first_published");
-                                    if (dt != DateTime.MinValue)
-                                        searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dt);
+                                    // File size and mime type are only used for file content types. If the database column 
+                                    // does not exist for the searched item (i.e. blogs), catch indexfOutOfRangeException and 
+                                    // populate the search result with default values.
+                                    try
+                                    {
+                                        searchResult.FileSize = sqlFVReader.GetInt32("item_size");
+                                        searchResult.MimeType = sqlFVReader.GetString("item_type");
+                                    }
+                                    catch (IndexOutOfRangeException e)
+                                    {
+                                        searchResult.FileSize = 0;
+                                        searchResult.MimeType = null;
+                                    }
 
-									dt = sqlFVReader.GetDateTime("Date_first_published");
-                                    if (dt != DateTime.MinValue)
-                                        searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dt);
-										
-                                    dt = sqlFVReader.GetDateTime("date_last_modified");
-                                    if (dt != DateTime.MinValue)
-                                        searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dt);
+                                    // Keep original published/modified/reviewed values, but also compare each value
+                                    // and return the most recent of the three for use in lists.
+                                    DateTime dfp = sqlFVReader.GetDateTime("Date_first_published");
+                                    DateTime listDate = dfp;
+                                    if (dfp != DateTime.MinValue)
+                                    {
+                                        searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dfp);
+                                        searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dfp);
+                                    }
+                                    DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
+                                    if (dlm != DateTime.MinValue)
+                                        searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dlm);
+                                    if (dlm > listDate)
+                                        listDate = dlm;
 
-                                    dt = sqlFVReader.GetDateTime("date_last_reviewed");
-                                    if (dt != DateTime.MinValue)
-                                        searchResult.ReviewedDate = String.Format("{0:MM/dd/yyyy}", dt);
+                                    DateTime dlr = sqlFVReader.GetDateTime("date_last_reviewed");
+                                    if (dlr != DateTime.MinValue)
+                                        searchResult.ReviewedDate = String.Format("{0:MM/dd/yyyy}", dlr);
+                                    if (dlr > listDate)
+                                        listDate = dlr;
+
+                                    searchResult.DateForLists = String.Format("{0:MMMM d, yyyy}", listDate);
+                                    searchResult.DateForListsEs = listDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
 
                                     searchResults.Add(searchResult);
                                 }

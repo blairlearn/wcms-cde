@@ -24,12 +24,12 @@ namespace CancerGov.Web.UI.SnippetControls
     {
         //My Nav Here
         NavigationDisplayInfo _navItem = null;
-        
-
+        int level = 0;  // level counter for section navigation
+        Boolean pastCurrentPage = false;
         public void Page_Load(object sender, EventArgs e)
         {
             //loads the xml structure from the snippet infos
-           _navItem = NavigationDisplayInfo.ParseTree(SnippetInfo.Data);
+            _navItem = NavigationDisplayInfo.ParseTree(SnippetInfo.Data);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace CancerGov.Web.UI.SnippetControls
         public override void RenderControl(HtmlTextWriter writer)
         {
             base.RenderControl(writer);
-
+            String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
             // If the navigation item exists, go ahead and render it.  Otherwise, log an error, but
             // allow the page to render.
             if (_navItem != null)
@@ -51,19 +51,28 @@ namespace CancerGov.Web.UI.SnippetControls
                 if (_navItem.rootNavItem != null)
                 {
                     //generates the start of the html by creating a div with the class to shade the area
-                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "leftnav-shaded-box");
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "section-nav");
                     writer.RenderBeginTag(HtmlTextWriterTag.Div);
-                    writer.RenderBeginTag(HtmlTextWriterTag.H1);
+                    writer.RenderBeginTag(HtmlTextWriterTag.Ul);
+                    writer.AddAttribute(HtmlTextWriterAttribute.Class, "level-" + level + " has-children");
+                    writer.RenderBeginTag(HtmlTextWriterTag.Li);
+                    if (_navItem.rootNavItem.SectionPath.Equals(path))
+                    {
+                        writer.AddAttribute(HtmlTextWriterAttribute.Class, "current-page");
+                        pastCurrentPage = true;
+                    }
+                    writer.RenderBeginTag(HtmlTextWriterTag.Div);
                     writer.AddAttribute(HtmlTextWriterAttribute.Href, _navItem.rootNavItem.URL);
                     writer.RenderBeginTag(HtmlTextWriterTag.A);
                     writer.Write(_navItem.rootNavItem.Title);
                     writer.RenderEndTag();  //end A
-                    writer.RenderEndTag();  //end H1
+                    writer.RenderEndTag(); //end Div
 
                     //then calls the renderNavtree method with the nav item
                     RenderNavTree(_navItem.rootNavItem, writer);
-
-                    writer.RenderEndTag();  //End Div
+                    writer.RenderEndTag();//End Li
+                    writer.RenderEndTag();//End Ul
+                    writer.RenderEndTag();//End Div
                 }
             }
             else
@@ -74,61 +83,111 @@ namespace CancerGov.Web.UI.SnippetControls
 
         private void RenderNavTree(NavigationItem root, HtmlTextWriter writer)
         {
-           
+
             //calls RenderNavItem assuming there are child nodes for the root and calls it on each child
             if (root.ChildItems.Length > 0)
             {
-                
+                level++;
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                 foreach (NavigationItem item in root.ChildItems)
                 {
                     RenderNavItem(item, writer);
-            
+
                 }
                 writer.RenderEndTag();//end Ul
+                level--;
             }
-          
+
         }
 
         private void RenderNavItem(NavigationItem item, HtmlTextWriter writer)
         {
             //gets the current webpage Section path to use for comparisons
             String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
-            String liClass = "";
-            
-            // Checks the section path against the page url and determines if it needs to be selected or open
-            if(path.Equals(item.SectionPath))
-            {
-                liClass="leftnav-on";
-            }
-            else if (path.Contains(item.SectionPath))
-            {
-                liClass="leftnav-open";
-            }
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, liClass);
+            String url = PageAssemblyContext.Current.requestedUrl;
+            
+            String liClass = "";
+            String divClass = "";
+            String ariaClass = "false";
+            String[] paths = path.Split('/');
+            String file = paths[paths.Length-1];
+            String[] sectionPath = item.SectionPath.Split('/');
+            String sectionFile = sectionPath[sectionPath.Length-1];
+            Boolean isSectionPath = false;
+            String hasChildren = "";
+            // Checks the section path against the page url and determines if it needs to be selected 
+            for (int i = 0; i < paths.Length && i < sectionPath.Length; i++)
+            {
+                if (paths[i].Equals(sectionPath[i]))
+                {
+                    isSectionPath = true;
+                }
+                else
+                {
+                    isSectionPath = false;
+                    break;
+                }
+
+            }
+            if(item.ChildItems.Length>0)
+            {
+                hasChildren = " has-children";
+            }
+            if (path.Equals(item.SectionPath))
+            {
+                liClass = " contains-current";
+                if (item.URL == url)
+                {
+                    divClass = "current-page";
+                }
+                ariaClass = "true";
+                pastCurrentPage = true;
+            }
+            else if (isSectionPath && pastCurrentPage == false)
+            {
+                liClass = " contains-current";
+                ariaClass = "true";
+            }
+            
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "level-" + level + liClass + hasChildren);
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
+            if (divClass != "")
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Class, divClass);
+            }
+            writer.RenderBeginTag(HtmlTextWriterTag.Div);
             writer.AddAttribute(HtmlTextWriterAttribute.Href, item.URL);
             writer.RenderBeginTag(HtmlTextWriterTag.A);
             writer.Write(item.Title);
             writer.RenderEndTag();//end A tag
-            
+            writer.RenderEndTag();//end Div
+
             // Checks if there are children for the node and
             // then whether the section path contains the page url and then renders it if it does
             if (item.ChildItems.Length > 0)
             {
-                if (path.Contains(item.SectionPath))
+                //Taken out because of missing child items when rendering section nav on NVCG
+                if (isSectionPath && pastCurrentPage == false)
                 {
-                    writer.RenderBeginTag(HtmlTextWriterTag.Ul);
-                    foreach (NavigationItem subitem in item.ChildItems)
-                    {
-                        RenderNavItem(subitem, writer);
-                    }
-                    writer.RenderEndTag();//end ul
+                    writer.AddAttribute(HtmlTextWriterAttribute.Style, "display:block;");
                 }
+                else
+                {
+                    writer.AddAttribute(HtmlTextWriterAttribute.Style, "display:none;");
+                }
+                writer.RenderBeginTag(HtmlTextWriterTag.Ul);
+                level++;
+                foreach (NavigationItem subitem in item.ChildItems)
+                {
+                    RenderNavItem(subitem, writer);
+                }
+                writer.RenderEndTag();//end ul
+                level--;
+
             }
             writer.RenderEndTag();//end li
-            
+
         }
 
     }

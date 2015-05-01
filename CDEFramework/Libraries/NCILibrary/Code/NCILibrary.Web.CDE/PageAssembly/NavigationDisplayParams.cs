@@ -12,15 +12,15 @@ namespace NCI.Web.CDE
     /// </summary>
     public class NavigationDisplayParams
     {
-        public string CSSClasses {get; private set;}
+        public string MobileNav {get; private set;}
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="cssClass">string</param>
-        private NavigationDisplayParams(string cssClass)
+        /// <param name="mobileNav">string</param>
+        private NavigationDisplayParams(string mobileNav)
         {
-            CSSClasses = cssClass;
+            MobileNav = mobileNav;
         }
 
         /// <summary>
@@ -30,14 +30,14 @@ namespace NCI.Web.CDE
         /// <returns>Navigation Display Params</returns>
         public static NavigationDisplayParams ParseElement(XmlNode xml)
         {
-            XmlNode cssClass = xml.SelectSingleNode("./CSSClasses");
+            XmlNode mobileNav = xml.SelectSingleNode("./MobileNav");
 
-            if (cssClass == null)
+            if (mobileNav == null)
             {
-                throw new Exception("Error: CSSClasses is null");
+                throw new Exception("Error: MobileNav is null");
             }
 
-            NavigationDisplayParams result = new NavigationDisplayParams(cssClass.InnerText);
+            NavigationDisplayParams result = new NavigationDisplayParams(mobileNav.InnerXml);
             
             
             return result;

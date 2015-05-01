@@ -121,7 +121,7 @@
     <value>Buscar</value>
   </data>
   <data name="bottomResultsXofYFormatter" xml:space="preserve">
-    <value>Resultados {0}-{1} de {2}.</value>
+    <value>Resultados &lt;span class='results-range'&gt;{0}&amp;ndash;{1}&lt;/span&gt; de &lt;span class='results-num'&gt;{2}&lt;/span&gt;.</value>
   </data>
   <data name="DidYouMeanText" xml:space="preserve">
     <value>Quiz&amp;aacute;s quiso decir</value>
@@ -166,6 +166,6 @@
     <value>Resultados</value>
   </data>
   <data name="topResultsXofYFormatter" xml:space="preserve">
-    <value>Resultados {0}-{1} de {2} para:</value>
+    <value>Resultados &lt;span class='results-range'&gt;{0}&amp;ndash;{1}&lt;/span&gt; de &lt;span class='results-num'&gt;{2}&lt;/span&gt; para:</value>
   </data>
 </root>

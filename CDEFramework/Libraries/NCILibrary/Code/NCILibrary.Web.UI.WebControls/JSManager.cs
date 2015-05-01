@@ -35,9 +35,9 @@ namespace NCI.Web.UI.WebControls
                 HtmlGenericControl script = new HtmlGenericControl("script");
                 p.Header.Controls.Add(script);
 
-                script.Attributes.Add("src", p.ClientScript.GetWebResourceUrl(
-                    type,
-                    resourceName));
+                String srcUrl = p.ClientScript.GetWebResourceUrl(type, resourceName);
+
+                script.Attributes.Add("src", srcUrl);
 
                 script.Attributes.Add("type", "text/javascript");
 

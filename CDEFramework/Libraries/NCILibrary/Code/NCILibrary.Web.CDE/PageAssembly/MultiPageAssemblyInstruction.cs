@@ -512,17 +512,20 @@ namespace NCI.Web.CDE
 
                 if (PageAssemblyContext.Current.DisplayVersion != DisplayVersions.ViewAll)
                     keysList.Add("viewall");
-
                 if (AlternateContentVersions.IsShareBookmarkAvailable)
                     keysList.Add("bookmarkshare");
                 if (AlternateContentVersions.IsEmailAvailable)
                     keysList.Add("email");
                 if (AlternateContentVersions.IsMobileShareAvailable)
                     keysList.Add("mobileShare");
+                if (AlternateContentVersions.IsFontResizeAvailable)
+                    keysList.Add("fontResize");
                 if (AlternateContentVersions.IsPublicArchive)
                     keysList.Add("publicArchive");
                 if (AlternateContentVersions.IsPublicUse)
                     keysList.Add("publicUse");
+                if (!string.IsNullOrEmpty(AlternateContentVersions.SyndicationURL))
+                    keysList.Add("syndicated");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
 
@@ -848,9 +851,9 @@ namespace NCI.Web.CDE
                 if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.ViewAll)
                     currentURL += "/AllPages";
                 else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
-                    currentURL += "/Print";
+                    currentURL += "#";
                 else if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.PrintAll)
-                    currentURL += "/AllPages/Print";
+                    currentURL += "/AllPages#";
 
                 url.SetUrl(currentURL);
 
@@ -875,6 +878,22 @@ namespace NCI.Web.CDE
                 //Set Property 
                 PrettyUrl = _pages._Pages[pageIndex].PrettyUrl;
                 url.SetUrl(PrettyUrl);
+            });
+			
+			AddUrlFilter("fontResize", (name, url) =>
+            {
+                url.SetUrl(GetUrl("CurrentURL").ToString());
+                url.UriStem += "#";
+            });
+
+            AddUrlFilter("syndicated", (name, url) =>
+            {
+                string syndicationUrl = string.Empty;
+                if (!string.IsNullOrEmpty(AlternateContentVersions.SyndicationURL))
+                {
+                    syndicationUrl = AlternateContentVersions.SyndicationURL.Trim();
+                }
+                url.SetUrl(syndicationUrl, true);
             });
 
             #region MobileURL
@@ -983,7 +1002,7 @@ namespace NCI.Web.CDE
             {
                 string printURL = GetUrl("CurrentURL").ToString();
                 if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.Print)
-                    printURL += "/print";
+                    printURL += "#";
                 url.SetUrl(printURL);
             });
 
@@ -1012,7 +1031,7 @@ namespace NCI.Web.CDE
 
             AddUrlFilter("PrintAll", (name, url) =>
             {
-                url.SetUrl(GetUrl("ViewAll").ToString() + "/Print");
+                url.SetUrl(GetUrl("ViewAll").ToString() + "#");
             });
 
             #endregion

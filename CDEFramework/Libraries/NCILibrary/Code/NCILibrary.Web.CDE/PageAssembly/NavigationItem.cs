@@ -17,6 +17,8 @@ namespace NCI.Web.CDE
         public string Title { get; private set; }
         public string URL { get; private set; }
         public string SectionPath { get; private set; }
+        public string MegaMenuInfo { get; private set; }
+        public string PathName { get; private set; }
 
         /// <summary>
         /// Get the child items for this Navigation Item.
@@ -33,11 +35,13 @@ namespace NCI.Web.CDE
         /// <param name="title"></param>
         /// <param name="url"></param>
         /// <param name="sectionPath"></param>
-        private NavigationItem(string title, string url, string sectionPath)
+        private NavigationItem(string title, string url, string sectionPath, string megaMenuInfo, string pathName)
         {
             Title = title;
             URL = url;
             SectionPath = sectionPath;
+            MegaMenuInfo = megaMenuInfo;
+            PathName = pathName;
         }
         /// <summary>
         /// This parses the xml that is passed in into the structure needed to produce the html for the site
@@ -65,14 +69,16 @@ namespace NCI.Web.CDE
             XmlNode titleNode = node.SelectSingleNode("./Title");
             XmlNode urlNode = node.SelectSingleNode("./URL");
             XmlNode sectionPathNode = node.SelectSingleNode("./SectionPath");
+            XmlNode pathName = node.SelectSingleNode("./PathName");
+            XmlNode megaMenuNode = node.SelectSingleNode("./MegaMenuInfo");
 
-            if (titleNode == null || urlNode == null || sectionPathNode==null)
+            if (titleNode == null || urlNode == null || sectionPathNode == null)
             {
                 throw new Exception("Error Parsing Nodes: Title, URL and/or SectionPath are null");
             }
 
             //creates the navigation item based on the nodes above
-            NavigationItem result = new NavigationItem(titleNode.InnerText, urlNode.InnerText, sectionPathNode.InnerText);
+            NavigationItem result = new NavigationItem(titleNode.InnerText, urlNode.InnerText, sectionPathNode.InnerText, megaMenuNode.InnerXml, pathName.InnerText);
 
             //if there are children of a node it gets set here
             XmlNodeList Children = node.SelectNodes("./NavItems/NavItem");
@@ -89,11 +95,11 @@ namespace NCI.Web.CDE
                 {
                     result._items.Add(ParseTree(noder));
                 }
-            
+
             }
-                return result;
-        }   
-        
+            return result;
+        }
+
         /// <summary>
         /// no longer used
         /// </summary>

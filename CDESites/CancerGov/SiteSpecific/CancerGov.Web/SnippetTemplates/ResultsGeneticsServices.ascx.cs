@@ -26,15 +26,122 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class ResultsGeneticsServices : SearchBaseUserControl
     {
-        //protected void Page_Load(object sender, EventArgs e)
-        //{
+        protected class ResultsGeneticServicesPager
+        {
+            private int showPages = 10;
+            private int currentPage = 0;
+            private int recordsPerPage = 10;
+            private int recordCount = 0;
+            private string pageBaseUrlFormat = "javascript:page('{0}');";
 
-        //}
+            #region Properties
+
+            /// <summary>
+            /// Property sets index of current page view
+            /// </summary>
+            public int CurrentPage
+            {
+                get { return currentPage; }
+                set { currentPage = value; }
+            }
+
+            /// <summary>
+            /// Property sets number of records per page view
+            /// </summary>
+            public int RecordsPerPage
+            {
+                get { return recordsPerPage; }
+                set { recordsPerPage = value; }
+            }
+
+            /// <summary>
+            /// Property sets total number of records
+            /// </summary>
+            public int RecordCount
+            {
+                get { return recordCount; }
+                set { recordCount = value; }
+            }
+
+            public int ShowPages
+            {
+                get { return showPages; }
+                set { showPages = value; }
+            }
+
+            #endregion
+
+            /// <summary>
+            /// Default class constructor
+            /// </summary>
+            public ResultsGeneticServicesPager() { }
+
+            public ResultsGeneticServicesPager(string pageBaseUrl, int pageIndex, int pageSize, int pageCount, int itemCount)
+            {
+                this.currentPage = pageIndex;
+                this.recordCount = itemCount;
+                this.recordsPerPage = pageSize;
+                this.showPages = pageCount;
+                this.pageBaseUrlFormat = pageBaseUrl + "&first={0}&page={1}";
+            }
+
+            /// <summary>
+            /// Method that builds HTML paging constructs based on class properties
+            /// </summary>
+            /// <returns>Paging HTML links</returns>
+            public string RenderPager()
+            {
+                string result = "";
+                int startIndex = 0;
+                int endIndex = 0;
+                int pages = 0;
+
+                //Get number of pages
+                if (recordsPerPage > 0)
+                {
+                    pages = recordCount / recordsPerPage;
+                    if (recordCount % recordsPerPage > 0)
+                    {
+                        pages += 1;
+                    }
+                }
+
+                if (pages > 1)
+                {
+                    startIndex = currentPage - showPages > 0 ? currentPage - showPages : 1;
+                    endIndex = currentPage + showPages > pages ? pages : currentPage + showPages;
+
+                    for (int i = startIndex; i <= endIndex; i++)
+                    {
+                        if (currentPage != i)
+                        {
+                            result += "<li><a href=\"" + String.Format(pageBaseUrlFormat, (((i - 1) * this.recordsPerPage) + 1).ToString(), i) + "\">" + i.ToString() + "</a></li>";
+                        }
+                        else
+                        {
+                            result += "<li class='current'>" + i.ToString() + "</li>";
+                        }
+                    }
+
+                    if (currentPage > 1)
+                    {
+                        result = "<li class='previous'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage - 2) * this.recordsPerPage) + 1).ToString(), (currentPage - 1).ToString()) + "\">Previous</a></li>" + result;
+                    }
+                    if (currentPage < pages)
+                    {
+                        result += "<li class='next'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage) * this.recordsPerPage) + 1).ToString(), (currentPage + 1).ToString()) + "\">Next</a></li>";
+                    }
+
+                    result = "<div class='pagination'><ul class='no-bullets'>" + result + "</ul></div>";
+                }
+
+                return result;
+            }
+        }
                
         private string resultLabel;
         private string resultCount;
         private string searchSummary;
-        private string pager = "";
         private int firstRec;
         private int lastRec;
         private int recordsPerPage = 10;
@@ -57,7 +164,7 @@ namespace CancerGov.Web.SnippetTemplates
         {
             get { return resultCount; }
             set { resultCount = value; }
-        }
+            }
 
         /// <summary>
         /// Gets the number of records displayed per page view
@@ -75,16 +182,7 @@ namespace CancerGov.Web.SnippetTemplates
         {
             get { return searchSummary; }
             set { searchSummary = value; }
-        }
-
-        /// <summary>
-        /// Gets the HTML source for the paging construct
-        /// </summary>
-        public string Pager
-        {
-            get { return pager; }
-            set { pager = value; }
-        }
+            }
 
         /// <summary>
         /// Gets the index of the first result displayed on the page view
@@ -174,15 +272,6 @@ namespace CancerGov.Web.SnippetTemplates
 			string city = Request.Form["txtCity"];
 			string lastName = Request.Form["txtLastName"];
 
-            if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web)
-            {
-                this.textSubmit.Visible = false;
-            }
-            else
-            {
-                this.submit.Visible = false;
-            }
-
             GeneticProfessional gp = new GeneticProfessional();
             DataTable dbTable;
             dbTable = gp.GetCancerGeneticProfessionals(CancerType, CancerFamily, city, State, Country, lastName);
@@ -195,7 +284,6 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 resultLabel = "Results: 0 - 0 of " + resultCount;
                 this.submit.Visible = false;
-                this.textSubmit.Visible = false;
                 resultGrid.Visible = false;
             }
             else 
@@ -206,12 +294,12 @@ namespace CancerGov.Web.SnippetTemplates
                 firstRec = selectedPage;
                 lastRec = (selectedPage + (recordsPerPage - 1)) < Convert.ToInt32(resultCount) ? (selectedPage + (recordsPerPage - 1)) : Convert.ToInt32(resultCount);
 
-                ResultPager objPager = new ResultPager();
+                ResultsGeneticServicesPager objPager = new ResultsGeneticServicesPager();
                 objPager.CurrentPage = (selectedPage / recordsPerPage) + ((selectedPage % recordsPerPage) > 0 ? 1 : 0);
                 objPager.RecordCount = Convert.ToInt32(resultCount);
                 objPager.RecordsPerPage = recordsPerPage;
                 objPager.ShowPages = 2;
-                pager = objPager.RenderPager();
+                ulPager.Text = objPager.RenderPager();
 
                 DataTable resultPage = dbTable.Clone();
                 for (int i = firstRec - 1; i < lastRec; i++)
@@ -274,51 +362,29 @@ namespace CancerGov.Web.SnippetTemplates
         {
             string result = "";
 
-            result += "<span class=\"page-title\">" + resultCount + " cancer genetics professionals found for:</span><p>\n";
-            result += "<table cellspacing=\"0\" cellpadding=\"1\" border=\"0\" class=\"gray-border\" width=\"100%\"><tr><td>\n";
-            result += "<table cellspacing=\"0\" cellpadding=\"5\" border=\"0\" width=\"100%\" bgcolor=\"#ffffff\">\n";
-            result += "	<tr>\n";
-            result += "		<td valign=\"top\" width=\"50%\">\n";
-            result += "			<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n";
-            result += "			<tr>\n";
-            result += "				<td nowrap align=\"right\" valign=\"top\">Type of cancer:</td>\n";
-            result += "				<td>&nbsp;&nbsp;&nbsp;</td>\n";
-            result += "				<td width=\"100%\"><b>" + cancerType + "</b></td>\n";
-            result += "			</tr>\n";
-            result += "			<tr>\n";
-            result += "				<td align=\"right\" valign=\"top\" nowrap>Family Cancer Syndrome:</td>\n";
-            result += "				<td>&nbsp;</td>\n";
-            result += "				<td width=\"100%\"><b>" + cancerFamily + "</b></td>\n";
-            result += "			</tr>\n";
-            result += "			<tr>\n";
-            result += "				<td align=\"right\" nowrap valign=\"top\">Last name:</td>\n";
-            result += "				<td>&nbsp;</td>\n";
-            result += "				<td width=\"100%\" nowrap><b>" + lastName + "</b></td>\n";
-            result += "			</tr>\n";
-            result += "			</table>\n";
-            result += "		</td>\n";
-            result += "		<td valign=\"top\" width=\"50%\">\n";
-            result += "			<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\">\n";
-            result += "			<tr>\n";
-            result += "				<td align=\"right\" nowrap>City:</td>\n";
-            result += "				<td>&nbsp;&nbsp;&nbsp;</td>\n";
-            result += "				<td width=\"100%\" nowrap><b>" + city + "</b></td>\n";
-            result += "			</tr>\n";
-            result += "			<tr>\n";
-            result += "				<td align=\"right\" valign=\"top\" nowrap>State:</td>\n";
-            result += "				<td></td>\n";
-            result += "				<td width=\"100%\"><b>" + stateName + "</b></td>\n";
-            result += "			</tr>\n";
-            result += "			<tr>\n";
-            result += "				<td align=\"right\" valign=\"top\" nowrap>Country:</td>\n";
-            result += "				<td></td>\n";
-            result += "				<td width=\"100%\"><b>" + countryName + "</b></td>\n";
-            result += "			</tr>\n";
-            result += "			</table>\n";
-            result += "		</td>\n";
-            result += "</tr></table>\n";
-            result += "</td></tr></table>\n";
+            result += "<h3>" + resultCount + " cancer genetics professionals found for:</h3>\n";
+            result += "<dl class='directory-search-terms'>";
 
+            result += "<dt>Type of cancer</dt>\n";
+            result += "<dd>" + cancerType.Replace(",", "</dd><dd>") + "</dd>\n";
+
+            result += "<dt>Family Cancer Syndrome</dt>\n";
+            result += "<dd>" + cancerFamily.Replace(",", "</dd><dd>") + "</dd>\n";
+
+            result += "<dt>Last name</dt>\n";
+            result += "<dd>" + lastName + "</dd>\n";
+
+            result += "<dt>City</dt>\n";
+            result += "<dd>" + city + "</dd>\n";
+
+            result += "<dt>State:</dt>\n";
+            result += "<dd>" + stateName.Replace(",", "</dd><dd>") + "</dd>\n";
+
+            result += "<dt>Country:</dt>\n";
+            result += "<dd>" + countryName.Replace(",", "</dd><dd>") + "</dd>\n";
+
+            result += "</dl>";
+            
             return result;
         }
         

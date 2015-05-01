@@ -27,7 +27,10 @@ namespace CancerGov.Web
 
 		protected string Caption {
 			get {return caption;}
-			set {caption = value;}
+			set {
+                caption = value;
+                resultsCaption.Visible = !String.IsNullOrEmpty(caption);
+            }
 		}
 
         protected void Page_Load(object sender, System.EventArgs e)
@@ -186,12 +189,12 @@ namespace CancerGov.Web
 
                 if (results.Items.Count == 0)
                 {
-                    caption = "<b>No records matched your search criteria.</b>";
+                    Caption = "No records matched your search criteria.";
                 }
             }
             else
             {
-                caption = "";
+                Caption = "";
             }
 
         }

@@ -18,12 +18,126 @@ using CancerGov.CDR.DrugDictionary;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using NCI.Search;
+using CancerGov.Web.SnippetTemplates;
 
 namespace Www.Templates
 {
 
     public partial class drugdictionary : SnippetControl
     {
+        protected class DrugPager
+        {
+            private int showPages = 10;
+            private int currentPage = 0;
+            private int recordsPerPage = 10;
+            private int recordCount = 0;
+            private string pageBaseUrlFormat = "javascript:page('{0}');";
+
+            #region Properties
+
+            /// <summary>
+            /// Property sets index of current page view
+            /// </summary>
+            public int CurrentPage
+            {
+                get { return currentPage; }
+                set { currentPage = value; }
+            }
+
+            /// <summary>
+            /// Property sets number of records per page view
+            /// </summary>
+            public int RecordsPerPage
+            {
+                get { return recordsPerPage; }
+                set { recordsPerPage = value; }
+            }
+
+            /// <summary>
+            /// Property sets total number of records
+            /// </summary>
+            public int RecordCount
+            {
+                get { return recordCount; }
+                set { recordCount = value; }
+            }
+
+            public int ShowPages
+            {
+                get { return showPages; }
+                set { showPages = value; }
+            }
+
+            #endregion
+
+            /// <summary>
+            /// Default class constructor
+            /// </summary>
+            public DrugPager() { }
+
+            public DrugPager(string pageBaseUrl, int pageIndex, int pageSize, int pageCount, int itemCount)
+            {
+                this.currentPage = pageIndex;
+                this.recordCount = itemCount;
+                this.recordsPerPage = pageSize;
+                this.showPages = pageCount;
+                this.pageBaseUrlFormat = pageBaseUrl + "&first={0}&page={1}";
+            }
+
+            /// <summary>
+            /// Method that builds HTML paging constructs based on class properties
+            /// </summary>
+            /// <returns>Paging HTML links</returns>
+            public string RenderPager()
+            {
+                string result = "";
+                int startIndex = 0;
+                int endIndex = 0;
+                int pages = 0;
+
+                //Get number of pages
+                if (recordsPerPage > 0)
+                {
+                    pages = recordCount / recordsPerPage;
+                    if (recordCount % recordsPerPage > 0)
+                    {
+                        pages += 1;
+                    }
+                }
+
+                if (pages > 1)
+                {
+                    startIndex = currentPage - showPages > 0 ? currentPage - showPages : 1;
+                    endIndex = currentPage + showPages > pages ? pages : currentPage + showPages;
+
+                    for (int i = startIndex; i <= endIndex; i++)
+                    {
+                        if (currentPage != i)
+                        {
+                            result += "<li><a href=\"" + String.Format(pageBaseUrlFormat, (((i - 1) * this.recordsPerPage) + 1).ToString(), i) + "\">" + i.ToString() + "</a></li>";
+                        }
+                        else
+                        {
+                            result += "<li class='current'>" + i.ToString() + "</li>";
+                        }
+                    }
+
+                    if (currentPage > 1)
+                    {
+                        result = "<li class='previous'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage - 2) * this.recordsPerPage) + 1).ToString(), (currentPage - 1).ToString()) + "\">Previous</a></li>" + result;
+                    }
+                    if (currentPage < pages)
+                    {
+                        result += "<li class='next'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage) * this.recordsPerPage) + 1).ToString(), (currentPage + 1).ToString()) + "\">Next</a></li>";
+                    }
+
+                    result = "<div class='pagination'><ul class='no-bullets'>" + result + "</ul></div>";
+                }
+
+                return result;
+            }
+        }
+         
 
         protected AlphaListBox alphaListBox;
 
@@ -141,13 +255,13 @@ namespace Www.Templates
             SetupCommon();
 
             //Set is IE property to determine if browser is IE 
-            AutoComplete1.IsIE = (Request.Browser.Browser.ToUpper() == "IE" ? true : false);
+            //AutoComplete1.IsIE = (Request.Browser.Browser.ToUpper() == "IE" ? true : false);
 
             //ConfigControlls();
 
             if (Page.Request.RequestType.Equals("POST")) //This is a POST(back)
             {
-                SearchStr = Request.Params["AutoComplete1"];
+                SearchStr = Request.Params[AutoComplete1.UniqueID];
                 SearchStr = SearchStr.Replace("[", "[[]");
                 CdrID = string.Empty;
                 Expand = string.Empty;
@@ -209,8 +323,8 @@ namespace Www.Templates
             //set up pager stuff
             if (NumResults > 0 && PageAssemblyContext.Current.DisplayVersion != DisplayVersions.Print)
             {
-                ResultPager objPager = new ResultPager(DictionaryURL + PageUrl, CurrentPageIndex, PageSize, 2, NumResults);
-                PagerHtml = "<p>" + objPager.RenderPager() + "</p>";
+                DrugPager objPager = new DrugPager(DictionaryURL + PageUrl, CurrentPageIndex, PageSize, 2, NumResults);
+                PagerHtml =  objPager.RenderPager();
             }
             litPager.Text = PagerHtml;
 
@@ -248,7 +362,7 @@ namespace Www.Templates
             else
             {
                 litBackToTop.Visible = true;
-                litBackToTop.Text = "<a href=\"#top\" class=\"backtotop-link\"><img src=\"/images/backtotop_red.gif\" alt=\"Back to Top\" border=\"0\">Back to Top</a>";
+                litBackToTop.Text = "";
 
             }
         }
@@ -271,19 +385,24 @@ namespace Www.Templates
 
         private void SetupCommon()
         {
+            AutoComplete1.Attributes.Add("placeholder", "Enter keywords or phrases");
+            AutoComplete1.Attributes.Add("aria-label", "Enter keywords or phrases");
+            AutoComplete1.Attributes.Add("aria-autocomplete", "list");
+            radioStarts.InputAttributes.Add("onchange", "autoFunc();");
+            radioContains.InputAttributes.Add("onchange", "autoFunc();");
             //litSendToPrinter.Text = "Send to Printer";
 
             // This sets the url and link text for close
-            AutoComplete1.SearchURL = "/DrugDictionary.svc/SearchJSON?searchTerm=";
+            //AutoComplete1.SearchURL = "/DrugDictionary.svc/SearchJSON?searchTerm=";
 
-            radioStarts.Attributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
-            radioContains.Attributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioStarts.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioContains.InputAttributes["onclick"] = "toggleSearchMode(event, '" + AutoComplete1.ClientID + "', true)";
 
-            radioStarts.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioStarts.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioStarts.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioStarts.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
-            radioContains.Attributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
-            radioContains.Attributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
+            //radioContains.InputAttributes["onmouseover"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', true)";
+            //radioContains.InputAttributes["onmouseout"] = "keepListBox(event, '" + AutoComplete1.ClientID + "', false)";
 
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = SrcGroup.Equals("Contains");
@@ -432,7 +551,7 @@ namespace Www.Templates
                         bool chemStruct = displayName.Trim().ToLower().StartsWith("chemical structure name");
                         if (chemStruct)
                         {
-                            syn.Append("<li style=\"margin-left:-25px;\">");
+                            syn.Append("<li>");
                         }
                         syn.Append(otherName);
                         if (displayPair.Value.Count > 1 && !chemStruct)
@@ -501,14 +620,13 @@ namespace Www.Templates
             htmlT.Append("<tr><td valign=\"top\" width=\"28%\"><b>");
             htmlT.Append(dispName);
             htmlT.Append(":</b></td>");
-            htmlT.Append("<td valign=\"top\" width=\"10\"><img src=\"/images/spacer.gif\" width=\"10\" height=\"1\"  border=\"0\" alt=\"\"></td>");
 
             htmlT.Append("<td valign=\"top\" width=\"68%\">");
             if (dispName.Trim().ToLower().StartsWith("chemical structure name"))
             {
                 if (synCnt > 1)
                 {
-                    htmlT.Append("<ul style=\"margin-bottom:0px;margin-top:0px;\">");
+                    htmlT.Append("<ul>");
                     htmlT.Append(syn);
                     htmlT.Append("</ul>");
                 }
@@ -525,7 +643,6 @@ namespace Www.Templates
 
             htmlT.Append("<td valign=\"top\" width=\"10\"></td>");
             //htmlT.Append("<tr> ");
-            htmlT.Append("<tr><td valign=\"top\" colspan=\"4\"><img src=\"/images/spacer.gif\" width=\"10\" height=\"6\"  border=\"0\" alt=\"\"></td></tr>");
         }
 
         #endregion
@@ -539,7 +656,7 @@ namespace Www.Templates
         {
             radioContains.Checked = BContains;
             AutoComplete1.Text = (string.IsNullOrEmpty(Expand)) ? SearchStr.Replace("[[]", "[") : string.Empty;
-            AutoComplete1.SearchCriteria = (BContains) ? AutoComplete.SearchCriteriaEnum.Contains : AutoComplete.SearchCriteriaEnum.BeginsWith;
+            //AutoComplete1.SearchCriteria = (BContains) ? AutoComplete.SearchCriteriaEnum.Contains : AutoComplete.SearchCriteriaEnum.BeginsWith;
         }
 
         #region Utility methods

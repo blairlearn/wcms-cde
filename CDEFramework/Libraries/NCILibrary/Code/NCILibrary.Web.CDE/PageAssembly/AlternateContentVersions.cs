@@ -51,6 +51,12 @@ namespace NCI.Web.CDE
         public bool IsShareBookmarkAvailable { get; set; }
 
         /// <summary>
+        /// If true, displays font resizer on Page Options.
+        /// </summary>		
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool IsFontResizeAvailable { get; set; }
+
+        /// <summary>
         /// If true displays the mobile share "add this" box.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
@@ -70,6 +76,12 @@ namespace NCI.Web.CDE
 
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool AltLanguage { get; set; }
+
+        /// <summary>
+        /// If true displays the displays the Syndication notice.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string SyndicationURL { get; set; }
 
         /// <summary>
         /// If true displays the order copy Page Option

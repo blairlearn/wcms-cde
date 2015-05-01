@@ -358,6 +358,10 @@ namespace NCI.Web.CDE
                     keysList.Add("publicArchive");
                 if (AlternateContentVersions.IsPublicUse)
                     keysList.Add("publicUse");
+                if (AlternateContentVersions.IsFontResizeAvailable)
+                    keysList.Add("fontResize");
+                if (!string.IsNullOrEmpty(AlternateContentVersions.SyndicationURL))
+                    keysList.Add("syndicated");
                 if (!string.IsNullOrEmpty(AlternateContentVersions.OrderCopyURL))
                     keysList.Add("free");
                 //Set Alt Language URL
@@ -382,7 +386,6 @@ namespace NCI.Web.CDE
                         keysList.Add("desktopurl");
                     }
                 }
-
                 if (SocialMetadata.IsCommentingAvailable != null)
                 {
                     keysList.Add("commentsavailable");
@@ -704,7 +707,7 @@ namespace NCI.Web.CDE
                 url.SetUrl(GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString());
                 if (PageAssemblyContext.CurrentDisplayVersion == DisplayVersions.Print)
                 {
-                    url.UriStem += "/print";
+                    url.UriStem += "#";
                 }
             });
 
@@ -715,13 +718,29 @@ namespace NCI.Web.CDE
                 //If we are in the print version we do not want to generate a URL /foo/print/print
                 if (PageAssemblyContext.CurrentDisplayVersion != DisplayVersions.Print)
                 {
-                    url.UriStem += "/print";
+                    url.UriStem += "#";
                 }
+            });
+
+            AddUrlFilter("fontResize", (name, url) =>
+            {
+                url.SetUrl(GetUrl("CurrentURL").ToString());
+                url.UriStem += "#";
             });
 
             AddUrlFilter("Email", (name, url) =>
             {
                 url.SetUrl(GetEmailUrl());
+            });
+
+            AddUrlFilter("syndicated", (name, url) =>
+            {
+                string syndicationUrl = string.Empty;
+                if (!string.IsNullOrEmpty(AlternateContentVersions.SyndicationURL))
+                {
+                    syndicationUrl = AlternateContentVersions.SyndicationURL.Trim();
+                }
+                url.SetUrl(syndicationUrl, true);
             });
 
             AddUrlFilter("free", (name, url) =>

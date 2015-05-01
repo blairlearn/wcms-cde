@@ -35,10 +35,11 @@ namespace CancerGov.UI.CDR
 
             StringBuilder sbContent = new StringBuilder();
 
-            sbContent.Append("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
+            //sbContent.Append("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n");
 
             //Draw the title, everything has to have a title
-            sbContent.AppendFormat("<tr>\n<td valign=\"top\"><label for=\"cdrid{1}\"><a href=\"{0}?cdrid={1}",
+            //<label for=\"cdrid{1}\">
+            sbContent.AppendFormat("<a href=\"{0}?cdrid={1}",
                 DetailedViewPage, pProtocol.CdrId);
 
             sbContent.Append("&version=");
@@ -58,12 +59,12 @@ namespace CancerGov.UI.CDR
             sbContent.Append(" >");
     
             sbContent.Append(pProtocol.ProtocolTitle);
-            sbContent.Append("</a></label></td>\n");
-            sbContent.Append("</tr>\n");
+            sbContent.Append("</a>\n");
+            //sbContent.Append("</td></tr>\n");
 
             // The row is always rendered for spacing purposes.  The contents are dependent on the data.
-            sbContent.Append("<tr>\n");
-            sbContent.Append("<td valign=\"top\" align=\"right\"><br>\n");
+            //sbContent.Append("<tr>\n");
+            //sbContent.Append("<td valign=\"top\" align=\"right\"><br>\n");
 
             // Don't show dates if the display format is ProtocolDisplayFormats.Short
             // Don't show dates for CTGov protocols since they are usually wrong.
@@ -99,10 +100,10 @@ namespace CancerGov.UI.CDR
                 }
             }
 
-            sbContent.Append("</td>");
-            sbContent.Append("</tr>");
+            //sbContent.Append("</td>");
+            //sbContent.Append("</tr>");
 
-            sbContent.Append("</table>\n");
+            //sbContent.Append("</table>\n");
 
             return sbContent.ToString();
         }
@@ -117,8 +118,7 @@ namespace CancerGov.UI.CDR
 			bool bDrawnStudySites = false;
 			bool bWroteTrialDesc = false;
 			bool bDrawnTCI = false;
-			StringBuilder sbTmp = null;
-
+			StringBuilder sbTmp = null;          
 
 			foreach (string strSectionType in pProtocol.SectionList.Split(',')) {
 				
@@ -152,12 +152,10 @@ namespace CancerGov.UI.CDR
 								
 								if (!bDrawnTCI) { //For stupid Trial Contact Information
 									bDrawnTCI = true;
-									sbContent.Append("<p>\n");
-									sbContent.Append("<a name=\"ContactInfo_");
-									sbContent.Append(pProtocol.FullCdrId);
-									sbContent.Append("\"></a>");
-									sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
-									sbContent.Append("<p>\n");
+                                    
+                                    sbContent.Append("<h2 id=\"ContactInfo_");
+                                    sbContent.Append(pProtocol.FullCdrId);
+                                    sbContent.Append("\">Trial Contact Information</h2>\n");
 								}
 
 								sbContent.Append(sbTmp.ToString());
@@ -173,12 +171,10 @@ namespace CancerGov.UI.CDR
 							if (pProtocol.Sections.Contains(iSection)) {
 
 								if (!bWroteTrialDesc) {
-									sbContent.Append("<p>\n");
-									sbContent.Append("<a name=\"TrialDescription_");
-									sbContent.Append(pProtocol.FullCdrId);
-									sbContent.Append("\"></a>");
-									sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Description</span>\n");
-									sbContent.Append("<p>\n");	
+                                    	
+                                    sbContent.Append("<h2 id=\"TrialDescription_");
+                                    sbContent.Append(pProtocol.FullCdrId);
+                                    sbContent.Append("\">Trial Description</h2>\n");
 						
 									bWroteTrialDesc = true;
 								}
@@ -194,12 +190,11 @@ namespace CancerGov.UI.CDR
 							if ((pProtocol.Sites != null) && (pProtocol.Sites.SiteTable != null)) {
 								bDrawnStudySites = true;
 								if (!bDrawnTCI) { //For stupid Trial Contact Information
-									sbContent.Append("<p>\n");
-									sbContent.Append("<a name=\"ContactInfo_");
-									sbContent.Append(pProtocol.FullCdrId);
-									sbContent.Append("\"></a>");
-									sbContent.Append("<span class=\"Protocol-Section-Heading\">Trial Contact Information</span>\n");
-									sbContent.Append("<p>\n");
+                                    
+                                    sbContent.Append("<h2 id=\"ContactInfo_");
+                                    sbContent.Append(pProtocol.FullCdrId);
+                                    sbContent.Append("\">Trial Contact Information</h2>\n");
+
 									bDrawnTCI = true;
 								}
 

@@ -8,20 +8,20 @@
 
 <script type="text/javascript">
     var ids = {
-    checkAllTop:"<%=checkAllTop.ClientID %>"
-    ,checkAllBottom:"<%=checkAllBottom.ClientID %>"
-    ,pageSize:"<%=pageSize.ClientID %>"
-    ,OffPageSelectionsExist:"<%=OffPageSelectionsExist.ClientID%>"
-    ,customFormat:"<%=customFormat.ClientID%>"
-    ,titleFormat:"<%=titleFormat.ClientID%>"
-    ,healthProfAudience:"<%=healthProfAudience.ClientID%>"
-    ,includeLocations:"<%=includeLocations.ClientID%>"
-    ,includeEligibility:"<%=includeEligibility.ClientID%>"
-    ,descriptionFormat:"<%=descriptionFormat.ClientID%>"
-    ,DisplaySearchCriteriaCollapsed:"<%=DisplaySearchCriteriaCollapsed.ClientID%>"
+        checkAllTop: "<%=checkAllTop.ClientID %>"
+    , checkAllBottom: "<%=checkAllBottom.ClientID %>"
+    , pageSize: "<%=pageSize.ClientID %>"
+    , OffPageSelectionsExist: "<%=OffPageSelectionsExist.ClientID%>"
+    , customFormat: "<%=customFormat.ClientID%>"
+    , titleFormat: "<%=titleFormat.ClientID%>"
+    , healthProfAudience: "<%=healthProfAudience.ClientID%>"
+    , includeLocations: "<%=includeLocations.ClientID%>"
+    , includeEligibility: "<%=includeEligibility.ClientID%>"
+    , descriptionFormat: "<%=descriptionFormat.ClientID%>"
+    , DisplaySearchCriteriaCollapsed: "<%=DisplaySearchCriteriaCollapsed.ClientID%>"
     , CriteriaDisplay: "<%=CriteriaDisplay.ClientID%>"
     , advResultForm: "<%=advResultForm.ClientID%>"
-        }
+    }
 </script>
     
 
@@ -34,200 +34,206 @@
         <!-- For use by JavaScript code -->
         <asp:HiddenField ID="pageSize" runat="server" />
         <asp:HiddenField ID="OffPageSelectionsExist" runat="server" EnableViewState="false" />
-        <p class="clinical-trials-strong-text">
+        <p>
         Initial search results include only NCI-sponsored clinical trials. To search all trials, click the "REFINE SEARCH" 
         button, scroll down to the Trial ID/Sponsor section and select the "All" check box in the Sponsor of Trial section.
         </p>
         <!-- Top View Content for box -->
-        <div class="clinicaltrials-filledbox" style="width: 698px;">
-            <asp:Panel runat="server" ID="ResultsFormatControl" Style="border-bottom: 1px #bdbdbd solid;">
-                <table width="686px" cellpadding="0" cellspacing="8" border="0" style="background: #ffffff;
-                    margin: 6px;" align="center">
-                    <tr>
-                        <td valign="top" width="32%" style="border-right: 1px dotted #bdbdbd;">
-                            <span style="color: #cb060d; font-size: 14px; font-weight: bold;">View Content for:</span>
-                            <ul class="clinicaltrials-results-formatcontrols">
-                                <li>
+        <asp:Panel runat="server" ID="ResultsFormatControl">
+        <div class="row collapse ct-results-form">
+            <div class="medium-11 columns">
+                <div class="row view-content-for-container roundy-box">
+                  
+                        <div class="medium-4 columns">
+                            <strong>View Content for:</strong>
+                            <div class="radio">
                                     <asp:RadioButton runat="server" ID="patientAudience" GroupName="AudienceType" Text="Patients"
-                                        AutoPostBack="false" CssClass="black-text" /></li>
-                                <li>
+                                        AutoPostBack="false" CssClass="black-text" />
+                             </div>
+                              <div class="radio"> 
                                     <asp:RadioButton runat="server" ID="healthProfAudience" GroupName="AudienceType"
-                                        Text="Health Professionals" AutoPostBack="false" CssClass="black-text" /></li>
-                            </ul>
-                        </td>
-                        <td valign="top" width="62%" style="padding-left: 15px;">
-                            <span style="color: #cb060d; font-size: 14px; font-weight: bold;">Display:</span>
-                            <ul class="clinicaltrials-results-formatcontrols">
-                                <li>
+                                        Text="Health Professionals" AutoPostBack="false" CssClass="black-text" />
+                              </div>
+                            
+                        </div>
+                        <div class="medium-8 columns">
+                            <strong>Display:</strong>
+                            
+                                <div class="radio">
                                     <asp:RadioButton runat="server" ID="titleFormat" GroupName="DisplayFormat" Text="Title"
-                                        CssClass="black-text" /></li>
-                                <li>
+                                        CssClass="black-text" /></div>
+                                 <div class="row collapse">
+                                 <span class="radio large-5 column">
                                     <asp:RadioButton runat="server" ID="descriptionFormat" GroupName="DisplayFormat"
-                                        Text="Description with:" CssClass="black-text" />
-                                    &nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox runat="server" ID="includeLocations" Text="Locations"
-                                        CssClass="black-text" />
-                                    &nbsp;&nbsp;&nbsp;&nbsp;<asp:CheckBox runat="server" ID="includeEligibility" Text="Eligibility"
-                                        CssClass="black-text" />
-                                </li>
-                                <li>
-                                    <asp:RadioButton runat="server" ID="fullDescriptionFormat" GroupName="DisplayFormat"
-                                        Text="Full Trial Description" CssClass="black-text" /></li>
-                                <li>
-                                    <asp:RadioButton runat="server" ID="customFormat" GroupName="DisplayFormat" Text="Custom"
-                                        CssClass="black-text" /></li>
-                            </ul>
+                                        Text="Description with:" CssClass="black-text" /></span>
+                                    <span class="large-7 column left">
+                                    <span class="checkbox"><asp:CheckBox runat="server" ID="includeLocations" Text="Locations"
+                                        CssClass="black-text" /></span>
+                                    <span class="checkbox"><asp:CheckBox runat="server" ID="includeEligibility" Text="Eligibility"
+                                        CssClass="black-text" /></span>
+                                      </span>
+                                </div>
+                                 <div class="radio"><asp:RadioButton runat="server" ID="fullDescriptionFormat" GroupName="DisplayFormat"
+                                    Text="Full Trial Description" CssClass="black-text" /></div>
+                            
+                                 <div class="radio"><asp:RadioButton runat="server" ID="customFormat" GroupName="DisplayFormat" Text="Custom"
+                                    CssClass="black-text" /></div>
+                            
 
                             <script type="text/javascript">
-                                document.observe("dom:loaded", function() {
-                                    Event.observe($("<% =patientAudience.ClientID%>"), "click", AudienceType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =healthProfAudience.ClientID%>"), "click", AudienceType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =titleFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =descriptionFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =fullDescriptionFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =customFormat.ClientID%>"), "click", FormatType_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =includeLocations.ClientID%>"), "click", DescriptionSubtype_clickhandler.bindAsEventListener(this));
-                                    Event.observe($("<% =includeEligibility.ClientID%>"), "click", DescriptionSubtype_clickhandler.bindAsEventListener(this));
+                                $(document).ready(function() {
+                                    $("#<% =patientAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler(e) });
+                                    $("#<% =healthProfAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler(e) });
+                                    $("#<% =titleFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
+                                    $("#<% =descriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
+                                    $("#<% =fullDescriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
+                                    $("#<% =customFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
+                                    $("#<% =includeLocations.ClientID%>").on("click", function(e) { DescriptionSubtype_clickhandler(e) });
+                                    $("#<% =includeEligibility.ClientID%>").on("click", function(e) { DescriptionSubtype_clickhandler(e) });
                                 });
                             </script>
-
-                        </td>
-                        <td valign="top" width="6%" align="right">
-                            <a target="new" href="<% =SearchHelpPrettyUrl %>/page3#1">
-                                <img src="/images/ctsearch/gray-question.gif" alt="Help with display options." width="15"
-                                    height="15" style="margin-bottom: 70px;" /></a>
-                            <asp:ImageButton ID="UpdateAudienceAndDisplay" runat="server" ImageUrl="/images/ctsearch/go-btn-red.gif"
-                                Width="24" Height="15" AlternateText="Go" OnClick="UpdateAudienceAndDisplay_Click" />
-                        </td>
-                    </tr>
-                </table>
-            </asp:Panel>
-            <div style="padding: 6px;">
-                <strong>
-                    <asp:Literal ID="ResultsCountText" runat="server" /></strong>
-            </div>
+                            <div style="float: right">
+                            <asp:Button ID="UpdateAudienceAndDisplay" runat="server"
+                                CssClass="submit button" Text="Go" AlternateText="Go" OnClick="UpdateAudienceAndDisplay_Click" />
+                             </div>
+                        </div>
+                        
+                  
+                </div>
+                 </div>      
+            
+             <div class="medium-1 columns ct-results-help">
+                  <a class="text-icon-help" aria-label="Help" target="new" href="/clinicaltrials/search-form-help/page3#1">?</a>
+                 </div> 
         </div>
+        </asp:Panel>
+        <div class="search-criteria-box roundy-box">
+        
+         <div id="hideCriteriaLink" class="hide-criteria-link">
+            <a href="javascript:toggleSearchCriteria()">Hide
+                Search Criteria</a></div>
+        <div id="showCriteriaLink" class="show-criteria-link">
+            <a href="javascript:toggleSearchCriteria()">Show
+                Search Criteria</a></div>
+
+        <div>
+            <cgov:ctsearchcriteriadisplay runat="server" id="CriteriaDisplay" cssclass="clinicaltrials-results-criteria-display" />
+        </div>
+        <asp:HiddenField ID="DisplaySearchCriteriaCollapsed" runat="server" />
+         <script type="text/javascript" language="javascript">
+             $(document).ready(function() { SetSearchCriteriaDisplay(); });
+		</script>
+        
+       </div>
+       
+                <h5>
+                    <asp:Literal ID="ResultsCountText" runat="server" /></h5>
+            
         <!-- Top View Content For box -->
         <asp:Panel ID="NoResultsMessage" Visible="false" runat="server">
             <p>
                 There were no clinical trials that matched the search criteria that you entered.
                 Remember that the more criteria you enter, the fewer results you are likely to get.</p>
         </asp:Panel>
-        <div style="width: 100%;">
-            <cgov:ctsearchcriteriadisplay runat="server" id="CriteriaDisplay" cssclass="clinicaltrials-results-criteria-display" />
-        </div>
-        <asp:HiddenField ID="DisplaySearchCriteriaCollapsed" runat="server" />
-        <div id="hideCriteriaLink" style="display: none; padding: 0px 8px 0px;">
-            <a class="clinicaltrials-collapseLink" href="javascript:toggleSearchCriteria()">Hide
-                Search Criteria</a></div>
-        <div id="showCriteriaLink" style="display: none; padding: 8px 8px 0px;">
-            <a class="clinicaltrials-expansionLink" href="javascript:toggleSearchCriteria()">Show
-                Search Criteria</a></div>
-
-        <script type="text/javascript" language="javascript">            document.observe("dom:loaded", function() { SetSearchCriteriaDisplay(); });</script>
-
-        <div class="clinicaltrials-results-action-controls">
-            <div style="float: left;">
-                <asp:ImageButton ID="TopPrintButton" class="action-button" runat="server" AlternateText="Print Selected"
-                    Width="89" Height="15" ImageUrl="/images/ctsearch/btn-print-selected-red.gif"
-                    OnClick="DisplayForPrint_ClickHandler" />
-                <input id="refineSearch1" class="action-button" runat="server" alt="Refine Search"
-                    border="0" height="15" width="85" onserverclick="refineSearch_ServerClick" src="/images/ctsearch/btn-refine-search-gray.gif"
-                    type="image" />
+        
+            <div class="ct-results-top-search-options">
+                <asp:Button ID="TopPrintButton" class="action button" runat="server" AlternateText="Print Selected" Text="Print Selected" OnClick="DisplayForPrint_ClickHandler" />
+                <input id="refineSearch1" class="action button" runat="server" alt="Refine Search"
+                    value="Refine Search" onserverclick="refineSearch_ServerClick"
+                    type="submit" />
 
                 <script type="text/javascript">
-                    document.observe("dom:loaded", function() {
-                        if ($("<% =TopPrintButton.ClientID %>") != null)
-                            Event.observe($("<% =TopPrintButton.ClientID %>"), "click", submitPrint_ClickHandler.bindAsEventListener(this));
+                    $(document).ready(function() {
+                        if ($("#<% =TopPrintButton.ClientID %>").length > 0)
+                            $("#<% =TopPrintButton.ClientID%>").on("click", function(e) { submitPrint_ClickHandler() });
                     });
                 </script>
 
-                <a id="newSearch1" href="<% =SearchPageInfo.SearchPagePrettyUrl %>">
-                    <img alt="Start Over" border="0" height="15" width="70" src="/images/CTSearch/grey_start_over_btn.gif" /></a>
+                <a id="newSearch1" href="<% =SearchPageInfo.SearchPagePrettyUrl %>" class="reset startover button">
+                    Start Over</a>
             </div>
-            <div style="float: right;">
-                <a target="new" href="<% =SearchHelpPrettyUrl %>/page3">Help with Results</a>
-            </div>
-            <div style="clear: both;">
-            </div>
-        </div>
-        <asp:Panel ID="topControlArea" runat="server" CssClass="clinicaltrials-filledbox"
-            Style="width:682px; color: #000000; font-weight: bold; padding: 8px 8px 8px 8px;">
-            <span style="float: left;">
-                <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllTop" Text="Select All on Page" onclick="checkAll_ClickHandler(this)" />
+           
+            
+        <asp:Panel ID="topControlArea" runat="server" CssClass="ct-results-top-control">
+           
+           <span class="checkbox ct-results-select-all">
+            
+                <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllTop" Text="<strong>Select All on Page</strong>" onclick="checkAll_ClickHandler(this)" />
+               
 
-<%--                <script type="text/javascript">
+<%--            // TODO: Commented out Prototype script - do we still need this?
+                <script type="text/javascript">
                     document.observe("dom:loaded", function() {
                         if ($("<%=checkAllTop.ClientID %>") != null)
                             Event.observe($("<%=checkAllTop.ClientID %>"), "click", checkAll_ClickHandler.bindAsEventListener(this));
                     });
                 </script>
 --%>
-                &nbsp;&nbsp;
+              </span> 
+               <span class="ct-results-sort">
                 <label for="<%=sortOrder.ClientID%>">
-                    Sort by:</label>&nbsp;
+                    <strong>Sort by:</strong></label>
                 <asp:DropDownList ID="sortOrder" runat="server" AutoPostBack="false">
                 </asp:DropDownList>
-                &nbsp;&nbsp; Show
+                </span>
+                 <span class="ct-results-show">
+                 <label><strong>Show</strong></label>
                 <asp:DropDownList ID="resultsPerPage" runat="server" AutoPostBack="false">
                 </asp:DropDownList>
                 <label for="<%=resultsPerPage.ClientID%>">
-                    Results per Page</label>
-            </span><span style="float: right; margin-top: 4px;">
-                <asp:ImageButton ID="ImageButton1" runat="server" ImageUrl="/images/ctsearch/go-btn-red.gif"
-                    Width="24" Height="15" AlternateText="Go" OnClick="UpdateSortOrderAndPageSize_Click" />
-            </span>
-            <div style="clear: both;">
-            </div>
+                     <strong>Results per Page</strong></label>
+                </span>
+                 <span class="ct-results-go">
+                <asp:Button ID="Button1" runat="server" CssClass="submit button"
+                    AlternateText="Go" Text="Go" OnClick="UpdateSortOrderAndPageSize_Click" />
+               </span>
+           
+            
+            
+ 
         </asp:Panel>
         <asp:Literal runat="server" ID="ProtocolContent" EnableViewState="false" />
-        <asp:Panel ID="lowerControlArea" runat="server" CssClass="clinicaltrials-filledbox"
-            Style="padding: 8px;">
-            <div style="float: left;">
-                <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllBottom" CssClass="black-text-b"
-                    Text="Select All on Page" onclick="checkAll_ClickHandler(this)" />
+        <asp:Panel ID="lowerControlArea" runat="server" CssClass="ct-results-lower-control">
+            <span class="checkbox">
+                <asp:CheckBox EnableViewState="false" runat="server" ID="checkAllBottom"
+                    Text="<strong>Select All on Page</strong>" onclick="checkAll_ClickHandler(this)" />
 
- <%--               <script type="text/javascript">
+<%--             // TODO: Commented out Prototype script - do we still need this?
+                 <script type="text/javascript">
                     document.observe("dom:loaded", function() {
                         if ($("<% =checkAllBottom.ClientID %>") != null)
                             Event.observe($("<% =checkAllBottom.ClientID %>"), "click", checkAll_ClickHandler.bindAsEventListener(this));
                     });
-                </script>
+                 </script>
 --%>
-            </div>
-            <div style="float: right;">
-                <cgov:postbackbuttonpager id="pager" runat="server" cssclass="clinicaltrials-pager"
+            </span>
+            
+                <cgov:postbackbuttonpager id="pager" runat="server" cssclass="pagination"
                     onpagechanged="PageChanged" shownumpages="3">
                                             <PagerStyleSettings NextPageText="Next &gt;" PrevPageText="&lt; Prev" />
                                         </cgov:postbackbuttonpager>
-            </div>
-            <div style="clear: both;">
-            </div>
+           
+            
         </asp:Panel>
-        <asp:Panel ID="BottomActionControls" runat="server" CssClass="clinicaltrials-results-action-controls">
-            <div style="float: left;">
-                <asp:ImageButton ID="BottomPrintButton" class="action-button" runat="server" AlternateText="Print Selected"
-                    Width="89" Height="15" ImageUrl="/images/ctsearch/btn-print-selected-red.gif"
-                    OnClick="DisplayForPrint_ClickHandler" />
-                <input id="refineSearch" class="action-button" runat="server" alt="Refine Search"
-                    border="0" height="15" width="85" onserverclick="refineSearch_ServerClick" src="/images/ctsearch/btn-refine-search-gray.gif"
-                    type="image" />
+        <asp:Panel ID="BottomActionControls" runat="server" CssClass="ct-results-bottom-action">
+            
+                <asp:Button ID="BottomPrintButton" class="action button" runat="server" AlternateText="Print Selected" Text="Print Selected" OnClick="DisplayForPrint_ClickHandler" />
+                <input id="refineSearch" class="action button" runat="server" alt="Refine Search"
+                    value="Refine Search" onserverclick="refineSearch_ServerClick"
+                    type="submit" />
 
                 <script type="text/javascript">
-                    document.observe("dom:loaded", function() {
-                        if ($("<%=BottomPrintButton.ClientID%>") != null)
-                            Event.observe($("<%=BottomPrintButton.ClientID%>"), "click", submitPrint_ClickHandler.bindAsEventListener(this));
+                    $(document).ready(function() {
+                        if ($("#<%=BottomPrintButton.ClientID%>").length > 0)
+                            $("#<% =BottomPrintButton.ClientID%>").on("click", function(e) { submitPrint_ClickHandler() });
                     });
                 </script>
 
 
-                <a id="newSearch" href="<% =SearchPageInfo.SearchPagePrettyUrl %>">
-                    <img alt="New Search" border="0" height="15" width="70" src="/images/grey_start_over_btn.gif" /></a>
-            </div>
-            <div style="float: right;">
-                <a target="new" href="<% =SearchHelpPrettyUrl %>/page3">Help with Results</a>
-            </div>
-            <div style="clear: both;">
-            </div>
+                <a id="newSearch" href="<% =SearchPageInfo.SearchPagePrettyUrl %>" class="reset startover button">
+                    Start Over</a>
+            
+           
         </asp:Panel>
     </asp:Panel>
     <!--start new form footnote-->

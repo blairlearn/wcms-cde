@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN">
 <HTML>
   <HEAD id="header" runat="server">
-	<TITLE>E-Mail This Document - National Cancer Institute</TITLE>
+	<TITLE><%=BrowserTitle%></TITLE>
 		<script type="text/javascript">
 		    var callingUrl = opener.location.href;
 		</script>

@@ -22,7 +22,7 @@ namespace TCGA.Web.Common.PopUps
         private IRenderer content;
         protected string strSendPrinter = "Send to Printer";
         //protected string strHeading = "<h3 class='popup-definition'>Definition from NCI's Dictionary of Cancer Terms</h3>";
-        protected string strHeading = "<h3 class='popup-definition'>Definition:</h3>";
+        protected string strHeading = "<div class=\"heading\">Definition:</div>";
         #region Page properties
 
         public IRenderer Content
@@ -153,10 +153,21 @@ namespace TCGA.Web.Common.PopUps
                 strSendPrinter = "Imprima esta página";
                 pronunciation = String.Empty;
                 //strHeading = "<h3 class='popup-definition'>Definición del Diccionario de cáncer del NCI</h3>";
-                strHeading = "<h3 class='popup-definition'>Definición:</h3>";
+                strHeading = "<div class=\"heading\">Definición:</div>";
             }
 
-            content = new HtmlSegment(String.Format("<span class=\"black-text-b\">{0}</span>", term) + ((Strings.Clean(pronunciation) != null) ? " " + pronunciation : "") + "<p>" + termDefinition + "<p>" + mediaHtml);
+            content = new HtmlSegment("<div class=\"audioPronounceLink\">" 
+                + String.Format("<span class=\"term\">{0}</span>", term) 
+                + String.Format("<span class=\"pronunciation\">{0}</span>", ((Strings.Clean(pronunciation) != null) ? " " + pronunciation : "")) 
+                + "</div>" 
+                + String.Format("<div class=\"definition\">{0}</div>", termDefinition) 
+                + String.Format("<div class=\"definitionImage\">{0}</div>", mediaHtml)
+                );
+                
+                
+                
+                
+                //String.Format("<span class=\"black-text-b\">{0}</span>", term) + ((Strings.Clean(pronunciation) != null) ? " " + pronunciation : "") + "<p>" + termDefinition + "<p>" + mediaHtml);
 
         }
 

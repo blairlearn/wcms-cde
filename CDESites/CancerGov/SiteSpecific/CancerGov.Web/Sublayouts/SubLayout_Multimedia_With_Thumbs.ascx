@@ -1,4 +1,21 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SubLayoutControl" %>
-<NCI:TemplateSlot ID="nvcgSlLayoutMultimediaA" runat="server" />
-<NCI:TemplateSlot ID="nvcgSlLayoutFeatureB" runat="server" />
-<NCI:TemplateSlot ID="TnvcgSlLayoutThumbnailA" runat="server" />
+<!-- BEGIN MULTIMEDIA, SECONDARY FEATURE ROW -->
+<div class="multimedia-slot">
+    <div class="row multimedia" data-match-height="">
+        <NCI:TemplateSlot
+            id="nvcgSlLayoutMultimediaA"
+            CssClass="equalheight small-8 columns card"
+            runat="server" />
+        <NCI:TemplateSlot
+            id="nvcgSlLayoutFeatureB"
+            CssClass="equalheight small-4 columns card"
+            runat="server" />
+    </div>
+</div>
+<!-- BEGIN THUMBNAIL SECTION -->
+<NCI:TemplateSlot
+    id="nvcgSlLayoutThumbnailA"
+    CssClass="row card-thumbnail"
+    runat="server"
+     />
+<!-- END THUMBNAIL SECTION -->
