@@ -70,7 +70,9 @@ function CreateCheckboxMirror(boxA, boxB) {
 }
 
 function UpdateCheckboxReflection(src, mirror) {
-    mirror.checked = src.checked;
+    var sourceBox = $(src);
+    var mirrorBox = $(mirror);
+    mirrorBox.prop('checked', sourceBox.prop('checked'));
 }
 
 // Click handler for change of audience.

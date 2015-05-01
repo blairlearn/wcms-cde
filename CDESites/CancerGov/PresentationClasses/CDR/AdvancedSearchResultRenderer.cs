@@ -80,7 +80,6 @@ namespace CancerGov.UI.CDR
             {
 
                 // Create JavaScript code to reveal and initialize mirror checkboxes.
-                StringBuilder sbCdrids = new StringBuilder();
                 isFirstProtocol = true;
 
                 sbContent.Append("<script type=\"text/javascript\">\n$(document).ready(function() {\n");
@@ -89,7 +88,7 @@ namespace CancerGov.UI.CDR
                 sbContent.Append("$('.cdrid_mirror_row').show();\n");
 
                 // Join the checkboxes to their mirrors
-                sbContent.Append("$('.cdridbox').each(function(item){CreateCheckboxMirror('cdrid' + item.value, 'cdrid_mirror' + item.value);});\n");
+                sbContent.Append("$('.cdridbox').each(function(item){CreateCheckboxMirror('#cdrid' + this.value, '#cdrid_mirror' + this.value);});\n");
 
                 sbContent.Append("});\n</script>\n");
             }

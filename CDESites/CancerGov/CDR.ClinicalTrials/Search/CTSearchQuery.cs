@@ -86,10 +86,8 @@ namespace CancerGov.CDR.ClinicalTrials.Search
 
             #region Conversion from m.tier to proc inputs
 
-            // Convert trial status to Y for Open/Active, N for Closed/Inactive
+            // Convert trial status to Y for Open/Active.  Closed/Inactive has been removed.
             string trialStatusFlag = "Y";
-            if (trialStatus == TrialStatusType.ClosedOnly)
-                trialStatusFlag = "N";
 
             // Convert drugname match to OR/AND formula
             string drugSearchFormula = "OR";

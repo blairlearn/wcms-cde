@@ -270,8 +270,8 @@ namespace CancerGov.Web.SnippetTemplates
                 definition.LocationCountry = country;
             }
 
-            definition.TrialStatusRestriction =
-                closedTrialsOnly ? TrialStatusType.ClosedOnly : TrialStatusType.OpenOnly;
+            // Force trial status to always be open.
+            definition.TrialStatusRestriction = TrialStatusType.OpenOnly;
 
             definition.RestrictToRecent = newTrialsOnly;
 

@@ -426,17 +426,13 @@ namespace CancerGov.UI.CDR
                 sbContent.Append("<tr>");
                 sbContent.Append("<th>Phase</th>");
                 sbContent.Append("<th>Type</th>");
-                sbContent.Append("<th>Status</th>");
                 sbContent.Append("<th>Age</th>");
-                sbContent.Append("<th>Sponsor</th>");
                 sbContent.Append("<th>Protocol IDs</th>");
                 sbContent.Append("</tr>");
                 sbContent.AppendFormat("<tr>");
                 sbContent.AppendFormat("<td>{0}</td>", pProtocol.Phase);
                 sbContent.AppendFormat("<td>{0}</td>", pProtocol.TrialType);
-                sbContent.AppendFormat("<td>{0}</td>", pProtocol.CurrentStatus);
                 sbContent.AppendFormat("<td>{0}</td>", pProtocol.AgeRange);
-                sbContent.AppendFormat("<td>{0}</td>", pProtocol.TrialSponsor.Replace("/", " / "));
                 sbContent.AppendFormat("<td><strong>{0}</strong><br>{1}</td>", pProtocol.PrimaryProtocolID, pProtocol.AlternateProtocolIDs);
                 sbContent.AppendFormat("</tr>");
                 sbContent.Append("</table>");
@@ -458,9 +454,7 @@ namespace CancerGov.UI.CDR
                 sbContent.Append("<div>\n");
                 sbContent.AppendFormat(InfoBoxFormat, "Phase", pProtocol.Phase);
                 sbContent.AppendFormat(InfoBoxFormat, "Type", pProtocol.TrialType);
-                sbContent.AppendFormat(InfoBoxFormat, "Status", pProtocol.CurrentStatus);
                 sbContent.AppendFormat(InfoBoxFormat, "Age", pProtocol.AgeRange);
-                sbContent.AppendFormat(InfoBoxFormat, "Sponsor", pProtocol.TrialSponsor.Replace("/", " / "));
                 sbContent.AppendFormat(InfoBoxFormat, "Protocol IDs", protocolList);
                 sbContent.Append("</div>\n");
             }
