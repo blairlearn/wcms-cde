@@ -18,7 +18,6 @@ namespace CancerGov.Web
 	/// </summary>
     public partial class CTLookupSearch : CTLookupBase
 	{
-		private string title = "";
 		private string inputKeyword;
 		private string inputAlphaIndex;
 		private string alphaIndexLinks;
@@ -32,10 +31,7 @@ namespace CancerGov.Web
 			set {caption = value;}
 		}
 
-		public string Title {
-			get {return title;}
-			set {title = value;}
-		}
+		public new string Title {get;set;}
 
 		public string InputKeyword {
 			get {return inputKeyword;}
@@ -71,7 +67,7 @@ namespace CancerGov.Web
             ValidateValidValues(Title, new ArrayList { "find+hospitals/institutions", 
                 "find+drug", "treatment/intervention", "find+trial+investigators", "find+lead+organizations" });
 
-			title = Strings.IfNull(Strings.Clean(Request.Params["title"]), "");
+			Title = Strings.IfNull(Strings.Clean(Request.Params["title"]), "");
 			inputKeyword = Strings.IfNull(Strings.Clean(Request.Params["keyword"]), "");
 			inputAlphaIndex = Strings.IfNull(Strings.Clean(Request.Params["alphaIndex"]), "");
 			string fld = Strings.IfNull(Strings.Clean(Request.Params["fld"]), "");
@@ -88,8 +84,8 @@ namespace CancerGov.Web
                     textInputPrompt = "Enter Hospital/Institution Name";
                     break;
 				case "leadorg":
-                    caption = "See a list of lead organizations and cooperative groups that can be used in your clinical trials search by browsing the alphabetical list or by entering a lead organization or cooperative group name in the search box. You can select multiple trial lead organizations and cooperative groups by checking the box next to each name and using the <b>Add Selected</b> button.";
-                    textInputPrompt = "Enter Lead Organization/Cooperative Group Name";
+                    caption = "See a list of lead organizations that can be used in your clinical trials search by browsing the alphabetical list or by entering a lead organization name in the search box. You can select multiple trial lead organizations by checking the box next to each name and using the <b>Add Selected</b> button.";
+                    textInputPrompt = "Enter Lead Organization Name";
                     break;
 				case "investigator":
                     caption = "See a list of trial investigators that can be used in your clinical trials search by browsing the alphabetical list or by entering an investigator name in the search box. You can select multiple trial investigators by checking the box next to each name and using the <b>Add Selected</b> button.";

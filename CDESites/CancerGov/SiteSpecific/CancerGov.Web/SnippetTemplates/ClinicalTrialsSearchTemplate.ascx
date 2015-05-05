@@ -495,7 +495,7 @@
             <div id="legend-trialsponsor" class="large-4 small-11 columns legend">Trial ID/Organizations</div>
             <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>/page2#6" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
-                Search by protocol ID, investigators, lead organization/cooperative group, or special category
+                Search by protocol ID, investigators, lead organization, or special category
                 <div id="showTrialSponsorSearchOptionsButton" class="show-criteria-link" style="display: none;">
                     <a class="clinicaltrials-expansionLink" href="javascript:showTrialSponsorSearchOptions()">
                         Show Search Options</a></div>
@@ -537,13 +537,13 @@
                 </div>
             </div>        
             <div id="trialLeadOrganizationRow" runat="server" class="row">
-                <div class="large-4 columns"><label class="field">Lead Organization/ Cooperative Group</label></div>
+                <div class="large-4 columns"><label class="field">Lead Organization</label></div>
                 <div class="large-7 left columns">
                     <div id="showLeadOrgListButtonArea" style="display: none;">
                         <button id="showLeadOrgListButton" class="action">Choose From List</button></div>
                     <asp:HiddenField runat="server" ID="leadOrgListExpanded" value="N"/>
                     <div id="leadOrgListSubBox">
-                        Lead Organizations or Cooperative Groups Selected:
+                        Lead Organizations Selected:
                         <input id="leadOrgid" type="hidden" size="18" name="leadOrgid" runat="server" />
                         <cancergov:deletelist id="leadOrg" 
                             runat="server" emptylisttext="Select &quot;Add More&quot; to see lead organization names." />
