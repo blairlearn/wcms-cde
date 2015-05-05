@@ -60,38 +60,47 @@ namespace NCI.Web.CDE.UI
        
         protected override void RenderContents(HtmlTextWriter writer)
         {
-            if (String.IsNullOrEmpty(this.FieldName))
-                throw new ArgumentException("Property FieldName cannot be null or empty.");
+            try
+            {
+                if (String.IsNullOrEmpty(this.FieldName))
+                    NCI.Logging.Logger.LogError("CDEField", "CDEField cannot be null or empty", NCI.Logging.NCIErrorLevel.Warning);
 
-            string DesiredField = null;
+                string DesiredField = null;
 
-            if (this.Scope == CDEFieldScope.Page)
+                if (this.Scope == CDEFieldScope.Page)
                     DesiredField = PageAssemblyContext.Current.PageAssemblyInstruction.GetField(this.FieldName);
 
-            if (this.Scope == CDEFieldScope.Snippet)
-            {
-                Control parent = this.Parent;
-                while (parent != null)
+                if (this.Scope == CDEFieldScope.Snippet)
                 {
-                    if (parent is SnippetControl)
+                    Control parent = this.Parent;
+                    while (parent != null)
                     {
-                        DesiredField = ((SnippetControl)parent).GetField(this.FieldName);
-                        break;
-                    }
-                    else
-                    {
-                        parent = parent.Parent;
+                        if (parent is SnippetControl)
+                        {
+                            DesiredField = ((SnippetControl)parent).GetField(this.FieldName);
+                            break;
+                        }
+                        else
+                        {
+                            parent = parent.Parent;
+                        }
                     }
                 }
+
+                if (DesiredField != null)
+                {
+                    writer.Write(DesiredField);
+                }
+                else
+                {
+                    writer.Write("");
+                }
             }
-            
-            if (DesiredField != null)
+            catch
             {
-                writer.Write(DesiredField);
-            }
-            else
-            {
-                writer.Write("");
+                // On the chance that the page- or snippet-level field is incorrect or missing, this catches the error,
+                // logs the error, and ignores the exception.
+                NCI.Logging.Logger.LogError("CDEField", "CDEField cannot be null or empty", NCI.Logging.NCIErrorLevel.Warning);
             }
         }
     }
