@@ -89,7 +89,7 @@ namespace NCI.Web.UI.WebControls.FormControls
                     RenderCriterion(writer, "Added in last 30 days?", "Yes");
                 RenderCriterion(writer, "Protocol ID", criteria.SpecificProtocolIDList);
                 RenderCriterion(writer, "Trial Investigators", criteria.InvestigatorList);
-                RenderCriterion(writer, "Lead Organization/Cooperative Group", criteria.LeadOrganizationList);
+                RenderCriterion(writer, "Lead Organization", criteria.LeadOrganizationList);
             }
         }
 
