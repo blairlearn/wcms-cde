@@ -205,7 +205,7 @@
         </div>
         <div class="row">
             <div class="large-4 columns">
-                <label class="field">Type/Condition</label>
+                <label class="field" for="<%= ddlCancerType.ClientID %>">Type/Condition</label>
             </div>
             <div class="large-7 left columns">
                  <asp:DropDownList 
@@ -222,7 +222,7 @@
                 
         <div class="row">
             <div class="large-4 columns">
-                <label class="field">Stage/Subtype</label>
+                <label class="field" for="<%= cancerStage.ClientID %>">Stage/Subtype</label>
             </div>
             <div class="large-7 left columns">
                 <CancerGov:AccessibleCheckBoxList 
