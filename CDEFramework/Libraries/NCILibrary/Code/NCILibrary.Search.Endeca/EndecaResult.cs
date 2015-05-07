@@ -33,9 +33,13 @@ namespace NCI.Search.Endeca
 			get { return url; }
 		}
 
+        /// <summary>
+        /// The url of the record, trimmed
+        /// Displayed under each sitewide search result
+        /// </summary>
 		public string DisplayUrl 
 		{
-			get { return Strings.Wrap((Strings.Clean(url)), 85, "\n"); }
+			get { return (Strings.Clean(url)); }
 		}
 
 		/// <summary>
