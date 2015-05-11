@@ -479,7 +479,7 @@
             </div>
             <div class="row">
                 <div class="large-4 columns"><label class="field">New Trials?</label></div>
-                <div class="large-7 left columns"><div class="checkbox"><asp:CheckBox ID="newOnly" runat="server" Text="Added in last 30 days" /></div></div>
+                <div class="large-7 left columns"><div class="checkbox"><asp:CheckBox ID="newOnly" runat="server" Text="Only include trials added in last 30 days." /></div></div>
             </div>        
         </div>
         
@@ -492,10 +492,10 @@
     <%-- ................... Trial ID/Sponsor ....................... --%>
     <fieldset aria-labelledby="legend-trialsponsor">
         <div class="row">
-            <div id="legend-trialsponsor" class="large-4 small-11 columns legend">Trial ID/Organizations</div>
+            <div id="legend-trialsponsor" class="large-4 small-11 columns legend">Trial Investigators / Lead Organization</div>
             <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>/page2#6" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
-                Search by protocol ID, investigators, lead organization, or special category
+                Search by trial investigators or lead organization
                 <div id="showTrialSponsorSearchOptionsButton" class="show-criteria-link" style="display: none;">
                     <a class="clinicaltrials-expansionLink" href="javascript:showTrialSponsorSearchOptions()">
                         Show Search Options</a></div>
@@ -505,9 +505,9 @@
         <div id="trialSponsorArea" class="collapsible">
             <div>
                 <div class="row">
-                    <div class="large-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID" CssClass="field" >Protocol ID</asp:Label></div>
+                    <div class="large-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID" CssClass="field" >Trial ID</asp:Label></div>
                     <div class="large-7 left columns">
-                        <div class="row">Separate multiple IDs with commas or semicolon</div>
+                        <div class="row">Search by trial ID. Separate multiple IDs with commas or semicolon.</div>
                         <div class="row"><asp:TextBox ID="protocolID" MaxLength="50" runat="server" /></div>
                     </div>
                 </div>                       
