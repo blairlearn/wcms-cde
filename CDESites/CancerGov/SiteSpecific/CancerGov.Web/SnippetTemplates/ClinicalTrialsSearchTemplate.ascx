@@ -507,7 +507,7 @@
                 <div class="row">
                     <div class="large-4 columns"><asp:Label ID="lblProtocolID" runat="server" AssociatedControlID="protocolID" CssClass="field" >Trial ID</asp:Label></div>
                     <div class="large-7 left columns">
-                        <div class="row">Search by trial ID. Separate multiple IDs with commas or semicolon.</div>
+                        <div class="row">Separate multiple IDs with commas or semicolon.</div>
                         <div class="row"><asp:TextBox ID="protocolID" MaxLength="50" runat="server" /></div>
                     </div>
                 </div>                       
