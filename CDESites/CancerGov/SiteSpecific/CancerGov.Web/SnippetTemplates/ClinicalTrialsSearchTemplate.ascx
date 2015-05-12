@@ -470,6 +470,7 @@
             <div class="row">
                 <div class="large-4 columns"><label class="field">Trial Phase</label></div>
                 <div class="large-7 left columns">
+                    Search by one or more trial phases
                     <CancerGov:AccessibleCheckBoxList
                         ID="trialPhase"
                         runat="server" 
