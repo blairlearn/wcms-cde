@@ -129,7 +129,7 @@ namespace CancerGov.Web.UI.SnippetControls
                     hasChildren = " has-children";
                 }
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item lvl-"+level+ liClass + hasChildren);
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item lvl-"+level+ liClass + hasChildren + " item-" + itemNum);
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
 
 
