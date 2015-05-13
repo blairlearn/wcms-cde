@@ -137,7 +137,13 @@ namespace Www.Templates
             ValidateParams();
             GetQueryParams();
 
-            //Setup URLS
+            /* Setup URLS -
+             * The URLs are being set in the Appmodule page content item, which publishes the following XML:
+             * <cde:Module_dictionaryURL ... >
+             *  <DictionaryEnglishURL/> //English dictionary path
+             *  <DictionarySpanishURL/> //Spanish dictionary path
+             * </cde:Module_dictionaryURL>
+            */
             string snippetXmlData = string.Empty;
             snippetXmlData = SnippetInfo.Data;
             snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
@@ -216,7 +222,7 @@ namespace Www.Templates
             }
 
             SetupPrintUrl();
-            SetupCanonicalUrl();
+            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
 
             lblNumResults.Text = NumResults.ToString();
             lblWord.Text = SearchStr.Replace("[[]", "[");
@@ -288,25 +294,26 @@ namespace Www.Templates
         /**
         * Add a filter for the Canonical URL.
         * The Canonical URL includes query parameters if they exist.
-        * TODO: 
-        *   - fix issues with numbered '%23' query
-        *   - find permanent fix for dictionary URLs
         */
-        private void SetupCanonicalUrl()
+        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
         {
             PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
             {
                 if (CdrID != "")
                     url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
                 else if (Expand != "")
+                {
+                    if (Expand.Trim() == "#")
+                    {
+                        Expand = "%23";
+                    }
                     url.SetUrl(url.ToString() + "?expand=" + Expand);
+                }
                 else
                     url.SetUrl(url.ToString());
             });
 
             string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
-            string englishDurl = "/publications/dictionaries/cancer-terms";
-            string spanishDurl = "/espanol/publicaciones/diccionario";
             PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter("CanonicalTranslation", (name, url) =>
             {
                 if (canonicalUrl.IndexOf(englishDurl) > -1)
