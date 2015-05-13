@@ -201,7 +201,7 @@
         <div class="row">
             <div id="legend-condition" class="large-4 small-11 columns legend">Cancer Type</div>
             <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#1" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
-            <div class="large-7 columns">Select cancer type information.</div>
+            <div class="large-7 columns">Select cancer type information</div>
         </div>
         <div class="row">
             <div class="large-4 columns">
@@ -486,7 +486,7 @@
             <div id="legend-newtrials" class="large-4 small-11 columns legend">New Trials</div>
             <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#4" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
-                <div class="row"><div class="checkbox"><asp:CheckBox ID="newOnly" runat="server" Text="Only include trials added in last 30 days." /></div></div>
+                <div class="row"><div class="checkbox"><asp:CheckBox ID="newOnly" runat="server" Text="Only include trials added in last 30 days" /></div></div>
             </div>
         </div>
     </fieldset>
@@ -498,7 +498,7 @@
             <div id="legend-trialid" class="large-4 small-11 columns legend">Trial ID</div>
             <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#4" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
-                <div class="row">Separate multiple IDs with commas or semicolon.</div>
+                <div class="row">Separate multiple IDs with commas or semicolons</div>
                 <div class="row">
 					<asp:TextBox ID="protocolID" MaxLength="50" runat="server" />
                 </div>
