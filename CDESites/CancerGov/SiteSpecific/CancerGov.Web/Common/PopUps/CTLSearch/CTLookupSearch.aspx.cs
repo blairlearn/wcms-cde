@@ -91,7 +91,7 @@ namespace CancerGov.Web
                     this.alphaIndexLinks = BuildAlphaIndexLinks();
                     break;
 				case "investigator":
-                    caption = "See a list of trial investigators that can be used in your clinical trials search by browsing the alphabetical list or by entering an investigator name in the search box. You can select multiple trial investigators by checking the box next to each name and using the <b>Add Selected</b> button.";
+                    caption = "See a list of trial investigators that can be used in your clinical trials search by entering an investigator name in the search box. You can select multiple trial investigators by checking the box next to each name and using the <b>Add Selected</b> button.";
                     textInputPrompt = "Enter Trial Investigator Name";
                     this.alphaIndexLinks = string.Empty;
                     break;
