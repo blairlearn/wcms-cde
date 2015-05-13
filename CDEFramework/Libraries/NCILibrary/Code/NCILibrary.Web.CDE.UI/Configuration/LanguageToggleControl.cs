@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -78,10 +79,12 @@ namespace NCI.Web.CDE.UI.WebControls
         /// </summary>
         protected override void RenderContents(HtmlTextWriter writer)
         {
-            string dictionaryUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
+            string translationUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("TranslationUrls").ToString();
+            string canonicalTranslation = PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("CanonicalTranslation").ToString();
 
-            if (!String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("TranslationUrls").ToString()))
+            if (!String.IsNullOrEmpty(translationUrl))
             {
+
                 writer.RenderBeginTag(HtmlTextWriterTag.Ul);
                 foreach (LanguageToggle lang in _itemsCollection[PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language")].LangsCollection)
                 {
@@ -104,7 +107,8 @@ namespace NCI.Web.CDE.UI.WebControls
 
                     foreach (string key in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
                     {
-                        if ((lang.Locale == "en-us" || lang.Locale == "es-us")&& String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(lang.Locale).ToString()))
+                        // Do not show other language links if they do not exist
+                        if ((lang.Locale == "en-us" || lang.Locale == "es-us") && String.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(lang.Locale).ToString()))
                         {
                             writer.RenderBeginTag(HtmlTextWriterTag.Li);
                             if (!string.IsNullOrEmpty(lang.OnClick.Trim()))
@@ -118,27 +122,28 @@ namespace NCI.Web.CDE.UI.WebControls
                             writer.RenderEndTag(); //</li>
                         }
 
+                        // If this is a dictionary page, link to the translation URL with the set query parameters.
+                        // Otherwise, link to the URLs in the page instruction translation data
                         if (lang.Locale == key)
                         {
+                            string safeUrl = string.Empty;
                             writer.RenderBeginTag(HtmlTextWriterTag.Li);
+
                             if (!string.IsNullOrEmpty(lang.OnClick.Trim()))
                             {
                                 writer.AddAttribute(HtmlTextWriterAttribute.Onclick, lang.OnClick);
                             }
 
-                            // If this is a Cancer Terms Dictionary page, the language toggle should link to the selected dictionary item, not home
-                            if ((lang.Locale == "es-us") && (dictionaryUrl.IndexOf("/dictionary?") > -1))
+                            if (!String.IsNullOrEmpty(canonicalTranslation))
                             {
-                                writer.AddAttribute(HtmlTextWriterAttribute.Href, dictionaryUrl.Replace("/dictionary?","/diccionario?"));
-                            }
-                            else if ((lang.Locale == "en-us") && (dictionaryUrl.IndexOf("/diccionario?") > -1))
-                            {
-                                writer.AddAttribute(HtmlTextWriterAttribute.Href, dictionaryUrl.Replace("/diccionario?", "/dictionary?"));
+                                safeUrl += canonicalTranslation;
                             }
                             else
                             {
-                                writer.AddAttribute(HtmlTextWriterAttribute.Href, PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(key).ToString());
+                                safeUrl += PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(key).ToString();
                             }
+
+                            writer.AddAttribute(HtmlTextWriterAttribute.Href, safeUrl);
                             writer.RenderBeginTag(HtmlTextWriterTag.A);
                             writer.Write(lang.Title);
                             writer.RenderEndTag(); //</a>
