@@ -14,7 +14,6 @@
     , OffPageSelectionsExist: "<%=OffPageSelectionsExist.ClientID%>"
     , customFormat: "<%=customFormat.ClientID%>"
     , titleFormat: "<%=titleFormat.ClientID%>"
-    , healthProfAudience: "<%=healthProfAudience.ClientID%>"
     , includeLocations: "<%=includeLocations.ClientID%>"
     , includeEligibility: "<%=includeEligibility.ClientID%>"
     , descriptionFormat: "<%=descriptionFormat.ClientID%>"
@@ -42,21 +41,7 @@
         <asp:Panel runat="server" ID="ResultsFormatControl">
         <div class="row collapse ct-results-form">
             <div class="medium-11 columns">
-                <div class="row view-content-for-container roundy-box">
-                  
-                        <div class="medium-4 columns">
-                            <strong>View Content for:</strong>
-                            <div class="radio">
-                                    <asp:RadioButton runat="server" ID="patientAudience" GroupName="AudienceType" Text="Patients"
-                                        AutoPostBack="false" CssClass="black-text" />
-                             </div>
-                              <div class="radio"> 
-                                    <asp:RadioButton runat="server" ID="healthProfAudience" GroupName="AudienceType"
-                                        Text="Health Professionals" AutoPostBack="false" CssClass="black-text" />
-                              </div>
-                            
-                        </div>
-                        <div class="medium-8 columns">
+                <div class="row view-content-for-container roundy-box">                  
                             <strong>Display:</strong>
                             
                                 <div class="radio">
@@ -82,8 +67,6 @@
 
                             <script type="text/javascript">
                                 $(document).ready(function() {
-                                    $("#<% =patientAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler(e) });
-                                    $("#<% =healthProfAudience.ClientID%>").on("click", function(e) { AudienceType_clickhandler(e) });
                                     $("#<% =titleFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
                                     $("#<% =descriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
                                     $("#<% =fullDescriptionFormat.ClientID%>").on("click", function(e) { FormatType_clickhandler(e) });
@@ -99,7 +82,7 @@
                         </div>
                         
                   
-                </div>
+                
                  </div>      
             
              <div class="medium-1 columns ct-results-help">

@@ -77,24 +77,6 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.Panel ResultsFormatControl;
         
         /// <summary>
-        /// patientAudience control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton patientAudience;
-        
-        /// <summary>
-        /// healthProfAudience control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton healthProfAudience;
-        
-        /// <summary>
         /// titleFormat control.
         /// </summary>
         /// <remarks>
