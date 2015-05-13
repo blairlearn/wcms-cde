@@ -200,7 +200,7 @@
     <fieldset aria-labelledby="legend-condition">
         <div class="row">
             <div id="legend-condition" class="large-4 small-11 columns legend">Cancer Type</div>
-            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#1" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#1" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">Select cancer type information</div>
         </div>
         <div class="row">
@@ -240,7 +240,7 @@
     <fieldset id="locationFieldset" aria-labelledby="legend-location">
         <div class="row">
             <div id="legend-location" class="large-4 small-11 columns legend">Location</div>
-            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#2" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#2" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 <div class="cts-location roundy-box">
                     <div class="row">
@@ -337,7 +337,7 @@
     <fieldset aria-labelledby="legend-trialtreatment">
         <div class="row">
             <div id="legend-trialtreatment" class="large-4 small-11 columns legend">Trial/Treatment Type</div>
-            <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>/page2#3" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>#3" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 Search by trial type, drug, or treatment/intervention
                 
@@ -440,7 +440,7 @@
     <fieldset aria-labelledby="legend-keyword">
         <div class="row">
             <div id="legend-keyword" class="large-4 small-11 columns legend">Keywords/Phrases</div>
-            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#4" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#4" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 <div class="row">Search by word or phrase (use quotation marks with phrases)</div>
                 <div class="row">
@@ -457,7 +457,7 @@
     <fieldset aria-labelledby="legend-trialstatus">
         <div class="row">
             <div id="legend-trialstatus" class="large-4 small-11 columns legend">Trial Phase</div>
-            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#5" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#5" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 <div class="row">
                     Search by one or more trial phases
@@ -484,7 +484,7 @@
     <fieldset aria-labelledby="legend-newtrials">
         <div class="row">
             <div id="legend-newtrials" class="large-4 small-11 columns legend">New Trials</div>
-            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#4" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#6" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 <div class="row"><div class="checkbox"><asp:CheckBox ID="newOnly" runat="server" Text="Only include trials added in last 30 days" /></div></div>
             </div>
@@ -496,7 +496,7 @@
     <fieldset aria-labelledby="legend-trialid">
         <div class="row">
             <div id="legend-trialid" class="large-4 small-11 columns legend">Trial ID</div>
-            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>/page2#4" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#7" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 <div class="row">Separate multiple IDs with commas or semicolons</div>
                 <div class="row">
@@ -511,7 +511,7 @@
     <fieldset aria-labelledby="legend-trialsponsor">
         <div class="row">
             <div id="legend-trialsponsor" class="large-4 small-11 columns legend">Trial Investigators / Lead Organization</div>
-            <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>/page2#6" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
+            <div class="large-1 small-1 columns right"><a href="<% =SearchHelpPrettyUrl %>#8" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 Search by trial investigators or lead organization
                 <div id="showTrialSponsorSearchOptionsButton" class="show-criteria-link" style="display: none;">
