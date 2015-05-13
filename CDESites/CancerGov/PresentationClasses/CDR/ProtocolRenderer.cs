@@ -427,7 +427,7 @@ namespace CancerGov.UI.CDR
                 sbContent.Append("<th>Phase</th>");
                 sbContent.Append("<th>Type</th>");
                 sbContent.Append("<th>Age</th>");
-                sbContent.Append("<th>Protocol IDs</th>");
+                sbContent.Append("<th>Trial IDs</th>");
                 sbContent.Append("</tr>");
                 sbContent.AppendFormat("<tr>");
                 sbContent.AppendFormat("<td>{0}</td>", pProtocol.Phase);
@@ -455,7 +455,7 @@ namespace CancerGov.UI.CDR
                 sbContent.AppendFormat(InfoBoxFormat, "Phase", pProtocol.Phase);
                 sbContent.AppendFormat(InfoBoxFormat, "Type", pProtocol.TrialType);
                 sbContent.AppendFormat(InfoBoxFormat, "Age", pProtocol.AgeRange);
-                sbContent.AppendFormat(InfoBoxFormat, "Protocol IDs", protocolList);
+                sbContent.AppendFormat(InfoBoxFormat, "Trial IDs", protocolList);
                 sbContent.Append("</div>\n");
             }
 

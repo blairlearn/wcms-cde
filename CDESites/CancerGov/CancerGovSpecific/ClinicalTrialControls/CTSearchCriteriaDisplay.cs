@@ -87,7 +87,7 @@ namespace NCI.Web.UI.WebControls.FormControls
                 RenderCriterion(writer, "Trial Phase", criteria.TrialPhase);
                 if (criteria.RestrictToRecent)
                     RenderCriterion(writer, "Added in last 30 days?", "Yes");
-                RenderCriterion(writer, "Protocol ID", criteria.SpecificProtocolIDList);
+                RenderCriterion(writer, "Trial ID", criteria.SpecificProtocolIDList);
                 RenderCriterion(writer, "Trial Investigators", criteria.InvestigatorList);
                 RenderCriterion(writer, "Lead Organization", criteria.LeadOrganizationList);
             }
