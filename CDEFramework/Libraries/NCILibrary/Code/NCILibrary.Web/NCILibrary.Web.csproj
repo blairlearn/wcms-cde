@@ -60,6 +60,14 @@
     <Compile Include="ProductionHost\Configuration\ProductionHostSection.cs" />
     <Compile Include="ProductionHost\ProductionHostConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sitemap\ISitemapUrlStore.cs" />
+    <Compile Include="Sitemap\SitemapHandler.cs" />
+    <Compile Include="Sitemap\SitemapProviderConfiguration.cs" />
+    <Compile Include="Sitemap\Sitemaps.cs" />
+    <Compile Include="Sitemap\SitemapUrl.cs" />
+    <Compile Include="Sitemap\SitemapUrlSet.cs" />
+    <Compile Include="Sitemap\SitemapUrlStoreBase.cs" />
+    <Compile Include="Sitemap\SitemapUrlStoreCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">
