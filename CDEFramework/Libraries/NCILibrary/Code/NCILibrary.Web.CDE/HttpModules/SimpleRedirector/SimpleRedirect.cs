@@ -63,6 +63,11 @@ namespace NCI.Web.CDE
         {
             String redirect = null;
 
+            if (url.LastIndexOf("/") == url.Length-1)
+            {
+                url = url.Substring(0, url.Length - 1);
+            }
+
             SimpleRedirectorConfigurationSection config = SimpleRedirectorConfigurationSection.Get();
 
             String datafile = HttpContext.Current.Server.MapPath(config.DataSource.DataFile);
@@ -70,6 +75,10 @@ namespace NCI.Web.CDE
 
             if (urlMap.Contains(url))
             {
+                if (urlMap.ContainsMultiple(url))
+                {
+                    log.debug(String.Format("Url: '{0}' has multiple instances in redirect map.", url));
+                }
                 redirect = urlMap[url];
                 log.debug(String.Format("Url '{0}' found; redirects to '{1}'.", url, redirect));
             }

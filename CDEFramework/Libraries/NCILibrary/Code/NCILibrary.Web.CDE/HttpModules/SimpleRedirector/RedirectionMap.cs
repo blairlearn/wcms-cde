@@ -160,6 +160,17 @@ namespace NCI.Web.CDE.SimpleRedirector
             return map.ContainsKey(url);
         }
 
+        public bool ContainsMultiple(String url)
+        {
+            url = url.Trim().ToLowerInvariant();
+            if(map.ContainsKey(url + "/"))
+            {
+                    return true;
+            }
+            
+            return false;
+        }
+
         public String this[String url]
         {
             get
