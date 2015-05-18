@@ -65,7 +65,7 @@ namespace CancerGov.HttpModules
                 if (map.Contains(psid))
                 {
                     //redirect 
-                    DoPermanentRedirect(context.Response, string.Format("/about-cancer/treatment/clinical-trials/search?protocolsearchid={0}", map[psid]));
+                    DoPermanentRedirect(context.Response, string.Format("/about-cancer/treatment/clinical-trials/search/results?protocolsearchid={0}", map[psid]));
                 }
 
             }
