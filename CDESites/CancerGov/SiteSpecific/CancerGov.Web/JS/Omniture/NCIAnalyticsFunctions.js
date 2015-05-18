@@ -779,6 +779,17 @@
         clickParams.LogToOmniture();
     },
     //******************************************************************************************************	
+    RightNavLink: function(sender, label) {
+
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal', 'o', 'RightNavLink-');
+        clickParams.Props = {
+            27: sender.innerHTML,
+        };
+		clickParams.Events = [8];
+        clickParams.LogToOmniture();
+    },
+    //******************************************************************************************************	
     BulletinSubscription: function(sender) {
 
         clickParams = new NCIAnalytics.ClickParams(sender,
