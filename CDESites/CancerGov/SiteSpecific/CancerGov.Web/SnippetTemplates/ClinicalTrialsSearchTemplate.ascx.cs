@@ -134,21 +134,17 @@ namespace CancerGov.Web.SnippetTemplates
 
             string webAnalyticsParameters =
                 String.Format(
-                    "{{typeOfTrialControlID : '{0}',drugControlID : '{1}',treatnentInterventionControlID : '{2}',sponsorOfTrialControlID : '{3}',trialInvestigatorsControlID : '{4}',leadOrganizationCooperativeGroupControlID : '{5}', specialCategoryControlID : '{6}'}}",
+                    "{{typeOfTrialControlID : '{0}',drugControlID : '{1}',treatnentInterventionControlID : '{2}',trialInvestigatorsControlID : '{3}',leadOrganizationCooperativeGroupControlID : '{4}'}}",
                     trialType.ClientID,
                     drug.ClientID,
                     intervention.ClientID,
-                    "",
                     investigator.ClientID,
-                    leadOrg.ClientID,
-                    ""
+                    leadOrg.ClientID
                 );
 
             submit.OnClientClick = "doSubmit(" + webAnalyticsParameters + ");";
 
             JSManager.AddExternalScript(this.Page, "/JS/Search/CDESearchClinicalTrials.js");
-            //JSManager.AddExternalScript(this.Page, "/JS/popEvents.js");
-
         }
 
         private void SetLocationButtons(CTSearchDefinition savedSearch)
