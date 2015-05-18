@@ -66,17 +66,9 @@ namespace CancerGov.Modules
                     context.Request.Url.Segments[1].ToLower() == "clinicaltrials/")
                 {
                     string oldId = string.Empty;
-                    string version = string.Empty;
+
                     // The third segment will be the old id that we can use to look up in the database
-                    if (context.Request.Url.Segments.Count() == 3)
-                    {
-                        oldId = context.Request.Url.Segments[2];
-                    }
-                    else if (context.Request.Url.Segments.Count() == 4)
-                    {
-                        oldId = context.Request.Url.Segments[2];
-                        version = context.Request.Url.Segments[3];
-                    }
+                    oldId = context.Request.Url.Segments[2];
 
                     if (!string.IsNullOrEmpty(oldId))
                     {
@@ -84,10 +76,7 @@ namespace CancerGov.Modules
                         string cdrID = CDRPrettyURLQuery.GetProtocolByOldId(oldId.Trim());
                         if (!string.IsNullOrEmpty(cdrID))
                         {
-                            if (string.IsNullOrEmpty(version))
-                                version = "healthprofessional";
-
-                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?cdrid={0}&version={1}", cdrID, version);
+                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?cdrid={0}", cdrID);
                             context.Response.Redirect(ctViewUrl, true);
                         }
                         else
