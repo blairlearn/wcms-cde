@@ -117,8 +117,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 ## Display image
                 ##
                 <div class=""list-item-image image container"">##
+                    #set($alt = """")##
+                    #if($resultItem.Alt)## 
+                        #set($alt = ""$resultItem.Alt"")##
+                    #elseif($resultItem.AltText)## 
+                        #set($alt = ""$resultItem.AltText"")##
+                    #else##
+                        #set($alt = """")##
+                    #end##
                     #if($resultItem.ThumbnailURL)## 
-                        <img src=""$resultItem.ThumbnailURL"" class=""item-image image"" align=""left"">
+                        <img src=""$resultItem.ThumbnailURL"" class=""item-image image"" alt=$alt align=""left"">
                     #else##
                         &nbsp;##
                     #end##
