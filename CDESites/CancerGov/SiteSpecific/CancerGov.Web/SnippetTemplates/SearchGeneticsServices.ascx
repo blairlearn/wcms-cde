@@ -29,7 +29,7 @@ function doWebAnalyticsStuff() {
             </div>
             <div class="row">
                 <div class="large-4 columns"> 
-                    <label for="selCancerType" class="right inline">Type of Cancer:<br />(choose 1 or more)
+                    <label for="selCancerType" class="field inline">Type of Cancer:<br />(choose 1 or more)
                     </label>
                 </div>
                 <div class="large-8 columns">
@@ -40,7 +40,7 @@ function doWebAnalyticsStuff() {
             <div class="row"><div class="large-8 columns right">OR</div></div>
             <div class="row">
                 <div class="large-4 columns">
-                    <label for="selCancerFamily" class="right inline">Family Cancer Syndrome:<br />(choose 1 or more)
+                    <label for="selCancerFamily" class="field inline">Family Cancer Syndrome:<br />(choose 1 or more)
                     </label>
                 </div>
                 <div class="large-8 columns">
@@ -55,15 +55,15 @@ function doWebAnalyticsStuff() {
             </div>
             <div class="row">
                 <div class="large-4 columns">
-                    <label for="txtCity" class="right inline">City:</label>
+                    <label for="txtCity" class="field inline">City:</label>
                 </div>
                 <div class="large-8 columns">                                      
-                    <input type="text" name="txtCity" id="txtCity" maxlength="40" size="30">
+                    <input type="text" name="txtCity" id="txtCity" maxlength="40">
                 </div>
             </div>
             <div class="row">
                 <div class="large-4 columns">
-                    <label for="selState" class="right inline">State:<br />(choose one or more)
+                    <label for="selState" class="field inline">State:<br />(choose one or more)
                     </label>
                 </div>
                 <div class="large-8 columns">
@@ -73,7 +73,7 @@ function doWebAnalyticsStuff() {
             </div>
             <div class="row">
                 <div class="large-4 columns">
-                    <label for="selCountry" class="right inline">Country:<br />(choose one or more)
+                    <label for="selCountry" class="field inline">Country:<br />(choose one or more)
                     </label>
                 </div>
                 <div class="large-8 columns">
@@ -88,11 +88,10 @@ function doWebAnalyticsStuff() {
             </div>
             <div class="row">
                 <div class="large-4 columns">
-                    <label for="txtLastName" class="right inline">Last name:</label>
+                    <label for="txtLastName" class="field inline">Last name:</label>
                 </div>
                 <div class="large-8 columns">
-                    <input type="text" name="txtLastName" id="txtLastName" maxlength="40" 
-                        size="30">
+                    <input type="text" name="txtLastName" id="txtLastName" maxlength="40">
                 </div>
             </div>
         </fieldset>
