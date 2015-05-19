@@ -49,7 +49,7 @@ namespace NCI.Web.CDE
 
             String redirectUrl = GetRedirectUrl(url, context);
 
-            if (query != "")
+            if (query != "" && redirectUrl!=null)
             {
                 redirectUrl = redirectUrl + query;
             }
