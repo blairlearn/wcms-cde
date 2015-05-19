@@ -23,7 +23,7 @@ namespace NCI.Web.UI.WebControls.FormControls
         private static readonly object EventSelectedIndexChanged = new object();
         private static readonly object EventTextChanged = new object();
         private ListItemCollection items;
-        private int cachedSelectedIndex;
+        private int cachedSelectedIndex = -1;
         private string cachedSelectedValue;
         private ArrayList cachedSelectedIndices;
         private bool _stateLoaded;
