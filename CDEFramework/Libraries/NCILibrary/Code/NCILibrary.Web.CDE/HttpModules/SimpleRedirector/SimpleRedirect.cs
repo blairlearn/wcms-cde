@@ -37,7 +37,7 @@ namespace NCI.Web.CDE
 
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
-            String query= context.Server.UrlDecode(context.Request.Url.Query);
+            
             // Can we ignore this file?
             if (Utility.IgnoreWebResource(url))
                 return;
@@ -47,15 +47,21 @@ namespace NCI.Web.CDE
             if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
                 return;
 
-            String redirectUrl = GetRedirectUrl(url, context);
 
-            if (query != "" && redirectUrl!=null)
+            String redirectUrl = GetRedirectUrl(url, context);
+            //check if url if not return
+            if (String.IsNullOrEmpty(redirectUrl))
+                return;
+
+            
+            String query = context.Server.UrlDecode(context.Request.Url.Query);
+            if (!String.IsNullOrEmpty(query))
             {
-                redirectUrl = redirectUrl + query;
+                redirectUrl += query;
             }
 
-            if(!String.IsNullOrEmpty(redirectUrl))
-                DoPermanentRedirect(context.Response, redirectUrl);
+           
+            DoPermanentRedirect(context.Response, redirectUrl);
         }
 
         /// <summary>
