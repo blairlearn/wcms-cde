@@ -126,7 +126,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         #set($alt = ""image"")##
                     #end##
                     #if($resultItem.ThumbnailURL)## 
-                        <img src=""$resultItem.ThumbnailURL"" class=""item-image image"" alt=$alt align=""left"">
+                        <img src=""$resultItem.ThumbnailURL"" class=""item-image image"" alt=""$alt"" align=""left"">
                     #else##
                         &nbsp;##
                     #end##
