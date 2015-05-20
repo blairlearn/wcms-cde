@@ -63,7 +63,8 @@ namespace NCI.Web.CDE.PageAssembly
                 // Get content type and set priority accordingly
                 contentType = nav.SelectSingleNode("//cde:SinglePageAssemblyInstruction/ContentItemInfo/ContentItemType", manager).Value;
                 if (contentType == "rx:nciHome" || contentType == "rx:nciLandingPage" || contentType == "rx:cgvCancerTypeHome" ||
-                    contentType == "rx:cgvCancerResearch")
+                    contentType == "rx:cgvCancerResearch" || contentType == "rx:nciAppModulePage" || contentType == "rx:pdqCancerInfoSummary" ||
+                    contentType == "rx:pdqDrugInfoSummary" || contentType == "rx:cgvFactSheet")
                     priority = 1.0;
                 else
                 {
