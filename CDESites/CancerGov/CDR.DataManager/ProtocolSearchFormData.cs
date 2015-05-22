@@ -104,7 +104,7 @@ namespace CancerGov.CDR.DataManager
         public static DataTable GetProtocolInvestigators(string keyword, string lookupMethod)
         {
             keyword = keyword.Replace("'", "''");
-            keyword += "%";
+            keyword = "%" + keyword + "%";
 
             DataTable dbTable = new DataTable();
             SqlDataAdapter dbAdapter = null;
