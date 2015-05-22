@@ -529,6 +529,10 @@
       <Project>{FF201258-189F-4EAF-B282-03FE7738A155}</Project>
       <Name>CancerGov.Web.UI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\LegacyCTSResultRedirector\LegacyCTSResultRedirector.csproj">
+      <Project>{2998FE53-18DD-4B27-A7AC-33BE692BAD61}</Project>
+      <Name>LegacyCTSResultRedirector</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\web_browsers_patch.xml" />
