@@ -24,10 +24,10 @@ function doWebAnalyticsStuff() {
         method="post" onsubmit="return doWebAnalyticsStuff();" 
         aria-label="Search the Cancer Genetics Services Directory">
         <fieldset aria-labelledby="legend-specialty">
-            <div class="row">
+            <div class="row collapse-edges">
                 <div id="legend-specialty" class="large-4 columns legend">Specialty</div>
             </div>
-            <div class="row">
+            <div class="row collapse-edges">
                 <div class="large-4 columns"> 
                     <label for="selCancerType" class="field inline">Type of Cancer:<br />(choose 1 or more)
                     </label>
@@ -37,8 +37,8 @@ function doWebAnalyticsStuff() {
                     </select>
                  </div>
             </div>
-            <div class="row"><div class="large-8 columns right">OR</div></div>
-            <div class="row">
+            <div class="row collapse-edges"><div class="large-8 columns right">OR</div></div>
+            <div class="row collapse-edges">
                 <div class="large-4 columns">
                     <label for="selCancerFamily" class="field inline">Family Cancer Syndrome:<br />(choose 1 or more)
                     </label>
@@ -50,10 +50,10 @@ function doWebAnalyticsStuff() {
             </div>
         </fieldset>
         <fieldset aria-labelledby="legend-location">
-            <div class="row">
+            <div class="row collapse-edges">
                 <div id="legend-location" class="large-4 columns legend">Location</div>
             </div>
-            <div class="row">
+            <div class="row collapse-edges">
                 <div class="large-4 columns">
                     <label for="txtCity" class="field inline">City:</label>
                 </div>
@@ -61,7 +61,7 @@ function doWebAnalyticsStuff() {
                     <input type="text" name="txtCity" id="txtCity" maxlength="40">
                 </div>
             </div>
-            <div class="row">
+            <div class="row collapse-edges">
                 <div class="large-4 columns">
                     <label for="selState" class="field inline">State:<br />(choose one or more)
                     </label>
@@ -71,7 +71,7 @@ function doWebAnalyticsStuff() {
                     </select>
                 </div>
             </div>
-            <div class="row">
+            <div class="row collapse-edges">
                 <div class="large-4 columns">
                     <label for="selCountry" class="field inline">Country:<br />(choose one or more)
                     </label>
@@ -83,10 +83,10 @@ function doWebAnalyticsStuff() {
             </div>
         </fieldset>
         <fieldset aria-labelledby="legend-prof-name">
-            <div class="row">
+            <div class="row collapse-edges">
                 <div id="legend-prof-name" class="large-4 columns legend">Name of genetics professional, if known</div>
             </div>
-            <div class="row">
+            <div class="row collapse-edges">
                 <div class="large-4 columns">
                     <label for="txtLastName" class="field inline">Last name:</label>
                 </div>
@@ -95,7 +95,7 @@ function doWebAnalyticsStuff() {
                 </div>
             </div>
         </fieldset>
-        <div class="row">
+        <div class="row collapse-edges">
             <div class="large-8 columns large-offset-4">
                 <button type="submit" name="searchBtn" class="submit button">Search</button>
                 <button type="reset" name="clearBtn" class="reset button">Clear</button>
