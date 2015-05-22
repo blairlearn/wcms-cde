@@ -23,8 +23,6 @@ namespace CancerGov.CDR.DataManager
     {
         public static DataTable GetProtocolInstitutions(string keyword, string lookupMethod)
         {
-            keyword = keyword.Replace("'", "''");
-
             switch (lookupMethod.Trim().ToUpper())
             {
                 case ProtocolSearchLookupMethods.AlphaNumIndex:
@@ -63,8 +61,6 @@ namespace CancerGov.CDR.DataManager
 
         public static DataTable GetProtocolLeadOrganizations(string keyword, string lookupMethod)
         {
-            keyword = keyword.Replace("'", "''");
-
             switch (lookupMethod.Trim().ToUpper())
             {
                 case ProtocolSearchLookupMethods.AlphaNumIndex:
@@ -103,7 +99,6 @@ namespace CancerGov.CDR.DataManager
 
         public static DataTable GetProtocolInvestigators(string keyword, string lookupMethod)
         {
-            keyword = keyword.Replace("'", "''");
             keyword = "%" + keyword + "%";
 
             DataTable dbTable = new DataTable();
@@ -134,7 +129,6 @@ namespace CancerGov.CDR.DataManager
 
         public static DataTable GetProtocolInterventions(string keyword, string lookupMethod)
         {
-            keyword = keyword.Replace("'", "''");
             keyword += "%";
 
             DataTable dbTable = new DataTable();
@@ -165,8 +159,6 @@ namespace CancerGov.CDR.DataManager
 
         public static DataTable GetProtocolDrugs(string keyword, string lookupMethod)
         {
-            keyword = keyword.Replace("'", "''");
-
             switch (lookupMethod.Trim().ToUpper())
             {
                 case ProtocolSearchLookupMethods.AlphaNumIndex:
