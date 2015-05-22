@@ -10,6 +10,11 @@
 		        var parentDeleteList = window.parent.opener.window.jQuery('#' + fld);
 		        var chkInputs = window.parent['results'].document.forms['resultsForm'].elements['chkItem'];
 
+                //If there is only one elem, this will not be an array.
+		        if (chkInputs && typeof chkInputs.length === "undefined") {
+		            chkInputs = [chkInputs];
+		        }
+		        
 		        for (var i = 0; i < chkInputs.length; i++) {
 		            if (chkInputs[i].checked && chkInputs[i].value !== '') {
 		                // check if the deletelist has already been created
