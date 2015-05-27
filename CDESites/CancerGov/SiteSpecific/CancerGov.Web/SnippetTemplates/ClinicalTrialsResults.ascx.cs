@@ -403,7 +403,7 @@ namespace CancerGov.Web.SnippetTemplates
             sortOrder.Items.Add(new ListItem("Title", CTSSortFilters.TitleAsc.ToString("d")));
             sortOrder.Items.Add(new ListItem("Type of Trial", CTSSortFilters.TrialTypeAsc.ToString("d")));
             sortOrder.Items.Add(new ListItem("Age Range", CTSSortFilters.AgeRangeAsc.ToString("d")));
-            sortOrder.Items.Add(new ListItem("Protocol IDs", CTSSortFilters.ProtocolIDAsc.ToString("d")));
+            sortOrder.Items.Add(new ListItem("Trial ID", CTSSortFilters.ProtocolIDAsc.ToString("d")));
 
             // Set the default sort order.
             ListItem item = sortOrder.Items.FindByValue(defaultSortOrder.ToString("d"));
