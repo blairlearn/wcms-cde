@@ -238,7 +238,6 @@
         var trialType = '';
         var phaseList = '';
         var sponsor = '';
-        var special = '';
         var keyword = '';
 
         var cancerTypeCondition = $('#' + ids.cancerType + " option:selected").text();
@@ -261,15 +260,7 @@
             location = 'At Hospital/Institution';
         }
 
-        // Trial Status/Phase
-        // - Status
-        if ($("#" + ids.trialStatus_0)[0].checked) {
-            statusPhase = 'Trial Status';
-        }
-        else if ($("#" + ids.trialStatus_1)[0].checked) {
-            statusPhase = 'Trial Status';
-        }
-        statusPhase += NCIAnalytics.fieldDelimiter;
+        // Trial Phase
         // - Phase
         if ($("#" + ids.trialPhase_1)[0].checked || $("#" + ids.trialPhase_2)[0].checked || $("#" + ids.trialPhase_3)[0].checked || $("#" + ids.trialPhase_4)[0].checked) {
             phaseList = 'Trial Phase';
@@ -299,15 +290,9 @@
                 NCIAnalytics.stringDelimiter) != '')
             treatmentType += 'Treatment/Intervention';
 
-        // Trial ID / Sponsor
+        // Trial ID
         if ($("#" + ids.protocolID).val() != '')
             trialIdSponsor += 'Protocol ID';
-        trialIdSponsor += NCIAnalytics.fieldDelimiter;
-        sponsor = NCIAnalytics.SelectedTextList(
-            webAnalyticsOptions.sponsorOfTrialControlID,
-            NCIAnalytics.stringDelimiter);
-        if ((sponsor != '') && (sponsor != 'All'))
-            trialIdSponsor += 'Sponsor of Trial';
         trialIdSponsor += NCIAnalytics.fieldDelimiter;
         if (NCIAnalytics.SelectedDeleteList(
                 webAnalyticsOptions.trialInvestigatorsControlID,
@@ -318,12 +303,6 @@
                 webAnalyticsOptions.leadOrganizationCooperativeGroupControlID,
                 NCIAnalytics.stringDelimiter) != '')
             trialIdSponsor += 'Lead Organization';
-        trialIdSponsor += NCIAnalytics.fieldDelimiter;
-        special = NCIAnalytics.SelectedTextList(
-            webAnalyticsOptions.specialCategoryControlID,
-            NCIAnalytics.stringDelimiter);
-        if ((special != '') && (special != 'All'))
-            trialIdSponsor += 'Special Category';
 
         //if ($("#" + ids.txtKeywords_state).val() == 'valid')
         if ($("#" + ids.txtKeywords).val())
@@ -797,6 +776,17 @@
             36: footerName
         };
         clickParams.Events = [16];
+        clickParams.LogToOmniture();
+    },
+    //******************************************************************************************************	
+    RightNavLink: function(sender, label) {
+
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            'nciglobal', 'o', 'RightNavLink-');
+        clickParams.Props = {
+            27: sender.innerHTML,
+        };
+		clickParams.Events = [8];
         clickParams.LogToOmniture();
     },
     //******************************************************************************************************	

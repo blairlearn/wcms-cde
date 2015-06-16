@@ -18,7 +18,6 @@ namespace CancerGov.Web
 	/// </summary>
     public partial class CTLookupSearch : CTLookupBase
 	{
-		private string title = "";
 		private string inputKeyword;
 		private string inputAlphaIndex;
 		private string alphaIndexLinks;
@@ -32,10 +31,7 @@ namespace CancerGov.Web
 			set {caption = value;}
 		}
 
-		public string Title {
-			get {return title;}
-			set {title = value;}
-		}
+		public new string Title {get;set;}
 
 		public string InputKeyword {
 			get {return inputKeyword;}
@@ -71,7 +67,7 @@ namespace CancerGov.Web
             ValidateValidValues(Title, new ArrayList { "find+hospitals/institutions", 
                 "find+drug", "treatment/intervention", "find+trial+investigators", "find+lead+organizations" });
 
-			title = Strings.IfNull(Strings.Clean(Request.Params["title"]), "");
+			Title = Strings.IfNull(Strings.Clean(Request.Params["title"]), "");
 			inputKeyword = Strings.IfNull(Strings.Clean(Request.Params["keyword"]), "");
 			inputAlphaIndex = Strings.IfNull(Strings.Clean(Request.Params["alphaIndex"]), "");
 			string fld = Strings.IfNull(Strings.Clean(Request.Params["fld"]), "");
@@ -82,46 +78,61 @@ namespace CancerGov.Web
 				case "drug":
                     caption = "See a list of drugs to use in your clinical trials search by browsing the alphabetical list or by entering a drug name in the search box. You can select multiple drug names by checking the box next to each name and using the <b>Add Selected</b> button.";
                     textInputPrompt = "Enter Drug Name";
+                    this.alphaIndexLinks = BuildAlphaIndexLinks();
 					break;
 				case "institution":
                     caption = "See a list of hospitals and institutions that can be used in your clinical trials search by browsing the alphabetical list or by entering a hospital or institution name in the search box. You can select multiple hospitals and institutions by checking the box next to each name and using the <b>Add Selected</b> button.";
                     textInputPrompt = "Enter Hospital/Institution Name";
+                    this.alphaIndexLinks = BuildAlphaIndexLinks();
                     break;
 				case "leadorg":
-                    caption = "See a list of lead organizations and cooperative groups that can be used in your clinical trials search by browsing the alphabetical list or by entering a lead organization or cooperative group name in the search box. You can select multiple trial lead organizations and cooperative groups by checking the box next to each name and using the <b>Add Selected</b> button.";
-                    textInputPrompt = "Enter Lead Organization/Cooperative Group Name";
+                    caption = "See a list of lead organizations that can be used in your clinical trials search by browsing the alphabetical list or by entering a lead organization name in the search box. You can select multiple trial lead organizations by checking the box next to each name and using the <b>Add Selected</b> button.";
+                    textInputPrompt = "Enter Lead Organization Name";
+                    this.alphaIndexLinks = BuildAlphaIndexLinks();
                     break;
 				case "investigator":
-                    caption = "See a list of trial investigators that can be used in your clinical trials search by browsing the alphabetical list or by entering an investigator name in the search box. You can select multiple trial investigators by checking the box next to each name and using the <b>Add Selected</b> button.";
+                    caption = "See a list of trial investigators that can be used in your clinical trials search by entering an investigator name in the search box. You can select multiple trial investigators by checking the box next to each name and using the <b>Add Selected</b> button.";
                     textInputPrompt = "Enter Trial Investigator Name";
+                    this.alphaIndexLinks = string.Empty;
                     break;
                 case "intervention":
                     caption = "See a list of treatments and interventions that can be used in your clinical trials search by browsing the alphabetical list or by entering a treatment or intervention name in the search box. You can select multiple treatments and interventions by checking the box next to each name and using the <b>Add Selected</b> button.";
                     textInputPrompt = "Enter Treatment/Intervention Name";
+                    this.alphaIndexLinks = BuildAlphaIndexLinks();
                     break;
 			}
 
-            alphaIndexLinks = "<div class='az-list inline narrow'><ul>";
+		}
+
+        private string BuildAlphaIndexLinks()
+        {
+            string alphaIndexLinks = "<div class=\"ct-popup-line\"><span id=\"alphaSearch\" class=\"ct-popup-label\">Click a Letter/#:</span><div class='az-list inline narrow'><ul>";
 
             if ("[^a-zA-Z]" == inputAlphaIndex.Trim())
             {
                 alphaIndexLinks += "<li>#</li>";
-			}
-			else {
+            }
+            else
+            {
                 alphaIndexLinks += "<li><a href=\"javascript: document.forms[0].alphaIndex.value = '[^a-zA-Z]'; document.forms[0].keyword.value = ''; doSubmit();\">#</a></li>";
             }
 
-			for(int i = Convert.ToInt16('A'); i <= Convert.ToInt16('Z'); i++) {
-				if(((char)i).ToString() == inputAlphaIndex.Trim().ToUpper()) {
-					alphaIndexLinks += "<li>" + (char)i + "</li>";
-				}
-				else {
-					alphaIndexLinks += "<li><a href=\"javascript: document.forms[0].alphaIndex.value = '" + (char)i + "'; document.forms[0].keyword.value = ''; doSubmit();\">" + (char)i + "</a></li>";
-				}
-			}
+            for (int i = Convert.ToInt16('A'); i <= Convert.ToInt16('Z'); i++)
+            {
+                if (((char)i).ToString() == inputAlphaIndex.Trim().ToUpper())
+                {
+                    alphaIndexLinks += "<li>" + (char)i + "</li>";
+                }
+                else
+                {
+                    alphaIndexLinks += "<li><a href=\"javascript: document.forms[0].alphaIndex.value = '" + (char)i + "'; document.forms[0].keyword.value = ''; doSubmit();\">" + (char)i + "</a></li>";
+                }
+            }
 
-            alphaIndexLinks += "</ul></div>";
-		}
+            alphaIndexLinks += "</ul></div></div>";
+
+            return alphaIndexLinks;
+        }
 
 		#region Web Form Designer generated code
 		override protected void OnInit(EventArgs e)

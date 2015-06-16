@@ -97,7 +97,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                 BuildIDList(search.InvestigatorList), BuildNameList(search.InvestigatorList),
                 BuildIDList(search.LeadOrganizationList), BuildNameList(search.LeadOrganizationList),
                 cancerTypeID, cancerTypeName, BuildIDList(search.CancerSubtypeIDList),
-                BuildIDList(search.TrialTypeList), search.TrialStatusRestriction,
+                BuildIDList(search.TrialTypeList), TrialStatusType.OpenOnly,
                 locationNIHOnly, search.RestrictToRecent, BuildIDList(search.TrialPhase),
                 BuildIDList(search.SpecificProtocolIDList), locationZip, locationProximity,
                 locationCity, locationStateList, locationCountry,
@@ -160,12 +160,8 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                     criteria.Keywords = tempString.Trim();
                 }
 
-                // Trial status. (Unknown defaults to Open)
-                tempString = Strings.Clean(searchDef["trialStatus"].ToString());
-                if (!string.IsNullOrEmpty(tempString) && tempString.ToUpper() == "N")
-                    criteria.TrialStatusRestriction = TrialStatusType.ClosedOnly;
-                else
-                    criteria.TrialStatusRestriction = TrialStatusType.OpenOnly;
+                // Force trial status to Open as all trials are open.
+                criteria.TrialStatusRestriction = TrialStatusType.OpenOnly;
 
                 // Load Trial Phase
                 FillFromDelimitedList(criteria.TrialPhase,
@@ -192,9 +188,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                 LoadLeadOrganizations(criteria, searchDef);
 
                 // Special Catetgories
-                FillFromDelimitedList(criteria.SpecialCategoryList,
-                    Strings.Clean(searchDef["specialCategory"].ToString()),
-                    commaDelimiter);
+                criteria.SpecialCategoryList.Clear();   // Force the special category list to be empty.
             }
             else
             {

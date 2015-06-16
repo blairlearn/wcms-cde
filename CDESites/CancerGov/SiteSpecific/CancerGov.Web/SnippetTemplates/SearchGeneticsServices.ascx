@@ -20,80 +20,86 @@ function doWebAnalyticsStuff() {
 
 <!-- Main Content Area -->
 <div class="directory-search">
-    <form id="searchForm" name="searchForm" action="<%=SearchPageInfo.SearchResultsPrettyUrl%>"  
+    <form class="genetics-directory-form" id="searchForm" name="searchForm" action="<%=SearchPageInfo.SearchResultsPrettyUrl%>"  
         method="post" onsubmit="return doWebAnalyticsStuff();" 
         aria-label="Search the Cancer Genetics Services Directory">
-        <fieldset>
-            <legend>Specialty</legend>
-            <div class="row">
-                <div class="medium-4 columns"> 
-                    <label for="selCancerType" class="right inline">Type of Cancer:<br />(choose 1 or more)
+        <fieldset aria-labelledby="legend-specialty">
+            <div class="row collapse-edges">
+                <div id="legend-specialty" class="large-4 columns legend">Specialty</div>
+            </div>
+            <div class="row collapse-edges">
+                <div class="large-4 columns"> 
+                    <label for="selCancerType" class="field inline">Type of Cancer:<br />(choose 1 or more)
                     </label>
                 </div>
-                <div class="medium-8 columns">
+                <div class="large-8 columns">
                     <select id="selCancerType" class="full-width" multiple name="selCancerType" runat="server" size="3">
                     </select>
                  </div>
             </div>
-            <div class="row"><div class="medium-8 columns right">OR</div></div>
-            <div class="row">
-                <div class="medium-4 columns">
-                    <label for="selCancerFamily" class="right inline">Family Cancer Syndrome:<br />(choose 1 or more)
+            <div class="row collapse-edges"><div class="large-8 columns right">OR</div></div>
+            <div class="row collapse-edges">
+                <div class="large-4 columns">
+                    <label for="selCancerFamily" class="field inline">Family Cancer Syndrome:<br />(choose 1 or more)
                     </label>
                 </div>
-                <div class="medium-8 columns">
+                <div class="large-8 columns">
                     <select id="selCancerFamily" class="full-width" multiple name="selCancerFamily" runat="server" size="3">
                     </select>
                 </div>
             </div>
         </fieldset>
-            
-        <fieldset>
-            <legend>Location</legend>
-            <div class="row">
-                <div class="medium-4 columns">
-                    <label for="txtCity" class="right inline">City:</label>
+        <fieldset aria-labelledby="legend-location">
+            <div class="row collapse-edges">
+                <div id="legend-location" class="large-4 columns legend">Location</div>
+            </div>
+            <div class="row collapse-edges">
+                <div class="large-4 columns">
+                    <label for="txtCity" class="field inline">City:</label>
                 </div>
-                <div class="medium-8 columns">                                      
-                    <input type="text" name="txtCity" id="txtCity" maxlength="40" size="30">
+                <div class="large-8 columns">                                      
+                    <input type="text" name="txtCity" id="txtCity" maxlength="40">
                 </div>
             </div>
-            <div class="row">
-                <div class="medium-4 columns">
-                    <label for="selState" class="right inline">State:<br />(choose one or more)
+            <div class="row collapse-edges">
+                <div class="large-4 columns">
+                    <label for="selState" class="field inline">State:<br />(choose one or more)
                     </label>
                 </div>
-                <div class="medium-8 columns">
+                <div class="large-8 columns">
                     <select id="selState" class="full-width" multiple name="selState" runat="server" size="3">
                     </select>
                 </div>
             </div>
-            <div class="row">
-                <div class="medium-4 columns">
-                    <label for="selCountry" class="right inline">Country:<br />(choose one or more)
+            <div class="row collapse-edges">
+                <div class="large-4 columns">
+                    <label for="selCountry" class="field inline">Country:<br />(choose one or more)
                     </label>
                 </div>
-                <div class="medium-8 columns">
+                <div class="large-8 columns">
                     <select id="selCountry" class="full-width" multiple name="selCountry" runat="server" size="3">
                     </select>
                 </div>
             </div>
         </fieldset>
-                                  
-        <fieldset>
-            <legend>Name of genetics professional, if known</legend>
-            <div class="row">
-                <div class="medium-4 columns">
-                    <label for="txtLastName" class="right inline">Last name:</label>
+        <fieldset aria-labelledby="legend-prof-name">
+            <div class="row collapse-edges">
+                <div id="legend-prof-name" class="large-4 columns legend">Name of genetics professional, if known</div>
+            </div>
+            <div class="row collapse-edges">
+                <div class="large-4 columns">
+                    <label for="txtLastName" class="field inline">Last name:</label>
                 </div>
-                <div class="medium-8 columns">
-                    <input type="text" name="txtLastName" id="txtLastName" maxlength="40" 
-                        size="30">
+                <div class="large-8 columns">
+                    <input type="text" name="txtLastName" id="txtLastName" maxlength="40">
                 </div>
             </div>
         </fieldset>
-        
-        <button type="submit" name="searchBtn" class="submit button">Search</button>
-        <button type="reset" name="clearBtn" class="reset button">Clear</button>
+        <div class="row collapse-edges">
+            <div class="large-8 columns large-offset-4">
+                <button type="submit" name="searchBtn" class="submit button">Search</button>
+                <button type="reset" name="clearBtn" class="reset button">Clear</button>
+            </div>
+        </div>
     </form>
 </div>

@@ -78,14 +78,14 @@ function loadDefinition(id) {
             {
                 var definition = '<p><b>' + someJSON[0].item + '</b> ' + someJSON[0].TermDictionaryDetail.TermPronunciation + 
                     '</p><p>' + someJSON[0].TermDictionaryDetail.DefinitionHTML + '</p><p>' +
-                    '<a href="http://www.cancer.gov/diccionario?CdrID=' + someJSON[0].id + '" target="_blank">' +
+                    '<a href="http://www.cancer.gov/espanol/publicaciones/diccionario?CdrID=' + someJSON[0].id + '" target="_blank">' +
                     '(es) Read this definition on the National Cancer Institute&#39;s website</a></p>';
              }
              else
              {
                 var definition = '<p><b>' + someJSON[0].item + '</b> ' + someJSON[0].TermDictionaryDetail.TermPronunciation + 
                     '</p><p>' + someJSON[0].TermDictionaryDetail.DefinitionHTML + '</p><p>' +
-                    '<a href="http://www.cancer.gov/dictionary?CdrID=' + someJSON[0].id + '" target="_blank">' +
+                    '<a href="http://www.cancer.gov/publications/dictionaries/cancer-terms?CdrID=' + someJSON[0].id + '" target="_blank">' +
                     'Read this definition on the National Cancer Institute&#39;s website</a></p>';
              }
             

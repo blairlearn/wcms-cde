@@ -137,12 +137,18 @@ namespace Www.Templates
             ValidateParams();
             GetQueryParams();
 
-            //Setup URLS
+            /* Setup URLS -
+             * The URLs are being set in the Appmodule page content item, which publishes the following XML:
+             * <cde:Module_dictionaryURL ... >
+             *  <DictionaryEnglishURL/> //English dictionary path
+             *  <DictionarySpanishURL/> //Spanish dictionary path
+             * </cde:Module_dictionaryURL>
+            */
             string snippetXmlData = string.Empty;
             snippetXmlData = SnippetInfo.Data;
             snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
             NCI.Web.CDE.Modules.DictionaryURL dUrl = ModuleObjectFactory<NCI.Web.CDE.Modules.DictionaryURL>.GetModuleObject(snippetXmlData);
-            
+
             DictionaryURLSpanish = dUrl.DictionarySpanishURL;
             DictionaryURLEnglish = dUrl.DictionaryEnglishURL;
 
@@ -150,7 +156,7 @@ namespace Www.Templates
 
             if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish"))
             {
-                Response.Redirect("/diccionario" + Request.Url.Query); 
+                Response.Redirect("/diccionario" + Request.Url.Query);
             }
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -190,16 +196,16 @@ namespace Www.Templates
                 SearchStr = SearchStr.Replace("[", "[[]");
                 CdrID = string.Empty;
                 Expand = string.Empty;
-                
+
                 RadioButton rd = (RadioButton)FindControl("radioContains");
 
-                if(rd.Checked==true)                
+                if (rd.Checked == true)
                     BContains = true;
 
                 if (string.IsNullOrEmpty(SearchStr))
                 {
                     ActivateDefaultView();
-                }  
+                }
                 else
                 {
                     LoadData();
@@ -216,6 +222,7 @@ namespace Www.Templates
             }
 
             SetupPrintUrl();
+            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
 
             lblNumResults.Text = NumResults.ToString();
             lblWord.Text = SearchStr.Replace("[[]", "[");
@@ -226,11 +233,11 @@ namespace Www.Templates
             {
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.PageName, wbField =>
                 {
-                string suffix = "";
-                if (Expand != "")
-                    suffix = " - AlphaNumericBrowse";
-                else if(CdrID != "") 
-                    suffix = " - Definition";
+                    string suffix = "";
+                    if (Expand != "")
+                        suffix = " - AlphaNumericBrowse";
+                    else if (CdrID != "")
+                        suffix = " - Definition";
                     wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
 
@@ -242,6 +249,10 @@ namespace Www.Templates
             }
         }
 
+        /**
+         * Add URL filter for old print page implementation
+         * @deprecated
+         */
         private void SetupPrintUrl()
         {
             PagePrintUrl = "?print=1";
@@ -278,16 +289,41 @@ namespace Www.Templates
             {
                 url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
             });
+        }
 
+        /**
+        * Add a filter for the Canonical URL.
+        * The Canonical URL includes query parameters if they exist.
+        */
+        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
+        {
             PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
             {
                 if (CdrID != "")
                     url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
                 else if (Expand != "")
+                {
+                    if (Expand.Trim() == "#")
+                    {
+                        Expand = "%23";
+                    }
                     url.SetUrl(url.ToString() + "?expand=" + Expand);
+                }
                 else
                     url.SetUrl(url.ToString());
-            });   
+            });
+
+            string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter("CanonicalTranslation", (name, url) =>
+            {
+                if (canonicalUrl.IndexOf(englishDurl) > -1)
+                    url.SetUrl(canonicalUrl.Replace(englishDurl, spanishDurl));
+                else if (canonicalUrl.IndexOf(spanishDurl) > -1)
+                    url.SetUrl(canonicalUrl.Replace(spanishDurl, englishDurl));
+                else
+                    url.SetUrl("");
+            });
+
         }
 
         #region Data-related
@@ -362,7 +398,7 @@ namespace Www.Templates
 
             TermDictionaryCollection dataCollection = TermDictionaryManager.Search(language, "_", 0, false);
             _totalCount = dataCollection.Count;
- 
+
             MultiView1.ActiveViewIndex = 0;
             numResDiv.Visible = (NumResults > 0);
         }
@@ -397,10 +433,10 @@ namespace Www.Templates
                 {
                     Int32.Parse(CdrID);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    throw new  Exception("Invalid CDRID" + CdrID);
-                    
+                    throw new Exception("Invalid CDRID" + CdrID);
+
                 }
         }
 
@@ -425,7 +461,7 @@ namespace Www.Templates
             //Controls
             AutoComplete1.Attributes.Add("aria-label", "Escriba frase o palabra clave");
             AutoComplete1.Attributes.Add("placeholder", "Escriba frase o palabra clave");
-            
+
             lblResultsFor.Text = "resultados de:";
             lblStartsWith.Text = "Empieza con";
             lblContains.Text = "Contiene";
@@ -440,7 +476,7 @@ namespace Www.Templates
             PageOptionsBoxTitle = "Opciones";
             PrevText = "Definiciones anteriores:";
             NextText = "Definiciones siguientes:";
-            
+
             ////common display features
             SetupCommon();
         }
@@ -527,8 +563,8 @@ namespace Www.Templates
 
         private void RenderGutter()
         {
-            gutterLangSwitch.EnglishUrl = "/dictionary/";
-            gutterLangSwitch.SpanishUrl = "/diccionario/";
+            gutterLangSwitch.EnglishUrl = "/publications/dictionaries/cancer-terms";
+            gutterLangSwitch.SpanishUrl = "/espanol/publicaciones/diccionario";
             gutterLangSwitch.Visible = true;
         }
 
@@ -570,20 +606,20 @@ namespace Www.Templates
             if (language == "Spanish")
             {
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
-                        {
-                            data.Value = "Definici&oacute;n de " + termName + " - Diccionario de c&aacute;ncer";
-                        });
+                {
+                    data.Value = "Definici&oacute;n de " + termName + " - Diccionario de c&aacute;ncer";
+                });
 
-                this.Page.Header.Title=PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+                this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
             }
             else
             {
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
-                        {
-                            data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
-                        });
+                {
+                    data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
+                });
 
-                this.Page.Header.Title=PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+                this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
                 lblTermPronun.Text = termPronun;
             }
 
@@ -626,7 +662,7 @@ namespace Www.Templates
         protected string AudioMediaHTML(object objData)
         {
             string audioMediaHTML = String.Empty;
-            if (objData != null )
+            if (objData != null)
             {
                 audioMediaHTML = objData.ToString();
                 audioMediaHTML = audioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);

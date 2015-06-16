@@ -276,8 +276,8 @@ namespace CancerGov.Handlers
                 definition.LocationCountry = country;
             }
 
-            definition.TrialStatusRestriction =
-                closedTrialsOnly ? TrialStatusType.ClosedOnly : TrialStatusType.OpenOnly;
+            // The system only contains open trials.
+            definition.TrialStatusRestriction = TrialStatusType.OpenOnly;
 
             definition.RestrictToRecent = newTrialsOnly;
 

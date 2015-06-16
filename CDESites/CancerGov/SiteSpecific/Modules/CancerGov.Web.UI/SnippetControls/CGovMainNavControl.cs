@@ -54,6 +54,11 @@ namespace CancerGov.Web.UI.SnippetControls
             //checks to make sure we have something to render and that has children
             if (root != null && root.ChildItems.Length > 0)
             {
+                String path = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
+                if (path.Equals(root.SectionPath))
+                {
+                    pastCurrentPage = true;
+                }
                 writer.AddAttribute(HtmlTextWriterAttribute.Class, "navigation");
                 writer.RenderBeginTag(HtmlTextWriterTag.Div);
                 writer.Write(_navInfo.displayParams.MobileNav);
@@ -124,7 +129,7 @@ namespace CancerGov.Web.UI.SnippetControls
                     hasChildren = " has-children";
                 }
 
-            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item lvl-"+level+ liClass + hasChildren);
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, "nav-item lvl-"+level+ liClass + hasChildren + " item-" + itemNum);
             writer.RenderBeginTag(HtmlTextWriterTag.Li);
 
 

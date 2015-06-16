@@ -32,7 +32,8 @@
 	        <input type="hidden" name="fld" value="<%=Request.Params["fld"]%>">
             <h5><%=Title%></h5>
             <p id="caption"><%=Caption%></p>
-            <div class="ct-popup-line"><span id="alphaSearch" class="ct-popup-label">Click a Letter/#:</span><%=AlphaIndexLinks%></div>
+            
+            <%=AlphaIndexLinks%>
             <div class="ct-popup-line">
                 <label class="ct-popup-label" for="SearchBox"><%=TextInputPrompt%>:</label>
                 <input type="text" id="SearchBox" name="keyword" size="20" value="<%=InputKeyword%>" />

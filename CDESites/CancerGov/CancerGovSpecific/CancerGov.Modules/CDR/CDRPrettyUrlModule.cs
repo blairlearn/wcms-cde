@@ -2,6 +2,7 @@
 using System.Web;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Data;
 using System.Linq;
 using CancerGov.Modules.CDR;
@@ -65,17 +66,9 @@ namespace CancerGov.Modules
                     context.Request.Url.Segments[1].ToLower() == "clinicaltrials/")
                 {
                     string oldId = string.Empty;
-                    string version = string.Empty;
+
                     // The third segment will be the old id that we can use to look up in the database
-                    if (context.Request.Url.Segments.Count() == 3)
-                    {
-                        oldId = context.Request.Url.Segments[2];
-                    }
-                    else if (context.Request.Url.Segments.Count() == 4)
-                    {
-                        oldId = context.Request.Url.Segments[2];
-                        version = context.Request.Url.Segments[3];
-                    }
+                    oldId = context.Request.Url.Segments[2];
 
                     if (!string.IsNullOrEmpty(oldId))
                     {
@@ -83,19 +76,32 @@ namespace CancerGov.Modules
                         string cdrID = CDRPrettyURLQuery.GetProtocolByOldId(oldId.Trim());
                         if (!string.IsNullOrEmpty(cdrID))
                         {
-                            if (string.IsNullOrEmpty(version))
-                                version = "healthprofessional";
-
-                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?cdrid={0}&version={1}", cdrID, version);
+                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?cdrid={0}", cdrID);
                             context.Response.Redirect(ctViewUrl, true);
                         }
                         else
+                        {
                             Logger.LogError("CDRPrettyUrlModule", "protocoloId not found in database for oldId " + oldId, NCIErrorLevel.Debug);
+
+                            // If this is an NCT ID, redirect to the trial's page at CTGov.
+                            if (IsNctID(oldId))
+                            {
+                                Logger.LogError("CDRPrettyUrlModule", oldId + " is an NCT ID.", NCIErrorLevel.Debug);
+
+                                // Format for a CTGov URL is https://clinicaltrials.gov/show/<<NCT_ID>>
+                                String nlmUrl = String.Format("https://clinicaltrials.gov/show/{0}", oldId.Trim());
+
+                                Logger.LogError("CDRPrettyUrlModule", "Redirecting to " + nlmUrl, NCIErrorLevel.Debug);
+                                context.Response.Redirect(nlmUrl, true);
+                            }
+                        }
                     }
                     else
                         Logger.LogError("CDRPrettyUrlModule", "oldId is null or empty", NCIErrorLevel.Debug);
                 }
             }
+            // Response.Redirect() throws a ThreadAbortException.  This is normal behavior.
+            // Hide the "normal error" by swallowing the exception.
             catch (System.Threading.ThreadAbortException)
             { }
             catch (Exception ex)
@@ -106,6 +112,26 @@ namespace CancerGov.Modules
 
 
         #endregion
+
+        /// <summary>
+        /// Determines whether the value contained by a string is an NCT ID.
+        /// </summary>
+        /// <param name="IDString"></param>
+        /// <returns></returns>
+        private bool IsNctID(string IDString)
+        {
+            // Per http://www.nlm.nih.gov/bsd/policy/clin_trials.html, 
+            // "The format for the ClinicalTrials.gov registry number is "NCT" followed by an 8-digit number, e.g.: NCT00000419."
+
+            bool isAMatch = false;
+
+            if(!string.IsNullOrEmpty(IDString)){
+
+                isAMatch = Regex.IsMatch(IDString.Trim(), "^NCT[0-9]{1,8}$", RegexOptions.IgnoreCase);
+            }
+
+            return isAMatch;
+        }
 
     }
 }

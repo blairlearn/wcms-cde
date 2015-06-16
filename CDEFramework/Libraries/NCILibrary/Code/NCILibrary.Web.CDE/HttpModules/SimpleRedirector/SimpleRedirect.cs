@@ -37,7 +37,7 @@ namespace NCI.Web.CDE
 
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
-
+            
             // Can we ignore this file?
             if (Utility.IgnoreWebResource(url))
                 return;
@@ -47,10 +47,21 @@ namespace NCI.Web.CDE
             if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
                 return;
 
-            String redirectUrl = GetRedirectUrl(url, context);
 
-            if(!String.IsNullOrEmpty(redirectUrl))
-                DoPermanentRedirect(context.Response, redirectUrl);
+            String redirectUrl = GetRedirectUrl(url, context);
+            //check if url if not return
+            if (String.IsNullOrEmpty(redirectUrl))
+                return;
+
+            
+            String query = context.Server.UrlDecode(context.Request.Url.Query);
+            if (!String.IsNullOrEmpty(query))
+            {
+                redirectUrl += query;
+            }
+
+           
+            DoPermanentRedirect(context.Response, redirectUrl);
         }
 
         /// <summary>
@@ -63,6 +74,11 @@ namespace NCI.Web.CDE
         {
             String redirect = null;
 
+            if (url.LastIndexOf("/") == url.Length-1)
+            {
+                url = url.Substring(0, url.Length - 1);
+            }
+
             SimpleRedirectorConfigurationSection config = SimpleRedirectorConfigurationSection.Get();
 
             String datafile = HttpContext.Current.Server.MapPath(config.DataSource.DataFile);
@@ -70,6 +86,10 @@ namespace NCI.Web.CDE
 
             if (urlMap.Contains(url))
             {
+                if (urlMap.ContainsMultiple(url))
+                {
+                    log.debug(String.Format("Url: '{0}' has multiple instances in redirect map.", url));
+                }
                 redirect = urlMap[url];
                 log.debug(String.Format("Url '{0}' found; redirects to '{1}'.", url, redirect));
             }

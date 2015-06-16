@@ -79,8 +79,10 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         protected ProtocolVersions CurrentAudience
         {
-            get { return (ProtocolVersions)(ViewState["CurrentAudience"] ?? ProtocolVersions.HealthProfessional); }
-            set { ViewState["CurrentAudience"] = value; }
+            //As part of CTRP data feed phase 1. there will only be one version, so we will
+            //force to HP always
+            get { return ProtocolVersions.HealthProfessional; }
+            set { return; }
         }
 
         /// <summary>
@@ -173,9 +175,6 @@ namespace CancerGov.Web.SnippetTemplates
                         PersistentSortOrder = CTSSortFilters.PhaseDesc;
                     InitializeSortOrderList(includesKeyword, PersistentSortOrder);
 
-                    // Check for Patient/Health Professional flag passed by ClinicalTrialsLink page.
-                    CheckForDefaultAudienceOverride();
-
                     // Set up page size
                     InitializeResultsPerPage();
 
@@ -245,7 +244,6 @@ namespace CancerGov.Web.SnippetTemplates
         protected void OnLoadComplete()
         {
             // Synchronize the various radio button sets with their assigned values.
-            SynchronizeAudienceSelection();
             SynchronizeDisplayFormatSelection();
             SynchronizeSortOrder();
             SynchronizeResultsPerPage();
@@ -404,10 +402,8 @@ namespace CancerGov.Web.SnippetTemplates
             sortOrder.Items.Add(new ListItem("Phase of Trial", CTSSortFilters.PhaseDesc.ToString("d")));
             sortOrder.Items.Add(new ListItem("Title", CTSSortFilters.TitleAsc.ToString("d")));
             sortOrder.Items.Add(new ListItem("Type of Trial", CTSSortFilters.TrialTypeAsc.ToString("d")));
-            sortOrder.Items.Add(new ListItem("Status of Trial", CTSSortFilters.StatusAsc.ToString("d")));
             sortOrder.Items.Add(new ListItem("Age Range", CTSSortFilters.AgeRangeAsc.ToString("d")));
-            sortOrder.Items.Add(new ListItem("Sponsor of Trial", CTSSortFilters.SponsorAsc.ToString("d")));
-            sortOrder.Items.Add(new ListItem("Protocol IDs", CTSSortFilters.ProtocolIDAsc.ToString("d")));
+            sortOrder.Items.Add(new ListItem("Trial ID", CTSSortFilters.ProtocolIDAsc.ToString("d")));
 
             // Set the default sort order.
             ListItem item = sortOrder.Items.FindByValue(defaultSortOrder.ToString("d"));
@@ -689,7 +685,7 @@ namespace CancerGov.Web.SnippetTemplates
         // So instead of evaluating the values contained in the controls directly, the code needs to
         // evaluate the corresponding state properties instead:
         // 
-        //     CurrentAudience -- Which audience option is currently in effect?
+        //     CurrentAudience -- This is being forced to HP as part of CTRP Data Feed Phase 1
         //     CurrentDisplayFormat -- Which display formatio should be used?
         //     DescriptionIncludesLocation -- If the Description format is in use, should locations be included?
         //     DescriptionIncludesEligibility -- If the Description format is in use, should eligibility be included?
@@ -700,33 +696,6 @@ namespace CancerGov.Web.SnippetTemplates
         // 
         // This block of code is intended to be the only place where the page updates or
         // evaluates the on-screen controls, and the only place which updates the state properties.
-
-
-
-        /// <summary>
-        /// Forces the audience selection controls to correspond to their preserved state
-        /// from previous page loads.
-        /// </summary>
-        private void SynchronizeAudienceSelection()
-        {
-            // In order to restore the buttons to their previous state, we first
-            // have to clear any that are already checked.  (This wouldn't be a
-            // problem if we could use a RadioButtonGroup, but the page layout
-            // won't allow it.)
-            patientAudience.Checked = false;
-            healthProfAudience.Checked = false;
-
-            // Set the button for the current selection.
-            switch (CurrentAudience)
-            {
-                case ProtocolVersions.Patient:
-                    patientAudience.Checked = true;
-                    break;
-                case ProtocolVersions.HealthProfessional:
-                    healthProfAudience.Checked = true;
-                    break;
-            }
-        }
 
         /// <summary>
         /// Forces the display format controls to correspond to their preserved state
@@ -769,29 +738,6 @@ namespace CancerGov.Web.SnippetTemplates
         }
 
         /// <summary>
-        /// Checks for a audience flag being passed in from clinical trials search links
-        /// and overriding the search results' default audience.
-        /// 
-        /// Because this method changes the page's CurrentAudience setting, it
-        /// must, must, must only be called during the initial page load.
-        /// </summary>
-        private void CheckForDefaultAudienceOverride()
-        {
-            string audienceOverride = Strings.Clean(Request["vers"]);
-            if (!string.IsNullOrEmpty(audienceOverride))
-            {
-                // Convert passed value to a ProtocolVersions.  If the value is non-parsable,
-                // default to Health Professional.
-                ProtocolVersions requestedAudience = (ProtocolVersions)Strings.ToInt(audienceOverride);
-                if (requestedAudience == ProtocolVersions.HealthProfessional ||
-                    requestedAudience == ProtocolVersions.Patient)
-                {
-                    CurrentAudience = requestedAudience;
-                }
-            }
-        }
-
-        /// <summary>
         /// Click handler for the "GO" button in the Audience and Display section of the results page.
         /// 
         /// This method determines which buttons are active, updates the page's CurrentAudience and 
@@ -802,14 +748,6 @@ namespace CancerGov.Web.SnippetTemplates
         /// <param name="e"></param>
         protected void UpdateAudienceAndDisplay_Click(object sender, EventArgs e)
         {
-            // Set the current audience according to the audience radio buttons.
-            // This is the one and only place where the audience type
-            // radio buttons are evaluated.
-            if (patientAudience.Checked)
-                CurrentAudience = ProtocolVersions.Patient;
-            else
-                CurrentAudience = ProtocolVersions.HealthProfessional;
-
             // Set the current display format according to the display format radio button
             // This is the one and only place where the display format radio buttons
             // are evaluated.
@@ -837,29 +775,6 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 // Default to Title format.
                 CurrentDisplayFormat = ProtocolDisplayFormats.Short;
-            }
-
-
-            // Reconcile Audience and Display Buttons.
-            // If the selected audience is Patient, disable Custom format (FR9256-016)
-            if (CurrentAudience == ProtocolVersions.Patient)
-            {
-                // If the user selects Patient as Audience type and Custom as format,
-                // force the format to Title.  (FR9256-017)
-                if (CurrentDisplayFormat == ProtocolDisplayFormats.Custom)
-                {
-                    CurrentDisplayFormat = ProtocolDisplayFormats.Short;
-                    titleFormat.Checked = true;
-                    customFormat.Checked = false;
-                }
-
-                customFormat.CssClass = "gray";
-                customFormat.Enabled = false;
-            }
-            else
-            {
-                customFormat.CssClass = "black-text";
-                customFormat.Enabled = true;
             }
 
             // If format is now Custom, show the custom format control
