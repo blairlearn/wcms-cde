@@ -16,7 +16,7 @@ namespace NCI.Web.Sitemap
         {
         }
 
-        [XmlElement("pageurl")]
+        [XmlElement("loc")]
         public string pageUrl;
 
         [XmlIgnore]
@@ -27,7 +27,7 @@ namespace NCI.Web.Sitemap
         {
             get
             {
-                return lastMod.ToShortDateString();
+                return lastMod.ToString("yyyy-MM-dd");
             }
             set { }
         }
