@@ -12,25 +12,10 @@ namespace NCI.Web.Sitemap
     [XmlType("url")]
     public class SitemapUrl
     {
-        internal SitemapUrl()
-        {
-        }
+        internal SitemapUrl() { }
 
         [XmlElement("loc")]
         public string pageUrl;
-
-        [XmlIgnore]
-        public DateTime lastMod;
-
-        [XmlElement("lastmod")]
-        public string lastModXml
-        {
-            get
-            {
-                return lastMod.ToString("yyyy-MM-dd");
-            }
-            set { }
-        }
 
         [XmlIgnore]
         public sitemapChangeFreq changeFreq;
@@ -48,10 +33,9 @@ namespace NCI.Web.Sitemap
         [XmlElement("priority")]
         public double priority;
 
-        public SitemapUrl(string url, DateTime mod, sitemapChangeFreq freq, double pri)
+        public SitemapUrl(string url, sitemapChangeFreq freq, double pri)
         {
             pageUrl = url;
-            lastMod = mod;
             changeFreq = freq;
             priority = pri;
         }
