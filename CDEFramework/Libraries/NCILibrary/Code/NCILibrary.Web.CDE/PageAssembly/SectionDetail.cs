@@ -123,8 +123,6 @@ namespace NCI.Web.CDE
         }
 
 
-        private SnippetInfoCollection _snippets = new SnippetInfoCollection();
-         
         /// <summary>
         /// Gets and sets the section name
         /// </summary>
@@ -132,10 +130,15 @@ namespace NCI.Web.CDE
         public string SectionName { get; set; }
 
 
-
         /// <summary>
-        /// Gets the snippet infos.
+        /// Gets custom analytics values
         /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public WebAnalyticsInfo WAInfo { get; set; }
+
+
+        private SnippetInfoCollection _snippets = new SnippetInfoCollection();
+        /// <summary>Gets the snippet infos.</summary>
         /// <value>The snippet infos.</value>
         [System.Xml.Serialization.XmlArray(ElementName = "Snippets", Form = XmlSchemaForm.Unqualified)]
         [System.Xml.Serialization.XmlArrayItem("SnippetInfo", Form = XmlSchemaForm.Unqualified)]
