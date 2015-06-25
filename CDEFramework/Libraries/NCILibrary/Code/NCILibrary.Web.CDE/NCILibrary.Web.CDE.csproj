@@ -177,6 +177,8 @@
     <Compile Include="PageAssembly\TranslationMetaTag.cs" />
     <Compile Include="PageAssembly\Translations.cs" />
     <Compile Include="PageAssembly\UrlFilterDelegate.cs" />
+    <Compile Include="PageAssembly\WebAnalyticsInfo.cs" />
+    <Compile Include="PageAssembly\WebAnalyticsCustomVariableOrEvent.cs" />
     <Compile Include="PageAssembly\WebAnalyticsDataPointDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebAnalytics\Configuration\ChannelElement.cs">
