@@ -2349,9 +2349,14 @@
     <annotation>
       <documentation>Defines a single analytics event.</documentation>
     </annotation>
-    <attribute name="Value" type="string" use="required">
+    <attribute name="Key" type="string" use="required">
       <annotation>
-        <documentation>Prop or Evar ID.</documentation>
+        <documentation>Event plus event number.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Value" type="string">
+      <annotation>
+        <documentation>Description of event type.</documentation>
       </annotation>
     </attribute>
   </complexType>  
