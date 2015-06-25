@@ -2303,9 +2303,9 @@
           <documentation>Comma-separated list of analytics report suites.</documentation>
         </annotation>
       </element>
-      <element name="WAContentBuckets" type="string" minOccurs="0" maxOccurs="1">
+      <element name="WAContentGroups" type="string" minOccurs="0" maxOccurs="1">
         <annotation>
-          <documentation>Comma-separated list of content buckets.</documentation>
+          <documentation>String of content buckets.</documentation>
         </annotation>
       </element>
       <element name="WAEvents" minOccurs="0" maxOccurs="1">
