@@ -72,6 +72,8 @@
     <Compile Include="BusinessObjects\RelatedItems.cs" />
     <Compile Include="BusinessObjects\RelatedSummary.cs" />
     <Compile Include="BusinessObjects\RelatedTerm.cs" />
+    <Compile Include="BusinessObjects\TermReturn.cs" />
+    <Compile Include="BusinessObjects\TermReturnMeta.cs" />
     <Compile Include="DictionaryService.svc.cs">
       <DependentUpon>DictionaryService.svc</DependentUpon>
     </Compile>

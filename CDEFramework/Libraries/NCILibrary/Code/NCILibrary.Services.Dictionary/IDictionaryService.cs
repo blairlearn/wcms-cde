@@ -6,46 +6,35 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 
+using NCI.Services.Dictionary.BusinessObjects;
+
 namespace NCI.Services.Dictionary
 {
     // NOTE: If you change the interface name here, you must also update the reference to it in Web.config.
+    /// <summary>
+    /// Declares the public methods for the dictionary service and defines the rules for
+    /// mapping the parts of the dictionary URLs into method parameters.
+    /// </summary>
     [ServiceContract]
     public interface IDictionaryService
     {
+        /// <summary>
+        /// Retrieves a single dictionary term based on its specific term ID.
+        /// </summary>
+        /// <param name="termId">The ID of the term to be retrieved</param>
+        /// <param name="dictionary">The dictionary to retreive the term from.
+        ///     Valid values are
+        ///        term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The term's desired language.</param>
+        /// <param name="version">API version number</param>
+        /// <returns></returns>
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "Foo/{language}?term={criteria}")]
+            UriTemplate = "{version}/{language}/{dictionary}/GetTerm?termID={termId}")]
         [OperationContract]
-        String[] Foo(string language, string criteria);
-
-        [OperationContract]
-        string GetData(int value);
-
-        [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
-
-        // TODO: Add your service operations here
+        TermReturn GetTerm(String termId, String dictionary, String language, String version);
     }
 
-
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
-    [DataContract]
-    public class CompositeType
-    {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
-        [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
-
-        [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
-    }
 }

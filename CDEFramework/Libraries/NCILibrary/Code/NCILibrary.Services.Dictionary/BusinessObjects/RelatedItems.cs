@@ -7,6 +7,15 @@ namespace NCI.Services.Dictionary.BusinessObjects
 {
     public class RelatedItems
     {
+        public RelatedItems()
+        {
+            // Guarantee that the arrays are never null.
+            Term = new RelatedTerm[] { };
+            External = new RelatedExternalLink[] { };
+            Summary = new RelatedSummary[] { };
+            DrugSummary = new RelatedDrugSummary[] { };
+        }
+
         /// <summary>
         /// Possibly empty list of relatedTerm structures
         /// </summary>

@@ -7,6 +7,13 @@ namespace NCI.Services.Dictionary.BusinessObjects
 {
     public class DictionaryTerm
     {
+        public DictionaryTerm()
+        {
+            // Guarantee that the arrays are never null.
+            Aliases = new Alias[] { };
+            images = new String[] { };
+        }
+
         /// <summary>
         ///  The term's ID
         /// </summary>
@@ -45,11 +52,11 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// <summary>
         /// Possibly empty array of other names for the term.  (Only populated for drug dictionary)
         /// </summary>
-        public Alias Aliases { get; set; }
+        public Alias[] Aliases { get; set; }
 
         /// <summary>
         /// related links. (Cancer Term and Genetics only)
         /// </summary>
-        public RelatedItems[] Related { get; set; }
+        public RelatedItems Related { get; set; }
     }
 }
