@@ -74,11 +74,19 @@
     <Compile Include="BusinessObjects\RelatedTerm.cs" />
     <Compile Include="BusinessObjects\TermReturn.cs" />
     <Compile Include="BusinessObjects\TermReturnMeta.cs" />
+    <Compile Include="DictionaryManager.cs" />
     <Compile Include="DictionaryService.svc.cs">
       <DependentUpon>DictionaryService.svc</DependentUpon>
     </Compile>
+    <Compile Include="enum.cs" />
     <Compile Include="IDictionaryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -13,7 +13,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
         public TermReturnMeta()
         {
             // Set a default status message.
-            Message = "OK";
+            Messages = new string[] { "OK" };
         }
 
         /// <summary>
@@ -30,6 +30,6 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// Human-readable message about the status of the call to GetTerm().
         /// May contain an error message.
         /// </summary>
-        public String Message { get; set; }
+        public String[] Messages { get; set; }
     }
 }

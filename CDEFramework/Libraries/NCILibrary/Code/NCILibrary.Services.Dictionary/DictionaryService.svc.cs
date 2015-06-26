@@ -1,55 +1,109 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
 using NCI.Services.Dictionary.BusinessObjects;
+using NCI.Util;
 
 namespace NCI.Services.Dictionary
 {
     // NOTE: If you change the class name "Service1" here, you must also update the reference to "Service1" in Web.config and in the associated .svc file.
     public class DictionaryService : IDictionaryService
     {
+        #region private class InputValidator
+
+        private class InputValidator
+        {
+            private String apiVersion;
+            private DictionaryType dictionary;
+            private Language language;
+
+            public InputValidator(String apiVersion, DictionaryType dictionary, Language language)
+            {
+                this.apiVersion = apiVersion.ToLower(CultureInfo.CurrentCulture).Trim();
+                this.dictionary = dictionary;
+                this.language = language;
+            }
+
+            public bool IsValid()
+            {
+                bool isValid = Enum.IsDefined(typeof(DictionaryType), dictionary) && dictionary != DictionaryType.Unknown
+                    && Enum.IsDefined(typeof(Language), language) && language != Language.Unknown
+                    && !String.IsNullOrEmpty(apiVersion) && apiVersion == "v1";
+
+                return isValid;
+            }
+
+            public TermReturn GetInvalidResult()
+            {
+                List<String> messages = new List<string>();
+
+                if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
+                    messages.Add("Dictionary must be 'term', 'drug' or 'genetic'.");
+
+                if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
+                    messages.Add("Language must be 'en' or 'es'.");
+
+                if (String.IsNullOrEmpty(apiVersion) || apiVersion != "v1")
+                    messages.Add("API version must be 'v1'.");
+
+                return new TermReturn()
+                {
+                    Meta = new TermReturnMeta()
+                    {
+                        Messages = messages.ToArray(),
+                        Language = language.ToString(),
+                        Audience = "n/a"
+                    },
+                    Term = null
+                };
+            }
+        }
+
+        #endregion
+
         public TermReturn GetTerm(String termId, String dictionary, String language, String version)
         {
-            //retVal.key= String.Format("Foo!  termid = {0}  dictionary = {1}  language = {2}  API version = {3}",
-            //    termId, dictionary, language, version);
-            //retVal.audio = "the other thing.";
+            DictionaryType dict = GetDictionaryType(dictionary);
+            Language lang = GetLanguage(language);
 
-            DictionaryTerm termDetail = new DictionaryTerm();
-            termDetail.id = termId;
-            termDetail.term = "term";
-            termDetail.pronunciation = new Pronunciation();
-            termDetail.pronunciation.audio = "audio";
-            termDetail.pronunciation.key = "key";
-            termDetail.dateFirstPublished = DateTime.MinValue.ToString("MM-dd-yyyy");
-            termDetail.dateLastModified = DateTime.MaxValue.ToString("MM-dd-yyyy");
-            termDetail.images = new String[] { "http://www.cancer.gov/PublishedContent/Images/images/patient-focused/work/hands-on-laptop-wide.jpg", "http://www.cancer.gov/PublishedContent/Images/images/causes/substances/coal-fired-power-plant-wide.jpg" };
-            termDetail.Definition = new Definition();
-            termDetail.Definition.Text = "Text";
-            termDetail.Definition.Html = "<p>Html</p>";
-            termDetail.Aliases = new Alias[] {
-                new Alias(){name="Term", type="preferred"},
-                new Alias(){name="Word", type="synonym"},
-                new Alias(){name="Dictionary Term", type="synonym"},
-                new Alias(){name="Cancer Term", type="brand name"}
-            };
-            termDetail.Related = new RelatedItems();
-
-            TermReturnMeta meta = new TermReturnMeta();
-            meta.Audience = "Determined by dictionary for now.";
-            meta.Language = language;
-            meta.Message = "K.O.";
-
-            TermReturn ret = new TermReturn()
+            InputValidator validator = new InputValidator(version, dict, lang);
+            if (validator.IsValid())
             {
-                Meta = meta,
-                Term = termDetail
-            };
 
-            return ret;
+                DictionaryManager mgr = new DictionaryManager();
+
+                TermReturn ret = mgr.GetTerm(termId, dict, lang, version);
+                return ret;
+            }
+            else
+                return validator.GetInvalidResult();
+        }
+
+        private DictionaryType GetDictionaryType(string dictionary)
+        {
+            DictionaryType type = ConvertEnum<DictionaryType>.Convert(dictionary, DictionaryType.Unknown);
+            return type;
+        }
+
+        private Language GetLanguage(string language)
+        {
+            Language type = Language.Unknown;
+            if (!String.IsNullOrEmpty(language))
+            {
+                language = language.ToLower(CultureInfo.CurrentCulture).Trim();
+                switch (language)
+                {
+                    case "en": type = Language.English; break;
+                    case "es": type = Language.Spanish; break;
+                }
+            }
+
+            return type;
         }
     }
 }
