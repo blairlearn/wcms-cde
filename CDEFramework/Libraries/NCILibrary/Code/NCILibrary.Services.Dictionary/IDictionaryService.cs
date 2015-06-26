@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Text;
 
 namespace NCI.Services.Dictionary
@@ -11,6 +12,10 @@ namespace NCI.Services.Dictionary
     [ServiceContract]
     public interface IDictionaryService
     {
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "Foo/{language}?term={criteria}")]
+        [OperationContract]
+        String[] Foo(string language, string criteria);
 
         [OperationContract]
         string GetData(int value);

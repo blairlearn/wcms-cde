@@ -10,6 +10,13 @@ namespace NCI.Services.Dictionary
     // NOTE: If you change the class name "Service1" here, you must also update the reference to "Service1" in Web.config and in the associated .svc file.
     public class DictionaryService : IDictionaryService
     {
+        public String[] Foo(string language, string criteria)
+        {
+            String[] values = { "Foo!", language, criteria };
+
+            return values;
+        }
+
         public string GetData(int value)
         {
             return string.Format("You entered: {0}", value);

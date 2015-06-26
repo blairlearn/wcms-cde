@@ -44,6 +44,9 @@
     <Reference Include="System.ServiceModel">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -60,6 +63,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\Alias.cs" />
+    <Compile Include="BusinessObjects\Definition.cs" />
+    <Compile Include="BusinessObjects\DictionaryTerm.cs" />
+    <Compile Include="BusinessObjects\Pronunciation.cs" />
+    <Compile Include="BusinessObjects\RelatedDrugSummary.cs" />
+    <Compile Include="BusinessObjects\RelatedExternalLink.cs" />
+    <Compile Include="BusinessObjects\RelatedItems.cs" />
+    <Compile Include="BusinessObjects\RelatedSummary.cs" />
+    <Compile Include="BusinessObjects\RelatedTerm.cs" />
     <Compile Include="DictionaryService.svc.cs">
       <DependentUpon>DictionaryService.svc</DependentUpon>
     </Compile>
