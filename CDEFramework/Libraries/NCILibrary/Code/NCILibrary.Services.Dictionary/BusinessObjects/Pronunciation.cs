@@ -10,6 +10,13 @@ namespace NCI.Services.Dictionary.BusinessObjects
     /// </summary>
     public class Pronunciation
     {
+        public Pronunciation()
+        {
+            // Guarantee non-null values.
+            key = string.Empty;
+            audio = string.Empty;
+        }
+
         /// <summary>
         /// Pronunciation key.  Possibly empty.
         /// </summary>
