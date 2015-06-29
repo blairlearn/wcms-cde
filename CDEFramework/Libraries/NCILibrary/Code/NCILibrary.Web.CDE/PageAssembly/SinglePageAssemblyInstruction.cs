@@ -210,6 +210,7 @@ namespace NCI.Web.CDE
                 IEnumerable<string> filledTemplateSlots = (from snippet in _snippets select snippet.SlotName).Distinct<string>().Except(BlockedSlotNames);
 
                 SectionDetail sectionDetail = SectionDetailFactory.GetSectionDetail(SectionPath);
+
                 if (sectionDetail != null)
                 {
                     List<SnippetInfo> snippetsFromParent = sectionDetail.GetSnippetsNotAssociatedWithSlots(filledTemplateSlots);
@@ -806,6 +807,9 @@ namespace NCI.Web.CDE
             {
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
+
+            SectionDetail sectionDetail = SectionDetailFactory.GetSectionDetail(SectionPath);
+            WebAnalyticsInfo wai = sectionDetail.WebAnalyticsInfo;
         }
         #endregion
 

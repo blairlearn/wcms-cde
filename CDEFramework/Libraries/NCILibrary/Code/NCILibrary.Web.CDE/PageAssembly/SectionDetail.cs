@@ -134,7 +134,7 @@ namespace NCI.Web.CDE
         /// Gets custom analytics values
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public WebAnalyticsInfo WAInfo { get; set; }
+        public WebAnalyticsInfo WebAnalyticsInfo { get; set; }
 
 
         private SnippetInfoCollection _snippets = new SnippetInfoCollection();
