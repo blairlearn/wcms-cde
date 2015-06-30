@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Test page</title>
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script> 
+<script>
+    function DoSearch(evt) {
+        var Url = "http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/SearchPost";
+
+        var param1 = $("#param1").val();
+        var param2 = $("#param2").val();
+
+        // Put the parameters into a JSON structure.  This is necessary, but
+        // not sufficient for satisfying the SearchInputs DataContract.
+        var searchInputs = {
+            "Param1": param1,
+            "Param2": param2
+        };
+
+        //jQuery.post(Url, json, StuffDoer, "json");
+        $.ajax({
+            type: "POST",
+            url: Url,
+            contentType: "application/json; charset=utf-8",
+
+            // This call to JSON.stringify() is what turns the searchInputs data structure
+            // into something the POST web service is able to understand.
+            data: JSON.stringify(searchInputs),
+            dataType: "json",
+            success: function(msg) {
+                debugger;
+            }
+        });
+    };
+
+    function StuffDoer(data, textStatus, jqXHR) {
+        debugger;
+    }
+
+    $(document).ready(function() {
+        $("#searchBtn").click(DoSearch);
+    });
+</script>
+
+</head>
+<body>
+
+<h1>Test Page</h1>
+
+<div id="GetTerm">
+<h2>GetTerm()</h2>
+
+<p>Cancer Terms</p>
+<ul>
+<li>English: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/GetTerm?termID=termId</a></li>
+<li>Spanish: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/GetTerm?termID=termId</a></li>
+</ul>
+
+<p>Drug Dictionary</p>
+<ul>
+<li>English: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/en/drug/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/en/drug/GetTerm?termID=termId</a></li>
+<li>Spanish: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/drug/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/es/drug/GetTerm?termID=termId</a></li>
+</ul>
+
+<p>Genetic Terms</p>
+<ul>
+<li>English: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/genetic/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/es/genetic/GetTerm?termID=termId</a></li>
+<li>Spanish: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/en/genetic/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/en/genetic/GetTerm?termID=termId</a></li>
+</ul>
+
+</div>
+
+<h2>Search()</h2>
+
+<h3>English</h3>
+
+Get: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/SearchGet?param1=foo&param2=bar">test</a>
+<form id="searchFrom">
+    param 1 <input id="param1" name="param1" value="search field 1" /><br />
+    param 2 <input id="param2" name="param2" value="search field 2" /><br />
+    <p><input id="searchBtn" type="button" value="search" /></p>
+</form>
+
+
+</body>
+</html>

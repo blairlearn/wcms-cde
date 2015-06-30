@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Text;
 
 using NCI.Services.Dictionary.BusinessObjects;
@@ -83,6 +84,19 @@ namespace NCI.Services.Dictionary
             else
                 return validator.GetInvalidResult();
         }
+
+        // Placeholder.  We really want to return something which *contains* an array.
+        public DictionaryTerm[] SearchGet(String param1, String param2, String dictionary, String language, String version)
+        {
+            return new DictionaryTerm[] { };
+        }
+
+        // Placeholder.  We really want to return something which *contains* an array.
+        public DictionaryTerm[] SearchPost(SearchInputs paramBlock, String dictionary, String language, String version)
+        {
+            return new DictionaryTerm[] { };
+        }
+
 
         private DictionaryType GetDictionaryType(string dictionary)
         {
