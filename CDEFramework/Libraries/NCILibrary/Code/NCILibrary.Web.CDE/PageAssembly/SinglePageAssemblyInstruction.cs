@@ -791,11 +791,35 @@ namespace NCI.Web.CDE
 
 
         #region Protected
+
+        /// <summary>
+        /// Load the analytics that have been set on the navon. If there is no value,
+        /// recurse through parents until a value is found or until root is reached.
+        /// </summary>
+        protected void LoadCustomAnalytics(SectionDetail section)
+        {
+            WebAnalyticsInfo wai = section.WebAnalyticsInfo;
+            if (wai == null)
+            {
+                if (section.ParentPath != null)
+                {
+                    wai = section.Parent.WebAnalyticsInfo;
+                    LoadCustomAnalytics(section.Parent);
+                }
+                else return;
+            }
+        }
+
         /// <summary>
         /// Override this method to add any page specifc web analytics data points.
         /// </summary>
         protected override void RegisterWebAnalyticsFieldFilters()
         {
+            // Get the section details for the content item, then load any custom analytics
+            // values from it or its parents
+            SectionDetail section = SectionDetailFactory.GetSectionDetail(SectionPath);
+            LoadCustomAnalytics(section);
+
             base.RegisterWebAnalyticsFieldFilters();
 
             SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
@@ -807,9 +831,6 @@ namespace NCI.Web.CDE
             {
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
-
-            SectionDetail sectionDetail = SectionDetailFactory.GetSectionDetail(SectionPath);
-            WebAnalyticsInfo wai = sectionDetail.WebAnalyticsInfo;
         }
         #endregion
 
