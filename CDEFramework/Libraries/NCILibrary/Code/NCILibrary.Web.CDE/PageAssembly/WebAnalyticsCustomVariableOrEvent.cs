@@ -14,13 +14,13 @@ namespace NCI.Web.CDE
         /// <summary>
         /// Unique variable ID
         /// </summary>
-        [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
+        [XmlAttribute(AttributeName = "Key", Form = XmlSchemaForm.Unqualified)]
         public string Key { get; set; }
 
         /// <summary>
         /// String value of variable
         /// </summary>
-        [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
+        [XmlAttribute(AttributeName = "Value", Form = XmlSchemaForm.Unqualified)]
         public string Value { get; set; }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace NCI.Web.CDE
         /// If true, the parent is added to the collection of variables.
         /// If false, it is removed.
         /// </summary>
-        [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
+        [XmlAttribute(AttributeName = "RemoveParent", Form = XmlSchemaForm.Unqualified)]
         public Boolean RemoveParent { get; set; }
 
         // Default constructor
@@ -36,7 +36,7 @@ namespace NCI.Web.CDE
         {
             this.Key = String.Empty;
             this.Value = String.Empty;
-            this.RemoveParent = true;
+            this.RemoveParent = false;
         }
     }
 }
