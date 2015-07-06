@@ -835,18 +835,14 @@ namespace NCI.Web.CDE
 
                 if (String.IsNullOrEmpty(chan))
                 {
-                    if (section.ParentPath != null)
-                    {
-                        wai = LoadCustomAnalytics(section.Parent);
-                        chan = LoadChannel(section.Parent);
-                    }
-                    else return "";
+                    wai = LoadCustomAnalytics(section.Parent);
+                    chan = LoadChannel(section.Parent);
                 }
                 return chan;
             }
             catch (NullReferenceException ex)
             {
-                return "";
+                return "Section or parent does not exist";
             }
         }
 
@@ -864,18 +860,36 @@ namespace NCI.Web.CDE
 
                 if (String.IsNullOrEmpty(suite))
                 {
-                    if (section.ParentPath != null)
-                    {
-                        wai = LoadCustomAnalytics(section.Parent);
-                        suite = LoadSuite(section.Parent);
-                    }
-                    else return "";
+                    wai = LoadCustomAnalytics(section.Parent);
+                    suite = LoadSuite(section.Parent);
                 }
                 return suite;
             }
             catch (NullReferenceException ex)
             {
-                return "";
+                return "Section or parent does not exist";
+            }
+        }
+
+        /// <summary>
+        /// Load the content group that has been set on this navon.
+        /// </summary>
+        protected string LoadContentGroup(SectionDetail section)
+        {
+            try
+            {
+                WebAnalyticsInfo wai = LoadCustomAnalytics(section);
+                string group = wai.WAContentGroups;
+
+                if (String.IsNullOrEmpty(group))
+                {
+                    group = "";  
+                }
+                return group;
+            }
+            catch (NullReferenceException ex)
+            {
+                return "Section or parent does not exist";
             }
         }
 
@@ -888,9 +902,9 @@ namespace NCI.Web.CDE
             // values from it or its parents
             /// TODO: clean up, actually use the values somewhere
             WebAnalyticsInfo wai = LoadCustomAnalytics(getSectionDetail());
-            string chan = LoadChannel(getSectionDetail());
             string suite = LoadSuite(getSectionDetail());
-
+            string channel = LoadChannel(getSectionDetail());
+            string group = LoadContentGroup(getSectionDetail());
 
             base.RegisterWebAnalyticsFieldFilters();
 
