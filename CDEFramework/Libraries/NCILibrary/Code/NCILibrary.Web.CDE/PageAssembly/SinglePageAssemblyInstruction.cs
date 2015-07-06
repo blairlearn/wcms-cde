@@ -793,10 +793,20 @@ namespace NCI.Web.CDE
         #region Protected
 
         /// <summary>
+        /// Create SectionDetail object 
+        /// </summary>
+        /// <returns></returns>
+        protected SectionDetail getSectionDetail()
+        {
+            SectionDetail sd = SectionDetailFactory.GetSectionDetail(SectionPath);
+            return sd;
+        }
+
+        /// <summary>
         /// Load the analytics that have been set on the navon. If there is no value,
         /// recurse through parents until a value is found or until root is reached.
         /// </summary>
-        protected void LoadCustomAnalytics(SectionDetail section)
+        protected WebAnalyticsInfo LoadCustomAnalytics(SectionDetail section)
         {
             WebAnalyticsInfo wai = section.WebAnalyticsInfo;
             if (wai == null)
@@ -806,7 +816,66 @@ namespace NCI.Web.CDE
                     wai = section.Parent.WebAnalyticsInfo;
                     LoadCustomAnalytics(section.Parent);
                 }
-                else return;
+                else return null;
+            }
+            return wai;
+        }
+
+        /// <summary>
+        /// Load the channel(s) that have been set on this navon. If there is no value,
+        /// recurse through parents until a value is found. Channels set on a loweer folder 
+        /// overwrite parents' channels.
+        /// </summary>
+        protected string LoadChannel(SectionDetail section)
+        {
+            try
+            {
+                WebAnalyticsInfo wai = LoadCustomAnalytics(section);
+                string chan = wai.WAChannels;
+
+                if (String.IsNullOrEmpty(chan))
+                {
+                    if (section.ParentPath != null)
+                    {
+                        chan = section.Parent.WebAnalyticsInfo.WAChannels;
+                        LoadChannel(section.Parent);
+                    }
+                    else return "";
+                }
+                return chan;
+            }
+            catch (NullReferenceException ex)
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Load the report suite(s) that have been set on this navon. If there is no value,
+        /// recurse through parents until a value is found. Suites set on a loweer folder 
+        /// overwrite parents' suites.
+        /// </summary>
+        protected string LoadSuite(SectionDetail section)
+        {
+            try
+            {
+                WebAnalyticsInfo wai = LoadCustomAnalytics(section);
+                string suite = wai.WAReportSuites;
+
+                if (String.IsNullOrEmpty(suite))
+                {
+                    if (section.ParentPath != null)
+                    {
+                        suite = section.Parent.WebAnalyticsInfo.WAReportSuites;
+                        LoadSuite(section.Parent);
+                    }
+                    else return "";
+                }
+                return suite;
+            }
+            catch (NullReferenceException ex)
+            {
+                return "";
             }
         }
 
@@ -817,8 +886,11 @@ namespace NCI.Web.CDE
         {
             // Get the section details for the content item, then load any custom analytics
             // values from it or its parents
-            SectionDetail section = SectionDetailFactory.GetSectionDetail(SectionPath);
-            LoadCustomAnalytics(section);
+            /// TODO: clean up, actually use the values somewhere
+            WebAnalyticsInfo wai = LoadCustomAnalytics(getSectionDetail());
+            string chan = LoadChannel(getSectionDetail());
+            string suite = LoadSuite(getSectionDetail());
+
 
             base.RegisterWebAnalyticsFieldFilters();
 
