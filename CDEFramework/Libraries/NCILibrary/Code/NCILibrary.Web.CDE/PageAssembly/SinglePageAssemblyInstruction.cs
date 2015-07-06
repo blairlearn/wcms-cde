@@ -837,8 +837,8 @@ namespace NCI.Web.CDE
                 {
                     if (section.ParentPath != null)
                     {
-                        chan = section.Parent.WebAnalyticsInfo.WAChannels;
-                        LoadChannel(section.Parent);
+                        wai = LoadCustomAnalytics(section.Parent);
+                        chan = LoadChannel(section.Parent);
                     }
                     else return "";
                 }
@@ -866,8 +866,8 @@ namespace NCI.Web.CDE
                 {
                     if (section.ParentPath != null)
                     {
-                        suite = section.Parent.WebAnalyticsInfo.WAReportSuites;
-                        LoadSuite(section.Parent);
+                        wai = LoadCustomAnalytics(section.Parent);
+                        suite = LoadSuite(section.Parent);
                     }
                     else return "";
                 }
