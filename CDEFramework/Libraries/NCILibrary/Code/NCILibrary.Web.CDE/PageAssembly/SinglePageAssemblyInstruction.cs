@@ -822,6 +822,24 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
+        /// Create list of WebAnalyticsInfo objects for current item and all ancestors
+        /// </summary>
+        protected List<WebAnalyticsInfo> WaiAil = new List<WebAnalyticsInfo> { };
+        protected List<WebAnalyticsInfo> LoadAllCustomAnalytics(SectionDetail section)
+        {
+            WaiAil.Add(section.WebAnalyticsInfo);
+            if (section.ParentPath != null)
+            {
+                LoadAllCustomAnalytics(section.Parent);
+            }
+            else
+            {
+                return null;
+            }
+            return WaiAil;
+        }
+
+        /// <summary>
         /// Load the channel(s) that have been set on this navon. If there is no value,
         /// recurse through parents until a value is found. Channels set on a loweer folder 
         /// overwrite parents' channels.
@@ -840,9 +858,12 @@ namespace NCI.Web.CDE
                 }
                 return chan;
             }
-            catch (NullReferenceException ex)
+            catch (Exception ex)
             {
-                return "Section or parent does not exist";
+                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadChannel()",
+                      "Exception encountered while retrieving web analytics channels.",
+                      NCIErrorLevel.Error, ex);
+                return "";
             }
         }
 
@@ -865,9 +886,12 @@ namespace NCI.Web.CDE
                 }
                 return suite;
             }
-            catch (NullReferenceException ex)
+            catch (Exception ex)
             {
-                return "Section or parent does not exist";
+                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadSuite()",
+                      "Exception encountered while retrieving web analytics suites.",
+                      NCIErrorLevel.Error, ex);
+                return "";
             }
         }
 
@@ -883,15 +907,75 @@ namespace NCI.Web.CDE
 
                 if (String.IsNullOrEmpty(group))
                 {
-                    group = "";  
+                    group = "";
                 }
                 return group;
             }
-            catch (NullReferenceException ex)
+            catch (Exception ex)
             {
-                return "Section or parent does not exist";
+                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadContentGroup()",
+                      "Exception encountered while retrieving web analytics content group.",
+                      NCIErrorLevel.Error, ex);
+                return "";
             }
         }
+
+        /// <summary>
+        /// Load events set on this navon.
+        /// </summary>
+        protected String LoadEvents(SectionDetail section)
+        {
+            try
+            {
+                string events = "";
+                List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
+                foreach (WebAnalyticsInfo waInfo in waInfos)
+                {
+                    WebAnalyticsCustomVariableOrEvent[] waEvents = waInfo.WAEvents;
+                    foreach (WebAnalyticsCustomVariableOrEvent waEvent in waEvents)
+                    {
+                        events += waEvent.Key;
+                    }
+                }
+                return events;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadEvents()",
+                      "Exception encountered while retrieving web analytics custom events",
+                      NCIErrorLevel.Error, ex);
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Load props and eVars set on this navon.
+        /// </summary>
+        protected String LoadPropsEvars(SectionDetail section)
+        {
+            try
+            {
+                string pevs = "";
+                List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
+                foreach (WebAnalyticsInfo waInfo in waInfos)
+                {
+                    WebAnalyticsCustomVariableOrEvent[] waPevs = waInfo.WACustomVariables;
+                    foreach (WebAnalyticsCustomVariableOrEvent waPev in waPevs)
+                    {
+                        pevs += waPev.Value;
+                    }
+                }
+                return pevs;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadPropsEvars()",
+                      "Exception encountered while retrieving web analytics custom props/evars",
+                      NCIErrorLevel.Error, ex);
+                return "";
+            }
+        }
+
 
         /// <summary>
         /// Override this method to add any page specifc web analytics data points.
@@ -905,6 +989,8 @@ namespace NCI.Web.CDE
             string suite = LoadSuite(getSectionDetail());
             string channel = LoadChannel(getSectionDetail());
             string group = LoadContentGroup(getSectionDetail());
+            string events = LoadEvents(getSectionDetail());
+            string propsEvars = LoadPropsEvars(getSectionDetail());
 
             base.RegisterWebAnalyticsFieldFilters();
 
@@ -917,6 +1003,12 @@ namespace NCI.Web.CDE
             {
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
+
+            SetWebAnalytics(WebAnalyticsOptions.Props.MultipageShortTile.ToString(), wbField =>
+            {
+                wbField.Value = suite + ", " + channel + ", " + group;
+            });
+
         }
         #endregion
 
