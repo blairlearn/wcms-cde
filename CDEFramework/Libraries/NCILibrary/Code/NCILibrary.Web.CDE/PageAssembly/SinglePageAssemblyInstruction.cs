@@ -925,8 +925,8 @@ namespace NCI.Web.CDE
 
         //protected Dictionary<string, WebAnalyticsDataPointDelegate> _PropsEvars = new Dictionary<string, WebAnalyticsDataPointDelegate>{};
         //protected Dictionary<string, WebAnalyticsDataPointDelegate> LoadPropsEvars(SectionDetail section)
-        protected Dictionary<string, string> _PropsEvars = new Dictionary<string, string> { };
-        protected Dictionary<string, string> LoadPropsEvars(SectionDetail section)
+        protected Dictionary<string, string> _props = new Dictionary<string, string> { };
+        protected Dictionary<string, string> LoadProps(SectionDetail section)
         {
             try
             {
@@ -937,29 +937,61 @@ namespace NCI.Web.CDE
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    WebAnalyticsCustomVariableOrEvent[] waPevs = waInfo.WACustomVariables;
-                    foreach (WebAnalyticsCustomVariableOrEvent waPev in waPevs)
+                    WebAnalyticsCustomVariableOrEvent[] waProps = waInfo.WAProps;
+                    foreach (WebAnalyticsCustomVariableOrEvent waProp in waProps)
                     {
-                        key = waPev.Key;
-                        value = waPev.Value;
-                        if (!_PropsEvars.ContainsKey(key))
+                        key = waProp.Key;
+                        value = waProp.Value;
+                        if (!_props.ContainsKey(key))
                         {
-                            _PropsEvars.Add(key, value);
+                            _props.Add(key, value);
                         }
                     }
                 }
-                return _PropsEvars;
+                return _props;
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadPropsEvars()",
-                      "Exception encountered while retrieving web analytics custom props/evars",
+                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadProps()",
+                      "Exception encountered while retrieving web analytics custom props",
                       NCIErrorLevel.Error, ex);
                 return null;
             }
         }
 
+        protected Dictionary<string, string> _evars = new Dictionary<string, string> { };
+        protected Dictionary<string, string> LoadEvars(SectionDetail section)
+        {
+            try
+            {
+                string key = "";
+                string value = "";
 
+                WaiAil.Clear();
+                List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
+                foreach (WebAnalyticsInfo waInfo in waInfos)
+                {
+                    WebAnalyticsCustomVariableOrEvent[] waEvars = waInfo.WAEvars;
+                    foreach (WebAnalyticsCustomVariableOrEvent waEvar in waEvars)
+                    {
+                        key = waEvar.Key;
+                        value = waEvar.Value;
+                        if (!_evars.ContainsKey(key))
+                        {
+                            _evars.Add(key, value);
+                        }
+                    }
+                }
+                return _evars;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadEvars()",
+                      "Exception encountered while retrieving web analytics custom evars",
+                      NCIErrorLevel.Error, ex);
+                return null;
+            }
+        }
 
         /// <summary>
         /// Override this method to add any page specifc web analytics data points.
@@ -973,7 +1005,8 @@ namespace NCI.Web.CDE
             string suite = LoadSuite(getSectionDetail());
             string channel = LoadChannel(getSectionDetail());
             string group = LoadContentGroup(getSectionDetail());
-            Dictionary<string, string> pev = LoadPropsEvars(getSectionDetail());
+            Dictionary<string, string> props = LoadProps(getSectionDetail());
+            Dictionary<string, string> evars = LoadEvars(getSectionDetail());
 
 
             base.RegisterWebAnalyticsFieldFilters();

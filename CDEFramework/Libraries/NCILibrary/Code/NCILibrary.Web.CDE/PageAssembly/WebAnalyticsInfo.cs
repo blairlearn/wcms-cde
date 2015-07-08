@@ -36,11 +36,18 @@ namespace NCI.Web.CDE
         public WebAnalyticsCustomVariableOrEvent[] WAEvents { get; set; }
 
         /// <summary>
-        /// Gets a collection of zero or more custom web analytics variables
+        /// Gets a collection of zero or more custom web analytics props
         /// </summary>
-        [XmlArray(ElementName = "WACustomVariables", Form = XmlSchemaForm.Unqualified)]
-        [XmlArrayItem("WACustomVariable", typeof(WebAnalyticsCustomVariableOrEvent), Form = XmlSchemaForm.Unqualified)]
-        public WebAnalyticsCustomVariableOrEvent[] WACustomVariables { get; set; }
+        [XmlArray(ElementName = "WAProps", Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem("WAProp", typeof(WebAnalyticsCustomVariableOrEvent), Form = XmlSchemaForm.Unqualified)]
+        public WebAnalyticsCustomVariableOrEvent[] WAProps { get; set; }
+
+        /// <summary>
+        /// Gets a collection of zero or more custom web analytics evars
+        /// </summary>
+        [XmlArray(ElementName = "WAEvars", Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem("WAEvar", typeof(WebAnalyticsCustomVariableOrEvent), Form = XmlSchemaForm.Unqualified)]
+        public WebAnalyticsCustomVariableOrEvent[] WAEvars { get; set; }
 
         // Default constructor
         public WebAnalyticsInfo()
@@ -49,7 +56,8 @@ namespace NCI.Web.CDE
             WAReportSuites = String.Empty;
             WAContentGroups = String.Empty;
             WAEvents = new WebAnalyticsCustomVariableOrEvent[0];
-            WACustomVariables = new WebAnalyticsCustomVariableOrEvent[0];
+            WAProps = new WebAnalyticsCustomVariableOrEvent[0];
+            WAEvars = new WebAnalyticsCustomVariableOrEvent[0];
         }
     }
 }
