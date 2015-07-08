@@ -792,6 +792,9 @@ namespace NCI.Web.CDE
 
         #region Protected
 
+        // TODO: pass values into analytics, refactor methods, clean up.
+        // fix Dictionary datatypes on prop/evar methods, add logic for RemoveParent
+
         /// <summary>
         /// Create SectionDetail object 
         /// </summary>
@@ -920,61 +923,42 @@ namespace NCI.Web.CDE
             }
         }
 
-        /// <summary>
-        /// Load events set on this navon.
-        /// </summary>
-        protected String LoadEvents(SectionDetail section)
+        //protected Dictionary<string, WebAnalyticsDataPointDelegate> _PropsEvars = new Dictionary<string, WebAnalyticsDataPointDelegate>{};
+        //protected Dictionary<string, WebAnalyticsDataPointDelegate> LoadPropsEvars(SectionDetail section)
+        protected Dictionary<string, string> _PropsEvars = new Dictionary<string, string> { };
+        protected Dictionary<string, string> LoadPropsEvars(SectionDetail section)
         {
             try
             {
-                string events = "";
-                List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
-                foreach (WebAnalyticsInfo waInfo in waInfos)
-                {
-                    WebAnalyticsCustomVariableOrEvent[] waEvents = waInfo.WAEvents;
-                    foreach (WebAnalyticsCustomVariableOrEvent waEvent in waEvents)
-                    {
-                        events += waEvent.Key;
-                    }
-                }
-                return events;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadEvents()",
-                      "Exception encountered while retrieving web analytics custom events",
-                      NCIErrorLevel.Error, ex);
-                return "";
-            }
-        }
+                string key = "";
+                string value = "";
 
-        /// <summary>
-        /// Load props and eVars set on this navon.
-        /// </summary>
-        protected String LoadPropsEvars(SectionDetail section)
-        {
-            try
-            {
-                string pevs = "";
+                WaiAil.Clear();
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
                     WebAnalyticsCustomVariableOrEvent[] waPevs = waInfo.WACustomVariables;
                     foreach (WebAnalyticsCustomVariableOrEvent waPev in waPevs)
                     {
-                        pevs += waPev.Value;
+                        key = waPev.Key;
+                        value = waPev.Value;
+                        if (!_PropsEvars.ContainsKey(key))
+                        {
+                            _PropsEvars.Add(key, value);
+                        }
                     }
                 }
-                return pevs;
+                return _PropsEvars;
             }
             catch (Exception ex)
             {
                 Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadPropsEvars()",
                       "Exception encountered while retrieving web analytics custom props/evars",
                       NCIErrorLevel.Error, ex);
-                return "";
+                return null;
             }
         }
+
 
 
         /// <summary>
@@ -982,15 +966,15 @@ namespace NCI.Web.CDE
         /// </summary>
         protected override void RegisterWebAnalyticsFieldFilters()
         {
+
             // Get the section details for the content item, then load any custom analytics
             // values from it or its parents
-            /// TODO: clean up, actually use the values somewhere
             WebAnalyticsInfo wai = LoadCustomAnalytics(getSectionDetail());
             string suite = LoadSuite(getSectionDetail());
             string channel = LoadChannel(getSectionDetail());
             string group = LoadContentGroup(getSectionDetail());
-            string events = LoadEvents(getSectionDetail());
-            string propsEvars = LoadPropsEvars(getSectionDetail());
+            Dictionary<string, string> pev = LoadPropsEvars(getSectionDetail());
+
 
             base.RegisterWebAnalyticsFieldFilters();
 
@@ -1002,11 +986,6 @@ namespace NCI.Web.CDE
             SetWebAnalytics(WebAnalyticsOptions.Props.PostedDate.ToString(), wbField =>
             {
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
-            });
-
-            SetWebAnalytics(WebAnalyticsOptions.Props.MultipageShortTile.ToString(), wbField =>
-            {
-                wbField.Value = suite + ", " + channel + ", " + group;
             });
 
         }
