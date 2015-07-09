@@ -6,7 +6,7 @@
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script> 
 <script>
     function DoSearch(evt) {
-        var Url = "http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/SearchPost";
+        var Url = "/DictionaryService.svc/v1/es/term/SearchPost";
 
         var param1 = $("#param1").val();
         var param2 = $("#param2").val();
@@ -53,20 +53,20 @@
 
 <p>Cancer Terms</p>
 <ul>
-<li>English: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/GetTerm?termID=termId</a></li>
-<li>Spanish: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/GetTerm?termID=termId</a></li>
+<li>English: <a href="/DictionaryService.svc/v1/es/term/GetTerm?termID=termId">/DictionaryService.svc/v1/es/term/GetTerm?termID=termId</a></li>
+<li>Spanish: <a href="/DictionaryService.svc/v1/es/term/GetTerm?termID=termId">/DictionaryService.svc/v1/es/term/GetTerm?termID=termId</a></li>
 </ul>
 
 <p>Drug Dictionary</p>
 <ul>
-<li>English: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/en/drug/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/en/drug/GetTerm?termID=termId</a></li>
-<li>Spanish: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/drug/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/es/drug/GetTerm?termID=termId</a></li>
+<li>English: <a href="/DictionaryService.svc/v1/en/drug/GetTerm?termID=termId">/DictionaryService.svc/v1/en/drug/GetTerm?termID=termId</a></li>
+<li>Spanish: <a href="/DictionaryService.svc/v1/es/drug/GetTerm?termID=termId">/DictionaryService.svc/v1/es/drug/GetTerm?termID=termId</a></li>
 </ul>
 
 <p>Genetic Terms</p>
 <ul>
-<li>English: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/genetic/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/es/genetic/GetTerm?termID=termId</a></li>
-<li>Spanish: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/en/genetic/GetTerm?termID=termId">http://dictionary.cancer.gov/DictionaryService.svc/v1/en/genetic/GetTerm?termID=termId</a></li>
+<li>English: <a href="/DictionaryService.svc/v1/es/genetic/GetTerm?termID=termId">/DictionaryService.svc/v1/es/genetic/GetTerm?termID=termId</a></li>
+<li>Spanish: <a href="/DictionaryService.svc/v1/en/genetic/GetTerm?termID=termId">/DictionaryService.svc/v1/en/genetic/GetTerm?termID=termId</a></li>
 </ul>
 
 </div>
@@ -75,7 +75,7 @@
 
 <h3>English</h3>
 
-Get: <a href="http://dictionary.cancer.gov/DictionaryService.svc/v1/es/term/SearchGet?param1=foo&param2=bar">test</a>
+Get: <a href="/DictionaryService.svc/v1/es/term/Search?param1=foo&param2=bar">test</a>
 <form id="searchFrom">
     param 1 <input id="param1" name="param1" value="search field 1" /><br />
     param 2 <input id="param2" name="param2" value="search field 2" /><br />
