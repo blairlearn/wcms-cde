@@ -8,14 +8,14 @@
     function DoSearch(evt) {
         var Url = "/DictionaryService.svc/v1/es/term/SearchPost";
 
-        var param1 = $("#param1").val();
-        var param2 = $("#param2").val();
+        var param1 = $("#searchText").val();
+        var param2 = $("#searchType").val();
 
         // Put the parameters into a JSON structure.  This is necessary, but
         // not sufficient for satisfying the SearchInputs DataContract.
         var searchInputs = {
-            "Param1": param1,
-            "Param2": param2
+        "searchText": searchText,
+        "searchType": searchType
         };
 
         //jQuery.post(Url, json, StuffDoer, "json");
@@ -75,10 +75,10 @@
 
 <h3>English</h3>
 
-Get: <a href="/DictionaryService.svc/v1/es/term/Search?param1=foo&param2=bar">test</a>
+Get: <a href="/DictionaryService.svc/v1/es/term/Search?searchText=foo&searchType=bar">test</a>
 <form id="searchFrom">
-    param 1 <input id="param1" name="param1" value="search field 1" /><br />
-    param 2 <input id="param2" name="param2" value="search field 2" /><br />
+    param 1 <input id="searchText" name="searchText" value="search text" /><br />
+    param 2 <input id="searchType" name="searchType" value="search field 2" /><br />
     <p><input id="searchBtn" type="button" value="search" /></p>
 </form>
 

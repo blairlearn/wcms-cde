@@ -36,19 +36,17 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         TermReturn GetTerm(String termId, String dictionary, String language);
 
-        // Placeholder.  We really want to return something which *contains* an array.
         // Search method for calling via GET requests.
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "v1/{language}/{dictionary}/search?param1={param1}&param2={param2}")]
+            UriTemplate = "v1/{language}/{dictionary}/search?searchText={searchText}&searchType={searchType}&offset={offset}&maxResults={maxResults}")]
         [OperationContract]
-        DictionaryTerm[] Search(String param1, String param2, String dictionary, String language);
+        SearchReturn Search(String searchText, String searchType, int offset, int maxResults, String dictionary, String language);
 
-        // Placeholder.  We really want to return something which *contains* an array..
         // Search method for calling via POST requests.
         [WebInvoke(ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "v1/{language}/{dictionary}/SearchPost")]
         [OperationContract]
-        DictionaryTerm[] SearchPost(SearchInputs paramBlock, String dictionary, String language);
+        SearchReturn SearchPost(SearchInputs paramBlock, String dictionary, String language);
        
     }
 

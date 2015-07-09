@@ -985,7 +985,6 @@ namespace NCI.Services.Dictionary
                         meta.Messages = new string[] { "Not a supported language for the drug dictionary." };
                     }
                     break;
-                    break;
                 default:
                     term = null;
                     break;
@@ -998,6 +997,84 @@ namespace NCI.Services.Dictionary
             };
 
             return trmReturn;
+        }
+
+        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        {
+            SearchReturn srchReturn;
+
+            DictionaryTerm[] results;
+
+            SearchReturnMeta meta = new SearchReturnMeta();
+            meta.Language = language.ToString();
+            meta.Offset = 0;
+
+            switch (dictionary)
+            {
+                case DictionaryType.term:
+                    if (language == Language.English)
+                    {
+                        results = CancerTermEnglish;
+                        meta.Audience = AUDIENCE_PATIENT;
+                        meta.Messages = new string[] { "OK" };
+                    }
+                    else if (language == Language.Spanish)
+                    {
+                        results = CancerTermSpanish;
+                        meta.Audience = AUDIENCE_PATIENT;
+                        meta.Messages = new string[] { "OK" };
+                    }
+                    else
+                    {
+                        results = new DictionaryTerm[] { };
+                        meta.Audience = string.Empty;
+                        meta.Messages = new string[] { "Not a supported language for the term dictionary." };
+                    }
+                    break;
+                case DictionaryType.drug:
+                    if (language == Language.English)
+                    {
+                        results = DrugTermEnglish;
+                        meta.Audience = AUDIENCE_HEALTHPROF;
+                        meta.Messages = new string[] { "OK" };
+                    }
+                    else
+                    {
+                        results = new DictionaryTerm[] { };
+                        meta.Audience = string.Empty;
+                        meta.Messages = new string[] { "Not a supported language for the drug dictionary." };
+                    }
+                    break;
+                case DictionaryType.genetic:
+                    if (language == Language.English)
+                    {
+                        results = GeneticTermEnglish;
+                        meta.Audience = AUDIENCE_HEALTHPROF;
+                        meta.Messages = new string[] { "OK" };
+                    }
+                    else
+                    {
+                        results = new DictionaryTerm[] { };
+                        meta.Audience = string.Empty;
+                        meta.Messages = new string[] { "Not a supported language for the drug dictionary." };
+                    }
+                    break;
+                default:
+                    results = new DictionaryTerm[] { };
+                    break;
+            }
+
+            meta.ResultCount = results.Length;
+
+
+            srchReturn = new SearchReturn()
+            {
+                Result = results,
+                Meta = meta
+            };
+
+            return srchReturn;
+        
         }
     }
 }

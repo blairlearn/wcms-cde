@@ -73,6 +73,8 @@
     <Compile Include="BusinessObjects\RelatedItems.cs" />
     <Compile Include="BusinessObjects\RelatedSummary.cs" />
     <Compile Include="BusinessObjects\RelatedTerm.cs" />
+    <Compile Include="BusinessObjects\SearchReturn.cs" />
+    <Compile Include="BusinessObjects\SearchReturnMeta.cs" />
     <Compile Include="BusinessObjects\TermReturn.cs" />
     <Compile Include="BusinessObjects\TermReturnMeta.cs" />
     <Compile Include="DictionaryManager.cs" />

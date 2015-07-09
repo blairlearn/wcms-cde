@@ -81,16 +81,25 @@ namespace NCI.Services.Dictionary
                 return validator.GetInvalidResult();
         }
 
-        // Placeholder.  We really want to return something which *contains* an array.
-        public DictionaryTerm[] Search(String param1, String param2, String dictionary, String language)
+        public SearchReturn Search(String searchText, String searchType, int offset, int maxResults, String dictionary, String language)
         {
-            return new DictionaryTerm[] { };
+            DictionaryType dict = GetDictionaryType(dictionary);
+            Language lang = GetLanguage(language);
+            SearchType search = GetSearchType(searchType);
+
+            DictionaryManager mgr = new DictionaryManager();
+            SearchReturn ret = mgr.Search(searchText, search, offset, maxResults, dict, lang);
+
+            return ret;
         }
 
-        // Placeholder.  We really want to return something which *contains* an array.
-        public DictionaryTerm[] SearchPost(SearchInputs paramBlock, String dictionary, String language)
+        public SearchReturn SearchPost(SearchInputs paramBlock, String dictionary, String language)
         {
-            return new DictionaryTerm[] { };
+            String searchText = paramBlock.searchText;
+            String searchType = paramBlock.searchType;
+            int offset = paramBlock.offset;
+            int maxResults = paramBlock.maxResults;
+            return Search(searchText, searchType, offset, maxResults, dictionary, language);
         }
 
 
@@ -113,6 +122,12 @@ namespace NCI.Services.Dictionary
                 }
             }
 
+            return type;
+        }
+
+        private SearchType GetSearchType(string searchType)
+        {
+            SearchType type = ConvertEnum<SearchType>.Convert(searchType, SearchType.Unknown);
             return type;
         }
     }

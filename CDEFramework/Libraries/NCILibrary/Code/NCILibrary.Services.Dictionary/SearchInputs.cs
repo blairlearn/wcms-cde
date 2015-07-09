@@ -11,9 +11,15 @@ namespace NCI.Services.Dictionary
     public class SearchInputs
     {
         [DataMember]
-        String Param1 { get; set; }
+        public String searchText { get; set; }
 
         [DataMember]
-        String Param2 { get; set; }
+        public String searchType { get; set; }
+
+        [DataMember]
+        public int offset { get; set; }
+
+        [DataMember]
+        public int maxResults { get; set; }
     }
 }

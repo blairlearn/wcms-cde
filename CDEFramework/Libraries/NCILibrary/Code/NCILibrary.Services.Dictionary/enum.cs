@@ -29,4 +29,12 @@ namespace NCI.Services.Dictionary
         English = 1,
         Spanish = 2
     }
+
+    internal enum SearchType
+    {
+        Unknown = 0,
+        Begins = 1,
+        Contains = 2,
+        Magic = 3
+    }
 }
