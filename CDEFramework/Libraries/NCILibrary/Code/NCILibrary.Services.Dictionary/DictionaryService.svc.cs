@@ -12,20 +12,20 @@ using NCI.Util;
 
 namespace NCI.Services.Dictionary
 {
-    // NOTE: If you change the class name "Service1" here, you must also update the reference to "Service1" in Web.config and in the associated .svc file.
+    // NOTE: If you change the class name "DictionaryService" here, you must also update the reference to "DictionaryService" in Web.config and the associated .svc file.
     public class DictionaryService : IDictionaryService
     {
+        const String API_VERSION = "v1";
+
         #region private class InputValidator
 
         private class InputValidator
         {
-            private String apiVersion;
             private DictionaryType dictionary;
             private Language language;
 
-            public InputValidator(String apiVersion, DictionaryType dictionary, Language language)
+            public InputValidator(DictionaryType dictionary, Language language)
             {
-                this.apiVersion = apiVersion.ToLower(CultureInfo.CurrentCulture).Trim();
                 this.dictionary = dictionary;
                 this.language = language;
             }
@@ -33,8 +33,7 @@ namespace NCI.Services.Dictionary
             public bool IsValid()
             {
                 bool isValid = Enum.IsDefined(typeof(DictionaryType), dictionary) && dictionary != DictionaryType.Unknown
-                    && Enum.IsDefined(typeof(Language), language) && language != Language.Unknown
-                    && !String.IsNullOrEmpty(apiVersion) && apiVersion == "v1";
+                    && Enum.IsDefined(typeof(Language), language) && language != Language.Unknown;
 
                 return isValid;
             }
@@ -48,9 +47,6 @@ namespace NCI.Services.Dictionary
 
                 if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
                     messages.Add("Language must be 'en' or 'es'.");
-
-                if (String.IsNullOrEmpty(apiVersion) || apiVersion != "v1")
-                    messages.Add("API version must be 'v1'.");
 
                 return new TermReturn()
                 {
@@ -67,18 +63,18 @@ namespace NCI.Services.Dictionary
 
         #endregion
 
-        public TermReturn GetTerm(String termId, String dictionary, String language, String version)
+        public TermReturn GetTerm(String termId, String dictionary, String language)
         {
             DictionaryType dict = GetDictionaryType(dictionary);
             Language lang = GetLanguage(language);
 
-            InputValidator validator = new InputValidator(version, dict, lang);
+            InputValidator validator = new InputValidator(dict, lang);
             if (validator.IsValid())
             {
 
                 DictionaryManager mgr = new DictionaryManager();
 
-                TermReturn ret = mgr.GetTerm(termId, dict, lang, version);
+                TermReturn ret = mgr.GetTerm(termId, dict, lang, API_VERSION);
                 return ret;
             }
             else
@@ -86,13 +82,13 @@ namespace NCI.Services.Dictionary
         }
 
         // Placeholder.  We really want to return something which *contains* an array.
-        public DictionaryTerm[] SearchGet(String param1, String param2, String dictionary, String language, String version)
+        public DictionaryTerm[] Search(String param1, String param2, String dictionary, String language)
         {
             return new DictionaryTerm[] { };
         }
 
         // Placeholder.  We really want to return something which *contains* an array.
-        public DictionaryTerm[] SearchPost(SearchInputs paramBlock, String dictionary, String language, String version)
+        public DictionaryTerm[] SearchPost(SearchInputs paramBlock, String dictionary, String language)
         {
             return new DictionaryTerm[] { };
         }

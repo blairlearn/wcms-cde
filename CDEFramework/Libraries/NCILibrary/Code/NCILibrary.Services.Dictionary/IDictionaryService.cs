@@ -32,23 +32,23 @@ namespace NCI.Services.Dictionary
         /// <param name="version">API version number</param>
         /// <returns></returns>
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "{version}/{language}/{dictionary}/GetTerm?termID={termId}")]
+            UriTemplate = "v1/{language}/{dictionary}/GetTerm?termID={termId}")]
         [OperationContract]
-        TermReturn GetTerm(String termId, String dictionary, String language, String version);
+        TermReturn GetTerm(String termId, String dictionary, String language);
 
         // Placeholder.  We really want to return something which *contains* an array.
         // Search method for calling via GET requests.
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "{version}/{language}/{dictionary}/search?param1={param1}&param2={param2}")]
+            UriTemplate = "v1/{language}/{dictionary}/search?param1={param1}&param2={param2}")]
         [OperationContract]
-        DictionaryTerm[] SearchGet(String param1, String param2, String dictionary, String language, String version);
+        DictionaryTerm[] Search(String param1, String param2, String dictionary, String language);
 
         // Placeholder.  We really want to return something which *contains* an array..
         // Search method for calling via POST requests.
         [WebInvoke(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "{version}/{language}/{dictionary}/SearchPost")]
+            UriTemplate = "v1/{language}/{dictionary}/SearchPost")]
         [OperationContract]
-        DictionaryTerm[] SearchPost(SearchInputs paramBlock, String dictionary, String language, String version);
+        DictionaryTerm[] SearchPost(SearchInputs paramBlock, String dictionary, String language);
        
     }
 
