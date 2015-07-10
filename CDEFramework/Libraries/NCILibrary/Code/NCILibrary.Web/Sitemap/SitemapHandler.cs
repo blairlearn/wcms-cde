@@ -39,11 +39,14 @@ namespace NCI.Web.Sitemap
             // If it isn't, get the current sitemap, save that in the cache, and output
             else
             {
-                XmlSerializer ser = new XmlSerializer(typeof(SitemapUrlSet));
+                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                ns.Add(string.Empty, "http://www.sitemaps.org/schemas/sitemap/0.9");
+                XmlSerializer ser = new XmlSerializer(typeof(SitemapUrlSet), "http://www.sitemaps.org/schemas/sitemap/0.9");
+
                 using (MemoryStream memStream = new MemoryStream())
                 using (XmlWriter writer = XmlWriter.Create(memStream))
                 {
-                    ser.Serialize(writer, Sitemaps.GetSitemap());
+                    ser.Serialize(writer, Sitemaps.GetSitemap(), ns);
                     utf8 = memStream.ToArray();
                     HttpContext.Current.Cache.Add("sitemap", utf8, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
                     response.OutputStream.Write(utf8, 0, utf8.Length);
