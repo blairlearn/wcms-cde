@@ -33,10 +33,7 @@
         <!-- For use by JavaScript code -->
         <asp:HiddenField ID="pageSize" runat="server" />
         <asp:HiddenField ID="OffPageSelectionsExist" runat="server" EnableViewState="false" />
-        <p>
-        Initial search results include only NCI-sponsored clinical trials. To search all trials, click the "REFINE SEARCH" 
-        button, scroll down to the Trial ID/Sponsor section and select the "All" check box in the Sponsor of Trial section.
-        </p>
+
         <!-- Top View Content for box -->
         <asp:Panel runat="server" ID="ResultsFormatControl">
         <div class="row collapse ct-results-form">

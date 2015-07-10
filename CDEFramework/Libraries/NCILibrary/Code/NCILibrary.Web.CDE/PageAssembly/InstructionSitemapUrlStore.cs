@@ -17,7 +17,6 @@ namespace NCI.Web.CDE.PageAssembly
         {
             List<SitemapUrl> sitemapUrls = new List<SitemapUrl>();
             String path;
-            DateTime mod;
             String contentType;
             double priority;
             String directory = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/"));
@@ -33,7 +32,6 @@ namespace NCI.Web.CDE.PageAssembly
                 // Add CDE namespace to parse through document
                 XmlNamespaceManager manager = new XmlNamespaceManager(nav.NameTable);
                 manager.AddNamespace("cde", "http://www.example.org/CDESchema");
-                //manager.AddNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
                 // Get pretty url from PrettyUrl node
                 if (nav.SelectSingleNode("//cde:SinglePageAssemblyInstruction/PrettyUrl", manager) != null)
@@ -50,28 +48,18 @@ namespace NCI.Web.CDE.PageAssembly
                 path.Replace("]]>", "");
                 path = "http://www.cancer.gov" + path;
 
-                // Get date string and convert to DateTime
-                if (nav.SelectSingleNode("//cde:SinglePageAssemblyInstruction/ContentDates/LastModified", manager) != null)
-                {
-                    mod = Convert.ToDateTime(nav.SelectSingleNode("//cde:SinglePageAssemblyInstruction/ContentDates/LastModified", manager).Value);
-                }
-                else
-                {
-                    continue;
-                }
-
                 // Get content type and set priority accordingly
                 contentType = nav.SelectSingleNode("//cde:SinglePageAssemblyInstruction/ContentItemInfo/ContentItemType", manager).Value;
                 if (contentType == "rx:nciHome" || contentType == "rx:nciLandingPage" || contentType == "rx:cgvCancerTypeHome" ||
                     contentType == "rx:cgvCancerResearch" || contentType == "rx:nciAppModulePage" || contentType == "rx:pdqCancerInfoSummary" ||
-                    contentType == "rx:pdqDrugInfoSummary" || contentType == "rx:cgvFactSheet")
+                    contentType == "rx:pdqDrugInfoSummary" || contentType == "rx:cgvFactSheet" || contentType == "rx:cgvTopicPage")
                     priority = 1.0;
                 else
                 {
                     priority = 0.5;
                 }
 
-                sitemapUrls.Add(new SitemapUrl(path, mod, sitemapChangeFreq.weekly, priority));
+                sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.weekly, priority));
             }
 
             directory = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.FilePathFormat.Path, "/"));
@@ -101,17 +89,7 @@ namespace NCI.Web.CDE.PageAssembly
                 // Remove outer text and concatenate with base URL
                 path = "http://www.cancer.gov" + path;
 
-                // Get date string and convert to DateTime
-                if (nav.SelectSingleNode("//cde:GenericFileInstruction/ContentDates/LastModified", manager) != null)
-                {
-                    mod = Convert.ToDateTime(nav.SelectSingleNode("//cde:GenericFileInstruction/ContentDates/LastModified", manager).Value);
-                }
-                else
-                {
-                    continue;
-                }
-
-                sitemapUrls.Add(new SitemapUrl(path, mod, sitemapChangeFreq.always, 0.5));
+                sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.always, 0.5));
             }
 
             return new SitemapUrlSet(sitemapUrls);
