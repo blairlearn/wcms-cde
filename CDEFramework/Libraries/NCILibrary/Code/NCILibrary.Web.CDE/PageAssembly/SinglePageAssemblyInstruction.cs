@@ -792,8 +792,12 @@ namespace NCI.Web.CDE
 
         #region Protected
 
-        // TODO: pass values into analytics, refactor methods, clean up.
-        // fix Dictionary datatypes on prop/evar methods, add logic for RemoveParent
+        // TODO: 
+        // - Refactor methods (move into WebAnalyticsInfo?).
+        // - Add logic for "RemoveParent" flag at Props/Evars/Events level.
+        // - Pass channels to correct place.
+        // - Pass suites to correct place.
+        // - Clean up, add comments.
 
         /// <summary>
         /// Create SectionDetail object 
@@ -827,10 +831,10 @@ namespace NCI.Web.CDE
         /// <summary>
         /// Create list of WebAnalyticsInfo objects for current item and all ancestors
         /// </summary>
-        protected List<WebAnalyticsInfo> WaiAil = new List<WebAnalyticsInfo> { };
+        protected List<WebAnalyticsInfo> WaiAll = new List<WebAnalyticsInfo> { };
         protected List<WebAnalyticsInfo> LoadAllCustomAnalytics(SectionDetail section)
         {
-            WaiAil.Add(section.WebAnalyticsInfo);
+            WaiAll.Add(section.WebAnalyticsInfo);
             if (section.ParentPath != null)
             {
                 LoadAllCustomAnalytics(section.Parent);
@@ -839,7 +843,7 @@ namespace NCI.Web.CDE
             {
                 return null;
             }
-            return WaiAil;
+            return WaiAll;
         }
 
         /// <summary>
@@ -923,8 +927,6 @@ namespace NCI.Web.CDE
             }
         }
 
-        //protected Dictionary<string, WebAnalyticsDataPointDelegate> _PropsEvars = new Dictionary<string, WebAnalyticsDataPointDelegate>{};
-        //protected Dictionary<string, WebAnalyticsDataPointDelegate> LoadPropsEvars(SectionDetail section)
         protected Dictionary<string, string> _props = new Dictionary<string, string> { };
         protected Dictionary<string, string> LoadProps(SectionDetail section)
         {
@@ -933,7 +935,7 @@ namespace NCI.Web.CDE
                 string key = "";
                 string value = "";
 
-                WaiAil.Clear();
+                WaiAll.Clear();
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
@@ -967,7 +969,7 @@ namespace NCI.Web.CDE
                 string key = "";
                 string value = "";
 
-                WaiAil.Clear();
+                WaiAll.Clear();
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
@@ -992,6 +994,31 @@ namespace NCI.Web.CDE
                 return null;
             }
         }
+
+
+        public string GetCustomProps(KeyValuePair<string, string> cprop)
+        {
+            string customProp = "";
+            foreach (WebAnalyticsOptions.Props prop in Enum.GetValues(typeof(WebAnalyticsOptions.Props)))
+            {
+                if (cprop.Key == prop.ToString())
+                    customProp = prop.ToString();
+            }
+            return customProp;
+        }
+
+
+        public string GetCustomEvars(KeyValuePair<string, string> cevar)
+        {
+            string customEvar = "";
+            foreach (WebAnalyticsOptions.eVars evar in Enum.GetValues(typeof(WebAnalyticsOptions.eVars)))
+            {
+                if (cevar.Key == evar.ToString())
+                    customEvar = evar.ToString();
+            }
+            return customEvar;
+        }
+
 
         /// <summary>
         /// Override this method to add any page specifc web analytics data points.
@@ -1021,10 +1048,38 @@ namespace NCI.Web.CDE
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
 
+            // Register custom props entered on navon
+            foreach (KeyValuePair<string, string> pr in props)
+            {
+                String propKey = GetCustomProps(pr);
+                String propValue = pr.Value;
+
+                if (!String.IsNullOrEmpty(propKey))
+                {
+                    SetWebAnalytics(propKey, waField =>
+                    {
+                        waField.Value = propValue;
+                    });
+                }
+            }
+
+            // Register custom evars entered on navon
+            foreach (KeyValuePair<string, string> ev in evars)
+            {
+                String evarKey = GetCustomEvars(ev);
+                String evarValue = ev.Value;
+
+                if (!String.IsNullOrEmpty(evarKey))
+                {
+                    SetWebAnalytics(evarKey, waField =>
+                    {
+                        waField.Value = evarValue;
+                    });
+                }
+            }
         }
         #endregion
 
         #endregion
-
     }
 }
