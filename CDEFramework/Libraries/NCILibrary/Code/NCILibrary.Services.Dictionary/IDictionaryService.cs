@@ -78,7 +78,7 @@ namespace NCI.Services.Dictionary
         /// </param>
         /// <returns></returns>
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "v1/search?searchText={searchText}&searchType={searchType}&offset={offset}&maxResults={maxResults}&lang={language}&dictionary={dictionary}")]
+            UriTemplate = "v1/search?searchText={searchText}&searchType={searchType}&offset={offset}&maxResults={maxResults}&language={language}&dictionary={dictionary}")]
         [OperationContract]
         SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language);
 
