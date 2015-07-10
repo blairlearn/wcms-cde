@@ -73,18 +73,15 @@ namespace NCI.Services.Dictionary
 
         #endregion
 
-        public TermReturn GetTerm(String termId, String dictionary, String language)
+        public TermReturn GetTerm(String termId, DictionaryType dictionary, Language language)
         {
-            DictionaryType dict = GetDictionaryType(dictionary);
-            Language lang = GetLanguage(language);
-
-            InputValidator validator = new InputValidator(dict, lang);
+            InputValidator validator = new InputValidator(dictionary, language);
             if (validator.IsValid())
             {
 
                 DictionaryManager mgr = new DictionaryManager();
 
-                TermReturn ret = mgr.GetTerm(termId, dict, lang, API_VERSION);
+                TermReturn ret = mgr.GetTerm(termId, dictionary, language, API_VERSION);
                 return ret;
             }
             else
@@ -112,35 +109,6 @@ namespace NCI.Services.Dictionary
             int maxResults = paramBlock.maxResults;
 
             return Search(searchText, searchType, offset, maxResults, dictionary, language);
-        }
-
-
-        private DictionaryType GetDictionaryType(string dictionary)
-        {
-            DictionaryType type = ConvertEnum<DictionaryType>.Convert(dictionary, DictionaryType.Unknown);
-            return type;
-        }
-
-        private Language GetLanguage(string language)
-        {
-            Language type = Language.Unknown;
-            if (!String.IsNullOrEmpty(language))
-            {
-                language = language.ToLower(CultureInfo.CurrentCulture).Trim();
-                switch (language)
-                {
-                    case "en": type = Language.English; break;
-                    case "es": type = Language.Spanish; break;
-                }
-            }
-
-            return type;
-        }
-
-        private SearchType GetSearchType(string searchType)
-        {
-            SearchType type = ConvertEnum<SearchType>.Convert(searchType, SearchType.Unknown);
-            return type;
         }
     }
 }

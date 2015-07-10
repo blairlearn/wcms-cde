@@ -49,9 +49,9 @@ namespace NCI.Services.Dictionary
         /// </param>
         /// <returns></returns>
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "v1/{language}/{dictionary}/GetTerm?termID={termId}")]
+            UriTemplate = "v1/GetTerm?termID={termId}&language={language}&dictionary={dictionary}")]
         [OperationContract]
-        TermReturn GetTerm(String termId, String dictionary, String language);
+        TermReturn GetTerm(String termId, DictionaryType dictionary, Language language);
 
         /// <summary>
         /// Performs a search for terms with names matching searchText.
