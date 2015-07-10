@@ -14,7 +14,13 @@ namespace NCI.Services.Dictionary
         public String searchText { get; set; }
 
         [DataMember]
-        public String searchType { get; set; }
+        public SearchType searchType { get; set; }
+
+        [DataMember]
+        public DictionaryType dictionaryType { get; set; }
+
+        [DataMember]
+        public Language languge { get; set; }
 
         [DataMember]
         public int offset { get; set; }

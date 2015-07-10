@@ -12,13 +12,23 @@ using NCI.Util;
 
 namespace NCI.Services.Dictionary
 {
-    // NOTE: If you change the class name "DictionaryService" here, you must also update the reference to "DictionaryService" in Web.config and the associated .svc file.
+
+    /// <summary>
+    ///    
+    /// </summary>
+    /// <remarks>
+    /// Changing the class name "DictionaryService" here requires that you also update the reference
+    /// to "DictionaryService" in Web.config and the associated .svc file.
+    /// </remarks>
     public class DictionaryService : IDictionaryService
     {
         const String API_VERSION = "v1";
 
         #region private class InputValidator
 
+        /// <summary>
+        /// 
+        /// </summary>
         private class InputValidator
         {
             private DictionaryType dictionary;
@@ -81,24 +91,26 @@ namespace NCI.Services.Dictionary
                 return validator.GetInvalidResult();
         }
 
-        public SearchReturn Search(String searchText, String searchType, int offset, int maxResults, String dictionary, String language)
+        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
-            DictionaryType dict = GetDictionaryType(dictionary);
-            Language lang = GetLanguage(language);
-            SearchType search = GetSearchType(searchType);
-
             DictionaryManager mgr = new DictionaryManager();
-            SearchReturn ret = mgr.Search(searchText, search, offset, maxResults, dict, lang);
+            SearchReturn ret = mgr.Search(searchText, searchType, offset, maxResults, dictionary, language);
 
             return ret;
         }
 
-        public SearchReturn SearchPost(SearchInputs paramBlock, String dictionary, String language)
+        public SearchReturn SearchPost(SearchInputs paramBlock)
         {
+            // Convert paramBlock to individual values and re-use the GET version of Search.
             String searchText = paramBlock.searchText;
-            String searchType = paramBlock.searchType;
+            SearchType searchType = paramBlock.searchType;
+
+            DictionaryType dictionary = paramBlock.dictionaryType;
+            Language language = paramBlock.languge;
+
             int offset = paramBlock.offset;
             int maxResults = paramBlock.maxResults;
+
             return Search(searchText, searchType, offset, maxResults, dictionary, language);
         }
 

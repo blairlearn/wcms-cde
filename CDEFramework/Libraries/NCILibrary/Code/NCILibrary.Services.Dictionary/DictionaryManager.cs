@@ -1003,6 +1003,10 @@ namespace NCI.Services.Dictionary
         {
             SearchReturn srchReturn;
 
+            // Sanity check for the offset and maxResults
+            if (offset < 0) offset = 0;
+            if (maxResults < 10) maxResults = 10;
+
             DictionaryTerm[] results;
 
             SearchReturnMeta meta = new SearchReturnMeta();

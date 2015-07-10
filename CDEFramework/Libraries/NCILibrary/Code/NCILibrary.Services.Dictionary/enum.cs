@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace NCI.Services.Dictionary
@@ -8,7 +9,8 @@ namespace NCI.Services.Dictionary
     /// <summary>
     /// Enumeration of the known dictionary types.
     /// </summary>
-    internal enum DictionaryType
+    [DataContract]
+    public enum DictionaryType
     {
         // We don't know what dictionary this is.  Error condition.
         Unknown = 0,
@@ -23,14 +25,16 @@ namespace NCI.Services.Dictionary
         genetic =3
     }
 
-    internal enum Language
+    [DataContract]
+    public enum Language
     {
         Unknown = 0,
         English = 1,
         Spanish = 2
     }
 
-    internal enum SearchType
+    [DataContract]
+    public enum SearchType
     {
         Unknown = 0,
         Begins = 1,
