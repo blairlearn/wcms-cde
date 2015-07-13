@@ -1,30 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
     /// <summary>
-    /// Describes how a dictionary term is pronounced.
+    /// Describes how a dictionary Term is pronounced.
     /// </summary>
+    [DataContract()]
     public class Pronunciation
     {
         public Pronunciation()
         {
             // Guarantee non-null values.
-            key = string.Empty;
-            audio = string.Empty;
+            Key = string.Empty;
+            Audio = string.Empty;
         }
 
         /// <summary>
         /// Pronunciation key.  Possibly empty.
         /// </summary>
-        public String key { get; set; }
+        [DataMember( Name = "key" )]
+        public String Key { get; set; }
 
         /// <summary>
         /// Possibly empty URL of an audio file containing the pronunciation. (Cancer Term and Genetics only)
         /// </summary>
-        public String audio { get; set; }
+        [DataMember(Name = "audio")]
+        public String Audio { get; set; }
     }
 }

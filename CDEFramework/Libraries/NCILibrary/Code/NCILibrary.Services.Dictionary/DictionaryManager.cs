@@ -20,15 +20,15 @@ namespace NCI.Services.Dictionary
 
         private DictionaryTerm[] CancerTermEnglish = new DictionaryTerm[] {
             new DictionaryTerm() {
-                id="12345",
-                term="Cancer term",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12345",
+                Term="Cancer Term",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -37,19 +37,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12346",
-                term="Cancer term 2",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12346",
+                Term="Cancer Term 2",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -58,19 +58,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12347",
-                term="Cancer term 3",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12347",
+                Term="Cancer Term 3",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -79,19 +79,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12348",
-                term="Cancer term 4",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12348",
+                Term="Cancer Term 4",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -100,19 +100,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12349",
-                term="Cancer term 5",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12349",
+                Term="Cancer Term 5",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -121,19 +121,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12350",
-                term="Cancer term 6",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12350",
+                Term="Cancer Term 6",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -142,19 +142,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12351",
-                term="Cancer term 7",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12351",
+                Term="Cancer Term 7",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -163,19 +163,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12352",
-                term="Cancer term 8",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12352",
+                Term="Cancer Term 8",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -184,19 +184,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12353",
-                term="Cancer term 9",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12353",
+                Term="Cancer Term 9",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -205,19 +205,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12354",
-                term="Cancer term 10",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12354",
+                Term="Cancer Term 10",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -226,7 +226,7 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
         };
@@ -237,14 +237,14 @@ namespace NCI.Services.Dictionary
 
         private DictionaryTerm[] CancerTermSpanish = new DictionaryTerm[] {
             new DictionaryTerm() {
-                id="12345",
-                term="Cáncer término (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12345",
+                Term="Cáncer término (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -252,18 +252,18 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12346",
-                term="Cáncer término 2 (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12346",
+                Term="Cáncer término 2 (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -271,18 +271,18 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12347",
-                term="Cáncer término 3 (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12347",
+                Term="Cáncer término 3 (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -290,18 +290,18 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12348",
-                term="Cáncer término 4 (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12348",
+                Term="Cáncer término 4 (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -309,18 +309,18 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12349",
-                term="Cáncer término 5 (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12349",
+                Term="Cáncer término 5 (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -328,18 +328,18 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12350",
-                term="Cáncer término 6 (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12350",
+                Term="Cáncer término 6 (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -347,18 +347,18 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12351",
-                term="Cáncer término 7 (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12351",
+                Term="Cáncer término 7 (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -366,18 +366,18 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12352",
-                term="Cáncer término 8 (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12352",
+                Term="Cáncer término 8 (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -385,18 +385,18 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12353",
-                term="Cáncer término 9 (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12353",
+                Term="Cáncer término 9 (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -404,18 +404,18 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12354",
-                term="Cáncer término 10 (en español)",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
+                ID="12354",
+                Term="Cáncer término 10 (en español)",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -423,7 +423,7 @@ namespace NCI.Services.Dictionary
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
         };
@@ -434,15 +434,15 @@ namespace NCI.Services.Dictionary
 
         private DictionaryTerm[] GeneticTermEnglish = new DictionaryTerm[] {
             new DictionaryTerm() {
-                id="12345",
-                term="Genetic term",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12345",
+                Term="Genetic Term",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -451,19 +451,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12346",
-                term="Genetic term 2",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12346",
+                Term="Genetic Term 2",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -472,19 +472,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12347",
-                term="Genetic term 3",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12347",
+                Term="Genetic Term 3",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -493,19 +493,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12348",
-                term="Genetic term 4",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12348",
+                Term="Genetic Term 4",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -514,19 +514,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12349",
-                term="Genetic term 5",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12349",
+                Term="Genetic Term 5",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -535,19 +535,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12350",
-                term="Genetic term 6",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12350",
+                Term="Genetic Term 6",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -556,19 +556,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12351",
-                term="Genetic term 7",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12351",
+                Term="Genetic Term 7",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -577,19 +577,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12352",
-                term="Genetic term 8",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12352",
+                Term="Genetic Term 8",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -598,19 +598,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12353",
-                term="Genetic term 9",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12353",
+                Term="Genetic Term 9",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -619,19 +619,19 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
             new DictionaryTerm() {
-                id="12354",
-                term="Genetic term 10",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12354",
+                Term="Genetic Term 10",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -640,7 +640,7 @@ namespace NCI.Services.Dictionary
                     DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
                     Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related term"}}
+                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
         };
@@ -651,273 +651,273 @@ namespace NCI.Services.Dictionary
 
         private DictionaryTerm[] DrugTermEnglish = new DictionaryTerm[] {
             new DictionaryTerm() {
-                id="12345",
-                term="Drug term",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12345",
+                Term="Drug Term",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
             new DictionaryTerm() {
-                id="12346",
-                term="Drug term 2",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12346",
+                Term="Drug Term 2",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
             new DictionaryTerm() {
-                id="12347",
-                term="Drug term 3",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12347",
+                Term="Drug Term 3",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
             new DictionaryTerm() {
-                id="12348",
-                term="Drug term 4",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12348",
+                Term="Drug Term 4",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
             new DictionaryTerm() {
-                id="12349",
-                term="Drug term 5",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12349",
+                Term="Drug Term 5",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
             new DictionaryTerm() {
-                id="12350",
-                term="Drug term 6",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12350",
+                Term="Drug Term 6",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
             new DictionaryTerm() {
-                id="12351",
-                term="Drug term 7",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12351",
+                Term="Drug Term 7",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
             new DictionaryTerm() {
-                id="12352",
-                term="Drug term 8",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12352",
+                Term="Drug Term 8",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
             new DictionaryTerm() {
-                id="12353",
-                term="Drug term 9",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12353",
+                Term="Drug Term 9",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
             new DictionaryTerm() {
-                id="12354",
-                term="Drug term 10",
-                pronunciation = new Pronunciation{
-                    audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    key = "KAN-ser"
+                ID="12354",
+                Term="Drug Term 10",
+                Pronunciation = new Pronunciation{
+                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
+                    Key = "KAN-ser"
                 },
-                dateFirstPublished = "01-01-0001",
-                dateLastModified="12-31-9999",
-                images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                DateFirstPublished = "01-01-0001",
+                DateLastModified="12-31-9999",
+                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Aliases = new Alias[]{
-                    new Alias(){ name="Alias 1", type="US brand name" },
-                    new Alias(){ name="Alias 2", type="Abbreviation" },
-                    new Alias(){ name="Alias 3", type="IND code" },
-                    new Alias(){ name="Alias 4", type="NSC number" },
-                    new Alias(){ name="Alias 5", type="Synonym" },
-                    new Alias(){ name="Alias 6", type="Synonym" },
-                    new Alias(){ name="Alias 7", type="Synonym" },
-                    new Alias(){ name="Alias 8", type="Synonym" },
-                    new Alias(){ name="Alias 9", type="Synonym" },
-                    new Alias(){ name="Alias 10", type="Synonym" }
+                    new Alias(){ Name="Alias 1", Type="US brand name" },
+                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
+                    new Alias(){ Name="Alias 3", Type="IND code" },
+                    new Alias(){ Name="Alias 4", Type="NSC number" },
+                    new Alias(){ Name="Alias 5", Type="Synonym" },
+                    new Alias(){ Name="Alias 6", Type="Synonym" },
+                    new Alias(){ Name="Alias 7", Type="Synonym" },
+                    new Alias(){ Name="Alias 8", Type="Synonym" },
+                    new Alias(){ Name="Alias 9", Type="Synonym" },
+                    new Alias(){ Name="Alias 10", Type="Synonym" }
                 }
             },
         };
@@ -1082,12 +1082,12 @@ namespace NCI.Services.Dictionary
                 case DictionaryType.term:
                     if (language == Language.English)
                     {
-                        results = Array.ConvertAll(CancerTermEnglish, term => { return new DictionarySuggestion() { id = term.id, term = term.term }; });
+                        results = Array.ConvertAll(CancerTermEnglish, term => { return new DictionarySuggestion() { ID = term.ID, Term = term.Term }; });
                         meta.Messages = new string[] { "OK" };
                     }
                     else if (language == Language.Spanish)
                     {
-                        results = Array.ConvertAll(CancerTermSpanish, term => { return new DictionarySuggestion() { id = term.id, term = term.term }; });
+                        results = Array.ConvertAll(CancerTermSpanish, term => { return new DictionarySuggestion() { ID = term.ID, Term = term.Term }; });
                         meta.Messages = new string[] { "OK" };
                     }
                     else
@@ -1098,7 +1098,7 @@ namespace NCI.Services.Dictionary
                 case DictionaryType.drug:
                     if (language == Language.English)
                     {
-                        results = Array.ConvertAll(DrugTermEnglish, term => { return new DictionarySuggestion() { id = term.id, term = term.term }; });
+                        results = Array.ConvertAll(DrugTermEnglish, term => { return new DictionarySuggestion() { ID = term.ID, Term = term.Term }; });
                         meta.Messages = new string[] { "OK" };
                     }
                     else
@@ -1109,7 +1109,7 @@ namespace NCI.Services.Dictionary
                 case DictionaryType.genetic:
                     if (language == Language.English)
                     {
-                        results = Array.ConvertAll(GeneticTermEnglish, term => { return new DictionarySuggestion() { id = term.id, term = term.term }; });
+                        results = Array.ConvertAll(GeneticTermEnglish, term => { return new DictionarySuggestion() { ID = term.ID, Term = term.Term }; });
                         meta.Messages = new string[] { "OK" };
                     }
                     else

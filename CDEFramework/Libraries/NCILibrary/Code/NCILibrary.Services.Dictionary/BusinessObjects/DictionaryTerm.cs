@@ -1,62 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
+    [DataContract()]
     public class DictionaryTerm
     {
         public DictionaryTerm()
         {
             // Guarantee that the arrays are never null.
             Aliases = new Alias[] { };
-            images = new String[] { };
+            Images = new String[] { };
         }
 
         /// <summary>
-        ///  The term's ID
+        ///  The Term's ID
         /// </summary>
-        public String id { get; set; }
+        [DataMember(Name = "id" )]
+        public String ID { get; set; }
 
         /// <summary>
-        /// The term's name
+        /// The Term's name
         /// </summary>
-        public String term { get; set; }
+        [DataMember(Name = "term")]
+        public String Term { get; set; }
 
         /// <summary>
-        /// Data structure describing how a dictionary term is pronounced.
+        /// Data structure describing how a dictionary Term is pronounced.
         /// </summary>
-        public Pronunciation pronunciation { get; set; }
+        [DataMember(Name = "pronunciation")]
+        public Pronunciation Pronunciation { get; set; }
 
         /// <summary>
-        /// The date the term was first published
+        /// The date the Term was first published
         /// </summary>
-        public String dateFirstPublished { get; set; }
+        [DataMember(Name = "date_first_published")]
+        public String DateFirstPublished { get; set; }
 
         /// <summary>
-        /// The date the term was last modified.
+        /// The date the Term was last modified.
         /// </summary>
-        public String dateLastModified { get; set; }
+        [DataMember(Name = "date_last_modified")]
+        public String DateLastModified { get; set; }
 
         /// <summary>
         /// Possibly empty array of strings containing the URLs of images associated with this definition.
         /// </summary>
-        public String[] images { get; set; }
+        [DataMember(Name = "images")]
+        public String[] Images { get; set; }
 
         /// <summary>
-        /// Data structure containing the term's definition.
+        /// Data structure containing the Term's definition.
         /// </summary>
+        [DataMember(Name = "definition")]
         public Definition Definition { get; set; }
 
         /// <summary>
-        /// Possibly empty array of other names for the term.  (Only populated for drug dictionary)
+        /// Possibly empty array of other names for the Term.  (Only populated for drug dictionary)
         /// </summary>
+        [DataMember(Name = "alias")]
         public Alias[] Aliases { get; set; }
 
         /// <summary>
         /// related links. (Cancer Term and Genetics only)
         /// </summary>
+        [DataMember(Name = "related")]
         public RelatedItems Related { get; set; }
     }
 }

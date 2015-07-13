@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
+    [DataContract()]
     public class RelatedItems
     {
         public RelatedItems()
@@ -19,21 +21,25 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// <summary>
         /// Possibly empty list of relatedTerm structures
         /// </summary>
+        [DataMember(Name = "term")]
         public RelatedTerm[] Term { get; set; }
 
         /// <summary>
         /// Possibly empty list of externalLink structures
         /// </summary>
+        [DataMember(Name = "external")]
         public RelatedExternalLink[] External { get; set; }
 
         /// <summary>
         /// Possibly empty list of summaryRef structures
         /// </summary>
+        [DataMember(Name = "summary")]
         public RelatedSummary[] Summary { get; set; }
 
         /// <summary>
         /// Possibly empty list of drugSummaryRef structures
         /// </summary>
+        [DataMember(Name = "drug_summary")]
         public RelatedDrugSummary[] DrugSummary { get; set; }
     }
 }

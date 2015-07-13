@@ -6,13 +6,13 @@ using System.Web;
 namespace NCI.Services.Dictionary.BusinessObjects
 {
     /// <summary>
-    /// represents a single related term
+    /// represents a single related Term
     /// </summary>
     public class RelatedTerm
     {
 
         /// <summary>
-        /// related term's ID
+        /// related Term's ID
         /// </summary>
         public String Termid { get; set; }
 

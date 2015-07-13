@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
+    [DataContract()]
     public class DictionarySuggestion
     {
         /// <summary>
-        ///  The term's ID
+        ///  The Term's ID
         /// </summary>
-        public String id { get; set; }
+        [DataMember(Name = "id")]
+        public String ID { get; set; }
 
         /// <summary>
-        /// The term's name
+        /// The Term's name
         /// </summary>
-        public String term { get; set; }
+        [DataMember(Name = "term")]
+        public String Term { get; set; }
     }
 }

@@ -11,12 +11,12 @@ namespace NCI.Services.Dictionary.BusinessObjects
     public class TermReturnMeta : MetaCommon
     {
         /// <summary>
-        /// The term's audience Patient or HealthProfessional
+        /// The Term's audience Patient or HealthProfessional
         /// </summary>
         public String Audience { get; set; }
 
         /// <summary>
-        /// The term's language
+        /// The Term's language
         /// </summary>
         public String Language { get; set; }
     }

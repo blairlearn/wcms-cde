@@ -68,7 +68,7 @@ namespace NCI.Services.Dictionary
                 List<String> messages = new List<string>();
 
                 if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
-                    messages.Add("Dictionary must be 'term', 'drug' or 'genetic'.");
+                    messages.Add("Dictionary must be 'Term', 'drug' or 'genetic'.");
 
                 if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
                     messages.Add("Language must be 'en' or 'es'.");
@@ -89,16 +89,16 @@ namespace NCI.Services.Dictionary
         #endregion
 
         /// <summary>
-        /// Retrieves a single dictionary term based on its specific term ID.
+        /// Retrieves a single dictionary Term based on its specific Term ID.
         /// </summary>
-        /// <param name="termId">The ID of the term to be retrieved</param>
-        /// <param name="dictionary">The dictionary to retreive the term from.
+        /// <param name="termId">The ID of the Term to be retrieved</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
         ///     Valid values are
-        ///        term - Dictionary of Cancer Terms
+        ///        Term - Dictionary of Cancer Terms
         ///        drug - Drug Dictionary
         ///        genetic - Dictionary of Genetics Terms
         /// </param>
-        /// <param name="language">The term's desired language.
+        /// <param name="language">The Term's desired language.
         ///     Supported values are:
         ///         en - English
         ///         es - Spanish
@@ -154,13 +154,13 @@ namespace NCI.Services.Dictionary
         /// </param>
         /// <param name="offset">Offset into the list of matches for the first result to return.</param>
         /// <param name="maxResults">The maximum number of results to return. Must be at least 10.</param>
-        /// <param name="dictionary">The dictionary to retreive the term from.
+        /// <param name="dictionary">The dictionary to retreive the Term from.
         ///     Valid values are
-        ///        term - Dictionary of Cancer Terms
+        ///        Term - Dictionary of Cancer Terms
         ///        drug - Drug Dictionary
         ///        genetic - Dictionary of Genetics Terms
         /// </param>
-        /// <param name="language">The term's desired language.
+        /// <param name="language">The Term's desired language.
         ///     Supported values are:
         ///         en - English
         ///         es - Spanish
@@ -210,13 +210,13 @@ namespace NCI.Services.Dictionary
         ///         Contains - Search for terms containing searchText.
         ///         Magic - Search for terms beginning with searchText, followed by those containing searchText.
         /// </param>
-        /// <param name="dictionary">The dictionary to retreive the term from.
+        /// <param name="dictionary">The dictionary to retreive the Term from.
         ///     Valid values are
-        ///        term - Dictionary of Cancer Terms
+        ///        Term - Dictionary of Cancer Terms
         ///        drug - Drug Dictionary
         ///        genetic - Dictionary of Genetics Terms
         /// </param>
-        /// <param name="language">The term's desired language.
+        /// <param name="language">The Term's desired language.
         ///     Supported values are:
         ///         en - English
         ///         es - Spanish
