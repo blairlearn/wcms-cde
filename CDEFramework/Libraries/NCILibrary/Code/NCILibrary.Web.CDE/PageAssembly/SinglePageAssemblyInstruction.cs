@@ -943,10 +943,7 @@ namespace NCI.Web.CDE
                     foreach (WebAnalyticsCustomVariableOrEvent waEvent in waEvents)
                     {
                         key = waEvent.Key;
-                        if (!_props.ContainsKey(key))
-                        {
-                            _events.Add(key);
-                        }
+                        _events.Add(key);
                     }
                 }
                 return _events;

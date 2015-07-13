@@ -25,8 +25,8 @@ namespace NCI.Web.CDE
 
         /// <summary>
         /// Boolean to determine whether or not to remove the parent value. 
-        /// If true, the parent is added to the collection of variables.
-        /// If false, it is removed.
+        /// If false, the parent is added to the collection of variables.
+        /// If true, the parent is removed.
         /// </summary>
         [XmlAttribute(AttributeName = "RemoveParent", Form = XmlSchemaForm.Unqualified)]
         public Boolean RemoveParent { get; set; }

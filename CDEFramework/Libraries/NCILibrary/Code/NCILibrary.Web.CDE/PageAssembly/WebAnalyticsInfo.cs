@@ -49,6 +49,30 @@ namespace NCI.Web.CDE
         [XmlArrayItem("WAEvar", typeof(WebAnalyticsCustomVariableOrEvent), Form = XmlSchemaForm.Unqualified)]
         public WebAnalyticsCustomVariableOrEvent[] WAEvars { get; set; }
 
+        /// <summary>
+        /// Boolean to determine whether or not to remove the parent value. 
+        /// If false, the parent is added to the collection of events.
+        /// If true, the parent is removed.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool RemoveParentEvents { get; set; }
+
+        /// <summary>
+        /// Boolean to determine whether or not to remove the parent value. 
+        /// If false, the parent is added to the collection of props.
+        /// If true, the parent is removed.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool RemoveParentProps { get; set; }
+
+        /// <summary>
+        /// Boolean to determine whether or not to remove the parent value. 
+        /// If false, the parent is added to the collection of evars.
+        /// If true, the parent is removed.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool RemoveParentEvars { get; set; }
+
         // Default constructor
         public WebAnalyticsInfo()
         {
@@ -58,6 +82,9 @@ namespace NCI.Web.CDE
             WAEvents = new WebAnalyticsCustomVariableOrEvent[0];
             WAProps = new WebAnalyticsCustomVariableOrEvent[0];
             WAEvars = new WebAnalyticsCustomVariableOrEvent[0];
+            RemoveParentEvents = false;
+            RemoveParentProps = false;
+            RemoveParentEvars = false;
         }
     }
 }
