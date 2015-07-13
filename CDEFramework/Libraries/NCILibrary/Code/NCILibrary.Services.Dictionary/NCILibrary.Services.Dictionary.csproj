@@ -82,7 +82,6 @@
       <DependentUpon>DictionaryService.svc</DependentUpon>
     </Compile>
     <Compile Include="enum.cs" />
-    <Compile Include="IDictionaryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchInputs.cs" />
   </ItemGroup>
