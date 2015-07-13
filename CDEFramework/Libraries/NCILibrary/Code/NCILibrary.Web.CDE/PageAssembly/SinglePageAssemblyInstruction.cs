@@ -927,6 +927,40 @@ namespace NCI.Web.CDE
             }
         }
 
+
+        protected List<string> _events = new List<string> { };
+        protected List<string> LoadEvents(SectionDetail section)
+        {
+            try
+            {
+                string key = "";
+
+                WaiAll.Clear();
+                List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
+                foreach (WebAnalyticsInfo waInfo in waInfos)
+                {
+                    WebAnalyticsCustomVariableOrEvent[] waEvents = waInfo.WAEvents;
+                    foreach (WebAnalyticsCustomVariableOrEvent waEvent in waEvents)
+                    {
+                        key = waEvent.Key;
+                        if (!_props.ContainsKey(key))
+                        {
+                            _events.Add(key);
+                        }
+                    }
+                }
+                return _events;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadProps()",
+                      "Exception encountered while retrieving web analytics custom props",
+                      NCIErrorLevel.Error, ex);
+                return null;
+            }
+        }
+
+
         protected Dictionary<string, string> _props = new Dictionary<string, string> { };
         protected Dictionary<string, string> LoadProps(SectionDetail section)
         {
@@ -995,26 +1029,37 @@ namespace NCI.Web.CDE
             }
         }
 
+        public string GetCustomEvents(string cEvent)
+        {
+            string customEvent = "";
+            foreach (WebAnalyticsOptions.Events ev in Enum.GetValues(typeof(WebAnalyticsOptions.Events)))
+            {
+                if (cEvent == ev.ToString())
+                    customEvent = cEvent;
+            }
+            return customEvent;
+        }
 
-        public string GetCustomProps(KeyValuePair<string, string> cprop)
+
+        public string GetCustomProps(KeyValuePair<string, string> cProp)
         {
             string customProp = "";
             foreach (WebAnalyticsOptions.Props prop in Enum.GetValues(typeof(WebAnalyticsOptions.Props)))
             {
-                if (cprop.Key == prop.ToString())
-                    customProp = prop.ToString();
+                if (cProp.Key == prop.ToString())
+                    customProp = cProp.Key;
             }
             return customProp;
         }
 
 
-        public string GetCustomEvars(KeyValuePair<string, string> cevar)
+        public string GetCustomEvars(KeyValuePair<string, string> cEvar)
         {
             string customEvar = "";
             foreach (WebAnalyticsOptions.eVars evar in Enum.GetValues(typeof(WebAnalyticsOptions.eVars)))
             {
-                if (cevar.Key == evar.ToString())
-                    customEvar = evar.ToString();
+                if (cEvar.Key == evar.ToString())
+                    customEvar = cEvar.Key;
             }
             return customEvar;
         }
@@ -1032,6 +1077,7 @@ namespace NCI.Web.CDE
             string suite = LoadSuite(getSectionDetail());
             string channel = LoadChannel(getSectionDetail());
             string group = LoadContentGroup(getSectionDetail());
+            List<String> eventsList = LoadEvents(getSectionDetail());
             Dictionary<string, string> props = LoadProps(getSectionDetail());
             Dictionary<string, string> evars = LoadEvars(getSectionDetail());
 
@@ -1047,6 +1093,19 @@ namespace NCI.Web.CDE
             {
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
+
+            foreach (string evn in eventsList)
+            {
+
+                if (!String.IsNullOrEmpty(evn))
+                {
+                    SetWebAnalytics(evn, waField =>
+                    {
+                        waField.Value = "";
+                    });
+                }
+            }
+
 
             // Register custom props entered on navon
             foreach (KeyValuePair<string, string> pr in props)
@@ -1064,10 +1123,10 @@ namespace NCI.Web.CDE
             }
 
             // Register custom evars entered on navon
-            foreach (KeyValuePair<string, string> ev in evars)
+            foreach (KeyValuePair<string, string> evr in evars)
             {
-                String evarKey = GetCustomEvars(ev);
-                String evarValue = ev.Value;
+                String evarKey = GetCustomEvars(evr);
+                String evarValue = evr.Value;
 
                 if (!String.IsNullOrEmpty(evarKey))
                 {
