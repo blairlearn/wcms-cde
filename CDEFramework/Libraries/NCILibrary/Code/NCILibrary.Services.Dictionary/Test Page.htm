@@ -102,35 +102,47 @@
         <option value="genetic">Genetic</option>
     </select><br />
     <p><input id="searchBtnForGet" type="submit" value="search" /></p>
+    
+    <!--<p><input id="searchBtnForPost" type="button" value="search" /></p>-->
+    
 </form>
-
-
 
 </div>
 
-<!--
-<form id="searchFrom">
-    search text <input id="searchText" name="searchText" value="search text" /><br />
+
+
+<div id="Div1">
+<h2>SearchSuggest()</h2>
+
+<h3>Get</h3>
+
+<form id="SearchSuggest" method="get" action="/DictionaryService.svc/v1/SearchSuggest" target="_blank">
+    search text <input id="Text1" name="searchText" value="search text" /><br />
     search type 
-    <select id="searchType" name="searchType">
+    <select id="Select1" name="searchType">
         <option value="contains">Contains</option>
         <option value="begins">Begins</option>
         <option value="magic">Magic</option>
     </select><br />
     Language: 
-    <select id="language" name="language">
+    <select id="Select2" name="language">
         <option value="English">English</option>
         <option value="Spanish">Spanish</option>
     </select><br />
     Dictionary: 
-    <select id="dictionary" name="dictionary">
+    <select id="Select3" name="dictionary">
         <option value="term">Term</option>
         <option value="drug">Drug</option>
         <option value="genetic">Genetic</option>
     </select><br />
-    <p><input id="searchBtnForPost" type="button" value="search" /></p>
+    <p><input id="Submit1" type="submit" value="search" /></p>
+    
+    <!--<p><input id="searchBtnForPost" type="button" value="search" /></p>-->
+    
 </form>
--->
+
+</div>
+
 
 </body>
 </html>

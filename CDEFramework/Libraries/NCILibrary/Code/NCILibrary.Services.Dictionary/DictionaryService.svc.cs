@@ -123,7 +123,7 @@ namespace NCI.Services.Dictionary
                 else
                     ret = validator.GetInvalidResult();
             }
-            // If the requested language isn't supported for this dictionary, fail with
+            // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.
             catch (DictionaryValidationException ex)
             {
@@ -134,8 +134,7 @@ namespace NCI.Services.Dictionary
                     Meta = new TermReturnMeta()
                     {
                         Messages = new string[] {ex.Message}
-                    },
-                    Term = null
+                    }
                 };
             }
 
@@ -172,8 +171,84 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
-            DictionaryManager mgr = new DictionaryManager();
-            SearchReturn ret = mgr.Search(searchText, searchType, offset, maxResults, dictionary, language);
+            SearchReturn ret;
+
+            try
+            {
+                DictionaryManager mgr = new DictionaryManager();
+                ret = mgr.Search(searchText, searchType, offset, maxResults, dictionary, language);
+
+            }
+            // If there was a problem with the inputs for this request, fail with
+            // an HTTP status message and an explanation.
+            catch (DictionaryValidationException ex)
+            {
+                WebOperationContext ctx = WebOperationContext.Current;
+                ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
+                ret = new SearchReturn()
+                {
+                    Meta = new SearchReturnMeta()
+                    {
+                        Messages = new string[] { ex.Message }
+                    }
+                };
+            }
+
+    
+            return ret;
+        }
+
+
+        /// <summary>
+        /// Lightweight method to search for terms matching searchText. This method is intended for use with autosuggest
+        /// and returns a maximum of 10 results
+        /// </summary>
+        /// <param name="searchText">text to search for.</param>
+        /// <param name="searchType">The type of search to perform.
+        ///     Valid values are:
+        ///         Begins - Search for terms beginning with searchText.
+        ///         Contains - Search for terms containing searchText.
+        ///         Magic - Search for terms beginning with searchText, followed by those containing searchText.
+        /// </param>
+        /// <param name="dictionary">The dictionary to retreive the term from.
+        ///     Valid values are
+        ///        term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <returns></returns>
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "v1/searchSuggest?searchText={searchText}&searchType={searchType}&language={language}&dictionary={dictionary}")]
+        [OperationContract]
+        public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language)
+        {
+            SuggestReturn ret;
+
+            try
+            {
+                DictionaryManager mgr = new DictionaryManager();
+                ret = mgr.SearchSuggest(searchText, searchType, dictionary, language);
+
+            }
+            // If there was a problem with the inputs for this request, fail with
+            // an HTTP status message and an explanation.
+            catch (DictionaryValidationException ex)
+            {
+                WebOperationContext ctx = WebOperationContext.Current;
+                ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
+                ret = new SuggestReturn()
+                {
+                    Meta = new SuggestReturnMeta()
+                    {
+                        Messages = new string[] { ex.Message }
+                    }
+                };
+            }
 
             return ret;
         }

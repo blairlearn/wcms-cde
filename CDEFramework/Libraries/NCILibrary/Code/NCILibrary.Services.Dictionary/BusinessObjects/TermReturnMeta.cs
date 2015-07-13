@@ -8,14 +8,8 @@ namespace NCI.Services.Dictionary.BusinessObjects
     /// <summary>
     /// Metadata about a call to GetTerm().
     /// </summary>
-    public class TermReturnMeta
+    public class TermReturnMeta : MetaCommon
     {
-        public TermReturnMeta()
-        {
-            // Set a default status message.
-            Messages = new string[] { "OK" };
-        }
-
         /// <summary>
         /// The term's audience Patient or HealthProfessional
         /// </summary>
@@ -25,11 +19,5 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// The term's language
         /// </summary>
         public String Language { get; set; }
-
-        /// <summary>
-        /// Human-readable message about the status of the call to GetTerm().
-        /// May contain an error message.
-        /// </summary>
-        public String[] Messages { get; set; }
     }
 }

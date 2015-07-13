@@ -8,7 +8,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
     /// <summary>
     /// Metadata about a call to GetTerm().
     /// </summary>
-    public class SearchReturnMeta
+    public class SearchReturnMeta : MetaCommon
     {
         public int Offset { get; set; }
 
@@ -23,11 +23,5 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// The term's language
         /// </summary>
         public String Language { get; set; }
-
-        /// <summary>
-        /// Human-readable message about the status of the call to GetTerm().
-        /// May contain an error message.
-        /// </summary>
-        public String[] Messages { get; set; }
     }
 }

@@ -66,7 +66,9 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\Alias.cs" />
     <Compile Include="BusinessObjects\Definition.cs" />
+    <Compile Include="BusinessObjects\DictionarySuggestion.cs" />
     <Compile Include="BusinessObjects\DictionaryTerm.cs" />
+    <Compile Include="BusinessObjects\MetaCommon.cs" />
     <Compile Include="BusinessObjects\Pronunciation.cs" />
     <Compile Include="BusinessObjects\RelatedDrugSummary.cs" />
     <Compile Include="BusinessObjects\RelatedExternalLink.cs" />
@@ -75,6 +77,8 @@
     <Compile Include="BusinessObjects\RelatedTerm.cs" />
     <Compile Include="BusinessObjects\SearchReturn.cs" />
     <Compile Include="BusinessObjects\SearchReturnMeta.cs" />
+    <Compile Include="BusinessObjects\SuggestReturn.cs" />
+    <Compile Include="BusinessObjects\SuggestReturnMeta.cs" />
     <Compile Include="BusinessObjects\TermReturn.cs" />
     <Compile Include="BusinessObjects\TermReturnMeta.cs" />
     <Compile Include="DictionaryManager.cs" />

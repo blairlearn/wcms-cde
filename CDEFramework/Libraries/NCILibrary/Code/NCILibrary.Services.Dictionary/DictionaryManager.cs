@@ -1024,9 +1024,7 @@ namespace NCI.Services.Dictionary
                     }
                     else
                     {
-                        results = new DictionaryTerm[] { };
-                        meta.Audience = string.Empty;
-                        meta.Messages = new string[] { "Not a supported language for the term dictionary." };
+                        throw new UnsupportedLanguageException(language, dictionary);
                     }
                     break;
                 case DictionaryType.drug:
@@ -1038,9 +1036,7 @@ namespace NCI.Services.Dictionary
                     }
                     else
                     {
-                        results = new DictionaryTerm[] { };
-                        meta.Audience = string.Empty;
-                        meta.Messages = new string[] { "Not a supported language for the drug dictionary." };
+                        throw new UnsupportedLanguageException(language, dictionary);
                     }
                     break;
                 case DictionaryType.genetic:
@@ -1052,14 +1048,12 @@ namespace NCI.Services.Dictionary
                     }
                     else
                     {
-                        results = new DictionaryTerm[] { };
-                        meta.Audience = string.Empty;
-                        meta.Messages = new string[] { "Not a supported language for the drug dictionary." };
+                        throw new UnsupportedLanguageException(language, dictionary);
                     }
                     break;
                 default:
-                    results = new DictionaryTerm[] { };
-                    break;
+                    throw new DictionaryValidationException(string.Format("Unknown dictionary type '{0}'.", dictionary));
+                    
             }
 
             meta.ResultCount = results.Length;
@@ -1073,6 +1067,71 @@ namespace NCI.Services.Dictionary
 
             return srchReturn;
         
+        }
+
+        public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language)
+        {
+            SuggestReturn srchReturn;
+
+            DictionarySuggestion[] results = new DictionarySuggestion[] { };
+
+            SuggestReturnMeta meta = new SuggestReturnMeta();
+
+            switch (dictionary)
+            {
+                case DictionaryType.term:
+                    if (language == Language.English)
+                    {
+                        results = Array.ConvertAll(CancerTermEnglish, term => { return new DictionarySuggestion() { id = term.id, term = term.term }; });
+                        meta.Messages = new string[] { "OK" };
+                    }
+                    else if (language == Language.Spanish)
+                    {
+                        results = Array.ConvertAll(CancerTermSpanish, term => { return new DictionarySuggestion() { id = term.id, term = term.term }; });
+                        meta.Messages = new string[] { "OK" };
+                    }
+                    else
+                    {
+                        throw new UnsupportedLanguageException(language, dictionary);
+                    }
+                    break;
+                case DictionaryType.drug:
+                    if (language == Language.English)
+                    {
+                        results = Array.ConvertAll(DrugTermEnglish, term => { return new DictionarySuggestion() { id = term.id, term = term.term }; });
+                        meta.Messages = new string[] { "OK" };
+                    }
+                    else
+                    {
+                        throw new UnsupportedLanguageException(language, dictionary);
+                    }
+                    break;
+                case DictionaryType.genetic:
+                    if (language == Language.English)
+                    {
+                        results = Array.ConvertAll(GeneticTermEnglish, term => { return new DictionarySuggestion() { id = term.id, term = term.term }; });
+                        meta.Messages = new string[] { "OK" };
+                    }
+                    else
+                    {
+                        throw new UnsupportedLanguageException(language, dictionary);
+                    }
+                    break;
+                default:
+                    throw new DictionaryValidationException(string.Format("Unknown dictionary type '{0}'.", dictionary));
+            }
+
+            meta.ResultCount = results.Length;
+
+
+            srchReturn = new SuggestReturn()
+            {
+                Result = results,
+                Meta = meta
+            };
+
+            return srchReturn;
+
         }
     }
 }
