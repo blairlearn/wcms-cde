@@ -952,9 +952,7 @@ namespace NCI.Services.Dictionary
                     }
                     else
                     {
-                        term = null;
-                        meta.Audience = string.Empty;
-                        meta.Messages = new string[] { "Not a supported language for the term dictionary." };
+                        throw new UnsupportedLanguageException(language, dictionary);
                     }
                     break;
                 case DictionaryType.drug:
@@ -966,9 +964,7 @@ namespace NCI.Services.Dictionary
                     }
                     else
                     {
-                        term = null;
-                        meta.Audience = string.Empty;
-                        meta.Messages = new string[] { "Not a supported language for the drug dictionary." };
+                        throw new UnsupportedLanguageException(language, dictionary);
                     }
                     break;
                 case DictionaryType.genetic:
@@ -980,9 +976,7 @@ namespace NCI.Services.Dictionary
                     }
                     else
                     {
-                        term = null;
-                        meta.Audience = string.Empty;
-                        meta.Messages = new string[] { "Not a supported language for the drug dictionary." };
+                        throw new UnsupportedLanguageException(language, dictionary);
                     }
                     break;
                 default:

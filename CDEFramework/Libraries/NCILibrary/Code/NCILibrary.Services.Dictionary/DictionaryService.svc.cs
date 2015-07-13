@@ -109,17 +109,37 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         public TermReturn GetTerm(String termId, DictionaryType dictionary, Language language)
         {
-            InputValidator validator = new InputValidator(dictionary, language);
-            if (validator.IsValid())
+            TermReturn ret = null;
+
+            try
             {
+                InputValidator validator = new InputValidator(dictionary, language);
+                if (validator.IsValid())
+                {
+                    DictionaryManager mgr = new DictionaryManager();
 
-                DictionaryManager mgr = new DictionaryManager();
-
-                TermReturn ret = mgr.GetTerm(termId, dictionary, language, API_VERSION);
-                return ret;
+                    ret = mgr.GetTerm(termId, dictionary, language, API_VERSION);
+                }
+                else
+                    ret = validator.GetInvalidResult();
             }
-            else
-                return validator.GetInvalidResult();
+            // If the requested language isn't supported for this dictionary, fail with
+            // an HTTP status message and an explanation.
+            catch (DictionaryValidationException ex)
+            {
+                WebOperationContext ctx = WebOperationContext.Current;
+                ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
+                ret = new TermReturn()
+                {
+                    Meta = new TermReturnMeta()
+                    {
+                        Messages = new string[] {ex.Message}
+                    },
+                    Term = null
+                };
+            }
+
+            return ret;
         }
 
 
@@ -156,42 +176,6 @@ namespace NCI.Services.Dictionary
             SearchReturn ret = mgr.Search(searchText, searchType, offset, maxResults, dictionary, language);
 
             return ret;
-        }
-
-
-        /// <summary>
-        /// Performs a search for terms with names matching searchText.  This alternate version is
-        /// invoked by a POST request.
-        /// </summary>
-        /// <param name="paramBlock"></param>
-        /// <param name="dictionary">The dictionary to retreive the term from.
-        ///     Valid values are
-        ///        term - Dictionary of Cancer Terms
-        ///        drug - Drug Dictionary
-        ///        genetic - Dictionary of Genetics Terms
-        /// </param>
-        /// <param name="language">The term's desired language.
-        ///     Supported values are:
-        ///         en - English
-        ///         es - Spanish
-        /// </param>
-        /// <returns></returns>
-        [WebInvoke(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "v1/SearchPost")]
-        [OperationContract]
-        public SearchReturn SearchPost(SearchInputs paramBlock)
-        {
-            // Convert paramBlock to individual values and re-use the GET version of Search.
-            String searchText = paramBlock.searchText;
-            SearchType searchType = paramBlock.searchType;
-
-            DictionaryType dictionary = paramBlock.dictionaryType;
-            Language language = paramBlock.languge;
-
-            int offset = paramBlock.offset;
-            int maxResults = paramBlock.maxResults;
-
-            return Search(searchText, searchType, offset, maxResults, dictionary, language);
         }
     }
 }
