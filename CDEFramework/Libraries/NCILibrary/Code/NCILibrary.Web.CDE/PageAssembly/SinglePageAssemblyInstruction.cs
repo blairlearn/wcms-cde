@@ -934,16 +934,21 @@ namespace NCI.Web.CDE
             try
             {
                 string key = "";
+                bool removeParents = false;
 
                 WaiAll.Clear();
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    WebAnalyticsCustomVariableOrEvent[] waEvents = waInfo.WAEvents;
-                    foreach (WebAnalyticsCustomVariableOrEvent waEvent in waEvents)
+                    if (removeParents == false)
                     {
-                        key = waEvent.Key;
-                        _events.Add(key);
+                        WebAnalyticsCustomVariableOrEvent[] waEvents = waInfo.WAEvents;
+                        foreach (WebAnalyticsCustomVariableOrEvent waEvent in waEvents)
+                        {
+                            key = waEvent.Key;
+                            _events.Add(key);
+                        }
+                        removeParents = waInfo.RemoveParentEvents;
                     }
                 }
                 return _events;
@@ -965,20 +970,25 @@ namespace NCI.Web.CDE
             {
                 string key = "";
                 string value = "";
+                bool removeParents = false;
 
                 WaiAll.Clear();
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    WebAnalyticsCustomVariableOrEvent[] waProps = waInfo.WAProps;
-                    foreach (WebAnalyticsCustomVariableOrEvent waProp in waProps)
+                    if (removeParents == false)
                     {
-                        key = waProp.Key;
-                        value = waProp.Value;
-                        if (!_props.ContainsKey(key))
+                        WebAnalyticsCustomVariableOrEvent[] waProps = waInfo.WAProps;
+                        foreach (WebAnalyticsCustomVariableOrEvent waProp in waProps)
                         {
-                            _props.Add(key, value);
+                            key = waProp.Key;
+                            value = waProp.Value;
+                            if (!_props.ContainsKey(key))
+                            {
+                                _props.Add(key, value);
+                            }
                         }
+                        removeParents = waInfo.RemoveParentProps;
                     }
                 }
                 return _props;
@@ -999,20 +1009,25 @@ namespace NCI.Web.CDE
             {
                 string key = "";
                 string value = "";
+                bool removeParents = false;
 
                 WaiAll.Clear();
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    WebAnalyticsCustomVariableOrEvent[] waEvars = waInfo.WAEvars;
-                    foreach (WebAnalyticsCustomVariableOrEvent waEvar in waEvars)
+                    if (removeParents == false)
                     {
-                        key = waEvar.Key;
-                        value = waEvar.Value;
-                        if (!_evars.ContainsKey(key))
+                        WebAnalyticsCustomVariableOrEvent[] waEvars = waInfo.WAEvars;
+                        foreach (WebAnalyticsCustomVariableOrEvent waEvar in waEvars)
                         {
-                            _evars.Add(key, value);
+                            key = waEvar.Key;
+                            value = waEvar.Value;
+                            if (!_evars.ContainsKey(key))
+                            {
+                                _evars.Add(key, value);
+                            }
                         }
+                        removeParents = waInfo.RemoveParentEvars;
                     }
                 }
                 return _evars;
