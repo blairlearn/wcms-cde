@@ -794,8 +794,6 @@ namespace NCI.Web.CDE
 
         // TODO: 
         // - Refactor methods (move into WebAnalyticsInfo?).
-        // - Add logic for "RemoveParent" flag at Props/Evars/Events level.
-        // - Pass channels to correct place.
         // - Pass suites to correct place.
         // - Clean up, add comments.
 
@@ -844,34 +842,6 @@ namespace NCI.Web.CDE
                 return null;
             }
             return WaiAll;
-        }
-
-        /// <summary>
-        /// Load the channel(s) that have been set on this navon. If there is no value,
-        /// recurse through parents until a value is found. Channels set on a loweer folder 
-        /// overwrite parents' channels.
-        /// </summary>
-        protected string LoadChannel(SectionDetail section)
-        {
-            try
-            {
-                WebAnalyticsInfo wai = LoadCustomAnalytics(section);
-                string chan = wai.WAChannels;
-
-                if (String.IsNullOrEmpty(chan))
-                {
-                    wai = LoadCustomAnalytics(section.Parent);
-                    chan = LoadChannel(section.Parent);
-                }
-                return chan;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadChannel()",
-                      "Exception encountered while retrieving web analytics channels.",
-                      NCIErrorLevel.Error, ex);
-                return "";
-            }
         }
 
         /// <summary>
@@ -1087,7 +1057,6 @@ namespace NCI.Web.CDE
             // values from it or its parents
             WebAnalyticsInfo wai = LoadCustomAnalytics(getSectionDetail());
             string suite = LoadSuite(getSectionDetail());
-            string channel = LoadChannel(getSectionDetail());
             string group = LoadContentGroup(getSectionDetail());
             List<String> eventsList = LoadEvents(getSectionDetail());
             Dictionary<string, string> props = LoadProps(getSectionDetail());

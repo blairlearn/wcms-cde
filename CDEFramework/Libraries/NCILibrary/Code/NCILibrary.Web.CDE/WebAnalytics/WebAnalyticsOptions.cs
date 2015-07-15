@@ -142,7 +142,32 @@ namespace NCI.Web.CDE.WebAnalytics
             return rtnFunctions.ToArray();
         }
 
-
+        /// <summary>
+        /// This method returns a channel name set in the section detail. If the current section
+        /// does not have a channel value set, recurse through parents until a channel 
+        /// value is found. Channels set on a loweer folder overwrite parents' channels.
+        /// </summary>
+        /// <param name="details">SectionDetail object.</param>
+        /// <returns>The channel name to be passed to analytics.</returns>
+        public static string GetChannelFromSectionDetail(SectionDetail details)
+        {
+            try
+            {
+                string channels = details.WebAnalyticsInfo.WAChannels;
+                if (String.IsNullOrEmpty(channels))
+                {
+                    channels = GetChannelFromSectionDetail(details.Parent);
+                }
+                return channels;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("CDE:WebAnalyticsOptions.cs:GetChannelFromSectionDetail()",
+                      "Exception encountered while retrieving web analytics channels.",
+                      NCIErrorLevel.Error, ex);
+                return "";
+            }
+        }
 
         /// <summary>
         /// This method returns a channel name for a given folderpath. It also matches occurence

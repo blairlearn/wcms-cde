@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Globalization;
 using NCI.Web.CDE;
 using NCI.Web.CDE.WebAnalytics;
+using NCI.Logging;
 
 namespace NCI.Web.CDE.UI.WebControls
 {
@@ -47,12 +48,20 @@ namespace NCI.Web.CDE.UI.WebControls
 
                 webAnalyticsPageLoad.SetLanguage(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("language"));
 
-                // Use pretty url to get channel name from the mapping, mapping information is in web.config
-                string prettyUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("PrettyUrl").UriStem;
-                if(!string.IsNullOrEmpty(prettyUrl))
+                // Get the channel name from the section details. As of the cancer.gov Feline release, analytics channels
+                // are set in the navons, not Web.config
+                try
                 {
-                    string channelName = WebAnalyticsOptions.GetChannelForUrlPath(prettyUrl);
+                    string sectionPath = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
+                    SectionDetail detail = SectionDetailFactory.GetSectionDetail(sectionPath);
+                    string channelName = WebAnalyticsOptions.GetChannelFromSectionDetail(detail);
                     webAnalyticsPageLoad.SetChannel(channelName);
+                }
+                catch (Exception ex)
+                {
+                    NCI.Logging.Logger.LogError("WebAnalyticsControl.cs:RenderContents()",
+                        "Error retrieving analytics channel.", NCIErrorLevel.Error, ex);
+                    webAnalyticsPageLoad.SetChannel("");
                 }
                 foreach (KeyValuePair<WebAnalyticsOptions.eVars, string> kvp in webAnalyticsSettings.Evars)
                     webAnalyticsPageLoad.AddEvar(kvp.Key, kvp.Value ); 
