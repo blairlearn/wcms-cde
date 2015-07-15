@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using NCI.Logging;
 using NCI.Services.Dictionary.BusinessObjects;
 
 namespace NCI.Services.Dictionary
 {
     internal class DictionaryManager
     {
+        static Log log = new Log(typeof(DictionaryManager));
+
         // These values should come from the GateKeeper backend processing.
         const String AUDIENCE_PATIENT = "Patient";
         const String AUDIENCE_HEALTHPROF = "Health Professional";
@@ -927,6 +930,8 @@ namespace NCI.Services.Dictionary
 
         public TermReturn GetTerm(String termId, DictionaryType dictionary, Language language, String version)
         {
+            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language, version));
+
             TermReturn trmReturn;
 
             DictionaryTerm term;
@@ -995,6 +1000,8 @@ namespace NCI.Services.Dictionary
 
         public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
+            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, maxResults, dictionary, language));
+
             SearchReturn srchReturn;
 
             // Sanity check for the offset and maxResults
@@ -1071,6 +1078,8 @@ namespace NCI.Services.Dictionary
 
         public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language)
         {
+            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}).", searchText, searchType, dictionary, language));
+
             SuggestReturn srchReturn;
 
             DictionarySuggestion[] results = new DictionarySuggestion[] { };

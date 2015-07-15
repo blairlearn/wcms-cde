@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 
+using NCI.Logging;
 using NCI.Services.Dictionary.BusinessObjects;
 using NCI.Util;
 
@@ -37,52 +38,99 @@ namespace NCI.Services.Dictionary
     [ServiceContract]
     public class DictionaryService
     {
+        static Log log = new Log(typeof(DictionaryService));
+
         const String API_VERSION = "v1";
 
         #region private class InputValidator
 
         /// <summary>
-        /// 
+        /// Validates input for the DictionaryService public interface.
         /// </summary>
-        private class InputValidator
+        private static class InputValidator
         {
-            private DictionaryType dictionary;
-            private Language language;
-
-            public InputValidator(DictionaryType dictionary, Language language)
+            public static void ValidateGetTerm(DictionaryType dictionary, Language language)
             {
-                this.dictionary = dictionary;
-                this.language = language;
-            }
-
-            public bool IsValid()
-            {
-                bool isValid = Enum.IsDefined(typeof(DictionaryType), dictionary) && dictionary != DictionaryType.Unknown
-                    && Enum.IsDefined(typeof(Language), language) && language != Language.Unknown;
-
-                return isValid;
-            }
-
-            public TermReturn GetInvalidResult()
-            {
-                List<String> messages = new List<string>();
+                String message = string.Empty;
+                bool failed = false;
 
                 if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
-                    messages.Add("Dictionary must be 'Term', 'drug' or 'genetic'.");
+                {
+                    failed = true;
+                    message += "Dictionary must be 'Term', 'drug' or 'genetic'.\n";
+                }
 
                 if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
-                    messages.Add("Language must be 'en' or 'es'.");
-
-                return new TermReturn()
                 {
-                    Meta = new TermReturnMeta()
-                    {
-                        Messages = messages.ToArray(),
-                        Language = language.ToString(),
-                        Audience = "n/a"
-                    },
-                    Term = null
-                };
+                    failed = true;
+                    message += "Language must be 'English' or 'Spanish'.\n";
+                }
+
+                if (failed)
+                {
+                    log.debug(message);
+                    throw new DictionaryValidationException(message);
+                }
+            }
+
+            public static void ValidateSearch(SearchType searchType, DictionaryType dictionary, Language language)
+            {
+                String message = string.Empty;
+                bool failed = false;
+
+                if (!Enum.IsDefined(typeof(SearchType), searchType) || searchType == SearchType.Unknown)
+                {
+                    failed = true;
+                    message += "Search type must be 'Begins', 'Contains', or 'Magic'.\n";
+                }
+
+                if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
+                {
+                    failed = true;
+                    message += "Dictionary must be 'Term', 'drug' or 'genetic'.\n";
+                }
+
+                if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
+                {
+                    failed = true;
+                    message += "Language must be 'English' or 'Spanish'.\n";
+                }
+
+                if (failed)
+                {
+                    log.debug(message);
+                    throw new DictionaryValidationException(message);
+                }
+            }
+
+            public static void SearchSuggest(SearchType searchType, DictionaryType dictionary, Language language)
+            {
+                String message = string.Empty;
+                bool failed = false;
+
+                if (!Enum.IsDefined(typeof(SearchType), searchType) || searchType == SearchType.Unknown)
+                {
+                    failed = true;
+                    message += "Search type must be 'Begins', 'Contains', or 'Magic'.\n";
+                }
+
+                if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
+                {
+                    failed = true;
+                    message += "Dictionary must be 'Term', 'drug' or 'genetic'.\n";
+                }
+
+                if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
+                {
+                    failed = true;
+                    message += "Language must be 'English' or 'Spanish'.\n";
+                }
+
+                if (failed)
+                {
+                    log.debug(message);
+                    throw new DictionaryValidationException(message);
+                }
             }
         }
 
@@ -109,19 +157,16 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         public TermReturn GetTerm(String termId, DictionaryType dictionary, Language language)
         {
+            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language));
+
             TermReturn ret = null;
 
             try
             {
-                InputValidator validator = new InputValidator(dictionary, language);
-                if (validator.IsValid())
-                {
-                    DictionaryManager mgr = new DictionaryManager();
+                InputValidator.ValidateGetTerm(dictionary, language);
 
-                    ret = mgr.GetTerm(termId, dictionary, language, API_VERSION);
-                }
-                else
-                    ret = validator.GetInvalidResult();
+                DictionaryManager mgr = new DictionaryManager();
+                ret = mgr.GetTerm(termId, dictionary, language, API_VERSION);
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.
@@ -133,10 +178,12 @@ namespace NCI.Services.Dictionary
                 {
                     Meta = new TermReturnMeta()
                     {
-                        Messages = new string[] {ex.Message}
+                        Messages = new string[] { ex.Message }
                     }
                 };
             }
+
+            log.debug("Successfully retrieved a term.");
 
             return ret;
         }
@@ -171,13 +218,18 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
+            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, maxResults, dictionary, language));
+
             SearchReturn ret;
 
             try
             {
+                InputValidator.ValidateSearch(searchType, dictionary, language);
+
                 DictionaryManager mgr = new DictionaryManager();
                 ret = mgr.Search(searchText, searchType, offset, maxResults, dictionary, language);
 
+                log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.
@@ -227,13 +279,18 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language)
         {
+            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}).", searchText, searchType, dictionary, language));
+
             SuggestReturn ret;
 
             try
             {
+                InputValidator.ValidateSearch(searchType, dictionary, language);
+
                 DictionaryManager mgr = new DictionaryManager();
                 ret = mgr.SearchSuggest(searchText, searchType, dictionary, language);
 
+                log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.

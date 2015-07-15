@@ -25,11 +25,16 @@ namespace NCI.Services.Dictionary
         genetic =3
     }
 
-    [DataContract]
+    [DataContract()]
     public enum Language
     {
+        [EnumMember(Value = "unknown")]
         Unknown = 0,
+
+        [EnumMember(Value = "en")]
         English = 1,
+
+        [EnumMember(Value = "es")]
         Spanish = 2
     }
 
