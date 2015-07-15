@@ -34,7 +34,7 @@ namespace NCI.Web.CDE.UI
     
     public class CDEField : WebControl
     {
-
+        private string _wrappingTagName = "span";
         private CDEFieldScope _scope = CDEFieldScope.Page;
 
         /// <summary>
@@ -50,7 +50,16 @@ namespace NCI.Web.CDE.UI
         /// Automated getting and setting of FieldName
         /// </summary>
         public string FieldName { get; set; }
-        
+
+        /// <summary>
+        /// Automated getting and setting of WrappingTagName
+        /// </summary>
+        public string WrappingTagName
+        {
+            get { return _wrappingTagName; }
+            set { this._wrappingTagName = value; }
+        }
+
         /// <summary>
         /// Renders contents for DesiredField: the field the user wishes to find and use. If the current
         /// scope is Page level, the field is found using the current page assembly. If the current scope
@@ -58,7 +67,7 @@ namespace NCI.Web.CDE.UI
         /// </summary>
         /// <param name="writer"></param>
        
-        protected override void RenderContents(HtmlTextWriter writer)
+        protected override void Render(HtmlTextWriter writer)
         {
             try
             {
@@ -89,7 +98,9 @@ namespace NCI.Web.CDE.UI
 
                 if (DesiredField != null)
                 {
+                    writer.RenderBeginTag(this.WrappingTagName);
                     writer.Write(DesiredField);
+                    writer.RenderEndTag();
                 }
                 else
                 {
