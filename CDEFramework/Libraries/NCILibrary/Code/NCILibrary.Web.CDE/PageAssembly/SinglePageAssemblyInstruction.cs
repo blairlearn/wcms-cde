@@ -794,7 +794,6 @@ namespace NCI.Web.CDE
 
         // TODO: 
         // - Refactor methods (move into WebAnalyticsInfo?).
-        // - Pass suites to correct place.
         // - Clean up, add comments.
 
         /// <summary>

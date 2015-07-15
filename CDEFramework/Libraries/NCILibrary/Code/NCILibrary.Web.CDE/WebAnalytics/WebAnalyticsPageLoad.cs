@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Configuration;
+using NCI.Logging;
 
 namespace NCI.Web.CDE.WebAnalytics
 {
@@ -29,6 +30,7 @@ namespace NCI.Web.CDE.WebAnalytics
         private string pageName = null;
         private string pageType = "";
         private string language = "";
+        private IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
 
 
         /// <summary>When true, page-wide link tracking is enabled.</summary>
@@ -118,6 +120,26 @@ namespace NCI.Web.CDE.WebAnalytics
                         reportSuites += ",";
                     reportSuites += suite;
                 }
+
+                try
+                {
+                    string sectionPath = pgInstruction.SectionPath;
+                    SectionDetail detail = SectionDetailFactory.GetSectionDetail(sectionPath);
+                    string customSuites = WebAnalyticsOptions.GetReportSuitesFromSectionDetail(detail);
+                    if (!string.IsNullOrEmpty(customSuites))
+                    {
+                        reportSuites += ",";
+                        reportSuites += customSuites;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError("CDE:WebAnalyticsPageLoad.cs:Tag()",
+                          "Exception encountered while retrieving web analytics suite.",
+                          NCIErrorLevel.Error, ex);
+                    reportSuites += "";
+                }
+
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
                 output.AppendLine("<!--");
                 output.AppendLine("var s_account=" + DELIMITER + reportSuites + DELIMITER + ";");

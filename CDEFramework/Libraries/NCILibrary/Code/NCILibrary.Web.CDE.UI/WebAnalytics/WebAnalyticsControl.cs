@@ -52,9 +52,9 @@ namespace NCI.Web.CDE.UI.WebControls
                 // are set in the navons, not Web.config
                 try
                 {
-                    string sectionPath = PageAssemblyContext.Current.PageAssemblyInstruction.SectionPath;
+                    string sectionPath = pgInstruction.SectionPath;
                     SectionDetail detail = SectionDetailFactory.GetSectionDetail(sectionPath);
-                    string channelName = WebAnalyticsOptions.GetChannelFromSectionDetail(detail);
+                    string channelName = WebAnalyticsOptions.GetChannelsFromSectionDetail(detail);
                     webAnalyticsPageLoad.SetChannel(channelName);
                 }
                 catch (Exception ex)

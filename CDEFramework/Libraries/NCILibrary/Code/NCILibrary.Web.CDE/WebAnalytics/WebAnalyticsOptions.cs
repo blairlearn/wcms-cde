@@ -87,6 +87,33 @@ namespace NCI.Web.CDE.WebAnalytics
         }
 
         /// <summary>
+        /// This method returns a report suite set in the section detail. If the current section
+        /// does not have a suite value set, recurse through parents until a suite 
+        /// value is found. Suites set on a loweer folder overwrite parents.
+        /// </summary>
+        /// <param name="details">SectionDetail object.</param>
+        /// <returns>The report suite name to be passed to analytics.</returns>
+        public static string GetReportSuitesFromSectionDetail(SectionDetail detail)
+        {
+            try
+            {
+                string suites = detail.WebAnalyticsInfo.WAReportSuites;
+                if (String.IsNullOrEmpty(suites))
+                {
+                    suites = GetReportSuitesFromSectionDetail(detail.Parent);
+                }
+                return suites;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("CDE:WebAnalyticsOptions.cs:GetReportSuitesFromSectionDetail()",
+                      "Exception encountered while retrieving web analytics channels.",
+                      NCIErrorLevel.Error, ex);
+                return "";
+            }
+        }
+
+        /// <summary>
         /// This method returns a list of all reporting suites for a given channel.
         /// </summary>
         /// <param name="channelName">The name of the channel</param>
@@ -149,20 +176,20 @@ namespace NCI.Web.CDE.WebAnalytics
         /// </summary>
         /// <param name="details">SectionDetail object.</param>
         /// <returns>The channel name to be passed to analytics.</returns>
-        public static string GetChannelFromSectionDetail(SectionDetail details)
+        public static string GetChannelsFromSectionDetail(SectionDetail detail)
         {
             try
             {
-                string channels = details.WebAnalyticsInfo.WAChannels;
+                string channels = detail.WebAnalyticsInfo.WAChannels;
                 if (String.IsNullOrEmpty(channels))
                 {
-                    channels = GetChannelFromSectionDetail(details.Parent);
+                    channels = GetChannelsFromSectionDetail(detail.Parent);
                 }
                 return channels;
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:WebAnalyticsOptions.cs:GetChannelFromSectionDetail()",
+                Logger.LogError("CDE:WebAnalyticsOptions.cs:GetChannelsFromSectionDetail()",
                       "Exception encountered while retrieving web analytics channels.",
                       NCIErrorLevel.Error, ex);
                 return "";
