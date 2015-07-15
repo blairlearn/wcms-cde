@@ -80,6 +80,7 @@
     <Compile Include="Logging\Configuration\FacilityMatchStringsCollection.cs" />
     <Compile Include="Logging\Configuration\LoggingSinkElement.cs" />
     <Compile Include="Logging\Configuration\LoggingSinksCollection.cs" />
+    <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LoggingHelper.cs" />
     <Compile Include="Logging\Configuration\NCILoggingSection.cs" />
     <Compile Include="Logging\Logger.cs" />
