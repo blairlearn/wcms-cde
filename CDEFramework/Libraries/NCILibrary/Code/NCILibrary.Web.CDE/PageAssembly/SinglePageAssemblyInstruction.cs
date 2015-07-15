@@ -1075,47 +1075,56 @@ namespace NCI.Web.CDE
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
 
-            foreach (string evn in eventsList)
+            try
             {
-
-                if (!String.IsNullOrEmpty(evn))
+                foreach (string evn in eventsList)
                 {
-                    SetWebAnalytics(evn, waField =>
+
+                    if (!String.IsNullOrEmpty(evn))
                     {
-                        waField.Value = "";
-                    });
+                        SetWebAnalytics(evn, waField =>
+                        {
+                            waField.Value = "";
+                        });
+                    }
+                }
+
+
+                // Register custom props entered on navon
+                foreach (KeyValuePair<string, string> pr in props)
+                {
+                    String propKey = GetCustomProps(pr);
+                    String propValue = pr.Value;
+
+                    if (!String.IsNullOrEmpty(propKey))
+                    {
+                        SetWebAnalytics(propKey, waField =>
+                        {
+                            waField.Value = propValue;
+                        });
+                    }
+                }
+
+                // Register custom evars entered on navon
+                foreach (KeyValuePair<string, string> evr in evars)
+                {
+                    String evarKey = GetCustomEvars(evr);
+                    String evarValue = evr.Value;
+
+                    if (!String.IsNullOrEmpty(evarKey))
+                    {
+                        SetWebAnalytics(evarKey, waField =>
+                        {
+                            waField.Value = evarValue;
+                        });
+                    }
                 }
             }
-
-
-            // Register custom props entered on navon
-            foreach (KeyValuePair<string, string> pr in props)
+            catch (NullReferenceException ex)
             {
-                String propKey = GetCustomProps(pr);
-                String propValue = pr.Value;
-
-                if (!String.IsNullOrEmpty(propKey))
-                {
-                    SetWebAnalytics(propKey, waField =>
-                    {
-                        waField.Value = propValue;
-                    });
-                }
-            }
-
-            // Register custom evars entered on navon
-            foreach (KeyValuePair<string, string> evr in evars)
-            {
-                String evarKey = GetCustomEvars(evr);
-                String evarValue = evr.Value;
-
-                if (!String.IsNullOrEmpty(evarKey))
-                {
-                    SetWebAnalytics(evarKey, waField =>
-                    {
-                        waField.Value = evarValue;
-                    });
-                }
+                Logger.LogError("SinglePageAssemblyInstruction.cs:RegisterWebAnalyticsFieldFilters()",
+                    "WebAnalyticsInfo is missing from SectionDetails XML", NCIErrorLevel.Error, ex);
+                return;
             }
         }
         #endregion
