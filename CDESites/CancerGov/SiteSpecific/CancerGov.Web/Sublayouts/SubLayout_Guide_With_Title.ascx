@@ -2,13 +2,12 @@
 <!-- BEGIN Row Title -->
 <div class="row collapse">
     <div class="large-12 columns guide-title">
-        <h2>
-            <NCI:CDEField
-                Scope="Snippet"
-                FieldName="sublayout_title"
-                id="CDEField1"
-                runat="server" />
-        </h2>
+        <NCI:CDEField
+            Scope="Snippet"
+            FieldName="sublayout_title"
+            WrappingTagName="h2"
+            id="CDEField1"
+            runat="server" />
     </div>
 </div>
 <!-- END Row Title -->
