@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
+﻿using System.Runtime.Serialization;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
+    /// <summary>
+    /// Outermost data structure for returns from SearchSuggest().
+    /// </summary>
     [DataContract()]
     public class SuggestReturn
     {
