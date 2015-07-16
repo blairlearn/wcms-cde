@@ -42,14 +42,22 @@ namespace NCI.Web.CDE.UI.WebControls
             base.RenderContents(output);
             IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
             WebAnalyticsSettings webAnalyticsSettings = pgInstruction.GetWebAnalytics();
+            string configChannelName = "";
             if (webAnalyticsSettings != null)
             {
                 WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
 
                 webAnalyticsPageLoad.SetLanguage(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("language"));
+                
+                // Use pretty url to get channel name from the mapping, mapping information is in web.config
+                string prettyUrl = pgInstruction.GetUrl("PrettyUrl").UriStem;
+                if (!string.IsNullOrEmpty(prettyUrl))
+                {
+                    configChannelName = WebAnalyticsOptions.GetChannelForUrlPath(prettyUrl);
+                }
 
                 // Get the channel name from the section details. As of the cancer.gov Feline release, analytics channels
-                // are set in the navons, not Web.config
+                // are set in the navons, not Web.config. The old functionality is being used in the catch block for now.
                 try
                 {
                     string sectionPath = pgInstruction.SectionPath;
@@ -61,7 +69,7 @@ namespace NCI.Web.CDE.UI.WebControls
                 {
                     NCI.Logging.Logger.LogError("WebAnalyticsControl.cs:RenderContents()",
                         "Error retrieving analytics channel.", NCIErrorLevel.Error, ex);
-                    webAnalyticsPageLoad.SetChannel("");
+                    webAnalyticsPageLoad.SetChannel(configChannelName);
                 }
                 foreach (KeyValuePair<WebAnalyticsOptions.eVars, string> kvp in webAnalyticsSettings.Evars)
                     webAnalyticsPageLoad.AddEvar(kvp.Key, kvp.Value ); 

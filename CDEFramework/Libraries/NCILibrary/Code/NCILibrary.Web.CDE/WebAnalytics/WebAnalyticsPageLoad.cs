@@ -113,14 +113,19 @@ namespace NCI.Web.CDE.WebAnalytics
                 output.AppendLine("");
                 output.AppendLine(WEB_ANALYTICS_COMMENT_START);
 
-                // Report Suites JavaScript variable (s_account) must be set before the s_code file is loaded
+                /*
+                // Loop through list of suites that have been matched to channels in Web.config
+                // Commenting this out, as suites are no longer being set in Web.config 
                 foreach (string suite in WebAnalyticsOptions.GetSuitesForChannel(channel, language))
                 {
                     if (reportSuites.Length > 0)
                         reportSuites += ",";
                     reportSuites += suite;
                 }
+                */
 
+                // Report Suites JavaScript variable (s_account) must be set before the s_code file is loaded
+                // Get custom suites that are set on the navon. Default suites are being set in wa_wcms_pre.js
                 try
                 {
                     string sectionPath = pgInstruction.SectionPath;
@@ -128,8 +133,8 @@ namespace NCI.Web.CDE.WebAnalytics
                     string customSuites = WebAnalyticsOptions.GetReportSuitesFromSectionDetail(detail);
                     if (!string.IsNullOrEmpty(customSuites))
                     {
-                        reportSuites += ",";
                         reportSuites += customSuites;
+                        reportSuites += ",";
                     }
                 }
                 catch (Exception ex)
@@ -142,9 +147,10 @@ namespace NCI.Web.CDE.WebAnalytics
 
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
                 output.AppendLine("<!--");
-                output.AppendLine("var s_account=" + DELIMITER + reportSuites + DELIMITER + ";");
+                output.AppendLine("var s_account=" + DELIMITER + reportSuites + DELIMITER + "; // custom suites");
                 output.AppendLine("-->");
                 output.AppendLine("</script>");
+                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/wa_wcms_pre.js\"></script>");
 
                 output.Append(pageLoadPreTag.ToString());
 

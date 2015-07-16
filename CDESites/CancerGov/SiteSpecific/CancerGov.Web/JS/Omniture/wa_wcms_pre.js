@@ -53,6 +53,7 @@ else if (page_URL.indexOf('/types') != -1 ||
 	page_URL.indexOf('/about-cancer') != -1) {
 	wa_production_report_suite +=  ',ncicancertopics-dev';
 	wa_dev_report_suite += ',ncicancertopics-dev';
+	wa_hier1 = '';
 }
 else if (page_URL.indexOf('/espanol/tipos') != -1) {
 	wa_production_report_suite +=  ',ncitiposdecancer-dev';
@@ -83,9 +84,9 @@ if (page_URL.indexOf('www.cancer.gov') != -1) {
 }
 
 if (wa_is_production_report_suite) {
-	s_account=wa_production_report_suite;
+	s_account += wa_production_report_suite;
 }
 else {
-	s_account=wa_dev_report_suite;
+	s_account += wa_dev_report_suite;
 }
 var pageNameOverride = location.hostname.toLowerCase() + location.pathname.toLowerCase();
