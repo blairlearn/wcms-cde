@@ -284,6 +284,9 @@ namespace NCI.DataManager
 
                                     // Keep original published/modified/reviewed values, but also compare each value
                                     // and return the most recent of the three for use in lists.
+                                    int dateDisplay = sqlFVReader.GetInt32("date_display_mode");
+
+
                                     DateTime dfp = sqlFVReader.GetDateTime("Date_first_published");
                                     DateTime listDate = dfp;
                                     if (dfp != DateTime.MinValue)
@@ -294,14 +297,78 @@ namespace NCI.DataManager
                                     DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dlm != DateTime.MinValue)
                                         searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dlm);
-                                    if (dlm > listDate)
-                                        listDate = dlm;
+                                    
 
                                     DateTime dlr = sqlFVReader.GetDateTime("date_last_reviewed");
                                     if (dlr != DateTime.MinValue)
                                         searchResult.ReviewedDate = String.Format("{0:MM/dd/yyyy}", dlr);
-                                    if (dlr > listDate)
+                                    
+
+                                    if (dateDisplay == 0)
+                                    {
+                                        searchResult.DateForLists = "";
+                                        searchResult.DateForListsEs = "";
+                                        searchResults.Add(searchResult);
+                                        break;
+                                    }
+                                    else if (dateDisplay == 1)
+                                    {
+                                        listDate = dfp;
+                                    }
+
+                                    else if (dateDisplay == 2)
+                                    {
+                                        listDate = dlm;
+                                    }
+                                    else if (dateDisplay == 4)
+                                    {
                                         listDate = dlr;
+                                    }
+
+                                    else if (dateDisplay == 3)
+                                    {
+                                        if (dlm > listDate)
+                                            listDate = dlm;
+                                    }
+                                    else if (dateDisplay == 5)
+                                    {
+                                        if (dlr > listDate)
+                                            listDate = dlr;
+                                    }
+                                    else if (dateDisplay == 6)
+                                    {
+                                        if (dlr > dlm)
+                                        {
+                                            listDate = dlr;
+                                        }
+                                        else
+                                        {
+                                            listDate = dlm;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (listDate < dlr && listDate > dlm)
+                                        {
+                                            listDate = dlr;
+                                        }
+                                        else if (listDate > dlr && listDate < dlm)
+                                        {
+                                            listDate = dlm;
+                                        }
+                                        else if (listDate < dlr && listDate < dlm)
+                                        {
+                                            if (dlm < dlr)
+                                            {
+                                                listDate = dlr;
+                                            }
+                                            else
+                                            {
+                                                listDate = dlm;
+                                            }
+
+                                        }
+                                    }
 
                                     searchResult.DateForLists = String.Format("{0:MMMM d, yyyy}", listDate);
                                     searchResult.DateForListsEs = listDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
