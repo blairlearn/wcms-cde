@@ -801,7 +801,6 @@ namespace NCI.Web.CDE
 
             WebAnalyticsInfo wai = new WebAnalyticsInfo();
             SectionDetail detail = SectionDetailFactory.GetSectionDetail(SectionPath);
-            wai.RegisterCustomWebAnalytics(detail);
 
             base.RegisterWebAnalyticsFieldFilters();
 
@@ -814,6 +813,8 @@ namespace NCI.Web.CDE
             {
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
+			
+			wai.RegisterCustomWebAnalytics(detail);
         }
         #endregion
 
