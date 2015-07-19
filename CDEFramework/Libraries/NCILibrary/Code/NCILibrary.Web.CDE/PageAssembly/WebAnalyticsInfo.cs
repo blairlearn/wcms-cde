@@ -78,21 +78,6 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool RemoveParentEvars { get; set; }
 
-        // Default constructor
-        public WebAnalyticsInfo()
-        {
-            WAChannels = String.Empty;
-            WAReportSuites = String.Empty;
-            WAContentGroups = String.Empty;
-            WAEvents = new WebAnalyticsCustomVariableOrEvent[0];
-            WAProps = new WebAnalyticsCustomVariableOrEvent[0];
-            WAEvars = new WebAnalyticsCustomVariableOrEvent[0];
-            RemoveParentEvents = false;
-            RemoveParentProps = false;
-            RemoveParentEvars = false;
-        }
-
-
 
         /// <summary>
         /// Load the analytics that have been set on the navon. If there is no value,
@@ -197,7 +182,7 @@ namespace NCI.Web.CDE
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    if ((removeParents == false) || (waInfo != null))
+                    if ((removeParents == false) && (waInfo != null))
                     {
                         WebAnalyticsCustomVariableOrEvent[] waEvents = waInfo.WAEvents;
                         foreach (WebAnalyticsCustomVariableOrEvent waEvent in waEvents)
@@ -233,7 +218,7 @@ namespace NCI.Web.CDE
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    if ((removeParents == false) || (waInfo != null))
+                    if ((removeParents == false) && (waInfo != null))
                     {
                         WebAnalyticsCustomVariableOrEvent[] waProps = waInfo.WAProps;
                         foreach (WebAnalyticsCustomVariableOrEvent waProp in waProps)
@@ -272,7 +257,7 @@ namespace NCI.Web.CDE
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    if ((removeParents == false) || (waInfo != null))
+                    if ((removeParents == false) && (waInfo != null))
                     {
                         WebAnalyticsCustomVariableOrEvent[] waEvars = waInfo.WAEvars;
                         foreach (WebAnalyticsCustomVariableOrEvent waEvar in waEvars)
