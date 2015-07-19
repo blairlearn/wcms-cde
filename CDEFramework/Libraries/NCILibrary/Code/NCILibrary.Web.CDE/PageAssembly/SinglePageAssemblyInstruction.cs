@@ -795,15 +795,6 @@ namespace NCI.Web.CDE
         /// </summary>
         protected override void RegisterWebAnalyticsFieldFilters()
         {
-		    // TODO: 
-			// - Refactor methods (move into WebAnalyticsInfo?).
-			// - Clean up, add comments.
-
-            WebAnalyticsInfo wai = new WebAnalyticsInfo();
-            SectionDetail detail = SectionDetailFactory.GetSectionDetail(SectionPath);
-			wai = wai.LoadCustomAnalytics(detail);
-			wai.RegisterCustomWebAnalytics(detail);
-
             base.RegisterWebAnalyticsFieldFilters();
 
             SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
@@ -815,7 +806,14 @@ namespace NCI.Web.CDE
             {
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
-			
+
+			// TODO: 
+			// - Refactor methods (move into WebAnalyticsInfo?).
+			// - Clean up, add comments.
+            WebAnalyticsInfo wai = new WebAnalyticsInfo();
+            SectionDetail detail = SectionDetailFactory.GetSectionDetail(SectionPath);
+			wai = wai.LoadCustomAnalytics(detail);
+			wai.RegisterCustomWebAnalytics(detail);
         }
         #endregion
 
