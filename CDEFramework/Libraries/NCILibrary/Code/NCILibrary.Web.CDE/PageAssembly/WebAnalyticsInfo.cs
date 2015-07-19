@@ -197,7 +197,7 @@ namespace NCI.Web.CDE
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    if (removeParents == false)
+                    if ((removeParents == false) || (waInfo != null))
                     {
                         WebAnalyticsCustomVariableOrEvent[] waEvents = waInfo.WAEvents;
                         foreach (WebAnalyticsCustomVariableOrEvent waEvent in waEvents)
@@ -233,7 +233,7 @@ namespace NCI.Web.CDE
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    if (removeParents == false)
+                    if ((removeParents == false) || (waInfo != null))
                     {
                         WebAnalyticsCustomVariableOrEvent[] waProps = waInfo.WAProps;
                         foreach (WebAnalyticsCustomVariableOrEvent waProp in waProps)
@@ -272,7 +272,7 @@ namespace NCI.Web.CDE
                 List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
                 foreach (WebAnalyticsInfo waInfo in waInfos)
                 {
-                    if (removeParents == false)
+                    if ((removeParents == false) || (waInfo != null))
                     {
                         WebAnalyticsCustomVariableOrEvent[] waEvars = waInfo.WAEvars;
                         foreach (WebAnalyticsCustomVariableOrEvent waEvar in waEvars)
