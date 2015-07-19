@@ -98,7 +98,7 @@ namespace NCI.Web.CDE
         /// Load the analytics that have been set on the navon. If there is no value,
         /// recurse through parents until a value is found or until root is reached.
         /// </summary>
-        protected WebAnalyticsInfo LoadCustomAnalytics(SectionDetail section)
+        public WebAnalyticsInfo LoadCustomAnalytics(SectionDetail section)
         {
             WebAnalyticsInfo wai = section.WebAnalyticsInfo;
             if (wai == null)

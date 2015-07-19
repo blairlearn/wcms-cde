@@ -11,7 +11,7 @@ using System.Xml.Schema;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using NCI.Web.CDE.Configuration;
-using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.CDE.WebAnalytics; 
 using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Util;
 using NCI.Core;
@@ -801,6 +801,8 @@ namespace NCI.Web.CDE
 
             WebAnalyticsInfo wai = new WebAnalyticsInfo();
             SectionDetail detail = SectionDetailFactory.GetSectionDetail(SectionPath);
+			wai = wai.LoadCustomAnalytics(detail);
+			wai.RegisterCustomWebAnalytics(detail);
 
             base.RegisterWebAnalyticsFieldFilters();
 
@@ -814,7 +816,6 @@ namespace NCI.Web.CDE
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
 			
-			wai.RegisterCustomWebAnalytics(detail);
         }
         #endregion
 
