@@ -790,7 +790,77 @@ namespace NCI.Web.CDE
 
 
         #region Protected
+
         /// <summary>
+        /// Get the section details for the content item, load custom analytics, 
+        /// then add the values to the webAnalyticsFieldFilterDelegates dictionary
+        /// </summary>
+        protected void RegisterCustomWebAnalytics()
+        {
+            WebAnalyticsInfo wai = new WebAnalyticsInfo();
+            SectionDetail sectiondetail = SectionDetailFactory.GetSectionDetail(SectionPath);
+            wai = wai.LoadCustomAnalytics(sectiondetail);
+
+            string suite = wai.LoadSuite(sectiondetail);
+            string group = wai.LoadContentGroup(sectiondetail);
+            List<String> eventsList = wai.LoadEvents(sectiondetail);
+            Dictionary<string, string> props = wai.LoadProps(sectiondetail);
+            Dictionary<string, string> evars = wai.LoadEvars(sectiondetail);
+
+            try
+            {
+                // Register custom events entered on navon
+                foreach (string evn in eventsList)
+                {
+                    if (!String.IsNullOrEmpty(evn))
+                    {
+                        SetWebAnalytics(evn, waField =>
+                        {
+                            waField.Value = "";
+                        });
+                    }
+                }
+
+                // Register custom props entered on navon
+                foreach (KeyValuePair<string, string> pr in props)
+                {
+                    String propKey = wai.GetPropKey(pr);
+                    String propValue = pr.Value;
+
+                    if (!String.IsNullOrEmpty(propKey))
+                    {
+                        SetWebAnalytics(propKey, waField =>
+                        {
+                            waField.Value = propValue;
+                        });
+                    }
+                }
+
+                // Register custom evars entered on navon
+                foreach (KeyValuePair<string, string> evr in evars)
+                {
+                    String evarKey = wai.GetEvarKey(evr);
+                    String evarValue = evr.Value;
+
+                    if (!String.IsNullOrEmpty(evarKey))
+                    {
+                        SetWebAnalytics(evarKey, waField =>
+                        {
+                            waField.Value = evarValue;
+                        });
+                    }
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                Logger.LogError("SinglePageAssemblyInstruction.cs:RegisterCustomWebAnalytics()",
+                    "WebAnalyticsInfo is missing from SectionDetails XML", NCIErrorLevel.Error, ex);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Add required values to the webAnalyticsFieldFilterDelegates dictionary.
         /// Override this method to add any page specifc web analytics data points.
         /// </summary>
         protected override void RegisterWebAnalyticsFieldFilters()
@@ -807,16 +877,10 @@ namespace NCI.Web.CDE
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
 
-			// TODO: 
-			// - Refactor methods (move into WebAnalyticsInfo?).
-			// - Clean up, add comments.
-            WebAnalyticsInfo wai = new WebAnalyticsInfo();
-            SectionDetail detail = SectionDetailFactory.GetSectionDetail(SectionPath);
-			wai = wai.LoadCustomAnalytics(detail);
-			wai.RegisterCustomWebAnalytics(detail);
+            RegisterCustomWebAnalytics();
         }
-        #endregion
 
-        #endregion
+        #endregion // Initialize methods region
+        #endregion // Protected region
     }
 }

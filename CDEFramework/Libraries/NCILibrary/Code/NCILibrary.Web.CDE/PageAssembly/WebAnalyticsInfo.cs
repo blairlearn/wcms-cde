@@ -13,7 +13,7 @@ namespace NCI.Web.CDE
     /// <summary>
     /// Defines custom web analytics values set on folders or content types.
     /// </summary>
-    public class WebAnalyticsInfo : BasePageAssemblyInstruction
+    public class WebAnalyticsInfo
     {
         /// <summary>
         /// Gets comma-separated list of analytics channel namess
@@ -83,6 +83,7 @@ namespace NCI.Web.CDE
         /// Load the analytics that have been set on the navon. If there is no value,
         /// recurse through parents until a value is found or until root is reached.
         /// </summary>
+        /// <param name="section">Section details</param>
         public WebAnalyticsInfo LoadCustomAnalytics(SectionDetail section)
         {
             WebAnalyticsInfo wai = section.WebAnalyticsInfo;
@@ -98,11 +99,13 @@ namespace NCI.Web.CDE
             return wai;
         }
 
-        /// <summary>
-        /// Create list of WebAnalyticsInfo objects for current item and all ancestors
-        /// </summary>
         protected List<WebAnalyticsInfo> WaiAll = new List<WebAnalyticsInfo> { };
-        protected List<WebAnalyticsInfo> LoadAllCustomAnalytics(SectionDetail section)
+        /// <summary>
+        /// Load the analytics that have been set on the navon and all of its parents
+        /// until root is reached.
+        /// </summary>
+        /// <param name="section">Section details</param>
+        public List<WebAnalyticsInfo> LoadAllCustomAnalytics(SectionDetail section)
         {
             WaiAll.Add(section.WebAnalyticsInfo);
             if (section.ParentPath != null)
@@ -121,7 +124,8 @@ namespace NCI.Web.CDE
         /// recurse through parents until a value is found. Suites set on a loweer folder 
         /// overwrite parents' suites.
         /// </summary>
-        protected string LoadSuite(SectionDetail section)
+        /// <param name="section">Section details</param>
+        public string LoadSuite(SectionDetail section)
         {
             try
             {
@@ -147,7 +151,8 @@ namespace NCI.Web.CDE
         /// <summary>
         /// Load the content group that has been set on this navon.
         /// </summary>
-        protected string LoadContentGroup(SectionDetail section)
+        /// <param name="section">Section details</param>
+        public string LoadContentGroup(SectionDetail section)
         {
             try
             {
@@ -169,9 +174,12 @@ namespace NCI.Web.CDE
             }
         }
 
-
         protected List<string> _events = new List<string> { };
-        protected List<string> LoadEvents(SectionDetail section)
+        /// <summary>
+        /// Load the custom events from the navon and all parents until RemoveParent 
+        /// flag is set or root is reached. Lower levels override parents' values.
+        /// <param name="section">Section details</param>
+        public List<string> LoadEvents(SectionDetail section)
         {
             try
             {
@@ -206,7 +214,11 @@ namespace NCI.Web.CDE
 
 
         protected Dictionary<string, string> _props = new Dictionary<string, string> { };
-        protected Dictionary<string, string> LoadProps(SectionDetail section)
+        /// <summary>
+        /// Load the custom props set on the navon and all parents until RemoveParent 
+        /// flag is set or root is reached. Lower levels override parents' values.
+        /// <param name="section">Section details</param>
+        public Dictionary<string, string> LoadProps(SectionDetail section)
         {
             try
             {
@@ -245,7 +257,11 @@ namespace NCI.Web.CDE
         }
 
         protected Dictionary<string, string> _evars = new Dictionary<string, string> { };
-        protected Dictionary<string, string> LoadEvars(SectionDetail section)
+        /// <summary>
+        /// Load the custom eVars set on the navon and all parents until RemoveParent 
+        /// flag is set or root is reached. Lower levels override parents' values.
+        /// <param name="section">Section details</param>
+        public Dictionary<string, string> LoadEvars(SectionDetail section)
         {
             try
             {
@@ -283,7 +299,10 @@ namespace NCI.Web.CDE
             }
         }
 
-        public string GetCustomEvents(string cEvent)
+        /// <summary>
+        /// Get event key if value matches enum in WebAnalyticsOptions
+        /// <param name="cEvent">Event key string</param>
+        public string GetEventKey(string cEvent)
         {
             string customEvent = "";
             foreach (WebAnalyticsOptions.Events ev in Enum.GetValues(typeof(WebAnalyticsOptions.Events)))
@@ -294,8 +313,10 @@ namespace NCI.Web.CDE
             return customEvent;
         }
 
-
-        public string GetCustomProps(KeyValuePair<string, string> cProp)
+        /// <summary>
+        /// Get prop key/value if key matches enum in WebAnalyticsOptions
+        /// <param name="cProp">Prop key/value pair</param>
+        public string GetPropKey(KeyValuePair<string, string> cProp)
         {
             string customProp = "";
             foreach (WebAnalyticsOptions.Props prop in Enum.GetValues(typeof(WebAnalyticsOptions.Props)))
@@ -306,8 +327,10 @@ namespace NCI.Web.CDE
             return customProp;
         }
 
-
-        public string GetCustomEvars(KeyValuePair<string, string> cEvar)
+        /// <summary>
+        /// Get eVar key/value if key matches enum in WebAnalyticsOptions
+        /// <param name="cEvar">eVar key/value pair</param>
+        public string GetEvarKey(KeyValuePair<string, string> cEvar)
         {
             string customEvar = "";
             foreach (WebAnalyticsOptions.eVars evar in Enum.GetValues(typeof(WebAnalyticsOptions.eVars)))
@@ -318,71 +341,13 @@ namespace NCI.Web.CDE
             return customEvar;
         }
 
-        public void RegisterCustomWebAnalytics(SectionDetail detail)
-        {
-
-            // Get the section details for the content item, then load any custom analytics
-            // values from it or its parents
-            WebAnalyticsInfo wai = LoadCustomAnalytics(detail);
-            string suite = LoadSuite(detail);
-            string group = LoadContentGroup(detail);
-            List<String> eventsList = LoadEvents(detail);
-            Dictionary<string, string> props = LoadProps(detail);
-            Dictionary<string, string> evars = LoadEvars(detail);
-
-
-            try
-            {
-                foreach (string evn in eventsList)
-                {
-
-                    if (!String.IsNullOrEmpty(evn))
-                    {
-                        SetWebAnalytics(evn, waField =>
-                        {
-                            waField.Value = "";
-                        });
-                    }
-                }
-
-
-                // Register custom props entered on navon
-                foreach (KeyValuePair<string, string> pr in props)
-                {
-                    String propKey = GetCustomProps(pr);
-                    String propValue = pr.Value;
-
-                    if (!String.IsNullOrEmpty(propKey))
-                    {
-                        SetWebAnalytics(propKey, waField =>
-                        {
-                            waField.Value = propValue;
-                        });
-                    }
-                }
-
-                // Register custom evars entered on navon
-                foreach (KeyValuePair<string, string> evr in evars)
-                {
-                    String evarKey = GetCustomEvars(evr);
-                    String evarValue = evr.Value;
-
-                    if (!String.IsNullOrEmpty(evarKey))
-                    {
-                        SetWebAnalytics(evarKey, waField =>
-                        {
-                            waField.Value = evarValue;
-                        });
-                    }
-                }
-            }
-            catch (NullReferenceException ex)
-            {
-                Logger.LogError("SinglePageAssemblyInstruction.cs:RegisterWebAnalyticsFieldFilters()",
-                    "WebAnalyticsInfo is missing from SectionDetails XML", NCIErrorLevel.Error, ex);
-                return;
-            }
-        } 
-
+       /*
+        * TODO:
+        * - Remove call to GetChannelForUrlPath() in WebAnalyticsControl one Web.configs are cleaned up
+        * - Fix suite output on WebAnalyticsPageLoad (all suites, not just custom)
+        * - Update enum values in WebAnalyticsOptions
+        * - Add logic to handle hierarchy value when set
+        * - Update content group functionality (future story)
+        */
     } 
 }
