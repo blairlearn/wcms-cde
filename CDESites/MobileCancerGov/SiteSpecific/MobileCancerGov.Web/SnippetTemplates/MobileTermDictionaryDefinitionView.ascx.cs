@@ -222,7 +222,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                             url.QueryParameters.Add("cdrid", cdrId);
                         });
 
-                        PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.DictionaryTermView, wbField =>
+                        PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event11, wbField =>
                         {
                             wbField.Value = "";
                         });

@@ -231,7 +231,8 @@ namespace Www.Templates
 
             if (WebAnalyticsOptions.IsEnabled)
             {
-                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.PageName, wbField =>
+                // Add page name to analytics
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar1, wbField =>
                 {
                     string suffix = "";
                     if (Expand != "")
@@ -353,7 +354,8 @@ namespace Www.Templates
                     // Web Analytics *************************************************
                     if (WebAnalyticsOptions.IsEnabled)
                     {
-                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.DictionaryTermView, wbField =>
+                        // Add dictionary term view event to analytics
+                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event11, wbField =>
                         {
                             wbField.Value = null;
                         });

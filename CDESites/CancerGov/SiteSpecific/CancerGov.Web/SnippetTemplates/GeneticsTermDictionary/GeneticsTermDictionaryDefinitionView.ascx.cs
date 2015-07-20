@@ -226,7 +226,8 @@ namespace CancerGov.Web.SnippetTemplates
                             url.QueryParameters.Add("cdrid", cdrId);
                         });
 
-                        PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.DictionaryTermView, wbField =>
+                        // Add Drug Dictionary Term view event to analytics
+                        PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event12, wbField =>
                         {
                             wbField.Value = "";
                         });

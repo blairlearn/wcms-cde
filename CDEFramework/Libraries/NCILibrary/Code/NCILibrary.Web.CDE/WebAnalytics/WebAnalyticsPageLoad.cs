@@ -50,8 +50,8 @@ namespace NCI.Web.CDE.WebAnalytics
             pageLoadPreTag.AppendLine("<!--");
 
             // Default props, eVars, and/or events
-            AddProp(WebAnalyticsOptions.Props.LongTitle, "document.title", true);  //prop10
-            AddEvent(WebAnalyticsOptions.Events.PageView);
+            AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
+            AddEvent(WebAnalyticsOptions.Events.event1); // page view event
 
             // The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
             //pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
@@ -361,8 +361,8 @@ namespace NCI.Web.CDE.WebAnalytics
                     languageValue = "english";
                     break;
             }
-            this.AddProp(WebAnalyticsOptions.Props.Language, languageValue); // prop8
-            this.AddEvar(WebAnalyticsOptions.eVars.Language, languageValue); // eVar2
+            this.AddProp(WebAnalyticsOptions.Props.prop8, languageValue); // Language
+            this.AddEvar(WebAnalyticsOptions.eVars.evar2, languageValue); // Language
             language = languageValue;
         }
 
@@ -371,7 +371,7 @@ namespace NCI.Web.CDE.WebAnalytics
         public void SetPageName(string pageNameValue)
         {
             pageName = pageNameValue.Replace("'", "\\'");
-            this.AddEvar(WebAnalyticsOptions.eVars.PageName, pageName);
+            this.AddEvar(WebAnalyticsOptions.eVars.evar1, pageName); // Page name
         }
 
         /// <summary>Sets the value of the Omniture pageType  variable in the Omniture page load JavaScript code.</summary>

@@ -218,18 +218,22 @@ namespace CancerGov.Web.SnippetTemplates
                 data.Value = "Clinicaltrials";
             });
 
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.ClinicalTrialViewCount, wbField =>
+            // Add clinical trial view count to analytics 
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar22, wbField =>
             {
                 wbField.Value = "+1";
             });
 
+            // Add clinical trial view event to analytics
             if (hasProtocolSearchid)
-                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.ClinicalTrialViewFromSearch, wbField =>
+                // If viewed from a search
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event4, wbField =>
                 {
                     wbField.Value = "";
                 });
             else
-                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.ClinicalTrialViewNotSearch, wbField =>
+                // If not viewed from a search
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event13, wbField =>
                 {
                     wbField.Value = "";
                 });

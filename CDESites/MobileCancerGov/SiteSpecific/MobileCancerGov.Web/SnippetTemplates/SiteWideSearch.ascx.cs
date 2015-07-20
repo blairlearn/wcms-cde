@@ -105,7 +105,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
 
 
                         //// Web Analytics *************************************************
-                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.NumberOfSearchResults, wbField =>
+                        // Add number of search results to analytics
+                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar10, wbField =>
                         {
                             wbField.Value = results.TotalNumResults.ToString();
                         });

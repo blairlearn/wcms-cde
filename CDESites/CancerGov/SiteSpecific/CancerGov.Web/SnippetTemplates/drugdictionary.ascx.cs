@@ -301,7 +301,8 @@ namespace Www.Templates
 
             if (WebAnalyticsOptions.IsEnabled)
             {
-                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.PageName, wbField =>
+                // Add page name to analytics
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar1, wbField =>
                 {
                     string suffix = "";
                     if (Expand != "")
@@ -468,8 +469,9 @@ namespace Www.Templates
                     ActivateDefinitionView(dataItem);
 
                     // Web Analytics *************************************************
+                    // Add Drug Dictionary View event to analytics
                     if (WebAnalyticsOptions.IsEnabled)
-                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.DrugDictionaryView, wbField =>
+                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event12, wbField =>
                         {
                             wbField.Value = null;
                         });

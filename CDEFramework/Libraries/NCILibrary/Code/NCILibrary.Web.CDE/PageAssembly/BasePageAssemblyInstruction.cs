@@ -227,7 +227,8 @@ namespace NCI.Web.CDE
         {
             IPageAssemblyInstruction pgInst = ((IPageAssemblyInstruction)this);
 
-            SetWebAnalytics(WebAnalyticsOptions.Props.RootPrettyURL.ToString(), wbField =>
+            // Add root pretty URL 
+            SetWebAnalytics(WebAnalyticsOptions.Props.prop3.ToString(), wbField =>
             {
                 wbField.Value = pgInst.GetUrl("RootPrettyURL").ToString();
             });
