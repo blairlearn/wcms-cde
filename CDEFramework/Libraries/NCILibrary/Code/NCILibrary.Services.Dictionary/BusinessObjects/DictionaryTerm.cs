@@ -10,7 +10,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
         {
             // Guarantee that the arrays are never null.
             Aliases = new Alias[] { };
-            Images = new String[] { };
+            Images = new ImageReference[] { };
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// Possibly empty array of strings containing the URLs of images associated with this definition.
         /// </summary>
         [DataMember(Name = "images")]
-        public String[] Images { get; set; }
+        public ImageReference[] Images { get; set; }
 
         /// <summary>
         /// Data structure containing the Term's definition.

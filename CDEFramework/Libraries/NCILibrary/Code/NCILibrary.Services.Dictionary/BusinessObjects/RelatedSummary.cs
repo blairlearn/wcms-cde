@@ -16,12 +16,6 @@ namespace NCI.Services.Dictionary.BusinessObjects
         public String Url { get; set; }
 
         /// <summary>
-        /// language to include the link with.
-        /// </summary>
-        [DataMember(Name = "language")]
-        public String Language { get; set; }
-
-        /// <summary>
         /// link text
         /// </summary>
         [DataMember(Name = "text")]

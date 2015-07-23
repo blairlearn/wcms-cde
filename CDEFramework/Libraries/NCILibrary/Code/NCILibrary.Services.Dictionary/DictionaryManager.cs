@@ -31,15 +31,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -52,15 +63,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -73,15 +95,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -94,15 +127,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -115,15 +159,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -136,15 +191,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -157,15 +223,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -178,15 +255,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -199,15 +287,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -220,15 +319,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -247,14 +357,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -266,14 +387,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -285,14 +417,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -304,14 +447,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -323,14 +477,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -342,14 +507,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -361,14 +537,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -380,14 +567,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -399,14 +597,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -418,14 +627,25 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="es", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="es", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -445,15 +665,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -466,15 +697,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -487,15 +729,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -508,15 +761,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -529,15 +793,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -550,15 +825,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -571,15 +857,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -592,15 +889,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -613,15 +921,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -634,15 +953,26 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Language = "en", Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Language="en", Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Language="en", Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -656,13 +986,24 @@ namespace NCI.Services.Dictionary
             new DictionaryTerm() {
                 ID="12345",
                 Term="Drug Term",
-                Pronunciation = new Pronunciation{
+                Pronunciation = new Pronunciation() {
                     Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
                     Key = "KAN-ser"
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -689,7 +1030,18 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -716,7 +1068,18 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -743,7 +1106,18 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -770,7 +1144,18 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -797,7 +1182,18 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -824,7 +1220,18 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -851,7 +1258,18 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -878,7 +1296,18 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"
@@ -905,7 +1334,18 @@ namespace NCI.Services.Dictionary
                 },
                 DateFirstPublished = "01-01-0001",
                 DateLastModified="12-31-9999",
-                Images = new String[] { "http://www.cancer.gov/images/cdr/live/CDR761781-750.jpg" },
+                Images = new ImageReference[]{
+                    new ImageReference(){
+                        Filename = "CDR428405-750.jpg",
+                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
+                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
+                    },
+                    new ImageReference(){
+                        Filename = "CDR466541-750.jpg",
+                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
+                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
+                    }
+                },
                 Definition = new Definition() {
                     Text = "Term Definition",
                     Html = "<p>Term Definition in HTML</p>"

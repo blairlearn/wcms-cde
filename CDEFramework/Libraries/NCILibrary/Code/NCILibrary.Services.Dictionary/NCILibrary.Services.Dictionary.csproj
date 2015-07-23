@@ -67,6 +67,7 @@
     <Compile Include="BusinessObjects\Definition.cs" />
     <Compile Include="BusinessObjects\DictionarySuggestion.cs" />
     <Compile Include="BusinessObjects\DictionaryTerm.cs" />
+    <Compile Include="BusinessObjects\ImageReference.cs" />
     <Compile Include="BusinessObjects\MetaCommon.cs" />
     <Compile Include="BusinessObjects\Pronunciation.cs" />
     <Compile Include="BusinessObjects\RelatedDrugSummary.cs" />
