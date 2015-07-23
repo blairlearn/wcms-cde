@@ -59,7 +59,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DictionaryService.svc" />
     <Content Include="Test Page.htm" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -82,9 +81,7 @@
     <Compile Include="BusinessObjects\TermReturn.cs" />
     <Compile Include="BusinessObjects\TermReturnMeta.cs" />
     <Compile Include="DictionaryManager.cs" />
-    <Compile Include="DictionaryService.svc.cs">
-      <DependentUpon>DictionaryService.svc</DependentUpon>
-    </Compile>
+    <Compile Include="DictionaryService.svc.cs" />
     <Compile Include="enum.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

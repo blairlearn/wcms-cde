@@ -458,6 +458,10 @@
       <Project>{8962B50C-E3A9-4F0A-9E48-7008C40247CD}</Project>
       <Name>NCILibrary.Search</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Services.Dictionary\NCILibrary.Services.Dictionary.csproj">
+      <Project>{7730D2CE-E504-49F9-AAAC-20B76FB8C618}</Project>
+      <Name>NCILibrary.Services.Dictionary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
       <Project>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</Project>
       <Name>NCILibrary.Web.CDE.UI</Name>
@@ -568,6 +572,7 @@
       <LastGenOutput>SiteWideSearch.es.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="DictionaryService.svc" />
     <Content Include="DrugDictionary.svc" />
     <Content Include="DynamicListTemplates\DynamicListDescNoImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListDescImgDate.ascx" />
