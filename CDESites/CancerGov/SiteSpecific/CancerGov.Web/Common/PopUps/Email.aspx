@@ -4,7 +4,9 @@
 <HTML>
   <HEAD id="header" runat="server">
   <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
-
+    <!--[if lt IE 9]>
+        <script src="/PublishedContent/js/respond.js"></script>
+    <![endif]-->
   </HEAD>
 	<body style="background:#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 	<div align="center">

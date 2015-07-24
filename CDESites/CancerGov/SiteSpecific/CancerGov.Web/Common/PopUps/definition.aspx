@@ -9,7 +9,9 @@
     <script type="text/javascript" language="JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script src="/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
     <link href="/PublishedContent/Styles/nvcg.css" rel="stylesheet" />
-    
+    <!--[if lt IE 9]>
+            <script src="/PublishedContent/js/respond.js"></script>
+    <![endif]-->
     <script type="text/javascript">
         //Hookup JPlayer for Audio
         if (jQuery.jPlayer && !Modernizr.touch) {

@@ -6,6 +6,9 @@
   <head>
 	<META http-equiv="content-type" content="text/html;charset=ISO-8859-1">
     <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
+    <!--[if lt IE 9]>
+        <script src="/PublishedContent/js/respond.js"></script>
+    <![endif]-->
     <title>National Cancer Institute</title>
   </head>
   <body style="margin:0 0 0 0; padding:0 0 0 0"> 

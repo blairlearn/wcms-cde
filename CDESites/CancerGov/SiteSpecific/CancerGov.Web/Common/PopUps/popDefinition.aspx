@@ -4,6 +4,9 @@
   <HEAD id="header" runat="server">
 	<TITLE>Dictionary of Cancer Terms</TITLE>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<!--[if lt IE 9]>
+        <script src="/PublishedContent/js/respond.js"></script>
+    <![endif]-->
   </HEAD>
   <FRAMESET border=0 frameSpacing=0 rows="80,*" frameBorder=no>
 	<FRAME name="Header" title="Header" src="/Common/PopUps/<%=Header%>" noResize scrolling=no>
