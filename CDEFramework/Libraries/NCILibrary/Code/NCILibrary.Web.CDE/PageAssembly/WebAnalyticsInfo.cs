@@ -141,9 +141,9 @@ namespace NCI.Web.CDE
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadSuite()",
+                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadSuite()",
                       "Exception encountered while retrieving web analytics suites.",
-                      NCIErrorLevel.Error, ex);
+                      NCIErrorLevel.Warning, ex);
                 return "";
             }
         }
@@ -167,9 +167,9 @@ namespace NCI.Web.CDE
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadContentGroup()",
+                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadContentGroup()",
                       "Exception encountered while retrieving web analytics content group.",
-                      NCIErrorLevel.Error, ex);
+                      NCIErrorLevel.Debug, ex);
                 return "";
             }
         }
@@ -205,9 +205,9 @@ namespace NCI.Web.CDE
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadProps()",
+                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadEvents()",
                       "Exception encountered while retrieving web analytics custom props",
-                      NCIErrorLevel.Error, ex);
+                      NCIErrorLevel.Warning, ex);
                 return null;
             }
         }
@@ -249,9 +249,9 @@ namespace NCI.Web.CDE
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadProps()",
+                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadProps()",
                       "Exception encountered while retrieving web analytics custom props",
-                      NCIErrorLevel.Error, ex);
+                      NCIErrorLevel.Warning, ex);
                 return null;
             }
         }
@@ -292,9 +292,9 @@ namespace NCI.Web.CDE
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:SinglePageAssemblyInstruction.cs:LoadEvars()",
+                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadEvars()",
                       "Exception encountered while retrieving web analytics custom evars",
-                      NCIErrorLevel.Error, ex);
+                      NCIErrorLevel.Warning, ex);
                 return null;
             }
         }
@@ -343,10 +343,6 @@ namespace NCI.Web.CDE
 
        /*
         * TODO:
-        * - Remove call to GetChannelForUrlPath() in WebAnalyticsControl one Web.configs are cleaned up
-        * - Fix suite output on WebAnalyticsPageLoad (all suites, not just custom)
-        * - Update enum values in WebAnalyticsOptions
-        * - Add logic to handle hierarchy value when set
         * - Update content group functionality (future story)
         */
     } 

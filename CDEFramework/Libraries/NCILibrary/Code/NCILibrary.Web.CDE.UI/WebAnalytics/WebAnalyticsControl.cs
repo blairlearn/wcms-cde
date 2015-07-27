@@ -68,7 +68,7 @@ namespace NCI.Web.CDE.UI.WebControls
                 catch (Exception ex)
                 {
                     NCI.Logging.Logger.LogError("WebAnalyticsControl.cs:RenderContents()",
-                        "Error retrieving analytics channel.", NCIErrorLevel.Error, ex);
+                        "Error retrieving analytics channel.", NCIErrorLevel.Warning, ex);
                     webAnalyticsPageLoad.SetChannel(configChannelName);
                 }
                 foreach (KeyValuePair<WebAnalyticsOptions.eVars, string> kvp in webAnalyticsSettings.Evars)

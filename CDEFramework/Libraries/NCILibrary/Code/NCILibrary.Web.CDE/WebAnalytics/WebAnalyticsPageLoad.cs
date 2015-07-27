@@ -126,6 +126,7 @@ namespace NCI.Web.CDE.WebAnalytics
 
                 // Report Suites JavaScript variable (s_account) must be set before the s_code file is loaded
                 // Get custom suites that are set on the navon. Default suites are being set in wa_wcms_pre.js
+                // TODO: Display suites in HTML source (all suites, not just custom)
                 try
                 {
                     string sectionPath = pgInstruction.SectionPath;
@@ -140,8 +141,8 @@ namespace NCI.Web.CDE.WebAnalytics
                 catch (Exception ex)
                 {
                     Logger.LogError("CDE:WebAnalyticsPageLoad.cs:Tag()",
-                          "Exception encountered while retrieving web analytics suite.",
-                          NCIErrorLevel.Error, ex);
+                          "Exception encountered while retrieving web analytics suites.",
+                          NCIErrorLevel.Debug, ex);
                     reportSuites += "";
                 }
 
@@ -165,7 +166,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 if (channel != "") // if channel is set, output them to the tag
                     output.AppendLine("s.channel=" + DELIMITER + channel + DELIMITER + ";");
 
-                if (pageName != null) // if pageName is not null (emptry string ok), output them to the tag
+                if (pageName != null) // if pageName is not null (empty string ok), output them to the tag
                     output.AppendLine("s.pageName=" + DELIMITER + pageName + DELIMITER + ";");
 
                 if (pageType != "") // if pageType is set, output them to the tag

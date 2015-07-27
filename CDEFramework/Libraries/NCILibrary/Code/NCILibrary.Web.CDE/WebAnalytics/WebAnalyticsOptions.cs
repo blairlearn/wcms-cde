@@ -107,8 +107,8 @@ namespace NCI.Web.CDE.WebAnalytics
             catch (Exception ex)
             {
                 Logger.LogError("CDE:WebAnalyticsOptions.cs:GetReportSuitesFromSectionDetail()",
-                      "Exception encountered while retrieving web analytics channels.",
-                      NCIErrorLevel.Error, ex);
+                      "Exception encountered while retrieving web analytics suites.",
+                      NCIErrorLevel.Warning, ex);
                 return "";
             }
         }
