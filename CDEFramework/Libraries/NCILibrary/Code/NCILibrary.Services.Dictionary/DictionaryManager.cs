@@ -48,9 +48,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -80,9 +80,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -112,9 +112,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -144,9 +144,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -176,9 +176,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -208,9 +208,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -240,9 +240,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -272,9 +272,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -304,9 +304,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -336,9 +336,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -375,7 +375,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -405,7 +405,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -435,7 +435,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -465,7 +465,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -495,7 +495,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -525,7 +525,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -555,7 +555,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -585,7 +585,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -615,7 +615,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -645,7 +645,7 @@ namespace NCI.Services.Dictionary
                 },
                 Related = new RelatedItems() {
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -682,9 +682,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -714,9 +714,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -746,9 +746,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -778,9 +778,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -810,9 +810,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -842,9 +842,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -874,9 +874,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -906,9 +906,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -938,9 +938,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },
@@ -970,9 +970,9 @@ namespace NCI.Services.Dictionary
                     Html = "<p>Term Definition in HTML</p>"
                 },
                 Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", Url="http://www.cancer.gov/publications/dictionaries/cancer-terms?cdrid=45693"} },
+                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
                     External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", Url="http://www.cancer.gov/types/lung/patient/non-small-cell-lung-treatment-pdq"}},
+                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
                     Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
                 }
             },

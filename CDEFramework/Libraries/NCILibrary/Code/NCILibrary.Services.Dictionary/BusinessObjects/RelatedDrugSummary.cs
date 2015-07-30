@@ -12,8 +12,8 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// <summary>
         /// the summary link
         /// </summary>
-        [DataMember(Name = "url")]
-        public String Url { get; set; }
+        [DataMember(Name = "id")]
+        public int ID { get; set; }
 
         /// <summary>
         /// link text
