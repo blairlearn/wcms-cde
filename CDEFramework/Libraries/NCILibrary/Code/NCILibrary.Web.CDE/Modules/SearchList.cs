@@ -55,7 +55,10 @@ namespace NCI.Web.CDE.Modules
     public class Taxon
     {
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string TaxonName { get; set; }
+        public int ID { get; set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string Name { get; set; }
     }
 
     /// <summary>
