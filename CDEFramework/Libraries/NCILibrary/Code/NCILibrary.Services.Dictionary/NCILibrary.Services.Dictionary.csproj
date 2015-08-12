@@ -67,18 +67,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessObjects\Alias.cs" />
-    <Compile Include="BusinessObjects\Definition.cs" />
     <Compile Include="BusinessObjects\DictionarySuggestion.cs" />
-    <Compile Include="BusinessObjects\DictionaryTerm.cs" />
-    <Compile Include="BusinessObjects\ImageReference.cs" />
     <Compile Include="BusinessObjects\MetaCommon.cs" />
-    <Compile Include="BusinessObjects\Pronunciation.cs" />
-    <Compile Include="BusinessObjects\RelatedDrugSummary.cs" />
-    <Compile Include="BusinessObjects\RelatedExternalLink.cs" />
-    <Compile Include="BusinessObjects\RelatedItems.cs" />
-    <Compile Include="BusinessObjects\RelatedSummary.cs" />
-    <Compile Include="BusinessObjects\RelatedTerm.cs" />
     <Compile Include="BusinessObjects\SearchReturn.cs" />
     <Compile Include="BusinessObjects\SearchReturnMeta.cs" />
     <Compile Include="BusinessObjects\SuggestReturn.cs" />
