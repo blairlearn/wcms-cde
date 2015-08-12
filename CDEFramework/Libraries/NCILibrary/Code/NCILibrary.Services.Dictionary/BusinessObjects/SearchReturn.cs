@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
@@ -8,13 +9,13 @@ namespace NCI.Services.Dictionary.BusinessObjects
         public SearchReturn()
         {
             // Force collection to be non-null.
-            Result = new DictionaryTerm[] { };
+            Result = new String[] { };
         }
 
         [DataMember(Name = "meta")]
         public SearchReturnMeta Meta { get; set; }
 
         [DataMember(Name = "result")]
-        public DictionaryTerm[] Result { get; set; }
+        public String[] Result { get; set; }
     }
 }

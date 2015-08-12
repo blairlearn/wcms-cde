@@ -1,4 +1,6 @@
 ﻿using System.Runtime.Serialization;
+using System;
+using System.IO;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
@@ -13,6 +15,6 @@ namespace NCI.Services.Dictionary.BusinessObjects
         public TermReturnMeta Meta { get; set; }
 
         [DataMember(Name = "term")]
-        public DictionaryTerm Term { get; set; }
+        public String Term { get; set; }
     }
 }

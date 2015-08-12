@@ -21,1348 +21,68 @@ namespace NCI.Services.Dictionary
 
         #region private DictionaryTerm[] CancerTermEnglish = new DictionaryTerm[]
 
-        private DictionaryTerm[] CancerTermEnglish = new DictionaryTerm[] {
-            new DictionaryTerm() {
-                ID="12345",
-                Term="Cancer Term",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12346",
-                Term="Cancer Term 2",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12347",
-                Term="Cancer Term 3",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12348",
-                Term="Cancer Term 4",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12349",
-                Term="Cancer Term 5",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12350",
-                Term="Cancer Term 6",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12351",
-                Term="Cancer Term 7",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12352",
-                Term="Cancer Term 8",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12353",
-                Term="Cancer Term 9",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12354",
-                Term="Cancer Term 10",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
+        private String[] CancerTermEnglish = new String[] {
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12345"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term""},",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12346"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term 2""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12347"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term 3""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12348"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term 4""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12349"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term 5""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12350"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term 6""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12351"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term 7""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12352"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term 8""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12353"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term 9""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12354"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cancer Term 10""}"
         };
 
         #endregion
 
         #region private DictionaryTerm[] CancerTermSpanish = new DictionaryTerm[]
 
-        private DictionaryTerm[] CancerTermSpanish = new DictionaryTerm[] {
-            new DictionaryTerm() {
-                ID="12345",
-                Term="Cáncer término (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12346",
-                Term="Cáncer término 2 (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12347",
-                Term="Cáncer término 3 (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12348",
-                Term="Cáncer término 4 (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12349",
-                Term="Cáncer término 5 (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12350",
-                Term="Cáncer término 6 (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12351",
-                Term="Cáncer término 7 (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12352",
-                Term="Cáncer término 8 (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12353",
-                Term="Cáncer término 9 (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12354",
-                Term="Cáncer término 10 (en español)",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
+        private String[] CancerTermSpanish = new String[] {
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12345"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término (en español)""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12346"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término 2 (en español)""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12347"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término 3 (en español)""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12348"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término 4 (en español)""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12349"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término 5 (en español)""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12350"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término 6 (en español)""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12351"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término 7 (en español)""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12352"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término 8 (en español)""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12353"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término 9 (en español)""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12354"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""""},""related"":{""drug_summary"":[],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Cáncer término 10 (en español)""}"
         };
 
         #endregion
 
         #region private DictionaryTerm[] GeneticTermEnglish = new DictionaryTerm[]
 
-        private DictionaryTerm[] GeneticTermEnglish = new DictionaryTerm[] {
-            new DictionaryTerm() {
-                ID="12345",
-                Term="Genetic Term",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12346",
-                Term="Genetic Term 2",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12347",
-                Term="Genetic Term 3",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12348",
-                Term="Genetic Term 4",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12349",
-                Term="Genetic Term 5",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12350",
-                Term="Genetic Term 6",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12351",
-                Term="Genetic Term 7",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12352",
-                Term="Genetic Term 8",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12353",
-                Term="Genetic Term 9",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
-            new DictionaryTerm() {
-                ID="12354",
-                Term="Genetic Term 10",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Related = new RelatedItems() {
-                    DrugSummary = new RelatedDrugSummary[] { new RelatedDrugSummary(){ Text="Related Drug Summary", ID=45693} },
-                    External = new RelatedExternalLink[] { new RelatedExternalLink(){ Text="Great Googly Moogly!", Url="http://www.google.com/"}},
-                    Summary = new RelatedSummary[]{ new RelatedSummary(){ Text="A Summary", ID=62956}},
-                    Term = new RelatedTerm[]{new RelatedTerm(){ Dictionary="Term", Termid="12345", Text="A related Term"}}
-                }
-            },
+        private String[] GeneticTermEnglish = new String[]{
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12345"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12346"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term 2""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12347"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term 3""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12348"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term 4""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12349"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term 5""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12350"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term 6""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12351"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term 7""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12352"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term 8""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12353"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term 9""}",
+            @"{""alias"":[],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12354"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":{""drug_summary"":[{""id"":45693,""text"":""Related Drug Summary""}],""external"":[{""text"":""Great Googly Moogly!"",""url"":""http:\/\/www.google.com\/""}],""summary"":[{""id"":62956,""text"":""A Summary""}],""term"":[{""dictionary"":""Term"",""id"":""12345"",""text"":""A related Term""}]},""term"":""Genetic Term 10""}"
         };
 
         #endregion
 
         #region private DictionaryTerm[] DrugTermEnglish = new DictionaryTerm[]
 
-        private DictionaryTerm[] DrugTermEnglish = new DictionaryTerm[] {
-            new DictionaryTerm() {
-                ID="12345",
-                Term="Drug Term",
-                Pronunciation = new Pronunciation() {
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
-            new DictionaryTerm() {
-                ID="12346",
-                Term="Drug Term 2",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
-            new DictionaryTerm() {
-                ID="12347",
-                Term="Drug Term 3",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
-            new DictionaryTerm() {
-                ID="12348",
-                Term="Drug Term 4",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
-            new DictionaryTerm() {
-                ID="12349",
-                Term="Drug Term 5",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
-            new DictionaryTerm() {
-                ID="12350",
-                Term="Drug Term 6",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
-            new DictionaryTerm() {
-                ID="12351",
-                Term="Drug Term 7",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
-            new DictionaryTerm() {
-                ID="12352",
-                Term="Drug Term 8",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
-            new DictionaryTerm() {
-                ID="12353",
-                Term="Drug Term 9",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
-            new DictionaryTerm() {
-                ID="12354",
-                Term="Drug Term 10",
-                Pronunciation = new Pronunciation{
-                    Audio = "http://www.cancer.gov/PublishedContent/Media/CDR/media/705333.mp3",
-                    Key = "KAN-ser"
-                },
-                DateFirstPublished = "01-01-0001",
-                DateLastModified="12-31-9999",
-                Images = new ImageReference[]{
-                    new ImageReference(){
-                        Filename = "CDR428405-750.jpg",
-                        AltText = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body.",
-                        Caption = "Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."
-                    },
-                    new ImageReference(){
-                        Filename = "CDR466541-750.jpg",
-                        AltText = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.",
-                        Caption = "Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."
-                    }
-                },
-                Definition = new Definition() {
-                    Text = "Term Definition",
-                    Html = "<p>Term Definition in HTML</p>"
-                },
-                Aliases = new Alias[]{
-                    new Alias(){ Name="Alias 1", Type="US brand name" },
-                    new Alias(){ Name="Alias 2", Type="Abbreviation" },
-                    new Alias(){ Name="Alias 3", Type="IND code" },
-                    new Alias(){ Name="Alias 4", Type="NSC number" },
-                    new Alias(){ Name="Alias 5", Type="Synonym" },
-                    new Alias(){ Name="Alias 6", Type="Synonym" },
-                    new Alias(){ Name="Alias 7", Type="Synonym" },
-                    new Alias(){ Name="Alias 8", Type="Synonym" },
-                    new Alias(){ Name="Alias 9", Type="Synonym" },
-                    new Alias(){ Name="Alias 10", Type="Synonym" }
-                }
-            },
+        private String[] DrugTermEnglish = new String[] {
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12345"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term""}",
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12346"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term 2""}",
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12347"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term 3""}",
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12348"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term 4""}",
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12349"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term 5""}",
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12350"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term 6""}",
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12351"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term 7""}",
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12352"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term 8""}",
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12353"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term 9""}",
+            @"{""alias"":[{""name"":""Alias 1"",""type"":""US brand name""},{""name"":""Alias 2"",""type"":""Abbreviation""},{""name"":""Alias 3"",""type"":""IND code""},{""name"":""Alias 4"",""type"":""NSC number""},{""name"":""Alias 5"",""type"":""Synonym""},{""name"":""Alias 6"",""type"":""Synonym""},{""name"":""Alias 7"",""type"":""Synonym""},{""name"":""Alias 8"",""type"":""Synonym""},{""name"":""Alias 9"",""type"":""Synonym""},{""name"":""Alias 10"",""type"":""Synonym""}],""date_first_published"":""01-01-0001"",""date_last_modified"":""12-31-9999"",""definition"":{""html"":""<p>Term Definition in HTML<\/p>"",""text"":""Term Definition""},""id"":""12354"",""images"":[{""alt"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""caption"":""Computed tomography (CT) scan of the abdomen. The patient lies on a table that slides through the CT machine, which takes x-ray pictures of the inside of the body."",""filename"":""CDR428405-750.jpg""},{""alt"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film."",""caption"":""Bone scan. A small amount of radioactive material is injected into the patient's bloodstream and collects in abnormal cells in the bones. As the patient lies on a table that slides under the scanner, the radioactive material is detected and images are made on a computer screen or film.."",""filename"":""CDR466541-750.jpg""}],""pronunciation"":{""audio"":""http:\/\/www.cancer.gov\/PublishedContent\/Media\/CDR\/media\/705333.mp3"",""key"":""KAN-ser""},""related"":null,""term"":""Drug Term 10""}"
         };
 
         #endregion
@@ -1374,7 +94,7 @@ namespace NCI.Services.Dictionary
 
             TermReturn trmReturn;
 
-            DictionaryTerm term;
+            String term;
 
             TermReturnMeta meta = new TermReturnMeta();
             meta.Language = language.ToString();
@@ -1448,7 +168,7 @@ namespace NCI.Services.Dictionary
             if (offset < 0) offset = 0;
             if (maxResults < 10) maxResults = 10;
 
-            DictionaryTerm[] results;
+            String[] results;
 
             SearchReturnMeta meta = new SearchReturnMeta();
             meta.Language = language.ToString();
@@ -1531,12 +251,34 @@ namespace NCI.Services.Dictionary
                 case DictionaryType.term:
                     if (language == Language.English)
                     {
-                        results = Array.ConvertAll(CancerTermEnglish, term => { return new DictionarySuggestion() { ID = term.ID, Term = term.Term }; });
+                        results = new DictionarySuggestion[] {
+                            new DictionarySuggestion(){ ID = "1", Term = "Cancer Term 1" },
+                            new DictionarySuggestion(){ ID = "2", Term = "Cancer Term 2" },
+                            new DictionarySuggestion(){ ID = "3", Term = "Cancer Term 3" },
+                            new DictionarySuggestion(){ ID = "4", Term = "Cancer Term 4" },
+                            new DictionarySuggestion(){ ID = "5", Term = "Cancer Term 5" },
+                            new DictionarySuggestion(){ ID = "6", Term = "Cancer Term 6" },
+                            new DictionarySuggestion(){ ID = "7", Term = "Cancer Term 7" },
+                            new DictionarySuggestion(){ ID = "8", Term = "Cancer Term 8" },
+                            new DictionarySuggestion(){ ID = "9", Term = "Cancer Term 9" },
+                            new DictionarySuggestion(){ ID = "10", Term = "Cancer Term 10" }
+                        };
                         meta.Messages = new string[] { "OK" };
                     }
                     else if (language == Language.Spanish)
                     {
-                        results = Array.ConvertAll(CancerTermSpanish, term => { return new DictionarySuggestion() { ID = term.ID, Term = term.Term }; });
+                        results = new DictionarySuggestion[] {
+                            new DictionarySuggestion(){ ID = "1", Term = "Spanish Cancer Term 1" },
+                            new DictionarySuggestion(){ ID = "2", Term = "Spanish Cancer Term 2" },
+                            new DictionarySuggestion(){ ID = "3", Term = "Spanish Cancer Term 3" },
+                            new DictionarySuggestion(){ ID = "4", Term = "Spanish Cancer Term 4" },
+                            new DictionarySuggestion(){ ID = "5", Term = "Spanish Cancer Term 5" },
+                            new DictionarySuggestion(){ ID = "6", Term = "Spanish Cancer Term 6" },
+                            new DictionarySuggestion(){ ID = "7", Term = "Spanish Cancer Term 7" },
+                            new DictionarySuggestion(){ ID = "8", Term = "Spanish Cancer Term 8" },
+                            new DictionarySuggestion(){ ID = "9", Term =  "Spanish Cancer Term 9" },
+                            new DictionarySuggestion(){ ID = "10", Term = "Spanish Cancer Term 10" }
+                        };
                         meta.Messages = new string[] { "OK" };
                     }
                     else
@@ -1547,7 +289,18 @@ namespace NCI.Services.Dictionary
                 case DictionaryType.drug:
                     if (language == Language.English)
                     {
-                        results = Array.ConvertAll(DrugTermEnglish, term => { return new DictionarySuggestion() { ID = term.ID, Term = term.Term }; });
+                        results = new DictionarySuggestion[] {
+                            new DictionarySuggestion(){ ID = "1", Term =  "Drug Term 1" },
+                            new DictionarySuggestion(){ ID = "2", Term =  "Drug Term 2" },
+                            new DictionarySuggestion(){ ID = "3", Term =  "Drug Term 3" },
+                            new DictionarySuggestion(){ ID = "4", Term =  "Drug Term 4" },
+                            new DictionarySuggestion(){ ID = "5", Term =  "Drug Term 5" },
+                            new DictionarySuggestion(){ ID = "6", Term =  "Drug Term 6" },
+                            new DictionarySuggestion(){ ID = "7", Term =  "Drug Term 7" },
+                            new DictionarySuggestion(){ ID = "8", Term =  "Drug Term 8" },
+                            new DictionarySuggestion(){ ID = "9", Term =  "Drug Term 9" },
+                            new DictionarySuggestion(){ ID = "10", Term = "Drug Term 10" }
+                        };
                         meta.Messages = new string[] { "OK" };
                     }
                     else
@@ -1558,7 +311,18 @@ namespace NCI.Services.Dictionary
                 case DictionaryType.genetic:
                     if (language == Language.English)
                     {
-                        results = Array.ConvertAll(GeneticTermEnglish, term => { return new DictionarySuggestion() { ID = term.ID, Term = term.Term }; });
+                        results = new DictionarySuggestion[] {
+                            new DictionarySuggestion(){ ID = "1", Term =  "Genetic Term 1" },
+                            new DictionarySuggestion(){ ID = "2", Term =  "Genetic Term 2" },
+                            new DictionarySuggestion(){ ID = "3", Term =  "Genetic Term 3" },
+                            new DictionarySuggestion(){ ID = "4", Term =  "Genetic Term 4" },
+                            new DictionarySuggestion(){ ID = "5", Term =  "Genetic Term 5" },
+                            new DictionarySuggestion(){ ID = "6", Term =  "Genetic Term 6" },
+                            new DictionarySuggestion(){ ID = "7", Term =  "Genetic Term 7" },
+                            new DictionarySuggestion(){ ID = "8", Term =  "Genetic Term 8" },
+                            new DictionarySuggestion(){ ID = "9", Term =  "Genetic Term 9" },
+                            new DictionarySuggestion(){ ID = "10", Term = "Genetic Term 10" }
+                        };
                         meta.Messages = new string[] { "OK" };
                     }
                     else
