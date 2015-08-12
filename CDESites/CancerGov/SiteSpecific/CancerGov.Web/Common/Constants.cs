@@ -20,4 +20,27 @@ namespace CancerGov.Web
         Portuguese = 3,
         Chinese_Simplified = 4
     }
+
+    public enum DictionaryType
+    {
+        /// <summary>
+        /// Dictionary hasn't been properly assigned.
+        /// </summary>
+        Unknown = 0,
+
+        /// <summary>
+        /// Dictionary of Cancer Terms.
+        /// </summary>
+        Term = 1,
+
+        /// <summary>
+        /// Genetics Dictionary
+        /// </summary>
+        Genetic = 2,
+
+        /// <summary>
+        /// Drug dictionary.
+        /// </summary>
+        Drug = 3
+    }
 }
