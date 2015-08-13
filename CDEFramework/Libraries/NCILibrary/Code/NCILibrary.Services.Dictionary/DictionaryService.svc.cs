@@ -163,10 +163,13 @@ namespace NCI.Services.Dictionary
 
             try
             {
+                // Convert termId to an int for internal use.
+                int idValue = Int32.Parse(termId);
+
                 InputValidator.ValidateGetTerm(dictionary, language);
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.GetTerm(termId, dictionary, language, API_VERSION);
+                ret = mgr.GetTerm(idValue, dictionary, language, API_VERSION);
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.

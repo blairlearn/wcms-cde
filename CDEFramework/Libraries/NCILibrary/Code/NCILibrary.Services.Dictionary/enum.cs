@@ -46,4 +46,12 @@ namespace NCI.Services.Dictionary
         Contains = 2,
         Magic = 3
     }
+
+    [DataContract]
+    public enum AudienceType
+    {
+        Unknown = 0,
+        Patient = 1,
+        HealthProfessional = 2
+    }
 }

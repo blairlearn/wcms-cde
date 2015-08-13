@@ -76,6 +76,7 @@
     <Compile Include="BusinessObjects\TermReturn.cs" />
     <Compile Include="BusinessObjects\TermReturnMeta.cs" />
     <Compile Include="DictionaryManager.cs" />
+    <Compile Include="DictionaryQuery.cs" />
     <Compile Include="DictionaryService.svc.cs" />
     <Compile Include="enum.cs" />
     <Compile Include="Exceptions.cs" />
