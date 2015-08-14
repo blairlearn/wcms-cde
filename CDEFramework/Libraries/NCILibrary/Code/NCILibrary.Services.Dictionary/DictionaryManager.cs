@@ -8,7 +8,7 @@ using NCI.Services.Dictionary.BusinessObjects;
 
 namespace NCI.Services.Dictionary
 {
-    protected class DictionaryManager
+    internal class DictionaryManager
     {
         static Log log = new Log(typeof(DictionaryManager));
         
