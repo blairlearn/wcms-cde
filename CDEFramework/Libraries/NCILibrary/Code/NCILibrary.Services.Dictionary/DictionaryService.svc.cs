@@ -69,7 +69,7 @@ namespace NCI.Services.Dictionary
                 if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
                 {
                     failed = true;
-                    message += "Language must be 'English' or 'Spanish'.\n";
+                    message += String.Format("Unsupported languge '{0}'.", language);
                 }
 
                 if (failed)
@@ -99,7 +99,7 @@ namespace NCI.Services.Dictionary
                 if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
                 {
                     failed = true;
-                    message += "Language must be 'English' or 'Spanish'.\n";
+                    message += String.Format("Unsupported languge '{0}'.", language);
                 }
 
                 if (failed)
@@ -129,7 +129,7 @@ namespace NCI.Services.Dictionary
                 if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
                 {
                     failed = true;
-                    message += "Language must be 'English' or 'Spanish'.\n";
+                    message += String.Format("Unsupported languge '{0}'.", language);
                 }
 
                 if (failed)

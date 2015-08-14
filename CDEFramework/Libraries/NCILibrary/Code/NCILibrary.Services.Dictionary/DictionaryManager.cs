@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -133,68 +134,44 @@ namespace NCI.Services.Dictionary
             DictionaryQuery query = new DictionaryQuery();
             DataTable dtTerm = query.GetTerm(termId, dictionary, language, audience, version);
 
-            TermReturn trmReturn;
+            List<String> messages = new List<string>();
 
-            String term;
+            String term = string.Empty;
+
+            // Normal, found 1 match.
+            int resultCount = dtTerm.Rows.Count;
+            if (resultCount == 1)
+            {
+                log.debug("Found 1 result.");
+                messages.Add("OK");
+                term = dtTerm.Rows[0].Field<string>("object");
+            }
+            // "Normal", found no matches.
+            else if (resultCount == 0)
+            {
+                log.debug("Found 0 results.");
+                messages.Add("No result found.");
+                term = string.Empty;
+            }
+            // "Odd" case. With multiple matches, return the first one.
+            else // result count must be greater than 1
+            {
+                log.warning(string.Format("Expected to find one result for term {0}, found {1} instead.", termId, resultCount));
+                messages.Add("OK");
+                term = dtTerm.Rows[0].Field<string>("object");
+            }
+
+
+            // Build up the return data structure.
+            TermReturn trmReturn = new TermReturn();
 
             TermReturnMeta meta = new TermReturnMeta();
             meta.Language = language.ToString();
+            meta.Audience = audience.ToString();
+            meta.Messages = messages.ToArray();
 
-
-            switch (dictionary)
-            {
-                case DictionaryType.term:
-                    if (language == Language.English)
-                    {
-                        term = CancerTermEnglish[0];
-                        meta.Audience = AUDIENCE_PATIENT;
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else if (language == Language.Spanish)
-                    {
-                        term = CancerTermSpanish[0];
-                        meta.Audience = AUDIENCE_PATIENT;
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else
-                    {
-                        throw new UnsupportedLanguageException(language, dictionary);
-                    }
-                    break;
-                case DictionaryType.drug:
-                    if (language == Language.English)
-                    {
-                        term = DrugTermEnglish[0];
-                        meta.Audience = AUDIENCE_HEALTHPROF;
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else
-                    {
-                        throw new UnsupportedLanguageException(language, dictionary);
-                    }
-                    break;
-                case DictionaryType.genetic:
-                    if (language == Language.English)
-                    {
-                        term = GeneticTermEnglish[0];
-                        meta.Audience = AUDIENCE_HEALTHPROF;
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else
-                    {
-                        throw new UnsupportedLanguageException(language, dictionary);
-                    }
-                    break;
-                default:
-                    term = null;
-                    break;
-            }
-
-            trmReturn = new TermReturn()
-            {
-                Term = term,
-                Meta = meta
-            };
+            trmReturn.Meta = meta;
+            trmReturn.Term = term;
 
             return trmReturn;
         }
