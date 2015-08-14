@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,10 +8,10 @@ using NCI.Services.Dictionary.BusinessObjects;
 
 namespace NCI.Services.Dictionary
 {
-    internal class DictionaryManager
+    protected class DictionaryManager
     {
         static Log log = new Log(typeof(DictionaryManager));
-
+        
         // These values should come from the GateKeeper backend processing.
         const String AUDIENCE_PATIENT = "Patient";
         const String AUDIENCE_HEALTHPROF = "Health Professional";
@@ -89,46 +88,9 @@ namespace NCI.Services.Dictionary
         #endregion
 
 
-        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, String version)
+        public TermReturn GetTerm(String termId, DictionaryType dictionary, Language language, String version)
         {
             log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language, version));
-
-            #region Argument Validation
-
-            if (termId <= 0)
-            {
-                string msg = string.Format("termId - expected a positive value, found '{0}'.", termId);
-                log.error(msg);
-                throw new ArgumentException(msg);
-            }
-
-            if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
-            {
-                string msg = string.Format("dictionary contains invalid value '{0}'.", dictionary);
-                log.error(msg);
-                throw new ArgumentException(msg);
-            }
-
-            if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
-            {
-                string msg = string.Format("language contains invalid value '{0}'.", language);
-                log.error(msg);
-                throw new ArgumentException(msg);
-            }
-
-            if (string.IsNullOrEmpty(version))
-            {
-                log.error("version is null or empty.");
-                throw new ArgumentException("version is null or empty.");
-            }
-
-            #endregion
-
-            // In the initial implementation, the audience is implied by the particular dictionary being used.
-            AudienceType audience = GetAudienceFromDictionaryType(dictionary);
-
-            DictionaryQuery query = new DictionaryQuery();
-            DataTable dtTerm = query.GetTerm(termId, dictionary, language, audience, version);
 
             TermReturn trmReturn;
 
@@ -383,34 +345,6 @@ namespace NCI.Services.Dictionary
 
             return srchReturn;
 
-        }
-
-        private AudienceType GetAudienceFromDictionaryType(DictionaryType dictionary)
-        {
-            AudienceType audience;
-
-            switch (dictionary)
-            {
-                case DictionaryType.term:
-                    audience = AudienceType.Patient;
-                    break;
-                case DictionaryType.drug:
-                    audience = AudienceType.HealthProfessional;
-                    break;
-                case DictionaryType.genetic:
-                    audience = AudienceType.HealthProfessional;
-                    break;
-
-                case DictionaryType.Unknown:
-                default:
-                    {
-                        string msg = string.Format("Unspported dictionary type '{0}'.", dictionary);
-                        log.error(msg);
-                        throw new ArgumentException(msg);
-                    }
-            }
-
-            return audience;
         }
     }
 }
