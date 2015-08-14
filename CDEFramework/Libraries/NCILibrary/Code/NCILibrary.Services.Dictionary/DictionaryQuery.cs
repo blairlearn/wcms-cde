@@ -38,6 +38,24 @@ namespace NCI.Services.Dictionary
 
         }
 
+        /// <summary>
+        /// Calls the database to retrieve a single dictionary term based on its specific Term ID.
+        /// </summary>
+        /// <param name="termId">The ID of the Term to be retrieved</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="audience">Target audieince for the definition.</param>
+        /// <param name="version">String identifying which vereion of the API to match.</param>
+        /// <returns></returns>
         public DataTable GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
             log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language));
