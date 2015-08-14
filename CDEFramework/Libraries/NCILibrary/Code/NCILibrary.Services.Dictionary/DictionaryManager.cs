@@ -88,7 +88,7 @@ namespace NCI.Services.Dictionary
         #endregion
 
 
-        public TermReturn GetTerm(String termId, DictionaryType dictionary, Language language, String version)
+        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, String version)
         {
             log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language, version));
 

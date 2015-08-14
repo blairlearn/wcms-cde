@@ -49,10 +49,16 @@ namespace NCI.Services.Dictionary
         /// </summary>
         private static class InputValidator
         {
-            public static void ValidateGetTerm(DictionaryType dictionary, Language language)
+            public static void ValidateGetTerm(int termID, DictionaryType dictionary, Language language)
             {
                 String message = string.Empty;
                 bool failed = false;
+
+                if (termID <= 0)
+                {
+                    failed = true;
+                    message += string.Format("TermID is expected to be a positive number. Found '{0}' instead.", termID);
+                }
 
                 if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
                 {
@@ -155,7 +161,7 @@ namespace NCI.Services.Dictionary
         [WebGet(ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "v1/GetTerm?termID={termId}&language={language}&dictionary={dictionary}")]
         [OperationContract]
-        public TermReturn GetTerm(String termId, DictionaryType dictionary, Language language)
+        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language)
         {
             log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language));
 
@@ -163,13 +169,10 @@ namespace NCI.Services.Dictionary
 
             try
             {
-                // Convert termId to an int for internal use.
-                int idValue = Int32.Parse(termId);
-
-                InputValidator.ValidateGetTerm(dictionary, language);
+                InputValidator.ValidateGetTerm(termId, dictionary, language);
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.GetTerm(idValue, dictionary, language, API_VERSION);
+                ret = mgr.GetTerm(termId, dictionary, language, API_VERSION);
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.
