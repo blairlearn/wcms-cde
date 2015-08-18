@@ -1,5 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TermDictionaryResultsList.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.TermDictionaryResultsList" %>
 <%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="DictionarySearchBlock.ascx" %>
+
+ 
 <DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
 
  <div class="results">
@@ -21,8 +23,10 @@
                 <ItemTemplate>
                     <dt>
                         <dfn>
-                             <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%><%=QueryStringLang%>" <%# ResultListViewHrefOnclick(Container)%>>
+                        <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
                              <%# Eval("TermName")%></a>
+                             
+     
                         </dfn>
                     </dt>
                     <dd class="pronunciation">
@@ -48,4 +52,4 @@
                     </asp:Panel>
                 </EmptyDataTemplate>
             </asp:ListView>
-        </div>
+ </div>

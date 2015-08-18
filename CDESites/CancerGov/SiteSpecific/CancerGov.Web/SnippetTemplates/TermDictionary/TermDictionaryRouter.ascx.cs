@@ -31,7 +31,7 @@ namespace CancerGov.Web.SnippetTemplates
             if (!String.IsNullOrEmpty(searchString))
                 localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/TermDictionaryResultsList.ascx");
             else if (!String.IsNullOrEmpty(cdrId) || !String.IsNullOrEmpty(id))
-                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/TermDictionaryDefinitionView.ascx.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/TermDictionaryDefinitionView.ascx");
             else if (!String.IsNullOrEmpty(expand))
                 localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/TermDictionaryResultsList.ascx");
             else

@@ -1,7 +1,7 @@
 ﻿// function used by AutoComplete to submit to server when user
 // selects an item
 function ACOnSubmit() {
-    document.getElementById('<%=btnGo.ClientID%>').click();
+    $("#btnGo").click();
 }
 
 //Hookup JPlayer for Audio
@@ -27,12 +27,6 @@ if (jQuery.jPlayer && !Modernizr.touch) {
     });
 }
 
-// Autocomplete functionality
-var ids = {
-    radioStarts: "<%=radioStarts.ClientID %>",
-    radioContains: "<%=radioContains.ClientID %>",
-    AutoComplete1: "<%=AutoComplete1.ClientID %>"
-}
 
 $(document).ready(function() {
     autoFunc();
@@ -43,6 +37,12 @@ function autoFunc() {
     if ($("html").attr("lang") === "es")
         language = "Spanish";
 
+    var $keywordElem = document.getElementById('AutoComplete1'); //$("#AutoComplete1").val();
+
+    alert("test:" + $keywordElem);
+    
+    alert($('#'+ AutoComplete1 ).val());
+    
     var isContains = IsContains();
     var svcUrl = "";
     if (isContains)
@@ -50,13 +50,13 @@ function autoFunc() {
     else
         svcUrl = "/TermDictionary.svc/SearchJSON/" + language;
 
-    NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
+    NCI.doAutocomplete("#" + $("#AutoComplete1"), svcUrl, isContains, "searchTerm", { maxRows: 10 });
 }
 
 function IsContains() {
     var ret = false;
 
-    if ($("#" + ids.radioContains).prop("checked"))
+    if ($("#radioContains").prop("checked"))
         ret = true;
 
     return ret;

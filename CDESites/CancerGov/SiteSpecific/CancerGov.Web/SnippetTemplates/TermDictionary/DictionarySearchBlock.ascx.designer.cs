@@ -14,13 +14,13 @@ namespace CancerGov.Web.SnippetTemplates {
     public partial class DictionarySearchBlock {
         
         /// <summary>
-        /// phTermDictionarySearchBlock control.
+        /// phTermDictionarySearchBlockText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phTermDictionarySearchBlock;
+        protected global::System.Web.UI.WebControls.PlaceHolder phTermDictionarySearchBlockText;
         
         /// <summary>
         /// pnlIntroEnglish control.
@@ -41,6 +41,24 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.PlaceHolder pnlIntroSpanish;
         
         /// <summary>
+        /// phGeneticsTermDictionarySearchBlockText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phGeneticsTermDictionarySearchBlockText;
+        
+        /// <summary>
+        /// phDrugDictionarySearchBlockText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phDrugDictionarySearchBlockText;
+        
+        /// <summary>
         /// pnlTermSearch control.
         /// </summary>
         /// <remarks>
@@ -50,13 +68,13 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.PlaceHolder pnlTermSearch;
         
         /// <summary>
-        /// aspnetForm control.
+        /// searchForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm aspnetForm;
+        protected global::System.Web.UI.HtmlControls.HtmlForm searchForm;
         
         /// <summary>
         /// radioStarts control.
@@ -120,14 +138,5 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Www.Common.UserControls.AlphaListBox alphaListBox;
-        
-        /// <summary>
-        /// phGeneticsTermDictionarySearchBlock control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phGeneticsTermDictionarySearchBlock;
     }
 }

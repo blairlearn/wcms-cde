@@ -42,14 +42,19 @@ namespace CancerGov.Web.SnippetTemplates
 
         public DisplayLanguage Language { get; set; }
 
+        public string QueryStringLang { get; set; }
+
+        public string PagePrintUrl { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             dictionarySearchBlock.Dictionary = DictionaryType.Term;
-
-            base.OnLoad(e);
-            ValidateParams();
+            dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+            DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+            //base.OnLoad(e);
             GetQueryParams();
-
+            ValidateParams();
+            
             /* Setup URLS -
              * The URLs are being set in the Appmodule page content item, which publishes the following XML:
              * <cde:Module_dictionaryURL ... >
@@ -57,15 +62,15 @@ namespace CancerGov.Web.SnippetTemplates
              *  <DictionarySpanishURL/> //Spanish dictionary path
              * </cde:Module_dictionaryURL>
             */
-            string snippetXmlData = string.Empty;
-            snippetXmlData = SnippetInfo.Data;
-            snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
-            NCI.Web.CDE.Modules.DictionaryURL dUrl = ModuleObjectFactory<NCI.Web.CDE.Modules.DictionaryURL>.GetModuleObject(snippetXmlData);
+            //string snippetXmlData = string.Empty;
+            //snippetXmlData = SnippetInfo.Data;
+            //snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
+            //NCI.Web.CDE.Modules.DictionaryURL dUrl = ModuleObjectFactory<NCI.Web.CDE.Modules.DictionaryURL>.GetModuleObject(snippetXmlData);
 
-            DictionaryURLSpanish = dUrl.DictionarySpanishURL;
-            DictionaryURLEnglish = dUrl.DictionaryEnglishURL;
+            DictionaryURLSpanish = DictionaryURL;
+            DictionaryURLEnglish = DictionaryURL;
 
-            DictionaryURL = DictionaryURLEnglish;
+            //DictionaryURL = DictionaryURLEnglish;
 
             if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish"))
             {
@@ -74,7 +79,6 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                DictionaryURL = DictionaryURLSpanish;
                 Language = DisplayLanguage.Spanish;
             }
             else
@@ -86,14 +90,28 @@ namespace CancerGov.Web.SnippetTemplates
                 if (dataItem != null)
                 {
                     ActivateDefinitionView(dataItem);
+                    // Web Analytics *************************************************
+                    if (WebAnalyticsOptions.IsEnabled)
+                    {
+                        // Add dictionary term view event to analytics
+                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event11, wbField =>
+                        {
+                            wbField.Value = null;
+                        });
+                    }
                 }
             }
+
+            SetupPrintUrl();
+            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
+                        
         }
 
         private void ActivateDefinitionView(TermDictionaryDataItem dataItem)
-        {           
-            
-            termDictionaryDefinitionView.DataSource = dataItem;
+        {
+            var myDataSource = new List<TermDictionaryDataItem> { dataItem };
+
+            termDictionaryDefinitionView.DataSource = myDataSource;
             termDictionaryDefinitionView.DataBind();
 
             string termName = string.Empty;
@@ -167,25 +185,98 @@ namespace CancerGov.Web.SnippetTemplates
             // 
         }
 
-        //private void RenderLangButtons()
-        //{
-        //    langSwitch.EnglishUrl = DictionaryURLEnglish + "?CdrID=" + CdrID;
-        //    langSwitch.SpanishUrl = DictionaryURLSpanish + "?CdrID=" + CdrID;
-        //}
 
-        protected void termDictionaryDefinitionView_OnItemCreated(object sender, EventArgs e)
+        /**
+         * Add URL filter for old print page implementation
+         * @deprecated
+         */
+        private void SetupPrintUrl()
+        {
+            PagePrintUrl = "?print=1";
+
+            //add expand
+            if (!string.IsNullOrEmpty(Expand))
+            {
+                if (Expand.Trim() == "#")
+                {
+                    PagePrintUrl += "&expand=%23";
+                }
+                else
+                {
+                    PagePrintUrl += "&expand=" + Expand.Trim().ToUpper();
+                }
+            }
+
+            //Language stuff
+            PagePrintUrl += QueryStringLang;
+
+            //add cdrid or searchstr
+            if (!string.IsNullOrEmpty(CdrID))
+            {
+                PagePrintUrl += "&cdrid=" + CdrID;
+            }
+            else if (!string.IsNullOrEmpty(SearchStr))
+            {
+                PagePrintUrl += "&search=" + SearchStr;
+                if (BContains)
+                    PagePrintUrl += "&contains=true";
+            }
+
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url) =>
+            {
+                url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
+            });
+        }
+
+        /**
+        * Add a filter for the Canonical URL.
+        * The Canonical URL includes query parameters if they exist.
+        */
+        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                if (CdrID != "")
+                    url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
+                else if (Expand != "")
+                {
+                    if (Expand.Trim() == "#")
+                    {
+                        Expand = "%23";
+                    }
+                    url.SetUrl(url.ToString() + "?expand=" + Expand);
+                }
+                else
+                    url.SetUrl(url.ToString());
+            });
+
+            string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter("CanonicalTranslation", (name, url) =>
+            {
+                if (canonicalUrl.IndexOf(englishDurl) > -1)
+                    url.SetUrl(canonicalUrl.Replace(englishDurl, spanishDurl));
+                else if (canonicalUrl.IndexOf(spanishDurl) > -1)
+                    url.SetUrl(canonicalUrl.Replace(spanishDurl, englishDurl));
+                else
+                    url.SetUrl("");
+            });
+
+        }
+
+        protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         { 
-       
-            FormView termDictionaryDefinitionView = sender as FormView;
+            
             //Get Related Information from the Manager layer
             //Add check to see if it exists and then display data accordingly
-            DataRowView row = termDictionaryDefinitionView.DataItem as DataRowView;
-            Literal litMoreInformation = termDictionaryDefinitionView.FindControl("litMoreInformation") as Literal;
-            if (Language == DisplayLanguage.Spanish)
-                litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
-            else
-                litMoreInformation.Text = "More Information";
-
+           
+            Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
+            if (litMoreInformation != null)
+            {
+                if (Language == DisplayLanguage.Spanish)
+                    litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
+                else
+                    litMoreInformation.Text = "More Information";
+            }
             //Based on the old code in GateKeeper the display order for related information is:
             //External Refs
             //Summary Refs
@@ -238,7 +329,7 @@ namespace CancerGov.Web.SnippetTemplates
         private void ValidateParams()
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);
-            if (!string.IsNullOrEmpty(CdrID.Trim()))
+            if (!string.IsNullOrEmpty(CdrID))
                 try
                 {
                     Int32.Parse(CdrID);
@@ -257,8 +348,8 @@ namespace CancerGov.Web.SnippetTemplates
         {
             Expand = Strings.Clean(Request.Params["expand"]);
             CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Strings.Clean(Request.Params["searchTxt"]);
-            SrcGroup = Strings.Clean(Request.Params["sgroup"]);
+            SearchStr = Strings.Clean(Request.Params["search"]);
+            SrcGroup = Strings.Clean(Request.Params["contains"]);
         }
     }
 }

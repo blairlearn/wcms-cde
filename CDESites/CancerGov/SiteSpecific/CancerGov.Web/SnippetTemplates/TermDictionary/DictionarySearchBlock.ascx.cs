@@ -8,6 +8,9 @@ using NCI.Web.CDE.UI;
 using CancerGov.CDR.TermDictionary;
 using NCI.Web.CDE;
 using NCI.Util;
+using NCI.Web.CDE.WebAnalytics;
+using System.Configuration;
+using NCI.Web.CDE.Modules;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -27,25 +30,38 @@ namespace CancerGov.Web.SnippetTemplates
 
         public int TotalCount = 0;
 
-        protected void Page_Load(object sender, EventArgs e)
+        public DisplayLanguage Language { get; set; }
+
+        public string DictionaryURLSpanish { get; set; }
+
+        public string DictionaryURLEnglish { get; set; }
+
+        public string DictionaryURL { get; set; }
+
+        protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            ValidateParams();
             GetQueryParams();
+            ValidateParams();
+           
 
             
             switch (Dictionary)
             {
                 case DictionaryType.Term:
+                    phTermDictionarySearchBlockText.Visible = true;
                     SetUpTermDictionary();
                     break;
                 case DictionaryType.Genetic:
+                    phGeneticsTermDictionarySearchBlockText.Visible = true;
                     SetUpGeneticsDictionary();
                     break;
                 case DictionaryType.Drug:
+                    phDrugDictionarySearchBlockText.Visible = true;
                     SetUpDrugDictionary();
                     break;
                 default:
+                    phTermDictionarySearchBlockText.Visible = true;
                     SetUpTermDictionary();
                     break;
             }
@@ -57,16 +73,20 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         private void GetQueryParams()
         {
+            Expand = "";
+            CdrID = "";
+            SearchStr = "";
+            SrcGroup = "";
             Expand = Strings.Clean(Request.Params["expand"]);
             CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Strings.Clean(Request.Params["searchTxt"]);
-            SrcGroup = Strings.Clean(Request.Params["sgroup"]);
+            SearchStr = Strings.Clean(Request.Params["search"]);
+            SrcGroup = Strings.Clean(Request.Params["contains"]);
         }
 
         private void ValidateParams()
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);
-            if (!string.IsNullOrEmpty(CdrID.Trim()))
+            if (!string.IsNullOrEmpty(CdrID))
                 try
                 {
                     Int32.Parse(CdrID);
@@ -78,28 +98,48 @@ namespace CancerGov.Web.SnippetTemplates
                 }
         }
 
+    
         #region "Term Dictionary Methods"
 
         private void SetUpTermDictionary()
         {
-            string language = "";
-
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-                language = "Spanish";
-            else
-                language = "English";
-
-            TermDictionaryCollection dataCollection = TermDictionaryManager.Search(language, "_", 0, false);
-            TotalCount = dataCollection.Count;
-
-            //Set display props according to lang
+            //dictionarySearchForm 
+            bool _isSpanish = false;
+                                   
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
+                Language = DisplayLanguage.Spanish;
                 SetupSpanish();
+                _isSpanish = true;
             }
             else
             {
+                Language = DisplayLanguage.English;
                 SetupEnglish();
+            }
+
+            TermDictionaryCollection dataCollection = TermDictionaryManager.Search(Language.ToString(), "_", 0, false);
+            TotalCount = dataCollection.Count;
+
+            
+            if (WebAnalyticsOptions.IsEnabled)
+            {
+                // Add page name to analytics
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar1, wbField =>
+                {
+                    string suffix = "";
+                    if (Expand != "")
+                        suffix = " - AlphaNumericBrowse";
+                    else if (CdrID != "")
+                        suffix = " - Definition";
+                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
+                });
+
+                Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.TermsDictionarySearch(this," + _isSpanish.ToString().ToLower() + ");"); // Load from onsubit script
+                if (_isSpanish)
+                    alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaListSpanish"; // Load A-Z list onclick script
+                else
+                    alphaListBox.WebAnalyticsFunction = "NCIAnalytics.TermsDictionarySearchAlphaList"; // Load A-Z list onclick script
             }
         }
 
@@ -150,22 +190,22 @@ namespace CancerGov.Web.SnippetTemplates
         /// Setup shared by English and Spanish versions
         /// </summary>
         private void SetupCommon()
-        {
-            string language = string.Empty;
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-            {
-                language = "Spanish";
-            }
-            else
-            {
-                language = "English";
-            }
-
+        {           
             radioStarts.InputAttributes.Add("onchange", "autoFunc();");
             radioContains.InputAttributes.Add("onchange", "autoFunc();");
 
             if (!string.IsNullOrEmpty(SrcGroup))
-                BContains = SrcGroup.Equals("Contains");
+            {
+                BContains = Convert.ToBoolean(SrcGroup);
+
+                RadioButton rd = (RadioButton)FindControl("radioContains");
+
+                if (BContains)
+                    rd.Checked = BContains;
+            }
+
+            if (!string.IsNullOrEmpty(SearchStr))
+                AutoComplete1.Text = SearchStr;
 
             if (!string.IsNullOrEmpty(Expand))
             {
@@ -189,7 +229,16 @@ namespace CancerGov.Web.SnippetTemplates
                 alphaListBox.TextOnly = (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web) ? true : false;
                 alphaListBox.Title = string.Empty;
             }
-        } 
+
+          alphaListBox.BaseUrl = DictionaryURL;
+            
+        }
+
+        private void LoadData() 
+        { 
+
+        
+        }
 
         #endregion
         
@@ -197,11 +246,37 @@ namespace CancerGov.Web.SnippetTemplates
         private void SetUpGeneticsDictionary() 
         {
             SetupEnglish();
+            SetupCommon();
         }
 
         private void SetUpDrugDictionary() 
         {
             SetupEnglish();
+            SetupCommon();
+        }
+
+        protected void btnGo_OnClick(object sender, EventArgs e)
+        {
+            SearchStr = AutoComplete1.Text;// Request.Params[AutoComplete1.UniqueID];
+            SearchStr = SearchStr.Replace("[", "[[]");
+            CdrID = string.Empty;
+            Expand = string.Empty;
+
+            if (!string.IsNullOrEmpty(SearchStr))
+                DictionaryURL = DictionaryURL + "?search=" + SearchStr;
+
+            RadioButton rd = (RadioButton)FindControl("radioContains");
+
+            if (rd.Checked == true)
+            {
+                BContains = true;
+                if (!string.IsNullOrEmpty(SearchStr))
+                    DictionaryURL = DictionaryURL + "&contains=true";
+                else
+                    DictionaryURL = DictionaryURL + "?contains=true";
+            }
+
+            Response.Redirect(DictionaryURL);
         }
     }
 }

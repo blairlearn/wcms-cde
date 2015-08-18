@@ -1,9 +1,77 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DictionarySearchBlock.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.DictionarySearchBlock" %>
 <%@ Register TagPrefix="CancerGovWww" TagName="AlphaListBox" Src="~/Common/UserControls/AlphaListBox.ascx" %>
 
-<%-- 8/12/2015 - Make sure the appropriate javascript file is loaded
---%>
-<asp:PlaceHolder ID="phTermDictionarySearchBlock" runat="server">
+
+<script type="text/javascript">
+    // function used by AutoComplete to submit to server when user
+    // selects an item
+    function ACOnSubmit() {
+        document.getElementById('<%=btnGo.ClientID%>').click();
+    }
+
+    //Hookup JPlayer for Audio
+    if (jQuery.jPlayer && !Modernizr.touch) {
+        jQuery(document).ready(function($) {
+            var my_jPlayer = $("#dictionary_jPlayer");
+
+            my_jPlayer.jPlayer({
+                swfPath: "/PublishedContent/files/global/flash/", //Path to SWF File Used by jPlayer
+                //errorAlerts: true,
+                supplied: "mp3" //The types of files which will be used.
+            });
+
+            //Attach a click event to the audio link
+
+            $(".CDR_audiofile").click(function() {
+                my_jPlayer.jPlayer("setMedia", {
+                    mp3: $(this).attr("href") // Defines the m4v url
+                }).jPlayer("play");
+
+                return false;
+            });
+        });
+    }
+
+    // Autocomplete functionality
+    var ids = {
+        radioStarts: "<%=radioStarts.ClientID %>",
+        radioContains: "<%=radioContains.ClientID %>",
+        AutoComplete1: "<%=AutoComplete1.ClientID %>"
+    }
+
+    $(document).ready(function() {
+        autoFunc();
+    });
+
+    function autoFunc() {
+        var language = "English";
+        if ($("html").attr("lang") === "es")
+            language = "Spanish";
+
+        var isContains = IsContains();
+        var svcUrl = "";
+        if (isContains)
+            svcUrl = "/TermDictionary.svc/SearchJSON/" + language + "?contains=true";
+        else
+            svcUrl = "/TermDictionary.svc/SearchJSON/" + language;
+
+
+        //alert(svcUrl);
+
+        NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
+    }
+
+    function IsContains() {
+        var ret = false;
+
+        if ($("#" + ids.radioContains).prop("checked"))
+            ret = true;
+
+        return ret;
+    }
+</script>
+
+<asp:PlaceHolder ID="phTermDictionarySearchBlockText" runat="server" Visible="false">
         <asp:PlaceHolder ID="pnlIntroEnglish" runat="server" EnableViewState="false">
             <p>
                 The NCI Dictionary of Cancer Terms features <b><% =TotalCount %></b> terms related 
@@ -24,8 +92,25 @@
                 una palabra o frase relacionada con el cáncer en la casilla de búsqueda.
             </p>
         </asp:PlaceHolder>
-        <asp:PlaceHolder ID="pnlTermSearch" name="pnlTermSearch" runat="server">
-        
+   </asp:PlaceHolder>     
+   
+   <asp:PlaceHolder ID="phGeneticsTermDictionarySearchBlockText" runat="server" Visible="false">
+<div id="welcomeDiv">
+    <p>Welcome to the NCI Dictionary of Genetics Terms, which contains technical definitions for more than 150 terms related to genetics. These definitions were developed by the <a href="/cancertopics/pdq/cancer-genetics-board">PDQ® Cancer Genetics Editorial Board</a> to support the evidence-based, peer-reviewed <a href="/cancertopics/pdq/genetics">PDQ cancer genetics information summaries</a>.</p>
+</div>
+
+</asp:PlaceHolder>
+<asp:PlaceHolder ID="phDrugDictionarySearchBlockText" runat="server" Visible="false">
+<%--
+
+This search block contains the dictionary text at the top
+
+Blair will add code here for the Drug Dictionary
+--%>
+</asp:PlaceHolder>
+
+        <asp:PlaceHolder ID="pnlTermSearch" runat="server">
+        <form id="searchForm" aria-label="Search the Dictionary of Cancer Terms" runat="server">
         <div class="dictionary-search">
             <div class="hidden">
                 The search textbox has an autosuggest feature. When you enter three or more characters,
@@ -35,20 +120,18 @@
                 allow you to toggle between having all search items start with or contain the text
                 you entered in the search box.
             </div>
-	        <form name="aspnetForm" method="post" action="/dictionary/" id="aspnetForm" onsubmit="NCIAnalytics.TermsDictionarySearch(this,false);"
-                role="search" aria-label="Search the Dictionary of Cancer Terms" runat="server">
-            
+	                   
                 <div id="dictionary_jPlayer"></div>
                 
                 <div class="row">
                     <div class="small-12 columns">              
                         <span class="radio">
-                            <asp:RadioButton ID="radioStarts" runat="server" Checked="true" GroupName="sgroup" />
+                        <asp:RadioButton ID="radioStarts" runat="server" GroupName="sgroup" Checked="true"    />
                             <asp:Label ID="lblStartsWith" class="inline" runat="server" Text="Starts with"
                                 AssociatedControlID="radioStarts"></asp:Label>
                         </span>
                         <span class="radio">
-                            <asp:RadioButton ID="radioContains" runat="server" GroupName="sgroup" />
+                            <asp:RadioButton ID="radioContains" runat="server" GroupName="sgroup"  />
                             <asp:Label ID="lblContains" runat="server" Text="Contains" class="inline" 
                                 AssociatedControlID="radioContains"></asp:Label>
                         </span>
@@ -61,30 +144,20 @@
                             CallbackFunc="ACOnSubmit" autocomplete="off" />
                     </div>
                     <div class="large-2 columns left">        
-                        <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server"
+                        <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server" OnClick="btnGo_OnClick"
                             ToolTip="Search" />
                     </div>
                 </div>
-            </form>
+    
         </div>
 	    <div class="az-list">
 	        <CancerGovWww:AlphaListBox runat="server" id="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
                 NumericItems="true" ShowAll="false" />
 	    </div>
-        
+        </form>
 </asp:PlaceHolder>
 
-</asp:PlaceHolder>
-<asp:PlaceHolder ID="phGeneticsTermDictionarySearchBlock" runat="server">
 
-</asp:PlaceHolder>
 
-<asp:PlaceHolder ID="phDrugDictionarySearchBlock" runat="server">
-<%--
 
-This search block contains the dictionary text at the top, the search text box and the a-z list.
-
-Blair will add code here for the Drug Dictionary
---%>
-</asp:PlaceHolder>
 
