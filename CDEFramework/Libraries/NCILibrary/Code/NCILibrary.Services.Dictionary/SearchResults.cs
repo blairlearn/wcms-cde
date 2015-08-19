@@ -6,6 +6,11 @@ using System.Web;
 
 namespace NCI.Services.Dictionary
 {
+    /// <summary>
+    /// Helper class to encapuslate return of search data and metadata
+    /// in a single object. (i.e. No need for an out parameter on the search
+    /// query layer.)
+    /// </summary>
     internal class SearchResults
     {
         public SearchResults(DataTable data, int matchCount)
