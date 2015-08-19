@@ -43,7 +43,7 @@ namespace NCI.Web.Dictionary
             
             
             TermReturn term = JsonConvert.DeserializeObject<TermReturn>(jsonObject);
-
+            term.Meta = new TermReturnMeta();
             //set Meta Data from Database
             term.Meta.Language = termRet.Meta.Language;
             term.Meta.Audience = termRet.Meta.Audience;
@@ -90,6 +90,7 @@ namespace NCI.Web.Dictionary
             }
             
             //set meta data
+            srchReturn.Meta = new SearchReturnMeta();
             srchReturn.Meta.Audience = searchRet.Meta.Audience;
             srchReturn.Meta.Language = searchRet.Meta.Language;
             srchReturn.Meta.Offset = searchRet.Meta.Offset;
