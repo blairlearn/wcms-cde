@@ -78,5 +78,9 @@ namespace NCI.Services.Dictionary
             return results;
         }
 
+        public DataSet Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

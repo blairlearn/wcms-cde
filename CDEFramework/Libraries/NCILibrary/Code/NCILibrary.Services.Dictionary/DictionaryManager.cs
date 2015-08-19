@@ -182,15 +182,22 @@ namespace NCI.Services.Dictionary
             return trmReturn;
         }
 
-        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
-            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, maxResults, dictionary, language));
+            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6}).", searchText, searchType, offset, maxResults, dictionary, language, version));
 
             SearchReturn srchReturn;
 
             // Sanity check for the offset and maxResults
             if (offset < 0) offset = 0;
             if (maxResults < 10) maxResults = 10;
+
+
+            // In the initial implementation, the audience is implied by the particular dictionary being used.
+            AudienceType audience = GetAudienceFromDictionaryType(dictionary);
+
+            DictionaryQuery query = new DictionaryQuery();
+
 
             String[] results;
 
@@ -260,9 +267,9 @@ namespace NCI.Services.Dictionary
         
         }
 
-        public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language)
+        public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language, String version)
         {
-            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}).", searchText, searchType, dictionary, language));
+            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}).", searchText, searchType, dictionary, language, version));
 
             SuggestReturn srchReturn;
 

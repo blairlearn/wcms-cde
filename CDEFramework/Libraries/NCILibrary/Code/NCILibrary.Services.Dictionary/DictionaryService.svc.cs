@@ -233,7 +233,7 @@ namespace NCI.Services.Dictionary
                 InputValidator.ValidateSearch(searchType, dictionary, language);
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.Search(searchText, searchType, offset, maxResults, dictionary, language);
+                ret = mgr.Search(searchText, searchType, offset, maxResults, dictionary, language, API_VERSION);
 
                 log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
             }
@@ -294,7 +294,7 @@ namespace NCI.Services.Dictionary
                 InputValidator.ValidateSearch(searchType, dictionary, language);
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.SearchSuggest(searchText, searchType, dictionary, language);
+                ret = mgr.SearchSuggest(searchText, searchType, dictionary, language, API_VERSION);
 
                 log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
             }
