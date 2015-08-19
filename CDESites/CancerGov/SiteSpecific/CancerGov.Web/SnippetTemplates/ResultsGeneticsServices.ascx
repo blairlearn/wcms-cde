@@ -101,11 +101,11 @@
         
         </div>
         
-        <button id="submit" type="button" onclick="doSubmit();" class="button" runat="server">
-            Display checked results</button>
+        <button id="submit" type="button" onclick="doSubmit();" class="submit" runat="server">
+            Display Checked Results</button>
         		
-        <button id="reset" type="button" onclick="window.location.href='<%=SearchPageInfo.SearchPagePrettyUrl%>'" class="button">
-            New search</button>
+        <button id="reset" type="reset" onclick="window.location.href='<%=SearchPageInfo.SearchPagePrettyUrl%>'" class="button">
+            New Search</button>
   </form>
 </div>
 		
