@@ -84,6 +84,7 @@
     <Compile Include="enum.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchResults.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">

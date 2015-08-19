@@ -16,6 +16,7 @@ namespace NCI.Services.Dictionary
         static Log log = new Log(typeof(DictionaryQuery));
 
         const string SP_GET_DICTIONARY_TERM = "usp_GetDictionaryTerm";
+        const string SP_SEARCH_DICTIONARY = "usp_SearchDictionary";
 
         private string DBConnectionString { get; set; }
 
@@ -58,7 +59,7 @@ namespace NCI.Services.Dictionary
         /// <returns></returns>
         public DataTable GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language));
+            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}, {3}, {4} ).", termId, dictionary, language, audience, version));
 
             DataTable results = null;
 
@@ -78,9 +79,48 @@ namespace NCI.Services.Dictionary
             return results;
         }
 
-        public DataSet Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
+        public SearchResults Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            throw new NotImplementedException();
+            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, offset, maxResults, dictionary, language, audience, version));
+
+            DataTable results = null;
+
+            switch (searchType)
+            {
+                case SearchType.Begins:
+                    searchText += "%";
+                    break;
+                case SearchType.Contains:
+                    searchText = "%" + searchText + "%";
+                    break;
+                default:
+                    {
+                        String message = String.Format("Unsupport search type '{0}'.", searchType);
+                        log.error(message);
+                        throw new ArgumentException(message);
+                    }
+            }
+
+            SqlParameter matchCountParam = new SqlParameter("@matchCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@searchText", SqlDbType.NVarChar){ Value = searchText},
+                new SqlParameter("@offset", SqlDbType.Int){ Value = offset },
+                new SqlParameter("@maxResults", SqlDbType.Int){ Value = maxResults },
+
+                new SqlParameter("@Dictionary", SqlDbType.NVarChar){Value = dictionary.ToString()},
+	            new SqlParameter("@Language", SqlDbType.NVarChar){Value = language.ToString()},
+	            new SqlParameter("@Audience", SqlDbType.NVarChar){Value = audience.ToString()},
+	            new SqlParameter("@ApiVers", SqlDbType.NVarChar){Value = version},
+                matchCountParam                
+            };
+
+            using (SqlConnection conn = SqlHelper.CreateConnection(DBConnectionString))
+            {
+                results = SqlHelper.ExecuteDatatable(conn, CommandType.StoredProcedure, SP_SEARCH_DICTIONARY, parameters);
+            }
+
+            return new SearchResults(results, (int)matchCountParam.Value);
         }
     }
 }

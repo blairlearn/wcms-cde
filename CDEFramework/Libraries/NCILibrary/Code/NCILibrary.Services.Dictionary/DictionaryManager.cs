@@ -182,11 +182,34 @@ namespace NCI.Services.Dictionary
             return trmReturn;
         }
 
+        /// <summary>
+        /// Performs a search for terms with names matching searchText.
+        /// </summary>
+        /// <param name="searchText">text to search for.</param>
+        /// <param name="searchType">The type of search to perform.
+        ///     Valid values are:
+        ///         Begins - Search for terms beginning with searchText.
+        ///         Contains - Search for terms containing searchText.
+        ///         Magic - Search for terms beginning with searchText, followed by those containing searchText.
+        /// </param>
+        /// <param name="offset">Offset into the list of matches for the first result to return.</param>
+        /// <param name="maxResults">The maximum number of results to return. Must be at least 10.</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="version">String identifying which vereion of the API to match.</param>
+        /// <returns></returns>
         public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
             log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6}).", searchText, searchType, offset, maxResults, dictionary, language, version));
-
-            SearchReturn srchReturn;
 
             // Sanity check for the offset and maxResults
             if (offset < 0) offset = 0;
@@ -197,74 +220,39 @@ namespace NCI.Services.Dictionary
             AudienceType audience = GetAudienceFromDictionaryType(dictionary);
 
             DictionaryQuery query = new DictionaryQuery();
+            SearchResults results = query.Search(searchText, searchType, offset, maxResults, dictionary, language, audience, version);
 
+            List<String> messages = new List<string>();
 
-            String[] results;
+            int resultCount = results.MatchCount;
 
+            // Report the count in a human-readable format.
+            String message = String.Format("Found {0} results.", resultCount);
+            log.debug(message);
+            messages.Add(message);
+
+            // Retrieve results
+            List<String> foundTerms = new List<string>();
+            foreach (DataRow row in results.Data.Rows)
+                foundTerms.Add(row.Field<string>("object"));
+
+            // Populate return metadata structure
             SearchReturnMeta meta = new SearchReturnMeta();
             meta.Language = language.ToString();
-            meta.Offset = 0;
+            meta.Audience = audience.ToString();
+            meta.Offset = offset;
+            meta.ResultCount = resultCount;
+            meta.Messages = messages.ToArray();
 
-            switch (dictionary)
+
+            // Combine meta and results to create the final return object.
+            SearchReturn srchReturn = new SearchReturn()
             {
-                case DictionaryType.term:
-                    if (language == Language.English)
-                    {
-                        results = CancerTermEnglish;
-                        meta.Audience = AUDIENCE_PATIENT;
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else if (language == Language.Spanish)
-                    {
-                        results = CancerTermSpanish;
-                        meta.Audience = AUDIENCE_PATIENT;
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else
-                    {
-                        throw new UnsupportedLanguageException(language, dictionary);
-                    }
-                    break;
-                case DictionaryType.drug:
-                    if (language == Language.English)
-                    {
-                        results = DrugTermEnglish;
-                        meta.Audience = AUDIENCE_HEALTHPROF;
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else
-                    {
-                        throw new UnsupportedLanguageException(language, dictionary);
-                    }
-                    break;
-                case DictionaryType.genetic:
-                    if (language == Language.English)
-                    {
-                        results = GeneticTermEnglish;
-                        meta.Audience = AUDIENCE_HEALTHPROF;
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else
-                    {
-                        throw new UnsupportedLanguageException(language, dictionary);
-                    }
-                    break;
-                default:
-                    throw new DictionaryValidationException(string.Format("Unknown dictionary type '{0}'.", dictionary));
-                    
-            }
-
-            meta.ResultCount = results.Length;
-
-
-            srchReturn = new SearchReturn()
-            {
-                Result = results,
+                Result = foundTerms.ToArray(),
                 Meta = meta
             };
 
             return srchReturn;
-        
         }
 
         public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language, String version)

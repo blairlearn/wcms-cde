@@ -84,10 +84,11 @@ namespace NCI.Services.Dictionary
                 String message = string.Empty;
                 bool failed = false;
 
-                if (!Enum.IsDefined(typeof(SearchType), searchType) || searchType == SearchType.Unknown)
+                if (!Enum.IsDefined(typeof(SearchType), searchType)
+                    && searchType != SearchType.Begins && searchType != SearchType.Contains)
                 {
                     failed = true;
-                    message += "Search type must be 'Begins', 'Contains', or 'Magic'.\n";
+                    message += "Search type must be 'Begins' or 'Contains'.\n";
                 }
 
                 if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
