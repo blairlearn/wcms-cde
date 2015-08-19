@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace NCI.Services.Dictionary.BusinessObjects
+namespace NCI.Web.Dictionary.BusinessObjects
 {
     /// <summary>
     /// represents an external link

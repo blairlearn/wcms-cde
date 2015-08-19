@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace NCI.Services.Dictionary.BusinessObjects
+namespace NCI.Web.Dictionary.BusinessObjects
 {
     /// <summary>
     /// Infrastructure.  Base class for all the return metadata classes.
@@ -15,7 +15,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
             Messages = new string[] { "OK" };
         }
 
-        /// <summary>
+        /// <summary>s
         /// Human-readable message about the status of the call to GetTerm().
         /// May contain an error message.
         /// </summary>

@@ -6,12 +6,14 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2C675310-2242-4CBB-B40E-D6225C719FFC}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NCILibrary.Web.Dictionary</RootNamespace>
     <AssemblyName>NCILibrary.Web.Dictionary</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,25 +35,56 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CDEFramework\Libraries\NCILibrary\ThirdPartyDlls\Json.Net\7.0.1\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\ThirdPartyDlls\Json.Net\7.0.1\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\Alias.cs" />
+    <Compile Include="BusinessObjects\Definition.cs" />
+    <Compile Include="BusinessObjects\DictionarySuggestion.cs" />
+    <Compile Include="BusinessObjects\DictionaryTerm.cs" />
+    <Compile Include="BusinessObjects\ImageReference.cs" />
+    <Compile Include="BusinessObjects\MetaCommon.cs" />
+    <Compile Include="BusinessObjects\Pronunciation.cs" />
+    <Compile Include="BusinessObjects\RelatedDrugSummary.cs" />
+    <Compile Include="BusinessObjects\RelatedExternalLink.cs" />
+    <Compile Include="BusinessObjects\RelatedItems.cs" />
+    <Compile Include="BusinessObjects\RelatedSummary.cs" />
+    <Compile Include="BusinessObjects\RelatedTerm.cs" />
+    <Compile Include="BusinessObjects\SearchReturn.cs" />
+    <Compile Include="BusinessObjects\SearchReturnMeta.cs" />
+    <Compile Include="BusinessObjects\SuggestReturn.cs" />
+    <Compile Include="BusinessObjects\SuggestReturnMeta.cs" />
+    <Compile Include="BusinessObjects\TermReturn.cs" />
+    <Compile Include="BusinessObjects\TermReturnMeta.cs" />
     <Compile Include="DictionaryAppManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +92,10 @@
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.Services.Dictionary\NCILibrary.Services.Dictionary.csproj">
+      <Project>{7730D2CE-E504-49F9-AAAC-20B76FB8C618}</Project>
+      <Name>NCILibrary.Services.Dictionary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

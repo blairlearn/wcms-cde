@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace NCI.Services.Dictionary.BusinessObjects
+namespace NCI.Web.Dictionary.BusinessObjects
 {
     [DataContract()]
     public class DictionarySuggestion
@@ -10,7 +10,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
         ///  The Term's ID
         /// </summary>
         [DataMember(Name = "id")]
-        public String ID { get; set; }
+        public int ID { get; set; }
 
         /// <summary>
         /// The Term's name

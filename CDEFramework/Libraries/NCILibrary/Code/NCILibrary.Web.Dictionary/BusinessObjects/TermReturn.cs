@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace NCI.Services.Dictionary.BusinessObjects
+namespace NCI.Web.Dictionary.BusinessObjects
 {
     /// <summary>
     /// Defines the overall data structure for returns from an individual

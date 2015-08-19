@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace NCI.Services.Dictionary.BusinessObjects
+namespace NCI.Web.Dictionary.BusinessObjects
 {
     [DataContract()]
     public class ImageReference

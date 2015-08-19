@@ -505,6 +505,10 @@
       <Project>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</Project>
       <Name>NCILibrary.Web.CDE</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.Dictionary\NCILibrary.Web.Dictionary.csproj">
+      <Project>{2C675310-2242-4CBB-B40E-D6225C719FFC}</Project>
+      <Name>NCILibrary.Web.Dictionary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
       <Name>NCILibrary.Web.UI.WebControls</Name>

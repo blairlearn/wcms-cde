@@ -15,6 +15,8 @@ using CancerGov.CDR.TermDictionary;
 using CancerGov.UI;
 using NCI.Web.UI.WebControls.FormControls;
 using NCI.Web.CDE.Modules;
+using NCI.Web.Dictionary;
+using NCI.Services.Dictionary;
 namespace Www.Templates
 {
     public partial class DbAlpha : SnippetControl
@@ -133,9 +135,15 @@ namespace Www.Templates
 
         protected override void OnLoad(EventArgs e)
         {
+
             base.OnLoad(e);
             ValidateParams();
             GetQueryParams();
+            DictionaryAppManager test = new DictionaryAppManager();
+            DictionaryType test1 = DictionaryType.term;
+            
+            Language lang = Language.English;
+            test.GetTerm(44578, test1, lang, "v1");
 
             /* Setup URLS -
              * The URLs are being set in the Appmodule page content item, which publishes the following XML:

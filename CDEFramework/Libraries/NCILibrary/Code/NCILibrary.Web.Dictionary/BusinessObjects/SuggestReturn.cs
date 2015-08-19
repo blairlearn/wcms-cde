@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace NCI.Services.Dictionary.BusinessObjects
+namespace NCI.Web.Dictionary.BusinessObjects
 {
     /// <summary>
     /// Outermost data structure for returns from SearchSuggest().

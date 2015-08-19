@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace NCI.Services.Dictionary.BusinessObjects
+namespace NCI.Web.Dictionary.BusinessObjects
 {
     /// <summary>
     /// represents a single related Term
@@ -14,7 +14,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// related Term's ID
         /// </summary>
         [DataMember(Name = "id")]
-        public String Termid { get; set; }
+        public int Termid { get; set; }
 
         /// <summary>
         /// identifies thpublic Stringe dictionary {get;set;}
