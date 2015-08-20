@@ -259,6 +259,13 @@ namespace NCI.Services.Dictionary
         {
             log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}).", searchText, searchType, dictionary, language, version));
 
+
+            // In the initial implementation, the audience is implied by the particular dictionary being used.
+            AudienceType audience = GetAudienceFromDictionaryType(dictionary);
+
+            DictionaryQuery query = new DictionaryQuery();
+            //query.SearchSuggest(searchText, searchType, dictionary, language, version);
+
             SuggestReturn srchReturn;
 
             DictionarySuggestion[] results = new DictionarySuggestion[] { };

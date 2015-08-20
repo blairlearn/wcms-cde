@@ -122,5 +122,11 @@ namespace NCI.Services.Dictionary
 
             return new SearchResults(results, (int)matchCountParam.Value);
         }
-    }
+
+        public Object SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language, String version)
+        {
+            throw new NotImplementedException();
+        }
+
+}
 }
