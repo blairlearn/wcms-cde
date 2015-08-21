@@ -40,10 +40,14 @@ namespace NCI.Web.Dictionary
 
             //String of JSON returned from the Database to be deserialized.
             String jsonObject =termRet.Term;
-            
-            
-            TermReturn term = JsonConvert.DeserializeObject<TermReturn>(jsonObject);
+            String newJsonObject = "{" + jsonObject + "}";
+            DictionaryTerm dicTerm = new DictionaryTerm();
+            TermReturn term = new TermReturn();
             term.Meta = new TermReturnMeta();
+            dicTerm = JsonConvert.DeserializeObject<DictionaryTerm>(newJsonObject);
+            term.Term = dicTerm;
+            
+
             //set Meta Data from Database
             term.Meta.Language = termRet.Meta.Language;
             term.Meta.Audience = termRet.Meta.Audience;
