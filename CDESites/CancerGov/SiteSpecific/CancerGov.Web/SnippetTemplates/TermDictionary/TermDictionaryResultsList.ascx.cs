@@ -10,6 +10,9 @@ using NCI.Web.CDE;
 using CancerGov.CDR.TermDictionary;
 using NCI.Web.CDE.WebAnalytics;
 using System.Configuration;
+using NCI.Web.Dictionary;
+using NCI.Services.Dictionary;
+using NCI.Web.Dictionary.BusinessObjects;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -29,7 +32,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         public string DictionaryURL { get; set; }
 
-        public DisplayLanguage Language { get; set; }
+        public Language DictionaryLanguage { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,13 +47,13 @@ namespace CancerGov.Web.SnippetTemplates
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                Language = DisplayLanguage.Spanish;
+                DictionaryLanguage = Language.Spanish;
                 lblResultsFor.Text = "resultados de:";
             }
             else
             {
                 lblResultsFor.Text = "results found for:";
-                Language = DisplayLanguage.English;
+                DictionaryLanguage = Language.English;
             }
 
             SetupCommon();
@@ -61,20 +64,24 @@ namespace CancerGov.Web.SnippetTemplates
 
         private void LoadData()
         {
-            string language = string.Empty;
+            DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
-            TermDictionaryCollection dataCollection = TermDictionaryManager.Search(Language.ToString(), SearchStr, 0, BContains);
-            
-                resultListView.DataSource = dataCollection;
-                resultListView.DataBind();
-                NumResults = dataCollection.Count;
-                lblWord.Text = SearchStr.Replace("[[]", "[");
-                lblNumResults.Text = NumResults.ToString();
-                if (NumResults == 0)
-                {
-                    RenderNoResults();
-                }
-            
+            SearchType searchType = SearchType.Begins;
+            if (BContains)
+                searchType = SearchType.Contains;
+
+            SearchReturn resultList = _dictionaryAppManager.Search(SearchStr, searchType, 0, 0, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+
+            resultListView.DataSource = resultList;
+            resultListView.DataBind();
+            NumResults = resultList.Meta.ResultCount;
+            lblWord.Text = SearchStr.Replace("[[]", "[");
+            lblNumResults.Text = NumResults.ToString();
+            if (NumResults == 0)
+            {
+                RenderNoResults();
+            }
+
 
         }
 

@@ -19,6 +19,10 @@ using CancerGov.Common.ErrorHandling;
 using System.Configuration;
 using NCI.Web.CDE.Modules;
 using System.Data;
+using NCI.Web.Dictionary;
+using NCI.Web.Dictionary.BusinessObjects;
+using NCI.Services.Dictionary;
+using CancerGov.UI.HTML;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -40,7 +44,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         public string DictionaryURL { get; set; }
 
-        public DisplayLanguage Language { get; set; }
+        public Language DictionaryLanguage { get; set; }
 
         public string QueryStringLang { get; set; }
 
@@ -51,27 +55,13 @@ namespace CancerGov.Web.SnippetTemplates
             dictionarySearchBlock.Dictionary = DictionaryType.Term;
             dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
-            //base.OnLoad(e);
+
             GetQueryParams();
             ValidateParams();
             
-            /* Setup URLS -
-             * The URLs are being set in the Appmodule page content item, which publishes the following XML:
-             * <cde:Module_dictionaryURL ... >
-             *  <DictionaryEnglishURL/> //English dictionary path
-             *  <DictionarySpanishURL/> //Spanish dictionary path
-             * </cde:Module_dictionaryURL>
-            */
-            //string snippetXmlData = string.Empty;
-            //snippetXmlData = SnippetInfo.Data;
-            //snippetXmlData = snippetXmlData.Replace("]]ENDCDATA", "]]>");
-            //NCI.Web.CDE.Modules.DictionaryURL dUrl = ModuleObjectFactory<NCI.Web.CDE.Modules.DictionaryURL>.GetModuleObject(snippetXmlData);
-
             DictionaryURLSpanish = DictionaryURL;
             DictionaryURLEnglish = DictionaryURL;
-
-            //DictionaryURL = DictionaryURLEnglish;
-
+                       
             if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish"))
             {
                 Response.Redirect("/diccionario" + Request.Url.Query);
@@ -79,14 +69,18 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                Language = DisplayLanguage.Spanish;
+                DictionaryLanguage = Language.Spanish;
             }
             else
-                Language = DisplayLanguage.English;
+                DictionaryLanguage = Language.English;
 
             if (!Page.IsPostBack)
             {
-                TermDictionaryDataItem dataItem = TermDictionaryManager.GetDefinitionByTermID(Language.ToString(), CdrID, null, 5);
+                DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
+                
+                //Language lang = Language.English;
+                //test.GetTerm(44578, DictionaryType.Term, lang, "v1");
+                TermReturn dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage, "v1"); 
                 if (dataItem != null)
                 {
                     ActivateDefinitionView(dataItem);
@@ -107,9 +101,9 @@ namespace CancerGov.Web.SnippetTemplates
                         
         }
 
-        private void ActivateDefinitionView(TermDictionaryDataItem dataItem)
+        private void ActivateDefinitionView(TermReturn dataItem)
         {
-            var myDataSource = new List<TermDictionaryDataItem> { dataItem };
+            var myDataSource = new List<TermReturn> { dataItem };
 
             termDictionaryDefinitionView.DataSource = myDataSource;
             termDictionaryDefinitionView.DataBind();
@@ -121,20 +115,9 @@ namespace CancerGov.Web.SnippetTemplates
             string audioMediaHtml = string.Empty;
             string relatedLinkInfo = String.Empty;
 
-            CdrID = dataItem.GlossaryTermID.ToString();
-            termName = dataItem.TermName;
-            termPronun = dataItem.TermPronunciation;
-            defHtml = dataItem.DefinitionHTML;
-            imageHtml = (dataItem.MediaHTML == null) ? string.Empty : dataItem.MediaHTML;
-            imageHtml = imageHtml.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+            CdrID = dataItem.Term.ID.ToString();
 
-            audioMediaHtml = (dataItem.AudioMediaHTML == null) ? string.Empty : dataItem.AudioMediaHTML;
-            audioMediaHtml = audioMediaHtml.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
-            audioMediaHtml = audioMediaHtml.Replace("[_flashMediaLocation]", ConfigurationSettings.AppSettings["FlashMediaLocation"]);
-
-            relatedLinkInfo = (dataItem.RelatedInfoHTML == null) ? string.Empty : dataItem.RelatedInfoHTML;
-
-            if (Language == DisplayLanguage.Spanish)
+            if (DictionaryLanguage == Language.Spanish)
             {
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
                 {
@@ -151,7 +134,6 @@ namespace CancerGov.Web.SnippetTemplates
                 });
 
                 this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
-                //lblTermPronun.Text = termPronun;
             }
 
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
@@ -167,22 +149,6 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (imageHtml != string.Empty)
                 imageHtml = "<p>" + imageHtml;
-
-            //lblTermName.Text = termName;
-            //litDefHtml.Text = defHtml;
-            //litImageHtml.Text = imageHtml;
-            //litAudioMediaHtml.Text = audioMediaHtml;
-
-            //if (!string.IsNullOrEmpty(relatedLinkInfo))
-            //{
-            //    pnlRelatedInfo.Visible = true;
-            //    litRelatedLinkInfo.Text = relatedLinkInfo;
-            //}
-            //else
-            //    pnlRelatedInfo.Visible = false;
-
-           // RenderLangButtons();
-            // 
         }
 
 
@@ -264,68 +230,178 @@ namespace CancerGov.Web.SnippetTemplates
         }
 
         protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
-        { 
-            
-            //Get Related Information from the Manager layer
-            //Add check to see if it exists and then display data accordingly
-           
-            Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
-            if (litMoreInformation != null)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
-                if (Language == DisplayLanguage.Spanish)
-                    litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
-                else
-                    litMoreInformation.Text = "More Information";
-            }
-            //Based on the old code in GateKeeper the display order for related information is:
-            //External Refs
-            //Summary Refs
-            //Drug info summary refs
-            //Related terms
-            //if (lang == Language.English)
-            //    url = String.Format("/dictionary?CdrID={0}", documentId);
-            //else if (lang == Language.Spanish && relatedTerm.HasSpanishTerm)
-            //    url = String.Format("/diccionario?CdrID={0}", documentId);
+                //get the TermReturn object that is bound to the current row.
+                TermReturn termDetails = (TermReturn)e.Item.DataItem;
 
-            //String relatedDictionaryLinks = string.Empty;
-            //String dictionaryFmt = @"<a href=""{0}"">{1}</a>";  // First list entry.
-            //String dictionaryFmtNext = @", <a href=""{0}"">{1}</a>"; // Additiional entry w/ leading comma.
+                if (termDetails != null)
+                {
+                    //Get Related Information from the Manager layer
+                    //Add check to see if it exists and then display data accordingly
+                    Panel pnlRelatedInfo = e.Item.FindControl("pnlRelatedInfo") as Panel;
+                    if (pnlRelatedInfo != null)
+                    {
+                        //display the related information panel
+                        //when atleast one of the related item exists
+                        if (termDetails.Term.Related.Term.Length > 0 ||
+                            termDetails.Term.Related.Summary.Length > 0 ||
+                            termDetails.Term.Related.DrugSummary.Length > 0 ||
+                            termDetails.Term.Related.External.Length > 0)
+                        {
+                            pnlRelatedInfo.Visible = true;
+                            Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
+                            if (litMoreInformation != null)
+                            {
+                                if (DictionaryLanguage == Language.Spanish)
+                                    litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
+                                else
+                                    litMoreInformation.Text = "More Information";
+                            }
 
-            //// List of related pages.
-            //String relatedPageLinks = string.Empty;
-            //foreach (RelatedInformationLink ri in def.RelatedInformationList)
-            //{
-            //    // Glossary terms go in a list for separate rendering, everything gets rendered into an <li>.
-            //    if (ri.LinkType == RelatedInformationLink.RelatedLinkType.GlossaryTerm)
-            //    {
-            //        relatedDictionaryLinks += string.Format(dictionaryFmt, ri.Url, ri.Name);
-            //        dictionaryFmt = dictionaryFmtNext;  // Sleight of hand for formatting.
-            //    }
-            //    else
-            //        relatedPageLinks += string.Format("<li><a href=\"{0}\">{1}</a></li>", ri.Url, ri.Name);
-            //}
+                            if (termDetails.Term.Related.External.Length > 0)
+                            {
+                                Repeater relatedExternalRefs = (Repeater)e.Item.FindControl("relatedExternalRefs");
+                                if (relatedExternalRefs != null)
+                                {
+                                    relatedExternalRefs.Visible = true;
+                                    relatedExternalRefs.DataSource = termDetails.Term.Related.External;
+                                    relatedExternalRefs.DataBind();
+                                }
+                            }
 
-            //// Do the actual rendering part.  Again, not enough to really justify a StringBuilder.
-            //if (def.RelatedInformationList.Count > 0)
-            //{
-            //    relatedInformationHtml = "<div class=\"related-resources\"><h6>" + langMoreinfo + "</h6>";
+                            if (termDetails.Term.Related.Summary.Length > 0)
+                            {
+                                Repeater relatedSummaryRefs = (Repeater)e.Item.FindControl("relatedSummaryRefs");
+                                if (relatedSummaryRefs != null)
+                                {
+                                    relatedSummaryRefs.Visible = true;
+                                    relatedSummaryRefs.DataSource = termDetails.Term.Related.Summary;
+                                    relatedSummaryRefs.DataBind();
+                                }
+                            }
 
-            //    // General list of related items.
-            //    if (!string.IsNullOrEmpty(relatedPageLinks))
-            //        relatedInformationHtml += String.Format("<ul class=\"no-bullets\">{0}</ul>", relatedPageLinks);
-            //    // Related glossary terms.
-            //    if (!string.IsNullOrEmpty(relatedDictionaryLinks))
-            //        relatedInformationHtml += String.Format("<p><span class=\"related-definition-label\">{1}</span> {0}.</p>", relatedDictionaryLinks, langDefinitionLabel);
-            //    relatedInformationHtml += "</div>";
-            //}
+                            if (termDetails.Term.Related.DrugSummary.Length > 0)
+                            {
+                                Repeater relatedDrugInfoSummaries = (Repeater)e.Item.FindControl("relatedDrugInfoSummaries");
+                                if (relatedDrugInfoSummaries != null)
+                                {
+                                    relatedDrugInfoSummaries.Visible = true;
+                                    relatedDrugInfoSummaries.DataSource = termDetails.Term.Related.DrugSummary;
+                                    relatedDrugInfoSummaries.DataBind();
+                                }
+                            }
 
-            //use this for Genetics dictionary 
-            //  // Health Professional is always English, always /geneticsdictionary.
-            //String url = String.Format("/geneticsdictionary?cdrid={0}", documentId);
-            //relInfoLink = new RelatedInformationLink(termName, url, Language.English, RelatedInformationLink.RelatedLinkType.GlossaryTerm);
+                            if (termDetails.Term.Related.Term.Length > 0)
+                            {
+                                PlaceHolder phRelatedTerms = (PlaceHolder)e.Item.FindControl("phRelatedTerms");
+                                if (phRelatedTerms != null)
+                                {
+                                    phRelatedTerms.Visible = true;
+                                    Label labelDefintion = (Label)e.Item.FindControl("labelDefintion");
+                                    if (labelDefintion != null)
+                                    {
+                                        if (DictionaryLanguage == Language.Spanish)
+                                            labelDefintion.Text = "Definici&oacute;n de:";
+                                        else
+                                            labelDefintion.Text = "Definition of:";
+                                    }
+                                    Repeater relatedTerms = (Repeater)e.Item.FindControl("relatedTerms");
+                                    if (relatedTerms != null)
+                                    {
+                                        relatedTerms.DataSource = termDetails.Term.Related.Term;
+                                        relatedTerms.DataBind();
+                                    }
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            pnlRelatedInfo.Visible = false;
+                        }
+
+                    }
+
+                    Repeater relatedImages = (Repeater)e.Item.FindControl("relatedImages");
+                    if (relatedImages != null)
+                    {
+                        if (termDetails.Term.Images.Length > 0)
+                        {
+                            relatedImages.Visible = true;
+                            relatedImages.DataSource = termDetails.Term.Images;
+                            relatedImages.DataBind();
+                        }
+                    }
+
+                }
+            } 
         }
 
-        
+        protected void relatedTerms_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                //get the RelatedTerm object that is bound to the current row.
+                RelatedTerm relatedTerm = (RelatedTerm)e.Item.DataItem;
+                if (relatedTerm != null)
+                {
+                    HyperLink relatedTermLink = (HyperLink)e.Item.FindControl("relatedTermLink");
+                    if (relatedTermLink != null)
+                    {
+                        relatedTermLink.NavigateUrl = DictionaryURL + "?cdrid=" + relatedTerm.Termid;
+                        relatedTermLink.Text = relatedTerm.Text;
+                        
+                        //use this for Genetics dictionary 
+                        //  // Health Professional is always English, always /geneticsdictionary.
+                        //String url = String.Format("/geneticsdictionary?cdrid={0}", documentId);
+                        //relInfoLink = new RelatedInformationLink(termName, url, Language.English, RelatedInformationLink.RelatedLinkType.GlossaryTerm);
+                    }
+                }
+            }
+        }
+        protected void relatedImages_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                //get the ImageReference object that is bound to the current row.
+                ImageReference imageDetails = (ImageReference)e.Item.DataItem;
+
+                if (imageDetails != null)
+                {                    
+                    System.Web.UI.HtmlControls.HtmlImage termImage = (System.Web.UI.HtmlControls.HtmlImage)e.Item.FindControl("termImage");
+                    if (termImage != null)
+                    {                       
+                        termImage.Alt = imageDetails.AltText;
+                       
+                        if (!string.IsNullOrEmpty(imageDetails.Filename))
+                        {
+                            string[] regularTermImage = imageDetails.Filename.Split('.');
+                            if (regularTermImage.Length == 2)
+                            {
+                                //termImage image size is 571
+                                //example format CDR526538-571.jpg
+                                termImage.Src = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageRegular"] + "." +regularTermImage[1];
+
+                                System.Web.UI.HtmlControls.HtmlAnchor termEnlargeImage = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("termEnlargeImage");
+                                if (termEnlargeImage != null)
+                                {
+                                    //enlarge image size is 750
+                                    //example format CDR526538-750.jpg
+                                    termEnlargeImage.HRef = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
+                                }
+                            }
+                                                                                    
+                        }
+                    }
+                    
+                }
+            }
+        }
         private void ValidateParams()
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);

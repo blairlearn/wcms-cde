@@ -11,6 +11,9 @@ using NCI.Util;
 using NCI.Web.CDE.WebAnalytics;
 using System.Configuration;
 using NCI.Web.CDE.Modules;
+using NCI.Web.Dictionary.BusinessObjects;
+using NCI.Web.Dictionary;
+using NCI.Services.Dictionary;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -30,7 +33,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         public int TotalCount = 0;
 
-        public DisplayLanguage Language { get; set; }
+        public Language DictionaryLanguage { get; set; }
 
         public string DictionaryURLSpanish { get; set; }
 
@@ -43,9 +46,9 @@ namespace CancerGov.Web.SnippetTemplates
             base.OnLoad(e);
             GetQueryParams();
             ValidateParams();
-           
 
-            
+            SetupCommon();
+                        
             switch (Dictionary)
             {
                 case DictionaryType.Term:
@@ -98,6 +101,56 @@ namespace CancerGov.Web.SnippetTemplates
                 }
         }
 
+        /// <summary>
+        /// Setup shared by English and Spanish versions
+        /// </summary>
+        private void SetupCommon()
+        {
+            radioStarts.InputAttributes.Add("onchange", "autoFunc();");
+            radioContains.InputAttributes.Add("onchange", "autoFunc();");
+
+            //set language to english by default
+            DictionaryLanguage = Language.English;
+
+            if (!string.IsNullOrEmpty(SrcGroup))
+            {
+                BContains = Convert.ToBoolean(SrcGroup);
+
+                RadioButton rd = (RadioButton)FindControl("radioContains");
+
+                if (BContains)
+                    rd.Checked = BContains;
+            }
+
+            if (!string.IsNullOrEmpty(SearchStr))
+                AutoComplete1.Text = SearchStr;
+
+            if (!string.IsNullOrEmpty(Expand))
+            {
+                if (Expand.Trim() == "#")
+                {
+                    SearchStr = "[0-9]";
+                }
+                else
+                {
+                    SearchStr = Expand.Trim().ToUpper();
+                }
+            }
+
+            if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
+            {
+                pnlTermSearch.Visible = false;
+
+            }
+            else
+            {
+                alphaListBox.TextOnly = (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web) ? true : false;
+                alphaListBox.Title = string.Empty;
+            }
+
+            alphaListBox.BaseUrl = DictionaryURL;
+
+        }
     
         #region "Term Dictionary Methods"
 
@@ -108,20 +161,22 @@ namespace CancerGov.Web.SnippetTemplates
                                    
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                Language = DisplayLanguage.Spanish;
+                DictionaryLanguage = Language.Spanish;
                 SetupSpanish();
                 _isSpanish = true;
             }
             else
             {
-                Language = DisplayLanguage.English;
+                DictionaryLanguage = Language.English;
                 SetupEnglish();
             }
 
-            TermDictionaryCollection dataCollection = TermDictionaryManager.Search(Language.ToString(), "_", 0, false);
-            TotalCount = dataCollection.Count;
+            //TermDictionaryCollection dataCollection = TermDictionaryManager.Search(Language.ToString(), "_", 0, false);
+            //DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
+            //SearchReturn resultList = _dictionaryAppManager.Search("_", SearchType.Begins, 0, 0, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
 
-            
+            TotalCount = 0;// resultList.Meta.ResultCount;
+                        
             if (WebAnalyticsOptions.IsEnabled)
             {
                 // Add page name to analytics
@@ -163,8 +218,7 @@ namespace CancerGov.Web.SnippetTemplates
             btnGo.Text = "Buscar";
             btnGo.ToolTip = "Buscar";
                         
-            ////common display features
-            SetupCommon();
+           
         }
 
         /// <summary>
@@ -181,64 +235,9 @@ namespace CancerGov.Web.SnippetTemplates
             pnlIntroEnglish.Visible = true;
             pnlIntroSpanish.Visible = false;
 
-          
-            //common display features
-            SetupCommon();
+
         }
-
-        /// <summary>
-        /// Setup shared by English and Spanish versions
-        /// </summary>
-        private void SetupCommon()
-        {           
-            radioStarts.InputAttributes.Add("onchange", "autoFunc();");
-            radioContains.InputAttributes.Add("onchange", "autoFunc();");
-
-            if (!string.IsNullOrEmpty(SrcGroup))
-            {
-                BContains = Convert.ToBoolean(SrcGroup);
-
-                RadioButton rd = (RadioButton)FindControl("radioContains");
-
-                if (BContains)
-                    rd.Checked = BContains;
-            }
-
-            if (!string.IsNullOrEmpty(SearchStr))
-                AutoComplete1.Text = SearchStr;
-
-            if (!string.IsNullOrEmpty(Expand))
-            {
-                if (Expand.Trim() == "#")
-                {
-                    SearchStr = "[0-9]";
-                }
-                else
-                {
-                    SearchStr = Expand.Trim().ToUpper();
-                }
-            }
-            
-            if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
-            {
-                pnlTermSearch.Visible = false;
-
-            }
-            else
-            {
-                alphaListBox.TextOnly = (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web) ? true : false;
-                alphaListBox.Title = string.Empty;
-            }
-
-          alphaListBox.BaseUrl = DictionaryURL;
-            
-        }
-
-        private void LoadData() 
-        { 
-
-        
-        }
+               
 
         #endregion
         
@@ -246,18 +245,18 @@ namespace CancerGov.Web.SnippetTemplates
         private void SetUpGeneticsDictionary() 
         {
             SetupEnglish();
-            SetupCommon();
+           
         }
 
         private void SetUpDrugDictionary() 
         {
             SetupEnglish();
-            SetupCommon();
+           
         }
 
         protected void btnGo_OnClick(object sender, EventArgs e)
         {
-            SearchStr = AutoComplete1.Text;// Request.Params[AutoComplete1.UniqueID];
+            SearchStr = AutoComplete1.Text;
             SearchStr = SearchStr.Replace("[", "[[]");
             CdrID = string.Empty;
             Expand = string.Empty;

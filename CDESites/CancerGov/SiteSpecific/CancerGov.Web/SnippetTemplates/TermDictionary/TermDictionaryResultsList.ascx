@@ -23,18 +23,18 @@
                 <ItemTemplate>
                     <dt>
                         <dfn>
-                        <a href="<%# DictionaryURL %>?CdrID=<%#DataBinder.Eval(Container.DataItem, "GlossaryTermID")%>" <%# ResultListViewHrefOnclick(Container)%>>
-                             <%# Eval("TermName")%></a>
+                        <a href="<%# DictionaryURL %>?CdrID=<%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                             <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Term%></a>
                              
      
                         </dfn>
                     </dt>
-                    <dd class="pronunciation">
-                        <%# AudioMediaHTML(DataBinder.Eval(Container.DataItem, "AudioMediaHTML")) %>
-                        <span><%#DataBinder.Eval(Container.DataItem, "TermPronunciation")%></span>
-                    </dd>
+                     <dd class="pronunciation">
+                            <a href="<%# ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]%><%#((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Pronunciation.Audio  %>" class="CDR_audiofile"><span class="hidden">listen</span></a>
+                            <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Pronunciation.Key%>
+                      </dd>
                     <dd class="definition">
-                        <%#DataBinder.Eval(Container.DataItem, "DefinitionHTML")%>
+                         <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Definition%>
                     </dd>
                 </ItemTemplate>
                 <EmptyDataTemplate>
