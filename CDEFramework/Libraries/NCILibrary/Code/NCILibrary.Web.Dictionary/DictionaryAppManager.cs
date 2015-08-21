@@ -80,22 +80,25 @@ namespace NCI.Web.Dictionary
             if (maxResults < 10) maxResults = 10;
 
             SearchReturn srchReturn =new SearchReturn();
-            NCI.Services.Dictionary.BusinessObjects.SearchReturn searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
             
+            NCI.Services.Dictionary.BusinessObjects.SearchReturn searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
+           
 
             String[] jsonObject = searchRet.Result;
             int count = 0;
-
+            DictionaryTerm[] dictionaryTerms = new DictionaryTerm[jsonObject.Length];
             //for each loop to deserialize the string array from database into the Dictionary Terms
             //for the result
             foreach(String m in jsonObject)
             {
                 String deserialize = "{" + m + "}";
-                srchReturn.Result[count] = JsonConvert.DeserializeObject<DictionaryTerm>(deserialize);
-                count++;
+                dictionaryTerms[count] = JsonConvert.DeserializeObject<DictionaryTerm>(deserialize);
+                count = count+1;
             }
+            srchReturn.Result = dictionaryTerms;
+            
 
-            srchReturn.Meta = new SearchReturnMeta();
+
             //set meta data
             srchReturn.Meta = new SearchReturnMeta();
             srchReturn.Meta.Audience = searchRet.Meta.Audience;
