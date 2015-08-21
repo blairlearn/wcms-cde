@@ -82,6 +82,7 @@ namespace NCI.Web.Dictionary
             SearchReturn srchReturn =new SearchReturn();
             NCI.Services.Dictionary.BusinessObjects.SearchReturn searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
             
+
             String[] jsonObject = searchRet.Result;
             int count = 0;
 
@@ -89,10 +90,12 @@ namespace NCI.Web.Dictionary
             //for the result
             foreach(String m in jsonObject)
             {
-                srchReturn.Result[count] = JsonConvert.DeserializeObject<DictionaryTerm>(m);
+                String deserialize = "{" + m + "}";
+                srchReturn.Result[count] = JsonConvert.DeserializeObject<DictionaryTerm>(deserialize);
                 count++;
             }
-            
+
+            srchReturn.Meta = new SearchReturnMeta();
             //set meta data
             srchReturn.Meta = new SearchReturnMeta();
             srchReturn.Meta.Audience = searchRet.Meta.Audience;
