@@ -95,7 +95,7 @@ namespace NCI.Services.Dictionary
         ///         en - English
         ///         es - Spanish
         /// </param>
-        /// <param name="version">String identifying which vereion of the API to match.</param>
+        /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
         /// <returns>A data structure containing both meta data about the request and a string containing a JSON representation
         /// of the particular definition identified by the inputs to the method.
         /// </returns>
@@ -205,7 +205,7 @@ namespace NCI.Services.Dictionary
         ///         en - English
         ///         es - Spanish
         /// </param>
-        /// <param name="version">String identifying which vereion of the API to match.</param>
+        /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
         /// <returns></returns>
         public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
@@ -231,18 +231,21 @@ namespace NCI.Services.Dictionary
             log.debug(message);
             messages.Add(message);
 
-            // Retrieve results
-            List<String> foundTerms = new List<string>();
+            // Retrieve results.  We already know the number of results, so let's preset the
+            // list to the size we know we're going to need.
+            List<String> foundTerms = new List<string>(resultCount);
             foreach (DataRow row in results.Data.Rows)
                 foundTerms.Add(row.Field<string>("object"));
 
             // Populate return metadata structure
-            SearchReturnMeta meta = new SearchReturnMeta();
-            meta.Language = language.ToString();
-            meta.Audience = audience.ToString();
-            meta.Offset = offset;
-            meta.ResultCount = resultCount;
-            meta.Messages = messages.ToArray();
+            SearchReturnMeta meta = new SearchReturnMeta()
+            {
+                Language = language.ToString(),
+                Audience = audience.ToString(),
+                Offset = offset,
+                ResultCount = resultCount,
+                Messages = messages.ToArray()
+            };
 
 
             // Combine meta and results to create the final return object.
@@ -255,124 +258,88 @@ namespace NCI.Services.Dictionary
             return srchReturn;
         }
 
-        public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language, String version)
+        /// <summary>
+        /// Lightweight method to search for terms matching searchText. This method is intended for use with autosuggest
+        /// and returns a maximum of 10 results
+        /// </summary>
+        /// <param name="searchText">text to search for.</param>
+        /// <param name="searchType">The type of search to perform.
+        ///     Valid values are:
+        ///         Begins - Search for terms beginning with searchText.
+        ///         Contains - Search for terms containing searchText.
+        ///         Magic - Search for terms beginning with searchText, followed by those containing searchText.
+        /// </param>
+        /// <param name="maxResults">Maximum number of results to return.</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
+        /// <returns></returns>
+        public SuggestReturn SearchSuggest(String searchText, SearchType searchType, int maxResults, DictionaryType dictionary, Language language, String version)
         {
-            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}).", searchText, searchType, dictionary, language, version));
+            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, maxResults, dictionary, language, version));
 
+            // Sanity check for maxResults
+            if (maxResults < 10) maxResults = 10;
 
             // In the initial implementation, the audience is implied by the particular dictionary being used.
             AudienceType audience = GetAudienceFromDictionaryType(dictionary);
 
             DictionaryQuery query = new DictionaryQuery();
-            //query.SearchSuggest(searchText, searchType, dictionary, language, version);
+            SuggestionResults results = query.SearchSuggest(searchText, searchType, maxResults, dictionary, language, audience, version);
 
-            SuggestReturn srchReturn;
+            List<String> messages = new List<string>();
 
-            DictionarySuggestion[] results = new DictionarySuggestion[] { };
+            int resultCount = results.MatchCount;
 
-            SuggestReturnMeta meta = new SuggestReturnMeta();
+            // Report the count in a human-readable format.
+            String message = String.Format("Found {0} results.", resultCount);
+            log.debug(message);
+            messages.Add(message);
 
-            switch (dictionary)
+            // Retrieve results.  We already know the number of results, so let's preset the
+            // list to the size we know we're going to need.
+            List<DictionarySuggestion> foundTerms = new List<DictionarySuggestion>(resultCount);
+            foreach (DataRow row in results.Data.Rows)
             {
-                case DictionaryType.term:
-                    if (language == Language.English)
-                    {
-                        results = new DictionarySuggestion[] {
-                            new DictionarySuggestion(){ ID = "1", Term = "Cancer Term 1" },
-                            new DictionarySuggestion(){ ID = "2", Term = "Cancer Term 2" },
-                            new DictionarySuggestion(){ ID = "3", Term = "Cancer Term 3" },
-                            new DictionarySuggestion(){ ID = "4", Term = "Cancer Term 4" },
-                            new DictionarySuggestion(){ ID = "5", Term = "Cancer Term 5" },
-                            new DictionarySuggestion(){ ID = "6", Term = "Cancer Term 6" },
-                            new DictionarySuggestion(){ ID = "7", Term = "Cancer Term 7" },
-                            new DictionarySuggestion(){ ID = "8", Term = "Cancer Term 8" },
-                            new DictionarySuggestion(){ ID = "9", Term = "Cancer Term 9" },
-                            new DictionarySuggestion(){ ID = "10", Term = "Cancer Term 10" }
-                        };
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else if (language == Language.Spanish)
-                    {
-                        results = new DictionarySuggestion[] {
-                            new DictionarySuggestion(){ ID = "1", Term = "Spanish Cancer Term 1" },
-                            new DictionarySuggestion(){ ID = "2", Term = "Spanish Cancer Term 2" },
-                            new DictionarySuggestion(){ ID = "3", Term = "Spanish Cancer Term 3" },
-                            new DictionarySuggestion(){ ID = "4", Term = "Spanish Cancer Term 4" },
-                            new DictionarySuggestion(){ ID = "5", Term = "Spanish Cancer Term 5" },
-                            new DictionarySuggestion(){ ID = "6", Term = "Spanish Cancer Term 6" },
-                            new DictionarySuggestion(){ ID = "7", Term = "Spanish Cancer Term 7" },
-                            new DictionarySuggestion(){ ID = "8", Term = "Spanish Cancer Term 8" },
-                            new DictionarySuggestion(){ ID = "9", Term =  "Spanish Cancer Term 9" },
-                            new DictionarySuggestion(){ ID = "10", Term = "Spanish Cancer Term 10" }
-                        };
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else
-                    {
-                        throw new UnsupportedLanguageException(language, dictionary);
-                    }
-                    break;
-                case DictionaryType.drug:
-                    if (language == Language.English)
-                    {
-                        results = new DictionarySuggestion[] {
-                            new DictionarySuggestion(){ ID = "1", Term =  "Drug Term 1" },
-                            new DictionarySuggestion(){ ID = "2", Term =  "Drug Term 2" },
-                            new DictionarySuggestion(){ ID = "3", Term =  "Drug Term 3" },
-                            new DictionarySuggestion(){ ID = "4", Term =  "Drug Term 4" },
-                            new DictionarySuggestion(){ ID = "5", Term =  "Drug Term 5" },
-                            new DictionarySuggestion(){ ID = "6", Term =  "Drug Term 6" },
-                            new DictionarySuggestion(){ ID = "7", Term =  "Drug Term 7" },
-                            new DictionarySuggestion(){ ID = "8", Term =  "Drug Term 8" },
-                            new DictionarySuggestion(){ ID = "9", Term =  "Drug Term 9" },
-                            new DictionarySuggestion(){ ID = "10", Term = "Drug Term 10" }
-                        };
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else
-                    {
-                        throw new UnsupportedLanguageException(language, dictionary);
-                    }
-                    break;
-                case DictionaryType.genetic:
-                    if (language == Language.English)
-                    {
-                        results = new DictionarySuggestion[] {
-                            new DictionarySuggestion(){ ID = "1", Term =  "Genetic Term 1" },
-                            new DictionarySuggestion(){ ID = "2", Term =  "Genetic Term 2" },
-                            new DictionarySuggestion(){ ID = "3", Term =  "Genetic Term 3" },
-                            new DictionarySuggestion(){ ID = "4", Term =  "Genetic Term 4" },
-                            new DictionarySuggestion(){ ID = "5", Term =  "Genetic Term 5" },
-                            new DictionarySuggestion(){ ID = "6", Term =  "Genetic Term 6" },
-                            new DictionarySuggestion(){ ID = "7", Term =  "Genetic Term 7" },
-                            new DictionarySuggestion(){ ID = "8", Term =  "Genetic Term 8" },
-                            new DictionarySuggestion(){ ID = "9", Term =  "Genetic Term 9" },
-                            new DictionarySuggestion(){ ID = "10", Term = "Genetic Term 10" }
-                        };
-                        meta.Messages = new string[] { "OK" };
-                    }
-                    else
-                    {
-                        throw new UnsupportedLanguageException(language, dictionary);
-                    }
-                    break;
-                default:
-                    throw new DictionaryValidationException(string.Format("Unknown dictionary type '{0}'.", dictionary));
+                int ID = row.Field<int>("TermID");
+                string term = row.Field<String>("TermName");
+                DictionarySuggestion suggestion = new DictionarySuggestion(ID, term);
+                foundTerms.Add(suggestion);
             }
 
-            meta.ResultCount = results.Length;
-
-
-            srchReturn = new SuggestReturn()
+            // Populate return metadata structure
+            SuggestReturnMeta meta = new SuggestReturnMeta()
             {
-                Result = results,
+                ResultCount = resultCount,
+                Messages = messages.ToArray()
+            };
+
+            // Combine meta and results to create the final return object.
+            SuggestReturn suggestReturn = new SuggestReturn()
+            {
+                Result = foundTerms.ToArray(),
                 Meta = meta
             };
 
-            return srchReturn;
+            return suggestReturn;
 
         }
 
+        /// <summary>
+        /// In version one of the API, the requested dictionary is used to determine which term audience to
+        /// use for filtering. This method puts that logic in one place.
+        /// </summary>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
         private AudienceType GetAudienceFromDictionaryType(DictionaryType dictionary)
         {
             AudienceType audience;

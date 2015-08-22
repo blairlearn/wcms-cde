@@ -286,6 +286,9 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language)
         {
+            // This should possibly be made a parameter
+            int MaxResultsAllowed = 10;
+
             log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}).", searchText, searchType, dictionary, language));
 
             SuggestReturn ret;
@@ -295,7 +298,7 @@ namespace NCI.Services.Dictionary
                 InputValidator.ValidateSearch(searchType, dictionary, language);
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.SearchSuggest(searchText, searchType, dictionary, language, API_VERSION);
+                ret = mgr.SearchSuggest(searchText, searchType, MaxResultsAllowed, dictionary, language, API_VERSION);
 
                 log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
             }
