@@ -13,7 +13,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
 
         public DictionarySuggestion(int id, String term)
         {
-            this.ID = id.ToString();
+            this.ID = id;
             this.Term = term;
         }
 
@@ -21,8 +21,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
         ///  The Term's ID
         /// </summary>
         [DataMember(Name = "id")]
-        // TODO:  Change this from String to Int without breaking the dictionary app manager.
-        public String ID { get; set; }
+        public int ID { get; set; }
 
         /// <summary>
         /// The Term's name
