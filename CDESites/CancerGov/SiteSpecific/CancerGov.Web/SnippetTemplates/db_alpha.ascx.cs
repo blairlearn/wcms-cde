@@ -140,10 +140,9 @@ namespace Www.Templates
             ValidateParams();
             GetQueryParams();
             DictionaryAppManager test = new DictionaryAppManager();
-            DictionaryType test1 = DictionaryType.term;
+           
             
-            Language lang = Language.English;
-            test.GetTerm(44578, test1, lang, "v1");
+            test.Search("cancer", SearchType.Contains, 0, 10, DictionaryType.term, Language.English);
 
             /* Setup URLS -
              * The URLs are being set in the Appmodule page content item, which publishes the following XML:
