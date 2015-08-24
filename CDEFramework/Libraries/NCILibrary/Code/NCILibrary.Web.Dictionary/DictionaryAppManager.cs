@@ -148,11 +148,11 @@ namespace NCI.Web.Dictionary
 
             ExpandReturn exRet = new ExpandReturn();
             DictionaryService service = new DictionaryService();
-            NCI.Services.Dictionary.BusinessObjects.ExpandReturn expandRet = service.Expand(searchText, includeTypes, offset, maxResults, dictionary, language, version);
+            NCI.Services.Dictionary.BusinessObjects.ExpandReturn expandRet = null;
 
             DictionaryExpansion[] expansion = new DictionaryExpansion[]{};
 
-            exRet =exRet ;
+            exRet = null;
 
             return exRet;
         }
