@@ -21,281 +21,381 @@ using CancerGov.Common;
 using CancerGov.CDR.TermDictionary;
 using CancerGov.Web.SnippetTemplates;
 using CancerGov.Common.ErrorHandling;
+using NCI.Services.Dictionary;
+using NCI.Web.Dictionary;
+using NCI.Web.Dictionary.BusinessObjects;
+using System.Collections.Generic;
 
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class GeneticsTermDictionaryDefintionView : SnippetControl
     {
-        private TermDictionaryDataItem _di = null;
-        private string _imageSmall = "";
-        private string _imageLarge = "";
-        private string _imageAlt = "";
-        private string _imageCaption = "";
-        private string _language = "";
+        public string SearchStr { get; set; }
 
-        // Properties 
-        public string AudioMediaHTML
-        {
-            get
-            {
-                if (_di != null)
-                {
-                    if (!String.IsNullOrEmpty(_di.AudioMediaHTML))
-                        return _di.AudioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
-                    else
-                        return "";
-                }
-                else
-                    return "";
-            }
-        }
-        public string AudioPronounceLink
-        {
-            get
-            {
-                if (_di != null)
-                {
-                    if (!String.IsNullOrEmpty(AudioMediaHTML))
-                    {
-                        if (String.IsNullOrEmpty(TermPronunciation))
-                            return AudioMediaHTML;
-                        else
-                            return AudioMediaHTML + "<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
-                    }
-                    else
-                    {
-                        if (String.IsNullOrEmpty(TermPronunciation))
-                            return "";
-                        else
-                            return "<span class=\"mtd_pronounce\">" + TermPronunciation + "</span>";
-                    }
-                }
-                else
-                    return "";
-            }
-        }
-        public string DefinitionHTML
-        {
-            get { return (_di == null ? "" : _di.DefinitionHTML); }
-        }
-        public string ImageAlt
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(_imageAlt))
-                    return _imageAlt;
-                else
-                    return "";
-            }
-        }
-        public string ImageCaption
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(_imageCaption))
-                    return _imageCaption;
-                else
-                    return "";
-            }
-        }
-        public string ImageLarge
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(_imageLarge))
-                    return _imageLarge;
-                else
-                    return "";
-            }
-        }
-        public string ImageLink
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(_imageSmall) && !String.IsNullOrEmpty(_imageSmall))
-                    return "<a href=\"" + ImageLarge + "\"><img id=\"Img1\" border=\"0\" src=\"" + ImageSmall + "\" alt=\"" + ImageAlt + "\" /></a>";
-                else
-                    return "";
-            }
-        }
-        public string ImageSmall
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(_imageSmall))
-                    return _imageSmall;
-                else
-                    return "";
-            }
-        }
-        public string MediaHTML
-        {
-            get
-            {
-                if (_di != null)
-                {
-                    if (!String.IsNullOrEmpty(_di.MediaHTML))
-                        return _di.MediaHTML.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+        public string Expand { get; set; }
 
-                    else
-                        return "";
-                }
-                else
-                    return "";
-            }
-        }
-        public string RelatedInfoHTML
-        {
-            get { return (_di == null ? "" : _di.RelatedInfoHTML); }
-        }
-        public string TermName
-        {
-            get { return (_di == null ? "" : _di.TermName); }
-        }
-        public string TermPronunciation
-        {
-            get
-            {
-                if (_di != null)
-                {
-                    if (!String.IsNullOrEmpty(_di.TermPronunciation))
-                    {
-                        //if (Language == GeneticsTermDictionaryHelper.SPANISH)
-                        //    return "";
-                        //else
-                            return _di.TermPronunciation;
-                    }
-                    else
-                        return "";
-                }
-                else
-                    return "";
-            }
-        }
-        
-        //public string Language
-        //{
-        //    get { return _language; }
-        //    set { _language = value; }
-        //}
+        public string CdrID { get; set; }
+
+        public string SrcGroup { get; set; }
+
+        public bool BContains { get; set; }
+
+        public string DictionaryURLSpanish { get; set; }
+
+        public string DictionaryURLEnglish { get; set; }
+
+        public string DictionaryURL { get; set; }
+
+        public Language DictionaryLanguage { get; set; }
+
+        public string QueryStringLang { get; set; }
+
+        public string PagePrintUrl { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            string startingUrl = "";
+            dictionarySearchBlock.Dictionary = DictionaryType.Genetic;
+            dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+            DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
-            try
+            GetQueryParams();
+            ValidateParams();
+           
+            //For Genetics dictionary language is always English
+            DictionaryLanguage = Language.English;
+
+            if (!Page.IsPostBack)
             {
-                startingUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
-                string cdrId = Strings.Clean(Request.QueryString["cdrid"]);
-                string term = Strings.Clean(Request.QueryString["term"]);
-                string id = Strings.Clean(Request.QueryString["id"]);
-                //string languageParam = Strings.Clean(Request.QueryString["language"]);
-                string languageParam = ""; //disable language selection by query parameter 
+                DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
-                if (String.IsNullOrEmpty(cdrId) && (!String.IsNullOrEmpty(id)))
-                    cdrId = id;
-
-                if (cdrId.Contains("CDR"))
-                    cdrId = cdrId.Replace("CDR", "");
-
-                // Determine langauge based PageAssemblyContext.Current.PageAssemblyInstruction.Language and 
-                // looking at a language query parameter - currently language selection by query parameter
-                // is turned off
-                string pageTitle; // output parameter 
-                string buttonText; // output parameter 
-                string reDirect; // output parameter 
-                
-                GeneticsTermDictionaryHelper.DetermineLanguage(languageParam, out _language, out pageTitle, out buttonText, out reDirect);
-
-
-                if (!String.IsNullOrEmpty(cdrId))
+                //Language lang = Language.English;
+                //test.GetTerm(44578, DictionaryType.Term, lang, "v1");
+                TermReturn dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
+                if (dataItem != null)
                 {
-                    _di = TermDictionaryManager.GetDefinitionByTermID(_language, cdrId, "Health professional", 1);
-                    if (_di != null)
+                    ActivateDefinitionView(dataItem);
+                    // Web Analytics *************************************************
+                    if (WebAnalyticsOptions.IsEnabled)
                     {
-                        dissectMediaHTML(_di.MediaHTML);
-
-                        // Setup Url Filters 
-                        PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+                        // Add dictionary term view event to analytics
+                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event11, wbField =>
                         {
-                            url.QueryParameters.Add("cdrid", cdrId);
+                            wbField.Value = null;
                         });
-
-                        PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
-                        {
-                            url.QueryParameters.Add("cdrid", cdrId);
-                        });
-
-                        // Add Drug Dictionary Term view event to analytics
-                        PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event12, wbField =>
-                        {
-                            wbField.Value = "";
-                        });
-
-                        litPageUrl.Text = startingUrl;
-                        litSearchBlock.Text = GeneticsTermDictionaryHelper.SearchBlock(startingUrl, "", _language, pageTitle, buttonText, false);
                     }
-                    else
-                        Page.Response.Redirect(startingUrl); // if no data returned - redirect to base page
                 }
             }
-            catch (Exception ex)
-            {
-                CancerGovError.LogError("GeneticsTermDictionaryDefinitionView", 2, ex);
-                Page.Response.Redirect(startingUrl); // if error - redirect to base page
-            }
+
+            SetupPrintUrl();
+            SetupCanonicalUrls(DictionaryURL);
+
         }
 
-        private void dissectMediaHTML(string mediaHTML)
+        private void ActivateDefinitionView(TermReturn dataItem)
         {
-            if (!String.IsNullOrEmpty(mediaHTML))
+            var myDataSource = new List<TermReturn> { dataItem };
+
+            termDictionaryDefinitionView.DataSource = myDataSource;
+            termDictionaryDefinitionView.DataBind();
+
+            string termName = dataItem.Term.Term;
+            
+            CdrID = dataItem.Term.ID.ToString();
+
+
+            //PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
+            //{
+            //    data.Value = "Definition of " + termName + " - NCI Dictionary of Genetics Terms";
+            //});
+
+            //this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+
+
+            //PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
+            //{
+            //    data.Value = "Definition of " + termName;
+            //});
+
+
+            //PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
+            //{
+            //    data.Value = termName + ", definition";
+            //});
+
+            //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+            //{
+            //    url.QueryParameters.Add("cdrid", CdrID);
+            //});
+
+            //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
+            //{
+            //    url.QueryParameters.Add("cdrid", CdrID);
+            //});
+
+            // Add Drug Dictionary Term view event to analytics
+            PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event12, wbField =>
             {
-                int imageLargeStart = mediaHTML.IndexOf("imageName=") + 10;
-                int imageLargeEnd = mediaHTML.IndexOf("\'", imageLargeStart);
-                int imageSmallStart = 0;
-                int imageSmallEnd = 0;
-                int imageAltStart = 0;
-                int imageAltEnd = 0;
-                string imageLarge = "";
-                string imageSmall = "";
-                string imageCaption = "";
-                string imageAlt = "";
+                wbField.Value = "";
+            });
+        }
 
-                if (imageLargeStart != -1 && imageLargeEnd != -1 && imageLargeStart < imageLargeEnd)
+
+        /**
+         * Add URL filter for old print page implementation
+         * @deprecated
+         */
+        private void SetupPrintUrl()
+        {
+            PagePrintUrl = "?print=1";
+
+            //add expand
+            if (!string.IsNullOrEmpty(Expand))
+            {
+                if (Expand.Trim() == "#")
                 {
-                    imageLarge = mediaHTML.Substring(imageLargeStart, imageLargeEnd - imageLargeStart);
-                    imageLarge = imageLarge.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+                    PagePrintUrl += "&expand=%23";
+                }
+                else
+                {
+                    PagePrintUrl += "&expand=" + Expand.Trim().ToUpper();
+                }
+            }
 
-                    imageAltStart = mediaHTML.IndexOf("alt=\"", imageLargeStart) + 5;
-                    imageSmallStart = mediaHTML.IndexOf("src=\"", imageLargeStart) + 5;
-                    imageSmallEnd = mediaHTML.IndexOf("\"", imageSmallStart);
-                    if (imageSmallStart != -1 && imageSmallEnd != -1 && imageSmallStart < imageSmallEnd)
+            //Language stuff
+            PagePrintUrl += QueryStringLang;
+
+            //add cdrid or searchstr
+            if (!string.IsNullOrEmpty(CdrID))
+            {
+                PagePrintUrl += "&cdrid=" + CdrID;
+            }
+            else if (!string.IsNullOrEmpty(SearchStr))
+            {
+                PagePrintUrl += "&search=" + SearchStr;
+                if (BContains)
+                    PagePrintUrl += "&contains=true";
+            }
+
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url) =>
+            {
+                url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
+            });
+        }
+
+        /**
+        * Add a filter for the Canonical URL.
+        * The Canonical URL includes query parameters if they exist.
+        */
+        private void SetupCanonicalUrls(string englishDurl)
+        {
+            //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            //{
+            //    if (CdrID != "")
+            //        url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
+            //    else if (Expand != "")
+            //    {
+            //        if (Expand.Trim() == "#")
+            //        {
+            //            Expand = "%23";
+            //        }
+            //        url.SetUrl(url.ToString() + "?expand=" + Expand);
+            //    }
+            //    else
+            //        url.SetUrl(url.ToString());
+            //});
+                       
+        }
+
+        protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                //get the TermReturn object that is bound to the current row.
+                TermReturn termDetails = (TermReturn)e.Item.DataItem;
+
+                if (termDetails != null)
+                {
+                    //Get Related Information from the Manager layer
+                    //Add check to see if it exists and then display data accordingly
+                    Panel pnlRelatedInfo = e.Item.FindControl("pnlRelatedInfo") as Panel;
+                    if (pnlRelatedInfo != null)
                     {
-                        imageSmall = mediaHTML.Substring(imageSmallStart, imageSmallEnd - imageSmallStart);
-                        imageSmall = imageSmall.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
-                        if (imageAltStart > -1)
+                        //display the related information panel
+                        //when atleast one of the related item exists
+                        if (termDetails.Term.Related.Term.Length > 0 ||
+                            termDetails.Term.Related.Summary.Length > 0 ||
+                            termDetails.Term.Related.DrugSummary.Length > 0 ||
+                            termDetails.Term.Related.External.Length > 0 ||
+                            termDetails.Term.Images.Length > 0)
                         {
-                            imageAltEnd = mediaHTML.IndexOf("\"", imageAltStart);
-                            if (imageAltEnd > -1 && imageAltEnd > imageAltStart)
-                                imageAlt = mediaHTML.Substring(imageAltStart, imageAltEnd - imageAltStart);
+                            pnlRelatedInfo.Visible = true;
+                            Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
+                            if (litMoreInformation != null)
+                            {
+                               litMoreInformation.Text = "More Information";
+                            }
+
+                            if (termDetails.Term.Related.External.Length > 0)
+                            {
+                                Repeater relatedExternalRefs = (Repeater)e.Item.FindControl("relatedExternalRefs");
+                                if (relatedExternalRefs != null)
+                                {
+                                    relatedExternalRefs.Visible = true;
+                                    relatedExternalRefs.DataSource = termDetails.Term.Related.External;
+                                    relatedExternalRefs.DataBind();
+                                }
+                            }
+
+                            if (termDetails.Term.Related.Summary.Length > 0)
+                            {
+                                Repeater relatedSummaryRefs = (Repeater)e.Item.FindControl("relatedSummaryRefs");
+                                if (relatedSummaryRefs != null)
+                                {
+                                    relatedSummaryRefs.Visible = true;
+                                    relatedSummaryRefs.DataSource = termDetails.Term.Related.Summary;
+                                    relatedSummaryRefs.DataBind();
+                                }
+                            }
+
+                            if (termDetails.Term.Related.DrugSummary.Length > 0)
+                            {
+                                Repeater relatedDrugInfoSummaries = (Repeater)e.Item.FindControl("relatedDrugInfoSummaries");
+                                if (relatedDrugInfoSummaries != null)
+                                {
+                                    relatedDrugInfoSummaries.Visible = true;
+                                    relatedDrugInfoSummaries.DataSource = termDetails.Term.Related.DrugSummary;
+                                    relatedDrugInfoSummaries.DataBind();
+                                }
+                            }
+
+                            if (termDetails.Term.Related.Term.Length > 0)
+                            {
+                                PlaceHolder phRelatedTerms = (PlaceHolder)e.Item.FindControl("phRelatedTerms");
+                                if (phRelatedTerms != null)
+                                {
+                                    phRelatedTerms.Visible = true;
+                                    Label labelDefintion = (Label)e.Item.FindControl("labelDefintion");
+                                    if (labelDefintion != null)
+                                    {
+                                        labelDefintion.Text = "Definition of:";
+                                    }
+                                    Repeater relatedTerms = (Repeater)e.Item.FindControl("relatedTerms");
+                                    if (relatedTerms != null)
+                                    {
+                                        relatedTerms.DataSource = termDetails.Term.Related.Term;
+                                        relatedTerms.DataBind();
+                                    }
+                                }
+
+                            }
+
+                            Repeater relatedImages = (Repeater)e.Item.FindControl("relatedImages");
+                            if (relatedImages != null)
+                            {
+                                if (termDetails.Term.Images.Length > 0)
+                                {
+                                    relatedImages.Visible = true;
+                                    relatedImages.DataSource = termDetails.Term.Images;
+                                    relatedImages.DataBind();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            pnlRelatedInfo.Visible = false;
                         }
 
                     }
-                }
 
-                if (imageLarge.IndexOf("caption=") > -1)
-                {
-                    int captionStart = imageLarge.IndexOf("&caption=");
-                    imageCaption = imageLarge.Substring(captionStart + 9);
-                    imageLarge = imageLarge.Substring(0, captionStart);
-                }
-                _imageLarge = imageLarge;
-                _imageSmall = imageSmall;
-                _imageCaption = imageCaption;
-                _imageAlt = imageAlt;
 
+
+                }
             }
         }
 
+        protected void relatedTerms_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                //get the RelatedTerm object that is bound to the current row.
+                RelatedTerm relatedTerm = (RelatedTerm)e.Item.DataItem;
+                if (relatedTerm != null)
+                {
+                    HyperLink relatedTermLink = (HyperLink)e.Item.FindControl("relatedTermLink");
+                    if (relatedTermLink != null)
+                    {
+                        relatedTermLink.NavigateUrl = DictionaryURL + "?cdrid=" + relatedTerm.Termid;
+                        relatedTermLink.Text = relatedTerm.Text;
+
+                    }
+                }
+            }
+        }
+        protected void relatedImages_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                //get the ImageReference object that is bound to the current row.
+                ImageReference imageDetails = (ImageReference)e.Item.DataItem;
+
+                if (imageDetails != null)
+                {
+                    System.Web.UI.HtmlControls.HtmlImage termImage = (System.Web.UI.HtmlControls.HtmlImage)e.Item.FindControl("termImage");
+                    if (termImage != null)
+                    {
+                        termImage.Alt = imageDetails.AltText;
+
+                        if (!string.IsNullOrEmpty(imageDetails.Filename))
+                        {
+                            string[] regularTermImage = imageDetails.Filename.Split('.');
+                            if (regularTermImage.Length == 2)
+                            {
+                                //termImage image size is 571
+                                //example format CDR526538-571.jpg
+                                termImage.Src = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
+
+                                System.Web.UI.HtmlControls.HtmlAnchor termEnlargeImage = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("termEnlargeImage");
+                                if (termEnlargeImage != null)
+                                {
+                                    //enlarge image size is 750
+                                    //example format CDR526538-750.jpg
+                                    termEnlargeImage.HRef = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+            }
+        }
+        private void ValidateParams()
+        {
+            CdrID = Strings.Clean(Request.Params["cdrid"]);
+            if (!string.IsNullOrEmpty(CdrID))
+                try
+                {
+                    Int32.Parse(CdrID);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Invalid CDRID" + CdrID);
+
+                }
+        }
+
+        /// <summary>
+        /// Saves the quesry parameters to support old gets
+        /// </summary>
+        private void GetQueryParams()
+        {
+            Expand = Strings.Clean(Request.Params["expand"]);
+            CdrID = Strings.Clean(Request.Params["cdrid"]);
+            SearchStr = Strings.Clean(Request.Params["search"]);
+            SrcGroup = Strings.Clean(Request.Params["contains"]);
+        }
     }
 }

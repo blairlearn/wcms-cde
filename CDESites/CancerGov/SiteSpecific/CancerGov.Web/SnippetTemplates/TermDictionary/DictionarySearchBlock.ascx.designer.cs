@@ -32,6 +32,15 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.PlaceHolder pnlIntroEnglish;
         
         /// <summary>
+        /// litTotalCount1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTotalCount1;
+        
+        /// <summary>
         /// pnlIntroSpanish control.
         /// </summary>
         /// <remarks>
@@ -39,6 +48,15 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder pnlIntroSpanish;
+        
+        /// <summary>
+        /// litTotalCount2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litTotalCount2;
         
         /// <summary>
         /// phGeneticsTermDictionarySearchBlockText control.

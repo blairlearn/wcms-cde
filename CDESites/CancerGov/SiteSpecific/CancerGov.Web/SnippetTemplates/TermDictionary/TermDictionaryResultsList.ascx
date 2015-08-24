@@ -13,12 +13,12 @@
                     <asp:Label ID="lblWord" CssClass="term" runat="server"></asp:Label>
                 </span>
             </asp:Panel>
-                
+                <dl class="dictionary-list">
             <asp:ListView ID="resultListView" runat="server">
                 <LayoutTemplate>
-                    <dl class="dictionary-list">
+                    
                         <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
-                    </dl>
+                   
                 </LayoutTemplate>
                 <ItemTemplate>
                     <dt>
@@ -34,7 +34,7 @@
                             <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Pronunciation.Key%>
                       </dd>
                     <dd class="definition">
-                         <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Definition%>
+                         <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Definition.Text%>
                     </dd>
                 </ItemTemplate>
                 <EmptyDataTemplate>
@@ -52,4 +52,5 @@
                     </asp:Panel>
                 </EmptyDataTemplate>
             </asp:ListView>
+             </dl>
  </div>

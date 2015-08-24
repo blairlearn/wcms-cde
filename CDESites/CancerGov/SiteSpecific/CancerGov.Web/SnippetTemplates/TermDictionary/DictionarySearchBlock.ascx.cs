@@ -156,6 +156,11 @@ namespace CancerGov.Web.SnippetTemplates
 
         private void SetUpTermDictionary()
         {
+            DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
+            SearchReturn resultList = _dictionaryAppManager.Search("%", SearchType.Begins, 0, 0, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+
+            TotalCount = resultList.Meta.ResultCount;
+                        
             //dictionarySearchForm 
             bool _isSpanish = false;
                                    
@@ -170,13 +175,8 @@ namespace CancerGov.Web.SnippetTemplates
                 DictionaryLanguage = Language.English;
                 SetupEnglish();
             }
-
-            //TermDictionaryCollection dataCollection = TermDictionaryManager.Search(Language.ToString(), "_", 0, false);
-            //DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-            //SearchReturn resultList = _dictionaryAppManager.Search("_", SearchType.Begins, 0, 0, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
-
-            TotalCount = 0;// resultList.Meta.ResultCount;
-                        
+                       
+            
             if (WebAnalyticsOptions.IsEnabled)
             {
                 // Add page name to analytics
@@ -217,7 +217,8 @@ namespace CancerGov.Web.SnippetTemplates
 
             btnGo.Text = "Buscar";
             btnGo.ToolTip = "Buscar";
-                        
+
+            litTotalCount2.Text = TotalCount.ToString();
            
         }
 
@@ -235,7 +236,7 @@ namespace CancerGov.Web.SnippetTemplates
             pnlIntroEnglish.Visible = true;
             pnlIntroSpanish.Visible = false;
 
-
+            litTotalCount1.Text = TotalCount.ToString();
         }
                
 
@@ -245,13 +246,19 @@ namespace CancerGov.Web.SnippetTemplates
         private void SetUpGeneticsDictionary() 
         {
             SetupEnglish();
+            alphaListBox.ShowAll = true;
+
+            DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
+            SearchReturn resultList = _dictionaryAppManager.Search("_", SearchType.Begins, 0, 0, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
+
+            TotalCount = resultList.Meta.ResultCount;
            
         }
 
         private void SetUpDrugDictionary() 
         {
             SetupEnglish();
-           
+            alphaListBox.ShowAll = true;
         }
 
         protected void btnGo_OnClick(object sender, EventArgs e)
@@ -259,8 +266,7 @@ namespace CancerGov.Web.SnippetTemplates
             SearchStr = AutoComplete1.Text;
             SearchStr = SearchStr.Replace("[", "[[]");
             CdrID = string.Empty;
-            Expand = string.Empty;
-
+            
             if (!string.IsNullOrEmpty(SearchStr))
                 DictionaryURL = DictionaryURL + "?search=" + SearchStr;
 
@@ -273,6 +279,11 @@ namespace CancerGov.Web.SnippetTemplates
                     DictionaryURL = DictionaryURL + "&contains=true";
                 else
                     DictionaryURL = DictionaryURL + "?contains=true";
+            }
+
+            if (!string.IsNullOrEmpty(Expand) && Expand.Trim().ToUpper().Equals("All"))
+            {
+                DictionaryURL = DictionaryURL + "?expand=" + Expand;
             }
 
             Response.Redirect(DictionaryURL);

@@ -14,22 +14,49 @@ namespace CancerGov.Web.SnippetTemplates {
     public partial class GenerticsTermDictionaryResultsList {
         
         /// <summary>
-        /// litPageUrl control.
+        /// dictionarySearchBlock control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litPageUrl;
+        protected global::CancerGov.Web.SnippetTemplates.DictionarySearchBlock dictionarySearchBlock;
         
         /// <summary>
-        /// litSearchBlock control.
+        /// numResDiv control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litSearchBlock;
+        protected global::System.Web.UI.WebControls.Panel numResDiv;
+        
+        /// <summary>
+        /// lblNumResults control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumResults;
+        
+        /// <summary>
+        /// lblResultsFor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblResultsFor;
+        
+        /// <summary>
+        /// lblWord control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblWord;
         
         /// <summary>
         /// resultListView control.
@@ -39,14 +66,5 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView resultListView;
-        
-        /// <summary>
-        /// spPager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::NCI.Web.UI.WebControls.SimplePager spPager;
     }
 }

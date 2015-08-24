@@ -14,30 +14,21 @@ namespace CancerGov.Web.SnippetTemplates {
     public partial class GeneticsTermDictionaryDefintionView {
         
         /// <summary>
-        /// litPageUrl control.
+        /// dictionarySearchBlock control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litPageUrl;
+        protected global::CancerGov.Web.SnippetTemplates.DictionarySearchBlock dictionarySearchBlock;
         
         /// <summary>
-        /// litSearchBlock control.
+        /// termDictionaryDefinitionView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litSearchBlock;
-        
-        /// <summary>
-        /// phSearchBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phSearchBox;
+        protected global::System.Web.UI.WebControls.Repeater termDictionaryDefinitionView;
     }
 }

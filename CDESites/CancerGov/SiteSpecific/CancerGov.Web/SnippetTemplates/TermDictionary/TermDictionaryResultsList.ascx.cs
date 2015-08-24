@@ -72,17 +72,24 @@ namespace CancerGov.Web.SnippetTemplates
 
             SearchReturn resultList = _dictionaryAppManager.Search(SearchStr, searchType, 0, 0, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
 
-            resultListView.DataSource = resultList;
-            resultListView.DataBind();
-            NumResults = resultList.Meta.ResultCount;
-            lblWord.Text = SearchStr.Replace("[[]", "[");
-            lblNumResults.Text = NumResults.ToString();
-            if (NumResults == 0)
+            if ((resultList.Meta.ResultCount == 1) && string.IsNullOrEmpty(Expand)) //if there is only 1 record - go directly to definition view
             {
-                RenderNoResults();
+                string itemDefinitionUrl = DictionaryURL + "?cdrid=" + resultList.Result[0].ID;
+                Page.Response.Redirect(itemDefinitionUrl);
             }
+            else
+            {
+                resultListView.DataSource = resultList.Result;
+                resultListView.DataBind();
+                NumResults = resultList.Meta.ResultCount;
+                lblWord.Text = SearchStr.Replace("[[]", "[");
+                lblNumResults.Text = NumResults.ToString();
+                if (NumResults == 0)
+                {
+                    RenderNoResults();
+                }
 
-
+            }
         }
 
         private void RenderNoResults()
@@ -153,17 +160,7 @@ namespace CancerGov.Web.SnippetTemplates
                 return "";
         }
 
-        protected string AudioMediaHTML(object objData)
-        {
-            string audioMediaHTML = String.Empty;
-            if (objData != null)
-            {
-                audioMediaHTML = objData.ToString();
-                audioMediaHTML = audioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
-            }
-
-            return audioMediaHTML;
-        }
+        
     }
 
     

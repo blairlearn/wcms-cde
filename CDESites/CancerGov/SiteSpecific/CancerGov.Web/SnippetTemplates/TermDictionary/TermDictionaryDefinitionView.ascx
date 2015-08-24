@@ -67,23 +67,24 @@
                                     <FooterTemplate></p></FooterTemplate>
                                 </asp:Repeater>
                             </asp:PlaceHolder>
-                           
+                         
+                            <asp:Repeater ID="relatedImages" runat="server" Visible="false" OnItemDataBound="relatedImages_OnItemDataBound">
+                              <ItemTemplate>
+                                <figure class="image-left-medium">
+                                    <a id="termEnlargeImage" runat="server" target="_blank" class="article-image-enlarge no-resize">Enlarge</a>
+                                    <img id="termImage" runat="server" src="" alt="" />
+                                        <figcaption>
+                                            <div class="caption-container no-resize">
+                                            <p><%# ((NCI.Web.Dictionary.BusinessObjects.ImageReference)(Container.DataItem)).Caption  %></p>
+                                            </div>
+                                        </figcaption>
+                                 </figure>
+                              </ItemTemplate>
+                         </asp:Repeater>
+                      
                          </div>
                          
                     </asp:Panel>
-                    <asp:Repeater ID="relatedImages" runat="server" Visible="false" OnItemDataBound="relatedImages_OnItemDataBound">
-                          <ItemTemplate>
-                            <figure class="image-left-medium">
-                                <a id="termEnlargeImage" runat="server" target="_blank" class="article-image-enlarge no-resize">Enlarge</a>
-                                <img id="termImage" runat="server" src="" alt="" />
-                                    <figcaption>
-                                        <div class="caption-container no-resize">
-                                        <p><%# ((NCI.Web.Dictionary.BusinessObjects.ImageReference)(Container.DataItem)).Caption  %></p>
-                                        </div>
-                                    </figcaption>
-                             </figure>
-                          </ItemTemplate>
-                     </asp:Repeater>
                     
                 </dd>
             </dl>

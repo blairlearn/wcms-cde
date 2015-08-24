@@ -56,8 +56,6 @@
             svcUrl = "/TermDictionary.svc/SearchJSON/" + language;
 
 
-        //alert(svcUrl);
-
         NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
     }
 
@@ -74,7 +72,7 @@
 <asp:PlaceHolder ID="phTermDictionarySearchBlockText" runat="server" Visible="false">
         <asp:PlaceHolder ID="pnlIntroEnglish" runat="server" EnableViewState="false">
             <p>
-                The NCI Dictionary of Cancer Terms features <b><% =TotalCount %></b> terms related 
+                The NCI Dictionary of Cancer Terms features <b><asp:Literal ID="litTotalCount1" runat="server" /></b> terms related 
                 to cancer and medicine.
             </p>
             <p>
@@ -84,7 +82,7 @@
         </asp:PlaceHolder>
         <asp:PlaceHolder ID="pnlIntroSpanish" runat="server" Visible="false" EnableViewState="false">
             <p>
-                El diccionario de cáncer del NCI contiene <b><% =TotalCount %></b> términos relacionados 
+                El diccionario de cáncer del NCI contiene <b><asp:Literal id="litTotalCount2" runat="server" /></b> términos relacionados 
                 con el cáncer y la medicina.
             </p>
             <p>
@@ -144,7 +142,7 @@ Blair will add code here for the Drug Dictionary
                             CallbackFunc="ACOnSubmit" autocomplete="off" />
                     </div>
                     <div class="large-2 columns left">        
-                        <asp:Button class="submit button postfix" Name="btnGo" ID="btnGo" runat="server" OnClick="btnGo_OnClick"
+                        <asp:Button class="submit button postfix" ID="btnGo" runat="server" OnClick="btnGo_OnClick"
                             ToolTip="Search" />
                     </div>
                 </div>

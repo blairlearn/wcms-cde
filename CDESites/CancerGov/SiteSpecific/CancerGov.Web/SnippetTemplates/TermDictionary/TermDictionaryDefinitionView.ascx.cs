@@ -108,12 +108,7 @@ namespace CancerGov.Web.SnippetTemplates
             termDictionaryDefinitionView.DataSource = myDataSource;
             termDictionaryDefinitionView.DataBind();
 
-            string termName = string.Empty;
-            string termPronun = string.Empty;
-            string defHtml = string.Empty;
-            string imageHtml = string.Empty;
-            string audioMediaHtml = string.Empty;
-            string relatedLinkInfo = String.Empty;
+            string termName = dataItem.Term.Term;
 
             CdrID = dataItem.Term.ID.ToString();
 
@@ -147,8 +142,6 @@ namespace CancerGov.Web.SnippetTemplates
                 data.Value = termName + ", definition";
             });
 
-            if (imageHtml != string.Empty)
-                imageHtml = "<p>" + imageHtml;
         }
 
 
@@ -249,7 +242,8 @@ namespace CancerGov.Web.SnippetTemplates
                         if (termDetails.Term.Related.Term.Length > 0 ||
                             termDetails.Term.Related.Summary.Length > 0 ||
                             termDetails.Term.Related.DrugSummary.Length > 0 ||
-                            termDetails.Term.Related.External.Length > 0)
+                            termDetails.Term.Related.External.Length > 0 ||
+                            termDetails.Term.Images.Length > 0)
                         {
                             pnlRelatedInfo.Visible = true;
                             Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
@@ -317,6 +311,17 @@ namespace CancerGov.Web.SnippetTemplates
                                 }
 
                             }
+
+                            Repeater relatedImages = (Repeater)e.Item.FindControl("relatedImages");
+                            if (relatedImages != null)
+                            {
+                                if (termDetails.Term.Images.Length > 0)
+                                {
+                                    relatedImages.Visible = true;
+                                    relatedImages.DataSource = termDetails.Term.Images;
+                                    relatedImages.DataBind();
+                                }
+                            }
                         }
                         else
                         {
@@ -325,16 +330,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                     }
 
-                    Repeater relatedImages = (Repeater)e.Item.FindControl("relatedImages");
-                    if (relatedImages != null)
-                    {
-                        if (termDetails.Term.Images.Length > 0)
-                        {
-                            relatedImages.Visible = true;
-                            relatedImages.DataSource = termDetails.Term.Images;
-                            relatedImages.DataBind();
-                        }
-                    }
+                    
 
                 }
             } 

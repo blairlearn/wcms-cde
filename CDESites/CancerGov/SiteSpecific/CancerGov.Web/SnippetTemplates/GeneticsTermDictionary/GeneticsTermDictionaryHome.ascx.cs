@@ -19,24 +19,19 @@ using NCI.Web.CDE.UI.SnippetControls;
 using NCI.Web.UI.WebControls;
 using NCI.Web.CDE;
 using NCI.Web;
+using NCI.Web.CDE.UI;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public partial class GeneticsTermDictionaryHome : System.Web.UI.UserControl
+    public partial class GeneticsTermDictionaryHome : SnippetControl
     {
+        protected CancerGov.Web.SnippetTemplates.DictionarySearchBlock dictionarySearchBlock;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            string languageParam = ""; //disable language selection by query parameter 
-
-            //Determine Language - set language related values
-            string pageTitle;
-            string buttonText;
-            string language;
-            string reDirect;
-            GeneticsTermDictionaryHelper.DetermineLanguage(languageParam, out language, out pageTitle, out buttonText, out reDirect);
-            litPageUrl.Text = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentUrl").ToString();
-            litSearchBlock.Text = GeneticsTermDictionaryHelper.SearchBlock(litPageUrl.Text, "", language, pageTitle, buttonText, false);
-
+            dictionarySearchBlock.Dictionary = DictionaryType.Genetic;
+            dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+        
         }
     }
 }

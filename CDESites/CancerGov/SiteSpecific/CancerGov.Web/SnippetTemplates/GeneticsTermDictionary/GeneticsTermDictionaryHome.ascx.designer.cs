@@ -12,23 +12,5 @@ namespace CancerGov.Web.SnippetTemplates {
     
     
     public partial class GeneticsTermDictionaryHome {
-        
-        /// <summary>
-        /// litPageUrl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litPageUrl;
-        
-        /// <summary>
-        /// litSearchBlock control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litSearchBlock;
     }
 }
