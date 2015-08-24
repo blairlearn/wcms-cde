@@ -334,6 +334,31 @@ namespace NCI.Services.Dictionary
 
         }
 
+        public ExpandReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        {
+            return new ExpandReturn()
+            {
+                Meta = new ExpandReturnMeta()
+                {
+                    Messages = new String[] { "Found 2 gazillion matches" },
+                    ResultCount = 10
+                },
+                Result = new DictionaryExpansion[]
+                {
+                    new DictionaryExpansion(){ ID = 1, MatchedTerm = "Matched Term 1", Term = CancerTermEnglish[0]},
+                    new DictionaryExpansion(){ ID = 2, MatchedTerm = "Matched Term 2", Term = CancerTermEnglish[1]},
+                    new DictionaryExpansion(){ ID = 3, MatchedTerm = "Matched Term 3", Term = CancerTermEnglish[2]},
+                    new DictionaryExpansion(){ ID = 4, MatchedTerm = "Matched Term 4", Term = CancerTermEnglish[3]},
+                    new DictionaryExpansion(){ ID = 5, MatchedTerm = "Matched Term 5", Term = CancerTermEnglish[4]},
+                    new DictionaryExpansion(){ ID = 6, MatchedTerm = "Matched Term 6", Term = CancerTermEnglish[5]},
+                    new DictionaryExpansion(){ ID = 7, MatchedTerm = "Matched Term 7", Term = CancerTermEnglish[6]},
+                    new DictionaryExpansion(){ ID = 8, MatchedTerm = "Matched Term 8", Term = CancerTermEnglish[7]},
+                    new DictionaryExpansion(){ ID = 9, MatchedTerm = "Matched Term 9", Term = CancerTermEnglish[8]},
+                    new DictionaryExpansion(){ ID =10, MatchedTerm = "Matched Term 10", Term = CancerTermEnglish[9]}
+                }
+            };
+        }
+
         /// <summary>
         /// In version one of the API, the requested dictionary is used to determine which term audience to
         /// use for filtering. This method puts that logic in one place.

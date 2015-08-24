@@ -319,5 +319,47 @@ namespace NCI.Services.Dictionary
 
             return ret;
         }
+
+        /* It would be really awesome if includeTypes could be an array of values instead of a delimited list, but
+         * that doesn't seem to be easily available "out of the box."  A possible solution is available at
+         * http://stackoverflow.com/questions/6445171/passing-an-array-to-wcf-service-via-get, but this has
+         * not yet been fully researched.
+         */
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "v1/expand?searchText={searchText}&includeTypes={includeTypes}&offset={offset}&maxResults={maxResults}&language={language}&dictionary={dictionary}")]
+        [OperationContract]
+        public ExpandReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language)
+        {
+            log.debug(string.Format("Enter searchText( {0}, {1}, {2}, {3}, {4}, {5} ).", searchText, includeTypes, offset, maxResults, dictionary, language));
+
+            ExpandReturn ret;
+
+            try
+            {
+                // Doesn't exist yet
+                //InputValidator.ValidateExpand(searchType, dictionary, language);
+
+                DictionaryManager mgr = new DictionaryManager();
+                ret = mgr.Expand(searchText, includeTypes, offset, maxResults, dictionary, language, API_VERSION);
+
+                log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
+            }
+            // If there was a problem with the inputs for this request, fail with
+            // an HTTP status message and an explanation.
+            catch (DictionaryValidationException ex)
+            {
+                WebOperationContext ctx = WebOperationContext.Current;
+                ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
+                ret = new ExpandReturn()
+                {
+                    Meta = new ExpandReturnMeta()
+                    {
+                        Messages = new string[] { ex.Message }
+                    }
+                };
+            }
+
+            return ret;
+        }
     }
 }
