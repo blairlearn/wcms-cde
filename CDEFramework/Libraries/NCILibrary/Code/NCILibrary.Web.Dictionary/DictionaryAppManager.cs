@@ -129,7 +129,7 @@ namespace NCI.Web.Dictionary
 
             foreach (NCI.Services.Dictionary.BusinessObjects.DictionarySuggestion m in suggestRet.Result)
             {
-                results[count].ID = Int32.Parse(m.ID);
+                results[count].ID = m.ID;
                 results[count].Term = m.Term;
                 count++;
             }
@@ -141,6 +141,20 @@ namespace NCI.Web.Dictionary
 
             return sugRet;
 
+        }
+
+        public ExpandReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        {
+
+            ExpandReturn exRet = new ExpandReturn();
+            DictionaryService service = new DictionaryService();
+            NCI.Services.Dictionary.BusinessObjects.ExpandReturn expandRet = service.Expand(searchText, includeTypes, offset, maxResults, dictionary, language, version);
+
+            DictionaryExpansion[] expansion = new DictionaryExpansion[]{};
+
+            exRet =exRet ;
+
+            return exRet;
         }
 
         
