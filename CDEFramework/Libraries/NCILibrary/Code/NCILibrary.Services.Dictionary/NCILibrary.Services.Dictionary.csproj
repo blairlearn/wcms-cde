@@ -79,6 +79,7 @@
     <Compile Include="BusinessObjects\SuggestReturnMeta.cs" />
     <Compile Include="BusinessObjects\TermReturn.cs" />
     <Compile Include="BusinessObjects\TermReturnMeta.cs" />
+    <Compile Include="DictionaryHandler.cs" />
     <Compile Include="DictionaryManager.cs" />
     <Compile Include="DictionaryQuery.cs" />
     <Compile Include="DictionaryService.svc.cs" />
