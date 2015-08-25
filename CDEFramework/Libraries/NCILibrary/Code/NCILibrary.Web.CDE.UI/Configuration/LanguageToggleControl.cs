@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using NCI.Logging;
 
 namespace NCI.Web.CDE.UI.WebControls
 {
@@ -80,7 +81,8 @@ namespace NCI.Web.CDE.UI.WebControls
         protected override void RenderContents(HtmlTextWriter writer)
         {
             string translationUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("TranslationUrls").ToString();
-            string canonicalTranslation = PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("CanonicalTranslation").ToString();
+            string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
+            string canonicalTranslation = GetCanonicalTranslation(canonicalUrl);
 
             if (!String.IsNullOrEmpty(translationUrl))
             {
@@ -161,6 +163,41 @@ namespace NCI.Web.CDE.UI.WebControls
             base.RenderEndTag(writer);
         }
 
+        /// <summary>
+        /// Gets translation of canonical URL based on path values set in Web.config
+        /// </summary>
+        /// <param name="canonicalUrl">
+        /// The full URL of the page (including query)
+        /// </param>
+        /// <returns>
+        /// The full URL of the page transation, if a translation exists.
+        /// </returns>
+        public String GetCanonicalTranslation(string canonicalUrl)
+        {
+            try
+            {
+                string englishDictUrl = ConfigurationManager.AppSettings["DictionaryOfCancerTermsURLEnglish"].ToString();
+                string spanishDictUrl = ConfigurationManager.AppSettings["DictionaryOfCancerTermsURLSpanish"].ToString();
+
+                string translation = "";
+                if (canonicalUrl.IndexOf(spanishDictUrl) > -1)
+                {
+                    translation = canonicalUrl.Replace(spanishDictUrl, englishDictUrl);
+                }
+                if (canonicalUrl.IndexOf(englishDictUrl) > -1)
+                {
+                    translation = canonicalUrl.Replace(englishDictUrl, spanishDictUrl);
+                }
+                return translation;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError("CDE:LanguageToggleControl.cs:GetCanonicalTranslation()",
+                @"Exception encountered while retrieving ""DictionaryOfcancerTermsURL..."" from Web.config",
+                NCIErrorLevel.Warning, ex);
+                return null;
+            }
+        }
 
         /// <summary>
         /// Saves any state that was modified after the <see cref="M:System.Web.UI.WebControls.Style.TrackViewState"/> method was invoked.
