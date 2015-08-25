@@ -291,11 +291,7 @@ namespace CancerGov.Web.SnippetTemplates
         {
             SetupEnglish();
             alphaListBox.ShowAll = true;
-
-            DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-            SearchReturn resultList = _dictionaryAppManager.Search("_", SearchType.Begins, 0, 0, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
-
-            TotalCount = resultList.Meta.ResultCount;
+                    
            
         }
 
