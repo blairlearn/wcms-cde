@@ -796,19 +796,19 @@ namespace NCI.Web.CDE
         /// then add the values to the webAnalyticsFieldFilterDelegates dictionary
         /// </summary>
         protected void RegisterCustomWebAnalytics()
-        {
-            WebAnalyticsInfo wai = new WebAnalyticsInfo();
-            SectionDetail sectiondetail = SectionDetailFactory.GetSectionDetail(SectionPath);
-            wai = wai.LoadCustomAnalytics(sectiondetail);
-
-            string suite = wai.LoadSuite(sectiondetail);
-            string group = wai.LoadContentGroup(sectiondetail);
-            List<String> eventsList = wai.LoadEvents(sectiondetail);
-            Dictionary<string, string> props = wai.LoadProps(sectiondetail);
-            Dictionary<string, string> evars = wai.LoadEvars(sectiondetail);
-
+        {            
             try
             {
+                WebAnalyticsInfo wai = new WebAnalyticsInfo();
+                SectionDetail sectiondetail = SectionDetailFactory.GetSectionDetail(SectionPath);
+                wai = wai.LoadCustomAnalytics(sectiondetail);
+
+                string suite = wai.LoadSuite(sectiondetail);
+                string group = wai.LoadContentGroup(sectiondetail);
+                List<String> eventsList = wai.LoadEvents(sectiondetail);
+                Dictionary<string, string> props = wai.LoadProps(sectiondetail);
+                Dictionary<string, string> evars = wai.LoadEvars(sectiondetail);
+
                 // If Content Group has a value, add to prop44 and eVar44
                 if (!String.IsNullOrEmpty(group))
                 {
@@ -867,7 +867,7 @@ namespace NCI.Web.CDE
             catch (NullReferenceException ex)
             {
                 Logger.LogError("SinglePageAssemblyInstruction.cs:RegisterCustomWebAnalytics()",
-                    "WebAnalyticsInfo is missing from SectionDetails XML", NCIErrorLevel.Error, ex);
+                    "SectionDetails XML and/or WebAnalyticsInfo not found.", NCIErrorLevel.Error, ex);
                 return;
             }
         }

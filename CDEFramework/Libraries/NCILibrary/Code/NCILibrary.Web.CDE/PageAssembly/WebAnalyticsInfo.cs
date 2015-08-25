@@ -86,17 +86,26 @@ namespace NCI.Web.CDE
         /// <param name="section">Section details</param>
         public WebAnalyticsInfo LoadCustomAnalytics(SectionDetail section)
         {
-            WebAnalyticsInfo wai = section.WebAnalyticsInfo;
-            if (wai == null)
+            try
             {
-                if (section.ParentPath != null)
+                WebAnalyticsInfo wai = section.WebAnalyticsInfo;
+                if (wai == null)
                 {
-                    wai = section.Parent.WebAnalyticsInfo;
-                    LoadCustomAnalytics(section.Parent);
+                    if (section.ParentPath != null)
+                    {
+                        wai = section.Parent.WebAnalyticsInfo;
+                        LoadCustomAnalytics(section.Parent);
+                    }
+                    else return null;
                 }
-                else return null;
+                return wai;
             }
-            return wai;
+            catch (NullReferenceException ex)
+            {
+                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadCustomAnalytics()",
+                "SectionDetails.xml not found.", NCIErrorLevel.Error, ex);
+                return null;
+            }
         }
 
         protected List<WebAnalyticsInfo> WaiAll = new List<WebAnalyticsInfo> { };
@@ -107,16 +116,25 @@ namespace NCI.Web.CDE
         /// <param name="section">Section details</param>
         public List<WebAnalyticsInfo> LoadAllCustomAnalytics(SectionDetail section)
         {
-            WaiAll.Add(section.WebAnalyticsInfo);
-            if (section.ParentPath != null)
+            try
             {
-                LoadAllCustomAnalytics(section.Parent);
+                WaiAll.Add(section.WebAnalyticsInfo);
+                if (section.ParentPath != null)
+                {
+                    LoadAllCustomAnalytics(section.Parent);
+                }
+                else
+                {
+                    return null;
+                }
+                return WaiAll;
             }
-            else
+            catch (NullReferenceException ex)
             {
+                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadAllCustomAnalytics()",
+                "SectionDetails.xml not found.", NCIErrorLevel.Error, ex);
                 return null;
             }
-            return WaiAll;
         }
 
         /// <summary>
