@@ -44,9 +44,15 @@ namespace NCI.Web.Dictionary
             DictionaryTerm dicTerm = new DictionaryTerm();
             TermReturn term = new TermReturn();
             term.Meta = new TermReturnMeta();
-            dicTerm = JsonConvert.DeserializeObject<DictionaryTerm>(newJsonObject);
+            try
+            {
+                dicTerm = JsonConvert.DeserializeObject<DictionaryTerm>(newJsonObject);
+            }
+            catch (JsonReaderException ex)
+            {
+                log.error("Error in Json string from service: " + ex.ToString());
+            }
             term.Term = dicTerm;
-            
 
             //set Meta Data from Database
             term.Meta.Language = termRet.Meta.Language;
@@ -89,8 +95,15 @@ namespace NCI.Web.Dictionary
             foreach(String m in jsonObject)
             {
                 String deserialize = "{" + m + "}";
-                dictionaryTerms[count] = JsonConvert.DeserializeObject<DictionaryTerm>(deserialize);
-                count = count+1;
+                try
+                {
+                    dictionaryTerms[count] = JsonConvert.DeserializeObject<DictionaryTerm>(deserialize);
+                }
+                catch(JsonReaderException ex)
+                {
+                    log.warning("Error in Json string from service: " + ex.ToString());
+                }
+                    count = count+1;
             }
             srchReturn.Result = dictionaryTerms;
             
@@ -149,14 +162,22 @@ namespace NCI.Web.Dictionary
 
 
             DictionaryExpansion[] expansion = new DictionaryExpansion[]{};
-            int count = 0;
+            int count = 0; 
 
 
             foreach (NCI.Services.Dictionary.BusinessObjects.DictionaryExpansion m in expandRet.Result)
             {
                 expansion[count].ID = m.ID;
                 expansion[count].MatchedTerm = m.MatchedTerm;
-                expansion[count].Term = JsonConvert.DeserializeObject<DictionaryTerm>("{" + m.Term + "}");
+                try
+                {
+                    expansion[count].Term = JsonConvert.DeserializeObject<DictionaryTerm>("{" + m.Term + "}");
+                }
+                catch (JsonReaderException ex)
+                {
+                    log.error("Error in Json string from service: " + ex.ToString());
+                }
+
             }
             exRet.Result = expansion;
 
