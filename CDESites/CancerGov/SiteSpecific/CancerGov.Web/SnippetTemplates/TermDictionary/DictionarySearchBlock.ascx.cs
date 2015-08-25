@@ -101,6 +101,43 @@ namespace CancerGov.Web.SnippetTemplates
                 }
         }
 
+        // SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
+
+        /**
+      * Add a filter for the Canonical URL.
+      * The Canonical URL includes query parameters if they exist.
+      */
+        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                if (!string.IsNullOrEmpty(CdrID))
+                    url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
+                else if (!string.IsNullOrEmpty(Expand))
+                {
+                    if (Expand.Trim() == "#")
+                    {
+                        Expand = "%23";
+                    }
+                    url.SetUrl(url.ToString() + "?expand=" + Expand);
+                }
+                else
+                    url.SetUrl(url.ToString());
+            });
+
+            string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter("CanonicalTranslation", (name, url) =>
+            {
+                if (canonicalUrl.IndexOf(englishDurl) > -1)
+                    url.SetUrl(canonicalUrl.Replace(englishDurl, spanishDurl));
+                else if (canonicalUrl.IndexOf(spanishDurl) > -1)
+                    url.SetUrl(canonicalUrl.Replace(spanishDurl, englishDurl));
+                else
+                    url.SetUrl("");
+            });
+
+        }
+
         /// <summary>
         /// Setup shared by English and Spanish versions
         /// </summary>
@@ -148,8 +185,15 @@ namespace CancerGov.Web.SnippetTemplates
                 alphaListBox.Title = string.Empty;
             }
 
+            DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             alphaListBox.BaseUrl = DictionaryURL;
+                        
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                DictionaryURLSpanish = DictionaryURL;
 
+            DictionaryURLEnglish = DictionaryURL;           
+
+            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
         }
     
         #region "Term Dictionary Methods"
