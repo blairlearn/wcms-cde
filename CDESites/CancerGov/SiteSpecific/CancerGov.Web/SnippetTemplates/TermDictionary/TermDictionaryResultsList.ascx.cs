@@ -70,7 +70,7 @@ namespace CancerGov.Web.SnippetTemplates
             if (BContains)
                 searchType = SearchType.Contains;
 
-            ExpandReturn resultList = new ExpandReturn();
+            SearchReturn resultList = new SearchReturn();
 
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {

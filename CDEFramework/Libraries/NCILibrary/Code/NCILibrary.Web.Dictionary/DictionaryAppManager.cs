@@ -75,19 +75,19 @@ namespace NCI.Web.Dictionary
         /// <param name="dictionary">the dictionary type (cancert term, drug, genetic)</param>
         /// <param name="language">English/Spanish</param>
         /// <returns>returns a list of dictioanry terms and related metadata</returns>
-        public ExpandReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
             log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, maxResults, dictionary, language));
             DictionaryService service = new DictionaryService();
 
 
 
-            ExpandReturn srchReturn = new ExpandReturn();
+            SearchReturn srchReturn = new SearchReturn();
             
-            NCI.Services.Dictionary.BusinessObjects.ExpandReturn searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
+            NCI.Services.Dictionary.BusinessObjects.SearchReturn searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
 
 
-            List<DictionaryExpansion> expansionList = new List<DictionaryExpansion>(srchReturn.Meta.ResultCount);
+            List<DictionaryExpansion> resultList = new List<DictionaryExpansion>(searchRet.Meta.ResultCount);
 
             foreach (NCI.Services.Dictionary.BusinessObjects.DictionaryExpansion m in searchRet.Result)
             {
@@ -98,7 +98,7 @@ namespace NCI.Web.Dictionary
                     DictionaryTerm term = JsonConvert.DeserializeObject<DictionaryTerm>("{" + m.TermDetail + "}");
 
                     DictionaryExpansion expansion = new DictionaryExpansion(id, termName, term);
-                    expansionList.Add(expansion);
+                    resultList.Add(expansion);
                 }
                 catch (JsonReaderException ex)
                 {
@@ -106,12 +106,12 @@ namespace NCI.Web.Dictionary
                 }
 
             }
-            srchReturn.Result = expansionList.ToArray();
+            srchReturn.Result = resultList.ToArray();
             
 
 
             //set meta data
-            srchReturn.Meta = new ExpandReturnMeta();
+            srchReturn.Meta = new SearchReturnMeta();
             srchReturn.Meta.Audience = searchRet.Meta.Audience;
             srchReturn.Meta.Language = searchRet.Meta.Language;
             srchReturn.Meta.Offset = searchRet.Meta.Offset;
@@ -154,12 +154,12 @@ namespace NCI.Web.Dictionary
 
         }
 
-        public ExpandReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        public SearchReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
 
-            ExpandReturn exRet = new ExpandReturn();
+            SearchReturn exRet = new SearchReturn();
             DictionaryService service = new DictionaryService();
-            NCI.Services.Dictionary.BusinessObjects.ExpandReturn expandRet = service.Expand(searchText, includeTypes, offset, maxResults, dictionary, language);
+            NCI.Services.Dictionary.BusinessObjects.SearchReturn expandRet = service.Expand(searchText, includeTypes, offset, maxResults, dictionary, language);
 
 
             List<DictionaryExpansion> expansionList = new List<DictionaryExpansion>(expandRet.Meta.ResultCount);
@@ -184,7 +184,7 @@ namespace NCI.Web.Dictionary
             exRet.Result = expansionList.ToArray();
 
             //set up meta data
-            exRet.Meta = new ExpandReturnMeta();
+            exRet.Meta = new SearchReturnMeta();
             exRet.Meta.ResultCount = expandRet.Meta.ResultCount;
             exRet.Meta.Messages = expandRet.Meta.Messages;
 

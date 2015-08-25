@@ -274,11 +274,11 @@ namespace NCI.Services.Dictionary
         [WebGet(ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "v1/search?searchText={searchText}&searchType={searchType}&offset={offset}&maxResults={maxResults}&language={language}&dictionary={dictionary}")]
         [OperationContract]
-        public ExpandReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
             log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, maxResults, dictionary, language));
 
-            ExpandReturn ret;
+            SearchReturn ret;
 
             try
             {
@@ -295,9 +295,9 @@ namespace NCI.Services.Dictionary
             {
                 WebOperationContext ctx = WebOperationContext.Current;
                 ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
-                ret = new ExpandReturn()
+                ret = new SearchReturn()
                 {
-                    Meta = new ExpandReturnMeta()
+                    Meta = new SearchReturnMeta()
                     {
                         Messages = new string[] { ex.Message }
                     }
@@ -379,11 +379,11 @@ namespace NCI.Services.Dictionary
         [WebGet(ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "v1/expand?searchText={searchText}&includeTypes={includeTypes}&offset={offset}&maxResults={maxResults}&language={language}&dictionary={dictionary}")]
         [OperationContract]
-        public ExpandReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public SearchReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
             log.debug(string.Format("Enter searchText( {0}, {1}, {2}, {3}, {4}, {5} ).", searchText, includeTypes, offset, maxResults, dictionary, language));
 
-            ExpandReturn ret;
+            SearchReturn ret;
 
             try
             {
@@ -400,9 +400,9 @@ namespace NCI.Services.Dictionary
             {
                 WebOperationContext ctx = WebOperationContext.Current;
                 ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
-                ret = new ExpandReturn()
+                ret = new SearchReturn()
                 {
-                    Meta = new ExpandReturnMeta()
+                    Meta = new SearchReturnMeta()
                     {
                         Messages = new string[] { ex.Message }
                     }

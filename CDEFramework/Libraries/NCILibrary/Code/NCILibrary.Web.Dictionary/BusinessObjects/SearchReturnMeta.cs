@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace NCI.Web.Dictionary.BusinessObjects
 {
     [DataContract()]
-    public class ExpandReturnMeta : MetaCommon
+    public class SearchReturnMeta : MetaCommon
     {
         [DataMember(Name = "offset")]
         public int Offset { get; set; }

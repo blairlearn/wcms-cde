@@ -72,8 +72,8 @@
     <Compile Include="BusinessObjects\DictionaryExpansion.cs" />
     <Compile Include="BusinessObjects\DictionarySuggestion.cs" />
     <Compile Include="BusinessObjects\DictionaryTerm.cs" />
-    <Compile Include="BusinessObjects\ExpandReturn.cs" />
-    <Compile Include="BusinessObjects\ExpandReturnMeta.cs" />
+    <Compile Include="BusinessObjects\SearchReturn.cs" />
+    <Compile Include="BusinessObjects\SearchReturnMeta.cs" />
     <Compile Include="BusinessObjects\ImageReference.cs" />
     <Compile Include="BusinessObjects\MetaCommon.cs" />
     <Compile Include="BusinessObjects\Pronunciation.cs" />

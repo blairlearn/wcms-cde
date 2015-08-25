@@ -207,7 +207,7 @@ namespace NCI.Services.Dictionary
         /// </param>
         /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
         /// <returns></returns>
-        public ExpandReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
             log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6}).", searchText, searchType, offset, maxResults, dictionary, language, version));
 
@@ -250,7 +250,7 @@ namespace NCI.Services.Dictionary
             }
 
             // Populate return metadata structure
-            ExpandReturnMeta meta = new ExpandReturnMeta()
+            SearchReturnMeta meta = new SearchReturnMeta()
             {
                 Language = language.ToString(),
                 Audience = audience.ToString(),
@@ -261,7 +261,7 @@ namespace NCI.Services.Dictionary
 
 
             // Combine meta and results to create the final return object.
-            ExpandReturn srchReturn = new ExpandReturn()
+            SearchReturn srchReturn = new SearchReturn()
             {
                 Result = foundTerms.ToArray(),
                 Meta = meta
@@ -346,7 +346,7 @@ namespace NCI.Services.Dictionary
 
         }
 
-        public ExpandReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        public SearchReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
             log.debug("Enter ValidateSearchSuggest().");
 
@@ -360,9 +360,9 @@ namespace NCI.Services.Dictionary
             DictionaryQuery query = new DictionaryQuery();
             //query.Expand();
 
-            return new ExpandReturn()
+            return new SearchReturn()
             {
-                Meta = new ExpandReturnMeta()
+                Meta = new SearchReturnMeta()
                 {
                     Language = language.ToString(),
                     Audience = audience.ToString(),

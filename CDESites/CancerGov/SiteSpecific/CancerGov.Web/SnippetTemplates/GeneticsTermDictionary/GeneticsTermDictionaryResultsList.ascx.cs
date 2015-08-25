@@ -56,7 +56,7 @@ namespace CancerGov.Web.SnippetTemplates
             //For Genetics dictionary language is always English
             DictionaryLanguage = Language.English;
 
-            ExpandReturn resultList = new ExpandReturn();
+            SearchReturn resultList = new SearchReturn();
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
             if (!string.IsNullOrEmpty(SrcGroup))

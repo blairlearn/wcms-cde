@@ -10,9 +10,9 @@ namespace NCI.Web.Dictionary.BusinessObjects
     /// Outermost data structure for returns from Expand().
     /// </summary>
     [DataContract()]
-    public class ExpandReturn
+    public class SearchReturn
     {
-        public ExpandReturn()
+        public SearchReturn()
         {
             // Force collection to be non-null.
             Result = new DictionaryExpansion[] { };
@@ -22,7 +22,7 @@ namespace NCI.Web.Dictionary.BusinessObjects
         /// Metadata about the expansion search results.
         /// </summary>
         [DataMember(Name = "meta")]
-        public ExpandReturnMeta Meta { get; set; }
+        public SearchReturnMeta Meta { get; set; }
 
         /// <summary>
         /// Array of DictionaryExpansion objects containg details of the individual terms which met the search criteria.
