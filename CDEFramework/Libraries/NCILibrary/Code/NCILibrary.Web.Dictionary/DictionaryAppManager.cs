@@ -177,6 +177,7 @@ namespace NCI.Web.Dictionary
                 {
                     log.error("Error in Json string from service: " + ex.ToString());
                 }
+                count++;
 
             }
             exRet.Result = expansion;
