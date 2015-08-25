@@ -207,7 +207,7 @@ namespace NCI.Services.Dictionary
         /// </param>
         /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
         /// <returns></returns>
-        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        public ExpandReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
             log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6}).", searchText, searchType, offset, maxResults, dictionary, language, version));
 
@@ -233,12 +233,24 @@ namespace NCI.Services.Dictionary
 
             // Retrieve results.  We already know the number of results, so let's preset the
             // list to the size we know we're going to need.
-            List<String> foundTerms = new List<string>(resultCount);
+            List<DictionaryExpansion> foundTerms = new List<DictionaryExpansion>(resultCount);
             foreach (DataRow row in results.Data.Rows)
-                foundTerms.Add(row.Field<string>("object"));
+            {
+                try
+                {
+                    int id = row.Field<int>("termID");
+                    string matchName = row.Field<string>("TermName");
+                    string detail = row.Field<string>("object");
+                    foundTerms.Add(new DictionaryExpansion(id, matchName, detail));
+                }
+                catch (Exception ex)
+                {
+                    log.error("Error retrieving search results.", ex);
+                }
+            }
 
             // Populate return metadata structure
-            SearchReturnMeta meta = new SearchReturnMeta()
+            ExpandReturnMeta meta = new ExpandReturnMeta()
             {
                 Language = language.ToString(),
                 Audience = audience.ToString(),
@@ -249,7 +261,7 @@ namespace NCI.Services.Dictionary
 
 
             // Combine meta and results to create the final return object.
-            SearchReturn srchReturn = new SearchReturn()
+            ExpandReturn srchReturn = new ExpandReturn()
             {
                 Result = foundTerms.ToArray(),
                 Meta = meta
@@ -285,7 +297,7 @@ namespace NCI.Services.Dictionary
         /// <returns></returns>
         public SuggestReturn SearchSuggest(String searchText, SearchType searchType, int maxResults, DictionaryType dictionary, Language language, String version)
         {
-            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, maxResults, dictionary, language, version));
+            log.debug(string.Format("Enter ValidateSearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, maxResults, dictionary, language, version));
 
             // Sanity check for maxResults
             if (maxResults < 10) maxResults = 10;
@@ -336,25 +348,40 @@ namespace NCI.Services.Dictionary
 
         public ExpandReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
+            log.debug("Enter ValidateSearchSuggest().");
+
+            // Sanity check for the offset and maxResults
+            if (offset < 0) offset = 0;
+            if (maxResults < 10) maxResults = 10;
+
+            // In the initial implementation, the audience is implied by the particular dictionary being used.
+            AudienceType audience = GetAudienceFromDictionaryType(dictionary);
+
+            DictionaryQuery query = new DictionaryQuery();
+            //query.Expand();
+
             return new ExpandReturn()
             {
                 Meta = new ExpandReturnMeta()
                 {
-                    Messages = new String[] { "Found 2 gazillion matches" },
-                    ResultCount = 10
+                    Language = language.ToString(),
+                    Audience = audience.ToString(),
+                    Offset = offset,
+                    ResultCount = 10,
+                    Messages = new String[] { "Found 2 gazillion matches" }
                 },
                 Result = new DictionaryExpansion[]
                 {
-                    new DictionaryExpansion(){ ID = 1, MatchedTerm = "Matched Term 1", Term = CancerTermEnglish[0]},
-                    new DictionaryExpansion(){ ID = 2, MatchedTerm = "Matched Term 2", Term = CancerTermEnglish[1]},
-                    new DictionaryExpansion(){ ID = 3, MatchedTerm = "Matched Term 3", Term = CancerTermEnglish[2]},
-                    new DictionaryExpansion(){ ID = 4, MatchedTerm = "Matched Term 4", Term = CancerTermEnglish[3]},
-                    new DictionaryExpansion(){ ID = 5, MatchedTerm = "Matched Term 5", Term = CancerTermEnglish[4]},
-                    new DictionaryExpansion(){ ID = 6, MatchedTerm = "Matched Term 6", Term = CancerTermEnglish[5]},
-                    new DictionaryExpansion(){ ID = 7, MatchedTerm = "Matched Term 7", Term = CancerTermEnglish[6]},
-                    new DictionaryExpansion(){ ID = 8, MatchedTerm = "Matched Term 8", Term = CancerTermEnglish[7]},
-                    new DictionaryExpansion(){ ID = 9, MatchedTerm = "Matched Term 9", Term = CancerTermEnglish[8]},
-                    new DictionaryExpansion(){ ID =10, MatchedTerm = "Matched Term 10", Term = CancerTermEnglish[9]}
+                    new DictionaryExpansion(){ ID = 1, MatchedTerm = "Matched Term 1", TermDetail = CancerTermEnglish[0]},
+                    new DictionaryExpansion(){ ID = 2, MatchedTerm = "Matched Term 2", TermDetail = CancerTermEnglish[1]},
+                    new DictionaryExpansion(){ ID = 3, MatchedTerm = "Matched Term 3", TermDetail = CancerTermEnglish[2]},
+                    new DictionaryExpansion(){ ID = 4, MatchedTerm = "Matched Term 4", TermDetail = CancerTermEnglish[3]},
+                    new DictionaryExpansion(){ ID = 5, MatchedTerm = "Matched Term 5", TermDetail = CancerTermEnglish[4]},
+                    new DictionaryExpansion(){ ID = 6, MatchedTerm = "Matched Term 6", TermDetail = CancerTermEnglish[5]},
+                    new DictionaryExpansion(){ ID = 7, MatchedTerm = "Matched Term 7", TermDetail = CancerTermEnglish[6]},
+                    new DictionaryExpansion(){ ID = 8, MatchedTerm = "Matched Term 8", TermDetail = CancerTermEnglish[7]},
+                    new DictionaryExpansion(){ ID = 9, MatchedTerm = "Matched Term 9", TermDetail = CancerTermEnglish[8]},
+                    new DictionaryExpansion(){ ID =10, MatchedTerm = "Matched Term 10", TermDetail = CancerTermEnglish[9]}
                 }
             };
         }

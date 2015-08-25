@@ -7,6 +7,18 @@ namespace NCI.Web.Dictionary.BusinessObjects
     [DataContract()]
     public class DictionaryExpansion
     {
+        // For serialization
+        public DictionaryExpansion()
+        {
+        }
+
+        public DictionaryExpansion(int id, String matchedTerm, DictionaryTerm term)
+        {
+            this.ID = id;
+            this.MatchedTerm = matchedTerm;
+            this.Term = term;
+        }
+
         /// <summary>
         ///  The Term's ID
         /// </summary>

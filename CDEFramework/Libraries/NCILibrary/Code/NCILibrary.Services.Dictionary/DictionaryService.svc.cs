@@ -49,6 +49,13 @@ namespace NCI.Services.Dictionary
         /// </summary>
         private static class InputValidator
         {
+            /// <summary>
+            /// Validate inputs for the GetTerm method.  Throws DictionaryValidationException if the inputs
+            /// are not valid.
+            /// </summary>
+            /// <param name="termID">The ID of the term being retrieved.  Must be greater than zero.</param>
+            /// <param name="dictionary">The dictioanry to retrieve from.  Must be Term, Drug, or Genetic.</param>
+            /// <param name="language">The desired result language. Must be English or Spanish.</param>
             public static void ValidateGetTerm(int termID, DictionaryType dictionary, Language language)
             {
                 String message = string.Empty;
@@ -79,6 +86,13 @@ namespace NCI.Services.Dictionary
                 }
             }
 
+            /// <summary>
+            /// Validate inputs for the Search method.  Throws DictionaryValidationException if the inputs
+            /// are not valid.
+            /// </summary>
+            /// <param name="searchType">The type of search to being.  Must be Begins or Contains.</param>
+            /// <param name="dictionary">The dictioanry to retrieve from.  Must be Term, Drug, or Genetic.</param>
+            /// <param name="language">The desired result language. Must be English or Spanish.</param>
             public static void ValidateSearch(SearchType searchType, DictionaryType dictionary, Language language)
             {
                 String message = string.Empty;
@@ -110,7 +124,14 @@ namespace NCI.Services.Dictionary
                 }
             }
 
-            public static void SearchSuggest(SearchType searchType, DictionaryType dictionary, Language language)
+            /// <summary>
+            /// Validate inputs for the SearchSuggest method.  Throws DictionaryValidationException if the inputs
+            /// are not valid.
+            /// </summary>
+            /// <param name="searchType">The type of search to being.  Must be Begins, Contains, or Magic.</param>
+            /// <param name="dictionary">The dictioanry to retrieve from.  Must be Term, Drug, or Genetic.</param>
+            /// <param name="language">The desired result language. Must be English or Spanish.</param>
+            public static void ValidateSearchSuggest(SearchType searchType, DictionaryType dictionary, Language language)
             {
                 String message = string.Empty;
                 bool failed = false;
@@ -138,6 +159,36 @@ namespace NCI.Services.Dictionary
                     log.debug(message);
                     throw new DictionaryValidationException(message);
                 }
+            }
+
+            /// <summary>
+            /// Validate inputs for the Expand method.  Throws DictionaryValidationException if the inputs
+            /// are not valid.
+            /// </summary>
+            /// <param name="dictionary">The dictioanry to retrieve from.  Must be Term, Drug, or Genetic.</param>
+            /// <param name="language">The desired result language. Must be English or Spanish.</param>
+            public static void ValidateExpand(DictionaryType dictionary, Language language)
+            {
+                String message = string.Empty;
+                bool failed = false;
+                if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
+                {
+                    failed = true;
+                    message += "Dictionary must be 'Term', 'drug' or 'genetic'.\n";
+                }
+
+                if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
+                {
+                    failed = true;
+                    message += String.Format("Unsupported languge '{0}'.", language);
+                }
+
+                if (failed)
+                {
+                    log.debug(message);
+                    throw new DictionaryValidationException(message);
+                }
+
             }
         }
 
@@ -223,11 +274,11 @@ namespace NCI.Services.Dictionary
         [WebGet(ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "v1/search?searchText={searchText}&searchType={searchType}&offset={offset}&maxResults={maxResults}&language={language}&dictionary={dictionary}")]
         [OperationContract]
-        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public ExpandReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
             log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, maxResults, dictionary, language));
 
-            SearchReturn ret;
+            ExpandReturn ret;
 
             try
             {
@@ -244,9 +295,9 @@ namespace NCI.Services.Dictionary
             {
                 WebOperationContext ctx = WebOperationContext.Current;
                 ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
-                ret = new SearchReturn()
+                ret = new ExpandReturn()
                 {
-                    Meta = new SearchReturnMeta()
+                    Meta = new ExpandReturnMeta()
                     {
                         Messages = new string[] { ex.Message }
                     }
@@ -289,7 +340,7 @@ namespace NCI.Services.Dictionary
             // This should possibly be made a parameter
             int MaxResultsAllowed = 10;
 
-            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}).", searchText, searchType, dictionary, language));
+            log.debug(string.Format("Enter ValidateSearchSuggest( {0}, {1}, {2}, {3}).", searchText, searchType, dictionary, language));
 
             SuggestReturn ret;
 
@@ -336,8 +387,7 @@ namespace NCI.Services.Dictionary
 
             try
             {
-                // Doesn't exist yet
-                //InputValidator.ValidateExpand(searchType, dictionary, language);
+                InputValidator.ValidateExpand(dictionary, language);
 
                 DictionaryManager mgr = new DictionaryManager();
                 ret = mgr.Expand(searchText, includeTypes, offset, maxResults, dictionary, language, API_VERSION);

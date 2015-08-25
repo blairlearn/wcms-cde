@@ -126,7 +126,7 @@ namespace NCI.Services.Dictionary
 
         public SuggestionResults SearchSuggest(String searchText, SearchType searchType, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, searchType, maxResults, dictionary, language, audience, version));
+            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, searchType, maxResults, dictionary, language, audience, version));
 
             DataTable results = null;
 
@@ -152,5 +152,14 @@ namespace NCI.Services.Dictionary
             return new SuggestionResults(results, (int)matchCountParam.Value);
         }
 
-}
+        public void Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
+        {
+            log.debug(string.Format("Enter Expand( {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} ).", searchText, includeTypes, offset, maxResults, dictionary, language, audience, version));
+
+            DataTable results = null;
+
+            SqlParameter matchCountParam = new SqlParameter("@matchCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
+        }
+    }
 }

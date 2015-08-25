@@ -82,8 +82,6 @@
     <Compile Include="BusinessObjects\RelatedItems.cs" />
     <Compile Include="BusinessObjects\RelatedSummary.cs" />
     <Compile Include="BusinessObjects\RelatedTerm.cs" />
-    <Compile Include="BusinessObjects\SearchReturn.cs" />
-    <Compile Include="BusinessObjects\SearchReturnMeta.cs" />
     <Compile Include="BusinessObjects\SuggestReturn.cs" />
     <Compile Include="BusinessObjects\SuggestReturnMeta.cs" />
     <Compile Include="BusinessObjects\TermReturn.cs" />

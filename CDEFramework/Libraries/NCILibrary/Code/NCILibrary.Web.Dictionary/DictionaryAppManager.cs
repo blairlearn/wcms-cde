@@ -75,42 +75,43 @@ namespace NCI.Web.Dictionary
         /// <param name="dictionary">the dictionary type (cancert term, drug, genetic)</param>
         /// <param name="language">English/Spanish</param>
         /// <returns>returns a list of dictioanry terms and related metadata</returns>
-        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public ExpandReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
             log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, maxResults, dictionary, language));
             DictionaryService service = new DictionaryService();
 
 
-            
-            SearchReturn srchReturn =new SearchReturn();
-            
-            NCI.Services.Dictionary.BusinessObjects.SearchReturn searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
-           
 
-            String[] jsonObject = searchRet.Result;
-            int count = 0;
-            DictionaryTerm[] dictionaryTerms = new DictionaryTerm[jsonObject.Length];
-            //for each loop to deserialize the string array from database into the Dictionary Terms
-            //for the result
-            foreach(String m in jsonObject)
+            ExpandReturn srchReturn = new ExpandReturn();
+            
+            NCI.Services.Dictionary.BusinessObjects.ExpandReturn searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
+
+
+            List<DictionaryExpansion> expansionList = new List<DictionaryExpansion>(srchReturn.Meta.ResultCount);
+
+            foreach (NCI.Services.Dictionary.BusinessObjects.DictionaryExpansion m in searchRet.Result)
             {
-                String deserialize = "{" + m + "}";
                 try
                 {
-                    dictionaryTerms[count] = JsonConvert.DeserializeObject<DictionaryTerm>(deserialize);
+                    int id = m.ID;
+                    string termName = m.MatchedTerm;
+                    DictionaryTerm term = JsonConvert.DeserializeObject<DictionaryTerm>("{" + m.TermDetail + "}");
+
+                    DictionaryExpansion expansion = new DictionaryExpansion(id, termName, term);
+                    expansionList.Add(expansion);
                 }
-                catch(JsonReaderException ex)
+                catch (JsonReaderException ex)
                 {
-                    log.warning("Error in Json string from service: " + ex.ToString());
+                    log.error("Error in Json string from service: " + ex.ToString());
                 }
-                    count = count+1;
+
             }
-            srchReturn.Result = dictionaryTerms;
+            srchReturn.Result = expansionList.ToArray();
             
 
 
             //set meta data
-            srchReturn.Meta = new SearchReturnMeta();
+            srchReturn.Meta = new ExpandReturnMeta();
             srchReturn.Meta.Audience = searchRet.Meta.Audience;
             srchReturn.Meta.Language = searchRet.Meta.Language;
             srchReturn.Meta.Offset = searchRet.Meta.Offset;
@@ -161,26 +162,26 @@ namespace NCI.Web.Dictionary
             NCI.Services.Dictionary.BusinessObjects.ExpandReturn expandRet = service.Expand(searchText, includeTypes, offset, maxResults, dictionary, language);
 
 
-            DictionaryExpansion[] expansion = new DictionaryExpansion[]{};
-            int count = 0; 
-
+            List<DictionaryExpansion> expansionList = new List<DictionaryExpansion>(expandRet.Meta.ResultCount);
 
             foreach (NCI.Services.Dictionary.BusinessObjects.DictionaryExpansion m in expandRet.Result)
             {
-                expansion[count].ID = m.ID;
-                expansion[count].MatchedTerm = m.MatchedTerm;
                 try
                 {
-                    expansion[count].Term = JsonConvert.DeserializeObject<DictionaryTerm>("{" + m.Term + "}");
+                    int id  = m.ID;
+                    string termName  = m.MatchedTerm;
+                    DictionaryTerm term = JsonConvert.DeserializeObject<DictionaryTerm>("{" + m.TermDetail + "}");
+
+                    DictionaryExpansion expansion = new DictionaryExpansion(id, termName, term);
+                    expansionList.Add(expansion);
                 }
                 catch (JsonReaderException ex)
                 {
                     log.error("Error in Json string from service: " + ex.ToString());
                 }
-                count++;
 
             }
-            exRet.Result = expansion;
+            exRet.Result = expansionList.ToArray();
 
             //set up meta data
             exRet.Meta = new ExpandReturnMeta();

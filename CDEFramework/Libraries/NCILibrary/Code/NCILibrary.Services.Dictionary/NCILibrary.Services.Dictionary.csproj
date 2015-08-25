@@ -75,8 +75,6 @@
     <Compile Include="BusinessObjects\ExpandReturn.cs" />
     <Compile Include="BusinessObjects\ExpandReturnMeta.cs" />
     <Compile Include="BusinessObjects\MetaCommon.cs" />
-    <Compile Include="BusinessObjects\SearchReturn.cs" />
-    <Compile Include="BusinessObjects\SearchReturnMeta.cs" />
     <Compile Include="BusinessObjects\SuggestReturn.cs" />
     <Compile Include="BusinessObjects\SuggestReturnMeta.cs" />
     <Compile Include="BusinessObjects\TermReturn.cs" />

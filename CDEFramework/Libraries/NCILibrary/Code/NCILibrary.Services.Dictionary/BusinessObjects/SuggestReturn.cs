@@ -3,7 +3,7 @@
 namespace NCI.Services.Dictionary.BusinessObjects
 {
     /// <summary>
-    /// Outermost data structure for returns from SearchSuggest().
+    /// Outermost data structure for returns from ValidateSearchSuggest().
     /// </summary>
     [DataContract()]
     public class SuggestReturn
