@@ -109,21 +109,25 @@ namespace CancerGov.Web.SnippetTemplates
       */
         private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
         {
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            if (string.IsNullOrEmpty(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.CanonicalUrl).ToString())) 
             {
-                if (!string.IsNullOrEmpty(CdrID))
-                    url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
-                else if (!string.IsNullOrEmpty(Expand))
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
                 {
-                    if (Expand.Trim() == "#")
+                    if (!string.IsNullOrEmpty(CdrID))
+                        url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
+                    else if (!string.IsNullOrEmpty(Expand))
                     {
-                        Expand = "%23";
+                        if (Expand.Trim() == "#")
+                        {
+                            Expand = "%23";
+                        }
+                        url.SetUrl(url.ToString() + "?expand=" + Expand);
                     }
-                    url.SetUrl(url.ToString() + "?expand=" + Expand);
-                }
-                else
-                    url.SetUrl(url.ToString());
-            });
+                    else
+                        url.SetUrl(url.ToString());
+                });
+            }
+            
 
             string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
             PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter("CanonicalTranslation", (name, url) =>
