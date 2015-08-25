@@ -84,17 +84,17 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {
-                
-                resultList = _dictionaryAppManager.Search(SearchStr, searchType, 0, 0, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
+
+                resultList = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
 
             }
             else if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
             {
 
                 if (Expand.ToLower() == "all")
-                    resultList = _dictionaryAppManager.Search("%", searchType, 0, 0, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
+                    resultList = _dictionaryAppManager.Search("%", searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
                 else
-                    resultList = _dictionaryAppManager.Search(Expand, searchType, 0, 0, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
+                    resultList = _dictionaryAppManager.Search(Expand, searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
             }
 
             if (resultList != null)

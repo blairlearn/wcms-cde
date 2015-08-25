@@ -50,6 +50,8 @@ namespace CancerGov.Web.SnippetTemplates
 
         public string PagePrintUrl { get; set; }
 
+        public int RelatedTermCount { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             dictionarySearchBlock.Dictionary = DictionaryType.Term;
@@ -79,8 +81,6 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
                 
-                //Language lang = Language.English;
-                //test.GetTerm(44578, DictionaryType.Term, lang, "v1");
                 TermReturn dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage, "v1"); 
                 if (dataItem != null)
                 {
@@ -255,6 +255,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                             if (termDetails.Term.Related.Term.Length > 0)
                             {
+                                RelatedTermCount = termDetails.Term.Related.Term.Length;
                                 PlaceHolder phRelatedTerms = (PlaceHolder)e.Item.FindControl("phRelatedTerms");
                                 if (phRelatedTerms != null)
                                 {
@@ -314,21 +315,21 @@ namespace CancerGov.Web.SnippetTemplates
                     if (relatedTermLink != null)
                     {
                         relatedTermLink.NavigateUrl = DictionaryURL + "?cdrid=" + relatedTerm.Termid;
-                        Literal relatedTermSeparator = (Literal)e.Item.FindControl("relatedTermSeparator");
+                        relatedTermLink.Text = relatedTerm.Text;
 
-                        if (e.Item.ItemIndex >  0)
-                            relatedTermLink.Text = relatedTerm.Text;
-                        else
-                            relatedTermLink.Text = relatedTerm.Text;
-                        
-                        //use this for Genetics dictionary 
-                        //  // Health Professional is always English, always /geneticsdictionary.
-                        //String url = String.Format("/geneticsdictionary?cdrid={0}", documentId);
-                        //relInfoLink = new RelatedInformationLink(termName, url, Language.English, RelatedInformationLink.RelatedLinkType.GlossaryTerm);
+                        //make sure the comma is only displayed when there is more than one related term
+                        Literal relatedTermSeparator = (Literal)e.Item.FindControl("relatedTermSeparator");
+                        if (relatedTermSeparator != null)
+                        {
+                            if (e.Item.ItemIndex >= 0 && e.Item.ItemIndex < RelatedTermCount - 1)
+                                relatedTermSeparator.Visible = true;
+                        }
+
                     }
                 }
             }
         }
+
         protected void relatedImages_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
 

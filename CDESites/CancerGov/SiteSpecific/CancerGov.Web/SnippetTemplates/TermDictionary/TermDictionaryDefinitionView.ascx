@@ -62,8 +62,8 @@
                                  <asp:Repeater ID="relatedTerms" runat="server" OnItemDataBound="relatedTerms_OnItemDataBound">
                                    
                                     <ItemTemplate>
-                                         <asp:HyperLink ID="relatedTermLink" runat="server" />
-                                         <asp:Literal ID="relatedTermSeparator" runat="server" Text="," Visible="false" />
+                                         <asp:HyperLink ID="relatedTermLink" runat="server" /><asp:Literal ID="relatedTermSeparator" runat="server" Text="," Visible="false" />
+                                         
                                     </ItemTemplate>
                                     
                                 </asp:Repeater>

@@ -70,7 +70,22 @@ namespace CancerGov.Web.SnippetTemplates
             if (BContains)
                 searchType = SearchType.Contains;
 
-            SearchReturn resultList = _dictionaryAppManager.Search(SearchStr, searchType, 0, 0, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+            SearchReturn resultList = new SearchReturn();
+
+            if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
+            {
+
+                resultList = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+
+            }
+            else if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
+            {
+
+                if (Expand.ToLower() == "all")
+                    resultList = _dictionaryAppManager.Search("%", searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+                else
+                    resultList = _dictionaryAppManager.Search(Expand, searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+            }
 
             if ((resultList.Meta.ResultCount == 1) && string.IsNullOrEmpty(Expand)) //if there is only 1 record - go directly to definition view
             {

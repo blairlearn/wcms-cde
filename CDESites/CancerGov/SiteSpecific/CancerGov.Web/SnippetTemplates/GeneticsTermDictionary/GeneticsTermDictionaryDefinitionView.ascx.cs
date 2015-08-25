@@ -52,6 +52,8 @@ namespace CancerGov.Web.SnippetTemplates
 
         public string PagePrintUrl { get; set; }
 
+        public int RelatedTermCount { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             dictionarySearchBlock.Dictionary = DictionaryType.Genetic;
@@ -67,9 +69,7 @@ namespace CancerGov.Web.SnippetTemplates
             if (!Page.IsPostBack)
             {
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-
-                //Language lang = Language.English;
-                //test.GetTerm(44578, DictionaryType.Term, lang, "v1");
+                                
                 TermReturn dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
                 if (dataItem != null)
                 {
@@ -87,8 +87,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             SetupPrintUrl();
-            SetupCanonicalUrls(DictionaryURL);
-
+           
         }
 
         private void ActivateDefinitionView(TermReturn dataItem)
@@ -103,36 +102,27 @@ namespace CancerGov.Web.SnippetTemplates
             CdrID = dataItem.Term.ID.ToString();
 
 
-            //PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
-            //{
-            //    data.Value = "Definition of " + termName + " - NCI Dictionary of Genetics Terms";
-            //});
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
+            {
+                data.Value = "Definition of " + termName + " - NCI Dictionary of Genetics Terms";
+            });
 
-            //this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
-
-
-            //PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
-            //{
-            //    data.Value = "Definition of " + termName;
-            //});
+            this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
 
 
-            //PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
-            //{
-            //    data.Value = termName + ", definition";
-            //});
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
+            {
+                data.Value = "Definition of " + termName;
+            });
 
-            //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
-            //{
-            //    url.QueryParameters.Add("cdrid", CdrID);
-            //});
 
-            //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.AltLanguage, (name, url) =>
-            //{
-            //    url.QueryParameters.Add("cdrid", CdrID);
-            //});
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
+            {
+                data.Value = termName + ", definition";
+            });
 
-            // Add Drug Dictionary Term view event to analytics
+           
+            // Add Genetics Dictionary Term view event to analytics
             PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event12, wbField =>
             {
                 wbField.Value = "";
@@ -182,30 +172,7 @@ namespace CancerGov.Web.SnippetTemplates
             });
         }
 
-        /**
-        * Add a filter for the Canonical URL.
-        * The Canonical URL includes query parameters if they exist.
-        */
-        private void SetupCanonicalUrls(string englishDurl)
-        {
-            //PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
-            //{
-            //    if (CdrID != "")
-            //        url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
-            //    else if (Expand != "")
-            //    {
-            //        if (Expand.Trim() == "#")
-            //        {
-            //            Expand = "%23";
-            //        }
-            //        url.SetUrl(url.ToString() + "?expand=" + Expand);
-            //    }
-            //    else
-            //        url.SetUrl(url.ToString());
-            //});
-                       
-        }
-
+        
         protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
 
@@ -271,6 +238,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                             if (termDetails.Term.Related.Term.Length > 0)
                             {
+                                RelatedTermCount = termDetails.Term.Related.Term.Length;
                                 PlaceHolder phRelatedTerms = (PlaceHolder)e.Item.FindControl("phRelatedTerms");
                                 if (phRelatedTerms != null)
                                 {
@@ -329,10 +297,19 @@ namespace CancerGov.Web.SnippetTemplates
                         relatedTermLink.NavigateUrl = DictionaryURL + "?cdrid=" + relatedTerm.Termid;
                         relatedTermLink.Text = relatedTerm.Text;
 
+                        //make sure the comma is only displayed when there is more than one related term
+                        Literal relatedTermSeparator = (Literal)e.Item.FindControl("relatedTermSeparator");
+                        if (relatedTermSeparator != null)
+                        {
+                            if (e.Item.ItemIndex >= 0 && e.Item.ItemIndex < RelatedTermCount - 1)
+                                relatedTermSeparator.Visible = true;
+                        }
+
                     }
                 }
             }
         }
+
         protected void relatedImages_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
 
