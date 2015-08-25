@@ -75,10 +75,7 @@ namespace NCI.Web.Dictionary
             DictionaryService service = new DictionaryService();
 
 
-            // Sanity check for the offset and maxResults
-            if (offset < 0) offset = 0;
-            if (maxResults < 10) maxResults = 10;
-
+            
             SearchReturn srchReturn =new SearchReturn();
             
             NCI.Services.Dictionary.BusinessObjects.SearchReturn searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
@@ -148,11 +145,27 @@ namespace NCI.Web.Dictionary
 
             ExpandReturn exRet = new ExpandReturn();
             DictionaryService service = new DictionaryService();
-            NCI.Services.Dictionary.BusinessObjects.ExpandReturn expandRet = null;
+            NCI.Services.Dictionary.BusinessObjects.ExpandReturn expandRet = service.Expand(searchText, includeTypes, offset, maxResults, dictionary, language);
+
 
             DictionaryExpansion[] expansion = new DictionaryExpansion[]{};
+            int count = 0;
 
-            exRet = null;
+
+            foreach (NCI.Services.Dictionary.BusinessObjects.DictionaryExpansion m in expandRet.Result)
+            {
+                expansion[count].ID = m.ID;
+                expansion[count].MatchedTerm = m.MatchedTerm;
+                expansion[count].Term = JsonConvert.DeserializeObject<DictionaryTerm>("{" + m.Term + "}");
+            }
+            exRet.Result = expansion;
+
+            //set up meta data
+            exRet.Meta = new ExpandReturnMeta();
+            exRet.Meta.ResultCount = expandRet.Meta.ResultCount;
+            exRet.Meta.Messages = expandRet.Meta.Messages;
+
+
 
             return exRet;
         }
