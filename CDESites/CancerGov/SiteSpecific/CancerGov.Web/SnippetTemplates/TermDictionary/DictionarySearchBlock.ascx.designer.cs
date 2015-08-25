@@ -131,22 +131,22 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.Label lblContains;
         
         /// <summary>
-        /// AutoComplete1 control.
+        /// txtSearchString control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox AutoComplete1;
+        protected global::System.Web.UI.WebControls.TextBox txtSearchString;
         
         /// <summary>
-        /// btnGo control.
+        /// btnSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGo;
+        protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
         /// alphaListBox control.

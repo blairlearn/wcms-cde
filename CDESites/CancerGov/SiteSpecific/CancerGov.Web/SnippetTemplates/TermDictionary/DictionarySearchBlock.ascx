@@ -6,7 +6,7 @@
     // function used by AutoComplete to submit to server when user
     // selects an item
     function ACOnSubmit() {
-        document.getElementById('<%=btnGo.ClientID%>').click();
+        document.getElementById('<%=btnSearch.ClientID%>').click();
     }
 
     //Hookup JPlayer for Audio
@@ -36,7 +36,7 @@
     var ids = {
         radioStarts: "<%=radioStarts.ClientID %>",
         radioContains: "<%=radioContains.ClientID %>",
-        AutoComplete1: "<%=AutoComplete1.ClientID %>"
+        txtSearchString: "<%=txtSearchString.ClientID %>"
     }
 
     $(document).ready(function() {
@@ -56,7 +56,7 @@
             svcUrl = "/TermDictionary.svc/SearchJSON/" + language;
 
 
-        NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
+        NCI.doAutocomplete("#" + ids.txtSearchString, svcUrl, isContains, "searchTerm", { maxRows: 10 });
     }
 
     function IsContains() {
@@ -137,12 +137,12 @@ Blair will add code here for the Drug Dictionary
                 </div>
                 <div class="row">
                     <div class="large-6 columns">
-                        <asp:TextBox CssClass="dictionary-search-input" ID="AutoComplete1"
+                        <asp:TextBox CssClass="dictionary-search-input" ID="txtSearchString"
                             inputmode="latin" aria-autocomplete="list" runat="server" 
                             CallbackFunc="ACOnSubmit" autocomplete="off" />
                     </div>
                     <div class="large-2 columns left">        
-                        <asp:Button class="submit button postfix" ID="btnGo" runat="server" OnClick="btnGo_OnClick"
+                        <asp:Button class="submit button postfix" ID="btnSearch" runat="server" OnClick="btnSearch_OnClick"
                             ToolTip="Search" />
                     </div>
                 </div>

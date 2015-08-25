@@ -160,7 +160,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             if (!string.IsNullOrEmpty(SearchStr))
-                AutoComplete1.Text = SearchStr;
+                txtSearchString.Text = SearchStr;
 
             if (!string.IsNullOrEmpty(Expand))
             {
@@ -247,11 +247,8 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         private void SetupSpanish()
         {
-            //_isSpanish = true;
-
-            //Controls
-            AutoComplete1.Attributes.Add("aria-label", "Escriba frase o palabra clave");
-            AutoComplete1.Attributes.Add("placeholder", "Escriba frase o palabra clave");
+            txtSearchString.Attributes.Add("aria-label", "Escriba frase o palabra clave");
+            txtSearchString.Attributes.Add("placeholder", "Escriba frase o palabra clave");
 
             lblStartsWith.Text = "Empieza con";
             lblContains.Text = "Contiene";
@@ -259,8 +256,8 @@ namespace CancerGov.Web.SnippetTemplates
             pnlIntroEnglish.Visible = false;
             pnlIntroSpanish.Visible = true;
 
-            btnGo.Text = "Buscar";
-            btnGo.ToolTip = "Buscar";
+            btnSearch.Text = "Buscar";
+            btnSearch.ToolTip = "Buscar";
 
             litTotalCount2.Text = TotalCount.ToString();
            
@@ -272,10 +269,10 @@ namespace CancerGov.Web.SnippetTemplates
         private void SetupEnglish()
         {
             //Controls            
-            AutoComplete1.Attributes.Add("aria-label", "Enter keywords or phrases");
-            AutoComplete1.Attributes.Add("placeholder", "Enter keywords or phrases");
+            txtSearchString.Attributes.Add("aria-label", "Enter keywords or phrases");
+            txtSearchString.Attributes.Add("placeholder", "Enter keywords or phrases");
 
-            btnGo.Text = "Search";
+            btnSearch.Text = "Search";
 
             pnlIntroEnglish.Visible = true;
             pnlIntroSpanish.Visible = false;
@@ -295,15 +292,14 @@ namespace CancerGov.Web.SnippetTemplates
            
         }
 
-        private void SetUpDrugDictionary() 
+        private void SetUpDrugDictionary()
         {
             SetupEnglish();
-            alphaListBox.ShowAll = true;
         }
 
-        protected void btnGo_OnClick(object sender, EventArgs e)
+        protected void btnSearch_OnClick(object sender, EventArgs e)
         {
-            SearchStr = AutoComplete1.Text;
+            SearchStr = txtSearchString.Text;
             SearchStr = SearchStr.Replace("[", "[[]");
             CdrID = string.Empty;
             
