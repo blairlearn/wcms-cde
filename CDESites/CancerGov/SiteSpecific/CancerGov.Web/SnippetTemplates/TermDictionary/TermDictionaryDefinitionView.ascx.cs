@@ -73,7 +73,8 @@ namespace CancerGov.Web.SnippetTemplates
             }
             else
                 DictionaryLanguage = Language.English;
-
+                       
+            
             if (!Page.IsPostBack)
             {
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
@@ -97,8 +98,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             SetupPrintUrl();
-            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
-                        
+                                   
         }
 
         private void ActivateDefinitionView(TermReturn dataItem)
@@ -185,41 +185,6 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
             });
-        }
-
-        /**
-        * Add a filter for the Canonical URL.
-        * The Canonical URL includes query parameters if they exist.
-        */
-        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
-        {
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
-            {
-                if (CdrID != "")
-                    url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
-                else if (Expand != "")
-                {
-                    if (Expand.Trim() == "#")
-                    {
-                        Expand = "%23";
-                    }
-                    url.SetUrl(url.ToString() + "?expand=" + Expand);
-                }
-                else
-                    url.SetUrl(url.ToString());
-            });
-
-            string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter("CanonicalTranslation", (name, url) =>
-            {
-                if (canonicalUrl.IndexOf(englishDurl) > -1)
-                    url.SetUrl(canonicalUrl.Replace(englishDurl, spanishDurl));
-                else if (canonicalUrl.IndexOf(spanishDurl) > -1)
-                    url.SetUrl(canonicalUrl.Replace(spanishDurl, englishDurl));
-                else
-                    url.SetUrl("");
-            });
-
         }
 
         protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
@@ -349,7 +314,12 @@ namespace CancerGov.Web.SnippetTemplates
                     if (relatedTermLink != null)
                     {
                         relatedTermLink.NavigateUrl = DictionaryURL + "?cdrid=" + relatedTerm.Termid;
-                        relatedTermLink.Text = relatedTerm.Text;
+                        Literal relatedTermSeparator = (Literal)e.Item.FindControl("relatedTermSeparator");
+
+                        if (e.Item.ItemIndex >  0)
+                            relatedTermLink.Text = relatedTerm.Text;
+                        else
+                            relatedTermLink.Text = relatedTerm.Text;
                         
                         //use this for Genetics dictionary 
                         //  // Health Professional is always English, always /geneticsdictionary.

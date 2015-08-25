@@ -58,14 +58,16 @@
                                 </FooterTemplate>
                             </asp:Repeater>
                             <asp:PlaceHolder ID="phRelatedTerms" runat="server" Visible="false">
-                                <p><asp:Label ID="labelDefintion" runat="server" class="related-definition-label"/></p>
+                                <p><asp:Label ID="labelDefintion" runat="server" class="related-definition-label"/>
                                  <asp:Repeater ID="relatedTerms" runat="server" OnItemDataBound="relatedTerms_OnItemDataBound">
-                                    <HeaderTemplate><p></HeaderTemplate>
+                                   
                                     <ItemTemplate>
-                                            <asp:HyperLink ID="relatedTermLink" runat="server" />
+                                         <asp:HyperLink ID="relatedTermLink" runat="server" />
+                                         <asp:Literal ID="relatedTermSeparator" runat="server" Text="," Visible="false" />
                                     </ItemTemplate>
-                                    <FooterTemplate></p></FooterTemplate>
+                                    
                                 </asp:Repeater>
+                                </p>
                             </asp:PlaceHolder>
                          
                             <asp:Repeater ID="relatedImages" runat="server" Visible="false" OnItemDataBound="relatedImages_OnItemDataBound">
