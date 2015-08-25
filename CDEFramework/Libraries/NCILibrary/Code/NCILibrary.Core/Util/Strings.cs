@@ -194,6 +194,39 @@ namespace NCI.Util
 
             return alList;
         }
+
+        /// <summary>
+        /// Convert a delimited list of values into an array of strings, removing any empty values.
+        /// </summary>
+        /// <param name="val">String containing the values to be separated.</param>
+        /// <param name="separator">The character separating individual values</param>
+        /// <returns>An array of strings.</returns>
+        /// <remarks>ToListOfTrimmedStrings is guaranteed to return non-null.  If val is null, an empty array
+        /// is returned.  All empty strings are removed from the final array.</remarks>
+        public static String[] ToListOfTrimmedStrings(String val, char separator)
+        {
+            string[] returnList;
+
+            // Coallesce val into an array of strings.
+            String[] typeArr = string.IsNullOrEmpty(val) ? new String[] { } : val.Split(separator);
+
+            // Trim the individual strings, removing any empty entries along the way.
+            if (typeArr.Length > 0)
+            {
+                List<string> convert = new List<string>(typeArr.Length);
+                Array.ForEach(typeArr, item =>
+                {
+                    item = item.Trim();
+                    if (!string.IsNullOrEmpty(item))
+                        convert.Add(item);
+                });
+                returnList = convert.ToArray();
+            }
+            else
+                returnList = new String[] { };
+
+            return returnList;
+        }
        
         #endregion
 
