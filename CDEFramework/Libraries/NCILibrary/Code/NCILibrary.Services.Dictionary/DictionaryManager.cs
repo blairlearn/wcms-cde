@@ -7,6 +7,7 @@ using System.Web;
 
 using NCI.Logging;
 using NCI.Services.Dictionary.BusinessObjects;
+using NCI.Util;
 
 namespace NCI.Services.Dictionary
 {
@@ -22,6 +23,7 @@ namespace NCI.Services.Dictionary
         const String AUDIENCE_PATIENT = "Patient";
         const String AUDIENCE_HEALTHPROF = "Health Professional";
 
+        const char LIST_DELIMITER = '|';
 
         #region Hard-coded returns for initial stub-out
 
@@ -222,52 +224,7 @@ namespace NCI.Services.Dictionary
             DictionaryQuery query = new DictionaryQuery();
             SearchResults results = query.Search(searchText, searchType, offset, maxResults, dictionary, language, audience, version);
 
-            List<String> messages = new List<string>();
-
-            int resultCount = results.MatchCount;
-
-            // Report the count in a human-readable format.
-            String message = String.Format("Found {0} results.", resultCount);
-            log.debug(message);
-            messages.Add(message);
-
-            // Retrieve results.  We already know the number of results, so let's preset the
-            // list to the size we know we're going to need.
-            List<DictionaryExpansion> foundTerms = new List<DictionaryExpansion>(resultCount);
-            foreach (DataRow row in results.Data.Rows)
-            {
-                try
-                {
-                    int id = row.Field<int>("termID");
-                    string matchName = row.Field<string>("TermName");
-                    string detail = row.Field<string>("object");
-                    foundTerms.Add(new DictionaryExpansion(id, matchName, detail));
-                }
-                catch (Exception ex)
-                {
-                    log.error("Error retrieving search results.", ex);
-                }
-            }
-
-            // Populate return metadata structure
-            SearchReturnMeta meta = new SearchReturnMeta()
-            {
-                Language = language.ToString(),
-                Audience = audience.ToString(),
-                Offset = offset,
-                ResultCount = resultCount,
-                Messages = messages.ToArray()
-            };
-
-
-            // Combine meta and results to create the final return object.
-            SearchReturn srchReturn = new SearchReturn()
-            {
-                Result = foundTerms.ToArray(),
-                Meta = meta
-            };
-
-            return srchReturn;
+            return BuildSearchResultsStructure(results, language, audience, offset);
         }
 
         /// <summary>
@@ -357,33 +314,69 @@ namespace NCI.Services.Dictionary
             // In the initial implementation, the audience is implied by the particular dictionary being used.
             AudienceType audience = GetAudienceFromDictionaryType(dictionary);
 
-            DictionaryQuery query = new DictionaryQuery();
-            //query.Expand();
+            // Convert delimited list to an array of distinct values.
+            String[] includeFilter = Strings.ToListOfTrimmedStrings(includeTypes, LIST_DELIMITER);
 
-            return new SearchReturn()
+            DictionaryQuery query = new DictionaryQuery();
+            SearchResults results = query.Expand(searchText, includeFilter, offset, maxResults, dictionary, language, audience, version);
+
+            return BuildSearchResultsStructure(results, language, audience, offset);
+        }
+
+
+        /// <summary>
+        /// Common code for building the results data structure from Search and Expand.
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
+        private SearchReturn BuildSearchResultsStructure(SearchResults results, Language language, AudienceType audience, int offset)
+        {
+            List<String> messages = new List<string>();
+
+            int resultCount = results.MatchCount;
+
+            // Report the count in a human-readable format.
+            String message = String.Format("Found {0} results.", resultCount);
+            log.debug(message);
+            messages.Add(message);
+
+            // Retrieve results.  We already know the number of results, so let's preset the
+            // list to the size we know we're going to need.
+            List<DictionaryExpansion> foundTerms = new List<DictionaryExpansion>(resultCount);
+            foreach (DataRow row in results.Data.Rows)
             {
-                Meta = new SearchReturnMeta()
+                try
                 {
-                    Language = language.ToString(),
-                    Audience = audience.ToString(),
-                    Offset = offset,
-                    ResultCount = 10,
-                    Messages = new String[] { "Found 2 gazillion matches" }
-                },
-                Result = new DictionaryExpansion[]
-                {
-                    new DictionaryExpansion(){ ID = 1, MatchedTerm = "Matched Term 1", TermDetail = CancerTermEnglish[0]},
-                    new DictionaryExpansion(){ ID = 2, MatchedTerm = "Matched Term 2", TermDetail = CancerTermEnglish[1]},
-                    new DictionaryExpansion(){ ID = 3, MatchedTerm = "Matched Term 3", TermDetail = CancerTermEnglish[2]},
-                    new DictionaryExpansion(){ ID = 4, MatchedTerm = "Matched Term 4", TermDetail = CancerTermEnglish[3]},
-                    new DictionaryExpansion(){ ID = 5, MatchedTerm = "Matched Term 5", TermDetail = CancerTermEnglish[4]},
-                    new DictionaryExpansion(){ ID = 6, MatchedTerm = "Matched Term 6", TermDetail = CancerTermEnglish[5]},
-                    new DictionaryExpansion(){ ID = 7, MatchedTerm = "Matched Term 7", TermDetail = CancerTermEnglish[6]},
-                    new DictionaryExpansion(){ ID = 8, MatchedTerm = "Matched Term 8", TermDetail = CancerTermEnglish[7]},
-                    new DictionaryExpansion(){ ID = 9, MatchedTerm = "Matched Term 9", TermDetail = CancerTermEnglish[8]},
-                    new DictionaryExpansion(){ ID =10, MatchedTerm = "Matched Term 10", TermDetail = CancerTermEnglish[9]}
+                    int id = row.Field<int>("termID");
+                    string matchName = row.Field<string>("TermName");
+                    string detail = row.Field<string>("object");
+                    foundTerms.Add(new DictionaryExpansion(id, matchName, detail));
                 }
+                catch (Exception ex)
+                {
+                    log.error("Error retrieving search results.", ex);
+                }
+            }
+
+            // Populate return metadata structure
+            SearchReturnMeta meta = new SearchReturnMeta()
+            {
+                Language = language.ToString(),
+                Audience = audience.ToString(),
+                Offset = offset,
+                ResultCount = resultCount,
+                Messages = messages.ToArray()
             };
+
+
+            // Combine meta and results to create the final return object.
+            SearchReturn srchReturn = new SearchReturn()
+            {
+                Result = foundTerms.ToArray(),
+                Meta = meta
+            };
+
+            return srchReturn;
         }
 
         /// <summary>

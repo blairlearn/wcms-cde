@@ -18,6 +18,7 @@ namespace NCI.Services.Dictionary
         const string SP_GET_DICTIONARY_TERM = "usp_GetDictionaryTerm";
         const string SP_SEARCH_DICTIONARY = "usp_SearchDictionary";
         const string SP_SEARCH_SUGGEST_DICTIONARY = "usp_SearchSuggestDictionary";
+        const string SP_EXPAND_DICTIONARY = "usp_SearchExpandDictionary";
 
         private string DBConnectionString { get; set; }
 
@@ -152,14 +153,37 @@ namespace NCI.Services.Dictionary
             return new SuggestionResults(results, (int)matchCountParam.Value);
         }
 
-        public void Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
+        public SearchResults Expand(String searchText, String[] includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
             log.debug(string.Format("Enter Expand( {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} ).", searchText, includeTypes, offset, maxResults, dictionary, language, audience, version));
 
-            DataTable results = null;
+            DataTable results;
+
+            // Set up table parameter for specific types to include.
+            DataTable includeFilter = new DataTable("includes");
+            includeFilter.Columns.Add("NameType");
+            Array.ForEach(includeTypes, typeName => includeFilter.Rows.Add(typeName));
 
             SqlParameter matchCountParam = new SqlParameter("@matchCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@searchText", SqlDbType.NVarChar){Value = searchText},
+                new SqlParameter("@IncludeTypes", SqlDbType.Structured){Value = includeFilter},
+                new SqlParameter("@offset", SqlDbType.Int){ Value = offset },
+                new SqlParameter("@maxResults", SqlDbType.Int){ Value = maxResults },
 
+                new SqlParameter("@Dictionary", SqlDbType.NVarChar){Value = dictionary.ToString()},
+	            new SqlParameter("@Language", SqlDbType.NVarChar){Value = language.ToString()},
+	            new SqlParameter("@Audience", SqlDbType.NVarChar){Value = audience.ToString()},
+	            new SqlParameter("@ApiVers", SqlDbType.NVarChar){Value = version},
+                matchCountParam                
+            };
+
+            using (SqlConnection conn = SqlHelper.CreateConnection(DBConnectionString))
+            {
+                results = SqlHelper.ExecuteDatatable(conn, CommandType.StoredProcedure, SP_EXPAND_DICTIONARY, parameters);
+            }
+
+            return new SearchResults(results, (int)matchCountParam.Value);
         }
     }
 }
