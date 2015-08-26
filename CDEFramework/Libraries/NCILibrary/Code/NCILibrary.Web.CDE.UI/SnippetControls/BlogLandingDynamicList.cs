@@ -39,9 +39,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     "<h3>" + base.SearchList.SearchTitle + "</h3>" +
                     helper.openList() +
                     helper.imageString() +
-                    helper.titleString() +
+                    helper.openListItem() +
                     helper.dateString() +
-                    helper.descString() +
+                    helper.blogBodyString() +
+                    helper.closeListItem() +
                     helper.closeList();
                 }
                 return base.SearchList;

@@ -137,7 +137,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /*
          * Output Long Title of content item plus additional info for file and media types.
          */
-        public string titleString()
+        public string openListItem()
         {
             string title = @"
             <div class=""title container"">##
@@ -183,6 +183,27 @@ namespace NCI.Web.CDE.UI.SnippetControls
         }
 
         /*
+         * Output first 2 paragraphs of blog post.
+         */
+        public string blogBodyString()
+        {
+            string bbody = @"
+                <p class=""description dynamic-description"">
+                ##
+                ## Display blog body
+                ##
+                    #if($resultItem.BlogBody.length() > 0)##
+                        $resultItem.BlogBody
+                    #elseif($resultItem.LongDescription)##
+                        $resultItem.LongDescription##
+                    #else##
+                        &nbsp;##
+                    #end##
+                </p>##";
+            return bbody;
+        }
+
+        /*
          * Output long description if exists.
          */
         public string descString()
@@ -204,10 +225,20 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /*
          * Closing tags for Dynamic list.
          */
-        public string closeList()
+        public string closeListItem()
         {
             string close = @"
                     </div>## Close description and title div class
+            ";
+            return close;
+        }
+
+        /*
+         * Closing tags for Dynamic list.
+         */
+        public string closeList()
+        {
+            string close = @"
                 </li>## End list item
             #end## End foreach search results loop
             </ul>## End list
@@ -221,7 +252,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public string closeNews()
         {
             string close = @"
-                    </div>
                 </li>
             #end
 				<li>

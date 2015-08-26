@@ -28,8 +28,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     helper.languageStrings() +
                     "<h3>" + base.SearchList.SearchTitle + "</h3>" +
                     helper.openList() +
-                    helper.titleString() +
+                    helper.openListItem() +
                     helper.dateString() +
+                    helper.closeListItem() +
                     helper.closeList();
                 }
                 return base.SearchList;
