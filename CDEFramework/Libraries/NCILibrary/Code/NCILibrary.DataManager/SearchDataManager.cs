@@ -334,76 +334,17 @@ namespace NCI.DataManager
                                     if (dlr != DateTime.MinValue)
                                         searchResult.ReviewedDate = String.Format("{0:MM/dd/yyyy}", dlr);
 
-
-                                    if (dateDisplay == 0)
+                                    DateTime dateTime = GetDateDisplay(dateDisplay, dfp, dlm, dlr);
+                                    if (dateTime == DateTime.MinValue)
                                     {
                                         searchResult.DateForLists = "";
                                         searchResult.DateForListsEs = "";
-                                        searchResults.Add(searchResult);
-                                        continue;
-                                    }
-                                    else if (dateDisplay == 1)
-                                    {
-                                        listDate = dfp;
-                                    }
-
-                                    else if (dateDisplay == 2)
-                                    {
-                                        listDate = dlm;
-                                    }
-                                    else if (dateDisplay == 4)
-                                    {
-                                        listDate = dlr;
-                                    }
-
-                                    else if (dateDisplay == 3)
-                                    {
-                                        if (dlm > listDate)
-                                            listDate = dlm;
-                                    }
-                                    else if (dateDisplay == 5)
-                                    {
-                                        if (dlr > listDate)
-                                            listDate = dlr;
-                                    }
-                                    else if (dateDisplay == 6)
-                                    {
-                                        if (dlr > dlm)
-                                        {
-                                            listDate = dlr;
-                                        }
-                                        else
-                                        {
-                                            listDate = dlm;
-                                        }
                                     }
                                     else
                                     {
-                                        if (listDate < dlr && listDate > dlm)
-                                        {
-                                            listDate = dlr;
-                                        }
-                                        else if (listDate > dlr && listDate < dlm)
-                                        {
-                                            listDate = dlm;
-                                        }
-                                        else if (listDate < dlr && listDate < dlm)
-                                        {
-                                            if (dlm < dlr)
-                                            {
-                                                listDate = dlr;
-                                            }
-                                            else
-                                            {
-                                                listDate = dlm;
-                                            }
-
-                                        }
+                                        searchResult.DateForLists = String.Format("{0:MMMM d, yyyy}", dateTime);
+                                        searchResult.DateForListsEs = dateTime.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
                                     }
-
-                                    searchResult.DateForLists = String.Format("{0:MMMM d, yyyy}", listDate);
-                                    searchResult.DateForListsEs = listDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
-
                                     searchResults.Add(searchResult);
                                 }
                             }
@@ -420,6 +361,97 @@ namespace NCI.DataManager
                 Logger.LogError("SearchDataManager:Execute", "Failed in DataManager", NCIErrorLevel.Error);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get Proper Date Display for dynamic lists
+        /// </summary>
+        /// <param name="displayMode"></param>
+        /// <param name="dfp">Date First Published</param>
+        /// <param name="dlm">Date Last Modified</param>
+        /// <param name="dlr">Date Last Reviewed</param>
+        /// <returns></returns>
+        private static DateTime GetDateDisplay(int displayMode, DateTime dfp, DateTime dlm, DateTime dlr)
+        {
+
+            //initializing to if date display is none  
+            //This would be DisplayDateModes.None
+            DateTime dateRet = DateTime.MinValue;
+
+
+            switch (displayMode)
+            {
+                case 1://DateDisplayModes.Posted which is 1
+                    {
+                        dateRet = dfp;
+                        break;
+                    }
+                case 2://DateDisplayModes.Updated which is 2
+                    {
+                        dateRet = dlm;
+                        break;
+                    }
+                case 3://DateDisplayModes.PostedUpdated which is 3
+                    {
+                        if (dlm > dateRet)
+                            dateRet = dlm;
+                        else 
+                            dateRet = dfp;
+                        break;
+                    }
+                case 4://DateDisplayModes.Reviewed which is 4
+                    {
+                        dateRet = dlr;
+                        break;
+                    }
+                case 5://DateDisplayModes.PostedReviewed which is 5
+                    {
+                        if (dlr > dfp)
+                            dateRet = dlr;
+                        else
+                            dateRet = dfp;
+                        break;
+                    }
+                case 6://DateDisplayModes.UpdatedReviewed which is 6
+                    {
+                        if (dlr > dlm)
+                            dateRet = dlr;
+                        else
+                            dateRet = dlm;
+                        break;
+                    }
+                case 7://DateDisplayModes.All is 7
+                    {
+                        if (dfp < dlr && dfp > dlm)
+                        {
+                            dateRet = dlr;
+                        }
+                        else if (dfp > dlr && dfp < dlm)
+                        {
+                            dateRet = dlm;
+                        }
+                        else if (dfp < dlr && dfp < dlm)
+                        {
+                            if (dlm < dlr)
+                            {
+                                dateRet = dlr;
+                            }
+                            else
+                            {
+                                dateRet = dlm;
+                            }
+
+                        }
+                        else
+                            dateRet = dfp;
+
+                        break;
+                    }
+
+
+            }
+            
+            return dateRet;
         }
     }
 }
