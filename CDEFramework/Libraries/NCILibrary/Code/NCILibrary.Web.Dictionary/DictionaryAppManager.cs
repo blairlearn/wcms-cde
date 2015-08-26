@@ -52,6 +52,11 @@ namespace NCI.Web.Dictionary
             {
                 log.error("Error in Json string from service: " + ex.ToString());
             }
+
+            if (term.Term.ID == null)
+            {
+                return term;
+            }
             term.Term = dicTerm;
 
             //set Meta Data from Database
@@ -106,9 +111,11 @@ namespace NCI.Web.Dictionary
                 }
 
             }
+            if (srchReturn.Result.Length == 0)
+            {
+                return srchReturn;
+            }
             srchReturn.Result = resultList.ToArray();
-            
-
 
             //set meta data
             srchReturn.Meta = new SearchReturnMeta();
@@ -180,6 +187,10 @@ namespace NCI.Web.Dictionary
                     log.error("Error in Json string from service: " + ex.ToString());
                 }
 
+            }
+            if (exRet.Result.Length == 0)
+            {
+                return exRet;
             }
             exRet.Result = expansionList.ToArray();
 
