@@ -23,7 +23,8 @@ namespace NCI.Services.Dictionary.BusinessObjects
 
         public void Jsonize(Jsonizer builder)
         {
-            throw new System.NotImplementedException();
+            builder.AddMember("meta", Meta, false);
+            builder.AddMember("result", Result, true);
         }
     }
 }
