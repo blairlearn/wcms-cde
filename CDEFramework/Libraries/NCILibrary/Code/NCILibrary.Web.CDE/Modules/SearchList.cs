@@ -32,8 +32,9 @@ namespace NCI.Web.CDE.Modules
     /// </summary>
     public class SearchFilters
     {
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public List<TaxonomyFilter> TaxonomyFilters { get; set; }
+        [XmlArray("TaxonomyFilters", Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem("TaxonomyFilter", Form = XmlSchemaForm.Unqualified)]
+        public TaxonomyFilter[] TaxonomyFilters { get; set; }
     }
 
     /// <summary>
@@ -45,12 +46,14 @@ namespace NCI.Web.CDE.Modules
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string TaxonomyName { get; set; }
 
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public List<Taxon> Taxons { get; set; }
+        [XmlArray("Taxons", Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem("Taxon", Form = XmlSchemaForm.Unqualified)]
+        public Taxon[] Taxons { get; set; }
     }
 
     /// <summary>
-    /// This class represents a taxon, which has both a taxon name.
+    /// This class represents a taxon, which has both a taxon name
+    /// and a taxon ID.
     /// </summary>
     public class Taxon
     {
@@ -129,7 +132,7 @@ namespace NCI.Web.CDE.Modules
         public SearchParameters SearchParameters { get; set; }
 
         /// <summary>
-        /// Search filters, specifically taxonomy filter
+        /// Search filters, specifically taxonomy filters
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public SearchFilters SearchFilters { get; set; }

@@ -32,32 +32,32 @@ namespace NCI.DataManager
         /// <param name="language"></param>
         /// <returns>A collection which contains Search Result objects.</returns>
         public static ICollection<SearchResult> Execute(
-        int         currentPage, 
-        DateTime    startDate, 
-        DateTime    endDate, 
-        string      keyWords, 
-        int         recordsPerPage,
-        int         maxResults, 
-        string      searchFilter, 
-        string      excludeSearchFilter, 
-        int      resultsSortOrder, 
-        string      language, 
-        bool        isLive, 
-        out int     actualMaxResult
+        int currentPage,
+        DateTime startDate,
+        DateTime endDate,
+        string keyWords,
+        int recordsPerPage,
+        int maxResults,
+        string searchFilter,
+        string excludeSearchFilter,
+        int resultsSortOrder,
+        string language,
+        bool isLive,
+        out int actualMaxResult
             )
-        { 
+        {
             try
             {
                 ICollection<SearchResult> searchResults = new Collection<SearchResult>();
                 actualMaxResult = 0;
 
                 string connString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
-                
+
                 if (!string.IsNullOrEmpty(connString))
                 {
                     using (SqlConnection conn = SqlHelper.CreateConnection(connString))
                     {
-                        using (SqlDataReader reader =                                    
+                        using (SqlDataReader reader =
                                     SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
                                     new SqlParameter("@Keyword ", string.IsNullOrEmpty(keyWords) ? null : keyWords),
                                     new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)),
@@ -177,6 +177,7 @@ namespace NCI.DataManager
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <param name="keyWords"></param>
+        /// <param name="taxonomyFiltersTable"></param>
         /// <param name="recordsPerPage"></param>
         /// <param name="maxResults"></param>
         /// <param name="searchFilter"></param>
@@ -192,6 +193,7 @@ namespace NCI.DataManager
         DateTime startDate,
         DateTime endDate,
         string keyWords,
+        DataTable taxonomyFiltersTable,
         int recordsPerPage,
         int maxResults,
         string searchFilter,
@@ -210,31 +212,60 @@ namespace NCI.DataManager
 
                 string connString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
 
+                SqlParameter taxonomyParam = new SqlParameter("@taxonomyFilter", taxonomyFiltersTable);
+                taxonomyParam.SqlDbType = SqlDbType.Structured;
+                taxonomyParam.TypeName = "dbo.udt_TaxonomyFilter";
+
                 if (!string.IsNullOrEmpty(connString))
                 {
                     using (SqlConnection conn = SqlHelper.CreateConnection(connString))
                     {
-                        using (SqlDataReader reader =
-                                    SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
-                                    new SqlParameter("@Keyword ", string.IsNullOrEmpty(keyWords) ? null : keyWords),
-                                    new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)),
-                                    new SqlParameter("@EndDate", endDate == DateTime.MaxValue ? null : String.Format("{0:MM/dd/yyyy}", endDate)),
-                                    new SqlParameter("@SearchFilter", searchFilter),
-                                    new SqlParameter("@excludeSearchFilter", excludeSearchFilter),
-                                    new SqlParameter("@ResultsSortOrder", resultsSortOrder),
-                                    new SqlParameter("@language", language),
-                                    new SqlParameter("@maxResults", maxResults),
-                                    new SqlParameter("@recordsPerPage", recordsPerPage),
-                                    new SqlParameter("@StartPage", currentPage),
-                                    new SqlParameter("@isLive", isLive ? 1 : 0),
-                                    new SqlParameter("@siteName", sitename)
-                            ))
+                        SqlDataReader reader;
+                        if (taxonomyFiltersTable == null)
+                        {
+                            // Do not pass in taxonomyParam if the table is null
+                            reader = SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
+                                new SqlParameter("@Keyword ", string.IsNullOrEmpty(keyWords) ? null : keyWords),
+                                new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)),
+                                new SqlParameter("@EndDate", endDate == DateTime.MaxValue ? null : String.Format("{0:MM/dd/yyyy}", endDate)),
+                                new SqlParameter("@SearchFilter", searchFilter),
+                                new SqlParameter("@excludeSearchFilter", excludeSearchFilter),
+                                new SqlParameter("@ResultsSortOrder", resultsSortOrder),
+                                new SqlParameter("@language", language),
+                                new SqlParameter("@maxResults", maxResults),
+                                new SqlParameter("@recordsPerPage", recordsPerPage),
+                                new SqlParameter("@StartPage", currentPage),
+                                new SqlParameter("@isLive", isLive ? 1 : 0),
+                                new SqlParameter("@siteName", sitename)
+                            );
+                        }
+                        else
+                        {
+                            // Pass in taxonomyParam if there are taxonomy tags to filter by
+                            reader = SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
+                                new SqlParameter("@Keyword ", string.IsNullOrEmpty(keyWords) ? null : keyWords),
+                                new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)),
+                                new SqlParameter("@EndDate", endDate == DateTime.MaxValue ? null : String.Format("{0:MM/dd/yyyy}", endDate)),
+                                new SqlParameter("@SearchFilter", searchFilter),
+                                new SqlParameter("@excludeSearchFilter", excludeSearchFilter),
+                                new SqlParameter("@ResultsSortOrder", resultsSortOrder),
+                                new SqlParameter("@language", language),
+                                new SqlParameter("@maxResults", maxResults),
+                                new SqlParameter("@recordsPerPage", recordsPerPage),
+                                new SqlParameter("@StartPage", currentPage),
+                                new SqlParameter("@isLive", isLive ? 1 : 0),
+                                new SqlParameter("@siteName", sitename),
+                                taxonomyParam
+                            );
+                        }
+
+                        using (reader)
                         {
                             while (reader.Read())
                             {
                                 actualMaxResult = reader.GetInt32(0);
                             }
-
+                            
                             if (reader.NextResult())
                             {
                                 SqlFieldValueReader sqlFVReader = new SqlFieldValueReader(reader);
@@ -297,19 +328,19 @@ namespace NCI.DataManager
                                     DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dlm != DateTime.MinValue)
                                         searchResult.UpdatedDate = String.Format("{0:MM/dd/yyyy}", dlm);
-                                    
+
 
                                     DateTime dlr = sqlFVReader.GetDateTime("date_last_reviewed");
                                     if (dlr != DateTime.MinValue)
                                         searchResult.ReviewedDate = String.Format("{0:MM/dd/yyyy}", dlr);
-                                    
+
 
                                     if (dateDisplay == 0)
                                     {
                                         searchResult.DateForLists = "";
                                         searchResult.DateForListsEs = "";
                                         searchResults.Add(searchResult);
-                                        break;
+                                        continue;
                                     }
                                     else if (dateDisplay == 1)
                                     {

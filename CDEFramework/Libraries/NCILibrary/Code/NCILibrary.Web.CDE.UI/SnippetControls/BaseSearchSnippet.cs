@@ -10,6 +10,7 @@ using NCI.Web.CDE.Modules;
 using NCI.DataManager;
 using NCI.Web.UI.WebControls;
 using NCI.Web.CDE.UI.Configuration;
+using System.Data;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
@@ -94,6 +95,21 @@ namespace NCI.Web.CDE.UI.SnippetControls
             }
         }
 
+        /// <summary>
+        /// TaxonomyFilters is a DataTable consisting of TaxonomyName and TaxonID 
+        /// for each taxonomy filter selected on a dynamic list.
+        /// If there are no filters selected, then send null.
+        /// </summary>
+        virtual protected DataTable TaxonomyFilters
+        {
+            get
+            {
+                if (this.SearchList.SearchFilters == null || this.SearchList.SearchFilters.TaxonomyFilters.Length == 0)
+                    return null;
+                return ReturnTaxonomySqlParam(this.SearchList.SearchFilters.TaxonomyFilters);
+            }
+        }
+
         protected virtual SearchList SearchList
         { get; set; }
 
@@ -131,11 +147,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         keyWord = string.Empty;
                     }
 
-                    
-
                     // Call the  datamanger to perform the search
                     ICollection<SearchResult> searchResults =
-                                SearchDataManager.Execute(CurrentPage, startDate, endDate, keyWord,
+                                SearchDataManager.Execute(CurrentPage, startDate, endDate, keyWord, TaxonomyFilters,
                                     this.SearchList.RecordsPerPage, this.SearchList.MaxResults, this.SearchList.SearchFilter,
                                     this.SearchList.ExcludeSearchFilter, this.SearchList.ResultsSortOrder, this.SearchList.Language, Settings.IsLive, out actualMaxResult, siteName);
 
@@ -154,11 +168,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     this.PageInstruction.AddUrlFilter("Print", (name, url) =>
                     {
-					
-						if (url.QueryParameters.ContainsKey("keyword") == false)
-						{
-							url.QueryParameters.Add("keyword", keyWord);
-						}
+
+                        if (url.QueryParameters.ContainsKey("keyword") == false)
+                        {
+                            url.QueryParameters.Add("keyword", keyWord);
+                        }
                         if (!((dynamicSearch.StartDate == "01/01/0001") || (dynamicSearch.EndDate == "12/31/9999")))
                         {
                             url.QueryParameters.Add("startmonth", startDate.Month.ToString());
@@ -225,11 +239,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
             pager.PageParamName = "page";
             pager.PagerStyleSettings.SelectedIndexCssClass = "pager-SelectedPage";
             pager.BaseUrl = PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
-            
+
             string searchQueryParams = string.Empty;
             if (this.SearchList.SearchType.ToLower() == "keyword" || this.SearchList.SearchType.ToLower() == "keyword_with_date")
                 searchQueryParams = "?keyword=" + Server.HtmlEncode(KeyWords);
-            if (this.SearchList.SearchType.ToLower() == "date" || this.SearchList.SearchType.ToLower()=="keyword_with_date")
+            if (this.SearchList.SearchType.ToLower() == "date" || this.SearchList.SearchType.ToLower() == "keyword_with_date")
             {
                 if (string.IsNullOrEmpty(searchQueryParams))
                     searchQueryParams = "?";
@@ -239,7 +253,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     searchQueryParams += string.Format("startMonth={0}&startyear={1}&endMonth={2}&endYear={3}", StartDate.Month, StartDate.Year, EndDate.Month, EndDate.Year);
                 else
                     searchQueryParams += "startMonth=&startyear=&endMonth=&endYear=";
-             }
+            }
 
             pager.BaseUrl += searchQueryParams;
 
@@ -258,6 +272,38 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 throw new Exception("One or more of these fields SearchFilter,ResultsTemplate,SearchType cannot be empty, correct the xml data.");
 
         }
+
+        private DataTable ReturnTaxonomySqlParam(TaxonomyFilter[] taxonomyFiltersList)
+        {
+            DataTable dt = new DataTable();
+
+            // Add first column to table
+            DataColumn dc = new DataColumn();
+            dc.DataType = System.Type.GetType("System.String");
+            dc.ColumnName = "taxonomyName";
+            dc.MaxLength = 250;
+            dt.Columns.Add(dc);
+
+            // Add second column to table
+            DataColumn dc1 = new DataColumn();
+            dc1.DataType = System.Type.GetType("System.Int32");
+            dc1.ColumnName = "taxonID";
+            dt.Columns.Add(dc1);
+
+            foreach (TaxonomyFilter filter in taxonomyFiltersList)
+            {
+                foreach (Taxon taxon in filter.Taxons)
+                {
+                    DataRow row = dt.NewRow();
+                    row["taxonomyName"] = filter.TaxonomyName;
+                    row["taxonID"] = taxon.ID;
+                    dt.Rows.Add(row);
+                }
+            }
+
+            return dt;
+        }
+
         #endregion
 
     }
