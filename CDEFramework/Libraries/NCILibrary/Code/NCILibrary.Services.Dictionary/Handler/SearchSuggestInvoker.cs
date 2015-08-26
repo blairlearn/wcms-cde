@@ -7,10 +7,23 @@ namespace NCI.Services.Dictionary.Handler
 {
     internal class SearchSuggestInvoker : Invoker
     {
+        private String SearchText { get; set; }
+        private SearchType SearchType { get; set; }
+        private DictionaryType Dictionary { get; set; }
+        private Language Language { get; set; }
+
         public SearchSuggestInvoker(HttpRequest request)
             : base(request)
         {
-            throw new NotImplementedException();
+            SearchText = GetSearchText();
+            SearchType = GetSearchType();
+            Dictionary = GetDictionary();
+            Language = GetLanguage();
+        }
+
+        public override void Invoke()
+        {
+            Object o = Service.SearchSuggest(SearchText, SearchType, Dictionary, Language);
         }
     }
 }

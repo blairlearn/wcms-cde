@@ -48,6 +48,8 @@ namespace NCI.Services.Dictionary
             Invoker invoker = Invoker.Create(method, request);
 
             // Get and invoke delegat that calls the particular web method.
+            invoker.Invoke();
+
             // Put together the response.
         }
 
