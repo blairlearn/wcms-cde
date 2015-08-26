@@ -26,6 +26,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
     [ToolboxData("<{0}:BlogLandingDynamicList runat=server></{0}:BlogLandingDynamicList>")]
     public class BlogLandingDynamicList : DynamicListSnippet
     {
+        /*
         protected override void SetupPager(int recordsPerPage, int totalRecordCount)
         {
             BlogPager blogLandingPager = new BlogPager();
@@ -65,7 +66,28 @@ namespace NCI.Web.CDE.UI.SnippetControls
             blogLandingPager.BaseUrl += searchQueryParams;
 
             Controls.Add(blogLandingPager);
-        }
+        }*/
 
+        override protected SearchList SearchList
+        {
+            get
+            {
+                if (base.SearchList == null)
+                {
+                    DynamicListHelper helper = new DynamicListHelper();
+                    base.SearchList = ModuleObjectFactory<DynamicList>.GetModuleObject(SnippetInfo.Data);
+                    base.SearchList.ResultsTemplate = base.SearchList.ResultsTemplate =
+                    helper.languageStrings() +
+                    "<h3>" + base.SearchList.SearchTitle + "</h3>" +
+                    helper.openList() +
+                    helper.imageString() +
+                    helper.titleString() +
+                    helper.dateString() +
+                    helper.descString() +
+                    helper.closeList();
+                }
+                return base.SearchList;
+            }
+        }
     }
 }

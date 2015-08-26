@@ -613,6 +613,7 @@
     </Content>
     <Content Include="DictionaryService.svc" />
     <Content Include="DrugDictionary.svc" />
+    <Content Include="DynamicListTemplates\DynamicBlogDescImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListDescNoImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListDescImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListNoDescImgDate.ascx" />
