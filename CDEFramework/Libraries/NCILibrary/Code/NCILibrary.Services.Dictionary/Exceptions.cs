@@ -47,4 +47,19 @@ namespace NCI.Services.Dictionary
             : base(info, context) { }
     }
 
+    /// <summary>
+    /// General purpose exception in the dictionary service.
+    /// </summary>
+    [global::System.Serializable]
+    public class DictionaryException : Exception
+    {
+        public DictionaryException() { }
+        public DictionaryException(string message) : base(message) { }
+        public DictionaryException(string message, Exception inner) : base(message, inner) { }
+        protected DictionaryException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context)
+            : base(info, context) { }
+    }
+
 }

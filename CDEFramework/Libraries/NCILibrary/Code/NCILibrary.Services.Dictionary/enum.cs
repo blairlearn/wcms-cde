@@ -54,4 +54,19 @@ namespace NCI.Services.Dictionary
         Patient = 1,
         HealthProfessional = 2
     }
+
+    /// <summary>
+    /// List of service methods
+    /// </summary>
+    internal enum ApiMethodType
+    {
+        Unknown = 0,
+        GetTerm = 1,
+        Search = 2,
+        SearchSuggest = 3,
+        Expand = 4
+    }
+
+
+
 }
