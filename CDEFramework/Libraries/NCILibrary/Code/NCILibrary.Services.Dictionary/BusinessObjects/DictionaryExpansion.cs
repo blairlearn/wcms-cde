@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace NCI.Services.Dictionary.BusinessObjects
 {
     [DataContract()]
-    public class DictionaryExpansion
+    public class DictionaryExpansion : IJsonizable
     {
 
         /// <summary>
@@ -39,5 +39,13 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// </summary>
         [DataMember(Name = "term")]
         public String TermDetail { get; set; }
+
+
+        public void Jsonize(Jsonizer builder)
+        {
+            builder.AddMember("id", ID, false);
+            builder.AddMember("matched", MatchedTerm, false);
+            builder.AddJsonString("term", TermDetail, true);
+        }
     }
 }

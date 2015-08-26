@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\DictionaryExpansion.cs" />
+    <Compile Include="BusinessObjects\IJsonizable.cs" />
     <Compile Include="BusinessObjects\DictionarySuggestion.cs" />
     <Compile Include="BusinessObjects\SearchReturn.cs" />
     <Compile Include="BusinessObjects\SearchReturnMeta.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Handler\Invoker.cs" />
     <Compile Include="Handler\SearchInvoker.cs" />
     <Compile Include="Handler\SearchSuggestInvoker.cs" />
+    <Compile Include="Jsonizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchResults.cs" />
     <Compile Include="SuggestionResults.cs" />

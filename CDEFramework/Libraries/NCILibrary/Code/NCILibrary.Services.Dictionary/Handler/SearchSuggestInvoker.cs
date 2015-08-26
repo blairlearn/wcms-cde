@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using NCI.Services.Dictionary.BusinessObjects;
+
 namespace NCI.Services.Dictionary.Handler
 {
     internal class SearchSuggestInvoker : Invoker
@@ -21,9 +23,9 @@ namespace NCI.Services.Dictionary.Handler
             Language = GetLanguage();
         }
 
-        public override void Invoke()
+        public override IJsonizable Invoke()
         {
-            Object o = Service.SearchSuggest(SearchText, SearchType, Dictionary, Language);
+            return Service.SearchSuggest(SearchText, SearchType, Dictionary, Language);
         }
     }
 }

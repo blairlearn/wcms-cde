@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using NCI.Services.Dictionary.BusinessObjects;
+
 namespace NCI.Services.Dictionary.Handler
 {
     internal class ExpandInvoker : Invoker
@@ -26,9 +28,9 @@ namespace NCI.Services.Dictionary.Handler
             Language = GetLanguage();
         }
 
-        public override void Invoke()
+        public override IJsonizable Invoke()
         {
-            Object o = Service.Expand(SearchText, IncludeTypes, Offset, MaxResults, Dictionary, Language);
+            return Service.Expand(SearchText, IncludeTypes, Offset, MaxResults, Dictionary, Language);
         }
     }
 }

@@ -4,7 +4,9 @@ using System.Web;
 using NCI.Logging;
 using NCI.Util;
 
+using NCI.Services.Dictionary.BusinessObjects;
 using NCI.Services.Dictionary.Handler;
+using System.Text;
 
 namespace NCI.Services.Dictionary
 {
@@ -36,21 +38,37 @@ namespace NCI.Services.Dictionary
 
         public void ProcessRequest(HttpContext context)
         {
-            // Get the paramters from context.Request.QueryString
-            context.Response.Write("Blah, blah, blah.  Whatever.");
+                HttpRequest request = context.Request;
+                HttpResponse response = context.Response;
 
-            HttpRequest request = context.Request;
+                try
+                {
+                    // Get the particular method being invoked.
+                    ApiMethodType method = ParseApiMethod(request);
 
-            // Get the particular method being invoked.
-            ApiMethodType method = ParseApiMethod(request);
+                    // Get object for invoking the specific dictionary method.
+                    Invoker invoker = Invoker.Create(method, request);
 
-            // Get object for invoking the specific dictionary method.
-            Invoker invoker = Invoker.Create(method, request);
+                    // Get and invoke delegat that calls the particular web method.
+                    IJsonizable result = invoker.Invoke();
 
-            // Get and invoke delegat that calls the particular web method.
-            invoker.Invoke();
+                    // Put together the response.
+                    Jsonizer json = new Jsonizer(result);
 
-            // Put together the response.
+                    response.ContentType = "application/json";
+                    response.Write(json.ToJsonString());
+                }
+                catch (HttpParseException ex)
+                {
+                    response.Status = ex.Message;
+                    response.StatusCode = 400;
+                }
+                catch (Exception ex)
+                {
+                    log.error(String.Format("Error processing dictionary request. Query: {0}", request.RawUrl), ex);
+                    response.Status = "Error processing dictionary request.";
+                    response.StatusCode = 500;
+                }
         }
 
         #endregion

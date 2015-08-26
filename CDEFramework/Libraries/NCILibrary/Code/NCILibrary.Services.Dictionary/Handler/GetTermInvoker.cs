@@ -21,9 +21,9 @@ namespace NCI.Services.Dictionary.Handler
             Language = GetLanguage();
         }
 
-        public override void Invoke()
+        public override IJsonizable Invoke()
         {
-            Object o = Service.GetTerm(TermID, Dictionary, Language);
+            return Service.GetTerm(TermID, Dictionary, Language);
         }
     }
 }

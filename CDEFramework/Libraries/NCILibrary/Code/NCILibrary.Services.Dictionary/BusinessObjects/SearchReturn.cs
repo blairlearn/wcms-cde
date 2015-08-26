@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
@@ -10,7 +11,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
     /// Outermost data structure for returns from Expand().
     /// </summary>
     [DataContract()]
-    public class SearchReturn
+    public class SearchReturn : IJsonizable
     {
         public SearchReturn()
         {
@@ -29,5 +30,11 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// </summary>
         [DataMember(Name = "result")]
         public DictionaryExpansion[] Result { get; set; }
+
+        public void Jsonize(Jsonizer builder)
+        {
+            builder.AddMember("meta", Meta, false);
+            builder.AddMember("result", Result, true);
+        }
     }
 }

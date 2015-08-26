@@ -7,7 +7,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
     /// Metadata about a call to GetTerm().
     /// </summary>
     [DataContract()]
-    public class TermReturnMeta : MetaCommon
+    public class TermReturnMeta : MetaCommon, IJsonizable
     {
         /// <summary>
         /// The Term's audience Patient or HealthProfessional
@@ -20,5 +20,12 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// </summary>
         [DataMember(Name = "language")]
         public String Language { get; set; }
+
+
+        public void Jsonize(Jsonizer builder)
+        {
+            builder.AddMember("audience", Audience, false);
+            builder.AddMember("language", Language, true);
+        }
     }
 }

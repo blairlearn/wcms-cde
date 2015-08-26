@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace NCI.Services.Dictionary.BusinessObjects
 {
     [DataContract()]
-    public class SearchReturnMeta : MetaCommon
+    public class SearchReturnMeta : MetaCommon,  IJsonizable
     {
         [DataMember(Name = "offset")]
         public int Offset { get; set; }
@@ -29,5 +29,13 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// </summary>
         [DataMember(Name = "language")]
         public String Language { get; set; }
+
+        public void Jsonize(Jsonizer builder)
+        {
+            builder.AddMember("offset", Offset, false);
+            builder.AddMember("result_count", ResultCount, false);
+            builder.AddMember("audience", Audience, false);
+            builder.AddMember("language", Language, true);
+        }
     }
 }

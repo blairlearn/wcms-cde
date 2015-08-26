@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Text;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
@@ -6,7 +7,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
     /// Outermost data structure for returns from ValidateSearchSuggest().
     /// </summary>
     [DataContract()]
-    public class SuggestReturn
+    public class SuggestReturn : IJsonizable
     {
         public SuggestReturn()
         {
@@ -19,5 +20,10 @@ namespace NCI.Services.Dictionary.BusinessObjects
 
         [DataMember(Name = "result")]
         public DictionarySuggestion[] Result { get; set; }
+
+        public void Jsonize(Jsonizer builder)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

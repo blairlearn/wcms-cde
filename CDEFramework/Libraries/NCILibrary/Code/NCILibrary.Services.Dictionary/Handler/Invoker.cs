@@ -56,7 +56,7 @@ namespace NCI.Services.Dictionary.Handler
             return invoker;
         }
 
-        public abstract void Invoke();
+        public abstract IJsonizable Invoke();
 
         protected int GetTermID()
         {

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using System;
+using System.Text;
 using System.IO;
 
 namespace NCI.Services.Dictionary.BusinessObjects
@@ -9,7 +10,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
     /// Term lookup.
     /// </summary>
     [DataContract()]
-    public class TermReturn
+    public class TermReturn : IJsonizable
     {
         /// <summary>
         /// Metadata about the term being returned.
@@ -29,5 +30,11 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// </remarks>
         [DataMember(Name = "term")]
         public String Term { get; set; }
+
+        public void Jsonize(Jsonizer builder)
+        {
+            builder.AddMember("meta", Meta, false);
+            builder.AddJsonString("term", Term, true);
+        }
     }
 }
