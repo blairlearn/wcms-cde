@@ -53,12 +53,10 @@ namespace NCI.Web.Dictionary
                 log.error("Error in Json string from service: " + ex.ToString());
             }
 
+            term.Term = dicTerm;
+
             if (term.Term != null)
             {
-
-
-                term.Term = dicTerm;
-
                 //set Meta Data from Database
                 term.Meta.Language = termRet.Meta.Language;
                 term.Meta.Audience = termRet.Meta.Audience;
@@ -116,18 +114,14 @@ namespace NCI.Web.Dictionary
 
             if (srchReturn.Result.Length > 0)
             {
-              
-            
-            
 
-            //set meta data
-            srchReturn.Meta = new SearchReturnMeta();
-            srchReturn.Meta.Audience = searchRet.Meta.Audience;
-            srchReturn.Meta.Language = searchRet.Meta.Language;
-            srchReturn.Meta.Offset = searchRet.Meta.Offset;
-            srchReturn.Meta.ResultCount = searchRet.Meta.ResultCount;
-            srchReturn.Meta.Messages = searchRet.Meta.Messages;
-
+                //set meta data
+                srchReturn.Meta = new SearchReturnMeta();
+                srchReturn.Meta.Audience = searchRet.Meta.Audience;
+                srchReturn.Meta.Language = searchRet.Meta.Language;
+                srchReturn.Meta.Offset = searchRet.Meta.Offset;
+                srchReturn.Meta.ResultCount = searchRet.Meta.ResultCount;
+                srchReturn.Meta.Messages = searchRet.Meta.Messages;
 
             }
 
@@ -195,10 +189,7 @@ namespace NCI.Web.Dictionary
             exRet.Result = expansionList.ToArray();
             if (exRet.Result.Length > 0)
             {
-                
-            
-                
-
+              
                 //set up meta data
                 exRet.Meta = new SearchReturnMeta();
                 exRet.Meta.ResultCount = expandRet.Meta.ResultCount;
