@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
 
   </HEAD>
-  <FRAMESET border=0 frameSpacing=0 rows=55,*,26 frameBorder=no>
+  <FRAMESET border=0 frameSpacing=0 rows=80,*,26 frameBorder=no>
 	<FRAME name="Header" title="Header" src="/Common/PopUps/<%=Header%>" noResize scrolling=no>
 	<FRAME name="Definition" title="Definition" src="/Common/PopUps/popHelp.html" noResize>
 	<FRAME name="Footer" title="Footer" src="/Common/PopUps/<%=Footer%>" noResize scrolling=no>

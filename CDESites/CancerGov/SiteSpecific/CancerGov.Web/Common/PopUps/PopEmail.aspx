@@ -11,7 +11,7 @@
             <script src="/PublishedContent/js/respond.js"></script>
         <![endif]-->
   </HEAD>
-  <FRAMESET border=0 frameSpacing=0 rows=55,*,26 frameBorder=no>
+  <FRAMESET border=0 frameSpacing=0 rows=80,*,26 frameBorder=no>
 	<FRAME name="Header" title="Header" src="/Common/PopUps/<%=Header%>" noResize scrolling=no>
 	<FRAME name="Email" title="Email" src="/Common/PopUps/Email.aspx<%=Request.Url.Query%>" noResize>
 	<FRAME name="Footer" title="Footer" src="/Common/PopUps/<%=Footer%>" noResize scrolling=no>
