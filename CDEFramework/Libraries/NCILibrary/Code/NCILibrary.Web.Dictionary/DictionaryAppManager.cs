@@ -53,17 +53,17 @@ namespace NCI.Web.Dictionary
                 log.error("Error in Json string from service: " + ex.ToString());
             }
 
-            if (term.Term.ID == null)
+            if (term.Term != null)
             {
-                return term;
+
+
+                term.Term = dicTerm;
+
+                //set Meta Data from Database
+                term.Meta.Language = termRet.Meta.Language;
+                term.Meta.Audience = termRet.Meta.Audience;
+                term.Meta.Messages = termRet.Meta.Messages;
             }
-            term.Term = dicTerm;
-
-            //set Meta Data from Database
-            term.Meta.Language = termRet.Meta.Language;
-            term.Meta.Audience = termRet.Meta.Audience;
-            term.Meta.Messages = termRet.Meta.Messages;
-
 
             return term;
         }
@@ -111,10 +111,10 @@ namespace NCI.Web.Dictionary
                 }
 
             }
-            if (srchReturn.Result.Length == 0)
+            if (srchReturn.Result.Length > 0)
             {
-                return srchReturn;
-            }
+              
+            
             srchReturn.Result = resultList.ToArray();
 
             //set meta data
@@ -126,7 +126,7 @@ namespace NCI.Web.Dictionary
             srchReturn.Meta.Messages = searchRet.Meta.Messages;
 
 
-            
+            }
 
 
             return srchReturn;
@@ -188,17 +188,17 @@ namespace NCI.Web.Dictionary
                 }
 
             }
-            if (exRet.Result.Length == 0)
+            if (exRet.Result.Length > 0)
             {
-                return exRet;
+                
+            
+                exRet.Result = expansionList.ToArray();
+
+                //set up meta data
+                exRet.Meta = new SearchReturnMeta();
+                exRet.Meta.ResultCount = expandRet.Meta.ResultCount;
+                exRet.Meta.Messages = expandRet.Meta.Messages;
             }
-            exRet.Result = expansionList.ToArray();
-
-            //set up meta data
-            exRet.Meta = new SearchReturnMeta();
-            exRet.Meta.ResultCount = expandRet.Meta.ResultCount;
-            exRet.Meta.Messages = expandRet.Meta.Messages;
-
 
 
             return exRet;
