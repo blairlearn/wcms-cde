@@ -189,9 +189,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
          */
         public string blogBodyString()
         {
-            string bbody = @"
-                <p>$resultItem.DateForLists</p>
-                <p>$resultItem.Author</p>
+            string dateForBlogs = @"$resultItem.DateForBlogs by ";
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                dateForBlogs = @"$resultItem.DateForBlogsEs por ";
+
+            string blogBody = @"
+                <p>" + dateForBlogs + @"$resultItem.Author</p>
                 <p class=""description dynamic-description"">
                 ##
                 ## Display blog body
@@ -205,7 +208,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     #end##
                 </p>##
                 <p><a href=$resultItem.HRef>$continueString ></a></p><hr/>";
-            return bbody;
+            return blogBody;
         }
 
         /*

@@ -132,6 +132,9 @@ namespace NCI.DataManager
                                     {
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dfp);
                                         searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dfp);
+                                        // Format date for Blog Series page
+                                        searchResult.DateForBlogs = String.Format("{0:MMMM d, yyyy}", dfp);
+                                        searchResult.DateForBlogsEs = dfp.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
                                     }
                                     DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dlm != DateTime.MinValue)
@@ -324,6 +327,9 @@ namespace NCI.DataManager
                                     {
                                         searchResult.PostedDate = String.Format("{0:MM/dd/yyyy}", dfp);
                                         searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dfp);
+                                        // Format date for Blog Series page
+                                        searchResult.DateForBlogs = String.Format("{0:MMMM d, yyyy}", dfp);
+                                        searchResult.DateForBlogsEs = dfp.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
                                     }
                                     DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dlm != DateTime.MinValue)
