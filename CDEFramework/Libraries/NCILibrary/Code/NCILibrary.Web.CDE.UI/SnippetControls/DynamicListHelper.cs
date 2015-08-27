@@ -30,6 +30,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 			#set($updatedString = ""Updated"")##
 			#set($reviewedString = ""Reviewed"")##
             #set($newsString = ""All NCI news"")##
+            #set($continueString = ""Continue Reading"")##
 			";
             if (PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language") == "es")
             {
@@ -41,6 +42,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 				#set($updatedString = ""Actualizaci&oacute;n"")##
 				#set($reviewedString = ""Revisi&oacute;n"")##
                 #set($newsString = ""Todas las noticias del NCI"")##
+                #set($continueString = ""Siga leyendo"")##
 				";
             }
             return pageLanguage;
@@ -188,6 +190,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public string blogBodyString()
         {
             string bbody = @"
+                <p>$resultItem.DateForLists</p>
+                <p>$resultItem.Author</p>
                 <p class=""description dynamic-description"">
                 ##
                 ## Display blog body
@@ -199,7 +203,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     #else##
                         &nbsp;##
                     #end##
-                </p>##";
+                </p>##
+                <p><a href=$resultItem.HRef>$continueString ></a></p><hr/>";
             return bbody;
         }
 
