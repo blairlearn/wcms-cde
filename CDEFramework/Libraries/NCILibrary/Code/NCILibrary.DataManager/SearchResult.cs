@@ -141,6 +141,11 @@ namespace NCI.DataManager
         public Boolean SubscriptionRequired { get; set; }
 
         /// <summary>
+        /// Whether or not Disqus comments have been enabled
+        /// </summary>
+        public Boolean AllowComments { get; set; }
+
+        /// <summary>
         /// File size
         /// </summary>
         public int FileSize { get; set; }

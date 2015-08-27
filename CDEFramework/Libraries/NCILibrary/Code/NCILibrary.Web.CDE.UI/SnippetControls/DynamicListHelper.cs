@@ -186,71 +186,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
         }
 
         /*
-         * Output formatted Blog Post list item 
-         */
-        public string blogBodyString()
-        {
-            string dateForBlogs = @"$resultItem.DateForBlogs by ";
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-                dateForBlogs = @"$resultItem.DateForBlogsEs por ";
-
-
-            string blogBody = @"
-            <div class=""blog-list"">   
-            #foreach($resultItem in $DynamicSearch.Results)##
-                #set($prettyUrl = $resultItem.HRef)##
-                <div class=""row blog-post"">
-                #if($resultItem.ThumbnailURL.length() > 0)##
-	                <div class=""medium-3 columns post-thumb"">
-		                <a href=""$prettyUrl"" title=""$resultItem.LongTitle"">
-			                <img src=""$resultItem.ThumbnailURL"" alt="""" />
-		                </a>						  
-	                </div>
-                #end##
-	                <div class=""medium-9 columns post-info"">
-		                <div class=""post-title clearfix""><h3><a href=""$prettyUrl"">$resultItem.LongTitle</a></h3>
-                #if($sys.item.hasProperty(""rx:commenting_available""))##
-	                #if($sys.item.getProperty(""rx:commenting_available"").String==true)##
-		                ##need to get the id format
-		                #set($identifier = ${resultItem.ContentType} + ""-""+${resultItem.ContentID})
-			                <a class=""comment-count"" href=""${prettyUrl}#disqus_thread"" data-disqus-identifier=""$identifier"">0 Comments</a>
-	                #end##
-                #end##
-		                </div>
-		                <div class=""date-author"">
-			                <span>" + dateForBlogs + @"$resultItem.Author</span>
-		                </div>
-		                <div>
-                #if($resultItem.BlogBody.length()>0)##
-	                $resultItem.BlogBody
-                #else##
-	                $resultItem.LongDescription
-                #end##
-		                </div>
-		                <p>
-			                <a href=""$prettyUrl"">Continue Reading ></a>
-		                </p>
-	                </div>
-                </div>
-                #set($itemType= $resultItem.type)##
-                #set($identifier = $itemType + ""-""+$resultItem.ContentID)
-            </div>
-            <script type=""text/javascript"">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-            var disqus_shortname = '$DynamicSearch.DisqusShortname'; // required: replace example with your forum shortname
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function () {
-            var s = document.createElement('script'); s.async = true;
-            s.type = 'text/javascript';
-            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-            }());
-            </script>##
-            #end";
-            return blogBody;
-        }
-
-        /*
          * Output long description if exists.
          */
         public string descString()
@@ -310,6 +245,72 @@ namespace NCI.Web.CDE.UI.SnippetControls
             </ul>
             ";
             return close;
+        }
+
+
+        /*
+         * Output formatted Blog Post list item 
+         */
+        public string blogBodyString()
+        {
+            string dateForBlogs = @"$resultItem.DateForBlogs by ";
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                dateForBlogs = @"$resultItem.DateForBlogsEs por ";
+
+            string blogBody = @"
+            <div class=""blog-list"">   
+            #foreach($resultItem in $DynamicSearch.Results)##
+                #set($prettyUrl = $resultItem.HRef)##
+                <div class=""row blog-post"">
+                #if($resultItem.ThumbnailURL.length() > 0)##
+	                <div class=""medium-3 columns post-thumb"">
+		                <a href=""$prettyUrl"" title=""$resultItem.LongTitle"">
+			                <img src=""$resultItem.ThumbnailURL"" alt="""" />
+		                </a>						  
+	                </div>
+                #end##
+	                <div class=""medium-9 columns post-info"">
+		                <div class=""post-title clearfix""><h3><a href=""$prettyUrl"">$resultItem.LongTitle</a></h3>
+
+                #if($resultItem.AllowComments)## 
+                    #if($resultItem.AllowComments.String == true)## 
+		                ##need to get the id format
+		                #set($identifier = ${resultItem.ContentType} + ""-""+${resultItem.ContentID})
+			                <a class=""comment-count"" href=""${prettyUrl}#disqus_thread"" data-disqus-identifier=""$identifier"">0 Comments</a>
+                    #end##
+                #end##
+		                </div>
+		                <div class=""date-author"">
+			                <span>" + dateForBlogs + @"$resultItem.Author</span>
+		                </div>
+		                <div>
+                #if($resultItem.BlogBody.length()>0)##
+	                $resultItem.BlogBody
+                #else##
+	                $resultItem.LongDescription
+                #end##
+		                </div>
+		                <p>
+			                <a href=""$prettyUrl"">Continue Reading ></a>
+		                </p>
+	                </div>
+                </div>
+                #set($itemType= $resultItem.type)##
+                #set($identifier = $itemType + ""-""+$resultItem.ContentID)
+            </div>
+            <script type=""text/javascript"">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = '$DynamicSearch.DisqusShortname'; // required: replace example with your forum shortname
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+            }());
+            </script>##
+            #end";
+            return blogBody;
         }
     }
 }
