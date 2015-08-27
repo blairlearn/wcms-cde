@@ -110,12 +110,15 @@ namespace NCI.Web.Dictionary
                     log.error("Error in Json string from service: " + ex.ToString());
                 }
 
-            }
+            } 
+            
+            srchReturn.Result = resultList.ToArray();
+
             if (srchReturn.Result.Length > 0)
             {
               
             
-            srchReturn.Result = resultList.ToArray();
+            
 
             //set meta data
             srchReturn.Meta = new SearchReturnMeta();
@@ -188,11 +191,13 @@ namespace NCI.Web.Dictionary
                 }
 
             }
+
+            exRet.Result = expansionList.ToArray();
             if (exRet.Result.Length > 0)
             {
                 
             
-                exRet.Result = expansionList.ToArray();
+                
 
                 //set up meta data
                 exRet.Meta = new SearchReturnMeta();
