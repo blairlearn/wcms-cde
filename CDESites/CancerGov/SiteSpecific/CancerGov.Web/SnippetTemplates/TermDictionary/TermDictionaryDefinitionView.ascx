@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TermDictionaryDefinitionView.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.TermDictionaryDefinitionView" %>
 <%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="DictionarySearchBlock.ascx" %>
+<%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
  
 <DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
     
@@ -10,16 +11,16 @@
             <dl class="dictionary-list">
                 <dt>
                     <dfn>
-                        <%# ((NCI.Web.Dictionary.BusinessObjects.TermReturn)(Container.DataItem)).Term.Term  %>
+                        <%# ((TermReturn)(Container.DataItem)).Term.Term  %>
                        
                     </dfn>
                 </dt>
                 <dd class="pronunciation">
-                    <a href="<%# ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]%>/<%#((NCI.Web.Dictionary.BusinessObjects.TermReturn)(Container.DataItem)).Term.Pronunciation.Audio  %>" class="CDR_audiofile"><span class="hidden">listen</span></a>
-                    <%# ((NCI.Web.Dictionary.BusinessObjects.TermReturn)(Container.DataItem)).Term.Pronunciation.Key  %>
+                    <a href="<%# ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]%>/<%#((TermReturn)(Container.DataItem)).Term.Pronunciation.Audio  %>" class="CDR_audiofile"><span class="hidden">listen</span></a>
+                    <%# ((TermReturn)(Container.DataItem)).Term.Pronunciation.Key  %>
                 </dd>
                 <dd class="definition">
-                    <%# ((NCI.Web.Dictionary.BusinessObjects.TermReturn)(Container.DataItem)).Term.Definition.Text  %>
+                    <%# ((TermReturn)(Container.DataItem)).Term.Definition.Text  %>
                     
                     <asp:Panel runat="server" ID="pnlRelatedInfo">
                         <div class="related-resources">
@@ -29,7 +30,7 @@
                                     <ul class="no-bullets">
                                 </HeaderTemplate>
                                 <ItemTemplate>
-                                        <li><a href="<%# ((NCI.Web.Dictionary.BusinessObjects.RelatedExternalLink)(Container.DataItem)).Url  %>"><%# ((NCI.Web.Dictionary.BusinessObjects.RelatedExternalLink)(Container.DataItem)).Text  %></a></li>
+                                        <li><a href="<%# ((RelatedExternalLink)(Container.DataItem)).Url  %>"><%# ((RelatedExternalLink)(Container.DataItem)).Text  %></a></li>
                                 </ItemTemplate>
                                 <FooterTemplate>
                                     </ul>
@@ -40,7 +41,7 @@
                                     <ul class="no-bullets">
                                 </HeaderTemplate>
                                 <ItemTemplate>
-                                       <li><a href="<%# ((NCI.Web.Dictionary.BusinessObjects.RelatedSummary)(Container.DataItem)).url  %>"><%# ((NCI.Web.Dictionary.BusinessObjects.RelatedSummary)(Container.DataItem)).Text  %></a></li>
+                                       <li><a href="<%# ((RelatedSummary)(Container.DataItem)).url  %>"><%# ((RelatedSummary)(Container.DataItem)).Text  %></a></li>
                                 </ItemTemplate>
                                 <FooterTemplate>
                                     </ul>
@@ -51,7 +52,7 @@
                                     <ul class="no-bullets">
                                 </HeaderTemplate>
                                 <ItemTemplate>
-                                        <li><a href="<%# ((NCI.Web.Dictionary.BusinessObjects.RelatedDrugSummary)(Container.DataItem)).url  %>"><%# ((NCI.Web.Dictionary.BusinessObjects.RelatedDrugSummary)(Container.DataItem)).Text  %></a></li>
+                                        <li><a href="<%# ((RelatedDrugSummary)(Container.DataItem)).url  %>"><%# ((RelatedDrugSummary)(Container.DataItem)).Text  %></a></li>
                                 </ItemTemplate>
                                 <FooterTemplate>
                                     </ul>
@@ -77,7 +78,7 @@
                                     <img id="termImage" runat="server" src="" alt="" />
                                         <figcaption>
                                             <div class="caption-container no-resize">
-                                            <p><%# ((NCI.Web.Dictionary.BusinessObjects.ImageReference)(Container.DataItem)).Caption  %></p>
+                                            <p><%# ((ImageReference)(Container.DataItem)).Caption  %></p>
                                             </div>
                                         </figcaption>
                                  </figure>
