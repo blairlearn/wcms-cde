@@ -538,7 +538,8 @@ namespace Www.Templates
 
             if (dataItem.DisplayNames.Count > 0)
             {
-                htmlText.Append("<table width=\"" + width + "\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
+                //OCEProject 3106 - Drug Dictionary - add space above synonyms box
+                htmlText.Append("<p><table width=\"" + width + "\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
 
                 foreach (KeyValuePair<string, List<string>> displayPair in dataItem.DisplayNames)
                 {
@@ -569,7 +570,7 @@ namespace Www.Templates
                     AppendOtherNameHtml(htmlText, displayName, syn, displayPair.Value.Count);
                 }
 
-                htmlText.Append("</table>");
+                htmlText.Append("</table><p>");
             }
 
             if (!string.IsNullOrEmpty(dataItem.PreferredName))
