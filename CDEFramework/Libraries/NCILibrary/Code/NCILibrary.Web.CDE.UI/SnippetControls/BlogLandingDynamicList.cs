@@ -42,11 +42,23 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 return base.SearchList;
             }
         }
-        /*
+
+        /// <summary>
+        /// Override the numerical pager used on other dynamic lists 
+        /// Displays 'older' and 'newer' links
+        /// </summary>
         protected override void SetupPager(int recordsPerPage, int totalRecordCount)
         {
             BlogPager blogLandingPager = new BlogPager();
             int currentPage = 0;
+            
+            string olderText = "< Older Posts";
+            string newerText = "Newer Posts >";
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language") == "es")
+            {
+                olderText = "< Artículos anteriores";
+                newerText = "Artículos siguientes >";
+            }
 
             blogLandingPager.RecordCount = totalRecordCount;
             blogLandingPager.RecordsPerPage = recordsPerPage;
@@ -59,9 +71,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
             blogLandingPager.PageParamName = "page";
             blogLandingPager.CssClass = "blog-pager clearfix";
             blogLandingPager.PagerStyleSettings.NextPageCssClass = "older";
-            blogLandingPager.PagerStyleSettings.NextPageText = "< Older Posts";
+            blogLandingPager.PagerStyleSettings.NextPageText = olderText;
             blogLandingPager.PagerStyleSettings.PrevPageCssClass = "newer";
-            blogLandingPager.PagerStyleSettings.PrevPageText = "Newer Posts >";
+            blogLandingPager.PagerStyleSettings.PrevPageText = newerText;
            
 
             string searchQueryParams = string.Empty;
@@ -83,6 +95,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             Controls.Add(blogLandingPager);
         }
-        */
+        
     }
 }
