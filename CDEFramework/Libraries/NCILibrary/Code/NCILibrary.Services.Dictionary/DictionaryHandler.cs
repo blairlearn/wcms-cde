@@ -66,7 +66,7 @@ namespace NCI.Services.Dictionary
                 catch (Exception ex)
                 {
                     log.error(String.Format("Error processing dictionary request. Query: {0}", request.RawUrl), ex);
-                    response.Status = "Error processing dictionary request.";
+                    response.StatusDescription = "Error processing dictionary request.";
                     response.StatusCode = 500;
                 }
         }
