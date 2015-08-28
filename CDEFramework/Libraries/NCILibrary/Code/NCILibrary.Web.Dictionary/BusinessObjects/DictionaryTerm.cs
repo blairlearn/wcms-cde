@@ -32,6 +32,18 @@ namespace NCI.Web.Dictionary.BusinessObjects
         public Pronunciation Pronunciation { get; set; }
 
         /// <summary>
+        /// Does the term have a pronuncation element?
+        /// </summary>
+        public Boolean HasPronunciation
+        {
+            get
+            {
+                return (Pronunciation != null)
+                  && Pronunciation.HasPronunciation;
+            }
+        }
+
+        /// <summary>
         /// The date the Term was first published
         /// </summary>
         [DataMember(Name = "date_first_published")]
