@@ -106,7 +106,7 @@ namespace NCI.DataManager
                                     searchResult.BlogBody = sqlFVReader.GetString("blogparagraph");
                                     searchResult.ThumbnailURL = sqlFVReader.GetString("thumbnailurl");
                                     searchResult.Author = sqlFVReader.GetString("author");
-                                    searchResult.AllowComments = sqlFVReader.GetBoolean("allowComments");
+                                    // searchResult.AllowComments = sqlFVReader.GetBoolean("allowComments");
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
 
@@ -299,7 +299,7 @@ namespace NCI.DataManager
                                     searchResult.BlogBody = sqlFVReader.GetString("blogparagraph");
                                     searchResult.ThumbnailURL = sqlFVReader.GetString("thumbnailurl");
                                     searchResult.Author = sqlFVReader.GetString("author");
-                                    searchResult.AllowComments = sqlFVReader.GetBoolean("allowComments");
+                                    // searchResult.AllowComments = sqlFVReader.GetBoolean("allowComments");
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
 
