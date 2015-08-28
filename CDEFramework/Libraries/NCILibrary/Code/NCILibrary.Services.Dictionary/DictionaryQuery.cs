@@ -104,6 +104,7 @@ namespace NCI.Services.Dictionary
             }
 
             SqlParameter matchCountParam = new SqlParameter("@matchCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            int matchCount;
 
             SqlParameter[] parameters = new SqlParameter[] {
                 new SqlParameter("@searchText", SqlDbType.NVarChar){ Value = searchText},
@@ -120,9 +121,22 @@ namespace NCI.Services.Dictionary
             using (SqlConnection conn = SqlHelper.CreateConnection(DBConnectionString))
             {
                 results = SqlHelper.ExecuteDatatable(conn, CommandType.StoredProcedure, SP_SEARCH_DICTIONARY, parameters);
+
+                // There's some unresolved weirdness with matchCountParam.Value coming back as NULL even though
+                // the value is set unconditionally.  This appears to have been due to retrieving the value
+                // after the connection had been closed. But, since that's not definite, check that the parameter
+                // value is not null (or DBNull) and if so, log an error and retrieve a value that will allow
+                // execution to continue.
+                if (DBNull.Value.Equals(matchCountParam.Value) || matchCountParam.Value == null)
+                {
+                    log.warning("Search() encountered null when attempting to retrieve the @matchCount parameter.");
+                    matchCount = int.MaxValue;
+                }
+                else
+                    matchCount = (int)matchCountParam.Value;
             }
 
-            return new SearchResults(results, (int)matchCountParam.Value);
+            return new SearchResults(results, matchCount);
         }
 
         public SuggestionResults SearchSuggest(String searchText, SearchType searchType, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
@@ -132,6 +146,7 @@ namespace NCI.Services.Dictionary
             DataTable results = null;
 
             SqlParameter matchCountParam = new SqlParameter("@matchCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            int matchCount;
 
             SqlParameter[] parameters = new SqlParameter[] {
                 new SqlParameter("@searchText", SqlDbType.NVarChar){ Value = searchText},
@@ -148,9 +163,22 @@ namespace NCI.Services.Dictionary
             using (SqlConnection conn = SqlHelper.CreateConnection(DBConnectionString))
             {
                 results = SqlHelper.ExecuteDatatable(conn, CommandType.StoredProcedure, SP_SEARCH_SUGGEST_DICTIONARY, parameters);
+
+                // There's some unresolved weirdness with matchCountParam.Value coming back as NULL even though
+                // the value is set unconditionally.  This appears to have been due to retrieving the value
+                // after the connection had been closed. But, since that's not definite, check that the parameter
+                // value is not null (or DBNull) and if so, log an error and retrieve a value that will allow
+                // execution to continue.
+                if (DBNull.Value.Equals(matchCountParam.Value) || matchCountParam.Value == null)
+                {
+                    log.warning("Search() encountered null when attempting to retrieve the @matchCount parameter.");
+                    matchCount = int.MaxValue;
+                }
+                else
+                    matchCount = (int)matchCountParam.Value;
             }
 
-            return new SuggestionResults(results, (int)matchCountParam.Value);
+            return new SuggestionResults(results, matchCount);
         }
 
         public SearchResults Expand(String searchText, String[] includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
@@ -165,6 +193,8 @@ namespace NCI.Services.Dictionary
             Array.ForEach(includeTypes, typeName => includeFilter.Rows.Add(typeName));
 
             SqlParameter matchCountParam = new SqlParameter("@matchCount", SqlDbType.Int) { Direction = ParameterDirection.Output };
+            int matchCount;
+
             SqlParameter[] parameters = new SqlParameter[] {
                 new SqlParameter("@searchText", SqlDbType.NVarChar){Value = searchText},
                 new SqlParameter("@IncludeTypes", SqlDbType.Structured){Value = includeFilter},
@@ -181,9 +211,22 @@ namespace NCI.Services.Dictionary
             using (SqlConnection conn = SqlHelper.CreateConnection(DBConnectionString))
             {
                 results = SqlHelper.ExecuteDatatable(conn, CommandType.StoredProcedure, SP_EXPAND_DICTIONARY, parameters);
+
+                // There's some unresolved weirdness with matchCountParam.Value coming back as NULL even though
+                // the value is set unconditionally.  This appears to have been due to retrieving the value
+                // after the connection had been closed. But, since that's not definite, check that the parameter
+                // value is not null (or DBNull) and if so, log an error and retrieve a value that will allow
+                // execution to continue.
+                if (DBNull.Value.Equals(matchCountParam.Value) || matchCountParam.Value == null)
+                {
+                    log.warning("Search() encountered null when attempting to retrieve the @matchCount parameter.");
+                    matchCount = int.MaxValue;
+                }
+                else
+                    matchCount = (int)matchCountParam.Value;
             }
 
-            return new SearchResults(results, (int)matchCountParam.Value);
+            return new SearchResults(results, matchCount);
         }
     }
 }
