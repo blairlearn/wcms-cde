@@ -1,7 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GeneticsTermDictionaryResultsList.ascx.cs"
     Inherits="CancerGov.Web.SnippetTemplates.GenerticsTermDictionaryResultsList" %>
 <%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
+
 <DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
+
 <div class="results">
     <!-- Number of results -->
     <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
@@ -17,21 +19,24 @@
                 <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
             </LayoutTemplate>
             <ItemTemplate>
-                <dt><dfn><a href="<%# DictionaryURL %>?CdrID=<%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).ID  %>"
-                    <%# ResultListViewHrefOnclick(Container)%>>
-                    <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Term%></a>
-                </dfn></dt>
-                <dd class="pronunciation">
-                    <a href="<%# ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]%><%#((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Pronunciation.Audio  %>"
-                        class="CDR_audiofile"><span class="hidden">listen</span></a>
-                    <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Pronunciation.Key%>
-                </dd>
-                <dd class="definition">
-                    <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryTerm)(Container.DataItem)).Definition.Text%>
-                </dd>
-            </ItemTemplate>
+                    <dt>
+                        <dfn>
+                        <a href="<%# DictionaryURL %>?CdrID=<%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                             <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).MatchedTerm%></a>
+                             
+     
+                        </dfn>
+                    </dt>
+                     <dd class="pronunciation">
+                            <a href="<%# ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]%>/<%#((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).Term.Pronunciation.Audio  %>" class="CDR_audiofile"><span class="hidden">listen</span></a>
+                            <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).Term.Pronunciation.Key%>
+                      </dd>
+                    <dd class="definition">
+                         <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).Term.Definition.Text%>
+                    </dd>
+                </ItemTemplate>
             <EmptyDataTemplate>
-                <asp:Panel ID="noMatched" runat="server" Visible="false">
+                <asp:Panel ID="noMatched" runat="server">
                     No matches were found for the word or phrase you entered. Please check your spelling,
                     and try searching again. You can also type the first few letters of your word or
                     phrase, or click a letter in the alphabet and browse through the list of terms that

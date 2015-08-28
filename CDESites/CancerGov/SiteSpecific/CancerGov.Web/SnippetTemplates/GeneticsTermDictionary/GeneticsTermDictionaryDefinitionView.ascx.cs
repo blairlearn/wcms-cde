@@ -71,7 +71,7 @@ namespace CancerGov.Web.SnippetTemplates
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
                                 
                 TermReturn dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
-                if (dataItem != null)
+                if (dataItem != null && dataItem.Term != null && dataItem.Term.Term != null)
                 {
                     ActivateDefinitionView(dataItem);
                     // Web Analytics *************************************************
@@ -84,6 +84,10 @@ namespace CancerGov.Web.SnippetTemplates
                         });
                     }
                 }
+                else
+                {
+                    termDictionaryDefinitionView.Visible = false;
+                }
             }
 
             SetupPrintUrl();
@@ -92,13 +96,15 @@ namespace CancerGov.Web.SnippetTemplates
 
         private void ActivateDefinitionView(TermReturn dataItem)
         {
+
             var myDataSource = new List<TermReturn> { dataItem };
 
+            termDictionaryDefinitionView.Visible = true;
             termDictionaryDefinitionView.DataSource = myDataSource;
             termDictionaryDefinitionView.DataBind();
 
             string termName = dataItem.Term.Term;
-            
+
             CdrID = dataItem.Term.ID.ToString();
 
 
@@ -121,12 +127,13 @@ namespace CancerGov.Web.SnippetTemplates
                 data.Value = termName + ", definition";
             });
 
-           
+
             // Add Genetics Dictionary Term view event to analytics
             PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event12, wbField =>
             {
                 wbField.Value = "";
             });
+
         }
 
 

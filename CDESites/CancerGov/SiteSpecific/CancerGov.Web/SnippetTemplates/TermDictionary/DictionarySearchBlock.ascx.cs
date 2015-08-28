@@ -147,8 +147,11 @@ namespace CancerGov.Web.SnippetTemplates
             radioContains.InputAttributes.Add("onchange", "autoFunc();");
 
             //set language to english by default
+            //this only applies to Genetics and Drug Dictionaries
             DictionaryLanguage = Language.English;
 
+            //set this false by default
+            BContains = false;
             if (!string.IsNullOrEmpty(SrcGroup))
             {
                 BContains = Convert.ToBoolean(SrcGroup);
@@ -160,7 +163,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             if (!string.IsNullOrEmpty(SearchStr))
-                txtSearchString.Text = SearchStr;
+                AutoComplete1.Text = SearchStr;
 
             if (!string.IsNullOrEmpty(Expand))
             {
@@ -203,7 +206,8 @@ namespace CancerGov.Web.SnippetTemplates
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
             SearchReturn resultList = _dictionaryAppManager.Search("%", SearchType.Begins, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
 
-            TotalCount = resultList.Meta.ResultCount;
+            if (resultList != null && resultList.Meta != null)
+                TotalCount = resultList.Meta.ResultCount;
                         
             //dictionarySearchForm 
             bool _isSpanish = false;
@@ -227,9 +231,9 @@ namespace CancerGov.Web.SnippetTemplates
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar1, wbField =>
                 {
                     string suffix = "";
-                    if (Expand != "")
+                    if (!string.IsNullOrEmpty(Expand))
                         suffix = " - AlphaNumericBrowse";
-                    else if (CdrID != "")
+                    else if (!string.IsNullOrEmpty(CdrID))
                         suffix = " - Definition";
                     wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
@@ -247,8 +251,8 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         private void SetupSpanish()
         {
-            txtSearchString.Attributes.Add("aria-label", "Escriba frase o palabra clave");
-            txtSearchString.Attributes.Add("placeholder", "Escriba frase o palabra clave");
+            AutoComplete1.Attributes.Add("aria-label", "Escriba frase o palabra clave");
+            AutoComplete1.Attributes.Add("placeholder", "Escriba frase o palabra clave");
 
             lblStartsWith.Text = "Empieza con";
             lblContains.Text = "Contiene";
@@ -269,8 +273,8 @@ namespace CancerGov.Web.SnippetTemplates
         private void SetupEnglish()
         {
             //Controls            
-            txtSearchString.Attributes.Add("aria-label", "Enter keywords or phrases");
-            txtSearchString.Attributes.Add("placeholder", "Enter keywords or phrases");
+            AutoComplete1.Attributes.Add("aria-label", "Enter keywords or phrases");
+            AutoComplete1.Attributes.Add("placeholder", "Enter keywords or phrases");
 
             btnSearch.Text = "Search";
 
@@ -288,7 +292,23 @@ namespace CancerGov.Web.SnippetTemplates
         {
             SetupEnglish();
             alphaListBox.ShowAll = true;
-                    
+
+            if (WebAnalyticsOptions.IsEnabled)
+            {
+                // Add page name to analytics
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar1, wbField =>
+                {
+                    string suffix = "";
+                    if (!string.IsNullOrEmpty(Expand))
+                        suffix = " - AlphaNumericBrowse";
+                    else if (!string.IsNullOrEmpty(CdrID))
+                        suffix = " - Definition";
+                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
+                });
+
+                Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.GeneticsDictionarySearchNew(this);");
+                alphaListBox.WebAnalyticsFunction = "NCIAnalytics.GeneticsDictionarySearchAlphaList"; // Load A-Z list onclick script
+            }
            
         }
 
@@ -299,7 +319,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected void btnSearch_OnClick(object sender, EventArgs e)
         {
-            SearchStr = txtSearchString.Text;
+            SearchStr = AutoComplete1.Text;
             SearchStr = SearchStr.Replace("[", "[[]");
             CdrID = string.Empty;
             

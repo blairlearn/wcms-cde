@@ -86,13 +86,13 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.PlaceHolder pnlTermSearch;
         
         /// <summary>
-        /// searchForm control.
+        /// aspnetForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm searchForm;
+        protected global::System.Web.UI.HtmlControls.HtmlForm aspnetForm;
         
         /// <summary>
         /// radioStarts control.
@@ -131,13 +131,13 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.Label lblContains;
         
         /// <summary>
-        /// txtSearchString control.
+        /// AutoComplete1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearchString;
+        protected global::System.Web.UI.WebControls.TextBox AutoComplete1;
         
         /// <summary>
         /// btnSearch control.

@@ -36,7 +36,7 @@
     var ids = {
         radioStarts: "<%=radioStarts.ClientID %>",
         radioContains: "<%=radioContains.ClientID %>",
-        txtSearchString: "<%=txtSearchString.ClientID %>"
+        AutoComplete1: "<%=AutoComplete1.ClientID %>"
     }
 
     $(document).ready(function() {
@@ -56,7 +56,7 @@
             svcUrl = "/TermDictionary.svc/SearchJSON/" + language;
 
 
-        NCI.doAutocomplete("#" + ids.txtSearchString, svcUrl, isContains, "searchTerm", { maxRows: 10 });
+        NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
     }
 
     function IsContains() {
@@ -108,7 +108,7 @@ Blair will add code here for the Drug Dictionary
 </asp:PlaceHolder>
 
         <asp:PlaceHolder ID="pnlTermSearch" runat="server">
-        <form id="searchForm" aria-label="Search the Dictionary of Cancer Terms" runat="server">
+        <form id="aspnetForm" aria-label="Search the Dictionary of Cancer Terms" runat="server">
         <div class="dictionary-search">
             <div class="hidden">
                 The search textbox has an autosuggest feature. When you enter three or more characters,
@@ -137,7 +137,7 @@ Blair will add code here for the Drug Dictionary
                 </div>
                 <div class="row">
                     <div class="large-6 columns">
-                        <asp:TextBox CssClass="dictionary-search-input" ID="txtSearchString"
+                        <asp:TextBox CssClass="dictionary-search-input" ID="AutoComplete1"
                             inputmode="latin" aria-autocomplete="list" runat="server" 
                             CallbackFunc="ACOnSubmit" autocomplete="off" />
                     </div>

@@ -353,9 +353,9 @@
             'TermsDictionarySearch',
             isSpanish);
     },
-
-    //******************************************************************************************************	
-    GeneticsDictionarySearch: function(sender, searchString, isStartsWith) {
+    
+     //******************************************************************************************************	
+     GeneticsDictionarySearch: function(sender, searchString, isStartsWith) {
         var prop24Contents = (isStartsWith) ? 'starts with' : 'contains';
 
         clickParams = new NCIAnalytics.ClickParams(sender,
@@ -373,7 +373,32 @@
         clickParams.Events = [2];
         clickParams.LogToOmniture();
     },
+    
+    //Created this function to be consistent with the Term Dictionary search.
+    //Since, we are not sure if the doc sites are using this function; Dion recommend I leave 
+    //the original function GeneticsDictionarySearch alone.
+    //******************************************************************************************************	
+    GeneticsDictionarySearchNew: function(sender) {
+   
+     var prop24Contents = ($("#" + ids.radioStarts)[0].checked) ? 'starts with' : 'contains';
 
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            '', 'o', 'GeneticsDictionarySearch');
+        clickParams.Props = {
+            11: 'dictionary_genetics',
+            22: $("#" + ids.AutoComplete1).val(),
+            24: prop24Contents
+        };
+        clickParams.Evars = {
+            11: 'dictionary_genetics',
+            13: '+1',
+            26: prop24Contents
+        };
+        clickParams.Events = [2];
+        clickParams.LogToOmniture();
+    
+    },
+    
     //******************************************************************************************************	
     GeneticsDictionarySearchAlphaList: function(sender, value) {
 

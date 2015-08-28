@@ -81,8 +81,8 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
                 
-                TermReturn dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage, "v1"); 
-                if (dataItem != null)
+                TermReturn dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage, "v1");
+                if (dataItem != null && dataItem.Term.Term != null)
                 {
                     ActivateDefinitionView(dataItem);
                     // Web Analytics *************************************************
@@ -95,6 +95,10 @@ namespace CancerGov.Web.SnippetTemplates
                         });
                     }
                 }
+                else
+                {
+                    termDictionaryDefinitionView.Visible = false;
+                }
             }
 
             SetupPrintUrl();
@@ -103,8 +107,10 @@ namespace CancerGov.Web.SnippetTemplates
 
         private void ActivateDefinitionView(TermReturn dataItem)
         {
+
             var myDataSource = new List<TermReturn> { dataItem };
 
+            termDictionaryDefinitionView.Visible = true;
             termDictionaryDefinitionView.DataSource = myDataSource;
             termDictionaryDefinitionView.DataBind();
 
@@ -141,6 +147,8 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 data.Value = termName + ", definition";
             });
+
+
 
         }
 
@@ -258,7 +266,7 @@ namespace CancerGov.Web.SnippetTemplates
                                 RelatedTermCount = termDetails.Term.Related.Term.Length;
                                 PlaceHolder phRelatedTerms = (PlaceHolder)e.Item.FindControl("phRelatedTerms");
                                 if (phRelatedTerms != null)
-                                {
+                                {                                    
                                     phRelatedTerms.Visible = true;
                                     Label labelDefintion = (Label)e.Item.FindControl("labelDefintion");
                                     if (labelDefintion != null)

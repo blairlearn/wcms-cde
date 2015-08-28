@@ -94,17 +94,17 @@ namespace CancerGov.Web.SnippetTemplates
                 if (Expand.ToLower() == "all")
                     resultList = _dictionaryAppManager.Search("%", searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
                 else
-                    resultList = _dictionaryAppManager.Search(Expand, searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
+                    resultList = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
             }
 
-            if (resultList != null)
+            if (resultList != null && resultList.Result.Length > 0)
             {
                 if ((resultList.Meta.ResultCount == 1) && string.IsNullOrEmpty(Expand)) //if there is only 1 record - go directly to definition view
                 {
                     string itemDefinitionUrl = DictionaryURL + "?cdrid=" + resultList.Result[0].ID;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
-                else 
+                else
                 {
                     resultListView.DataSource = resultList.Result;
                     resultListView.DataBind();
@@ -116,19 +116,26 @@ namespace CancerGov.Web.SnippetTemplates
                     lblNumResults.Text = NumResults.ToString();
                     if (NumResults == 0)
                     {
-                        Control c = resultListView.Controls[0];
-                        Panel noMatched = (Panel)c.FindControl("noMatched");
-                        if (noMatched != null)
-                            noMatched.Visible = true;
+                        RenderNoResults();
                     }
-                
+
                 }
 
-                
+
+            }
+            else 
+            {               
+                RenderNoResults();
             }
         }
 
-
+        private void RenderNoResults()
+        {
+            //to display EmptyDataTemplate the ListView datasource needs to be set to null
+            resultListView.DataSource = null;
+            resultListView.DataBind();
+            numResDiv.Visible = false;
+        }
 
         private void ValidateParams()
         {

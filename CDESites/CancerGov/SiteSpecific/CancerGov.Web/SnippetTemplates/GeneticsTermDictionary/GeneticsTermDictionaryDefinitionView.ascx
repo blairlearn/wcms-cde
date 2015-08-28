@@ -16,7 +16,7 @@
                     </dfn>
                 </dt>
                 <dd class="pronunciation">
-                    <a href="<%# ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]%><%#((NCI.Web.Dictionary.BusinessObjects.TermReturn)(Container.DataItem)).Term.Pronunciation.Audio  %>" class="CDR_audiofile"><span class="hidden">listen</span></a>
+                    <a href="<%# ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]%>/<%#((NCI.Web.Dictionary.BusinessObjects.TermReturn)(Container.DataItem)).Term.Pronunciation.Audio  %>" class="CDR_audiofile"><span class="hidden">listen</span></a>
                     <%# ((NCI.Web.Dictionary.BusinessObjects.TermReturn)(Container.DataItem)).Term.Pronunciation.Key  %>
                 </dd>
                 <dd class="definition">

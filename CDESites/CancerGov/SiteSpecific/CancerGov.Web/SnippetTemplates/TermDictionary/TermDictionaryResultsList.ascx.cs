@@ -82,41 +82,58 @@ namespace CancerGov.Web.SnippetTemplates
             {
 
                 if (Expand.ToLower() == "all")
-                    resultList = _dictionaryAppManager.Search("%", searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+                    resultList = _dictionaryAppManager.Expand("%", "", 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage,"v1");
                 else
-                    resultList = _dictionaryAppManager.Search(Expand, searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+                    resultList = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage, "v1");
             }
 
-            if ((resultList.Meta.ResultCount == 1) && string.IsNullOrEmpty(Expand)) //if there is only 1 record - go directly to definition view
+            if (resultList != null && resultList.Result.Length > 0)
             {
-                string itemDefinitionUrl = DictionaryURL + "?cdrid=" + resultList.Result[0].ID;
-                Page.Response.Redirect(itemDefinitionUrl);
-            }
-            else
-            {
-                resultListView.DataSource = resultList.Result;
-                resultListView.DataBind();
-                NumResults = resultList.Meta.ResultCount;
-                lblWord.Text = SearchStr.Replace("[[]", "[");
-                lblNumResults.Text = NumResults.ToString();
-                if (NumResults == 0)
+                if ((resultList.Meta.ResultCount == 1) && string.IsNullOrEmpty(Expand)) //if there is only 1 record - go directly to definition view
                 {
-                    RenderNoResults();
+                    string itemDefinitionUrl = DictionaryURL + "?cdrid=" + resultList.Result[0].ID;
+                    Page.Response.Redirect(itemDefinitionUrl);
                 }
+                else
+                {
+                    resultListView.DataSource = resultList.Result;
+                    resultListView.DataBind();
+                    NumResults = resultList.Meta.ResultCount;
+                    lblWord.Text = SearchStr.Replace("[[]", "[");
+                    lblNumResults.Text = NumResults.ToString();
+                    if (NumResults == 0)
+                    {
+                        RenderNoResults();
+                    }
 
+                }
+            }
+            else 
+            {
+                RenderNoResults();
             }
         }
 
         private void RenderNoResults()
         {
-            Control c = resultListView.Controls[0];
-            Panel noDataEngPanel = (Panel)c.FindControl("pnlNoDataEnglish");
-            Panel noDataSpanPanel = (Panel)c.FindControl("pnlNoDataSpanish");
+            //to display EmptyDataTemplate the ListView datasource needs to be set to null
+            resultListView.DataSource = null;
+            resultListView.DataBind();
+            numResDiv.Visible = false;
+        }
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-                noDataSpanPanel.Visible = true;
-            else
-                noDataEngPanel.Visible = true;
+        //update the EmptyDataTemplate label text based on the Dictionary Language
+        protected void GetNoDataMessage(object sender, EventArgs e)
+        {
+            Label lblNoDataMessage = sender as Label;
+
+            if (lblNoDataMessage != null)
+            {
+                if (DictionaryLanguage == Language.Spanish)
+                    lblNoDataMessage.Text = "No se encontraron resultados para lo que usted busca. Revise si escribi&oacute; correctamente e inténtelo de nuevo. También puede escribir las primeras letras de la palabra o frase que busca o hacer clic en la letra del alfabeto y revisar la lista de términos que empiezan con esa letra.";
+                else
+                    lblNoDataMessage.Text = "No matches were found for the word or phrase you entered. Please check your spelling, and try searching again. You can also type the first few letters of your word or phrase, or click a letter in the alphabet and browse through the list of terms that begin with that letter.";
+            }
         }
                 
         /// <summary>
