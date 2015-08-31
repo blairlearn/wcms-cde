@@ -6,7 +6,6 @@ using System.Runtime.Serialization;
 
 namespace NCI.Web.Dictionary.BusinessObjects
 {
-    [DataContract()]
     public class SearchReturnMeta : MetaCommon
     {
         public int Offset { get; set; }
