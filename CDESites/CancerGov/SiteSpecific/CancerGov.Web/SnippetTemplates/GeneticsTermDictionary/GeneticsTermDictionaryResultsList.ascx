@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GeneticsTermDictionaryResultsList.ascx.cs"
     Inherits="CancerGov.Web.SnippetTemplates.GenerticsTermDictionaryResultsList" %>
+<%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
 <%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
 
 <DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
@@ -14,25 +15,27 @@
         </span>
     </asp:Panel>
     <dl class="dictionary-list">
-        <asp:ListView ID="resultListView" runat="server" Visible="true">
-            <LayoutTemplate>
-                <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
-            </LayoutTemplate>
+        <asp:ListView ID="resultListView" runat="server" OnItemDataBound="resultListView_OnItemDataBound">
+           <LayoutTemplate>
+                    <dl class="dictionary-list">
+                        <asp:PlaceHolder runat="server" ID="itemPlaceholder"></asp:PlaceHolder>
+                    </dl>
+                </LayoutTemplate>
             <ItemTemplate>
                     <dt>
                         <dfn>
-                        <a href="<%# DictionaryURL %>?CdrID=<%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
-                             <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).MatchedTerm%></a>
-                             
-     
+                        <a href="<%# DictionaryURL %>?CdrID=<%# ((DictionaryExpansion)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                             <%# ((DictionaryExpansion)(Container.DataItem)).MatchedTerm%></a>
                         </dfn>
                     </dt>
-                     <dd class="pronunciation">
-                            <a href="<%# ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]%>/<%#((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).Term.Pronunciation.Audio  %>" class="CDR_audiofile"><span class="hidden">listen</span></a>
-                            <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).Term.Pronunciation.Key%>
-                      </dd>
+                     <asp:PlaceHolder ID="phPronunciation" runat="server">
+                         <dd class="pronunciation">
+                                <a id="pronunciationLink" runat="server" class="CDR_audiofile"><span class="hidden">listen</span></a>
+                                <asp:Literal ID="pronunciationKey" runat="server" />
+                          </dd>
+                    </asp:PlaceHolder>
                     <dd class="definition">
-                         <%# ((NCI.Web.Dictionary.BusinessObjects.DictionaryExpansion)(Container.DataItem)).Term.Definition.Text%>
+                         <%# ((DictionaryExpansion)(Container.DataItem)).Term.Definition.Text%>
                     </dd>
                 </ItemTemplate>
             <EmptyDataTemplate>

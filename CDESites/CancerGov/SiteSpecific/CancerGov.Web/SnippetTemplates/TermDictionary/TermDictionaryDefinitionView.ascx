@@ -15,10 +15,12 @@
                        
                     </dfn>
                 </dt>
-                <dd class="pronunciation">
-                    <a href="<%# ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]%>/<%#((TermReturn)(Container.DataItem)).Term.Pronunciation.Audio  %>" class="CDR_audiofile"><span class="hidden">listen</span></a>
-                    <%# ((TermReturn)(Container.DataItem)).Term.Pronunciation.Key  %>
-                </dd>
+                <asp:PlaceHolder ID="phPronunciation" runat="server">
+                    <dd class="pronunciation">
+                        <a id="pronunciationLink" runat="server" class="CDR_audiofile"><span class="hidden">listen</span></a>
+                        <asp:Literal ID="pronunciationKey" runat="server" />
+                    </dd>
+                </asp:PlaceHolder>
                 <dd class="definition">
                     <%# ((TermReturn)(Container.DataItem)).Term.Definition.Text  %>
                     

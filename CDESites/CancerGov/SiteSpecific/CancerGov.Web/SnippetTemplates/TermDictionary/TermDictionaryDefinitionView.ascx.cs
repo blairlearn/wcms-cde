@@ -205,6 +205,27 @@ namespace CancerGov.Web.SnippetTemplates
 
                 if (termDetails != null)
                 {
+                    PlaceHolder phPronunciation = (PlaceHolder) e.Item.FindControl("phPronunciation");
+                    if (termDetails.Term.HasPronunciation && phPronunciation != null)
+                    {
+                        phPronunciation.Visible = true;
+                        System.Web.UI.HtmlControls.HtmlAnchor pronunciationLink = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("pronunciationLink");
+                        if (pronunciationLink != null && termDetails.Term.Pronunciation.HasAudio)
+                        {
+                            pronunciationLink.Visible = true;
+                            pronunciationLink.HRef = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] + "/" + termDetails.Term.Pronunciation.Audio;
+                        }
+                        else
+                            pronunciationLink.Visible = false;
+
+                        Literal pronunciationKey = (Literal)e.Item.FindControl("pronunciationKey");
+                        if (pronunciationKey != null && termDetails.Term.Pronunciation.HasKey)
+                            pronunciationKey.Text = " " + termDetails.Term.Pronunciation.Key;
+
+                    }
+                    else
+                        phPronunciation.Visible = false;
+
                     //Get Related Information from the Manager layer
                     //Add check to see if it exists and then display data accordingly
                     Panel pnlRelatedInfo = e.Item.FindControl("pnlRelatedInfo") as Panel;

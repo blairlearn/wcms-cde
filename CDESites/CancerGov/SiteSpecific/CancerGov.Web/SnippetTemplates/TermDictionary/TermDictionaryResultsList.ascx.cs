@@ -13,6 +13,7 @@ using System.Configuration;
 using NCI.Web.Dictionary;
 using NCI.Services.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+using System.Web.UI.HtmlControls;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -192,6 +193,42 @@ namespace CancerGov.Web.SnippetTemplates
                 return "";
         }
 
+        protected void resultListView_OnItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            ListViewDataItem dataItem = (ListViewDataItem)e.Item;
+
+            if (e.Item.ItemType == ListViewItemType.DataItem)
+            {
+                DictionaryExpansion dictionaryResult = (DictionaryExpansion)dataItem.DataItem;
+
+                if (dictionaryResult != null)
+                {
+                    PlaceHolder phPronunciation = (PlaceHolder)dataItem.FindControl("phPronunciation");
+                    if (dictionaryResult.Term.HasPronunciation && phPronunciation != null)
+                    {
+                        phPronunciation.Visible = true;
+                        HtmlAnchor pronunciationLink = (HtmlAnchor)dataItem.FindControl("pronunciationLink");
+                        if (pronunciationLink != null && dictionaryResult.Term.Pronunciation.HasAudio)
+                        {
+                            pronunciationLink.Visible = true;
+                            pronunciationLink.HRef = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] + "/" + dictionaryResult.Term.Pronunciation.Audio;
+                        }
+                        else
+                            pronunciationLink.Visible = false;
+
+                        Literal pronunciationKey = (Literal)dataItem.FindControl("pronunciationKey");
+
+                        if (pronunciationKey != null && dictionaryResult.Term.Pronunciation.HasKey)
+                            pronunciationKey.Text = " " + dictionaryResult.Term.Pronunciation.Key;
+
+                    }
+                    else
+                        phPronunciation.Visible = false;
+                }
+
+            }
+
+        }
         
     }
 
