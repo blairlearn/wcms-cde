@@ -272,13 +272,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
 	                <div class=""medium-9 columns post-info"">
 		                <div class=""post-title clearfix""><h3><a href=""$prettyUrl"">$resultItem.LongTitle</a></h3>
 
-                #if($resultItem.AllowComments)## 
-                    #if($resultItem.AllowComments.String == true)## 
 		                ##need to get the id format
+                        ## TODO: fix logic that that this only shows on series pages with ""allow comments"" checked - 
+                        ## The field is currently set as sys.item in Percussion template 
 		                #set($identifier = ${resultItem.ContentType} + ""-""+${resultItem.ContentID})
 			                <a class=""comment-count"" href=""${prettyUrl}#disqus_thread"" data-disqus-identifier=""$identifier"">0 Comments</a>
-                    #end##
-                #end##
+
 		                </div>
 		                <div class=""date-author"">
 			                <span>" + dateForBlogs + @"$resultItem.Author</span>
@@ -298,6 +297,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 #set($itemType= $resultItem.type)##
                 #set($identifier = $itemType + ""-""+$resultItem.ContentID)
             </div>
+            #end
             <script type=""text/javascript"">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = '$DynamicSearch.DisqusShortname'; // required: replace example with your forum shortname
@@ -308,8 +308,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
             (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
             }());
-            </script>##
-            #end";
+            </script>";
             return blogBody;
         }
     }
