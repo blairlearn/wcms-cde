@@ -9,13 +9,10 @@ namespace NCI.Web.Dictionary.BusinessObjects
     [DataContract()]
     public class ImageReference
     {
-        [DataMember(Name = "ref")]
         public string Filename { get; set; }
 
-        [DataMember(Name = "alt")]
         public string AltText { get; set; }
 
-        [DataMember(Name = "caption")]
         public string Caption { get; set; }
     }
 }

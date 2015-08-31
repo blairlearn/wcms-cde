@@ -6,7 +6,6 @@ namespace NCI.Web.Dictionary.BusinessObjects
     /// <summary>
     /// Describes how a dictionary Term is pronounced.
     /// </summary>
-    [DataContract()]
     public class Pronunciation
     {
         public Pronunciation()
@@ -27,7 +26,6 @@ namespace NCI.Web.Dictionary.BusinessObjects
         /// <summary>
         /// Pronunciation key.  Possibly empty.
         /// </summary>
-        [DataMember( Name = "key" )]
         public String Key { get; set; }
 
         /// <summary>
@@ -38,7 +36,6 @@ namespace NCI.Web.Dictionary.BusinessObjects
         /// <summary>
         /// Possibly empty URL of an audio file containing the pronunciation. (Cancer Term and Genetics only)
         /// </summary>
-        [DataMember(Name = "audio")]
         public String Audio { get; set; }
 
         /// <summary>
