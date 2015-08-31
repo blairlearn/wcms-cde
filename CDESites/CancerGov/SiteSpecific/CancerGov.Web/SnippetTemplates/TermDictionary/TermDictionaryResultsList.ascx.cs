@@ -163,6 +163,7 @@ namespace CancerGov.Web.SnippetTemplates
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);
             if (!string.IsNullOrEmpty(CdrID))
+            {
                 try
                 {
                     Int32.Parse(CdrID);
@@ -172,6 +173,7 @@ namespace CancerGov.Web.SnippetTemplates
                     throw new Exception("Invalid CDRID" + CdrID);
 
                 }
+            }
         }
 
         /// <summary>

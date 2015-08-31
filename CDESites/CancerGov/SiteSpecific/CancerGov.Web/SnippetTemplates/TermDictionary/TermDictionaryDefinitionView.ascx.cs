@@ -197,7 +197,6 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the TermReturn object that is bound to the current row.
@@ -316,6 +315,7 @@ namespace CancerGov.Web.SnippetTemplates
                                     relatedImages.DataSource = termDetails.Term.Images;
                                     relatedImages.DataBind();
                                 }
+                                
                             }
                         }
                         else
@@ -402,6 +402,7 @@ namespace CancerGov.Web.SnippetTemplates
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);
             if (!string.IsNullOrEmpty(CdrID))
+            {
                 try
                 {
                     Int32.Parse(CdrID);
@@ -411,6 +412,7 @@ namespace CancerGov.Web.SnippetTemplates
                     throw new Exception("Invalid CDRID" + CdrID);
 
                 }
+            }
         }
 
         /// <summary>
