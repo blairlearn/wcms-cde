@@ -6,7 +6,6 @@ using System.Web;
 
 namespace NCI.Web.Dictionary.BusinessObjects
 {
-    [DataContract()]
     public class ImageReference
     {
         public string Filename { get; set; }
