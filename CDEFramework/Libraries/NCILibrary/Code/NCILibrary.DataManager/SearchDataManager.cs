@@ -106,9 +106,19 @@ namespace NCI.DataManager
                                     searchResult.BlogBody = sqlFVReader.GetString("blogparagraph");
                                     searchResult.ThumbnailURL = sqlFVReader.GetString("thumbnailurl");
                                     searchResult.Author = sqlFVReader.GetString("author");
-                                    // searchResult.AllowComments = sqlFVReader.GetBoolean("allowComments");
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
+
+                                    // Column for blog series content types only - return false for all other content types.
+                                    // If this is a blog series landing page, check to see if comments have been turned on.
+                                    try
+                                    {
+                                        searchResult.AllowComments = sqlFVReader.GetBoolean("allowComments");
+                                    }
+                                    catch (IndexOutOfRangeException e)
+                                    {
+                                        searchResult.AllowComments = false;
+                                    }
 
                                     // File size and mime type are only used for file content types. If the database column 
                                     // does not exist for the searched item (i.e. blogs), catch indexfOutOfRangeException and 
@@ -299,9 +309,19 @@ namespace NCI.DataManager
                                     searchResult.BlogBody = sqlFVReader.GetString("blogparagraph");
                                     searchResult.ThumbnailURL = sqlFVReader.GetString("thumbnailurl");
                                     searchResult.Author = sqlFVReader.GetString("author");
-                                    // searchResult.AllowComments = sqlFVReader.GetBoolean("allowComments");
                                     searchResult.ContentType = sqlFVReader.GetString("contenttype");
                                     searchResult.ContentID = sqlFVReader.GetString("contentid");
+
+                                    // Column for blog series content types only - return false for all other content types.
+                                    // If this is a blog series landing page, check to see if comments have been turned on.
+                                    try
+                                    {
+                                        searchResult.AllowComments = sqlFVReader.GetBoolean("allowComments");
+                                    }
+                                    catch (IndexOutOfRangeException e)
+                                    {
+                                        searchResult.AllowComments = false;
+                                    }
 
                                     // File size and mime type are only used for file content types. If the database column 
                                     // does not exist for the searched item (i.e. blogs), catch indexfOutOfRangeException and 
