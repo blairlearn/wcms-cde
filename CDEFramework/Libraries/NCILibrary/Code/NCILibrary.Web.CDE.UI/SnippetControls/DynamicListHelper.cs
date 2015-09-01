@@ -247,16 +247,30 @@ namespace NCI.Web.CDE.UI.SnippetControls
             return close;
         }
 
-
         /*
-         * Output formatted Blog Post list item 
+         * Output formatted list of Blog posts for Blog Landing Page Dynamic List
          */
         public string blogBodyString()
         {
+            // Display comment count if comments have been allowed for this blog series
+            string commentCount = "";
+            foreach (SnippetInfo snippet in PageAssemblyContext.Current.PageAssemblyInstruction.Snippets)
+            {
+                if (snippet.SnippetTemplatePath.Contains("BlogLandingDynamicList.ascx") &&
+                  snippet.Data.Contains("isCommentingAvailable=true"))
+                {
+                    commentCount = 
+                    @"#set($identifier = ${resultItem.ContentType} + ""-""+${resultItem.ContentID})
+                        <a class=""comment-count"" href=""${prettyUrl}#disqus_thread"" data-disqus-identifier=""$identifier"">0 Comments</a>";
+                }
+            }
+
+            // Format date according to language
             string dateForBlogs = @"$resultItem.DateForBlogs by ";
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 dateForBlogs = @"$resultItem.DateForBlogsEs por ";
 
+            // Put the whole blog snippet template together
             string blogBody = @"
             <div class=""blog-list"">   
             #foreach($resultItem in $DynamicSearch.Results)##
@@ -270,15 +284,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
 	                </div>
                 #end##
 	                <div class=""medium-9 columns post-info"">
-		                <div class=""post-title clearfix""><h3><a href=""$prettyUrl"">$resultItem.LongTitle</a></h3>
-
-		                ##need to get the id format
-                        ## TODO: fix logic that that this only shows on series pages with ""allow comments"" checked - 
-                        ## The field is currently set as sys.item in Percussion template 
-		                #set($identifier = ${resultItem.ContentType} + ""-""+${resultItem.ContentID})
-			                <a class=""comment-count"" href=""${prettyUrl}#disqus_thread"" data-disqus-identifier=""$identifier"">0 Comments</a>
-
-		                </div>
+		                <div class=""post-title clearfix""><h3><a href=""$prettyUrl"">$resultItem.LongTitle</a></h3>"
+                        + commentCount + 
+		                @"</div>
 		                <div class=""date-author"">
 			                <span>" + dateForBlogs + @"$resultItem.Author</span>
 		                </div>
