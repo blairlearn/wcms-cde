@@ -363,6 +363,9 @@ namespace CancerGov.Web.SnippetTemplates
 
                                 if (termEnlargeImage != null)
                                     termEnlargeImage.HRef = ConfigurationSettings.AppSettings["CDRImageLocation"] + imageDetails.Filename;
+
+                                //log a warning
+                                NCI.Logging.Logger.LogError("GeneticsTermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
                             }
                             else
                             {
