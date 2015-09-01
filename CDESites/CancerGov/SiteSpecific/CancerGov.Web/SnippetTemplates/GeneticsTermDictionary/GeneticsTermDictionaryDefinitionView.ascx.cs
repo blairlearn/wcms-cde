@@ -339,7 +339,6 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected void relatedImages_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the ImageReference object that is bound to the current row.
@@ -354,19 +353,31 @@ namespace CancerGov.Web.SnippetTemplates
 
                         if (!string.IsNullOrEmpty(imageDetails.Filename))
                         {
-                            string[] regularTermImage = imageDetails.Filename.Split('.');
-                            if (regularTermImage.Length == 2)
-                            {
-                                //termImage image size is 571
-                                //example format CDR526538-571.jpg
-                                termImage.Src = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
+                            System.Web.UI.HtmlControls.HtmlAnchor termEnlargeImage = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("termEnlargeImage");
 
-                                System.Web.UI.HtmlControls.HtmlAnchor termEnlargeImage = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("termEnlargeImage");
+                            //if either the regular image size or the enlarge image size is not in the web.config file
+                            //default to the full image in the database
+                            if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageRegular"]) || string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageEnlarge"]))
+                            {
+                                termImage.Src = ConfigurationSettings.AppSettings["CDRImageLocation"] + imageDetails.Filename;
+
                                 if (termEnlargeImage != null)
+                                    termEnlargeImage.HRef = ConfigurationSettings.AppSettings["CDRImageLocation"] + imageDetails.Filename;
+                            }
+                            else
+                            {
+                                string[] regularTermImage = imageDetails.Filename.Split('.');
+                                if (regularTermImage.Length == 2)
                                 {
+                                    //termImage image size is 571
+                                    //example format CDR526538-571.jpg
+                                    termImage.Src = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
+
                                     //enlarge image size is 750
                                     //example format CDR526538-750.jpg
-                                    termEnlargeImage.HRef = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
+                                    if (termEnlargeImage != null)
+                                        termEnlargeImage.HRef = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
+
                                 }
                             }
 
@@ -376,6 +387,7 @@ namespace CancerGov.Web.SnippetTemplates
                 }
             }
         }
+
         private void ValidateParams()
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);
