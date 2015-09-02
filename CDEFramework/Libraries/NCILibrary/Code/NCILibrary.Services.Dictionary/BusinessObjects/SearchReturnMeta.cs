@@ -30,12 +30,17 @@ namespace NCI.Services.Dictionary.BusinessObjects
         [DataMember(Name = "language")]
         public String Language { get; set; }
 
+        /// <summary>
+        /// Hook for storing data members by calling the various AddMember() overloads.
+        /// </summary>
+        /// <param name="builder">The Jsonizer instance to use for storing data members.</param>
         public void Jsonize(Jsonizer builder)
         {
             builder.AddMember("offset", Offset, false);
             builder.AddMember("result_count", ResultCount, false);
             builder.AddMember("audience", Audience, false);
-            builder.AddMember("language", Language, true);
+            builder.AddMember("language", Language, false);
+            builder.AddMember("message", Messages, true);
         }
     }
 }

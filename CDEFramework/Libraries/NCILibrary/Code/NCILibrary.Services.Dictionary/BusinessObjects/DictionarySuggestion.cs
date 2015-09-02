@@ -30,6 +30,10 @@ namespace NCI.Services.Dictionary.BusinessObjects
         public String Term { get; set; }
 
 
+        /// <summary>
+        /// Hook for storing data members by calling the various AddMember() overloads.
+        /// </summary>
+        /// <param name="builder">The Jsonizer instance to use for storing data members.</param>
         public void Jsonize(Jsonizer builder)
         {
             builder.AddMember("id", ID, false);

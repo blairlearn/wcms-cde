@@ -6,7 +6,6 @@ using NCI.Util;
 
 using NCI.Services.Dictionary.BusinessObjects;
 using NCI.Services.Dictionary.Handler;
-using System.Text;
 
 namespace NCI.Services.Dictionary
 {
@@ -36,6 +35,12 @@ namespace NCI.Services.Dictionary
             get { return true; }
         }
 
+        /// <summary>
+        /// Entry point for handling the HTTP request.  ProcessRequest manages the process of
+        /// determining which method was requested, invoking it, and returning a JSON response.
+        /// Part of IHttpHandler
+        /// </summary>
+        /// <param name="context">Object containing the details of current HTTP request and response.</param>
         public void ProcessRequest(HttpContext context)
         {
                 HttpRequest request = context.Request;
@@ -49,20 +54,23 @@ namespace NCI.Services.Dictionary
                     // Get object for invoking the specific dictionary method.
                     Invoker invoker = Invoker.Create(method, request);
 
-                    // Get and invoke delegat that calls the particular web method.
+                    // Invoke the requested dictionary method.
                     IJsonizable result = invoker.Invoke();
 
-                    // Put together the response.
+                    // Put together the JSON response.
                     Jsonizer json = new Jsonizer(result);
 
                     response.ContentType = "application/json";
                     response.Write(json.ToJsonString());
                 }
+                // There was something wrong with the request that prevented us from
+                // being able to invoke a method.
                 catch (HttpParseException ex)
                 {
                     response.Status = ex.Message;
                     response.StatusCode = 400;
                 }
+                // Something went wrong in our code.
                 catch (Exception ex)
                 {
                     log.error(String.Format("Error processing dictionary request. Query: {0}", request.RawUrl), ex);
