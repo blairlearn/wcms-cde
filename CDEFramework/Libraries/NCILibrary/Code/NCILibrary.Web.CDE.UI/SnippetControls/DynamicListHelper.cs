@@ -30,7 +30,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 			#set($updatedString = ""Updated"")##
 			#set($reviewedString = ""Reviewed"")##
             #set($newsString = ""All NCI news"")##
-            #set($continueString = ""Continue Reading"")##
+            #set($continueReading = ""Continue Reading"")##
 			";
             if (PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language") == "es")
             {
@@ -42,7 +42,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 				#set($updatedString = ""Actualizaci&oacute;n"")##
 				#set($reviewedString = ""Revisi&oacute;n"")##
                 #set($newsString = ""Todas las noticias del NCI"")##
-                #set($continueString = ""Siga leyendo"")##
+                #set($continueReading = ""Siga leyendo"")##
 				";
             }
             return pageLanguage;
@@ -266,9 +266,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
             }
 
             // Format date according to language
-            string dateForBlogs = @"$resultItem.DateForBlogs by ";
+            string dateAndAuthor = @"<span>$resultItem.DateForBlogs</span> by <span>$resultItem.Author</span>";
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-                dateForBlogs = @"$resultItem.DateForBlogsEs por ";
+                dateAndAuthor = @"<span>$resultItem.DateForBlogsEs</span> por <span>$resultItem.Author</span>";
 
             // Put the whole blog snippet template together
             string blogBody = @"
@@ -287,9 +287,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
 		                <div class=""post-title clearfix""><h3><a href=""$prettyUrl"">$resultItem.LongTitle</a></h3>"
                         + commentCount + 
 		                @"</div>
-		                <div class=""date-author"">
-			                <span>" + dateForBlogs + @"$resultItem.Author</span>
-		                </div>
+		                <div class=""date-author"">"
+			            + dateAndAuthor +
+		                @"</div>
 		                <div>
                 #if($resultItem.BlogBody.length()>0)##
 	                $resultItem.BlogBody
@@ -298,14 +298,14 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 #end##
 		                </div>
 		                <p>
-			                <a href=""$prettyUrl"">Continue Reading ></a>
+			                <a href=""$prettyUrl"">$continueReading &gt;</a>
 		                </p>
 	                </div>
                 </div>
                 #set($itemType= $resultItem.type)##
                 #set($identifier = $itemType + ""-""+$resultItem.ContentID)
-            </div>
             #end
+            </div>
             <script type=""text/javascript"">
             /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
             var disqus_shortname = '$DynamicSearch.DisqusShortname'; // required: replace example with your forum shortname
