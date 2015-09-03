@@ -13,10 +13,6 @@ namespace NCI.Web.Dictionary
     {
         static Log log = new Log(typeof(DictionaryAppManager));
 
-        // These values should come from the GateKeeper backend processing.
-        const String AUDIENCE_PATIENT = "Patient";
-        const String AUDIENCE_HEALTHPROF = "Health Professional";
-
 
         
 
@@ -41,11 +37,13 @@ namespace NCI.Web.Dictionary
             //String of JSON returned from the Database to be deserialized.
             String jsonObject =termRet.Term;
             String newJsonObject = "{" + jsonObject + "}";
-            DictionaryTerm dicTerm = new DictionaryTerm();
+            DictionaryTerm dicTerm = null;
+            //drop this
             TermReturn term = new TermReturn();
             term.Meta = new TermReturnMeta();
             try
             {
+                //deserialize term details as returned by the service layer (termret.term)
                 dicTerm = JsonConvert.DeserializeObject<DictionaryTerm>(newJsonObject);
             }
             catch (JsonReaderException ex)
@@ -55,6 +53,8 @@ namespace NCI.Web.Dictionary
 
             term.Term = dicTerm;
 
+
+            //drop this
             if (term.Term != null)
             {
                 //set Meta Data from Database
@@ -74,7 +74,7 @@ namespace NCI.Web.Dictionary
         /// <param name="searchText">the text that has been typed into the search box</param>
         /// <param name="searchType">the type of search being executed</param>
         /// <param name="offset">how many to offset the first return result</param>
-        /// <param name="maxResults">the max results to return</param>
+        /// <param name="maxResults">the max results to return<remarks>int.maxvalue should be used for retrieving all unless we have more</remarks></param>
         /// <param name="dictionary">the dictionary type (cancert term, drug, genetic)</param>
         /// <param name="language">English/Spanish</param>
         /// <returns>returns a list of dictioanry terms and related metadata</returns>
