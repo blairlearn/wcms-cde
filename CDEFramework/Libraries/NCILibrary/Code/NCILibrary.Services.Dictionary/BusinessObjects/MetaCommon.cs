@@ -9,6 +9,9 @@ namespace NCI.Services.Dictionary.BusinessObjects
     [DataContract()]
     abstract public class MetaCommon
     {
+        /// <summary>
+        /// Initialization.
+        /// </summary>
         public MetaCommon()
         {
             // Set a default status message.

@@ -2,6 +2,11 @@
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
+    /// <summary>
+    /// Contains a data structure with information about the
+    /// return from a call to the Dictionary service's SearchSuggest
+    /// method.
+    /// </summary>
     [DataContract()]
     public class SuggestReturnMeta : MetaCommon, IJsonizable
     {

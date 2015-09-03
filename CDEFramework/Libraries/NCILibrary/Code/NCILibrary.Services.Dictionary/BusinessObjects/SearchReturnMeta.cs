@@ -6,9 +6,15 @@ using System.Runtime.Serialization;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
+    /// <summary>
+    /// Data structure for the results of a call to the dictionary service's Search method.
+    /// </summary>
     [DataContract()]
     public class SearchReturnMeta : MetaCommon,  IJsonizable
     {
+        /// <summary>
+        /// Offset into the set of results available of the first record returend.
+        /// </summary>
         [DataMember(Name = "offset")]
         public int Offset { get; set; }
 

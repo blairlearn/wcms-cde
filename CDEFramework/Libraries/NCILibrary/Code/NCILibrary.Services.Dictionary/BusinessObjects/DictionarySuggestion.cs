@@ -3,14 +3,23 @@ using System.Runtime.Serialization;
 
 namespace NCI.Services.Dictionary.BusinessObjects
 {
+    /// <summary>
+    /// Data structure containing a single suggested term from the Dictionary
+    /// Service's SearchSuggest method.
+    /// </summary>
     [DataContract()]
     public class DictionarySuggestion : IJsonizable
     {
-        // For serialization
+        // Required for serialization
         public DictionarySuggestion()
         {
         }
 
+        /// <summary>
+        /// Initialization
+        /// </summary>
+        /// <param name="id">The term's ID</param>
+        /// <param name="term">Name of a term.</param>
         public DictionarySuggestion(int id, String term)
         {
             this.ID = id;
