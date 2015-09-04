@@ -206,10 +206,10 @@ namespace CancerGov.Web.SnippetTemplates
         private void SetUpTermDictionary()
         {
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-            SearchReturn resultList = _dictionaryAppManager.Search("%", SearchType.Begins, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+            DictionarySearchResultCollection resultList = _dictionaryAppManager.Search("%", SearchType.Begins, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
 
-            if (resultList != null && resultList.Meta != null)
-                TotalCount = resultList.Meta.ResultCount;
+            if (resultList != null)
+                TotalCount = resultList.ResultsCount;
                         
             //dictionarySearchForm 
             bool _isSpanish = false;

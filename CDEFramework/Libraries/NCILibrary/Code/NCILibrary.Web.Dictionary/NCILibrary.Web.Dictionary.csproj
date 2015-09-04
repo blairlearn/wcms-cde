@@ -8,7 +8,7 @@
     <ProjectGuid>{2C675310-2242-4CBB-B40E-D6225C719FFC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NCILibrary.Web.Dictionary</RootNamespace>
+    <RootNamespace>NCI.Web.Dictionary</RootNamespace>
     <AssemblyName>NCILibrary.Web.Dictionary</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

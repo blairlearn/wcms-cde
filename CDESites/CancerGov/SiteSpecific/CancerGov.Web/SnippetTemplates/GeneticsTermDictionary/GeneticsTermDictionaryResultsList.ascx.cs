@@ -57,7 +57,7 @@ namespace CancerGov.Web.SnippetTemplates
             //For Genetics dictionary language is always English
             DictionaryLanguage = Language.English;
 
-            IEnumerable<DictionarySearchResult> resultList = null;
+            DictionarySearchResultCollection resultList = null;
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
             if (!string.IsNullOrEmpty(SrcGroup))
@@ -98,18 +98,23 @@ namespace CancerGov.Web.SnippetTemplates
                     resultList = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
             }
 
-            if (resultList != null && resultList.Result.Length > 0)
+            if (resultList != null && resultList.Count() > 0)
             {
-                if ((resultList.Meta.ResultCount == 1) && string.IsNullOrEmpty(Expand)) //if there is only 1 record - go directly to definition view
+                //if there is only 1 record - go directly to definition view
+                if ((resultList.ResultsCount == 1) && string.IsNullOrEmpty(Expand))
                 {
-                    string itemDefinitionUrl = DictionaryURL + "?cdrid=" + resultList.Result[0].ID;
+                    // Get the first (only) item so we can redirect to it specifically
+                    IEnumerator<DictionarySearchResult> itemPtr = resultList.GetEnumerator();
+                    itemPtr.MoveNext();
+
+                    string itemDefinitionUrl = DictionaryURL + "?cdrid=" + itemPtr.Current.ID;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else
                 {
-                    resultListView.DataSource = resultList.Result;
+                    resultListView.DataSource = resultList;
                     resultListView.DataBind();
-                    NumResults = resultList.Meta.ResultCount;
+                    NumResults = resultList.ResultsCount;
                     if (!string.IsNullOrEmpty(SearchStr))
                         lblWord.Text = SearchStr.Replace("[[]", "[");
                     else if (!string.IsNullOrEmpty(Expand))
@@ -181,7 +186,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (e.Item.ItemType == ListViewItemType.DataItem)
             {
-                DictionaryExpansion dictionaryResult = (DictionaryExpansion)dataItem.DataItem;
+                DictionarySearchResult dictionaryResult = (DictionarySearchResult)dataItem.DataItem;
 
                 if (dictionaryResult != null)
                 {
