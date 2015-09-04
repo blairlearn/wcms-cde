@@ -248,7 +248,7 @@ namespace NCI.Services.Dictionary
 
 
         /// <summary>
-        /// Performs a search for terms with names matching searchText.
+        /// Performs a search for terms with names or aliases that start with or contain searchText.
         /// </summary>
         /// <param name="searchText">text to search for.</param>
         /// <param name="searchType">The type of search to perform.
@@ -258,7 +258,7 @@ namespace NCI.Services.Dictionary
         ///         Magic - Search for terms beginning with searchText, followed by those containing searchText.
         /// </param>
         /// <param name="offset">Offset into the list of matches for the first result to return.</param>
-        /// <param name="maxResults">The maximum number of results to return. Must be at least 10.</param>
+        /// <param name="numResults">The maximum number of results to return. Must be at least 10.</param>
         /// <param name="dictionary">The dictionary to retreive the Term from.
         ///     Valid values are
         ///        Term - Dictionary of Cancer Terms
@@ -270,13 +270,13 @@ namespace NCI.Services.Dictionary
         ///         en - English
         ///         es - Spanish
         /// </param>
-        /// <returns></returns>
+        /// <returns>An object structure containing the results of the search and various metadata.</returns>
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "v1/search?searchText={searchText}&searchType={searchType}&offset={offset}&maxResults={maxResults}&language={language}&dictionary={dictionary}")]
+            UriTemplate = "v1/search?searchText={searchText}&searchType={searchType}&offset={offset}&numResults={numResults}&language={language}&dictionary={dictionary}")]
         [OperationContract]
-        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public SearchReturn Search(String searchText, SearchType searchType, int offset, int numResults, DictionaryType dictionary, Language language)
         {
-            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, maxResults, dictionary, language));
+            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, numResults, dictionary, language));
 
             SearchReturn ret;
 
@@ -285,7 +285,7 @@ namespace NCI.Services.Dictionary
                 InputValidator.ValidateSearch(searchType, dictionary, language);
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.Search(searchText, searchType, offset, maxResults, dictionary, language, API_VERSION);
+                ret = mgr.Search(searchText, searchType, offset, numResults, dictionary, language, API_VERSION);
 
                 log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
             }
@@ -376,12 +376,32 @@ namespace NCI.Services.Dictionary
          * http://stackoverflow.com/questions/6445171/passing-an-array-to-wcf-service-via-get, but this has
          * not yet been fully researched.
          */
+        /// <summary>
+        /// Perform a search for terms with names or aliases that start with searchText, sorted by the  matched term name or alias.
+        /// </summary>
+        /// <param name="searchText">text to search for.</param>
+        /// <param name="includeTypes">A filter for the types of name aliases to include.  Multiple values are separated by the pipe character (|).
+        /// If no filter is supplied, the result </param>
+        /// <param name="offset">Offset into the list of matches for the first result to return.</param>
+        /// <param name="numResults">The maximum number of results to return. Must be at least 10.</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <returns>An object structure containing the results of the search and various metadata.</returns>
         [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "v1/expand?searchText={searchText}&includeTypes={includeTypes}&offset={offset}&maxResults={maxResults}&language={language}&dictionary={dictionary}")]
+            UriTemplate = "v1/expand?searchText={searchText}&includeTypes={includeTypes}&offset={offset}&numResults={numResults}&language={language}&dictionary={dictionary}")]
         [OperationContract]
-        public SearchReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public SearchReturn Expand(String searchText, String includeTypes, int offset, int numResults, DictionaryType dictionary, Language language)
         {
-            log.debug(string.Format("Enter searchText( {0}, {1}, {2}, {3}, {4}, {5} ).", searchText, includeTypes, offset, maxResults, dictionary, language));
+            log.debug(string.Format("Enter searchText( {0}, {1}, {2}, {3}, {4}, {5} ).", searchText, includeTypes, offset, numResults, dictionary, language));
 
             SearchReturn ret;
 
@@ -390,7 +410,7 @@ namespace NCI.Services.Dictionary
                 InputValidator.ValidateExpand(dictionary, language);
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.Expand(searchText, includeTypes, offset, maxResults, dictionary, language, API_VERSION);
+                ret = mgr.Expand(searchText, includeTypes, offset, numResults, dictionary, language, API_VERSION);
 
                 log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
             }
