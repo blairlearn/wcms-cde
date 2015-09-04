@@ -23,8 +23,8 @@
                 <ItemTemplate>
                     <dt>
                        <dfn>
-                        <a href="<%# DictionaryURL %>?CdrID=<%# ((DictionaryExpansion)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
-                             <%# ((DictionaryExpansion)(Container.DataItem)).MatchedTerm%></a>
+                        <a href="<%# DictionaryURL %>?CdrID=<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                             <%# ((DictionarySearchResult)(Container.DataItem)).MatchedTerm%></a>
                         </dfn>
                     </dt>
                     <asp:PlaceHolder ID="phPronunciation" runat="server">
@@ -34,7 +34,7 @@
                           </dd>
                     </asp:PlaceHolder>
                     <dd class="definition">
-                         <%# ((DictionaryExpansion)(Container.DataItem)).Term.Definition.Text%>
+                         <%# ((DictionarySearchResult)(Container.DataItem)).Term.Definition.Text%>
                     </dd>
                 </ItemTemplate>
                 <EmptyDataTemplate>
