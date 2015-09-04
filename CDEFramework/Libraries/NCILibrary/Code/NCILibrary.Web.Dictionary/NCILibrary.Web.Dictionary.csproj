@@ -69,7 +69,7 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\Alias.cs" />
     <Compile Include="BusinessObjects\Definition.cs" />
-    <Compile Include="BusinessObjects\DictionaryExpansion.cs" />
+    <Compile Include="BusinessObjects\DictionarySearchResult.cs" />
     <Compile Include="BusinessObjects\DictionarySuggestion.cs" />
     <Compile Include="BusinessObjects\DictionaryTerm.cs" />
     <Compile Include="BusinessObjects\SearchReturn.cs" />

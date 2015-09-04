@@ -5,14 +5,20 @@ using System.Runtime.Serialization;
 namespace NCI.Web.Dictionary.BusinessObjects
 {
     [DataContract()]
-    public class DictionaryExpansion
+    public class DictionarySearchResult
     {
         // For serialization
-        public DictionaryExpansion()
+        public DictionarySearchResult()
         {
         }
 
-        public DictionaryExpansion(int id, String matchedTerm, DictionaryTerm term)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">term's id</param>
+        /// <param name="matchedTerm">the term that matched</param>
+        /// <param name="term">The term as type</param>
+        public DictionarySearchResult(int id, String matchedTerm, DictionaryTerm term)
         {
             this.ID = id;
             this.MatchedTerm = matchedTerm;

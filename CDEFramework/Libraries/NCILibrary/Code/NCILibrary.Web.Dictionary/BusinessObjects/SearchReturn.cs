@@ -15,7 +15,7 @@ namespace NCI.Web.Dictionary.BusinessObjects
         public SearchReturn()
         {
             // Force collection to be non-null.
-            Result = new DictionaryExpansion[] { };
+            Result = new DictionarySearchResult[] { };
         }
 
         /// <summary>
@@ -28,6 +28,6 @@ namespace NCI.Web.Dictionary.BusinessObjects
         /// Array of DictionaryExpansion objects containg details of the individual terms which met the search criteria.
         /// </summary>
         [DataMember(Name = "result")]
-        public DictionaryExpansion[] Result { get; set; }
+        public DictionarySearchResult[] Result { get; set; }
     }
 }
