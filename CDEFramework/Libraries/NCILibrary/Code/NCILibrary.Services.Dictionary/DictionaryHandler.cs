@@ -28,6 +28,10 @@ namespace NCI.Services.Dictionary
  
         #region IHttpHandler Members
 
+        /// <summary>
+        /// Signals to the ASP.Net system that this object can be resused. (Default implementation.)
+        /// This class has no stateful member variables.
+        /// </summary>
         public bool IsReusable
         {
             // Return false in case your Managed Handler cannot be reused for another request.
