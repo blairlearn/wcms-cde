@@ -74,7 +74,7 @@ namespace NCI.Web.Dictionary
         /// <param name="dictionary">the dictionary type (cancert term, drug, genetic)</param>
         /// <param name="language">English/Spanish</param>
         /// <returns>returns a list of dictioanry terms and related metadata</returns>
-        public DictionarySearchResult[] Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public IEnumerable<DictionarySearchResult> Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
             DictionaryService service = new DictionaryService();
 
@@ -92,7 +92,7 @@ namespace NCI.Web.Dictionary
 
             List<DictionarySearchResult> resultList = DeserializeList(searchRet.Result);
             
-            return resultList.ToArray();
+            return resultList.AsEnumerable();
 
             /*if (srchReturn.Result.Length > 0)
             {
@@ -158,7 +158,7 @@ namespace NCI.Web.Dictionary
         /// <param name="language">which language</param>
         /// <param name="version">version of dictionary service</param>
         /// <returns>Collection of Dictionary Search Results</returns>
-        public DictionarySearchResult[] Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        public IEnumerable<DictionarySearchResult> Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
 
             DictionaryService service = new DictionaryService();
@@ -176,7 +176,7 @@ namespace NCI.Web.Dictionary
 
             
 
-            return expansionList.ToArray();
+            return expansionList.AsEnumerable();
             /*if (exRet.Result.Length > 0)
             {
               
