@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using NCI.Logging;
 using NCI.Web.Dictionary.BusinessObjects;
 using NCI.Services.Dictionary;
-using NCILibrary.Web.Dictionary;
+using NCI.Web.Dictionary;
 
 namespace NCI.Web.Dictionary
 {
@@ -136,6 +136,52 @@ namespace NCI.Web.Dictionary
             sugRet.Meta.Messages = suggestRet.Meta.Messages;
 
             return sugRet;
+
+        }
+
+        /// <summary>
+        /// Term suggestions from what is being typed into the search box.  Used for autosuggest
+        /// </summary>
+        /// <param name="searchText">the string being typed</param>
+        /// <param name="searchType">Type of search being done (contains, starts with, etc.)</param>
+        /// <param name="dictionary">Which dictionary is being searched</param>
+        /// <param name="language">Language</param>
+        /// <returns>returns list of suggestions</returns>
+        public DictionarySuggestionCollection SearchSuggest2(String searchText, SearchType searchType, DictionaryType dictionary, Language language)
+        {
+
+
+            
+            //Set up variables we will use
+            List<DictionarySuggestion> list = new List<DictionarySuggestion>();
+            DictionaryService service = new DictionaryService();
+            SuggestReturnMeta meta = new SuggestReturnMeta();
+
+            NCI.Services.Dictionary.BusinessObjects.SuggestReturn suggestRet = null;
+            
+            try
+            {
+                service.SearchSuggest(searchText, searchType, dictionary, language);
+            }   
+            catch(Exception ex)
+            {
+                log.error("Error in search suggest method in Dictionary Web Service: " + ex);
+            }
+
+            //sets up the suggest so the list of suggestions
+            DictionarySuggestion suggest = new DictionarySuggestion();
+            foreach (NCI.Services.Dictionary.BusinessObjects.DictionarySuggestion m in suggestRet.Result)
+            {
+                //get properties and set them then add to list
+                suggest.ID = m.ID;
+                suggest.Term = m.Term;
+                list.Add(suggest);
+        
+            }
+            //create return variable based on list
+            DictionarySuggestionCollection result = new DictionarySuggestionCollection(list.AsEnumerable());
+            result.ResultsCount = suggestRet.Meta.ResultCount;
+            return result;
 
         }
 

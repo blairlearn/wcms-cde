@@ -5,7 +5,7 @@ using System.Text;
 using NCI.Web.Dictionary.BusinessObjects;
 using System.Collections;
 
-namespace NCILibrary.Web.Dictionary
+namespace NCI.Web.Dictionary
 {
     /// <summary>
     /// Dictionary Collection for Search and Expand
@@ -14,7 +14,10 @@ namespace NCILibrary.Web.Dictionary
     {
   
         private IEnumerable<DictionarySearchResult> searchResults;
-        public int ResultsCount { get { return ResultsCount; } set { ResultsCount = value; } }
+        /// <summary>
+        /// This Results count is the number of results that matched the search from the web service
+        /// </summary>
+        public int ResultsCount { get; set; }
 
         /// <summary>
         /// Constructor Method that sets the enumerator
