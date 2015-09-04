@@ -69,9 +69,9 @@ namespace CancerGov.Web.SnippetTemplates
             if (!Page.IsPostBack)
             {
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-                                
-                TermReturn dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
-                if (dataItem != null && dataItem.Term != null && dataItem.Term.Term != null)
+
+                DictionaryTerm dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
+                if (dataItem != null && dataItem.Term != null)
                 {
                     ActivateDefinitionView(dataItem);
                     // Web Analytics *************************************************
@@ -91,30 +91,40 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             SetupPrintUrl();
-           
+
         }
 
-        private void ActivateDefinitionView(TermReturn dataItem)
+        private void ActivateDefinitionView(DictionaryTerm dataItem)
         {
 
-            var myDataSource = new List<TermReturn> { dataItem };
+            var myDataSource = new List<DictionaryTerm> { dataItem };
 
             termDictionaryDefinitionView.Visible = true;
             termDictionaryDefinitionView.DataSource = myDataSource;
             termDictionaryDefinitionView.DataBind();
 
-            string termName = dataItem.Term.Term;
+            string termName = dataItem.Term;
 
-            CdrID = dataItem.Term.ID.ToString();
+            CdrID = dataItem.ID.ToString();
 
-
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
+            if (DictionaryLanguage == Language.Spanish)
             {
-                data.Value = "Definition of " + termName + " - NCI Dictionary of Genetics Terms";
-            });
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
+                {
+                    data.Value = "Definici&oacute;n de " + termName + " - Diccionario de c&aacute;ncer";
+                });
 
-            this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+                this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+            }
+            else
+            {
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
+                {
+                    data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
+                });
 
+                this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+            }
 
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
             {
@@ -128,11 +138,6 @@ namespace CancerGov.Web.SnippetTemplates
             });
 
 
-            // Add Genetics Dictionary Term view event to analytics
-            PageAssemblyContext.Current.PageAssemblyInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event12, wbField =>
-            {
-                wbField.Value = "";
-            });
 
         }
 
@@ -179,32 +184,31 @@ namespace CancerGov.Web.SnippetTemplates
             });
         }
 
-        
         protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the TermReturn object that is bound to the current row.
-                TermReturn termDetails = (TermReturn)e.Item.DataItem;
+                DictionaryTerm termDetails = (DictionaryTerm)e.Item.DataItem;
 
                 if (termDetails != null)
                 {
                     PlaceHolder phPronunciation = (PlaceHolder)e.Item.FindControl("phPronunciation");
-                    if (termDetails.Term.HasPronunciation && phPronunciation != null)
+                    if (termDetails.HasPronunciation && phPronunciation != null)
                     {
                         phPronunciation.Visible = true;
-                        HtmlAnchor pronunciationLink = (HtmlAnchor)e.Item.FindControl("pronunciationLink");
-                        if (pronunciationLink != null && termDetails.Term.Pronunciation.HasAudio)
+                        System.Web.UI.HtmlControls.HtmlAnchor pronunciationLink = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("pronunciationLink");
+                        if (pronunciationLink != null && termDetails.Pronunciation.HasAudio)
                         {
                             pronunciationLink.Visible = true;
-                            pronunciationLink.HRef = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] + "/" + termDetails.Term.Pronunciation.Audio;
+                            pronunciationLink.HRef = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] + "/" + termDetails.Pronunciation.Audio;
                         }
                         else
                             pronunciationLink.Visible = false;
 
                         Literal pronunciationKey = (Literal)e.Item.FindControl("pronunciationKey");
-                        if (pronunciationKey != null && termDetails.Term.Pronunciation.HasKey)
-                            pronunciationKey.Text = " " + termDetails.Term.Pronunciation.Key;
+                        if (pronunciationKey != null && termDetails.Pronunciation.HasKey)
+                            pronunciationKey.Text = " " + termDetails.Pronunciation.Key;
 
                     }
                     else
@@ -217,55 +221,58 @@ namespace CancerGov.Web.SnippetTemplates
                     {
                         //display the related information panel
                         //when atleast one of the related item exists
-                        if (termDetails.Term.Related.Term.Length > 0 ||
-                            termDetails.Term.Related.Summary.Length > 0 ||
-                            termDetails.Term.Related.DrugSummary.Length > 0 ||
-                            termDetails.Term.Related.External.Length > 0 ||
-                            termDetails.Term.Images.Length > 0)
+                        if (termDetails.Related.Term.Length > 0 ||
+                            termDetails.Related.Summary.Length > 0 ||
+                            termDetails.Related.DrugSummary.Length > 0 ||
+                            termDetails.Related.External.Length > 0 ||
+                            termDetails.Images.Length > 0)
                         {
                             pnlRelatedInfo.Visible = true;
                             Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
                             if (litMoreInformation != null)
                             {
-                               litMoreInformation.Text = "More Information";
+                                if (DictionaryLanguage == Language.Spanish)
+                                    litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
+                                else
+                                    litMoreInformation.Text = "More Information";
                             }
 
-                            if (termDetails.Term.Related.External.Length > 0)
+                            if (termDetails.Related.External.Length > 0)
                             {
                                 Repeater relatedExternalRefs = (Repeater)e.Item.FindControl("relatedExternalRefs");
                                 if (relatedExternalRefs != null)
                                 {
                                     relatedExternalRefs.Visible = true;
-                                    relatedExternalRefs.DataSource = termDetails.Term.Related.External;
+                                    relatedExternalRefs.DataSource = termDetails.Related.External;
                                     relatedExternalRefs.DataBind();
                                 }
                             }
 
-                            if (termDetails.Term.Related.Summary.Length > 0)
+                            if (termDetails.Related.Summary.Length > 0)
                             {
                                 Repeater relatedSummaryRefs = (Repeater)e.Item.FindControl("relatedSummaryRefs");
                                 if (relatedSummaryRefs != null)
                                 {
                                     relatedSummaryRefs.Visible = true;
-                                    relatedSummaryRefs.DataSource = termDetails.Term.Related.Summary;
+                                    relatedSummaryRefs.DataSource = termDetails.Related.Summary;
                                     relatedSummaryRefs.DataBind();
                                 }
                             }
 
-                            if (termDetails.Term.Related.DrugSummary.Length > 0)
+                            if (termDetails.Related.DrugSummary.Length > 0)
                             {
                                 Repeater relatedDrugInfoSummaries = (Repeater)e.Item.FindControl("relatedDrugInfoSummaries");
                                 if (relatedDrugInfoSummaries != null)
                                 {
                                     relatedDrugInfoSummaries.Visible = true;
-                                    relatedDrugInfoSummaries.DataSource = termDetails.Term.Related.DrugSummary;
+                                    relatedDrugInfoSummaries.DataSource = termDetails.Related.DrugSummary;
                                     relatedDrugInfoSummaries.DataBind();
                                 }
                             }
 
-                            if (termDetails.Term.Related.Term.Length > 0)
+                            if (termDetails.Related.Term.Length > 0)
                             {
-                                RelatedTermCount = termDetails.Term.Related.Term.Length;
+                                RelatedTermCount = termDetails.Related.Term.Length;
                                 PlaceHolder phRelatedTerms = (PlaceHolder)e.Item.FindControl("phRelatedTerms");
                                 if (phRelatedTerms != null)
                                 {
@@ -273,12 +280,15 @@ namespace CancerGov.Web.SnippetTemplates
                                     Label labelDefintion = (Label)e.Item.FindControl("labelDefintion");
                                     if (labelDefintion != null)
                                     {
-                                        labelDefintion.Text = "Definition of:";
+                                        if (DictionaryLanguage == Language.Spanish)
+                                            labelDefintion.Text = "Definici&oacute;n de:";
+                                        else
+                                            labelDefintion.Text = "Definition of:";
                                     }
                                     Repeater relatedTerms = (Repeater)e.Item.FindControl("relatedTerms");
                                     if (relatedTerms != null)
                                     {
-                                        relatedTerms.DataSource = termDetails.Term.Related.Term;
+                                        relatedTerms.DataSource = termDetails.Related.Term;
                                         relatedTerms.DataBind();
                                     }
                                 }
@@ -288,12 +298,13 @@ namespace CancerGov.Web.SnippetTemplates
                             Repeater relatedImages = (Repeater)e.Item.FindControl("relatedImages");
                             if (relatedImages != null)
                             {
-                                if (termDetails.Term.Images.Length > 0)
+                                if (termDetails.Images.Length > 0)
                                 {
                                     relatedImages.Visible = true;
-                                    relatedImages.DataSource = termDetails.Term.Images;
+                                    relatedImages.DataSource = termDetails.Images;
                                     relatedImages.DataBind();
                                 }
+
                             }
                         }
                         else
@@ -339,6 +350,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected void relatedImages_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
+
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the ImageReference object that is bound to the current row.
@@ -355,7 +367,7 @@ namespace CancerGov.Web.SnippetTemplates
                         {
                             System.Web.UI.HtmlControls.HtmlAnchor termEnlargeImage = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("termEnlargeImage");
 
-                            //if either the regular image size or the enlarge image size is not in the web.config file
+                            //if either the regular image size or the enlarge image size is not in the config file
                             //default to the full image in the database
                             if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageRegular"]) || string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageEnlarge"]))
                             {
@@ -365,7 +377,7 @@ namespace CancerGov.Web.SnippetTemplates
                                     termEnlargeImage.HRef = ConfigurationSettings.AppSettings["CDRImageLocation"] + imageDetails.Filename;
 
                                 //log a warning
-                                NCI.Logging.Logger.LogError("GeneticsTermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
+                                NCI.Logging.Logger.LogError("TermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
                             }
                             else
                             {
@@ -390,7 +402,6 @@ namespace CancerGov.Web.SnippetTemplates
                 }
             }
         }
-
         private void ValidateParams()
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);

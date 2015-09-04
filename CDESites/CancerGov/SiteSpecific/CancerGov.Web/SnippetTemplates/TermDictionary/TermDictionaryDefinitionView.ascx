@@ -11,7 +11,7 @@
             <dl class="dictionary-list">
                 <dt>
                     <dfn>
-                        <%# ((TermReturn)(Container.DataItem)).Term.Term  %>
+                        <%# ((DictionaryTerm)(Container.DataItem)).Term%>
                        
                     </dfn>
                 </dt>
@@ -22,7 +22,7 @@
                     </dd>
                 </asp:PlaceHolder>
                 <dd class="definition">
-                    <%# ((TermReturn)(Container.DataItem)).Term.Definition.Text  %>
+                    <%# ((DictionaryTerm)(Container.DataItem)).Definition.Text%>
                     
                     <asp:Panel runat="server" ID="pnlRelatedInfo">
                         <div class="related-resources">

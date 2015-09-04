@@ -71,7 +71,7 @@ namespace CancerGov.Web.SnippetTemplates
             if (BContains)
                 searchType = SearchType.Contains;
 
-            SearchReturn resultList = new SearchReturn();
+            IEnumerable<DictionarySearchResult> resultList = null;
 
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {

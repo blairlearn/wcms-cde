@@ -11,7 +11,7 @@
             <dl class="dictionary-list">
                 <dt>
                     <dfn>
-                        <%# ((TermReturn)(Container.DataItem)).Term.Term  %>
+                        <%# ((DictionaryTerm)(Container.DataItem)).Term%>
                        
                     </dfn>
                 </dt>
@@ -22,7 +22,7 @@
                     </dd>
                 </asp:PlaceHolder>
                 <dd class="definition">
-                    <%# ((TermReturn)(Container.DataItem)).Term.Definition.Text  %>
+                    <%# ((DictionaryTerm)(Container.DataItem)).Definition.Text%>
                     
                     <asp:Panel runat="server" ID="pnlRelatedInfo">
                         <div class="related-resources">
@@ -60,7 +60,6 @@
                                     </ul>
                                 </FooterTemplate>
                             </asp:Repeater>
-                            
                             <asp:PlaceHolder ID="phRelatedTerms" runat="server" Visible="false">
                                 <p><asp:Label ID="labelDefintion" runat="server" class="related-definition-label"/>
                                  <asp:Repeater ID="relatedTerms" runat="server" OnItemDataBound="relatedTerms_OnItemDataBound">
@@ -73,7 +72,7 @@
                                 </asp:Repeater>
                                 </p>
                             </asp:PlaceHolder>
-                            
+                         
                             <asp:Repeater ID="relatedImages" runat="server" Visible="false" OnItemDataBound="relatedImages_OnItemDataBound">
                               <ItemTemplate>
                                 <figure class="image-left-medium">

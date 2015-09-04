@@ -22,6 +22,7 @@ using NCI.Web;
 using NCI.Services.Dictionary;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+using System.Collections.Generic;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -56,7 +57,7 @@ namespace CancerGov.Web.SnippetTemplates
             //For Genetics dictionary language is always English
             DictionaryLanguage = Language.English;
 
-            SearchReturn resultList = new SearchReturn();
+            IEnumerable<DictionarySearchResult> resultList = null;
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
             if (!string.IsNullOrEmpty(SrcGroup))

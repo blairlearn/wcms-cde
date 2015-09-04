@@ -23,7 +23,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         public string SearchStr{ get; set; }
 
-        public string Expand { get; set; }
+        public string Expand { get; set; } 
 
         public string CdrID { get; set; }
 
