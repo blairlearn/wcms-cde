@@ -14,7 +14,7 @@ namespace NCI.Services.Dictionary.Handler
         private String SearchText { get; set; }
         private String IncludeTypes { get; set; }
         private int Offset { get; set; }
-        private int MaxResults { get; set; }
+        private int NumResults { get; set; }
         private DictionaryType Dictionary { get; set; }
         private Language Language { get; set; }
 
@@ -29,7 +29,7 @@ namespace NCI.Services.Dictionary.Handler
             SearchText = GetSearchText();
             IncludeTypes = GetIncludeTypes();
             Offset = GetOffset();
-            MaxResults = GetMaxResults();
+            NumResults = GetNumResults();
             Dictionary = GetDictionary();
             Language = GetLanguage();
         }
@@ -41,7 +41,7 @@ namespace NCI.Services.Dictionary.Handler
         /// the Expand search.</returns>
         public override IJsonizable Invoke()
         {
-            return Service.Expand(SearchText, IncludeTypes, Offset, MaxResults, Dictionary, Language);
+            return Service.Expand(SearchText, IncludeTypes, Offset, NumResults, Dictionary, Language);
         }
     }
 }

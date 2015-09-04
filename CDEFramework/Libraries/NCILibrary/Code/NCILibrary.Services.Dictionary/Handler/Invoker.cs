@@ -164,12 +164,12 @@ namespace NCI.Services.Dictionary.Handler
         }
 
         /// <summary>
-        /// Infrastructure method for retrieving the "maxResults" parameter.
+        /// Infrastructure method for retrieving the "numResults" parameter.
         /// </summary>
-        /// <returns>The value of the "maxResults" parameter.</returns>
-        protected int GetMaxResults()
+        /// <returns>The value of the "numResults" parameter.</returns>
+        protected int GetNumResults()
         {
-            string rawValue = GetOptionalParameter("maxResults");
+            string rawValue = GetOptionalParameter("numResults");
             int val = Strings.ToInt(rawValue, 100);
             return val;
         }
