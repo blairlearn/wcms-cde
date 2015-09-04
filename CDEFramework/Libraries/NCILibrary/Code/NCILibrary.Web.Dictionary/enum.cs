@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
+using System.Text;
 
-namespace NCI.Services.Dictionary
+namespace NCI.Web.Dictionary
 {
     /// <summary>
     /// Enumeration of the known dictionary types.
     /// </summary>
-    [DataContract]
     public enum DictionaryType
     {
         // We don't know what dictionary this is.  Error condition.
@@ -22,26 +20,12 @@ namespace NCI.Services.Dictionary
         drug = 2,
 
         // Dictionary of Genetics Terms
-        genetic =3
-    }
-
-    [DataContract()]
-    public enum Language
-    {
-        [EnumMember(Value = "unknown")]
-        Unknown = 0,
-
-        [EnumMember(Value = "en")]
-        English = 1,
-
-        [EnumMember(Value = "es")]
-        Spanish = 2
+        genetic = 3
     }
 
     /// <summary>
     /// Allowed search types
     /// </summary>
-    [DataContract]
     public enum SearchType
     {
         Unknown = 0,
@@ -61,27 +45,4 @@ namespace NCI.Services.Dictionary
         /// </summary>
         Magic = 3
     }
-
-    [DataContract]
-    public enum AudienceType
-    {
-        Unknown = 0,
-        Patient = 1,
-        HealthProfessional = 2
-    }
-
-    /// <summary>
-    /// List of service methods
-    /// </summary>
-    internal enum ApiMethodType
-    {
-        Unknown = 0,
-        GetTerm = 1,
-        Search = 2,
-        SearchSuggest = 3,
-        Expand = 4
-    }
-
-
-
 }

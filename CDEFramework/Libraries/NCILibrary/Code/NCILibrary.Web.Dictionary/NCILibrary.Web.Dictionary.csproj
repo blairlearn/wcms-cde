@@ -89,7 +89,9 @@
     <Compile Include="BusinessObjects\TermReturn.cs" />
     <Compile Include="BusinessObjects\TermReturnMeta.cs" />
     <Compile Include="DictionaryAppManager.cs" />
+    <Compile Include="enum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeTranslator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">

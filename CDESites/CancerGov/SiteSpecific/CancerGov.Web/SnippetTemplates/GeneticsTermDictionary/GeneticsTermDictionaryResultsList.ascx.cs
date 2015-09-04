@@ -1,28 +1,18 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Linq;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
+
+using CancerGov.Text;
+using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
-using CancerGov.Text;
-using CancerGov.Common;
-using CancerGov.CDR.TermDictionary;
-using CancerGov.Web.SnippetTemplates;
-using NCI.Web.CDE.UI.SnippetControls;
-using NCI.Web.UI.WebControls;
-using NCI.Web.CDE;
-using NCI.Web;
-using NCI.Services.Dictionary;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
-using System.Collections.Generic;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -42,7 +32,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         public string DictionaryURL { get; set; }
 
-        public Language DictionaryLanguage { get; set; }
+        public String DictionaryLanguage { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -55,9 +45,9 @@ namespace CancerGov.Web.SnippetTemplates
             ValidateParams();
 
             //For Genetics dictionary language is always English
-            DictionaryLanguage = Language.English;
+            DictionaryLanguage = "en";
 
-            DictionarySearchResultCollection resultList = null;
+            DictionarySearchResultCollection resultCollection = null;
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
             if (!string.IsNullOrEmpty(SrcGroup))
@@ -86,25 +76,25 @@ namespace CancerGov.Web.SnippetTemplates
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {
 
-                resultList = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
+                resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage);
 
             }
             else if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
             {
 
                 if (Expand.ToLower() == "all")
-                    resultList = _dictionaryAppManager.Search("%", searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage);
+                    resultCollection = _dictionaryAppManager.Search("%", searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage);
                 else
-                    resultList = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
+                    resultCollection = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
             }
 
-            if (resultList != null && resultList.Count() > 0)
+            if (resultCollection != null && resultCollection.Count() > 0)
             {
                 //if there is only 1 record - go directly to definition view
-                if ((resultList.ResultsCount == 1) && string.IsNullOrEmpty(Expand))
+                if ((resultCollection.ResultsCount == 1) && string.IsNullOrEmpty(Expand))
                 {
                     // Get the first (only) item so we can redirect to it specifically
-                    IEnumerator<DictionarySearchResult> itemPtr = resultList.GetEnumerator();
+                    IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
                     string itemDefinitionUrl = DictionaryURL + "?cdrid=" + itemPtr.Current.ID;
@@ -112,9 +102,9 @@ namespace CancerGov.Web.SnippetTemplates
                 }
                 else
                 {
-                    resultListView.DataSource = resultList;
+                    resultListView.DataSource = resultCollection;
                     resultListView.DataBind();
-                    NumResults = resultList.ResultsCount;
+                    NumResults = resultCollection.ResultsCount;
                     if (!string.IsNullOrEmpty(SearchStr))
                         lblWord.Text = SearchStr.Replace("[[]", "[");
                     else if (!string.IsNullOrEmpty(Expand))

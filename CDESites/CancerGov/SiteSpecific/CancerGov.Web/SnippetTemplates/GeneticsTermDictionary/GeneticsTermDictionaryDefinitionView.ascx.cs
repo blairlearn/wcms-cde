@@ -21,7 +21,7 @@ using CancerGov.Common;
 using CancerGov.CDR.TermDictionary;
 using CancerGov.Web.SnippetTemplates;
 using CancerGov.Common.ErrorHandling;
-using NCI.Services.Dictionary;
+
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
 using System.Collections.Generic;
@@ -46,7 +46,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         public string DictionaryURL { get; set; }
 
-        public Language DictionaryLanguage { get; set; }
+        public String DictionaryLanguage { get; set; }
 
         public string QueryStringLang { get; set; }
 
@@ -64,13 +64,13 @@ namespace CancerGov.Web.SnippetTemplates
             ValidateParams();
            
             //For Genetics dictionary language is always English
-            DictionaryLanguage = Language.English;
+            DictionaryLanguage = "en";
 
             if (!Page.IsPostBack)
             {
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
-                DictionaryTerm dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
+                DictionaryTerm dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
                 if (dataItem != null && dataItem.Term != null)
                 {
                     ActivateDefinitionView(dataItem);
@@ -107,7 +107,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             CdrID = dataItem.ID.ToString();
 
-            if (DictionaryLanguage == Language.Spanish)
+            if (DictionaryLanguage == "es")
             {
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
                 {
@@ -231,7 +231,7 @@ namespace CancerGov.Web.SnippetTemplates
                             Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
                             if (litMoreInformation != null)
                             {
-                                if (DictionaryLanguage == Language.Spanish)
+                                if (DictionaryLanguage == "es")
                                     litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
                                 else
                                     litMoreInformation.Text = "More Information";
@@ -280,7 +280,7 @@ namespace CancerGov.Web.SnippetTemplates
                                     Label labelDefintion = (Label)e.Item.FindControl("labelDefintion");
                                     if (labelDefintion != null)
                                     {
-                                        if (DictionaryLanguage == Language.Spanish)
+                                        if (DictionaryLanguage == "es")
                                             labelDefintion.Text = "Definici&oacute;n de:";
                                         else
                                             labelDefintion.Text = "Definition of:";

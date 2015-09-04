@@ -1,28 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Xml.Linq;
+
+using CancerGov.Text;
+using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
-using NCI.Web.CDE.UI.SnippetControls;
-using NCI.Web.UI.WebControls;
-using NCI.Web.CDE;
-using NCI.Web;
-using CancerGov.Text;
-using CancerGov.Common;
-using CancerGov.CDR.TermDictionary;
-using CancerGov.Web.SnippetTemplates;
-using CancerGov.Common.ErrorHandling;
-using System.Configuration;
-using NCI.Web.CDE.Modules;
-using System.Data;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
-using NCI.Services.Dictionary;
-using CancerGov.UI.HTML;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -44,7 +31,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         public string DictionaryURL { get; set; }
 
-        public Language DictionaryLanguage { get; set; }
+        public String DictionaryLanguage { get; set; }
 
         public string QueryStringLang { get; set; }
 
@@ -69,19 +56,14 @@ namespace CancerGov.Web.SnippetTemplates
                 Response.Redirect("/diccionario" + Request.Url.Query);
             }
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-            {
-                DictionaryLanguage = Language.Spanish;
-            }
-            else
-                DictionaryLanguage = Language.English;
+            DictionaryLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
                        
             
             if (!Page.IsPostBack)
             {
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
-                DictionaryTerm dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage, "v1");
+                DictionaryTerm dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Web.Dictionary.DictionaryType.term, DictionaryLanguage, "v1");
                 if (dataItem != null && dataItem.Term != null)
                 {
                     ActivateDefinitionView(dataItem);
@@ -118,7 +100,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             CdrID = dataItem.ID.ToString();
 
-            if (DictionaryLanguage == Language.Spanish)
+            if (DictionaryLanguage == "es")
             {
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
                 {
@@ -242,7 +224,7 @@ namespace CancerGov.Web.SnippetTemplates
                             Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
                             if (litMoreInformation != null)
                             {
-                                if (DictionaryLanguage == Language.Spanish)
+                                if (DictionaryLanguage == "es")
                                     litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
                                 else
                                     litMoreInformation.Text = "More Information";
@@ -291,7 +273,7 @@ namespace CancerGov.Web.SnippetTemplates
                                     Label labelDefintion = (Label)e.Item.FindControl("labelDefintion");
                                     if (labelDefintion != null)
                                     {
-                                        if (DictionaryLanguage == Language.Spanish)
+                                        if (DictionaryLanguage == "es")
                                             labelDefintion.Text = "Definici&oacute;n de:";
                                         else
                                             labelDefintion.Text = "Definition of:";

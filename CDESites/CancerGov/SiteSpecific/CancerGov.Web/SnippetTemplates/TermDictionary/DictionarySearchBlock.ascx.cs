@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using NCI.Web.CDE.UI;
+
 using CancerGov.CDR.TermDictionary;
-using NCI.Web.CDE;
 using NCI.Util;
-using NCI.Web.CDE.WebAnalytics;
-using System.Configuration;
+using NCI.Web.CDE;
 using NCI.Web.CDE.Modules;
-using NCI.Web.Dictionary.BusinessObjects;
+using NCI.Web.CDE.UI;
+using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
-using NCI.Services.Dictionary;
+using NCI.Web.Dictionary.BusinessObjects;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -33,7 +33,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         public int TotalCount = 0;
 
-        public Language DictionaryLanguage { get; set; }
+        public String DictionaryLanguage { get; set; }
 
         public string DictionaryURLSpanish { get; set; }
 
@@ -150,7 +150,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             //set language to english by default
             //this only applies to Genetics and Drug Dictionaries
-            DictionaryLanguage = Language.English;
+            DictionaryLanguage = "en";
 
             //set this false by default
             BContains = false;
@@ -206,23 +206,23 @@ namespace CancerGov.Web.SnippetTemplates
         private void SetUpTermDictionary()
         {
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-            DictionarySearchResultCollection resultList = _dictionaryAppManager.Search("%", SearchType.Begins, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+            DictionarySearchResultCollection resultCollection = _dictionaryAppManager.Search("%", SearchType.Begins, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, DictionaryLanguage);
 
-            if (resultList != null)
-                TotalCount = resultList.ResultsCount;
+            if (resultCollection != null)
+                TotalCount = resultCollection.ResultsCount;
                         
             //dictionarySearchForm 
             bool _isSpanish = false;
                                    
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                DictionaryLanguage = Language.Spanish;
+                DictionaryLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
                 SetupSpanish();
                 _isSpanish = true;
             }
             else
             {
-                DictionaryLanguage = Language.English;
+                DictionaryLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
                 SetupEnglish();
             }
                        

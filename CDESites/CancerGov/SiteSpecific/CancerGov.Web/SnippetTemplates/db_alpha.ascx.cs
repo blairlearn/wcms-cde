@@ -1,22 +1,17 @@
 ﻿using System;
 using System.Configuration;
-using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using NCI.Text;
-using NCI.Web.CDE.UI;
+
+using CancerGov.CDR.TermDictionary;
 using CancerGov.Text;
 using NCI.Web.CDE;
-using Www.Common.UserControls;
-using NCI.Web.CDE.WebAnalytics;
-using CancerGov.CDR.TermDictionary;
-using CancerGov.UI;
-using NCI.Web.UI.WebControls.FormControls;
 using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.UI;
+using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
-using NCI.Services.Dictionary;
+using Www.Common.UserControls;
+
 namespace Www.Templates
 {
     public partial class DbAlpha : SnippetControl
@@ -141,8 +136,8 @@ namespace Www.Templates
             GetQueryParams();
             DictionaryAppManager test = new DictionaryAppManager();
 
-            test.GetTerm(46501, DictionaryType.term, Language.English, "v1");
-            test.Search("A", SearchType.Begins, 0, 10, DictionaryType.genetic, Language.English);
+            test.GetTerm(46501, NCI.Web.Dictionary.DictionaryType.term, "en", "v1");
+            test.Search("A", SearchType.Begins, 0, 10, NCI.Web.Dictionary.DictionaryType.genetic, "en");
 
             /* Setup URLS -
              * The URLs are being set in the Appmodule page content item, which publishes the following XML:

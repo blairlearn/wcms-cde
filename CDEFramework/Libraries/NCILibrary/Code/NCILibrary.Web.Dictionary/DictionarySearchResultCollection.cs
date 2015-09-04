@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NCI.Web.Dictionary.BusinessObjects;
 using System.Collections;
+
+using NCI.Web.Dictionary.BusinessObjects;
 
 namespace NCI.Web.Dictionary
 {

@@ -8,7 +8,6 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 using CancerGov.CDR.TermDictionary;
-using NCI.Services.Dictionary;
 using NCI.Util;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
@@ -34,8 +33,6 @@ namespace CancerGov.Web.SnippetTemplates
 
         public string DictionaryURL { get; set; }
 
-        public Language DictionaryLanguage { get; set; }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             dictionarySearchBlock.Dictionary = DictionaryType.Term;
@@ -49,13 +46,11 @@ namespace CancerGov.Web.SnippetTemplates
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
             {
-                DictionaryLanguage = Language.Spanish;
                 lblResultsFor.Text = "resultados de:";
             }
             else
             {
                 lblResultsFor.Text = "results found for:";
-                DictionaryLanguage = Language.English;
             }
 
             SetupCommon();
@@ -72,30 +67,30 @@ namespace CancerGov.Web.SnippetTemplates
             if (BContains)
                 searchType = SearchType.Contains;
 
-            DictionarySearchResultCollection resultList = null;
+            DictionarySearchResultCollection resultCollection = null;
 
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {
 
-                resultList = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage);
+                resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
 
             }
             else if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
             {
 
                 if (Expand.ToLower() == "all")
-                    resultList = _dictionaryAppManager.Expand("%", "", 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage,"v1");
+                    resultCollection = _dictionaryAppManager.Expand("%", "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
                 else
-                    resultList = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Services.Dictionary.DictionaryType.term, DictionaryLanguage, "v1");
+                    resultCollection = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
             }
 
-            if (resultList != null && resultList.Count() > 0)
+            if (resultCollection != null && resultCollection.Count() > 0)
             {
                 //if there is only 1 record - go directly to definition view
-                if ((resultList.ResultsCount == 1) && string.IsNullOrEmpty(Expand))
+                if ((resultCollection.ResultsCount == 1) && string.IsNullOrEmpty(Expand))
                 {
                     // Get the first (only) item so we can redirect to it specifically
-                    IEnumerator<DictionarySearchResult> itemPtr = resultList.GetEnumerator();
+                    IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
                     string itemDefinitionUrl = DictionaryURL + "?cdrid=" + itemPtr.Current.ID;
@@ -103,9 +98,9 @@ namespace CancerGov.Web.SnippetTemplates
                 }
                 else
                 {
-                    resultListView.DataSource = resultList;
+                    resultListView.DataSource = resultCollection;
                     resultListView.DataBind();
-                    NumResults = resultList.ResultsCount;
+                    NumResults = resultCollection.ResultsCount;
                     lblWord.Text = SearchStr.Replace("[[]", "[");
                     lblNumResults.Text = NumResults.ToString();
                     if (NumResults == 0)
@@ -136,7 +131,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (lblNoDataMessage != null)
             {
-                if (DictionaryLanguage == Language.Spanish)
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                     lblNoDataMessage.Text = "No se encontraron resultados para lo que usted busca. Revise si escribi&oacute; correctamente e inténtelo de nuevo. También puede escribir las primeras letras de la palabra o frase que busca o hacer clic en la letra del alfabeto y revisar la lista de términos que empiezan con esa letra.";
                 else
                     lblNoDataMessage.Text = "No matches were found for the word or phrase you entered. Please check your spelling, and try searching again. You can also type the first few letters of your word or phrase, or click a letter in the alphabet and browse through the list of terms that begin with that letter.";

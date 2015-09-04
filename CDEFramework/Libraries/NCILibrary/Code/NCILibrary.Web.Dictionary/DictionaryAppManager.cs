@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+
 using Newtonsoft.Json;
+
 using NCI.Logging;
 using NCI.Web.Dictionary.BusinessObjects;
 using NCI.Services.Dictionary;
-using NCI.Web.Dictionary;
+
+using svcDictionaryType = NCI.Services.Dictionary.DictionaryType;
+using svcSearchType = NCI.Services.Dictionary.SearchType;
+using svcLanguage = NCI.Services.Dictionary.Language;
 
 namespace NCI.Web.Dictionary
 {
@@ -14,8 +18,6 @@ namespace NCI.Web.Dictionary
     {
         static Log log = new Log(typeof(DictionaryAppManager));
 
-
-        
 
         /// <summary>
         /// Get Term from Dictionary Service to be deserialized and returned to the app module
@@ -25,10 +27,12 @@ namespace NCI.Web.Dictionary
         /// <param name="language">English/Spanish term</param>
         /// <param name="version">the version of the dictionary service</param>
         /// <returns>the term deserialized and the meta data from the database</returns>
-        public DictionaryTerm GetTerm(int termId, DictionaryType dictionary, Language language, String version)
+        public DictionaryTerm GetTerm(int termId, DictionaryType dictionary, String language, String version)
         {
-            
-            
+            // Translate from types the AppManager exposes to types the Dictionary Service exposes.
+            svcDictionaryType svcDictionary = TypeTranslator.Translate(dictionary);
+            svcLanguage svcLanguage = TypeTranslator.TranslateLocaleString(language);
+
             //sets up Dictionary Service so methods can be called
             DictionaryService service = new DictionaryService();
 
@@ -37,7 +41,7 @@ namespace NCI.Web.Dictionary
             NCI.Services.Dictionary.BusinessObjects.TermReturn termRet = new NCI.Services.Dictionary.BusinessObjects.TermReturn();
             try
             {
-                termRet = service.GetTerm(termId, dictionary, language);
+                termRet = service.GetTerm(termId, svcDictionary, svcLanguage);
             }
             catch (Exception ex)
             {
@@ -58,9 +62,6 @@ namespace NCI.Web.Dictionary
             }
 
            return dicTerm;
-
-
-            
         }
 
 
@@ -75,8 +76,13 @@ namespace NCI.Web.Dictionary
         /// <param name="dictionary">the dictionary type (cancert term, drug, genetic)</param>
         /// <param name="language">English/Spanish</param>
         /// <returns>returns a list of dictioanry terms and related metadata</returns>
-        public DictionarySearchResultCollection Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public DictionarySearchResultCollection Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, String language)
         {
+            // Translate from types the AppManager exposes to types the Dictionary Service exposes.
+            svcDictionaryType svcDictionary = TypeTranslator.Translate(dictionary);
+            svcSearchType svcSearchType = TypeTranslator.Translate(searchType);
+            svcLanguage svcLanguage = TypeTranslator.TranslateLocaleString(language);
+
             DictionaryService service = new DictionaryService();
 
             //sets up SearchReturn from Web Service
@@ -85,7 +91,7 @@ namespace NCI.Web.Dictionary
             //tries the dictionary service to get the strings back
             try
             {
-                searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
+                searchRet = service.Search(searchText, svcSearchType, offset, maxResults, svcDictionary, svcLanguage);
             }
             catch (Exception ex)
             {
@@ -96,11 +102,6 @@ namespace NCI.Web.Dictionary
             DictionarySearchResultCollection collection = new DictionarySearchResultCollection(resultList.AsEnumerable());
             collection.ResultsCount = searchRet.Meta.ResultCount;
             return collection;
-
-            
-
-
-
         }
 
         /// <summary>
@@ -111,46 +112,12 @@ namespace NCI.Web.Dictionary
         /// <param name="dictionary">Which dictionary is being searched</param>
         /// <param name="language">Language</param>
         /// <returns>returns list of suggestions</returns>
-        public SuggestReturn SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, Language language)
+        public DictionarySuggestionCollection SearchSuggest(String searchText, SearchType searchType, DictionaryType dictionary, String language)
         {
-           
-
-            SuggestReturn sugRet = new SuggestReturn();
-
-            DictionarySuggestion[] results = new DictionarySuggestion[] { };
-            DictionaryService service = new DictionaryService();
-            int count=0;
-            SuggestReturnMeta meta = new SuggestReturnMeta();
-            NCI.Services.Dictionary.BusinessObjects.SuggestReturn suggestRet = service.SearchSuggest(searchText, searchType, dictionary, language);
-
-            foreach (NCI.Services.Dictionary.BusinessObjects.DictionarySuggestion m in suggestRet.Result)
-            {
-                results[count].ID = m.ID;
-                results[count].Term = m.Term;
-                count++;
-            }
-
-            sugRet.Result = results;
-
-            sugRet.Meta.ResultCount = suggestRet.Meta.ResultCount;
-            sugRet.Meta.Messages = suggestRet.Meta.Messages;
-
-            return sugRet;
-
-        }
-
-        /// <summary>
-        /// Term suggestions from what is being typed into the search box.  Used for autosuggest
-        /// </summary>
-        /// <param name="searchText">the string being typed</param>
-        /// <param name="searchType">Type of search being done (contains, starts with, etc.)</param>
-        /// <param name="dictionary">Which dictionary is being searched</param>
-        /// <param name="language">Language</param>
-        /// <returns>returns list of suggestions</returns>
-        public DictionarySuggestionCollection SearchSuggest2(String searchText, SearchType searchType, DictionaryType dictionary, Language language)
-        {
-
-
+            // Translate from types the AppManager exposes to types the Dictionary Service exposes.
+            svcDictionaryType svcDictionary = TypeTranslator.Translate(dictionary);
+            svcSearchType svcSearchType = TypeTranslator.Translate(searchType);
+            svcLanguage svcLanguage = TypeTranslator.TranslateLocaleString(language);
             
             //Set up variables we will use
             List<DictionarySuggestion> list = new List<DictionarySuggestion>();
@@ -161,7 +128,7 @@ namespace NCI.Web.Dictionary
             
             try
             {
-                service.SearchSuggest(searchText, searchType, dictionary, language);
+                service.SearchSuggest(searchText, svcSearchType, svcDictionary, svcLanguage);
             }   
             catch(Exception ex)
             {
@@ -196,14 +163,17 @@ namespace NCI.Web.Dictionary
         /// <param name="language">which language</param>
         /// <param name="version">version of dictionary service</param>
         /// <returns>Collection of Dictionary Search Results</returns>
-        public DictionarySearchResultCollection Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        public DictionarySearchResultCollection Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, String language, String version)
         {
-            
+            // Translate from types the AppManager exposes to types the Dictionary Service exposes.
+            svcDictionaryType svcDictionary = TypeTranslator.Translate(dictionary);
+            svcLanguage svcLanguage = TypeTranslator.TranslateLocaleString(language);
+
             DictionaryService service = new DictionaryService();
             NCI.Services.Dictionary.BusinessObjects.SearchReturn expandRet = null;
             try
             {
-                expandRet = service.Expand(searchText, includeTypes, offset, maxResults, dictionary, language);
+                expandRet = service.Expand(searchText, includeTypes, offset, maxResults, svcDictionary, svcLanguage);
             }
             catch (Exception ex)
             {
