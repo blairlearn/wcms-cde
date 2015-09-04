@@ -194,11 +194,11 @@ namespace NCI.Web.Dictionary
         /// </summary>
         /// <param name="list">the string list that the dictionary service would return</param>
         /// <returns>deserialized list of DictionarySearchResults</returns>
-        private List<DictionarySearchResult> DeserializeList(NCI.Services.Dictionary.BusinessObjects.DictionaryExpansion[] list)
+        private List<DictionarySearchResult> DeserializeList(NCI.Services.Dictionary.BusinessObjects.DictionarySearchResultEntry[] list)
         {
             List<DictionarySearchResult> returnList = new List<DictionarySearchResult>(); ;
 
-            foreach (NCI.Services.Dictionary.BusinessObjects.DictionaryExpansion m in list)
+            foreach (NCI.Services.Dictionary.BusinessObjects.DictionarySearchResultEntry m in list)
             {
                 try
                 {

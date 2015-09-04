@@ -16,7 +16,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
         public SearchReturn()
         {
             // Force collection to be non-null.
-            Result = new DictionaryExpansion[] { };
+            Result = new DictionarySearchResultEntry[] { };
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace NCI.Services.Dictionary.BusinessObjects
         /// Array of objects containg details of the individual terms which met the search criteria.
         /// </summary>
         [DataMember(Name = "result")]
-        public DictionaryExpansion[] Result { get; set; }
+        public DictionarySearchResultEntry[] Result { get; set; }
 
         /// <summary>
         /// Hook for storing data members by calling the various AddMember() overloads.

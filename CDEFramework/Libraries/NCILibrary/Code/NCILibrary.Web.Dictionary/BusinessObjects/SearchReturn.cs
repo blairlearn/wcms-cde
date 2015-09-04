@@ -25,7 +25,7 @@ namespace NCI.Web.Dictionary.BusinessObjects
         public SearchReturnMeta Meta { get; set; }
 
         /// <summary>
-        /// Array of DictionaryExpansion objects containg details of the individual terms which met the search criteria.
+        /// Array of DictionarySearchResultEntry objects containg details of the individual terms which met the search criteria.
         /// </summary>
         [DataMember(Name = "result")]
         public DictionarySearchResult[] Result { get; set; }

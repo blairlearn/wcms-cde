@@ -5,17 +5,17 @@ using System.Runtime.Serialization;
 namespace NCI.Services.Dictionary.BusinessObjects
 {
     [DataContract()]
-    public class DictionaryExpansion : IJsonizable
+    public class DictionarySearchResultEntry : IJsonizable
     {
 
         /// <summary>
         /// Needed for serialization
         /// </summary>
-        public DictionaryExpansion()
+        public DictionarySearchResultEntry()
         {
         }
 
-        public DictionaryExpansion(int id, String termName, String termDetail)
+        public DictionarySearchResultEntry(int id, String termName, String termDetail)
         {
             this.ID = id;
             this.MatchedTerm = termName;

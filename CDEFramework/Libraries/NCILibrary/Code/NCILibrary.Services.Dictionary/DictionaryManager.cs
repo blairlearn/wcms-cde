@@ -343,7 +343,7 @@ namespace NCI.Services.Dictionary
             // Retrieve results.  We already know the number of results, so let's preset the
             // list to the size we know we're going to need.  (Use the number of rows in the results
             // since MatchCount/resultCount is conceivably much larger than we need and might even be int.MaxValue.)
-            List<DictionaryExpansion> foundTerms = new List<DictionaryExpansion>(results.Data.Rows.Count);
+            List<DictionarySearchResultEntry> foundTerms = new List<DictionarySearchResultEntry>(results.Data.Rows.Count);
             foreach (DataRow row in results.Data.Rows)
             {
                 try
@@ -351,7 +351,7 @@ namespace NCI.Services.Dictionary
                     int id = row.Field<int>("termID");
                     string matchName = row.Field<string>("TermName");
                     string detail = row.Field<string>("object");
-                    foundTerms.Add(new DictionaryExpansion(id, matchName, detail));
+                    foundTerms.Add(new DictionarySearchResultEntry(id, matchName, detail));
                 }
                 catch (Exception ex)
                 {
