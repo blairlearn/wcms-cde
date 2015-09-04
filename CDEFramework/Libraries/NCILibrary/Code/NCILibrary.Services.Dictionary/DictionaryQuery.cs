@@ -22,6 +22,9 @@ namespace NCI.Services.Dictionary
 
         private string DBConnectionString { get; set; }
 
+        /// <summary>
+        /// Initialization. Set up connection strings.
+        /// </summary>
         public DictionaryQuery()
         {
             if (ConfigurationManager.ConnectionStrings["CDRDbConnectionString"] == null)
@@ -81,9 +84,35 @@ namespace NCI.Services.Dictionary
             return results;
         }
 
-        public SearchResults Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
+        /// <summary>
+        /// Performs a search for terms with names matching searchText. Results are sorted by the matching term name.
+        /// </summary>
+        /// <param name="searchText">text to search for.</param>
+        /// <param name="searchType">The type of search to perform.
+        ///     Valid values are:
+        ///         Begins - Search for terms beginning with searchText.
+        ///         Contains - Search for terms containing searchText.
+        ///         Magic - Search for terms beginning with searchText, followed by those containing searchText.
+        /// </param>
+        /// <param name="offset">Offset into the list of matches for the first result to return.</param>
+        /// <param name="numResults">The maximum number of results to return. Must be at least 10.</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="audience">The desired target audience - Patient or Health professional</param>
+        /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
+        /// <returns>DataTable containing a list of matching records.  Results are sorted by the matching term name.</returns>
+        public SearchResults Search(String searchText, SearchType searchType, int offset, int numResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, offset, maxResults, dictionary, language, audience, version));
+            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, offset, numResults, dictionary, language, audience, version));
 
             DataTable results = null;
 
@@ -109,7 +138,7 @@ namespace NCI.Services.Dictionary
             SqlParameter[] parameters = new SqlParameter[] {
                 new SqlParameter("@searchText", SqlDbType.NVarChar){ Value = searchText},
                 new SqlParameter("@offset", SqlDbType.Int){ Value = offset },
-                new SqlParameter("@maxResults", SqlDbType.Int){ Value = maxResults },
+                new SqlParameter("@maxResults", SqlDbType.Int){ Value = numResults },
 
                 new SqlParameter("@Dictionary", SqlDbType.NVarChar){Value = dictionary.ToString()},
 	            new SqlParameter("@Language", SqlDbType.NVarChar){Value = language.ToString()},
@@ -139,9 +168,35 @@ namespace NCI.Services.Dictionary
             return new SearchResults(results, matchCount);
         }
 
-        public SuggestionResults SearchSuggest(String searchText, SearchType searchType, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
+        /// <summary>
+        /// Calls the database to search for terms matching searchText. This method is intended for use with autosuggest
+        /// and returns a maximum of 10 results
+        /// </summary>
+        /// <param name="searchText">text to search for.</param>
+        /// <param name="searchType">The type of search to perform.
+        ///     Valid values are:
+        ///         Begins - Search for terms beginning with searchText.
+        ///         Contains - Search for terms containing searchText.
+        ///         Magic - Search for terms beginning with searchText, followed by those containing searchText.
+        /// </param>
+        /// <param name="numResults">Maximum number of results to return.</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="audience">The desired target audience - Patient or Health professional</param>
+        /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
+        /// <returns>DataTable containing a list of matching records.</returns>
+        public SuggestionResults SearchSuggest(String searchText, SearchType searchType, int numResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, searchType, maxResults, dictionary, language, audience, version));
+            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, searchType, numResults, dictionary, language, audience, version));
 
             DataTable results = null;
 
@@ -151,7 +206,7 @@ namespace NCI.Services.Dictionary
             SqlParameter[] parameters = new SqlParameter[] {
                 new SqlParameter("@searchText", SqlDbType.NVarChar){ Value = searchText},
                 new SqlParameter("@searchType", SqlDbType.NVarChar){ Value = searchType.ToString() },
-                new SqlParameter("@maxResults", SqlDbType.Int){ Value = maxResults },
+                new SqlParameter("@maxResults", SqlDbType.Int){ Value = numResults },
 
                 new SqlParameter("@Dictionary", SqlDbType.NVarChar){Value = dictionary.ToString()},
 	            new SqlParameter("@Language", SqlDbType.NVarChar){Value = language.ToString()},
@@ -181,9 +236,30 @@ namespace NCI.Services.Dictionary
             return new SuggestionResults(results, matchCount);
         }
 
-        public SearchResults Expand(String searchText, String[] includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
+        /// <summary>
+        /// Calls the database to search for terms matching searchText. Results are sorted by the matched term name or alias.
+        /// </summary>
+        /// <param name="searchText">text to search for.</param>
+        /// <param name="includeTypes">A filter for the types of name aliases to include.  Multiple values are separated by the pipe character (|).
+        /// If no filter is supplied, the result </param>
+        /// <param name="offset">Offset into the list of matches for the first result to return.</param>
+        /// <param name="numResults">The maximum number of results to return. Must be at least 10.</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
+        /// <returns>DataTable containing a list of matching records.  Results are sorted by the matching term name.</returns>
+        public SearchResults Expand(String searchText, String[] includeTypes, int offset, int numResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter Expand( {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} ).", searchText, includeTypes, offset, maxResults, dictionary, language, audience, version));
+            log.debug(string.Format("Enter Expand( {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} ).", searchText, includeTypes, offset, numResults, dictionary, language, audience, version));
 
             DataTable results;
 
@@ -199,7 +275,7 @@ namespace NCI.Services.Dictionary
                 new SqlParameter("@searchText", SqlDbType.NVarChar){Value = searchText},
                 new SqlParameter("@IncludeTypes", SqlDbType.Structured){Value = includeFilter},
                 new SqlParameter("@offset", SqlDbType.Int){ Value = offset },
-                new SqlParameter("@maxResults", SqlDbType.Int){ Value = maxResults },
+                new SqlParameter("@maxResults", SqlDbType.Int){ Value = numResults },
 
                 new SqlParameter("@Dictionary", SqlDbType.NVarChar){Value = dictionary.ToString()},
 	            new SqlParameter("@Language", SqlDbType.NVarChar){Value = language.ToString()},
