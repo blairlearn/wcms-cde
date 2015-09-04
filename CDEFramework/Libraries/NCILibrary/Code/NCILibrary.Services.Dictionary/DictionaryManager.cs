@@ -341,8 +341,9 @@ namespace NCI.Services.Dictionary
             messages.Add(message);
 
             // Retrieve results.  We already know the number of results, so let's preset the
-            // list to the size we know we're going to need.
-            List<DictionaryExpansion> foundTerms = new List<DictionaryExpansion>(resultCount);
+            // list to the size we know we're going to need.  (Use the number of rows in the results
+            // since MatchCount/resultCount is conceivably much larger than we need and might even be int.MaxValue.)
+            List<DictionaryExpansion> foundTerms = new List<DictionaryExpansion>(results.Data.Rows.Count);
             foreach (DataRow row in results.Data.Rows)
             {
                 try

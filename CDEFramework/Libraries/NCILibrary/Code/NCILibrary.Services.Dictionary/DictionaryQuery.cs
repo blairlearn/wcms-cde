@@ -154,8 +154,8 @@ namespace NCI.Services.Dictionary
                 // There's some unresolved weirdness with matchCountParam.Value coming back as NULL even though
                 // the value is set unconditionally.  This appears to have been due to retrieving the value
                 // after the connection had been closed. But, since that's not definite, check that the parameter
-                // value is not null (or DBNull) and if so, log an error and retrieve a value that will allow
-                // execution to continue.
+                // value is not null (or DBNull) and if so, log an error and attempt to mretrieve a value that
+                // will allow execution to continue.
                 if (DBNull.Value.Equals(matchCountParam.Value) || matchCountParam.Value == null)
                 {
                     log.warning("Search() encountered null when attempting to retrieve the @matchCount parameter.");
