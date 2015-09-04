@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using NCI.Logging;
 using NCI.Web.Dictionary.BusinessObjects;
 using NCI.Services.Dictionary;
+using NCILibrary.Web.Dictionary;
 
 namespace NCI.Web.Dictionary
 {
@@ -74,13 +75,14 @@ namespace NCI.Web.Dictionary
         /// <param name="dictionary">the dictionary type (cancert term, drug, genetic)</param>
         /// <param name="language">English/Spanish</param>
         /// <returns>returns a list of dictioanry terms and related metadata</returns>
-        public IEnumerable<DictionarySearchResult> Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
+        public DictionarySearchResultCollection Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language)
         {
             DictionaryService service = new DictionaryService();
 
             //sets up SearchReturn from Web Service
             NCI.Services.Dictionary.BusinessObjects.SearchReturn searchRet = null;
 
+            //tries the dictionary service to get the strings back
             try
             {
                 searchRet = service.Search(searchText, searchType, offset, maxResults, dictionary, language);
@@ -91,21 +93,11 @@ namespace NCI.Web.Dictionary
             }
 
             List<DictionarySearchResult> resultList = DeserializeList(searchRet.Result);
+            DictionarySearchResultCollection collection = new DictionarySearchResultCollection(resultList.AsEnumerable());
+            collection.ResultsCount = searchRet.Meta.ResultCount;
+            return collection;
+
             
-            return resultList.AsEnumerable();
-
-            /*if (srchReturn.Result.Length > 0)
-            {
-
-                //set meta data
-                srchReturn.Meta = new SearchReturnMeta();
-                srchReturn.Meta.Audience = searchRet.Meta.Audience;
-                srchReturn.Meta.Language = searchRet.Meta.Language;
-                srchReturn.Meta.Offset = searchRet.Meta.Offset;
-                srchReturn.Meta.ResultCount = searchRet.Meta.ResultCount;
-                srchReturn.Meta.Messages = searchRet.Meta.Messages;
-
-            }*/
 
 
 
@@ -158,9 +150,9 @@ namespace NCI.Web.Dictionary
         /// <param name="language">which language</param>
         /// <param name="version">version of dictionary service</param>
         /// <returns>Collection of Dictionary Search Results</returns>
-        public IEnumerable<DictionarySearchResult> Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        public DictionarySearchResultCollection Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
         {
-
+            
             DictionaryService service = new DictionaryService();
             NCI.Services.Dictionary.BusinessObjects.SearchReturn expandRet = null;
             try
@@ -173,21 +165,12 @@ namespace NCI.Web.Dictionary
             }
 
             List<DictionarySearchResult> expansionList = DeserializeList(expandRet.Result);
-
+            DictionarySearchResultCollection collection = new DictionarySearchResultCollection(expansionList.AsEnumerable());
+            collection.ResultsCount = expandRet.Meta.ResultCount;
             
 
-            return expansionList.AsEnumerable();
-            /*if (exRet.Result.Length > 0)
-            {
-              
-                //set up meta data
-                exRet.Meta = new SearchReturnMeta();
-                exRet.Meta.ResultCount = expandRet.Meta.ResultCount;
-                exRet.Meta.Messages = expandRet.Meta.Messages;
-            }
-
-
-            return exRet;*/
+            return collection;
+            
         }
 
         /// <summary>
