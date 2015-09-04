@@ -134,11 +134,12 @@ namespace NCI.Services.Dictionary
         /// Called by an implementation of IJsonizable to store a data member which is a JSON string.
         /// </summary>
         /// <param name="name">The object member's name</param>
-        /// <param name="item">The object to store</param>
+        /// <param name="item">The object to store. <remarks>item is assumed to be a
+        /// syntactically correct, fully-formed JSON object.</remarks></param>
         /// <param name="isFinal">Is this the last member the caller will add?</param>
         internal void AddJsonString(string name, String item, bool isFinal)
         {
-            builder.AppendFormat("\"{0}\": {{{1}}}", name, item);
+            builder.AppendFormat("\"{0}\": {1}", name, item);
             if (!isFinal)
                 builder.Append(",");
         }
