@@ -109,7 +109,7 @@ namespace NCI.Web.CDE
             {
                 if (!string.IsNullOrEmpty(info.WAChannels))
                 {
-                    return info.WAReportSuites;
+                    return info.WAChannels;
                 }
             }
             return "";
@@ -143,13 +143,16 @@ namespace NCI.Web.CDE
             //Loop through infos in order ... more comment here
             foreach (WebAnalyticsInfo info in infos)
             {
-                foreach (WebAnalyticsCustomVariableOrEvent evt in info.WAEvents)
+                if (info.WAEvents != null)
                 {
-                    //Put comment here
-                    if (!seenID.Contains(evt.Key))
+                    foreach (WebAnalyticsCustomVariableOrEvent evt in info.WAEvents)
                     {
-                        seenID.Add(evt.Key);
-                        yield return evt.Key;
+                        //Put comment here
+                        if (!seenID.Contains(evt.Key))
+                        {
+                            seenID.Add(evt.Key);
+                            yield return evt.Key;
+                        }
                     }
                 }
 
@@ -172,14 +175,17 @@ namespace NCI.Web.CDE
             //Loop through infos in order ... more comment here
             foreach (WebAnalyticsInfo info in infos)
             {
-                foreach (WebAnalyticsCustomVariableOrEvent prop in info.WAProps)
+                if (info.WAProps != null)
                 {
-                    // Check the list of seen IDs; if this key does not appear on the list, add it.
-                    // Do not add if the key already exists - child keys override parents, and this loop
-                    // starts at the current content item and moves through parents until the root or "removeParents" is hit.                    if (!seenID.Contains(prop.Key))
+                    foreach (WebAnalyticsCustomVariableOrEvent prop in info.WAProps)
                     {
-                        seenID.Add(prop.Key);
-                        yield return prop;
+                        // Check the list of seen IDs; if this key does not appear on the list, add it.
+                        // Do not add if the key already exists - child keys override parents, and this loop
+                        // starts at the current content item and moves through parents until the root or "removeParents" is hit.                    if (!seenID.Contains(prop.Key))
+                        {
+                            seenID.Add(prop.Key);
+                            yield return prop;
+                        }
                     }
                 }
 
@@ -202,18 +208,20 @@ namespace NCI.Web.CDE
             //Loop through infos in order ... more comment here
             foreach (WebAnalyticsInfo info in infos)
             {
-                foreach (WebAnalyticsCustomVariableOrEvent evar in info.WAEvars)
+                if (info.WAEvars != null)
                 {
-                    // Check the list of seen IDs; if this key does not appear on the list, add it.
-                    // Do not add if the key already exists - child keys override parents, and this loop
-                    // starts at the current content item and moves through parents until the root or "removeParents" is hit.
-                    if (!seenID.Contains(evar.Key))
+                    foreach (WebAnalyticsCustomVariableOrEvent evar in info.WAEvars)
                     {
-                        seenID.Add(evar.Key);
-                        yield return evar;
+                        // Check the list of seen IDs; if this key does not appear on the list, add it.
+                        // Do not add if the key already exists - child keys override parents, and this loop
+                        // starts at the current content item and moves through parents until the root or "removeParents" is hit.
+                        if (!seenID.Contains(evar.Key))
+                        {
+                            seenID.Add(evar.Key);
+                            yield return evar;
+                        }
                     }
                 }
-
                 // If we are to remove the parent events we need to stop looping
                 if (info.RemoveParentEvars)
                     break;

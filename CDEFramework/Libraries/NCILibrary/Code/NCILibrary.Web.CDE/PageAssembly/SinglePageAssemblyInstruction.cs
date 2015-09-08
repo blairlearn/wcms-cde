@@ -797,20 +797,19 @@ namespace NCI.Web.CDE
         /// then add the values to the webAnalyticsFieldFilterDelegates dictionary
         /// </summary>
         protected void RegisterCustomWebAnalytics()
-        {            
-            
-            try
-            {
-                SectionDetail sectiondetail = SectionDetailFactory.GetSectionDetail(SectionPath);
+        {
+            SectionDetail sectiondetail = SectionDetailFactory.GetSectionDetail(SectionPath);
 
+            // Check sectiondetail to make sure not null!!!!!
+            if (sectiondetail != null)
+            {
                 string channels = sectiondetail.GetWAChannels();
                 string suites = sectiondetail.GetWASuites();
                 string group = sectiondetail.GetWAContentGroups();
                 string[] events = sectiondetail.GetWAEvents().ToArray();
                 WebAnalyticsCustomVariableOrEvent[] props = sectiondetail.GetWAProps().ToArray();
                 WebAnalyticsCustomVariableOrEvent[] evars = sectiondetail.GetWAEvars().ToArray();
-                
-                //Check sectiondetail to make sure not null !!!!
+
                 // If Content Group has a value, add to prop44 and eVar44
                 if (!String.IsNullOrEmpty(group))
                 {
@@ -835,7 +834,7 @@ namespace NCI.Web.CDE
                         });
                     }
                 }
-                
+
                 // Register custom props entered on navon
                 foreach (WebAnalyticsCustomVariableOrEvent prop in props)
                 {
@@ -866,13 +865,12 @@ namespace NCI.Web.CDE
                     }
                 }
             }
-            catch (NullReferenceException ex)
+            else
             {
                 Logger.LogError("SinglePageAssemblyInstruction.cs:RegisterCustomWebAnalytics()",
-                    "SectionDetails XML and/or WebAnalyticsInfo not found.", NCIErrorLevel.Error, ex);
+                    "SectionDetails XML not found.", NCIErrorLevel.Debug);
                 return;
             }
-             
         }
 
         /// <summary>
