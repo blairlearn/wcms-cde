@@ -393,7 +393,7 @@ namespace NCI.DataManager
         /// <summary>
         /// Get Proper Date Display for dynamic lists
         /// </summary>
-        /// <param name="displayMode"></param>
+        /// <param name="displayMode"><see cref="DateDisplayModes"/></param>
         /// <param name="dfp">Date First Published</param>
         /// <param name="dlm">Date Last Modified</param>
         /// <param name="dlr">Date Last Reviewed</param>
