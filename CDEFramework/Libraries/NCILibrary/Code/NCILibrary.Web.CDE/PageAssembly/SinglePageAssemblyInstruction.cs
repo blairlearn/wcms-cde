@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Collections.Generic;
@@ -791,24 +791,26 @@ namespace NCI.Web.CDE
 
         #region Protected
 
+        
         /// <summary>
         /// Get the section details for the content item, load custom analytics, 
         /// then add the values to the webAnalyticsFieldFilterDelegates dictionary
         /// </summary>
         protected void RegisterCustomWebAnalytics()
         {            
+            
             try
             {
-                WebAnalyticsInfo wai = new WebAnalyticsInfo();
                 SectionDetail sectiondetail = SectionDetailFactory.GetSectionDetail(SectionPath);
-                wai = wai.LoadCustomAnalytics(sectiondetail);
 
-                string suite = wai.LoadSuite(sectiondetail);
-                string group = wai.LoadContentGroup(sectiondetail);
-                List<String> eventsList = wai.LoadEvents(sectiondetail);
-                Dictionary<string, string> props = wai.LoadProps(sectiondetail);
-                Dictionary<string, string> evars = wai.LoadEvars(sectiondetail);
-
+                string channels = sectiondetail.GetWAChannels();
+                string suites = sectiondetail.GetWASuites();
+                string group = sectiondetail.GetWAContentGroups();
+                string[] events = sectiondetail.GetWAEvents().ToArray();
+                WebAnalyticsCustomVariableOrEvent[] props = sectiondetail.GetWAProps().ToArray();
+                WebAnalyticsCustomVariableOrEvent[] evars = sectiondetail.GetWAEvars().ToArray();
+                
+                //Check sectiondetail to make sure not null !!!!
                 // If Content Group has a value, add to prop44 and eVar44
                 if (!String.IsNullOrEmpty(group))
                 {
@@ -823,7 +825,7 @@ namespace NCI.Web.CDE
                 }
 
                 // Register custom events entered on navon
-                foreach (string evn in eventsList)
+                foreach (string evn in events)
                 {
                     if (!String.IsNullOrEmpty(evn))
                     {
@@ -833,12 +835,12 @@ namespace NCI.Web.CDE
                         });
                     }
                 }
-
+                
                 // Register custom props entered on navon
-                foreach (KeyValuePair<string, string> pr in props)
+                foreach (WebAnalyticsCustomVariableOrEvent prop in props)
                 {
-                    String propKey = wai.GetPropKey(pr);
-                    String propValue = pr.Value;
+                    String propKey = prop.Key;
+                    String propValue = prop.Value;
 
                     if (!String.IsNullOrEmpty(propKey))
                     {
@@ -850,10 +852,10 @@ namespace NCI.Web.CDE
                 }
 
                 // Register custom evars entered on navon
-                foreach (KeyValuePair<string, string> evr in evars)
+                foreach (WebAnalyticsCustomVariableOrEvent evar in evars)
                 {
-                    String evarKey = wai.GetEvarKey(evr);
-                    String evarValue = evr.Value;
+                    String evarKey = evar.Key;
+                    String evarValue = evar.Value;
 
                     if (!String.IsNullOrEmpty(evarKey))
                     {
@@ -870,6 +872,7 @@ namespace NCI.Web.CDE
                     "SectionDetails XML and/or WebAnalyticsInfo not found.", NCIErrorLevel.Error, ex);
                 return;
             }
+             
         }
 
         /// <summary>

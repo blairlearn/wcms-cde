@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Collections.Generic;
@@ -70,6 +70,7 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool RemoveParentProps { get; set; }
 
+
         /// <summary>
         /// Boolean to determine whether or not to remove the parent value. 
         /// If false, the parent is added to the collection of evars.
@@ -78,290 +79,146 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool RemoveParentEvars { get; set; }
 
+        /// <summary>
+        /// Load the report suite(s) that have been set on this navon. 
+        /// </summary>
+        /// <param name="infos">WebAnalyticsInfo</param>
+        /// <returns></returns>
+        public static String GetSuites(IEnumerable<WebAnalyticsInfo> infos)
+        {
+            // Loop through infos until a report suite value is found. 
+            foreach (WebAnalyticsInfo info in infos)
+            {
+                if (!string.IsNullOrEmpty(info.WAReportSuites))
+                {
+                    return info.WAReportSuites;
+                }
+            }
+            return "";
+        }
 
         /// <summary>
-        /// Load the analytics that have been set on the navon. If there is no value,
-        /// recurse through parents until a value is found or until root is reached.
+        /// Load the WA channel(s) that have been set on this navon. 
         /// </summary>
-        /// <param name="section">Section details</param>
-        public WebAnalyticsInfo LoadCustomAnalytics(SectionDetail section)
+        /// <param name="infos">WebAnalyticsInfo</param>
+        /// <returns></returns>
+        public static String GetChannels(IEnumerable<WebAnalyticsInfo> infos)
         {
-            try
+            // Loop through infos until a report channel value is found. 
+            foreach (WebAnalyticsInfo info in infos)
             {
-                WebAnalyticsInfo wai = section.WebAnalyticsInfo;
-                if (wai == null)
+                if (!string.IsNullOrEmpty(info.WAChannels))
                 {
-                    if (section.ParentPath != null)
+                    return info.WAReportSuites;
+                }
+            }
+            return "";
+        }
+
+        /// <summary>
+        /// Load the content groups that have been set on this navon. 
+        /// </summary>
+        /// <param name="infos">WebAnalyticsInfo</param>
+        /// <returns></returns>
+        public static String GetContentGroup(WebAnalyticsInfo info)
+        {
+            string group = "";
+            if (!string.IsNullOrEmpty(info.WAContentGroups))
+            {
+                group = info.WAContentGroups;
+            }
+            return group;
+        }
+
+        /// <summary>
+        /// Get the events from a collection of WebAnalyticsInfos.  This assumes that the input is a flattened
+        /// tree where the first item is the current item and the last item is the root ancestor. 
+        /// </summary>
+        /// <param name="infos"></param>
+        /// <returns></returns>
+        public static IEnumerable<String> GetEvents(IEnumerable<WebAnalyticsInfo> infos)
+        {
+            List<string> seenID = new List<string>();
+
+            //Loop through infos in order ... more comment here
+            foreach (WebAnalyticsInfo info in infos)
+            {
+                foreach (WebAnalyticsCustomVariableOrEvent evt in info.WAEvents)
+                {
+                    //Put comment here
+                    if (!seenID.Contains(evt.Key))
                     {
-                        wai = section.Parent.WebAnalyticsInfo;
-                        LoadCustomAnalytics(section.Parent);
-                    }
-                    else return null;
-                }
-                return wai;
-            }
-            catch (NullReferenceException ex)
-            {
-                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadCustomAnalytics()",
-                "SectionDetails.xml not found.", NCIErrorLevel.Error, ex);
-                return null;
-            }
-        }
-
-        protected List<WebAnalyticsInfo> WaiAll = new List<WebAnalyticsInfo> { };
-        /// <summary>
-        /// Load the analytics that have been set on the navon and all of its parents
-        /// until root is reached.
-        /// </summary>
-        /// <param name="section">Section details</param>
-        public List<WebAnalyticsInfo> LoadAllCustomAnalytics(SectionDetail section)
-        {
-            try
-            {
-                WaiAll.Add(section.WebAnalyticsInfo);
-                if (section.ParentPath != null)
-                {
-                    LoadAllCustomAnalytics(section.Parent);
-                }
-                else
-                {
-                    return null;
-                }
-                return WaiAll;
-            }
-            catch (NullReferenceException ex)
-            {
-                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadAllCustomAnalytics()",
-                "SectionDetails.xml not found.", NCIErrorLevel.Error, ex);
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Load the report suite(s) that have been set on this navon. If there is no value,
-        /// recurse through parents until a value is found. Suites set on a loweer folder 
-        /// overwrite parents' suites.
-        /// </summary>
-        /// <param name="section">Section details</param>
-        public string LoadSuite(SectionDetail section)
-        {
-            try
-            {
-                WebAnalyticsInfo wai = LoadCustomAnalytics(section);
-                string suite = wai.WAReportSuites;
-
-                if (String.IsNullOrEmpty(suite))
-                {
-                    wai = LoadCustomAnalytics(section.Parent);
-                    suite = LoadSuite(section.Parent);
-                }
-                return suite;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadSuite()",
-                      "Exception encountered while retrieving web analytics suites.",
-                      NCIErrorLevel.Warning, ex);
-                return "";
-            }
-        }
-
-        /// <summary>
-        /// Load the content group that has been set on this navon.
-        /// </summary>
-        /// <param name="section">Section details</param>
-        public string LoadContentGroup(SectionDetail section)
-        {
-            try
-            {
-                WebAnalyticsInfo wai = LoadCustomAnalytics(section);
-                string group = wai.WAContentGroups;
-
-                if (String.IsNullOrEmpty(group))
-                {
-                    group = "";
-                }
-                return group;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadContentGroup()",
-                      "Exception encountered while retrieving web analytics content group.",
-                      NCIErrorLevel.Debug, ex);
-                return "";
-            }
-        }
-
-        protected List<string> _events = new List<string> { };
-        /// <summary>
-        /// Load the custom events from the navon and all parents until RemoveParent 
-        /// flag is set or root is reached. Lower levels override parents' values.
-        /// <param name="section">Section details</param>
-        public List<string> LoadEvents(SectionDetail section)
-        {
-            try
-            {
-                string key = "";
-                bool removeParents = false;
-
-                WaiAll.Clear();
-                List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
-                foreach (WebAnalyticsInfo waInfo in waInfos)
-                {
-                    if ((removeParents == false) && (waInfo != null))
-                    {
-                        WebAnalyticsCustomVariableOrEvent[] waEvents = waInfo.WAEvents;
-                        foreach (WebAnalyticsCustomVariableOrEvent waEvent in waEvents)
-                        {
-                            key = waEvent.Key;
-                            _events.Add(key);
-                        }
-                        removeParents = waInfo.RemoveParentEvents;
+                        seenID.Add(evt.Key);
+                        yield return evt.Key;
                     }
                 }
-                return _events;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadEvents()",
-                      "Exception encountered while retrieving web analytics custom props",
-                      NCIErrorLevel.Warning, ex);
-                return null;
+
+                // If we are to remove the parent events we need to stop looping
+                if (info.RemoveParentEvents)
+                    break;
             }
         }
 
-
-        protected Dictionary<string, string> _props = new Dictionary<string, string> { };
         /// <summary>
-        /// Load the custom props set on the navon and all parents until RemoveParent 
-        /// flag is set or root is reached. Lower levels override parents' values.
-        /// <param name="section">Section details</param>
-        public Dictionary<string, string> LoadProps(SectionDetail section)
+        /// Get the Props from a collection of WebAnalyticsInfos. This assumes that the input is a flattened
+        /// tree where the first item is the current item and the last item is the root ancestor. 
+        /// </summary>
+        /// <param name="infos">collection of WebAnalyticsInfos</param>
+        /// <returns></returns>
+        public static IEnumerable<WebAnalyticsCustomVariableOrEvent> GetProps(IEnumerable<WebAnalyticsInfo> infos)
         {
-            try
-            {
-                string key = "";
-                string value = "";
-                bool removeParents = false;
+            List<string> seenID = new List<string>();
 
-                WaiAll.Clear();
-                List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
-                foreach (WebAnalyticsInfo waInfo in waInfos)
+            //Loop through infos in order ... more comment here
+            foreach (WebAnalyticsInfo info in infos)
+            {
+                foreach (WebAnalyticsCustomVariableOrEvent prop in info.WAProps)
                 {
-                    if ((removeParents == false) && (waInfo != null))
+                    // Check the list of seen IDs; if this key does not appear on the list, add it.
+                    // Do not add if the key already exists - child keys override parents, and this loop
+                    // starts at the current content item and moves through parents until the root or "removeParents" is hit.                    if (!seenID.Contains(prop.Key))
                     {
-                        WebAnalyticsCustomVariableOrEvent[] waProps = waInfo.WAProps;
-                        foreach (WebAnalyticsCustomVariableOrEvent waProp in waProps)
-                        {
-                            key = waProp.Key;
-                            value = waProp.Value;
-                            if (!_props.ContainsKey(key))
-                            {
-                                _props.Add(key, value);
-                            }
-                        }
-                        removeParents = waInfo.RemoveParentProps;
+                        seenID.Add(prop.Key);
+                        yield return prop;
                     }
                 }
-                return _props;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadProps()",
-                      "Exception encountered while retrieving web analytics custom props",
-                      NCIErrorLevel.Warning, ex);
-                return null;
+
+                // If we are to remove the parent events we need to stop looping
+                if (info.RemoveParentProps)
+                    break;
             }
         }
 
-        protected Dictionary<string, string> _evars = new Dictionary<string, string> { };
         /// <summary>
-        /// Load the custom eVars set on the navon and all parents until RemoveParent 
-        /// flag is set or root is reached. Lower levels override parents' values.
-        /// <param name="section">Section details</param>
-        public Dictionary<string, string> LoadEvars(SectionDetail section)
+        /// Get the eVars from a collection of WebAnalyticsInfos. This assumes that the input is a flattened
+        /// tree where the first item is the current item and the last item is the root ancestor. 
+        /// </summary>
+        /// <param name="infos">collection of WebAnalyticsInfos</param>
+        /// <returns></returns>
+        public static IEnumerable<WebAnalyticsCustomVariableOrEvent> GetEvars(IEnumerable<WebAnalyticsInfo> infos)
         {
-            try
-            {
-                string key = "";
-                string value = "";
-                bool removeParents = false;
+            List<string> seenID = new List<string>();
 
-                WaiAll.Clear();
-                List<WebAnalyticsInfo> waInfos = LoadAllCustomAnalytics(section);
-                foreach (WebAnalyticsInfo waInfo in waInfos)
+            //Loop through infos in order ... more comment here
+            foreach (WebAnalyticsInfo info in infos)
+            {
+                foreach (WebAnalyticsCustomVariableOrEvent evar in info.WAEvars)
                 {
-                    if ((removeParents == false) && (waInfo != null))
+                    // Check the list of seen IDs; if this key does not appear on the list, add it.
+                    // Do not add if the key already exists - child keys override parents, and this loop
+                    // starts at the current content item and moves through parents until the root or "removeParents" is hit.
+                    if (!seenID.Contains(evar.Key))
                     {
-                        WebAnalyticsCustomVariableOrEvent[] waEvars = waInfo.WAEvars;
-                        foreach (WebAnalyticsCustomVariableOrEvent waEvar in waEvars)
-                        {
-                            key = waEvar.Key;
-                            value = waEvar.Value;
-                            if (!_evars.ContainsKey(key))
-                            {
-                                _evars.Add(key, value);
-                            }
-                        }
-                        removeParents = waInfo.RemoveParentEvars;
+                        seenID.Add(evar.Key);
+                        yield return evar;
                     }
                 }
-                return _evars;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError("CDE:WebAnalyticsInfo.cs:LoadEvars()",
-                      "Exception encountered while retrieving web analytics custom evars",
-                      NCIErrorLevel.Warning, ex);
-                return null;
+
+                // If we are to remove the parent events we need to stop looping
+                if (info.RemoveParentEvars)
+                    break;
             }
         }
 
-        /// <summary>
-        /// Get event key if value matches enum in WebAnalyticsOptions
-        /// <param name="cEvent">Event key string</param>
-        public string GetEventKey(string cEvent)
-        {
-            string customEvent = "";
-            foreach (WebAnalyticsOptions.Events ev in Enum.GetValues(typeof(WebAnalyticsOptions.Events)))
-            {
-                if (cEvent == ev.ToString())
-                    customEvent = cEvent;
-            }
-            return customEvent;
-        }
-
-        /// <summary>
-        /// Get prop key/value if key matches enum in WebAnalyticsOptions
-        /// <param name="cProp">Prop key/value pair</param>
-        public string GetPropKey(KeyValuePair<string, string> cProp)
-        {
-            string customProp = "";
-            foreach (WebAnalyticsOptions.Props prop in Enum.GetValues(typeof(WebAnalyticsOptions.Props)))
-            {
-                if (cProp.Key == prop.ToString())
-                    customProp = cProp.Key;
-            }
-            return customProp;
-        }
-
-        /// <summary>
-        /// Get eVar key/value if key matches enum in WebAnalyticsOptions
-        /// <param name="cEvar">eVar key/value pair</param>
-        public string GetEvarKey(KeyValuePair<string, string> cEvar)
-        {
-            string customEvar = "";
-            foreach (WebAnalyticsOptions.eVars evar in Enum.GetValues(typeof(WebAnalyticsOptions.eVars)))
-            {
-                if (cEvar.Key == evar.ToString())
-                    customEvar = cEvar.Key;
-            }
-            return customEvar;
-        }
-
-       /*
-        * TODO:
-        * - Update content group functionality (future story)
-        */
-    } 
+    }
 }

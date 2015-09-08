@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -135,6 +135,74 @@ namespace NCI.Web.CDE
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public WebAnalyticsInfo WebAnalyticsInfo { get; set; }
+
+        /// <summary>
+        /// Get the all the WebAnalyticsInfos of this section and its parents starting with this section
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<WebAnalyticsInfo> RecursiveGetAnalyticsInfo()
+        {
+            SectionDetail currSection = this;
+            while (currSection != null)
+            {
+                yield return currSection.WebAnalyticsInfo;
+                currSection = currSection.Parent;
+            }
+        }
+
+        /// <summary>
+        /// Get Web Analytics Report Suites for this SectionDetails
+        /// </summary>
+        /// <returns></returns>
+        public String GetWASuites()
+        {
+            return WebAnalyticsInfo.GetSuites(RecursiveGetAnalyticsInfo());
+        }
+
+        /// <summary>
+        /// Get Web Analytics Channels for this SectionDetails
+        /// </summary>
+        /// <returns></returns>
+        public String GetWAChannels()
+        {
+            return WebAnalyticsInfo.GetChannels(RecursiveGetAnalyticsInfo());
+        }
+
+        /// <summary>
+        /// Get Web Analytics Content Groups for this SectionDetails
+        /// </summary>
+        /// <returns></returns>
+        public String GetWAContentGroups()
+        {
+            return WebAnalyticsInfo.GetContentGroup(WebAnalyticsInfo);
+        }
+
+        /// <summary>
+        /// Get Web Analytics events for this SectionDetails
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<String> GetWAEvents()
+        {
+            return WebAnalyticsInfo.GetEvents(RecursiveGetAnalyticsInfo());
+        }
+
+        /// <summary>
+        /// Get Web Analytics props for this SectionDetails
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<WebAnalyticsCustomVariableOrEvent> GetWAProps()
+        {
+            return WebAnalyticsInfo.GetProps(RecursiveGetAnalyticsInfo());
+        }
+
+        /// <summary>
+        /// Get Web Analytics evars for this SectionDetails
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<WebAnalyticsCustomVariableOrEvent> GetWAEvars()
+        {
+            return WebAnalyticsInfo.GetEvars(RecursiveGetAnalyticsInfo());
+        }
 
 
         private SnippetInfoCollection _snippets = new SnippetInfoCollection();
