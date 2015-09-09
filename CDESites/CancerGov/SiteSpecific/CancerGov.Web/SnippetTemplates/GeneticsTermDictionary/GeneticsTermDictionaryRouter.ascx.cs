@@ -42,13 +42,13 @@ namespace CancerGov.Web.SnippetTemplates
 
             // Load appropriate control 
             if (!String.IsNullOrEmpty(searchString))
-                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/GeneticsTermDictionaryResultsList.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/Views/GeneticsTermDictionaryResultsList.ascx");
             else if (!String.IsNullOrEmpty(cdrId) || !String.IsNullOrEmpty(id))
-                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/GeneticsTermDictionaryDefinitionView.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/Views/GeneticsTermDictionaryDefinitionView.ascx");
             else if (!String.IsNullOrEmpty(expand))
-                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/GeneticsTermDictionaryResultsList.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/Views/GeneticsTermDictionaryResultsList.ascx");
             else
-                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/GeneticsTermDictionaryHome.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/GeneticsTermDictionary/Views/GeneticsTermDictionaryHome.ascx");
 
             if (localControl != null)
                 phGeneticsTermDictionary.Controls.Add(localControl);

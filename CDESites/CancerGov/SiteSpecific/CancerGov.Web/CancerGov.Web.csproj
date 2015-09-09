@@ -355,26 +355,19 @@
     <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.designer.cs">
       <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryResultsList.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryResultsList.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryDefinitionView.ascx.cs">
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx.cs">
       <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryDefinitionView.ascx.designer.cs">
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx.designer.cs">
       <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHelper.cs" />
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHome.ascx.cs">
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx.cs">
       <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHome.ascx.designer.cs">
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx.designer.cs">
       <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx.cs">
@@ -383,6 +376,13 @@
     </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx.designer.cs">
       <DependentUpon>GeneticsTermDictionaryRouter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx.cs">
+      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx.designer.cs">
+      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.cs">
       <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
@@ -685,10 +685,10 @@
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
     <Content Include="SnippetTemplates\EmergencyBanner.ascx" />
     <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
-    <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryResultsList.ascx" />
-    <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryDefinitionView.ascx" />
-    <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHome.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\GlossaryTerms.ascx" />
     <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />
     <Content Include="SnippetTemplates\PublicArchiveBanner.ascx" />
