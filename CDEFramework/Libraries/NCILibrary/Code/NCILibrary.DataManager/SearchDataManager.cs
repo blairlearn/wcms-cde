@@ -180,8 +180,6 @@ namespace NCI.DataManager
         }
 
 
-
-
         /// <summary>
         /// Connects to the database , and executes the stored proc with the required parameter. The 
         /// results are processed as SearchResult object.
@@ -225,54 +223,39 @@ namespace NCI.DataManager
 
                 string connString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
 
-                SqlParameter taxonomyParam = new SqlParameter("@taxonomyFilter", taxonomyFiltersTable);
-                taxonomyParam.SqlDbType = SqlDbType.Structured;
-                taxonomyParam.TypeName = "dbo.udt_TaxonomyFilter";
+                // Create list of SQL parameters required for passing into stored proc
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter("@Keyword ", string.IsNullOrEmpty(keyWords) ? null : keyWords));
+                parameters.Add(new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)));
+                parameters.Add(new SqlParameter("@EndDate", endDate == DateTime.MaxValue ? null : String.Format("{0:MM/dd/yyyy}", endDate)));
+                parameters.Add(new SqlParameter("@SearchFilter", searchFilter));
+                parameters.Add(new SqlParameter("@excludeSearchFilter", excludeSearchFilter));
+                parameters.Add(new SqlParameter("@ResultsSortOrder", resultsSortOrder));
+                parameters.Add(new SqlParameter("@language", language));
+                parameters.Add(new SqlParameter("@maxResults", maxResults));
+                parameters.Add(new SqlParameter("@recordsPerPage", recordsPerPage));
+                parameters.Add(new SqlParameter("@StartPage", currentPage));
+                parameters.Add(new SqlParameter("@isLive", isLive ? 1 : 0));
+                parameters.Add(new SqlParameter("@siteName", sitename));
+
+                // If the taxonomyFiltersTable exists, then there are taxonomy tags to filter by. Create the
+                // taxonomyParam parameter to pass in the datatable to the stored proc, and add to the list
+                // of parameters.
+                if (taxonomyFiltersTable != null)
+                {
+                    SqlParameter taxonomyParam = new SqlParameter("@taxonomyFilter", taxonomyFiltersTable);
+                    taxonomyParam.SqlDbType = SqlDbType.Structured;
+                    taxonomyParam.TypeName = "dbo.udt_TaxonomyFilter";
+                    parameters.Add(taxonomyParam);
+                }
 
                 if (!string.IsNullOrEmpty(connString))
                 {
                     using (SqlConnection conn = SqlHelper.CreateConnection(connString))
                     {
-                        SqlDataReader reader;
-                        if (taxonomyFiltersTable == null)
-                        {
-                            // Do not pass in taxonomyParam if the table is null
-                            reader = SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
-                                new SqlParameter("@Keyword ", string.IsNullOrEmpty(keyWords) ? null : keyWords),
-                                new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)),
-                                new SqlParameter("@EndDate", endDate == DateTime.MaxValue ? null : String.Format("{0:MM/dd/yyyy}", endDate)),
-                                new SqlParameter("@SearchFilter", searchFilter),
-                                new SqlParameter("@excludeSearchFilter", excludeSearchFilter),
-                                new SqlParameter("@ResultsSortOrder", resultsSortOrder),
-                                new SqlParameter("@language", language),
-                                new SqlParameter("@maxResults", maxResults),
-                                new SqlParameter("@recordsPerPage", recordsPerPage),
-                                new SqlParameter("@StartPage", currentPage),
-                                new SqlParameter("@isLive", isLive ? 1 : 0),
-                                new SqlParameter("@siteName", sitename)
-                            );
-                        }
-                        else
-                        {
-                            // Pass in taxonomyParam if there are taxonomy tags to filter by
-                            reader = SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
-                                new SqlParameter("@Keyword ", string.IsNullOrEmpty(keyWords) ? null : keyWords),
-                                new SqlParameter("@StartDate", startDate == DateTime.MinValue ? null : String.Format("{0:MM/dd/yyyy}", startDate)),
-                                new SqlParameter("@EndDate", endDate == DateTime.MaxValue ? null : String.Format("{0:MM/dd/yyyy}", endDate)),
-                                new SqlParameter("@SearchFilter", searchFilter),
-                                new SqlParameter("@excludeSearchFilter", excludeSearchFilter),
-                                new SqlParameter("@ResultsSortOrder", resultsSortOrder),
-                                new SqlParameter("@language", language),
-                                new SqlParameter("@maxResults", maxResults),
-                                new SqlParameter("@recordsPerPage", recordsPerPage),
-                                new SqlParameter("@StartPage", currentPage),
-                                new SqlParameter("@isLive", isLive ? 1 : 0),
-                                new SqlParameter("@siteName", sitename),
-                                taxonomyParam
-                            );
-                        }
-
-                        using (reader)
+                        using (SqlDataReader reader = SqlHelper.ExecuteReader(conn, CommandType.StoredProcedure, "dbo.searchFilterKeywordDate",
+                                parameters.ToArray()
+                            ))
                         {
                             while (reader.Read())
                             {

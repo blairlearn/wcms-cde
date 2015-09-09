@@ -275,25 +275,31 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         private DataTable ReturnTaxonomySqlParam(TaxonomyFilter[] taxonomyFiltersList)
         {
+            // This datatable must be structured like the datatable in the stored proc, 
+            // in order to be passed in correctly as a parameter.
             DataTable dt = new DataTable();
 
-            // Add first column to table
+            // First column, "taxonomyName", is a varchar of 250 characters
             DataColumn dc = new DataColumn();
             dc.DataType = System.Type.GetType("System.String");
             dc.ColumnName = "taxonomyName";
             dc.MaxLength = 250;
             dt.Columns.Add(dc);
 
-            // Add second column to table
+            // Second column, "taxonID", is an int
             DataColumn dc1 = new DataColumn();
             dc1.DataType = System.Type.GetType("System.Int32");
             dc1.ColumnName = "taxonID";
             dt.Columns.Add(dc1);
 
+            // Loop through each of the different TaxonomyFilters (for different taxonomies)
             foreach (TaxonomyFilter filter in taxonomyFiltersList)
             {
+                // Loop through each Taxon within each TaxonomyFilter
                 foreach (Taxon taxon in filter.Taxons)
                 {
+                    // Create a new row in the datatable for each Taxon, and assign the
+                    // values to the columns accordingly.
                     DataRow row = dt.NewRow();
                     row["taxonomyName"] = filter.TaxonomyName;
                     row["taxonID"] = taxon.ID;
