@@ -29,10 +29,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         public void Page_Load(object sender, EventArgs e)
         {
-            if (displayPublicUse() == "true")
+            if (shouldDisplay())
+            {
                 HtmlData = SnippetInfo.Data;
+                Visible = true;
+            }
             else
+            {
                 HtmlData = String.Empty;
+                Visible = false;
+            }
         }
 
         public override void RenderControl(HtmlTextWriter writer)
@@ -42,24 +48,25 @@ namespace NCI.Web.CDE.UI.SnippetControls
             LiteralControl lit = new LiteralControl(HtmlData);
             lit.RenderControl(writer);
         }
+
         /// <summary>
-        /// Process the public banner XML field determines if the public archive 
-        /// banner should be displayed or not.
+        /// Checks whether the "Public Use" banner should be displayed.
         /// </summary>
-        /// <param name="snippetXmlData">The xml fragment which contains pageoptions information.</param>
-        private string displayPublicUse()
+        /// <returns>Returns true if the "publicUse" alternate content version key has been
+        /// set, false otherwise.</returns>
+        private bool shouldDisplay()
         {
+            bool isPubUse = false;
 
             IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
-            // If AlternateContentVersions information is not in the instructions then do not create 
-            // the PageOptions box.
+
+            // If AlternateContentVersions information is not in the instructions then do not display.
             string[] acvKeys = pgInstruction.AlternateContentVersionsKeys;
-            string isPubUse = "false";
             if (acvKeys != null)
             {
-                if (pgInstruction.AlternateContentVersionsKeys.Contains("publicUse"))
+                if (acvKeys.Contains("publicUse"))
                 {
-                    isPubUse = "true";
+                    isPubUse = true;
                 }
             }
             return isPubUse;
