@@ -45,8 +45,11 @@ namespace CancerGov.Web.SnippetTemplates
             GetQueryParams();
             ValidateParams();
 
+
+            //set up everything that is common for all three dictionaries
             SetupCommon();
 
+            //code unique to each dictionary
             switch (Dictionary)
             {
                 case DictionaryType.Term:
@@ -97,9 +100,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
         }
 
-        // SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
-
-        /**
+       /**
       * Add a filter for the Canonical URL.
       * The Canonical URL includes query parameters if they exist.
       */
@@ -146,7 +147,7 @@ namespace CancerGov.Web.SnippetTemplates
             //this only applies to Genetics and Drug Dictionaries
             DictionaryLanguage = "en";
 
-            //set this false by default
+            //set the contains radiobutton to false by default
             BContains = false;
             if (!string.IsNullOrEmpty(SrcGroup))
             {
@@ -173,24 +174,17 @@ namespace CancerGov.Web.SnippetTemplates
                 }
             }
 
-            if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
-            {
-                pnlTermSearch.Visible = false;
+            alphaListBox.TextOnly = (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web) ? true : false;
+            alphaListBox.Title = string.Empty;
 
-            }
-            else
-            {
-                alphaListBox.TextOnly = (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web) ? true : false;
-                alphaListBox.Title = string.Empty;
-            }
 
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             alphaListBox.BaseUrl = DictionaryURL;
-                        
+
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 DictionaryURLSpanish = DictionaryURL;
 
-            DictionaryURLEnglish = DictionaryURL;           
+            DictionaryURLEnglish = DictionaryURL;
 
             SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
         }
