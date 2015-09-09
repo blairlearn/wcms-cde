@@ -199,7 +199,7 @@ namespace NCI.Web.CDE
         /// <summary>
         /// Get the eVars from a collection of WebAnalyticsInfos. This assumes that the input is a flattened
         /// tree where the first item is the current item and the last item is the root ancestor. 
-        /// </summary>
+        /// </summary> 
         /// <param name="infos">collection of WebAnalyticsInfos</param>
         /// <returns>collection of WebAnalyticCustomVariableOrEvents</returns>
         public static IEnumerable<WebAnalyticsCustomVariableOrEvent> GetEvars(IEnumerable<WebAnalyticsInfo> infos)

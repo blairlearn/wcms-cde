@@ -803,6 +803,7 @@ namespace NCI.Web.CDE
             // Check sectiondetail to make sure not null!!!!!
             if (sectiondetail != null)
             {
+
                 string channels = sectiondetail.GetWAChannels();
                 string suites = sectiondetail.GetWASuites();
                 string group = sectiondetail.GetWAContentGroups();

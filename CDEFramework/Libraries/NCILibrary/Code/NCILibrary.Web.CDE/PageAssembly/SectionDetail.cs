@@ -174,7 +174,7 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
-        /// Get Web Analytics events for this SectionDetails
+        /// Get Web Analytics Events for this SectionDetails
         /// </summary>
         public IEnumerable<String> GetWAEvents()
         {
@@ -182,7 +182,7 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
-        /// Get Web Analytics props for this SectionDetails
+        /// Get Web Analytics Props for this SectionDetails
         /// </summary>
         public IEnumerable<WebAnalyticsCustomVariableOrEvent> GetWAProps()
         {
@@ -190,7 +190,7 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
-        /// Get Web Analytics evars for this SectionDetails
+        /// Get Web Analytics eVars for this SectionDetails
         /// </summary>
         public IEnumerable<WebAnalyticsCustomVariableOrEvent> GetWAEvars()
         {
