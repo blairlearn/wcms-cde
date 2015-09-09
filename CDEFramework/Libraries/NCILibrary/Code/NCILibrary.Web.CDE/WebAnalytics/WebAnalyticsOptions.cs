@@ -458,8 +458,33 @@ namespace NCI.Web.CDE.WebAnalytics
             prop72 = 72, // Custom Insight 72
             prop73 = 73, // Custom Insight 73
             prop74 = 74, // Custom Insight 74
-            prop75 = 75  // Custom Insight 75
-        }
+            prop75 = 75, // Custom Insight 75
+			prop76 = 76, // props 76-100 are unassigned Custom props
+			prop77 = 77,
+			prop78 = 78,
+			prop79 = 79,
+			prop80 = 80,
+			prop81 = 81,
+			prop82 = 82,
+			prop83 = 83,
+			prop84 = 84,
+			prop85 = 85,
+			prop86 = 86,
+			prop87 = 87,
+			prop88 = 88,
+			prop89 = 89,
+			prop90 = 90,
+			prop91 = 91,
+			prop92 = 92,
+			prop93 = 93,
+			prop94 = 94,
+			prop95 = 95,
+			prop96 = 96,
+			prop97 = 97,
+			prop98 = 98,
+			prop99 = 99,
+			prop100 = 100
+		}
 
         /// <summary>
         /// Named constants for eVars data point types - 
@@ -541,7 +566,32 @@ namespace NCI.Web.CDE.WebAnalytics
 			evar72 = 72,
             evar73 = 73, // Terms
             evar74 = 74, // Social Platforms / Properties
-            evar75 = 75  // Authors
+            evar75 = 75, // Authors
+			evar76 = 76, // evars 76-100 are unassigned Custom eVars
+			evar77 = 77,
+			evar78 = 78,
+			evar79 = 79,
+			evar80 = 80,
+			evar81 = 81,
+			evar82 = 82,
+			evar83 = 83,
+			evar84 = 84,
+			evar85 = 85,
+			evar86 = 86,
+			evar87 = 87,
+			evar88 = 88,
+			evar89 = 89,
+			evar90 = 90,
+			evar91 = 91,
+			evar92 = 92,
+			evar93 = 93,
+			evar94 = 94,
+			evar95 = 95,
+			evar96 = 96,
+			evar97 = 97,
+			evar98 = 98,
+			evar99 = 99,
+			evar100 = 100
         }
     }
 }
