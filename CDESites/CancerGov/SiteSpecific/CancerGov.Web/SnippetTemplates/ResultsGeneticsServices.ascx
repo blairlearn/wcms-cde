@@ -104,7 +104,7 @@
         <button id="submit" type="button" onclick="doSubmit();" class="submit" runat="server">
             Display Checked Results</button>
         		
-        <button id="reset" type="reset" onclick="window.location.href='<%=SearchPageInfo.SearchPagePrettyUrl%>'" class="button">
+        <button id="reset" type="button" class="reset" onclick="window.location.href='<%=SearchPageInfo.SearchPagePrettyUrl%>'" class="button">
             New Search</button>
   </form>
 </div>
