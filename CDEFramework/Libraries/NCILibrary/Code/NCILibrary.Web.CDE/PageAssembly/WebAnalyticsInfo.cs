@@ -134,20 +134,22 @@ namespace NCI.Web.CDE
         /// Get the events from a collection of WebAnalyticsInfos.  This assumes that the input is a flattened
         /// tree where the first item is the current item and the last item is the root ancestor. 
         /// </summary>
-        /// <param name="infos"></param>
-        /// <returns></returns>
+        /// <param name="infos">collection of WebAnalyticsInfos</param>
+        /// <returns>Collection of event keys (string)</returns>
         public static IEnumerable<String> GetEvents(IEnumerable<WebAnalyticsInfo> infos)
         {
             List<string> seenID = new List<string>();
 
-            //Loop through infos in order ... more comment here
+            // Loop through infos in order, starting at the current folder level and working through each successive
+			// parent until either the site root or "RemoveParent" is hit.
             foreach (WebAnalyticsInfo info in infos)
             {
                 if (info.WAEvents != null)
                 {
                     foreach (WebAnalyticsCustomVariableOrEvent evt in info.WAEvents)
                     {
-                        //Put comment here
+                        // Check the list of seen IDs; if this key does not appear on the list, add it.
+                        // Do not add if the key already exists - child keys should override parents.
                         if (!seenID.Contains(evt.Key))
                         {
                             seenID.Add(evt.Key);
@@ -155,7 +157,6 @@ namespace NCI.Web.CDE
                         }
                     }
                 }
-
                 // If we are to remove the parent events we need to stop looping
                 if (info.RemoveParentEvents)
                     break;
@@ -167,12 +168,13 @@ namespace NCI.Web.CDE
         /// tree where the first item is the current item and the last item is the root ancestor. 
         /// </summary>
         /// <param name="infos">collection of WebAnalyticsInfos</param>
-        /// <returns></returns>
+        /// <returns>collection of WebAnalyticCustomVariableOrEvents</returns>
         public static IEnumerable<WebAnalyticsCustomVariableOrEvent> GetProps(IEnumerable<WebAnalyticsInfo> infos)
         {
             List<string> seenID = new List<string>();
 
-            //Loop through infos in order ... more comment here
+            // Loop through infos in order, starting at the current folder level and working through each successive
+			// parent until either the site root or "RemoveParent" is hit.
             foreach (WebAnalyticsInfo info in infos)
             {
                 if (info.WAProps != null)
@@ -180,16 +182,15 @@ namespace NCI.Web.CDE
                     foreach (WebAnalyticsCustomVariableOrEvent prop in info.WAProps)
                     {
                         // Check the list of seen IDs; if this key does not appear on the list, add it.
-                        // Do not add if the key already exists - child keys override parents, and this loop
-                        // starts at the current content item and moves through parents until the root or "removeParents" is hit.                    if (!seenID.Contains(prop.Key))
+                        // Do not add if the key already exists - child keys should override parents.
+						if (!seenID.Contains(prop.Key))
                         {
                             seenID.Add(prop.Key);
                             yield return prop;
                         }
                     }
                 }
-
-                // If we are to remove the parent events we need to stop looping
+                // If we are to remove the parent props we need to stop looping
                 if (info.RemoveParentProps)
                     break;
             }
@@ -200,12 +201,13 @@ namespace NCI.Web.CDE
         /// tree where the first item is the current item and the last item is the root ancestor. 
         /// </summary>
         /// <param name="infos">collection of WebAnalyticsInfos</param>
-        /// <returns></returns>
+        /// <returns>collection of WebAnalyticCustomVariableOrEvents</returns>
         public static IEnumerable<WebAnalyticsCustomVariableOrEvent> GetEvars(IEnumerable<WebAnalyticsInfo> infos)
         {
             List<string> seenID = new List<string>();
 
-            //Loop through infos in order ... more comment here
+            // Loop through infos in order, starting at the current folder level and working through each successive
+			// parent until either the site root or "RemoveParent" is hit.
             foreach (WebAnalyticsInfo info in infos)
             {
                 if (info.WAEvars != null)
@@ -213,8 +215,7 @@ namespace NCI.Web.CDE
                     foreach (WebAnalyticsCustomVariableOrEvent evar in info.WAEvars)
                     {
                         // Check the list of seen IDs; if this key does not appear on the list, add it.
-                        // Do not add if the key already exists - child keys override parents, and this loop
-                        // starts at the current content item and moves through parents until the root or "removeParents" is hit.
+                        // Do not add if the key already exists - child keys should override parents.
                         if (!seenID.Contains(evar.Key))
                         {
                             seenID.Add(evar.Key);
@@ -222,7 +223,7 @@ namespace NCI.Web.CDE
                         }
                     }
                 }
-                // If we are to remove the parent events we need to stop looping
+                // If we are to remove the parent evars we need to stop looping
                 if (info.RemoveParentEvars)
                     break;
             }
