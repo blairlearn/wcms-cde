@@ -30,9 +30,7 @@ namespace CancerGov.Web.SnippetTemplates
         public string SrcGroup { get; set; }
 
         public bool BContains { get; set; }
-
-        public int TotalCount = 0;
-
+               
         public String DictionaryLanguage { get; set; }
 
         public string DictionaryURLSpanish { get; set; }
@@ -48,23 +46,19 @@ namespace CancerGov.Web.SnippetTemplates
             ValidateParams();
 
             SetupCommon();
-                        
+
             switch (Dictionary)
             {
                 case DictionaryType.Term:
-                    phTermDictionarySearchBlockText.Visible = true;
                     SetUpTermDictionary();
                     break;
                 case DictionaryType.Genetic:
-                    phGeneticsTermDictionarySearchBlockText.Visible = true;
                     SetUpGeneticsDictionary();
                     break;
                 case DictionaryType.Drug:
-                    phDrugDictionarySearchBlockText.Visible = true;
                     SetUpDrugDictionary();
                     break;
                 default:
-                    phTermDictionarySearchBlockText.Visible = true;
                     SetUpTermDictionary();
                     break;
             }
@@ -204,14 +198,7 @@ namespace CancerGov.Web.SnippetTemplates
         #region "Term Dictionary Methods"
 
         private void SetUpTermDictionary()
-        {
-            DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-            DictionarySearchResultCollection resultCollection = _dictionaryAppManager.Search("%", SearchType.Begins, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, DictionaryLanguage);
-
-            if (resultCollection != null)
-                TotalCount = resultCollection.ResultsCount;
-                        
-            //dictionarySearchForm 
+        {    
             bool _isSpanish = false;
                                    
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -258,15 +245,10 @@ namespace CancerGov.Web.SnippetTemplates
 
             lblStartsWith.Text = "Empieza con";
             lblContains.Text = "Contiene";
-
-            pnlIntroEnglish.Visible = false;
-            pnlIntroSpanish.Visible = true;
-
+                        
             btnSearch.Text = "Buscar";
             btnSearch.ToolTip = "Buscar";
-
-            litTotalCount2.Text = TotalCount.ToString();
-           
+                        
         }
 
         /// <summary>
@@ -280,10 +262,6 @@ namespace CancerGov.Web.SnippetTemplates
 
             btnSearch.Text = "Search";
 
-            pnlIntroEnglish.Visible = true;
-            pnlIntroSpanish.Visible = false;
-
-            litTotalCount1.Text = TotalCount.ToString();
         }
                
 

@@ -20,7 +20,7 @@ namespace CancerGov.Web.SnippetTemplates {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CancerGov.Web.SnippetTemplates.DictionarySearchBlock dictionarySearchBlock;
+        protected global::CancerGov.Web.SnippetTemplates.GeneticsTermDictionaryHome dictionarySearchBlock;
         
         /// <summary>
         /// numResDiv control.

@@ -14,69 +14,6 @@ namespace CancerGov.Web.SnippetTemplates {
     public partial class DictionarySearchBlock {
         
         /// <summary>
-        /// phTermDictionarySearchBlockText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phTermDictionarySearchBlockText;
-        
-        /// <summary>
-        /// pnlIntroEnglish control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder pnlIntroEnglish;
-        
-        /// <summary>
-        /// litTotalCount1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litTotalCount1;
-        
-        /// <summary>
-        /// pnlIntroSpanish control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder pnlIntroSpanish;
-        
-        /// <summary>
-        /// litTotalCount2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litTotalCount2;
-        
-        /// <summary>
-        /// phGeneticsTermDictionarySearchBlockText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phGeneticsTermDictionarySearchBlockText;
-        
-        /// <summary>
-        /// phDrugDictionarySearchBlockText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phDrugDictionarySearchBlockText;
-        
-        /// <summary>
         /// pnlTermSearch control.
         /// </summary>
         /// <remarks>
