@@ -29,13 +29,13 @@ namespace CancerGov.Web.SnippetTemplates
 
             // Load appropriate control 
             if (!String.IsNullOrEmpty(searchString))
-                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/TermDictionaryResultsList.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryResultsList.ascx");
             else if (!String.IsNullOrEmpty(cdrId) || !String.IsNullOrEmpty(id))
-                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/TermDictionaryDefinitionView.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryDefinitionView.ascx");
             else if (!String.IsNullOrEmpty(expand))
-                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/TermDictionaryResultsList.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryResultsList.ascx");
             else
-                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/TermDictionaryHome.ascx");
+                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryHome.ascx");
                        
             if (localControl != null)
                 phTermDictionary.Controls.Add(localControl);

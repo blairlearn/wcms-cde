@@ -419,25 +419,25 @@
     <Compile Include="SnippetTemplates\TermDictionary\DictionarySearchBlock.ascx.designer.cs">
       <DependentUpon>DictionarySearchBlock.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryDefinitionView.ascx.cs">
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx.cs">
       <DependentUpon>TermDictionaryDefinitionView.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryDefinitionView.ascx.designer.cs">
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx.designer.cs">
       <DependentUpon>TermDictionaryDefinitionView.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryHome.ascx.cs">
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx.cs">
       <DependentUpon>TermDictionaryHome.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryHome.ascx.designer.cs">
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx.designer.cs">
       <DependentUpon>TermDictionaryHome.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryResultsList.ascx.cs">
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx.cs">
       <DependentUpon>TermDictionaryResultsList.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryResultsList.ascx.designer.cs">
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx.designer.cs">
       <DependentUpon>TermDictionaryResultsList.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryRouter.ascx.cs">
@@ -698,9 +698,9 @@
     <Content Include="SnippetTemplates\SyndicationNotice.ascx" />
     <Content Include="SnippetTemplates\TableofLinks.ascx" />
     <Content Include="SnippetTemplates\TermDictionary\DictionarySearchBlock.ascx" />
-    <Content Include="SnippetTemplates\TermDictionary\TermDictionaryDefinitionView.ascx" />
-    <Content Include="SnippetTemplates\TermDictionary\TermDictionaryHome.ascx" />
-    <Content Include="SnippetTemplates\TermDictionary\TermDictionaryResultsList.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\TermDictionary\TermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
     <Content Include="SnippetTemplates\BlogPostNewerOlder.ascx" />
