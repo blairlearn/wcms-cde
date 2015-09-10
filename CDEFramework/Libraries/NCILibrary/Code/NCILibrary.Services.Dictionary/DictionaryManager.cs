@@ -135,7 +135,7 @@ namespace NCI.Services.Dictionary
         ///         Magic - Search for terms beginning with searchText, followed by those containing searchText.
         /// </param>
         /// <param name="offset">Offset into the list of matches for the first result to return.</param>
-        /// <param name="maxResults">The maximum number of results to return. Must be at least 10.</param>
+        /// <param name="numResults">The maximum number of results to return. Must be at least 10.</param>
         /// <param name="dictionary">The dictionary to retreive the Term from.
         ///     Valid values are
         ///        Term - Dictionary of Cancer Terms
@@ -149,20 +149,20 @@ namespace NCI.Services.Dictionary
         /// </param>
         /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
         /// <returns></returns>
-        public SearchReturn Search(String searchText, SearchType searchType, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        public SearchReturn Search(String searchText, SearchType searchType, int offset, int numResults, DictionaryType dictionary, Language language, String version)
         {
-            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6}).", searchText, searchType, offset, maxResults, dictionary, language, version));
+            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6}).", searchText, searchType, offset, numResults, dictionary, language, version));
 
-            // Sanity check for the offset and maxResults
+            // Sanity check for the offset and numResults
             if (offset < 0) offset = 0;
-            if (maxResults < 10) maxResults = 10;
+            if (numResults < 10) numResults = 200;
 
 
             // In the initial implementation, the audience is implied by the particular dictionary being used.
             AudienceType audience = GetAudienceFromDictionaryType(dictionary);
 
             DictionaryQuery query = new DictionaryQuery();
-            SearchResults results = query.Search(searchText, searchType, offset, maxResults, dictionary, language, audience, version);
+            SearchResults results = query.Search(searchText, searchType, offset, numResults, dictionary, language, audience, version);
 
             return BuildSearchResultsStructure(results, language, audience, offset);
         }
@@ -178,7 +178,7 @@ namespace NCI.Services.Dictionary
         ///         Contains - Search for terms containing searchText.
         ///         Magic - Search for terms beginning with searchText, followed by those containing searchText.
         /// </param>
-        /// <param name="maxResults">Maximum number of results to return.</param>
+        /// <param name="numResults">Maximum number of results to return.</param>
         /// <param name="dictionary">The dictionary to retreive the Term from.
         ///     Valid values are
         ///        Term - Dictionary of Cancer Terms
@@ -192,18 +192,18 @@ namespace NCI.Services.Dictionary
         /// </param>
         /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
         /// <returns></returns>
-        public SuggestReturn SearchSuggest(String searchText, SearchType searchType, int maxResults, DictionaryType dictionary, Language language, String version)
+        public SuggestReturn SearchSuggest(String searchText, SearchType searchType, int numResults, DictionaryType dictionary, Language language, String version)
         {
-            log.debug(string.Format("Enter ValidateSearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, maxResults, dictionary, language, version));
+            log.debug(string.Format("Enter ValidateSearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, numResults, dictionary, language, version));
 
-            // Sanity check for maxResults
-            if (maxResults < 10) maxResults = 10;
+            // Sanity check for numResults
+            if (numResults < 10) numResults = 10;
 
             // In the initial implementation, the audience is implied by the particular dictionary being used.
             AudienceType audience = GetAudienceFromDictionaryType(dictionary);
 
             DictionaryQuery query = new DictionaryQuery();
-            SuggestionResults results = query.SearchSuggest(searchText, searchType, maxResults, dictionary, language, audience, version);
+            SuggestionResults results = query.SearchSuggest(searchText, searchType, numResults, dictionary, language, audience, version);
 
             List<String> messages = new List<string>();
 
@@ -243,13 +243,34 @@ namespace NCI.Services.Dictionary
 
         }
 
-        public SearchReturn Expand(String searchText, String includeTypes, int offset, int maxResults, DictionaryType dictionary, Language language, String version)
+        /// <summary>
+        /// Perform a search for terms with names or aliases that start with searchText, sorted by the  matched term name or alias.
+        /// </summary>
+        /// <param name="searchText">text to search for.</param>
+        /// <param name="includeTypes">A filter for the types of name aliases to include.  Multiple values are separated by the pipe character (|).
+        /// If no filter is supplied, the result </param>
+        /// <param name="offset">Offset into the list of matches for the first result to return.</param>
+        /// <param name="numResults">The maximum number of results to return. Must be at least 10.</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
+        /// <returns>An object structure containing the results of the search and various metadata.</returns>
+        public SearchReturn Expand(String searchText, String includeTypes, int offset, int numResults, DictionaryType dictionary, Language language, String version)
         {
             log.debug("Enter ValidateSearchSuggest().");
 
-            // Sanity check for the offset and maxResults
+            // Sanity check for the offset and numResults
             if (offset < 0) offset = 0;
-            if (maxResults < 10) maxResults = 10;
+            if (numResults < 10) numResults = 200;
 
             // In the initial implementation, the audience is implied by the particular dictionary being used.
             AudienceType audience = GetAudienceFromDictionaryType(dictionary);
@@ -258,7 +279,7 @@ namespace NCI.Services.Dictionary
             String[] includeFilter = Strings.ToListOfTrimmedStrings(includeTypes, LIST_DELIMITER);
 
             DictionaryQuery query = new DictionaryQuery();
-            SearchResults results = query.Expand(searchText, includeFilter, offset, maxResults, dictionary, language, audience, version);
+            SearchResults results = query.Expand(searchText, includeFilter, offset, numResults, dictionary, language, audience, version);
 
             return BuildSearchResultsStructure(results, language, audience, offset);
         }
