@@ -199,7 +199,7 @@ namespace CancerGov.Web.SnippetTemplates
                         if (pronunciationLink != null && termDetails.Pronunciation.HasAudio)
                         {
                             pronunciationLink.Visible = true;
-                            pronunciationLink.HRef = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] + "/" + termDetails.Pronunciation.Audio;
+                            pronunciationLink.HRef = termDetails.Pronunciation.Audio;
                         }
                         else
                             pronunciationLink.Visible = false;
@@ -369,10 +369,10 @@ namespace CancerGov.Web.SnippetTemplates
                             //default to the full image in the database
                             if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageRegular"]) || string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageEnlarge"]))
                             {
-                                termImage.Src = ConfigurationSettings.AppSettings["CDRImageLocation"] + imageDetails.Filename;
+                                termImage.Src = imageDetails.Filename;
 
                                 if (termEnlargeImage != null)
-                                    termEnlargeImage.HRef = ConfigurationSettings.AppSettings["CDRImageLocation"] + imageDetails.Filename;
+                                    termEnlargeImage.HRef = imageDetails.Filename;
 
                                 //log a warning
                                 NCI.Logging.Logger.LogError("TermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
@@ -384,12 +384,12 @@ namespace CancerGov.Web.SnippetTemplates
                                 {
                                     //termImage image size is 571
                                     //example format CDR526538-571.jpg
-                                    termImage.Src = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
+                                    termImage.Src = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
 
                                     //enlarge image size is 750
                                     //example format CDR526538-750.jpg
                                     if (termEnlargeImage != null)
-                                        termEnlargeImage.HRef = ConfigurationSettings.AppSettings["CDRImageLocation"] + regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
+                                        termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
 
                                 }
                             }

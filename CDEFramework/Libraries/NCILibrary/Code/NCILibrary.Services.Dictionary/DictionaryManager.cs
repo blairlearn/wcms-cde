@@ -1,9 +1,7 @@
 ﻿using System;
+using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 using NCI.Logging;
 using NCI.Services.Dictionary.BusinessObjects;
@@ -19,7 +17,38 @@ namespace NCI.Services.Dictionary
     {
         static Log log = new Log(typeof(DictionaryManager));
 
+         // Where are the Audio and Image files found? (JSON will contain placeholders.)
+        private String _audioFileLocation;
+        private String _imageFileLocation;
+
+        const string IMAGE_PLACEHOLDER_TEXT = "[__imagelocation]";
+        const string AUDIO_PLACEHOLDER_TEXT = "[__audiolocation]";
+
         const char LIST_DELIMITER = '|';
+
+        /// <summary>
+        /// Initialization
+        /// </summary>
+        public DictionaryManager()
+        {
+            // Prevent null value.
+            _imageFileLocation = ConfigurationSettings.AppSettings["CDRImageLocation"] ?? String.Empty;
+            _imageFileLocation = _imageFileLocation.Trim();
+            if (String.IsNullOrEmpty(_imageFileLocation))
+                log.error("appSetting value 'CDRImageLocation' not set.");
+            // Make sure the path ends with a slash.
+            else if (_imageFileLocation[_imageFileLocation.Length - 1] != '/')
+                _imageFileLocation += '/';
+
+            // Prevent null value.
+            _audioFileLocation = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] ?? String.Empty;
+            _audioFileLocation = _audioFileLocation.Trim();
+            if(String.IsNullOrEmpty(_audioFileLocation))
+                log.error("appSetting value 'CDRAudioMediaLocation' not set.");
+            // Make sure the path ends with a slash.
+            else if (_audioFileLocation[_audioFileLocation.Length - 1] != '/')
+                _audioFileLocation += '/';
+        }
 
 
         /// <summary>
@@ -93,6 +122,7 @@ namespace NCI.Services.Dictionary
                 log.debug("Found 1 result.");
                 messages.Add("OK");
                 term = dtTerm.Rows[0].Field<string>("object");
+                term = RewriteMediaFileLocations(term);
             }
             // "Normal", found no matches.
             else if (resultCount == 0)
@@ -107,6 +137,7 @@ namespace NCI.Services.Dictionary
                 log.warning(string.Format("Expected to find one result for term {0}, found {1} instead.", termId, resultCount));
                 messages.Add("OK");
                 term = dtTerm.Rows[0].Field<string>("object");
+                term = RewriteMediaFileLocations(term);
             }
 
 
@@ -312,6 +343,7 @@ namespace NCI.Services.Dictionary
                     int id = row.Field<int>("termID");
                     string matchName = row.Field<string>("TermName");
                     string detail = row.Field<string>("object");
+                    detail = RewriteMediaFileLocations(detail);
                     foundTerms.Add(new DictionarySearchResultEntry(id, matchName, detail));
                 }
                 catch (Exception ex)
@@ -373,6 +405,22 @@ namespace NCI.Services.Dictionary
             }
 
             return audience;
+        }
+
+        /// <summary>
+        /// Substitute image and audio path placeholder values with actual values.
+        /// </summary>
+        /// <param name="json">String containing the JSON structure for a dictionary entry.</param>
+        /// <returns>A new string containing the rewritten JSON string.</returns>
+        private String RewriteMediaFileLocations(String json)
+        {
+            if (!String.IsNullOrEmpty(json))
+            {
+                json = json.Replace(IMAGE_PLACEHOLDER_TEXT, _imageFileLocation);
+                json = json.Replace(AUDIO_PLACEHOLDER_TEXT, _audioFileLocation);
+            }
+
+            return json;
         }
     }
 }

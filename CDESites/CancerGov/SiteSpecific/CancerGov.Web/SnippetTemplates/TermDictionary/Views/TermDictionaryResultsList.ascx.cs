@@ -212,7 +212,7 @@ namespace CancerGov.Web.SnippetTemplates
                         if (pronunciationLink != null && dictionaryResult.Term.Pronunciation.HasAudio)
                         {
                             pronunciationLink.Visible = true;
-                            pronunciationLink.HRef = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] + "/" + dictionaryResult.Term.Pronunciation.Audio;
+                            pronunciationLink.HRef = dictionaryResult.Term.Pronunciation.Audio;
                         }
                         else
                             pronunciationLink.Visible = false;
