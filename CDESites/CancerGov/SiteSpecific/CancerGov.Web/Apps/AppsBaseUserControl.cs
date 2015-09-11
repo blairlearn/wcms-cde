@@ -82,7 +82,17 @@ namespace NCI.Web.CancerGov.Apps
             if (messageKey == "InvalidSearchID")
             {
                 systemMessagePageUrl = ConfigurationSettings.AppSettings["ClinicalTrialInvalidSearchID"].Trim();
-                Response.Redirect(systemMessagePageUrl, true);
+                
+                //Bypass the custom error messages and return our content
+                Response.TrySkipIisCustomErrors = true;
+
+                //Setup the 404 response code.
+                Response.StatusCode = 404;
+
+                //System.IO.StringWriter writer = new System.IO.StringWriter();
+                Server.Execute(systemMessagePageUrl);
+
+                Response.End();
             }
             else
             {
