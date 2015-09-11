@@ -78,5 +78,13 @@ namespace NCI.Web.Dictionary.BusinessObjects
         /// </summary>
         [DataMember(Name = "related")]
         public RelatedItems Related { get; set; }
+
+        /// <summary>
+        /// Does the term include a Related Items structure?
+        /// </summary>
+        public bool HasRelatedItems
+        {
+            get { return this.Related != null; }
+        }
     }
 }

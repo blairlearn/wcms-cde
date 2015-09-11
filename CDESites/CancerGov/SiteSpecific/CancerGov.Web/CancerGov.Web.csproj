@@ -341,6 +341,34 @@
     <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
       <DependentUpon>drugdictionary.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.cs">
+      <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.designer.cs">
+      <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx.cs">
+      <DependentUpon>DrugDictionaryDefinitionView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx.designer.cs">
+      <DependentUpon>DrugDictionaryDefinitionView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx.cs">
+      <DependentUpon>DrugDictionaryHome.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx.designer.cs">
+      <DependentUpon>DrugDictionaryHome.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx.cs">
+      <DependentUpon>DrugDictionaryResultsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx.designer.cs">
+      <DependentUpon>DrugDictionaryResultsList.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\EmergencyBanner.ascx.cs">
       <DependentUpon>EmergencyBanner.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -683,6 +711,10 @@
     <Content Include="SnippetTemplates\DisqusComments.ascx" />
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\EmergencyBanner.ascx" />
     <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx" />
