@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DrugDictionaryResultsList.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.DrugDictionaryResultsList" %>
-<%@ Register TagPrefix="TermDictionaryHome" TagName="SearchBlock" Src="~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryHome.ascx" %>
+<%@ Register TagPrefix="DrugDictionaryHome" TagName="SearchBlock" Src="~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryHome.ascx" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
 
-<TermDictionaryHome:SearchBlock id="dictionarySearchBlock" runat="server" />
+<DrugDictionaryHome:SearchBlock AtoZIncludesAll="true" id="dictionarySearchBlock" runat="server" />
 
  <div class="results">
             <!-- Number of results -->
