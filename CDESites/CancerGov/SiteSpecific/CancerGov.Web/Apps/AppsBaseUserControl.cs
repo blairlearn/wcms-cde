@@ -78,9 +78,12 @@ namespace NCI.Web.CancerGov.Apps
 
         virtual public void RaiseErrorPage(string messageKey)
         {
-            string systemMessagePageUrl;
+            //This seems like a bad place for the invalid search message, but in 
+            //refactoring 
             if (messageKey == "InvalidSearchID")
             {
+                string systemMessagePageUrl;
+
                 systemMessagePageUrl = ConfigurationSettings.AppSettings["ClinicalTrialInvalidSearchID"].Trim();
                 
                 //Bypass the custom error messages and return our content
@@ -96,13 +99,8 @@ namespace NCI.Web.CancerGov.Apps
             }
             else
             {
-                systemMessagePageUrl = ConfigurationSettings.AppSettings["SystemMessagePage"].Trim();
-
-                if (systemMessagePageUrl.Substring(systemMessagePageUrl.Length - 1, 1) != "?")
-                    systemMessagePageUrl += "?";
-
-                systemMessagePageUrl += "msg=" + messageKey.Trim();
-                Response.Redirect(systemMessagePageUrl, true);
+                //Use the common ErrorPageDisplayer so we do not duplicate the logic
+                ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
             }
         }
 

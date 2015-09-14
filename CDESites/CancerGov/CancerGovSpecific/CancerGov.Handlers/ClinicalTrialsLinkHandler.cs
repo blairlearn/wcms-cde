@@ -13,6 +13,7 @@ using CancerGov.CDR.ClinicalTrials.Helpers;
 
 using NCI.Util;
 using NCI.Logging;
+using NCI.Web.CDE.UI;
 
 namespace CancerGov.Handlers
 {
@@ -357,8 +358,12 @@ namespace CancerGov.Handlers
             }
         }
 
+        /// <summary>
+        /// Raise the error page
+        /// </summary>
         private void RaiseErrorPage()
-        { 
+        {
+            ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
         }
 
         private string SearchResultsPrettyUrl

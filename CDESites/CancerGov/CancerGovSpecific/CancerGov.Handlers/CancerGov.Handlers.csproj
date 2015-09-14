@@ -77,6 +77,10 @@
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
+      <Project>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</Project>
+      <Name>NCILibrary.Web.CDE.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CancerGovCommon\CancerGovCommon.csproj">
       <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
       <Name>CancerGovCommon</Name>
