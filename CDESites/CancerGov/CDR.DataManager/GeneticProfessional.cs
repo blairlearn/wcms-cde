@@ -249,7 +249,6 @@ namespace CancerGov.CDR.DataManager
             catch (SqlException sqlE)
             {
                 CancerGovError.LogError("GeneticProfessional GetCancerGeneticProfessionals method:  Error Getting the cancer genetic professional data:  ", "", this.ToString(), ErrorType.DbUnavailable, sqlE);
-                //this.RaiseErrorPage(); 
             }
             finally
             {

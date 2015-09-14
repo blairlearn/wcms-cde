@@ -930,7 +930,7 @@ namespace NCI.Web.CancerGov.Apps
             catch (Exception ex)
             {
                 Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetBestBetsResults", NCIErrorLevel.Error, ex);
-                throw ex;// this.RaiseErrorPage("error");
+                throw ex;
             }
 
             return results;
@@ -956,7 +956,7 @@ namespace NCI.Web.CancerGov.Apps
             catch (Exception ex)
             {
                 Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetSearchResults, Endeca Search Query used:" + searchTerm, NCIErrorLevel.Error, ex);
-                throw ex;//this.RaiseErrorPage("error");
+                throw ex;
             }
 
             return results;

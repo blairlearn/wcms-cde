@@ -296,19 +296,16 @@ namespace CancerGov.Web.SnippetTemplates
                 catch (ProtocolFetchFailureException fetchError)
                 {
                     CancerGovError.LogError("ClinicalTrialsResultsAdvanced.aspx", 1, "Failed to fetch Results for PSID : " + protocolSearchID.ToString() + " Error : " + fetchError.Message);
-                    //this.RaiseErrorPage();
                     this.RaiseErrorPage("InvalidSearchID");
                 }
                 catch (ProtocolTableEmptyException fetchError)
                 {
                     CancerGovError.LogError("ClinicalTrialsResultsAdvanced", 1, "ProtocolSearchID = " + protocolSearchID.ToString() + " Error: " + fetchError.Message);
-                    //this.RaiseErrorPage();
                     this.RaiseErrorPage("InvalidSearchID");
                 }
                 catch (ProtocolTableMiscountException fetchError)
                 {
                     CancerGovError.LogError("ClinicalTrialsResultsAdvanced", 1, "ProtocolSearchID = " + protocolSearchID.ToString() + " Error: " + fetchError.Message);
-                    //this.RaiseErrorPage();
                     this.RaiseErrorPage("InvalidSearchID");
                 }
 
@@ -376,7 +373,6 @@ namespace CancerGov.Web.SnippetTemplates
             if (protocolSearchID == -1)
             {
                 CancerGovError.LogError("ClinicalTrialsResultsAdvanced.aspx", 1, "Invalid Protocol Search ID");
-                //this.RaiseErrorPage();
                 this.RaiseErrorPage("InvalidSearchID");
             }
 
