@@ -289,6 +289,7 @@ namespace CancerGov.Web.SnippetTemplates
         private void SetUpDrugDictionary()
         {
             SetupEnglish();
+            alphaListBox.ShowAll = true;
         }
 
         protected void btnSearch_OnClick(object sender, EventArgs e)
