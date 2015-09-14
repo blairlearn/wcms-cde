@@ -285,13 +285,6 @@
     <Compile Include="SnippetTemplates\ClinicalTrialsBaseUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsLink.ascx.cs">
-      <DependentUpon>ClinicalTrialsLink.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsLink.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsLink.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\ClinicalTrialsResults.ascx.cs">
       <DependentUpon>ClinicalTrialsResults.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -699,7 +692,6 @@
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\CGovMainNavControl.ascx" />
     <Content Include="SnippetTemplates\CGovSectionNavControl.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsLink.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsView.ascx" />
