@@ -402,7 +402,7 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     Int32.Parse(CdrID);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw new Exception("Invalid CDRID" + CdrID);
 
