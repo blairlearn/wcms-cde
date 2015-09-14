@@ -31,6 +31,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 			#set($reviewedString = ""Reviewed"")##
             #set($newsString = ""All NCI news"")##
             #set($continueReading = ""Continue Reading"")##
+            #set($by = ""by"")##
 			";
             if (PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language") == "es")
             {
@@ -43,6 +44,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 				#set($reviewedString = ""Revisi&oacute;n"")##
                 #set($newsString = ""Todas las noticias del NCI"")##
                 #set($continueReading = ""Siga leyendo"")##
+                #set($by = ""por"")##
 				";
             }
             return pageLanguage;
@@ -266,9 +268,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
             }
 
             // Format date according to language
-            string dateAndAuthor = @"<span>$resultItem.DateForBlogs</span> by <span>$resultItem.Author</span>";
+            string date = @"<span>$resultItem.DateForBlogs</span> ";
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-                dateAndAuthor = @"<span>$resultItem.DateForBlogsEs</span> por <span>$resultItem.Author</span>";
+                date = @"<span>$resultItem.DateForBlogsEs</span> ";
 
             // Put the whole blog snippet template together
             string blogBody = @"
@@ -288,13 +290,20 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         + commentCount + 
 		                @"</div>
 		                <div class=""date-author"">"
-			            + dateAndAuthor +
-		                @"</div>
+			                + date + @"
+                            #if($resultItem.Author.length()>0)##
+                                $by $resultItem.Author##
+                            #else##
+                                &nbsp;##
+                            #end##
+		                </div>
 		                <div>
                 #if($resultItem.BlogBody.length()>0)##
 	                $resultItem.BlogBody
-                #else##
+                #elseif($resultItem.LongDescription.length()>0)##
 	                $resultItem.LongDescription
+                #else##
+	                &nbsp;##
                 #end##
 		                </div>
 		                <p>
