@@ -63,9 +63,10 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (iProtocolID < 1)
             {
+                NCI.Logging.Logger.LogError("ViewClinicalTrials.OnLoad", "No ProtocolID Specified", NCIErrorLevel.Error);
 
-                NCI.Logging.Logger.LogError("ViewClinicalTrials.OnLoad", "No ProtocalID Specified", NCIErrorLevel.Error);
-                this.RaiseErrorPage("No ProtocalID Specified");
+                //Send the user the PageNotFoundPage.  (One could argue we should return a 400 since there were invalid params...)
+                throw new HttpException(404, "No Protocol ID Specified");
             }
 
             iProtocolSearchID = Strings.ToInt(Strings.IfNull(Strings.Clean(Request.Params["protocolsearchid"]), "0"));
@@ -81,23 +82,36 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 pProtocol = new Protocol(iProtocolID, ProtocolFunctions.GetSectionList(pvVersion, ProtocolDisplayFormats.SingleProtocol), iProtocolSearchID, pvVersion);
             }
-            catch (ProtocolFetchFailureException fetchError)
+            catch (CancerGov.Exceptions.ProtocolFetchFailureException fetchError)
             {
 
                 NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
-                this.RaiseErrorPage("Error:" + fetchError.Message);
+                //This is an error - maybe no DB connection, who knows what, but stuff broke.
+                this.RaiseErrorPage();
             }
-            catch (ProtocolTableEmptyException fetchError)
+            catch (CancerGov.Exceptions.ProtocolTableEmptyException fetchError)
             {
 
                 NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
-                this.RaiseErrorPage("Error:" + fetchError.Message);
+                //Send the user to the page not found page.  This is tricky since this can be thrown if
+                //the protocol was not retrieved, but also if NO tables came back, which would indicate
+                //something wrong with the stored proc.  We will just treat them both as a protocol
+                //was not found.
+                throw new HttpException(404, "No Protocol Found with that ID");
+
             }
-            catch (ProtocolTableMiscountException fetchError)
+            catch (CancerGov.Exceptions.ProtocolTableMiscountException fetchError)
             {
 
                 NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
-                this.RaiseErrorPage("Error:" + fetchError.Message);
+                //This is an error - basically there are tables we are expecting that are not there
+                //this is probably a stored proc issue.
+                this.RaiseErrorPage();
+            }
+            catch (Exception ex)
+            {
+                NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + ex.Message, NCIErrorLevel.Error, ex);
+                this.RaiseErrorPage();
             }
 
 
