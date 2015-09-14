@@ -25,10 +25,6 @@ namespace CancerGov.Web.SnippetTemplates
             if (resultCollection != null)
                 TotalCount = resultCollection.ResultsCount;
 
-            // Drug dictionary is always in English
-            pnlIntroEnglish.Visible = true;
-            pnlIntroSpanish.Visible = false;
-
         }
     }
 }
