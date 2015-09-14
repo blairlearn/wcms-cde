@@ -69,17 +69,18 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {
-
                 resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
-
             }
             else if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
             {
-
                 if (Expand.ToLower() == "all")
                     resultCollection = _dictionaryAppManager.Expand("%", "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
                 else
                     resultCollection = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
+
+                // Workaround for the way variables are used as both search data and
+                // flag for the type of search to be performed.
+                SearchStr = Expand;
             }
 
             if (resultCollection != null && resultCollection.Count() > 0)
@@ -148,11 +149,11 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 if (Expand.Trim() == "#")
                 {
-                    SearchStr = "[0-9]";
+                    Expand = "[0-9]";
                 }
                 else
                 {
-                    SearchStr = Expand.Trim().ToUpper();
+                    Expand = Expand.Trim().ToUpper();
                 }
             }
             
