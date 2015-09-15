@@ -595,7 +595,7 @@ namespace NCI.Web.CDE
                    this.PageMetadata.BrowserTitle != "")
                     data.Value = this.PageMetadata.BrowserTitle;
                 else
-                    data.Value = this.PageMetadata.ShortTitle;
+                    data.Value = GetField("short_title"); 
 
             });
 
