@@ -62,10 +62,8 @@ namespace CancerGov.Web.SnippetTemplates
             iProtocolID = Strings.ToInt(Request.Params["cdrid"]);
 
             if (iProtocolID < 1)
-            {
-                NCI.Logging.Logger.LogError("ViewClinicalTrials.OnLoad", "No ProtocolID Specified", NCIErrorLevel.Error);
-
-                //Send the user the PageNotFoundPage.  (One could argue we should return a 400 since there were invalid params...)
+            {                
+                //Send the user the PageNotFoundPage, do not log anything.  (One could argue we should return a 400 since there were invalid params...)
                 throw new HttpException(404, "No Protocol ID Specified");
             }
 
@@ -90,11 +88,11 @@ namespace CancerGov.Web.SnippetTemplates
                 this.RaiseErrorPage();
             }
             catch (CancerGov.Exceptions.ProtocolTableEmptyException fetchError)
-            {
-
-                NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
-                //Send the user to the page not found page.  This is tricky since this can be thrown if
-                //the protocol was not retrieved, but also if NO tables came back, which would indicate
+            {               
+                //Do not log an error as no protocol was found.  If you really want to know why it was
+                //not found, then just run the stored proc.  Instead, just send the user to the page 
+                //not found page.  This is tricky since this can be thrown if the protocol was not 
+                //retrieved, but also if NO tables came back, which would indicate
                 //something wrong with the stored proc.  We will just treat them both as a protocol
                 //was not found.
                 throw new HttpException(404, "No Protocol Found with that ID");
