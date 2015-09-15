@@ -9,11 +9,11 @@
             <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
                 <span class="results-count">
                     <asp:Label ID="lblNumResults" CssClass="results-num" runat="server"></asp:Label>
-                    <asp:Label ID="lblResultsFor" runat="server"></asp:Label>
+                    <asp:Label ID="lblResultsFor" Text="result found for: " runat="server"></asp:Label>
                     <asp:Label ID="lblWord" CssClass="term" runat="server"></asp:Label>
                 </span>
             </asp:Panel>
-                <dl class="dictionary-list">
+
             <asp:ListView ID="resultListView" runat="server" OnItemDataBound="resultListView_OnItemDataBound">
                 <LayoutTemplate>
                     <dl class="dictionary-list">
@@ -23,8 +23,11 @@
                 <ItemTemplate>
                     <dt>
                        <dfn>
-                        <a href="<%# DictionaryURL %>?CdrID=<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
-                             <%# ((DictionarySearchResult)(Container.DataItem)).MatchedTerm%></a>
+                            <a href="<%# DictionaryURL %>?CdrID=<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                                <%# HiLite(((DictionarySearchResult)(Container.DataItem)).MatchedTerm )%></a>
+                            <span class="dictionary-partial-match-n">
+                                <%# GetTermAliasList(Container.DataItem)%>
+                            </span>
                         </dfn>
                     </dt>
                     <asp:PlaceHolder ID="phPronunciation" runat="server">

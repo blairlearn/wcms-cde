@@ -105,7 +105,7 @@ namespace CancerGov.Web.SnippetTemplates
                     data.Value = "Definici&oacute;n de " + termName + " - Diccionario de c&aacute;ncer";
                 });
 
-                this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+                //this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
             }
             else
             {
@@ -114,7 +114,7 @@ namespace CancerGov.Web.SnippetTemplates
                     data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                 });
 
-                this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+                //this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
             }
 
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>

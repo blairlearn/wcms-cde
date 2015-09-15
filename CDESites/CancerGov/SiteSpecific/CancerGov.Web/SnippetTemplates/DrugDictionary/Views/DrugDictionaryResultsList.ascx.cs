@@ -14,6 +14,7 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+using System.Text;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -231,7 +232,111 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
         }
-        
+
+        /// <summary>
+        /// Turn a term's list of aliases into a semi-colon separated list.
+        /// </summary>
+        /// <param name="word">A DictionarySearchResult object containing a Term data structure.</param>
+        /// <returns> A semi-colon separated list of term aliases, enclosed in square brackets.
+        /// <remarks>
+        /// Only returns those aliases which met the search criteria.
+        /// Returns an empty string if an Expand search was performed.</remarks>
+        /// </returns>
+        public string GetTermAliasList(object termSearchResult)
+        {
+            string aliases = String.Empty;
+
+            DictionarySearchResult termInfo = termSearchResult as DictionarySearchResult;
+
+            if (string.IsNullOrEmpty(Expand) // Only do this if we're not responding to an "Expand" click.
+                    && termInfo != null      // Don't do this unless there are aliases to list.
+                    && termInfo.Term.Aliases.Length > 0
+                )
+            {
+                StringBuilder sb = new StringBuilder();
+
+                // Get the original search string, forcing it to be non-null and removing any
+                // leading/trailing spaces.
+                string searchstr = Strings.Clean(Request.Params["search"]) ?? String.Empty;
+                searchstr = SearchStr.Trim().ToLower();
+
+                // Roll up the list of terms.
+                foreach (Alias alias in termInfo.Term.Aliases)
+                {
+                    if (alias.Name != null)
+                    {
+                        // Mimic legacy logic for 
+                        string name = HiLite(alias.Name.Trim());
+                        string compareName = alias.Name.Trim().ToLower();
+
+                        // name contains the search string
+                        if ( BContains && compareName.Contains(searchstr))
+                            sb.AppendFormat("{0}; ", name);
+                        // name starts with the search string
+                        else if( !BContains && compareName.StartsWith(searchstr))
+                            sb.AppendFormat("{0}; ", name);
+                        // else -- not a match.
+                    }
+                }
+
+                // If terms were found, trim off the final semicolon and space before
+                // wrapping the whole thing in square brackets.
+                aliases = sb.ToString();
+                if(!String.IsNullOrEmpty(aliases))
+                    aliases = String.Format("[{0}]", aliases.TrimEnd(' ', ';'));
+            }
+
+            return aliases;
+
+            //string bracketed = string.Empty;
+            //if (word != null && string.IsNullOrEmpty(Expand))
+            //{
+            //    string original = word.ToString();
+            //    string[] pieces = original.Split(';');
+            //    foreach (string piece in pieces)
+            //    {
+            //        bracketed += HiLite(piece.Trim()) + "; ";
+            //    }
+            //    bracketed = bracketed.TrimEnd(' ', ';');
+            //    bracketed = "[ " + bracketed + " ]";
+            //}
+
+            //return bracketed;
+        }
+
+        public string HiLite(object word)
+        {
+            string marked = string.Empty;
+
+            string original = word.ToString();
+            string seq = SearchStr.ToLower();
+            marked = original;
+            int len = seq.Length;
+            string style = "<span class=\"dictionary-partial-match\">";
+
+            if (string.IsNullOrEmpty(Expand))
+            {
+                if (!BContains)  //only higlight if it begins with sequence 
+                {
+                    if (original.ToLower().StartsWith(seq))
+                    {
+                        marked = marked.Insert(len, "</span>");
+                        marked = marked.Insert(0, style);
+                    }
+                }
+                else
+                {
+                    int pos = original.ToLower().IndexOf(seq, 0);
+                    if (pos > -1)
+                    {
+                        marked = marked.Insert(pos + len, "</span>");
+                        marked = marked.Insert(pos, style);
+                    }
+                }
+            }
+            return marked;
+        }
+
     }
 
     
