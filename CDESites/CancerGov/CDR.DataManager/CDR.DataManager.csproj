@@ -56,7 +56,6 @@
     <Compile Include="SqlProtocolAdapter.cs" />
     <Compile Include="SqlProtocolListAdapter.cs" />
     <Compile Include="SqlSearchResultsAdapter.cs" />
-    <Compile Include="SqlTCSearchAdapter.cs" />
     <Compile Include="StudySiteCollection.cs" />
     <Compile Include="StudySiteList.cs" />
     <Compile Include="XMLProtocolSearchParameters.cs" />
