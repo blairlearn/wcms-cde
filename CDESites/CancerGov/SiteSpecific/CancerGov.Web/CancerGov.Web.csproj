@@ -313,13 +313,6 @@
     <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.designer.cs">
       <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\db_alpha.ascx.cs">
-      <DependentUpon>db_alpha.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\db_alpha.ascx.designer.cs">
-      <DependentUpon>db_alpha.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\DocTitleBlock.ascx.cs">
       <DependentUpon>DocTitleBlock.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -667,13 +660,11 @@
     <Content Include="JS\ForeSee\tracker.html" />
     <Content Include="JS\ForeSee\tracker_sp.html" />
     <Content Include="JS\ForeSee\truste.png" />
-    <Content Include="JS\geneticsTermDictionary.js" />
     <Content Include="JS\imgEvents.js" />
     <Content Include="JS\JSLoader\JSLoader.js" />
     <Content Include="JS\NetTracker\ntpagetag.js" />
     <Content Include="JS\Search\CDEResultsClinicalTrials.js" />
     <Content Include="JS\Search\CDESearchClinicalTrials.js" />
-    <Content Include="JS\termDictionary.js" />
     <Content Include="JS\Widgets\nci-logo.gif" />
     <Content Include="JS\Widgets\TermDictionaryWidget.htm" />
     <Content Include="JS\Widgets\TermDictionaryWidget.js" />
@@ -699,7 +690,6 @@
     <Content Include="SnippetTemplates\ConditionalDisplaySnippet.ascx" />
     <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
     <Content Include="SnippetTemplates\BreadcrumbSnippet.ascx" />
-    <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="SnippetTemplates\DisqusComments.ascx" />
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
     <Content Include="SnippetTemplates\drugdictionary.ascx" />
