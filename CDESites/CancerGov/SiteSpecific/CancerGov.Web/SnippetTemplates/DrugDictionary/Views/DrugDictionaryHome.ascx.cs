@@ -16,7 +16,7 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            dictionarySearchBlock.Dictionary = DictionaryType.Term;
+            dictionarySearchBlock.Dictionary = DictionaryType.term;
             dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();

@@ -19,7 +19,7 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class DictionarySearchBlock : SnippetControl
     {
-        public DictionaryType Dictionary { get; set; }
+        public NCI.Web.Dictionary.DictionaryType Dictionary { get; set; }
 
         public string SearchStr{ get; set; }
 
@@ -52,13 +52,13 @@ namespace CancerGov.Web.SnippetTemplates
             //code unique to each dictionary
             switch (Dictionary)
             {
-                case DictionaryType.Term:
+                case NCI.Web.Dictionary.DictionaryType.term:
                     SetUpTermDictionary();
                     break;
-                case DictionaryType.Genetic:
+                case NCI.Web.Dictionary.DictionaryType.genetic:
                     SetUpGeneticsDictionary();
                     break;
-                case DictionaryType.Drug:
+                case NCI.Web.Dictionary.DictionaryType.drug:
                     SetUpDrugDictionary();
                     break;
                 default:
