@@ -155,6 +155,14 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 data.Value = pProtocol.ProtocolTitle;
             });
+
+            //Set the short title as the NCTID Clinical Trial.  [OCEPROJECT-3489]
+            PageInstruction.AddFieldFilter("short_title", (fieldName, data) =>
+            {
+                if (pProtocol.NCTID != string.Empty)
+                    data.Value = pProtocol.NCTID + " Clinical Trial";
+
+            });
             
             StringBuilder sbPageUrl = new StringBuilder();
             sbPageUrl.Append(SearchPageInfo.DetailedViewSearchResultPagePrettyUrl);
