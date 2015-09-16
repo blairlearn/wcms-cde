@@ -20,15 +20,15 @@ namespace CancerGov.Web.SnippetTemplates {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::CancerGov.Web.SnippetTemplates.TermDictionaryHome dictionarySearchBlock;
+        protected global::CancerGov.Web.SnippetTemplates.DrugDictionaryHome dictionarySearchBlock;
         
         /// <summary>
-        /// termDictionaryDefinitionView control.
+        /// drugDictionaryDefinitionView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater termDictionaryDefinitionView;
+        protected global::System.Web.UI.WebControls.Repeater drugDictionaryDefinitionView;
     }
 }

@@ -74,6 +74,14 @@ namespace NCI.Web.Dictionary.BusinessObjects
         public Alias[] Aliases { get; set; }
 
         /// <summary>
+        /// Does the term actually have any aliases?
+        /// </summary>
+        public bool HasAliases
+        {
+            get { return Aliases != null && Aliases.Length > 0; }
+        }
+
+        /// <summary>
         /// related links. (Cancer Term and Genetics only)
         /// </summary>
         [DataMember(Name = "related")]

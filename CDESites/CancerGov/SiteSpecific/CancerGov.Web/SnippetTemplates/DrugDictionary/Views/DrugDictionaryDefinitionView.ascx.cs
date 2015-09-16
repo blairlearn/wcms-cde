@@ -10,6 +10,7 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+using System.Text;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -77,7 +78,7 @@ namespace CancerGov.Web.SnippetTemplates
                 }
                 else
                 {
-                    termDictionaryDefinitionView.Visible = false;
+                    drugDictionaryDefinitionView.Visible = false;
                 }
             }
 
@@ -90,9 +91,9 @@ namespace CancerGov.Web.SnippetTemplates
 
             var myDataSource = new List<DictionaryTerm> { dataItem };
 
-            termDictionaryDefinitionView.Visible = true;
-            termDictionaryDefinitionView.DataSource = myDataSource;
-            termDictionaryDefinitionView.DataBind();
+            drugDictionaryDefinitionView.Visible = true;
+            drugDictionaryDefinitionView.DataSource = myDataSource;
+            drugDictionaryDefinitionView.DataBind();
 
             string termName = dataItem.Term;
 
@@ -100,21 +101,17 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (DictionaryLanguage == "es")
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("browser_title", (name, data) =>
                 {
                     data.Value = "Definici&oacute;n de " + termName + " - Diccionario de c&aacute;ncer";
                 });
-
-                //this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
             }
             else
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("browser_title", (name, data) =>
                 {
                     data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                 });
-
-                //this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
             }
 
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
@@ -132,6 +129,121 @@ namespace CancerGov.Web.SnippetTemplates
 
         }
 
+        // Type names from the TermOtherNameType table, sorted by
+        // priority order.
+        const string NAME_TYPE_SYNONYM = "synonym";
+        const string NAME_TYPE_BRAND_NAME = "us brand name";
+        const string NAME_TYPE_FOREIGN_BRAND = "foreign brand name";
+        const string NAME_TYPE_ABBREV = "abbreviation";
+        const string NAME_TYPE_ACRONYM = "acronym";
+        const string NAME_TYPE_CODE_NAME = "code name";
+        const string NAME_TYPE_CHEMICAL_NAME = "chemical structure name";
+
+        const string NAME_LABEL_SYNONYM = "Synonym";
+        const string NAME_LABEL_BRAND_NAME = "US brand name";
+        const string NAME_LABEL_FOREIGN_BRAND = "Foreign brand name";
+        const string NAME_LABEL_ABBREV = "Abbreviation";
+        const string NAME_LABEL_ACRONYM = "Acronym";
+        const string NAME_LABEL_CODE_NAME = "Code name";
+        const string NAME_LABEL_CHEMICAL_NAME = "Chemical structure";
+
+
+
+        /// <summary>
+        /// Stinky code to generate a drug definition's list of aliases.
+        /// </summary>
+        /// <param name="termSearchResult"></param>
+        /// <returns></returns>
+        public string GenerateTermAliasList(object termSearchResult)
+        {
+            string aliasDisplay = String.Empty;
+
+            DictionaryTerm termInfo = termSearchResult as DictionaryTerm;
+            if (termInfo != null && termInfo.HasAliases)
+            {
+                Dictionary<string, List<string>> nameTypeMap = RollupNameTypeLists(termInfo.Aliases);
+                StringBuilder sb = new StringBuilder();
+
+                // Display the list of names.
+                if (nameTypeMap.Count > 0)
+                {
+                    sb.Append("<p><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
+
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_SYNONYM,      NAME_LABEL_SYNONYM));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_BRAND_NAME,   NAME_LABEL_BRAND_NAME));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_FOREIGN_BRAND,NAME_LABEL_FOREIGN_BRAND));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_ABBREV,       NAME_LABEL_ABBREV));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_ACRONYM,      NAME_LABEL_ACRONYM));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_CODE_NAME,    NAME_LABEL_CODE_NAME));
+                    //sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_CHEMICAL_NAME,NAME_LABEL_CHEMICAL_NAME));
+
+                    sb.Append("</table><p>");
+                }
+
+                aliasDisplay = sb.ToString();
+            }
+
+            return aliasDisplay;
+        }
+
+        private string GenerateAliasRow(Dictionary<string, List<string>> nameTypeMap, string nameTypeKey, string nameLabel)
+        {
+            string row = String.Empty;
+
+            if (nameTypeMap.ContainsKey(nameTypeKey))
+            {
+                List<string> aliasList = nameTypeMap[nameTypeKey];
+                string nameList = String.Empty;
+                if (aliasList.Count > 1)
+                {
+                    // Append all the names to one another, separating with a <br />.  Arguably, this might be done better
+                    // with a StringBuilder, but this should be such a small list that the StringBuilder overhead is worse than
+                    // the multiple small objects.
+                    aliasList.ForEach(name => { nameList += name + "<br />"; });
+                }
+                else
+                    nameList = aliasList[0];
+
+                row = String.Format("<tr><td valign=\"top\" width=\"28%\"><b>{0}:</b></td><td valign=\"top\" width=\"68%\">{1}</td>",
+                    nameLabel, nameList);
+            }
+
+            return row;
+        }
+
+
+        /// <summary>
+        /// Replicates legacy logic for rolling up alias names into a collection of named lists.
+        /// </summary>
+        /// <param name="arrTermAliases"></param>
+        /// <returns>A non-empty Dictionary structure with name types as keys and sorted lists of 
+        /// aliases as the values.</returns>
+        private Dictionary<string, List<string>> RollupNameTypeLists(Alias[] arrTermAliases)
+        {
+            Dictionary<string, List<string>> map = new Dictionary<string, List<string>>();
+
+            // Put the list into alphabetic order, based on the alias name.
+            Array.Sort(arrTermAliases, (a, b) => { 
+                return a.Name.CompareTo(b.Name); 
+            });
+
+            // Add individual aliases to the list associated with the alias type.
+            Array.ForEach(arrTermAliases, alias =>
+            {
+                string key = alias.Type.ToLower();
+                List<string> nameList;
+
+                // If there's no list for a name, create one.
+                if (!map.ContainsKey(key))
+                    map.Add(key, new List<string>());
+
+                nameList = map[key];
+                nameList.Add(alias.Name);
+            });
+
+
+            return map;
+        }
 
         /**
          * Add URL filter for old print page implementation
@@ -175,7 +287,7 @@ namespace CancerGov.Web.SnippetTemplates
             });
         }
 
-        protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        protected void drugDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
@@ -205,110 +317,10 @@ namespace CancerGov.Web.SnippetTemplates
                     else
                         phPronunciation.Visible = false;
 
-                    //Get Related Information from the Manager layer
-                    //Add check to see if it exists and then display data accordingly
-                    Panel pnlRelatedInfo = e.Item.FindControl("pnlRelatedInfo") as Panel;
-                    if (pnlRelatedInfo != null)
-                    {
-                        //display the related information panel
-                        //when atleast one of the related item exists
-                        if (termDetails.Related != null &&
-                                ( termDetails.Related.Term.Length > 0 ||
-                                  termDetails.Related.Summary.Length > 0 ||
-                                  termDetails.Related.DrugSummary.Length > 0 ||
-                                  termDetails.Related.External.Length > 0 ||
-                                  termDetails.Images.Length > 0)
-                            )
-                        {
-                            pnlRelatedInfo.Visible = true;
-                            Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
-                            if (litMoreInformation != null)
-                            {
-                                if (DictionaryLanguage == "es")
-                                    litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
-                                else
-                                    litMoreInformation.Text = "More Information";
-                            }
-
-                            if (termDetails.Related.External.Length > 0)
-                            {
-                                Repeater relatedExternalRefs = (Repeater)e.Item.FindControl("relatedExternalRefs");
-                                if (relatedExternalRefs != null)
-                                {
-                                    relatedExternalRefs.Visible = true;
-                                    relatedExternalRefs.DataSource = termDetails.Related.External;
-                                    relatedExternalRefs.DataBind();
-                                }
-                            }
-
-                            if (termDetails.Related.Summary.Length > 0)
-                            {
-                                Repeater relatedSummaryRefs = (Repeater)e.Item.FindControl("relatedSummaryRefs");
-                                if (relatedSummaryRefs != null)
-                                {
-                                    relatedSummaryRefs.Visible = true;
-                                    relatedSummaryRefs.DataSource = termDetails.Related.Summary;
-                                    relatedSummaryRefs.DataBind();
-                                }
-                            }
-
-                            if (termDetails.Related.DrugSummary.Length > 0)
-                            {
-                                Repeater relatedDrugInfoSummaries = (Repeater)e.Item.FindControl("relatedDrugInfoSummaries");
-                                if (relatedDrugInfoSummaries != null)
-                                {
-                                    relatedDrugInfoSummaries.Visible = true;
-                                    relatedDrugInfoSummaries.DataSource = termDetails.Related.DrugSummary;
-                                    relatedDrugInfoSummaries.DataBind();
-                                }
-                            }
-
-                            if (termDetails.Related.Term.Length > 0)
-                            {
-                                RelatedTermCount = termDetails.Related.Term.Length;
-                                PlaceHolder phRelatedTerms = (PlaceHolder)e.Item.FindControl("phRelatedTerms");
-                                if (phRelatedTerms != null)
-                                {                                    
-                                    phRelatedTerms.Visible = true;
-                                    Label labelDefintion = (Label)e.Item.FindControl("labelDefintion");
-                                    if (labelDefintion != null)
-                                    {
-                                        if (DictionaryLanguage == "es")
-                                            labelDefintion.Text = "Definici&oacute;n de:";
-                                        else
-                                            labelDefintion.Text = "Definition of:";
-                                    }
-                                    Repeater relatedTerms = (Repeater)e.Item.FindControl("relatedTerms");
-                                    if (relatedTerms != null)
-                                    {
-                                        relatedTerms.DataSource = termDetails.Related.Term;
-                                        relatedTerms.DataBind();
-                                    }
-                                }
-
-                            }
-
-                            Repeater relatedImages = (Repeater)e.Item.FindControl("relatedImages");
-                            if (relatedImages != null)
-                            {
-                                if (termDetails.Images.Length > 0)
-                                {
-                                    relatedImages.Visible = true;
-                                    relatedImages.DataSource = termDetails.Images;
-                                    relatedImages.DataBind();
-                                }
-                                
-                            }
-                        }
-                        else
-                        {
-                            pnlRelatedInfo.Visible = false;
-                        }
-
-                    }
-
-                    
-
+                                    
+                    PlaceHolder phAliasList = (PlaceHolder) e.Item.FindControl("phAliasList");
+                    if (phAliasList != null && termDetails.HasAliases)
+                        phAliasList.Visible = true;
                 }
             } 
         }
@@ -370,7 +382,7 @@ namespace CancerGov.Web.SnippetTemplates
                                     termEnlargeImage.HRef = imageDetails.Filename;
 
                                 //log a warning
-                                NCI.Logging.Logger.LogError("TermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
+                                NCI.Logging.Logger.LogError("DrugDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
                             }
                             else
                             {
@@ -395,6 +407,7 @@ namespace CancerGov.Web.SnippetTemplates
                 }
             }
         }
+
         private void ValidateParams()
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);
