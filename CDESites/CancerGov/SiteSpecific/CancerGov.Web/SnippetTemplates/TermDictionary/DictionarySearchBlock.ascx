@@ -56,7 +56,7 @@
             svcUrl = "/TermDictionary.svc/SearchJSON/" + language;
 
 
-        NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
+       // NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
     }
 
     function IsContains() {
