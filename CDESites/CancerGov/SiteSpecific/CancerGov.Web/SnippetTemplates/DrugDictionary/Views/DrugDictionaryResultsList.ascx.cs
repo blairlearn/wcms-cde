@@ -265,7 +265,7 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     if (alias.Name != null)
                     {
-                        // Mimic legacy logic for 
+                        // Mimic legacy logic for choosing which aliases to display.
                         string name = HiLite(alias.Name.Trim());
                         string compareName = alias.Name.Trim().ToLower();
 
@@ -283,25 +283,10 @@ namespace CancerGov.Web.SnippetTemplates
                 // wrapping the whole thing in square brackets.
                 aliases = sb.ToString();
                 if(!String.IsNullOrEmpty(aliases))
-                    aliases = String.Format("[{0}]", aliases.TrimEnd(' ', ';'));
+                    aliases = String.Format("[ {0} ]", aliases.TrimEnd(' ', ';'));
             }
 
             return aliases;
-
-            //string bracketed = string.Empty;
-            //if (word != null && string.IsNullOrEmpty(Expand))
-            //{
-            //    string original = word.ToString();
-            //    string[] pieces = original.Split(';');
-            //    foreach (string piece in pieces)
-            //    {
-            //        bracketed += HiLite(piece.Trim()) + "; ";
-            //    }
-            //    bracketed = bracketed.TrimEnd(' ', ';');
-            //    bracketed = "[ " + bracketed + " ]";
-            //}
-
-            //return bracketed;
         }
 
         public string HiLite(object word)
