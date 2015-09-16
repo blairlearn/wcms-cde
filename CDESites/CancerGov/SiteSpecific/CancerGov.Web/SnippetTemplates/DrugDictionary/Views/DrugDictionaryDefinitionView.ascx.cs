@@ -175,7 +175,7 @@ namespace CancerGov.Web.SnippetTemplates
                     sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_ABBREV,       NAME_LABEL_ABBREV));
                     sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_ACRONYM,      NAME_LABEL_ACRONYM));
                     sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_CODE_NAME,    NAME_LABEL_CODE_NAME));
-                    //sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_CHEMICAL_NAME,NAME_LABEL_CHEMICAL_NAME));
+                    sb.Append(GenerateAliasULRow(nameTypeMap, NAME_TYPE_CHEMICAL_NAME, NAME_LABEL_CHEMICAL_NAME));
 
                     sb.Append("</table><p>");
                 }
@@ -200,6 +200,41 @@ namespace CancerGov.Web.SnippetTemplates
                     // with a StringBuilder, but this should be such a small list that the StringBuilder overhead is worse than
                     // the multiple small objects.
                     aliasList.ForEach(name => { nameList += name + "<br />"; });
+                }
+                else
+                    nameList = aliasList[0];
+
+                row = String.Format("<tr><td valign=\"top\" width=\"28%\"><b>{0}:</b></td><td valign=\"top\" width=\"68%\">{1}</td>",
+                    nameLabel, nameList);
+            }
+
+            return row;
+        }
+
+        /// <summary>
+        /// Special handling for aliases (e.g. Chemical Name) where multiple values are to be output in an unordered list
+        /// instead of the usual list using br tags.
+        /// </summary>
+        /// <param name="nameTypeMap"></param>
+        /// <param name="nameTypeKey"></param>
+        /// <param name="nameLabel"></param>
+        /// <returns></returns>
+        private string GenerateAliasULRow(Dictionary<string, List<string>> nameTypeMap, string nameTypeKey, string nameLabel)
+        {
+            string row = String.Empty;
+
+            if (nameTypeMap.ContainsKey(nameTypeKey))
+            {
+                List<string> aliasList = nameTypeMap[nameTypeKey];
+                string nameList = String.Empty;
+                if (aliasList.Count > 1)
+                {
+                    
+                    // Append all the names to one another, separating with a <br />.  Arguably, this might be done better
+                    // with a StringBuilder, but this should be such a small list that the StringBuilder overhead is worse than
+                    // the multiple small objects.
+                    aliasList.ForEach(name => { nameList += "<li>" + name; });
+                    nameList = String.Format("<ul>{0}</ul>", nameList);
                 }
                 else
                     nameList = aliasList[0];
