@@ -11,6 +11,7 @@ using NCI.Services.Dictionary;
 using svcDictionaryType = NCI.Services.Dictionary.DictionaryType;
 using svcSearchType = NCI.Services.Dictionary.SearchType;
 using svcLanguage = NCI.Services.Dictionary.Language;
+using svcAudienceType = NCI.Services.Dictionary.AudienceType;
 
 namespace NCI.Web.Dictionary
 {
@@ -38,7 +39,7 @@ namespace NCI.Web.Dictionary
 
             //Sets up the services return type so that the meta data can be transfered to this term return.
 
-            NCI.Services.Dictionary.BusinessObjects.TermReturn termRet = new NCI.Services.Dictionary.BusinessObjects.TermReturn();
+            NCI.Services.Dictionary.BusinessObjects.TermReturn termRet = null;
             try
             {
                 termRet = service.GetTerm(termId, svcDictionary, svcLanguage);
@@ -63,7 +64,58 @@ namespace NCI.Web.Dictionary
 
            return dicTerm;
         }
+                
 
+        // <summary>
+        /// Get Term from Dictionary Service to be deserialized and returned to the app module
+        /// </summary>
+        /// <param name="termId">int of the CDR ID</param>
+        /// <param name="dictionary">which dictionary is being passed through</param>
+        /// <param name="language">English/Spanish term</param>
+        /// <param name="version">the version of the dictionary service</param>
+        /// <param name="audience">The Term's desired audience.
+        ///     Supported values are:
+        ///         Patient
+        ///         HealthProfessional
+        /// </param>
+        /// <returns>the term deserialized and the meta data from the database</returns>
+        public DictionaryTerm GetTerm(int termId, DictionaryType dictionary, String language, String version, AudienceType audience)
+        {
+            // Translate from types the AppManager exposes to types the Dictionary Service exposes.
+            svcDictionaryType svcDictionary = TypeTranslator.Translate(dictionary);
+            svcLanguage svcLanguage = TypeTranslator.TranslateLocaleString(language);
+            svcAudienceType svcAudience = TypeTranslator.Translate(audience);
+
+            //sets up Dictionary Service so methods can be called
+            DictionaryService service = new DictionaryService();
+
+            //Sets up the services return type so that the meta data can be transfered to this term return.
+
+            NCI.Services.Dictionary.BusinessObjects.TermReturn termRet = null;
+            try
+            {
+                termRet = service.GetTerm(termId, svcDictionary, svcLanguage, svcAudience);
+            }
+            catch (Exception ex)
+            {
+                log.error("Error in Dictionary Web Service for Get Term: " + ex);
+            }
+
+            //String of JSON returned from the Database to be deserialized.
+            DictionaryTerm dicTerm = null;
+
+            try
+            {
+                //deserialize term details as returned by the service layer (termret.term)
+                dicTerm = JsonConvert.DeserializeObject<DictionaryTerm>(termRet.Term);
+            }
+            catch (JsonReaderException ex)
+            {
+                log.error("Error in Json string from service: " + ex.ToString());
+            }
+
+            return dicTerm;
+        }
 
         /// <summary>
         /// Dictionary search that will return a list of dictionary terms based on the dictionary type passed in

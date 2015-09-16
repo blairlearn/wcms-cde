@@ -5,6 +5,7 @@
 using svcDictionaryType = NCI.Services.Dictionary.DictionaryType;
 using svcSearchType = NCI.Services.Dictionary.SearchType;
 using svcLanguage = NCI.Services.Dictionary.Language;
+using svcAudienceType = NCI.Services.Dictionary.AudienceType;
 
 namespace NCI.Web.Dictionary
 {
@@ -89,6 +90,35 @@ namespace NCI.Web.Dictionary
                     break;
             }
             return language;
+        }
+
+
+        /// <summary>
+        /// Translates values of type NCI.Web.Dictionary.AudienceType.
+        /// to values of the type NCI.Services.Dictionary.AudienceType.
+        /// </summary>
+        /// <param name="dictionary">The NCI.Web.Dictionary.AudienceType value to be translated.</param>
+        /// <returns>A value of type NCI.Services.Dictionary.AudienceType.</returns>
+        public static svcAudienceType Translate(AudienceType xlate)
+        {
+            svcAudienceType audience;
+            switch (xlate)
+            {
+                case AudienceType.Unknown:
+                    audience = svcAudienceType.Unknown;
+                    break;
+                case AudienceType.HealthProfessional:
+                    audience = svcAudienceType.HealthProfessional;
+                    break;
+                case AudienceType.Patient:
+                    audience = svcAudienceType.Patient;
+                    break;
+                    break;
+                default:
+                    throw new ArgumentException(String.Format("Uknown type '{0}'.", xlate));
+            }
+
+            return audience;
         }
     }
 }

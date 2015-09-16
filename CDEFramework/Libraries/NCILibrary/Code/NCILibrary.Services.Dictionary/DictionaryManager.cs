@@ -156,6 +156,119 @@ namespace NCI.Services.Dictionary
         }
 
         /// <summary>
+        /// Retrieves a single dictionary term based on its specific Term ID.
+        /// </summary>
+        /// <param name="termId">The ID of the Term to be retrieved</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
+        ///<param name="audience">The Term's desired audience.
+        ///     Supported values are:
+        ///         Patient
+        ///         HealthProfessional
+        /// </param>
+        /// <returns>A data structure containing both meta data about the request and a string containing a JSON representation
+        /// of the particular definition identified by the inputs to the method.
+        /// </returns>
+        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, String version, AudienceType audience)
+        {
+            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language, version));
+
+            #region Argument Validation
+
+            if (termId <= 0)
+            {
+                string msg = string.Format("termId - expected a positive value, found '{0}'.", termId);
+                log.error(msg);
+                throw new ArgumentException(msg);
+            }
+
+            if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
+            {
+                string msg = string.Format("dictionary contains invalid value '{0}'.", dictionary);
+                log.error(msg);
+                throw new ArgumentException(msg);
+            }
+
+            if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
+            {
+                string msg = string.Format("language contains invalid value '{0}'.", language);
+                log.error(msg);
+                throw new ArgumentException(msg);
+            }
+
+            if (!Enum.IsDefined(typeof(AudienceType), audience) || audience == AudienceType.Unknown)
+            {
+                string msg = string.Format("audience contains invalid value '{0}'.", audience);
+                log.error(msg);
+                throw new ArgumentException(msg);
+            }
+
+            if (string.IsNullOrEmpty(version))
+            {
+                log.error("version is null or empty.");
+                throw new ArgumentException("version is null or empty.");
+            }
+
+            #endregion
+                      
+            DictionaryQuery query = new DictionaryQuery();
+            DataTable dtTerm = query.GetTerm(termId, dictionary, language, audience, version);
+
+            List<String> messages = new List<string>();
+
+            String term = string.Empty;
+
+            // Normal, found 1 match.
+            int resultCount = dtTerm.Rows.Count;
+            if (resultCount == 1)
+            {
+                log.debug("Found 1 result.");
+                messages.Add("OK");
+                term = dtTerm.Rows[0].Field<string>("object");
+                term = RewriteMediaFileLocations(term);
+            }
+            // "Normal", found no matches.
+            else if (resultCount == 0)
+            {
+                log.debug("Found 0 results.");
+                messages.Add("No result found.");
+                term = string.Empty;
+            }
+            // "Odd" case. With multiple matches, return the first one.
+            else // result count must be greater than 1
+            {
+                log.warning(string.Format("Expected to find one result for term {0}, found {1} instead.", termId, resultCount));
+                messages.Add("OK");
+                term = dtTerm.Rows[0].Field<string>("object");
+                term = RewriteMediaFileLocations(term);
+            }
+
+
+            // Build up the return data structure.
+            TermReturn trmReturn = new TermReturn();
+
+            TermReturnMeta meta = new TermReturnMeta();
+            meta.Language = language.ToString();
+            meta.Audience = audience.ToString();
+            meta.Messages = messages.ToArray();
+
+            trmReturn.Meta = meta;
+            trmReturn.Term = term;
+
+            return trmReturn;
+        }
+
+        /// <summary>
         /// Performs a search for terms with names matching searchText.
         /// </summary>
         /// <param name="searchText">text to search for.</param>

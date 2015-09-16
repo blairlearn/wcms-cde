@@ -246,6 +246,67 @@ namespace NCI.Services.Dictionary
             return ret;
         }
 
+        /// <summary>
+        /// Retrieves a single dictionary Term based on its specific Term ID.
+        /// </summary>
+        /// <param name="termId">The ID of the Term to be retrieved</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        Term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        ///<param name="audience">The Term's desired audience.
+        ///     Supported values are:
+        ///         Patient
+        ///         HealthProfessional
+        /// </param>
+        /// <returns></returns>
+        
+        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience)
+        {
+            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language));
+
+            TermReturn ret = null;
+
+            try
+            {
+                InputValidator.ValidateGetTerm(termId, dictionary, language);
+
+                if (!Enum.IsDefined(typeof(AudienceType), audience) || audience == AudienceType.Unknown)
+                {
+                    string msg = string.Format("audience contains invalid value '{0}'.", audience);
+                    log.error(msg);
+                    throw new ArgumentException(msg);
+                }
+
+                DictionaryManager mgr = new DictionaryManager();
+                ret = mgr.GetTerm(termId, dictionary, language, API_VERSION, audience);
+            }
+            // If there was a problem with the inputs for this request, fail with
+            // an HTTP status message and an explanation.
+            catch (DictionaryValidationException ex)
+            {
+                WebOperationContext ctx = WebOperationContext.Current;
+                ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
+                ret = new TermReturn()
+                {
+                    Meta = new TermReturnMeta()
+                    {
+                        Messages = new string[] { ex.Message }
+                    }
+                };
+            }
+
+            log.debug("Successfully retrieved a term.");
+
+            return ret;
+        }
 
         /// <summary>
         /// Performs a search for terms with names or aliases that start with or contain searchText.

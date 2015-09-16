@@ -45,4 +45,11 @@ namespace NCI.Web.Dictionary
         /// </summary>
         Magic = 3
     }
+
+    public enum AudienceType
+    {
+        Unknown = 0,
+        Patient = 1,
+        HealthProfessional = 2
+    }
 }

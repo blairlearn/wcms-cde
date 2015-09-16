@@ -35,7 +35,7 @@ namespace Www.Common.PopUps
         private string urlArgs = "";
         public string CdrID { get; set; }
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected void Page_Load(object sender, EventArgs e) 
         {
             string input_term;
             PDQVersion version;
@@ -46,6 +46,26 @@ namespace Www.Common.PopUps
                 input_term = Strings.Clean(Request.Params["term"]);
                 CdrID = Strings.IfNull(Strings.Clean(Request.Params["id"]), Strings.Clean(Request.Params["cdrid"]));
                 version = PDQVersionResolver.GetPDQVersion(Strings.Clean(Request.Params["version"]));
+
+                //STINKY CODE - Business rule - default to Dictionary of Cancer Terms and Audience is set to Patient 
+                DictionaryType dictionaryType = DictionaryType.term;
+
+                //determine the term audience from the PDQVersion
+                AudienceType audience;
+                switch (version)
+                {
+                    case PDQVersion.HealthProfessional:
+                        audience = AudienceType.HealthProfessional;
+                        //STINKY CODE - only when the audience is Health Professional the system points to the Genetics dictionary
+                        dictionaryType = DictionaryType.genetic;
+                        break;
+                    case PDQVersion.Patient:
+                        audience = AudienceType.Patient;
+                        break;
+                    default:
+                        audience = AudienceType.Patient;
+                        break;
+                }
                                
                 CancerGov.Web.DisplayLanguage dl = new CancerGov.Web.DisplayLanguage();
 
@@ -64,7 +84,7 @@ namespace Www.Common.PopUps
                     dl = CancerGov.Web.DisplayLanguage.English;
                     SetUpEnglish();
                 }
-
+                                
                 //load the definition
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
                 
@@ -73,7 +93,7 @@ namespace Www.Common.PopUps
                 if (!string.IsNullOrEmpty(CdrID))
                 {
                     CdrID = Regex.Replace(CdrID, "^CDR0+", "", RegexOptions.Compiled);
-                    dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Web.Dictionary.DictionaryType.term, dl.ToString(), "v1");
+                    dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), dictionaryType, dl.ToString(), "v1", audience);
 
                 }
                 
@@ -100,7 +120,6 @@ namespace Www.Common.PopUps
                 // End Web Analytics *********************************************
 
             }
-            
             
         }
 
@@ -168,11 +187,7 @@ namespace Www.Common.PopUps
                     {
                         //display the related information panel
                         //when atleast one of the related item exists
-                        if (termDetails.Related.Term.Length > 0 ||
-                            termDetails.Related.Summary.Length > 0 ||
-                            termDetails.Related.DrugSummary.Length > 0 ||
-                            termDetails.Related.External.Length > 0 ||
-                            termDetails.Images.Length > 0)
+                        if (termDetails.Images.Length > 0)
                         {
                             pnlRelatedInfo.Visible = true;
                             
@@ -194,8 +209,6 @@ namespace Www.Common.PopUps
                         }
 
                     }
-
-
 
                 }
             }
