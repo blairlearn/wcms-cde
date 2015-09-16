@@ -365,7 +365,10 @@ namespace CancerGov.Web.SnippetTemplates
                                 termImage.Src = imageDetails.Filename;
 
                                 if (termEnlargeImage != null)
+                                {
                                     termEnlargeImage.HRef = imageDetails.Filename;
+                                    termEnlargeImage.InnerText = DictionaryLanguage == "es" ? "Ampliar" : "Enlarge";
+                                }
 
                                 //log a warning
                                 NCI.Logging.Logger.LogError("TermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
@@ -382,7 +385,10 @@ namespace CancerGov.Web.SnippetTemplates
                                     //enlarge image size is 750
                                     //example format CDR526538-750.jpg
                                     if (termEnlargeImage != null)
+                                    {
                                         termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
+                                        termEnlargeImage.InnerText = DictionaryLanguage == "es" ? "Ampliar" : "Enlarge";
+                                    }
 
                                 }
                             }

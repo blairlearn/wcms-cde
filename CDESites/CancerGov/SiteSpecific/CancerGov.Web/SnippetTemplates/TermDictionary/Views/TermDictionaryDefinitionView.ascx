@@ -76,7 +76,7 @@
                             <asp:Repeater ID="relatedImages" runat="server" Visible="false" OnItemDataBound="relatedImages_OnItemDataBound">
                               <ItemTemplate>
                                 <figure class="image-left-medium">
-                                    <a id="termEnlargeImage" runat="server" target="_blank" class="article-image-enlarge no-resize">Enlarge</a>
+                                    <a id="termEnlargeImage" runat="server" target="_blank" class="article-image-enlarge no-resize"/>
                                     <img id="termImage" runat="server" src="" alt="" />
                                         <figcaption>
                                             <div class="caption-container no-resize">

@@ -31,6 +31,8 @@ namespace TCGA.Web.Common.PopUps
     {
         private string urlArgs = "";
         public string CdrID { get; set; }
+        //set the language to English by default
+        string dictionaryLanguage = "en";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -62,25 +64,7 @@ namespace TCGA.Web.Common.PopUps
                     default:
                         audience = AudienceType.Patient;
                         break;
-                }       
-
-                CancerGov.Web.DisplayLanguage dl = new CancerGov.Web.DisplayLanguage();
-
-                if (Request.QueryString["language"] == "English")
-                {
-                    dl = CancerGov.Web.DisplayLanguage.English;
-                    
-                }
-                else if (Request.QueryString["language"] == "Spanish")
-                {
-                    dl = CancerGov.Web.DisplayLanguage.Spanish;
-                    
-                }
-                else
-                {
-                    dl = CancerGov.Web.DisplayLanguage.English;
-                   
-                }
+                }                                           
 
                 //load the definition
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
@@ -90,7 +74,8 @@ namespace TCGA.Web.Common.PopUps
                 if (!string.IsNullOrEmpty(CdrID))
                 {
                     CdrID = Regex.Replace(CdrID, "^CDR0+", "", RegexOptions.Compiled);
-                    dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), dictionaryType, dl.ToString(), "v1", audience);
+                    //the language is set to English = en by default
+                    dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), dictionaryType, dictionaryLanguage, "v1", audience);
 
                 }
 
@@ -101,17 +86,10 @@ namespace TCGA.Web.Common.PopUps
 
                 // Web Analytics *************************************************
                 WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
-
-                if (dl == CancerGov.Web.DisplayLanguage.Spanish)
-                {
-                    webAnalyticsPageLoad.SetChannel("Diccionario de cancer (Dictionary of Cancer Terms)");
-                    webAnalyticsPageLoad.SetLanguage("es");
-                }
-                else
-                {
-                    webAnalyticsPageLoad.SetChannel("Dictionary of Cancer Terms");
-                    webAnalyticsPageLoad.SetLanguage("en");
-                }
+                                
+                webAnalyticsPageLoad.SetChannel("Dictionary of Cancer Terms");
+                webAnalyticsPageLoad.SetLanguage("en");
+                
                 webAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.event11); // Dictionary Term view (event11)
                 litOmniturePageLoad.Text = webAnalyticsPageLoad.Tag();  // Load page load script 
                 // End Web Analytics *********************************************
@@ -214,7 +192,10 @@ namespace TCGA.Web.Common.PopUps
                                 termImage.Src = imageDetails.Filename;
 
                                 if (termEnlargeImage != null)
+                                {
                                     termEnlargeImage.HRef = imageDetails.Filename;
+                                    termEnlargeImage.InnerText = "Enlarge";
+                                }
 
                                 //log a warning
                                 NCI.Logging.Logger.LogError("TermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);

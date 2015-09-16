@@ -35,6 +35,9 @@ namespace Www.Common.PopUps
         private string urlArgs = "";
         public string CdrID { get; set; }
 
+        //set the language to English by default
+        string dictionaryLanguage = "en";
+
         protected void Page_Load(object sender, EventArgs e) 
         {
             string input_term;
@@ -66,23 +69,22 @@ namespace Www.Common.PopUps
                         audience = AudienceType.Patient;
                         break;
                 }
-                               
-                CancerGov.Web.DisplayLanguage dl = new CancerGov.Web.DisplayLanguage();
 
-                if (Request.QueryString["language"] == "English")
+
+                if (Request.QueryString["language"] == "Spanish")
                 {
-                    dl = CancerGov.Web.DisplayLanguage.English;
-                    SetUpEnglish();
-                }
-                else if (Request.QueryString["language"] == "Spanish")
-                {
-                    dl = CancerGov.Web.DisplayLanguage.Spanish;
-                    SetUpSpanish();
+                    dictionaryLanguage = "es";
+                    logoText1.InnerText = "INSTITUTO NACIONAL DEL CÁNCER";
+                    logoText2.InnerText = "de los Institutos Nacionales de la Salud de EE. UU.";
+                    closeWindowText.InnerText = "Cerrar";
+                    definitionLabel.Text = "Definición:";
                 }
                 else
                 {
-                    dl = CancerGov.Web.DisplayLanguage.English;
-                    SetUpEnglish();
+                    logoText1.InnerText = "NATIONAL CANCER INSTITUTE";
+                    logoText2.InnerText = "at the National Institutes of Health";
+                    closeWindowText.InnerText = "Close Window";
+                    definitionLabel.Text = "Definition:";
                 }
                                 
                 //load the definition
@@ -93,7 +95,7 @@ namespace Www.Common.PopUps
                 if (!string.IsNullOrEmpty(CdrID))
                 {
                     CdrID = Regex.Replace(CdrID, "^CDR0+", "", RegexOptions.Compiled);
-                    dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), dictionaryType, dl.ToString(), "v1", audience);
+                    dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), dictionaryType, dictionaryLanguage, "v1", audience);
 
                 }
                 
@@ -105,7 +107,7 @@ namespace Www.Common.PopUps
                 // Web Analytics *************************************************
                 WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
 
-                if (dl == CancerGov.Web.DisplayLanguage.Spanish)
+                if (dictionaryLanguage == "es")
                 {
                     webAnalyticsPageLoad.SetChannel("Diccionario de cancer (Dictionary of Cancer Terms)");
                     webAnalyticsPageLoad.SetLanguage("es");
@@ -133,23 +135,7 @@ namespace Www.Common.PopUps
 
             
         }
-        protected void SetUpEnglish()
-        {
-            logoText1.InnerText = "NATIONAL CANCER INSTITUTE";
-            logoText2.InnerText = "at the National Institutes of Health";
-            closeWindowText.InnerText = "Close Window";
-            definitionLabel.Text = "Definition:";
         
-        }
-
-        protected void SetUpSpanish()
-        {
-            logoText1.InnerText = "INSTITUTO NACIONAL DEL CÁNCER";
-            logoText2.InnerText = "de los Institutos Nacionales de la Salud de EE. UU.";
-            closeWindowText.InnerText = "Cerrar";
-            definitionLabel.Text = "Definición:";
-        }
-
         protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -240,7 +226,10 @@ namespace Www.Common.PopUps
                                 termImage.Src = imageDetails.Filename;
 
                                 if (termEnlargeImage != null)
+                                {
                                     termEnlargeImage.HRef = imageDetails.Filename;
+                                    termEnlargeImage.InnerText = dictionaryLanguage == "es" ? "Ampliar" : "Enlarge";
+                                }
 
                                 //log a warning
                                 NCI.Logging.Logger.LogError("TermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
@@ -257,8 +246,10 @@ namespace Www.Common.PopUps
                                     //enlarge image size is 750
                                     //example format CDR526538-750.jpg
                                     if (termEnlargeImage != null)
+                                    {
                                         termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
-
+                                        termEnlargeImage.InnerText = dictionaryLanguage == "es" ? "Ampliar" : "Enlarge";
+                                    }
                                 }
                             }
 
