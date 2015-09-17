@@ -113,25 +113,13 @@ namespace NCI.Web.CDE.WebAnalytics
                 output.AppendLine("");
                 output.AppendLine(WEB_ANALYTICS_COMMENT_START);
 
-                /*
-                // Loop through list of suites that have been matched to channels in Web.config
-                // Commenting this out, as suites are no longer being set in Web.config 
-                foreach (string suite in WebAnalyticsOptions.GetSuitesForChannel(channel, language))
-                {
-                    if (reportSuites.Length > 0)
-                        reportSuites += ",";
-                    reportSuites += suite;
-                }
-                */
-
                 // Report Suites JavaScript variable (s_account) must be set before the s_code file is loaded
                 // Get custom suites that are set on the navon. Default suites are being set in wa_wcms_pre.js
-                // TODO: Display suites in HTML source (all suites, not just custom)
                 try
                 {
                     string sectionPath = pgInstruction.SectionPath;
                     SectionDetail detail = SectionDetailFactory.GetSectionDetail(sectionPath);
-                    string customSuites = WebAnalyticsOptions.GetReportSuitesFromSectionDetail(detail);
+                    string customSuites = detail.GetWASuites();
                     if (!string.IsNullOrEmpty(customSuites))
                     {
                         reportSuites += customSuites;
