@@ -138,6 +138,8 @@ namespace CancerGov.Web.SnippetTemplates
         const string NAME_TYPE_ACRONYM = "acronym";
         const string NAME_TYPE_CODE_NAME = "code name";
         const string NAME_TYPE_CHEMICAL_NAME = "chemical structure name";
+        const string NAME_TYPE_IND_NUMBER = "IND number";
+        const string NAME_TYPE_NSC_CODE = "NSC code";
 
         const string NAME_LABEL_SYNONYM = "Synonym";
         const string NAME_LABEL_BRAND_NAME = "US brand name";
@@ -146,7 +148,8 @@ namespace CancerGov.Web.SnippetTemplates
         const string NAME_LABEL_ACRONYM = "Acronym";
         const string NAME_LABEL_CODE_NAME = "Code name";
         const string NAME_LABEL_CHEMICAL_NAME = "Chemical structure";
-
+        const string NAME_LABEL_IND_NUMBER = "IND number";
+        const string NAME_LABEL_NSC_CODE = "NSC code";
 
 
         /// <summary>
@@ -169,13 +172,15 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     sb.Append("<p><table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">");
 
-                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_SYNONYM,      NAME_LABEL_SYNONYM));
-                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_BRAND_NAME,   NAME_LABEL_BRAND_NAME));
-                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_FOREIGN_BRAND,NAME_LABEL_FOREIGN_BRAND));
-                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_ABBREV,       NAME_LABEL_ABBREV));
-                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_ACRONYM,      NAME_LABEL_ACRONYM));
-                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_CODE_NAME,    NAME_LABEL_CODE_NAME));
-                    sb.Append(GenerateAliasULRow(nameTypeMap, NAME_TYPE_CHEMICAL_NAME, NAME_LABEL_CHEMICAL_NAME));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_SYNONYM,          NAME_LABEL_SYNONYM));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_BRAND_NAME,       NAME_LABEL_BRAND_NAME));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_FOREIGN_BRAND,    NAME_LABEL_FOREIGN_BRAND));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_ABBREV,           NAME_LABEL_ABBREV));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_ACRONYM,          NAME_LABEL_ACRONYM));
+                    sb.Append(GenerateAliasRow(nameTypeMap, NAME_TYPE_CODE_NAME,        NAME_LABEL_CODE_NAME));
+                    sb.Append(GenerateAliasULRow(nameTypeMap, NAME_TYPE_CHEMICAL_NAME,  NAME_LABEL_CHEMICAL_NAME));
+                    sb.Append(GenerateAliasULRow(nameTypeMap, NAME_TYPE_IND_NUMBER,     NAME_LABEL_IND_NUMBER));
+                    sb.Append(GenerateAliasULRow(nameTypeMap, NAME_TYPE_NSC_CODE,       NAME_LABEL_NSC_CODE));
 
                     sb.Append("</table><p>");
                 }
