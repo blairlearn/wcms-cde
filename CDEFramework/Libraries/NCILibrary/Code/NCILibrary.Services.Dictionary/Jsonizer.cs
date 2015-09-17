@@ -139,6 +139,12 @@ namespace NCI.Services.Dictionary
         /// <param name="isFinal">Is this the last member the caller will add?</param>
         internal void AddJsonString(string name, String item, bool isFinal)
         {
+            // If item is empty, there is no structure to output. In this case,
+            // output the literal "null" to note the absence of any value.
+            // Otherwise, this would output invalid JSON.
+            if(String.IsNullOrEmpty(item))
+                item = "null";
+
             builder.AppendFormat("\"{0}\": {1}", name, item);
             if (!isFinal)
                 builder.Append(",");
