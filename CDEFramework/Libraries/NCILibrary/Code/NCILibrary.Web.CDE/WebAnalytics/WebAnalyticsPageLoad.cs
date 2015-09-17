@@ -45,7 +45,7 @@ namespace NCI.Web.CDE.WebAnalytics
         public WebAnalyticsPageLoad()
         {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/NCIAnalyticsFunctions.js\"></script>");
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/s_code.js\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"//static.cancer.gov/webanalytics/wcms/s_code.js\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
             pageLoadPreTag.AppendLine("<!--");
 
