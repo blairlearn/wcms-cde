@@ -80,21 +80,23 @@ namespace NCI.Web.CDE
         public bool RemoveParentEvars { get; set; }
 
         /// <summary>
-        /// Load the report suite(s) that have been set on this navon. 
+        /// Load the report suite(s) that have been set for this navon. 
         /// </summary>
         /// <param name="infos">WebAnalyticsInfo</param>
         /// <returns></returns>
         public static String GetSuites(IEnumerable<WebAnalyticsInfo> infos)
         {
-            // Loop through infos until a report suite value is found. 
+            string allSuites = "";
+
+            // Loop through infos and aggregate report suites down to the site root.
             foreach (WebAnalyticsInfo info in infos)
             {
                 if (!string.IsNullOrEmpty(info.WAReportSuites))
                 {
-                    return info.WAReportSuites;
+                    allSuites += ("," + info.WAReportSuites);
                 }
             }
-            return "";
+            return allSuites;
         }
 
         /// <summary>

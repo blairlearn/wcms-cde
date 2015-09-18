@@ -123,7 +123,6 @@ namespace NCI.Web.CDE.WebAnalytics
                     if (!string.IsNullOrEmpty(customSuites))
                     {
                         reportSuites += customSuites;
-                        reportSuites += ",";
                     }
                 }
                 catch (Exception ex)
@@ -134,12 +133,18 @@ namespace NCI.Web.CDE.WebAnalytics
                     reportSuites += "";
                 }
 
+                // Output analytics Javascript to HTML source in this order:
+                // 1. wa_wcms_pre.js source URL
+                // 2. Snippet to set s_account value
+                // 3. NCIAnalyticsFunctions.js source URL (see line 47)
+                // 4. s_code source URL
+                // 5. Channel, Prop, eVar, and Event info
+                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/wa_wcms_pre.js\"></script>");
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
                 output.AppendLine("<!--");
-                output.AppendLine("var s_account=" + DELIMITER + reportSuites + DELIMITER + "; // custom suites");
+                output.AppendLine("var s_account = AnalyticsMapping.GetSuites(\"" + reportSuites + "\");");
                 output.AppendLine("-->");
                 output.AppendLine("</script>");
-                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/wa_wcms_pre.js\"></script>");
 
                 output.Append(pageLoadPreTag.ToString());
 
