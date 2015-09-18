@@ -44,7 +44,7 @@ namespace NCI.Web.CDE.WebAnalytics
         /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
         public WebAnalyticsPageLoad()
         {
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/NCIAnalyticsFunctions.js\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"//static.cancer.gov/webanalytics/wcms/NCIAnalyticsFunctions.js\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"//static.cancer.gov/webanalytics/wcms/s_code.js\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
             pageLoadPreTag.AppendLine("<!--");
