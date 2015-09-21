@@ -55,29 +55,13 @@ namespace NCI.Web.CDE
         public WebAnalyticsCustomVariableOrEvent[] WAEvars { get; set; }
 
         /// <summary>
-        /// Boolean to determine whether or not to remove the parent value. 
-        /// If false, the parent is added to the collection of events.
+        /// Boolean to determine whether or not to remove the parent values
+        /// of Events, Props, and eVars. 
+        /// If false, the parent is added.
         /// If true, the parent is removed.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public bool RemoveParentEvents { get; set; }
-
-        /// <summary>
-        /// Boolean to determine whether or not to remove the parent value. 
-        /// If false, the parent is added to the collection of props.
-        /// If true, the parent is removed.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public bool RemoveParentProps { get; set; }
-
-
-        /// <summary>
-        /// Boolean to determine whether or not to remove the parent value. 
-        /// If false, the parent is added to the collection of evars.
-        /// If true, the parent is removed.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public bool RemoveParentEvars { get; set; }
+        public bool RemoveParents { get; set; }
 
         /// <summary>
         /// Load the report suite(s) that have been set for this navon. 
@@ -160,7 +144,7 @@ namespace NCI.Web.CDE
                     }
                 }
                 // If we are to remove the parent events we need to stop looping
-                if (info.RemoveParentEvents)
+                if (info.RemoveParents)
                     break;
             }
         }
@@ -193,7 +177,7 @@ namespace NCI.Web.CDE
                     }
                 }
                 // If we are to remove the parent props we need to stop looping
-                if (info.RemoveParentProps)
+                if (info.RemoveParents)
                     break;
             }
         }
@@ -226,7 +210,7 @@ namespace NCI.Web.CDE
                     }
                 }
                 // If we are to remove the parent evars we need to stop looping
-                if (info.RemoveParentEvars)
+                if (info.RemoveParents)
                     break;
             }
         }

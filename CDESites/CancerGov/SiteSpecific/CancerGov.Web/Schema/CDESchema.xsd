@@ -2359,20 +2359,10 @@
           </sequence>
         </complexType>
       </element>
-      <element name="RemoveParentEvents" type="boolean" minOccurs="0" maxOccurs="1">
+      <element name="RemoveParents" type="boolean" minOccurs="0" maxOccurs="1">
         <annotation>
-          <documentation>Flag to exclude parent event values on this level.</documentation>
+          <documentation>Flag to exclude parent Event, Prop, and eVar values on this level.</documentation>
         </annotation> 
-      </element>
-      <element name="RemoveParentProps" type="boolean" minOccurs="0" maxOccurs="1">
-        <annotation>
-          <documentation>Flag to exclude parent Prop values on this level.</documentation>
-        </annotation>
-      </element>
-      <element name="RemoveParentEvars" type="boolean" minOccurs="0" maxOccurs="1">
-        <annotation>
-          <documentation>Flag to exclude parent eVar values on this level.</documentation>
-        </annotation>
       </element>
     </all>
   </complexType>
@@ -2391,9 +2381,9 @@
         <documentation>String value of Event, Prop, or eVar.</documentation>
       </annotation>
     </attribute>
-    <attribute name="RemoveParent" type="boolean">
+    <attribute name="Description" type="string">
       <annotation>
-        <documentation>Flag to exclude parent analytics values on this level.</documentation>
+        <documentation>String description of Event, Prop, or eVar.</documentation>
       </annotation>
     </attribute>
   </complexType>

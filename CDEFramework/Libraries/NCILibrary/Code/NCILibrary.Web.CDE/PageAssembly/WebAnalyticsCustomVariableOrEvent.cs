@@ -24,19 +24,18 @@ namespace NCI.Web.CDE
         public string Value { get; set; }
 
         /// <summary>
-        /// Boolean to determine whether or not to remove the parent value. 
-        /// If false, the parent is added to the collection of variables.
-        /// If true, the parent is removed.
+        /// String description of variable (optional)
         /// </summary>
-        [XmlAttribute(AttributeName = "RemoveParent", Form = XmlSchemaForm.Unqualified)]
-        public Boolean RemoveParent { get; set; }
+        [XmlAttribute(AttributeName = "Description", Form = XmlSchemaForm.Unqualified)]
+        public string Description { get; set; }
+
 
         // Default constructor
         public WebAnalyticsCustomVariableOrEvent()
         {
             this.Key = String.Empty;
             this.Value = String.Empty;
-            this.RemoveParent = false;
+            this.Description = String.Empty;
         }
     }
 }
