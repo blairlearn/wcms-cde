@@ -44,21 +44,30 @@
     });
 
     function autoFunc() {
-        var language = "English";
-        if ($("html").attr("lang") === "es")
-            language = "Spanish";
+
+        var dictionary = "<%=Dictionary.ToString() %>";
+
+
+
+        var language = 'English';
+
+        if ($('html').attr('lang') === 'es') {
+
+            language = 'Spanish';
+
+        }
+
+
 
         var isContains = IsContains();
-        var svcUrl = "";
-        if (isContains)
-            svcUrl = "/TermDictionary.svc/SearchJSON/" + language + "?contains=true";
-        else
-            svcUrl = "/TermDictionary.svc/SearchJSON/" + language;
 
 
-       // NCI.doAutocomplete("#" + ids.AutoComplete1, svcUrl, isContains, "searchTerm", { maxRows: 10 });
+
+        NCI.doAutocomplete('#' + ids.AutoComplete1, function(term) { return NCI.dictionary.searchSuggest(dictionary, term, language, isContains ? 'contains' : 'begins'); }, isContains);
+
     }
 
+ 
     function IsContains() {
         var ret = false;
 

@@ -100,30 +100,32 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (DictionaryLanguage == "es")
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
+                PageInstruction.AddFieldFilter("short_title", (name, data) =>
                 {
                     data.Value = "Definici&oacute;n de " + termName + " - Diccionario de c&aacute;ncer";
                 });
 
-                this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+                this.Page.Title = PageInstruction.GetField("short_title");
+                
             }
             else
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("short_title", (name, data) =>
+                PageInstruction.AddFieldFilter("short_title", (name, data) =>
                 {
                     data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                 });
 
-                this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
+                this.Page.Title = PageInstruction.GetField("short_title");
+                //this.Page.Header.Title = PageInstruction.GetField("short_title");
             }
 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
+            PageInstruction.AddFieldFilter("meta_description", (name, data) =>
             {
                 data.Value = "Definition of " + termName;
             });
 
 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
+            PageInstruction.AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = termName + ", definition";
             });
