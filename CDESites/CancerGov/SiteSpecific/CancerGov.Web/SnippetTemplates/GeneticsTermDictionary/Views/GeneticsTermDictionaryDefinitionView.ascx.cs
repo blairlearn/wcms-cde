@@ -82,12 +82,11 @@ namespace CancerGov.Web.SnippetTemplates
                         });
                     }
 
-                    PageInstruction.AddFieldFilter("short_title", (name, data) =>
+                    PageInstruction.AddFieldFilter("browser_title", (name, data) =>
                     {
                         data.Value = "Definition of " + dataItem.Term + " - NCI Dictionary of Genetics Terms";
                     });
 
-                    this.Page.Title = PageInstruction.GetField("short_title");
                 }
                 else
                 {

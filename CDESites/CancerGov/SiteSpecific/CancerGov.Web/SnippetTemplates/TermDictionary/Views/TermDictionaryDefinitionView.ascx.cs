@@ -100,7 +100,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (DictionaryLanguage == "es")
             {
-                PageInstruction.AddFieldFilter("short_title", (name, data) =>
+                PageInstruction.AddFieldFilter("browser_title", (name, data) =>
                 {
                     data.Value = "Definici&oacute;n de " + termName + " - Diccionario de c&aacute;ncer";
                 });
@@ -110,13 +110,12 @@ namespace CancerGov.Web.SnippetTemplates
             }
             else
             {
-                PageInstruction.AddFieldFilter("short_title", (name, data) =>
+                PageInstruction.AddFieldFilter("browser_title", (name, data) =>
                 {
                     data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                 });
 
-                this.Page.Title = PageInstruction.GetField("short_title");
-                //this.Page.Header.Title = PageInstruction.GetField("short_title");
+                
             }
 
             PageInstruction.AddFieldFilter("meta_description", (name, data) =>

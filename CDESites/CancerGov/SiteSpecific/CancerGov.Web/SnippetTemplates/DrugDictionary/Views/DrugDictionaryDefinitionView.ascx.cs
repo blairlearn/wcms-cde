@@ -99,20 +99,12 @@ namespace CancerGov.Web.SnippetTemplates
 
             CdrID = dataItem.ID.ToString();
 
-            if (DictionaryLanguage == "es")
+
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("browser_title", (name, data) =>
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("browser_title", (name, data) =>
-                {
-                    data.Value = "Definici&oacute;n de " + termName + " - Diccionario de c&aacute;ncer";
-                });
-            }
-            else
-            {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("browser_title", (name, data) =>
-                {
-                    data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
-                });
-            }
+                data.Value = "Definition of " + termName + " - NCI Drug Dictionary";
+            });
+
 
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
             {
