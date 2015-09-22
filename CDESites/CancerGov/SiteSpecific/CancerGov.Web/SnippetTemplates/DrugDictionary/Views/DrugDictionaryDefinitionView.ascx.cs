@@ -351,10 +351,14 @@ namespace CancerGov.Web.SnippetTemplates
                 // Only load data from the first item.
                 RelatedDrugSummary drugSumamry = dataItem.Related.DrugSummary[0];
 
+                // Find the dd tag containing the hyperlink.
+                Control container = parent.FindControl("ddPatientInfo");
+
+                // Find the actual hyperlink.
                 HyperLink hlPatientInfo = (HyperLink)parent.FindControl("hlPatientInfo");
-                if (hlPatientInfo != null)
+                if (container != null && hlPatientInfo != null)
                 {
-                    hlPatientInfo.Visible = true;
+                    container.Visible = true;
                     hlPatientInfo.NavigateUrl = drugSumamry.url;
                 }
             }

@@ -11,17 +11,19 @@
             <dt>
                 <dfn>
                     <span><%# ((DictionaryTerm)(Container.DataItem)).Term%></span>
-                    <asp:HyperLink ID="hlPatientInfo" runat="server" Visible="false">
-                        <img src="/images/btn-patient-info.gif" alt="Patient Information" title="Patient Information" width="139" height="20" hspace="12" border="0"  align="absmiddle" />
-                    </asp:HyperLink>
                 </dfn>
             </dt>
+            <dd class="info-summary" id="ddPatientInfo" runat="server" Visible="false">
+                <asp:HyperLink ID="hlPatientInfo" runat="server" Visible="true">
+                    <img src="/images/btn-patient-info.gif" alt="Patient Information" title="Patient Information" width="139" height="20" hspace="12" border="0"  align="absmiddle" />
+                </asp:HyperLink>
+            </dd>
             <dd class="definition">
 
                 <%# ((DictionaryTerm)(Container.DataItem)).Definition.Html%>
                 
-                <!-- Location to display the list of aliases.  Code behind will make it visible if
-                there's anything to show. -->
+                <%-- Location to display the list of aliases.  Code behind will make it visible if
+                there's anything to show. --%>
                 <asp:PlaceHolder id="phAliasList" runat="server" Visible="false">
                     <%# GenerateTermAliasList(Container.DataItem)%>
                 </asp:PlaceHolder>
