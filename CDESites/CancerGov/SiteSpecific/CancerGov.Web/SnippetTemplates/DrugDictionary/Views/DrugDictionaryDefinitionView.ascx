@@ -20,8 +20,14 @@
                     <asp:Literal ID="pronunciationKey" runat="server" />
                 </dd>
             </asp:PlaceHolder>
-            <dd class="definition">
-                <%# ((DictionaryTerm)(Container.DataItem)).Definition.Text%>
+            <dd class="definition"><asp:ImageButton ID="ibtnPatientInfo" CssClass="btn-patient-info" ImageUrl="/images/btn-patient-info.gif"
+                runat="server" Visible="false" AlternateText="Patient Information" ToolTip="Patient Information"
+                ImageAlign="AbsMiddle" Height="20" Width="139" />
+            <asp:HyperLink ID="hlPatientInfo" runat="server" Visible="false">
+                    <img src="/images/btn-patient-info.gif" alt="Patient Information" title="Patient Information" width="139" height="20" hspace="12" border="0"  align="absmiddle" />
+            </asp:HyperLink>
+
+                <%# ((DictionaryTerm)(Container.DataItem)).Definition.Html%>
                 
                 <!-- Location to display the list of aliases.  Code behind will make it visible if
                 there's anything to show. -->

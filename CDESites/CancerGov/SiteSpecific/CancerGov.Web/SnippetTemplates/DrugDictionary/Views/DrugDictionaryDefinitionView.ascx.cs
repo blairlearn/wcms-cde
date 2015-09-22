@@ -117,8 +117,6 @@ namespace CancerGov.Web.SnippetTemplates
                 data.Value = termName + ", definition";
             });
 
-
-
         }
 
         // Type names from the TermOtherNameType table, sorted by
@@ -353,9 +351,38 @@ namespace CancerGov.Web.SnippetTemplates
                     PlaceHolder phAliasList = (PlaceHolder) e.Item.FindControl("phAliasList");
                     if (phAliasList != null && termDetails.HasAliases)
                         phAliasList.Visible = true;
+
+                    SetupDrugInfoSummaryLink(e.Item, termDetails);
                 }
             } 
         }
+
+        /// <summary>
+        /// Set up the link to the definition's related drug information summary, if one exists.
+        /// Sets up at most one related drug summary.
+        /// </summary>
+        /// <param name="dataItem">The DictionaryTerm item for the term being displayed.</param>
+        private void SetupDrugInfoSummaryLink(Control parent, DictionaryTerm dataItem)
+        {
+            if (parent != null
+                && dataItem != null
+                && dataItem.HasRelatedItems
+                && dataItem.Related.DrugSummary != null
+                && dataItem.Related.DrugSummary.Length > 0)
+            {
+                // Only load data from the first item.
+                RelatedDrugSummary drugSumamry = dataItem.Related.DrugSummary[0];
+
+                HyperLink hlPatientInfo = (HyperLink)parent.FindControl("hlPatientInfo");
+                if (hlPatientInfo != null)
+                {
+                    hlPatientInfo.Visible = true;
+                    hlPatientInfo.NavigateUrl = drugSumamry.url;
+                }
+            }
+        }
+
+
 
         protected void relatedTerms_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
