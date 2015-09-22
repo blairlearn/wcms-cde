@@ -16,14 +16,6 @@
                     </asp:HyperLink>
                 </dfn>
             </dt>
-            <asp:PlaceHolder ID="phPronunciation" runat="server">
-                <!-- Drug definitions don't have pronunciations, so this won't actually render.
-                     This is left over from copying from the TermDictionary views. -->
-                <dd class="pronunciation">
-                    <a id="pronunciationLink" runat="server" class="CDR_audiofile"><span class="hidden">listen</span></a>
-                    <asp:Literal ID="pronunciationKey" runat="server" />
-                </dd>
-            </asp:PlaceHolder>
             <dd class="definition">
 
                 <%# ((DictionaryTerm)(Container.DataItem)).Definition.Html%>

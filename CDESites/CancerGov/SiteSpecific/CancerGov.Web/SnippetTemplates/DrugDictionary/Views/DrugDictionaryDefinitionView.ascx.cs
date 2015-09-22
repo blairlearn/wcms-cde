@@ -326,28 +326,6 @@ namespace CancerGov.Web.SnippetTemplates
 
                 if (termDetails != null)
                 {
-                    PlaceHolder phPronunciation = (PlaceHolder) e.Item.FindControl("phPronunciation");
-                    if (termDetails.HasPronunciation && phPronunciation != null)
-                    {
-                        phPronunciation.Visible = true;
-                        System.Web.UI.HtmlControls.HtmlAnchor pronunciationLink = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("pronunciationLink");
-                        if (pronunciationLink != null && termDetails.Pronunciation.HasAudio)
-                        {
-                            pronunciationLink.Visible = true;
-                            pronunciationLink.HRef = termDetails.Pronunciation.Audio;
-                        }
-                        else
-                            pronunciationLink.Visible = false;
-
-                        Literal pronunciationKey = (Literal)e.Item.FindControl("pronunciationKey");
-                        if (pronunciationKey != null && termDetails.Pronunciation.HasKey)
-                            pronunciationKey.Text = " " + termDetails.Pronunciation.Key;
-
-                    }
-                    else
-                        phPronunciation.Visible = false;
-
-                                    
                     PlaceHolder phAliasList = (PlaceHolder) e.Item.FindControl("phAliasList");
                     if (phAliasList != null && termDetails.HasAliases)
                         phAliasList.Visible = true;
