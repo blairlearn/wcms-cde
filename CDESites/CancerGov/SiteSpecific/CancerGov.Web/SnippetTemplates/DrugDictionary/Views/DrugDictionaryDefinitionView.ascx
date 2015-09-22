@@ -9,20 +9,17 @@
         <!-- Term and def -->
         <dl>
             <dt>
-                <dfn>
-                    <%# ((DictionaryTerm)(Container.DataItem)).Term%>
-                </dfn>
+                <dfn><span><%# ((DictionaryTerm)(Container.DataItem)).Term%></span></dfn>
             </dt>
-            <!-- Drug definitions don't have pronunciations, so this won't actually render. -->
             <asp:PlaceHolder ID="phPronunciation" runat="server">
+                <!-- Drug definitions don't have pronunciations, so this won't actually render.
+                     This is left over from copying from the TermDictionary views. -->
                 <dd class="pronunciation">
                     <a id="pronunciationLink" runat="server" class="CDR_audiofile"><span class="hidden">listen</span></a>
                     <asp:Literal ID="pronunciationKey" runat="server" />
                 </dd>
             </asp:PlaceHolder>
-            <dd class="definition"><asp:ImageButton ID="ibtnPatientInfo" CssClass="btn-patient-info" ImageUrl="/images/btn-patient-info.gif"
-                runat="server" Visible="false" AlternateText="Patient Information" ToolTip="Patient Information"
-                ImageAlign="AbsMiddle" Height="20" Width="139" />
+            <dd class="definition">
             <asp:HyperLink ID="hlPatientInfo" runat="server" Visible="false">
                     <img src="/images/btn-patient-info.gif" alt="Patient Information" title="Patient Information" width="139" height="20" hspace="12" border="0"  align="absmiddle" />
             </asp:HyperLink>
