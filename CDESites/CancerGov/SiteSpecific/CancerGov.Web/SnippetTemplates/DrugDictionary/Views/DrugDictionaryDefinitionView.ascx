@@ -9,7 +9,12 @@
         <!-- Term and def -->
         <dl>
             <dt>
-                <dfn><span><%# ((DictionaryTerm)(Container.DataItem)).Term%></span></dfn>
+                <dfn>
+                    <span><%# ((DictionaryTerm)(Container.DataItem)).Term%></span>
+                    <asp:HyperLink ID="hlPatientInfo" runat="server" Visible="false">
+                        <img src="/images/btn-patient-info.gif" alt="Patient Information" title="Patient Information" width="139" height="20" hspace="12" border="0"  align="absmiddle" />
+                    </asp:HyperLink>
+                </dfn>
             </dt>
             <asp:PlaceHolder ID="phPronunciation" runat="server">
                 <!-- Drug definitions don't have pronunciations, so this won't actually render.
@@ -20,9 +25,6 @@
                 </dd>
             </asp:PlaceHolder>
             <dd class="definition">
-            <asp:HyperLink ID="hlPatientInfo" runat="server" Visible="false">
-                    <img src="/images/btn-patient-info.gif" alt="Patient Information" title="Patient Information" width="139" height="20" hspace="12" border="0"  align="absmiddle" />
-            </asp:HyperLink>
 
                 <%# ((DictionaryTerm)(Container.DataItem)).Definition.Html%>
                 
