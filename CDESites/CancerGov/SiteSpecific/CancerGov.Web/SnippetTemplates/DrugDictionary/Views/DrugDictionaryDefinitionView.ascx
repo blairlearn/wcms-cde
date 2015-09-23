@@ -5,7 +5,8 @@
 <DrugDictionaryHome:SearchBlock id="dictionarySearchBlock" runat="server" />
     
 <asp:Repeater ID="drugDictionaryDefinitionView" runat="server" OnItemDataBound="drugDictionaryDefinitionView_OnItemDataBound">
-<ItemTemplate> 
+<ItemTemplate>
+    <div class="results">
         <!-- Term and def -->
         <dl>
             <dt>
@@ -30,6 +31,6 @@
                 
             </dd>
         </dl>
-        
+    </div>    
 </ItemTemplate> 
 </asp:Repeater>
