@@ -465,8 +465,12 @@ namespace CancerGov.Web.SnippetTemplates
                 string searchstr = Strings.Clean(Request.Params["search"]) ?? String.Empty;
                 searchstr = SearchStr.Trim().ToLower();
 
+                // Handle the possibility that two alias types might have the same value
+                // (e.g. US Brand Name and Foreign Brand Name)
+                IEnumerable<Alias> uniqueAliases = termInfo.Term.Aliases.Distinct();
+
                 // Roll up the list of terms.
-                foreach (Alias alias in termInfo.Term.Aliases)
+                foreach (Alias alias in uniqueAliases)
                 {
                     if (alias.Name != null)
                     {
@@ -492,6 +496,39 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             return aliases;
+        }
+
+        public string GetTermDefinition(object termSearchResult)
+        {
+            string definition = String.Empty;
+
+            DictionarySearchResult termInfo = termSearchResult as DictionarySearchResult;
+
+            if (termInfo != null)
+            {
+                // Special handling for Expand.  Otherwise, just send back the definition.
+                if (!string.IsNullOrEmpty(Expand))
+                {
+                    // Is the matched name identical to the term name (preferred name)?
+                    // If so, return the actual definition
+                    if (termInfo.MatchedTerm.CompareTo(termInfo.Term.Term) == 0)
+                    {
+                        definition = termInfo.Term.Definition.Html;
+                    }
+                    // Otherwise, report that this name is an alias.
+                    else
+                    {
+                        definition = String.Format("(Other name for: {0})", termInfo.Term.Term);
+                    }
+                }
+                else
+                {
+                    definition = termInfo.Term.Definition.Html;
+                }
+            }
+
+
+            return definition;
         }
 
         public string HiLite(object word)
