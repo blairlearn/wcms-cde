@@ -214,10 +214,15 @@ namespace CancerGov.Web.SnippetTemplates
             }
             else if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
             {
+                string searchText;
                 if (Expand.ToLower() == "all")
-                    resultCollection = _dictionaryAppManager.Expand("%", "", offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
+                    searchText = "%";
                 else
-                    resultCollection = _dictionaryAppManager.Expand(Expand, "", offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
+                    searchText = Expand;
+
+                string filter = GetDrugDictionaryFilter();
+
+                resultCollection = _dictionaryAppManager.Expand(searchText, filter, offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
 
                 // Other places in the code expect to find the string that was searched for in SearchStr,
                 // but if it was set prior to this point in the code, the wrong search would be performed.
@@ -256,6 +261,21 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 RenderNoResults();
             }
+        }
+
+        /// <summary>
+        /// Retrieve pipe | separated list of "OtherNameType" values for the drug dictionary.
+        /// </summary>
+        /// <returns></returns>
+        private string GetDrugDictionaryFilter()
+        {
+            string filter = ConfigurationSettings.AppSettings["DrugDictionaryFilter"];
+            if (string.IsNullOrEmpty(filter))
+                filter = String.Empty;
+            else
+                filter = filter.Trim();
+
+            return filter;
         }
 
         /// <summary>
