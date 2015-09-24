@@ -66,5 +66,14 @@ namespace CancerGov.Web.SnippetTemplates {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListView resultListView;
+        
+        /// <summary>
+        /// litPager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litPager;
     }
 }

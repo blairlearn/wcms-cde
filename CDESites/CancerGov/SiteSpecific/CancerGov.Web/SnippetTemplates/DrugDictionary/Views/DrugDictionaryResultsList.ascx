@@ -42,8 +42,8 @@
         </ItemTemplate>
         <EmptyDataTemplate>
             <asp:Label ID="lblNoDataMessage" runat="server" OnLoad="GetNoDataMessage" />
-           
         </EmptyDataTemplate>
     </asp:ListView>
  </div>
+<asp:Literal ID="litPager" runat="server"></asp:Literal>
  

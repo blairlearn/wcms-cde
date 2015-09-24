@@ -20,6 +20,120 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class DrugDictionaryResultsList : SnippetControl
     {
+        protected class DrugPager
+        {
+            private int showPages = 10;
+            private int currentPage = 0;
+            private int recordsPerPage = 10;
+            private int recordCount = 0;
+            private string pageBaseUrlFormat = "javascript:page('{0}');";
+
+            #region Properties
+
+            /// <summary>
+            /// Property sets index of current page view
+            /// </summary>
+            public int CurrentPage
+            {
+                get { return currentPage; }
+                set { currentPage = value; }
+            }
+
+            /// <summary>
+            /// Property sets number of records per page view
+            /// </summary>
+            public int RecordsPerPage
+            {
+                get { return recordsPerPage; }
+                set { recordsPerPage = value; }
+            }
+
+            /// <summary>
+            /// Property sets total number of records
+            /// </summary>
+            public int RecordCount
+            {
+                get { return recordCount; }
+                set { recordCount = value; }
+            }
+
+            public int ShowPages
+            {
+                get { return showPages; }
+                set { showPages = value; }
+            }
+
+            #endregion
+
+            /// <summary>
+            /// Default class constructor
+            /// </summary>
+            public DrugPager() { }
+
+            public DrugPager(string pageBaseUrl, int pageIndex, int pageSize, int pageCount, int itemCount)
+            {
+                this.currentPage = pageIndex;
+                this.recordCount = itemCount;
+                this.recordsPerPage = pageSize;
+                this.showPages = pageCount;
+                this.pageBaseUrlFormat = pageBaseUrl + "&first={0}&page={1}";
+            }
+
+            /// <summary>
+            /// Method that builds HTML paging constructs based on class properties
+            /// </summary>
+            /// <returns>Paging HTML links</returns>
+            public string RenderPager()
+            {
+                string result = "";
+                int startIndex = 0;
+                int endIndex = 0;
+                int pages = 0;
+
+                //Get number of pages
+                if (recordsPerPage > 0)
+                {
+                    pages = recordCount / recordsPerPage;
+                    if (recordCount % recordsPerPage > 0)
+                    {
+                        pages += 1;
+                    }
+                }
+
+                if (pages > 1)
+                {
+                    startIndex = currentPage - showPages > 0 ? currentPage - showPages : 1;
+                    endIndex = currentPage + showPages > pages ? pages : currentPage + showPages;
+
+                    for (int i = startIndex; i <= endIndex; i++)
+                    {
+                        if (currentPage != i)
+                        {
+                            result += "<li><a href=\"" + String.Format(pageBaseUrlFormat, (((i - 1) * this.recordsPerPage) + 1).ToString(), i) + "\">" + i.ToString() + "</a></li>";
+                        }
+                        else
+                        {
+                            result += "<li class='current'>" + i.ToString() + "</li>";
+                        }
+                    }
+
+                    if (currentPage > 1)
+                    {
+                        result = "<li class='previous'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage - 2) * this.recordsPerPage) + 1).ToString(), (currentPage - 1).ToString()) + "\">Previous</a></li>" + result;
+                    }
+                    if (currentPage < pages)
+                    {
+                        result += "<li class='next'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage) * this.recordsPerPage) + 1).ToString(), (currentPage + 1).ToString()) + "\">Next</a></li>";
+                    }
+
+                    result = "<div class='pagination'><ul class='no-bullets'>" + result + "</ul></div>";
+                }
+
+                return result;
+            }
+        }
+
+        
         public string SearchStr{ get; set; }
 
         public string Expand { get; set; }
@@ -31,6 +145,16 @@ namespace CancerGov.Web.SnippetTemplates
         public bool BContains { get; set; }
 
         public int NumResults { get; set; }
+
+        /// <summary>
+        /// Sets the number of results to show per page.
+        /// </summary>
+        public int PageSize{get;set;}
+
+        /// <summary>
+        /// Which page of the search results
+        /// </summary>
+        public int CurrentPageIndex { get; set; }
 
         public string DictionaryURL { get; set; }
 
@@ -56,6 +180,16 @@ namespace CancerGov.Web.SnippetTemplates
 
             LoadData();
 
+            //set up pager stuff
+            string pageHtml = string.Empty;
+            if (NumResults > 0 && PageAssemblyContext.Current.DisplayVersion != DisplayVersions.Print)
+            {
+                string pageURL = GetPageUrl();
+
+                DrugPager objPager = new DrugPager(DictionaryURL + pageURL, CurrentPageIndex, PageSize, 2, NumResults);
+                pageHtml = objPager.RenderPager();
+            }
+            litPager.Text = pageHtml;
         }
 
         private void LoadData()
@@ -68,19 +202,27 @@ namespace CancerGov.Web.SnippetTemplates
 
             DictionarySearchResultCollection resultCollection = null;
 
+            // Translate page number into offset.
+            // One less than the current page number (with sanity check), times the page size
+            // translates from a "first page is 1" page number to a "first record is zero" offset into the
+            // list of results.
+            int offset = ((CurrentPageIndex > 0 ? CurrentPageIndex : 1) - 1) * PageSize;
+
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {
-                resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
+                resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
             }
             else if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
             {
                 if (Expand.ToLower() == "all")
-                    resultCollection = _dictionaryAppManager.Expand("%", "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
+                    resultCollection = _dictionaryAppManager.Expand("%", "", offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
                 else
-                    resultCollection = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
+                    resultCollection = _dictionaryAppManager.Expand(Expand, "", offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
 
-                // Workaround for the way variables are used as both search data and
-                // flag for the type of search to be performed.
+                // Other places in the code expect to find the string that was searched for in SearchStr,
+                // but if it was set prior to this point in the code, the wrong search would be performed.
+                // This is a result of the hacky way variables are being used to both store search data,
+                // and as a flag for which sort of search is supposed to be performed.
                 SearchStr = Expand;
             }
 
@@ -114,6 +256,42 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 RenderNoResults();
             }
+        }
+
+        /// <summary>
+        /// Recreates the page's query string parameters for use in paging.
+        /// </summary>
+        /// <returns>A query string, starting with "/?", containing the parameters and values used
+        /// to create the page.</returns>
+        private string GetPageUrl()
+        {
+            string url;
+
+            // URL base.
+            url = "/?";
+
+            //add expand
+            if (!string.IsNullOrEmpty(Expand))
+            {
+                if (Expand.Trim() == "#")
+                    url += "&expand=%23";
+                else
+                    url += "&expand=" + Expand.Trim();
+            }
+
+            //add cdrid or searchstr
+            if (!string.IsNullOrEmpty(CdrID))
+            {
+                url += "&cdrid=" + CdrID;
+            }
+            else if (!string.IsNullOrEmpty(SearchStr))
+            {
+                url += "&searchTxt=" + SearchStr;
+                if (BContains)
+                    url += "&sgroup=Contains";
+            }
+
+            return url;
         }
 
         private void RenderNoResults()
@@ -157,7 +335,13 @@ namespace CancerGov.Web.SnippetTemplates
                     Expand = Expand.Trim().ToUpper();
                 }
             }
-            
+
+            // Initialize number of results per page.
+            string pgSize = ConfigurationSettings.AppSettings["DrugDictionaryPageSize"];
+            if (string.IsNullOrEmpty(pgSize))
+                PageSize = 100;
+            else
+                PageSize = Int32.Parse(pgSize);
         }
 
         private void ValidateParams()
@@ -186,6 +370,7 @@ namespace CancerGov.Web.SnippetTemplates
             CdrID = Strings.Clean(Request.Params["cdrid"]);
             SearchStr = Strings.Clean(Request.Params["search"]);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
+            CurrentPageIndex = Strings.ToInt(Request.Params["page"], 1);
         }
 
         protected string ResultListViewHrefOnclick(ListViewDataItem dataItem)
