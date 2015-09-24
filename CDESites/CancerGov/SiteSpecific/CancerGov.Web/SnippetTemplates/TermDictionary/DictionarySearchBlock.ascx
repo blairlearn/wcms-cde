@@ -111,10 +111,16 @@
                 <asp:Button class="submit button postfix" ID="btnSearch" runat="server" OnClick="btnSearch_OnClick"
                     ToolTip="Search" />
             </div>
+
+            <div class="medium-1 columns left">
+                <a  class="text-icon-help" aria-label="Help"  href="javascript:dynPopWindow('/Common/PopUps/popHelp.aspx','popup','width=500,height=700,scrollbars=1,resizable=1,menubar=0,location=0,status=0,toolbar=0')">
+                    ?
+                </a> 
+            </div>
         </div>
     </div>
     <div class="az-list">
-        <CancerGovWww:AlphaListBox runat="server" ID="alphaListBox" BaseUrl="/templates/drugdictionary.aspx"
+        <CancerGovWww:AlphaListBox runat="server" ID="alphaListBox"
             NumericItems="true" ShowAll="false" />
     </div>
     </form>
