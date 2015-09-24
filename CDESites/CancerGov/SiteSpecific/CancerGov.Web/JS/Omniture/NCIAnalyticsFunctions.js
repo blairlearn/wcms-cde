@@ -1,4 +1,10 @@
-﻿var NCIAnalytics = {
+﻿/* This is legacy Javascript to be used for development testing only.
+* As of WCMS Feline release, this file is hosted at 
+* http://static.cancer.gov/webanalytics/wcms/NCIAnalyticsFunctions.js
+* The NCIAnalyticsFunctions Javascript is called in WebAnalyticsPageLoad.cs
+* - daquinohd
+*/
+var NCIAnalytics = {
 
     displayAlerts: false,
     stringDelimiter: '|',

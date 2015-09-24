@@ -1,11 +1,17 @@
+/* This is legacy Javascript to be used for development testing only.
+* As of WCMS Feline release, this file is hosted at 
+* http://static.cancer.gov/webanalytics/wcms/wa_wcms_pre.js
+* The wa_wcms_pre Javascript is called in WebAnalyticsPageLoad.cs
+* - daquinohd
+*/
 var wa_hier1 = '';
 var wa_hier2 = '';
 var wa_lang = '';
 
 /* 
- * Check to see if this is a Prod site, if so set the 'live_or_other' flag to map to the Live
- * site report suites
- */
+* Check to see if this is a Prod site, if so set the 'live_or_other' flag to map to the Live
+* site report suites
+*/
 var live_or_other = 'other';
 if (document.URL.indexOf('www.cancer.gov') != -1 ||
     document.URL.indexOf('ccop.cancer.gov') != -1 ||
@@ -18,9 +24,9 @@ if (document.URL.indexOf('www.cancer.gov') != -1 ||
 };
 
 /*
- * Mapping of all WCMS reporting suites
- * Last update: 2015-09-18
- */
+* Mapping of all WCMS reporting suites
+* Last update: 2015-09-18
+*/
 var AllSuites =
 {
     /// CancerGov suites
@@ -86,13 +92,13 @@ var AllSuites =
         live: 'ncidcp-cancerprevention',
         other: 'ncidcp-cancerprevention-dev'
     },
-        
+
     /// DCEG suites
     'ncidceg-cancerepidemiologyandgenetics': {
         live: 'ncidceg-cancerepidemiologyandgenetics',
         other: 'ncidceg-cancerepidemiologyandgenetics-dev'
     },
-        
+
     /// Imaging suites
     'ncidctd-cancertreatmentanddiagnosis': {
         live: 'ncidctd-cancertreatmentanddiagnosis',
@@ -101,9 +107,9 @@ var AllSuites =
 
     /// TCGA and Proteomics suites
     'ncicssi-strategicscientificinitiatives': {
-    live: 'ncicssi-strategicscientificinitiatives',
+        live: 'ncicssi-strategicscientificinitiatives',
         other: 'ncicssi-strategicscientificinitiatives-dev'
-    }    
+    }
 };
 
 /*
@@ -125,7 +131,6 @@ var AnalyticsMapping =
             }
             catch (Error) {
                 filteredSuites += '';
-                console.log('One or more suite names not found in AllSuites map (wa_wcms_pre.js:24)');
             }
         }
         return filteredSuites;

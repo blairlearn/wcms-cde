@@ -1,3 +1,9 @@
+/* This is legacy Javascript to be used for development testing only.
+* As of WCMS Feline release, this file is hosted at 
+* http://static.cancer.gov/webanalytics/wcms/wa_wcms_pre.js
+* The wa_wcms_pre Javascript is called in WebAnalyticsPageLoad.cs
+* - daquinohd
+*/
 var wa_hier1 = '';
 var wa_hier2 = '';
 var wa_lang = '';
@@ -125,7 +131,6 @@ var AnalyticsMapping =
             }
             catch (Error) {
                 filteredSuites += '';
-                console.log('One or more suite names not found in AllSuites map (wa_wcms_pre.js:24)');
             }
         }
         return filteredSuites;
