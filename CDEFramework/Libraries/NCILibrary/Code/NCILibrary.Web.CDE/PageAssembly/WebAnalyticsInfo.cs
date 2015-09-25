@@ -70,17 +70,15 @@ namespace NCI.Web.CDE
         /// <returns></returns>
         public static String GetSuites(IEnumerable<WebAnalyticsInfo> infos)
         {
-            string allSuites = "";
-
-            // Loop through infos and aggregate report suites down to the site root.
+            // Loop through infos until a report suite value is found. 
             foreach (WebAnalyticsInfo info in infos)
             {
                 if (!string.IsNullOrEmpty(info.WAReportSuites))
                 {
-                    allSuites += ("," + info.WAReportSuites);
+                    return info.WAReportSuites;
                 }
             }
-            return allSuites;
+            return "";
         }
 
         /// <summary>

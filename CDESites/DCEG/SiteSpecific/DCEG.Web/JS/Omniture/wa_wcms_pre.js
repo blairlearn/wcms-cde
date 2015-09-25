@@ -122,6 +122,11 @@ var AnalyticsMapping =
         var suiteArray = suites.split(",");
         var filteredSuites = '';
 
+        // Add the 'nciglobal' suite to all CancerGov pages
+        if (document.URL.indexOf('www') != -1 &&
+            document.URL.indexOf('cancer.gov') != -1)
+            suiteArray.push('nciglobal');
+
         for (i = 0; i < suiteArray.length; i++) {
             try {
                 filteredSuites += AllSuites[suiteArray[i]][live_or_other];
