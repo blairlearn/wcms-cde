@@ -290,6 +290,23 @@ namespace CancerGov.Web.SnippetTemplates
         {
             SetupEnglish();
             alphaListBox.ShowAll = true;
+
+            if (WebAnalyticsOptions.IsEnabled)
+            {
+                // Add page name to analytics
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar1, wbField =>
+                {
+                    string suffix = "";
+                    if (!string.IsNullOrEmpty(Expand))
+                        suffix = " - AlphaNumericBrowse";
+                    else if (!string.IsNullOrEmpty(CdrID))
+                        suffix = " - Definition";
+                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
+                });
+
+                Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.DrugDictionarySearch(this);"); // Load from onsubmit script
+                alphaListBox.WebAnalyticsFunction = "NCIAnalytics.DrugDictionarySearchAlphaList"; // Load A-Z list onclick script
+            }
         }
 
         protected void btnSearch_OnClick(object sender, EventArgs e)
