@@ -320,13 +320,6 @@
     <Compile Include="SnippetTemplates\DocTitleBlock.ascx.designer.cs">
       <DependentUpon>DocTitleBlock.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\drugdictionary.ascx.cs">
-      <DependentUpon>drugdictionary.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
-      <DependentUpon>drugdictionary.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.cs">
       <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -692,7 +685,6 @@
     <Content Include="SnippetTemplates\BreadcrumbSnippet.ascx" />
     <Content Include="SnippetTemplates\DisqusComments.ascx" />
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
-    <Content Include="SnippetTemplates\drugdictionary.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx" />
