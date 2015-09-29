@@ -29,6 +29,9 @@ namespace NCI.Web.Dictionary
                 case DictionaryType.Unknown:
                     dictionary = svcDictionaryType.Unknown;
                     break;
+                case DictionaryType.NotSet:
+                    dictionary = svcDictionaryType.NotSet;
+                    break;
                 case DictionaryType.term:
                     dictionary = svcDictionaryType.term;
                     break;

@@ -10,17 +10,31 @@ namespace NCI.Web.Dictionary
     /// </summary>
     public enum DictionaryType
     {
-        // We don't know what dictionary this is.  Error condition.
+        /// <summary>
+        /// We don't know what dictionary this is.  Error condition.
+        /// </summary>
         Unknown = 0,
 
-        // Dictionary of Cancer Terms
-        term = 1,
+        /// <summary>
+        /// The source document didn't specify a dictionary.
+        /// Distinct from "A dictioary was assigned, but we don't know what it is."
+        /// </summary>
+        NotSet = 1,
 
-        // Drug Dictionary
-        drug = 2,
+        /// <summary>
+        /// Dictionary of Cancer Terms.
+        /// </summary>
+        term = 2,
 
-        // Dictionary of Genetics Terms
-        genetic = 3
+        /// <summary>
+        /// Drug dictionary.
+        /// </summary>
+        drug = 3,
+
+        /// <summary>
+        /// Genetics Dictionary
+        /// </summary>
+        genetic = 4
     }
 
     /// <summary>
