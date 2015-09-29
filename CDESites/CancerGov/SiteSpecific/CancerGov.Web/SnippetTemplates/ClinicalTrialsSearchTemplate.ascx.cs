@@ -35,20 +35,53 @@ namespace CancerGov.Web.SnippetTemplates
             //Need to add ARIA tags to location controls - this has nothing to do with the state of the form,
             //so we are doing it on init.
 
+            // Associate each location selector value with the fieldset it controls
+
+            ListItem selector;
+
+            // Assoicate the "all" selector with the all/blank input area.
+            selector = LocationTypeSelector.Items.FindByValue("all");
+            if (selector != null)
+                selector.Attributes.Add("aria-controls", ""); // Deliberately nothing.
+
+
+            // Associate the "zip" selector with the zip location fields.
+            selector = LocationTypeSelector.Items.FindByValue("zip");
+            if (selector != null)
+                selector.Attributes.Add("aria-controls", zipCodeLocationFieldset.ClientID);
+
             //Tell the radio which fieldset it controls
             zipCodeLocationButton.InputAttributes.Add("aria-controls", zipCodeLocationFieldset.ClientID);
             //Tell the fieldset which radio labels it
             zipCodeLocationFieldset.Attributes.Add("aria-labelledby", zipCodeLocationButton.ClientID);
+
+
+            // Associate the "city/state/country" selector with the zip location fields.
+            selector = LocationTypeSelector.Items.FindByValue("city");
+            if (selector != null)
+                selector.Attributes.Add("aria-controls", cityStateLocationFieldset.ClientID);
 
             //Tell the radio which fieldset it controls
             cityStateLocationButton.InputAttributes.Add("aria-controls", cityStateLocationFieldset.ClientID);
             //Tell the fieldset which radio labels it
             cityStateLocationFieldset.Attributes.Add("aria-labelledby", cityStateLocationButton.ClientID);
 
+
+            // Associate the "city/state/country" selector with the zip location fields.
+            selector = LocationTypeSelector.Items.FindByValue("hospital");
+            if (selector != null)
+                selector.Attributes.Add("aria-controls", hospitalLocationFieldset.ClientID);
+
             //Tell the radio which fieldset it controls
             hospitalLocationButton.InputAttributes.Add("aria-controls", hospitalLocationFieldset.ClientID);
             //Tell the fieldset which radio labels it
             hospitalLocationFieldset.Attributes.Add("aria-labelledby", hospitalLocationButton.ClientID);
+
+
+            // Associate the "city/state/country" selector with the zip location fields.
+            selector = LocationTypeSelector.Items.FindByValue("nih");
+            if (selector != null)
+                selector.Attributes.Add("aria-controls", atNihLocationFieldset.ClientID);
 
             //Tell the radio which fieldset it controls
             atNihLocationButton.InputAttributes.Add("aria-controls", atNihLocationFieldset.ClientID);

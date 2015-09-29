@@ -50,6 +50,15 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::NCI.Web.UI.WebControls.FormControls.AccessibleCheckBoxList cancerStage;
         
         /// <summary>
+        /// LocationTypeSelector control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList LocationTypeSelector;
+        
+        /// <summary>
         /// zipCodeLocationButton control.
         /// </summary>
         /// <remarks>

@@ -129,6 +129,61 @@
 })(jQuery);
 </script>
 
+<!-- Location type dropdown toggles. -->
+<script type="text/javascript">
+(function($) {
+    if ($.fn.setupLocationToggleBlocks === undefined) {
+
+        $.setupLocationToggleBlocks = {
+            "default": {}
+        };
+
+        // Define the setupLocationToggleBlocks method.
+        $.fn.setupLocationToggleBlocks = function() {
+            // Loop through the elements where we are trying to set up location toggles.
+
+            // 'this' (and thus container) refers to the element setupLocationToggleBlocks was invoked against.
+            return this.each(function() {
+                var container = $(this);
+
+                // Set of regions we can toggle.
+                var regions = [];
+
+                var dropDown = container.find("select.location-chooser");
+
+                // Find the set of options tags making up the location chooser.
+                var options = dropDown.find("option");
+                options.each(function() {
+                    var el = $(this); // 'this' now refers to an individual option element.
+
+                    // Initialize the indivual region's display
+                    var ctrl_tocontrol = el.attr("aria-controls");
+                    if (ctrl_tocontrol != "") {
+                        var region = $("#" + ctrl_tocontrol);
+                        regions.push(region);
+                        region.prop("tabindex", "-1");
+
+                        // Hide regions not connected to the option marked as selected.
+                        if (this.selected !== true) {
+                            region.hide().attr('aria-expanded', 'false');
+                        } else {
+                            region.attr('aria-expanded', 'true');
+                        }
+                    }
+                });
+
+                // Set a change handler for the container (few events avaiable on option elements).
+                dropDown.on('change', regions, function() {
+                    alert("click!");
+                });
+            });
+        };
+    }
+
+    return $.fn.setupLocationToggleBlocks;
+})(jQuery);
+</script>
+
     <script type="text/javascript">
         var ids = {
             intervention: "<%=intervention.ClientID%>"
@@ -183,10 +238,11 @@
             , interventionListExpanded: "<%=interventionListExpanded.ClientID %>"
 
         };
-    
+
         $(document).ready(function() {
             $(".groupedCheckBoxList").groupedCheckBoxList();
-            $("#locationFieldset").radioToggleBlocks();
+            //$("#locationFieldset").radioToggleBlocks();
+            $("#locationFieldset").setupLocationToggleBlocks();
         });
     </script>
 
@@ -243,6 +299,15 @@
             <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#2" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
                 <div class="cts-location roundy-box">
+                    <div class="row">
+                        <asp:DropDownList CssClass="fullwidth location-chooser" ID="LocationTypeSelector" runat="server">
+                            <asp:ListItem Value="all" Selected="True">All</asp:ListItem>
+                            <asp:ListItem Value="zip">Near ZIP Code</asp:ListItem>
+                            <asp:ListItem Value="city">In City/State/Country</asp:ListItem>
+                            <asp:ListItem Value="hospital">At Hospital/Institution</asp:ListItem>
+                            <asp:ListItem Value="nih">At NIH</asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
                     <div class="row">
                         <div class="large-6 columns">
                             <div class="radio"><asp:RadioButton ID="zipCodeLocationButton" value="zip" GroupName="LocationChooser" runat="server" Text="Near ZIP Code" /></div>
