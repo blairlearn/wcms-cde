@@ -77,7 +77,7 @@ namespace NCI.Web.CDE
         /// Load the report suite(s) that have been set for this navon. 
         /// </summary>
         /// <param name="infos">WebAnalyticsInfo</param>
-        /// <returns></returns>
+        /// <returns>Report suite string</returns>
         public static String GetSuites(IEnumerable<WebAnalyticsInfo> infos)
         {
             // Loop through infos until a report suite value is found. 
@@ -95,7 +95,7 @@ namespace NCI.Web.CDE
         /// Load the WA channel(s) that have been set on this navon. 
         /// </summary>
         /// <param name="infos">WebAnalyticsInfo</param>
-        /// <returns></returns>
+        /// <returns>Channels string</returns>
         public static String GetChannels(IEnumerable<WebAnalyticsInfo> infos)
         {
             // Loop through infos until a report channel value is found. 
@@ -113,15 +113,18 @@ namespace NCI.Web.CDE
         /// Load the content groups that have been set on this navon. 
         /// </summary>
         /// <param name="infos">WebAnalyticsInfo</param>
-        /// <returns></returns>
-        public static String GetContentGroup(WebAnalyticsInfo info)
+        /// <returns>Content group string</returns>
+        public static String GetContentGroups(IEnumerable<WebAnalyticsInfo> infos)
         {
-            string group = "";
-            if (!string.IsNullOrEmpty(info.WAContentGroups))
+            // Loop through infos until a Conteng Group value is found. 
+            foreach (WebAnalyticsInfo info in infos)
             {
-                group = info.WAContentGroups;
+                if (!string.IsNullOrEmpty(info.WAContentGroups))
+                {
+                    return info.WAContentGroups;
+                }
             }
-            return group;
+            return "";
         }
 
         /// <summary>

@@ -170,7 +170,7 @@ namespace NCI.Web.CDE
         /// </summary>
         public String GetWAContentGroups()
         {
-            return WebAnalyticsInfo.GetContentGroup(WebAnalyticsInfo);
+            return WebAnalyticsInfo.GetContentGroups(RecursiveGetAnalyticsInfo());
         }
 
         /// <summary>
