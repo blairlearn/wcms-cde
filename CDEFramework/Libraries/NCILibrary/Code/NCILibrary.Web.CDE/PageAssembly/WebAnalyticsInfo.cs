@@ -16,6 +16,16 @@ namespace NCI.Web.CDE
     public class WebAnalyticsInfo
     {
         /// <summary>
+        /// Default constructor to ensure Events, Props, and eVars are not null
+        /// </summary>
+        public WebAnalyticsInfo()
+        {
+            this.WAEvents = new WebAnalyticsCustomVariableOrEvent[] { };
+            this.WAProps = new WebAnalyticsCustomVariableOrEvent[] { };
+            this.WAEvars = new WebAnalyticsCustomVariableOrEvent[] { };
+        }
+
+        /// <summary>
         /// Gets comma-separated list of analytics channel namess
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
@@ -115,6 +125,15 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
+        /// Determine if this WebAnalyticsInfo has a prop, evar, or event set
+        /// </summary>
+        /// <returns></returns>
+        private bool HasPropEvarEvt()
+        {
+            return (this.WAEvars.Length + this.WAEvents.Length + this.WAProps.Length) > 0;
+        }
+
+        /// <summary>
         /// Get the events from a collection of WebAnalyticsInfos.  This assumes that the input is a flattened
         /// tree where the first item is the current item and the last item is the root ancestor. 
         /// </summary>
@@ -122,26 +141,19 @@ namespace NCI.Web.CDE
         /// <returns>Collection of event keys (string)</returns>
         public static IEnumerable<String> GetEvents(IEnumerable<WebAnalyticsInfo> infos)
         {
-            List<string> seenID = new List<string>();
-
             // Loop through infos in order, starting at the current folder level and working through each successive
-			// parent until either the site root or "RemoveParent" is hit.
+            // parent until either the site root or "RemoveParent" is hit.
             foreach (WebAnalyticsInfo info in infos)
             {
-                if (info.WAEvents != null)
+                if (info.HasPropEvarEvt())
                 {
                     foreach (WebAnalyticsCustomVariableOrEvent evt in info.WAEvents)
                     {
-                        // Check the list of seen IDs; if this key does not appear on the list, add it.
-                        // Do not add if the key already exists - child keys should override parents.
-                        if (!seenID.Contains(evt.Key))
-                        {
-                            seenID.Add(evt.Key);
-                            yield return evt.Key;
-                        }
+                        yield return evt.Key;
                     }
+                    break;
                 }
-                // If we are to remove the parent events we need to stop looping
+                // If we are to remove the parent props we need to stop looping
                 if (info.RemoveParents)
                     break;
             }
@@ -155,24 +167,17 @@ namespace NCI.Web.CDE
         /// <returns>collection of WebAnalyticCustomVariableOrEvents</returns>
         public static IEnumerable<WebAnalyticsCustomVariableOrEvent> GetProps(IEnumerable<WebAnalyticsInfo> infos)
         {
-            List<string> seenID = new List<string>();
-
             // Loop through infos in order, starting at the current folder level and working through each successive
-			// parent until either the site root or "RemoveParent" is hit.
+            // parent until either the site root or "RemoveParent" is hit.
             foreach (WebAnalyticsInfo info in infos)
             {
-                if (info.WAProps != null)
+                if (info.HasPropEvarEvt())
                 {
                     foreach (WebAnalyticsCustomVariableOrEvent prop in info.WAProps)
                     {
-                        // Check the list of seen IDs; if this key does not appear on the list, add it.
-                        // Do not add if the key already exists - child keys should override parents.
-						if (!seenID.Contains(prop.Key))
-                        {
-                            seenID.Add(prop.Key);
-                            yield return prop;
-                        }
+                        yield return prop;
                     }
+                    break;
                 }
                 // If we are to remove the parent props we need to stop looping
                 if (info.RemoveParents)
@@ -188,30 +193,23 @@ namespace NCI.Web.CDE
         /// <returns>collection of WebAnalyticCustomVariableOrEvents</returns>
         public static IEnumerable<WebAnalyticsCustomVariableOrEvent> GetEvars(IEnumerable<WebAnalyticsInfo> infos)
         {
-            List<string> seenID = new List<string>();
-
             // Loop through infos in order, starting at the current folder level and working through each successive
-			// parent until either the site root or "RemoveParent" is hit.
+            // parent until either the site root or "RemoveParent" is hit.
             foreach (WebAnalyticsInfo info in infos)
             {
-                if (info.WAEvars != null)
+                if (info.HasPropEvarEvt())
                 {
                     foreach (WebAnalyticsCustomVariableOrEvent evar in info.WAEvars)
                     {
-                        // Check the list of seen IDs; if this key does not appear on the list, add it.
-                        // Do not add if the key already exists - child keys should override parents.
-                        if (!seenID.Contains(evar.Key))
-                        {
-                            seenID.Add(evar.Key);
-                            yield return evar;
-                        }
+                        yield return evar;
                     }
+                    break;
                 }
-                // If we are to remove the parent evars we need to stop looping
+                // If we are to remove the parent props we need to stop looping
                 if (info.RemoveParents)
                     break;
             }
-        }
+        } // end GetEvars()
 
-    }
+    } // end WebAnalyticsInfo
 }
