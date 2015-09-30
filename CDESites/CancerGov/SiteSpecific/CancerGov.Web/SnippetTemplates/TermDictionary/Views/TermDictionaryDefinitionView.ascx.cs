@@ -223,7 +223,7 @@ namespace CancerGov.Web.SnippetTemplates
                             Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
                             if (litMoreInformation != null)
                             {
-                                //don't display more informaiton text when only images are being displayed
+                                //don't display more information text when only images are being displayed
                                 if (termDetails.Related.Term.Length > 0 ||
                                 termDetails.Related.Summary.Length > 0 ||
                                 termDetails.Related.DrugSummary.Length > 0 ||
