@@ -223,10 +223,22 @@ namespace CancerGov.Web.SnippetTemplates
                             Literal litMoreInformation = e.Item.FindControl("litMoreInformation") as Literal;
                             if (litMoreInformation != null)
                             {
-                                if (DictionaryLanguage == "es")
-                                    litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
+                                //don't display more informaiton text when only images are being displayed
+                                if (termDetails.Related.Term.Length > 0 ||
+                                termDetails.Related.Summary.Length > 0 ||
+                                termDetails.Related.DrugSummary.Length > 0 ||
+                                termDetails.Related.External.Length > 0)
+                                {
+                                    litMoreInformation.Visible = true;
+                                    if (DictionaryLanguage == "es")
+                                        litMoreInformation.Text = "M&aacute;s informaci&oacute;n";
+                                    else
+                                        litMoreInformation.Text = "More Information";
+                                }
                                 else
-                                    litMoreInformation.Text = "More Information";
+                                {
+                                    litMoreInformation.Visible = false;
+                                }
                             }
 
                             if (termDetails.Related.External.Length > 0)
