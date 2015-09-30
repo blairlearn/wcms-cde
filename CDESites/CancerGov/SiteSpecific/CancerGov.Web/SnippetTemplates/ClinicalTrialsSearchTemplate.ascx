@@ -172,9 +172,20 @@
                     }
                 });
 
-                // Set a change handler for the container (few events avaiable on option elements).
+                // Set a change handler for the container (not many events are avaiable on option elements).
                 dropDown.on('change', regions, function() {
-                    alert("click!");
+                    // 'this' is the dropdown.
+                    var ddl = $(this);
+                    var options = ddl.find("option");
+                    options.each(function() {
+                        var el = $(this);
+                        var ctrl_tocontrol = el.attr("aria-controls");
+                        var region = $("#" + ctrl_tocontrol);
+                        if (this.selected)
+                            region.show().attr('aria-expanded', 'true');
+                        else
+                            region.hide().attr('aria-expanded', 'false');
+                    });
                 });
             });
         };
@@ -196,10 +207,10 @@
             , institutionListSubBox: "<%=institutionListSubBox.ClientID %>"
             , showInstitutionListButton: "<%=showInstitutionListButton.ClientID %>"
 
-            , hospitalLocationButton: "<%=hospitalLocationButton.ClientID %>"
-            , zipCodeLocationButton: "<%=zipCodeLocationButton.ClientID %>"
-            , cityStateLocationButton: "<%=cityStateLocationButton.ClientID %>"
-            , atNihLocationButton: "<%=atNihLocationButton.ClientID %>"
+            , hospitalLocationButton: "<=hospitalLocationButton.ClientID %>"
+            , zipCodeLocationButton: "<=zipCodeLocationButton.ClientID %>"
+            , cityStateLocationButton: "<=cityStateLocationButton.ClientID %>"
+            , atNihLocationButton: "<=atNihLocationButton.ClientID %>"
             , country: "<%=country.ClientID %>"
             , city: "<%=city.ClientID %>"
             , state: "<%=state.ClientID %>"
@@ -308,16 +319,7 @@
                             <asp:ListItem Value="nih">At NIH</asp:ListItem>
                         </asp:DropDownList>
                     </div>
-                    <div class="row">
-                        <div class="large-6 columns">
-                            <div class="radio"><asp:RadioButton ID="zipCodeLocationButton" value="zip" GroupName="LocationChooser" runat="server" Text="Near ZIP Code" /></div>
-                            <div class="radio"><asp:RadioButton ID="cityStateLocationButton" value="city" GroupName="LocationChooser" runat="server" Text="In City/State/Country" /></div>
-                        </div>                       
-                        <div class="large-6 columns">         
-                            <div class="radio"><asp:RadioButton ID="hospitalLocationButton" value="hospital" GroupName="LocationChooser" runat="server" Text="At Hospital/Institution" /></div>
-                            <div class="radio"><asp:RadioButton ID="atNihLocationButton" value="nih" GroupName="LocationChooser" runat="server" Text="At NIH" /></div>
-                        </div>                                
-                    </div>
+
                     <fieldset ID="zipCodeLocationFieldset" runat="server" class="roundy-box row" role="region">
                         <div class="legend" id="legend-location-zip">Near ZIP Code</div>
                         <div>

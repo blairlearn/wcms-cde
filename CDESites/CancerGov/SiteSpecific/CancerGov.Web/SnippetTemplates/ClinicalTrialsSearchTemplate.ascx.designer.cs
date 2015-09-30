@@ -59,42 +59,6 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::System.Web.UI.WebControls.DropDownList LocationTypeSelector;
         
         /// <summary>
-        /// zipCodeLocationButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton zipCodeLocationButton;
-        
-        /// <summary>
-        /// cityStateLocationButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton cityStateLocationButton;
-        
-        /// <summary>
-        /// hospitalLocationButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton hospitalLocationButton;
-        
-        /// <summary>
-        /// atNihLocationButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton atNihLocationButton;
-        
-        /// <summary>
         /// zipCodeLocationFieldset control.
         /// </summary>
         /// <remarks>
