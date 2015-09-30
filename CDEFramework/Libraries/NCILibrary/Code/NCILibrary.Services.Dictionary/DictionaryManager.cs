@@ -170,16 +170,16 @@ namespace NCI.Services.Dictionary
         ///         en - English
         ///         es - Spanish
         /// </param>
-        /// <param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
-        ///<param name="audience">The Term's desired audience.
+        /// <param name="audience">The Term's desired audience.
         ///     Supported values are:
         ///         Patient
         ///         HealthProfessional
         /// </param>
+        ///<param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
         /// <returns>A data structure containing both meta data about the request and a string containing a JSON representation
         /// of the particular definition identified by the inputs to the method.
         /// </returns>
-        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, String version, AudienceType audience)
+        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
             log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language, version));
 

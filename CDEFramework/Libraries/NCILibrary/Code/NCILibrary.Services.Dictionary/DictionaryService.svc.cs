@@ -286,7 +286,7 @@ namespace NCI.Services.Dictionary
                 }
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.GetTerm(termId, dictionary, language, API_VERSION, audience);
+                ret = mgr.GetTerm(termId, dictionary, language, audience, API_VERSION);
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.
