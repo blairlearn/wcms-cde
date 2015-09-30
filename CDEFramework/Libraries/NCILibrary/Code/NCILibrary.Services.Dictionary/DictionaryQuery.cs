@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 using NCI.Data;
 using NCI.Logging;
@@ -16,6 +13,7 @@ namespace NCI.Services.Dictionary
         static Log log = new Log(typeof(DictionaryQuery));
 
         const string SP_GET_DICTIONARY_TERM = "usp_GetDictionaryTerm";
+        const string SP_GET_DICTIONARY_TERM_FOR_AUDIENCE = "usp_GetDictionaryTermForAudience";
         const string SP_SEARCH_DICTIONARY = "usp_SearchDictionary";
         const string SP_SEARCH_SUGGEST_DICTIONARY = "usp_SearchSuggestDictionary";
         const string SP_EXPAND_DICTIONARY = "usp_SearchExpandDictionary";
@@ -79,6 +77,42 @@ namespace NCI.Services.Dictionary
             using (SqlConnection conn = SqlHelper.CreateConnection(DBConnectionString))
             {
                 results = SqlHelper.ExecuteDatatable(conn, CommandType.StoredProcedure, SP_GET_DICTIONARY_TERM, parameters);
+            }
+
+            return results;
+        }
+
+        /// <summary>
+        /// Calls the database to retrieve a single dictionary term based on its specific Term ID.
+        /// Similar, but not identical, to GetTerm().  Instead of retrieving the term for a specific
+        /// dictionary, the term is fetched for a preferred audience.  If no records are available for that audience,
+        /// then any other avaiable records are returned instead.
+        /// </summary>
+        /// <param name="termId">The ID of the Term to be retrieved</param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="preferredAudience">Preferred target audieince for the definition.</param>
+        /// <param name="version">String identifying which vereion of the API to match.</param>
+        /// <returns></returns>
+        public DataTable GetTermForAudience(int termId, Language language, AudienceType preferredAudience, String version)
+        {
+            log.debug(string.Format("Enter GetTermForAudience( {0}, {1}, {2}, {3}, {4} ).", termId, language, preferredAudience, version));
+
+            DataTable results = null;
+
+            SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@TermID", SqlDbType.Int){Value = termId},
+	            new SqlParameter("@Language", SqlDbType.NVarChar){Value = language.ToString()},
+	            new SqlParameter("@PreferredAudience", SqlDbType.NVarChar){Value = preferredAudience.ToString()},
+	            new SqlParameter("@ApiVers", SqlDbType.NVarChar){Value = version},
+            };
+
+            using (SqlConnection conn = SqlHelper.CreateConnection(DBConnectionString))
+            {
+                results = SqlHelper.ExecuteDatatable(conn, CommandType.StoredProcedure, SP_GET_DICTIONARY_TERM_FOR_AUDIENCE, parameters);
             }
 
             return results;

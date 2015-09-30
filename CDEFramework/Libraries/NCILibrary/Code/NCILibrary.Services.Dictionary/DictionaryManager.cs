@@ -108,51 +108,7 @@ namespace NCI.Services.Dictionary
             // In the initial implementation, the audience is implied by the particular dictionary being used.
             AudienceType audience = GetAudienceFromDictionaryType(dictionary);
 
-            DictionaryQuery query = new DictionaryQuery();
-            DataTable dtTerm = query.GetTerm(termId, dictionary, language, audience, version);
-
-            List<String> messages = new List<string>();
-
-            String term = string.Empty;
-
-            // Normal, found 1 match.
-            int resultCount = dtTerm.Rows.Count;
-            if (resultCount == 1)
-            {
-                log.debug("Found 1 result.");
-                messages.Add("OK");
-                term = dtTerm.Rows[0].Field<string>("object");
-                term = RewriteMediaFileLocations(term);
-            }
-            // "Normal", found no matches.
-            else if (resultCount == 0)
-            {
-                log.debug("Found 0 results.");
-                messages.Add("No result found.");
-                term = string.Empty;
-            }
-            // "Odd" case. With multiple matches, return the first one.
-            else // result count must be greater than 1
-            {
-                log.warning(string.Format("Expected to find one result for term {0}, found {1} instead.", termId, resultCount));
-                messages.Add("OK");
-                term = dtTerm.Rows[0].Field<string>("object");
-                term = RewriteMediaFileLocations(term);
-            }
-
-
-            // Build up the return data structure.
-            TermReturn trmReturn = new TermReturn();
-
-            TermReturnMeta meta = new TermReturnMeta();
-            meta.Language = language.ToString();
-            meta.Audience = audience.ToString();
-            meta.Messages = messages.ToArray();
-
-            trmReturn.Meta = meta;
-            trmReturn.Term = term;
-
-            return trmReturn;
+            return GetTerm(termId, dictionary, language, audience, version);
         }
 
         /// <summary>
@@ -224,6 +180,91 @@ namespace NCI.Services.Dictionary
             DictionaryQuery query = new DictionaryQuery();
             DataTable dtTerm = query.GetTerm(termId, dictionary, language, audience, version);
 
+            return GetTermCommon(dtTerm, termId, language, audience);
+        }
+
+        /// <summary>
+        /// Retrieves a single dictionary term based on its specific Term ID.
+        /// Similar, but not identical, to GetTerm().  Instead of retrieving the term for a specific
+        /// dictionary, the term is fetched for a preferred audience.  If no records are available for that audience,
+        /// then any other avaiable records are returned instead.
+        /// </summary>
+        /// <param name="termId">The ID of the Term to be retrieved</param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="audience">The Term's desired audience.
+        ///     Supported values are:
+        ///         Patient
+        ///         HealthProfessional
+        /// </param>
+        ///<param name="version">String identifying which vereion of the JSON structure to retrieve.</param>
+        /// <returns>A data structure containing both meta data about the request and a string containing a JSON representation
+        /// of the particular definition identified by the inputs to the method.
+        /// </returns>
+        public TermReturn GetTermForAudience(int termId, Language language, AudienceType audience, String version)
+        {
+            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, language, version));
+
+            #region Argument Validation
+
+            if (termId <= 0)
+            {
+                string msg = string.Format("termId - expected a positive value, found '{0}'.", termId);
+                log.error(msg);
+                throw new ArgumentException(msg);
+            }
+
+            if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
+            {
+                string msg = string.Format("language contains invalid value '{0}'.", language);
+                log.error(msg);
+                throw new ArgumentException(msg);
+            }
+
+            if (!Enum.IsDefined(typeof(AudienceType), audience) || audience == AudienceType.Unknown)
+            {
+                string msg = string.Format("audience contains invalid value '{0}'.", audience);
+                log.error(msg);
+                throw new ArgumentException(msg);
+            }
+
+            if (string.IsNullOrEmpty(version))
+            {
+                log.error("version is null or empty.");
+                throw new ArgumentException("version is null or empty.");
+            }
+
+            #endregion
+
+            DictionaryQuery query = new DictionaryQuery();
+            DataTable dtTerm = query.GetTermForAudience(termId, language, audience, version);
+
+            return GetTermCommon(dtTerm, termId, language, audience);
+        }
+
+        /// <summary>
+        /// Infrastructure for turning the DataTable returned for one of the GetTerm family of query
+        /// methods into a TermReturn object.
+        /// </summary>
+        /// <param name="termId">The ID of the Term which was retrieved</param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="audience">The Term's desired audience.
+        ///     Supported values are:
+        ///         Patient
+        ///         HealthProfessional
+        /// </param>
+        /// <returns>A data structure containing both meta data about the request and a string containing a JSON representation
+        /// of the particular definition identified by the inputs to the method.
+        /// </returns>
+        private TermReturn GetTermCommon(DataTable dtTerm, int termId, Language language, AudienceType audience)
+        {
             List<String> messages = new List<string>();
 
             String term = string.Empty;
