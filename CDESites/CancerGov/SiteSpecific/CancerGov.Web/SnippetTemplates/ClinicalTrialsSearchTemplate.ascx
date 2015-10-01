@@ -57,78 +57,6 @@
 })(jQuery);
 </script>
 
-<%-- Radio Toggle Blocks --%>
-<script type="text/javascript">
-(function($) {
-
-    if ($.fn.radioToggleBlocks === undefined) {
-
-        $.radioToggleBlocks = {
-            "default": {}
-        };
-
-        $.fn.radioToggleBlocks = function() {
-            //Loop through each element we are trying to make a radioToggleBlock.  Each element should contain controllers.
-            return this.each(function() {
-                var cbl = $(this);
-                var radios = cbl.find('input[type=radio]');
-
-                var regions = [];
-
-                //Find all checkboxes within the current checkbox list
-                radios.each(function() {
-                    //Initial setup function
-                    var el = $(this); //This is the radio
-
-
-                    var ctrl_tocontrol = el.attr("aria-controls");
-                    var region = $("#" + ctrl_tocontrol);
-                    regions.push(region); //Add region to our list of regions
-
-                    region.prop("tabindex", "-1");
-
-                    if (this.checked !== true) {
-                        region.hide().attr('aria-expanded', 'false');
-                    } else {
-                        region.attr('aria-expanded', 'true');
-                    }
-
-
-                    el.on('click', regions, function() {
-
-                        //Only do this if we are selecting the radio
-                        if (this.checked === true) {
-
-                            var curr_el = $(this);
-
-                            var selected_region = false;
-                            for (var i = 0; i < regions.length; i++) {
-                                if (regions[i].attr('id') === curr_el.attr('aria-controls')) {
-                                    regions[i].show().attr("aria-expanded", "true");
-                                    selected_region = regions[i];
-                                } else {
-                                    regions[i].hide().attr("aria-expanded", "false");
-                                }
-
-                            }
-
-                            if (selected_region) {
-                                selected_region.focus();
-                            }
-                        }
-                    });
-
-                });
-            });
-        };
-
-    }
-
-
-    return $.fn.radioToggleBlocks;
-})(jQuery);
-</script>
-
 <!-- Location type dropdown toggles. -->
 <script type="text/javascript">
 (function($) {
@@ -207,10 +135,7 @@
             , institutionListSubBox: "<%=institutionListSubBox.ClientID %>"
             , showInstitutionListButton: "<%=showInstitutionListButton.ClientID %>"
 
-            , hospitalLocationButton: "<=hospitalLocationButton.ClientID %>"
-            , zipCodeLocationButton: "<=zipCodeLocationButton.ClientID %>"
-            , cityStateLocationButton: "<=cityStateLocationButton.ClientID %>"
-            , atNihLocationButton: "<=atNihLocationButton.ClientID %>"
+            , locationSelector: "<%= LocationTypeSelector.ClientID %>"
             , country: "<%=country.ClientID %>"
             , city: "<%=city.ClientID %>"
             , state: "<%=state.ClientID %>"
@@ -252,7 +177,6 @@
 
         $(document).ready(function() {
             $(".groupedCheckBoxList").groupedCheckBoxList();
-            //$("#locationFieldset").radioToggleBlocks();
             $("#locationFieldset").setupLocationToggleBlocks();
         });
     </script>
