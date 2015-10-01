@@ -44,27 +44,24 @@
     });
 
     function autoFunc() {
-
         var dictionary = "<%=Dictionary.ToString() %>";
-
-
-
         var language = 'English';
-
         if ($('html').attr('lang') === 'es') {
-
             language = 'Spanish';
-
         }
-
-
-
         var isContains = IsContains();
 
-
-
-        NCI.doAutocomplete('#' + ids.AutoComplete1, function(term) { return NCI.dictionary.searchSuggest(dictionary, term, language, isContains ? 'contains' : 'begins'); }, isContains);
-
+        (function (factory) {
+            if (typeof define === 'function' && define.amd) {
+                // AMD
+                define(['Common/Enhancements/NCI', 'Data/DictionaryService'], factory);
+            } else {
+                // Browser globals
+                factory(NCI, NCI.dictionary);
+            }
+        }(function (NCI, DictionaryService) {
+            NCI.doAutocomplete('#' + ids.AutoComplete1, function(term) { return DictionaryService.searchSuggest(dictionary, term, language, isContains ? 'contains' : 'begins'); }, isContains);
+        }));
     }
 
  
