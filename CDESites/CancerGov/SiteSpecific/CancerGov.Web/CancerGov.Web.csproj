@@ -622,7 +622,6 @@
     <Content Include="DynamicListTemplates\DynamicListNoDescImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListNoDescNoImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicNewsDescImgDate.ascx" />
-    <Content Include="JS\drugDictionary.js" />
     <Content Include="JS\ForeSee\cancel.gif" />
     <Content Include="JS\ForeSee\cancel.html" />
     <Content Include="JS\ForeSee\closebtn.gif" />
