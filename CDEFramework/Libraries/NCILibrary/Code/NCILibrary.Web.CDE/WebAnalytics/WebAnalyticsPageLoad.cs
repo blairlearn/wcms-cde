@@ -32,6 +32,11 @@ namespace NCI.Web.CDE.WebAnalytics
         private string language = "";
         private IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
 
+        // Get paths for WCMS analytics code
+        // Dev tiers are hosted locally (/JS/Omniture/), Prod is hosted on static.cancer.gov/wcms
+        private string WaPre = ConfigurationManager.AppSettings["WAWCMSPre"].ToString();
+        private string WaSCode = ConfigurationManager.AppSettings["SCode"].ToString();
+        private string WaFunctions = ConfigurationManager.AppSettings["NCIAnalyticsFunctions"].ToString();
 
         /// <summary>When true, page-wide link tracking is enabled.</summary>
         public bool DoPageWideLinkTracking
@@ -42,12 +47,11 @@ namespace NCI.Web.CDE.WebAnalytics
 
         /// <summary>the constructor builds base Omniture page load code.   
         /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
-        /// Note: as of the Feline release, the web analytics javascript is hosted on static.cancer.gov
-        /// For dev or testing, you can still point to src "/JS/Omniture/myfilename.js");
+        /// Note: as of the Feline release, Prod web analytics javascript is hosted on static.cancer.gov
         public WebAnalyticsPageLoad()
         {
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"//static.cancer.gov/webanalytics/wcms/NCIAnalyticsFunctions.js\"></script>");
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"//static.cancer.gov/webanalytics/wcms/s_code.js\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
             pageLoadPreTag.AppendLine("<!--");
 
@@ -141,9 +145,8 @@ namespace NCI.Web.CDE.WebAnalytics
                 // 3. NCIAnalyticsFunctions.js source URL (see line 47)
                 // 4. s_code source URL
                 // 5. Channel, Prop, eVar, and Event info
-                /// Note: as of the Feline release, the web analytics javascript is hosted on static.cancer.gov
-                /// For dev or testing, you can still point to src "/JS/Omniture/myfilename.js");
-                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"//static.cancer.gov/webanalytics/wcms/wa_wcms_pre.js\"></script>");
+                // Note: as of the Feline release, the web analytics javascript is hosted on static.cancer.gov
+                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
                 output.AppendLine("<!--");
                 output.AppendLine("var s_account = AnalyticsMapping.GetSuites(\"" + reportSuites + "\");");
