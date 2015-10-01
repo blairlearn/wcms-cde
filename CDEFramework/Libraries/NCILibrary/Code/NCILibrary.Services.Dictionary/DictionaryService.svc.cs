@@ -87,6 +87,43 @@ namespace NCI.Services.Dictionary
             }
 
             /// <summary>
+            /// Validate inputs for the ValidateGetTermForAudience method.  Throws DictionaryValidationException
+            /// if the inputs are not valid.
+            /// </summary>
+            /// <param name="termID">The ID of the term being retrieved.  Must be greater than zero.</param>
+            /// <param name="language">The desired result language. Must be English or Spanish.</param>
+            /// <param name="audience">The desired target audience. Must be Patient or HealthProfessional.</param>
+            public static void ValidateGetTermForAudience(int termID, Language language, AudienceType audience)
+            {
+                String message = string.Empty;
+                bool failed = false;
+
+                if (termID <= 0)
+                {
+                    failed = true;
+                    message += string.Format("TermID is expected to be a positive number. Found '{0}' instead.", termID);
+                }
+
+                if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
+                {
+                    failed = true;
+                    message += String.Format("Unsupported languge '{0}'.", language);
+                }
+
+                if (!Enum.IsDefined(typeof(AudienceType), audience) || audience == AudienceType.Unknown)
+                {
+                    failed = true;
+                    message += string.Format("Unsupported audience '{0}'.", audience);
+                }
+
+                if (failed)
+                {
+                    log.debug(message);
+                    throw new DictionaryValidationException(message);
+                }
+            }
+
+            /// <summary>
             /// Validate inputs for the Search method.  Throws DictionaryValidationException if the inputs
             /// are not valid.
             /// </summary>
@@ -249,13 +286,20 @@ namespace NCI.Services.Dictionary
         /// <summary>
         /// Retrieves a single dictionary Term based on its specific Term ID.
         /// </summary>
+        /// <returns></returns>
+        [Obsolete("Use GetTermForAudience instead.")]
+        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience)
+        {
+            return GetTermForAudience(termId, language, audience);
+        }
+
+        /// <summary>
+        /// Retrieves a single dictionary term based on its specific Term ID.
+        /// Similar, but not identical, to GetTerm().  Instead of retrieving the term for a specific
+        /// dictionary, the term is fetched for a preferred audience.  If no records are available for that audience,
+        /// then any other avaiable records are returned instead.
+        /// </summary>
         /// <param name="termId">The ID of the Term to be retrieved</param>
-        /// <param name="dictionary">The dictionary to retreive the Term from.
-        ///     Valid values are
-        ///        Term - Dictionary of Cancer Terms
-        ///        drug - Drug Dictionary
-        ///        genetic - Dictionary of Genetics Terms
-        /// </param>
         /// <param name="language">The Term's desired language.
         ///     Supported values are:
         ///         en - English
@@ -267,26 +311,18 @@ namespace NCI.Services.Dictionary
         ///         HealthProfessional
         /// </param>
         /// <returns></returns>
-        
-        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience)
+        public TermReturn GetTermForAudience(int termId, Language language, AudienceType audience)
         {
-            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language));
+            log.debug(string.Format("Enter GetTermForAudience( {0}, {1}, {2}).", termId, language, audience));
 
             TermReturn ret = null;
 
             try
             {
-                InputValidator.ValidateGetTerm(termId, dictionary, language);
-
-                if (!Enum.IsDefined(typeof(AudienceType), audience) || audience == AudienceType.Unknown)
-                {
-                    string msg = string.Format("audience contains invalid value '{0}'.", audience);
-                    log.error(msg);
-                    throw new ArgumentException(msg);
-                }
+                InputValidator.ValidateGetTermForAudience(termId, language, audience);
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.GetTerm(termId, dictionary, language, audience, API_VERSION);
+                ret = mgr.GetTermForAudience(termId, language, audience, API_VERSION);
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.
