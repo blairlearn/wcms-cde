@@ -250,7 +250,7 @@ var NCIAnalytics = {
 
         //Location
         switch($("#" + ids.locationSelector).val()) {
-            case "all": location = "All"; break;
+            case "all": location = "all locations"; break;
 
             case "zip": location = "Near Zip Code"; break;
 
