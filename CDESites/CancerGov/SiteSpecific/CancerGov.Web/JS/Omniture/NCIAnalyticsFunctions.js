@@ -248,22 +248,22 @@ var NCIAnalytics = {
 
         var cancerTypeCondition = $('#' + ids.cancerType + " option:selected").text();
 
-        //Location 
-        // - zip code
-        if ($("#" + ids.zipCodeLocationButton)[0].checked)
-            location = 'Near Zip Code';
-        // - At NIH
-        else if ($("#" + ids.atNihLocationButton)[0].checked)
-            if ($("#" + ids.nihOnly)[0].checked)
-            location = 'At NIH Only Bethesda, Md';
-        else
-            location = 'At NIH';
-        // - City/State/Country
-        else if ($("#" + ids.cityStateLocationButton)[0].checked) {
-            location = 'In City/State/Country';
-        }
-        else if ($("#" + ids.hospitalLocationButton)[0].checked) {
-            location = 'At Hospital/Institution';
+        //Location
+        switch($("#" + ids.locationSelector).val()) {
+            case "all": location = "All"; break;
+
+            case "zip": location = "Near Zip Code"; break;
+
+            case "city": location = "In City/State/Country"; break;
+
+            case "hospital": location = "At Hospital/Institution"; break;
+
+            case "nih": // - At NIH
+                if ($("#" + ids.nihOnly)[0].checked)
+                    location = 'At NIH Only Bethesda, Md';
+                else
+                    location = 'At NIH';
+                break;
         }
 
         // Trial Phase
