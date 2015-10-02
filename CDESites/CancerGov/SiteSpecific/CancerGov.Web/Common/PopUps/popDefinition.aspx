@@ -10,15 +10,8 @@
     <meta content="text/html;charset=ISO-8859-1" http-equiv="content-type" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <script src="/PublishedContent/js/modernizr.custom.2.7.1.js" type="text/javascript"></script>
-
-    <script src="/PublishedContent/js/popEvents.js" type="text/javascript"></script>
-
-    <script type="text/javascript" language="JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-
-    <script src="/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script src="/PublishedContent/js/Common.js" type="text/javascript"></script>
+    <script src="/PublishedContent/js/Popups.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         //Hookup JPlayer for Audio
