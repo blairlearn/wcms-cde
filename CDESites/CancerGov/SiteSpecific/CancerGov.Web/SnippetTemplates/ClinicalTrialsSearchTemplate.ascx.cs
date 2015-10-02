@@ -41,14 +41,11 @@ namespace CancerGov.Web.SnippetTemplates
             //Need to add ARIA tags to location controls - this has nothing to do with the state of the form,
             //so we are doing it on init.
 
-            // Associate each location selector value with the fieldset it controls
 
             ListItem selector;
 
-            // Associate the "all" selector with the all/blank input area.
-            selector = LocationTypeSelector.Items.FindByValue(LOCATION_ALL);
-            if (selector != null)
-                selector.Attributes.Add("aria-controls", ""); // Deliberately nothing.
+            // Associate each location selector value with the fieldset it controls
+            // We deliberately do *NOT* associate the "all" selector with the all/blank input area.
 
 
             // Associate the "zip" selector with the zip location fields.

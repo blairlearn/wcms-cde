@@ -84,9 +84,9 @@
                 options.each(function() {
                     var el = $(this); // 'this' now refers to an individual option element.
 
-                    // Initialize the indivual region's display
+                    // Initialize the individual region's display
                     var ctrl_tocontrol = el.attr("aria-controls");
-                    if (ctrl_tocontrol != "") {
+                    if (ctrl_tocontrol != null && ctrl_tocontrol != "") {
                         var region = $("#" + ctrl_tocontrol);
                         regions.push(region);
                         region.prop("tabindex", "-1");
