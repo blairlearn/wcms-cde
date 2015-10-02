@@ -50,17 +50,12 @@ namespace Www.Common.PopUps
                 CdrID = Strings.IfNull(Strings.Clean(Request.Params["id"]), Strings.Clean(Request.Params["cdrid"]));
                 version = PDQVersionResolver.GetPDQVersion(Strings.Clean(Request.Params["version"]));
 
-                //STINKY CODE - Business rule - default to Dictionary of Cancer Terms and Audience is set to Patient 
-                DictionaryType dictionaryType = DictionaryType.term;
-
                 //determine the term audience from the PDQVersion
                 AudienceType audience;
                 switch (version)
                 {
                     case PDQVersion.HealthProfessional:
                         audience = AudienceType.HealthProfessional;
-                        //STINKY CODE - only when the audience is Health Professional the system points to the Genetics dictionary
-                        dictionaryType = DictionaryType.genetic;
                         break;
                     case PDQVersion.Patient:
                         audience = AudienceType.Patient;
@@ -95,7 +90,7 @@ namespace Www.Common.PopUps
                 if (!string.IsNullOrEmpty(CdrID))
                 {
                     CdrID = Regex.Replace(CdrID, "^CDR0+", "", RegexOptions.Compiled);
-                    dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), dictionaryType, dictionaryLanguage, "v1", audience);
+                    dataItem = _dictionaryAppManager.GetTermForAudience(Convert.ToInt32(CdrID), dictionaryLanguage, "v1", audience);
 
                 }
                 

@@ -99,7 +99,7 @@ namespace NCI.Services.Dictionary
         /// <returns></returns>
         public DataTable GetTermForAudience(int termId, Language language, AudienceType preferredAudience, String version)
         {
-            log.debug(string.Format("Enter GetTermForAudience( {0}, {1}, {2}, {3}, {4} ).", termId, language, preferredAudience, version));
+            log.debug(string.Format("Enter GetTermForAudience( {0}, {1}, {2}, {3} ).", termId, language, preferredAudience, version));
 
             DataTable results = null;
 

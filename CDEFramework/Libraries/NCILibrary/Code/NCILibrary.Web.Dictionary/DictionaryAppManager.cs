@@ -70,8 +70,6 @@ namespace NCI.Web.Dictionary
         /// Get Term from Dictionary Service to be deserialized and returned to the app module
         /// </summary>
         /// <param name="termId">int of the CDR ID</param>
-        /// <param name="dictionary">which dictionary is being passed through</param>
-        /// <param name="language">English/Spanish term</param>
         /// <param name="version">the version of the dictionary service</param>
         /// <param name="audience">The Term's desired audience.
         ///     Supported values are:
@@ -79,10 +77,9 @@ namespace NCI.Web.Dictionary
         ///         HealthProfessional
         /// </param>
         /// <returns>the term deserialized and the meta data from the database</returns>
-        public DictionaryTerm GetTerm(int termId, DictionaryType dictionary, String language, String version, AudienceType audience)
+        public DictionaryTerm GetTermForAudience(int termId, String language, String version, AudienceType audience)
         {
             // Translate from types the AppManager exposes to types the Dictionary Service exposes.
-            svcDictionaryType svcDictionary = TypeTranslator.Translate(dictionary);
             svcLanguage svcLanguage = TypeTranslator.TranslateLocaleString(language);
             svcAudienceType svcAudience = TypeTranslator.Translate(audience);
 
@@ -94,7 +91,7 @@ namespace NCI.Web.Dictionary
             NCI.Services.Dictionary.BusinessObjects.TermReturn termRet = null;
             try
             {
-                termRet = service.GetTerm(termId, svcDictionary, svcLanguage, svcAudience);
+                termRet = service.GetTermForAudience(termId, svcLanguage, svcAudience);
             }
             catch (Exception ex)
             {
