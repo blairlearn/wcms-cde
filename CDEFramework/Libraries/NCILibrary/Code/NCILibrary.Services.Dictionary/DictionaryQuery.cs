@@ -192,7 +192,7 @@ namespace NCI.Services.Dictionary
                 // will allow execution to continue.
                 if (DBNull.Value.Equals(matchCountParam.Value) || matchCountParam.Value == null)
                 {
-                    log.warning("Search() encountered null when attempting to retrieve the @matchCount parameter.");
+                    log.warning("SearchSuggest() encountered null when attempting to retrieve the @matchCount parameter.");
                     matchCount = int.MaxValue;
                 }
                 else
@@ -329,7 +329,7 @@ namespace NCI.Services.Dictionary
                 // execution to continue.
                 if (DBNull.Value.Equals(matchCountParam.Value) || matchCountParam.Value == null)
                 {
-                    log.warning("Search() encountered null when attempting to retrieve the @matchCount parameter.");
+                    log.warning("Expand() encountered null when attempting to retrieve the @matchCount parameter.");
                     matchCount = int.MaxValue;
                 }
                 else
