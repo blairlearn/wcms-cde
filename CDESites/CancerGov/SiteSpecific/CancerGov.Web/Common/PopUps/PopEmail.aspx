@@ -8,9 +8,8 @@
 	    var callingUrl = opener.location.href;
 	</script>
 	<link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
-    <!--[if lt IE 9]>
-        <script src="/PublishedContent/js/respond.js"></script>
-    <![endif]-->
+    <script src="/PublishedContent/js/Common.js" type="text/javascript"></script>
+    <script src="/PublishedContent/js/Popups.js" type="text/javascript"></script>
   </HEAD>
   <FRAMESET border=0 frameSpacing=0 rows=80,*,26 frameBorder=no>
 	<FRAME name="Header" title="Header" src="/Common/PopUps/<%=Header%>" noResize scrolling=no>
