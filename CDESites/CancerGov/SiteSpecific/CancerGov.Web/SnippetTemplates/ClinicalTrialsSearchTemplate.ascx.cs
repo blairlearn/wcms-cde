@@ -53,43 +53,20 @@ namespace CancerGov.Web.SnippetTemplates
             if (selector != null)
                 selector.Attributes.Add("aria-controls", zipCodeLocationFieldset.ClientID);
 
-            ////Tell the radio which fieldset it controls
-            //zipCodeLocationButton.InputAttributes.Add("aria-controls", zipCodeLocationFieldset.ClientID);
-            ////Tell the fieldset which radio labels it
-            //zipCodeLocationFieldset.Attributes.Add("aria-labelledby", zipCodeLocationButton.ClientID);
-
-
             // Associate the "city/state/country" selector with the zip location fields.
             selector = LocationTypeSelector.Items.FindByValue(LOCATION_CITY);
             if (selector != null)
                 selector.Attributes.Add("aria-controls", cityStateLocationFieldset.ClientID);
-
-            ////Tell the radio which fieldset it controls
-            //cityStateLocationButton.InputAttributes.Add("aria-controls", cityStateLocationFieldset.ClientID);
-            ////Tell the fieldset which radio labels it
-            //cityStateLocationFieldset.Attributes.Add("aria-labelledby", cityStateLocationButton.ClientID);
-
 
             // Associate the "city/state/country" selector with the zip location fields.
             selector = LocationTypeSelector.Items.FindByValue(LOCATION_HOSPITAL);
             if (selector != null)
                 selector.Attributes.Add("aria-controls", hospitalLocationFieldset.ClientID);
 
-            ////Tell the radio which fieldset it controls
-            //hospitalLocationButton.InputAttributes.Add("aria-controls", hospitalLocationFieldset.ClientID);
-            ////Tell the fieldset which radio labels it
-            //hospitalLocationFieldset.Attributes.Add("aria-labelledby", hospitalLocationButton.ClientID);
-
-
             // Associate the "city/state/country" selector with the zip location fields.
             selector = LocationTypeSelector.Items.FindByValue(LOCATION_NIH);
             if (selector != null)
                 selector.Attributes.Add("aria-controls", atNihLocationFieldset.ClientID);
-
-            ////Tell the radio which fieldset it controls
-            //atNihLocationButton.InputAttributes.Add("aria-controls", atNihLocationFieldset.ClientID);
-            ////Tell the fieldset which radio labels it
-            //atNihLocationFieldset.Attributes.Add("aria-labelledby", atNihLocationButton.ClientID);
 
 
             txtKeywords.Attributes.Add("placeholder", "Examples: PSA, HER-2, \"Paget disease\"");
