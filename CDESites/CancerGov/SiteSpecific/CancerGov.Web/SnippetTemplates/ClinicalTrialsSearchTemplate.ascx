@@ -244,7 +244,7 @@
                         </asp:DropDownList>
                     </div>
 
-                    <fieldset ID="zipCodeLocationFieldset" runat="server" class="roundy-box row" role="region">
+                    <fieldset ID="zipCodeLocationFieldset" runat="server" class="roundy-box row">
                         <div class="legend" id="legend-location-zip">Near ZIP Code</div>
                         <div>
                             <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat="server">Show trials located within:</asp:Label>
@@ -265,7 +265,7 @@
                             <!-- Add validator -->
                         </div>
                     </fieldset>
-                    <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row" role="region">
+                    <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row">
                         <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
                         <div>
                             <button id="showInstitutionListButton" class="action" runat="server">Choose From List</button>
@@ -292,7 +292,7 @@
                             });
                         </script>
                     </fieldset>
-                    <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" role="region">
+                    <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row">
                         <div class="legend" id="legend-location-citystate">In City/State/Country</div>
                         <div>
                             <div class="ct-country-area">
@@ -312,7 +312,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" role="region">
+                    <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row">
                         <div class="legend" id="legend-location-NIH">At NIH</div>
                         <div class="checkbox"><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
                     </fieldset>
