@@ -144,8 +144,15 @@ namespace NCI.Web.CDE
             SectionDetail currSection = this;
             while (currSection != null)
             {
-                yield return currSection.WebAnalyticsInfo;
-                currSection = currSection.Parent;
+                if (this.WebAnalyticsInfo != null)
+                {
+                    yield return currSection.WebAnalyticsInfo;
+                    currSection = currSection.Parent;
+                } 
+                else
+                {
+                    currSection = currSection.Parent;
+                }
             }
         }
 
