@@ -98,6 +98,11 @@ namespace Www.Common.PopUps
                 {
                     ActivateDefinitionView(dataItem);
                 }
+                else
+                {
+                    phDefinition.Visible = false;
+                    phNoResult.Visible = true;
+                }
 
                 // Web Analytics *************************************************
                 WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
@@ -122,6 +127,9 @@ namespace Www.Common.PopUps
 
         private void ActivateDefinitionView(DictionaryTerm dataItem)
         {
+            phDefinition.Visible = true;
+            phNoResult.Visible = false;
+
             var myDataSource = new List<DictionaryTerm> { dataItem };
 
             termDictionaryDefinitionView.Visible = true;

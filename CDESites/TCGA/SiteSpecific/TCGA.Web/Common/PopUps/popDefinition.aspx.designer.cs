@@ -32,6 +32,15 @@ namespace TCGA.Web.Common.PopUps {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl closeWindowText;
         
         /// <summary>
+        /// phDefinition control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phDefinition;
+        
+        /// <summary>
         /// definitionLabel control.
         /// </summary>
         /// <remarks>
@@ -48,6 +57,15 @@ namespace TCGA.Web.Common.PopUps {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater termDictionaryDefinitionView;
+        
+        /// <summary>
+        /// phNoResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phNoResult;
         
         /// <summary>
         /// litOmniturePageLoad control.

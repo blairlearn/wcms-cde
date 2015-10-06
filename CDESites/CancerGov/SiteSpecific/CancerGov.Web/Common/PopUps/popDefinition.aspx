@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <script src="/PublishedContent/js/Common.js" type="text/javascript"></script>
+
     <script src="/PublishedContent/js/Popups.js" type="text/javascript"></script>
 
     <script type="text/javascript">
@@ -45,7 +46,6 @@
     </script>
 
 </head>
-
 <body>
     <!--[if lt IE 9]>
             <script src="/PublishedContent/js/respond.js"></script>
@@ -66,25 +66,26 @@
         </p>
         <div id='dictionary_jPlayer'>
         </div>
-        <div class="heading">
-            <asp:Literal ID="definitionLabel" runat="server" /></div>
-        <asp:Repeater ID="termDictionaryDefinitionView" runat="server" OnItemDataBound="termDictionaryDefinitionView_OnItemDataBound">
-            <ItemTemplate>
-                <div class="audioPronounceLink">
-                    <span class="term">
-                        <%# ((DictionaryTerm)(Container.DataItem)).Term%></span>
-                    <asp:PlaceHolder ID="phPronunciation" runat="server">
-                        <asp:Label ID="pronunciationKey" runat="server" CssClass="pronunciation" />
-                        <a id="pronunciationLink" runat="server" class="CDR_audiofile"><span class="hidden">
-                            listen</span></a> </asp:PlaceHolder>
-                </div>
-                <div class="definition">
-                    <%# ((DictionaryTerm)(Container.DataItem)).Definition.Text%></div>
-                <asp:Panel runat="server" ID="pnlRelatedInfo">
-                    <div class="definitionImage">
-                        <asp:Repeater ID="relatedImages" runat="server" Visible="false" OnItemDataBound="relatedImages_OnItemDataBound">
-                            <ItemTemplate>
-                                <figure class="image-left-medium">
+        <asp:PlaceHolder ID="phDefinition" runat="server">
+            <div class="heading">
+                <asp:Literal ID="definitionLabel" runat="server" /></div>
+            <asp:Repeater ID="termDictionaryDefinitionView" runat="server" OnItemDataBound="termDictionaryDefinitionView_OnItemDataBound">
+                <ItemTemplate>
+                    <div class="audioPronounceLink">
+                        <span class="term">
+                            <%# ((DictionaryTerm)(Container.DataItem)).Term%></span>
+                        <asp:PlaceHolder ID="phPronunciation" runat="server">
+                            <asp:Label ID="pronunciationKey" runat="server" CssClass="pronunciation" />
+                            <a id="pronunciationLink" runat="server" class="CDR_audiofile"><span class="hidden">
+                                listen</span></a> </asp:PlaceHolder>
+                    </div>
+                    <div class="definition">
+                        <%# ((DictionaryTerm)(Container.DataItem)).Definition.Text%></div>
+                    <asp:Panel runat="server" ID="pnlRelatedInfo">
+                        <div class="definitionImage">
+                            <asp:Repeater ID="relatedImages" runat="server" Visible="false" OnItemDataBound="relatedImages_OnItemDataBound">
+                                <ItemTemplate>
+                                    <figure class="image-left-medium">
                                     <a id="termEnlargeImage" runat="server" target="_blank" class="article-image-enlarge no-resize"/>
                                     <img id="termImage" runat="server" src="" alt="" />
                                         <figcaption>
@@ -93,12 +94,17 @@
                                             </div>
                                         </figcaption>
                                  </figure>
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </div>
-                </asp:Panel>
-            </ItemTemplate>
-        </asp:Repeater>
+                                </ItemTemplate>
+                            </asp:Repeater>
+                        </div>
+                    </asp:Panel>
+                </ItemTemplate>
+            </asp:Repeater>
+        </asp:PlaceHolder>
+        <asp:PlaceHolder ID="phNoResult" runat="server" Visible="false">
+            <div class="definition">
+                The term you are looking for does not exist in the glossary.</div>
+        </asp:PlaceHolder>
         <asp:Literal ID="litOmniturePageLoad" Mode="PassThrough" runat="server" />
     </div>
 </body>

@@ -3,12 +3,7 @@
 <%@ Register TagPrefix="CancerGovWww" TagName="AlphaListBox" Src="~/Common/UserControls/AlphaListBox.ascx" %>
 
 <script type="text/javascript">
-    // function used by AutoComplete to submit to server when user
-    // selects an item
-    function ACOnSubmit() {
-        document.getElementById('<%=btnSearch.ClientID%>').click();
-    }
-
+   
     //Hookup JPlayer for Audio
     if (jQuery.jPlayer && !Modernizr.touch) {
         jQuery(document).ready(function($) {
@@ -102,7 +97,7 @@
         <div class="row">
             <div class="large-6 columns">
                 <asp:TextBox CssClass="dictionary-search-input" ID="AutoComplete1" inputmode="latin"
-                    aria-autocomplete="list" runat="server" CallbackFunc="ACOnSubmit" autocomplete="off" />
+                    aria-autocomplete="list" runat="server" autocomplete="off" />
             </div>
             <div class="large-2 columns left">
                 <asp:Button class="submit button postfix" ID="btnSearch" runat="server" OnClick="btnSearch_OnClick"
