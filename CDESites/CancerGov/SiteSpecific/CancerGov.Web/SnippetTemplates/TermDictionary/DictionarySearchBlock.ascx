@@ -3,29 +3,38 @@
 <%@ Register TagPrefix="CancerGovWww" TagName="AlphaListBox" Src="~/Common/UserControls/AlphaListBox.ascx" %>
 
 <script type="text/javascript">
-   
-    //Hookup JPlayer for Audio
-    if (jQuery.jPlayer && !Modernizr.touch) {
-        jQuery(document).ready(function($) {
-            var my_jPlayer = $("#dictionary_jPlayer");
+    (function(factory) {
+        if (typeof define === 'function' && define.amd) {
+            // AMD
+            define(['jquery', 'jquery/jplayer'], factory);
+        } else {
+            // Browser globals
+            factory(jQuery);
+        }
+    } (function(jQuery) {
+        //Hookup JPlayer for Audio
+        if (jQuery.jPlayer && !Modernizr.touch) {
+            jQuery(document).ready(function($) {
+                var my_jPlayer = $("#dictionary_jPlayer");
 
-            my_jPlayer.jPlayer({
-                swfPath: "/PublishedContent/files/global/flash/", //Path to SWF File Used by jPlayer
-                //errorAlerts: true,
-                supplied: "mp3" //The types of files which will be used.
+                my_jPlayer.jPlayer({
+                    swfPath: "/PublishedContent/files/global/flash/", //Path to SWF File Used by jPlayer
+                    //errorAlerts: true,
+                    supplied: "mp3" //The types of files which will be used.
+                });
+
+                //Attach a click event to the audio link
+
+                $(".CDR_audiofile").click(function() {
+                    my_jPlayer.jPlayer("setMedia", {
+                        mp3: $(this).attr("href") // Defines the m4v url
+                    }).jPlayer("play");
+
+                    return false;
+                });
             });
-
-            //Attach a click event to the audio link
-
-            $(".CDR_audiofile").click(function() {
-                my_jPlayer.jPlayer("setMedia", {
-                    mp3: $(this).attr("href") // Defines the m4v url
-                }).jPlayer("play");
-
-                return false;
-            });
-        });
-    }
+        }
+    }));
 
     // Autocomplete functionality
     var ids = {
