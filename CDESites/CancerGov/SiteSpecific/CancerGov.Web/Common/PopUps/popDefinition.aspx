@@ -16,9 +16,9 @@
 
     <script type="text/javascript">
         (function(factory) {
-            if (typeof define === 'function' && define.amd) {
+            if (typeof define === 'function' && define.amd && typeof require === 'function') {
                 // AMD
-                define(['jquery', 'jquery/jplayer'], factory);
+                require(['jquery', 'jquery/jplayer'], factory);
             } else {
                 // Browser globals
                 factory(jQuery);

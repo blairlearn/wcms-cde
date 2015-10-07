@@ -4,9 +4,9 @@
 
 <script type="text/javascript">
     (function(factory) {
-        if (typeof define === 'function' && define.amd) {
+        if (typeof define === 'function' && define.amd && typeof require === 'function') {
             // AMD
-            define(['jquery', 'jquery/jplayer'], factory);
+            require(['jquery', 'jquery/jplayer'], factory);
         } else {
             // Browser globals
             factory(jQuery);
@@ -56,9 +56,9 @@
         var isContains = IsContains();
 
         (function (factory) {
-            if (typeof define === 'function' && define.amd) {
+            if (typeof define === 'function' && define.amd && typeof require === 'function') {
                 // AMD
-                define(['Common/Enhancements/NCI', 'Data/DictionaryService'], factory);
+                require(['Common/Enhancements/NCI', 'Data/DictionaryService'], factory);
             } else {
                 // Browser globals
                 factory(NCI, NCI.dictionary);
