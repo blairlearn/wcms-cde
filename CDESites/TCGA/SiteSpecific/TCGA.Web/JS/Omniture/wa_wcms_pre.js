@@ -1,8 +1,8 @@
-/* This is legacy Javascript to be used for development testing only.
-* As of WCMS Feline release, this file is hosted at 
+/* This Javascript file location is used for Development, QA, and Stage tiers only.
+* As of WCMS Feline release, the Prod file is hosted at 
 * http://static.cancer.gov/webanalytics/wcms/wa_wcms_pre.js
-* The wa_wcms_pre Javascript is called in WebAnalyticsPageLoad.cs
-* - daquinohd
+* The wa_wcms_pre Javascript is called in WebAnalyticsPageLoad.cs.
+* The path is set in Web.config  - daquinohd
 */
 var wa_hier1 = '';
 var wa_hier2 = '';
@@ -122,14 +122,10 @@ var AnalyticsMapping =
         var suiteArray = suites.split(",");
         var filteredSuites = '';
 
-        // Add the 'nciglobal' suite to all CancerGov pages
-        if (document.URL.indexOf('www') != -1 &&
-            document.URL.indexOf('cancer.gov') != -1)
-            suiteArray.push('nciglobal');
-
         for (i = 0; i < suiteArray.length; i++) {
             try {
-                filteredSuites += AllSuites[suiteArray[i]][live_or_other];
+                var suiteName = suiteArray[i].replace(' ','');
+                filteredSuites += AllSuites[suiteName][live_or_other];
                 if (i < (suiteArray.length - 1)) {
                     filteredSuites += ',';
                 }
