@@ -109,8 +109,14 @@
                         var el = $(this);
                         var ctrl_tocontrol = el.attr("aria-controls");
                         var region = $("#" + ctrl_tocontrol);
-                        if (this.selected)
+                        if (this.selected) {
                             region.show().attr('aria-expanded', 'true');
+                            // After making the region visible again, refresh any select menus it contains.
+                            var subDdl = region.find("select");
+                            subDdl.each(function() {
+                                $(this).selectmenu("refresh");
+                            });
+                        }
                         else
                             region.hide().attr('aria-expanded', 'false');
                     });
