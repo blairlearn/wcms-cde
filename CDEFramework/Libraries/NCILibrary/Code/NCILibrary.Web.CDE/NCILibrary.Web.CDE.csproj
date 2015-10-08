@@ -87,6 +87,7 @@
     <Compile Include="HttpHandlers\FormEmailerHandler.cs" />
     <Compile Include="HttpHandlers\FormEmailerWithCaptchaHandler.cs" />
     <Compile Include="HttpHandlers\ListservSubscriptionHandler.cs" />
+    <Compile Include="HttpHandlers\PageNotFoundHandler.cs" />
     <Compile Include="HttpHeaders\Configuration\HttpHeaderElement.cs" />
     <Compile Include="HttpHeaders\Configuration\HttpHeaderListElement.cs" />
     <Compile Include="HttpHeaders\Configuration\HttpHeadersSection.cs" />

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 using System.Web;
+using System.Web.Configuration;
 
 namespace NCI.Web.CDE.UI
 {
@@ -12,6 +13,7 @@ namespace NCI.Web.CDE.UI
     /// </summary>
     public static class ErrorPageDisplayer
     {
+
         /// <summary>
         /// Display the "ErrorPage" page and a status of 500.
         /// </summary>
