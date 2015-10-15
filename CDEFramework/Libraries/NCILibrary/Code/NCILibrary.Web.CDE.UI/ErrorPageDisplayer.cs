@@ -30,6 +30,7 @@ namespace NCI.Web.CDE.UI
             //Set the status code so we know some bad mojo happened.
             HttpContext.Current.Response.StatusDescription = "Application Error";
             HttpContext.Current.Response.StatusCode = 500;
+            HttpContext.Current.Response.TrySkipIisCustomErrors = true;
 
             string errorPageURL = ConfigurationSettings.AppSettings["ErrorPage"];
             bool hasDisplayedMessage = false;
