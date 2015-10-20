@@ -239,89 +239,92 @@
             <div id="legend-location" class="large-4 small-11 columns legend">Location</div>
             <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#2" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
-                <div class="cts-location roundy-box">
-                    <div class="row">
-                        <asp:DropDownList CssClass="fullwidth location-chooser" ID="LocationTypeSelector" runat="server">
-                            <asp:ListItem Value="all" Selected="True">All</asp:ListItem>
-                            <asp:ListItem Value="zip">Near ZIP Code</asp:ListItem>
-                            <asp:ListItem Value="city">In City/State/Country</asp:ListItem>
-                            <asp:ListItem Value="hospital">At Hospital/Institution</asp:ListItem>
-                            <asp:ListItem Value="nih">At NIH</asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
+                <div class="row">Search by location</div>
+                <div class="row">
+                    <div class="cts-location roundy-box">
+                        <div class="row">
+                            <asp:DropDownList CssClass="fullwidth location-chooser" ID="LocationTypeSelector" runat="server">
+                                <asp:ListItem Value="all" Selected="True">All</asp:ListItem>
+                                <asp:ListItem Value="zip">Near ZIP Code</asp:ListItem>
+                                <asp:ListItem Value="city">In City/State/Country</asp:ListItem>
+                                <asp:ListItem Value="hospital">At Hospital/Institution</asp:ListItem>
+                                <asp:ListItem Value="nih">At NIH</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
 
-                    <fieldset ID="zipCodeLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-zip">
-                        <div class="legend" id="legend-location-zip">Near ZIP Code</div>
-                        <div>
-                            <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat="server">Show trials located within:</asp:Label>
-                            <div class="row ct-zip-row">
-                                <asp:DropDownList ID="zipCodeProximity" CssClass="ct-radius" runat="server">
-                                    <asp:ListItem Value="20">20 miles</asp:ListItem>
-                                    <asp:ListItem Value="50">50 miles</asp:ListItem>
-                                    <asp:ListItem Value="100" Selected="True">100 miles</asp:ListItem>
-                                    <asp:ListItem Value="200">200 miles</asp:ListItem>
-                                    <asp:ListItem Value="500">500 miles</asp:ListItem>
-                                </asp:DropDownList>
-                                <span class="ct-zip-area">of
-                                <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code</asp:Label>
-                                <asp:TextBox ID="zipCode" CssClass="ct-zip" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
-                                <a class="ct-zip-lookup" onclick="javascript:dynPopWindow('http://zip4.usps.com/zip4/citytown.jsp', '', 'width=740px,menubar=no,location=no,height=465px,scrollbar=yes'); return(false);"
-                                    href="http://zip4.usps.com/zip4/citytown.jsp">ZIP Code Lookup</a></span>
+                        <fieldset ID="zipCodeLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-zip">
+                            <div class="legend" id="legend-location-zip">Near ZIP Code</div>
+                            <div>
+                                <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat="server">Show trials located within:</asp:Label>
+                                <div class="row ct-zip-row">
+                                    <asp:DropDownList ID="zipCodeProximity" CssClass="ct-radius" runat="server">
+                                        <asp:ListItem Value="20">20 miles</asp:ListItem>
+                                        <asp:ListItem Value="50">50 miles</asp:ListItem>
+                                        <asp:ListItem Value="100" Selected="True">100 miles</asp:ListItem>
+                                        <asp:ListItem Value="200">200 miles</asp:ListItem>
+                                        <asp:ListItem Value="500">500 miles</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <span class="ct-zip-area">of
+                                    <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code</asp:Label>
+                                    <asp:TextBox ID="zipCode" CssClass="ct-zip" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
+                                    <a class="ct-zip-lookup" onclick="javascript:dynPopWindow('http://zip4.usps.com/zip4/citytown.jsp', '', 'width=740px,menubar=no,location=no,height=465px,scrollbar=yes'); return(false);"
+                                        href="http://zip4.usps.com/zip4/citytown.jsp">ZIP Code Lookup</a></span>
+                                </div>
+                                <!-- Add validator -->
                             </div>
-                            <!-- Add validator -->
-                        </div>
-                    </fieldset>
-                    <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-hospital">
-                        <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
-                        <div>
-                            <button id="showInstitutionListButton" class="action" runat="server">Choose From List</button>
-                            <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
-                            <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
-                            <div id="institutionListSubBox" runat="server">
-                                <cancergov:deletelist id="institution" runat="server" 
-                                    emptylisttext="Select &quot;Add More&quot; to see hospital names." />
-                                <span id="institutionAddButton">
-                                    <button class="button action" type="button"
-                                        onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=750px,menubar=no,location=no,height=650px');">
-                                        Add More
-                                    </button>
-                                </span>
-                                <asp:Button ID="institutionClearAll" runat="server" Text="Clear All"
-                                    OnClick="InstutionListClearAll_ClickHandler" 
-                                    OnClientClick="$('#' + ids.institution).deletelist('clearAll');return false;"
-                                    CssClass="button reset" />
+                        </fieldset>
+                        <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-hospital">
+                            <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
+                            <div>
+                                <button id="showInstitutionListButton" class="action" runat="server">Choose From List</button>
+                                <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
+                                <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
+                                <div id="institutionListSubBox" runat="server">
+                                    <cancergov:deletelist id="institution" runat="server" 
+                                        emptylisttext="Select &quot;Add More&quot; to see hospital names." />
+                                    <span id="institutionAddButton">
+                                        <button class="button action" type="button"
+                                            onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=750px,menubar=no,location=no,height=650px');">
+                                            Add More
+                                        </button>
+                                    </span>
+                                    <asp:Button ID="institutionClearAll" runat="server" Text="Clear All"
+                                        OnClick="InstutionListClearAll_ClickHandler" 
+                                        OnClientClick="$('#' + ids.institution).deletelist('clearAll');return false;"
+                                        CssClass="button reset" />
+                                </div>
                             </div>
-                        </div>
-                        <script>
-                            $(document).ready(function() {
-                                InitializeInstitutionListSubBox();
-                            });
-                        </script>
-                    </fieldset>
-                    <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-citystate">
-                        <div class="legend" id="legend-location-citystate">In City/State/Country</div>
-                        <div>
-                            <div class="ct-country-area">
-                                <label for="<%=country.ClientID%>" class="ct-country-label">Country:</label>
-                                <select id="country" onchange="country_onChange(this);" name="country" runat="server" />
+                            <script>
+                                $(document).ready(function() {
+                                    InitializeInstitutionListSubBox();
+                                });
+                            </script>
+                        </fieldset>
+                        <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-citystate">
+                            <div class="legend" id="legend-location-citystate">In City/State/Country</div>
+                            <div>
+                                <div class="ct-country-area">
+                                    <label for="<%=country.ClientID%>" class="ct-country-label">Country:</label>
+                                    <select id="country" onchange="country_onChange(this);" name="country" runat="server" />
+                                </div>
+                                <div class="ct-city-area">
+                                    <label for="<%=city.ClientID%>" class="ct-city-label">City:</label>
+                                    <input id="city" type="text" size="14" name="city" runat="server" />
+                                </div>
+                                <div class="ct-state-area">
+                                    <label class="ct-state-label">State</label>
+                                    <CancerGov:AccessibleCheckBoxList
+                                        id="state"
+                                        runat="server"
+                                        CssClass="scrolling-list roundy-box groupedCheckBoxList ct-state-list" />                        
+                                </div>
                             </div>
-                            <div class="ct-city-area">
-                                <label for="<%=city.ClientID%>" class="ct-city-label">City:</label>
-                                <input id="city" type="text" size="14" name="city" runat="server" />
-                            </div>
-                            <div class="ct-state-area">
-                                <label class="ct-state-label">State</label>
-                                <CancerGov:AccessibleCheckBoxList
-                                    id="state"
-                                    runat="server"
-                                    CssClass="scrolling-list roundy-box groupedCheckBoxList ct-state-list" />                        
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-NIH">
-                        <div class="legend" id="legend-location-NIH">At NIH</div>
-                        <div class="checkbox"><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
-                    </fieldset>
+                        </fieldset>
+                        <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-NIH">
+                            <div class="legend" id="legend-location-NIH">At NIH</div>
+                            <div class="checkbox"><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
+                        </fieldset>
+                    </div>
                 </div>
             </div>
         </div>
