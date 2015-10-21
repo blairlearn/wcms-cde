@@ -290,6 +290,7 @@ namespace CancerGov.Web.SnippetTemplates
         {
             SetupEnglish();
             alphaListBox.ShowAll = true;
+            helpButton.Visible = true;
 
             if (WebAnalyticsOptions.IsEnabled)
             {

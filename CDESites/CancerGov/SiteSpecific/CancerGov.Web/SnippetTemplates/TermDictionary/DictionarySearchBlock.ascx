@@ -113,11 +113,11 @@
                     ToolTip="Search" />
             </div>
 
-            <div class="medium-1 columns left">
+            <asp:Panel runat="server" CssClass="medium-1 columns left" ID="helpButton" Visible="false">
                 <a  class="text-icon-help" aria-label="Help"  href="javascript:dynPopWindow('/Common/PopUps/popHelp.aspx','popup','width=500,height=700,scrollbars=1,resizable=1,menubar=0,location=0,status=0,toolbar=0')">
                     ?
                 </a> 
-            </div>
+            </asp:Panel>
         </div>
     </div>
     <div class="az-list">
