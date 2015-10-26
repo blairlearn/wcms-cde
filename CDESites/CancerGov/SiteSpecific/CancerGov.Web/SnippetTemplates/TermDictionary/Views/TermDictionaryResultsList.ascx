@@ -34,7 +34,7 @@
                           </dd>
                     </asp:PlaceHolder>
                     <dd class="definition">
-                         <%# ((DictionarySearchResult)(Container.DataItem)).Term.Definition.Text%>
+                         <%# ((DictionarySearchResult)(Container.DataItem)).Term.Definition.Html%>
                     </dd>
                 </ItemTemplate>
                 <EmptyDataTemplate>

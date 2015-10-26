@@ -90,7 +90,7 @@
                                 listen</span></a> </asp:PlaceHolder>
                     </div>
                     <div class="definition">
-                        <%# ((DictionaryTerm)(Container.DataItem)).Definition.Text%></div>
+                        <%# ((DictionaryTerm)(Container.DataItem)).Definition.Html%></div>
                     <asp:Panel runat="server" ID="pnlRelatedInfo">
                         <div class="definitionImage">
                             <asp:Repeater ID="relatedImages" runat="server" Visible="false" OnItemDataBound="relatedImages_OnItemDataBound">

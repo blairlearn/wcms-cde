@@ -19,7 +19,7 @@
                     </dd>
                 </asp:PlaceHolder>
                 <dd class="definition">
-                    <%# ((DictionaryTerm)(Container.DataItem)).Definition.Text%>
+                    <%# ((DictionaryTerm)(Container.DataItem)).Definition.Html%>
                     <asp:Panel runat="server" ID="pnlRelatedInfo">
                         <div class="related-resources">
                             <h6>
