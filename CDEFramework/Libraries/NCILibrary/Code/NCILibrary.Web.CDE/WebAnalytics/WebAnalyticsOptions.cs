@@ -190,8 +190,8 @@ namespace NCI.Web.CDE.WebAnalytics
             catch (Exception ex)
             {
                 Logger.LogError("CDE:WebAnalyticsOptions.cs:GetChannelsFromSectionDetail()",
-                      "Exception encountered while retrieving web analytics channels.",
-                      NCIErrorLevel.Error, ex);
+                      "Error retrieving Web Analytics channel. Check analytics values in section details.",
+                      NCIErrorLevel.Debug, ex);
                 return "";
             }
         }
