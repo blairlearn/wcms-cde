@@ -27,7 +27,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     base.SearchList.ResultsTemplate = base.SearchList.ResultsTemplate =
                     helper.languageStrings() +
                     @"<div class=""dynamic list has-images"">" + 
-                    @"<h3>" + base.SearchList.SearchTitle + @"</h3>" +
+                    @"<h3 class=""dynamic-list-title"">" + base.SearchList.SearchTitle + @"</h3>" +
                     helper.openList() +
                     helper.imageString() +
                     helper.openListItem() +
