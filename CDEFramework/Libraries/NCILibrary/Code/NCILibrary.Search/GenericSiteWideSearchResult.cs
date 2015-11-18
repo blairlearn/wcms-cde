@@ -6,6 +6,7 @@ using NCI.Util;
 
 namespace NCI.Search
 {
+    [Obsolete("This is being replaced by the new SiteWideSearchProvider")]
     public class GenericSiteWideSearchResult : ISiteWideSearchResult
     {
         private string _title;
