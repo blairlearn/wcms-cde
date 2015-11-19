@@ -23,50 +23,52 @@ namespace CancerGov.Modules.Search.Endeca
         /// <param name="offSet"></param>
         /// <param name="dimIDs"></param>
         /// <returns></returns>
-        public static SiteWideSearchResults GetSiteWideSearchResults(string searchTerm, long itemsPerPage, long offSet, DisplayLanguage lang)
-        {
-            string dimIDs = Strings.Clean(ConfigurationManager.AppSettings["EndecaAllDocs"]);
+        //public static SiteWideSearchResults GetSiteWideSearchResults(string searchTerm, long itemsPerPage, long offSet, DisplayLanguage lang)
+        //{
+        //    string dimIDs = Strings.Clean(ConfigurationManager.AppSettings["EndecaAllDocs"]);
 
-            if (lang == DisplayLanguage.Spanish)
-            {
-                dimIDs = Strings.Clean(ConfigurationManager.AppSettings["EndecaSpanishDocs"]);
-            }
+        //    if (lang == DisplayLanguage.Spanish)
+        //    {
+        //        dimIDs = Strings.Clean(ConfigurationManager.AppSettings["EndecaSpanishDocs"]);
+        //    }
 
-            if (dimIDs == null)
-            {
-                throw new Exception("The site wide search result doc types are not set correctly.");
-            }
+        //    if (dimIDs == null)
+        //    {
+        //        throw new Exception("The site wide search result doc types are not set correctly.");
+        //    }
 
-            //Create a search object and execute it.
-            EndecaSearch eSearch = new EndecaSearch(searchTerm, itemsPerPage, offSet, dimIDs);
-            eSearch.ExecuteSearch();
+        //    //Create a search object and execute it.
+        //    EndecaSearch eSearch = new EndecaSearch(searchTerm, itemsPerPage, offSet, dimIDs);
+        //    eSearch.ExecuteSearch();
 
-            //I do not want to mess with the EndecaSearch class since it is used by more than the site wide
-            //search results.  Unfortunately FillSearchResults does not take in an IList, but an ArrayList.
-            //The SiteWideSearchResults is a generic list, so I still need to use an ArrayList temporarily.
-            ArrayList searchResults = new ArrayList();
-            eSearch.FillSearchResults(searchResults);
+        //    NCI.Search.ISiteWideSearchResultCollection collection = SiteWideSearch.GetSearchResults("CancerGovEnglish", "breast cancer", 15, 0);
 
-            if (searchResults.Count == 0)
-            {
-                return new SiteWideSearchResults(0);
-            }
-            else
-            {
-                SiteWideSearchResults results = new SiteWideSearchResults(eSearch.TotalSearchResults);
+        //    //I do not want to mess with the EndecaSearch class since it is used by more than the site wide
+        //    //search results.  Unfortunately FillSearchResults does not take in an IList, but an ArrayList.
+        //    //The SiteWideSearchResults is a generic list, so I still need to use an ArrayList temporarily.
+        //    ArrayList searchResults = new ArrayList();
+        //    eSearch.FillSearchResults(searchResults);
 
-                foreach (EndecaResult res in searchResults)
-                    results.Add(res);
+        //    if (searchResults.Count == 0)
+        //    {
+        //        return new SiteWideSearchResults(0);
+        //    }
+        //    else
+        //    {
+        //        SiteWideSearchResults results = new SiteWideSearchResults(eSearch.TotalSearchResults);
 
-                //DYM Keyword
-                string didYouMeanStr = eSearch.DidYouMean();
-                if (didYouMeanStr != null)
-                {
-                    results.DidYouMeanText = didYouMeanStr;
-                }
+        //        foreach (EndecaResult res in searchResults)
+        //            results.Add(res);
 
-                return results;
-            }
-        }
+        //        //DYM Keyword
+        //        string didYouMeanStr = eSearch.DidYouMean();
+        //        if (didYouMeanStr != null)
+        //        {
+        //            results.DidYouMeanText = didYouMeanStr;
+        //        }
+
+        //        return results;
+        //    }
+        //}
     }
 }

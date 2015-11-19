@@ -58,12 +58,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     {
                         long dimFilter = Strings.ToLong(ConfigurationManager.AppSettings["EndecaSWSearchDimFilter"], 0);
 
-                        ISiteWideSearchResultCollection results = GenericSiteWideSearchManager.GetSearchResults(Keyword, _currentPage, _recordsPerPage, dimFilter);
+                        ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("CancerGovEnglish", Keyword, _currentPage, 0); //GenericSiteWideSearchManager.GetSearchResults(Keyword, _currentPage, _recordsPerPage, dimFilter);
 
                         rptSearchResults.DataSource = results;
                         rptSearchResults.DataBind();
 
-                        if (results.TotalNumResults == 0)
+                        if (results.ResultCount == 0)
                         {
                             ResultsText = "No results found";
                             rptSearchResults.Visible = false;
@@ -73,15 +73,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
                             int startRecord = 0;
                             int endRecord = 0;
                             _resultsFound = true;
-                            SimplePager.GetFirstItemLastItem(_currentPage, _recordsPerPage, (int)results.TotalNumResults, out startRecord, out endRecord);
+                            SimplePager.GetFirstItemLastItem(_currentPage, _recordsPerPage, (int)results.ResultCount, out startRecord, out endRecord);
 
                             //phNoResultsLabel.Visible = false;
                             rptSearchResults.Visible = true;
-                            string resultsCount = String.Format("{0}-{1} of {2}", startRecord.ToString(), endRecord.ToString(), results.TotalNumResults.ToString());
+                            string resultsCount = String.Format("{0}-{1} of {2}", startRecord.ToString(), endRecord.ToString(), results.ResultCount.ToString());
                             ResultsText = "Results " + resultsCount;
                         }
 
-                        spPager.RecordCount = (int)results.TotalNumResults;
+                        spPager.RecordCount = (int)results.ResultCount;
                         spPager.RecordsPerPage = _recordsPerPage;
                         spPager.CurrentPage = _currentPage;
                         spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;

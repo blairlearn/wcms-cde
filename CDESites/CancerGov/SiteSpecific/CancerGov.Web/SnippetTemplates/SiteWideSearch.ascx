@@ -19,24 +19,18 @@
         <asp:Repeater ID="rptBestBets" EnableViewState="false" runat="server">
             <ItemTemplate>
                 <div class="featured sitewide-results">
-                    <h2>
+                 <%--   <h2>
                         <asp:Label
                             ID="lblBBCatName" 
                             Text='<%# (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish ? "Mejores resultados para " : "Best Bets for ") + Eval("CategoryName")%>'
                             runat="server" />
                     </h2>
                     <asp:Literal ID="Literal1" runat="server" Text='<%# BestBetResultsHyperlinkOnclick(Container) %>'>
-                    </asp:Literal>
+                    </asp:Literal>--%>
                 </div>    
             </ItemTemplate>
         </asp:Repeater>
-        
-        <!-- DYM -->
-        <asp:PlaceHolder ID="phDYM" runat="server">
-            <h2><asp:Literal ID="litDidYouMeanText" runat="server">Did you mean</asp:Literal>:</h2>
-            <asp:HyperLink id="lnkDym" NavigateUrl="#" runat="server"><span class="term"><asp:Literal ID="litDYMString" runat="server" /></span></asp:HyperLink><p></p>
-        </asp:PlaceHolder>
-        
+                        
         <!-- Results x-y of z for: Keyword -->
         <div class="sitewide-results">
             <h4><asp:Label ID="lblTopResultsXofY" runat="server" /> <span class="term"><asp:Label ID="lblTopResultsXofYKeyword" runat="server" /></span></h4>

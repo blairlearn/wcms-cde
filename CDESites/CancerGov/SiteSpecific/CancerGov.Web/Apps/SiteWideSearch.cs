@@ -19,6 +19,7 @@ using NCI.Logging;
 using NCI.Search.Endeca;
 using CancerGov.Modules.Search.Endeca;
 using NCI.Web.CDE;
+using NCI.Search;
 
 
 namespace NCI.Web.CancerGov.Apps
@@ -32,7 +33,7 @@ namespace NCI.Web.CancerGov.Apps
         protected Repeater rptBestBets;
         protected Label lblBBCatName;
         protected Repeater rptBBListItems;
-        protected PlaceHolder phDYM;
+       
         protected Literal litDidYouMeanText;
         protected PlaceHolder phError;
         protected Label lblTopResultsXofYKeyword;
@@ -257,9 +258,6 @@ namespace NCI.Web.CancerGov.Apps
             SetupCancerGovPageStuff();
 
             SetLabels();
-
-            //Hide the Did You Mean Section
-            phDYM.Visible = false;
 
             //Hide the error message
             phError.Visible = false;
@@ -701,37 +699,40 @@ namespace NCI.Web.CancerGov.Apps
                 rptBestBets.Visible = false;
             }
 
-            //Get Results...            
-            SiteWideSearchResults results = GetSearchResults(SearchTerm);
+            //Get Results...  
+            ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("CancerGovEnglish", SearchTerm, 15, 0);
+            
 
             //Setup the Did You Mean if needed.
-            if (_allowedToShowDYM && !string.IsNullOrEmpty(results.DidYouMeanText) && CurrentPage == 1)
-                ShowDYMText(results.DidYouMeanText);
+            //if (_allowedToShowDYM && !string.IsNullOrEmpty(results.DidYouMeanText) && CurrentPage == 1)
+            //    ShowDYMText(results.DidYouMeanText);
 
             //Set the last total number of results so if the user changes the ItemsPerPage(pageunit)
             //then we can move them to the closest page.  Say you are viewing 10 items per page and
             //you are on page 6. This shows 51-60.  If you change to 50 items per page you should put
             //the user on page 2 and not page 1.  That way they will see 51-100.  
-            TotalNumberOfResults = results.TotalNumResults;
+            TotalNumberOfResults = results.ResultCount;
             PreviousItemsPerPage = ItemsPerPage;
 
             int firstIndex, lastIndex;
 
             //Get first index and last index
-            SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.TotalNumResults, out firstIndex, out lastIndex);
+            SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.ResultCount, out firstIndex, out lastIndex);
             _resultOffset = firstIndex;
 
-            rptResults.DataSource = from res in results
-                                    select new NCI.Web.UI.WebControls.TemplatedDataItem(
-                                        GetSearchResultTemplate(res),
-                                        new
-                                        {
-                                            URL = res.Url,
-                                            Title = res.Title,
-                                            DisplayUrl = res.DisplayUrl,
-                                            Description = res.Description,
-                                            Label = GetSearchResultLabel(res),
-                                        });
+            rptResults.DataSource = results;
+
+            //rptResults.DataSource = from res in results
+            //                        select new NCI.Web.UI.WebControls.TemplatedDataItem(
+            //                            GetSearchResultTemplate(res),
+            //                            new
+            //                            {
+            //                                URL = res.Url,
+            //                                Title = res.Title,
+            //                                DisplayUrl = res.DisplayUrl,
+            //                                Description = res.Description,
+            //                                Label = GetSearchResultLabel(res),
+            //                            });
             rptResults.DataBind();
 
             //Set Keywords in labels
@@ -740,7 +741,7 @@ namespace NCI.Web.CancerGov.Apps
             lblSearchWithinResultKeyword.Text = KeywordText;
 
             //Show labels for results X of Y
-            ShowResultsXoYLabels(firstIndex, lastIndex, results.TotalNumResults);
+            ShowResultsXoYLabels(firstIndex, lastIndex, results.ResultCount);
 
             //Setup pager
             SetupPager();
@@ -898,22 +899,7 @@ namespace NCI.Web.CancerGov.Apps
             if (PageDisplayInformation.Language == DisplayLanguage.Spanish)
                 spPager.BaseUrl += "&lang=spanish";
         }
-
-        /// <summary>
-        /// Helper method to setup the DYM stuff
-        /// </summary>
-        /// <param name="dymText"></param>
-        private void ShowDYMText(string dymText)
-        {
-            phDYM.Visible = true;
-            lnkDym.Text = dymText;
-            lnkDym.NavigateUrl = string.Format(
-                "{0}?swKeyword={1}&pageunit={2}&dym=1",
-                PageInstruction.GetUrl("PrettyUrl").UriStem,
-                Server.UrlEncode(dymText),
-                ItemsPerPage);
-        }
-
+                
         /// <summary>
         /// Method to get best bets
         /// </summary>
@@ -945,19 +931,19 @@ namespace NCI.Web.CancerGov.Apps
         {
             SiteWideSearchResults results = null;
 
-            try
-            {
-                results = SiteWideSearchManager.GetSiteWideSearchResults(
-                    searchTerm,
-                    ItemsPerPage,
-                    (CurrentPage - 1) * ItemsPerPage,
-                    PageDisplayInformation.Language);
-            }
-            catch (Exception ex)
-            {
-                Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetSearchResults, Endeca Search Query used:" + searchTerm, NCIErrorLevel.Error, ex);
-                throw ex;
-            }
+            //try
+            //{
+            //    results = SiteWideSearchManager.GetSiteWideSearchResults(
+            //        searchTerm,
+            //        ItemsPerPage,
+            //        (CurrentPage - 1) * ItemsPerPage,
+            //        PageDisplayInformation.Language);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetSearchResults, Endeca Search Query used:" + searchTerm, NCIErrorLevel.Error, ex);
+            //    throw ex;
+            //}
 
             return results;
         }

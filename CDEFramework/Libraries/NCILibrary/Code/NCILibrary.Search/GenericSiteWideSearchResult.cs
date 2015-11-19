@@ -7,49 +7,49 @@ using NCI.Util;
 namespace NCI.Search
 {
     [Obsolete("This is being replaced by the new SiteWideSearchProvider")]
-    public class GenericSiteWideSearchResult : ISiteWideSearchResult
+    public class GenericSiteWideSearchResult //: ISiteWideSearchResult
     {
-        private string _title;
-        private string _description;
-        private string _url;
+        //private string _title;
+        //private string _description;
+        //private string _url;
 
-        public string Title
-        {
-            get
-            {
-                if (!String.IsNullOrEmpty(_title))
-                    return _title;
-                else
-                    return "Untitled";
-            }
-        }
+        //public string Title
+        //{
+        //    get
+        //    {
+        //        if (!String.IsNullOrEmpty(_title))
+        //            return _title;
+        //        else
+        //            return "Untitled";
+        //    }
+        //}
 
-        public string Description
-        {
-            get { return _description; }
-        }
+        //public string Description
+        //{
+        //    get { return _description; }
+        //}
 
-        public string Url
-        {
-            get { return _url; }
-        }
+        //public string Url
+        //{
+        //    get { return _url; }
+        //}
 
-        public string WrappedUrl
-        {
-            get
-            {
-                if (_url != null)
-                    return Strings.Wrap(_url, 85, "<br />");
-                else
-                    return "";
-            }
-        }
+        //public string WrappedUrl
+        //{
+        //    get
+        //    {
+        //        if (_url != null)
+        //            return Strings.Wrap(_url, 85, "<br />");
+        //        else
+        //            return "";
+        //    }
+        //}
 
-        public GenericSiteWideSearchResult(string title, string description, string url)
-        {
-            this._title = title;
-            this._description = description;
-            this._url = url;
-        }
+        //public GenericSiteWideSearchResult(string title, string description, string url)
+        //{
+        //    this._title = title;
+        //    this._description = description;
+        //    this._url = url;
+        //}
     }
 }
