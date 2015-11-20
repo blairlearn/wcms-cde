@@ -607,7 +607,7 @@ namespace NCI.Web.CancerGov.Apps
 
             //Set controls.
             lblResultsForText.Text = GetResource("ResultsForText"); //"Resultados para:";
-            litDidYouMeanText.Text = GetResource("DidYouMeanText"); //"Quiz&aacute;s quiso decir";
+            //litDidYouMeanText.Text = GetResource("DidYouMeanText"); //"Quiz&aacute;s quiso decir";
             btnTextChangePageUnit.Text = GetResource("TextChangePageUnit"); //"Sí";
 
             //Pager previous and next
@@ -703,10 +703,7 @@ namespace NCI.Web.CancerGov.Apps
             ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("CancerGovEnglish", SearchTerm, 15, 0);
             
 
-            //Setup the Did You Mean if needed.
-            //if (_allowedToShowDYM && !string.IsNullOrEmpty(results.DidYouMeanText) && CurrentPage == 1)
-            //    ShowDYMText(results.DidYouMeanText);
-
+           
             //Set the last total number of results so if the user changes the ItemsPerPage(pageunit)
             //then we can move them to the closest page.  Say you are viewing 10 items per page and
             //you are on page 6. This shows 51-60.  If you change to 50 items per page you should put
@@ -907,21 +904,21 @@ namespace NCI.Web.CancerGov.Apps
         /// <returns></returns>
         private BestBetsResults GetBestBetsResults(string searchTerm)
         {
-            BestBetsResults results = null;
+            BestBetsResults results = new BestBetsResults();
 
-            try
-            {
-                results = BestBetsManager.GetBestBets(searchTerm, PageDisplayInformation.Language);
-            }
-            catch (Exception ex)
-            {
-                Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetBestBetsResults", NCIErrorLevel.Error, ex);
-                throw ex;
-            }
+            //try
+            //{
+            //    results = BestBetsManager.GetBestBets(searchTerm, PageDisplayInformation.Language);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetBestBetsResults", NCIErrorLevel.Error, ex);
+            //    throw ex;
+            //}
 
             return results;
         }
-
+         
         /// <summary>
         /// Method to get search results.
         /// </summary>

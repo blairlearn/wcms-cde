@@ -20,7 +20,7 @@ namespace CancerGov.Modules.Search.Endeca
         //}        
 
         ///// <summary>
-        ///// Gets and sets any Did you mean text.
+        ///// Gets and sets any Did you mean text. 
         ///// </summary>
         //public string DidYouMeanText
         //{

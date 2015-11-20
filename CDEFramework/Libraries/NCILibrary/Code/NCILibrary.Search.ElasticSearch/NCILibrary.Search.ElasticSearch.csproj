@@ -64,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898ff17c-c94a-4d85-8aad-88764b72cfae}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NCILibrary.Search\NCILibrary.Search.csproj">
       <Project>{8962b50c-e3a9-4f0a-9e48-7008c40247cd}</Project>
       <Name>NCILibrary.Search</Name>

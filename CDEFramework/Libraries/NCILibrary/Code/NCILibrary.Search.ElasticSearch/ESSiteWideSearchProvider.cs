@@ -11,6 +11,8 @@ using Elasticsearch.Net.ConnectionPool;
 
 using NCI.Search.Configuration;
 using NCI.Search;
+using NCI.Logging;
+
 
 
 namespace NCI.Search
@@ -20,6 +22,7 @@ namespace NCI.Search
     /// </summary>
     public class ESSiteWideSearchProvider : NCI.Search.SiteWideSearchProviderBase
     {
+        static Log log = new Log(typeof(ESSiteWideSearchProvider));
 
         /// <summary>
         /// Gets the search results from this SiteWideSearch provider.
@@ -97,7 +100,7 @@ namespace NCI.Search
 
             catch (Exception ex)
             {
-                // log.error("Error retrieving search results.", ex);
+                log.error("Error retrieving search results.", ex);
             }
 
 
