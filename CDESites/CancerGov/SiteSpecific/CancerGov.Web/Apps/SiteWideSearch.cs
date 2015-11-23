@@ -669,7 +669,7 @@ namespace NCI.Web.CancerGov.Apps
                 LoadResults();
             }
         }
-
+         
         /// <summary>
         /// This method is the one that sets up label text and binds the search results.
         /// </summary>
@@ -700,7 +700,8 @@ namespace NCI.Web.CancerGov.Apps
             }
 
             //Get Results...  
-            ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("CancerGovEnglish", SearchTerm, 15, 0);
+            ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("CancerGovEnglish", SearchTerm,  ItemsPerPage,
+                    (CurrentPage - 1) * ItemsPerPage);
             
 
            
@@ -717,19 +718,19 @@ namespace NCI.Web.CancerGov.Apps
             SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.ResultCount, out firstIndex, out lastIndex);
             _resultOffset = firstIndex;
 
-            rptResults.DataSource = results;
+           // rptResults.DataSource = results;
 
-            //rptResults.DataSource = from res in results
-            //                        select new NCI.Web.UI.WebControls.TemplatedDataItem(
-            //                            GetSearchResultTemplate(res),
-            //                            new
-            //                            {
-            //                                URL = res.Url,
-            //                                Title = res.Title,
-            //                                DisplayUrl = res.DisplayUrl,
-            //                                Description = res.Description,
-            //                                Label = GetSearchResultLabel(res),
-            //                            });
+            rptResults.DataSource = from res in results
+                                    select new NCI.Web.UI.WebControls.TemplatedDataItem(
+                                        GetSearchResultTemplate((ESSiteWideSearchResult)res),
+                                        new
+                                        {
+                                            URL = res.Url,
+                                            Title = res.Title,
+                                            DisplayUrl = res.Url,
+                                            Description = res.Description,
+                                            Label = GetSearchResultLabel((ESSiteWideSearchResult)res),
+                                        });
             rptResults.DataBind();
 
             //Set Keywords in labels
@@ -774,7 +775,7 @@ namespace NCI.Web.CancerGov.Apps
         /// </summary>
         /// <param name="res">The source EndecaResult used to generate the label.</param>
         /// <returns>A language-specific label for the result.</returns>
-        private String GetSearchResultLabel(EndecaResult res)
+        private String GetSearchResultLabel(ESSiteWideSearchResult res)
         {
             string language = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
             string label = res.ContentType;
@@ -800,7 +801,7 @@ namespace NCI.Web.CancerGov.Apps
         /// </summary>
         /// <param name="res">The source EndecaResult.</param>
         /// <returns>A String template name.</returns>
-        private string GetSearchResultTemplate(EndecaResult res)
+        private string GetSearchResultTemplate(ESSiteWideSearchResult res)
         {
             switch (res.ContentType)
             {

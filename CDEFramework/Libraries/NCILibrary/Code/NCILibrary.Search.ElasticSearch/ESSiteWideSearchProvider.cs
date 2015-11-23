@@ -73,21 +73,21 @@ namespace NCI.Search
                 {
 
                     string title = "";
-                    if (hit.fields.title && hit.fields.title.length > 0)
+                    if (hit.fields.title != null)
                     {
                         title = hit.fields.title[0];
                     }
 
                     string url = "";
-                    if (hit.fields.url && hit.fields.url.length > 0)
+                    if (hit.fields.url != null)
                     {
                         url = hit.fields.url[0];
                     }
 
-                    string description = hit.fields.metatag[0];
-                    if (hit.fields.metatag && hit.fields.metatag.length > 0)
+                    string description = "";
+                    if (hit.fields["metatag.description"][0] != null)
                     {
-                        description = hit.fields.metatag[0];
+                        description = hit.fields["metatag.description"][0];
                     }
 
                     foundTerms.Add(new ESSiteWideSearchResult(title, url, description));
@@ -101,6 +101,8 @@ namespace NCI.Search
             catch (Exception ex)
             {
                 log.error("Error retrieving search results.", ex);
+                throw ex;
+                
             }
 
 

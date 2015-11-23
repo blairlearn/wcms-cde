@@ -15,7 +15,7 @@
         <cc1:JavascriptProbeControl ID="jsProbe" runat="server" />
         <h3><asp:Label id="lblResultsForText" Text="Results for:" runat="server"/> <asp:Label CssClass="term" ID="lblResultsForKeyword" runat="server" /></h3>
      
-        <!-- Best Bets Here -->
+        <!-- Best Bets Here --> 
         <asp:Repeater ID="rptBestBets" EnableViewState="false" runat="server">
             <ItemTemplate>
                 <div class="featured sitewide-results">
@@ -62,11 +62,11 @@
                                 <div class="description">
 		                            <%# Eval("Description") %>
 		                        </div> 
-		                        <div>
+		                       <%-- <div>
 		                            <cite class="url">
 		                            <%# Eval("DisplayUrl") %>
 		                            </cite>
-		                        </div>
+		                        </div>--%>
 		                    </li>                    
                         </Template>		                    
                     </cc1:TemplateItem>
@@ -79,7 +79,7 @@
                                     runat="server"
                                     onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
                                     NavigateUrl='<%# Eval("Url") %>'
-                                    Text='<%# String.Format("{0} ({1})", Eval("Title"), Eval("Label")) %>' />
+                                    Text='<%# String.Format("{0} ({1})", Eval("Title"), Eval("Description")) %>' />
                                 </div>
                                 <div>
 		                            <cite class="url">

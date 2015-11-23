@@ -16,6 +16,7 @@ namespace NCI.Search
 
         public string WrappedUrl { get; set; }
 
+        public string ContentType { get; set; }
 
         public ESSiteWideSearchResult()
         {
