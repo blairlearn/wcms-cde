@@ -147,7 +147,7 @@ namespace NCI.Web.Dictionary
                 log.error("There is an error in the Search Method of the Dictionary Service: " + ex);
             }
 
-            List<DictionarySearchResult> resultList = DeserializeList(searchRet.Result);
+            List<DictionarySearchResult> resultList = DeserializeList(searchRet.Result, svcDictionary);
             DictionarySearchResultCollection collection = new DictionarySearchResultCollection(resultList.AsEnumerable());
             collection.ResultsCount = searchRet.Meta.ResultCount;
             return collection;
@@ -229,7 +229,7 @@ namespace NCI.Web.Dictionary
                 log.error("Error in Expand Method in Dictionary Web Service: " + ex);
             }
 
-            List<DictionarySearchResult> expansionList = DeserializeList(expandRet.Result);
+            List<DictionarySearchResult> expansionList = DeserializeList(expandRet.Result, svcDictionary);
             DictionarySearchResultCollection collection = new DictionarySearchResultCollection(expansionList.AsEnumerable());
             collection.ResultsCount = expandRet.Meta.ResultCount;
             
@@ -243,7 +243,7 @@ namespace NCI.Web.Dictionary
         /// </summary>
         /// <param name="list">the string list that the dictionary service would return</param>
         /// <returns>deserialized list of DictionarySearchResults</returns>
-        private List<DictionarySearchResult> DeserializeList(NCI.Services.Dictionary.BusinessObjects.DictionarySearchResultEntry[] list)
+        private List<DictionarySearchResult> DeserializeList(NCI.Services.Dictionary.BusinessObjects.DictionarySearchResultEntry[] list, svcDictionaryType dictionaryType)
         {
             List<DictionarySearchResult> returnList = new List<DictionarySearchResult>(); ;
 
@@ -260,7 +260,7 @@ namespace NCI.Web.Dictionary
                 }
                 catch (JsonReaderException ex)
                 {
-                    log.error("Error in Json string from service: " + ex.ToString());
+                    log.error("Error in Json string from service: " + ex.ToString() + "\nDictionary: " + dictionaryType + "\nTerm ID: " + m.ID + "\nTerm Name: " + m.MatchedTerm);
                 }
 
             }
