@@ -73,19 +73,34 @@ namespace NCI.Search
                 {
 
                     string title = "";
-                    if (hit.fields.title != null)
+                    try
                     {
-                        title = hit.fields.title[0];
+                        if (hit.fields.title != null)
+                        {
+                            title = hit.fields.title[0];
+                        }
+                    }
+
+                    catch (KeyNotFoundException keynotfound)
+                    {
+                        title = "";
                     }
 
                     string url = "";
-                    if (hit.fields.url != null)
+                    try
                     {
-                        url = hit.fields.url[0];
+                        if (hit.fields.url != null)
+                        {
+                            url = hit.fields.url[0];
+                        }
+                    }
+
+                    catch (KeyNotFoundException keynotfound)
+                    {
+                        url = "";
                     }
 
                     string description = "";
-                    
                     try
                     {
                         if (hit.fields["metatag.description"][0] != null)
