@@ -85,11 +85,20 @@ namespace NCI.Search
                     }
 
                     string description = "";
-                    if (hit.fields["metatag.description"][0] != null)
+                    
+                    try
                     {
-                        description = hit.fields["metatag.description"][0];
+                        if (hit.fields["metatag.description"][0] != null)
+                        {
+                            description = hit.fields["metatag.description"][0];
+                        }
                     }
 
+                    catch (KeyNotFoundException keynotfound)
+                    {
+                        description = "";
+                        log.error("Description no found:", keynotfound);
+                    }
                     foundTerms.Add(new ESSiteWideSearchResult(title, url, description));
 
 
