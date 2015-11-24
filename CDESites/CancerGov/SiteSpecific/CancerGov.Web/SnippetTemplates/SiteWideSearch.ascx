@@ -62,11 +62,11 @@
                                 <div class="description">
 		                            <%# Eval("Description") %>
 		                        </div> 
-		                       <%-- <div>
+		                        <div>
 		                            <cite class="url">
-		                            <%# Eval("DisplayUrl") %>
+		                            <%# Eval("Url") %>
 		                            </cite>
-		                        </div>--%>
+		                        </div>
 		                    </li>                    
                         </Template>		                    
                     </cc1:TemplateItem>
