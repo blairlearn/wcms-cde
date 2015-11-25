@@ -165,7 +165,7 @@ namespace NCI.Web.CDE.UI
             if (htmlMetaDataType == HtmlMetaDataType.ContentLanguage)
                 hm.Name = "content-language";
             else if (htmlMetaDataType == HtmlMetaDataType.ContentType)
-                hm.Name = "content-type";
+                hm.Name = "nci-pagetype";
             else if (htmlMetaDataType == HtmlMetaDataType.EnglishLinkingPolicy)
                 hm.Name = "english-linking-policy";
             else if (htmlMetaDataType == HtmlMetaDataType.EspanolLinkingPolicy)
@@ -356,6 +356,7 @@ namespace NCI.Web.CDE.UI
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EnglishLinkingPolicy);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EspanolLinkingPolicy);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Robots);
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.ContentType);
             }
 
             SocialMetaTag[] tags = PageAssemblyInstruction.GetSocialMetaTags();
