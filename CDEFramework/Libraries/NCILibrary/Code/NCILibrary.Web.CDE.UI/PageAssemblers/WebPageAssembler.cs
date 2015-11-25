@@ -165,7 +165,7 @@ namespace NCI.Web.CDE.UI
             if (htmlMetaDataType == HtmlMetaDataType.ContentLanguage)
                 hm.Name = "content-language";
             else if (htmlMetaDataType == HtmlMetaDataType.ContentType)
-                hm.Name = "nci-pagetype";
+                hm.Name = "dcterms.type";
             else if (htmlMetaDataType == HtmlMetaDataType.EnglishLinkingPolicy)
                 hm.Name = "english-linking-policy";
             else if (htmlMetaDataType == HtmlMetaDataType.EspanolLinkingPolicy)
@@ -350,6 +350,12 @@ namespace NCI.Web.CDE.UI
         {
             if (CurrentPageHead != null)
             {
+                //add in schema for dcterms to head as well - for content type
+                HtmlLink hml = new HtmlLink();
+                hml.Attributes.Add("rel", "schema.dcterms");
+                hml.Href = "http://purl.org/dc/terms/";
+                CurrentPageHead.Controls.Add(hml);
+
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.KeyWords);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Description);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.ContentLanguage);
