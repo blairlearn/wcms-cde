@@ -562,11 +562,11 @@
     </ProjectReference>
     <ProjectReference Include="..\..\EmergencyAlert\EmergencyAlert.csproj">
       <Project>{2ED8F4D6-9A1D-4109-8F37-6D407C674184}</Project>
-      <Name>EmergencyAlert %28EmergencyAlert\EmergencyAlert%29</Name>
+      <Name>EmergencyAlert</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\PresentationClasses\PresentationClasses.csproj">
       <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
-      <Name>PresentationClasses %28CancerGovSpecific\PresentationClasses\PresentationClasses%29</Name>
+      <Name>PresentationClasses</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Search.AutoSuggest\CancerGov.Search.AutoSuggest.csproj">
       <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>
