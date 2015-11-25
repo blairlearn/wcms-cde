@@ -142,6 +142,9 @@ namespace NCI.Web.CDE.UI
                     case HtmlMetaDataType.EspanolLinkingPolicy:
                         metaData = ContentDeliveryEngineConfig.PathInformation.EspanolLinkingPolicyPath.Path;
                         break;
+                    case HtmlMetaDataType.ContentType:
+                        metaData = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
+                        break;
                 }
 
             }
