@@ -22,5 +22,7 @@ namespace NCI.Search
         {
             get;
         }
+        string ContentType
+        { get; }
     }
 }

@@ -721,14 +721,14 @@ namespace NCI.Web.CancerGov.Apps
 
             rptResults.DataSource = from res in results
                                     select new NCI.Web.UI.WebControls.TemplatedDataItem(
-                                        GetSearchResultTemplate((ESSiteWideSearchResult)res),
+                                        GetSearchResultTemplate((ISiteWideSearchResult)res),
                                         new
                                         {
                                             URL = res.Url,
                                             Title = res.Title,//res.Title.Remove(res.Title.IndexOf(ResultTitleText)),
                                             DisplayUrl = res.Url,
                                             Description = res.Description,
-                                            Label = GetSearchResultLabel((ESSiteWideSearchResult)res),
+                                            Label = GetSearchResultLabel((ISiteWideSearchResult)res),
                                         });
             rptResults.DataBind();
 
@@ -774,7 +774,7 @@ namespace NCI.Web.CancerGov.Apps
         /// </summary>
         /// <param name="res">The source EndecaResult used to generate the label.</param>
         /// <returns>A language-specific label for the result.</returns>
-        private String GetSearchResultLabel(ESSiteWideSearchResult res)
+        private String GetSearchResultLabel(ISiteWideSearchResult res)
         {
             string language = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
             string label = res.ContentType;
@@ -800,7 +800,7 @@ namespace NCI.Web.CancerGov.Apps
         /// </summary>
         /// <param name="res">The source EndecaResult.</param>
         /// <returns>A String template name.</returns>
-        private string GetSearchResultTemplate(ESSiteWideSearchResult res)
+        private string GetSearchResultTemplate(ISiteWideSearchResult res)
         {
             switch (res.ContentType)
             {

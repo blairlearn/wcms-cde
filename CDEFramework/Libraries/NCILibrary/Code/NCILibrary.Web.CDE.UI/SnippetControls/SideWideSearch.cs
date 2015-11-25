@@ -56,8 +56,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     try
                     {
-                        long dimFilter = Strings.ToLong(ConfigurationManager.AppSettings["EndecaSWSearchDimFilter"], 0);
-
+                        
                         ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("CancerGovEnglish", Keyword, _currentPage, 0); //GenericSiteWideSearchManager.GetSearchResults(Keyword, _currentPage, _recordsPerPage, dimFilter);
 
                         rptSearchResults.DataSource = results;
