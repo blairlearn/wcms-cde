@@ -115,7 +115,7 @@
     <Compile Include="Apps\GlossaryTerms.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Apps\SiteWideSearch.cs">
+    <Compile Include="Apps\SiteWideSearchModule.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="App_GlobalResources\SiteWideSearch.es.designer.cs">

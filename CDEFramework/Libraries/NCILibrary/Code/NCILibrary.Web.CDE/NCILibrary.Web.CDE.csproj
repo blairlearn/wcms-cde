@@ -132,6 +132,7 @@
     <Compile Include="Modules\ModuleObjectFactory.cs" />
     <Compile Include="Modules\SearchList.cs" />
     <Compile Include="Modules\SearchResultPageInfo.cs" />
+    <Compile Include="Modules\SiteWideSearchConfig.cs" />
     <Compile Include="Modules\VelocityTemplate.cs" />
     <Compile Include="PageAssembly\AlternateContentVersions.cs" />
     <Compile Include="PageAssembly\BlockedSlot.cs" />

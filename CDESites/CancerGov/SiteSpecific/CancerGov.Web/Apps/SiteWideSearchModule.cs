@@ -20,11 +20,15 @@ using NCI.Search.Endeca;
 using CancerGov.Modules.Search.Endeca;
 using NCI.Web.CDE;
 using NCI.Search;
+using System.ComponentModel;
+using NCI.Web.CDE.Modules;
 
 
 namespace NCI.Web.CancerGov.Apps
 {
-    public class SiteWideSearch : AppsBaseUserControl
+    [DefaultProperty("Text")]
+    [ToolboxData("<{0}:SiteWideSearchModule runat=server></{0}:SiteWideSearchModule>")]
+    public class SiteWideSearchModule : AppsBaseUserControl
     {
         #region Control Members
         protected DropDownList ddlPageUnit;
@@ -134,6 +138,9 @@ namespace NCI.Web.CancerGov.Apps
             }
         }
 
+        private string SearchCollection { get; set; }
+        private string ResultTitleText { get; set; }
+
         /// <summary>
         /// Gets and sets the PreviousItemsPerPage.  
         /// </summary>
@@ -235,21 +242,19 @@ namespace NCI.Web.CancerGov.Apps
         #endregion
 
         /// <summary>
-        /// Event method sets content version and template and user control properties<br/>
-        /// <br/>
-        /// [1] Input form parameters:<br/>
-        ///			keyword {string: search string},<br/>
-        ///			first {integer: ordinal index of first result},<br/>
-        ///			resultSearch {string: search within results search string},<br/>
-        ///			chkCategories {comma-delimited set of strings: specific virtual paths to search},<br/>
-        ///			selectedPage {integer: current result page number}<br/>
-        /// [2] Builds Verity and BestBet query language and Verity query xml document<br/>
-        /// [3] Parses Verity results and errors<br/>
-        /// [4] Builds Verity and BestBet result HTML<br/>
-        /// [5] Builds paging control for results browsing<br/>
+        /// Event method sets content version and template and user control properties<br /><br />
+        /// [1] Input form parameters:<br />
+        /// keyword {string: search string},<br />
+        /// first {integer: ordinal index of first result},<br />
+        /// resultSearch {string: search within results search string},<br />
+        /// chkCategories {comma-delimited set of strings: specific virtual paths to search},<br />
+        /// selectedPage {integer: current result page number}<br />
+        /// [2] Builds Verity and BestBet query language and Verity query xml document<br />
+        /// [3] Parses Verity results and errors<br />
+        /// [4] Builds Verity and BestBet result HTML<br />
+        /// [5] Builds paging control for results browsing<br />
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -262,9 +267,15 @@ namespace NCI.Web.CancerGov.Apps
             //Hide the error message
             phError.Visible = false;
 
-            //Setup if we are allowed to show DYM
-            _allowedToShowDYM = Strings.ToBoolean((string)ConfigurationSettings.AppSettings["EndecaDidYouMean"]) && PageDisplayInformation.Language != DisplayLanguage.Spanish;
-
+            //set up the search collection (CancerGovEnglish or CancerGovSpanish)
+            //determine what text needs to be removed from the title e.g. - National Cancer Institute
+            SiteWideSearchConfig searchConfig = ModuleObjectFactory<SiteWideSearchConfig>.GetModuleObject(SnippetInfo.Data);
+            if (searchConfig != null)
+            {
+                SearchCollection = searchConfig.SearchCollection;
+                ResultTitleText = searchConfig.ResultTitleText;
+            }
+                        
             if (Page.Request.RequestType == "POST")
             {
                 if (!IsPostBack)
@@ -327,33 +338,21 @@ namespace NCI.Web.CancerGov.Apps
                 }
                 else
                 {
+                    //These things only apply to paging
 
-                    //Lets us know that this was a DYM click.
-                    bool isDym = Strings.ToBoolean(Request.Params["dym"]);
+                    //Get Items per page.
+                    ItemsPerPage = Strings.ToInt(Request.Params["pageunit"], 10);
 
-                    if (isDym)
+                    //Get the current Page
+                    CurrentPage = Strings.ToInt(Request.Params["page"], 1);
+
+                    //"De-serialize" old keywords.
+                    if (!string.IsNullOrEmpty(Request.Params["old_keywords"]))
                     {
-                        //Log the keyword because this is a new search.  I figure it is better if we mark it as a DYM.
-                        LogUserInput("DYM-Keyword:" + Keyword);
+                        string[] oldKeys = Request.Params["old_keywords"].Split(new char[] { '|' });
+                        OldKeywords.AddRange(oldKeys);
                     }
-                    else
-                    {
-                        //These things only apply to paging
-
-                        //Get Items per page.
-                        ItemsPerPage = Strings.ToInt(Request.Params["pageunit"], 10);
-
-                        //Get the current Page
-                        CurrentPage = Strings.ToInt(Request.Params["page"], 1);
-
-                        //"De-serialize" old keywords.
-                        if (!string.IsNullOrEmpty(Request.Params["old_keywords"]))
-                        {
-                            string[] oldKeys = Request.Params["old_keywords"].Split(new char[] { '|' });
-                            OldKeywords.AddRange(oldKeys);
-                        }
-                    }
-
+                    
                     LoadResults();
                 }
             }
@@ -700,7 +699,7 @@ namespace NCI.Web.CancerGov.Apps
             }
 
             //Get Results...  
-            ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("CancerGovEnglish", SearchTerm,  ItemsPerPage,
+            ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults(SearchCollection, SearchTerm, ItemsPerPage,
                     (CurrentPage - 1) * ItemsPerPage);
             
 
@@ -726,7 +725,7 @@ namespace NCI.Web.CancerGov.Apps
                                         new
                                         {
                                             URL = res.Url,
-                                            Title = res.Title,
+                                            Title = res.Title,//res.Title.Remove(res.Title.IndexOf(ResultTitleText)),
                                             DisplayUrl = res.Url,
                                             Description = res.Description,
                                             Label = GetSearchResultLabel((ESSiteWideSearchResult)res),

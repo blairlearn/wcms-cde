@@ -112,7 +112,7 @@ namespace NCI.Search
                     catch (KeyNotFoundException keynotfound)
                     {
                         description = "";
-                        log.error("Description no found:", keynotfound);
+                        
                     }
                     foundTerms.Add(new ESSiteWideSearchResult(title, url, description));
 
