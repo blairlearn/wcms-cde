@@ -144,6 +144,7 @@ namespace NCI.Web.CDE.UI
                         break;
                     case HtmlMetaDataType.ContentType:
                         metaData = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
+                        metaData = metaData.Replace("rx:", "");
                         break;
                 }
 
