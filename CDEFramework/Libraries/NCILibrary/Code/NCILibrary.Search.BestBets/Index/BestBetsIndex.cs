@@ -160,9 +160,15 @@ namespace NCI.Search.BestBets.Index
 
             _bestBetsPath = pathConfig.BestBetsFilePath;
 
+            if (!IO.Directory.Exists(_luceneIndexPath))
+                IO.Directory.CreateDirectory(_luceneIndexPath);
+
             //We are using an MMapDirectory as the default option (FSSimpleDirectory) does not handle
             //multi-threading well.
             _luceneIndex = MMapDirectory.Open(_luceneIndexPath);
+
+            //Now let's actually index the content.
+            BuildIndex();
         }
 
         /// <summary>

@@ -11,13 +11,14 @@ using System.Text;
 using System.Configuration;
 using System.Xml;
 using System.Globalization;
+
 using NCI.Util;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE.UI.WebControls;
 using NCI.Web.UI.WebControls;
 using NCI.Logging;
 using NCI.Search.Endeca;
-using CancerGov.Modules.Search.Endeca;
+using CancerGov.Search.BestBets;
 using NCI.Web.CDE;
 using NCI.Search;
 using System.ComponentModel;
@@ -395,7 +396,7 @@ namespace NCI.Web.CancerGov.Apps
             {
                 try
                 {
-                    BestBetResult bbResultItem = (BestBetResult)result.DataItem;
+                    BestBetUIResult bbResultItem = (BestBetUIResult)result.DataItem;
                     resultData = bbResultItem.CategoryDisplay;
 
                     // Did not use html parser here, seemed like a overkill just to inject a simple string. 
@@ -679,9 +680,9 @@ namespace NCI.Web.CancerGov.Apps
             //the results.
             if (CurrentPage == 1 && OldKeywords.Count == 0)
             {
-                BestBetsResults bbResults = GetBestBetsResults(SearchTerm);
+                BestBetUIResult[] bbResults = GetBestBetsResults(SearchTerm);
 
-                if (bbResults.Count > 0)
+                if (bbResults.Length > 0)
                 {
                     isBestBet = true;
                     rptBestBets.DataSource = bbResults;
@@ -902,48 +903,22 @@ namespace NCI.Web.CancerGov.Apps
         /// </summary>
         /// <param name="searchTerm"></param>
         /// <returns></returns>
-        private BestBetsResults GetBestBetsResults(string searchTerm)
+        private BestBetUIResult[] GetBestBetsResults(string searchTerm)
         {
-            BestBetsResults results = new BestBetsResults();
+            BestBetUIResult[] results = new BestBetUIResult[0];
 
-            //try
-            //{
-            //    results = BestBetsManager.GetBestBets(searchTerm, PageDisplayInformation.Language);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetBestBetsResults", NCIErrorLevel.Error, ex);
-            //    throw ex;
-            //}
+            try
+            {
+                results = BestBetsPresentationManager.GetBestBets(searchTerm, PageDisplayInformation.Language);
+            }
+            catch (Exception ex)
+            {
+                Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetBestBetsResults", NCIErrorLevel.Error, ex);
+                throw ex;
+            }
 
             return results;
         }
          
-        /// <summary>
-        /// Method to get search results.
-        /// </summary>
-        /// <param name="searchTerm"></param>
-        /// <returns></returns>
-        private SiteWideSearchResults GetSearchResults(string searchTerm)
-        {
-            SiteWideSearchResults results = null;
-
-            //try
-            //{
-            //    results = SiteWideSearchManager.GetSiteWideSearchResults(
-            //        searchTerm,
-            //        ItemsPerPage,
-            //        (CurrentPage - 1) * ItemsPerPage,
-            //        PageDisplayInformation.Language);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetSearchResults, Endeca Search Query used:" + searchTerm, NCIErrorLevel.Error, ex);
-            //    throw ex;
-            //}
-
-            return results;
-        }
-
     }
 }

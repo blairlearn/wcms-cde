@@ -19,14 +19,14 @@
         <asp:Repeater ID="rptBestBets" EnableViewState="false" runat="server">
             <ItemTemplate>
                 <div class="featured sitewide-results">
-                 <%--   <h2>
+                 <h2>
                         <asp:Label
                             ID="lblBBCatName" 
                             Text='<%# (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish ? "Mejores resultados para " : "Best Bets for ") + Eval("CategoryName")%>'
                             runat="server" />
                     </h2>
                     <asp:Literal ID="Literal1" runat="server" Text='<%# BestBetResultsHyperlinkOnclick(Container) %>'>
-                    </asp:Literal>--%>
+                    </asp:Literal>
                 </div>    
             </ItemTemplate>
         </asp:Repeater>
