@@ -32,6 +32,12 @@ namespace NCI.Search.BestBets
         public bool IsExactMatch { get; set; }
 
         /// <summary>
+        /// The 2 letter language code for this category
+        /// </summary>
+        [System.Xml.Serialization.XmlElement(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+        public string Language { get; set; }
+
+        /// <summary>
         /// Get the display HTML of the item
         /// </summary>
         [System.Xml.Serialization.XmlElement(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]

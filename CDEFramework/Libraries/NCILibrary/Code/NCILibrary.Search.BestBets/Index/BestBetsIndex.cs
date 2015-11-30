@@ -216,12 +216,12 @@ namespace NCI.Search.BestBets.Index
 
                 foreach (BestBetSynonym syn in bbcat.IncludeSynonyms)
                 {
-                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, false, syn.IsExactMatch, "en");
+                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, false, syn.IsExactMatch, bbcat.Language);
                 }
 
                 foreach (BestBetSynonym syn in bbcat.ExcludeSynonyms)
                 {
-                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, true, syn.IsExactMatch, "en");
+                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, true, syn.IsExactMatch, bbcat.Language);
                 }
             }
 
