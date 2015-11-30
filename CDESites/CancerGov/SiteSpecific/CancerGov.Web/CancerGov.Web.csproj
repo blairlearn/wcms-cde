@@ -580,10 +580,6 @@
       <Project>{a3d91f04-b62b-4ec4-bb66-ff10b2d23b23}</Project>
       <Name>CancerGov.Search.BestBets</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\CancerGov.Search.Endeca\CancerGov.Search.Endeca.csproj">
-      <Project>{4FD1D24F-D186-46FE-B44E-FA110AFE27FF}</Project>
-      <Name>CancerGov.Search.Endeca</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.TopicSearch\CancerGov.TopicSearch.csproj">
       <Project>{917C939E-6AA1-4FEE-8C35-6EC62974455B}</Project>
       <Name>CancerGov.TopicSearch</Name>
