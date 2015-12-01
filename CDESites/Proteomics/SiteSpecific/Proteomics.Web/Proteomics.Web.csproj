@@ -81,6 +81,10 @@
       <Project>{680B6841-020D-46DE-BFBB-FC38ACA2EF82}</Project>
       <Name>NCILibrary.Web.CDE.UI.Modules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.ElasticSearch\NCILibrary.Search.ElasticSearch.csproj">
+      <Project>{0af8d250-e5a2-4195-8940-54f806acf5f2}</Project>
+      <Name>NCILibrary.Search.ElasticSearch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
       <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>
       <Name>NCILibrary.Search.Endeca</Name>

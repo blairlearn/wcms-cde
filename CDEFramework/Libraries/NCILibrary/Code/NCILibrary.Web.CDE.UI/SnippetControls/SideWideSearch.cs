@@ -56,8 +56,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     try
                     {
-                        
-                        ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("CancerGovEnglish", Keyword, _currentPage, 0); //GenericSiteWideSearchManager.GetSearchResults(Keyword, _currentPage, _recordsPerPage, dimFilter);
+
+                        ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("DocSearch", Keyword, _recordsPerPage,
+                    (_currentPage - 1) * _recordsPerPage);
 
                         rptSearchResults.DataSource = results;
                         rptSearchResults.DataBind();

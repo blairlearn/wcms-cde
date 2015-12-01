@@ -125,34 +125,70 @@ namespace DCEG.Web.SnippetTemplates
                 //Get Endeca Search Results
                 string doc_type = ConfigurationSettings.AppSettings["EndecaDCEGNewsletter"];
                 //CancerGov.Search.EndecaSearching.EndecaSearch eSearch;
-                EndecaSearch eSearch;
-                if (bSearchRange)
-                {
-                    if (startMonth < 0 || startMonth > 12 || endMonth < 0 || endMonth > 12 || startYear < 0 || endYear < 0)
-                    {
-                        NCI.Logging.Logger.LogError("Invalid date range parameters", "NewsletterSearchResults", NCIErrorLevel.Error);
-                        this.RaiseErrorPage("Invalid date range parameters");
-                    }
+                //EndecaSearch eSearch;
+                //if (bSearchRange)
+                //{
+                //    if (startMonth < 0 || startMonth > 12 || endMonth < 0 || endMonth > 12 || startYear < 0 || endYear < 0)
+                //    {
+                //        NCI.Logging.Logger.LogError("Invalid date range parameters", "NewsletterSearchResults", NCIErrorLevel.Error);
+                //        this.RaiseErrorPage("Invalid date range parameters");
+                //    }
 
-                    string startRange = getTimeStamp(startYear, startMonth, 1);
-                    int endLastDay = getLastDayOfTheMonth(endMonth, endYear);
-                    string endRange = getTimeStamp(endYear, endMonth, endLastDay);
+                //    string startRange = getTimeStamp(startYear, startMonth, 1);
+                //    int endLastDay = getLastDayOfTheMonth(endMonth, endYear);
+                //    string endRange = getTimeStamp(endYear, endMonth, endLastDay);
 
-                    string startDate = startMonth.ToString() + "/1/" + startYear.ToString();
-                    string endDate = endMonth.ToString() + "/" + endLastDay.ToString() + "/" + endYear.ToString();
+                //    string startDate = startMonth.ToString() + "/1/" + startYear.ToString();
+                //    string endDate = endMonth.ToString() + "/" + endLastDay.ToString() + "/" + endYear.ToString();
 
-                    dateLabel = "<b>for items between</b> \"" + startDate + "\" <b>and</b> \"" + endDate + "\"";
+                //    dateLabel = "<b>for items between</b> \"" + startDate + "\" <b>and</b> \"" + endDate + "\"";
 
-                    eSearch = new EndecaSearch(keyword, pageSize, firstRecord - 1, startRange, endRange, doc_type);
-                }
-                else
-                {
-                    eSearch = new EndecaSearch(keyword, pageSize, firstRecord - 1, null, null, doc_type);
-                }
+                //    eSearch = new EndecaSearch(keyword, pageSize, firstRecord - 1, startRange, endRange, doc_type);
+                //}
+                //else
+                //{
+                //    eSearch = new EndecaSearch(keyword, pageSize, firstRecord - 1, null, null, doc_type);
+                //}
 
+                ISiteWideSearchResultCollection results;
                 try
                 {
-                    eSearch.ExecuteSearch();
+                    //eSearch.ExecuteSearch();
+
+                    results = NCI.Search.SiteWideSearch.GetSearchResults("DCEGNewsletterSearch", Keyword, pageSize,
+                   (currentPage - 1) * pageSize);
+
+                    if (results != null && results.ResultCount > 0)
+                    {
+
+                        lastRecord = firstRecord + results.ResultCount - 1;
+                        totalItems = (int)results.ResultCount;
+
+                        ResultRepeater.DataSource = results;
+                        ResultRepeater.DataBind();
+
+                        //pager code
+                        string urlFormat;
+                        string pagerUrl;
+                        if (bSearchRange)
+                        {
+                            urlFormat = PrettyUrl + "?cbsubmit=range&cbkeyword={0}&startMonth={1}&startYear={2}&endMonth={3}&endYear={4}";
+                            pagerUrl = String.Format(urlFormat, Server.UrlEncode(keyword), startMonth.ToString(), startYear.ToString(), endMonth.ToString(), endYear.ToString());
+                        }
+                        else
+                        {
+                            urlFormat = PrettyUrl + "?cbkeyword={0}";
+                            pagerUrl = String.Format(urlFormat, Server.UrlEncode(keyword));
+                        }
+
+                        ResultPager objPager = new ResultPager(pagerUrl, currentPage, pageSize, 2, totalItems);
+                        pager = objPager.RenderPager();
+
+                    }
+                    else
+                    {
+                        firstRecord = 0;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -161,39 +197,9 @@ namespace DCEG.Web.SnippetTemplates
                 }
 
                 
-                eSearch.FillSearchResults(eSearchResults);
+                //eSearch.FillSearchResults(eSearchResults);
 
-                if (eSearchResults.Count != 0)
-                {
-
-                    lastRecord = firstRecord + eSearchResults.Count - 1;
-                    totalItems = (int)eSearch.TotalSearchResults;
-
-                    ResultRepeater.DataSource = eSearchResults;
-                    ResultRepeater.DataBind();
-
-                    //pager code
-                    string urlFormat;
-                    string pagerUrl;
-                    if (bSearchRange)
-                    {
-                        urlFormat = PrettyUrl + "?cbsubmit=range&cbkeyword={0}&startMonth={1}&startYear={2}&endMonth={3}&endYear={4}";
-                        pagerUrl = String.Format(urlFormat, Server.UrlEncode(keyword), startMonth.ToString(), startYear.ToString(), endMonth.ToString(), endYear.ToString());
-                    }
-                    else
-                    {
-                        urlFormat = PrettyUrl + "?cbkeyword={0}";
-                        pagerUrl = String.Format(urlFormat, Server.UrlEncode(keyword));
-                    }
-
-                    ResultPager objPager = new ResultPager(pagerUrl, currentPage, pageSize, 2, totalItems);
-                    pager = objPager.RenderPager();
-
-                }
-                else
-                {
-                    firstRecord = 0;
-                }
+               
             }
             
             this.PageInstruction.AddFieldFilter("channelName", (fieldName, data) =>
