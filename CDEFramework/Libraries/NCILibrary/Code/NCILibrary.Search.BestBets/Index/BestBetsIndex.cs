@@ -209,19 +209,30 @@ namespace NCI.Search.BestBets.Index
             {
                 BestBetCategory bbcat = ModuleObjectFactory<BestBetCategory>.GetObjectFromFile(bbFilePath);
 
+                //Clean up the language as it is the localized version
+                string twoLetterISOLanguageName = bbcat.Language;
+                if (twoLetterISOLanguageName.Length >= 2)
+                {
+                    twoLetterISOLanguageName = twoLetterISOLanguageName.Substring(0, 2);
+                }
+                else
+                {
+                    twoLetterISOLanguageName = "en";
+                }
+
                 //We will basically index each synonym as an idividual record, with the category information
                 //"duplicated" on each record.
 
-                PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, bbcat.CategoryName, false, bbcat.IsExactMatch, "en");
+                PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, bbcat.CategoryName, false, bbcat.IsExactMatch, twoLetterISOLanguageName);
 
                 foreach (BestBetSynonym syn in bbcat.IncludeSynonyms)
                 {
-                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, false, syn.IsExactMatch, bbcat.Language);
+                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, false, syn.IsExactMatch, twoLetterISOLanguageName);
                 }
 
                 foreach (BestBetSynonym syn in bbcat.ExcludeSynonyms)
                 {
-                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, true, syn.IsExactMatch, bbcat.Language);
+                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, true, syn.IsExactMatch, twoLetterISOLanguageName);
                 }
             }
 

@@ -19,7 +19,8 @@ namespace NCI.Search.BestBets
         /// Gets the Best Bets Categories for a given term
         /// </summary>
         /// <param name="term">The term to search</param>
-        public static BestBetResult[] Search(string term)
+        /// <param name="language">The two character language code to search, null or string.empty if searching all.</param>
+        public static BestBetResult[] Search(string term, string language)
         {
             List<BestBetResult> includedResults = new List<BestBetResult>();
 
@@ -29,7 +30,7 @@ namespace NCI.Search.BestBets
 
             Searcher searcher = Index.BestBetsIndex.Instance.GetSearcher();
 
-            Query q = BuildQuery(tokenizedString);
+            Query q = BuildQuery(tokenizedString, language);
 
             TopDocs docs = searcher.Search(q, null, searcher.MaxDoc);
 
@@ -116,7 +117,13 @@ namespace NCI.Search.BestBets
 
         #endregion
 
-        private static Query BuildQuery(List<string> tokenizedString)
+        /// <summary>
+        /// Builds up the lucene query based on the tokenized search term list
+        /// </summary>
+        /// <param name="tokenizedString">The tokenized list of search terms</param>
+        /// <param name="language">The two character language code, or string.empty/null to search all languages.</param>
+        /// <returns></returns>
+        private static Query BuildQuery(List<string> tokenizedString, string language)
         {
 
             //This is the overall Boolean query
@@ -144,7 +151,17 @@ namespace NCI.Search.BestBets
                 }
             }
 
-            return q;
+            if (string.IsNullOrWhiteSpace(language))
+            {
+                return q;
+            }
+            else
+            {
+                BooleanQuery termAndLang = new BooleanQuery();
+                termAndLang.Add(q, Occur.MUST);
+                termAndLang.Add(new TermQuery(new Term("language", language)), Occur.MUST);
+                return termAndLang;
+            }
         }
 
         private static BooleanQuery GetAndedTerms(params string[] terms)

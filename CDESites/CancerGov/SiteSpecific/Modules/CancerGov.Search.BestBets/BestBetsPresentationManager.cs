@@ -31,21 +31,16 @@ namespace CancerGov.Search.BestBets
             //Note, new NCI.Search.BestBets.BestBetsManager will clean terms for us, so we 
             //do not have to worry about that.
 
-            /* LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE
-             * --------------------------------------------------------------------------------
-            string dimIDs = "0";
+            string twoCharLang = string.Empty; //To search all, pass in string.empty
             if (lang == DisplayLanguage.Spanish)
             {
-                dimIDs = Strings.Clean(ConfigurationSettings.AppSettings["EndecaSpanishBestBets"]) ?? dimIDs;
-            }
-             ----------------------------------------------------------------------------------------
-             LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE LANGUAGE */
-              
-             
+                twoCharLang = "es";
+            } 
+
             //TODO: Language!!!!
             //NOTE: This can throw an exception - in the past we left it unhandled.  That is stupid, because
             //we log other errors.  Put that logging here!
-            BestBetResult[] rawResults = BestBetsManager.Search(searchTerm);
+            BestBetResult[] rawResults = BestBetsManager.Search(searchTerm, twoCharLang);
            
 
             //Loop through the cats and get the list items.
@@ -71,40 +66,11 @@ namespace CancerGov.Search.BestBets
                     // The bestbet result xml file may not always be there, so catch the exception and log the error
                     // and ignore the exception
                     NCI.Logging.Logger.LogError("GetBestBets", "could not find bb result for category id " + res.CategoryID + " Category name " + res.CategoryName, NCI.Logging.NCIErrorLevel.Warning, ex);
-
                 }
             }
 
             return rtnResults.ToArray();
         }
 
-        /// <summary>
-        /// This is so the LINQ query that builds up the list items does not look too crazy.
-        /// </summary>
-        /// <param name="prettyUrl"></param>
-        /// <param name="url"></param>
-        /// <param name="urlArguments"></param>
-        /// <returns>The prettyUrl if it is not null, otherwise the url, and arguments if there are any.</returns>
-        //private static string GetListItemUrl(string prettyUrl, string url, string urlArguments)
-        //{
-        //    string rtnUrl = Strings.Clean(prettyUrl);
-
-        //    if (string.IsNullOrEmpty(rtnUrl))
-        //    {
-        //        rtnUrl = Strings.Clean(url);
-        //        if (!string.IsNullOrEmpty(rtnUrl))
-        //        {
-        //            string args = Strings.Clean(urlArguments);
-        //            if (!string.IsNullOrEmpty(args))
-        //                rtnUrl += "?" + args;
-        //        }
-        //        else
-        //        {
-        //            rtnUrl = "#"; //This should NEVER happen, but it is much better than an exception being thrown.
-        //        }
-        //    }
-
-        //    return rtnUrl;
-        //}
     }
 }
