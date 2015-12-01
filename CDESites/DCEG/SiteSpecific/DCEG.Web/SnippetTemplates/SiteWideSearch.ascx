@@ -10,7 +10,7 @@
         <br />
         <p class="genSiteSearchResultsCount"><% =ResultsText%></p>
         <% } %>
-        <ul class="no-bullets">
+        <ol>
             <asp:Repeater ID="rptSearchResults" runat="server">
                 <ItemTemplate>
                     <li class="genSearchItem">
@@ -20,7 +20,7 @@
                     </li>
                 </ItemTemplate>     
             </asp:Repeater>
-        </ul>
+        </ol>
   <% if( ResultsFound ) {%>
   <br />
    <NCI:SimplePager ID="spPager" runat="server" ShowNumPages="3" />
