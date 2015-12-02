@@ -11,10 +11,10 @@
         <p class="genSiteSearchResultsCount"><% =ResultsText%></p>
         <% } %>
         <ul class="no-bullets">
-            <asp:Repeater ID="rptSearchResults" runat="server">
+            <asp:Repeater ID="rptSearchResults" runat="server" OnItemDataBound="rptSearchResults_OnItemDataBound">
                 <ItemTemplate>
                     <li class="genSearchItem">
-                        <h4><a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>"><%# DataBinder.Eval(Container.DataItem, "Title")%></a></h4>
+                        <h4><a id="titleLink" runat="server"/></h4>
                         <p class="genListItemDesc"><%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") : "" %></p>
                         <p class="genListItemLink"><%# DataBinder.Eval(Container.DataItem, "Url")%></p>
                     </li>

@@ -11,7 +11,7 @@
 					
 						<!-- Results Table -->
 						<%=ResultsHtml%>
-						<asp:Repeater ID="ResultRepeater" Runat="server">
+						<asp:Repeater ID="ResultRepeater" Runat="server" OnItemDataBound="ResultRepeater_OnItemDataBound">
 						
 							<HeaderTemplate>
 									<table border="0" cellspacing="0" cellpadding="0" width="100%">  
@@ -20,9 +20,7 @@
 							<ItemTemplate>
 								<tr>
 									<td>
-										<a href="<%# Convert.ToString(DataBinder.Eval(Container.DataItem, "Url")) %>" onclick="<%=WebAnalytics%>">
-										  <%# Convert.ToString(DataBinder.Eval(Container.DataItem,"Title")) %>
-										</a>
+										<a  id="titleLink" runat="server" onclick="<%=WebAnalytics%>" />
 									</td>
 							    </tr>
 							  

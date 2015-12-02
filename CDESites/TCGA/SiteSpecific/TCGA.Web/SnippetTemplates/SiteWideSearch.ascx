@@ -19,12 +19,12 @@
            { %>
         <br />
         <p><% =ResultsText%></p>
-        <% } %>
+        <% } %> 
         <ul>
-            <asp:Repeater ID="rptSearchResults" runat="server">
+            <asp:Repeater ID="rptSearchResults" runat="server" OnItemDataBound="rptSearchResults_OnItemDataBound">
                 <ItemTemplate>
                     <li>
-                        <h1><%# DataBinder.Eval(Container.DataItem, "Title")%></h1>
+                        <h1><asp:Literal id="litTitle" runat="server" /></h1>
                         <%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") + "<br />" : "" %>
                         <a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>"><%# DataBinder.Eval(Container.DataItem, "Url")%></a>
                         <br />

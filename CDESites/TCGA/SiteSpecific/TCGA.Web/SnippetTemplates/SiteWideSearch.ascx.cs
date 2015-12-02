@@ -12,7 +12,8 @@ using NCI.Logging;
 using NCI.Util;
 using NCI.Search.Endeca;
 using NCI.Search;
-using NCI.Logging;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.Configuration;
 
 namespace TCGA.Web.SnippetTemplates
 {
@@ -26,6 +27,8 @@ namespace TCGA.Web.SnippetTemplates
         private const string swKeywordQuery = "swKeywordQuery";
         private const string swKeyword = "swKeyword";
         private bool _resultsFound = false;
+        private string SearchCollection { get; set; }
+        private string ResultTitleText { get; set; }
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
@@ -51,11 +54,21 @@ namespace TCGA.Web.SnippetTemplates
                     else
                         ViewState[swKeyword] = Keyword;
 
+                    //set up the search collection 
+                    //determine what text needs to be removed from the title e.g. - National Cancer Institute
+                    SiteWideSearchConfig searchConfig = ModuleObjectFactory<SiteWideSearchConfig>.GetModuleObject(SnippetInfo.Data);
+                    if (searchConfig != null)
+                    {
+                        SearchCollection = searchConfig.SearchCollection;
+                        ResultTitleText = searchConfig.ResultTitleText;
+                    }
+
                     try
                     {
                         long dimFilter = Strings.ToLong(ConfigurationManager.AppSettings["EndecaSWSearchDimFilter"], 0);
 
-                        ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("CancerGovEnglish", Keyword, _currentPage, 0);//GenericSiteWideSearchManager.GetSearchResults(Keyword, _currentPage, _recordsPerPage, dimFilter);
+                        ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults(SearchCollection, Keyword, _recordsPerPage,
+                    (_currentPage - 1) * _recordsPerPage);
 
                         rptSearchResults.DataSource = results;
                         rptSearchResults.DataBind();
@@ -152,6 +165,28 @@ namespace TCGA.Web.SnippetTemplates
                 if (itemsPerPage == null)
                     return 10;
                 return Int32.Parse(itemsPerPage.Value);
+            }
+        }
+
+        protected void rptSearchResults_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                ISiteWideSearchResult searchResultRow = (ISiteWideSearchResult)e.Item.DataItem;
+
+                Literal litTitle = (Literal)e.Item.FindControl("litTitle");
+
+                if (searchResultRow != null && litTitle != null)
+                {
+                    //the title text that needs to be removed from the search result Title
+                    string removeTitleText = ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
+
+                    litTitle.Text = (!string.IsNullOrEmpty(removeTitleText) && searchResultRow.Title.Contains(removeTitleText)) ? searchResultRow.Title.Remove(searchResultRow.Title.IndexOf(removeTitleText)) : searchResultRow.Title;
+
+
+                }
+
             }
         }
 

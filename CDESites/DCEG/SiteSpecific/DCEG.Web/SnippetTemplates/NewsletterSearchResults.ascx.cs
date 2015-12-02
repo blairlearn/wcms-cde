@@ -10,6 +10,9 @@ using NCI.Web.CDE.WebAnalytics;
 using NCI.Search;
 
 using DCEG.Web.Apps;
+using NCI.Web.CDE.Modules;
+using System.Web.UI.WebControls;
+using NCI.Web.CDE.Configuration;
 
 namespace DCEG.Web.SnippetTemplates
 {
@@ -28,7 +31,8 @@ namespace DCEG.Web.SnippetTemplates
         private int totalItems = 0;
         private string resultsHtml = "";
         private string dateLabel = "";
-
+        private string SearchCollection { get; set; }
+        private string ResultTitleText { get; set; }
 
         #region Properties
         public string Pager
@@ -122,40 +126,20 @@ namespace DCEG.Web.SnippetTemplates
                 firstRecord = (currentPage - 1) * pageSize + 1;
                 recordIndex = firstRecord;
 
-                //Get Endeca Search Results
-                string doc_type = ConfigurationSettings.AppSettings["EndecaDCEGNewsletter"];
-                //CancerGov.Search.EndecaSearching.EndecaSearch eSearch;
-                //EndecaSearch eSearch;
-                //if (bSearchRange)
-                //{
-                //    if (startMonth < 0 || startMonth > 12 || endMonth < 0 || endMonth > 12 || startYear < 0 || endYear < 0)
-                //    {
-                //        NCI.Logging.Logger.LogError("Invalid date range parameters", "NewsletterSearchResults", NCIErrorLevel.Error);
-                //        this.RaiseErrorPage("Invalid date range parameters");
-                //    }
-
-                //    string startRange = getTimeStamp(startYear, startMonth, 1);
-                //    int endLastDay = getLastDayOfTheMonth(endMonth, endYear);
-                //    string endRange = getTimeStamp(endYear, endMonth, endLastDay);
-
-                //    string startDate = startMonth.ToString() + "/1/" + startYear.ToString();
-                //    string endDate = endMonth.ToString() + "/" + endLastDay.ToString() + "/" + endYear.ToString();
-
-                //    dateLabel = "<b>for items between</b> \"" + startDate + "\" <b>and</b> \"" + endDate + "\"";
-
-                //    eSearch = new EndecaSearch(keyword, pageSize, firstRecord - 1, startRange, endRange, doc_type);
-                //}
-                //else
-                //{
-                //    eSearch = new EndecaSearch(keyword, pageSize, firstRecord - 1, null, null, doc_type);
-                //}
+                //set up the search collection 
+                //determine what text needs to be removed from the title e.g. - National Cancer Institute
+                SiteWideSearchConfig searchConfig = ModuleObjectFactory<SiteWideSearchConfig>.GetModuleObject(SnippetInfo.Data);
+                if (searchConfig != null)
+                {
+                    SearchCollection = searchConfig.SearchCollection;
+                    ResultTitleText = searchConfig.ResultTitleText;
+                }
 
                 ISiteWideSearchResultCollection results;
                 try
                 {
-                    //eSearch.ExecuteSearch();
 
-                    results = NCI.Search.SiteWideSearch.GetSearchResults("DCEGNewsletterSearch", Keyword, pageSize,
+                    results = NCI.Search.SiteWideSearch.GetSearchResults(SearchCollection, Keyword, pageSize,
                    (currentPage - 1) * pageSize);
 
                     if (results != null && results.ResultCount > 0)
@@ -240,6 +224,28 @@ namespace DCEG.Web.SnippetTemplates
             TimeSpan ts = d1 - d2;
             return ts.Days;
 
-        } 
+        }
+
+        protected void ResultRepeater_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                ISiteWideSearchResult searchResultRow = (ISiteWideSearchResult)e.Item.DataItem;
+
+                System.Web.UI.HtmlControls.HtmlAnchor titleLink = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("titleLink");
+
+                if (searchResultRow != null && titleLink != null)
+                {
+                    //the title text that needs to be removed from the search result Title
+                    string removeTitleText = ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
+
+                    titleLink.InnerText = (!string.IsNullOrEmpty(removeTitleText) && searchResultRow.Title.Contains(removeTitleText)) ? searchResultRow.Title.Remove(searchResultRow.Title.IndexOf(removeTitleText)) : searchResultRow.Title;
+                    titleLink.HRef = searchResultRow.Url;
+
+                }
+
+            }
+        }
     }
 }

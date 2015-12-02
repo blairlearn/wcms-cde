@@ -19,10 +19,11 @@ using NCI.Web.UI.WebControls;
 using NCI.Logging;
 using NCI.Search.Endeca;
 using CancerGov.Search.BestBets;
-using NCI.Web.CDE;
+using NCI.Web.CDE; 
 using NCI.Search;
 using System.ComponentModel;
 using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.Configuration;
 
 
 namespace NCI.Web.CancerGov.Apps
@@ -141,8 +142,7 @@ namespace NCI.Web.CancerGov.Apps
         }
 
         private string SearchCollection { get; set; }
-        private string ResultTitleText { get; set; }
-
+        
         /// <summary>
         /// Gets and sets the PreviousItemsPerPage.  
         /// </summary>
@@ -273,11 +273,9 @@ namespace NCI.Web.CancerGov.Apps
             //determine what text needs to be removed from the title e.g. - National Cancer Institute
             SiteWideSearchConfig searchConfig = ModuleObjectFactory<SiteWideSearchConfig>.GetModuleObject(SnippetInfo.Data);
             if (searchConfig != null)
-            {
-                SearchCollection = searchConfig.SearchCollection;
-                ResultTitleText = searchConfig.ResultTitleText;
-            }
-                        
+               SearchCollection = searchConfig.SearchCollection;
+               
+                                    
             if (Page.Request.RequestType == "POST")
             {
                 if (!IsPostBack)
@@ -718,20 +716,24 @@ namespace NCI.Web.CancerGov.Apps
             //Get first index and last index
             SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.ResultCount, out firstIndex, out lastIndex);
             _resultOffset = firstIndex;
-                      
 
-            rptResults.DataSource = from res in results
-                                    select new NCI.Web.UI.WebControls.TemplatedDataItem(
-                                        GetSearchResultTemplate((ISiteWideSearchResult)res),
-                                        new
-                                        {
-                                            URL = res.Url,
-                                            Title = (!string.IsNullOrEmpty(ResultTitleText) && res.Title.Contains(ResultTitleText)) ? res.Title.Remove(res.Title.IndexOf(ResultTitleText)) : res.Title,
-                                            DisplayUrl = res.Url,
-                                            Description = res.Description,
-                                            Label = GetSearchResultLabel((ISiteWideSearchResult)res),
-                                        });
-            rptResults.DataBind();
+            if (results != null && results.ResultCount > 0)
+            {
+                //the title text that needs to be removed from the search result Title
+                string removeTitleText = ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
+                rptResults.DataSource = from res in results
+                                        select new NCI.Web.UI.WebControls.TemplatedDataItem(
+                                            GetSearchResultTemplate((ISiteWideSearchResult)res),
+                                            new
+                                            {
+                                                URL = res.Url,
+                                                Title = (!string.IsNullOrEmpty(removeTitleText) && res.Title.Contains(removeTitleText)) ? res.Title.Remove(res.Title.IndexOf(removeTitleText)) : res.Title,
+                                                DisplayUrl = res.Url,
+                                                Description = res.Description,
+                                                Label = GetSearchResultLabel((ISiteWideSearchResult)res),
+                                            });
+                rptResults.DataBind();
+            }
 
             //Set Keywords in labels
             lblResultsForKeyword.Text = KeywordText;
@@ -920,29 +922,7 @@ namespace NCI.Web.CancerGov.Apps
             return results;
         }
 
-        protected void searchResults_OnItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-
-            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
-            {
-                ISiteWideSearchResult searchResultRow = (ISiteWideSearchResult)e.Item.DataItem;
-
-                HyperLink HyperLink1 = (HyperLink)e.Item.FindControl("HyperLink1");
-
-                if (searchResultRow != null && HyperLink1 != null)
-                {
-                    string title = searchResultRow.Title;
-                    if ( !string.IsNullOrEmpty(ResultTitleText) && title.Contains(ResultTitleText))
-                    {
-                        title = title.Remove(title.IndexOf(ResultTitleText));
-                    }
-                    
-                    //title = (string.IsNullOrWhiteSpace(ResultTitleText) && title.Contains(ResultTitleText)) ? title.Remove(title.IndexOf(ResultTitleText)) : title;
-                    HyperLink1.Text = title;
-                }
-            
-            }
-        }
+        
          
     }
 }

@@ -11,6 +11,8 @@ using NCI.Logging;
 using NCI.Util;
 using NCI.Search.Endeca;
 using NCI.Search;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
@@ -29,6 +31,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
         private const string swKeywordQuery = "swKeywordQuery";
         private const string swKeyword = "swKeyword";
         private bool _resultsFound = false;
+        private string SearchCollection { get; set; }
+        private string ResultTitleText { get; set; }
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
@@ -46,6 +50,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             if (PerformSearch)
             {
+                //set up the search collection 
+                //determine what text needs to be removed from the title e.g. - National Cancer Institute
+                SiteWideSearchConfig searchConfig = ModuleObjectFactory<SiteWideSearchConfig>.GetModuleObject(SnippetInfo.Data);
+                if (searchConfig != null)
+                {
+                    SearchCollection = searchConfig.SearchCollection;
+                    ResultTitleText = searchConfig.ResultTitleText;
+                }
+
                 if (Keyword != null)
                 {
                     //Store keyword in viewstate (This does not check if it is not there already)
@@ -57,7 +70,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     try
                     {
 
-                        ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults("DocSearch", Keyword, _recordsPerPage,
+                        ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults(SearchCollection, Keyword, _recordsPerPage,
                     (_currentPage - 1) * _recordsPerPage);
 
                         rptSearchResults.DataSource = results;
@@ -155,6 +168,28 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 if (itemsPerPage == null)
                     return 10;
                 return Int32.Parse(itemsPerPage.Value);
+            }
+        }
+
+        protected void rptSearchResults_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                ISiteWideSearchResult searchResultRow = (ISiteWideSearchResult)e.Item.DataItem;
+
+                System.Web.UI.HtmlControls.HtmlAnchor titleLink = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("titleLink");
+
+                if (searchResultRow != null && titleLink != null)
+                {
+                    //the title text that needs to be removed from the search result Title
+                    string removeTitleText = ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
+                                        
+                    titleLink.InnerText = (!string.IsNullOrEmpty(removeTitleText) && searchResultRow.Title.Contains(removeTitleText)) ? searchResultRow.Title.Remove(searchResultRow.Title.IndexOf(removeTitleText)) : searchResultRow.Title;
+                    titleLink.HRef = searchResultRow.Url;
+
+                }
+
             }
         }
 
