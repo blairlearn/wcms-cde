@@ -4,6 +4,7 @@ using System.Configuration;
 using IO = System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -14,6 +15,8 @@ using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
+
+using Quartz;
 
 using NCI.Search.BestBets.Configuration;
 using NCI.Search.BestBets.Lucene;
@@ -30,9 +33,14 @@ namespace NCI.Search.BestBets.Index
         #region Singleton things
 
         /// <summary>
-        /// An object for locking for creation/reindexing
+        /// An object for locking during reindexing
         /// </summary>
         private static readonly Object _indexLock = new object();
+
+        /// <summary>
+        /// An object for locking during instance creation.
+        /// </summary>
+        private static readonly Object _instanceLock = new object();
 
         /// <summary>
         /// The actual BestBetsIndex
@@ -66,7 +74,7 @@ namespace NCI.Search.BestBets.Index
 
                 if (_instance == null)
                 {
-                    lock (_indexLock)
+                    lock (_instanceLock)
                     {
                         //If the lock was released, but the previous thread was not able to
                         //initialize, then we need to throw the exception they got.
@@ -161,14 +169,16 @@ namespace NCI.Search.BestBets.Index
             _bestBetsPath = pathConfig.BestBetsFilePath;
 
             if (!IO.Directory.Exists(_luceneIndexPath))
-                IO.Directory.CreateDirectory(_luceneIndexPath);
+                IO.Directory.CreateDirectory(_luceneIndexPath);            
 
             //We are using an MMapDirectory as the default option (FSSimpleDirectory) does not handle
             //multi-threading well.
             _luceneIndex = MMapDirectory.Open(_luceneIndexPath);
 
-            //Now let's actually index the content.
-            BuildIndex();
+            //If there is no index at that location, then build the index.  Otherwise, we will
+            //let the scheduler build it.
+            if (!IndexReader.IndexExists(_luceneIndex))
+                BuildIndex();
         }
 
         /// <summary>
@@ -197,47 +207,67 @@ namespace NCI.Search.BestBets.Index
         /// </summary>
         private void BuildIndex()
         {
-            //Let's assume that there is a lock in place for handling this.  Any calling program should handle locking/thread safety.
-
-            //Define our custom Analyzer for analyzing text fields for our index.
-            Analyzer analyzer = new BestBetsAnalyzer(global::Lucene.Net.Util.Version.LUCENE_30);
-
-            //Create instance of an IndexWriter
-            IndexWriter writer = new IndexWriter(_luceneIndex, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
-
-            foreach (string bbFilePath in System.IO.Directory.EnumerateFiles(_bestBetsPath, "*.xml"))
+            //Building the index should require a lock.  If a lock has NOT been obtained, let's assume
+            //that someone else is building the index and we should be done with things.
+            if (Monitor.TryEnter(_indexLock))
             {
-                BestBetCategory bbcat = ModuleObjectFactory<BestBetCategory>.GetObjectFromFile(bbFilePath);
-
-                //Clean up the language as it is the localized version
-                string twoLetterISOLanguageName = bbcat.Language;
-                if (twoLetterISOLanguageName.Length >= 2)
+                try
                 {
-                    twoLetterISOLanguageName = twoLetterISOLanguageName.Substring(0, 2);
+                    //Define our custom Analyzer for analyzing text fields for our index.
+                    Analyzer analyzer = new BestBetsAnalyzer(global::Lucene.Net.Util.Version.LUCENE_30);
+
+                    //Create instance of an IndexWriter
+                    IndexWriter writer = new IndexWriter(_luceneIndex, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
+
+                    //Clear out the docs
+                    writer.DeleteAll();
+
+                    foreach (string bbFilePath in System.IO.Directory.EnumerateFiles(_bestBetsPath, "*.xml"))
+                    {
+                        BestBetCategory bbcat = ModuleObjectFactory<BestBetCategory>.GetObjectFromFile(bbFilePath);
+
+                        //Clean up the language as it is the localized version
+                        string twoLetterISOLanguageName = bbcat.Language;
+                        if (twoLetterISOLanguageName.Length >= 2)
+                        {
+                            twoLetterISOLanguageName = twoLetterISOLanguageName.Substring(0, 2);
+                        }
+                        else
+                        {
+                            twoLetterISOLanguageName = "en";
+                        }
+
+                        //We will basically index each synonym as an idividual record, with the category information
+                        //"duplicated" on each record.
+
+                        PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, bbcat.CategoryName, false, bbcat.IsExactMatch, twoLetterISOLanguageName);
+
+                        foreach (BestBetSynonym syn in bbcat.IncludeSynonyms)
+                        {
+                            PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, false, syn.IsExactMatch, twoLetterISOLanguageName);
+                        }
+
+                        foreach (BestBetSynonym syn in bbcat.ExcludeSynonyms)
+                        {
+                            PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, true, syn.IsExactMatch, twoLetterISOLanguageName);
+                        }
+                    }
+
+                    //Commit the changes to the index.
+                    writer.Commit();
                 }
-                else
+                finally
                 {
-                    twoLetterISOLanguageName = "en";
-                }
-
-                //We will basically index each synonym as an idividual record, with the category information
-                //"duplicated" on each record.
-
-                PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, bbcat.CategoryName, false, bbcat.IsExactMatch, twoLetterISOLanguageName);
-
-                foreach (BestBetSynonym syn in bbcat.IncludeSynonyms)
-                {
-                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, false, syn.IsExactMatch, twoLetterISOLanguageName);
-                }
-
-                foreach (BestBetSynonym syn in bbcat.ExcludeSynonyms)
-                {
-                    PushToIndex(writer, bbcat.CategoryId.ToString(), bbcat.CategoryName, syn.Text, true, syn.IsExactMatch, twoLetterISOLanguageName);
+                    Monitor.Exit(_indexLock);
                 }
             }
+            else
+            {
+                //TODO: Log debug statement that we are skipping indexing.  This may be due to another 
+                //job running an index.  This condition should not happen often.
+                NCI.Logging.Logger.LogError(this.GetType().ToString(), "BestBetsIndex lock obtained by other thread, skipping indexing.", Logging.NCIErrorLevel.Info);
+            }
 
-            //Commit the changes to the index.
-            writer.Commit();
         }
 
         /// <summary>
@@ -338,6 +368,31 @@ namespace NCI.Search.BestBets.Index
         }
 
         #endregion
+
+        /// <summary>
+        /// Quarz.NET job to reindex best bets
+        /// <remarks>
+        /// This is a nested class so it can have access to the private build index method without
+        /// exposing the method to anyone else.
+        /// </remarks>
+        /// </summary>
+        public class IndexRebuilderJob : IJob {
+
+            #region IJob Members
+
+            /// <summary>
+            /// Execute the job
+            /// </summary>
+            /// <param name="context"></param>
+            public void Execute(IJobExecutionContext context)
+            {                
+                BestBetsIndex.Instance.BuildIndex();
+            }
+
+            #endregion
+        }
+
+
 
     }
 }

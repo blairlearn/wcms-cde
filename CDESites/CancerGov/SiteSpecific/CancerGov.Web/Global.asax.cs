@@ -6,10 +6,15 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.IO;
+using System.Configuration;
+
+using Quartz;
+using Quartz.Impl;
+
 using NCI.Web.CDE;
 using NCI.Web.CDE.Configuration;
-using System.Configuration;
 using NCI.Logging;
+using NCI.Search.BestBets.Index;
 
 namespace CancerGov.Web
 {
@@ -29,8 +34,33 @@ namespace CancerGov.Web
             {
                 NCI.Logging.Logger.LogError("Monitoring of PromoUrl mapping file could not be established", NCI.Logging.NCIErrorLevel.Error, ex);
             }
+            #endregion
+
+
+            #region Setup Quartz.NET jobs
+
+            // This schedule stuff should move to a config file...
+            IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
+            scheduler.Start();
+
+            //Schedule best bets indexing
+            IJobDetail job = JobBuilder.Create<BestBetsIndex.IndexRebuilderJob>().Build();
+
+            ITrigger trigger = TriggerBuilder.Create()
+                .WithDailyTimeIntervalSchedule(
+                    s =>
+                        s.WithIntervalInHours(24)
+                        .OnEveryDay()
+                        .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
+                )
+                .Build();
+
+            scheduler.ScheduleJob(job, trigger);
+
+            //Trigger the job.
 
             #endregion
+
         }
 
         #region Private Methods
