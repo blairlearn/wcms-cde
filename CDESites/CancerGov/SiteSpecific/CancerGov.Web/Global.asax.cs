@@ -39,25 +39,38 @@ namespace CancerGov.Web
 
             #region Setup Quartz.NET jobs
 
-            // This schedule stuff should move to a config file...
-            IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
-            scheduler.Start();
+            try
+            {
+                // This schedule stuff should move to a config file...
+                IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
+                scheduler.Start();
 
-            //Schedule best bets indexing
-            IJobDetail job = JobBuilder.Create<BestBetsIndex.IndexRebuilderJob>().Build();
+                string TRIGGER_NAME = "BestBetsTrigger";
+                string TRIGGER_GROUP = "BestBetsGroup";
 
-            ITrigger trigger = TriggerBuilder.Create()
-                .WithDailyTimeIntervalSchedule(
-                    s =>
-                        s.WithIntervalInHours(24)
-                        .OnEveryDay()
-                        .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
-                )
-                .Build();
+                //Schedule best bets indexing
+                IJobDetail job = JobBuilder.Create<BestBetsIndex.IndexRebuilderJob>()
+                    .WithIdentity(TRIGGER_NAME, TRIGGER_GROUP)
+                    .Build();
 
-            scheduler.ScheduleJob(job, trigger);
+                // Create the atual schedule, run according to the schedule specified by the
+                // BestBets IndexRebuilder, and make it eligible to start running immediately.
+                ITrigger trigger = TriggerBuilder.Create()
+                    .WithIdentity(TRIGGER_NAME, TRIGGER_GROUP)
+                    .WithCronSchedule(BestBetsIndex.IndexRebuilderJob.ExecutionSchedule)
+                    .StartNow()
+                    .Build();
 
-            //Trigger the job.
+                // Add the job to the scheduler.
+                scheduler.ScheduleJob(job, trigger);
+
+                //Trigger the job for immediate execution.
+                scheduler.TriggerJob(new JobKey(TRIGGER_NAME, TRIGGER_GROUP));
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(this.GetType().ToString(), "An error occured while setting up QuartzScheduler for Best Bets.", NCI.Logging.NCIErrorLevel.Info, ex);
+            }
 
             #endregion
 

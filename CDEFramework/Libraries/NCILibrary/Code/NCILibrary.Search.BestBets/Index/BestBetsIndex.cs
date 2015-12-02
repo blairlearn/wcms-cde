@@ -380,13 +380,37 @@ namespace NCI.Search.BestBets.Index
 
             #region IJob Members
 
+            private static readonly Object _runonceLock = new object();
+
+            public static String ExecutionSchedule
+            {
+                get { return "0 0/10 * ? * *"; }
+            }
+
+
             /// <summary>
             /// Execute the job
             /// </summary>
             /// <param name="context"></param>
             public void Execute(IJobExecutionContext context)
-            {                
-                BestBetsIndex.Instance.BuildIndex();
+            {
+
+                if (Monitor.TryEnter(_runonceLock))
+                {
+                    try
+                    {
+                        BestBetsIndex.Instance.BuildIndex();
+                    }
+                    finally
+                    {
+                        Monitor.Exit(_runonceLock);
+                    }
+                }
+                else
+                {
+                    NCI.Logging.Logger.LogError(this.GetType().ToString(), "IndexRebuilderJob lock obtained by other thread, skipping indexing.", Logging.NCIErrorLevel.Info);
+                }
+
             }
 
             #endregion
