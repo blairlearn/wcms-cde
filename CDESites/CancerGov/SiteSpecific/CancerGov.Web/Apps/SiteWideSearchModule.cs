@@ -46,6 +46,7 @@ namespace NCI.Web.CancerGov.Apps
         protected Label lblTopResultsXofY;
         protected Literal litError;
         protected NCI.Web.UI.WebControls.MultiTemplatedRepeater rptResults;
+        
         protected Label lblBottomResultsXofY;
         protected Label lblDDLPageUnitShowText;
         protected Label lblPageUnit;
@@ -717,8 +718,7 @@ namespace NCI.Web.CancerGov.Apps
             //Get first index and last index
             SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.ResultCount, out firstIndex, out lastIndex);
             _resultOffset = firstIndex;
-
-           // rptResults.DataSource = results;
+                      
 
             rptResults.DataSource = from res in results
                                     select new NCI.Web.UI.WebControls.TemplatedDataItem(
@@ -726,7 +726,7 @@ namespace NCI.Web.CancerGov.Apps
                                         new
                                         {
                                             URL = res.Url,
-                                            Title = res.Title,//res.Title.Remove(res.Title.IndexOf(ResultTitleText)),
+                                            Title = (!string.IsNullOrEmpty(ResultTitleText) && res.Title.Contains(ResultTitleText)) ? res.Title.Remove(res.Title.IndexOf(ResultTitleText)) : res.Title,
                                             DisplayUrl = res.Url,
                                             Description = res.Description,
                                             Label = GetSearchResultLabel((ISiteWideSearchResult)res),
@@ -918,6 +918,30 @@ namespace NCI.Web.CancerGov.Apps
             }
 
             return results;
+        }
+
+        protected void searchResults_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                ISiteWideSearchResult searchResultRow = (ISiteWideSearchResult)e.Item.DataItem;
+
+                HyperLink HyperLink1 = (HyperLink)e.Item.FindControl("HyperLink1");
+
+                if (searchResultRow != null && HyperLink1 != null)
+                {
+                    string title = searchResultRow.Title;
+                    if ( !string.IsNullOrEmpty(ResultTitleText) && title.Contains(ResultTitleText))
+                    {
+                        title = title.Remove(title.IndexOf(ResultTitleText));
+                    }
+                    
+                    //title = (string.IsNullOrWhiteSpace(ResultTitleText) && title.Contains(ResultTitleText)) ? title.Remove(title.IndexOf(ResultTitleText)) : title;
+                    HyperLink1.Text = title;
+                }
+            
+            }
         }
          
     }

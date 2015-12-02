@@ -1,5 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CancerGov.Apps.SiteWideSearchModule"  %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="cc1" %>
+<script runat="server">
+
+    protected void searchResults_ItemCreated(object sender, RepeaterItemEventArgs e)
+    {
+
+    }
+</script>
+
 
 <script type="text/javascript">
     var ids = {
@@ -41,8 +49,8 @@
                     <asp:Literal ID="litError" runat="server" Text="Please enter a search phrase." />
                 </div>
             </asp:PlaceHolder>
-            
-            <cc1:MultiTemplatedRepeater ID="rptResults" EnableViewState="false" runat=server>
+           
+            <cc1:MultiTemplatedRepeater ID="rptResults" EnableViewState="false" runat=server visible="true">
                 <HeaderTemplate>
                     <div class="sitewide-list" >
                         <ul class="no-bullets">
@@ -83,7 +91,7 @@
                                 </div>
                                 <div>
 		                            <cite class="url">
-		                            <%# Eval("DisplayUrl") %>
+		                            <%# Eval("Url") %>
 		                            </cite>
 		                        </div>
 		                        <div class="description">
