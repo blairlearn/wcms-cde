@@ -168,6 +168,7 @@ namespace NCI.Search.BestBets.Index
 
             _bestBetsPath = pathConfig.BestBetsFilePath;
 
+
             if (!IO.Directory.Exists(_luceneIndexPath))
                 IO.Directory.CreateDirectory(_luceneIndexPath);            
 
@@ -384,7 +385,19 @@ namespace NCI.Search.BestBets.Index
 
             public static String ExecutionSchedule
             {
-                get { return "0 0/10 * ? * *"; }
+                get {
+                    BestBetsSection config = (BestBetsSection)ConfigurationManager.GetSection("nci/search/bestbets");
+
+                    //See if the config
+                    if (config == null || String.IsNullOrWhiteSpace(config.ReindexSchedule))
+                    {
+                        return "";
+                    }
+                    else
+                    {
+                        return config.ReindexSchedule;
+                    }
+                }
             }
 
 

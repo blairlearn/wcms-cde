@@ -15,5 +15,11 @@ namespace NCI.Search.BestBets.Configuration
             get { return (string)base["pathConfigurationClass"]; }
         }
 
+        [ConfigurationProperty("reindexSchedule")]
+        public string ReindexSchedule
+        {
+            get { return (string)base["reindexSchedule"]; }
+        }
+
     }
 }
