@@ -94,7 +94,7 @@ namespace TCGA.Web.SnippetTemplates
                         spPager.RecordCount = (int)results.ResultCount;
                         spPager.RecordsPerPage = _recordsPerPage;
                         spPager.CurrentPage = _currentPage;
-                        spPager.BaseUrl = PrettyUrl + "?swKeyword=" + Keyword;
+                        spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
                     }
                     catch (Exception ex)
                     {
@@ -131,7 +131,7 @@ namespace TCGA.Web.SnippetTemplates
             get
             {
                 if (!string.IsNullOrEmpty(Request.Params["PageNum"]) ||
-                    !string.IsNullOrEmpty(Strings.Clean(Request.Params["swKeyword"])) ||
+                    !string.IsNullOrEmpty(Strings.Clean(Request.Params["swKeywordQuery"])) ||
                     IsPostBack
                     )
                     return true;
@@ -150,7 +150,7 @@ namespace TCGA.Web.SnippetTemplates
             {
                 string keyword = Strings.Clean(Request.Params["txtKeyword1"]);
                 if (string.IsNullOrEmpty(keyword))
-                    keyword = Strings.Clean(Request.Params["swKeyword"]);
+                    keyword = Strings.Clean(Request.Params["swKeywordQuery"]);
                 return keyword;
             }
         }

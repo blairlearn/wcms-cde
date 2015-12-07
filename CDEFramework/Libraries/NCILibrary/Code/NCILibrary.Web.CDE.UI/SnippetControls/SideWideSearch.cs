@@ -19,8 +19,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
     public partial class SiteWideSearch : AppsBaseSnippetControl
     {
         #region Control Members
-        protected Repeater rptSearchResults=null;
-        protected SimplePager spPager=null;
+        protected Repeater rptSearchResults = null;
+        protected SimplePager spPager = null;
         protected HiddenField itemsPerPage = null;
         #endregion
         private int _currentPage = 1;
@@ -33,6 +33,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         private bool _resultsFound = false;
         private string SearchCollection { get; set; }
         
+
         protected void Page_PreRender(object sender, EventArgs e)
         {
             //Get Settings
@@ -53,7 +54,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 //determine what text needs to be removed from the title e.g. - National Cancer Institute
                 SiteWideSearchConfig searchConfig = ModuleObjectFactory<SiteWideSearchConfig>.GetModuleObject(SnippetInfo.Data);
                 if (searchConfig != null)
+                {
                     SearchCollection = searchConfig.SearchCollection;
+                   
+                }
 
                 if (Keyword != null)
                 {
@@ -93,7 +97,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         spPager.RecordCount = (int)results.ResultCount;
                         spPager.RecordsPerPage = _recordsPerPage;
                         spPager.CurrentPage = _currentPage;
-                        spPager.BaseUrl = PrettyUrl + "?swKeyword=" + Keyword;
+                        spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
                     }
                     catch (Exception ex)
                     {
@@ -130,7 +134,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             get
             {
                 if (!string.IsNullOrEmpty(Request.Params["PageNum"]) ||
-                    !string.IsNullOrEmpty(Strings.Clean(Request.Params["swKeyword"])) ||
+                    !string.IsNullOrEmpty(Strings.Clean(Request.Params["swKeywordQuery"])) ||
                     IsPostBack
                     )
                     return true;
@@ -149,7 +153,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 string keyword = Strings.Clean(Request.Params["txtKeyword1"]);
                 if (string.IsNullOrEmpty(keyword))
-                    keyword = Strings.Clean(Request.Params["swKeyword"]);
+                    keyword = Strings.Clean(Request.Params["swKeywordQuery"]);
                 return keyword;
             }
         }
@@ -180,7 +184,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 {
                     //the title text that needs to be removed from the search result Title
                     string removeTitleText = ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
-                                        
+
                     titleLink.InnerText = (!string.IsNullOrEmpty(removeTitleText) && searchResultRow.Title.Contains(removeTitleText)) ? searchResultRow.Title.Remove(searchResultRow.Title.IndexOf(removeTitleText)) : searchResultRow.Title;
                     titleLink.HRef = searchResultRow.Url;
 
