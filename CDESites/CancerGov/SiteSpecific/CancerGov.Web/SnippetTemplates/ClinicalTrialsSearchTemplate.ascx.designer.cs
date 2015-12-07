@@ -50,40 +50,13 @@ namespace CancerGov.Web.SnippetTemplates {
         protected global::NCI.Web.UI.WebControls.FormControls.AccessibleCheckBoxList cancerStage;
         
         /// <summary>
-        /// zipCodeLocationButton control.
+        /// LocationTypeSelector control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton zipCodeLocationButton;
-        
-        /// <summary>
-        /// cityStateLocationButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton cityStateLocationButton;
-        
-        /// <summary>
-        /// hospitalLocationButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton hospitalLocationButton;
-        
-        /// <summary>
-        /// atNihLocationButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton atNihLocationButton;
+        protected global::System.Web.UI.WebControls.DropDownList LocationTypeSelector;
         
         /// <summary>
         /// zipCodeLocationFieldset control.

@@ -28,6 +28,12 @@ namespace CancerGov.Web.SnippetTemplates
         protected const string COLLAPSED = "N";
         protected const string EXPANDED = "Y";
 
+        protected const string LOCATION_ALL = "all";
+        protected const string LOCATION_ZIP = "zip";
+        protected const string LOCATION_CITY = "city";
+        protected const string LOCATION_HOSPITAL = "hospital";
+        protected const string LOCATION_NIH = "nih";
+
         #endregion
 
         protected void Page_Init(object sender, EventArgs e)
@@ -35,25 +41,32 @@ namespace CancerGov.Web.SnippetTemplates
             //Need to add ARIA tags to location controls - this has nothing to do with the state of the form,
             //so we are doing it on init.
 
-            //Tell the radio which fieldset it controls
-            zipCodeLocationButton.InputAttributes.Add("aria-controls", zipCodeLocationFieldset.ClientID);
-            //Tell the fieldset which radio labels it
-            zipCodeLocationFieldset.Attributes.Add("aria-labelledby", zipCodeLocationButton.ClientID);
 
-            //Tell the radio which fieldset it controls
-            cityStateLocationButton.InputAttributes.Add("aria-controls", cityStateLocationFieldset.ClientID);
-            //Tell the fieldset which radio labels it
-            cityStateLocationFieldset.Attributes.Add("aria-labelledby", cityStateLocationButton.ClientID);
+            ListItem selector;
 
-            //Tell the radio which fieldset it controls
-            hospitalLocationButton.InputAttributes.Add("aria-controls", hospitalLocationFieldset.ClientID);
-            //Tell the fieldset which radio labels it
-            hospitalLocationFieldset.Attributes.Add("aria-labelledby", hospitalLocationButton.ClientID);
+            // Associate each location selector value with the fieldset it controls
+            // We deliberately do *NOT* associate the "all" selector with the all/blank input area.
 
-            //Tell the radio which fieldset it controls
-            atNihLocationButton.InputAttributes.Add("aria-controls", atNihLocationFieldset.ClientID);
-            //Tell the fieldset which radio labels it
-            atNihLocationFieldset.Attributes.Add("aria-labelledby", atNihLocationButton.ClientID);
+
+            // Associate the "zip" selector with the zip location fields.
+            selector = LocationTypeSelector.Items.FindByValue(LOCATION_ZIP);
+            if (selector != null)
+                selector.Attributes.Add("aria-controls", zipCodeLocationFieldset.ClientID);
+
+            // Associate the "city/state/country" selector with the zip location fields.
+            selector = LocationTypeSelector.Items.FindByValue(LOCATION_CITY);
+            if (selector != null)
+                selector.Attributes.Add("aria-controls", cityStateLocationFieldset.ClientID);
+
+            // Associate the "city/state/country" selector with the zip location fields.
+            selector = LocationTypeSelector.Items.FindByValue(LOCATION_HOSPITAL);
+            if (selector != null)
+                selector.Attributes.Add("aria-controls", hospitalLocationFieldset.ClientID);
+
+            // Associate the "city/state/country" selector with the zip location fields.
+            selector = LocationTypeSelector.Items.FindByValue(LOCATION_NIH);
+            if (selector != null)
+                selector.Attributes.Add("aria-controls", atNihLocationFieldset.ClientID);
 
 
             txtKeywords.Attributes.Add("placeholder", "Examples: PSA, HER-2, \"Paget disease\"");
@@ -149,30 +162,32 @@ namespace CancerGov.Web.SnippetTemplates
 
         private void SetLocationButtons(CTSearchDefinition savedSearch)
         {
+            string searchLocation = LOCATION_ALL;
             if (savedSearch != null)
             {
                 switch (savedSearch.LocationSearchType)
                 {
                     case LocationSearchType.Institution:
-                        hospitalLocationButton.Checked = true;
+                        searchLocation = LOCATION_HOSPITAL;
                         break;
                     case LocationSearchType.City:
-                        cityStateLocationButton.Checked = true;
+                        searchLocation = LOCATION_CITY;
                         break;
                     case LocationSearchType.NIH:
-                        atNihLocationButton.Checked = true;
+                        searchLocation = LOCATION_NIH;
                         break;
                     case LocationSearchType.Zip:
+                        searchLocation = LOCATION_ZIP;
+                        break;
                     default:
-                        zipCodeLocationButton.Checked = true;
+                    // Do nothing -- already set to LOCATION_ALL.
                         break;
                 }
             }
-            else
-            {
-                zipCodeLocationButton.Checked = true;
-            }
+
+            LocationTypeSelector.SelectedValue = searchLocation;
         }
+
         private void FillNihLocationSelectBox(CTSearchDefinition savedSearch)
         {
             if (savedSearch != null && savedSearch.LocationSearchType == LocationSearchType.NIH)
@@ -777,71 +792,86 @@ namespace CancerGov.Web.SnippetTemplates
                 }
             }
 
-            // Determine which location to use.  It isn't possible to have no buttons checked.
-            if (zipCodeLocationButton.Checked)
+            // Determine which location to use.
+            switch (LocationTypeSelector.SelectedValue)
             {
-                // Don't attempt to set a ZIP location unless ZIP is numeric and greater than 0.
-                int zip = Strings.ToInt(zipCode.Text, 0);
-                if (zip > 0)
-                {
-                    criteria.LocationSearchType = LocationSearchType.Zip;
-                    criteria.SetLocationZipCriteria(zipCode.Text, zipCodeProximity.SelectedValue);
-                }
-            }
-            else if (hospitalLocationButton.Checked)
-            {
-                criteria.LocationSearchType = LocationSearchType.Institution;
-                foreach (ListItem item in institution.Items)
-                {
-                    // Check validity of item.Text via hash code contained in item.Value (CDRID+HashMaster hash and salt strings) - if valid, set value to CDRIF and add to criteria                    
-                    if (HashMaster.SaltedHashCompareCompound(item.Text, item.Value, out value))
-                        criteria.LocationInstitutions.Add(new KeyValuePair<string, int>(item.Text, int.Parse(value)));
-                }
-            }
-            else if (cityStateLocationButton.Checked)
-            {
-                criteria.LocationSearchType = LocationSearchType.City;
-                criteria.LocationCity = city.Value;
-
-                // If the selected country is anything other than "All" or "U.S.A.",
-                // then the state list is ignored.
-                // Index 0 == "All"; Index 1 == "U.S.A."
-                if (country.SelectedIndex == 0 || country.SelectedIndex == 1)
-                {
-                    if (SelectionIsPresent(state))
+                case LOCATION_ZIP:
                     {
-                        foreach (ListItem item in state.Items)
+                        // Don't attempt to set a ZIP location unless ZIP is numeric and greater than 0.
+                        int zip = Strings.ToInt(zipCode.Text, 0);
+                        if (zip > 0)
                         {
-                            if (item.Selected && !string.IsNullOrEmpty(item.Value))
-                            {
-                                criteria.LocationStateIDList.Add(item.Value);
-                                criteria.LocationStateNameList.Add(item.Text);
-                            }
+                            criteria.LocationSearchType = LocationSearchType.Zip;
+                            criteria.SetLocationZipCriteria(zipCode.Text, zipCodeProximity.SelectedValue);
                         }
                     }
-                }
+                    break;
 
-                // If "All" was selected (selected country was null or empty) and
-                // one or more states were selected, then force the country selection to
-                // be U.S.A.
-                if (country.SelectedIndex == 0 && criteria.LocationStateIDList.Count > 0)
-                {
-                    criteria.LocationCountry = country.Items[1].Value;
-                }
-                else
-                {
-                    // Otherwise, use whatever country was selected.
-                    int index = country.SelectedIndex;
-                    if (index >= 0)
-                        criteria.LocationCountry = country.Items[index].Value;
-                }
+                case LOCATION_HOSPITAL:
+                    {
+                        criteria.LocationSearchType = LocationSearchType.Institution;
+                        foreach (ListItem item in institution.Items)
+                        {
+                            // Check validity of item.Text via hash code contained in item.Value (CDRID+HashMaster hash and salt strings) - if valid, set value to CDRIF and add to criteria                    
+                            if (HashMaster.SaltedHashCompareCompound(item.Text, item.Value, out value))
+                                criteria.LocationInstitutions.Add(new KeyValuePair<string, int>(item.Text, int.Parse(value)));
+                        }
+                    }
+                    break;
 
+                case LOCATION_CITY:
+                    {
+                        criteria.LocationSearchType = LocationSearchType.City;
+                        criteria.LocationCity = city.Value;
+
+                        // If the selected country is anything other than "All" or "U.S.A.",
+                        // then the state list is ignored.
+                        // Index 0 == "All"; Index 1 == "U.S.A."
+                        if (country.SelectedIndex == 0 || country.SelectedIndex == 1)
+                        {
+                            if (SelectionIsPresent(state))
+                            {
+                                foreach (ListItem item in state.Items)
+                                {
+                                    if (item.Selected && !string.IsNullOrEmpty(item.Value))
+                                    {
+                                        criteria.LocationStateIDList.Add(item.Value);
+                                        criteria.LocationStateNameList.Add(item.Text);
+                                    }
+                                }
+                            }
+                        }
+
+                        // If "All" was selected (selected country was null or empty) and
+                        // one or more states were selected, then force the country selection to
+                        // be U.S.A.
+                        if (country.SelectedIndex == 0 && criteria.LocationStateIDList.Count > 0)
+                        {
+                            criteria.LocationCountry = country.Items[1].Value;
+                        }
+                        else
+                        {
+                            // Otherwise, use whatever country was selected.
+                            int index = country.SelectedIndex;
+                            if (index >= 0)
+                                criteria.LocationCountry = country.Items[index].Value;
+                        }
+                    }
+                    break;
+
+                case LOCATION_NIH:
+                    {
+                        criteria.LocationSearchType = LocationSearchType.NIH;
+                        criteria.LocationNihOnly = nihOnly.Checked;
+                    }
+                    break;
+
+                case LOCATION_ALL:
+                default:
+                    // Do Nothing.
+                    break;
             }
-            else if (atNihLocationButton.Checked)
-            {
-                criteria.LocationSearchType = LocationSearchType.NIH;
-                criteria.LocationNihOnly = nihOnly.Checked;
-            }
+
 
             // Keywords
             if (!string.IsNullOrEmpty(txtKeywords.Text))

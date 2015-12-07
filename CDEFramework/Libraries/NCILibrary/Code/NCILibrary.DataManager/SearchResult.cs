@@ -141,6 +141,11 @@ namespace NCI.DataManager
         public Boolean SubscriptionRequired { get; set; }
 
         /// <summary>
+        /// Whether or not Disqus comments have been enabled
+        /// </summary>
+        public Boolean AllowComments { get; set; }
+
+        /// <summary>
         /// File size
         /// </summary>
         public int FileSize { get; set; }
@@ -154,11 +159,21 @@ namespace NCI.DataManager
         /// Most recent date to show on lists
         /// </summary>
         public String DateForLists { get; set; }
-        
+
         /// <summary>
         /// Most recent date to show on lists in Spanish
         /// </summary>
         public String DateForListsEs { get; set; }
+
+        /// <summary>
+        /// Formatted "Posted" date to show on Blog Series page
+        /// </summary>
+        public String DateForBlogs { get; set; }
+
+        /// <summary>
+        /// Formatted "Posted" date to show on Spanish Blog Series page
+        /// </summary>
+        public String DateForBlogsEs { get; set; }
 
         public SearchResult()
         {
@@ -176,6 +191,8 @@ namespace NCI.DataManager
             FileSize = 0;
             DateForLists = string.Empty;
             DateForListsEs = string.Empty;
+            DateForBlogs = string.Empty;
+            DateForBlogsEs = string.Empty;
         }
     }
 }

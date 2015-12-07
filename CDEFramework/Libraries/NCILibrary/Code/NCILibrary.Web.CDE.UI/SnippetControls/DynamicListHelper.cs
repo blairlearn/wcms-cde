@@ -30,6 +30,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
 			#set($updatedString = ""Updated"")##
 			#set($reviewedString = ""Reviewed"")##
             #set($newsString = ""All NCI news"")##
+            #set($continueReading = ""Continue Reading"")##
+            #set($by = ""by"")##
 			";
             if (PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language") == "es")
             {
@@ -41,10 +43,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
 				#set($updatedString = ""Actualizaci&oacute;n"")##
 				#set($reviewedString = ""Revisi&oacute;n"")##
                 #set($newsString = ""Todas las noticias del NCI"")##
+                #set($continueReading = ""Siga leyendo"")##
+                #set($by = ""por"")##
 				";
             }
             return pageLanguage;
         }
+
 
         /*
          * Opening tags for dynamic list. Also sets variables for any File Content Type data.
@@ -137,7 +142,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /*
          * Output Long Title of content item plus additional info for file and media types.
          */
-        public string titleString()
+        public string openListItem()
         {
             string title = @"
             <div class=""title container"">##
@@ -204,10 +209,20 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /*
          * Closing tags for Dynamic list.
          */
-        public string closeList()
+        public string closeListItem()
         {
             string close = @"
                     </div>## Close description and title div class
+            ";
+            return close;
+        }
+
+        /*
+         * Closing tags for Dynamic list.
+         */
+        public string closeList()
+        {
+            string close = @"
                 </li>## End list item
             #end## End foreach search results loop
             </ul>## End list
@@ -221,7 +236,6 @@ namespace NCI.Web.CDE.UI.SnippetControls
         public string closeNews()
         {
             string close = @"
-                    </div>
                 </li>
             #end
 				<li>
@@ -233,6 +247,86 @@ namespace NCI.Web.CDE.UI.SnippetControls
             </ul>
             ";
             return close;
+        }
+
+        /*
+         * Output formatted list of Blog posts for Blog Landing Page Dynamic List
+         */
+        public string blogBodyString()
+        {
+            // Display comment count if comments have been allowed for this blog series
+            string commentCount = "";
+            foreach (SnippetInfo snippet in PageAssemblyContext.Current.PageAssemblyInstruction.Snippets)
+            {
+                if (snippet.SnippetTemplatePath.Contains("BlogLandingDynamicList.ascx") &&
+                  snippet.Data.Contains("isCommentingAvailable=true"))
+                {
+                    commentCount = 
+                    @"#set($identifier = ${resultItem.ContentType} + ""-""+${resultItem.ContentID})
+                        <a class=""comment-count"" href=""${prettyUrl}#disqus_thread"" data-disqus-identifier=""$identifier"">0 Comments</a>";
+                }
+            }
+
+            // Format date according to language
+            string date = @"<span>$resultItem.DateForBlogs</span> ";
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                date = @"<span>$resultItem.DateForBlogsEs</span> ";
+
+            // Put the whole blog snippet template together
+            string blogBody = @"
+            <div class=""blog-list"">   
+            #foreach($resultItem in $DynamicSearch.Results)##
+                #set($prettyUrl = $resultItem.HRef)##
+                <div class=""row blog-post"">
+                #if($resultItem.ThumbnailURL.length() > 0)##
+	                <div class=""medium-3 columns post-thumb"">
+		                <a href=""$prettyUrl"" title=""$resultItem.LongTitle"">
+			                <img src=""$resultItem.ThumbnailURL"" alt="""" />
+		                </a>						  
+	                </div>
+                #end##
+	                <div class=""medium-9 columns post-info"">
+		                <div class=""post-title clearfix""><h3><a href=""$prettyUrl"">$resultItem.LongTitle</a></h3>"
+                        + commentCount + 
+		                @"</div>
+		                <div class=""date-author"">"
+			                + date + @"
+                            #if($resultItem.Author.length()>0)##
+                                $by $resultItem.Author##
+                            #else##
+                                &nbsp;##
+                            #end##
+		                </div>
+		                <div>
+                #if($resultItem.BlogBody.length()>0)##
+	                $resultItem.BlogBody
+                #elseif($resultItem.LongDescription.length()>0)##
+	                $resultItem.LongDescription
+                #else##
+	                &nbsp;##
+                #end##
+		                </div>
+		                <p>
+			                <a href=""$prettyUrl"">$continueReading &gt;</a>
+		                </p>
+	                </div>
+                </div>
+                #set($itemType= $resultItem.type)##
+                #set($identifier = $itemType + ""-""+$resultItem.ContentID)
+            #end
+            </div>
+            <script type=""text/javascript"">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = '$DynamicSearch.DisqusShortname'; // required: replace example with your forum shortname
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function () {
+            var s = document.createElement('script'); s.async = true;
+            s.type = 'text/javascript';
+            s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+            (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+            }());
+            </script>";
+            return blogBody;
         }
     }
 }

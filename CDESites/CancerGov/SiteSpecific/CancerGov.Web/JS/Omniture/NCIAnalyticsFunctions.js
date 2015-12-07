@@ -1,4 +1,10 @@
-﻿var NCIAnalytics = {
+﻿/* This is legacy Javascript to be used for development testing only.
+* As of WCMS Feline release, this file is hosted at 
+* http://static.cancer.gov/webanalytics/wcms/NCIAnalyticsFunctions.js
+* The NCIAnalyticsFunctions Javascript is called in WebAnalyticsPageLoad.cs
+* - daquinohd
+*/
+var NCIAnalytics = {
 
     displayAlerts: false,
     stringDelimiter: '|',
@@ -242,22 +248,22 @@
 
         var cancerTypeCondition = $('#' + ids.cancerType + " option:selected").text();
 
-        //Location 
-        // - zip code
-        if ($("#" + ids.zipCodeLocationButton)[0].checked)
-            location = 'Near Zip Code';
-        // - At NIH
-        else if ($("#" + ids.atNihLocationButton)[0].checked)
-            if ($("#" + ids.nihOnly)[0].checked)
-            location = 'At NIH Only Bethesda, Md';
-        else
-            location = 'At NIH';
-        // - City/State/Country
-        else if ($("#" + ids.cityStateLocationButton)[0].checked) {
-            location = 'In City/State/Country';
-        }
-        else if ($("#" + ids.hospitalLocationButton)[0].checked) {
-            location = 'At Hospital/Institution';
+        //Location
+        switch($("#" + ids.locationSelector).val()) {
+            case "all": location = "all locations"; break;
+
+            case "zip": location = "Near Zip Code"; break;
+
+            case "city": location = "In City/State/Country"; break;
+
+            case "hospital": location = "At Hospital/Institution"; break;
+
+            case "nih": // - At NIH
+                if ($("#" + ids.nihOnly)[0].checked)
+                    location = 'At NIH Only Bethesda, Md';
+                else
+                    location = 'At NIH';
+                break;
         }
 
         // Trial Phase
@@ -353,9 +359,9 @@
             'TermsDictionarySearch',
             isSpanish);
     },
-
-    //******************************************************************************************************	
-    GeneticsDictionarySearch: function(sender, searchString, isStartsWith) {
+    
+     //******************************************************************************************************	
+     GeneticsDictionarySearch: function(sender, searchString, isStartsWith) {
         var prop24Contents = (isStartsWith) ? 'starts with' : 'contains';
 
         clickParams = new NCIAnalytics.ClickParams(sender,
@@ -373,7 +379,32 @@
         clickParams.Events = [2];
         clickParams.LogToOmniture();
     },
+    
+    //Created this function to be consistent with the Term Dictionary search.
+    //Since, we are not sure if the doc sites are using this function; Dion recommend I leave 
+    //the original function GeneticsDictionarySearch alone.
+    //******************************************************************************************************	
+    GeneticsDictionarySearchNew: function(sender) {
+   
+     var prop24Contents = ($("#" + ids.radioStarts)[0].checked) ? 'starts with' : 'contains';
 
+        clickParams = new NCIAnalytics.ClickParams(sender,
+            '', 'o', 'GeneticsDictionarySearch');
+        clickParams.Props = {
+            11: 'dictionary_genetics',
+            22: $("#" + ids.AutoComplete1).val(),
+            24: prop24Contents
+        };
+        clickParams.Evars = {
+            11: 'dictionary_genetics',
+            13: '+1',
+            26: prop24Contents
+        };
+        clickParams.Events = [2];
+        clickParams.LogToOmniture();
+    
+    },
+    
     //******************************************************************************************************	
     GeneticsDictionarySearchAlphaList: function(sender, value) {
 
@@ -1194,96 +1225,3 @@
         //alert('Lang');
     }
 };
-
-(function($) {
-    $('#mega-nav a')
-	    .filter(function() { return $(this).closest('.mobile-item').length === 0; })
-	    .on('click', function(event) {
-	        var $this = $(this);
-	        var tree = [];
-	        var treeParents = $this.parent('li').parents('li');
-	        tree.push($this[0]);
-	        if (treeParents.children('a').length > 0) {
-	            tree.push(treeParents.children('a')[0]);
-	        }
-	        if (treeParents.children('div').children('a').length > 0) {
-	            tree.push(treeParents.children('div').children('a')[0]);
-	        }
-
-	        NCIAnalytics.MegaMenuClick(this, tree);
-	    });
-
-    $('.utility a').each(function(i, el) {
-        $(el).on('click', function(event) {
-            var $this = $(this);
-            var linkText = $this.text();
-
-            NCIAnalytics.UtilityBarClick(this, linkText);
-        });
-    });
-
-    $('.nci-logo')
-	    .on('click', function(event) {
-	        NCIAnalytics.LogoClick(this)
-	    });
-
-    $('.feature-primary .feature-card').each(function(i, el) {
-        $(el).on('click', 'a', function(event) {
-            var $this = $(this);
-            var cardTitle = $this.children('h3').text();
-            var linkText = $this.children('h3').text();
-            var container = 'Feature';
-            var containerIndex = i + 1;
-
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
-        });
-    });
-
-    $('.guide-card .card').each(function(i, el) {
-        $(el).on('click', 'a', function(event) {
-            var $this = $(this);
-            var cardTitle = $(el).children('h2').text();
-            var linkText = $this.text();
-            var container = 'Guide';
-            var containerIndex = i + 1;
-
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
-        });
-    });
-
-    $('.multimedia .card').each(function(i, el) {
-        $(el).on('click', 'a', function(event) {
-            var $this = $(this);
-            var cardTitle = $this.children('h3').text();
-            var linkText = $this.children('h3').text();
-            var container = 'Multimedia';
-            var containerIndex = i + 1;
-
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
-        });
-    });
-
-    $('.cthp-card-container .cthpCard').each(function(i, el) {
-        $(el).on('click', 'a', function(event) {
-            var $this = $(this);
-            var cardTitle = $this.closest('.cthpCard').find('h3:first').text();
-            var linkText = $this.text();
-            var container = 'CTHP';
-            var containerIndex = i + 1;
-
-            NCIAnalytics.CardClick(this, cardTitle, linkText, container, containerIndex);
-        });
-    });
-
-})(jQuery);
-
-// AddThis overrides the 'onclick' event handlers, so re-bind analytics after AddThis loads.
-(function($) {
-    $('.add_this_btn').each(function() {
-        var thisBtn = this;
-        var $this = $(this);
-        $this.parent().on('click', $this, function(e) {
-            NCIAnalytics.BookmarkShareClick(thisBtn);
-        });
-    });
-})(jQuery);

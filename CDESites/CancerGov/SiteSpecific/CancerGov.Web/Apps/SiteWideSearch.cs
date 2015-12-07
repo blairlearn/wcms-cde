@@ -749,7 +749,8 @@ namespace NCI.Web.CancerGov.Apps
             rblSWRSearchType.SelectedIndex = 0;
 
             //// Web Analytics *************************************************
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.NumberOfSearchResults, wbField =>
+            // Add number of search results to analytics
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar10, wbField =>
             {
                 wbField.Value = TotalNumberOfResults.ToString();
             });
@@ -759,11 +760,12 @@ namespace NCI.Web.CancerGov.Apps
                 data.Value = "NCI Home";
             });
 
+            // Add Best Bets event to analytics
             if (rptBestBets.Visible)
             {
-                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.BestBets, wbField =>
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event10, wbField =>
                 {
-                    wbField.Value = WebAnalyticsOptions.Events.BestBets.ToString();
+                    wbField.Value = WebAnalyticsOptions.Events.event10.ToString();
                 });
             }
             //// End Web Analytics *************************************************
@@ -833,7 +835,8 @@ namespace NCI.Web.CancerGov.Apps
             spPager.RecordCount = 0;
 
             //// Web Analytics *************************************************
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.NumberOfSearchResults, wbField =>
+            // Add number of search results to analytics
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar10, wbField =>
             {
                 wbField.Value = "0";
             });
@@ -927,7 +930,7 @@ namespace NCI.Web.CancerGov.Apps
             catch (Exception ex)
             {
                 Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetBestBetsResults", NCIErrorLevel.Error, ex);
-                throw ex;// this.RaiseErrorPage("error");
+                throw ex;
             }
 
             return results;
@@ -953,7 +956,7 @@ namespace NCI.Web.CancerGov.Apps
             catch (Exception ex)
             {
                 Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetSearchResults, Endeca Search Query used:" + searchTerm, NCIErrorLevel.Error, ex);
-                throw ex;//this.RaiseErrorPage("error");
+                throw ex;
             }
 
             return results;

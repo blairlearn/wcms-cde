@@ -27,6 +27,44 @@ namespace NCI.Web.CDE.Modules
     }
 
     /// <summary>
+    /// This class represents search filters, a collection of
+    /// taxonomy filters.
+    /// </summary>
+    public class SearchFilters
+    {
+        [XmlArray("TaxonomyFilters", Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem("TaxonomyFilter", Form = XmlSchemaForm.Unqualified)]
+        public TaxonomyFilter[] TaxonomyFilters { get; set; }
+    }
+
+    /// <summary>
+    /// This class represents a taxonomy filter, which has both
+    /// taxonomy name and a collection of taxons.
+    /// </summary>
+    public class TaxonomyFilter
+    {
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string TaxonomyName { get; set; }
+
+        [XmlArray("Taxons", Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem("Taxon", Form = XmlSchemaForm.Unqualified)]
+        public Taxon[] Taxons { get; set; }
+    }
+
+    /// <summary>
+    /// This class represents a taxon, which has both a taxon name
+    /// and a taxon ID.
+    /// </summary>
+    public class Taxon
+    {
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public int ID { get; set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string Name { get; set; }
+    }
+
+    /// <summary>
     /// This class represents parameter fields, results template used in search.
     /// </summary>
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
@@ -92,6 +130,12 @@ namespace NCI.Web.CDE.Modules
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public SearchParameters SearchParameters { get; set; }
+
+        /// <summary>
+        /// Search filters, specifically taxonomy filters
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public SearchFilters SearchFilters { get; set; }
 
         /// <summary>
         /// The template which will be used to render the results on the CDE

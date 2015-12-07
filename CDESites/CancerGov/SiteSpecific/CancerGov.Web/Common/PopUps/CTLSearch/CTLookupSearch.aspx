@@ -21,7 +21,7 @@
         <!-- Top Header Section -->
         <div class="clearfix">
 		    <div class="nci-logo">
-			    <a href="/">NATIONAL CANCER INSTITUTE<br> <span>at the National Institutes of Health</span></a>
+			    <a>NATIONAL CANCER INSTITUTE<br> <span>at the National Institutes of Health</span></a>
 		    </div>
 	    </div> 
         <!-- end Top Header Section -->

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Xml.Schema;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using NCI.Web.CDE.Configuration;
-using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.CDE.WebAnalytics; 
 using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Util;
 using NCI.Core;
@@ -595,7 +595,7 @@ namespace NCI.Web.CDE
                    this.PageMetadata.BrowserTitle != "")
                     data.Value = this.PageMetadata.BrowserTitle;
                 else
-                    data.Value = this.PageMetadata.ShortTitle;
+                    data.Value = GetField("short_title"); 
 
             });
 
@@ -790,26 +790,114 @@ namespace NCI.Web.CDE
 
 
         #region Protected
+
+        
         /// <summary>
+        /// Get the section details for the content item, load custom analytics, 
+        /// then add the values to the webAnalyticsFieldFilterDelegates dictionary
+        /// </summary>
+        protected void RegisterCustomWebAnalytics()
+        {
+            SectionDetail sectiondetail = SectionDetailFactory.GetSectionDetail(SectionPath);
+
+            // Check sectiondetail to make sure not null!!!!!
+            if (sectiondetail != null)
+            {
+
+                string channels = sectiondetail.GetWAChannels();
+                string suites = sectiondetail.GetWASuites();
+                string group = sectiondetail.GetWAContentGroups();
+                string[] events = sectiondetail.GetWAEvents().ToArray();
+                WebAnalyticsCustomVariableOrEvent[] props = sectiondetail.GetWAProps().ToArray();
+                WebAnalyticsCustomVariableOrEvent[] evars = sectiondetail.GetWAEvars().ToArray();
+
+                // If Content Group has a value, add to prop44 and eVar44
+                if (!String.IsNullOrEmpty(group))
+                {
+                    SetWebAnalytics(WebAnalyticsOptions.Props.prop44.ToString(), wbField =>
+                    {
+                        wbField.Value = group;
+                    });
+                    SetWebAnalytics(WebAnalyticsOptions.eVars.evar44.ToString(), wbField =>
+                    {
+                        wbField.Value = group;
+                    });
+                }
+
+                // Register custom events entered on navon
+                foreach (string evn in events)
+                {
+                    if (!String.IsNullOrEmpty(evn))
+                    {
+                        SetWebAnalytics(evn, waField =>
+                        {
+                            waField.Value = "";
+                        });
+                    }
+                }
+
+                // Register custom props entered on navon
+                foreach (WebAnalyticsCustomVariableOrEvent prop in props)
+                {
+                    String propKey = prop.Key;
+                    String propValue = prop.Value;
+
+                    if (!String.IsNullOrEmpty(propKey))
+                    {
+                        SetWebAnalytics(propKey, waField =>
+                        {
+                            waField.Value = propValue;
+                        });
+                    }
+                }
+
+                // Register custom evars entered on navon
+                foreach (WebAnalyticsCustomVariableOrEvent evar in evars)
+                {
+                    String evarKey = evar.Key;
+                    String evarValue = evar.Value;
+
+                    if (!String.IsNullOrEmpty(evarKey))
+                    {
+                        SetWebAnalytics(evarKey, waField =>
+                        {
+                            waField.Value = evarValue;
+                        });
+                    }
+                }
+            }
+            else
+            {
+                Logger.LogError("SinglePageAssemblyInstruction.cs:RegisterCustomWebAnalytics()",
+                    "SectionDetails XML not found.", NCIErrorLevel.Debug);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Add required values to the webAnalyticsFieldFilterDelegates dictionary.
         /// Override this method to add any page specifc web analytics data points.
         /// </summary>
         protected override void RegisterWebAnalyticsFieldFilters()
         {
             base.RegisterWebAnalyticsFieldFilters();
 
-            SetWebAnalytics(WebAnalyticsOptions.Props.ShortTitle.ToString(), wbField =>
+            // Add short title
+            SetWebAnalytics(WebAnalyticsOptions.Props.prop6.ToString(), wbField =>
             {
                 wbField.Value = GetField("short_title");
             });
 
-            SetWebAnalytics(WebAnalyticsOptions.Props.PostedDate.ToString(), wbField =>
+            // Add posted date
+            SetWebAnalytics(WebAnalyticsOptions.Props.prop25.ToString(), wbField =>
             {
                 wbField.Value = String.Format("{0:MM/dd/yyyy}", this.ContentDates.FirstPublished);
             });
+
+            RegisterCustomWebAnalytics();
         }
-        #endregion
 
-        #endregion
-
+        #endregion // Initialize methods region
+        #endregion // Protected region
     }
 }

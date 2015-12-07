@@ -62,10 +62,9 @@ namespace CancerGov.Web.SnippetTemplates
             iProtocolID = Strings.ToInt(Request.Params["cdrid"]);
 
             if (iProtocolID < 1)
-            {
-
-                NCI.Logging.Logger.LogError("ViewClinicalTrials.OnLoad", "No ProtocalID Specified", NCIErrorLevel.Error);
-                this.RaiseErrorPage("No ProtocalID Specified");
+            {                
+                //Send the user the PageNotFoundPage, do not log anything.  (One could argue we should return a 400 since there were invalid params...)
+                throw new HttpException(404, "No Protocol ID Specified");
             }
 
             iProtocolSearchID = Strings.ToInt(Strings.IfNull(Strings.Clean(Request.Params["protocolsearchid"]), "0"));
@@ -81,23 +80,36 @@ namespace CancerGov.Web.SnippetTemplates
             {
                 pProtocol = new Protocol(iProtocolID, ProtocolFunctions.GetSectionList(pvVersion, ProtocolDisplayFormats.SingleProtocol), iProtocolSearchID, pvVersion);
             }
-            catch (ProtocolFetchFailureException fetchError)
+            catch (CancerGov.Exceptions.ProtocolFetchFailureException fetchError)
             {
 
                 NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
-                this.RaiseErrorPage("Error:" + fetchError.Message);
+                //This is an error - maybe no DB connection, who knows what, but stuff broke.
+                this.RaiseErrorPage();
             }
-            catch (ProtocolTableEmptyException fetchError)
-            {
+            catch (CancerGov.Exceptions.ProtocolTableEmptyException fetchError)
+            {               
+                //Do not log an error as no protocol was found.  If you really want to know why it was
+                //not found, then just run the stored proc.  Instead, just send the user to the page 
+                //not found page.  This is tricky since this can be thrown if the protocol was not 
+                //retrieved, but also if NO tables came back, which would indicate
+                //something wrong with the stored proc.  We will just treat them both as a protocol
+                //was not found.
+                throw new HttpException(404, "No Protocol Found with that ID");
 
-                NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
-                this.RaiseErrorPage("Error:" + fetchError.Message);
             }
-            catch (ProtocolTableMiscountException fetchError)
+            catch (CancerGov.Exceptions.ProtocolTableMiscountException fetchError)
             {
 
                 NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
-                this.RaiseErrorPage("Error:" + fetchError.Message);
+                //This is an error - basically there are tables we are expecting that are not there
+                //this is probably a stored proc issue.
+                this.RaiseErrorPage();
+            }
+            catch (Exception ex)
+            {
+                NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + ex.Message, NCIErrorLevel.Error, ex);
+                this.RaiseErrorPage();
             }
 
 
@@ -142,6 +154,14 @@ namespace CancerGov.Web.SnippetTemplates
             PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
             {
                 data.Value = pProtocol.ProtocolTitle;
+            });
+
+            //Set the short title as the NCTID Clinical Trial.  [OCEPROJECT-3489]
+            PageInstruction.AddFieldFilter("short_title", (fieldName, data) =>
+            {
+                if (pProtocol.NCTID != string.Empty)
+                    data.Value = pProtocol.NCTID + " Clinical Trial";
+
             });
             
             StringBuilder sbPageUrl = new StringBuilder();
@@ -218,18 +238,22 @@ namespace CancerGov.Web.SnippetTemplates
                 data.Value = "Clinicaltrials";
             });
 
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.ClinicalTrialViewCount, wbField =>
+            // Add clinical trial view count to analytics 
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar22, wbField =>
             {
                 wbField.Value = "+1";
             });
 
+            // Add clinical trial view event to analytics
             if (hasProtocolSearchid)
-                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.ClinicalTrialViewFromSearch, wbField =>
+                // If viewed from a search
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event4, wbField =>
                 {
                     wbField.Value = "";
                 });
             else
-                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.ClinicalTrialViewNotSearch, wbField =>
+                // If not viewed from a search
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event13, wbField =>
                 {
                     wbField.Value = "";
                 });

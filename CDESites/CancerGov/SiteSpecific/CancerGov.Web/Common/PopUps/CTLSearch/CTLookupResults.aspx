@@ -5,7 +5,8 @@
 <head>
     <title>CTLookupResults</title>
     <link rel="stylesheet" href="/PublishedContent/Styles/nvcg.css" />
-    <script src="/PublishedContent/js/modernizr.custom.2.7.1.js" type="text/javascript"></script>
+    <script src="/PublishedContent/js/Common.js" type="text/javascript"></script>
+    <script src="/PublishedContent/js/Popups.js" type="text/javascript"></script>
 </head>
 <body class="popup">
     <form id="resultsForm" runat="server" method="post" > 

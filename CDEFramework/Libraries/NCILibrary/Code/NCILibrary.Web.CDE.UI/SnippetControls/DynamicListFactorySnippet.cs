@@ -18,7 +18,7 @@ using NCI.Web.CDE.Modules;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
-    public class DynamicListFactorySnippet : BaseSearchSnippet
+    public class DynamicListFactorySnippet : SnippetControl
     {
         /// <summary>
         /// Gets the snippet info for a Dynamic List content item and selects the correct control

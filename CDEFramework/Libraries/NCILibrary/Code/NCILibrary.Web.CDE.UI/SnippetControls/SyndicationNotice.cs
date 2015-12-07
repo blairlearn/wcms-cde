@@ -32,9 +32,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
             if (displaySyndicationNotice())
             {
                 HtmlData = SnippetInfo.Data;
+                Visible = true;
             }
             else
+            {
                 HtmlData = String.Empty;
+                Visible = false;
+            }
         }
 
         public override void RenderControl(HtmlTextWriter writer)

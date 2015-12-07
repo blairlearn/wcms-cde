@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -123,8 +123,6 @@ namespace NCI.Web.CDE
         }
 
 
-        private SnippetInfoCollection _snippets = new SnippetInfoCollection();
-         
         /// <summary>
         /// Gets and sets the section name
         /// </summary>
@@ -132,10 +130,83 @@ namespace NCI.Web.CDE
         public string SectionName { get; set; }
 
 
+        /// <summary>
+        /// Gets custom analytics values
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public WebAnalyticsInfo WebAnalyticsInfo { get; set; }
 
         /// <summary>
-        /// Gets the snippet infos.
+        /// Get the all the WebAnalyticsInfos of this section and its parents starting with this section
         /// </summary>
+        private IEnumerable<WebAnalyticsInfo> RecursiveGetAnalyticsInfo()
+        {
+            SectionDetail currSection = this;
+            while (currSection != null)
+            {
+                if (this.WebAnalyticsInfo != null)
+                {
+                    yield return currSection.WebAnalyticsInfo;
+                    currSection = currSection.Parent;
+                } 
+                else
+                {
+                    currSection = currSection.Parent;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get Web Analytics Report Suites for this SectionDetails
+        /// </summary>
+        public String GetWASuites()
+        {
+            return WebAnalyticsInfo.GetSuites(RecursiveGetAnalyticsInfo());
+        }
+
+        /// <summary>
+        /// Get Web Analytics Channels for this SectionDetails
+        /// </summary>
+        public String GetWAChannels()
+        {
+            return WebAnalyticsInfo.GetChannels(RecursiveGetAnalyticsInfo());
+        }
+
+        /// <summary>
+        /// Get Web Analytics Content Groups for this SectionDetails
+        /// </summary>
+        public String GetWAContentGroups()
+        {
+            return WebAnalyticsInfo.GetContentGroups(RecursiveGetAnalyticsInfo());
+        }
+
+        /// <summary>
+        /// Get Web Analytics Events for this SectionDetails
+        /// </summary>
+        public IEnumerable<String> GetWAEvents()
+        {
+            return WebAnalyticsInfo.GetEvents(RecursiveGetAnalyticsInfo());
+        }
+
+        /// <summary>
+        /// Get Web Analytics Props for this SectionDetails
+        /// </summary>
+        public IEnumerable<WebAnalyticsCustomVariableOrEvent> GetWAProps()
+        {
+            return WebAnalyticsInfo.GetProps(RecursiveGetAnalyticsInfo());
+        }
+
+        /// <summary>
+        /// Get Web Analytics eVars for this SectionDetails
+        /// </summary>
+        public IEnumerable<WebAnalyticsCustomVariableOrEvent> GetWAEvars()
+        {
+            return WebAnalyticsInfo.GetEvars(RecursiveGetAnalyticsInfo());
+        }
+
+
+        private SnippetInfoCollection _snippets = new SnippetInfoCollection();
+        /// <summary>Gets the snippet infos.</summary>
         /// <value>The snippet infos.</value>
         [System.Xml.Serialization.XmlArray(ElementName = "Snippets", Form = XmlSchemaForm.Unqualified)]
         [System.Xml.Serialization.XmlArrayItem("SnippetInfo", Form = XmlSchemaForm.Unqualified)]

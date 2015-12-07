@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Configuration;
+using NCI.Logging;
 
 namespace NCI.Web.CDE.WebAnalytics
 {
@@ -29,7 +30,13 @@ namespace NCI.Web.CDE.WebAnalytics
         private string pageName = null;
         private string pageType = "";
         private string language = "";
+        private IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
 
+        // Get paths for WCMS analytics code
+        // Dev tiers are hosted locally (/JS/Omniture/), Prod is hosted on static.cancer.gov/wcms
+        private string WaPre = ConfigurationManager.AppSettings["WAWCMSPre"].ToString();
+        private string WaSCode = ConfigurationManager.AppSettings["SCode"].ToString();
+        private string WaFunctions = ConfigurationManager.AppSettings["NCIAnalyticsFunctions"].ToString();
 
         /// <summary>When true, page-wide link tracking is enabled.</summary>
         public bool DoPageWideLinkTracking
@@ -40,16 +47,17 @@ namespace NCI.Web.CDE.WebAnalytics
 
         /// <summary>the constructor builds base Omniture page load code.   
         /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
+        /// Note: as of the Feline release, Prod web analytics javascript is hosted on static.cancer.gov
         public WebAnalyticsPageLoad()
         {
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/NCIAnalyticsFunctions.js\"></script>");
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"/JS/Omniture/s_code.js\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
             pageLoadPreTag.AppendLine("<!--");
 
             // Default props, eVars, and/or events
-            AddProp(WebAnalyticsOptions.Props.LongTitle, "document.title", true);  //prop10
-            AddEvent(WebAnalyticsOptions.Events.PageView);
+            AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
+            AddEvent(WebAnalyticsOptions.Events.event1); // page view event
 
             // The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
             //pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
@@ -112,15 +120,36 @@ namespace NCI.Web.CDE.WebAnalytics
                 output.AppendLine(WEB_ANALYTICS_COMMENT_START);
 
                 // Report Suites JavaScript variable (s_account) must be set before the s_code file is loaded
-                foreach (string suite in WebAnalyticsOptions.GetSuitesForChannel(channel, language))
+                // Get custom suites that are set on the navon. Default suites are being set in wa_wcms_pre.js
+                try
                 {
-                    if (reportSuites.Length > 0)
-                        reportSuites += ",";
-                    reportSuites += suite;
+                    string sectionPath = pgInstruction.SectionPath;
+                    SectionDetail detail = SectionDetailFactory.GetSectionDetail(sectionPath);
+                    string customSuites = detail.GetWASuites();
+                    if (!string.IsNullOrEmpty(customSuites))
+                    {
+                        reportSuites += customSuites;
+                    }
                 }
+                catch (Exception ex)
+                {
+                    Logger.LogError("CDE:WebAnalyticsPageLoad.cs:Tag()",
+                          "Exception encountered while retrieving web analytics suites.",
+                          NCIErrorLevel.Debug, ex);
+                    reportSuites += "";
+                }
+
+                // Output analytics Javascript to HTML source in this order:
+                // 1. wa_wcms_pre.js source URL
+                // 2. Snippet to set s_account value
+                // 3. NCIAnalyticsFunctions.js source URL (see line 47)
+                // 4. s_code source URL
+                // 5. Channel, Prop, eVar, and Event info
+                // Note: as of the Feline release, the web analytics javascript is hosted on static.cancer.gov
+                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
                 output.AppendLine("<!--");
-                output.AppendLine("var s_account=" + DELIMITER + reportSuites + DELIMITER + ";");
+                output.AppendLine("var s_account = AnalyticsMapping.GetSuites(\"" + reportSuites + "\");");
                 output.AppendLine("-->");
                 output.AppendLine("</script>");
 
@@ -137,7 +166,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 if (channel != "") // if channel is set, output them to the tag
                     output.AppendLine("s.channel=" + DELIMITER + channel + DELIMITER + ";");
 
-                if (pageName != null) // if pageName is not null (emptry string ok), output them to the tag
+                if (pageName != null) // if pageName is not null (empty string ok), output them to the tag
                     output.AppendLine("s.pageName=" + DELIMITER + pageName + DELIMITER + ";");
 
                 if (pageType != "") // if pageType is set, output them to the tag
@@ -333,8 +362,8 @@ namespace NCI.Web.CDE.WebAnalytics
                     languageValue = "english";
                     break;
             }
-            this.AddProp(WebAnalyticsOptions.Props.Language, languageValue); // prop8
-            this.AddEvar(WebAnalyticsOptions.eVars.Language, languageValue); // eVar2
+            this.AddProp(WebAnalyticsOptions.Props.prop8, languageValue); // Language
+            this.AddEvar(WebAnalyticsOptions.eVars.evar2, languageValue); // Language
             language = languageValue;
         }
 
@@ -343,7 +372,7 @@ namespace NCI.Web.CDE.WebAnalytics
         public void SetPageName(string pageNameValue)
         {
             pageName = pageNameValue.Replace("'", "\\'");
-            this.AddEvar(WebAnalyticsOptions.eVars.PageName, pageName);
+            this.AddEvar(WebAnalyticsOptions.eVars.evar1, pageName); // Page name
         }
 
         /// <summary>Sets the value of the Omniture pageType  variable in the Omniture page load JavaScript code.</summary>

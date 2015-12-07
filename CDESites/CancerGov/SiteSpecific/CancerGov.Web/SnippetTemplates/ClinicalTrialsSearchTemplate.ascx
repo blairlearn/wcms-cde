@@ -57,75 +57,75 @@
 })(jQuery);
 </script>
 
-<%-- Radio Toggle Blocks --%>
+<!-- Location type dropdown toggles. -->
 <script type="text/javascript">
 (function($) {
+    if ($.fn.setupLocationToggleBlocks === undefined) {
 
-    if ($.fn.radioToggleBlocks === undefined) {
-
-        $.radioToggleBlocks = {
+        $.setupLocationToggleBlocks = {
             "default": {}
         };
 
-        $.fn.radioToggleBlocks = function() {
-            //Loop through each element we are trying to make a radioToggleBlock.  Each element should contain controllers.
-            return this.each(function() {
-                var cbl = $(this);
-                var radios = cbl.find('input[type=radio]');
+        // Define the setupLocationToggleBlocks method.
+        $.fn.setupLocationToggleBlocks = function() {
+            // Loop through the elements where we are trying to set up location toggles.
 
+            // 'this' (and thus container) refers to the element setupLocationToggleBlocks was invoked against.
+            return this.each(function() {
+                var container = $(this);
+
+                // Set of regions we can toggle.
                 var regions = [];
 
-                //Find all checkboxes within the current checkbox list
-                radios.each(function() {
-                    //Initial setup function
-                    var el = $(this); //This is the radio
+                var dropDown = container.find("select.location-chooser");
 
+                // Find the set of options tags making up the location chooser.
+                var options = dropDown.find("option");
+                options.each(function() {
+                    var el = $(this); // 'this' now refers to an individual option element.
 
+                    // Initialize the individual region's display
                     var ctrl_tocontrol = el.attr("aria-controls");
-                    var region = $("#" + ctrl_tocontrol);
-                    regions.push(region); //Add region to our list of regions
+                    if (ctrl_tocontrol != null && ctrl_tocontrol != "") {
+                        var region = $("#" + ctrl_tocontrol);
+                        regions.push(region);
+                        region.prop("tabindex", "-1");
 
-                    region.prop("tabindex", "-1");
-
-                    if (this.checked !== true) {
-                        region.hide().attr('aria-expanded', 'false');
-                    } else {
-                        region.attr('aria-expanded', 'true');
-                    }
-
-
-                    el.on('click', regions, function() {
-
-                        //Only do this if we are selecting the radio
-                        if (this.checked === true) {
-
-                            var curr_el = $(this);
-
-                            var selected_region = false;
-                            for (var i = 0; i < regions.length; i++) {
-                                if (regions[i].attr('id') === curr_el.attr('aria-controls')) {
-                                    regions[i].show().attr("aria-expanded", "true");
-                                    selected_region = regions[i];
-                                } else {
-                                    regions[i].hide().attr("aria-expanded", "false");
-                                }
-
-                            }
-
-                            if (selected_region) {
-                                selected_region.focus();
-                            }
+                        // Hide regions not connected to the option marked as selected.
+                        if (this.selected !== true) {
+                            region.hide().attr('aria-expanded', 'false');
+                        } else {
+                            region.attr('aria-expanded', 'true');
                         }
-                    });
+                    }
+                });
 
+                // Set a change handler for the container (not many events are avaiable on option elements).
+                dropDown.on('change', regions, function() {
+                    // 'this' is the dropdown.
+                    var ddl = $(this);
+                    var options = ddl.find("option");
+                    options.each(function() {
+                        var el = $(this);
+                        var ctrl_tocontrol = el.attr("aria-controls");
+                        var region = $("#" + ctrl_tocontrol);
+                        if (this.selected) {
+                            region.show().attr('aria-expanded', 'true');
+                            // After making the region visible again, refresh any select menus it contains.
+                            var subDdl = region.find("select");
+                            subDdl.each(function() {
+                                $(this).selectmenu("refresh");
+                            });
+                        }
+                        else
+                            region.hide().attr('aria-expanded', 'false');
+                    });
                 });
             });
         };
-
     }
 
-
-    return $.fn.radioToggleBlocks;
+    return $.fn.setupLocationToggleBlocks;
 })(jQuery);
 </script>
 
@@ -141,10 +141,7 @@
             , institutionListSubBox: "<%=institutionListSubBox.ClientID %>"
             , showInstitutionListButton: "<%=showInstitutionListButton.ClientID %>"
 
-            , hospitalLocationButton: "<%=hospitalLocationButton.ClientID %>"
-            , zipCodeLocationButton: "<%=zipCodeLocationButton.ClientID %>"
-            , cityStateLocationButton: "<%=cityStateLocationButton.ClientID %>"
-            , atNihLocationButton: "<%=atNihLocationButton.ClientID %>"
+            , locationSelector: "<%= LocationTypeSelector.ClientID %>"
             , country: "<%=country.ClientID %>"
             , city: "<%=city.ClientID %>"
             , state: "<%=state.ClientID %>"
@@ -183,10 +180,10 @@
             , interventionListExpanded: "<%=interventionListExpanded.ClientID %>"
 
         };
-    
+
         $(document).ready(function() {
             $(".groupedCheckBoxList").groupedCheckBoxList();
-            $("#locationFieldset").radioToggleBlocks();
+            $("#locationFieldset").setupLocationToggleBlocks();
         });
     </script>
 
@@ -242,89 +239,92 @@
             <div id="legend-location" class="large-4 small-11 columns legend">Location</div>
             <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#2" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
-                <div class="cts-location roundy-box">
-                    <div class="row">
-                        <div class="large-6 columns">
-                            <div class="radio"><asp:RadioButton ID="zipCodeLocationButton" value="zip" GroupName="LocationChooser" runat="server" Text="Near ZIP Code" /></div>
-                            <div class="radio"><asp:RadioButton ID="cityStateLocationButton" value="city" GroupName="LocationChooser" runat="server" Text="In City/State/Country" /></div>
-                        </div>                       
-                        <div class="large-6 columns">         
-                            <div class="radio"><asp:RadioButton ID="hospitalLocationButton" value="hospital" GroupName="LocationChooser" runat="server" Text="At Hospital/Institution" /></div>
-                            <div class="radio"><asp:RadioButton ID="atNihLocationButton" value="nih" GroupName="LocationChooser" runat="server" Text="At NIH" /></div>
-                        </div>                                
+                <div class="row">Search by location</div>
+                <div class="row">
+                    <div class="cts-location roundy-box">
+                        <div class="row">
+                            <asp:DropDownList CssClass="fullwidth location-chooser" ID="LocationTypeSelector" runat="server">
+                                <asp:ListItem Value="all" Selected="True">All</asp:ListItem>
+                                <asp:ListItem Value="zip">Near ZIP Code</asp:ListItem>
+                                <asp:ListItem Value="city">In City/State/Country</asp:ListItem>
+                                <asp:ListItem Value="hospital">At Hospital/Institution</asp:ListItem>
+                                <asp:ListItem Value="nih">At NIH</asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+
+                        <fieldset ID="zipCodeLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-zip">
+                            <div class="legend" id="legend-location-zip">Near ZIP Code</div>
+                            <div>
+                                <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat="server">Show trials located within:</asp:Label>
+                                <div class="row ct-zip-row">
+                                    <asp:DropDownList ID="zipCodeProximity" CssClass="ct-radius" runat="server">
+                                        <asp:ListItem Value="20">20 miles</asp:ListItem>
+                                        <asp:ListItem Value="50">50 miles</asp:ListItem>
+                                        <asp:ListItem Value="100" Selected="True">100 miles</asp:ListItem>
+                                        <asp:ListItem Value="200">200 miles</asp:ListItem>
+                                        <asp:ListItem Value="500">500 miles</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <span class="ct-zip-area">of
+                                    <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code</asp:Label>
+                                    <asp:TextBox ID="zipCode" CssClass="ct-zip" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
+                                    <a class="ct-zip-lookup" onclick="javascript:dynPopWindow('http://zip4.usps.com/zip4/citytown.jsp', '', 'width=740px,menubar=no,location=no,height=465px,scrollbar=yes'); return(false);"
+                                        href="http://zip4.usps.com/zip4/citytown.jsp">ZIP Code Lookup</a></span>
+                                </div>
+                                <!-- Add validator -->
+                            </div>
+                        </fieldset>
+                        <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-hospital">
+                            <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
+                            <div>
+                                <button id="showInstitutionListButton" class="action" runat="server">Choose From List</button>
+                                <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
+                                <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
+                                <div id="institutionListSubBox" runat="server">
+                                    <cancergov:deletelist id="institution" runat="server" 
+                                        emptylisttext="Select &quot;Add More&quot; to see hospital names." />
+                                    <span id="institutionAddButton">
+                                        <button class="button action" type="button"
+                                            onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=750px,menubar=no,location=no,height=650px');">
+                                            Add More
+                                        </button>
+                                    </span>
+                                    <asp:Button ID="institutionClearAll" runat="server" Text="Clear All"
+                                        OnClick="InstutionListClearAll_ClickHandler" 
+                                        OnClientClick="$('#' + ids.institution).deletelist('clearAll');return false;"
+                                        CssClass="button reset" />
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    InitializeInstitutionListSubBox();
+                                });
+                            </script>
+                        </fieldset>
+                        <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-citystate">
+                            <div class="legend" id="legend-location-citystate">In City/State/Country</div>
+                            <div>
+                                <div class="ct-country-area">
+                                    <label for="<%=country.ClientID%>" class="ct-country-label">Country:</label>
+                                    <select id="country" onchange="country_onChange(this);" name="country" runat="server" />
+                                </div>
+                                <div class="ct-city-area">
+                                    <label for="<%=city.ClientID%>" class="ct-city-label">City:</label>
+                                    <input id="city" type="text" size="14" name="city" runat="server" />
+                                </div>
+                                <div class="ct-state-area">
+                                    <label class="ct-state-label">State</label>
+                                    <CancerGov:AccessibleCheckBoxList
+                                        id="state"
+                                        runat="server"
+                                        CssClass="scrolling-list roundy-box groupedCheckBoxList ct-state-list" />                        
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-NIH">
+                            <div class="legend" id="legend-location-NIH">At NIH</div>
+                            <div class="checkbox"><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
+                        </fieldset>
                     </div>
-                    <fieldset ID="zipCodeLocationFieldset" runat="server" class="roundy-box row" role="region">
-                        <div class="legend" id="legend-location-zip">Near ZIP Code</div>
-                        <div>
-                            <asp:Label ID="lblzipCodeProximity" AssociatedControlID="zipCodeProximity" runat="server">Show trials located within:</asp:Label>
-                            <div class="row ct-zip-row">
-                                <asp:DropDownList ID="zipCodeProximity" CssClass="ct-radius" runat="server">
-                                    <asp:ListItem Value="20">20 miles</asp:ListItem>
-                                    <asp:ListItem Value="50">50 miles</asp:ListItem>
-                                    <asp:ListItem Value="100" Selected="True">100 miles</asp:ListItem>
-                                    <asp:ListItem Value="200">200 miles</asp:ListItem>
-                                    <asp:ListItem Value="500">500 miles</asp:ListItem>
-                                </asp:DropDownList>
-                                <span class="ct-zip-area">of
-                                <asp:Label ID="lblzipCode" AssociatedControlID="zipCode" runat="server">ZIP Code</asp:Label>
-                                <asp:TextBox ID="zipCode" CssClass="ct-zip" MaxLength="5" Columns="8" runat="server" ValidationGroup="v1"></asp:TextBox>
-                                <a class="ct-zip-lookup" onclick="javascript:dynPopWindow('http://zip4.usps.com/zip4/citytown.jsp', '', 'width=740px,menubar=no,location=no,height=465px,scrollbar=yes'); return(false);"
-                                    href="http://zip4.usps.com/zip4/citytown.jsp">ZIP Code Lookup</a></span>
-                            </div>
-                            <!-- Add validator -->
-                        </div>
-                    </fieldset>
-                    <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row" role="region">
-                        <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
-                        <div>
-                            <button id="showInstitutionListButton" class="action" runat="server">Choose From List</button>
-                            <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
-                            <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
-                            <div id="institutionListSubBox" runat="server">
-                                <cancergov:deletelist id="institution" runat="server" 
-                                    emptylisttext="Select &quot;Add More&quot; to see hospital names." />
-                                <span id="institutionAddButton">
-                                    <button class="button action" type="button"
-                                        onclick="dynPopWindow('/Common/PopUps/CTLSearch/CTLookup.aspx?type=<% =institution.ClientID %>&amp;fld=institution&amp;title=Find+Hospitals/Institutions', 'InstitutionLookup', 'width=750px,menubar=no,location=no,height=650px');">
-                                        Add More
-                                    </button>
-                                </span>
-                                <asp:Button ID="institutionClearAll" runat="server" Text="Clear All"
-                                    OnClick="InstutionListClearAll_ClickHandler" 
-                                    OnClientClick="$('#' + ids.institution).deletelist('clearAll');return false;"
-                                    CssClass="button reset" />
-                            </div>
-                        </div>
-                        <script>
-                            $(document).ready(function() {
-                                InitializeInstitutionListSubBox();
-                            });
-                        </script>
-                    </fieldset>
-                    <fieldset  ID="cityStateLocationFieldset" runat="server" class="roundy-box row" role="region">
-                        <div class="legend" id="legend-location-citystate">In City/State/Country</div>
-                        <div>
-                            <div class="ct-country-area">
-                                <label for="<%=country.ClientID%>" class="ct-country-label">Country:</label>
-                                <select id="country" onchange="country_onChange(this);" name="country" runat="server" />
-                            </div>
-                            <div class="ct-city-area">
-                                <label for="<%=city.ClientID%>" class="ct-city-label">City:</label>
-                                <input id="city" type="text" size="14" name="city" runat="server" />
-                            </div>
-                            <div class="ct-state-area">
-                                <label class="ct-state-label">State</label>
-                                <CancerGov:AccessibleCheckBoxList
-                                    id="state"
-                                    runat="server"
-                                    CssClass="scrolling-list roundy-box groupedCheckBoxList ct-state-list" />                        
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset ID="atNihLocationFieldset" runat="server" class="roundy-box row" role="region">
-                        <div class="legend" id="legend-location-NIH">At NIH</div>
-                        <div class="checkbox"><asp:CheckBox ID="nihOnly" runat="server" value="1" Text="Only show trials at the NIH Clinical Center (Bethesda, Md.)" Checked="true"></asp:CheckBox></div>
-                    </fieldset>
                 </div>
             </div>
         </div>

@@ -1,4 +1,6 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +12,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CancerGov.Web</RootNamespace>
     <AssemblyName>CancerGov.Web</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
@@ -36,12 +46,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -60,19 +65,18 @@
     <Reference Include="System.ServiceModel.Web">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web.Extensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Common\FormEmailer.aspx" />
@@ -82,6 +86,7 @@
     <Content Include="Common\PopUps\popTextHeader.htm" />
     <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
     <Content Include="Global.asax" />
+    <Content Include="JS\Omniture\wa_wcms_pre.js" />
     <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
     <Content Include="JS\Omniture\s_code.js" />
     <Content Include="JS\popEvents.js" />
@@ -284,13 +289,6 @@
     <Compile Include="SnippetTemplates\ClinicalTrialsBaseUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsLink.ascx.cs">
-      <DependentUpon>ClinicalTrialsLink.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsLink.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsLink.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\ClinicalTrialsResults.ascx.cs">
       <DependentUpon>ClinicalTrialsResults.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -319,13 +317,6 @@
     <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.designer.cs">
       <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\db_alpha.ascx.cs">
-      <DependentUpon>db_alpha.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\db_alpha.ascx.designer.cs">
-      <DependentUpon>db_alpha.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\DocTitleBlock.ascx.cs">
       <DependentUpon>DocTitleBlock.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -333,12 +324,33 @@
     <Compile Include="SnippetTemplates\DocTitleBlock.ascx.designer.cs">
       <DependentUpon>DocTitleBlock.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\drugdictionary.ascx.cs">
-      <DependentUpon>drugdictionary.ascx</DependentUpon>
+    <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.cs">
+      <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\drugdictionary.ascx.designer.cs">
-      <DependentUpon>drugdictionary.ascx</DependentUpon>
+    <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.designer.cs">
+      <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx.cs">
+      <DependentUpon>DrugDictionaryDefinitionView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx.designer.cs">
+      <DependentUpon>DrugDictionaryDefinitionView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx.cs">
+      <DependentUpon>DrugDictionaryHome.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx.designer.cs">
+      <DependentUpon>DrugDictionaryHome.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx.cs">
+      <DependentUpon>DrugDictionaryResultsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx.designer.cs">
+      <DependentUpon>DrugDictionaryResultsList.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\EmergencyBanner.ascx.cs">
       <DependentUpon>EmergencyBanner.ascx</DependentUpon>
@@ -354,26 +366,19 @@
     <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.designer.cs">
       <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryResultsList.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryResultsList.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryDefinitionView.ascx.cs">
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx.cs">
       <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryDefinitionView.ascx.designer.cs">
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx.designer.cs">
       <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHelper.cs" />
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHome.ascx.cs">
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx.cs">
       <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHome.ascx.designer.cs">
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx.designer.cs">
       <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx.cs">
@@ -382,6 +387,13 @@
     </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx.designer.cs">
       <DependentUpon>GeneticsTermDictionaryRouter.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx.cs">
+      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx.designer.cs">
+      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.cs">
       <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
@@ -410,6 +422,41 @@
     </Compile>
     <Compile Include="SnippetTemplates\TableofLinks.ascx.designer.cs">
       <DependentUpon>TableofLinks.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\DictionarySearchBlock.ascx.cs">
+      <DependentUpon>DictionarySearchBlock.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\DictionarySearchBlock.ascx.designer.cs">
+      <DependentUpon>DictionarySearchBlock.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx.cs">
+      <DependentUpon>TermDictionaryDefinitionView.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx.designer.cs">
+      <DependentUpon>TermDictionaryDefinitionView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx.cs">
+      <DependentUpon>TermDictionaryHome.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx.designer.cs">
+      <DependentUpon>TermDictionaryHome.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx.cs">
+      <DependentUpon>TermDictionaryResultsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx.designer.cs">
+      <DependentUpon>TermDictionaryResultsList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryRouter.ascx.cs">
+      <DependentUpon>TermDictionaryRouter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryRouter.ascx.designer.cs">
+      <DependentUpon>TermDictionaryRouter.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
@@ -464,6 +511,10 @@
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
       <Project>{EEE51BA0-18AE-4CF2-876F-7E75B5A2D1FF}</Project>
       <Name>NCILibrary.Web.CDE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.Dictionary\NCILibrary.Web.Dictionary.csproj">
+      <Project>{2C675310-2242-4CBB-B40E-D6225C719FFC}</Project>
+      <Name>NCILibrary.Web.Dictionary</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.UI.WebControls\NCILibrary.Web.UI.WebControls.csproj">
       <Project>{5ADEF930-6ED8-485E-83DB-A9E14A4182F6}</Project>
@@ -567,13 +618,14 @@
       <LastGenOutput>SiteWideSearch.es.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="DictionaryService.svc" />
     <Content Include="DrugDictionary.svc" />
+    <Content Include="DynamicListTemplates\DynamicBlogDescImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListDescNoImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListDescImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListNoDescImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicListNoDescNoImgDate.ascx" />
     <Content Include="DynamicListTemplates\DynamicNewsDescImgDate.ascx" />
-    <Content Include="JS\drugDictionary.js" />
     <Content Include="JS\ForeSee\cancel.gif" />
     <Content Include="JS\ForeSee\cancel.html" />
     <Content Include="JS\ForeSee\closebtn.gif" />
@@ -604,7 +656,6 @@
     <Content Include="JS\ForeSee\tracker.html" />
     <Content Include="JS\ForeSee\tracker_sp.html" />
     <Content Include="JS\ForeSee\truste.png" />
-    <Content Include="JS\geneticsTermDictionary.js" />
     <Content Include="JS\imgEvents.js" />
     <Content Include="JS\JSLoader\JSLoader.js" />
     <Content Include="JS\NetTracker\ntpagetag.js" />
@@ -628,7 +679,6 @@
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\CGovMainNavControl.ascx" />
     <Content Include="SnippetTemplates\CGovSectionNavControl.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsLink.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
     <Content Include="SnippetTemplates\ClinicalTrialsView.ascx" />
@@ -636,16 +686,18 @@
     <Content Include="SnippetTemplates\ConditionalDisplaySnippet.ascx" />
     <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
     <Content Include="SnippetTemplates\BreadcrumbSnippet.ascx" />
-    <Content Include="SnippetTemplates\db_alpha.ascx" />
     <Content Include="SnippetTemplates\DisqusComments.ascx" />
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
-    <Content Include="SnippetTemplates\drugdictionary.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\EmergencyBanner.ascx" />
     <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
-    <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryResultsList.ascx" />
-    <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryDefinitionView.ascx" />
-    <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHome.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\GlossaryTerms.ascx" />
     <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />
     <Content Include="SnippetTemplates\PublicArchiveBanner.ascx" />
@@ -654,6 +706,11 @@
     <Content Include="SnippetTemplates\SearchGeneticsServices.ascx" />
     <Content Include="SnippetTemplates\SyndicationNotice.ascx" />
     <Content Include="SnippetTemplates\TableofLinks.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\DictionarySearchBlock.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\TermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\ViewGenericsProfessionals.ascx" />
     <Content Include="SnippetTemplates\BlogPostNewerOlder.ascx" />
     <Content Include="Sublayouts\SubLayout_Feature_Primary.ascx" />
@@ -715,8 +772,13 @@
     <Folder Include="App_LocalResources\" />
     <Folder Include="UserControls\Footers\" />
   </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

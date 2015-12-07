@@ -34,6 +34,7 @@ namespace CancerGov.CDR.DataManager
 		private string trialSponsor = "";
 		private string primaryProtocolID = "";
 		private string alternateProtocolIDs = "";
+        //NCTID is actually going to be a autoproperty
 		private string phase = "";
 		private string strSectionList = "";
 		private ProtocolVersions pvVersion;
@@ -114,6 +115,13 @@ namespace CancerGov.CDR.DataManager
 		{
 			get {return alternateProtocolIDs;}
 		}
+
+        /// <summary>
+        /// Gets the NCTID (if it exists) for this protocol, or an empty string if it does not exist.
+        /// This is currently only enabled when a protocol is retrieved by its CDRID.  (e.g. 
+        /// usp_GetProtocolByProtocolID)
+        /// </summary>        
+        public string NCTID { get; private set; } //OCEPROJECT-3575
         
 		public string Phase {
 			get {return phase;}
@@ -357,6 +365,7 @@ namespace CancerGov.CDR.DataManager
 			string trialSponsor,
 			string primaryProtocolID,
 			string alternateProtocolIDs,
+            string nctID,
 			string phase,
 			DateTime dateLastModified,
 			DateTime dateFirstPublished,
@@ -372,6 +381,7 @@ namespace CancerGov.CDR.DataManager
 			this.trialSponsor = trialSponsor;
 			this.primaryProtocolID = primaryProtocolID;
 			this.alternateProtocolIDs = alternateProtocolIDs;
+            this.NCTID = nctID; //OCEPROJECT-3575
 			this.phase = phase;
 			this.dateLastModified = dateLastModified;
 			this.dateFirstPublished = dateFirstPublished;
@@ -409,6 +419,13 @@ namespace CancerGov.CDR.DataManager
 			trialSponsor = Strings.IfNull(Strings.Clean(drProtocolInfo["SponsorOfTrial"].ToString()),"");
 			primaryProtocolID = Strings.IfNull(Strings.Clean(drProtocolInfo["PrimaryProtocolID"].ToString()),"");
 			alternateProtocolIDs = Strings.IfNull(Strings.Clean(drProtocolInfo["AlternateProtocolIDs"].ToString()),"");
+
+            // Adding NCTID for setting the browser title [OCEPROJECT-3575].  This will only exist for Getting a Single Protocol
+            if (drProtocolInfo.Table.Columns.Contains("NCTID"))
+                this.NCTID = Strings.IfNull(Strings.Clean(drProtocolInfo["NCTID"].ToString()), "");
+            else
+                this.NCTID = string.Empty;
+
 			phase = Strings.IfNull(Strings.Clean(drProtocolInfo["Phase"].ToString()),"");
 			dateLastModified = Strings.ToDateTime(Strings.Clean(drProtocolInfo["DateLastModified"].ToString()));
 			dateFirstPublished = Strings.ToDateTime(Strings.Clean(drProtocolInfo["DateFirstPublished"].ToString()));

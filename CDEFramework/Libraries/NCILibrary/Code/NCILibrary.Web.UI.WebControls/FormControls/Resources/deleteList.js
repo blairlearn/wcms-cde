@@ -87,6 +87,15 @@ $.widget('nci.deletelist', {
     },
 
     addItem: function(item) {
+        if (typeof item === 'string') {
+            try {
+                item = JSON.parse(item);
+            }
+            catch (e) {
+                console.error(e);
+                return;
+            }
+        }
         if (typeof item === 'object' && typeof item.name !== 'undefined' && typeof item.value !== 'undefined') {
             // set the item's visibility to true
             item.visible = true;

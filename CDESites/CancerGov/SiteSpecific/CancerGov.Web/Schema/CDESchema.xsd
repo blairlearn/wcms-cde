@@ -685,6 +685,11 @@
           <documentation>Defines the data for the content item's translation(s).</documentation>
         </annotation>
       </element>
+      <element name="WebAnalyticsInfo" type="cde:webAnalyticsInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines custom web analytics data set for the content item.</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1041,6 +1046,11 @@
       <element name="Translations" type="cde:translations" maxOccurs="1" minOccurs="0">
         <annotation>
           <documentation>Defines the data for the content item's translation(s).</documentation>
+        </annotation>
+      </element>
+      <element name="WebAnalyticsInfo" type="cde:webAnalyticsInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines custom web analytics data set for the content item.</documentation>
         </annotation>
       </element>
     </all>
@@ -1423,7 +1433,12 @@
         <annotation>
           <documentation>Defines the Full Path for a content item.</documentation>
         </annotation>
-      </element>	  
+      </element>
+      <element name="WebAnalyticsInfo" type="cde:webAnalyticsInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines custom web analytics data set for the folder.</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -2273,4 +2288,103 @@
     </attribute>
   </complexType>  
   
+  <complexType name="webAnalyticsInfo">
+    <annotation>
+      <documentation>Defines custom web analytics values set on folders or content types.</documentation>
+    </annotation>
+    <all>
+      <element name="WAChannels" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Comma-separated list of analytics channel namess.</documentation>
+        </annotation>
+      </element>
+      <element name="WAReportSuites" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Comma-separated list of analytics report suites.</documentation>
+        </annotation>
+      </element>
+      <element name="WAContentGroups" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>String of content buckets.</documentation>
+        </annotation>
+      </element>
+      <element name="WAEvents" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A collection of zero or more custom web analytics events.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more custom web analytics events.</documentation>
+          </annotation>
+          <sequence>
+            <element name="WAEvent" type="cde:waCustomVariableOrEvent" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>A single analytics event in the collection.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="WAProps" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A collection of zero or more custom web analytics props.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more custom web analytics props.</documentation>
+          </annotation>
+          <sequence>
+            <element name="WAProp" type="cde:waCustomVariableOrEvent" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>A single analytics prop.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="WAEvars" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A collection of zero or more custom web analytics evars.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more custom web analytics evars.</documentation>
+          </annotation>
+          <sequence>
+            <element name="WAEvar" type="cde:waCustomVariableOrEvent" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>A single analytics custom evar.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RemoveParents" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Flag to exclude parent Event, Prop, and eVar values on this level.</documentation>
+        </annotation> 
+      </element>
+    </all>
+  </complexType>
+  
+  <complexType name="waCustomVariableOrEvent">
+    <annotation>
+      <documentation>Defines a single custom variable (Event, Prop, or eVar) for custom web analytics.</documentation>
+    </annotation>
+    <attribute name="Key" type="string" use="required">
+      <annotation>
+        <documentation>Event, Prop, or eVar ID.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Value" type="string">
+      <annotation>
+        <documentation>String value of Event, Prop, or eVar.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Description" type="string">
+      <annotation>
+        <documentation>String description of Event, Prop, or eVar.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
 </schema>

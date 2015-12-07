@@ -120,37 +120,53 @@ namespace CancerGov.Web
 
         protected void Application_Error(object sender, EventArgs e)
         {
+
+            /* In order for the error handling to return the correct codes and display the right
+             * pages, the customErrors section of the web.config needs to look like:
+                <customErrors mode="On" defaultRedirect="/PublishedContent/ErrorMessages/error.html" redirectMode="ResponseRewrite">
+                  <error statusCode="404" redirect="/PublishedContent/ErrorMessages/pagenotfound.html" />
+                  <error statusCode="500" redirect="/PublishedContent/ErrorMessages/error.html" />
+                </customErrors>            
+            */              
+             
+
             Exception objErr = Server.GetLastError();
 
             if (objErr != null)
             {
-
-                string err = "Error Caught in Application_Error event\n" +
-                    "Error in: " + Request.Url.ToString() +
-                    "\nError Message:" + objErr.Message.ToString() +
-                    "\nStack Trace:" + objErr.ToString();
-
-                try
+                if (objErr is HttpException)
+                {   
+                    //Make sure the response's status code matches the correct response for 
+                    //things like search engines.
+                    Response.StatusCode = ((HttpException)objErr).GetHttpCode();
+                    return;
+                }
+                else
                 {
-                    NCI.Logging.Logger.LogError("Application Exception", err, NCIErrorLevel.Error);
+
+                    string err = "Error Caught in Application_Error event\n" +
+                        "Error in: " + Request.Url.ToString() +
+                        "\nError Message:" + objErr.Message.ToString() +
+                        "\nStack Trace:" + objErr.ToString();
+
+                    try
+                    {
+                        NCI.Logging.Logger.LogError("Application Exception", err, NCIErrorLevel.Error);
+                    }
+                    catch (System.ComponentModel.Win32Exception)
+                    { //Since we cannot log to the eventlog, then we should not try again
+                    }
+                    catch { }
                 }
-                catch (System.ComponentModel.Win32Exception)
-                { //Since we cannot log to the eventlog, then we should not try again
-                }
-                catch { }
             }
 
             Server.ClearError();
-            string error = Request.Params["TransferredByError"];
 
-            if ((error != null) && (error == "1"))
-            {
-                //Response.Write("<b>Unexpected errors occurred. Our technicians have been notified and are working to correct the situation.</b>");
-            }
-            else
-            {
-                Response.Redirect(System.Configuration.ConfigurationManager.AppSettings["ErrorPage"], true);                
-            }
+            //Set the status code so we know some bad mojo happened.
+            Response.StatusDescription = "Application Error";
+            Response.StatusCode = 500;
+
+            return;
         }
 
         #endregion

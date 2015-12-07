@@ -176,7 +176,7 @@ namespace CancerGov.Web.Common.PopUps
                webAnalyticsPageLoad.SetChannel("Dictionary of Cancer Terms");
                webAnalyticsPageLoad.SetLanguage("en");
            }
-           webAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.DictionaryTermView); // Dictionary Term view (event11)
+           webAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.event11); // Dictionary Term view (event11)
            litOmniturePageLoad.Text = webAnalyticsPageLoad.Tag();  // Load page load script 
            // End Web Analytics *********************************************
 

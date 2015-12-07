@@ -33,7 +33,7 @@
 		                    deleteListItem.value = '0';
 		                }
 
-		                parentDeleteList.deletelist('addItem', deleteListItem);
+		                parentDeleteList.deletelist('addItem', JSON.stringify(deleteListItem));
 		                RevealParentListArea('<%=Request.Params["fld"]%>');
 		            }
 		        }

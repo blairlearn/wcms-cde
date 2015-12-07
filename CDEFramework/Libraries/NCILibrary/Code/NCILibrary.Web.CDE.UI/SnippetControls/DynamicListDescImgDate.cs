@@ -26,12 +26,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     base.SearchList = ModuleObjectFactory<DynamicList>.GetModuleObject(SnippetInfo.Data);
                     base.SearchList.ResultsTemplate = base.SearchList.ResultsTemplate =
                     helper.languageStrings() +
-                    "<h3>" + base.SearchList.SearchTitle + "</h3>" +
+                    @"<h3 class=""dynamic-list-title"">" + base.SearchList.SearchTitle + @"</h3>" +
                     helper.openList() +
                     helper.imageString() +
-                    helper.titleString() +
+                    helper.openListItem() +
                     helper.dateString() +
                     helper.descString() +
+                    helper.closeListItem() +
                     helper.closeList();
                 }
                 return base.SearchList;
