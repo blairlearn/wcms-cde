@@ -32,8 +32,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         private const string swKeyword = "swKeyword";
         private bool _resultsFound = false;
         private string SearchCollection { get; set; }
-        private string ResultTitleText { get; set; }
-
+        
         protected void Page_PreRender(object sender, EventArgs e)
         {
             //Get Settings
@@ -54,10 +53,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 //determine what text needs to be removed from the title e.g. - National Cancer Institute
                 SiteWideSearchConfig searchConfig = ModuleObjectFactory<SiteWideSearchConfig>.GetModuleObject(SnippetInfo.Data);
                 if (searchConfig != null)
-                {
                     SearchCollection = searchConfig.SearchCollection;
-                    ResultTitleText = searchConfig.ResultTitleText;
-                }
 
                 if (Keyword != null)
                 {
@@ -97,7 +93,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         spPager.RecordCount = (int)results.ResultCount;
                         spPager.RecordsPerPage = _recordsPerPage;
                         spPager.CurrentPage = _currentPage;
-                        spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
+                        spPager.BaseUrl = PrettyUrl + "?swKeyword=" + Keyword;
                     }
                     catch (Exception ex)
                     {
@@ -134,7 +130,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             get
             {
                 if (!string.IsNullOrEmpty(Request.Params["PageNum"]) ||
-                    !string.IsNullOrEmpty(Strings.Clean(Request.Params["swKeywordQuery"])) ||
+                    !string.IsNullOrEmpty(Strings.Clean(Request.Params["swKeyword"])) ||
                     IsPostBack
                     )
                     return true;
@@ -153,7 +149,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 string keyword = Strings.Clean(Request.Params["txtKeyword1"]);
                 if (string.IsNullOrEmpty(keyword))
-                    keyword = Strings.Clean(Request.Params["swKeywordQuery"]);
+                    keyword = Strings.Clean(Request.Params["swKeyword"]);
                 return keyword;
             }
         }
