@@ -915,8 +915,9 @@ namespace NCI.Web.CancerGov.Apps
             }
             catch (Exception ex)
             {
+                //Search results should be retrieved even if Best Bets fail
+                //log the error  but don't throw an exception
                 Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetBestBetsResults", NCIErrorLevel.Error, ex);
-                throw ex;
             }
 
             return results;
