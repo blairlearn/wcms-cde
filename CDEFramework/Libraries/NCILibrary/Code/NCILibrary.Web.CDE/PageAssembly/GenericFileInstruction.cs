@@ -44,11 +44,30 @@ namespace NCI.Web.CDE
         public string FilePath { get; set; }
 
         /// <summary>
+        /// Gets whether or not this item should be indexed.
+        /// </summary>
+        [XmlIgnore()]
+        public bool DoNotIndex
+        {
+            get
+            {
+                return (SearchMetadata != null && SearchMetadata.DoNotIndex);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the page metadata.
         /// </summary>
         /// <value>The page metadata.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public PageMetadata PageMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the search metadata.
+        /// </summary>
+        /// <value>The search metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public SearchMetadata SearchMetadata { get; set; }
 
         /// <summary>
         /// Gets or sets the content dates for the page.

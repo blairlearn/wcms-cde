@@ -129,6 +129,12 @@ namespace NCI.Web.CDE
             // Do not reset the client path because it'll break form action url's.
             try
             {
+                //If we should not index this item, then add the X-Robots-Tag header.  This works
+                //just like the <meta name="robots"> tag.  
+                if (fileInstruction.DoNotIndex)
+                {
+                    context.Response.AppendHeader("X-Robots-Tag", "noindex, nofollow");
+                }
                 context.RewritePath(fileInstruction.FilePath, false);
             }
 

@@ -55,6 +55,7 @@ namespace NCI.Web.CDE
             PageMetadata = new PageMetadata();
             SocialMetadata = new SocialMetadata();
             PageResources = new PageResources();
+            SearchMetadata = new SearchMetadata();
             _localFields = new LocalFieldCollection();
 
             //base.Initialize();
@@ -159,6 +160,13 @@ namespace NCI.Web.CDE
         /// <value>The page metadata.</value>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public SocialMetadata SocialMetadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets the search metadata.
+        /// </summary>
+        /// <value>The search metadata.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public SearchMetadata SearchMetadata { get; set; }
 
         /// <summary>
         /// Gets the page resources (JS and CSS)
@@ -627,6 +635,8 @@ namespace NCI.Web.CDE
             AddFieldFilter("meta_robots", (name, data) =>
             {
                 if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Print)
+                    data.Value = "noindex, nofollow";
+                else if (this.SearchMetadata.DoNotIndex)
                     data.Value = "noindex, nofollow";
                 else
                     data.Value = "";
