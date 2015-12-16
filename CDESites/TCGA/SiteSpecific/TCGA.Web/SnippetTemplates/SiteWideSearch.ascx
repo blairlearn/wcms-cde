@@ -25,7 +25,7 @@
                 <ItemTemplate>
                     <li>
                         <h1><asp:Literal id="litTitle" runat="server" /></h1>
-                        <%# DataBinder.Eval(Container.DataItem, "Description") != null ? DataBinder.Eval(Container.DataItem, "Description") + "<br />" : "" %>
+                        <%# (DataBinder.Eval(Container.DataItem, "Description") != null && DataBinder.Eval(Container.DataItem, "Description") != "" )? DataBinder.Eval(Container.DataItem, "Description") + "<br />" : "" %>
                         <a href="<%# DataBinder.Eval(Container.DataItem, "Url")%>"><%# DataBinder.Eval(Container.DataItem, "Url")%></a>
                         <br />
                     </li>
