@@ -78,6 +78,14 @@ namespace NCI.Search
                         if (hit.fields.title != null)
                         {
                             title = hit.fields.title[0];
+                            if (title.Trim().Length == 0)
+                            {
+                                title = "Untitled";
+                            }
+                        }
+                        else 
+                        { 
+                            title = "Untitled"; 
                         }
                     }
 
