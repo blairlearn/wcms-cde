@@ -31,7 +31,7 @@ namespace CancerGov.Search.BestBets
         public string LuceneIndexPath
         {
             get {
-                return System.IO.Path.Combine(System.IO.Path.GetTempPath(), "BestBetsIndex");
+                return System.IO.Path.Combine(System.IO.Path.GetTempPath(), ContentDeliveryEngineConfig.PathInformation.BestBetsIndexFolder.Path);
             }
         }
 

@@ -47,6 +47,12 @@ namespace NCI.Web.CDE.Configuration
             get { return (PathElement)base["bestBetsResultPath"]; }
         }
 
+        [ConfigurationProperty("bestBetsIndexFolder")]
+        public PathElement BestBetsIndexFolder
+        {
+            get { return (PathElement)base["bestBetsIndexFolder"]; }
+        }
+
         [ConfigurationProperty("englishLinkingPolicyPath")]
         public PathElement EnglishLinkingPolicyPath
         {
