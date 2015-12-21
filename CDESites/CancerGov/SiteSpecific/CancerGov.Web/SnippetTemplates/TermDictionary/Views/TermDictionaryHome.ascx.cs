@@ -20,10 +20,22 @@ namespace CancerGov.Web.SnippetTemplates
             dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-            DictionarySearchResultCollection resultCollection = _dictionaryAppManager.Search("%", SearchType.Begins, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
 
-            if (resultCollection != null)
-                TotalCount = resultCollection.ResultsCount.ToString("N0");
+            // Check if dictionary terms list size is cached; if so, set to TotalCount
+            if (HttpContext.Current.Cache.Get("totalcount") != null)
+            {
+                TotalCount = (string)HttpContext.Current.Cache.Get("totalcount");
+            }
+            // If it isn't, get the current size, save that in the cache, and set to TotalCount
+            else
+            {
+                DictionarySearchResultCollection resultCollection = _dictionaryAppManager.Search("%", SearchType.Begins, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
+
+                if (resultCollection != null)
+                    TotalCount = resultCollection.ResultsCount.ToString("N0");
+                    
+                HttpContext.Current.Cache.Add("totalcount", TotalCount, null, DateTime.Now.AddMinutes(60), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
+            }
 
             //set visibilty for the English versus Spanish text
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")

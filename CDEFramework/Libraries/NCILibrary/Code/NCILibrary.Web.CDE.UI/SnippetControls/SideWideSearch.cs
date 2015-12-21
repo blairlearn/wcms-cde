@@ -11,14 +11,16 @@ using NCI.Logging;
 using NCI.Util;
 using NCI.Search.Endeca;
 using NCI.Search;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
     public partial class SiteWideSearch : AppsBaseSnippetControl
     {
         #region Control Members
-        protected Repeater rptSearchResults=null;
-        protected SimplePager spPager=null;
+        protected Repeater rptSearchResults = null;
+        protected SimplePager spPager = null;
         protected HiddenField itemsPerPage = null;
         #endregion
         private int _currentPage = 1;
@@ -29,6 +31,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
         private const string swKeywordQuery = "swKeywordQuery";
         private const string swKeyword = "swKeyword";
         private bool _resultsFound = false;
+        private string SearchCollection { get; set; }
+        
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
@@ -46,6 +50,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             if (PerformSearch)
             {
+                //set up the search collection 
+                //determine what text needs to be removed from the title e.g. - National Cancer Institute
+                SiteWideSearchConfig searchConfig = ModuleObjectFactory<SiteWideSearchConfig>.GetModuleObject(SnippetInfo.Data);
+                if (searchConfig != null)
+                {
+                    SearchCollection = searchConfig.SearchCollection;
+                   
+                }
+
                 if (Keyword != null)
                 {
                     //Store keyword in viewstate (This does not check if it is not there already)
@@ -56,14 +69,14 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     try
                     {
-                        long dimFilter = Strings.ToLong(ConfigurationManager.AppSettings["EndecaSWSearchDimFilter"], 0);
 
-                        ISiteWideSearchResultCollection results = GenericSiteWideSearchManager.GetSearchResults(Keyword, _currentPage, _recordsPerPage, dimFilter);
+                        ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults(SearchCollection, Keyword, _recordsPerPage,
+                    (_currentPage - 1) * _recordsPerPage);
 
                         rptSearchResults.DataSource = results;
                         rptSearchResults.DataBind();
 
-                        if (results.TotalNumResults == 0)
+                        if (results.ResultCount == 0)
                         {
                             ResultsText = "No results found";
                             rptSearchResults.Visible = false;
@@ -73,15 +86,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
                             int startRecord = 0;
                             int endRecord = 0;
                             _resultsFound = true;
-                            SimplePager.GetFirstItemLastItem(_currentPage, _recordsPerPage, (int)results.TotalNumResults, out startRecord, out endRecord);
+                            SimplePager.GetFirstItemLastItem(_currentPage, _recordsPerPage, (int)results.ResultCount, out startRecord, out endRecord);
 
                             //phNoResultsLabel.Visible = false;
                             rptSearchResults.Visible = true;
-                            string resultsCount = String.Format("{0}-{1} of {2}", startRecord.ToString(), endRecord.ToString(), results.TotalNumResults.ToString());
+                            string resultsCount = String.Format("{0}-{1} of {2}", startRecord.ToString(), endRecord.ToString(), results.ResultCount.ToString());
                             ResultsText = "Results " + resultsCount;
                         }
 
-                        spPager.RecordCount = (int)results.TotalNumResults;
+                        spPager.RecordCount = (int)results.ResultCount;
                         spPager.RecordsPerPage = _recordsPerPage;
                         spPager.CurrentPage = _currentPage;
                         spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
@@ -155,6 +168,28 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 if (itemsPerPage == null)
                     return 10;
                 return Int32.Parse(itemsPerPage.Value);
+            }
+        }
+
+        protected void rptSearchResults_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                ISiteWideSearchResult searchResultRow = (ISiteWideSearchResult)e.Item.DataItem;
+
+                System.Web.UI.HtmlControls.HtmlAnchor titleLink = (System.Web.UI.HtmlControls.HtmlAnchor)e.Item.FindControl("titleLink");
+
+                if (searchResultRow != null && titleLink != null)
+                {
+                    //the title text that needs to be removed from the search result Title
+                    string removeTitleText = ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
+
+                    titleLink.InnerText = (!string.IsNullOrEmpty(removeTitleText) && searchResultRow.Title.Contains(removeTitleText)) ? searchResultRow.Title.Remove(searchResultRow.Title.IndexOf(removeTitleText)) : searchResultRow.Title;
+                    titleLink.HRef = searchResultRow.Url;
+
+                }
+
             }
         }
 

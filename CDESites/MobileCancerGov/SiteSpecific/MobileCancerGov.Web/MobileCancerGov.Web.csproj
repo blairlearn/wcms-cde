@@ -75,7 +75,6 @@
     <Content Include="SnippetTemplates\MobileTermDictionaryResultsListAdvanced.ascx" />
     <Content Include="SnippetTemplates\MobileTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
-    <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="TermDictionary.svc" />
     <None Include="Web.config" />
   </ItemGroup>
@@ -133,13 +132,6 @@
     </Compile>
     <Compile Include="SnippetTemplates\MobileTermDictionaryRouter.ascx.designer.cs">
       <DependentUpon>MobileTermDictionaryRouter.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\SiteWideSearch.ascx.cs">
-      <DependentUpon>SiteWideSearch.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\SiteWideSearch.ascx.designer.cs">
-      <DependentUpon>SiteWideSearch.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

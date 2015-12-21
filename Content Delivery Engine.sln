@@ -109,6 +109,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Services.Diction
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web.Dictionary", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.Dictionary\NCILibrary.Web.Dictionary.csproj", "{2C675310-2242-4CBB-B40E-D6225C719FFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Search.ElasticSearch", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.ElasticSearch\NCILibrary.Search.ElasticSearch.csproj", "{0AF8D250-E5A2-4195-8940-54F806ACF5F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Search.BestBets", "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.BestBets\NCILibrary.Search.BestBets.csproj", "{ABF0DFF3-2CFC-490F-96D5-69DC770824D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4BAB0086-F182-4806-AF63-19A089C6CD1F}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CancerGov.Search.BestBets", "CDESites\CancerGov\SiteSpecific\Modules\CancerGov.Search.BestBets\CancerGov.Search.BestBets.csproj", "{A3D91F04-B62B-4EC4-BB66-FF10B2D23B23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -283,6 +296,18 @@ Global
 		{2C675310-2242-4CBB-B40E-D6225C719FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C675310-2242-4CBB-B40E-D6225C719FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C675310-2242-4CBB-B40E-D6225C719FFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AF8D250-E5A2-4195-8940-54F806ACF5F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AF8D250-E5A2-4195-8940-54F806ACF5F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AF8D250-E5A2-4195-8940-54F806ACF5F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AF8D250-E5A2-4195-8940-54F806ACF5F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF0DFF3-2CFC-490F-96D5-69DC770824D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF0DFF3-2CFC-490F-96D5-69DC770824D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF0DFF3-2CFC-490F-96D5-69DC770824D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF0DFF3-2CFC-490F-96D5-69DC770824D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3D91F04-B62B-4EC4-BB66-FF10B2D23B23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D91F04-B62B-4EC4-BB66-FF10B2D23B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D91F04-B62B-4EC4-BB66-FF10B2D23B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D91F04-B62B-4EC4-BB66-FF10B2D23B23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -325,5 +350,8 @@ Global
 		{2998FE53-18DD-4B27-A7AC-33BE692BAD61} = {9EAB6B68-85D5-4D4B-A699-C25A2113362D}
 		{7730D2CE-E504-49F9-AAAC-20B76FB8C618} = {5D9D8645-C846-43F9-B85C-043CD21225DB}
 		{2C675310-2242-4CBB-B40E-D6225C719FFC} = {5D9D8645-C846-43F9-B85C-043CD21225DB}
+		{0AF8D250-E5A2-4195-8940-54F806ACF5F2} = {5D9D8645-C846-43F9-B85C-043CD21225DB}
+		{ABF0DFF3-2CFC-490F-96D5-69DC770824D3} = {5D9D8645-C846-43F9-B85C-043CD21225DB}
+		{A3D91F04-B62B-4EC4-BB66-FF10B2D23B23} = {9EAB6B68-85D5-4D4B-A699-C25A2113362D}
 	EndGlobalSection
 EndGlobal

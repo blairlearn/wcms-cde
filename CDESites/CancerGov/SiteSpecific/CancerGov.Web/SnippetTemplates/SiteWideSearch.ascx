@@ -1,5 +1,13 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CancerGov.Apps.SiteWideSearch"  %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CancerGov.Apps.SiteWideSearchModule"  %>
 <%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="cc1" %>
+<script runat="server">
+
+    protected void searchResults_ItemCreated(object sender, RepeaterItemEventArgs e)
+    {
+
+    }
+</script>
+
 
 <script type="text/javascript">
     var ids = {
@@ -15,11 +23,11 @@
         <cc1:JavascriptProbeControl ID="jsProbe" runat="server" />
         <h3><asp:Label id="lblResultsForText" Text="Results for:" runat="server"/> <asp:Label CssClass="term" ID="lblResultsForKeyword" runat="server" /></h3>
      
-        <!-- Best Bets Here -->
+        <!-- Best Bets Here --> 
         <asp:Repeater ID="rptBestBets" EnableViewState="false" runat="server">
             <ItemTemplate>
                 <div class="featured sitewide-results">
-                    <h2>
+                 <h2>
                         <asp:Label
                             ID="lblBBCatName" 
                             Text='<%# (PageDisplayInformation.Language == NCI.Web.CDE.DisplayLanguage.Spanish ? "Mejores resultados para " : "Best Bets for ") + Eval("CategoryName")%>'
@@ -30,13 +38,7 @@
                 </div>    
             </ItemTemplate>
         </asp:Repeater>
-        
-        <!-- DYM -->
-        <asp:PlaceHolder ID="phDYM" runat="server">
-            <h2><asp:Literal ID="litDidYouMeanText" runat="server">Did you mean</asp:Literal>:</h2>
-            <asp:HyperLink id="lnkDym" NavigateUrl="#" runat="server"><span class="term"><asp:Literal ID="litDYMString" runat="server" /></span></asp:HyperLink><p></p>
-        </asp:PlaceHolder>
-        
+                        
         <!-- Results x-y of z for: Keyword -->
         <div class="sitewide-results">
             <h4><asp:Label ID="lblTopResultsXofY" runat="server" /> <span class="term"><asp:Label ID="lblTopResultsXofYKeyword" runat="server" /></span></h4>
@@ -47,8 +49,8 @@
                     <asp:Literal ID="litError" runat="server" Text="Please enter a search phrase." />
                 </div>
             </asp:PlaceHolder>
-            
-            <cc1:MultiTemplatedRepeater ID="rptResults" EnableViewState="false" runat=server>
+           
+            <cc1:MultiTemplatedRepeater ID="rptResults" EnableViewState="false" runat=server visible="true">
                 <HeaderTemplate>
                     <div class="sitewide-list" >
                         <ul class="no-bullets">
@@ -70,7 +72,7 @@
 		                        </div> 
 		                        <div>
 		                            <cite class="url">
-		                            <%# Eval("DisplayUrl") %>
+		                            <%# Eval("Url") %>
 		                            </cite>
 		                        </div>
 		                    </li>                    
@@ -85,11 +87,11 @@
                                     runat="server"
                                     onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
                                     NavigateUrl='<%# Eval("Url") %>'
-                                    Text='<%# String.Format("{0} ({1})", Eval("Title"), Eval("Label")) %>' />
+                                    Text='<%# String.Format("{0} ({1})", Eval("Title"), Eval("Description")) %>' />
                                 </div>
                                 <div>
 		                            <cite class="url">
-		                            <%# Eval("DisplayUrl") %>
+		                            <%# Eval("Url") %>
 		                            </cite>
 		                        </div>
 		                        <div class="description">

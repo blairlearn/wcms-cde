@@ -132,6 +132,7 @@
     <Compile Include="Modules\ModuleObjectFactory.cs" />
     <Compile Include="Modules\SearchList.cs" />
     <Compile Include="Modules\SearchResultPageInfo.cs" />
+    <Compile Include="Modules\SiteWideSearchConfig.cs" />
     <Compile Include="Modules\VelocityTemplate.cs" />
     <Compile Include="PageAssembly\AlternateContentVersions.cs" />
     <Compile Include="PageAssembly\BlockedSlot.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="PageAssembly\ContentItemInfo.cs" />
     <Compile Include="PageAssembly\InstructionSitemapUrlStore.cs" />
     <Compile Include="PageAssembly\PageResources.cs" />
+    <Compile Include="PageAssembly\SearchMetadata.cs" />
     <Compile Include="PageAssembly\SocialMetaTag.cs" />
     <Compile Include="PageAssembly\SocialMetaTagData.cs" />
     <Compile Include="PageAssembly\SocialMetadata.cs" />

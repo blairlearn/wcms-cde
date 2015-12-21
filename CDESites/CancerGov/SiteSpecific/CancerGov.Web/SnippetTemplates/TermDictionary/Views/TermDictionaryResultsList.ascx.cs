@@ -117,7 +117,7 @@ namespace CancerGov.Web.SnippetTemplates
         private void RenderNoResults()
         {
             //to display EmptyDataTemplate the ListView datasource needs to be set to null
-            resultListView.DataSource = null;
+            resultListView.DataSource = new DictionarySearchResultCollection(new DictionarySearchResult[0]);
             resultListView.DataBind();
             numResDiv.Visible = false;
         }

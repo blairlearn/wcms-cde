@@ -12,19 +12,12 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class DrugDictionaryHome : SnippetControl
     {
-        public int TotalCount = 0;
-
         protected void Page_Load(object sender, EventArgs e)
         {
             dictionarySearchBlock.Dictionary = DictionaryType.drug;
             dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
-            DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-            DictionarySearchResultCollection resultCollection = _dictionaryAppManager.Search("%", SearchType.Begins, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
-
-            if (resultCollection != null)
-                TotalCount = resultCollection.ResultsCount;
-
         }
+        
     }
 }

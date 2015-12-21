@@ -26,5 +26,12 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <value>The path of the file.</value>        
         string FilePath { get; set; }
+
+        /// <summary>
+        /// Gets information if this item should be indexed or not.
+        /// </summary>
+        /// <value>Should this item be indexed or not.</value>        
+        bool DoNotIndex { get; }
+
     }
 }

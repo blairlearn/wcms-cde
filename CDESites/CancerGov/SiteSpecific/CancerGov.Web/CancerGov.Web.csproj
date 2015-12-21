@@ -19,6 +19,8 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +42,18 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.0.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Recaptcha, Version=1.0.5.0, Culture=neutral, PublicKeyToken=9afc4d65b28c38c2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\CDEFramework\Libraries\NCILibrary\ThirdPartyDlls\reCaptcha\1.0.5.0\Recaptcha.dll</HintPath>
@@ -106,6 +120,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\wurfl-latest.zip" />
+    <Content Include="packages.config" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +133,7 @@
     <Compile Include="Apps\GlossaryTerms.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Apps\SiteWideSearch.cs">
+    <Compile Include="Apps\SiteWideSearchModule.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="App_GlobalResources\SiteWideSearch.es.designer.cs">
@@ -496,6 +514,14 @@
       <Project>{680B6841-020D-46DE-BFBB-FC38ACA2EF82}</Project>
       <Name>NCILibrary.Web.CDE.UI.Modules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.BestBets\NCILibrary.Search.BestBets.csproj">
+      <Project>{abf0dff3-2cfc-490f-96d5-69dc770824d3}</Project>
+      <Name>NCILibrary.Search.BestBets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.ElasticSearch\NCILibrary.Search.ElasticSearch.csproj">
+      <Project>{0af8d250-e5a2-4195-8940-54f806acf5f2}</Project>
+      <Name>NCILibrary.Search.ElasticSearch</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
       <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>
       <Name>NCILibrary.Search.Endeca</Name>
@@ -558,19 +584,19 @@
     </ProjectReference>
     <ProjectReference Include="..\..\EmergencyAlert\EmergencyAlert.csproj">
       <Project>{2ED8F4D6-9A1D-4109-8F37-6D407C674184}</Project>
-      <Name>EmergencyAlert %28EmergencyAlert\EmergencyAlert%29</Name>
+      <Name>EmergencyAlert</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\PresentationClasses\PresentationClasses.csproj">
       <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
-      <Name>PresentationClasses %28CancerGovSpecific\PresentationClasses\PresentationClasses%29</Name>
+      <Name>PresentationClasses</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Search.AutoSuggest\CancerGov.Search.AutoSuggest.csproj">
       <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>
       <Name>CancerGov.Search.AutoSuggest</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\CancerGov.Search.Endeca\CancerGov.Search.Endeca.csproj">
-      <Project>{4FD1D24F-D186-46FE-B44E-FA110AFE27FF}</Project>
-      <Name>CancerGov.Search.Endeca</Name>
+    <ProjectReference Include="..\Modules\CancerGov.Search.BestBets\CancerGov.Search.BestBets.csproj">
+      <Project>{a3d91f04-b62b-4ec4-bb66-ff10b2d23b23}</Project>
+      <Name>CancerGov.Search.BestBets</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.TopicSearch\CancerGov.TopicSearch.csproj">
       <Project>{917C939E-6AA1-4FEE-8C35-6EC62974455B}</Project>
@@ -670,7 +696,6 @@
     <Content Include="JS\Widgets\TermDictionaryWidgetSpanish.js" />
     <Content Include="JS\Widgets\OLD_termdictWidget-autocomplete.js" />
     <Content Include="JS\Widgets\widget.css" />
-    <Content Include="MobileTester.aspx" />
     <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate-NoLeftNav.aspx" />
     <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
@@ -795,4 +820,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
 </Project>

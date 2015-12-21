@@ -1,38 +1,17 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NewsletterSearchResults.ascx.cs" Inherits="DCEG.Web.SnippetTemplates.NewsletterSearchResults"  %>
     <!-- Main Content Area -->
 				   
-				   <table width="100%" cellspacing="0" cellpadding="0" border="0">
-							<tr>
-							<td valign="top">
+				 
+<div>
+    <p><b>Search results for keyword(s)</b> "<%=Keyword%>"</p>
+    
+   <p> <b>Showing results:</b> <%=FirstRecord%>-<%=LastRecord%> of <%=TotalItems%></p>
 
-							<table border="0" cellpadding="2" cellspacing="0" width="100%">
-							<tr>
-							<td><span class="page-title">Linkage Newsletter Search Results</span></td>
-							</tr>
-							<tr>
-							<td><img src="/images/spacer.gif" alt="" width="1" height="10"></td>
-							</tr>
-							<tr>
-							<td><b>Search results for keyword(s)</b> "<%=Keyword%>"  <%=DateLabel%></td>
-							</tr>
-							<tr>
-							<td><b>Showing results:</b> <%=FirstRecord%>-<%=LastRecord%> of <%=TotalItems%></td>
-							</tr>
-							<tr>
-							<td><img src="/images/spacer.gif" alt="" width="1" height="10"></td>
-							</tr>
-								<tr>
-							<td><img src="/images/gray_spacer.gif" width="100%" height="1" alt="" border="0"></td></tr>
-							<tr>
-							<td><img src="/images/spacer.gif" width="1" height="10" alt="" border="0"></td></tr>
-							</table>
-					
-					</td></tr>
-					</table>
+</div>
 					
 						<!-- Results Table -->
 						<%=ResultsHtml%>
-						<asp:Repeater ID="ResultRepeater" Runat="server">
+						<asp:Repeater ID="ResultRepeater" Runat="server" OnItemDataBound="ResultRepeater_OnItemDataBound">
 						
 							<HeaderTemplate>
 									<table border="0" cellspacing="0" cellpadding="0" width="100%">  
@@ -41,23 +20,17 @@
 							<ItemTemplate>
 								<tr>
 									<td>
-										<a href="<%# Convert.ToString(DataBinder.Eval(Container.DataItem, "Url")) %>" onclick="<%=WebAnalytics%>">
-										  <%# Convert.ToString(DataBinder.Eval(Container.DataItem,"Title")) %>
-										</a>
+										<a  id="titleLink" runat="server" onclick="<%=WebAnalytics%>" />
 									</td>
 							    </tr>
-							    <tr>
-									<td>
-										<%# Convert.ToString(DataBinder.Eval(Container.DataItem, "VolumeNumber")) %>
-									</td>
-								</tr>
+							  
 							    <tr>
 									<td>
 										<%# Convert.ToString(DataBinder.Eval(Container.DataItem, "Description")) %>
 									</td>
 								</tr>
 								<tr><td class="display-url">
-										<%# Convert.ToString(DataBinder.Eval(Container.DataItem,"DisplayUrl")) %>
+										<%# Convert.ToString(DataBinder.Eval(Container.DataItem,"Url")) %>
 								</td></tr>
 								<tr><td>&nbsp;</td></tr>
 							</ItemTemplate>

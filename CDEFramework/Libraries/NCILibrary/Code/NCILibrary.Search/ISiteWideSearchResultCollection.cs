@@ -5,42 +5,44 @@ using System.Collections;
 
 namespace NCI.Search
 {
-    public interface ISiteWideSearchResultCollection : ICollection
+    public interface ISiteWideSearchResultCollection : IEnumerable<ISiteWideSearchResult>
     {
-        ArrayList WordForms
-        {
-            get;
-            set;
-        }
-        string DidYouMean
-        {
-            get;
-            set;
-        }
-        long TotalNumResults
-        {
-            get;
-            set;
-        }
+        int ResultCount { get; set; }        
 
-        void Add(ISiteWideSearchResult value);
+        //ArrayList WordForms
+        //{
+        //    get;
+        //    set;
+        //}
+        //string DidYouMean
+        //{
+        //    get;
+        //    set;
+        //}
+        //long TotalNumResults
+        //{
+        //    get;
+        //    set;
+        //}
 
-        void Clear();
+        //void Add(ISiteWideSearchResult value);
 
-        bool Contains(ISiteWideSearchResult value);
+        //void Clear();
 
-        int IndexOf(ISiteWideSearchResult value);
+        //bool Contains(ISiteWideSearchResult value);
 
-        void Insert(int index, ISiteWideSearchResult value);
+        //int IndexOf(ISiteWideSearchResult value);
 
-        void Remove(ISiteWideSearchResult value);
+        //void Insert(int index, ISiteWideSearchResult value);
 
-        void RemoveAt(int index);
+        //void Remove(ISiteWideSearchResult value);
 
-        ISiteWideSearchResult this[int index]
-        {
-            get;
-            set;
-        }
+        //void RemoveAt(int index);
+
+        //ISiteWideSearchResult this[int index]
+        //{
+        //    get;
+        //    set;
+        //}
     }
 }

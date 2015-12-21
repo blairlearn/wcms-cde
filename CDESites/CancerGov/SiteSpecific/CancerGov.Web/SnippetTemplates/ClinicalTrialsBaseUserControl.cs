@@ -9,8 +9,7 @@ using NCI.Web.CDE.UI.WebControls;
 using NCI.Web.CDE.Modules;
 using NCI.Web.UI.WebControls;
 using NCI.Logging;
-using NCI.Search.Endeca;
-using CancerGov.Modules.Search.Endeca;
+
 using NCI.Web.CDE;
 using NCI.Web.CancerGov.Apps;
 
