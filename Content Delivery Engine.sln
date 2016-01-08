@@ -91,8 +91,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCILibrary.Web", "CDEFramew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCEG.Web", "CDESites\DCEG\SiteSpecific\DCEG.Web\DCEG.Web.csproj", "{5AF3E5C9-B4B8-41FC-8BD1-676477D6C41F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCOP.Web", "CDESites\CCOP\SiteSpecific\CCOP.Web\CCOP.Web.csproj", "{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imaging.Web", "CDESites\Imaging\SiteSpecific\Imaging.Web\Imaging.Web.csproj", "{FF743746-20E8-49EC-AFF5-1545E43D944A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileCancerGov.Web", "CDESites\MobileCancerGov\SiteSpecific\MobileCancerGov.Web\MobileCancerGov.Web.csproj", "{85C3C6DF-ED06-4BE2-AC85-67E8F3FCF9CA}"
@@ -260,10 +258,6 @@ Global
 		{5AF3E5C9-B4B8-41FC-8BD1-676477D6C41F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AF3E5C9-B4B8-41FC-8BD1-676477D6C41F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AF3E5C9-B4B8-41FC-8BD1-676477D6C41F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C58CE0A-A715-4CAB-A065-7A14E2D7D3F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FF743746-20E8-49EC-AFF5-1545E43D944A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF743746-20E8-49EC-AFF5-1545E43D944A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF743746-20E8-49EC-AFF5-1545E43D944A}.Release|Any CPU.ActiveCfg = Release|Any CPU
