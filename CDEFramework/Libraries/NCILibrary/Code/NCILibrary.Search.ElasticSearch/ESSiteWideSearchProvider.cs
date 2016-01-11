@@ -38,10 +38,16 @@ namespace NCI.Search
             ESSiteWideSearchCollectionElement searchCollConfig = ElasticSearchConfig.GetSearchCollectionConfig(searchCollection);
 
             var connectionPool = new SniffingConnectionPool(searchCollConfig.ClusterNodes);
-            var config = new ConnectionConfiguration(connectionPool);
+            var config = new ConnectionConfiguration(connectionPool)
+                            .ExposeRawResponse()
+                            .UsePrettyResponses()
+                            .MaximumRetries(5)
+                            .ThrowOnElasticsearchServerExceptions();
+                                       
             var esClient = new ElasticsearchClient(config);
 
             string[] fieldList = ElasticSearchConfig.GetFields(searchCollection);
+
 
             //do search_template 
             var _body = new
@@ -60,89 +66,114 @@ namespace NCI.Search
                 }
             };
 
-            ElasticsearchResponse<DynamicDictionary> results = esClient.SearchTemplate(searchCollConfig.Index, _body);
-
-            var stringResponse = results.Response;
+            ElasticsearchResponse<DynamicDictionary> results = null;
             List<ESSiteWideSearchResult> foundTerms = new List<ESSiteWideSearchResult>(pageSize);
+            ESSiteWideSearchResultCollection searchResultCollection = null;
 
             try
             {
+                results = esClient.SearchTemplate(searchCollConfig.Index, _body);
 
-
-                foreach (var hit in results.Response["hits"].hits)
+                if (results.Success)
                 {
+                    var stringResponse = results.Response;
 
-                    string title = "";
                     try
                     {
-                        if (hit.fields.title != null)
+
+
+                        foreach (var hit in results.Response["hits"].hits)
                         {
-                            title = hit.fields.title[0];
-                            if (title.Trim().Length == 0)
+
+                            string title = "";
+                            try
                             {
-                                title = "Untitled";
+                                if (hit.fields.title != null)
+                                {
+                                    title = hit.fields.title[0];
+                                    if (title.Trim().Length == 0)
+                                    {
+                                        title = "Untitled";
+                                    }
+                                }
+                                else
+                                {
+                                    title = "Untitled";
+                                }
                             }
-                        }
-                        else 
-                        { 
-                            title = "Untitled"; 
-                        }
-                    }
 
-                    catch (KeyNotFoundException keynotfound)
-                    {
-                        title = "";
-                    }
+                            catch (KeyNotFoundException keynotfound)
+                            {
+                                title = "";
+                            }
 
-                    string url = "";
-                    try
-                    {
-                        if (hit.fields.url != null)
+                            string url = "";
+                            try
+                            {
+                                if (hit.fields.url != null)
+                                {
+                                    url = hit.fields.url[0];
+                                }
+                            }
+
+                            catch (KeyNotFoundException keynotfound)
+                            {
+                                url = "";
+                            }
+
+                            string description = "";
+                            try
+                            {
+                                if (hit.fields["metatag.description"][0] != null)
+                                {
+                                    description = hit.fields["metatag.description"][0];
+                                }
+                            }
+
+                            catch (KeyNotFoundException keynotfound)
+                            {
+                                description = "";
+
+                            }
+                            foundTerms.Add(new ESSiteWideSearchResult(title, url, description));
+
+
+                        }
+
+                        searchResultCollection = new ESSiteWideSearchResultCollection(foundTerms.AsEnumerable())
                         {
-                            url = hit.fields.url[0];
-                        }
+                            ResultCount = results.Response["hits"].total
+                        };
+
                     }
 
-                    catch (KeyNotFoundException keynotfound)
+                    catch (Exception ex)
                     {
-                        url = "";
-                    }
+                        log.error("Error retrieving search results.", ex);
+                        throw ex;
 
-                    string description = "";
-                    try
-                    {
-                        if (hit.fields["metatag.description"][0] != null)
-                        {
-                            description = hit.fields["metatag.description"][0];
-                        }
                     }
-
-                    catch (KeyNotFoundException keynotfound)
-                    {
-                        description = "";
-                        
-                    }
-                    foundTerms.Add(new ESSiteWideSearchResult(title, url, description));
-
 
                 }
-
+                else 
+                {
+                    Logger.LogError("test", NCIErrorLevel.Error, new Exception());
+                    log.error("Search failed. Http Status Code:" + results.HttpStatusCode.Value.ToString() + ". Message: " + results.ToString());
+                }
 
             }
-
-            catch (Exception ex)
+            catch (Exception e) 
             {
-                log.error("Error retrieving search results.", ex);
-                throw ex;
-                
+               
+               log.error("Error using the ESClient Search Template method.", e);
+            
             }
 
+            
+            
 
             //Return the results
-            return new ESSiteWideSearchResultCollection(foundTerms.AsEnumerable())
-            {
-                ResultCount = results.Response["hits"].total
-            };
+            return searchResultCollection;
         }
     }
 }
