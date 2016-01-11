@@ -157,15 +157,15 @@ namespace NCI.Search
                 }
                 else 
                 {
-                    Logger.LogError("test", NCIErrorLevel.Error, new Exception());
+                    Logger.LogError(this.GetType().ToString(), NCIErrorLevel.Error, new Exception());
                     log.error("Search failed. Http Status Code:" + results.HttpStatusCode.Value.ToString() + ". Message: " + results.ToString());
                 }
 
             }
             catch (Exception e) 
             {
-               
-               log.error("Error using the ESClient Search Template method.", e);
+                Logger.LogError(this.GetType().ToString(), "Error using the ESClient Search Template method.", NCIErrorLevel.Error, e);
+               //log.error("Error using the ESClient Search Template method.", e);
             
             }
 
