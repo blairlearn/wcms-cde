@@ -276,7 +276,7 @@
                         <fieldset ID="hospitalLocationFieldset" runat="server" class="roundy-box row" aria-labelledby="legend-location-hospital">
                             <div class="legend" id="legend-location-hospital">At Hospital/Institution</div>
                             <div>
-                                <button id="showInstitutionListButton" class="action" runat="server">Choose From List</button>
+                                <button id="showInstitutionListButton" class="action" type="button" runat="server">Choose From List</button>
                                 <input type="hidden" id="institutionListExpanded" value="N" runat="server" />
                                 <input id="institutionid" type="hidden" size="18" name="institutionid" runat="server" />
                                 <div id="institutionListSubBox" runat="server">
@@ -371,7 +371,7 @@
                 </div>
                 <div class="large-7 left columns">
                     <div id="showDrugListButtonArea" style="display: none;">
-                        <button class="action" id="showDrugListButton">Choose From List</button>
+                        <button class="action" type="button" id="showDrugListButton">Choose From List</button>
                     </div>
                     <asp:HiddenField runat="server" ID="drugListExpanded" value="N"/>
                     <div id="drugListSubBox">
@@ -405,7 +405,7 @@
                 <div class="large-7 left columns">
                     <em>Examples: chemotherapy, adjuvant therapy, colonoscopy</em>
                     <div id="showInterventionListButtonArea" style="display: none;">
-                        <button id="showInterventionListButton" class="action">Choose From List</button></div>
+                        <button id="showInterventionListButton" class="action" type="button">Choose From List</button></div>
                     <asp:HiddenField runat="server" ID="interventionListExpanded" value="N"/>
                     <div id="interventionListSubBox">
                         <input id="interventionid" type="hidden" size="18" name="interventionid" runat="server" />
@@ -525,7 +525,7 @@
                 <div class="large-4 columns"><label class="field">Trial Investigators</label></div>
                 <div class="large-7 left columns">
                     <div id="showInvestigatorListButtonArea" style="display: none;">
-                        <button id="showInvestigatorListButton" class="action">Choose From List</button></div>
+                        <button id="showInvestigatorListButton" class="action" type="button">Choose From List</button></div>
                     <asp:HiddenField runat="server" ID="investigatorListExpanded" value="N"/>
                     <div id="investigatorListSubBox">
                         Trial Investigators Selected:
@@ -549,7 +549,7 @@
                 <div class="large-4 columns"><label class="field">Lead Organization</label></div>
                 <div class="large-7 left columns">
                     <div id="showLeadOrgListButtonArea" style="display: none;">
-                        <button id="showLeadOrgListButton" class="action">Choose From List</button></div>
+                        <button id="showLeadOrgListButton" class="action" type="button">Choose From List</button></div>
                     <asp:HiddenField runat="server" ID="leadOrgListExpanded" value="N"/>
                     <div id="leadOrgListSubBox">
                         Lead Organizations Selected:
