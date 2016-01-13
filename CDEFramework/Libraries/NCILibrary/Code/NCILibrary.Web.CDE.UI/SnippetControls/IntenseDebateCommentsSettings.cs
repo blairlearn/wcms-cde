@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Xml.Schema;
 
-namespace NCI.Web.CDE.UI.SnippetControls
+namespace NCI.Web.CDE.UI.Modules
 {
     /// <summary>
     /// The class which defines all configurable properties.

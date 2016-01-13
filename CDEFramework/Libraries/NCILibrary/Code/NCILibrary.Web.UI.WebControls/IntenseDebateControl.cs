@@ -89,13 +89,14 @@ namespace NCI.Web.UI.WebControls
             output.RenderBeginTag(HtmlTextWriterTag.Div);
             output.Write("<!-- IntenseDebate Content Here -->");
             output.RenderEndTag();
- 
-            string intenseDebateScript =
-                @"
-                    var idcomments_acct = '" + this.Account + @"';
-                    var idcomments_post_id = '" + this.Identifier + @"';
-                    var idcomments_post_url = '" + this.URL + @"';
-                + @";
+
+            string pattern = 
+                @"var idcomments_acct =  '{0}';
+                var idcomments_post_id = '{1}';
+                var idcomments_post_url = '{2}';
+                ";
+
+            string intenseDebateScript = string.Format(pattern, this.Account, this.Identifier, this.URL);
  
             output.RenderBeginTag(HtmlTextWriterTag.Script);
             output.Write(intenseDebateScript);

@@ -11,7 +11,7 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.UI.WebControls;
 using NCI.Util;
 
-namespace NCI.Web.CDE.UI.SnippetControls
+namespace NCI.Web.CDE.UI.Modules
 {
     /// <summary>
     /// This Snippet Template is for inserting an IntenseDebate comment thread onto the page.
