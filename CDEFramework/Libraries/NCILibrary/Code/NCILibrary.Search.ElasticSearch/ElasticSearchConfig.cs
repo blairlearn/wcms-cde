@@ -66,6 +66,34 @@ namespace NCI.Search
             return listOfNodes.ToArray();
         }
 
+        public static ClusterElement GetCluster(string clusterName)
+        {
+            List<string> fieldList = new List<string>();
+
+            ClusterElementCollection clusterConfigs = ESSection.Clusters;
+
+            if (clusterConfigs == null)
+                throw new ConfigurationErrorsException("ElasticSearch cluster configuration cannot be found");
+
+            ClusterElement requestedCluster = null;
+
+            //Find the cluster
+            foreach (ClusterElement cluster in clusterConfigs)
+            {
+                if (cluster.Name == clusterName)
+                {
+                    requestedCluster = cluster;
+                    break;
+                }
+            }
+
+            if (requestedCluster == null)
+                throw new ConfigurationErrorsException("ElasticSearch cluster, " + clusterName + ", cannot be found in configuration.");
+
+
+            return requestedCluster;
+        }
+
         public static ESSiteWideSearchCollectionElement GetSearchCollectionConfig(string searchCollectionName)
         {
             ESSiteWideSearchCollectionElementCollection searchCollections = ESSection.SiteWideSearchCollections;

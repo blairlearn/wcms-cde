@@ -18,6 +18,25 @@ namespace NCI.Search.Configuration
             }
         }
 
+        [ConfigurationProperty("maximumretries", IsRequired = true, DefaultValue = "5")]
+        public int MaximumRetries
+        {
+            get
+            {
+                return (int)base["maximumretries"];
+            }
+        }
+        
+        //default value - 5000 milliseconds = 5 seconds
+        [ConfigurationProperty("connectiontimeoutdelay", IsRequired = true, DefaultValue = "5000")]
+        public int ConnectionTimeoutDelay
+        {
+            get
+            {
+                return (int)base["connectiontimeoutdelay"];
+            }
+        }
+
         [ConfigurationProperty("nodes")]
         public NodeElementCollection Nodes
         {

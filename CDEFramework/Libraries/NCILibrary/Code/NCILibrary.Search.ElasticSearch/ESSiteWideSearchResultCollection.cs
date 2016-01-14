@@ -11,16 +11,10 @@ namespace NCI.Search
     {
         private IEnumerable<ESSiteWideSearchResult> searchResults;
 
-        public int ResultCount { get; set; }
+        public long ResultCount { get; set; }
 
         List<ESSiteWideSearchResult> SearchResults { get; set; }
-
-        //protected ESSearchResultCollection(IEnumerable<ESSearchResult> results)
-        //{
-        //    this.searchResults = results;
-
-        //}
-
+        
         public List<ESSiteWideSearchResult> ESSearchCollection()
         {
             SearchResults = (List<ESSiteWideSearchResult>)searchResults;
@@ -47,18 +41,7 @@ namespace NCI.Search
         }
 
         #endregion
-
-        //#region IEnumerable Members
-        ///// <summary>
-        ///// Get IEnumerable
-        ///// </summary>
-        ///// <returns>the Enumerable list</returns>
-        //IEnumerator IEnumerable.GetEnumerator()
-        //{
-        //    return searchResults.GetEnumerator();
-        //}
-
-        //#endregion
+               
 
         IEnumerator IEnumerable.GetEnumerator()
         {

@@ -48,6 +48,14 @@ namespace NCI.Search.Configuration
             }
         }
 
+        public ClusterElement ClusterElementDetails
+        {
+            get
+            {
+                return ElasticSearchConfig.GetCluster(this.Cluster);
+            }
+        }
+
         [ConfigurationProperty("fields")]
         public FieldElementCollection Fields
         {
