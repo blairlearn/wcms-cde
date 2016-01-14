@@ -145,7 +145,7 @@ namespace DCEG.Web.SnippetTemplates
                     if (results != null && results.ResultCount > 0)
                     {
 
-                        lastRecord = firstRecord + results.ResultCount - 1;
+                        lastRecord = firstRecord + (int)results.ResultCount - 1;
                         totalItems = (int)results.ResultCount;
 
                         ResultRepeater.DataSource = results;
