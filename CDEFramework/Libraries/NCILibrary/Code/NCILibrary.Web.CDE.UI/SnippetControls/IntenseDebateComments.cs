@@ -65,6 +65,7 @@ namespace NCI.Web.CDE.UI.Modules
                 + "://"
                 + HttpContext.Current.Request.Url.Authority
                 + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("PrettyUrl");
+            theControl.CommentPolicyText = intenseDebateCommentsSettings.CommentPolicy;
         }
     }
 }

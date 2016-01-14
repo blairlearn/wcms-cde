@@ -26,6 +26,7 @@ namespace NCI.Web.UI.WebControls
             Identifier = string.Empty;
             URL = string.Empty;
             Title = string.Empty;
+            CommentPolicyText = string.Empty;
         }
 
         protected override HtmlTextWriterTag TagKey
@@ -78,12 +79,22 @@ namespace NCI.Web.UI.WebControls
             set { ViewState["Title"] = value; }
         }
 
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue("")]
+        [Localizable(true)]
+        public string CommentPolicyText
+        {
+            get { return (String)ViewState["CommentPolicyText"] ?? string.Empty; }
+            set { ViewState["CommentPolicyText"] = value; }
+        }
+
 
         protected override void RenderContents(HtmlTextWriter output)
         {
-            /*output.RenderBeginTag(HtmlTextWriterTag.Div);
-            output.Write(commentPolicyText);
-            output.RenderEndTag(); */
+            output.RenderBeginTag(HtmlTextWriterTag.Div);
+            output.Write(this.CommentPolicyText);
+            output.RenderEndTag();
  
             output.AddAttribute(HtmlTextWriterAttribute.Id, "intensedebate-thread");
             output.RenderBeginTag(HtmlTextWriterTag.Div);

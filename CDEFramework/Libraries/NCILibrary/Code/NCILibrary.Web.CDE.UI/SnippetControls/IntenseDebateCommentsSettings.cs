@@ -20,5 +20,8 @@ namespace NCI.Web.CDE.UI.Modules
   
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string DevAccount{get;set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string CommentPolicy { get; set; }
     }
 }
