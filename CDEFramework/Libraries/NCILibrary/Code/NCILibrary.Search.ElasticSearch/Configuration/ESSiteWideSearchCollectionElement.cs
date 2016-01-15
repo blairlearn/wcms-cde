@@ -16,7 +16,6 @@ namespace NCI.Search.Configuration
         /// <summary>
         /// Name of the search collection
         /// </summary>
-    
         [ConfigurationProperty("name", IsRequired = true)]
         public string Name
         {

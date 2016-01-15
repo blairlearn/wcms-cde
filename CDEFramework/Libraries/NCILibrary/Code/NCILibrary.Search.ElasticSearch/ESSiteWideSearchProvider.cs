@@ -20,7 +20,7 @@ using System.Threading;
 namespace NCI.Search
 {
     /// <summary>
-    /// 
+    /// This is the maanger class for Elastic Search. It is used to return search results.
     /// </summary>
     public class ESSiteWideSearchProvider : NCI.Search.SiteWideSearchProviderBase
     {       
@@ -102,7 +102,7 @@ namespace NCI.Search
 
                     foreach (var hit in results.Response["hits"].hits)
                     {
-
+                        //title is a special case and when it is empty the value needs to be Untitled
                         string title = SetFieldValue(hit, "title");
                         if (string.IsNullOrEmpty(title))
                             title = "Untitled";
@@ -151,6 +151,11 @@ namespace NCI.Search
             };
         }
 
+        /// <summary>
+        /// Sets the value of a field
+        /// </summary>
+        /// <param name="hit">Each hit returned as part of the results</param>
+        /// <param name="field">The name of the field e.g. Title, URL, Description</param>
         private string SetFieldValue(dynamic hit, string field)
         {
             string fieldValue = "";
@@ -165,6 +170,8 @@ namespace NCI.Search
 
             catch (KeyNotFoundException keynotfound)
             {
+                //specifically catch the keynotfound exception and set the fieldValue to empty string
+                //just checking of not null values does not work
                 fieldValue = "";
             }
 
