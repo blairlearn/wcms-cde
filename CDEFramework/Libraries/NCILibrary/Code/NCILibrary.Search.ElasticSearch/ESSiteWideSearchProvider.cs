@@ -23,13 +23,7 @@ namespace NCI.Search
     /// 
     /// </summary>
     public class ESSiteWideSearchProvider : NCI.Search.SiteWideSearchProviderBase
-    {
-        public string Title { get; set; }
-        public string Url { get; set; }
-        public string Description { get; set; }
-
-        static Log log = new Log(typeof(ESSiteWideSearchProvider));
-
+    {       
         /// <summary>
         /// Gets the search results from this SiteWideSearch provider.
         /// </summary>
@@ -92,6 +86,7 @@ namespace NCI.Search
                 catch (Exception e)
                 {
                     Logger.LogError(this.GetType().ToString(), "Error using the ESClient Search Template method.", NCIErrorLevel.Error, e);
+                    throw e;
                 }
 
 
@@ -108,56 +103,15 @@ namespace NCI.Search
                     foreach (var hit in results.Response["hits"].hits)
                     {
 
-                        string title = "Untitled";
-                        try
-                        {
-                            if (hit.fields.title != null)
-                            {
-                                title = hit.fields.title[0];
-                                if (title.Trim().Length == 0)
-                                {
-                                    title = "Untitled";
-                                }
-                            }
-                            else
-                            {
-                                title = "Untitled";
-                            }
-                        }
+                        string title = SetFieldValue(hit, "title");
+                        if (string.IsNullOrEmpty(title))
+                            title = "Untitled";
 
-                        catch (KeyNotFoundException keynotfound)
-                        {
-                            title = "";
-                        }
+                        string url = SetFieldValue(hit, "url");
 
-                        string url = "";
-                        try
-                        {
-                            if (hit.fields.url != null)
-                            {
-                                url = hit.fields.url[0];
-                            }
-                        }
+                        string description = SetFieldValue(hit, "metatag.description");
+                                          
 
-                        catch (KeyNotFoundException keynotfound)
-                        {
-                            url = "";
-                        }
-
-                        string description = "";
-                        try
-                        {
-                            if (hit.fields["metatag.description"][0] != null)
-                            {
-                                description = hit.fields["metatag.description"][0];
-                            }
-                        }
-
-                        catch (KeyNotFoundException keynotfound)
-                        {
-                            description = "";
-
-                        }
                         foundTerms.Add(new ESSiteWideSearchResult(title, url, description));
 
 
@@ -177,8 +131,17 @@ namespace NCI.Search
 
             else
             {
-                Logger.LogError(this.GetType().ToString(), "Search failed. Http Status Code:" + results.HttpStatusCode.Value.ToString() + ". Message: " + results.ToString(), NCIErrorLevel.Error);
-                
+                string prettyResponse = "";
+                //log the raw response message 
+                //if there is not response them log with message - "No message in response"
+                if (!string.IsNullOrEmpty(System.Text.Encoding.Default.GetString(results.ResponseRaw)))
+                    prettyResponse = System.Text.Encoding.Default.GetString(results.ResponseRaw);
+                else
+                    prettyResponse = "No message in response";
+
+                Logger.LogError(this.GetType().ToString(), "Search failed. Http Status Code:" + results.HttpStatusCode.Value.ToString() + ". Message: " + prettyResponse, NCIErrorLevel.Error);
+
+                throw (new Exception("Search failed. Http Status Code:" + results.HttpStatusCode.Value.ToString() + ". Message: " + prettyResponse));
             }
                                 
             //Return the results
@@ -188,17 +151,16 @@ namespace NCI.Search
             };
         }
 
-        private string SetFieldValue(string field)
+        private string SetFieldValue(dynamic hit, string field)
         {
             string fieldValue = "";
+
             try
             {
-                if (field != null)
+                if (hit.fields[field][0] != null)
                 {
-                    fieldValue = field[0].ToString();
-
+                    fieldValue = hit.fields[field][0];
                 }
-
             }
 
             catch (KeyNotFoundException keynotfound)
@@ -206,7 +168,14 @@ namespace NCI.Search
                 fieldValue = "";
             }
 
+            catch (Exception e)
+            {
+                Logger.LogError(this.GetType().ToString(), "Error when setting field values for field:" + field, NCIErrorLevel.Error, e);
+                throw e;
+            }
             return fieldValue;
         }
+
+      
     }
 }

@@ -700,39 +700,33 @@ namespace NCI.Web.CancerGov.Apps
 
             //Get Results...  
             ISiteWideSearchResultCollection results = null;
-
+            
             try
             {
                 results = NCI.Search.SiteWideSearch.GetSearchResults(SearchCollection, SearchTerm, ItemsPerPage,
                         (CurrentPage - 1) * ItemsPerPage);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                rptBestBets.Visible = false;
-                rptResults.Visible = false;
-                phError.Visible = true;
-                //throw a user friendly error message
-                litError.Text = "Search with the following keyword returned an error: " + KeywordText;
-
+                //capture exactly which keyword caused the error
                 Logger.LogError(this.GetType().ToString(), "Search with the following keyword returned an error: " + KeywordText, NCIErrorLevel.Error, e);
             }
 
+            //Set the last total number of results so if the user changes the ItemsPerPage(pageunit)
+            //then we can move them to the closest page.  Say you are viewing 10 items per page and
+            //you are on page 6. This shows 51-60.  If you change to 50 items per page you should put
+            //the user on page 2 and not page 1.  That way they will see 51-100.  
+            TotalNumberOfResults = results.ResultCount;
+            PreviousItemsPerPage = ItemsPerPage;
+
+            int firstIndex, lastIndex;
+
+            //Get first index and last index
+            SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)results.ResultCount, out firstIndex, out lastIndex);
+            _resultOffset = firstIndex;
+
             if (results != null && results.ResultCount > 0)
             {
-                //Set the last total number of results so if the user changes the ItemsPerPage(pageunit)
-                //then we can move them to the closest page.  Say you are viewing 10 items per page and
-                //you are on page 6. This shows 51-60.  If you change to 50 items per page you should put
-                //the user on page 2 and not page 1.  That way they will see 51-100.  
-                TotalNumberOfResults = results.ResultCount;
-                PreviousItemsPerPage = ItemsPerPage;
-
-                int firstIndex, lastIndex;
-
-                //Get first index and last index
-                SimpleUlPager.GetFirstItemLastItem(CurrentPage, ItemsPerPage, (int)TotalNumberOfResults, out firstIndex, out lastIndex);
-                _resultOffset = firstIndex;
-
-
                 //the title text that needs to be removed from the search result Title
                 string removeTitleText = ContentDeliveryEngineConfig.PageTitle.AppendPageTitle.Title;
                 rptResults.DataSource = from res in results
@@ -747,44 +741,43 @@ namespace NCI.Web.CancerGov.Apps
                                                 Label = GetSearchResultLabel((ISiteWideSearchResult)res),
                                             });
                 rptResults.DataBind();
-
-                //Set Keywords in labels
-                lblResultsForKeyword.Text = KeywordText;
-                lblTopResultsXofYKeyword.Text = KeywordText;
-                lblSearchWithinResultKeyword.Text = KeywordText;
-
-                //Show labels for results X of Y
-                ShowResultsXoYLabels(firstIndex, lastIndex, results.ResultCount);
-
-                //Setup pager
-                SetupPager();
-
-                //Set the Search Within Results Radio button to new search
-                rblSWRSearchType.SelectedIndex = 0;
-
-                //// Web Analytics *************************************************
-                // Add number of search results to analytics
-                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar10, wbField =>
-                {
-                    wbField.Value = TotalNumberOfResults.ToString();
-                });
-
-                this.PageInstruction.AddFieldFilter("channelName", (name, data) =>
-                {
-                    data.Value = "NCI Home";
-                });
-
-                // Add Best Bets event to analytics
-                if (rptBestBets.Visible)
-                {
-                    this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event10, wbField =>
-                    {
-                        wbField.Value = WebAnalyticsOptions.Events.event10.ToString();
-                    });
-                }
-                //// End Web Analytics *************************************************
             }
-                                    
+
+            //Set Keywords in labels
+            lblResultsForKeyword.Text = KeywordText;
+            lblTopResultsXofYKeyword.Text = KeywordText;
+            lblSearchWithinResultKeyword.Text = KeywordText;
+
+            //Show labels for results X of Y
+            ShowResultsXoYLabels(firstIndex, lastIndex, results.ResultCount);
+
+            //Setup pager
+            SetupPager();
+
+            //Set the Search Within Results Radio button to new search
+            rblSWRSearchType.SelectedIndex = 0;
+
+            //// Web Analytics *************************************************
+            // Add number of search results to analytics
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar10, wbField =>
+            {
+                wbField.Value = TotalNumberOfResults.ToString();
+            });
+
+            this.PageInstruction.AddFieldFilter("channelName", (name, data) =>
+            {
+                data.Value = "NCI Home";
+            });
+
+            // Add Best Bets event to analytics
+            if (rptBestBets.Visible)
+            {
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event10, wbField =>
+                {
+                    wbField.Value = WebAnalyticsOptions.Events.event10.ToString();
+                });
+            }
+            //// End Web Analytics *************************************************
         }
 
         /// <summary>
