@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="/PublishedContent/Styles/nvcg.css" type="text/css" />
     <meta content="text/html;charset=ISO-8859-1" http-equiv="content-type" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-
+    <meta name="robots" content="noindex, nofollow" />
+     
     <script src="/PublishedContent/js/Common.js" type="text/javascript"></script>
 
     <script src="/PublishedContent/js/Popups.js" type="text/javascript"></script>
