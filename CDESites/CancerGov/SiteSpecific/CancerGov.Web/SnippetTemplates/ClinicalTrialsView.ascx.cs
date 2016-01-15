@@ -53,11 +53,10 @@ namespace CancerGov.Web.SnippetTemplates
 
             int iProtocolID = -1;
             int iProtocolSearchID = 0;
-            string strVersion = "";
             bool hasProtocolSearchid = false;
 
 
-
+            // Protocol version is *Always* HealthProfessional. (There is now only one version.)
             ProtocolVersions pvVersion = ProtocolVersions.HealthProfessional;
             iProtocolID = Strings.ToInt(Request.Params["cdrid"]);
 
@@ -68,12 +67,6 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             iProtocolSearchID = Strings.ToInt(Strings.IfNull(Strings.Clean(Request.Params["protocolsearchid"]), "0"));
-            strVersion = Strings.IfNull(Strings.Clean(Request.Params["version"]), "healthprofessional");
-
-            if (strVersion.ToUpper() == "PATIENT")
-            {
-                pvVersion = ProtocolVersions.Patient;
-            }
 
             Protocol pProtocol = null;
             try
@@ -284,12 +277,6 @@ namespace CancerGov.Web.SnippetTemplates
 
                 if (iProtocolID > -1)
                     localUrl += "?cdrid=" + iProtocolID;
-
-                if (pvVersion.ToString() != "")
-                    localUrl += "?version=" + pvVersion;
-
-                if (iProtocolSearchID > 0)
-                    localUrl += "?protocolsearchid=" + iProtocolSearchID;
 
                 url.SetUrl(localUrl);
             });
