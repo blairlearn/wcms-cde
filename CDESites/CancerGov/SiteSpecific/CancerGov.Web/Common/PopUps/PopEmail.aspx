@@ -4,6 +4,7 @@
   <HEAD id="header" runat="server">
 	<TITLE><%=BrowserTitle%></TITLE>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="noindex, nofollow">
 	<script type="text/javascript">
 	    var callingUrl = opener.location.href;
 	</script>
