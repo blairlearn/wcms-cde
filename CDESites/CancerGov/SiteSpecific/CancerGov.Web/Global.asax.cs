@@ -188,7 +188,17 @@ namespace CancerGov.Web
                 {   
                     //Make sure the response's status code matches the correct response for 
                     //things like search engines.
-                    Response.StatusCode = ((HttpException)objErr).GetHttpCode();
+                    if (objErr is HttpRequestValidationException)
+                    {
+                        // By default .NET uses 500 for a malformed URL or unsafe request.  This 
+                        // is exactly what the 400 status is for.  See:
+                        // https://tools.ietf.org/html/rfc7231#section-6.5.1
+                        Response.StatusCode = 400;
+                    }
+                    else
+                    {
+                        Response.StatusCode = ((HttpException)objErr).GetHttpCode();
+                    }                    
                     return;
                 }
                 else
