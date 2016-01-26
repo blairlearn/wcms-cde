@@ -144,7 +144,9 @@ namespace NCI.DataManager
                                         searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dfp);
                                         // Format date for Blog Series page
                                         searchResult.DateForBlogs = String.Format("{0:MMMM d, yyyy}", dfp);
-                                        searchResult.DateForBlogsEs = dfp.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
+                                        // Format date for Spanish blog lists - dd de MMMM de yyyy
+                                        searchResult.DateForBlogsEs = dfp.Day.ToString() + " de " + dfp.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-US"))
+                                            + " de " + dfp.Year.ToString();
                                     }
                                     DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dlm != DateTime.MinValue)
@@ -159,8 +161,9 @@ namespace NCI.DataManager
                                         listDate = dlr;
 
                                     searchResult.DateForLists = String.Format("{0:MMMM d, yyyy}", listDate);
-                                    searchResult.DateForListsEs = listDate.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
-
+                                    // Format date for Spanish dynamic lists - dd de MMMM de yyyy
+                                    searchResult.DateForListsEs = listDate.Day.ToString() + " de " + listDate.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-US"))
+                                    + " de " + listDate.Year.ToString();
                                     searchResults.Add(searchResult);
                                 }
                             }
@@ -333,7 +336,9 @@ namespace NCI.DataManager
                                         searchResult.PostedDate_NewsPortalFormat = String.Format("{0:MMMM d, yyyy}", dfp);
                                         // Format date for Blog Series page
                                         searchResult.DateForBlogs = String.Format("{0:MMMM d, yyyy}", dfp);
-                                        searchResult.DateForBlogsEs = dfp.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
+                                        // Format date for Spanish blog lists - dd de MMMM de yyyy
+                                        searchResult.DateForBlogsEs = dfp.Day.ToString() + " de " + dfp.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-US"))
+                                            + " de " + dfp.Year.ToString();
                                     }
                                     DateTime dlm = sqlFVReader.GetDateTime("date_last_modified");
                                     if (dlm != DateTime.MinValue)
@@ -353,7 +358,9 @@ namespace NCI.DataManager
                                     else
                                     {
                                         searchResult.DateForLists = String.Format("{0:MMMM d, yyyy}", dateTime);
-                                        searchResult.DateForListsEs = dateTime.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("es-US"));
+                                        // Format date for Spanish dynamic lists - dd de MMMM de yyyy
+                                        searchResult.DateForListsEs = listDate.Day.ToString() + " de " + listDate.ToString("MMMM", CultureInfo.CreateSpecificCulture("es-US"))
+                                        + " de " + listDate.Year.ToString();
                                     }
                                     searchResults.Add(searchResult);
                                 }
