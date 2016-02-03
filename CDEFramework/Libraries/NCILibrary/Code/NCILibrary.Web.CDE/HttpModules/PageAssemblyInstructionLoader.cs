@@ -221,8 +221,8 @@ namespace NCI.Web.CDE
             PageTemplateInfo pageTemplateInfo=null;
             try 
             {
-                    pageTemplateInfo = PageTemplateResolver.GetPageTemplateInfo(assemblyInfo.PageTemplateName, displayVersion);
-            }
+                pageTemplateInfo = GetPageTemplateInfo(displayVersion, assemblyInfo);
+            } 
             catch(Exception ex)
             {
                 string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nCannot Load the pageTemplateInfo problem with the PageTemplateConfiguration XML file ";
@@ -363,6 +363,45 @@ namespace NCI.Web.CDE
                     return false;
             }
         }
+
+        /// <summary>
+        /// Gets the Page Template Info (.aspx along with associated css and javascript) for the requested page and current display version.
+        /// </summary>
+        /// <param name="displayVersion"></param>
+        /// <param name="assemblyInfo"></param>
+        /// <returns></returns>
+        private static PageTemplateInfo GetPageTemplateInfo(DisplayVersions displayVersion, IPageAssemblyInstruction assemblyInfo)
+        {
+            //We need to get the template them from the page's navon.
+            string templateTheme = assemblyInfo.TemplateTheme;
+
+
+            //No default theme.  It can just be set at the root of each site.
+
+
+            //If the template theme is not set, then use the default theme.
+            if (!string.IsNullOrWhiteSpace(templateTheme))
+            {
+                if (PageTemplateResolver.IsThemeDefined(templateTheme))
+                {
+                    return PageTemplateResolver.GetPageTemplateInfo(templateTheme, assemblyInfo.PageTemplateName, displayVersion);
+                }
+                else
+                {
+                    //We may want to just log a warning and fall back to the default theme.  My
+                    //only concern with this is that people will most likely not be able to figure
+                    //out why the correct templates are not showing.  Stating flat-out that the
+                    //theme cannot be found will make it easier to figure out.
+                    throw new Exception("Theme, " + templateTheme + " , cannot be found.");
+                }
+            }
+            else
+            {
+                return PageTemplateResolver.GetDefaultThemePageTemplateInfo(assemblyInfo.PageTemplateName, displayVersion);
+            }
+        }
+
+
         #endregion
     }
 }

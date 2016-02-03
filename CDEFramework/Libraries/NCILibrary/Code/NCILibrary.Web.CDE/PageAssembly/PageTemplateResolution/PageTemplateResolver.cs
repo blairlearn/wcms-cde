@@ -85,11 +85,61 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
+        /// Checks to see if a given theme name is defined in the PageTemplateConfiguration
+        /// </summary>
+        /// <param name="themeName">The name of the theme to check</param>
+        /// <returns>true if the theme is defined, false if not</returns>
+        public static bool IsThemeDefined(string themeName)
+        {
+            return PageTemplateConfiguration.TemplateThemeCollection.Any(tti => tti.ThemeName == themeName);
+        }
+
+        /// <summary>
         /// Retrieves the LayoutTemplateInfo representing the named template.
         /// </summary>
-        /// <param name="templateName"></param>
+        /// <param name="themeName">The name of the theme that the template belongs to.</param>
+        /// <param name="templateName">The logical name of the page template we are looking for</param>
+        /// <param name="version">The current display version that is being used.  This is used to choose the correct page template. </param>
         /// <returns></returns>
-        public static PageTemplateInfo GetPageTemplateInfo(string templateName, DisplayVersions version)
+        public static PageTemplateInfo GetPageTemplateInfo(string themeName, string templateName, DisplayVersions version)
+        {
+            //Validate ThemeName
+            if (string.IsNullOrEmpty(themeName))
+            {
+                throw new ArgumentNullException("themeName", "The themeName parameter cannot be null or empty.");
+            }
+
+            return GetPageTemplateInfo(
+                templateName, //The templatename we are looking for
+                version, //The version we are looking for
+                tti => tti.ThemeName == themeName //Get the theme PTC.
+            );
+        }
+
+        /// <summary>
+        /// Gets the Page Template Info for a logical template for the default theme.
+        /// (Where default theme is the first theme where IsDefault == true)
+        /// </summary>
+        /// <param name="templateName">The logical name of the page template we are looking for</param>
+        /// <param name="version">The current display version that is being used.  This is used to choose the correct page template. </param>
+        /// <returns></returns>
+        public static PageTemplateInfo GetDefaultThemePageTemplateInfo(string templateName, DisplayVersions version)
+        {
+            return GetPageTemplateInfo(
+                templateName, //The templatename we are looking for
+                version, //The version we are looking for
+                tti => tti.IsDefault //Get the theme PTC.
+            );
+        }
+
+        /// <summary>
+        /// Gets the Page Template Info for the given templateName within the first theme matching the predicate
+        /// </summary>
+        /// <param name="templateName">The logical name of the page template we are looking for</param>
+        /// <param name="version">The current display version that is being used.  This is used to choose the correct page template. </param>
+        /// <param name="predicate">A Func<TemplateThemeInfo,bool> that is used to find the first TemplateThemeInfo that matches.</param>
+        /// <returns></returns>
+        private static PageTemplateInfo GetPageTemplateInfo(string templateName, DisplayVersions version, Func<TemplateThemeInfo, bool> predicate) 
         {
             PageTemplateInfo rtnInfo = null;
 
@@ -98,17 +148,20 @@ namespace NCI.Web.CDE
                 throw new ArgumentNullException("templateName", "The templateName parameter cannot be null or empty.");
             }
 
+            if (predicate == null)
+            {
+                throw new ArgumentNullException("predicate", "The predicate function cannot be null");
+            }
 
             if (PageTemplateConfiguration != null)
             {
-                //Get the page template collection for the templatename we are looking for.
-                PageTemplateCollection coll = 
-                    PageTemplateConfiguration.PageTemplateCollections.FirstOrDefault(ptc => ptc.TemplateName == templateName);
+                //First, we need to get the theme we are looking for
+                TemplateThemeInfo info = PageTemplateConfiguration.TemplateThemeCollection.FirstOrDefault(predicate);
 
-                //If there is a collection, ask the collection for the template with the version we are looking for.
-                if (coll != null)
+                if (info != null)
                 {
-                    rtnInfo = coll.GetPageTemplateInfo(version);
+                    //We found a theme.  Now get the template info.
+                    rtnInfo = info.GetPageTemplateInfo(templateName, version);
                 }
             }
 

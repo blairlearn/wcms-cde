@@ -180,6 +180,27 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
+        /// Gets the template theme this page should be using.  (Set on a SectionDetails withing the parent folders of this page)
+        /// </summary>
+        /// <value>The name of the Template Theme</value>
+        public string TemplateTheme
+        {
+            get
+            {
+                SectionDetail sectionDetail = SectionDetailFactory.GetSectionDetail(SectionPath);
+                if (sectionDetail != null)
+                {
+                    return sectionDetail.GetEffectiveTemplateTheme();
+                }
+
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the name of the page template i.e the actual aspx page to be loaded.
         /// </summary>
         /// <value>The name of the page template.</value>

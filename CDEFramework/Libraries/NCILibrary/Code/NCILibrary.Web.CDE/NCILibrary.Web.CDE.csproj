@@ -141,6 +141,8 @@
     <Compile Include="PageAssembly\ContentItemInfo.cs" />
     <Compile Include="PageAssembly\InstructionSitemapUrlStore.cs" />
     <Compile Include="PageAssembly\PageResources.cs" />
+    <Compile Include="PageAssembly\PageTemplateResolution\TemplateThemeCollection.cs" />
+    <Compile Include="PageAssembly\PageTemplateResolution\TemplateThemeInfo.cs" />
     <Compile Include="PageAssembly\SearchMetadata.cs" />
     <Compile Include="PageAssembly\SocialMetaTag.cs" />
     <Compile Include="PageAssembly\SocialMetaTagData.cs" />

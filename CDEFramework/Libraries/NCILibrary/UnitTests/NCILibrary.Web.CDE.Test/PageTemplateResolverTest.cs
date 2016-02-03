@@ -64,7 +64,7 @@ namespace NCILibrary.Web.CDE.Test
         }
 
         /// <summary>
-        ///A test for GetTemplateInfo
+        ///A test for GetDefaultThemePageTemplateInfo
         ///</summary>
         [TestMethod()]
         [DeploymentItem(@"XmlFiles")]
@@ -79,7 +79,7 @@ namespace NCILibrary.Web.CDE.Test
                 PageTemplateInfo expected = GetWebPageTemplateInfo();
 
                 PageTemplateInfo actual;
-                actual = PageTemplateResolver.GetPageTemplateInfo(templateName, version);
+                actual = PageTemplateResolver.GetDefaultThemePageTemplateInfo(templateName, version);
 
                 Assert.AreEqual(expected, actual);
             }
@@ -101,7 +101,7 @@ namespace NCILibrary.Web.CDE.Test
                 PageTemplateInfo expected = GetPrintPageTemplateInfo();
 
                 PageTemplateInfo actual;
-                actual = PageTemplateResolver.GetPageTemplateInfo(templateName, version);
+                actual = PageTemplateResolver.GetDefaultThemePageTemplateInfo(templateName, version);
                 Assert.AreEqual(expected, actual);
             }
         }
