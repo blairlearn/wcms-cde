@@ -62,7 +62,55 @@
     <Content Include="JS\Omniture\s_code.js" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
+    <None Include="Web.Blue-Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Blue-Preview.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <None Include="Web.config" />
+    <None Include="Web.DT-Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.DT-Preview.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Pink-Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Pink-Preview.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Prod-Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Prod-Preview.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.QA-Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.QA-Preview.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Red-Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Red-Preview.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Stage-Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Stage-Preview.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Training-Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Training-Preview.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
