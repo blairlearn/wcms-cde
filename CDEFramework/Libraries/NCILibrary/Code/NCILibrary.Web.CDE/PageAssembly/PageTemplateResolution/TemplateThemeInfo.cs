@@ -22,15 +22,6 @@ namespace NCI.Web.CDE
         public string ThemeName { get; set; }
 
         /// <summary>
-        /// Gets or sets if this Page Template Theme is used as the default.  This is what is used if
-        /// no theme is specified on a folder/navon.  IF A PAGE TEMPLATE COLLECTION IS NOT FOUND WITHIN
-        /// A THEME DO WE USE THE ONE FROM THE DEFAULT?
-        /// </summary>
-        /// <value>The name of the template.</value>
-        [XmlAttribute(AttributeName = "IsDefault", Form = XmlSchemaForm.Unqualified)]
-        public bool IsDefault { get; set; }
-
-        /// <summary>
         /// Gets or sets a collection of CDE Page Templates.
         /// </summary>
         /// <value>The page template collections.</value>

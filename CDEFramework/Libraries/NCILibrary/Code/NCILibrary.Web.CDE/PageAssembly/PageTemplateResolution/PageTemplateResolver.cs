@@ -10,6 +10,9 @@ using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class PageTemplateResolver
     {
         private const string PageTemplateConfigurationKey = "PageTemplateConfiguration";
@@ -96,6 +99,13 @@ namespace NCI.Web.CDE
 
         /// <summary>
         /// Retrieves the LayoutTemplateInfo representing the named template.
+        /// <remarks>
+        /// So we will handle backwards compatibility by using the Theme approach if TemplateThemeCollection
+        /// has something in it, OR fallback to the old PageTemplateCollection way if there are no themes.
+        ///
+        /// This way the DOCs can use the old mechanism, and CGov can use the new.  Also the go live for
+        /// CGov will not require the new PTC to be published before the CDE code is deployed.
+        /// </remarks>
         /// </summary>
         /// <param name="themeName">The name of the theme that the template belongs to.</param>
         /// <param name="templateName">The logical name of the page template we are looking for</param>
@@ -103,70 +113,59 @@ namespace NCI.Web.CDE
         /// <returns></returns>
         public static PageTemplateInfo GetPageTemplateInfo(string themeName, string templateName, DisplayVersions version)
         {
-            //Validate ThemeName
-            if (string.IsNullOrEmpty(themeName))
-            {
-                throw new ArgumentNullException("themeName", "The themeName parameter cannot be null or empty.");
-            }
-
-            return GetPageTemplateInfo(
-                templateName, //The templatename we are looking for
-                version, //The version we are looking for
-                tti => tti.ThemeName == themeName //Get the theme PTC.
-            );
-        }
-
-        /// <summary>
-        /// Gets the Page Template Info for a logical template for the default theme.
-        /// (Where default theme is the first theme where IsDefault == true)
-        /// </summary>
-        /// <param name="templateName">The logical name of the page template we are looking for</param>
-        /// <param name="version">The current display version that is being used.  This is used to choose the correct page template. </param>
-        /// <returns></returns>
-        public static PageTemplateInfo GetDefaultThemePageTemplateInfo(string templateName, DisplayVersions version)
-        {
-            return GetPageTemplateInfo(
-                templateName, //The templatename we are looking for
-                version, //The version we are looking for
-                tti => tti.IsDefault //Get the theme PTC.
-            );
-        }
-
-        /// <summary>
-        /// Gets the Page Template Info for the given templateName within the first theme matching the predicate
-        /// </summary>
-        /// <param name="templateName">The logical name of the page template we are looking for</param>
-        /// <param name="version">The current display version that is being used.  This is used to choose the correct page template. </param>
-        /// <param name="predicate">A Func<TemplateThemeInfo,bool> that is used to find the first TemplateThemeInfo that matches.</param>
-        /// <returns></returns>
-        private static PageTemplateInfo GetPageTemplateInfo(string templateName, DisplayVersions version, Func<TemplateThemeInfo, bool> predicate) 
-        {
-            PageTemplateInfo rtnInfo = null;
-
+            //Error if the templateName is null
             if (string.IsNullOrEmpty(templateName))
             {
                 throw new ArgumentNullException("templateName", "The templateName parameter cannot be null or empty.");
             }
 
-            if (predicate == null)
+            //Error if we cannot get to the PTC
+            if (PageTemplateConfiguration == null)
             {
-                throw new ArgumentNullException("predicate", "The predicate function cannot be null");
+                throw new Exception("PageTemplateConfiguration is null, Cannot determine page template");
             }
 
-            if (PageTemplateConfiguration != null)
+            //Check and see if we either have Template Themes or old school PageTemplateCollections and
+            //if we do not have either, throw and exception
+            if (!(
+                (PageTemplateConfiguration.TemplateThemeCollection != null && PageTemplateConfiguration.TemplateThemeCollection.Length > 0) ||
+                (PageTemplateConfiguration.PageTemplateCollections != null && PageTemplateConfiguration.PageTemplateCollections.Length > 0)
+                )) 
             {
-                //First, we need to get the theme we are looking for
-                TemplateThemeInfo info = PageTemplateConfiguration.TemplateThemeCollection.FirstOrDefault(predicate);
+                throw new Exception("Neither Template Themes nor Page template collections exist in the PageTemplateConfiguration, cannot load page template.");
+            }
+           
 
-                if (info != null)
-                {
-                    //We found a theme.  Now get the template info.
-                    rtnInfo = info.GetPageTemplateInfo(templateName, version);
+            // Now we determine the way to get to the templateInfo.  Themes will take priority over old 
+            // way.
+            PageTemplateInfo rtnTempInfo = null;
+
+            if (PageTemplateConfiguration.TemplateThemeCollection.Length > 0)
+            {
+                //Check Theme Name
+                if (String.IsNullOrWhiteSpace(themeName))
+                    throw new ArgumentNullException("themeName", "The themeName parameter cannot be null or empty.");
+
+                //Handle New
+                TemplateThemeInfo themeInfo = PageTemplateConfiguration.TemplateThemeCollection.FirstOrDefault(tti => tti.ThemeName == themeName);
+
+                if (themeInfo == null)
+                    throw new Exception("Cannot Find Theme named: " + themeName);
+
+                rtnTempInfo = themeInfo.GetPageTemplateInfo(templateName, version);
+            }
+            else if (PageTemplateConfiguration.PageTemplateCollections.Length > 0)
+            {
+                PageTemplateCollection tempColl = PageTemplateConfiguration.PageTemplateCollections.FirstOrDefault(ptc => ptc.TemplateName == templateName);
+
+                if (tempColl != null) {
+                    rtnTempInfo = tempColl.GetPageTemplateInfo(version);
                 }
             }
 
-            return rtnInfo;
+            return rtnTempInfo;
         }
+
 
         private static PageTemplateConfiguration LoadPageTemplateConfiguration(string configurationPath)
         {

@@ -25,11 +25,20 @@ namespace NCI.Web.CDE
         public TemplateThemeInfo[] TemplateThemeCollection { get; set; }
 
         /// <summary>
+        /// Gets or sets a collection of CDE Page Templates.
+        /// </summary>
+        /// <value>The page template collections.</value>
+        [XmlArray(ElementName = "PageTemplateCollections", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
+        [XmlArrayItem(ElementName = "PageTemplateCollection", Form = XmlSchemaForm.Unqualified)]
+        public PageTemplateCollection[] PageTemplateCollections { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PageTemplateConfiguration"/> class.
         /// </summary>
         public PageTemplateConfiguration()
         {
             TemplateThemeCollection = new TemplateThemeInfo[] { };
+            PageTemplateCollections = new PageTemplateCollection[] { };
         }
 
         /// <summary>
@@ -75,6 +84,34 @@ namespace NCI.Web.CDE
                         return false;
                 }
             }
+
+            if (
+                (PageTemplateCollections == null && target.PageTemplateCollections != null) ||
+                (PageTemplateCollections != null && target.PageTemplateCollections == null)
+                )
+            {
+                return false;
+            }
+
+            if (PageTemplateCollections.Length != target.PageTemplateCollections.Length)
+                return false;
+
+            for (int i = 0; i < PageTemplateCollections.Length; i++)
+            {
+                if (PageTemplateCollections[i] == null)
+                {
+                    if (target.PageTemplateCollections[i] != null)
+                        return false;
+
+                    //If we did not return then we know that target.PageTemplateCollections[i] is also null
+                }
+                else
+                {
+                    if (!PageTemplateCollections[i].Equals(target.PageTemplateCollections[i]))
+                        return false;
+                }
+            }
+
 
             return true;
         }

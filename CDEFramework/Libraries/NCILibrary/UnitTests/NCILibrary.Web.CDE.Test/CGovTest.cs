@@ -116,7 +116,6 @@ namespace NCI.Web.CDE.Test
                 TemplateThemeCollection = new TemplateThemeInfo[] {
                     new TemplateThemeInfo() {
                         ThemeName = "default",
-                        IsDefault = true,
                         PageTemplateCollections = new PageTemplateCollection[]
                         {
                             new PageTemplateCollection() {

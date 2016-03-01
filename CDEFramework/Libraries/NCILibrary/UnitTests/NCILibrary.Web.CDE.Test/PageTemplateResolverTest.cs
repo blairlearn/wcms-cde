@@ -79,7 +79,7 @@ namespace NCILibrary.Web.CDE.Test
                 PageTemplateInfo expected = GetWebPageTemplateInfo();
 
                 PageTemplateInfo actual;
-                actual = PageTemplateResolver.GetDefaultThemePageTemplateInfo(templateName, version);
+                actual = PageTemplateResolver.GetPageTemplateInfo(string.Empty, templateName, version);
 
                 Assert.AreEqual(expected, actual);
             }
@@ -101,7 +101,7 @@ namespace NCILibrary.Web.CDE.Test
                 PageTemplateInfo expected = GetPrintPageTemplateInfo();
 
                 PageTemplateInfo actual;
-                actual = PageTemplateResolver.GetDefaultThemePageTemplateInfo(templateName, version);
+                actual = PageTemplateResolver.GetPageTemplateInfo(string.Empty, templateName, version);
                 Assert.AreEqual(expected, actual);
             }
         }
