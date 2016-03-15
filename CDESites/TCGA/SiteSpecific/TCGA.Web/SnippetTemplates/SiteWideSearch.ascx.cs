@@ -97,8 +97,10 @@ namespace TCGA.Web.SnippetTemplates
                         spPager.BaseUrl = PrettyUrl + "?swKeywordQuery=" + Keyword;
                     }
                     catch (Exception ex)
-                    {
-                        Logger.LogError("SiteWideSearch", NCIErrorLevel.Error, ex);
+                    {                        
+                        //capture exactly which keyword caused the error
+                        Logger.LogError("SiteWideSearch", "Search with the following keyword returned an error: " + Keyword, NCIErrorLevel.Error, ex);
+
                     }
 
                 }

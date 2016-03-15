@@ -398,6 +398,7 @@ namespace CancerGov.Web.SnippetTemplates
             sortOrder.Items.Add(new ListItem("Phase of Trial", CTSSortFilters.PhaseDesc.ToString("d")));
             sortOrder.Items.Add(new ListItem("Title", CTSSortFilters.TitleAsc.ToString("d")));
             sortOrder.Items.Add(new ListItem("Type of Trial", CTSSortFilters.TrialTypeAsc.ToString("d")));
+            sortOrder.Items.Add(new ListItem("Status of Trial", CTSSortFilters.StatusAsc.ToString("d")));
             sortOrder.Items.Add(new ListItem("Age Range", CTSSortFilters.AgeRangeAsc.ToString("d")));
             sortOrder.Items.Add(new ListItem("Trial ID", CTSSortFilters.ProtocolIDAsc.ToString("d")));
 

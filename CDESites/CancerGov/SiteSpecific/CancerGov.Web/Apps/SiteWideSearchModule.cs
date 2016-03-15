@@ -699,11 +699,19 @@ namespace NCI.Web.CancerGov.Apps
             }
 
             //Get Results...  
-            ISiteWideSearchResultCollection results = NCI.Search.SiteWideSearch.GetSearchResults(SearchCollection, SearchTerm, ItemsPerPage,
-                    (CurrentPage - 1) * ItemsPerPage);
+            ISiteWideSearchResultCollection results = null;
             
+            try
+            {
+                results = NCI.Search.SiteWideSearch.GetSearchResults(SearchCollection, SearchTerm, ItemsPerPage,
+                        (CurrentPage - 1) * ItemsPerPage);
+            }
+            catch (Exception e)
+            {
+                //capture exactly which keyword caused the error
+                Logger.LogError(this.GetType().ToString(), "Search with the following keyword returned an error: " + KeywordText, NCIErrorLevel.Error, e);
+            }
 
-           
             //Set the last total number of results so if the user changes the ItemsPerPage(pageunit)
             //then we can move them to the closest page.  Say you are viewing 10 items per page and
             //you are on page 6. This shows 51-60.  If you change to 50 items per page you should put

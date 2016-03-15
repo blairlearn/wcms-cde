@@ -7,20 +7,23 @@ using System.Threading.Tasks;
 
 namespace NCI.Search
 {
+    /// <summary>
+    /// This class is a collection of all the Search results
+    /// </summary>
     public class ESSiteWideSearchResultCollection : ISiteWideSearchResultCollection
     {
         private IEnumerable<ESSiteWideSearchResult> searchResults;
 
-        public int ResultCount { get; set; }
+        /// <summary>
+        /// Number of results returned
+        /// </summary>
+        public long ResultCount { get; set; }
 
+        /// <summary>
+        /// List of all the Search results
+        /// </summary>
         List<ESSiteWideSearchResult> SearchResults { get; set; }
-
-        //protected ESSearchResultCollection(IEnumerable<ESSearchResult> results)
-        //{
-        //    this.searchResults = results;
-
-        //}
-
+        
         public List<ESSiteWideSearchResult> ESSearchCollection()
         {
             SearchResults = (List<ESSiteWideSearchResult>)searchResults;
@@ -47,18 +50,7 @@ namespace NCI.Search
         }
 
         #endregion
-
-        //#region IEnumerable Members
-        ///// <summary>
-        ///// Get IEnumerable
-        ///// </summary>
-        ///// <returns>the Enumerable list</returns>
-        //IEnumerator IEnumerable.GetEnumerator()
-        //{
-        //    return searchResults.GetEnumerator();
-        //}
-
-        //#endregion
+               
 
         IEnumerator IEnumerable.GetEnumerator()
         {

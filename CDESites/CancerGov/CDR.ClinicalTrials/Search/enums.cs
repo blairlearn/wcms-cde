@@ -71,6 +71,8 @@
         ProtocolIDDesc = 6,
         TrialTypeAsc = 7,
         TrialTypeDesc = 8,
+        StatusAsc = 9,
+        StatusDesc = 10,
         AgeRangeAsc = 11,
         AgeRangeDesc = 12,
         Relevance = 15,

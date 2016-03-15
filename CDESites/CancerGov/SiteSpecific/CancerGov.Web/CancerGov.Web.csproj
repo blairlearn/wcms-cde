@@ -107,6 +107,7 @@
     <Content Include="Common\PopUps\PopEmail.aspx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
+    <Content Include="SnippetTemplates\IntenseDebateComments.ascx" />
     <Content Include="SnippetTemplates\ModuleSearchBox.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SearchBox.ascx" />
@@ -124,7 +125,9 @@
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Web.config" />
+    <None Include="Web.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apps\AppsBaseUserControl.cs">

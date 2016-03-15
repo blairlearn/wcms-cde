@@ -145,7 +145,7 @@ namespace DCEG.Web.SnippetTemplates
                     if (results != null && results.ResultCount > 0)
                     {
 
-                        lastRecord = firstRecord + results.ResultCount - 1;
+                        lastRecord = firstRecord + (int)results.ResultCount - 1;
                         totalItems = (int)results.ResultCount;
 
                         ResultRepeater.DataSource = results;
@@ -175,8 +175,9 @@ namespace DCEG.Web.SnippetTemplates
                     }
                 }
                 catch (Exception ex)
-                {
-                    NCI.Logging.Logger.LogError( "NewsletterSearchResults" ,PrettyUrl, NCIErrorLevel.Error, ex);
+                {                    
+                    //capture exactly which keyword caused the error
+                    Logger.LogError("NewsletterSearchResults", PrettyUrl + ". Search with the following keyword returned an error: " + Keyword, NCIErrorLevel.Error, ex);
                     this.RaiseErrorPage();
                 }
 
