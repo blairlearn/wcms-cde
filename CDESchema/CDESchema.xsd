@@ -1465,6 +1465,24 @@
       <documentation>Represents the root tree node published from Percussion.</documentation>
     </annotation>
   </element>
+  
+  <complexType name="templateThemeInfo">
+    <annotation>
+      <documentation>Represents a CDE Page Template theme.  Contains all of the templates for the display versions of the CDE for that theme.</documentation>
+    </annotation>
+    <sequence>
+      <element name="PageTemplateCollections">
+        <complexType>
+          <sequence>
+            <element name="PageTemplateCollection" type="cde:pageTemplateCollection" minOccurs="0" maxOccurs="unbounded"></element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+    <attribute name="Name" type="string"></attribute>
+	<attribute name="IsDefault" type="boolean"></attribute>
+  </complexType>
+  
 
   <complexType name="pageTemplateCollection">
     <annotation>
@@ -1584,10 +1602,10 @@
       <documentation>Represents all of the CDE Page Templates registered in the system. </documentation>
     </annotation>
     <sequence>
-      <element name="PageTemplateCollections">
+      <element name="TemplateThemeCollection">
         <complexType>
           <sequence>
-            <element name="PageTemplateCollection" type="cde:pageTemplateCollection" minOccurs="0" maxOccurs="unbounded"></element>
+            <element name="TemplateThemeInfo" type="cde:templateThemeInfo" minOccurs="0" maxOccurs="unbounded"></element>
           </sequence>
         </complexType>
       </element>

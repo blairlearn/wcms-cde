@@ -22,6 +22,12 @@ namespace NCI.Web.CDE
         string PageTemplateName { get; }
 
         /// <summary>
+        /// Gets the template theme this page should be using.  (Set on a SectionDetails withing the parent folders of this page)
+        /// </summary>
+        /// <value>The name of the Template Theme</value>
+        string TemplateTheme { get; }
+
+        /// <summary>
         /// The path of all parent folders of the page assembly instruction.        
         /// </summary>
         string SectionPath { get; }
