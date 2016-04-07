@@ -19,6 +19,21 @@
       <documentation>Defines the schema for a file instruction xml file for the CDE.  In order to allow files to have pretty urls and be indexed by the search engine, there needs to be a record of that item in the file system.  This is that record.</documentation>
     </annotation>
     <all>
+      <element name="MimeType" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Multipurpose Internet Mail Extensions</documentation>
+        </annotation>
+      </element>
+      <element name="ContentItemInfo" type="cde:contentItemInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The information of the content item this Assembly Item represents</documentation>
+        </annotation>
+      </element>
+      <element name="SearchMetadata" type="cde:searchMetadata" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines metadata for this Assembly Instruction used for searching</documentation>
+        </annotation>
+      </element>
       <element name="PageMetadata" type="cde:pageMetadata"
         minOccurs="1" maxOccurs="1">
         <annotation>
@@ -291,6 +306,16 @@
       </documentation>
     </annotation>
     <all>
+      <element name="ContentItemInfo" type="cde:contentItemInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The information of the content item this Assembly Item represents</documentation>
+        </annotation>
+      </element>
+      <element name="SearchMetadata" type="cde:searchMetadata" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines metadata for this Assembly Instruction used for searching</documentation>
+        </annotation>
+      </element>
       <element name="PageTemplateName" type="cde:path"
         minOccurs="1" maxOccurs="1">
         <annotation>
@@ -421,6 +446,22 @@
           </sequence>
         </complexType>
       </element>
+      <element name="LocalFields" minOccurs="0">
+        <complexType>
+          <sequence>
+            <element name="Field" nillable="true" minOccurs="0" maxOccurs="unbounded">
+              <complexType>
+                <simpleContent>
+                  <extension base="string">
+                    <attribute name="Name" form="unqualified" type="string" />
+                  </extension>
+                </simpleContent>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+
       <element name="Language" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>
@@ -626,12 +667,27 @@
       </element>
       <element name="AlternateContentVersions" type="cde:alternateContentVersions" maxOccurs="1" minOccurs="1">
         <annotation>
-          <documentation>Defines the alternate content versions for a Single Page Assembly Instruction.</documentation>
+          <documentation>Defines the alternate content versions for a Multi Page Assembly Instruction.</documentation>
         </annotation>
       </element>
       <element name="SocialMetadata" type="cde:socialMetadata" maxOccurs="1" minOccurs="0">
         <annotation>
-          <documentation>Defines the social metadata for a Single Page Assembly Instruction.</documentation>
+          <documentation>Defines the social metadata for a Multi Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+      <element name="PageResources" type="cde:pageResourcesInfo" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines page-level JS and CSS resources.</documentation>
+        </annotation>
+      </element>
+      <element name="Translations" type="cde:translations" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the data for the content item's translation(s).</documentation>
+        </annotation>
+      </element>
+      <element name="WebAnalyticsInfo" type="cde:webAnalyticsInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines custom web analytics data set for the content item.</documentation>
         </annotation>
       </element>
     </all>
@@ -644,6 +700,16 @@
       </documentation>
     </annotation>
     <all>
+      <element name="ContentItemInfo" type="cde:contentItemInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The information of the content item this Assembly Item represents</documentation>
+        </annotation>
+      </element>
+      <element name="SearchMetadata" type="cde:searchMetadata" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines metadata for this Assembly Instruction used for searching</documentation>
+        </annotation>
+      </element>
       <element name="PageTemplateName" type="cde:path"
         minOccurs="1" maxOccurs="1">
         <annotation>
@@ -744,6 +810,21 @@
           </sequence>
         </complexType>
       </element>
+      <element name="LocalFields" minOccurs="0">
+        <complexType>
+          <sequence>
+            <element name="Field" nillable="true" minOccurs="0" maxOccurs="unbounded">
+              <complexType>
+                <simpleContent>
+                  <extension base="string">
+                    <attribute name="Name" form="unqualified" type="string" />
+                  </extension>
+                </simpleContent>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
       <element name="Language" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>
@@ -957,6 +1038,21 @@
           <documentation>Defines the social metadata for a Single Page Assembly Instruction.</documentation>
         </annotation>
       </element>
+      <element name="PageResources" type="cde:pageResourcesInfo" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines page-level JS and CSS resources.</documentation>
+        </annotation>
+      </element>
+      <element name="Translations" type="cde:translations" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the data for the content item's translation(s).</documentation>
+        </annotation>
+      </element>
+      <element name="WebAnalyticsInfo" type="cde:webAnalyticsInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines custom web analytics data set for the content item.</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -965,6 +1061,7 @@
       <documentation>The path to a file or url</documentation>
     </annotation>
     <restriction base="string">
+      <whiteSpace value="collapse"/>
       <pattern value="\S+"></pattern>
     </restriction>
   </simpleType>
@@ -977,6 +1074,51 @@
       <pattern value="\S+"></pattern>
     </restriction>
   </simpleType>
+
+  <complexType name="contentItemInfo">
+    <annotation>
+      <documentation>Defines information about the content item a Page Assembly Instruction represents.</documentation>
+    </annotation>
+    <all>
+      <element name="ContentItemID" type="string" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>The content ID of the content item for the Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+      <element name="ContentItemType" type="string" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>The content type of the content item for the Page Assembly Instruction.</documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="searchMetadata">
+    <annotation>
+      <documentation>Defines metadata for the Assembly Instruction used for searching</documentation>
+    </annotation>
+    <all>
+      <element name="DoNotIndex" type="boolean" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>Defines if this Assembly Instruction should NOT be indexed by the search engine</documentation>
+        </annotation>
+      </element>
+      <element name="SiteSpecificSearchMetadata" type="cde:siteSpecificSearchMetadata" minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>Defines any site specific metadata for an Assembly Instruction to be used for searching</documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="siteSpecificSearchMetadata">
+    <annotation>
+      <documentation>Defines any site specific metadata for an Assembly Instruction to be used for searching.  Note: This is free form XML</documentation>
+    </annotation>
+    <sequence>
+      <any minOccurs="0" maxOccurs="unbounded"></any>
+    </sequence>
+  </complexType>
 
   <complexType name="pageMetadata">
     <annotation>
@@ -1003,6 +1145,11 @@
           <documentation>A long description for a Page Assembly Instruction.</documentation>
         </annotation>
       </element>
+      <element name="BrowserTitle" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The document title to display in the browser's title bar.</documentation>
+        </annotation>
+      </element>
       <element name="MetaDescription" type="string" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>A description for a Page Assembly Instruction which will be used for a HTML description meta tag.</documentation>
@@ -1011,6 +1158,21 @@
       <element name="MetaKeywords" type="string" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>A description for a Page Assembly Instruction which will be used for a HTML keywords meta tag.</documentation>
+        </annotation>
+      </element>
+      <element name="AltLanguageURL" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A description for a Page Assembly Instruction which will be used for a HTML keywords meta tag.</documentation>
+        </annotation>
+      </element>
+      <element name="MobileURL" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The url path of a page's mobile equivalent.</documentation>
+        </annotation>
+      </element>
+      <element name="DesktopURL" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The url path of a page's desktop equivalent.</documentation>
         </annotation>
       </element>
     </all>
@@ -1095,6 +1257,33 @@
           </sequence>
         </complexType>
       </element>
+      <element name="Snippets" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            An optional collection of all of the snippets
+            associated with this sub-layout snippet.
+          </documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>
+              Defines a collection of one or more Snippets
+              associated with this sub-layout snippet.
+            </documentation>
+          </annotation>
+          <sequence>
+            <element name="SnippetInfo"
+              type="cde:snippetInfo" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>
+                  A Snippet in the collection of snippets
+                  associated with this sub-layout snippet.
+                </documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
     </all>
   </complexType>
 
@@ -1173,29 +1362,22 @@
           </sequence>
         </complexType>
       </element>
+      <element name="LocalFields" minOccurs="0">
+        <complexType>
+          <sequence>
+            <element name="Field" nillable="true" minOccurs="0" maxOccurs="unbounded">
+              <complexType>
+                <simpleContent>
+                  <extension base="string">
+                    <attribute name="Name" form="unqualified" type="string" />
+                  </extension>
+                </simpleContent>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
     </all>
-  </complexType>
-
-  <complexType name="localFields">
-    <annotation>
-      <documentation>Additional fields of a Page Assembly Instruction which are needed by the CDE yet do not fall into the pageMetadata.</documentation>
-    </annotation>
-    <sequence>
-      <element name="LocalField" type="cde:localField" minOccurs="0" maxOccurs="unbounded"></element>
-    </sequence>
-  </complexType>
-
-  <complexType name="localField">
-    <annotation>
-      <documentation>A local file of a Page Assembly Instruction.</documentation>
-    </annotation>
-    <simpleContent>
-      <extension base="string">
-        <attribute name="fieldName" type="string"
-          use="required">
-        </attribute>
-      </extension>
-    </simpleContent>
   </complexType>
 
   <complexType name="sectionDetail">
@@ -1235,6 +1417,31 @@
       <element name="ParentPath" type="cde:path" minOccurs="0" maxOccurs="1">
         <annotation>
           <documentation>Defines the ParentPath for this SectionDetail.  It should only be empty or not exist if this is the root SectionDetail.</documentation>
+        </annotation>
+      </element>
+      <element name="TemplateTheme" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines the theme for this SectionDetail and all of its children, unless a child overrides it.  An empty value will be treated as using the default theme.</documentation>
+        </annotation>
+      </element>
+      <element name="LandingPageURL" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines URL for the content item's landing page.</documentation>
+        </annotation>
+      </element>
+      <element name="NavTitle" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the title for the content item's landing page.</documentation>
+        </annotation>
+      </element>
+      <element name="FullPath" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the Full Path for a content item.</documentation>
+        </annotation>
+      </element>
+      <element name="WebAnalyticsInfo" type="cde:webAnalyticsInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines custom web analytics data set for the folder.</documentation>
         </annotation>
       </element>
     </all>
@@ -1344,6 +1551,22 @@
     </annotation>
   </element>
 
+  <complexType name="templateThemeInfo">
+    <annotation>
+      <documentation>Represents a CDE Page Template theme.  Contains all of the templates for the display versions of the CDE for that theme.</documentation>
+    </annotation>
+    <sequence>
+      <element name="PageTemplateCollections">
+        <complexType>
+          <sequence>
+            <element name="PageTemplateCollection" type="cde:pageTemplateCollection" minOccurs="0" maxOccurs="unbounded"></element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+    <attribute name="Name" type="string"></attribute>
+  </complexType>
+
   <complexType name="pageTemplateCollection">
     <annotation>
       <documentation>Represents a CDE Page Template.  Contains all of the templates for the display versions of the CDE.</documentation>
@@ -1377,12 +1600,38 @@
           <documentation>The collection of CDE Stylesheets for this PageTemplateInfo.</documentation>
         </annotation>
       </element>
+      <element name="Javascripts" type="cde:javascriptCollection"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The collection of CDE Javascripts for this PageTemplateInfo.</documentation>
+        </annotation>
+      </element>
     </all>
     <attribute name="DisplayVersion" type="cde:displayVersion">
       <annotation>
         <documentation>The display version this PageTemplateInfo is for.</documentation>
       </annotation>
     </attribute>
+  </complexType>
+
+  <complexType name="pageResourcesInfo">
+    <annotation>
+      <documentation>Represents Javascript and Style Sheets attatched at a page level.</documentation>
+    </annotation>
+    <all>
+      <element name="StyleSheets" type="cde:styleSheetCollection"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The collection of CDE Stylesheets for this PageTemplateInfo.</documentation>
+        </annotation>
+      </element>
+      <element name="Javascripts" type="cde:javascriptCollection"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>The collection of CDE Javascripts for this PageTemplateInfo.</documentation>
+        </annotation>
+      </element>
+    </all>
   </complexType>
 
   <complexType name="styleSheetInfo">
@@ -1396,6 +1645,29 @@
         </annotation>
       </element>
     </sequence>
+    <attribute name="Beginning" type="string"></attribute>
+    <attribute name="End" type="string"></attribute>
+    <attribute name="Media" type="string">
+      <annotation>
+        <documentation>The media to which the style should be applied.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <complexType name="JavascriptInfo">
+    <annotation>
+      <documentation>Represents a Stylesheet for a page template for use by the CDE.</documentation>
+    </annotation>
+    <sequence>
+      <element name="JavascriptPath" type="cde:path">
+        <annotation>
+          <documentation>The path to the stylesheet relative to the CDE application root.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+    <attribute name="Beginning" type="string"></attribute>
+    <attribute name="End" type="string"></attribute>
+    <attribute name="Type" type="string"></attribute>
   </complexType>
 
   <complexType name="styleSheetCollection">
@@ -1404,6 +1676,18 @@
     </annotation>
     <sequence>
       <element name="StyleSheetInfo" type="cde:styleSheetInfo" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation>An instance of a styleSheetInfo type for this Collection.</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+  <complexType name="javascriptCollection">
+    <annotation>
+      <documentation>Represents a collection of StyleSheetInfo elements.</documentation>
+    </annotation>
+    <sequence>
+      <element name="JavascriptInfo" type="cde:JavascriptInfo" minOccurs="0" maxOccurs="unbounded">
         <annotation>
           <documentation>An instance of a styleSheetInfo type for this Collection.</documentation>
         </annotation>
@@ -1425,7 +1709,14 @@
     <annotation>
       <documentation>Represents all of the CDE Page Templates registered in the system. </documentation>
     </annotation>
-    <sequence>
+    <choice>
+      <element name="TemplateThemeCollection">
+        <complexType>
+          <sequence>
+            <element name="TemplateThemeInfo" type="cde:templateThemeInfo" minOccurs="0" maxOccurs="unbounded"></element>
+          </sequence>
+        </complexType>
+      </element>
       <element name="PageTemplateCollections">
         <complexType>
           <sequence>
@@ -1433,7 +1724,7 @@
           </sequence>
         </complexType>
       </element>
-    </sequence>
+    </choice>
   </complexType>
 
   <element name="PageTemplateConfiguration" type="cde:pageTemplateConfiguration"></element>
@@ -1474,6 +1765,67 @@
           </documentation>
         </annotation>
       </element>
+      <element name="IsMobileShareAvailable" type="boolean"
+        minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Defines if this Page Assembly Instruction can be
+            shared on a mobile browser.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="IsPublicArchive" type="boolean"
+        minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Defines if this Page Assembly Instruction is in
+            the Public Archive.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="IsPublicUse" type="boolean"
+        minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Defines if this Page Assembly Instruction should
+            display the Public Use notice.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="IsFontResizeAvailable" type="boolean"
+      minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Defines if this Page Assembly Instruction can allow
+            font resizing option.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="SyndicationURL" type="string"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Links to another page to view syndication details.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="OrderCopyURL" type="string"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Links to external page for downloading a free copy.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="AltLanguage" type="string"
+        minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Language alternate Version of the page .
+          </documentation>
+        </annotation>
+      </element>
+
       <element name="Files" maxOccurs="1" minOccurs="1">
         <annotation>
           <documentation>A collection of zero or more files which are alternate content versions of this Page Assembly Instruction.  The MimeTypes of this collection should be unique. E.G. Only 1 PDF, Only 1 PPT.</documentation>
@@ -1746,6 +2098,81 @@
     </sequence>
   </complexType>
 
+  <element name="BestBetsCategory" type="cde:bestBetsCategory">
+    <annotation>
+      <documentation>.</documentation>
+    </annotation>
+  </element>
+  <complexType name="bestBetsCategory">
+    <annotation>
+      <documentation>Defines the elements of the BestBets search result and elements needed by endeca.</documentation>
+    </annotation>
+    <all>
+      <element name="CategoryId" type="string" maxOccurs="1" minOccurs="1">
+        <annotation>
+          <documentation>
+            The id which uniquely identifies the BestBets category.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="CategoryName" type="string" maxOccurs="1" minOccurs="1">
+        <annotation>
+          <documentation>Name of the category.</documentation>
+        </annotation>
+      </element>
+      <element name="CategoryWeight" type="int" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation></documentation>
+        </annotation>
+      </element>
+      <element name="Language" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation></documentation>
+        </annotation>
+      </element>
+      <element name="IsExactMatch" type="boolean" maxOccurs="1" minOccurs="1">
+        <annotation>
+          <documentation></documentation>
+        </annotation>
+      </element>
+      <element name="CategoryDisplay" type="string" maxOccurs="1" minOccurs="1">
+        <annotation>
+          <documentation>Contains the HTML that will be displayed for this BestBets category.</documentation>
+        </annotation>
+      </element>
+      <element name="IncludeSynonyms" maxOccurs="1" minOccurs="1">
+        <complexType>
+          <sequence>
+            <element name="Synonym" maxOccurs="unbounded" minOccurs="1">
+              <complexType>
+                <attribute name="IsExactMatch" type="boolean">
+                  <annotation>
+                    <documentation></documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ExcludeSynonyms">
+        <complexType>
+          <sequence>
+            <element name="Synonym" maxOccurs="unbounded" minOccurs="1">
+              <complexType>
+                <attribute name="IsExactMatch" type="boolean">
+                  <annotation>
+                    <documentation></documentation>
+                  </annotation>
+                </attribute>
+              </complexType>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+    </all>
+  </complexType>
+
   <complexType name="socialMetadata">
     <annotation>
       <documentation>
@@ -1850,5 +2277,142 @@
       <pattern value=".+" />
     </restriction>
   </simpleType>
-  
+
+  <complexType name="translations">
+    <annotation>
+      <documentation>The data for the content item's translation(s).</documentation>
+    </annotation>
+    <all>
+      <element name="TranslationData" minOccurs="0" maxOccurs="1">
+        <complexType>
+          <sequence>
+            <element name="TranslationMetaTag" type="cde:translationMetaTag" minOccurs="0" maxOccurs="unbounded" />
+          </sequence>
+        </complexType>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="translationMetaTag">
+    <annotation>
+      <documentation>
+        Defines a single meta tag to retrieve translation information.
+      </documentation>
+    </annotation>
+    <attribute name="Locale" type="string" use="required">
+      <annotation>
+        <documentation>Translation locale.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Id" type="string" use="required">
+      <annotation>
+        <documentation>Content ID of translation.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Url" type="string" use="required">
+      <annotation>
+        <documentation>Translation URL.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <complexType name="webAnalyticsInfo">
+    <annotation>
+      <documentation>Defines custom web analytics values set on folders or content types.</documentation>
+    </annotation>
+    <all>
+      <element name="WAChannels" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Comma-separated list of analytics channel namess.</documentation>
+        </annotation>
+      </element>
+      <element name="WAReportSuites" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Comma-separated list of analytics report suites.</documentation>
+        </annotation>
+      </element>
+      <element name="WAContentGroups" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>String of content buckets.</documentation>
+        </annotation>
+      </element>
+      <element name="WAEvents" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A collection of zero or more custom web analytics events.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more custom web analytics events.</documentation>
+          </annotation>
+          <sequence>
+            <element name="WAEvent" type="cde:waCustomVariableOrEvent" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>A single analytics event in the collection.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="WAProps" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A collection of zero or more custom web analytics props.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more custom web analytics props.</documentation>
+          </annotation>
+          <sequence>
+            <element name="WAProp" type="cde:waCustomVariableOrEvent" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>A single analytics prop.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="WAEvars" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A collection of zero or more custom web analytics evars.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more custom web analytics evars.</documentation>
+          </annotation>
+          <sequence>
+            <element name="WAEvar" type="cde:waCustomVariableOrEvent" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>A single analytics custom evar.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RemoveParents" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Flag to exclude parent Event, Prop, and eVar values on this level.</documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="waCustomVariableOrEvent">
+    <annotation>
+      <documentation>Defines a single custom variable (Event, Prop, or eVar) for custom web analytics.</documentation>
+    </annotation>
+    <attribute name="Key" type="string" use="required">
+      <annotation>
+        <documentation>Event, Prop, or eVar ID.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Value" type="string">
+      <annotation>
+        <documentation>String value of Event, Prop, or eVar.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Description" type="string">
+      <annotation>
+        <documentation>String description of Event, Prop, or eVar.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
 </schema>
