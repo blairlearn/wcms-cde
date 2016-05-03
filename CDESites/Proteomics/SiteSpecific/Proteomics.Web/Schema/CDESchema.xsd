@@ -685,6 +685,11 @@
           <documentation>Defines the data for the content item's translation(s).</documentation>
         </annotation>
       </element>
+      <element name="WebAnalyticsInfo" type="cde:webAnalyticsInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines custom web analytics data set for the content item.</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1043,6 +1048,11 @@
           <documentation>Defines the data for the content item's translation(s).</documentation>
         </annotation>
       </element>
+      <element name="WebAnalyticsInfo" type="cde:webAnalyticsInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines custom web analytics data set for the content item.</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1247,6 +1257,33 @@
           </sequence>
         </complexType>
       </element>
+      <element name="Snippets" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            An optional collection of all of the snippets
+            associated with this sub-layout snippet.
+          </documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>
+              Defines a collection of one or more Snippets
+              associated with this sub-layout snippet.
+            </documentation>
+          </annotation>
+          <sequence>
+            <element name="SnippetInfo"
+              type="cde:snippetInfo" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>
+                  A Snippet in the collection of snippets
+                  associated with this sub-layout snippet.
+                </documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
     </all>
   </complexType>
 
@@ -1382,6 +1419,31 @@
           <documentation>Defines the ParentPath for this SectionDetail.  It should only be empty or not exist if this is the root SectionDetail.</documentation>
         </annotation>
       </element>
+      <element name="TemplateTheme" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines the theme for this SectionDetail and all of its children, unless a child overrides it.  An empty value will be treated as using the default theme.</documentation>
+        </annotation>
+      </element>
+      <element name="LandingPageURL" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines URL for the content item's landing page.</documentation>
+        </annotation>
+      </element>
+      <element name="NavTitle" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the title for the content item's landing page.</documentation>
+        </annotation>
+      </element>
+      <element name="FullPath" type="string" maxOccurs="1" minOccurs="0">
+        <annotation>
+          <documentation>Defines the Full Path for a content item.</documentation>
+        </annotation>
+      </element>
+      <element name="WebAnalyticsInfo" type="cde:webAnalyticsInfo" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Defines custom web analytics data set for the folder.</documentation>
+        </annotation>
+      </element>
     </all>
   </complexType>
 
@@ -1488,6 +1550,22 @@
       <documentation>Represents the root tree node published from Percussion.</documentation>
     </annotation>
   </element>
+
+  <complexType name="templateThemeInfo">
+    <annotation>
+      <documentation>Represents a CDE Page Template theme.  Contains all of the templates for the display versions of the CDE for that theme.</documentation>
+    </annotation>
+    <sequence>
+      <element name="PageTemplateCollections">
+        <complexType>
+          <sequence>
+            <element name="PageTemplateCollection" type="cde:pageTemplateCollection" minOccurs="0" maxOccurs="unbounded"></element>
+          </sequence>
+        </complexType>
+      </element>
+    </sequence>
+    <attribute name="Name" type="string"></attribute>
+  </complexType>
 
   <complexType name="pageTemplateCollection">
     <annotation>
@@ -1631,7 +1709,14 @@
     <annotation>
       <documentation>Represents all of the CDE Page Templates registered in the system. </documentation>
     </annotation>
-    <sequence>
+    <choice>
+      <element name="TemplateThemeCollection">
+        <complexType>
+          <sequence>
+            <element name="TemplateThemeInfo" type="cde:templateThemeInfo" minOccurs="0" maxOccurs="unbounded"></element>
+          </sequence>
+        </complexType>
+      </element>
       <element name="PageTemplateCollections">
         <complexType>
           <sequence>
@@ -1639,7 +1724,7 @@
           </sequence>
         </complexType>
       </element>
-    </sequence>
+    </choice>
   </complexType>
 
   <element name="PageTemplateConfiguration" type="cde:pageTemplateConfiguration"></element>
@@ -1698,24 +1783,24 @@
           </documentation>
         </annotation>
       </element>
-	  <element name="IsPublicUse" type="boolean"
-	    minOccurs="1" maxOccurs="1">
-		<annotation>
-		  <documentation>
-			Defines if this Page Assembly Instruction should 
-			display the Public Use notice.
-		  </documentation>
-		</annotation>
-	  </element>
-	  <element name="IsFontResizeAvailable" type="boolean" 
-		minOccurs="0" maxOccurs="1">
-		<annotation>
-		  <documentation>
-			Defines if this Page Assembly Instruction can allow 
-			font resizing option.
-		  </documentation>
-		</annotation>
-	  </element>
+      <element name="IsPublicUse" type="boolean"
+        minOccurs="1" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Defines if this Page Assembly Instruction should
+            display the Public Use notice.
+          </documentation>
+        </annotation>
+      </element>
+      <element name="IsFontResizeAvailable" type="boolean"
+      minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Defines if this Page Assembly Instruction can allow
+            font resizing option.
+          </documentation>
+        </annotation>
+      </element>
       <element name="SyndicationURL" type="string"
         minOccurs="0" maxOccurs="1">
         <annotation>
@@ -2198,7 +2283,7 @@
       <documentation>The data for the content item's translation(s).</documentation>
     </annotation>
     <all>
-	  <element name="TranslationData" minOccurs="0" maxOccurs="1">
+      <element name="TranslationData" minOccurs="0" maxOccurs="1">
         <complexType>
           <sequence>
             <element name="TranslationMetaTag" type="cde:translationMetaTag" minOccurs="0" maxOccurs="unbounded" />
@@ -2229,6 +2314,105 @@
         <documentation>Translation URL.</documentation>
       </annotation>
     </attribute>
-  </complexType>  
-  
+  </complexType>
+
+  <complexType name="webAnalyticsInfo">
+    <annotation>
+      <documentation>Defines custom web analytics values set on folders or content types.</documentation>
+    </annotation>
+    <all>
+      <element name="WAChannels" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Comma-separated list of analytics channel namess.</documentation>
+        </annotation>
+      </element>
+      <element name="WAReportSuites" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Comma-separated list of analytics report suites.</documentation>
+        </annotation>
+      </element>
+      <element name="WAContentGroups" type="string" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>String of content buckets.</documentation>
+        </annotation>
+      </element>
+      <element name="WAEvents" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A collection of zero or more custom web analytics events.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more custom web analytics events.</documentation>
+          </annotation>
+          <sequence>
+            <element name="WAEvent" type="cde:waCustomVariableOrEvent" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>A single analytics event in the collection.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="WAProps" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A collection of zero or more custom web analytics props.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more custom web analytics props.</documentation>
+          </annotation>
+          <sequence>
+            <element name="WAProp" type="cde:waCustomVariableOrEvent" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>A single analytics prop.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="WAEvars" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>A collection of zero or more custom web analytics evars.</documentation>
+        </annotation>
+        <complexType>
+          <annotation>
+            <documentation>A collection of zero or more custom web analytics evars.</documentation>
+          </annotation>
+          <sequence>
+            <element name="WAEvar" type="cde:waCustomVariableOrEvent" minOccurs="0" maxOccurs="unbounded">
+              <annotation>
+                <documentation>A single analytics custom evar.</documentation>
+              </annotation>
+            </element>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="RemoveParents" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>Flag to exclude parent Event, Prop, and eVar values on this level.</documentation>
+        </annotation>
+      </element>
+    </all>
+  </complexType>
+
+  <complexType name="waCustomVariableOrEvent">
+    <annotation>
+      <documentation>Defines a single custom variable (Event, Prop, or eVar) for custom web analytics.</documentation>
+    </annotation>
+    <attribute name="Key" type="string" use="required">
+      <annotation>
+        <documentation>Event, Prop, or eVar ID.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Value" type="string">
+      <annotation>
+        <documentation>String value of Event, Prop, or eVar.</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="Description" type="string">
+      <annotation>
+        <documentation>String description of Event, Prop, or eVar.</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
 </schema>

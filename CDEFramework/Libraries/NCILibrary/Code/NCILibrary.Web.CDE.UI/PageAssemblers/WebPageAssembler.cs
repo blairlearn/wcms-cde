@@ -503,6 +503,8 @@ namespace NCI.Web.CDE.UI
                 string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
                 if (htmlTag.Equals("body"))
                 {
+                    //Add content type class and data tag to body.  The class can be used for styling
+                    //purposes.
                     string contentType = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
                     contentType = string.IsNullOrEmpty(contentType) ? String.Empty : contentType.ToLower();
 
@@ -512,7 +514,14 @@ namespace NCI.Web.CDE.UI
                         int index = contentType.IndexOf(':');
                         contentType = index > -1 ? contentType.Substring(index + 1) : contentType;
                         htmlCtl.Attributes.Add("class", contentType);
+                        htmlCtl.Attributes.Add("data-cde-contenttype", contentType);
                     }
+
+                    //Add in additional CDE data
+                    htmlCtl.Attributes.Add("data-cde-pagetemplate", PageAssemblyInstruction.PageTemplateName);
+                    htmlCtl.Attributes.Add("data-cde-templatetheme", PageAssemblyInstruction.TemplateTheme);
+                    htmlCtl.Attributes.Add("data-cde-contentid", ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemID);
+
                 }
             }
         }

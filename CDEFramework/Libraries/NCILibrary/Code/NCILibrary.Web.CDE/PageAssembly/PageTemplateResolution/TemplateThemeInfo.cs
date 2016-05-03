@@ -7,38 +7,48 @@ using System.Xml.Schema;
 
 namespace NCI.Web.CDE
 {
-
     /// <summary>
-    /// Represents the CDE Page Templates available to the Page Assemblers.
+    /// Defines a Page Template Theme, which allows us to use different physical page templates across the
+    /// web site based on a theme name for a given logical page template.
     /// </summary>
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
-    [System.Xml.Serialization.XmlRootAttribute("PageTemplateConfiguration", Namespace = "http://www.example.org/CDESchema", IsNullable = false)] 
-    public class PageTemplateConfiguration
+    public class TemplateThemeInfo
     {
 
         /// <summary>
-        /// Gets or sets a collection of CDE Page Template Themes.
+        /// Gets or sets the name of this CDE Page Template Theme.
         /// </summary>
-        /// <value>The template theme collections.</value>
-        [XmlArray(ElementName = "TemplateThemeCollection", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        [XmlArrayItem(ElementName="TemplateThemeInfo", Form=XmlSchemaForm.Unqualified)]
-        public TemplateThemeInfo[] TemplateThemeCollection { get; set; }
+        /// <value>The name of the template.</value>
+        [XmlAttribute(AttributeName = "Name", Form = XmlSchemaForm.Unqualified)]
+        public string ThemeName { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of CDE Page Templates.
         /// </summary>
         /// <value>The page template collections.</value>
         [XmlArray(ElementName = "PageTemplateCollections", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        [XmlArrayItem(ElementName = "PageTemplateCollection", Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem(ElementName="PageTemplateCollection", Form=XmlSchemaForm.Unqualified)]
         public PageTemplateCollection[] PageTemplateCollections { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PageTemplateConfiguration"/> class.
         /// </summary>
-        public PageTemplateConfiguration()
+        public TemplateThemeInfo()
         {
-            TemplateThemeCollection = new TemplateThemeInfo[] { };
             PageTemplateCollections = new PageTemplateCollection[] { };
+        }
+
+        /// <summary>
+        /// Gets the PageTemplateInfo for a given template and Display Version.
+        /// </summary>
+        /// <param name="templateName">The template we are looking for </param>
+        /// <param name="version">The Display Version to get the PageTemplateInfo</param>
+        /// <returns>The PageTemplateInfo for the given Display Version if defined, otherwise null
+        /// </returns>
+        public PageTemplateInfo GetPageTemplateInfo(string templateName, DisplayVersions version)
+        {
+            PageTemplateCollection col = PageTemplateCollections.FirstOrDefault(ptc => ptc.TemplateName == templateName);
+            //If we could not find the page template col then return null, otherwise, ask the PTC for the template info
+            return col == null ? null : col.GetPageTemplateInfo(version);
         }
 
         /// <summary>
@@ -53,37 +63,10 @@ namespace NCI.Web.CDE
         /// </exception>
         public override bool Equals(object obj)
         {
-            PageTemplateConfiguration target = obj as PageTemplateConfiguration;
+            TemplateThemeInfo target = obj as TemplateThemeInfo;
 
             if (target == null)
                 return false;
-
-            if (
-                (TemplateThemeCollection == null && target.TemplateThemeCollection != null) ||
-                (TemplateThemeCollection != null && target.TemplateThemeCollection == null)
-                )
-            {
-                return false;
-            }
-
-            if (TemplateThemeCollection.Length != target.TemplateThemeCollection.Length)
-                return false;
-
-            for (int i = 0; i < TemplateThemeCollection.Length; i++)
-            {
-                if (TemplateThemeCollection[i] == null)
-                {
-                    if (target.TemplateThemeCollection[i] != null)
-                        return false;
-
-                    //If we did not return then we know that target.TemplateThemeCollection[i] is also null
-                }
-                else
-                {
-                    if (!TemplateThemeCollection[i].Equals(target.TemplateThemeCollection[i]))
-                        return false;
-                }
-            }
 
             if (
                 (PageTemplateCollections == null && target.PageTemplateCollections != null) ||
@@ -112,7 +95,6 @@ namespace NCI.Web.CDE
                 }
             }
 
-
             return true;
         }
 
@@ -128,6 +110,5 @@ namespace NCI.Web.CDE
             //so use the base implementation
             return base.GetHashCode();
         }
-
     }
 }

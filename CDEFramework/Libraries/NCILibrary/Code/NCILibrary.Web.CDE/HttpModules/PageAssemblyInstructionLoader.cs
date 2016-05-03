@@ -221,7 +221,7 @@ namespace NCI.Web.CDE
             PageTemplateInfo pageTemplateInfo=null;
             try 
             {
-                    pageTemplateInfo = PageTemplateResolver.GetPageTemplateInfo(assemblyInfo.PageTemplateName, displayVersion);
+                pageTemplateInfo = PageTemplateResolver.GetPageTemplateInfo(assemblyInfo.TemplateTheme, assemblyInfo.PageTemplateName, displayVersion);
             }
             catch(Exception ex)
             {
@@ -363,6 +363,7 @@ namespace NCI.Web.CDE
                     return false;
             }
         }
+
         #endregion
     }
 }

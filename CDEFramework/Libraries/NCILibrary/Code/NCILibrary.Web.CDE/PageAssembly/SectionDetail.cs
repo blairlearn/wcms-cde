@@ -48,6 +48,27 @@ namespace NCI.Web.CDE
             }
         }
 
+        private string _templateTheme = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the theme for this section detail object.  Use GetEffectiveTemplateTheme() to determine (based on ancestors) the template theme that should be used.
+        /// </summary>
+        /// <value>The parent path.</value>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string TemplateTheme
+        {
+            get
+            {
+                return _templateTheme;
+            }
+
+            set
+            {
+                _templateTheme = value;
+            }
+        }
+
+
         /// <summary>
         /// Gets the Parent of this SectionDetail
         /// </summary>
@@ -230,6 +251,28 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
+        /// Gets the Template Theme this section details would use by either returning its TemplateTheme, or one of its ancestor themes if not set.
+        /// </summary>
+        /// <returns></returns>
+        public string GetEffectiveTemplateTheme()
+        {
+            string rtnTheme = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(TemplateTheme)) {
+                rtnTheme = TemplateTheme;
+            }
+            else
+            {
+                if (Parent != null)
+                {
+                    rtnTheme = Parent.GetEffectiveTemplateTheme();
+                }
+            }
+
+            return rtnTheme;
+        }
+
+        /// <summary>
         /// Gets a list of snippets not associated with any of the passed in template slots.
         /// If finds one or more SnippetInfo objects destined for a slot not named in the exclusion list, adds it to 
         /// the list of items to return.  If not, goes to the parent to try to find them.
@@ -285,6 +328,9 @@ namespace NCI.Web.CDE
                 return false;
 
             if (ParentPath != target.ParentPath)
+                return false;
+
+            if (TemplateTheme != target.TemplateTheme)
                 return false;
 
             if (!SnippetInfos.Equals(target.SnippetInfos))
