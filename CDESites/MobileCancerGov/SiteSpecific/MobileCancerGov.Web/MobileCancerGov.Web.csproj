@@ -76,9 +76,10 @@
     <Content Include="SnippetTemplates\MobileTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="TermDictionary.svc" />
-    <None Include="Schema\CDESchema.xsd">
+    <Content Include="Schema\CDESchema.xsd">
       <SubType>Designer</SubType>
-    </None>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
