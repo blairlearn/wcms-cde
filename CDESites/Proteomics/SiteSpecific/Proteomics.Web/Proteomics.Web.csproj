@@ -60,6 +60,9 @@
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
+    <None Include="Schema\CDESchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.config">
     </None>
     <None Include="Web.Blue-Live.config">

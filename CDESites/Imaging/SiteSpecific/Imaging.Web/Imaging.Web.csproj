@@ -62,6 +62,9 @@
     <Content Include="JS\Omniture\s_code.js" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
+    <None Include="Schema\CDESchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Blue-Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
