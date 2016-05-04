@@ -5,7 +5,8 @@
     <documentation>
       <!-- 
 		$Rev: 39 $
-		$Author: bryanp $		
+		$Author: bryanp $
+		* Comment for testing*
 		-->
       Defines the schema of the XML elements of the CDE.
       $Date: 2010-07-13 13:40:15 -0400 (Tue, 13 Jul 2010) $
