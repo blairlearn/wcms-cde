@@ -60,7 +60,8 @@
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
-	<None Include="Web.config"></None>
+    <None Include="Web.config">
+    </None>
     <None Include="Web.Blue-Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -159,9 +160,6 @@
     <Content Include="JS\Omniture\wa_wcms_pre.js" />
     <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
     <Content Include="JS\Omniture\s_code.js" />
-    <Content Include="Schema\CDESchema.xsd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Apps\" />

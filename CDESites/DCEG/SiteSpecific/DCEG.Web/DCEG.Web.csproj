@@ -179,9 +179,6 @@
     <Content Include="JS\Omniture\wa_wcms_pre.js" />
     <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
     <Content Include="JS\Omniture\s_code.js" />
-    <Content Include="Schema\CDESchema.xsd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="SnippetTemplates\NewsletterSearch.ascx" />
     <Content Include="SnippetTemplates\NewsletterSearchResults.ascx" />
     <Content Include="SnippetTemplates\wc.ascx" />

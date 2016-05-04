@@ -136,7 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Data\wurfl-latest.zip" />
-    <None Include="Schema\CDESchema.xsd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
