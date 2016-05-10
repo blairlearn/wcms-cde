@@ -87,16 +87,18 @@
                                     runat="server"
                                     onclick='<%# ResultsHyperlinkOnclick(Container) %>'                                   
                                     NavigateUrl='<%# Eval("Url") %>'
-                                    Text='<%# String.Format("{0} ({1})", Eval("Title"), Eval("Description")) %>' />
+                                    Text='<%# Eval("Title") %>' /> 
+                                     <span class="media-type">(<%# Eval("Label") %>)</span>
                                 </div>
+		                        <div class="description">
+		                            <%# Eval("Description") %>
+		                        </div>
                                 <div>
 		                            <cite class="url">
 		                            <%# Eval("Url") %>
 		                            </cite>
 		                        </div>
-		                        <div class="description">
-		                            <%# Eval("Description") %>
-		                        </div>
+
 		                    </li>
                         </Template>		                    
                     </cc1:TemplateItem>                                            

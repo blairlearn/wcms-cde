@@ -112,8 +112,10 @@ namespace NCI.Search
                         string description = SetFieldValue(hit, "metatag.description");
                                           
 
-                        foundTerms.Add(new ESSiteWideSearchResult(title, url, description));
+                        string type = SetFieldValue(hit, "metatag.dcterms.type");
 
+                      
+                        foundTerms.Add(new ESSiteWideSearchResult(title, url, description, type));
 
                     }
 

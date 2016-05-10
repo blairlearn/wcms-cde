@@ -34,7 +34,7 @@ namespace NCI.Search
         public string WrappedUrl { get; set; }
 
         /// <summary>
-        /// Not being used at the moment but may be used in a future release
+        /// Holds the value of metatag.dcterms.type from elastic search
         /// </summary>
         public string ContentType { get; set; }
 
@@ -42,11 +42,14 @@ namespace NCI.Search
         {
         }
 
-        public ESSiteWideSearchResult(string title, string url, string description)
+        public ESSiteWideSearchResult(string title, string url, string description, string type)
         {
+
+
             this.Title = title;
             this.Url = url;
             this.Description = description;
+            this.ContentType = type;
         }
     }
 }
