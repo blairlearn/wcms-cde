@@ -70,6 +70,7 @@ namespace NCI.Services.Dictionary
         /// <returns>A data structure containing both meta data about the request and a string containing a JSON representation
         /// of the particular definition identified by the inputs to the method.
         /// </returns>
+        [Obsolete("Use the five-argument GetTerm method instead.")]
         public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, String version)
         {
             log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language, version));
@@ -137,7 +138,7 @@ namespace NCI.Services.Dictionary
         /// </returns>
         public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language, version));
+            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}, {4}).", termId, dictionary, language, version, audience));
 
             #region Argument Validation
 
@@ -204,6 +205,7 @@ namespace NCI.Services.Dictionary
         /// <returns>A data structure containing both meta data about the request and a string containing a JSON representation
         /// of the particular definition identified by the inputs to the method.
         /// </returns>
+        [Obsolete("Use the five-argument GetTerm method instead.")]
         public TermReturn GetTermForAudience(int termId, Language language, AudienceType audience, String version)
         {
             log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, language, version));
