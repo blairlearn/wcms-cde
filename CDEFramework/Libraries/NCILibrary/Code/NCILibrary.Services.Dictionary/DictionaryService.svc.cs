@@ -87,6 +87,50 @@ namespace NCI.Services.Dictionary
             }
 
             /// <summary>
+            /// Validate inputs for the GetTerm method.  Throws DictionaryValidationException if the inputs
+            /// are not valid.
+            /// </summary>
+            /// <param name="termID">The ID of the term being retrieved.  Must be greater than zero.</param>
+            /// <param name="dictionary">The dictioanry to retrieve from.  Must be Term, Drug, or Genetic.</param>
+            /// <param name="language">The desired result language. Must be English or Spanish.</param>
+            /// <param name="audience">The desired target audience. Must be Patient or HealthProfessional.</param>
+            public static void ValidateGetTerm(int termID, DictionaryType dictionary, Language language, AudienceType audience)
+            {
+                String message = string.Empty;
+                bool failed = false;
+
+                if (termID <= 0)
+                {
+                    failed = true;
+                    message += string.Format("TermID is expected to be a positive number. Found '{0}' instead.", termID);
+                }
+
+                if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
+                {
+                    failed = true;
+                    message += "Dictionary must be 'Term', 'drug' or 'genetic'.\n";
+                }
+
+                if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
+                {
+                    failed = true;
+                    message += String.Format("Unsupported languge '{0}'.", language);
+                }
+
+                if (!Enum.IsDefined(typeof(AudienceType), audience) || audience == AudienceType.Unknown)
+                {
+                    failed = true;
+                    message += string.Format("Unsupported audience '{0}'.", audience);
+                }
+
+                if (failed)
+                {
+                    log.debug(message);
+                    throw new DictionaryValidationException(message);
+                }
+            }
+
+            /// <summary>
             /// Validate inputs for the ValidateGetTermForAudience method.  Throws DictionaryValidationException
             /// if the inputs are not valid.
             /// </summary>
@@ -247,21 +291,65 @@ namespace NCI.Services.Dictionary
         ///         es - Spanish
         /// </param>
         /// <returns></returns>
-        [WebGet(ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "v1/GetTerm?termID={termId}&language={language}&dictionary={dictionary}")]
-        [OperationContract]
         public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language)
         {
             log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language));
+
+            AudienceType audience = AudienceType.Patient;
+
+            // determine what audience to use based on the dictionary
+            switch (dictionary)
+            {
+                case DictionaryType.NotSet:
+                case DictionaryType.genetic:
+                    audience = AudienceType.HealthProfessional;
+                    break;
+                default:
+                    audience = AudienceType.Patient;
+                    break;
+            }
+
+            // route to GetTerm with all arguments
+            return GetTerm(termId, dictionary, language, audience);
+        }
+
+        /// <summary>
+        /// Retrieves a single dictionary Term based on its specific Term ID.
+        /// </summary>
+        /// <param name="termId">The ID of the Term to be retrieved</param>
+        /// <param name="dictionary">The dictionary to retreive the Term from.
+        ///     Valid values are
+        ///        term - Dictionary of Cancer Terms
+        ///        drug - Drug Dictionary
+        ///        genetic - Dictionary of Genetics Terms
+        ///        NotSet - non-dictionary-specific definitions, often related to Health Professionals
+        /// </param>
+        /// <param name="language">The Term's desired language.
+        ///     Supported values are:
+        ///         en - English
+        ///         es - Spanish
+        /// </param>
+        /// <param name="audience">The Term's desired target audience.
+        ///     Supported values are:
+        ///         Patient - terms for cancer patients
+        ///         HealthProfessional - terms for health professionals
+        /// </param>
+        /// <returns></returns>
+        [WebGet(ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "v1/GetTerm?termID={termId}&language={language}&dictionary={dictionary}&audience={audience}")]
+        [OperationContract]
+        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience)
+        {
+            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}, {3}).", termId, dictionary, language, audience));
 
             TermReturn ret = null;
 
             try
             {
-                InputValidator.ValidateGetTerm(termId, dictionary, language);
+                InputValidator.ValidateGetTerm(termId, dictionary, language, audience);
 
                 DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.GetTerm(termId, dictionary, language, API_VERSION);
+                ret = mgr.GetTerm(termId, dictionary, language, audience, API_VERSION);
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.
@@ -281,16 +369,6 @@ namespace NCI.Services.Dictionary
             log.debug("Successfully retrieved a term.");
 
             return ret;
-        }
-
-        /// <summary>
-        /// Retrieves a single dictionary Term based on its specific Term ID.
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Use GetTermForAudience instead.")]
-        public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience)
-        {
-            return GetTermForAudience(termId, language, audience);
         }
 
         /// <summary>
@@ -315,33 +393,19 @@ namespace NCI.Services.Dictionary
         {
             log.debug(string.Format("Enter GetTermForAudience( {0}, {1}, {2}).", termId, language, audience));
 
-            TermReturn ret = null;
+            DictionaryType dictionary = DictionaryType.term;
 
-            try
+            switch (audience)
             {
-                InputValidator.ValidateGetTermForAudience(termId, language, audience);
-
-                DictionaryManager mgr = new DictionaryManager();
-                ret = mgr.GetTermForAudience(termId, language, audience, API_VERSION);
-            }
-            // If there was a problem with the inputs for this request, fail with
-            // an HTTP status message and an explanation.
-            catch (DictionaryValidationException ex)
-            {
-                WebOperationContext ctx = WebOperationContext.Current;
-                ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
-                ret = new TermReturn()
-                {
-                    Meta = new TermReturnMeta()
-                    {
-                        Messages = new string[] { ex.Message }
-                    }
-                };
+                case AudienceType.HealthProfessional:
+                    dictionary = DictionaryType.NotSet;
+                    break;
+                default:
+                    dictionary = DictionaryType.term;
+                    break;
             }
 
-            log.debug("Successfully retrieved a term.");
-
-            return ret;
+            return GetTerm(termId, dictionary, language, audience);
         }
 
         /// <summary>
