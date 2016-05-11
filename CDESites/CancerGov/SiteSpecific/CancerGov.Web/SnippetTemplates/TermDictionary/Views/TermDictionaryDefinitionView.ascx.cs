@@ -106,7 +106,11 @@ namespace CancerGov.Web.SnippetTemplates
                 });
 
                 this.Page.Title = PageInstruction.GetField("short_title");
-                
+
+                PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                {
+                    data.Value = "Definición de " + termName;
+                });
             }
             else
             {
@@ -115,13 +119,11 @@ namespace CancerGov.Web.SnippetTemplates
                     data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                 });
 
-                
+                PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                {
+                    data.Value = "Definition of " + termName;
+                });
             }
-
-            PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-            {
-                data.Value = "Definition of " + termName;
-            });
 
 
             PageInstruction.AddFieldFilter("meta_keywords", (name, data) =>
