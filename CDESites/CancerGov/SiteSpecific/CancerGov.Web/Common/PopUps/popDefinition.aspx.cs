@@ -138,7 +138,7 @@ namespace Www.Common.PopUps
                         if (pronunciationLink != null && termDetails.Pronunciation.HasAudio)
                         {
                             pronunciationLink.Visible = true;
-                            pronunciationLink.HRef = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] + "/" + termDetails.Pronunciation.Audio;
+                            pronunciationLink.HRef = termDetails.Pronunciation.Audio;
                         }
                         else
                             pronunciationLink.Visible = false;
