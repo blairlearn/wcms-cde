@@ -98,7 +98,6 @@ function doWebAnalyticsStuff() {
         <div class="row collapse-edges">
             <div class="large-8 columns large-offset-4">
                 <button type="submit" name="searchBtn" class="submit button">Search</button>
-                <button type="reset" name="clearBtn" class="reset button">Clear</button>
             </div>
         </div>
     </form>
