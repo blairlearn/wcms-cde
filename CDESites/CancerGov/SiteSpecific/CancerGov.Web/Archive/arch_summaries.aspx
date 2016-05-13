@@ -7,7 +7,6 @@
 		<meta content="C#" name="CODE_LANGUAGE">
 		<meta content="JavaScript" name="vs_defaultClientScript">
 		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
-	    <script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>
 	</HEAD>
 	<body>
 		<h1>Summaries</h1>

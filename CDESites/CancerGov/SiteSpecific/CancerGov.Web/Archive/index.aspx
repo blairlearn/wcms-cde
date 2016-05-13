@@ -7,7 +7,6 @@
 		<meta name="CODE_LANGUAGE" Content="C#">
 		<meta name="vs_defaultClientScript" content="JavaScript">
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
-	    <script src="/Scripts/JSLoader/JSLoader.js" type="text/javascript"></script>
 	</HEAD>
 	<body>
 		<form id="Form1" method="post" runat="server">
