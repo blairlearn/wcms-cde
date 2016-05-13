@@ -66,9 +66,6 @@
     <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
     <Content Include="Global.asax" />
     <Content Include="JS\imgEvents.js" />
-    <Content Include="JS\Omniture\wa_wcms_pre.js" />
-    <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
-    <Content Include="JS\Omniture\s_code.js" />
     <Content Include="JS\popEvents.js" />
     <Content Include="PageTemplates\DefaultTCGAPageTemplate.aspx" />
     <Content Include="PageTemplates\NoRightNavTCGAPageTemplate.aspx" />
