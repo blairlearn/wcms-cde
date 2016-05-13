@@ -1,0 +1,145 @@
+﻿
+#if($CDEContext.Language == "es")##
+	#set($videoContent = "Video")##
+	#set($carouselContent = "Lista de reproducci&oacute;n de videos")##
+	#set($infographicContent = "Infograf&iacute;a")##
+	#set($postedString = "Publicaci&oacute;n")##
+	#set($updatedString = "Actualizaci&oacute;n")##
+	#set($reviewedString = "Revisi&oacute;n")##
+	#set($newsString = "Todas las noticias del NCI")##
+	#set($continueReading = "Siga leyendo")##
+	#set($by = "por")##
+#else##
+	#set($videoContent = "Video")##
+	#set($carouselContent = "Video Playlist")##
+	#set($infographicContent = "Infographic")##
+	#set($postedString = "Posted")##
+	#set($updatedString = "Updated")##
+	#set($reviewedString = "Reviewed")##
+	#set($newsString = "All NCI news")##
+	#set($continueReading = "Continue Reading")##
+	#set($by = "by")##
+#end##
+
+<h3 class="dynamic-list-title">$SearchResults.SearchTitle</h3>##
+<ul class="list no-bullets">##
+	#foreach($resultItem in $SearchResults.Results)
+		#if($resultItem.ContentType == "rx:nciFile")##
+			##
+			## Set file size
+			##
+			#if($resultItem.FileSize < 1000)##
+				#set($fileSize = "($resultItem.FileSize B)")##
+			#else##
+				#set($kbFileSize = ($resultItem.FileSize / 1000))##
+				#if($kbFileSize < 1000)##
+					#set($fileSize = "($kbFileSize KB)")##
+				#else##
+					#set($mbFileSize = ($kbFileSize / 1000))##
+					#set($fileSize = "($mbFileSize MB)")##
+				#end##
+			#end##
+			##
+			## Set mime type
+			##							
+			#set($printOutExt="")##
+			#set($fileType = $resultItem.MimeType)##
+			#if($fileType == "application/vnd.ms-excel" || $fileType == "application/excel" || $fileType == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")##
+				#set($fileClass = "list-excel")##
+				#set($fileType_safe = "excel")##
+			#elseif($fileType == "application/mspowerpoint" || $fileType== "application/vnd.ms-powerpoint" || $fileType == "application/vnd.openxmlformats-officedocument.presentationml.presentation")##
+				#set($fileClass = "list-powerpoint")##
+				#set($fileType_safe = "ppt")##
+			#elseif($fileType == "application/msword" || $fileType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document")##
+				#set($fileClass = "list-word")##
+				#set($fileType_safe = "word")##
+			#elseif($fileType == "application/pdf")##
+				#set($fileClass = "list-pdf")##
+				#set($fileType_safe = "pdf")##
+			#elseif($fileType == "application/octet-stream" || $fileType == "application/x-compressed" || $fileType == "application/x-msdownload")##
+				#set($fileClass = "list-execute")##
+				#set($fileType_safe = "exe")##
+			#elseif($fileType == "application/epub+zip" || $fileType == "application/x-mobipocket-ebook")##
+				#set($fileClass = "list-ebook")##
+				#set($fileType_safe = "ebook")##
+			#elseif($fileType == "text/plain")##
+				#set($fileClass = "list-txt")##	
+				#set($fileType_safe = "txt")##
+			#else##
+				#set($fileClass = "list-item-link link")##
+				#set($fileType_safe = "unknown")##
+				#set($printOutExt = $fileType)##
+			#end##
+			<li class="file-list-item file $fileType_safe list-item $fileClass">##
+		#elseif($resultItem.ContentType == "rx:cgvInfographic")##
+			<li class="infographic-list-item infographic list-item">##
+		#elseif($resultItem.ContentType == "rx:gloVideo")##
+			<li class="video-list-item video list-item">##
+		#elseif($resultItem.ContentType == "rx:gloVideoCarousel")##
+			<li class="carousel-list-item carousel list-item">##
+		#else##
+			<li class="general-list-item list-item">##
+		#end##
+
+		##
+		## Display image
+		##
+		<div class="list-item-image image container">##
+			#set($alt = "image")##
+			#if($resultItem.Alt)## 
+				#set($alt = "$resultItem.Alt")##
+			#elseif($resultItem.AltText)## 
+				#set($alt = "$resultItem.AltText")##
+			#else##
+				#set($alt = "image")##
+			#end##
+			#if($resultItem.ThumbnailURL)## 
+				<img src="$resultItem.ThumbnailURL" class="item-image image" alt="$alt" align="left">
+			#else##
+				&nbsp;##
+			#end##
+		</div>##
+		
+		<div class="title container">##
+			##
+			## Display title
+			##
+			<span class="title">##
+				<a href="$resultItem.Href" onclick="NCIAnalytics.SearchResults(this,$resultItem.RecNumber);" class="$fileClass title">##						
+				$resultItem.LongTitle##
+				#if($resultItem.ContentType == "rx:gloVideo")##
+					</a> ($videoContent)##
+				#elseif($resultItem.ContentType == "rx:gloVideoCarousel")##
+					</a> ($carouselContent)##
+				#elseif($resultItem.ContentType == "rx:cgvInfographic")##
+					</a> ($infographicContent)##
+				#elseif($resultItem.ContentType == "rx:nciFile")##
+					<span class="filesize">$fileSize $printOutExt</span><span class="filetype $fileType_safe"><span class="hidden">$fileType_safe file</span></span></a>##
+				#else##
+					</a>##
+				#end##
+			</span>##
+			<p class="date dynamic-date">##
+				##
+				## Display dates
+				##
+				#if($CDEContext.Language == "es")##
+					$resultItem.DateForListsEs##
+				#else##
+					$resultItem.DateForLists##
+				#end##
+			</p>##
+			<p class="description dynamic-description">
+				##
+				## Display description
+				##
+				#if($resultItem.LongDescription)##
+					$resultItem.LongDescription ##
+				#else##
+					&nbsp;##
+				#end##
+			</p>##
+		</div>## Close description and title div class
+	</li>## End list item
+    #end## End foreach search results loop
+</ul>## End list

@@ -160,6 +160,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     dynamicSearch.KeyWord = keyWord;
                     dynamicSearch.SiteName = siteName;
                     dynamicSearch.DisqusShortname = this.SearchList.DisqusShortname;
+                    dynamicSearch.SearchTitle = this.SearchList.SearchTitle;
 
                     // check if the site is in production
                     bool isProd = PageAssemblyContext.Current.IsProd;
@@ -217,7 +218,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         validCount = this.SearchList.MaxResults;
 
                     dynamicSearch.ResultCount = validCount;
-                    LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResults(this.SearchList.ResultsTemplate, dynamicSearch));
+                    LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(this.SearchList.ResultsTemplate, dynamicSearch));
                     Controls.Add(ltl);
                     SetupPager(this.SearchList.RecordsPerPage, validCount);
                 }
