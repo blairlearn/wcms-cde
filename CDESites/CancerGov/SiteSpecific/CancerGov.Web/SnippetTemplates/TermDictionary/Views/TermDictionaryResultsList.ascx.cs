@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
-using CancerGov.CDR.TermDictionary;
 using NCI.Util;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
@@ -180,7 +177,7 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         private void GetQueryParams()
         {
-            Expand = Strings.Clean(Request.Params["expand"]);
+            Expand = Strings.Clean(Request.Params["expand"], "A");
             CdrID = Strings.Clean(Request.Params["cdrid"]);
             SearchStr = Strings.Clean(Request.Params["search"]);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
