@@ -7,10 +7,6 @@
                 The NCI Dictionary of Cancer Terms features <b><%= TotalCount %></b> terms related 
                 to cancer and medicine.
             </p>
-            <p>
-                Browse the dictionary by selecting a letter of the alphabet or by entering a cancer-related
-                word or phrase in the search box.
-            </p>
         </asp:PlaceHolder>
         <asp:PlaceHolder ID="pnlIntroSpanish" runat="server" Visible="false" EnableViewState="false">
             <p>
