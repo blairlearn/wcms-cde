@@ -430,7 +430,7 @@
 <div class="dynamic list has-images">
 	#if($SearchResults.SearchTitle != "")
 		#set($anchortag = $SearchResults.SearchTitle.replace(" ", "+"))##
-		<h3 id="$anchortag" tabindex="0" class="dynamic-list-title">$SearchResults.SearchTitle</h3>
+		<p id="$anchortag" tabindex="0" class="title">$SearchResults.SearchTitle</h3>
 	#end##
 	<ul>
 		#foreach($resultItem in $SearchResults.Results)
