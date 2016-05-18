@@ -13,10 +13,6 @@
                 El diccionario de cáncer del NCI contiene <b><%= TotalCount %></b> términos relacionados 
                 con el cáncer y la medicina.
             </p>
-            <p>
-                Para buscar un término en el diccionario presione en cualquier letra del alfabeto o escriba 
-                una palabra o frase relacionada con el cáncer en la casilla de búsqueda.
-            </p>
         </asp:PlaceHolder>
 
  
