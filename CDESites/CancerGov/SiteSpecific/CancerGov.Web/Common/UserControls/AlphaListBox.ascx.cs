@@ -195,6 +195,18 @@
             //alphaListItems += "	</tr></tbody>\n";
             //alphaListItems += "</table>\n";
             alphaListItems += "</ul>\n";
+
+            //set visibilty for the English versus Spanish text
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+            {
+                phBrowseEnglish.Visible = false;
+                phBrowseSpanish.Visible = true;
+            }
+            else
+            {
+                phBrowseEnglish.Visible = true;
+                phBrowseSpanish.Visible = false;
+            }
         }
 
         protected void Page_Init(object sender, EventArgs e)

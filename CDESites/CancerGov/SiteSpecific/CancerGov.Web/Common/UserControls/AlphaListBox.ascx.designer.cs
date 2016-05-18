@@ -11,5 +11,23 @@ namespace Www.Common.UserControls {
     
     
     public partial class AlphaListBox {
+        
+        /// <summary>
+        /// phBrowseEnglish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phBrowseEnglish;
+        
+        /// <summary>
+        /// phBrowseSpanish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phBrowseSpanish;
     }
 }
