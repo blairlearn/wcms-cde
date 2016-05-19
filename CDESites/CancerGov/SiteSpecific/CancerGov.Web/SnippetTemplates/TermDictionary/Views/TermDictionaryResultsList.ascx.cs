@@ -141,7 +141,7 @@ namespace CancerGov.Web.SnippetTemplates
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = Convert.ToBoolean(SrcGroup);
 
-            if (!string.IsNullOrEmpty(Expand))
+            if (!string.IsNullOrEmpty(Expand) && string.IsNullOrEmpty(SearchStr))
             {
                 if (Expand.Trim() == "#")
                 {
