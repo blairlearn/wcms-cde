@@ -107,7 +107,7 @@ namespace NCI.Services.Dictionary
             #endregion
 
             // In the initial implementation, the audience is implied by the particular dictionary being used.
-            AudienceType audience = GetAudienceFromDictionaryType(dictionary);
+            AudienceType audience = GetDefaultAudienceFromDictionaryType(dictionary);
 
             return GetTerm(termId, dictionary, language, audience, version);
         }
@@ -346,7 +346,7 @@ namespace NCI.Services.Dictionary
 
 
             // In the initial implementation, the audience is implied by the particular dictionary being used.
-            AudienceType audience = GetAudienceFromDictionaryType(dictionary);
+            AudienceType audience = GetDefaultAudienceFromDictionaryType(dictionary);
 
             DictionaryQuery query = new DictionaryQuery();
             SearchResults results = query.Search(searchText, searchType, offset, numResults, dictionary, language, audience, version);
@@ -387,7 +387,7 @@ namespace NCI.Services.Dictionary
             if (numResults < 10) numResults = 10;
 
             // In the initial implementation, the audience is implied by the particular dictionary being used.
-            AudienceType audience = GetAudienceFromDictionaryType(dictionary);
+            AudienceType audience = GetDefaultAudienceFromDictionaryType(dictionary);
 
             DictionaryQuery query = new DictionaryQuery();
             SuggestionResults results = query.SearchSuggest(searchText, searchType, numResults, dictionary, language, audience, version);
@@ -460,7 +460,7 @@ namespace NCI.Services.Dictionary
             if (numResults < 10) numResults = 200;
 
             // In the initial implementation, the audience is implied by the particular dictionary being used.
-            AudienceType audience = GetAudienceFromDictionaryType(dictionary);
+            AudienceType audience = GetDefaultAudienceFromDictionaryType(dictionary);
 
             // Convert delimited list to an array of distinct values.
             String[] includeFilter = Strings.ToListOfTrimmedStrings(includeTypes, LIST_DELIMITER);
@@ -535,7 +535,7 @@ namespace NCI.Services.Dictionary
         /// </summary>
         /// <param name="dictionary"></param>
         /// <returns></returns>
-        private AudienceType GetAudienceFromDictionaryType(DictionaryType dictionary)
+        public AudienceType GetDefaultAudienceFromDictionaryType(DictionaryType dictionary)
         {
             AudienceType audience;
 

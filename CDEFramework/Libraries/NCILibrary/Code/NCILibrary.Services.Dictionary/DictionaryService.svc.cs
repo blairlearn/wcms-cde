@@ -298,16 +298,8 @@ namespace NCI.Services.Dictionary
             AudienceType audience = AudienceType.Patient;
 
             // determine what audience to use based on the dictionary
-            switch (dictionary)
-            {
-                case DictionaryType.NotSet:
-                case DictionaryType.genetic:
-                    audience = AudienceType.HealthProfessional;
-                    break;
-                default:
-                    audience = AudienceType.Patient;
-                    break;
-            }
+            DictionaryManager dictionaryManager = new DictionaryManager();
+            audience = dictionaryManager.GetDefaultAudienceFromDictionaryType(dictionary);
 
             // route to GetTerm with all arguments
             return GetTerm(termId, dictionary, language, audience);
