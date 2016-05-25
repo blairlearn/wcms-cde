@@ -231,7 +231,8 @@ namespace CancerGov.Web.SnippetTemplates
             if (resultCollection != null && resultCollection.Count() > 0)
             {
                 //if there is only 1 record - go directly to definition view
-                if ((resultCollection.ResultsCount == 1) && string.IsNullOrEmpty(Expand))
+                //check if expand equals "A", as this is the default value
+                if ((resultCollection.ResultsCount == 1) && (Expand == "A"))
                 {
                     // Get the first (only) item so we can redirect to it specifically
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
