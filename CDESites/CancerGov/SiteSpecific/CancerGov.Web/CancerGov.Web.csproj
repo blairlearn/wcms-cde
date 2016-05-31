@@ -356,27 +356,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnippetTemplates\BasicCTS\BasicCTSResults.ascx.cs">
-      <DependentUpon>BasicCTSResults.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\BasicCTS\BasicCTSResults.ascx.designer.cs">
-      <DependentUpon>BasicCTSResults.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\BasicCTS\BasicCTSSearch.ascx.cs">
-      <DependentUpon>BasicCTSSearch.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\BasicCTS\BasicCTSSearch.ascx.designer.cs">
-      <DependentUpon>BasicCTSSearch.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\BasicCTS\BasicCTSView.ascx.cs">
-      <DependentUpon>BasicCTSView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\BasicCTS\BasicCTSView.ascx.designer.cs">
-      <DependentUpon>BasicCTSView.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -669,6 +648,10 @@
     <ProjectReference Include="..\..\PresentationClasses\PresentationClasses.csproj">
       <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
       <Name>PresentationClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.BasicCTS\CancerGov.BasicCTS.csproj">
+      <Project>{d3896177-dbf5-45e4-bc4c-9d53e8341015}</Project>
+      <Name>CancerGov.BasicCTS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Search.AutoSuggest\CancerGov.Search.AutoSuggest.csproj">
       <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>

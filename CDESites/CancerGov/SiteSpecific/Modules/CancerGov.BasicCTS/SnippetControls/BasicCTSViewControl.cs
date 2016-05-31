@@ -1,28 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using NCI.Web.CDE.UI;
 
-
-namespace CancerGov.Web.SnippetTemplates.BasicCTS
+namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 {
-    public partial class BasicViewTrial : SnippetControl
+    public class BasicCTSViewControl : SnippetControl
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
+            base.OnLoad(e);
             // Get ID
             string nctid = Request.Params["id"];
-            if (String.IsNullOrWhiteSpace(nctid)) {
+            if (String.IsNullOrWhiteSpace(nctid))
+            {
                 this.Controls.Add(new LiteralControl("NeedID"));
                 return;
             }
-                       
-            if (!Regex.IsMatch(nctid, "^NCT[0-9]+$")) {
+
+            if (!Regex.IsMatch(nctid, "^NCT[0-9]+$"))
+            {
                 this.Controls.Add(new LiteralControl("Invalid ID"));
                 return;
             }
@@ -30,7 +35,9 @@ namespace CancerGov.Web.SnippetTemplates.BasicCTS
 
             // Get Trial by ID
             // Show Trial
-        }
 
+
+
+        }
     }
 }

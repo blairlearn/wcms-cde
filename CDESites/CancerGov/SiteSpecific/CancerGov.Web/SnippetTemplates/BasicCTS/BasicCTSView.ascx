@@ -1,1 +1,1 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BasicCTSView.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.BasicCTS.BasicViewTrial" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.ClinicalTrials.Basic.SnippetControls.BasicCTSViewControl" %>

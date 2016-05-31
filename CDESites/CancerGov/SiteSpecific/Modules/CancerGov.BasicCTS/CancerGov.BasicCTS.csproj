@@ -7,10 +7,11 @@
     <ProjectGuid>{D3896177-DBF5-45E4-BC4C-9D53E8341015}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CancerGov.BasicCTS</RootNamespace>
+    <RootNamespace>CancerGov.ClinicalTrials.Basic</RootNamespace>
     <AssemblyName>CancerGov.BasicCTS</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +33,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,6 +43,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnippetControls\BasicCTSSearchControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\BasicCTSResultsControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\BasicCTSViewControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898ff17c-c94a-4d85-8aad-88764b72cfae}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.ElasticSearch\NCILibrary.Search.ElasticSearch.csproj">
+      <Project>{0af8d250-e5a2-4195-8940-54f806acf5f2}</Project>
+      <Name>NCILibrary.Search.ElasticSearch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
+      <Project>{aafa2f86-d3f3-4224-a13e-ba6209a4ebad}</Project>
+      <Name>NCILibrary.Web.CDE.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
+      <Project>{eee51ba0-18ae-4cf2-876f-7e75b5a2d1ff}</Project>
+      <Name>NCILibrary.Web.CDE</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
