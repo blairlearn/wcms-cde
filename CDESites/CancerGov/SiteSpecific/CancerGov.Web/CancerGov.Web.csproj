@@ -133,6 +133,7 @@
     <Content Include="VelocityTemplates\DynamicListNoDescImgDate.vm" />
     <Content Include="VelocityTemplates\DynamicNewsDescImgDate.vm" />
     <Content Include="VelocityTemplates\DynamicBlogDescImgDate.vm" />
+    <Content Include="VelocityTemplates\BasicCTSView.vm" />
     <None Include="Web.Blue-Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

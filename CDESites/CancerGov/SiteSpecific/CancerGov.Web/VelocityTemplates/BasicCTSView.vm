@@ -1,0 +1,36 @@
+﻿## Lots of script here. :(
+
+<div class="accordion">
+	<div id="pdq-toc-protocol"></div>
+	<h2 id="StudyIdInfo_$SearchResults.CDRID">Basic Trial Information</h2>
+	<table class="table-default">
+		<tr>
+			<th>Phase</th>
+			<th>Type</th>
+			<th>Status</th>
+			<th>Age</th>
+			<th>Trial IDs</th>
+		</tr>
+		<tr>
+			<td>$SearchResults.JoinedPhases</td>
+			<td>$SearchResults.JoinedTrialTypes</td>
+			<td>$SearchResults.CurrentProtocolStatus</td>
+			<td>$SearchResults.Eligibility.AgeText</td>
+			## Need to A) Find out where NCTID goes, and B) if it is OrgStudyID, then it is not duplicated.
+			<td><strong>$SearchResults.OrgStudyID</strong><br>$SearchResults.SecondaryIDList</td>
+		</tr>
+	</table>
+	<h2 id="TrialDescription_$SearchResults.CDRID">Trial Description</h2>
+	<h3 id="Objectives_$SearchResults.CDRID">Summary</h3>
+	[Brief Summary Here]
+	<h3 id="Outline_$SearchResults.CDRID">Further Study Information</h3>
+	[Detailed Description HERE]
+	<h3 id="EntryCriteria_$SearchResults.CDRID">Eligibility Criteria</h3>
+	[ELIGIBILITY CRITERIA HERE]
+	<h2 id="ContactInfo_$SearchResults.CDRID">Trial Contact Information</h2>
+	<h3 id="LeadOrgs_$SearchResults.CDRID" do-not-show="toc">Trial Lead Organizations / Sponsors / Collaborators</h3>
+	[SPONSOR/LEADORG HeRE]
+	<h3 do-not-show="toc">Trial Sites</h3>
+
+	[DISCLAIMER]
+</div>
