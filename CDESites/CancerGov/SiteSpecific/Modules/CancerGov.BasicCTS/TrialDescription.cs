@@ -7,46 +7,16 @@ using System.Threading.Tasks;
 namespace CancerGov.ClinicalTrials.Basic
 {
     /// <summary>
-    /// Represents the _source view for a Trial document.
+    /// Represents the complete information for a Trial.
     /// </summary>
-    public class TrialDescription
+    public class TrialDescription : TrialBase
     {
-        public string CDRID { get; set; }
-        public string OrgStudyID { get; set; }
-        public string[] SecondaryIDs { get; set; }
-        public string NCTID { get; set; }
-        public string BriefTitle { get; set; }
-        public string OfficialTitle { get; set; }
         public string BriefSummary { get; set; }
         public string DetailedDescription { get; set; }
         public string CTEntryCriteria { get; set; }
         public string CTGovDisclaimer { get; set; }
-        public string CurrentProtocolStatus { get; set; }
-        public string[] ProtocolPhases { get; set; }
-        public string[] StudyCategoryNames { get; set; }
-        public TrialEligibility Eligibility { get; set; }
         public TrialLocation[] Locations { get; set; }
 
-        //Helpers that really should be done in velocity instead.
-        public string JoinedPhases { 
-            get { 
-                //Should probably sort...
-                return string.Join(",", ProtocolPhases);  
-            } 
-        }
-        public string JoinedTrialTypes { 
-            get { 
-                return string.Join(",", StudyCategoryNames); 
-            } 
-        }
-
-        public string SecondaryIDList
-        {
-            get
-            {
-                return string.Join(",", SecondaryIDs, NCTID);
-            }
-        }
 
         #region Supporting Classes
 
@@ -72,18 +42,6 @@ namespace CancerGov.ClinicalTrials.Basic
 
         }
 
-        public class TrialEligibility
-        {
-
-            public string HealthyVolunteers { get; set; }
-            public string Gender { get; set; }
-            // These are numbers and I don't want to experience the magic of JSON -> "number" yet.
-            //"LowAge": UNSEARCHABLE_STR, ## Should be number
-            //"HighAge": UNSEARCHABLE_STR, ## Should be number
-            public string AgeText { get; set; }
-            public string[] Diagnoses { get; set; }
-
-        }
 
         #endregion
 

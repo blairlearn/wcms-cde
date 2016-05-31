@@ -49,7 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseCTSSearchParam.cs" />
     <Compile Include="BasicCTSManager.cs" />
+    <Compile Include="CancerTypeSearchParam.cs" />
+    <Compile Include="PhraseSearchParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnippetControls\BasicCTSSearchControl.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -60,7 +63,9 @@
     <Compile Include="SnippetControls\BasicCTSViewControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="TrialBase.cs" />
     <Compile Include="TrialDescription.cs" />
+    <Compile Include="TrialSearchResult.cs" />
     <Compile Include="TrialSearchResults.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -47,7 +47,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             BasicCTSManager basicCTSManager = new BasicCTSManager(_index, _indexType, _clusterName);
 
             // Get Trial by ID
-            var trial = basicCTSManager.GetTrial(nctid);
+            var trial = basicCTSManager.Get(nctid);
 
             if (trial == null)
                 throw new HttpException(404, "Trial cannot be found.");

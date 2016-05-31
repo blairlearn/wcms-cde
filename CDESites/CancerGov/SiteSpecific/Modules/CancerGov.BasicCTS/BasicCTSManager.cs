@@ -32,8 +32,7 @@ namespace CancerGov.ClinicalTrials.Basic
 
             this._indexName = indexName;
             this._trialIndexType = trialIndexType;
-            this._clusterName = clusterName;
-            
+            this._clusterName = clusterName;            
         }
 
         /// <summary>
@@ -41,7 +40,7 @@ namespace CancerGov.ClinicalTrials.Basic
         /// </summary>
         /// <param name="nctID">The CT.gov ID</param>
         /// <returns></returns>
-        public TrialDescription GetTrial(string nctID)
+        public TrialDescription Get(string nctID)
         {
             ElasticsearchClient client = GetESConnection();
 
@@ -54,6 +53,27 @@ namespace CancerGov.ClinicalTrials.Basic
 
             return response.Response;
         }
+
+        /// <summary>
+        /// Searches for Trials given a set of parameters
+        /// </summary>
+        /// <param name="searchParams">The Search Parameters to use</param>
+        /// <returns></returns>
+        public TrialSearchResults Search(BaseCTSSearchParam searchParams)
+        {
+            ElasticsearchClient client = GetESConnection();
+            
+            var response = client.Search<TrialSearchResult>(searchParams.GetBody());
+            
+            //Strongly Typed is weird here...
+
+            
+
+
+            return new TrialSearchResults();
+        }
+
+
 
         private ElasticsearchClient GetESConnection()
         {
