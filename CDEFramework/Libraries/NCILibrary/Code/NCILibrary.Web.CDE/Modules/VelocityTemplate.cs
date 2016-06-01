@@ -38,6 +38,7 @@ namespace NCI.Web.CDE.Modules
                 VelocityContext context = new VelocityContext();
                 context.Put("SearchResults", obj);
                 context.Put("CDEContext", new CDEContext());
+                context.Put("PageContext", HttpContext.Current);
                 StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath(filepath));
                 string template = sr.ReadToEnd();
                 sr.Close();
