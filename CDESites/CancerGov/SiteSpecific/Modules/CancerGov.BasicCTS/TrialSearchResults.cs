@@ -6,27 +6,17 @@ using System.Threading.Tasks;
 
 namespace CancerGov.ClinicalTrials.Basic
 {
-    public class TrialSearchResults : IEnumerable<TrialSearchResult>
+    public class TrialSearchResults
     {
-        private List<TrialSearchResult> _results = new List<TrialSearchResult>();
 
-        #region IEnumerable<TrialSearchResult> Members
+        public TrialSearchResult[] Results { get; private set; }
+        public long TotalResults { get; private set; }
 
-        public IEnumerator<TrialSearchResult> GetEnumerator()
+        public TrialSearchResults(long totalResults, IEnumerable<TrialSearchResult> results)
         {
-            return _results.GetEnumerator();
+            Results = results.ToArray();
+            TotalResults = totalResults;
         }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return _results.GetEnumerator();
-        }
-
-        #endregion
 
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nest;
 
 namespace CancerGov.ClinicalTrials.Basic
 {
@@ -33,6 +34,14 @@ namespace CancerGov.ClinicalTrials.Basic
         /// Gets the body for the ElasticSearch Search/SearchTemplate request.
         /// </summary>
         /// <returns>A JSON string to be used in the Search/SearchTemplate request</returns>
-        public abstract object GetBody();
+        public virtual SearchDescriptor<T> ModifySearchParams<T>(SearchDescriptor<T> descriptor) where T : class
+        {          
+        
+            return descriptor.
+                From(From)
+                .Size(Size);
+
+            //Add age, gender and zip if needed
+        }
     }
 }

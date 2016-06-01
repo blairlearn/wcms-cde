@@ -1,1 +1,27 @@
-﻿Hello
+﻿
+## If there are no results, then we need to show a different message
+<h5 id="ui-id-4">Results 1-25 of $SearchResults.TotalResults for your search:</h5>
+
+<div class="cts-results-container">
+
+#foreach($resultItem in $SearchResults.Results)
+	#each
+	## Attach Onclick for Analytics elsewhere
+	<a href="#" class="protocol-abstract-link">$resultItem.BriefTitle</a>
+	<div>
+		<strong>Status: </strong>$resultItem.CurrentProtocolStatus<br>
+		<strong>Age: </strong>$resultItem.Eligibility.AgeText<br>
+		<strong>Gender: </strong>$resultItem.Eligibility.Gender<br>
+		<strong>Locations: </strong>[INSERT LOCATIONS HERE]<br>
+	</div>
+	#before
+	<div class="row collapse">
+		<div class="medium-12 columns clinical-trial-individual-result">
+	#after
+		</div>
+	</div>
+	#nodata
+	No Items
+#end
+
+</div>

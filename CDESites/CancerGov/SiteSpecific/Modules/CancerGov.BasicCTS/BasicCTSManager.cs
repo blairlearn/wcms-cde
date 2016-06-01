@@ -8,6 +8,8 @@ using Elasticsearch.Net;
 using Elasticsearch.Net.Connection;
 using Elasticsearch.Net.ConnectionPool;
 
+using Nest;
+
 using NCI.Search;
 
 namespace CancerGov.ClinicalTrials.Basic
@@ -42,16 +44,21 @@ namespace CancerGov.ClinicalTrials.Basic
         /// <returns></returns>
         public TrialDescription Get(string nctID)
         {
-            ElasticsearchClient client = GetESConnection();
+            ElasticClient client = GetESConnection();
 
             //Using the GenericVersion will magically map the JSON to a strongly typed object.
-            var response = client.GetSource<TrialDescription>(_indexName, _trialIndexType, nctID);
+            //var response = client.GetSource<TrialDescription>(_indexName, _trialIndexType, nctID);
+            var response = client.Get<TrialDescription>(g => g
+                .Index(_indexName)
+                .Type(_trialIndexType)
+                .Id(nctID)
+            );
 
             //response.HttpStatusCode == 404
-
+            
             int i = 1;
 
-            return response.Response;
+            return response.Source;
         }
 
         /// <summary>
@@ -61,21 +68,27 @@ namespace CancerGov.ClinicalTrials.Basic
         /// <returns></returns>
         public TrialSearchResults Search(BaseCTSSearchParam searchParams)
         {
-            ElasticsearchClient client = GetESConnection();
-            
-            var response = client.Search<TrialSearchResult>(searchParams.GetBody());
-            
-            //Strongly Typed is weird here...
+            ElasticClient client = GetESConnection();
 
-            
+            var response = client.Search<TrialSearchResult>(sd => 
+                    searchParams.ModifySearchParams<TrialSearchResult>(
+                        sd
+                            .Index(_indexName)
+                            .Type(_trialIndexType)
+                    )
+                );
 
+            // If no results / error / etc then raise error
 
-            return new TrialSearchResults();
+            return new TrialSearchResults(
+                response.Total,
+                response.Documents
+            );
         }
 
 
 
-        private ElasticsearchClient GetESConnection()
+        private ElasticClient GetESConnection()
         {
             //Get The Cluster configuration
             //TODO: Make the cluster name a configurable item
@@ -83,13 +96,12 @@ namespace CancerGov.ClinicalTrials.Basic
             NCI.Search.Configuration.ClusterElement clusterConfig = ElasticSearchConfig.GetCluster(_clusterName);
 
             var connectionPool = new SniffingConnectionPool(clusterNodes);
-            var config = new ConnectionConfiguration(connectionPool)
+            var config = new ConnectionSettings(connectionPool)
                             .UsePrettyResponses()
                             .MaximumRetries(clusterConfig.MaximumRetries)//try 5 times if the server is down
                             .ExposeRawResponse()
                             .ThrowOnElasticsearchServerExceptions();
-
-            return new ElasticsearchClient(config);
+            return new ElasticClient(config);
 
         }
     }

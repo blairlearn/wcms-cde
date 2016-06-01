@@ -11,9 +11,9 @@ namespace CancerGov.ClinicalTrials.Basic
     /// </summary>
     public class CancerTypeSearchParam : BaseCTSSearchParam
     {
-        public override string GetBody()
+        public override Nest.SearchDescriptor<T> ModifySearchParams<T>(Nest.SearchDescriptor<T> descriptor)
         {
-            throw new NotImplementedException();
+            return base.ModifySearchParams<T>(descriptor);
         }
     }
 }

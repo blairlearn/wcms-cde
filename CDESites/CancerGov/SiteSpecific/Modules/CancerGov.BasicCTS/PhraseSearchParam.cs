@@ -17,22 +17,10 @@ namespace CancerGov.ClinicalTrials.Basic
         public string Phrase { get; set; }
 
 
-        public override string GetBody()
+        public override Nest.SearchDescriptor<T> ModifySearchParams<T>(Nest.SearchDescriptor<T> descriptor)
         {
-
-            return String.Format(
-                @"{{
-                        ""from"" : {0},
-                        ""size"" : {1},
-                        ""query"" : {{
-                            ""term"" : {{ ""OfficialTitle"" : ""{2}"" }}
-                        }}
-                    }}
-                ",
-                 From,
-                 Size,
-                 Phrase
-            );
+            return base.ModifySearchParams<T>(descriptor);
+                //.Query(q=> q.Term("OfficialTitle", Phrase));
         }
     }
 }
