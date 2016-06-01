@@ -1,1 +1,59 @@
-﻿[SEARCH FORM HERE]
+﻿<form class="clinical-trials-search-form" action="basic/results" method="get">
+
+    <fieldset aria-labelledby="legend-age">
+        <div class="row">
+            <div class="large-4 small-11 columns legend" id="legend-age">Your Age</div>
+            <div class="large-8 columns">
+                <div class="row">
+					<input class="small-3" type="text" id="a" maxlength="4" name="a">
+                </div>
+                <div class="row">Your age helps determine which trials are right for you.</div>
+            </div>
+        </div>
+    </fieldset>
+
+	<fieldset aria-labelledby="legend-gender">
+        <div class="row">
+            <div class="large-4 small-11 columns legend" id="legend-gender">Your Gender</div>
+            <div class="large-8 columns">
+                <div class="row">
+					<input type="radio" maxlength="4" id="b_2" name="b" value="2">
+					<label for="b_2">Male</label>
+					<input type="radio" maxlength="4" id="b_1" name="b" value="1">
+					<label for="b_2">Female</label>
+					<input type="radio" maxlength="4" id="b_0" name="b" value="0" checked="true">
+					<label for="b_2">Opt Out</label>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset aria-labelledby="legend-zip">
+        <div class="row">
+            <div class="large-4 small-11 columns legend" id="legend-zip">ZIP Code</div>
+            <div class="large-8 columns">
+                <div class="row">
+					<input type="text" placeholder="Show trials near ZIP code" maxlength="10" name="z">
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+	<fieldset aria-labelledby="legend-type">
+        <div class="row">
+            <div class="large-4 small-11 columns legend" id="legend-type">Type/Condition</div>
+            <div class="large-8 columns">
+                <div class="row">
+					<input placeholder="Start typing to select a cancer type."  type="text" id="a" maxlength="100" name="t">
+                </div>
+                <div class="row">Not sure of your cancer type? <a>Search by keyword</a> instead.</div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="row">
+        <div class="large-8 columns right">
+            <input type="submit" class="submit button" value="Search">
+        </div>
+    </div>
+</form>
