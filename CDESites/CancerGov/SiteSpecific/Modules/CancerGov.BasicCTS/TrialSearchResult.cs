@@ -11,5 +11,24 @@ namespace CancerGov.ClinicalTrials.Basic
     /// </summary>
     public class TrialSearchResult : TrialBase
     {
+        public TrialLocation[] Locations { get; set; }
+
+        public class TrialLocation
+        {
+            public string FacilityName { get; set; }
+            public LocationPostalAddress PostalAddress { get; set; }
+
+            public class LocationPostalAddress
+            {
+                public string CountryName { get; set; }
+                public string City { get; set; }
+                public string PoliticalSubUnitName { get; set; }
+                public string PostalCode_ZIP { get; set; }
+                public string PostalCodePosition { get; set; }
+                //GeoCode *IS* important here.
+            }
+
+        }
+
     }
 }

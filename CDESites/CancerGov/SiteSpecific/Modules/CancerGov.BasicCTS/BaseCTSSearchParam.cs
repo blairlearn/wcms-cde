@@ -12,21 +12,45 @@ namespace CancerGov.ClinicalTrials.Basic
     /// </summary>
     public abstract class BaseCTSSearchParam
     {
-        /// <summary>
-        /// Gets/Sets the position to start results from
-        /// </summary>
-        public int From { get; set; }
+        public static readonly string GENDER_FEMALE = "Female";
+        public static readonly string GENDER_MALE = "Male";
+
+        int _pageNum = 1;
+        int _itemsPerPage = 10;
 
         /// <summary>
-        /// Gets/Sets the Number of Records to Fetch
+        /// Gets/Sets the Page Number
         /// </summary>
-        public int Size { get; set; }
+        public int Page
+        {
+            get { return _pageNum; }
+            set { _pageNum = value; }
+        }
+
+        /// <summary>
+        /// Gets/Sets the Page Number
+        /// </summary>
+        public int ItemsPerPage
+        {
+            get { return _itemsPerPage; }
+            set { _itemsPerPage = value; }
+        }
+
 
         /// <summary>
         /// ZipCode to use for filtering.  NOTE: This may be some sort of LocationFilter object if we need more than Zip.
         /// </summary>
         public string ZipCode { get; set; }
-        
+
+        /// <summary>
+        /// Should be Male or Female
+        /// </summary>
+        public string Gender { get; set; }
+
+        /// <summary>
+        /// Gets and Sets the Visitor's Age
+        /// </summary>
+        public int? Age { get; set; }
 
         //We may need some sorting options here too...
 
@@ -37,9 +61,18 @@ namespace CancerGov.ClinicalTrials.Basic
         public virtual SearchDescriptor<T> ModifySearchParams<T>(SearchDescriptor<T> descriptor) where T : class
         {          
         
+            //From starts at 0
+            int from = 0;
+
+            if (Page > 1)
+            {
+                from = Page * ItemsPerPage;
+            }
+
+            //Figure out From and Size from PageNum
             return descriptor.
-                From(From)
-                .Size(Size);
+                From(from)
+                .Size(ItemsPerPage);
 
             //Add age, gender and zip if needed
         }

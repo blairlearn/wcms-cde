@@ -1,18 +1,29 @@
 ﻿
+
+From: $SearchResults.Params.Page <br>
+Size: $SearchResults.Params.ItemsPerPage <br>
+ZipCode: $SearchResults.Params.ZipCode <br>
+Age: $SearchResults.Params.Age <br>
+Gender: $SearchResults.Params.Gender <br>
+<br>
+<br>
+<br>
+
+
 ## If there are no results, then we need to show a different message
-<h5 id="ui-id-4">Results 1-25 of $SearchResults.TotalResults for your search:</h5>
+<h5 id="ui-id-4">Results [Start]-[End] of $SearchResults.Results.TotalResults for your search:</h5>
 
 <div class="cts-results-container">
 
-#foreach($resultItem in $SearchResults.Results)
+#foreach($resultItem in $SearchResults.Results.Results)
 	#each
 	## Attach Onclick for Analytics elsewhere
-	<a href="#" class="protocol-abstract-link">$resultItem.BriefTitle</a>
+	<a href="$SearchResults.Control.GetResultsUrl($resultItem.NCTID)" class="protocol-abstract-link">$resultItem.BriefTitle</a>
 	<div>
 		<strong>Status: </strong>$resultItem.CurrentProtocolStatus<br>
 		<strong>Age: </strong>$resultItem.Eligibility.AgeText<br>
 		<strong>Gender: </strong>$resultItem.Eligibility.Gender<br>
-		<strong>Locations: </strong>[INSERT LOCATIONS HERE]<br>
+		<strong>Locations: </strong>$resultItem.Locations.length locations<br>
 	</div>
 	#before
 	<div class="row collapse">
@@ -23,5 +34,15 @@
 	#nodata
 	No Items
 #end
+</div>
 
+## If there are results then...
+<div class="ct-results-lower-control">			            
+	<div class="pagination">
+		## Get Curr Page
+
+		## Shows 3 before and 3 after
+
+		<span>1</span>&nbsp;<input id="ctl45_pager_2" name="ctl45$pager$2" value="2" type="submit">&nbsp;<input id="ctl45_pager_3" name="ctl45$pager$3" value="3" type="submit">&nbsp;<input id="ctl45_pager_4" name="ctl45$pager$4" value="4" type="submit">&nbsp;&nbsp;<input id="ctl45_pager_nextBtn" name="ctl45$pager$2" value="Next >" type="submit">
+	</div>
 </div>
