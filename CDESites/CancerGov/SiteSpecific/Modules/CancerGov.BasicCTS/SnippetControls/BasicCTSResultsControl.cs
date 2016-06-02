@@ -20,7 +20,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
     {
         private string _index = "clinicaltrials";
         private string _indexType = "trial";
-        private string _clusterName = "cts";
+        private string _clusterName = "SearchCluster";
         private string _templatePath = "~/VelocityTemplates/BasicCTSResults.vm";
         private string _resultsUrl = "/about-cancer/treatment/clinical-trials/basic/view";
         private int _defaultItemsPerPage = 10;

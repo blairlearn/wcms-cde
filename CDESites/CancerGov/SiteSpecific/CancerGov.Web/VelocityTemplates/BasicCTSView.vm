@@ -2,62 +2,60 @@
 
 
 Status: $SearchResults.CurrentProtocolStatus
-<div class="accordion">
-	<h2>Trial Phase & Type</h2>
-	<table class="table-default">
-		<tr>
-			<th>Phase</th>
-			<th>Type</th>
-			<th>Status</th>
-			<th>Age</th>
-			<th>Trial IDs</th>
-		</tr>
-		<tr>
-			<td>$SearchResults.JoinedPhases</td>
-			<td>$SearchResults.JoinedTrialTypes</td>
-			<td>$SearchResults.CurrentProtocolStatus</td>
-			<td>$SearchResults.Eligibility.AgeText</td>
-			## Need to A) Find out where NCTID goes, and B) if it is OrgStudyID, then it is not duplicated.
-			<td></td>
-		</tr>
-	</table>
-	<h2>Description</h2>
-	<div>
-		$SearchResults.BriefSummary
-	</div>
-
+<div class="accordion desktop">
+	<section>
+	<h2>Trial Phase & Type</h2>	
+		<div>
+			<table class="table-default">
+				<tr>
+					<th>Phase</th>
+					<th>Type</th>
+					<th>Status</th>
+					<th>Age</th>
+				</tr>
+				<tr>
+					<td>$SearchResults.JoinedPhases</td>
+					<td>$SearchResults.JoinedTrialTypes</td>
+					<td>$SearchResults.CurrentProtocolStatus</td>
+					<td>$SearchResults.Eligibility.AgeText</td>
+					## Need to A) Find out where NCTID goes, and B) if it is OrgStudyID, then it is not duplicated.
+				</tr>
+			</table>
+		</div>
+	</section>
+	<section>
+	<h2>Description</h2>	
+		<div>
+			$SearchResults.BriefSummary
+		</div>
+	</section>
+	<section>
 	<h2>Trial Objectives and Outline</h2>
-	<div>
-		$SearchResults.DetailedDescription
-	</div>
-
+		<div>
+			$SearchResults.DetailedDescription
+		</div>
+	</section>
+	<section>
 	<h2>Eligibility Criteria</h2>	
-	<div>
-		$SearchResults.CTEntryCriteria
-	</div>
+		<div>
+			$SearchResults.CTEntryCriteria
+		</div>
+	</section>
 
-	<h2>Contacts & Locations</h2>
-	<div>
-		[SPONSOR/LEADORG HeRE]
-		[LOCATIONS]
-	</div>
+	<section>
+		<h2>Contacts & Locations</h2>
+		<div>
+			[SPONSOR/LEADORG HeRE]
+			[LOCATIONS]
+		</div>
+	</section>
 
-	<h2>Trial IDs</h2>
-	<div>
-		<strong>$SearchResults.OrgStudyID</strong><br>$SearchResults.SecondaryIDList
-	</div>
+	<section>
+		<h2>Trial IDs</h2>
+		<div>
+			<strong>$SearchResults.OrgStudyID</strong><br>$SearchResults.SecondaryIDList
+		</div>
+	</section>
 	
 </div>
 
-<script>
-
-	(function() {
-		var $ = require('jquery');
-		var NCI = require('Common/Enhancements/NCI');
-		$(document).ready(function($) {
-			NCI.doAccordion("div.accordion", {});
-		});
-
-	})();
-
-</script>
