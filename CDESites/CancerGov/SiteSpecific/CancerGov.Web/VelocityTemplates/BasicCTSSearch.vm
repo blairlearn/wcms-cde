@@ -18,7 +18,7 @@
 	});
 </script>
 
-<form class="clinical-trials-search-form" action="results" method="get">
+<form class="clinical-trials-search-form" action="basic/results" method="get">
     <fieldset aria-labelledby="legend-age">
         <div class="row">
             <div class="large-4 small-11 columns legend" id="legend-age">Your Age</div>
