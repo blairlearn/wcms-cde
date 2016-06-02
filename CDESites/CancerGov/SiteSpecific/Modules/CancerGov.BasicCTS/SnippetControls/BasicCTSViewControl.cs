@@ -44,8 +44,13 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             }
 
 
-            BasicCTSManager basicCTSManager = new BasicCTSManager(BasicCTSPageInfo.SearchIndex,
-                BasicCTSPageInfo.SearchIndexType, BasicCTSPageInfo.SearchClusterName);
+            BasicCTSManager basicCTSManager = new BasicCTSManager(
+                BasicCTSPageInfo.SearchIndex,
+                BasicCTSPageInfo.TrialIndexType,
+                BasicCTSPageInfo.MenuTermIndexType,
+                BasicCTSPageInfo.GeoLocIndexType,
+                BasicCTSPageInfo.SearchClusterName
+            );
 
             // Get Trial by ID
             var trial = basicCTSManager.Get(nctid);
@@ -71,7 +76,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             });
 
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                BasicCTSPageInfo.TemplatePath, trial));
+                BasicCTSPageInfo.DetailedViewPageTemplatePath, trial));
             Controls.Add(ltl);
         }
     }

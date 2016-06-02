@@ -16,16 +16,19 @@ using NCI.Web;
 
 namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 {
-    public class BasicCTSResultsControl : SnippetControl
+    public class BasicCTSResultsControl : BasicCTSBaseControl
     {
+        /*
         private string _index = "clinicaltrials";
         private string _indexType = "trial";
         private string _clusterName = "SearchCluster";
         private string _templatePath = "~/VelocityTemplates/BasicCTSResults.vm";
         private string _resultsUrl = "/about-cancer/treatment/clinical-trials/basic/view";
+        private string _ESTemplateFullText = "clinicaltrials_CTfulltextTemplate";
+        private string _ESTemplateCancerType = "clinicaltrials_CTCancerTypeIDTemplate";
         private int _defaultItemsPerPage = 10;
-        private int _defaultZipProximity = 50;
-
+        private int _defaultZipProximity = 100;
+        */
 
         public BaseCTSSearchParam SearchParams { get; private set; }
 
@@ -63,10 +66,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         {
             //Parse Parameters
             int pageNum = this.ParmAsInt("pn", 1);
-            int itemsPerPage = this.ParmAsInt("ni", _defaultItemsPerPage);
+            int itemsPerPage = this.ParmAsInt("ni", BasicCTSPageInfo.DefaultItemsPerPage);
             string phrase = this.ParmAsStr("q", string.Empty);
             string zip = this.ParmAsStr("z", string.Empty);
-            int zipProximity = this.ParmAsInt("zp", _defaultZipProximity); //In miles
+            int zipProximity = this.ParmAsInt("zp", BasicCTSPageInfo.DefaultZipProximity); //In miles
             int age = this.ParmAsInt("a", 0);
             int gender = this.ParmAsInt("g", 0); //0 = decline, 1 = female, 2 = male, 
             string cancerType = this.ParmAsStr("t", string.Empty);
@@ -140,7 +143,13 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         {
             base.OnLoad(e);            
 
-            BasicCTSManager basicCTSManager = new BasicCTSManager(_index, _indexType, _clusterName);
+            BasicCTSManager basicCTSManager = new BasicCTSManager(
+                BasicCTSPageInfo.SearchIndex, 
+                BasicCTSPageInfo.TrialIndexType,
+                BasicCTSPageInfo.MenuTermIndexType,
+                BasicCTSPageInfo.GeoLocIndexType,
+                BasicCTSPageInfo.SearchClusterName
+            );
 
 
             //Do the search
@@ -149,7 +158,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             // Show Results
 
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                _templatePath, 
+                BasicCTSPageInfo.ResultsPageTemplatePath, 
                 new
                 {
                     Results = results,
@@ -164,7 +173,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         public string GetResultsUrl(string id)
         {
             NciUrl url = new NciUrl();
-            url.SetUrl(_resultsUrl);
+            url.SetUrl(BasicCTSPageInfo.DetailedViewPagePrettyUrl);
 
             url.QueryParameters.Add("id", id);
             //TODO: Add In Search Params

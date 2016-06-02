@@ -29,10 +29,22 @@ namespace CancerGov.ClinicalTrials.Basic
         public string SearchIndex { get; set; }
 
         /// <summary>
-        /// The type of the search index.
+        /// The type of the trial document.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string SearchIndexType { get; set; }
+        public string TrialIndexType { get; set; }
+
+        /// <summary>
+        /// The type of the GeoLocation document.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string GeoLocIndexType { get; set; }
+
+        /// <summary>
+        /// The type of the MenuTerm document.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string MenuTermIndexType { get; set; }
 
         /// <summary>
         /// The search cluster name.
@@ -44,7 +56,7 @@ namespace CancerGov.ClinicalTrials.Basic
         /// The path to the template to use.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string TemplatePath { get; set; }
+        public string SearchPageTemplatePath { get; set; }
 
         /// <summary>
         /// The pretty url of the search page.
@@ -53,10 +65,22 @@ namespace CancerGov.ClinicalTrials.Basic
         public string SearchPagePrettyUrl { get; set; }
 
         /// <summary>
+        /// The path to the template to use.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string ResultsPageTemplatePath { get; set; }
+
+        /// <summary>
         /// The pretty url of the results page.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string ResultsPagePrettyUrl { get; set; }
+
+        /// <summary>
+        /// The path to the template to use.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string DetailedViewPageTemplatePath { get; set; }
 
         /// <summary>
         /// The pretty url of the detailed view page
@@ -68,13 +92,13 @@ namespace CancerGov.ClinicalTrials.Basic
         /// The default number of search result items per page.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string DefaultItemsPerPage { get; set; }
+        public int DefaultItemsPerPage { get; set; }
 
         /// <summary>
         /// The default zip code proximity.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string DefaultZipProximity { get; set; }
+        public int DefaultZipProximity { get; set; }
 
         /// <summary>
         /// The Elastic Search template to use for full text.

@@ -52,6 +52,12 @@ namespace CancerGov.ClinicalTrials.Basic
         /// </summary>
         public int? Age { get; set; }
 
+        /// <summary>
+        /// Gets and Sets the name of the ElasticSearch template to use for this search
+        /// </summary>
+        public string ESTemplateFile { get; set; }
+
+
         //We may need some sorting options here too...
 
         /// <summary>
@@ -76,5 +82,43 @@ namespace CancerGov.ClinicalTrials.Basic
 
             //Add age, gender and zip if needed
         }
+
+        /// <summary>
+        /// Gets the body for the ElasticSearch Search/SearchTemplate request.
+        /// </summary>
+        /// <returns>A JSON string to be used in the Search/SearchTemplate request</returns>
+        public virtual SearchTemplateDescriptor<T> ModifySearchParams<T>(SearchTemplateDescriptor<T> descriptor) where T : class
+        {
+
+
+            //From starts at 0
+            int from = 0;
+
+            if (Page > 1)
+            {
+                from = Page * ItemsPerPage;
+            }
+
+            /**
+             * 
+             * age
+             * gender
+             * geopoint
+             * size
+             * from
+             * 
+             * 
+             * searchstring
+             * OR
+             * cancertypeid
+             */ 
+
+
+            //Figure out how to conditionally add all the other parameters
+            return descriptor.File(ESTemplateFile);
+
+            //Add age, gender and zip if needed
+        }
+
     }
 }

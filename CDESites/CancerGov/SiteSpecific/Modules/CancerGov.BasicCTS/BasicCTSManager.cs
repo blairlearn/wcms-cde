@@ -19,15 +19,28 @@ namespace CancerGov.ClinicalTrials.Basic
 
         private string _clusterName = "";
         private string _trialIndexType = "";
+        private string _menuTermIndexType = "";
+        private string _geoLocIndexType = "";
         private string _indexName = "";
 
-        public BasicCTSManager(string indexName, string trialIndexType, string clusterName)
+        public BasicCTSManager(
+            string indexName, 
+            string trialIndexType,
+            string menuTermIndexType,
+            string geoLocIndexType, 
+            string clusterName)
         {
             if (string.IsNullOrWhiteSpace(indexName))
                 throw new ArgumentNullException("indexName cannot be null or empty");
 
             if (string.IsNullOrWhiteSpace(trialIndexType))
                 throw new ArgumentNullException("trialIndexType cannot be null or empty");
+
+            if (string.IsNullOrWhiteSpace(geoLocIndexType))
+                throw new ArgumentNullException("geoLocIndexType cannot be null or empty");
+
+            if (string.IsNullOrWhiteSpace(menuTermIndexType))
+                throw new ArgumentNullException("menuTermIndexType cannot be null or empty");
 
             if (string.IsNullOrWhiteSpace(clusterName))
                 throw new ArgumentNullException("clusterName cannot be null or empty");
@@ -47,18 +60,34 @@ namespace CancerGov.ClinicalTrials.Basic
             ElasticClient client = GetESConnection();
 
             //Using the GenericVersion will magically map the JSON to a strongly typed object.
-            //var response = client.GetSource<TrialDescription>(_indexName, _trialIndexType, nctID);
             var response = client.Get<TrialDescription>(g => g
                 .Index(_indexName)
                 .Type(_trialIndexType)
                 .Id(nctID)
             );
 
-            //response.HttpStatusCode == 404
-            
-            int i = 1;
-
             return response.Source;
+        }
+
+        /// <summary>
+        /// Gets the Geo Location for a ZipCode
+        /// </summary>
+        /// <param name="zipCode"></param>
+        /// <returns></returns>
+        public GeoLocation GetGeoLocationForZip(string zipCode)
+        {
+            ElasticClient client = GetESConnection();
+
+            var response = client.Get<ZipLookup>(g => g
+                .Index(_indexName)
+                .Type(_geoLocIndexType)
+                .Id(zipCode)
+            );
+
+            if (response.Source != null)
+                return response.Source.GeoCode;
+            else
+                return null;
         }
 
         /// <summary>
@@ -86,7 +115,30 @@ namespace CancerGov.ClinicalTrials.Basic
             );
         }
 
+        /// <summary>
+        /// Searches for Trials given a set of parameters using a search template.
+        /// </summary>
+        /// <param name="searchParams">The Search Parameters to use</param>
+        /// <returns></returns>
+        public TrialSearchResults SearchTemplate(BaseCTSSearchParam searchParams)
+        {
+            ElasticClient client = GetESConnection();
 
+            var response = client.SearchTemplate<TrialSearchResult>(sd =>
+                    searchParams.ModifySearchParams<TrialSearchResult>(
+                        sd
+                            .Index(_indexName)
+                            .Type(_trialIndexType)
+                    )
+                );
+
+            // If no results / error / etc then raise error
+
+            return new TrialSearchResults(
+                response.Total,
+                response.Documents
+            );
+        }
 
         private ElasticClient GetESConnection()
         {
