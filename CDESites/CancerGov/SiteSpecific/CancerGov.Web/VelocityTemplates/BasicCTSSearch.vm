@@ -39,9 +39,9 @@
 					<input type="radio" maxlength="4" id="b_2" name="g" value="2">
 					<label for="b_2">Male</label>
 					<input type="radio" maxlength="4" id="b_1" name="g" value="1">
-					<label for="b_2">Female</label>
+					<label for="b_1">Female</label>
 					<input type="radio" maxlength="4" id="b_0" name="g" value="0" checked="true">
-					<label for="b_2">Opt Out</label>
+					<label for="b_0">Opt Out</label>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
             <div class="large-4 small-11 columns legend" id="legend-keyword">Keyword</div>
             <div class="large-8 columns">
                 <div class="row">
-					<input placeholder="Show trials with a certain keyword"  type="text" id="a" maxlength="100" name="q">
+					<input type="text" id="a" maxlength="100" name="q">
                 </div>
                 <div class="row"><a href="#" onclick="showCancerType(); return false;">Search by cancer type</a> instead</div>
             </div>
