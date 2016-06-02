@@ -1,5 +1,24 @@
-﻿<form class="clinical-trials-search-form" action="basic/results" method="get">
+﻿<script>
+	function showCancerType() {
+		$("#fieldset-type").show();
+		$("#fieldset-type input").prop("disabled", false);
+		$("#fieldset-keyword").hide();
+		$("#fieldset-keyword input").prop("disabled", true);
+	}
 
+	function showKeyword() {
+		$("#fieldset-keyword").show();
+		$("#fieldset-keyword input").prop("disabled", false);
+		$("#fieldset-type").hide();
+		$("#fieldset-type input").prop("disabled", true);
+	}
+
+	$(function() {
+		showCancerType();
+	});
+</script>
+
+<form class="clinical-trials-search-form" action="basic/results" method="get">
     <fieldset aria-labelledby="legend-age">
         <div class="row">
             <div class="large-4 small-11 columns legend" id="legend-age">Your Age</div>
@@ -16,12 +35,12 @@
         <div class="row">
             <div class="large-4 small-11 columns legend" id="legend-gender">Your Gender</div>
             <div class="large-8 columns">
-                <div class="row">
-					<input type="radio" maxlength="4" id="b_2" name="b" value="2">
+                <div class="row radio">
+					<input type="radio" maxlength="4" id="b_2" name="g" value="2">
 					<label for="b_2">Male</label>
-					<input type="radio" maxlength="4" id="b_1" name="b" value="1">
+					<input type="radio" maxlength="4" id="b_1" name="g" value="1">
 					<label for="b_2">Female</label>
-					<input type="radio" maxlength="4" id="b_0" name="b" value="0" checked="true">
+					<input type="radio" maxlength="4" id="b_0" name="g" value="0" checked="true">
 					<label for="b_2">Opt Out</label>
                 </div>
             </div>
@@ -39,14 +58,26 @@
         </div>
     </fieldset>
 
-	<fieldset aria-labelledby="legend-type">
+	<fieldset id="fieldset-type" aria-labelledby="legend-type">
         <div class="row">
             <div class="large-4 small-11 columns legend" id="legend-type">Type/Condition</div>
             <div class="large-8 columns">
                 <div class="row">
-					<input placeholder="Start typing to select a cancer type."  type="text" id="a" maxlength="100" name="t">
+					<input placeholder="Start typing to select a cancer type"  type="text" id="a" maxlength="100" name="t">
                 </div>
-                <div class="row">Not sure of your cancer type? <a>Search by keyword</a> instead.</div>
+                <div class="row">Not sure of your cancer type? <a href="#" onclick="showKeyword()">Search by keyword</a> instead</div>
+            </div>
+        </div>
+    </fieldset>
+
+	<fieldset id="fieldset-keyword" aria-labelledby="legend-keyword" style="display: none;">
+        <div class="row">
+            <div class="large-4 small-11 columns legend" id="legend-keyword">Keyword</div>
+            <div class="large-8 columns">
+                <div class="row">
+					<input placeholder="Show trials with a certain keyword"  type="text" id="a" maxlength="100" name="q">
+                </div>
+                <div class="row">Do you know your cancer type? <a href="#" onclick="showCancerType()">Find a cancer type</a> instead</div>
             </div>
         </div>
     </fieldset>
