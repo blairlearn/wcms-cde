@@ -12,6 +12,7 @@ using System.Web.UI.WebControls;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE;
+using NCI.Web;
 
 namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 {
@@ -25,9 +26,12 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         private int _defaultItemsPerPage = 10;
         private int _defaultZipProximity = 50;
 
+
+        public BaseCTSSearchParam SearchParams { get; private set; }
+
         private string ParmAsStr(string param, string def)
         {
-            string paramval = Request.QueryString[param];            
+            string paramval = Request.QueryString[param];
 
             if (string.IsNullOrWhiteSpace(paramval))
                 return def;
@@ -55,7 +59,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             }
         }
 
-        private BaseCTSSearchParam GetSearchParams()
+        private void SetSearchParams()
         {
             //Parse Parameters
             int pageNum = this.ParmAsInt("pn", 1);
@@ -123,22 +127,24 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             #endregion
 
 
+            SearchParams = searchParams;
+        }
 
-            return searchParams;
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            SetSearchParams();
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
-
-            BaseCTSSearchParam searchParams = GetSearchParams();
-            
+            base.OnLoad(e);            
 
             BasicCTSManager basicCTSManager = new BasicCTSManager(_index, _indexType, _clusterName);
 
 
             //Do the search
-            var results = basicCTSManager.Search(searchParams);
+            var results = basicCTSManager.Search(SearchParams);
 
             // Show Results
 
@@ -146,7 +152,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 _templatePath, 
                 new
                 {
-                    Params = searchParams,
                     Results = results,
                     Control = this
                 }
@@ -158,13 +163,60 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
         public string GetResultsUrl(string id)
         {
+            NciUrl url = new NciUrl();
+            url.SetUrl(_resultsUrl);
+
+            url.QueryParameters.Add("id", id);
             //TODO: Add In Search Params
-            return _resultsUrl + "?id=" + id;
+
+            return url.ToString();
         }
 
         public string GetPageUrl(int pageNum)
         {
-            return this.PageInstruction.GetUrl("CurrentURL").ToString();
+            NciUrl url = this.PageInstruction.GetUrl("CurrentURL");
+            url.QueryParameters.Add("pn", pageNum.ToString());
+
+            return url.ToString();
+        }
+
+        public IEnumerable<object> GetPagerItems(int numLeft, int numRight, long totalResults)
+        {
+            int startPage = (SearchParams.Page - numLeft) >= 1 ? SearchParams.Page - numLeft : 1;
+            int maxPage = (int)Math.Ceiling((double)(totalResults / SearchParams.ItemsPerPage));
+            int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage;
+
+            List<object> items = new List<object>();
+
+            if (SearchParams.Page != 1)
+                items.Add(
+                    new
+                    {
+                        Text = "&lt; Previous",
+                        PageUrl = GetPageUrl(SearchParams.Page - 1)
+                    });
+
+            for (int i = startPage; i <= endPage; i++)
+            {
+                items.Add(
+                    new {
+                        Text = i.ToString(),
+                        PageUrl = GetPageUrl(i)
+                    }
+                );
+            }
+
+            if (SearchParams.Page != maxPage)
+                items.Add(
+                    new
+                    {
+                        Text = "Next &gt;",
+                        PageUrl = GetPageUrl(SearchParams.Page + 1)
+                    });
+
+
+
+            return items;
         }
 
         #endregion

@@ -1,10 +1,10 @@
 ﻿
 
-From: $SearchResults.Params.Page <br>
-Size: $SearchResults.Params.ItemsPerPage <br>
-ZipCode: $SearchResults.Params.ZipCode <br>
-Age: $SearchResults.Params.Age <br>
-Gender: $SearchResults.Params.Gender <br>
+From: $SearchResults.Control.SearchParams.Page <br>
+Size: $SearchResults.Control.SearchParams.ItemsPerPage <br>
+ZipCode: $SearchResults.Control.SearchParams.ZipCode <br>
+Age: $SearchResults.Control.SearchParams.Age <br>
+Gender: $SearchResults.Control.SearchParams.Gender <br>
 <br>
 <br>
 <br>
@@ -42,7 +42,19 @@ Gender: $SearchResults.Params.Gender <br>
 		## Get Curr Page
 
 		## Shows 3 before and 3 after
+		#foreach($pagerItem in $SearchResults.Control.GetPagerItems(3,3,$SearchResults.Results.TotalResults))
+			#each
+				#if($pagerItem.Text == $SearchResults.Control.SearchParams.Page.ToString())
+					<span>$pagerItem.Text</span>
+				#else
+					<a href="$pagerItem.PageUrl">$pagerItem.Text</a>
+				#end
+			#after
+				&nbsp;
+		#end
 
-		<span>1</span>&nbsp;<input id="ctl45_pager_2" name="ctl45$pager$2" value="2" type="submit">&nbsp;<input id="ctl45_pager_3" name="ctl45$pager$3" value="3" type="submit">&nbsp;<input id="ctl45_pager_4" name="ctl45$pager$4" value="4" type="submit">&nbsp;&nbsp;<input id="ctl45_pager_nextBtn" name="ctl45$pager$2" value="Next >" type="submit">
+		## Shows 3 before and 3 after
+
+		##<span>1</span>&nbsp;<input id="ctl45_pager_2" name="ctl45$pager$2" value="2" type="submit">&nbsp;<input id="ctl45_pager_3" name="ctl45$pager$3" value="3" type="submit">&nbsp;<input id="ctl45_pager_4" name="ctl45$pager$4" value="4" type="submit">&nbsp;&nbsp;<input id="ctl45_pager_nextBtn" name="ctl45$pager$2" value="Next >" type="submit">
 	</div>
 </div>
