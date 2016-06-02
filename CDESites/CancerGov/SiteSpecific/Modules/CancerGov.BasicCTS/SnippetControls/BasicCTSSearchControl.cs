@@ -13,7 +13,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             base.OnLoad(e);
 
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                BasicCTSPageInfo.TemplatePath, String.Empty));
+                BasicCTSPageInfo.TemplatePath, new
+                {
+                    ResultsPagePrettyUrl = BasicCTSPageInfo.ResultsPagePrettyUrl
+                }));
             Controls.Add(ltl);
         }
     }

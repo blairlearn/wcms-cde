@@ -18,7 +18,7 @@
 	});
 </script>
 
-<form class="clinical-trials-search-form" action="basic/results" method="get">
+<form class="clinical-trials-search-form" action="$SearchResults.ResultsPagePrettyUrl" method="get">
     <fieldset aria-labelledby="legend-age">
         <div class="row">
             <div class="large-4 small-11 columns legend" id="legend-age">Your Age</div>
@@ -49,11 +49,12 @@
 
     <fieldset aria-labelledby="legend-zip">
         <div class="row">
-            <div class="large-4 small-11 columns legend" id="legend-zip">ZIP Code</div>
+            <div class="large-4 small-11 columns legend" id="legend-zip">U.S. ZIP Code</div>
             <div class="large-8 columns">
                 <div class="row">
-					<input type="text" placeholder="Show trials near ZIP code" maxlength="10" name="z">
+					<input type="text" maxlength="10" name="z">
                 </div>
+				<div class="row">Show trials near this U.S. ZIP code.</div>
             </div>
         </div>
     </fieldset>
@@ -77,7 +78,7 @@
                 <div class="row">
 					<input placeholder="Show trials with a certain keyword"  type="text" id="a" maxlength="100" name="q">
                 </div>
-                <div class="row">Do you know your cancer type? <a href="#" onclick="showCancerType(); return false;">Find a cancer type</a> instead</div>
+                <div class="row"><a href="#" onclick="showCancerType(); return false;">Search by cancer type</a> instead</div>
             </div>
         </div>
     </fieldset>
