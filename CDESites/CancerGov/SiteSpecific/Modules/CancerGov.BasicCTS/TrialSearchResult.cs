@@ -13,6 +13,8 @@ namespace CancerGov.ClinicalTrials.Basic
     {
         public TrialLocation[] Locations { get; set; }
 
+        private TrialLocation[] _USLocations = null;
+
         public class TrialLocation
         {
             public string FacilityName { get; set; }
@@ -28,6 +30,22 @@ namespace CancerGov.ClinicalTrials.Basic
                 //GeoCode *IS* important here.
             }
 
+        }
+
+        /// <summary>
+        /// Get all US Locations
+        /// </summary>
+        /// <returns></returns>
+        public TrialLocation[] GetUSLocations()
+        {
+            if (_USLocations == null)
+            {
+                _USLocations = (from location in this.Locations
+                               where location.PostalAddress.CountryName == "U.S.A."
+                               select location).ToArray();
+            }
+
+            return _USLocations;
         }
 
     }
