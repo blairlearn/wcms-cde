@@ -13,16 +13,17 @@ namespace NCI.Web.CDE.Modules
     /// that defines the search page.
     /// </summary>
     [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://www.example.org/CDESchema")]
-    [System.Xml.Serialization.XmlRootAttribute("Module_SearchResultPageInfo", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
+    [System.Xml.Serialization.XmlRootAttribute("Module_BasicCTSPageInfo", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
     public class BasicCTSPageInfo
     {
-        private string _index = "clinicaltrials";
+        /*private string _index = "clinicaltrials";
         private string _indexType = "trial";
         private string _clusterName = "cts";
         private string _templatePath = "~/VelocityTemplates/BasicCTSResults.vm";
+        private string _searchUrl = "/about-cancer/treatment/clinical-trials/basic";
         private string _resultsUrl = "/about-cancer/treatment/clinical-trials/basic/view";
         private int _defaultItemsPerPage = 10;
-        private int _defaultZipProximity = 50;
+        private int _defaultZipProximity = 50;*/
 
 
         /// <summary>
@@ -78,32 +79,6 @@ namespace NCI.Web.CDE.Modules
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string DefaultZipProximity { get; set; }
-
-
-        /// <summary>
-        /// The page that displays the search conditions for selection by the user.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string SearchPagePrettyUrl { get; set; }
-
-        /// <summary>
-        /// The page displays the detailed view of a single result.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string DetailedViewSearchResultPagePrettyUrl { get; set; }
-
-        /// <summary>
-        /// The page displays the detailed view of a single result.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string PrintSearchResultPagePrettyUrl { get; set; }
-
-        /// <summary>
-        /// The help page.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string SearchHelpPrettyUrl { get; set; }
-
     }
 }
     
