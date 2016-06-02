@@ -37,7 +37,7 @@ namespace CancerGov.ClinicalTrials.Basic
                 public string PoliticalSubUnitName { get; set; }
                 public string PostalCode_ZIP { get; set; }
                 public string PostalCodePosition { get; set; }
-                //GeoCode *IS* important here.
+                public GeoLocation GeoCode { get; set; }
             }
 
         }

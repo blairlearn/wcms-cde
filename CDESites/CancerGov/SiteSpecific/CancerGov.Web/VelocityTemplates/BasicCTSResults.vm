@@ -14,6 +14,7 @@ Gender: $SearchResults.Control.SearchParams.Gender <br>
 		#if ($trial.GetUSLocations().length == 1)
 			#set($loc = $trial.GetUSLocations().get(0))			
 			$loc.FacilityName, $loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName
+			$loc.PostalAddress.GeoCode
 		#elseif ($trial.GetUSLocations().length == 0)
 			No U.S. Locations
 		#else
