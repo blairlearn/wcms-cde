@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Xml.Schema;
 using System.Xml.Serialization;
-using System.Xml.Schema;
 
-namespace NCI.Web.CDE.Modules
+namespace CancerGov.ClinicalTrials.Basic
 {
     /// <summary>
     /// This class defines the properties of search result. Like the prettyUrl of the 

@@ -16,12 +16,12 @@ using NCI.Web.CDE.Modules;
 
 namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 {
-    public class BasicCTSViewControl : SnippetControl
+    public partial class BasicCTSViewControl : BasicCTSBaseControl
     {
-        private string _index = "clinicaltrials";
-        private string _indexType = "trial";
-        private string _clusterName = "SearchCluster";
-        private string _templatePath = "~/VelocityTemplates/BasicCTSView.vm";
+        //private string _index = "clinicaltrials";
+        //private string _indexType = "trial";
+        //private string _clusterName = "SearchCluster";
+        //private string _templatePath = "~/VelocityTemplates/BasicCTSView.vm";
 
         protected override void OnLoad(EventArgs e)
         {
@@ -44,7 +44,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             }
 
 
-            BasicCTSManager basicCTSManager = new BasicCTSManager(_index, _indexType, _clusterName);
+            BasicCTSManager basicCTSManager = new BasicCTSManager(BasicCTSPageInfo.SearchIndex,
+                BasicCTSPageInfo.SearchIndexType, BasicCTSPageInfo.SearchClusterName);
 
             // Get Trial by ID
             var trial = basicCTSManager.Get(nctid);
@@ -69,7 +70,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             });
 
-            LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(_templatePath, trial));
+            LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
+                BasicCTSPageInfo.TemplatePath, trial));
             Controls.Add(ltl);
         }
     }
