@@ -79,6 +79,18 @@ namespace NCI.Web.CDE.Modules
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string DefaultZipProximity { get; set; }
+
+        /// <summary>
+        /// The Elastic Search template to use for full text.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string ESTemplateFullText { get; set; }
+
+        /// <summary>
+        /// The Elastic Search template to use for cancer types.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string ESTemplateCancerType { get; set; }
     }
 }
     
