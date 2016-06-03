@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,21 +44,36 @@ namespace CancerGov.ClinicalTrials.Basic
             return _USLocations;
         }
 
-        //public IEnumerable<TrialLocation> GetLocationsByCountry(string country)
+        //public Dictionary<string,List<TrialLocation>> GetLocationsByCountry(string country)
         //{
-            
+        //    //Group By Political Sub Unit.
+        //    //Then by hospital
+                        
         //    if (country == "U.S.A.")
         //    {
+        //        Dictionary<string, List<TrialLocation>> locations = new Dictionary<string,List<TrialLocation>>();
+
+        //        var sortedSites = from location in GetUSLocations()
+        //                          where location.PostalAddress.CountryName == "U.S.A."
+        //                          orderby location.PostalAddress.PoliticalSubUnitName, location.FacilityName
+        //                          select location;
+
+        //        foreach (TrialLocation location in sortedSites)
+        //        {
+
+        //            if (!locations.ContainsKey(location.PostalAddress.PoliticalSubUnitName))
+        //                locations.Add(location.PostalAddress.PoliticalSubUnitName, new List<TrialLocation>());
+
+        //            locations[location.PostalAddress.PoliticalSubUnitName].Add(location);
+        //        }
+
                 
-        //    }
-        //    else if (country == "Canada")
-        //    {
+
+        //        return locations;
 
         //    }
-        //    else
-        //    {
 
-        //    }
+        //    return new Dictionary<string, List<TrialLocation>>();
         //}
 
 
@@ -68,6 +84,7 @@ namespace CancerGov.ClinicalTrials.Basic
                     orderby origin.DistanceBetween(location.PostalAddress.GeoCode) ascending
                     select location).ToArray();
         }
+
 
         #region Supporting Classes
 

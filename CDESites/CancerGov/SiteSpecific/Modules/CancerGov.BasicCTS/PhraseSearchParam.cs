@@ -23,8 +23,6 @@ namespace CancerGov.ClinicalTrials.Basic
 
             if (!String.IsNullOrWhiteSpace(Phrase))
                 paramdict.Add("searchstring", this.Phrase);
-            else
-                paramdict.Add("searchstring", "cancer"); //Hack for now until Min fixes the template. :(
             
         }
 
