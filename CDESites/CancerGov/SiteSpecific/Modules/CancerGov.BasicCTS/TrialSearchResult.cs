@@ -48,5 +48,18 @@ namespace CancerGov.ClinicalTrials.Basic
             return _USLocations;
         }
 
+        /// <summary>
+        /// Get all us Locations, but filtered by origin and radius in miles
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        public TrialLocation[] GetUSLocations(GeoLocation origin, int radius)
+        {
+                return (from location in this.GetUSLocations()
+                                where location.PostalAddress.GeoCode != null && origin.DistanceBetween(location.PostalAddress.GeoCode) <= radius
+                                select location).ToArray();
+        }
+
     }
 }

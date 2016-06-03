@@ -162,7 +162,30 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);            
+            base.OnLoad(e);
+
+            // Copying the Title & Short Title logic from Advanced Form
+            //set the page title as the protocol title
+            PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
+            {
+                List<string> plist = new List<string>();
+
+                if (SearchParams.Age != null && SearchParams.Age > 0)
+                    plist.Add("Age " + SearchParams.Age);
+
+                if (!string.IsNullOrWhiteSpace(SearchParams.Gender))
+                    plist.Add("Gender " + SearchParams.Gender);
+
+                if (HasZip())
+                    plist.Add("ZIP " + SearchParams.ZipLookup.PostalCode_ZIP);
+
+                data.Value = "Results of your search";
+
+                if (plist.Count > 0)
+                {
+                    data.Value += " for \"" + string.Join(", ", plist) + "\"";
+                }
+            });
 
 
 
@@ -184,7 +207,44 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
         #region Velocity Helpers
 
-        public string GetResultsUrl(string id)
+        /// <summary>
+        /// Gets the Starting Number for the Results Being Displayed
+        /// </summary>
+        /// <returns></returns>
+        public string GetStartItemNum()
+        {            
+            return (((SearchParams.Page - 1) * SearchParams.ItemsPerPage) + 1).ToString();
+        }
+
+        /// <summary>
+        /// Gets the ending number for the results being displayed
+        /// </summary>
+        /// <param name="totalResults"></param>
+        /// <returns></returns>
+        public string GetEndItemNum(long totalResults)
+        {
+            long possibleLast = (SearchParams.Page * SearchParams.ItemsPerPage);
+            if (possibleLast > totalResults)
+                return totalResults.ToString();
+            else
+                return possibleLast.ToString();
+        }
+
+        /// <summary>
+        /// Determines if the current search has a Zip or not.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasZip()
+        {
+            return SearchParams.ZipLookup != null;
+        }
+
+        /// <summary>
+        /// Gets the View URL for an ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public string GetDetailedViewUrl(string id)
         {
             NciUrl url = new NciUrl();
             url.SetUrl(BasicCTSPageInfo.DetailedViewPagePrettyUrl);

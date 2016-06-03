@@ -1,37 +1,32 @@
 ﻿
-
-From: $SearchResults.Control.SearchParams.Page <br>
-Size: $SearchResults.Control.SearchParams.ItemsPerPage <br>
-ZipCode: $SearchResults.Control.SearchParams.ZipLookup <br>
-Age: $SearchResults.Control.SearchParams.Age <br>
-Gender: $SearchResults.Control.SearchParams.Gender <br>
-<br>
-<br>
-<br>
-
 #macro(DrawLocationInformation $trial)
 	<strong>Location: </strong>
 		#if ($trial.GetUSLocations().length == 1)
 			#set($loc = $trial.GetUSLocations().get(0))			
 			$loc.FacilityName, $loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName
 		#elseif ($trial.GetUSLocations().length == 0)
-			No U.S. Locations
+			See <a href="https://www.clinicaltrials.gov/show/$trial.NCTID">Clinical Trials.gov</a>
 		#else
-			$trial.GetUSLocations().length locations in the U.S.
+			$trial.GetUSLocations().length locations
+
+			#if ($SearchResults.Control.HasZip())
+				, including $trial.GetUSLocations($SearchResults.Control.SearchParams.ZipLookup.GeoCode, $SearchResults.Control.SearchParams.ZipRadius).length near you
+			#end
+
 		#end
 	<br>
 #end
 
 
 ## If there are no results, then we need to show a different message
-<h5 id="ui-id-4">Results [Start]-[End] of $SearchResults.Results.TotalResults for your search:</h5>
+<h5 id="ui-id-4">Results $SearchResults.Control.GetStartItemNum()-$SearchResults.Control.GetEndItemNum($SearchResults.Results.TotalResults) of $SearchResults.Results.TotalResults</h5>
 
 <div class="cts-results-container">
 
 #foreach($resultItem in $SearchResults.Results.Results)
 	#each
 		## Attach Onclick for Analytics elsewhere
-		<a href="$SearchResults.Control.GetResultsUrl($resultItem.NCTID)" class="protocol-abstract-link">$resultItem.BriefTitle</a>
+		<a href="$SearchResults.Control.GetDetailedViewUrl($resultItem.NCTID)" class="protocol-abstract-link">$resultItem.BriefTitle</a>
 		<div>
 			<strong>Status: </strong>$resultItem.CurrentProtocolStatus<br>
 			<strong>Age: </strong>$resultItem.Eligibility.AgeText<br>
