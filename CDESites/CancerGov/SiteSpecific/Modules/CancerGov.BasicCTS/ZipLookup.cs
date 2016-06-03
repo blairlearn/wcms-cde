@@ -23,5 +23,10 @@ namespace CancerGov.ClinicalTrials.Basic
         /// Gets and Sets the GeoCode for that Zip Code
         /// </summary>
         public GeoLocation GeoCode { get; set; }
+
+        public override string ToString()
+        {
+            return "{ PostalCode_ZIP: " + PostalCode_ZIP + ", GeoCode: " + GeoCode.ToString() + " }";
+        }
     }
 }

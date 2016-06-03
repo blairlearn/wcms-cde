@@ -2,7 +2,7 @@
 
 From: $SearchResults.Control.SearchParams.Page <br>
 Size: $SearchResults.Control.SearchParams.ItemsPerPage <br>
-ZipCode: $SearchResults.Control.SearchParams.ZipCode <br>
+ZipCode: $SearchResults.Control.SearchParams.ZipLookup <br>
 Age: $SearchResults.Control.SearchParams.Age <br>
 Gender: $SearchResults.Control.SearchParams.Gender <br>
 <br>
@@ -38,6 +38,8 @@ Gender: $SearchResults.Control.SearchParams.Gender <br>
 			<strong>Gender: </strong>$resultItem.Eligibility.Gender<br>
 			#DrawLocationInformation($resultItem)
 		</div>
+		<br>
+		<br>
 	#before
 	<div class="row collapse">
 		<div class="medium-12 columns clinical-trial-individual-result">

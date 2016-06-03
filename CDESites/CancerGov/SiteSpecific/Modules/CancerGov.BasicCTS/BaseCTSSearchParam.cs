@@ -17,6 +17,7 @@ namespace CancerGov.ClinicalTrials.Basic
 
         int _pageNum = 1;
         int _itemsPerPage = 10;
+        int _zipRadius = 100;
 
         /// <summary>
         /// Gets/Sets the Page Number
@@ -38,9 +39,18 @@ namespace CancerGov.ClinicalTrials.Basic
 
 
         /// <summary>
-        /// ZipCode to use for filtering.  NOTE: This may be some sort of LocationFilter object if we need more than Zip.
+        /// This contains both the ZipCode and Lat/Long for this search zip.
         /// </summary>
-        public string ZipCode { get; set; }
+        public ZipLookup ZipLookup { get; set; }
+
+        /// <summary>
+        /// Gets and Sets Zip Code Search Radius
+        /// </summary>
+        public int ZipRadius
+        {
+            get { return _zipRadius; }
+            set { _zipRadius = value; }
+        }
 
         /// <summary>
         /// Should be Male or Female
@@ -83,11 +93,13 @@ namespace CancerGov.ClinicalTrials.Basic
             //Add age, gender and zip if needed
         }
 
+
+
         /// <summary>
         /// Gets the body for the ElasticSearch Search/SearchTemplate request.
         /// </summary>
         /// <returns>A JSON string to be used in the Search/SearchTemplate request</returns>
-        public virtual SearchTemplateDescriptor<T> ModifySearchParams<T>(SearchTemplateDescriptor<T> descriptor) where T : class
+        public SearchTemplateDescriptor<T> SetSearchParams<T>(SearchTemplateDescriptor<T> descriptor) where T : class
         {
 
 
@@ -100,25 +112,69 @@ namespace CancerGov.ClinicalTrials.Basic
             }
 
             /**
+             * Parameters For Templates:
              * 
              * age
              * gender
-             * geopoint
+             * geopoint, radius
              * size
              * from
              * 
+             * Template Specific Options:
              * 
              * searchstring
              * OR
              * cancertypeid
-             */ 
+             */
 
+            //Set the template.
+            descriptor = descriptor
+                .File(ESTemplateFile)
+                .Params(pd =>
+                    {
+                        //Add params that are always set.
+                        pd
+                            .Add("size", this.ItemsPerPage)
+                            .Add("from", from)
+                            .Add("fields", "_source");
 
-            //Figure out how to conditionally add all the other parameters
-            return descriptor.File(ESTemplateFile);
+                        //Add optional parameters
+                        if (this.Age != null &&  this.Age > 0)
+                            pd.Add("age", this.Age);
 
-            //Add age, gender and zip if needed
+                        if (!String.IsNullOrWhiteSpace(this.Gender))
+                            pd.Add("gender", this.Gender);
+
+                        if (ZipLookup != null)
+                        {
+                            //I don't like the code below, the template should make this clean for us. :(
+                            pd
+                                .Add("radius", this.ZipRadius.ToString() + "mi")
+                                .Add("geopoint", this.ZipLookup.GeoCode.Lat.ToString() + "," + this.ZipLookup.GeoCode.Lon.ToString());
+                        }
+
+                        AddTemplateParams(pd);
+                        
+                        return pd;
+                });
+
+            return ModifySearchParams<T>(descriptor);
+
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="descriptor"></param>
+        /// <returns></returns>
+        protected abstract SearchTemplateDescriptor<T> ModifySearchParams<T>(SearchTemplateDescriptor<T> descriptor) where T : class;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="?"></param>
+        /// <returns></returns>
+        protected abstract void AddTemplateParams(FluentDictionary<string, object> paramdict);
     }
 }

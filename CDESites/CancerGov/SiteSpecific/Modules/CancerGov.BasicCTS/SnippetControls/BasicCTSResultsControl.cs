@@ -32,6 +32,9 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
         public BaseCTSSearchParam SearchParams { get; private set; }
 
+        private BasicCTSManager _basicCTSManager = null;
+
+
         private string ParmAsStr(string param, string def)
         {
             string paramval = Request.QueryString[param];
@@ -78,26 +81,35 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             #region Set Cancer Type or Phrase
 
-            if (phrase != string.Empty)
-            {
-                searchParams = new PhraseSearchParam()
-                {
-                    Phrase = phrase
-                };
-            }
-            else
+            if (cancerType != string.Empty)
             {
                 searchParams = new CancerTypeSearchParam()
                 {
                     //get cancer type.
+                    CancerTypeID = cancerType,
+                    ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
+                };
+            }
+            else
+            {
+                searchParams = new PhraseSearchParam()
+                {
+                    Phrase = phrase,
+                    ESTemplateFile = BasicCTSPageInfo.ESTemplateFullText
                 };
             }
 
             #endregion
 
             // Fill in common parameters
-            //How to handle invalid zip?
-            //Need to lookup zip
+
+            #region Set Zip Code + GeoLocation
+            if (!string.IsNullOrWhiteSpace(zip))
+            {
+                searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
+            }
+
+            #endregion
 
             #region Set Page and Items Per Page
             searchParams.Page = pageNum;
@@ -136,6 +148,15 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
+
+            _basicCTSManager = new BasicCTSManager(
+                BasicCTSPageInfo.SearchIndex,
+                BasicCTSPageInfo.TrialIndexType,
+                BasicCTSPageInfo.MenuTermIndexType,
+                BasicCTSPageInfo.GeoLocIndexType,
+                BasicCTSPageInfo.SearchClusterName
+            );
+
             SetSearchParams();
         }
 
@@ -143,17 +164,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         {
             base.OnLoad(e);            
 
-            BasicCTSManager basicCTSManager = new BasicCTSManager(
-                BasicCTSPageInfo.SearchIndex, 
-                BasicCTSPageInfo.TrialIndexType,
-                BasicCTSPageInfo.MenuTermIndexType,
-                BasicCTSPageInfo.GeoLocIndexType,
-                BasicCTSPageInfo.SearchClusterName
-            );
 
 
             //Do the search
-            var results = basicCTSManager.Search(SearchParams);
+            var results = _basicCTSManager.SearchTemplate(SearchParams);
 
             // Show Results
 

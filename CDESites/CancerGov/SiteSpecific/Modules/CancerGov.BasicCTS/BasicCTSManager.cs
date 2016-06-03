@@ -47,6 +47,8 @@ namespace CancerGov.ClinicalTrials.Basic
 
             this._indexName = indexName;
             this._trialIndexType = trialIndexType;
+            this._geoLocIndexType = geoLocIndexType;
+            this._menuTermIndexType = menuTermIndexType;
             this._clusterName = clusterName;            
         }
 
@@ -74,7 +76,7 @@ namespace CancerGov.ClinicalTrials.Basic
         /// </summary>
         /// <param name="zipCode"></param>
         /// <returns></returns>
-        public GeoLocation GetGeoLocationForZip(string zipCode)
+        public ZipLookup GetZipLookupForZip(string zipCode)
         {
             ElasticClient client = GetESConnection();
 
@@ -84,10 +86,7 @@ namespace CancerGov.ClinicalTrials.Basic
                 .Id(zipCode)
             );
 
-            if (response.Source != null)
-                return response.Source.GeoCode;
-            else
-                return null;
+            return response.Source;
         }
 
         /// <summary>
@@ -124,13 +123,15 @@ namespace CancerGov.ClinicalTrials.Basic
         {
             ElasticClient client = GetESConnection();
 
-            var response = client.SearchTemplate<TrialSearchResult>(sd =>
-                    searchParams.ModifySearchParams<TrialSearchResult>(
-                        sd
-                            .Index(_indexName)
-                            .Type(_trialIndexType)
-                    )
-                );
+            var response = client.SearchTemplate<TrialSearchResult>(sd => {
+                sd = sd
+                    .Index(_indexName)
+                    .Type(_trialIndexType);
+
+                sd = searchParams.SetSearchParams<TrialSearchResult>(sd);
+
+                return sd;
+            });
 
             // If no results / error / etc then raise error
 

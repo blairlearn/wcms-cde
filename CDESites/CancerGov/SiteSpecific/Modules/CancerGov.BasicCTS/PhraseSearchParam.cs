@@ -16,11 +16,22 @@ namespace CancerGov.ClinicalTrials.Basic
         /// </summary>
         public string Phrase { get; set; }
 
-
-        public override Nest.SearchDescriptor<T> ModifySearchParams<T>(Nest.SearchDescriptor<T> descriptor)
+        protected override void AddTemplateParams(Nest.FluentDictionary<string, object> paramdict)
         {
-            return base.ModifySearchParams<T>(descriptor);
-                //.Query(q=> q.Term("OfficialTitle", Phrase));
+
+            // Set the searchstring only if we have one.  Maybe clean it up too if needbe.
+
+            if (!String.IsNullOrWhiteSpace(Phrase))
+                paramdict.Add("searchstring", this.Phrase);
+            else
+                paramdict.Add("searchstring", "cancer"); //Hack for now until Min fixes the template. :(
+            
+        }
+
+        protected override Nest.SearchTemplateDescriptor<T> ModifySearchParams<T>(Nest.SearchTemplateDescriptor<T> descriptor)
+        {
+
+            return descriptor;
         }
     }
 }

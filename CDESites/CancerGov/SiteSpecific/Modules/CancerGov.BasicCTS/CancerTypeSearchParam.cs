@@ -11,9 +11,24 @@ namespace CancerGov.ClinicalTrials.Basic
     /// </summary>
     public class CancerTypeSearchParam : BaseCTSSearchParam
     {
-        public override Nest.SearchDescriptor<T> ModifySearchParams<T>(Nest.SearchDescriptor<T> descriptor)
+        /// <summary>
+        /// Get and Set the Cancer Type ID for this search
+        /// </summary>
+        public string CancerTypeID { get; set; }
+
+        protected override void AddTemplateParams(Nest.FluentDictionary<string, object> paramdict)
         {
-            return base.ModifySearchParams<T>(descriptor);
+
+            // Set the cancertypeid only if we have one.  Maybe clean it up too if needbe.
+
+            if (!String.IsNullOrWhiteSpace(CancerTypeID))
+                paramdict.Add("cancertypeid", this.CancerTypeID);
+
+        }
+
+        protected override Nest.SearchTemplateDescriptor<T> ModifySearchParams<T>(Nest.SearchTemplateDescriptor<T> descriptor)
+        {
+            return descriptor; 
         }
     }
 }
