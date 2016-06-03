@@ -23,6 +23,36 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         //private string _clusterName = "SearchCluster";
         //private string _templatePath = "~/VelocityTemplates/BasicCTSView.vm";
 
+        public ZipLookup ZipLookup { get; set; }
+        public int ZipRadius {
+            get { return BasicCTSPageInfo.DefaultZipProximity;  }
+        }
+
+        private BasicCTSManager _basicCTSManager = null;
+
+        /// <summary>
+        /// Determines if the current search has a Zip or not.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasZip()
+        {
+            return ZipLookup != null;
+        }
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+            _basicCTSManager = new BasicCTSManager(
+                BasicCTSPageInfo.SearchIndex,
+                BasicCTSPageInfo.TrialIndexType,
+                BasicCTSPageInfo.MenuTermIndexType,
+                BasicCTSPageInfo.GeoLocIndexType,
+                BasicCTSPageInfo.SearchClusterName
+            );
+
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -35,6 +65,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 return;
             }
 
+
             nctid = nctid.Trim();
 
             if (!Regex.IsMatch(nctid, "^NCT[0-9]+$"))
@@ -42,6 +73,16 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 this.Controls.Add(new LiteralControl("Invalid ID"));
                 return;
             }
+
+            string zip = this.ParmAsStr(ZIP_PARAM, string.Empty);
+            int zipProximity = this.ParmAsInt(ZIPPROX_PARAM, BasicCTSPageInfo.DefaultZipProximity); //In miles
+
+            if (!string.IsNullOrWhiteSpace(zip))
+            {
+                ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
+            }
+    
+            
 
 
             BasicCTSManager basicCTSManager = new BasicCTSManager(
@@ -53,7 +94,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             );
 
             // Get Trial by ID
-            var trial = basicCTSManager.Get(nctid);
+            var trial = _basicCTSManager.Get(nctid);
 
             if (trial == null)
                 throw new HttpException(404, "Trial cannot be found.");
@@ -76,7 +117,14 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             });
 
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                BasicCTSPageInfo.DetailedViewPageTemplatePath, trial));
+                    BasicCTSPageInfo.DetailedViewPageTemplatePath, 
+                    new
+                    {
+                        Trial = trial,
+                        Control = this
+                    }
+                )
+            );
             Controls.Add(ltl);
         }
     }

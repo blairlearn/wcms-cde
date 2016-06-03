@@ -1,7 +1,7 @@
 ﻿## Lots of script here. :(
 
 
-Status: $SearchResults.CurrentProtocolStatus
+Status: $SearchResults.Trial.CurrentProtocolStatus
 <div class="accordion desktop">
 	<section>
 	<h2>Trial Phase & Type</h2>	
@@ -14,10 +14,10 @@ Status: $SearchResults.CurrentProtocolStatus
 					<th>Age</th>
 				</tr>
 				<tr>
-					<td>$SearchResults.JoinedPhases</td>
-					<td>$SearchResults.JoinedTrialTypes</td>
-					<td>$SearchResults.CurrentProtocolStatus</td>
-					<td>$SearchResults.Eligibility.AgeText</td>
+					<td>$SearchResults.Trial.JoinedPhases</td>
+					<td>$SearchResults.Trial.JoinedTrialTypes</td>
+					<td>$SearchResults.Trial.CurrentProtocolStatus</td>
+					<td>$SearchResults.Trial.Eligibility.AgeText</td>
 					## Need to A) Find out where NCTID goes, and B) if it is OrgStudyID, then it is not duplicated.
 				</tr>
 			</table>
@@ -26,34 +26,57 @@ Status: $SearchResults.CurrentProtocolStatus
 	<section>
 	<h2>Description</h2>	
 		<div>
-			$SearchResults.BriefSummary
+			$SearchResults.Trial.BriefSummary
 		</div>
 	</section>
 	<section>
 	<h2>Trial Objectives and Outline</h2>
 		<div>
-			$SearchResults.DetailedDescription
+			$SearchResults.Trial.DetailedDescription
 		</div>
 	</section>
 	<section>
 	<h2>Eligibility Criteria</h2>	
 		<div>
-			$SearchResults.CTEntryCriteria
+			$SearchResults.Trial.CTEntryCriteria
+		</div>
+	</section>
+
+	<section>
+		<h2>Lead Organization</h2>
+		<div>
+			[SPONSOR/LEADORG HeRE]
 		</div>
 	</section>
 
 	<section>
 		<h2>Contacts & Locations</h2>
 		<div>
-			[SPONSOR/LEADORG HeRE]
-			[LOCATIONS]
+			#if($SearchResults.Control.HasZip())
+				Locations within $SearchResults.Control.ZipRadius miles of ZIP code "$SearchResults.Control.ZipLookup.PostalCode_ZIP"
+				<br>
+				<br>
+				#foreach($loc in $SearchResults.Trial.GetLocationsNearZip($SearchResults.Control.ZipLookup.GeoCode,$SearchResults.Control.ZipRadius))
+				#each
+					<div>
+					$loc.FacilityName<br>
+					$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
+					<br>
+					<br>
+					</div>
+				#end
+			#else
+				[SHOW USA FIRST HERE]
+			#end
 		</div>
 	</section>
 
 	<section>
 		<h2>Trial IDs</h2>
 		<div>
-			<strong>$SearchResults.OrgStudyID</strong><br>$SearchResults.SecondaryIDList
+			<strong>Primary ID</strong> $SearchResults.Trial.OrgStudyID <br>
+			<strong>Secondary IDs</strong> $SearchResults.Trial.SecondaryIDList <br>
+			<strong>Clinicaltrials.gov ID</strong> $SearchResults.Trial.NCTID <br>
 		</div>
 	</section>
 	

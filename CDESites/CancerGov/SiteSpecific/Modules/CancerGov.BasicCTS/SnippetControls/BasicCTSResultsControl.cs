@@ -42,50 +42,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         private BasicCTSManager _basicCTSManager = null;
         
 
-        /// <summary>
-        /// Gets a query parameter as a string or uses a default
-        /// </summary>
-        /// <param name="param"></param>
-        /// <param name="def"></param>
-        /// <returns></returns>
-        private string ParmAsStr(string param, string def)
-        {
-            string paramval = Request.QueryString[param];
-
-            if (string.IsNullOrWhiteSpace(paramval))
-                return def;
-            else 
-                return paramval;
-        }
-
-        private int ParmAsInt(string param, int def)
-        {
-            string paramval = Request.QueryString[param];
-
-            if (string.IsNullOrWhiteSpace(paramval))
-            {
-                return def;
-            }
-            else
-            {
-                int tmpInt = 0;
-                if (int.TryParse(paramval, out tmpInt))
-                {
-                    return tmpInt;
-                } else {
-                    return def;
-                }                
-            }
-        }
-
-        private const string PAGENUM_PARAM = "pn";
-        private const string ITEMSPP_PARAM = "ni";
-        private const string PRASE_PARAM = "q";
-        private const string ZIP_PARAM = "z";
-        private const string ZIPPROX_PARAM = "zp";
-        private const string AGE_PARAM = "a";
-        private const string GENDER_PARAM = "g";
-        private const string CANCERTYPE_PARAM = "t";
 
         private void SetSearchParams()
         {

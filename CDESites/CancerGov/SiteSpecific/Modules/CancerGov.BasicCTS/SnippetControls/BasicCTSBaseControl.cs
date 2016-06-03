@@ -9,6 +9,54 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
     {
         private BasicCTSPageInfo _basicCTSPageInfo = null;
 
+        /// <summary>
+        /// Gets a query parameter as a string or uses a default
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="def"></param>
+        /// <returns></returns>
+        protected string ParmAsStr(string param, string def)
+        {
+            string paramval = Request.QueryString[param];
+
+            if (string.IsNullOrWhiteSpace(paramval))
+                return def;
+            else
+                return paramval;
+        }
+
+        protected int ParmAsInt(string param, int def)
+        {
+            string paramval = Request.QueryString[param];
+
+            if (string.IsNullOrWhiteSpace(paramval))
+            {
+                return def;
+            }
+            else
+            {
+                int tmpInt = 0;
+                if (int.TryParse(paramval, out tmpInt))
+                {
+                    return tmpInt;
+                }
+                else
+                {
+                    return def;
+                }
+            }
+        }
+
+        protected const string PAGENUM_PARAM = "pn";
+        protected const string ITEMSPP_PARAM = "ni";
+        protected const string PRASE_PARAM = "q";
+        protected const string ZIP_PARAM = "z";
+        protected const string ZIPPROX_PARAM = "zp";
+        protected const string AGE_PARAM = "a";
+        protected const string GENDER_PARAM = "g";
+        protected const string CANCERTYPE_PARAM = "t";
+
+
         protected BasicCTSPageInfo BasicCTSPageInfo
         {
             get
