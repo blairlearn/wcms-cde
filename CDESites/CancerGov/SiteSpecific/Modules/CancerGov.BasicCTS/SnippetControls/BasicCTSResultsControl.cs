@@ -18,23 +18,36 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 {
     public class BasicCTSResultsControl : BasicCTSBaseControl
     {
-        /*
-        private string _index = "clinicaltrials";
-        private string _indexType = "trial";
-        private string _clusterName = "SearchCluster";
-        private string _templatePath = "~/VelocityTemplates/BasicCTSResults.vm";
-        private string _resultsUrl = "/about-cancer/treatment/clinical-trials/basic/view";
-        private string _ESTemplateFullText = "clinicaltrials_CTfulltextTemplate";
-        private string _ESTemplateCancerType = "clinicaltrials_CTCancerTypeIDTemplate";
-        private int _defaultItemsPerPage = 10;
-        private int _defaultZipProximity = 100;
-        */
+        /// <summary>
+        /// Enumeration representing a bitmap for the fields that are set.
+        /// </summary>
+        [Flags]
+        private enum SetFields
+        {
+            None = 0,
+            Age = 1,
+            Gender = Age << 1,
+            ZipCode = Gender << 1,
+            ZipProximity = ZipCode << 1,
+            Phrase = ZipProximity << 1,
+            CancerType = Phrase << 1
+        }
 
+        /// <summary>
+        /// Gets the Search Parameters for the current request.
+        /// </summary>
         public BaseCTSSearchParam SearchParams { get; private set; }
 
+        private SetFields _setFields = SetFields.None;
         private BasicCTSManager _basicCTSManager = null;
+        
 
-
+        /// <summary>
+        /// Gets a query parameter as a string or uses a default
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="def"></param>
+        /// <returns></returns>
         private string ParmAsStr(string param, string def)
         {
             string paramval = Request.QueryString[param];
@@ -65,17 +78,26 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             }
         }
 
+        private const string PAGENUM_PARAM = "pn";
+        private const string ITEMSPP_PARAM = "ni";
+        private const string PRASE_PARAM = "q";
+        private const string ZIP_PARAM = "z";
+        private const string ZIPPROX_PARAM = "zp";
+        private const string AGE_PARAM = "a";
+        private const string GENDER_PARAM = "g";
+        private const string CANCERTYPE_PARAM = "t";
+
         private void SetSearchParams()
         {
             //Parse Parameters
-            int pageNum = this.ParmAsInt("pn", 1);
-            int itemsPerPage = this.ParmAsInt("ni", BasicCTSPageInfo.DefaultItemsPerPage);
-            string phrase = this.ParmAsStr("q", string.Empty);
-            string zip = this.ParmAsStr("z", string.Empty);
-            int zipProximity = this.ParmAsInt("zp", BasicCTSPageInfo.DefaultZipProximity); //In miles
-            int age = this.ParmAsInt("a", 0);
-            int gender = this.ParmAsInt("g", 0); //0 = decline, 1 = female, 2 = male, 
-            string cancerType = this.ParmAsStr("t", string.Empty);
+            int pageNum = this.ParmAsInt(PAGENUM_PARAM, 1);
+            int itemsPerPage = this.ParmAsInt(ITEMSPP_PARAM, BasicCTSPageInfo.DefaultItemsPerPage);
+            string phrase = this.ParmAsStr(PRASE_PARAM, string.Empty);
+            string zip = this.ParmAsStr(ZIP_PARAM, string.Empty);
+            int zipProximity = this.ParmAsInt(ZIPPROX_PARAM, BasicCTSPageInfo.DefaultZipProximity); //In miles
+            int age = this.ParmAsInt(AGE_PARAM, 0);
+            int gender = this.ParmAsInt(GENDER_PARAM, 0); //0 = decline, 1 = female, 2 = male, 
+            string cancerType = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
 
             BaseCTSSearchParam searchParams = null;
 
@@ -89,6 +111,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     CancerTypeID = cancerType,
                     ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
                 };
+
+                _setFields |= SetFields.CancerType;
             }
             else
             {
@@ -97,6 +121,9 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     Phrase = phrase,
                     ESTemplateFile = BasicCTSPageInfo.ESTemplateFullText
                 };
+
+                if (!string.IsNullOrWhiteSpace(phrase))
+                    _setFields |= SetFields.Phrase;
             }
 
             #endregion
@@ -107,6 +134,12 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             if (!string.IsNullOrWhiteSpace(zip))
             {
                 searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
+                if (searchParams.ZipLookup != null)
+                {
+                    _setFields |= SetFields.ZipCode;
+                    if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
+                        _setFields |= SetFields.ZipProximity;
+                }
             }
 
             #endregion
@@ -122,6 +155,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             if (age > 0)
             {
                 searchParams.Age = age;
+                _setFields |= SetFields.Age;
             }
 
             #endregion
@@ -133,17 +167,22 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             {
                 case 1: 
                     searchParams.Gender = BaseCTSSearchParam.GENDER_FEMALE;
+                    _setFields |= SetFields.Gender;
                     break;
                 case 2:
                     searchParams.Gender = BaseCTSSearchParam.GENDER_MALE;
+                    _setFields |= SetFields.Gender;
                     break;
             }
 
             #endregion
 
 
+
             SearchParams = searchParams;
         }
+
+        
 
         protected override void OnInit(EventArgs e)
         {
@@ -250,19 +289,58 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             url.SetUrl(BasicCTSPageInfo.DetailedViewPagePrettyUrl);
 
             url.QueryParameters.Add("id", id);
-            //TODO: Add In Search Params
+
+            if ((_setFields & SetFields.ZipCode) != 0)
+                url.QueryParameters.Add(ZIP_PARAM, SearchParams.ZipLookup.PostalCode_ZIP);
+
+            if ((_setFields & SetFields.ZipProximity) != 0)
+                url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
 
             return url.ToString();
         }
 
+        /// <summary>
+        /// Gets URL for a Single Page of Results
+        /// </summary>
+        /// <param name="pageNum"></param>
+        /// <returns></returns>
         public string GetPageUrl(int pageNum)
         {
             NciUrl url = this.PageInstruction.GetUrl("CurrentURL");
             url.QueryParameters.Add("pn", pageNum.ToString());
 
+            if ((_setFields & SetFields.Age) != 0)
+                url.QueryParameters.Add(AGE_PARAM, SearchParams.Age.ToString());
+
+            if ((_setFields & SetFields.Gender) != 0)
+            {
+                if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
+                    url.QueryParameters.Add(GENDER_PARAM, "1");
+                else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
+                    url.QueryParameters.Add(GENDER_PARAM, "2");
+            }            
+            
+            if ((_setFields & SetFields.ZipCode) != 0)
+                url.QueryParameters.Add(ZIP_PARAM, SearchParams.ZipLookup.PostalCode_ZIP);
+
+            if ((_setFields & SetFields.ZipProximity) != 0)
+                url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
+
+
+            //Phrase and type are based on the type of object
+
+            //Items Per Page
+
             return url.ToString();
         }
 
+        /// <summary>
+        /// Gets the Urls and Labels for all the pages of results from Curr Page - numLeft to Curr Page + numRight
+        /// </summary>
+        /// <param name="numLeft">The number of pages to display left of the selected page</param>
+        /// <param name="numRight">The number of pages to display to the right of the selected page</param>
+        /// <param name="totalResults">The total number of results </param>
+        /// <returns></returns>
         public IEnumerable<object> GetPagerItems(int numLeft, int numRight, long totalResults)
         {
             int startPage = (SearchParams.Page - numLeft) >= 1 ? SearchParams.Page - numLeft : 1;
@@ -289,7 +367,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 );
             }
 
-            if (SearchParams.Page != maxPage)
+            if (SearchParams.Page != endPage)
                 items.Add(
                     new
                     {
