@@ -19,6 +19,7 @@ namespace NCI.Web.CDE.Modules
                 Velocity.Init();
                 VelocityContext context = new VelocityContext();
                 context.Put("DynamicSearch", obj);
+                context.Put("Tools", new VelocityTools());
                 StringWriter writer = new StringWriter();
                 Velocity.Evaluate(context, writer, "", template);
                 return writer.GetStringBuilder().ToString();
@@ -39,6 +40,7 @@ namespace NCI.Web.CDE.Modules
                 context.Put("SearchResults", obj);
                 context.Put("CDEContext", new CDEContext());
                 context.Put("PageContext", HttpContext.Current);
+                context.Put("Tools", new VelocityTools());
                 StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath(filepath));
                 string template = sr.ReadToEnd();
                 sr.Close();
@@ -68,6 +70,19 @@ namespace NCI.Web.CDE.Modules
                 {
                     Language = "en";
                 }
+            }
+        }
+
+        class VelocityTools
+        {
+            public bool IsNull(object obj)
+            {
+                return obj == null;
+            }
+
+            public bool IsNullOrWhitespace(string str)
+            {
+                return String.IsNullOrWhiteSpace(str);
             }
         }
     }

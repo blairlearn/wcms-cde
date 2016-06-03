@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="SnippetControls\BasicCTSBaseControl.cs" />
     <Compile Include="TrialBase.cs" />
+    <Compile Include="TrialContact.cs" />
     <Compile Include="TrialDescription.cs" />
     <Compile Include="TrialSearchResult.cs" />
     <Compile Include="TrialSearchResults.cs" />

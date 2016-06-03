@@ -44,37 +44,74 @@ namespace CancerGov.ClinicalTrials.Basic
             return _USLocations;
         }
 
-        //public Dictionary<string,List<TrialLocation>> GetLocationsByCountry(string country)
-        //{
-        //    //Group By Political Sub Unit.
-        //    //Then by hospital
-                        
-        //    if (country == "U.S.A.")
-        //    {
-        //        Dictionary<string, List<TrialLocation>> locations = new Dictionary<string,List<TrialLocation>>();
+        public object GetAllSortedLocations()
+        {
+            //Group By Political Sub Unit.
+            //Then by hospital
 
-        //        var sortedSites = from location in GetUSLocations()
-        //                          where location.PostalAddress.CountryName == "U.S.A."
-        //                          orderby location.PostalAddress.PoliticalSubUnitName, location.FacilityName
-        //                          select location;
+            return new {
+                USA = GetUSASortedLocations(),
+                Canada = GetCanadianSortedLocations(),
+                Other = GetOtherSortedLocations()
+            };
 
-        //        foreach (TrialLocation location in sortedSites)
-        //        {
 
-        //            if (!locations.ContainsKey(location.PostalAddress.PoliticalSubUnitName))
-        //                locations.Add(location.PostalAddress.PoliticalSubUnitName, new List<TrialLocation>());
+        }
 
-        //            locations[location.PostalAddress.PoliticalSubUnitName].Add(location);
-        //        }
 
-                
+        private object GetNASortedLocations(string country)
+        {
+            OrderedDictionary locations = new OrderedDictionary();
 
-        //        return locations;
+            var sortedSites = from location in GetUSLocations()
+                              where location.PostalAddress.CountryName == country
+                              orderby location.PostalAddress.PoliticalSubUnitName, location.FacilityName
+                              select location;
 
-        //    }
+            foreach (TrialLocation location in sortedSites)
+            {
+                if (!locations.Contains(location.PostalAddress.PoliticalSubUnitName))
+                    locations.Add(location.PostalAddress.PoliticalSubUnitName, new List<TrialLocation>());
 
-        //    return new Dictionary<string, List<TrialLocation>>();
-        //}
+                ((List<TrialLocation>)locations[location.PostalAddress.PoliticalSubUnitName]).Add(location);
+            }
+
+            return locations;
+        }
+
+        private object GetUSASortedLocations()
+        {
+            return GetNASortedLocations("U.S.A.");
+        }
+
+        private object GetCanadianSortedLocations()
+        {
+            return GetNASortedLocations("Canada");
+        }
+
+
+
+        private object GetOtherSortedLocations()
+        {
+            OrderedDictionary locations = new OrderedDictionary();
+
+            var sortedSites = from location in GetUSLocations()
+                              where location.PostalAddress.CountryName != "U.S.A." 
+                                    && location.PostalAddress.CountryName != "Canada"
+                              orderby location.PostalAddress.PoliticalSubUnitName, location.FacilityName
+                              select location;
+
+            foreach (TrialLocation location in sortedSites)
+            {
+                if (!locations.Contains(location.PostalAddress.CountryName))
+                    locations.Add(location.PostalAddress.CountryName, new List<TrialLocation>());
+
+                ((List<TrialLocation>)locations[location.PostalAddress.CountryName]).Add(location);
+            }
+
+            return locations;
+
+        }
 
 
         public IEnumerable<TrialLocation> GetLocationsNearZip(GeoLocation origin, int radius)
@@ -92,6 +129,11 @@ namespace CancerGov.ClinicalTrials.Basic
         {
             public string FacilityName { get; set; }
             public LocationPostalAddress PostalAddress { get; set; }
+            public TrialContact CTGovContact { get; set; }
+            public bool HasContact
+            {
+                get { return CTGovContact != null; }
+            }
             /** need to add:
             "CTGovContact": { "type": "object"},
             "Investigator": { "type": "object"}

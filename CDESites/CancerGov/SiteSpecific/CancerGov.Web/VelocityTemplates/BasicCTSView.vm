@@ -1,6 +1,31 @@
 ﻿## Lots of script here. :(
 
+#macro(DrawLocation $loc)
+	<div>
+		<strong>$loc.FacilityName</strong><br>
+		$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
+		#if ($loc.HasContact)
+			Contact:
+			#if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.SurName))
+				$loc.CTGovContact.SurName
+			#else
+				Name Not Available
+			#end
+			<br>
+			#if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.Phone))
+			Phone: $loc.CTGovContact.Phone
+			#end			
 
+			#if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.Email))
+				Email: $loc.CTGovContact.Email
+			#end
+		#end
+		<br>
+		<br>
+	<div>
+#end
+
+<div class="medium-9 columns">
 Status: $SearchResults.Trial.CurrentProtocolStatus
 <div class="accordion desktop">
 	<section>
@@ -52,22 +77,59 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 	<section>
 		<h2>Contacts & Locations</h2>
 		<div>
-			#if($SearchResults.Control.HasZip())
-				Locations within $SearchResults.Control.ZipRadius miles of ZIP code "$SearchResults.Control.ZipLookup.PostalCode_ZIP"
-				<br>
-				<br>
-				#foreach($loc in $SearchResults.Trial.GetLocationsNearZip($SearchResults.Control.ZipLookup.GeoCode,$SearchResults.Control.ZipRadius))
-				#each
-					<div>
-					$loc.FacilityName<br>
-					$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
-					<br>
-					<br>
-					</div>
-				#end
-			#else
-				[Show Country Filters]
+			#if ($SearchResults.Trial.GetAllSortedLocations().USA.Count > 0)
+				<div data-filter-country="U.S.A">
+					#foreach($state in $SearchResults.Trial.GetAllSortedLocations().USA)
+					#each
+							<div>
+								<h3>$state.key</h3>
+								#foreach($loc in $state.Value)
+								#each
+									#DrawLocation($loc)
+								#end
+							</div>
+					#end
+				</div>
 			#end
+			#if ($SearchResults.Trial.GetAllSortedLocations().Canada.Count > 0)
+				<div data-filter-country="Canada">
+					#foreach($state in $SearchResults.Trial.GetAllSortedLocations().Canada)
+					#each
+							<div>
+								<h3>$state.key</h3>
+								#foreach($loc in $state.Value)
+								#each
+									<div>
+										$loc.FacilityName<br>
+										$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
+										<br>
+										<br>
+									<div>
+								#end
+							</div>
+					#end
+				</div>
+			#end
+			#if ($SearchResults.Trial.GetAllSortedLocations().Other.Count > 0)
+				<div data-filter-country="Other">
+					#foreach($state in $SearchResults.Trial.GetAllSortedLocations().Other)
+					#each
+							<div>
+								<h3>$state.key</h3>
+								#foreach($loc in $state.Value)
+								#each
+									<div>
+										$loc.FacilityName<br>
+										$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
+										<br>
+										<br>
+									<div>
+								#end
+							</div>
+					#end
+				</div>
+			#end
+
 		</div>
 	</section>
 
@@ -77,8 +139,12 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 			<strong>Primary ID</strong> $SearchResults.Trial.OrgStudyID <br>
 			<strong>Secondary IDs</strong> $SearchResults.Trial.SecondaryIDList <br>
 			<strong>Clinicaltrials.gov ID</strong> $SearchResults.Trial.NCTID <br>
+
 		</div>
 	</section>
 	
 </div>
-
+</div>
+<div class="medium-3 columns">
+	Content Here
+</div>

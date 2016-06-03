@@ -17,7 +17,7 @@
 	<br>
 #end
 
-
+<div class="medium-9 columns">
 ## If there are no results, then we need to show a different message
 <h5 id="ui-id-4">Results $SearchResults.Control.GetStartItemNum()-$SearchResults.Control.GetEndItemNum($SearchResults.Results.TotalResults) of $SearchResults.Results.TotalResults</h5>
 
@@ -63,4 +63,8 @@
 				&nbsp;
 		#end
 	</div>
+</div>
+</div>
+<div class="medium-3 columns">
+	Content Here
 </div>
