@@ -26,7 +26,7 @@
         <div class="large-4 small-11 columns legend" id="legend-type">Type/Condition</div>
         <div class="large-8 columns">
           <div class="row">
-            <input placeholder="Start typing to select a cancer type"  type="text" id="a" maxlength="100" name="t">
+            <input placeholder="Start typing to select a cancer type"  type="text" id="t" maxlength="100" name="t">
                 </div>
           <div class="row">
             Not sure of your cancer type? <a href="#" onclick="showKeyword(); return false;">Search by keyword</a> instead
@@ -40,7 +40,7 @@
         <div class="large-4 small-11 columns legend" id="legend-keyword">Keyword</div>
         <div class="large-8 columns">
           <div class="row">
-            <input type="text" id="a" maxlength="100" name="q">
+            <input type="text" id="q" maxlength="100" name="q">
                 </div>
           <div class="row">
             <a href="#" onclick="showCancerType(); return false;">Search by cancer type</a> instead
@@ -54,7 +54,7 @@
         <div class="large-4 small-11 columns legend" id="legend-zip">U.S. ZIP Code</div>
         <div class="large-8 columns">
           <div class="row">
-            <input type="text" maxlength="10" name="z">
+            <input id="z" type="text" maxlength="10" name="z">
                 </div>
           <div class="row">Show trials near this U.S. ZIP code.</div>
         </div>
