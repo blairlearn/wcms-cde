@@ -1,9 +1,14 @@
-﻿## Lots of script here. :(
-
+﻿
+## Draws a Single Location Item
 #macro(DrawLocation $loc)
-	<div>
-		<strong>$loc.FacilityName</strong><br>
-		$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
+	<div itemprop="location" itemscope itemtype="http://schema.org/Place">
+		<strong itemprop="name">$loc.FacilityName</strong><br>
+		<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+			<meta itemprop="addressCountry" content="$loc.PostalAddress.CountryName" />
+			<span itemprop="addressLocality">$loc.PostalAddress.City</span>, 
+			<span itemprop="addressRegion">$loc.PostalAddress.PoliticalSubUnitName</span>
+		</span><br>
+
 		#if ($loc.HasContact)
 			Contact:
 			#if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.SurName))
@@ -29,35 +34,9 @@
 Status: $SearchResults.Trial.CurrentProtocolStatus
 <div class="accordion desktop">
 	<section>
-	<h2>Trial Phase & Type</h2>	
-		<div>
-			<table class="table-default">
-				<tr>
-					<th>Phase</th>
-					<th>Type</th>
-					<th>Status</th>
-					<th>Age</th>
-				</tr>
-				<tr>
-					<td>$SearchResults.Trial.JoinedPhases</td>
-					<td>$SearchResults.Trial.JoinedTrialTypes</td>
-					<td>$SearchResults.Trial.CurrentProtocolStatus</td>
-					<td>$SearchResults.Trial.Eligibility.AgeText</td>
-					## Need to A) Find out where NCTID goes, and B) if it is OrgStudyID, then it is not duplicated.
-				</tr>
-			</table>
-		</div>
-	</section>
-	<section>
 	<h2>Description</h2>	
 		<div>
 			$SearchResults.Trial.BriefSummary
-		</div>
-	</section>
-	<section>
-	<h2>Trial Objectives and Outline</h2>
-		<div>
-			$SearchResults.Trial.DetailedDescription
 		</div>
 	</section>
 	<section>
@@ -66,19 +45,11 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 			$SearchResults.Trial.CTEntryCriteria
 		</div>
 	</section>
-
 	<section>
-		<h2>Lead Organization</h2>
-		<div>
-			[SPONSOR/LEADORG HeRE]
-		</div>
-	</section>
-
-	<section>
-		<h2>Contacts & Locations</h2>
+		<h2>Locations & Contacts</h2>
 		<div>
 			#if ($SearchResults.Trial.GetAllSortedLocations().USA.Count > 0)
-				<div data-filter-country="U.S.A">
+				<div>
 					#foreach($state in $SearchResults.Trial.GetAllSortedLocations().USA)
 					#each
 							<div>
@@ -134,6 +105,47 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 	</section>
 
 	<section>
+	<h2>Trial Objectives and Outline</h2>
+		<div>
+			$SearchResults.Trial.DetailedDescription
+		</div>
+	</section>
+	<section>
+	<h2>Trial Phase & Type</h2>	
+		<div>
+			<div class="row">
+				<div class="medium-6 columns">
+					Trial Phase
+				</div>
+				<div class="medium-6 columns">
+					Trial Type
+				</div>
+			</div>
+			<div class="row">
+				<div class="medium-6 columns">
+					#foreach($phase in $SearchResults.Trial.Phases)
+						#each
+						$phase<br>
+					#end
+				</div>
+				<div class="medium-6 columns">
+					#foreach($type in $SearchResults.Trial.TrialTypes)
+						#each
+						$type<br>
+					#end					
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<h2>Lead Organization</h2>
+		<div>
+			[SPONSOR/LEADORG HeRE]
+		</div>
+	</section>
+
+	<section>
 		<h2>Trial IDs</h2>
 		<div>
 			<strong>Primary ID</strong> $SearchResults.Trial.OrgStudyID <br>
@@ -142,8 +154,8 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 
 		</div>
 	</section>
-	
 </div>
+Share this clinical trial with your doctor (print) (email) 
 </div>
 <div class="medium-3 columns">
 	Content Here
