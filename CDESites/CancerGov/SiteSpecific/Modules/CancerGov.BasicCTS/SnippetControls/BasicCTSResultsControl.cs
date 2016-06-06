@@ -144,13 +144,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         {
             base.OnInit(e);
 
-            _basicCTSManager = new BasicCTSManager(
-                BasicCTSPageInfo.SearchIndex,
-                BasicCTSPageInfo.TrialIndexType,
-                BasicCTSPageInfo.MenuTermIndexType,
-                BasicCTSPageInfo.GeoLocIndexType,
-                BasicCTSPageInfo.SearchClusterName
-            );
+            _basicCTSManager = new BasicCTSManager();
 
             SetSearchParams();
         }

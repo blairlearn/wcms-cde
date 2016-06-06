@@ -18,7 +18,15 @@ namespace CancerGov.ClinicalTrials.Basic.HttpHandlers
 
         public void ProcessRequest(HttpContext context)
         {
-            context.Response.Write("");    
+            string query = context.Request.Params["q"];
+
+            //Handle this as a 404.
+            if (string.IsNullOrWhiteSpace(query))
+                throw new ArgumentException("Query Must Not be Null or Empty");
+
+            BasicCTSManager manager = new BasicCTSManager();
+
+            context.Response.ContentType = "application/json";    
         }
 
         #endregion

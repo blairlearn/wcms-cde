@@ -43,13 +43,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         {
             base.OnInit(e);
 
-            _basicCTSManager = new BasicCTSManager(
-                BasicCTSPageInfo.SearchIndex,
-                BasicCTSPageInfo.TrialIndexType,
-                BasicCTSPageInfo.MenuTermIndexType,
-                BasicCTSPageInfo.GeoLocIndexType,
-                BasicCTSPageInfo.SearchClusterName
-            );
+            _basicCTSManager = new BasicCTSManager();
 
         }
 
@@ -85,13 +79,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             
 
 
-            BasicCTSManager basicCTSManager = new BasicCTSManager(
-                BasicCTSPageInfo.SearchIndex,
-                BasicCTSPageInfo.TrialIndexType,
-                BasicCTSPageInfo.MenuTermIndexType,
-                BasicCTSPageInfo.GeoLocIndexType,
-                BasicCTSPageInfo.SearchClusterName
-            );
+            BasicCTSManager basicCTSManager = new BasicCTSManager();
 
             // Get Trial by ID
             var trial = _basicCTSManager.Get(nctid);

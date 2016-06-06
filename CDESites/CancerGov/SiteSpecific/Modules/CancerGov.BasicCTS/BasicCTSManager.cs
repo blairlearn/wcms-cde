@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,13 @@ using Elasticsearch.Net.ConnectionPool;
 using Nest;
 
 using NCI.Search;
+using CancerGov.ClinicalTrials.Basic.Configuration;
 
 namespace CancerGov.ClinicalTrials.Basic
 {
     public class BasicCTSManager
     {
+        private static readonly string CONFIG_SECTION_NAME = "nci/search/basicClinicalTrialSearch";
 
         private string _clusterName = "";
         private string _trialIndexType = "";
@@ -23,33 +26,33 @@ namespace CancerGov.ClinicalTrials.Basic
         private string _geoLocIndexType = "";
         private string _indexName = "";
 
-        public BasicCTSManager(
-            string indexName, 
-            string trialIndexType,
-            string menuTermIndexType,
-            string geoLocIndexType, 
-            string clusterName)
+        public BasicCTSManager()
         {
-            if (string.IsNullOrWhiteSpace(indexName))
-                throw new ArgumentNullException("indexName cannot be null or empty");
+            BasicClinicalTrialSearchSection config = (BasicClinicalTrialSearchSection)ConfigurationManager.GetSection(CONFIG_SECTION_NAME);
 
-            if (string.IsNullOrWhiteSpace(trialIndexType))
-                throw new ArgumentNullException("trialIndexType cannot be null or empty");
+            if (config == null)
+                throw new ConfigurationErrorsException("The configuration section, " + CONFIG_SECTION_NAME + ", cannot be found");
 
-            if (string.IsNullOrWhiteSpace(geoLocIndexType))
-                throw new ArgumentNullException("geoLocIndexType cannot be null or empty");
+            if (string.IsNullOrWhiteSpace(config.SearchIndex))
+                throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: searchIndex cannot be null or empty");
 
-            if (string.IsNullOrWhiteSpace(menuTermIndexType))
-                throw new ArgumentNullException("menuTermIndexType cannot be null or empty");
+            if (string.IsNullOrWhiteSpace(config.TrialIndexType))
+                throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: trialIndexType cannot be null or empty");
 
-            if (string.IsNullOrWhiteSpace(clusterName))
-                throw new ArgumentNullException("clusterName cannot be null or empty");
+            if (string.IsNullOrWhiteSpace(config.GeoLocIndexType))
+                throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: geoLocIndexType cannot be null or empty");
 
-            this._indexName = indexName;
-            this._trialIndexType = trialIndexType;
-            this._geoLocIndexType = geoLocIndexType;
-            this._menuTermIndexType = menuTermIndexType;
-            this._clusterName = clusterName;            
+            if (string.IsNullOrWhiteSpace(config.MenuTermIndexType))
+                throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: menuTermIndexType cannot be null or empty");
+
+            if (string.IsNullOrWhiteSpace(config.SearchCluster))
+                throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: searchCluster cannot be null or empty");
+
+            this._indexName = config.SearchIndex;
+            this._trialIndexType = config.TrialIndexType;
+            this._geoLocIndexType = config.GeoLocIndexType;
+            this._menuTermIndexType = config.MenuTermIndexType;
+            this._clusterName = config.SearchCluster;
         }
 
         /// <summary>
