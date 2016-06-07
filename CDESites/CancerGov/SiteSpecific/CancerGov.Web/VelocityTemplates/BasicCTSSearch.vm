@@ -1,36 +1,5 @@
-﻿<script>
-  function showCancerType() {
-  $("#fieldset-type").show();
-  $("#fieldset-type input").prop("disabled", false);
-  $("#fieldset-keyword").hide();
-  $("#fieldset-keyword input").prop("disabled", true);
-  }
+﻿<script src="/PublishedContent/js/BasicCTSSearchPage.js" type="text/javascript"></script>
 
-  function showKeyword() {
-  $("#fieldset-keyword").show();
-  $("#fieldset-keyword input").prop("disabled", false);
-  $("#fieldset-type").hide();
-  $("#fieldset-type input").prop("disabled", true);
-  }
-
-  $(function() {
-  showCancerType();
-  });
-
-  require(['jquery', 'Common/Enhancements/NCI'],function($, NCI) {
-  $(document).ready(function() {
-  NCI.doAutocomplete(
-  $('#t'),
-  '/BasicCTS.Service/v1/CancerTypeAutoSuggest',//URL or promise
-  false,
-  'q'
-
-
-  );
-  });
-  });
-
-</script>
 <div class="large-9 columns">
   <form class="clinical-trials-search-form" action="$SearchResults.ResultsPagePrettyUrl" method="get">
 
@@ -42,7 +11,7 @@
             <input placeholder="Start typing to select a cancer type"  type="text" id="t" maxlength="100" name="t" autocomplete="off">
                 </div>
           <div class="row">
-            Not sure of your cancer type? <a href="#" onclick="showKeyword(); return false;">Search by keyword</a> instead
+            Not sure of your cancer type? <a class="basiccts-keyword-toggle" href="#">Search by keyword</a> instead
           </div>
         </div>
       </div>
@@ -56,7 +25,7 @@
             <input type="text" id="q" maxlength="100" name="q">
                 </div>
           <div class="row">
-            <a href="#" onclick="showCancerType(); return false;">Search by cancer type</a> instead
+            <a class="basiccts-cancertype-toggle" href="#">Search by cancer type</a> instead
           </div>
         </div>
       </div>
