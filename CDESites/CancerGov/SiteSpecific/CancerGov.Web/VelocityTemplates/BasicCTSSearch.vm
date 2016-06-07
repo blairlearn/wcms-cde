@@ -31,8 +31,7 @@
   });
 
 </script>
-<div class="medium-9 columns">
-
+<div class="large-9 columns">
   <form class="clinical-trials-search-form" action="$SearchResults.ResultsPagePrettyUrl" method="get">
 
     <fieldset id="fieldset-type" aria-labelledby="legend-type">
@@ -94,6 +93,25 @@
     </div>
   </form>
 </div>
-<div class="medium-3 columns">
-  CONTENT HERE
+## Begin "Delighter" section ##
+<div class="delighter-rail large-3 columns">
+	<div class="delighter">
+		<h4>Have a question?</h4>
+		<p>We're here to help<br/>&nbsp;</p>
+		<p><a href='/contact'>Chat with us: <span class="live-help-button"><img alt="LiveHelp" src="/publishedcontent/images/images/spacer.gif"></span></a></p>
+		<p><a href="tel:1-800-422-2637">Call us: <span>1-800-4-CANCER</span></a></p>
+		<p><a href="tel:1-800-422-2637"><span>(1-800-422-6237)</span></a></p>
+	</div>
+	<a href="/about-cancer/treatment/clinical-trials/search/trial-guide  ">
+		<div class="delighter ctp-no-decoration">
+			<h4>Which trials are right for you?</h4>
+			<p><br/>Use the checklist in our guide to gather the information you’ll need.</p>
+		</div>
+	</a>
+	<a href="/about-cancer/treatment/clinical-trials/what-are-trials">
+		<div class="delighter ctp-no-decoration">
+			<h4>What Are Cancer Clinical Trials?</h4>
+			<p><br/>Learn what they are and what you should know about them.</p>
+		</div>
+	</a>
 </div>

@@ -30,7 +30,7 @@
 	<div>
 #end
 
-<div class="medium-9 columns">
+<div class="large-9 columns">
 Status: $SearchResults.Trial.CurrentProtocolStatus
 <div class="accordion desktop">
 	<section>
@@ -157,6 +157,18 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 </div>
 Share this clinical trial with your doctor (print) (email) 
 </div>
-<div class="medium-3 columns">
-	Content Here
+<div class="delighter-rail large-3 columns">
+	<div class="delighter">
+		<h4>Have a question?</h4>
+		<p>We're here to help<br/>&nbsp;</p>
+		<p><a href='/contact'>Chat with us: <span class="live-help-button"><img alt="LiveHelp" src="/publishedcontent/images/images/spacer.gif"></span></a></p>
+		<p><a href="tel:1-800-422-2637">Call us: <span>1-800-4-CANCER</span></a></p>
+		<p><a href="tel:1-800-422-2637"><span>(1-800-422-6237)</span></a></p>
+	</div>
+	<a href="/about-cancer/treatment/clinical-trials/taking-part">
+		<div class="delighter ctp-no-decoration">
+			<h4>I’ve found a trial—what’s my next step?</h4>
+			<p><br/>Information to help you decide if a clinical trial is right for you.</p>
+		</div>
+	</a>
 </div>
