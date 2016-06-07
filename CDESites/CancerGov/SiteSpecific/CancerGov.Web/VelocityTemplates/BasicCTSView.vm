@@ -156,6 +156,8 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 	</section>
 </div>
 Share this clinical trial with your doctor (print) (email) 
+$SearchResults.Control.PageInstruction.GetUrl("email")
+
 </div>
 <div class="delighter-rail large-3 columns">
 	<div class="delighter">
