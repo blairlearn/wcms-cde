@@ -32,133 +32,131 @@
 
 <div class="large-9 columns">
 Status: $SearchResults.Trial.CurrentProtocolStatus
-<div class="accordion desktop">
-	<section>
-	<h2>Description</h2>	
-		<div>
-			$SearchResults.Trial.BriefSummary
-		</div>
-	</section>
-	<section>
-	<h2>Eligibility Criteria</h2>	
-		<div>
-			$SearchResults.Trial.CTEntryCriteria
-		</div>
-	</section>
-	<section>
-		<h2>Locations & Contacts</h2>
-		<div>
-			#if ($SearchResults.Trial.GetAllSortedLocations().USA.Count > 0)
-				<div>
-					#foreach($state in $SearchResults.Trial.GetAllSortedLocations().USA)
-					#each
-							<div>
-								<h3>$state.key</h3>
-								#foreach($loc in $state.Value)
-								#each
-									#DrawLocation($loc)
-								#end
-							</div>
-					#end
-				</div>
-			#end
-			#if ($SearchResults.Trial.GetAllSortedLocations().Canada.Count > 0)
-				<div data-filter-country="Canada">
-					#foreach($state in $SearchResults.Trial.GetAllSortedLocations().Canada)
-					#each
-							<div>
-								<h3>$state.key</h3>
-								#foreach($loc in $state.Value)
-								#each
-									<div>
-										$loc.FacilityName<br>
-										$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
-										<br>
-										<br>
-									<div>
-								#end
-							</div>
-					#end
-				</div>
-			#end
-			#if ($SearchResults.Trial.GetAllSortedLocations().Other.Count > 0)
-				<div data-filter-country="Other">
-					#foreach($state in $SearchResults.Trial.GetAllSortedLocations().Other)
-					#each
-							<div>
-								<h3>$state.key</h3>
-								#foreach($loc in $state.Value)
-								#each
-									<div>
-										$loc.FacilityName<br>
-										$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
-										<br>
-										<br>
-									<div>
-								#end
-							</div>
-					#end
-				</div>
-			#end
+	<div class="accordion desktop">
+		<section>
+		<h2>Description</h2>	
+			<div>
+				$SearchResults.Trial.BriefSummary
+			</div>
+		</section>
+		<section>
+		<h2>Eligibility Criteria</h2>	
+			<div>
+				$SearchResults.Trial.CTEntryCriteria
+			</div>
+		</section>
+		<section>
+			<h2>Locations & Contacts</h2>
+			<div>
+				#if ($SearchResults.Trial.GetAllSortedLocations().USA.Count > 0)
+					<div>
+						#foreach($state in $SearchResults.Trial.GetAllSortedLocations().USA)
+						#each
+								<div>
+									<h3>$state.key</h3>
+									#foreach($loc in $state.Value)
+									#each
+										#DrawLocation($loc)
+									#end
+								</div>
+						#end
+					</div>
+				#end
+				#if ($SearchResults.Trial.GetAllSortedLocations().Canada.Count > 0)
+					<div data-filter-country="Canada">
+						#foreach($state in $SearchResults.Trial.GetAllSortedLocations().Canada)
+						#each
+								<div>
+									<h3>$state.key</h3>
+									#foreach($loc in $state.Value)
+									#each
+										<div>
+											$loc.FacilityName<br>
+											$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
+											<br>
+											<br>
+										<div>
+									#end
+								</div>
+						#end
+					</div>
+				#end
+				#if ($SearchResults.Trial.GetAllSortedLocations().Other.Count > 0)
+					<div data-filter-country="Other">
+						#foreach($state in $SearchResults.Trial.GetAllSortedLocations().Other)
+						#each
+								<div>
+									<h3>$state.key</h3>
+									#foreach($loc in $state.Value)
+									#each
+										<div>
+											$loc.FacilityName<br>
+											$loc.PostalAddress.City, $loc.PostalAddress.PoliticalSubUnitName<br>
+											<br>
+											<br>
+										<div>
+									#end
+								</div>
+						#end
+					</div>
+				#end
 
-		</div>
-	</section>
+			</div>
+		</section>
 
-	<section>
-	<h2>Trial Objectives and Outline</h2>
-		<div>
-			$SearchResults.Trial.DetailedDescription
-		</div>
-	</section>
-	<section>
-	<h2>Trial Phase & Type</h2>	
-		<div>
-			<div class="row">
-				<div class="medium-6 columns">
-					Trial Phase
+		<section>
+		<h2>Trial Objectives and Outline</h2>
+			<div>
+				$SearchResults.Trial.DetailedDescription
+			</div>
+		</section>
+		<section>
+		<h2>Trial Phase & Type</h2>	
+			<div>
+				<div class="row">
+					<div class="medium-6 columns">
+						Trial Phase
+					</div>
+					<div class="medium-6 columns">
+						Trial Type
+					</div>
 				</div>
-				<div class="medium-6 columns">
-					Trial Type
+				<div class="row">
+					<div class="medium-6 columns">
+						#foreach($phase in $SearchResults.Trial.Phases)
+							#each
+							$phase<br>
+						#end
+					</div>
+					<div class="medium-6 columns">
+						#foreach($type in $SearchResults.Trial.TrialTypes)
+							#each
+							$type<br>
+						#end					
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="medium-6 columns">
-					#foreach($phase in $SearchResults.Trial.Phases)
-						#each
-						$phase<br>
-					#end
-				</div>
-				<div class="medium-6 columns">
-					#foreach($type in $SearchResults.Trial.TrialTypes)
-						#each
-						$type<br>
-					#end					
-				</div>
+		</section>
+
+		<section>
+			<h2>Lead Organization</h2>
+			<div>
+				[SPONSOR/LEADORG HeRE]
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<section>
-		<h2>Lead Organization</h2>
-		<div>
-			[SPONSOR/LEADORG HeRE]
-		</div>
-	</section>
+		<section>
+			<h2>Trial IDs</h2>
+			<div>
+				<strong>Primary ID</strong> $SearchResults.Trial.OrgStudyID <br>
+				<strong>Secondary IDs</strong> $SearchResults.Trial.SecondaryIDList <br>
+				<strong>Clinicaltrials.gov ID</strong> $SearchResults.Trial.NCTID <br>
 
-	<section>
-		<h2>Trial IDs</h2>
-		<div>
-			<strong>Primary ID</strong> $SearchResults.Trial.OrgStudyID <br>
-			<strong>Secondary IDs</strong> $SearchResults.Trial.SecondaryIDList <br>
-			<strong>Clinicaltrials.gov ID</strong> $SearchResults.Trial.NCTID <br>
-
-		</div>
-	</section>
+			</div>
+		</section>
+	</div>
 </div>
-Share this clinical trial with your doctor (print) (email) 
-$SearchResults.Control.PageInstruction.GetUrl("email")
 
-</div>
 <div class="delighter-rail large-3 columns">
 	<div class="delighter">
 		<h4>Have a question?</h4>
@@ -173,4 +171,25 @@ $SearchResults.Control.PageInstruction.GetUrl("email")
 			<p>Information to help you decide if a clinical trial is right for you.</p>
 		</div>
 	</a>
+</div>
+
+<div class="row">
+	<div class="large-9 columns">
+		#set($printUrl = $SearchResults.Control.PageInstruction.GetUrl("print"))##
+		#set($emailUrl = $SearchResults.Control.PageInstruction.GetUrl("email"))##
+		#set($emailOnClick = "NCIAnalytics.eMailLink(this); dynPopWindow(&#39;" + $fullUrl + "&#39;, &#39;emailPopUp&#39;, &#39;height=525,width=492&#39;); return false;")##
+		<div class="page-options no-resize cts-share">
+			Share this clinical trial with your doctor:
+			<li class="po-print">
+				<a title="Print" onclick="NCIAnalytics.PrintLink(this);" href="$printUrl">
+					<img alt="Print" src="/publishedcontent/images/images/spacer.gif" />
+				</a>
+			</li>
+			<li class="po-email">
+				<a title="Email" href="$emailUrl" onclick="$onClickText">
+					<img alt="Email" src="/publishedcontent/images/images/spacer.gif" />
+				</a>
+			</li>
+		</div>
+	</div>
 </div>
