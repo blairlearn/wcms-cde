@@ -39,7 +39,7 @@
         <div class="large-4 small-11 columns legend" id="legend-type">Type/Condition</div>
         <div class="large-8 columns">
           <div class="row">
-            <input placeholder="Start typing to select a cancer type"  type="text" id="t" maxlength="100" name="t" autocomplete="no">
+            <input placeholder="Start typing to select a cancer type"  type="text" id="t" maxlength="100" name="t" autocomplete="off">
                 </div>
           <div class="row">
             Not sure of your cancer type? <a href="#" onclick="showKeyword(); return false;">Search by keyword</a> instead
