@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace CancerGov.ClinicalTrials.Basic.HttpHandlers
 {
@@ -26,7 +29,20 @@ namespace CancerGov.ClinicalTrials.Basic.HttpHandlers
 
             BasicCTSManager manager = new BasicCTSManager();
 
-            context.Response.ContentType = "application/json";    
+            Regex startsPattern = new Regex("^" + query, RegexOptions.IgnoreCase);
+            Regex containsPattern = new Regex("\\b" + query, RegexOptions.IgnoreCase);
+
+            var response = from suggestion in manager.GetCancerTypeSuggestions(query)
+                           where startsPattern.IsMatch(suggestion.Name) || containsPattern.IsMatch(suggestion.Name) 
+                           orderby startsPattern.IsMatch(suggestion.Name) descending
+                           select new {
+                               term = suggestion.Name,
+                               id = suggestion.CDRID + "|" + suggestion.Hash
+                           };
+
+            context.Response.ContentType = "application/json";            
+            context.Response.Write(JsonConvert.SerializeObject(response));
+
         }
 
         #endregion

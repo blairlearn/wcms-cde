@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Elasticsearch.Net;
@@ -16,6 +17,9 @@ using CancerGov.ClinicalTrials.Basic.Configuration;
 
 namespace CancerGov.ClinicalTrials.Basic
 {
+    /// <summary>
+    /// An interface between the Search Screens and the Elastic Search DBs.  (A controller if you will)
+    /// </summary>
     public class BasicCTSManager
     {
         private static readonly string CONFIG_SECTION_NAME = "nci/search/basicClinicalTrialSearch";
@@ -26,6 +30,9 @@ namespace CancerGov.ClinicalTrials.Basic
         private string _geoLocIndexType = "";
         private string _indexName = "";
 
+        /// <summary>
+        /// Creates a new instance of a BasicCTSManager
+        /// </summary>
         public BasicCTSManager()
         {
             BasicClinicalTrialSearchSection config = (BasicClinicalTrialSearchSection)ConfigurationManager.GetSection(CONFIG_SECTION_NAME);
@@ -143,6 +150,51 @@ namespace CancerGov.ClinicalTrials.Basic
                 response.Documents
             );
         }
+
+        /// <summary>
+        /// Get Cancer Type Suggestions for a query
+        /// </summary>
+        /// <param name="query"></param>
+        public IEnumerable<MenuTerm> GetCancerTypeSuggestions(string query)
+        {
+            ElasticClient client = GetESConnection();
+
+                //STRING_DELIMS = " (),-./:"
+                //STOPWORDS = set(["of", "the", "and"])
+
+            string[] query_terms = Regex.Split(query, "[ (),-./:]+", RegexOptions.IgnoreCase);
+
+            var response = client.Search<MenuTerm>(sd => sd
+                .Index(_indexName)
+                .Type(_menuTermIndexType)
+                .From(0)
+                .Size(3000)
+                .Sort(s => s.OnField("Name"))
+                .Filter(f => f
+                    .Bool(b => b.Should(
+                            innerFilter =>
+                            {
+                             
+                                foreach (string term in query_terms)
+                                {
+                                    innerFilter.Term("SplitNames", term);
+                                }
+
+                                return innerFilter;
+                            }
+                        )
+                     
+                    )
+                 )
+            );
+
+            if (response.Total > 0)
+                return response.Documents;
+            else
+                return new MenuTerm[] { };
+        }
+
+
 
         private ElasticClient GetESConnection()
         {

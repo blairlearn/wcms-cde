@@ -1,21 +1,35 @@
 ﻿<script>
-	function showCancerType() {
-		$("#fieldset-type").show();
-		$("#fieldset-type input").prop("disabled", false);
-		$("#fieldset-keyword").hide();
-		$("#fieldset-keyword input").prop("disabled", true);
-	}
+  function showCancerType() {
+  $("#fieldset-type").show();
+  $("#fieldset-type input").prop("disabled", false);
+  $("#fieldset-keyword").hide();
+  $("#fieldset-keyword input").prop("disabled", true);
+  }
 
-	function showKeyword() {
-		$("#fieldset-keyword").show();
-		$("#fieldset-keyword input").prop("disabled", false);
-		$("#fieldset-type").hide();
-		$("#fieldset-type input").prop("disabled", true);
-	}
+  function showKeyword() {
+  $("#fieldset-keyword").show();
+  $("#fieldset-keyword input").prop("disabled", false);
+  $("#fieldset-type").hide();
+  $("#fieldset-type input").prop("disabled", true);
+  }
 
-	$(function() {
-		showCancerType();
-	});
+  $(function() {
+  showCancerType();
+  });
+
+  require(['jquery', 'Common/Enhancements/NCI'],function($, NCI) {
+  $(document).ready(function() {
+  NCI.doAutocomplete(
+  $('#t'),
+  '/BasicCTS.Service/v1/CancerTypeAutoSuggest',//URL or promise
+  false,
+  'q'
+
+
+  );
+  });
+  });
+
 </script>
 <div class="medium-9 columns">
 

@@ -63,6 +63,7 @@
     <Compile Include="Configuration\BasicClinicalTrialSearchSection.cs" />
     <Compile Include="GeoLocation.cs" />
     <Compile Include="HttpHandlers\CTSCancerTypeAutoSuggestHandler.cs" />
+    <Compile Include="MenuTerm.cs" />
     <Compile Include="PhraseSearchParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BasicCTSPageInfo.cs" />
