@@ -61,14 +61,23 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             if (cancerType != string.Empty)
             {
-                searchParams = new CancerTypeSearchParam()
-                {
-                    //get cancer type.
-                    CancerTypeID = cancerType,
-                    ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
-                };
+                string[] ctarr = cancerType.Split(new Char[]{'|'}, StringSplitOptions.RemoveEmptyEntries);
 
-                _setFields |= SetFields.CancerType;
+                if (ctarr.Length >= 1)
+                {
+                    //Test id to match ^CDR\d+$
+                    searchParams = new CancerTypeSearchParam()
+                    {
+                        //get cancer type.
+                        CancerTypeID = ctarr[0],
+                        //Add in the label which is go to ElasticSearch, fetch ctarr[1] (the hash) and get the text
+                        ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
+                    };
+
+                    _setFields |= SetFields.CancerType;
+
+                }
+
             }
             else
             {
