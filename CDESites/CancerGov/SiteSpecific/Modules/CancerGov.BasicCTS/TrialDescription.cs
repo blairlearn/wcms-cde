@@ -21,13 +21,7 @@ namespace CancerGov.ClinicalTrials.Basic
         public string CTGovDisclaimer { get; set; }
         public TrialLocation[] Locations { get; set; }
 
-        //public IEnumerable<Object> SortedAllLocations
-        //{
-        //    get
-        //    {
-                
-        //    }
-        //}
+        private object _allSortedLocations = null;
 
         private TrialLocation[] _USLocations = null;
 
@@ -49,37 +43,17 @@ namespace CancerGov.ClinicalTrials.Basic
 
         public object GetAllSortedLocations()
         {
-            //Group By Political Sub Unit.
-            //Then by hospital
-
-            return new {
-                USA = GetUSASortedLocations(),
-                Canada = GetCanadianSortedLocations(),
-                Other = GetOtherSortedLocations()
-            };
-
-
-        }
-
-
-        private object GetNASortedLocations(string country)
-        {
-            OrderedDictionary locations = new OrderedDictionary();
-
-            var sortedSites = from location in GetUSLocations()
-                              where location.PostalAddress.CountryName == country
-                              orderby location.PostalAddress.PoliticalSubUnitName, location.FacilityName
-                              select location;
-
-            foreach (TrialLocation location in sortedSites)
+            if (_allSortedLocations == null)
             {
-                if (!locations.Contains(location.PostalAddress.PoliticalSubUnitName))
-                    locations.Add(location.PostalAddress.PoliticalSubUnitName, new List<TrialLocation>());
-
-                ((List<TrialLocation>)locations[location.PostalAddress.PoliticalSubUnitName]).Add(location);
+                _allSortedLocations = new
+                {
+                    USA = GetUSASortedLocations(),
+                    Canada = GetCanadianSortedLocations(),
+                    Other = GetOtherSortedLocations()
+                };
             }
 
-            return locations;
+            return _allSortedLocations;
         }
 
         private object GetUSASortedLocations()
@@ -92,26 +66,50 @@ namespace CancerGov.ClinicalTrials.Basic
             return GetNASortedLocations("Canada");
         }
 
+        private object GetNASortedLocations(string country)
+        {
+            OrderedDictionary locations = new OrderedDictionary();
+
+            if (this.Locations != null)
+            {
+                var sortedSites = from location in this.Locations
+                                  where location.PostalAddress.CountryName == country
+                                  orderby location.PostalAddress.PoliticalSubUnitName, location.FacilityName
+                                  select location;
+
+                foreach (TrialLocation location in sortedSites)
+                {
+                    if (!locations.Contains(location.PostalAddress.PoliticalSubUnitName))
+                        locations.Add(location.PostalAddress.PoliticalSubUnitName, new List<TrialLocation>());
+
+                    ((List<TrialLocation>)locations[location.PostalAddress.PoliticalSubUnitName]).Add(location);
+                }
+            }
+
+            return locations;
+        }
 
 
         private object GetOtherSortedLocations()
         {
             OrderedDictionary locations = new OrderedDictionary();
 
-            var sortedSites = from location in GetUSLocations()
-                              where location.PostalAddress.CountryName != "U.S.A." 
-                                    && location.PostalAddress.CountryName != "Canada"
-                              orderby location.PostalAddress.PoliticalSubUnitName, location.FacilityName
-                              select location;
-
-            foreach (TrialLocation location in sortedSites)
+            if (this.Locations != null)
             {
-                if (!locations.Contains(location.PostalAddress.CountryName))
-                    locations.Add(location.PostalAddress.CountryName, new List<TrialLocation>());
+                var sortedSites = from location in this.Locations
+                                  where (location.PostalAddress.CountryName != "U.S.A."
+                                        && location.PostalAddress.CountryName != "Canada")
+                                  orderby location.PostalAddress.CountryName, location.PostalAddress.PoliticalSubUnitName, location.FacilityName
+                                  select location;
 
-                ((List<TrialLocation>)locations[location.PostalAddress.CountryName]).Add(location);
+                foreach (TrialLocation location in sortedSites)
+                {
+                    if (!locations.Contains(location.PostalAddress.CountryName))
+                        locations.Add(location.PostalAddress.CountryName, new List<TrialLocation>());
+
+                    ((List<TrialLocation>)locations[location.PostalAddress.CountryName]).Add(location);
+                }
             }
-
             return locations;
 
         }
