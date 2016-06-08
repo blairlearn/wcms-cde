@@ -115,24 +115,18 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 			<div>
 				<div class="row">
 					<div class="medium-6 columns">
-						Trial Phase
+            <strong>Trial Phase</strong>
 					</div>
 					<div class="medium-6 columns">
-						Trial Type
+            <strong>Trial Type</strong>
 					</div>
 				</div>
 				<div class="row">
 					<div class="medium-6 columns">
-						#foreach($phase in $SearchResults.Trial.Phases)
-							#each
-							$phase<br>
-						#end
+						$SearchResults.Trial.JoinedPhases
 					</div>
 					<div class="medium-6 columns">
-						#foreach($type in $SearchResults.Trial.TrialTypes)
-							#each
-							$type<br>
-						#end					
+						$SearchResults.Trial.JoinedTrialTypes
 					</div>
 				</div>
 			</div>
