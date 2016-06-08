@@ -141,7 +141,32 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 		<section>
 			<h2>Lead Organization</h2>
 			<div>
-				[SPONSOR/LEADORG HeRE]
+        <strong>Lead Sponsor</strong><br>
+        $SearchResults.Trial.LeadSponsor<br>
+        <br>
+        #if($SearchResults.Trial.Collaborators.Count > 0)
+          #if($SearchResults.Trial.Collaborators.Count > 1)
+            Collaborators<br>
+          #else
+            Collaborator<br>
+          #end
+          #foreach($collab in $SearchResults.Trial.Collaborators)
+            #each
+            $collab<br>
+          #end
+        #end
+        <br>
+        #if($SearchResults.Trial.OverallOfficials.Count > 0)
+          #if($SearchResults.Trial.OverallOfficials.Count > 1)
+            Principal Investigators<br>
+          #else
+            Principal Investigator<br>
+          #end
+          #foreach($official in $SearchResults.Trial.OverallOfficials)
+            #each
+            $official.SurName<br>
+         #end
+        #end
 			</div>
 		</section>
 

@@ -12,6 +12,9 @@ namespace CancerGov.ClinicalTrials.Basic
     /// </summary>
     public class TrialDescription : TrialBase
     {
+        public string[] Collaborators { get; set; }
+        public string LeadSponsor { get; set; }
+        public TrialOfficial[] OverallOfficials { get; set; }
         public string BriefSummary { get; set; }
         public string DetailedDescription { get; set; }
         public string CTEntryCriteria { get; set; }
@@ -124,6 +127,15 @@ namespace CancerGov.ClinicalTrials.Basic
 
 
         #region Supporting Classes
+        /// <summary>
+        /// This represents an Overall Official for a Clinical Trial.
+        /// </summary>
+        public class TrialOfficial
+        {
+            public string Role { get; set; }
+            public string SurName { get; set; }
+            public string Affiliation { get; set; }
+        }
 
         public class TrialLocation
         {
