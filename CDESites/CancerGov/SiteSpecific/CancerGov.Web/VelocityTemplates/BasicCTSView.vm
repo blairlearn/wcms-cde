@@ -47,12 +47,12 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 		</section>
 		<section>
 			<h2>Locations & Contacts</h2>
-			<div>
+			<div id="filterable-trialslist">
 				#if ($SearchResults.Trial.GetAllSortedLocations().USA.Count > 0)
-					<div>
+					<div data-basiccts-countrygroup="U.S.A.">
 						#foreach($state in $SearchResults.Trial.GetAllSortedLocations().USA)
 						#each
-								<div>
+								<div data-basiccts-psunitgroup="$state.key">
 									<h3>$state.key</h3>
 									#foreach($loc in $state.Value)
 									#each
@@ -63,10 +63,10 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 					</div>
 				#end
 				#if ($SearchResults.Trial.GetAllSortedLocations().Canada.Count > 0)
-					<div data-filter-country="Canada">
+					<div data-basiccts-countrygroup="Canada">
 						#foreach($state in $SearchResults.Trial.GetAllSortedLocations().Canada)
 						#each
-								<div>
+								<div data-basiccts-psunitgroup="$state.key">
 									<h3>$state.key</h3>
 									#foreach($loc in $state.Value)
 									#each
@@ -82,12 +82,12 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 					</div>
 				#end
 				#if ($SearchResults.Trial.GetAllSortedLocations().Other.Count > 0)
-					<div data-filter-country="Other">
+					<div data-basiccts-countrygroup="Other">
 						#foreach($state in $SearchResults.Trial.GetAllSortedLocations().Other)
 						#each
-								<div>
+								<div data-basiccts-psunitgroup="$state.Value">
 									<h3>$state.key</h3>
-									#foreach($loc in $state.Value)
+									#foreach($loc in $state.key)
 									#each
 										<div>
 											$loc.FacilityName<br>
