@@ -344,9 +344,7 @@
 				#DrawBlogDescription($resultItem)
 			#end##
 			
-			<p>
-				<a href="$resultItem.Href">$continueReading &gt;</a>
-			</p>
+			<a href="$resultItem.Href">$continueReading &gt;</a>
 			
 			#if($showDate || $showLongDescription)##
 				</div>##
@@ -414,7 +412,7 @@
 #end##
 
 #macro(DrawBlogDescription $resultItem)
-	<p class="body">##
+	<span class="body">##
 		#if($resultItem.BlogBody.length()>0)##
 			$resultItem.BlogBody
 		#elseif($resultItem.LongDescription.length()>0)##
@@ -422,7 +420,7 @@
 		#else##
 			&nbsp;##
 		#end##
-	</p>##
+	</span>##
 #end##
 
 #DrawLanguageStrings($CDEContext)
