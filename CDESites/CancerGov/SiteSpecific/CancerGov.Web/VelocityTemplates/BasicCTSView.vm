@@ -8,9 +8,9 @@
   <br>
     <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
       <meta itemprop="addressCountry" content="$loc.PostalAddress.CountryName" />
-      <span itemprop="addressLocality">$loc.PostalAddress.City</span>
-      #if (!$Tools.IsNullOrWhitespace($loc.PostalAddress.PoliticalSubUnitName))
-      , <span itemprop="addressRegion">$loc.PostalAddress.PoliticalSubUnitName</span>
+      <span itemprop="addressLocality">$loc.PostalAddress.City</span>##
+#if (!$Tools.IsNullOrWhitespace($loc.PostalAddress.PoliticalSubUnitName))##
+, <span itemprop="addressRegion">$loc.PostalAddress.PoliticalSubUnitName</span>
       #end
     </span>
     <br>
