@@ -225,11 +225,14 @@
 			<li class="po-print">
 				<a title="Print" onclick="NCIAnalytics.PrintLink(this);" href="$printUrl">
 					<img alt="Print" src="/publishedcontent/images/images/spacer.gif" />
+          <span class="text">Print</span>
 				</a>
 			</li>
 			<li class="po-email">
 				<a title="Email" href="$emailUrl" onclick="$onClickText">
 					<img alt="Email" src="/publishedcontent/images/images/spacer.gif" />
+          <span class="text">Email</span>
+          
 				</a>
 			</li>
 		</div>
