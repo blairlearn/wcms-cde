@@ -93,7 +93,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 };
 
                 if (!string.IsNullOrWhiteSpace(phrase))
+                {
                     _setFields |= SetFields.Phrase;
+                }
+                
             }
 
             #endregion
@@ -176,9 +179,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             {
                 List<string> plist = new List<string>();
 
-                if (!string.IsNullOrWhiteSpace(SearchParams.CancerTypeDisplayName))
-                    plist.Add(SearchParams.CancerTypeDisplayName);
-
                 if (SearchParams.Age != null && SearchParams.Age > 0)
                     plist.Add("Age " + SearchParams.Age);
 
@@ -190,8 +190,18 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
                 data.Value = "Results of your search";
 
+                if(plist.Count == 0)
+                {
+                    if (!string.IsNullOrWhiteSpace(SearchParams.CancerTypeDisplayName))
+                    {
+                        data.Value += " for \"" + SearchParams.CancerTypeDisplayName + "\"";
+                    }
+                }
+
                 if (plist.Count > 0)
                 {
+                    if (!string.IsNullOrWhiteSpace(SearchParams.CancerTypeDisplayName))
+                        plist.Add("Type/Condition " + SearchParams.CancerTypeDisplayName);
                     data.Value += " for \"" + string.Join(", ", plist) + "\"";
                 }
 
