@@ -40,8 +40,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
         private SetFields _setFields = SetFields.None;
         private BasicCTSManager _basicCTSManager = null;
-        
-
 
         private void SetSearchParams()
         {
@@ -65,11 +63,18 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
                 if (ctarr.Length >= 1)
                 {
+                    string displayName = null;
+                    if(ctarr.Length > 1)    
+                        displayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], ctarr[1]);
+
                     //Test id to match ^CDR\d+$
                     searchParams = new CancerTypeSearchParam()
                     {
                         //get cancer type.
                         CancerTypeID = ctarr[0],
+
+                        CancerTypeDisplayName = displayName,
+
                         //Add in the label which is go to ElasticSearch, fetch ctarr[1] (the hash) and get the text
                         ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
                     };
@@ -162,11 +167,17 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         {
             base.OnLoad(e);
 
+            //Do the search
+            var results = _basicCTSManager.SearchTemplate(SearchParams);
+
             // Copying the Title & Short Title logic from Advanced Form
             //set the page title as the protocol title
             PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
             {
                 List<string> plist = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(SearchParams.CancerTypeDisplayName))
+                    plist.Add(SearchParams.CancerTypeDisplayName);
 
                 if (SearchParams.Age != null && SearchParams.Age > 0)
                     plist.Add("Age " + SearchParams.Age);
@@ -183,12 +194,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 {
                     data.Value += " for \"" + string.Join(", ", plist) + "\"";
                 }
+
+                if (results.TotalResults == 0)
+                    data.Value = "No Trials Matched Your Search";
             });
-
-
-
-            //Do the search
-            var results = _basicCTSManager.SearchTemplate(SearchParams);
 
             // Show Results
 

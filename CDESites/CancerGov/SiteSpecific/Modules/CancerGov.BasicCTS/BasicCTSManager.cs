@@ -194,6 +194,43 @@ namespace CancerGov.ClinicalTrials.Basic
                 return new MenuTerm[] { };
         }
 
+        public string GetCancerTypeDisplayName(string cancertypeid, string hashid)
+        {
+            ElasticClient client = GetESConnection();
+
+            var response = client.Search<MenuTerm>(sd => sd
+                .Index(_indexName)
+                .Type(_menuTermIndexType)
+                .From(0)
+                .Size(1)
+                .Filter(f => 
+                    //.Bool(b => b.Should(
+                    //        innerFilter =>
+                            {
+                                FilterContainer ff = f.Term("CDRID", cancertypeid);
+                                if (!String.IsNullOrWhiteSpace(hashid))
+                                    ff &= f.Term("Hash", hashid);
+
+                                return ff;
+                            }
+                        //)
+                    //)
+                )
+            );
+
+            if(response.Total == 1)
+            {
+                return response.Documents.First().Name;
+            }
+            else
+            {
+                if (!String.IsNullOrWhiteSpace(hashid))
+                    return GetCancerTypeDisplayName(cancertypeid, null);
+                else
+                    return null;
+            }
+            
+        }
 
 
         private ElasticClient GetESConnection()
