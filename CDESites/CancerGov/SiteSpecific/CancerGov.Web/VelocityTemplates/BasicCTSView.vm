@@ -221,20 +221,15 @@
 		#set($emailUrl = $SearchResults.Control.PageInstruction.GetUrl("email"))##
 		#set($emailOnClick = "NCIAnalytics.eMailLink(this); dynPopWindow(&#39;" + $fullUrl + "&#39;, &#39;emailPopUp&#39;, &#39;height=525,width=492&#39;); return false;")##
 		<div class="page-options no-resize cts-share">
-			Share this clinical trial with your doctor:
-			<li class="po-print">
+      <span class="share-text">Share this clinical trial with your doctor:</span>
 				<a title="Print" onclick="NCIAnalytics.PrintLink(this);" href="$printUrl">
-					<img alt="Print" src="/publishedcontent/images/images/spacer.gif" />
+          <span class="icon icon-print"></span>
           <span class="text">Print</span>
 				</a>
-			</li>
-			<li class="po-email">
-				<a title="Email" href="$emailUrl" onclick="$onClickText">
-					<img alt="Email" src="/publishedcontent/images/images/spacer.gif" />
+				<a title="Email" href="$emailUrl" onclick="$emailOnClick">
+          <span class="icon icon-email"></span>
           <span class="text">Email</span>
-          
 				</a>
-			</li>
 		</div>
 	</div>
 </div>
