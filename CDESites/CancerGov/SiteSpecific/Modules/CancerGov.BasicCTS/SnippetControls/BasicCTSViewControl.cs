@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
+using NCI.Web;
 
 
 
@@ -44,6 +45,11 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         public bool HasZip()
         {
             return ZipLookup != null;
+        }
+
+        public bool HasShowAll()
+        {
+            return Request.Params.AllKeys.Contains("all");
         }
 
         protected string GetGlossifiedTrialPhase(string[] phases)
@@ -111,6 +117,33 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             }
 
             return string.Join(", ", glossPhases);
+        }
+
+        /// <summary>
+        /// Gets the View URL for a zip-code proximity search
+        /// </summary>
+        /// <returns></returns>
+        public string GetNearbyZipUrl()
+        {
+            NciUrl url = PageInstruction.GetUrl("CurrentUrl");
+            
+            url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
+
+            return url.ToString();
+        }
+
+        /// <summary>
+        /// Gets the View URL for a all-locations search following a zipcode search
+        /// </summary>
+        /// <returns></returns>
+        public string GetAllLocationsUrl()
+        {
+            NciUrl url = PageInstruction.GetUrl("CurrentUrl");
+
+            url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
+            url.QueryParameters.Add("all", "true");
+
+            return url.ToString();
         }
 
         protected override void OnInit(EventArgs e)
@@ -181,6 +214,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
             {
                 url.QueryParameters.Add("id", nctid);
+                url.QueryParameters.Add("z", zip);
             });
 
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
