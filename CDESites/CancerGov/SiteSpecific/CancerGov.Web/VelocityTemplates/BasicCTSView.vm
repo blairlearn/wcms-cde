@@ -106,7 +106,9 @@
 #end
 
 <div class="large-9 columns">
-Status: $SearchResults.Trial.CurrentProtocolStatus
+  <div class="status">
+    Status: $SearchResults.Trial.CurrentProtocolStatus
+  </div>
 	<div class="accordion desktop">
 		<section>
 		<h2>Description</h2>	
