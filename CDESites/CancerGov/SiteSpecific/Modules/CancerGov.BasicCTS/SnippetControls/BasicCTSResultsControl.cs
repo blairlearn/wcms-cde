@@ -52,6 +52,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             int age = this.ParmAsInt(AGE_PARAM, 0);
             int gender = this.ParmAsInt(GENDER_PARAM, 0); //0 = decline, 1 = female, 2 = male, 
             string cancerType = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
+            string cancerTypeDisplayName = null;
 
             BaseCTSSearchParam searchParams = null;
 
@@ -63,9 +64,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
                 if (ctarr.Length >= 1)
                 {
-                    string displayName = null;
                     if(ctarr.Length > 1)    
-                        displayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], ctarr[1]);
+                        cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], ctarr[1]);
 
                     //Test id to match ^CDR\d+$
                     searchParams = new CancerTypeSearchParam()
@@ -73,7 +73,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                         //get cancer type.
                         CancerTypeID = ctarr[0],
 
-                        CancerTypeDisplayName = displayName,
+                        CancerTypeDisplayName = cancerTypeDisplayName,
 
                         //Add in the label which is go to ElasticSearch, fetch ctarr[1] (the hash) and get the text
                         ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
@@ -113,6 +113,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
                         _setFields |= SetFields.ZipProximity;
                 }
+                else
+                {
+                    invalidSearchParam = true;
+                }
             }
 
             #endregion
@@ -149,8 +153,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             }
 
             #endregion
-
-
 
             SearchParams = searchParams;
         }
@@ -196,6 +198,11 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     {
                         data.Value += " for \"" + SearchParams.CancerTypeDisplayName + "\"";
                     }
+                    else if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
+                    {
+                        data.Value += " for \"all trials\"";
+                    }
+                    
                 }
 
                 if (plist.Count > 0)
@@ -203,7 +210,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     if (!string.IsNullOrWhiteSpace(SearchParams.CancerTypeDisplayName))
                         plist.Add("Type/Condition " + SearchParams.CancerTypeDisplayName);
                     data.Value += " for \"" + string.Join(", ", plist) + "\"";
-                }
+                }   
 
                 if (results.TotalResults == 0)
                     data.Value = "No Trials Matched Your Search";

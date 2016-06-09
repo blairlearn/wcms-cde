@@ -8,6 +8,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
     public class BasicCTSBaseControl : SnippetControl
     {
         private BasicCTSPageInfo _basicCTSPageInfo = null;
+        public bool invalidSearchParam = false;
 
         /// <summary>
         /// Gets a query parameter as a string or uses a default
@@ -42,6 +43,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 }
                 else
                 {
+                    invalidSearchParam = true;
                     return def;
                 }
             }
