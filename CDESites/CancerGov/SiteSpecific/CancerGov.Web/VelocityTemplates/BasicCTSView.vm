@@ -34,6 +34,77 @@
 	</div>
 #end
 
+#macro(DrawLocations)
+  #if($SearchResults.Control.HasZip())
+    #DrawProximityLocations()
+  #else
+    #DrawFilterableLocations()
+  #end
+#end
+
+## This is used to draw all study sites with filters.
+#macro(DrawFilterableLocations)
+<div id="filterable-trialslist">
+  #if ($SearchResults.Trial.GetAllSortedLocations().USA.Count > 0)
+  <div data-basiccts-countrygroup="U.S.A.">
+    #foreach($state in $SearchResults.Trial.GetAllSortedLocations().USA)
+    #each
+    <div data-basiccts-psunitgroup="$state.key">
+      <h3>$state.key</h3>
+      #foreach($loc in $state.Value)
+      #each
+      #DrawLocation($loc)
+      #end
+    </div>
+    #end
+  </div>
+  #end
+  #if ($SearchResults.Trial.GetAllSortedLocations().Canada.Count > 0)
+  <div data-basiccts-countrygroup="Canada">
+    #foreach($state in $SearchResults.Trial.GetAllSortedLocations().Canada)
+    #each
+    <div data-basiccts-psunitgroup="$state.key">
+      <h3>$state.key</h3>
+      #foreach($loc in $state.Value)
+      #each
+      #DrawLocation($loc)
+      #end
+    </div>
+    #end
+  </div>
+  #end
+  #if ($SearchResults.Trial.GetAllSortedLocations().Other.Count > 0)
+  <div data-basiccts-countrygroup="Other">
+    #foreach($country in $SearchResults.Trial.GetAllSortedLocations().Other)
+    #each
+    <div data-basiccts-psunitgroup="$country.key">
+      <h3>$country.key</h3>
+      #foreach($loc in $country.value)
+      #each
+      #DrawLocation($loc)
+      #end
+    </div>
+    #end
+  </div>
+  #end
+
+</div>
+#end
+
+## This is used to draw the closest sites when viewing by proximity
+#macro(DrawProximityLocations)
+<div id="proximity-trialslist">
+  
+  Locations within $SearchResults.Control.ZipRadius miles of ZIP code "$SearchResults.Control.ZipLookup.PostalCode_ZIP"
+  <br>
+    <br>
+      #foreach($loc in $SearchResults.Trial.GetLocationsNearZip($SearchResults.Control.ZipLookup.GeoCode,$SearchResults.Control.ZipRadius))
+      #each
+        #DrawLocation($loc)
+      #end
+    </div>
+#end
+
 <div class="large-9 columns">
 Status: $SearchResults.Trial.CurrentProtocolStatus
 	<div class="accordion desktop">
@@ -51,52 +122,8 @@ Status: $SearchResults.Trial.CurrentProtocolStatus
 		</section>
 		<section>
 			<h2>Locations & Contacts</h2>
-			<div id="filterable-trialslist">
-				#if ($SearchResults.Trial.GetAllSortedLocations().USA.Count > 0)
-					<div data-basiccts-countrygroup="U.S.A.">
-						#foreach($state in $SearchResults.Trial.GetAllSortedLocations().USA)
-						#each
-								<div data-basiccts-psunitgroup="$state.key">
-									<h3>$state.key</h3>
-									#foreach($loc in $state.Value)
-									#each
-										#DrawLocation($loc)
-									#end
-								</div>
-						#end 
-					</div>
-				#end
-				#if ($SearchResults.Trial.GetAllSortedLocations().Canada.Count > 0)
-					<div data-basiccts-countrygroup="Canada">
-						#foreach($state in $SearchResults.Trial.GetAllSortedLocations().Canada)
-						#each
-								<div data-basiccts-psunitgroup="$state.key">
-									<h3>$state.key</h3>
-                  #foreach($loc in $state.Value)
-                  #each
-                    #DrawLocation($loc)
-                  #end
-                </div>
-						#end
-					</div>
-				#end
-				#if ($SearchResults.Trial.GetAllSortedLocations().Other.Count > 0)
-					<div data-basiccts-countrygroup="Other">
-						#foreach($country in $SearchResults.Trial.GetAllSortedLocations().Other)
-						#each
-								<div data-basiccts-psunitgroup="$country.key">
-									<h3>$country.key</h3>
-                  #foreach($loc in $country.value)
-                  #each
-                    #DrawLocation($loc)
-                  #end
-                </div>
-						#end
-					</div>
-				#end
-
-			</div>
-		</section>
+      #DrawLocations()
+    </section>
 
 		<section>
 		<h2>Trial Objectives and Outline</h2>
