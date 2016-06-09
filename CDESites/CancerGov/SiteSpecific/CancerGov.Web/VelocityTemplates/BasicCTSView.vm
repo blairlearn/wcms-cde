@@ -3,43 +3,45 @@
 ## Draws a Single Location Item
 
 #macro(DrawLocation $loc)
-<div itemprop="location" itemscope itemtype="http://schema.org/Place">
-		<strong itemprop="name">$loc.FacilityName</strong><br>
-		<span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-			<meta itemprop="addressCountry" content="$loc.PostalAddress.CountryName" />
+<div itemprop="location" itemscope="" itemtype="http://schema.org/Place">
+  <strong itemprop="name">$loc.FacilityName</strong>
+  <br>
+    <span itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+      <meta itemprop="addressCountry" content="$loc.PostalAddress.CountryName" />
       <span itemprop="addressLocality">$loc.PostalAddress.City</span>
       #if (!$Tools.IsNullOrWhitespace($loc.PostalAddress.PoliticalSubUnitName))
       , <span itemprop="addressRegion">$loc.PostalAddress.PoliticalSubUnitName</span>
       #end
-    </span><br>
+    </span>
+    <br>
 
-		#if ($loc.HasContact)
-			Contact:
-			#if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.SurName))
-				$loc.CTGovContact.SurName
-			#else
-				Name Not Available
-			#end
-			<br>
-			#if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.Phone))
-			Phone: $loc.CTGovContact.Phone
-			#end			
+      #if ($loc.HasContact)
+      Contact:
+      #if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.SurName))
+      $loc.CTGovContact.SurName
+      #else
+      Name Not Available
+      #end
+      <br>
+        #if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.Phone))
+        Phone: $loc.CTGovContact.Phone
+        #end
 
-			#if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.Email))
-				Email: $loc.CTGovContact.Email
-			#end
-		#end
-		<br>
-		<br>
+        #if (!$Tools.IsNullOrWhitespace($loc.CTGovContact.Email))
+        Email: $loc.CTGovContact.Email
+        #end
+        #end
+        <br>
+          <br>
 	</div>
 #end
 
 #macro(DrawLocations)
-  #if($SearchResults.Control.HasZip())
-    #DrawProximityLocations()
-  #else
-    #DrawFilterableLocations()
-  #end
+#if($SearchResults.Control.HasZip())
+#DrawProximityLocations()
+#else
+#DrawFilterableLocations()
+#end
 #end
 
 ## This is used to draw all study sites with filters.
@@ -94,7 +96,7 @@
 ## This is used to draw the closest sites when viewing by proximity
 #macro(DrawProximityLocations)
 <div id="proximity-trialslist">
-  
+
   Locations within $SearchResults.Control.ZipRadius miles of ZIP code "$SearchResults.Control.ZipLookup.PostalCode_ZIP"
   <br>
     <br>
@@ -109,127 +111,144 @@
   <div class="status">
     Status: $SearchResults.Trial.CurrentProtocolStatus
   </div>
-	<div class="accordion desktop">
-		<section>
-		<h2>Description</h2>	
-			<div>
-				$SearchResults.Trial.BriefSummary
-			</div>
-		</section>
-		<section>
-		<h2>Eligibility Criteria</h2>	
-			<div>
-				$SearchResults.Trial.CTEntryCriteria
-			</div>
-		</section>
-		<section>
-			<h2>Locations & Contacts</h2>
+  <div class="accordion desktop">
+    <section>
+      <h2>Description</h2>
+      <div>
+        $SearchResults.Trial.BriefSummary
+      </div>
+    </section>
+    <section>
+      <h2>Eligibility Criteria</h2>
+      <div>
+        $SearchResults.Trial.CTEntryCriteria
+      </div>
+    </section>
+    <section>
+      <h2>Locations & Contacts</h2>
       #DrawLocations()
     </section>
 
-		<section>
-		<h2>Trial Objectives and Outline</h2>
-			<div>
-				$SearchResults.Trial.DetailedDescription
-			</div>
-		</section>
-		<section>
-		<h2>Trial Phase & Type</h2>	
-			<div>
-				<div class="row">
-					<div class="medium-6 columns">
+    <section>
+      <h2>Trial Objectives and Outline</h2>
+      <div>
+        $SearchResults.Trial.DetailedDescription
+      </div>
+    </section>
+    <section>
+      <h2>Trial Phase & Type</h2>
+      <div>
+        <div class="row">
+          <div class="medium-6 columns">
             <strong>Trial Phase</strong>
-					</div>
-					<div class="medium-6 columns">
+          </div>
+          <div class="medium-6 columns">
             <strong>Trial Type</strong>
-					</div>
-				</div>
-				<div class="row">
-					<div class="medium-6 columns">
-						$SearchResults.Trial.JoinedPhases
-					</div>
-					<div class="medium-6 columns">
-						$SearchResults.Trial.JoinedTrialTypes
-					</div>
-				</div>
-			</div>
-		</section>
+          </div>
+        </div>
+        <div class="row">
+          <div class="medium-6 columns">
+            $SearchResults.GlossifiedPhase
+          </div>
+          <div class="medium-6 columns">
+            $SearchResults.Trial.JoinedTrialTypes
+          </div>
+        </div>
+      </div>
+    </section>
 
-		<section>
-			<h2>Lead Organization</h2>
-			<div>
-        <strong>Lead Sponsor</strong><br>
-        $SearchResults.Trial.LeadSponsor<br>
+    <section>
+      <h2>Lead Organization</h2>
+      <div>
+        <strong>Lead Sponsor</strong>
         <br>
-        #if($SearchResults.Trial.Collaborators.Count > 0)
-          #if($SearchResults.Trial.Collaborators.Count > 1)
-            Collaborators<br>
-          #else
-            Collaborator<br>
-          #end
-          #foreach($collab in $SearchResults.Trial.Collaborators)
-            #each
-            $collab<br>
-          #end
-        #end
-        <br>
-        #if($SearchResults.Trial.OverallOfficials.Count > 0)
-          #if($SearchResults.Trial.OverallOfficials.Count > 1)
-            Principal Investigators<br>
-          #else
-            Principal Investigator<br>
-          #end
-          #foreach($official in $SearchResults.Trial.OverallOfficials)
-            #each
-            $official.SurName<br>
+          $SearchResults.Trial.LeadSponsor<br>
+            <br>
+              #if($SearchResults.Trial.Collaborators.Count > 0)
+              #if($SearchResults.Trial.Collaborators.Count > 1)
+              Collaborators<br>
+                #else
+                Collaborator<br>
+                  #end
+                  #foreach($collab in $SearchResults.Trial.Collaborators)
+                  #each
+                  $collab<br>
+                    #end
+                    #end
+                    <br>
+                      #if($SearchResults.Trial.OverallOfficials.Count > 0)
+                      #if($SearchResults.Trial.OverallOfficials.Count > 1)
+                      Principal Investigators<br>
+                        #else
+                        Principal Investigator<br>
+                          #end
+                          #foreach($official in $SearchResults.Trial.OverallOfficials)
+                          #each
+                          $official.SurName<br>
          #end
         #end
 			</div>
-		</section>
+    </section>
 
-		<section>
-			<h2>Trial IDs</h2>
-			<div>
-				<strong>Primary ID</strong> $SearchResults.Trial.OrgStudyID <br>
-				<strong>Secondary IDs</strong> $SearchResults.Trial.SecondaryIDList <br>
-				<strong>Clinicaltrials.gov ID</strong> $SearchResults.Trial.NCTID <br>
+    <section>
+      <h2>Trial IDs</h2>
+      <div>
+        <strong>Primary ID</strong> $SearchResults.Trial.OrgStudyID <br>
+          <strong>Secondary IDs</strong> $SearchResults.Trial.SecondaryIDList <br>
+            <strong>Clinicaltrials.gov ID</strong> $SearchResults.Trial.NCTID <br>
 
 			</div>
-		</section>
-	</div>
+    </section>
+  </div>
 </div>
 
 <div class="delighter-rail large-3 columns">
-	<div class="delighter cts-livehelp">
-		<h4>Have a question?</h4>
-		<p>We're here to help</p><hr/>
-		<p><a href='/contact'>Chat with us: <span class="live-help-button"><img alt="LiveHelp" src="/publishedcontent/images/images/spacer.gif"></span></a></p>
-		<p><a href="tel:1-800-422-2637">Call us: <span>1-800-4-CANCER</span></a></p>
-		<p><a href="tel:1-800-422-2637"><span>(1-800-422-6237)</span></a></p>
-	</div>
-	<a href="/about-cancer/treatment/clinical-trials/taking-part">
-		<div class="delighter cts-next-step">
-			<h4>I’ve found a trial—what’s my next step?</h4><hr/>
-			<p>Information to help you decide if a clinical trial is right for you.</p>
-		</div>
-	</a>
+  <div class="delighter cts-livehelp">
+    <h4>Have a question?</h4>
+    <p>We're here to help</p>
+    <hr/>
+    <p>
+      <a href='/contact'>
+        Chat with us: <span class="live-help-button">
+          <img alt="LiveHelp" src="/publishedcontent/images/images/spacer.gif">
+        </span>
+      </a>
+    </p>
+    <p>
+      <a href="tel:1-800-422-2637">
+        Call us: <span>1-800-4-CANCER</span>
+      </a>
+    </p>
+    <p>
+      <a href="tel:1-800-422-2637">
+        <span>(1-800-422-6237)</span>
+      </a>
+    </p>
+  </div>
+  <a href="/about-cancer/treatment/clinical-trials/taking-part">
+    <div class="delighter cts-next-step">
+      <h4>I’ve found a trial—what’s my next step?</h4>
+      <hr/>
+      <p>Information to help you decide if a clinical trial is right for you.</p>
+    </div>
+  </a>
 </div>
 
 <div class="row">
-	<div class="large-9 columns">
-		#set($printUrl = $SearchResults.Control.PageInstruction.GetUrl("print"))##
-		#set($emailUrl = $SearchResults.Control.PageInstruction.GetUrl("email"))##
-		#set($emailOnClick = "NCIAnalytics.eMailLink(this); dynPopWindow(&#39;" + $fullUrl + "&#39;, &#39;emailPopUp&#39;, &#39;height=525,width=492&#39;); return false;")##
-		<div class="page-options no-resize cts-share">
+  <div class="large-9 columns">
+    #set($printUrl = $SearchResults.Control.PageInstruction.GetUrl("print"))##
+    #set($emailUrl = $SearchResults.Control.PageInstruction.GetUrl("email"))##
+    #set($emailOnClick = "NCIAnalytics.eMailLink(this); dynPopWindow(&#39;" + $fullUrl + "&#39;, &#39;emailPopUp&#39;, &#39;height=525,width=492&#39;); return false;")##
+    <div class="page-options no-resize cts-share">
       <span class="share-text">Share this clinical trial with your doctor:</span>
-				<a title="Print" onclick="NCIAnalytics.PrintLink(this);" href="$printUrl">
-          <span class="icon icon-print"></span>
-          <span class="text">Print</span>
-				</a>
-				<a title="Email" href="$emailUrl" onclick="$emailOnClick">
-          <span class="icon icon-email"></span>
-          <span class="text">Email</span>
-				</a>
-		</div>
+      <a title="Print" onclick="NCIAnalytics.PrintLink(this);" href="$printUrl">
+        <span class="icon icon-print"></span>
+        <span class="text">Print</span>
+      </a>
+      <a title="Email" href="$emailUrl" onclick="$emailOnClick">
+        <span class="icon icon-email"></span>
+        <span class="text">Email</span>
+      </a>
+    </div>
 	</div>
 </div>

@@ -28,14 +28,14 @@ namespace CancerGov.ClinicalTrials.Basic
             get
             {
                 //Should probably sort...
-                return string.Join(",", ProtocolPhases);
+                return string.Join(", ", ProtocolPhases);
             }
         }
         public string JoinedTrialTypes
         {
             get
             {
-                return string.Join(",", StudyCategoryNames);
+                return string.Join(", ", StudyCategoryNames);
             }
         }
 
@@ -43,7 +43,7 @@ namespace CancerGov.ClinicalTrials.Basic
         {
             get
             {
-                return string.Join(",", String.Join(",", SecondaryIDs), NCTID);
+                return string.Join(", ", String.Join(", ", SecondaryIDs), NCTID);
             }
         }
 

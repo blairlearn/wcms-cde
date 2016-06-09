@@ -22,6 +22,13 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         //private string _indexType = "trial";
         //private string _clusterName = "SearchCluster";
         //private string _templatePath = "~/VelocityTemplates/BasicCTSView.vm";
+        private const string _phaseI = "Phase I";
+        private const string _phaseII = "Phase II";
+        private const string _phaseIII = "Phase III";
+        private const string _phaseIV = "Phase IV";
+
+        private const string _phaseI_II = "Phase I/II";
+        private const string _phaseII_III = "Phase II/III";
 
         public ZipLookup ZipLookup { get; set; }
         public int ZipRadius {
@@ -37,6 +44,73 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         public bool HasZip()
         {
             return ZipLookup != null;
+        }
+
+        protected string GetGlossifiedTrialPhase(string[] phases)
+        {
+            int phaseBits = 0x00;
+            List<string> glossPhases = new List<string>();
+
+            foreach (string phase in phases)
+            {
+                switch (phase)
+                {
+                    case _phaseI:
+                        phaseBits |= 0x01;
+                        break;
+                    case _phaseII:
+                        phaseBits |= 0x02;
+                        break;
+                    case _phaseIII:
+                        phaseBits |= 0x04;
+                        break;
+                    case _phaseIV:
+                        phaseBits |= 0x08;
+                        break;
+                    default:
+                        glossPhases.Add(phase);
+                        break;
+                }
+            }
+
+
+            SortedDictionary<int, string> termIds = new SortedDictionary<int, string>();
+
+            switch (phaseBits)
+            {
+                case 0x00: // no phases recognized, just use glossPhases
+                    break;
+                case 0x01: //"phase I":
+                    termIds.Add(45830, _phaseI);
+                    break;
+                case 0x02: //"phase II":
+                    termIds.Add(45831, _phaseII);
+                    break;
+                case 0x03: //"phase I/II":
+                    termIds.Add(45832, _phaseI_II);
+                    break;
+                case 0x04: //"phase III":
+                    termIds.Add(45833, _phaseIII);
+                    break;
+                case 0x06: //"phase II/III":
+                    termIds.Add(45834, _phaseII_III);
+                    break;
+                case 0x08: //"phase IV":
+                    termIds.Add(45835, _phaseIV);
+                    break;
+                default: // unknown, combine all phases
+                    glossPhases.Add("unknown phase pairing: " + string.Join(", ", phases) + " (bits ="  + phaseBits + ")");
+                    return string.Join(", ", glossPhases);
+            }
+
+            foreach (KeyValuePair<int, string> pair in termIds)
+            {
+                glossPhases.Add("<a onclick=\"javascript:popWindow('defbyid','CDR00000" + pair.Key.ToString() + "&amp;version=Patient&amp;language=English'); return false;\" " +
+                "href=\"/Common/PopUps/popDefinition.aspx?id=CDR00000" + pair.Key.ToString() + "&amp;version=Patient&amp;language=English\" " +
+                "class=\"definition\">" + pair.Value + "</a>");
+            }
+
+            return string.Join(", ", glossPhases);
         }
 
         protected override void OnInit(EventArgs e)
@@ -114,7 +188,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     new
                     {
                         Trial = trial,
-                        Control = this
+                        Control = this,
+                        GlossifiedPhase = GetGlossifiedTrialPhase(trial.ProtocolPhases)
                     }
                 )
             );
