@@ -37,6 +37,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// Gets the Search Parameters for the current request.
         /// </summary>
         public BaseCTSSearchParam SearchParams { get; private set; }
+        public PhraseSearchParam PhraseSearchParams { get; set; }
+        public CancerTypeSearchParam CancerTypeSearchParams { get; set; }
 
         private SetFields _setFields = SetFields.None;
         private BasicCTSManager _basicCTSManager = null;
@@ -66,6 +68,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 {
                     if(ctarr.Length > 1)    
                         cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], ctarr[1]);
+
 
                     //Test id to match ^CDR\d+$
                     searchParams = new CancerTypeSearchParam()
@@ -179,41 +182,16 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             //set the page title as the protocol title
             PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
             {
-                List<string> plist = new List<string>();
-
-                if (SearchParams.Age != null && SearchParams.Age > 0)
-                    plist.Add("Age " + SearchParams.Age);
-
-                if (!string.IsNullOrWhiteSpace(SearchParams.Gender))
-                    plist.Add("Gender " + SearchParams.Gender);
-
-                if (HasZip())
-                    plist.Add("ZIP " + SearchParams.ZipLookup.PostalCode_ZIP);
-
-                data.Value = "Results of your search";
-
-                if(plist.Count == 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(SearchParams.CancerTypeDisplayName))
-                    {
-                        data.Value += " for \"" + SearchParams.CancerTypeDisplayName + "\"";
-                    }
-                    else if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
-                    {
-                        data.Value += " for \"all trials\"";
-                    }
-                    
-                }
-
-                if (plist.Count > 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(SearchParams.CancerTypeDisplayName))
-                        plist.Add("Type/Condition " + SearchParams.CancerTypeDisplayName);
-                    data.Value += " for \"" + string.Join(", ", plist) + "\"";
-                }   
-
+                data.Value = "Results of Your Search";
+ 
                 if (results.TotalResults == 0)
+                {
                     data.Value = "No Trials Matched Your Search";
+                }
+                else if (invalidSearchParam)
+                {
+                    data.Value = "No Results";
+                }
             });
 
             // Show Results
@@ -252,6 +230,47 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 return totalResults.ToString();
             else
                 return possibleLast.ToString();
+        }
+
+        public string GetParamsList()
+        {
+            List<string> plist = new List<string>();
+
+            if (SearchParams is CancerTypeSearchParam)
+            {
+                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
+
+                if (!string.IsNullOrWhiteSpace(CancerTypeSearchParams.CancerTypeDisplayName))
+                    plist.Add("Type/Condition \"" + CancerTypeSearchParams.CancerTypeDisplayName + "\"");
+            }
+
+            if (SearchParams is PhraseSearchParam)
+            {
+                PhraseSearchParams = (PhraseSearchParam)SearchParams;
+                if (!string.IsNullOrWhiteSpace(PhraseSearchParams.Phrase))
+                    plist.Add("Keyword \"" + PhraseSearchParams.Phrase + "\"");
+            }
+
+            if (SearchParams.Age != null && SearchParams.Age > 0)
+                plist.Add("Age \"" + SearchParams.Age + "\"");
+
+            if (!string.IsNullOrWhiteSpace(SearchParams.Gender))
+                plist.Add("Gender \"" + SearchParams.Gender + "\"");
+
+            if (HasZip())
+                plist.Add("ZIP \"" + SearchParams.ZipLookup.PostalCode_ZIP + "\"");
+
+            if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
+            {
+                return "all trials\"";
+            }
+
+            return string.Join(", ", plist);
+        }
+
+        public bool HasInvalidParams()
+        {
+            return this.invalidSearchParam;
         }
 
         /// <summary>

@@ -16,13 +16,21 @@ namespace CancerGov.ClinicalTrials.Basic
         /// </summary>
         public string CancerTypeID { get; set; }
 
+        /// <summary>
+        /// Gets and Sets the cancer type display name to use for this search
+        /// </summary>
+        public string CancerTypeDisplayName { get; set; }
+
         protected override void AddTemplateParams(Nest.FluentDictionary<string, object> paramdict)
         {
 
             // Set the cancertypeid only if we have one.  Maybe clean it up too if needbe.
-
             if (!String.IsNullOrWhiteSpace(CancerTypeID))
                 paramdict.Add("cancertypeid", this.CancerTypeID);
+
+            // Set the cancertypedisplayname only if we have one.  Maybe clean it up too if needbe.
+            if (!String.IsNullOrWhiteSpace(CancerTypeID))
+                paramdict.Add("cancertypedisplayname", this.CancerTypeDisplayName);
 
         }
 

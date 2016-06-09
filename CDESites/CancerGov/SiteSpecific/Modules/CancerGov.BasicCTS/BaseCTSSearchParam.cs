@@ -67,11 +67,6 @@ namespace CancerGov.ClinicalTrials.Basic
         /// </summary>
         public string ESTemplateFile { get; set; }
 
-        /// <summary>
-        /// Gets and Sets the cancer type display name to use for this search
-        /// </summary>
-        public string CancerTypeDisplayName { get; set; }
-
         //We may need some sorting options here too...
 
         /// <summary>
