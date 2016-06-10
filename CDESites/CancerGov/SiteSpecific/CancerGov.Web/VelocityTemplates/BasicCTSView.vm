@@ -256,7 +256,7 @@
   <div class="large-9 columns">
     #set($printUrl = $SearchResults.Control.PageInstruction.GetUrl("print"))##
     #set($emailUrl = $SearchResults.Control.PageInstruction.GetUrl("email"))##
-    #set($emailOnClick = "NCIAnalytics.eMailLink(this); dynPopWindow(&#39;" + $fullUrl + "&#39;, &#39;emailPopUp&#39;, &#39;height=525,width=492&#39;); return false;")##
+    #set($emailOnClick = "NCIAnalytics.eMailLink(this); dynPopWindow(&#39;${emailUrl}&#39;, &#39;emailPopUp&#39;, &#39;height=525,width=492&#39;); return false;")##
     <div class="page-options no-resize cts-share">
       <span class="share-text">Share this clinical trial with your doctor:</span>
       <a title="Print" onclick="NCIAnalytics.PrintLink(this);" href="$printUrl">
