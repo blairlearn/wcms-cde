@@ -78,7 +78,7 @@
     #end
   ## If there are no results, then we need to show a different message
   #else
-    <p>No clinical trials matched your search for $SearchResults.Control.GetParamsList() .</p>
+    <p>No clinical trials matched your search for $SearchResults.Control.NoResultsParams().</p>
     <p>For assistance, please contact our Cancer Information Service. You can <a href="/contact">chat online</a> or call 1-800-4CANCER (1-800-622-6237).</p>
     <br>
     <a href="/about-cancer/treatment/clinical-trials/basic">Try a new search</a>
