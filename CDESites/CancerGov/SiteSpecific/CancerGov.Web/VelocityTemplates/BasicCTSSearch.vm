@@ -45,7 +45,7 @@
 
     <fieldset aria-labelledby="legend-age">
       <div class="row">
-        <div class="large-4 small-11 columns legend" id="legend-age">Your Age</div>
+        <div class="large-4 small-11 columns legend" id="legend-age">Age</div>
         <div class="large-8 columns">
           <div class="row">
             <input class="small-3" type="text" id="a" maxlength="4" name="a">
