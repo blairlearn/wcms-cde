@@ -160,8 +160,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             SearchParams = searchParams;
         }
 
-        
-
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -193,7 +191,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     data.Value = "No Results";
                 }
             });
-
+            
             // Show Results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                 BasicCTSPageInfo.ResultsPageTemplatePath, 
@@ -261,7 +259,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
             {
-                return "all trials\"";
+                return "\"all trials\"";
             }
 
             return string.Join(", ", plist);
