@@ -11,7 +11,7 @@
             <input placeholder="Start typing to select a cancer type"  type="text" id="ct" maxlength="100" name="ct" autocomplete="off">
                 </div>
           <div class="row">
-            Not sure of your cancer type? <a class="basiccts-keyword-toggle" href="#">Search by keyword</a> instead
+            Not sure of your cancer type? <a class="basiccts-keyword-toggle" href="#">Search by keyword</a> instead.
           </div>
         </div>
       </div>
@@ -25,7 +25,7 @@
             <input type="text" id="q" maxlength="100" name="q">
                 </div>
           <div class="row">
-            <a class="basiccts-cancertype-toggle" href="#">Search by cancer type</a> instead
+            <a class="basiccts-cancertype-toggle" href="#">Search by cancer type</a> instead.
           </div>
         </div>
       </div>
