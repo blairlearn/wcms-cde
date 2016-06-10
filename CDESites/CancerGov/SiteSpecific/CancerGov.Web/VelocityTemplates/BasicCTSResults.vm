@@ -66,9 +66,9 @@
   #if($SearchResults.Results.TotalResults > 0)
     #if($SearchResults.Control.HasInvalidParams() == false)
       <h5 id="ui-id-4">
-        You searched for: $SearchResults.Control.GetParamsList()<br>
-        Results $SearchResults.Control.GetStartItemNum()-$SearchResults.Control.GetEndItemNum($SearchResults.Results.TotalResults) of $SearchResults.Results.TotalResults
+        Results $SearchResults.Control.GetStartItemNum()-$SearchResults.Control.GetEndItemNum($SearchResults.Results.TotalResults) of $SearchResults.Results.TotalResults for: $SearchResults.Control.GetParamsList()
       </h5>
+      <br>
       #DrawResults($SearchResults)
     #else
       <p>No results were found matching your criteria.</p>

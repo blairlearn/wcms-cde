@@ -42,6 +42,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
         private SetFields _setFields = SetFields.None;
         private BasicCTSManager _basicCTSManager = null;
+        private string cancerTypeIDAndHash = null;
 
         private void SetSearchParams()
         {
@@ -62,6 +63,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             if (cancerType != string.Empty)
             {
+                cancerTypeIDAndHash = cancerType;
                 string[] ctarr = cancerType.Split(new Char[]{'|'}, StringSplitOptions.RemoveEmptyEntries);
 
                 if (ctarr.Length >= 1)
@@ -368,8 +370,23 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
 
             //Phrase and type are based on the type of object
+            if (SearchParams is CancerTypeSearchParam)
+            {
+                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
+
+                if ((_setFields & SetFields.CancerType) != 0)
+                    url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
+            }
+
+            if (SearchParams is PhraseSearchParam)
+            {
+                PhraseSearchParams = (PhraseSearchParam)SearchParams;
+                if ((_setFields & SetFields.Phrase) != 0)
+                    url.QueryParameters.Add(PRASE_PARAM, PhraseSearchParams.Phrase);
+            }
 
             //Items Per Page
+            url.QueryParameters.Add(ITEMSPP_PARAM, SearchParams.ItemsPerPage.ToString());
 
             return url.ToString();
         }
