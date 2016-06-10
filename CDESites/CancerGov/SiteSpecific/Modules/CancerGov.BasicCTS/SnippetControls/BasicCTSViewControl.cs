@@ -47,9 +47,9 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             return ZipLookup != null;
         }
 
-        public bool HasShowAll()
+        public int GetShowAll()
         {
-            return Request.Params.AllKeys.Contains("all");
+            return ParmAsInt("all", -1);
         }
 
         protected string GetGlossifiedTrialPhase(string[] phases)
@@ -128,6 +128,14 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             NciUrl url = PageInstruction.GetUrl("CurrentUrl");
             
             url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
+            if (url.QueryParameters.ContainsKey("all"))
+            {
+                url.QueryParameters["all"] = "0";
+            }
+            else
+            {
+                url.QueryParameters.Add("all", "0");
+            }
 
             return url.ToString();
         }
@@ -141,7 +149,14 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             NciUrl url = PageInstruction.GetUrl("CurrentUrl");
 
             url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
-            url.QueryParameters.Add("all", "true");
+            if (url.QueryParameters.ContainsKey("all"))
+            {
+                url.QueryParameters["all"] = "1";
+            }
+            else
+            {
+                url.QueryParameters.Add("all", "1");
+            }
 
             return url.ToString();
         }
@@ -215,6 +230,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             {
                 url.QueryParameters.Add("id", nctid);
                 url.QueryParameters.Add("z", zip);
+                url.QueryParameters.Add("all", GetShowAll().ToString());
             });
 
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(

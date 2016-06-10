@@ -37,7 +37,7 @@
 #end
 
 #macro(DrawLocations)
-#if($SearchResults.Control.HasShowAll())
+#if($SearchResults.Control.GetShowAll() > 0)
 #DrawAllLocations()
 #elseif($SearchResults.Control.HasZip())
 #DrawProximityLocations()
@@ -100,7 +100,7 @@
 <div id="proximity-trialslist">
 
   <span class="right">
-    <a href="$SearchResults.Control.GetAllLocationsUrl()">Show all locations</a>
+    <a id="location-link" href="$SearchResults.Control.GetAllLocationsUrl()">Show all locations</a>
   </span>
   Locations within $SearchResults.Control.ZipRadius miles of ZIP code "$SearchResults.Control.ZipLookup.PostalCode_ZIP"
   <br />
@@ -116,7 +116,7 @@
 #macro(DrawAllLocations)
 <div id="proximity-trialslist">
   <span class="right">
-    <a href="$SearchResults.Control.GetNearbyZipUrl()">Show locations near me</a>
+    <a id="location-link" href="$SearchResults.Control.GetNearbyZipUrl()">Show locations near me</a>
   </span>
   #foreach($loc in $SearchResults.Trial.GetLocationsNearZip($SearchResults.Control.ZipLookup.GeoCode,$SearchResults.Control.ZipRadius))
   #each
