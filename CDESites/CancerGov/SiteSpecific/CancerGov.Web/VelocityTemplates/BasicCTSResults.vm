@@ -8,9 +8,10 @@
   #elseif ($trial.GetUSLocations().length == 0)
     See <a href="https://www.clinicaltrials.gov/show/$trial.NCTID">Clinical Trials.gov</a>
   #else
-    $trial.GetUSLocations().length locations
     #if ($SearchResults.Control.HasZip())
-      , including $trial.GetUSLocations($SearchResults.Control.SearchParams.ZipLookup.GeoCode, $SearchResults.Control.SearchParams.ZipRadius).length near you
+      $trial.GetUSLocations().length locations, including $trial.GetUSLocations($SearchResults.Control.SearchParams.ZipLookup.GeoCode, $SearchResults.Control.SearchParams.ZipRadius).length near you
+    #else
+      $trial.GetUSLocations().length locations
     #end
   #end
   <br>
