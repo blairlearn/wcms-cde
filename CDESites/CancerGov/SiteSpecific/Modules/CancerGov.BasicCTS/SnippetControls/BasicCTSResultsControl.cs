@@ -291,14 +291,14 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     plist.Add("Keyword \"" + PhraseSearchParams.Phrase + "\"");
             }
 
+            if (HasZip())
+                plist.Add("ZIP \"" + SearchParams.ZipLookup.PostalCode_ZIP + "\"");
+
             if (SearchParams.Age != null && SearchParams.Age > 0)
                 plist.Add("Age \"" + SearchParams.Age + "\"");
 
             if (!string.IsNullOrWhiteSpace(SearchParams.Gender))
                 plist.Add("Gender \"" + SearchParams.Gender + "\"");
-
-            if (HasZip())
-                plist.Add("ZIP \"" + SearchParams.ZipLookup.PostalCode_ZIP + "\"");
 
             if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
             {
@@ -327,14 +327,14 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     plist.Add("\"" + PhraseSearchParams.Phrase + "\"");
             }
 
+            if (HasZip())
+                plist.Add("ZIP \"" + SearchParams.ZipLookup.PostalCode_ZIP + "\"");
+
             if (SearchParams.Age != null && SearchParams.Age > 0)
                 plist.Add("Age \"" + SearchParams.Age + "\"");
 
             if (!string.IsNullOrWhiteSpace(SearchParams.Gender))
                 plist.Add("Gender \"" + SearchParams.Gender + "\"");
-
-            if (HasZip())
-                plist.Add("ZIP \"" + SearchParams.ZipLookup.PostalCode_ZIP + "\"");
 
             string allParams = string.Join(", ", plist);
 
