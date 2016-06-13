@@ -254,19 +254,22 @@
 
 <div class="row">
   <div class="large-9 columns">
-    #set($printUrl = $SearchResults.Control.PageInstruction.GetUrl("print"))##
     #set($emailUrl = $SearchResults.Control.PageInstruction.GetUrl("email"))##
     #set($emailOnClick = "NCIAnalytics.eMailLink(this); dynPopWindow(&#39;${emailUrl}&#39;, &#39;emailPopUp&#39;, &#39;height=525,width=492&#39;); return false;")##
     <div class="page-options no-resize cts-share">
       <span class="share-text">Share this clinical trial with your doctor:</span>
-      <a title="Print" onclick="NCIAnalytics.PrintLink(this);" href="$printUrl">
-        <span class="icon icon-print"></span>
-        <span class="text">Print</span>
-      </a>
-      <a title="Email" href="$emailUrl" onclick="$emailOnClick">
-        <span class="icon icon-email"></span>
-        <span class="text">Email</span>
-      </a>
-    </div>
+      <span class="po-print">
+        <a title="Print" onclick="NCIAnalytics.PrintLink(this);" href="#">
+          <span class="icon icon-print"></span>
+          <span class="text">Print</span>
+        </a>
+      </span>
+      <span class="po-email">
+        <a title="Email" href="$emailUrl" onclick="$emailOnClick">
+          <span class="icon icon-email"></span>
+          <span class="text">Email</span>
+        </a>
+      </span>
+  </div>
 	</div>
 </div>
