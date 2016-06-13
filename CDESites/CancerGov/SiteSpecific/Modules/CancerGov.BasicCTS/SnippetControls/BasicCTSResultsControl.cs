@@ -413,40 +413,50 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         public IEnumerable<object> GetPagerItems(int numLeft, int numRight, long totalResults)
         {
             int startPage = (SearchParams.Page - numLeft) >= 1 ? SearchParams.Page - numLeft : 1;
-            int maxPage = (int)Math.Ceiling((double)(totalResults / SearchParams.ItemsPerPage));
+            int maxPage = (((int)totalResults - 1) / (int)SearchParams.ItemsPerPage) + 1;
             int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage;
 
-            List<object> items = new List<object>();
-
-            if (SearchParams.Page != 1)
-                items.Add(
-                    new
-                    {
-                        Text = "&lt; Previous",
-                        PageUrl = GetPageUrl(SearchParams.Page - 1)
-                    });
-
-            for (int i = startPage; i <= endPage; i++)
+            // If maxPage == 1, then only one page of results is found. Therefore, return null for the pager items.
+            // Otherwise, set up the pager accordingly.
+            if (maxPage > 1)
             {
-                items.Add(
-                    new {
-                        Text = i.ToString(),
-                        PageUrl = GetPageUrl(i)
-                    }
-                );
+                List<object> items = new List<object>();
+
+                if (SearchParams.Page != 1)
+                    items.Add(
+                        new
+                        {
+                            Text = "&lt; Previous",
+                            PageUrl = GetPageUrl(SearchParams.Page - 1)
+                        });
+
+                for (int i = startPage; i <= endPage; i++)
+                {
+                    items.Add(
+                        new
+                        {
+                            Text = i.ToString(),
+                            PageUrl = GetPageUrl(i)
+                        }
+                    );
+                }
+
+                if (SearchParams.Page != endPage)
+                    items.Add(
+                        new
+                        {
+                            Text = "Next &gt;",
+                            PageUrl = GetPageUrl(SearchParams.Page + 1)
+                        });
+
+
+
+                return items;
             }
-
-            if (SearchParams.Page != endPage)
-                items.Add(
-                    new
-                    {
-                        Text = "Next &gt;",
-                        PageUrl = GetPageUrl(SearchParams.Page + 1)
-                    });
-
-
-
-            return items;
+            else
+            {
+                return null;
+            }
         }
 
         #endregion
