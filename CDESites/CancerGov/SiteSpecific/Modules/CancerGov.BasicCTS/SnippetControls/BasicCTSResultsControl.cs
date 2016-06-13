@@ -111,12 +111,17 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             #region Set Zip Code + GeoLocation
             if (!string.IsNullOrWhiteSpace(zip))
             {
-                searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
-                if (searchParams.ZipLookup != null)
+                string pattern = @"^[0-9]{5}$";
+
+                if (Regex.IsMatch(zip, pattern))
                 {
-                    _setFields |= SetFields.ZipCode;
-                    if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
-                        _setFields |= SetFields.ZipProximity;
+                    searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
+                    if (searchParams.ZipLookup != null)
+                    {
+                        _setFields |= SetFields.ZipCode;
+                        if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
+                            _setFields |= SetFields.ZipProximity;
+                    }
                 }
                 else
                 {
@@ -136,8 +141,15 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             //Handle Age
             if (age > 0)
             {
-                searchParams.Age = age;
-                _setFields |= SetFields.Age;
+                if (age > 120)
+                {
+                    invalidSearchParam = true;
+                }
+                else
+                {
+                    searchParams.Age = age;
+                    _setFields |= SetFields.Age;
+                }
             }
 
             #endregion
