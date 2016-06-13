@@ -105,10 +105,7 @@ namespace CancerGov.ClinicalTrials.Basic
             //From starts at 0
             int from = 0;
 
-            if (Page > 1)
-            {
-                from = Page * ItemsPerPage;
-            }
+            from = (Page - 1) * ItemsPerPage;
 
             /**
              * Parameters For Templates:
