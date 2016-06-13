@@ -193,7 +193,48 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     data.Value = "No Results";
                 }
             });
-            
+
+            PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+            {
+                if ((_setFields & SetFields.Age) != 0)
+                    url.QueryParameters.Add("a", SearchParams.Age.ToString());
+
+                if ((_setFields & SetFields.Gender) != 0)
+                {
+                    if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
+                        url.QueryParameters.Add("g", "1");
+                    else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
+                        url.QueryParameters.Add("g", "2");
+                }
+
+                if ((_setFields & SetFields.ZipCode) != 0)
+                    url.QueryParameters.Add("z", SearchParams.ZipLookup.PostalCode_ZIP);
+
+                if ((_setFields & SetFields.ZipProximity) != 0)
+                    url.QueryParameters.Add("zp", SearchParams.ZipRadius.ToString());
+
+                //Phrase and type are based on the type of object
+                if (SearchParams is CancerTypeSearchParam)
+                {
+                    CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
+
+                    if ((_setFields & SetFields.CancerType) != 0)
+                        url.QueryParameters.Add("t", cancerTypeIDAndHash);
+                }
+
+                if (SearchParams is PhraseSearchParam)
+                {
+                    PhraseSearchParams = (PhraseSearchParam)SearchParams;
+                    if ((_setFields & SetFields.Phrase) != 0)
+                        url.QueryParameters.Add("q", PhraseSearchParams.Phrase);
+                }
+
+                //Items Per Page
+                url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString());
+
+            });
+
+           
             // Show Results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                 BasicCTSPageInfo.ResultsPageTemplatePath, 
@@ -349,44 +390,15 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         public string GetPageUrl(int pageNum)
         {
             NciUrl url = this.PageInstruction.GetUrl("CurrentURL");
-            url.QueryParameters.Add("pn", pageNum.ToString());
 
-            if ((_setFields & SetFields.Age) != 0)
-                url.QueryParameters.Add(AGE_PARAM, SearchParams.Age.ToString());
-
-            if ((_setFields & SetFields.Gender) != 0)
+            if(!url.QueryParameters.ContainsKey("pn"))
             {
-                if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
-                    url.QueryParameters.Add(GENDER_PARAM, "1");
-                else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
-                    url.QueryParameters.Add(GENDER_PARAM, "2");
-            }            
-            
-            if ((_setFields & SetFields.ZipCode) != 0)
-                url.QueryParameters.Add(ZIP_PARAM, SearchParams.ZipLookup.PostalCode_ZIP);
-
-            if ((_setFields & SetFields.ZipProximity) != 0)
-                url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
-
-
-            //Phrase and type are based on the type of object
-            if (SearchParams is CancerTypeSearchParam)
-            {
-                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
-
-                if ((_setFields & SetFields.CancerType) != 0)
-                    url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
+                url.QueryParameters.Add("pn", pageNum.ToString());
             }
-
-            if (SearchParams is PhraseSearchParam)
+            else
             {
-                PhraseSearchParams = (PhraseSearchParam)SearchParams;
-                if ((_setFields & SetFields.Phrase) != 0)
-                    url.QueryParameters.Add(PRASE_PARAM, PhraseSearchParams.Phrase);
+                url.QueryParameters["pn"] = pageNum.ToString();
             }
-
-            //Items Per Page
-            url.QueryParameters.Add(ITEMSPP_PARAM, SearchParams.ItemsPerPage.ToString());
 
             return url.ToString();
         }
