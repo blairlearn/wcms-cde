@@ -119,48 +119,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             return string.Join(", ", glossPhases);
         }
 
-        /// <summary>
-        /// Gets the View URL for a zip-code proximity search
-        /// </summary>
-        /// <returns></returns>
-        public string GetNearbyZipUrl()
-        {
-            NciUrl url = PageInstruction.GetUrl("CurrentUrl");
-            
-            url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
-            if (url.QueryParameters.ContainsKey("all"))
-            {
-                url.QueryParameters["all"] = "0";
-            }
-            else
-            {
-                url.QueryParameters.Add("all", "0");
-            }
-
-            return url.ToString();
-        }
-
-        /// <summary>
-        /// Gets the View URL for a all-locations search following a zipcode search
-        /// </summary>
-        /// <returns></returns>
-        public string GetAllLocationsUrl()
-        {
-            NciUrl url = PageInstruction.GetUrl("CurrentUrl");
-
-            url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
-            if (url.QueryParameters.ContainsKey("all"))
-            {
-                url.QueryParameters["all"] = "1";
-            }
-            else
-            {
-                url.QueryParameters.Add("all", "1");
-            }
-
-            return url.ToString();
-        }
-
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
@@ -230,7 +188,36 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             {
                 url.QueryParameters.Add("id", nctid);
                 url.QueryParameters.Add("z", zip);
-                url.QueryParameters.Add("all", GetShowAll().ToString());
+                if (GetShowAll() > -1)
+                {
+                    url.QueryParameters.Add("all", GetShowAll().ToString());
+                }
+            });
+
+            PageInstruction.AddUrlFilter("ShowNearbyUrl", (name, url) =>
+            {
+                url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
+                if (url.QueryParameters.ContainsKey("all"))
+                {
+                    url.QueryParameters["all"] = "0";
+                }
+                else
+                {
+                    url.QueryParameters.Add("all", "0");
+                }
+            });
+
+            PageInstruction.AddUrlFilter("ShowAllUrl", (name, url) =>
+            {
+                url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
+                if (url.QueryParameters.ContainsKey("all"))
+                {
+                    url.QueryParameters["all"] = "1";
+                }
+                else
+                {
+                    url.QueryParameters.Add("all", "1");
+                }
             });
 
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
