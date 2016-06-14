@@ -127,15 +127,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="VelocityTemplates\DynamicListDescImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicListNoDescNoImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicListDescNoImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicListNoDescImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicNewsDescImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicBlogDescImgDate.vm" />
-    <Content Include="VelocityTemplates\BasicCTSView.vm" />
-    <Content Include="VelocityTemplates\BasicCTSResults.vm" />
-    <Content Include="VelocityTemplates\BasicCTSSearch.vm" />
     <None Include="Web.Blue-Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
