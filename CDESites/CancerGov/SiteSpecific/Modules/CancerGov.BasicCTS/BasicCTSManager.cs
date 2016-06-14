@@ -169,27 +169,22 @@ namespace CancerGov.ClinicalTrials.Basic
                 .Type(_menuTermIndexType)
                 .From(0)
                 .Size(3000)
-                .Sort(s => s.OnField("Name"))
-                .Filter(f => f
-                    .Bool(b => b.Should(
-                            innerFilter =>
+                .Filter(f =>
+                        {
+                            FilterContainer ff = f;
+                            foreach (string term in query_terms)
                             {
-                             
-                                foreach (string term in query_terms)
-                                {
-                                    innerFilter.Term("SplitNames", term);
-                                }
-
-                                return innerFilter;
+                                ff &= f.Prefix("SplitNames", term);
                             }
-                        )
-                     
-                    )
+
+
+                            return ff;
+                        }                    
                  )
             );
 
             if (response.Total > 0)
-                return response.Documents;
+                return response.Documents.OrderBy(doc => doc.Name, StringComparer.CurrentCultureIgnoreCase);
             else
                 return new MenuTerm[] { };
         }
