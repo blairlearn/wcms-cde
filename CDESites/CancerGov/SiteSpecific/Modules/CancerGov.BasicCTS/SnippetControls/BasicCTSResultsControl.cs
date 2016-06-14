@@ -63,28 +63,43 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             if (cancerType != string.Empty)
             {
-                cancerTypeIDAndHash = cancerType;
+                //cancerTypeIDAndHash = cancerType;
                 string[] ctarr = cancerType.Split(new Char[]{'|'}, StringSplitOptions.RemoveEmptyEntries);
 
                 if (ctarr.Length >= 1)
                 {
                     if(ctarr.Length > 1)    
                         cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], ctarr[1]);
+                    else if(ctarr.Length == 1)
+                        cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], null);
 
-
-                    //Test id to match ^CDR\d+$
-                    searchParams = new CancerTypeSearchParam()
+                    if(cancerTypeDisplayName != null)
                     {
-                        //get cancer type.
-                        CancerTypeID = ctarr[0],
+                        cancerTypeIDAndHash = cancerType;
 
-                        CancerTypeDisplayName = cancerTypeDisplayName,
+                        //Test id to match ^CDR\d+$
+                        searchParams = new CancerTypeSearchParam()
+                        {
+                            //get cancer type.
+                            CancerTypeID = ctarr[0],
 
-                        //Add in the label which is go to ElasticSearch, fetch ctarr[1] (the hash) and get the text
-                        ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
-                    };
+                            CancerTypeDisplayName = cancerTypeDisplayName,
 
-                    _setFields |= SetFields.CancerType;
+                            //Add in the label which is go to ElasticSearch, fetch ctarr[1] (the hash) and get the text
+                            ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
+                        };
+
+                        _setFields |= SetFields.CancerType;
+                    }
+                    else
+                    {
+                        invalidSearchParam = true;
+                        searchParams = new CancerTypeSearchParam()
+                        {
+                            ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
+                        };
+                    }
+
 
                 }
 
@@ -121,6 +136,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                         _setFields |= SetFields.ZipCode;
                         if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
                             _setFields |= SetFields.ZipProximity;
+                    }
+                    else
+                    {
+                        invalidSearchParam = true;
                     }
                 }
                 else

@@ -39,6 +39,9 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 int tmpInt = 0;
                 if (int.TryParse(paramval, out tmpInt))
                 {
+                    if (tmpInt == 0)
+                        invalidSearchParam = true;
+
                     return tmpInt;
                 }
                 else
