@@ -27,6 +27,8 @@ namespace CancerGov.ClinicalTrials.Basic.HttpHandlers
             if (string.IsNullOrWhiteSpace(query))
                 throw new ArgumentException("Query Must Not be Null or Empty");
 
+            query = query.ToLower();
+
             BasicCTSManager manager = new BasicCTSManager();
 
             Regex startsPattern = new Regex("^" + query, RegexOptions.IgnoreCase);
