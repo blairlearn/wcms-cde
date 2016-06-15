@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using NCI.Logging;
 using NVelocity;
 using NVelocity.App;
@@ -83,6 +84,10 @@ namespace NCI.Web.CDE.Modules
             public bool IsNullOrWhitespace(string str)
             {
                 return String.IsNullOrWhiteSpace(str);
+            }
+            public List<string> CreateEmptyStringList()
+            {
+                return new List<string>();
             }
         }
     }
