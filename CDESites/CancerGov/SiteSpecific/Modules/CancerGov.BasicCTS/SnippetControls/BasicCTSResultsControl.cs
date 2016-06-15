@@ -151,7 +151,11 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             #endregion
 
             #region Set Page and Items Per Page
-            searchParams.Page = pageNum;
+            if (pageNum < 1)
+                SearchParams.Page = 1;
+            else
+                searchParams.Page = pageNum;
+
             searchParams.ItemsPerPage = itemsPerPage;
             #endregion
 
@@ -213,6 +217,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             //set the page title as the protocol title
             PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
             {
+                int maxPage = (int)Math.Ceiling((double)results.TotalResults / (double)SearchParams.ItemsPerPage);
                 data.Value = "Results of Your Search";
  
                 if (results.TotalResults == 0)
@@ -220,6 +225,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     data.Value = "No Trials Matched Your Search";
                 }
                 else if (invalidSearchParam)
+                {
+                    data.Value = "No Results";
+                }
+                else if (SearchParams.Page > maxPage)
                 {
                     data.Value = "No Results";
                 }
@@ -257,7 +266,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 {
                     PhraseSearchParams = (PhraseSearchParam)SearchParams;
                     if ((_setFields & SetFields.Phrase) != 0)
-                        url.QueryParameters.Add("q", PhraseSearchParams.Phrase);
+                        url.QueryParameters.Add("q", HttpUtility.UrlEncode(PhraseSearchParams.Phrase));
                 }
 
                 //Items Per Page
@@ -303,6 +312,11 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 return possibleLast.ToString();
         }
 
+        /// <summary>
+        /// Returns a list of parameters for display on Search Result pages.
+        /// </summary>
+        /// <param name="totalResults"></param>
+        /// <returns></returns>
         public string GetParamsList(long totalResults)
         {
             List<string> plist = new List<string>();
@@ -352,6 +366,19 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             return string.Join(", ", plist);
         }
 
+        public bool OutOfBounds(long totalResults)
+        {
+            int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage);
+            if (SearchParams.Page > maxPage)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Returns a boolean that defines whether an invalid search parameter has been entered or not.
+        /// </summary>
+        /// <returns></returns>
         public bool HasInvalidParams()
         {
             return this.invalidSearchParam;
@@ -420,6 +447,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             int startPage = (SearchParams.Page - numLeft) >= 1 ? SearchParams.Page - numLeft : 1;
             int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage);
             int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage;
+            if (SearchParams.Page > endPage)
+                startPage = endPage - numLeft;
 
             // If maxPage == 1, then only one page of results is found. Therefore, return null for the pager items.
             // Otherwise, set up the pager accordingly.
@@ -446,7 +475,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     );
                 }
 
-                if (SearchParams.Page != endPage)
+                if (SearchParams.Page < endPage)
                     items.Add(
                         new
                         {
