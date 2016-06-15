@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace CancerGov.ClinicalTrials.Basic
 {
@@ -19,10 +20,23 @@ namespace CancerGov.ClinicalTrials.Basic
         protected override void AddTemplateParams(Nest.FluentDictionary<string, object> paramdict)
         {
 
-            // Set the searchstring only if we have one.  Maybe clean it up too if needbe.
+            string pattern = @"^""[^""]+""$";
 
-            if (!String.IsNullOrWhiteSpace(Phrase))
-                paramdict.Add("searchstring", this.Phrase);
+            // Set the searchstring only if we have one.  Maybe clean it up too if needbe.
+            if (!String.IsNullOrWhiteSpace(this.Phrase))
+            {
+                if (Regex.IsMatch(this.Phrase, pattern))
+                {
+                    // Add in parameter without strings, along with an extra parameter that
+                    // specifies that the search string was entered with quotes.
+                    paramdict.Add("searchstring", this.Phrase.Replace("\"", ""));
+                    paramdict.Add("searchtype", "phrase");
+                }
+                else
+                {
+                    paramdict.Add("searchstring", this.Phrase.Replace("\"", ""));
+                }
+            }
             
         }
 

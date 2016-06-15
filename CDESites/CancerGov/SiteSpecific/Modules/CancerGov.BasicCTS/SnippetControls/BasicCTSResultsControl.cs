@@ -303,7 +303,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 return possibleLast.ToString();
         }
 
-        public string GetParamsList()
+        public string GetParamsList(long totalResults)
         {
             List<string> plist = new List<string>();
 
@@ -336,46 +336,20 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 return "\"all trials\"";
             }
 
+            if (totalResults == 0)
+            {
+                string allParams = string.Join(", ", plist);
+
+                string find = ", ";
+                string replace = " and ";
+                int place = allParams.LastIndexOf(find);
+                if (place == -1)
+                    return allParams;
+                string ret = allParams.Remove(place, find.Length).Insert(place, replace);
+                return ret;
+            }
+
             return string.Join(", ", plist);
-        }
-
-        public string NoResultsParams()
-        {
-            List<string> plist = new List<string>();
-
-            if (SearchParams is CancerTypeSearchParam)
-            {
-                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
-
-                if (!string.IsNullOrWhiteSpace(CancerTypeSearchParams.CancerTypeDisplayName))
-                    plist.Add("\"" + CancerTypeSearchParams.CancerTypeDisplayName + "\"");
-            }
-
-            if (SearchParams is PhraseSearchParam)
-            {
-                PhraseSearchParams = (PhraseSearchParam)SearchParams;
-                if (!string.IsNullOrWhiteSpace(PhraseSearchParams.Phrase))
-                    plist.Add("\"" + PhraseSearchParams.Phrase + "\"");
-            }
-
-            if (HasZip())
-                plist.Add("ZIP \"" + SearchParams.ZipLookup.PostalCode_ZIP + "\"");
-
-            if (SearchParams.Age != null && SearchParams.Age > 0)
-                plist.Add("Age \"" + SearchParams.Age + "\"");
-
-            if (!string.IsNullOrWhiteSpace(SearchParams.Gender))
-                plist.Add("Gender \"" + SearchParams.Gender + "\"");
-
-            string allParams = string.Join(", ", plist);
-
-            string find = ", ";
-            string replace = " and ";
-            int place = allParams.LastIndexOf(find);
-            if (place == -1)
-                return allParams;
-            string ret = allParams.Remove(place, find.Length).Insert(place, replace);
-            return ret;
         }
 
         public bool HasInvalidParams()
