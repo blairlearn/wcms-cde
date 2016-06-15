@@ -180,7 +180,9 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             {
                 //Eh, When would this happen???
                 if (!string.IsNullOrWhiteSpace(trial.NCTID))
-                    data.Value = trial.NCTID + " Clinical Trial";
+                    data.Value = "Clinical Trial " + trial.NCTID;
+                else
+                    data.Value = "Clinical Trial";
 
             });
 
