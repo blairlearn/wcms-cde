@@ -313,59 +313,62 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         }
 
         /// <summary>
-        /// Returns a list of parameters for display on Search Result pages.
+        /// Returns the cancer type the user searched for if the current search contains a type/condition.
         /// </summary>
-        /// <param name="totalResults"></param>
         /// <returns></returns>
-        public string GetParamsList(long totalResults)
+        public string HasType()
         {
-            List<string> plist = new List<string>();
-
             if (SearchParams is CancerTypeSearchParam)
             {
                 CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
 
                 if (!string.IsNullOrWhiteSpace(CancerTypeSearchParams.CancerTypeDisplayName))
-                    plist.Add("Type/Condition \"" + CancerTypeSearchParams.CancerTypeDisplayName + "\"");
+                    return CancerTypeSearchParams.CancerTypeDisplayName;
             }
+            return null;
+        }
 
+        /// <summary>
+        /// Returns the phrase the user searched for if the current search contains a phrase.
+        /// </summary>
+        /// <returns></returns>
+        public string HasPhrase()
+        {
             if (SearchParams is PhraseSearchParam)
             {
                 PhraseSearchParams = (PhraseSearchParam)SearchParams;
                 if (!string.IsNullOrWhiteSpace(PhraseSearchParams.Phrase))
-                    plist.Add("Keyword \"" + PhraseSearchParams.Phrase + "\"");
+                    return PhraseSearchParams.Phrase;
             }
-
-            if (HasZip())
-                plist.Add("ZIP \"" + SearchParams.ZipLookup.PostalCode_ZIP + "\"");
-
-            if (SearchParams.Age != null && SearchParams.Age > 0)
-                plist.Add("Age \"" + SearchParams.Age + "\"");
-
-            if (!string.IsNullOrWhiteSpace(SearchParams.Gender))
-                plist.Add("Gender \"" + SearchParams.Gender + "\"");
-
-            if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
-            {
-                return "\"all trials\"";
-            }
-
-            if (totalResults == 0)
-            {
-                string allParams = string.Join(", ", plist);
-
-                string find = ", ";
-                string replace = " and ";
-                int place = allParams.LastIndexOf(find);
-                if (place == -1)
-                    return allParams;
-                string ret = allParams.Remove(place, find.Length).Insert(place, replace);
-                return ret;
-            }
-
-            return string.Join(", ", plist);
+            return null;
         }
 
+        /// <summary>
+        /// Determines if the current search has a Zip or not.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasZip()
+        {
+            return SearchParams.ZipLookup != null;
+        }
+
+        /// <summary>
+        /// Returns whether a user searched for all trials.
+        /// </summary>
+        /// <returns></returns>
+        public bool GetSearchForAllTrials()
+        {
+            if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// Determine whether the page number provided is above the maximum number of pages available with results.
+        /// </summary>
+        /// <param name="totalResults"></param>
+        /// <returns></returns>
         public bool OutOfBounds(long totalResults)
         {
             int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage);
@@ -382,15 +385,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         public bool HasInvalidParams()
         {
             return this.invalidSearchParam;
-        }
-
-        /// <summary>
-        /// Determines if the current search has a Zip or not.
-        /// </summary>
-        /// <returns></returns>
-        public bool HasZip()
-        {
-            return SearchParams.ZipLookup != null;
         }
 
         /// <summary>
