@@ -23,7 +23,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             if (string.IsNullOrWhiteSpace(paramval))
                 return def;
             else
-                return paramval;
+                return paramval.Trim();
         }
 
         protected int ParmAsInt(string param, int def)
@@ -37,7 +37,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             else
             {
                 int tmpInt = 0;
-                if (int.TryParse(paramval, out tmpInt))
+                if (int.TryParse(paramval.Trim(), out tmpInt))
                 {
                     if (tmpInt == 0)
                         invalidSearchParam = true;
