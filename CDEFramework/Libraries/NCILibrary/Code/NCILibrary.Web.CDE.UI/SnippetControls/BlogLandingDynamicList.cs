@@ -33,10 +33,17 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 if (base.SearchList == null)
                 {
                     DynamicListHelper helper = new DynamicListHelper();
+                    
                     base.SearchList = ModuleObjectFactory<DynamicList>.GetModuleObject(SnippetInfo.Data);
                     base.SearchList.ResultsTemplate = base.SearchList.ResultsTemplate =
                     helper.languageStrings() +
                     helper.blogBodyString();
+                    /*
+                    if (base.SearchList.ResultsTemplate.Contains("~/DynamicListTemplates"))
+                    {
+                        string filename = VirtualPathUtility.GetFileName(this.AppRelativeVirtualPath).Replace(".ascx", "");
+                        base.SearchList.ResultsTemplate = "~/VelocityTemplates/" + filename + ".vm";
+                    }*/
 
                 }
                 return base.SearchList;

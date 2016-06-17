@@ -13,6 +13,7 @@ namespace NCI.Services.Dictionary.Handler
         private int TermID { get; set; }
         private DictionaryType Dictionary { get; set; }
         private Language Language { get; set; }
+        private AudienceType AudienceType { get; set; }
 
         /// <summary>
         /// Initialization.  Use Invoker.Create() with method set to ApiMethodType.GetTerm
@@ -23,8 +24,9 @@ namespace NCI.Services.Dictionary.Handler
             : base(request)
         {
             TermID = GetTermID();
-            Dictionary = GetDictionary();
+            Dictionary = GetDictionaryWithDefaults();
             Language = GetLanguage();
+            AudienceType = GetAudienceWithDefaults();
         }
 
         /// <summary>
@@ -34,7 +36,7 @@ namespace NCI.Services.Dictionary.Handler
         /// the GetTerm call.</returns>
         public override IJsonizable Invoke()
         {
-            return Service.GetTerm(TermID, Dictionary, Language);
+            return Service.GetTerm(TermID, Dictionary, Language, AudienceType);
         }
     }
 }

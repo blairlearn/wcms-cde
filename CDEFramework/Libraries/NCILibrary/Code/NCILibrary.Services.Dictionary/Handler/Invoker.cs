@@ -118,6 +118,38 @@ namespace NCI.Services.Dictionary.Handler
         }
 
         /// <summary>
+        /// Infrastructure method for retrieving the "dictionary" parameter, returning appropriate Audience-aware 
+        /// default values if dictionary is not otherwise set.
+        /// </summary>
+        /// <returns>The value of the "dictionary" parameter.</returns>
+        protected DictionaryType GetDictionaryWithDefaults()
+        {
+            String rawValue = GetOptionalParameter("dictionary");
+            rawValue = Strings.Clean(rawValue, "Unknown");
+            
+            DictionaryType val = ConvertEnum<DictionaryType>.Convert(rawValue, DictionaryType.Unknown);
+            if (val == DictionaryType.Unknown)
+            {
+                // is dictionary is unknown, check Audience and set default value
+                String audienceValue = GetOptionalParameter("audience");
+                audienceValue = Strings.Clean(audienceValue, "Unknown");
+
+                AudienceType audience = ConvertEnum<AudienceType>.Convert(audienceValue, AudienceType.Unknown);
+                switch(audience)
+                {
+                    case AudienceType.HealthProfessional:
+                        val = DictionaryType.NotSet;
+                        break;
+                    default:
+                        val = DictionaryType.term;
+                        break;
+                }
+            }
+            return val;
+        }
+
+
+        /// <summary>
         /// Infrastructure method for retrieving the "language" parameter.
         /// </summary>
         /// <returns>The value of the "language" parameter.</returns>
@@ -208,6 +240,39 @@ namespace NCI.Services.Dictionary.Handler
         {
             return RawParams[name];
         }
+
+        /// <summary>
+        /// Infrastructure method for retrieving the "audience" parameter, returning appropriate Dictionary-aware 
+        /// default values if audience is not otherwise set.
+        /// </summary>
+        /// <returns>The value of the "audience" parameter.</returns>
+        protected AudienceType GetAudienceWithDefaults()
+        {
+            String rawValue = GetOptionalParameter("audience");
+            rawValue = Strings.Clean(rawValue, "Unknown");
+
+            AudienceType val = ConvertEnum<AudienceType>.Convert(rawValue, AudienceType.Unknown);
+            if (val == AudienceType.Unknown)
+            {
+                // is dictionary is unknown, check Audience and set default value
+                String dictionaryValue = GetOptionalParameter("dictionary");
+                dictionaryValue = Strings.Clean(dictionaryValue, "Unknown");
+
+                DictionaryType dictionary = ConvertEnum<DictionaryType>.Convert(dictionaryValue, DictionaryType.Unknown);
+                switch (dictionary)
+                {
+                    case DictionaryType.NotSet:
+                    case DictionaryType.genetic:
+                        val = AudienceType.HealthProfessional;
+                        break;
+                    default:
+                        val = AudienceType.Patient;
+                        break;
+                }
+            }
+            return val;
+        }
+
 
     }
 }

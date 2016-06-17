@@ -127,6 +127,27 @@ namespace NCI.Web.CDE
         public string PageTemplateName { get; set; }
 
         /// <summary>
+        /// Gets the template theme this page should be using.  (Set on a SectionDetails withing the parent folders of this page)
+        /// </summary>
+        /// <value>The name of the Template Theme</value>
+        public string TemplateTheme
+        {
+            get
+            {
+                SectionDetail sectionDetail = SectionDetailFactory.GetSectionDetail(SectionPath);
+                if (sectionDetail != null)
+                {
+                    return sectionDetail.GetEffectiveTemplateTheme();
+                }
+
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the language for the page displayed.
         /// </summary>
         /// <value>The language.</value>

@@ -113,13 +113,18 @@ namespace NCI.Web.CDE.Test
         {
             return new PageTemplateConfiguration()
             {
-                PageTemplateCollections = new PageTemplateCollection[]
-                {
-                    new PageTemplateCollection() {
-                        TemplateName = "DefaultCancerGovTemplate",
-                        PageTemplateInfos = new PageTemplateInfo[]{
-                            GetWebPageTemplateInfo(),
-                            GetPrintPageTemplateInfo()
+                TemplateThemeCollection = new TemplateThemeInfo[] {
+                    new TemplateThemeInfo() {
+                        ThemeName = "default",
+                        PageTemplateCollections = new PageTemplateCollection[]
+                        {
+                            new PageTemplateCollection() {
+                                TemplateName = "DefaultCancerGovTemplate",
+                                PageTemplateInfos = new PageTemplateInfo[]{
+                                    GetWebPageTemplateInfo(),
+                                    GetPrintPageTemplateInfo()
+                                }
+                            }
                         }
                     }
                 }
