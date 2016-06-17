@@ -74,9 +74,6 @@ namespace CancerGov.Web.SnippetTemplates
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Force "Start Over" link to come back to whatever URL this page was invoked as.
-            clear.HRef = PageInstruction.GetUrl(NCI.Web.CDE.PageAssemblyInstructionUrls.PrettyUrl).ToString();
-
             if (!IsPostBack)
             {
                 // On initial page load, check for a protocol search ID. If one is found, load the
