@@ -32,7 +32,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                             filename = "DynamicBlogDescImgDate";
                         }
 
-                        base.SearchList.ResultsTemplate = "~/VelocityTemplates/" + filename + ".vm";
+                        base.SearchList.ResultsTemplate = "~/PublishedContent/VelocityTemplates/" + filename + ".vm";
                     }
                 }
                 return base.SearchList;

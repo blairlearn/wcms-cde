@@ -102,6 +102,9 @@
     <Content Include="Global.asax" />
     <Content Include="JS\popEvents.js" />
     <Content Include="Common\PopUps\PopEmail.aspx" />
+    <Content Include="SnippetTemplates\BasicCTS\BasicCTSResults.ascx" />
+    <Content Include="SnippetTemplates\BasicCTS\BasicCTSSearch.ascx" />
+    <Content Include="SnippetTemplates\BasicCTS\BasicCTSView.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\IntenseDebateComments.ascx" />
@@ -124,12 +127,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="VelocityTemplates\DynamicListDescImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicListNoDescNoImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicListDescNoImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicListNoDescImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicNewsDescImgDate.vm" />
-    <Content Include="VelocityTemplates\DynamicBlogDescImgDate.vm" />
     <None Include="Web.Blue-Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -645,6 +642,10 @@
     <ProjectReference Include="..\..\PresentationClasses\PresentationClasses.csproj">
       <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
       <Name>PresentationClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.BasicCTS\CancerGov.BasicCTS.csproj">
+      <Project>{d3896177-dbf5-45e4-bc4c-9d53e8341015}</Project>
+      <Name>CancerGov.BasicCTS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Search.AutoSuggest\CancerGov.Search.AutoSuggest.csproj">
       <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>
