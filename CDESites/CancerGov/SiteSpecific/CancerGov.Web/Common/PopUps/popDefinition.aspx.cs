@@ -1,24 +1,13 @@
 ﻿using System;
-using System.Configuration;
-using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using NCI.Text;
-using NCI.Web.CDE.UI;
-using CancerGov.Text;
-using NCI.Web.CDE;
-using Www.Common.UserControls;
-using NCI.Web.CDE.WebAnalytics;
-using CancerGov.CDR.TermDictionary;
-using CancerGov.UI;
-using NCI.Web.UI.WebControls.FormControls;
-using CancerGov.Web;
-using NCI.Web.Dictionary.BusinessObjects;
-using NCI.Web.Dictionary;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Text.RegularExpressions;
+using System.Web.UI.WebControls;
+using NCI.Util;
+using NCI.Web.CDE;
+using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.Dictionary;
+using NCI.Web.Dictionary.BusinessObjects;
 namespace Www.Common.PopUps
 {
     ///<summary>
@@ -41,30 +30,14 @@ namespace Www.Common.PopUps
         protected void Page_Load(object sender, EventArgs e) 
         {
             string input_term;
-            PDQVersion version;
 
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web)
             {
                 urlArgs = Request.Url.Query.Substring(1);
                 input_term = Strings.Clean(Request.Params["term"]);
                 CdrID = Strings.IfNull(Strings.Clean(Request.Params["id"]), Strings.Clean(Request.Params["cdrid"]));
-                version = PDQVersionResolver.GetPDQVersion(Strings.Clean(Request.Params["version"]));
-
-                //determine the term audience from the PDQVersion
-                AudienceType audience;
-                switch (version)
-                {
-                    case PDQVersion.HealthProfessional:
-                        audience = AudienceType.HealthProfessional;
-                        break;
-                    case PDQVersion.Patient:
-                        audience = AudienceType.Patient;
-                        break;
-                    default:
-                        audience = AudienceType.Patient;
-                        break;
-                }
-
+                AudienceType audience = GetAudienceType(Strings.Clean(Request.Params["version"]));
+                DictionaryType dictionary = GetDictionaryType(Strings.Clean(Request.Params["dictionary"]));
 
                 if (Request.QueryString["language"] == "Spanish")
                 {
@@ -90,7 +63,16 @@ namespace Www.Common.PopUps
                 if (!string.IsNullOrEmpty(CdrID))
                 {
                     CdrID = Regex.Replace(CdrID, "^CDR0+", "", RegexOptions.Compiled);
-                    dataItem = _dictionaryAppManager.GetTermForAudience(Convert.ToInt32(CdrID), dictionaryLanguage, "v1", audience);
+
+                    // call appropriate method if dictionary type is known
+                    if (dictionary == DictionaryType.Unknown)
+                    {
+                        dataItem = _dictionaryAppManager.GetTermForAudience(Convert.ToInt32(CdrID), dictionaryLanguage, "v1", audience);
+                    }
+                    else
+                    {
+                        dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), dictionary, dictionaryLanguage, "v1", audience);
+                    }
 
                 }
                 
@@ -156,7 +138,7 @@ namespace Www.Common.PopUps
                         if (pronunciationLink != null && termDetails.Pronunciation.HasAudio)
                         {
                             pronunciationLink.Visible = true;
-                            pronunciationLink.HRef = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] + "/" + termDetails.Pronunciation.Audio;
+                            pronunciationLink.HRef = termDetails.Pronunciation.Audio;
                         }
                         else
                             pronunciationLink.Visible = false;
@@ -268,6 +250,41 @@ namespace Www.Common.PopUps
             // CODEGEN: This call is required by the ASP.NET Web Form Designer.
             //
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Converts the given string (ideally from the 'version' query parameter) to an AudienceType enum.
+        /// Preserves the legacy mappings from the GetPDQVersion call.
+        /// </summary>
+        /// <param name="version">The string parameter to convert.</param>
+        /// <returns>The matching AudienceType.  Defaults to 'Patient' if version is not recognized.</returns>
+        private AudienceType GetAudienceType(string version)
+        {
+            version = CancerGov.Text.Strings.IfNull(version, "");
+
+            switch (version.Trim().ToLower())
+            {
+                case "1":
+                case "healthprofessional":
+                case "provider":
+                    return AudienceType.HealthProfessional;
+                case "0":
+                case "patient":
+                default:
+                    return AudienceType.Patient;
+            }
+        }
+
+        /// <summary>
+        /// Converts the given string (ideally from the 'dictionary' query parameter) to a DictionaryType enum.
+        /// </summary>
+        /// <param name="dictionary">The string parameter to convert.</param>
+        /// <returns>The matching DictionaryType.  Defaults to 'Unknown' if string is not recognized.</returns>
+        private DictionaryType GetDictionaryType(string dictionary)
+        {
+            dictionary = Strings.Clean(dictionary, "Unknown");
+
+            return ConvertEnum<DictionaryType>.Convert(dictionary, DictionaryType.Unknown);
         }
 
         #region Web Form Designer generated code
