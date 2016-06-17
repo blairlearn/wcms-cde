@@ -118,6 +118,9 @@
     <Compile Include="SnippetControls\ContentSearchSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\DeprecatedDynamicList.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\DynamicListDescNoImgDate.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -173,6 +176,9 @@
     </Compile>
     <Compile Include="SnippetControls\SublayoutInfo.cs" />
     <Compile Include="SnippetControls\SyndicationNotice.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\TemplatedDynamicList.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WebAnalytics\WebAnalyticsControl.cs" />

@@ -57,11 +57,12 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="JS\Omniture\wa_wcms_pre.js" />
-    <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
-    <Content Include="JS\Omniture\s_code.js" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
+    <Content Include="Schema\CDESchema.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.Blue-Live.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -158,9 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Schema\CDESchema.xsd">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
   </ItemGroup>
   <ItemGroup>

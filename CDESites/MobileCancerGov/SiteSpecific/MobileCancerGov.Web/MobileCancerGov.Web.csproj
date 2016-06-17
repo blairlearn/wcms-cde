@@ -62,9 +62,6 @@
     <Content Include="Default.aspx" />
     <Content Include="DrugDictionary.svc" />
     <Content Include="Global.asax" />
-    <Content Include="JS\Omniture\wa_wcms_pre.js" />
-    <Content Include="JS\Omniture\NCIAnalyticsFunctions.js" />
-    <Content Include="JS\Omniture\s_code.js" />
     <Content Include="JS\sw-mtd-autocomplete.js" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
@@ -76,6 +73,10 @@
     <Content Include="SnippetTemplates\MobileTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="TermDictionary.svc" />
+    <Content Include="Schema\CDESchema.xsd">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -136,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Data\wurfl-latest.zip" />
-    <None Include="Schema\CDESchema.xsd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
