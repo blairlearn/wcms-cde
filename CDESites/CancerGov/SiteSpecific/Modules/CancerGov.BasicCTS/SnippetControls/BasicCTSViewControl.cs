@@ -135,8 +135,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             string nctid = Request.Params["id"];
             if (String.IsNullOrWhiteSpace(nctid))
             {
-                this.Controls.Add(new LiteralControl("NeedID"));
-                return;
+                throw new HttpException(404, "Missing trial ID.");
             }
 
 
@@ -144,8 +143,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             if (!Regex.IsMatch(nctid, "^NCT[0-9]+$"))
             {
-                this.Controls.Add(new LiteralControl("Invalid ID"));
-                return;
+                throw new HttpException(404, "Invalid trial ID.");
             }
 
             string zip = this.ParmAsStr(ZIP_PARAM, string.Empty);
