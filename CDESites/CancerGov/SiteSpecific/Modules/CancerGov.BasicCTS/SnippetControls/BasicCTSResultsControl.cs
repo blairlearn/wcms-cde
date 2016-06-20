@@ -442,7 +442,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage);
             int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage;
             if (SearchParams.Page > endPage)
-                startPage = endPage - numLeft;
+                startPage = (endPage - numLeft) >= 1 ? endPage - numLeft : 1;
 
             // If maxPage == 1, then only one page of results is found. Therefore, return null for the pager items.
             // Otherwise, set up the pager accordingly.
