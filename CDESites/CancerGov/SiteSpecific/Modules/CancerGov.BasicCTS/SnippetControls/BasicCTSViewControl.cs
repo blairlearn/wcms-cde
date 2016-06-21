@@ -19,10 +19,13 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 {
     public partial class BasicCTSViewControl : BasicCTSBaseControl
     {
-        //private string _index = "clinicaltrials";
-        //private string _indexType = "trial";
-        //private string _clusterName = "SearchCluster";
-        //private string _templatePath = "~/VelocityTemplates/BasicCTSView.vm";
+        /// <summary>
+        /// Gets the Search Parameters for the current request.
+        /// </summary>
+        public BaseCTSSearchParam SearchParams { get; private set; }
+        public PhraseSearchParam PhraseSearchParams { get; set; }
+        public CancerTypeSearchParam CancerTypeSearchParams { get; set; }
+        
         private const string _phaseI = "Phase I";
         private const string _phaseII = "Phase II";
         private const string _phaseIII = "Phase III";
@@ -36,7 +39,36 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             get { return BasicCTSPageInfo.DefaultZipProximity;  }
         }
 
-        private BasicCTSManager _basicCTSManager = null;
+        /// <summary>
+        /// Returns the cancer type the user searched for if the current search contains a type/condition.
+        /// </summary>
+        /// <returns></returns>
+        public string GetCancerType()
+        {
+            if (SearchParams is CancerTypeSearchParam)
+            {
+                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
+
+                if (!string.IsNullOrWhiteSpace(CancerTypeSearchParams.CancerTypeDisplayName))
+                    return CancerTypeSearchParams.CancerTypeDisplayName;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Returns the phrase the user searched for if the current search contains a phrase.
+        /// </summary>
+        /// <returns></returns>
+        public string GetPhrase()
+        {
+            if (SearchParams is PhraseSearchParam)
+            {
+                PhraseSearchParams = (PhraseSearchParam)SearchParams;
+                if (!string.IsNullOrWhiteSpace(PhraseSearchParams.Phrase))
+                    return PhraseSearchParams.Phrase;
+            }
+            return null;
+        }
 
         /// <summary>
         /// Determines if the current search has a Zip or not.
@@ -45,6 +77,18 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         public bool HasZip()
         {
             return ZipLookup != null;
+        }
+
+        /// <summary>
+        /// Returns whether a user searched for all trials.
+        /// </summary>
+        /// <returns></returns>
+        public bool GetSearchForAllTrials()
+        {
+            if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
+                return true;
+            else
+                return false;
         }
 
         public int GetShowAll()
@@ -123,8 +167,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         {
             base.OnInit(e);
 
-            _basicCTSManager = new BasicCTSManager();
-
+            SearchParams = GetSearchParams();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -135,37 +178,31 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             string nctid = Request.Params["id"];
             if (String.IsNullOrWhiteSpace(nctid))
             {
-                this.Controls.Add(new LiteralControl("NeedID"));
-                return;
+                throw new HttpException(404, "Missing trial ID.");
             }
-
 
             nctid = nctid.Trim();
 
             if (!Regex.IsMatch(nctid, "^NCT[0-9]+$"))
             {
-                this.Controls.Add(new LiteralControl("Invalid ID"));
-                return;
+                throw new HttpException(404, "Invalid trial ID.");
             }
-
-            string zip = this.ParmAsStr(ZIP_PARAM, string.Empty);
-            int zipProximity = this.ParmAsInt(ZIPPROX_PARAM, BasicCTSPageInfo.DefaultZipProximity); //In miles
-
-            if (!string.IsNullOrWhiteSpace(zip))
-            {
-                ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
-            }
-    
-            
-
-
-            BasicCTSManager basicCTSManager = new BasicCTSManager();
 
             // Get Trial by ID
             var trial = _basicCTSManager.Get(nctid);
 
             if (trial == null)
                 throw new HttpException(404, "Trial cannot be found.");
+
+            // get zip from search parameters
+            ZipLookup = SearchParams.ZipLookup;
+
+            string zip = "";
+            if (ZipLookup != null)
+            {
+                zip = SearchParams.ZipLookup.PostalCode_ZIP;
+                int zipProximity = SearchParams.ZipRadius; //In miles
+            }
 
             // Show Trial
 
@@ -180,20 +217,58 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             {
                 //Eh, When would this happen???
                 if (!string.IsNullOrWhiteSpace(trial.NCTID))
-                    data.Value = "Clinical Trial " + trial.NCTID;
+                    data.Value = "View Clinical Trial " + trial.NCTID;
                 else
-                    data.Value = "Clinical Trial";
+                    data.Value = "View Clinical Trial";
 
             });
 
             PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
             {
                 url.QueryParameters.Add("id", nctid);
-                url.QueryParameters.Add("z", zip);
                 if (GetShowAll() > -1)
                 {
                     url.QueryParameters.Add("all", GetShowAll().ToString());
                 }
+
+                if ((_setFields & SetFields.Age) != 0)
+                    url.QueryParameters.Add(AGE_PARAM, SearchParams.Age.ToString());
+
+                if ((_setFields & SetFields.Gender) != 0)
+                {
+                    if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
+                        url.QueryParameters.Add(GENDER_PARAM, "1");
+                    else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
+                        url.QueryParameters.Add(GENDER_PARAM, "2");
+                }
+
+                if ((_setFields & SetFields.ZipCode) != 0)
+                    url.QueryParameters.Add(ZIP_PARAM, SearchParams.ZipLookup.PostalCode_ZIP);
+
+                if ((_setFields & SetFields.ZipProximity) != 0)
+                    url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
+
+                //Phrase and type are based on the type of object
+                if (SearchParams is CancerTypeSearchParam)
+                {
+                    CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
+
+                    if ((_setFields & SetFields.CancerType) != 0)
+                        url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
+                }
+
+                if (SearchParams is PhraseSearchParam)
+                {
+                    PhraseSearchParams = (PhraseSearchParam)SearchParams;
+                    if ((_setFields & SetFields.Phrase) != 0)
+                        url.QueryParameters.Add(PRASE_PARAM, HttpUtility.UrlEncode(PhraseSearchParams.Phrase));
+                }
+
+                // Page Number
+                url.QueryParameters.Add(PAGENUM_PARAM, SearchParams.Page.ToString());
+
+                //Items Per Page
+                url.QueryParameters.Add(ITEMSPP_PARAM, SearchParams.ItemsPerPage.ToString());
             });
 
             PageInstruction.AddUrlFilter("ShowNearbyUrl", (name, url) =>
