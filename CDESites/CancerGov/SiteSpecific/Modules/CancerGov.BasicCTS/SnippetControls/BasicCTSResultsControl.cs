@@ -231,6 +231,39 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             if ((_setFields & SetFields.ZipProximity) != 0)
                 url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
 
+            if ((_setFields & SetFields.Age) != 0)
+                url.QueryParameters.Add("a", SearchParams.Age.ToString());
+
+            if ((_setFields & SetFields.Gender) != 0)
+            {
+                if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
+                    url.QueryParameters.Add("g", "1");
+                else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
+                    url.QueryParameters.Add("g", "2");
+            }
+
+            //Phrase and type are based on the type of object
+            if (SearchParams is CancerTypeSearchParam)
+            {
+                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
+
+                if ((_setFields & SetFields.CancerType) != 0)
+                    url.QueryParameters.Add("t", cancerTypeIDAndHash);
+            }
+
+            if (SearchParams is PhraseSearchParam)
+            {
+                PhraseSearchParams = (PhraseSearchParam)SearchParams;
+                if ((_setFields & SetFields.Phrase) != 0)
+                    url.QueryParameters.Add("q", HttpUtility.UrlEncode(PhraseSearchParams.Phrase));
+            }
+
+            //Items Per Page
+            url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString());
+
+            // Page number
+            url.QueryParameters.Add("pn", SearchParams.Page.ToString());
+
             return url.ToString();
         }
 
