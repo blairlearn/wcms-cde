@@ -43,7 +43,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         protected BasicCTSManager _basicCTSManager = null;
         protected string cancerTypeIDAndHash = null;
 
-        protected BaseCTSSearchParam SetSearchParams()
+        protected BaseCTSSearchParam GetSearchParams()
         {
             //Parse Parameters
             int pageNum = this.ParmAsInt(PAGENUM_PARAM, 1);
@@ -266,6 +266,14 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     throw ex;
                 }
             }
+        }
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+            _basicCTSManager = new BasicCTSManager();
+
         }
     }
 }
