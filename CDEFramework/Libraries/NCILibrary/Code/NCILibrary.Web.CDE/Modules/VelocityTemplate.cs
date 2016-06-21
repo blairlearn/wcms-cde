@@ -13,16 +13,19 @@ namespace NCI.Web.CDE.Modules
 {
     public class VelocityTemplate
     {
+        [Obsolete("Use MergeTemplateWithResultsByFilepath() instead.")]
         public static string MergeTemplateWithResults(string template, object obj)
         {
             try
             {
-                Velocity.Init();
+                VelocityEngine velocity = new VelocityEngine();
+
+                velocity.Init();
                 VelocityContext context = new VelocityContext();
                 context.Put("DynamicSearch", obj);
                 context.Put("Tools", new VelocityTools());
                 StringWriter writer = new StringWriter();
-                Velocity.Evaluate(context, writer, "", template);
+                velocity.Evaluate(context, writer, "", template);
                 return writer.GetStringBuilder().ToString();
             }
             catch (Exception ex)
@@ -36,7 +39,9 @@ namespace NCI.Web.CDE.Modules
         {
             try
             {
-                Velocity.Init();
+                VelocityEngine velocity = new VelocityEngine();
+
+                velocity.Init();
                 VelocityContext context = new VelocityContext();
                 context.Put("SearchResults", obj);
                 context.Put("CDEContext", new CDEContext());
@@ -47,7 +52,7 @@ namespace NCI.Web.CDE.Modules
                 sr.Close();
                 //String template = File.ReadAllText(HttpContext.Current.Server.MapPath(filepath));
                 StringWriter writer = new StringWriter();
-                Velocity.Evaluate(context, writer, "", template);
+                velocity.Evaluate(context, writer, "", template);
                 return writer.GetStringBuilder().ToString();
             }
             catch (Exception ex)
