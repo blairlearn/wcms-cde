@@ -52,7 +52,7 @@ namespace NCI.Web.CDE.Modules
             }
             catch (Exception ex)
             {
-                Logger.LogError("VelocityTemplate:MergeTemplateWithResultsByFilepath", "Failed to when evaluating results template and object.", NCIErrorLevel.Error);
+                Logger.LogError("VelocityTemplate:MergeTemplateWithResultsByFilepath", "Failed when evaluating results template and object.", NCIErrorLevel.Error, ex);
                 throw (ex);
             }
         }
