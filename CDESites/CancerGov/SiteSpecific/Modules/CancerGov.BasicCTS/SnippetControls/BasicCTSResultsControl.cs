@@ -334,15 +334,11 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// <returns></returns>
         public string HasPhrase()
         {
-            string pattern = @"^""[^""]+""$";
             if (SearchParams is PhraseSearchParam)
             {
                 PhraseSearchParams = (PhraseSearchParam)SearchParams;
                 if (!string.IsNullOrWhiteSpace(PhraseSearchParams.Phrase))
-                    if (Regex.IsMatch(PhraseSearchParams.Phrase, pattern))
                         return PhraseSearchParams.Phrase;
-                    else
-                        return PhraseSearchParams.Phrase.Replace("\"", "");
             }
             return null;
         }

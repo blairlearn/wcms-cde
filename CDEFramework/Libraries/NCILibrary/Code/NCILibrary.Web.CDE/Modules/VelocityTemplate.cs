@@ -89,6 +89,12 @@ namespace NCI.Web.CDE.Modules
             {
                 return new List<string>();
             }
+
+            public string Replace(string str, string pattern1, string pattern2)
+            {
+                string rtn = str.Replace(pattern1, pattern2);
+                return rtn;
+            }
         }
     }
 }
