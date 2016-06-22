@@ -36,7 +36,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         protected const string CANCERTYPE_PARAM = "t";
 
 
-        private BasicCTSPageInfo _basicCTSPageInfo = null;
+        protected BasicCTSPageInfo _basicCTSPageInfo = null;
         public bool invalidSearchParam = false;
 
         protected SetFields _setFields = SetFields.None;

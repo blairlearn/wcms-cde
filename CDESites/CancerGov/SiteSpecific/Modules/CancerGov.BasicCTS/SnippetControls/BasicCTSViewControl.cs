@@ -297,6 +297,22 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 }
             });
 
+            PageInstruction.AddUrlFilter("ResultsUrl", (name, url) =>
+            {
+                url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
+                url.UriStem = _basicCTSPageInfo.ResultsPagePrettyUrl;
+
+                if (url.QueryParameters.ContainsKey("all"))
+                {
+                    url.QueryParameters.Remove("all");
+                }
+
+                if (url.QueryParameters.ContainsKey("id"))
+                {
+                    url.QueryParameters.Remove("id");
+                }
+            });
+
             PageInstruction.AddUrlFilter("CanonicalUrl", (name, url) =>
             {
                 url.QueryParameters.Clear();
