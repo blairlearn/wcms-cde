@@ -12,6 +12,7 @@ using System.Web.UI.WebControls;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
 using NCI.Web;
+using NCI.Web.CDE;
 
 
 
@@ -188,6 +189,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
             {
+                //NOTE: If you add more params, please remove them from CanonicalURL,
+                //unless they substantially change the rendered HTML markup.  (e.g. like id does)
                 url.QueryParameters.Add("id", nctid);
                 url.QueryParameters.Add("z", zip);
                 if (GetShowAll() > -1)
@@ -195,6 +198,34 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     url.QueryParameters.Add("all", GetShowAll().ToString());
                 }
             });
+
+            // The Canonical URL should just be the URL with the id parameter
+            PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            {
+                if (url.QueryParameters.ContainsKey("z"))
+                {
+                    url.QueryParameters.Remove("z");
+                }
+
+                if (url.QueryParameters.ContainsKey("all"))
+                {
+                    url.QueryParameters.Remove("all");
+                }
+
+                //This should leave us with just ID.
+            });
+
+            // Override the social media URL (og:url)
+            PageInstruction.AddFieldFilter("og:url", (fieldName, data) =>
+            {
+                //Ok, this is weird, but...  The OpenGraph URL is actually a field. It kind of makes sense,
+                //and it kind of does not.  Really it should be a field that gets the og:url instead of the 
+                //pretty URL.
+                //BUt here we are, and it is what we have.  So let's replace the og:url with the canonical URL.
+
+                data.Value = PageInstruction.GetUrl(PageAssemblyInstructionUrls.CanonicalUrl).ToString();
+            });
+
 
             PageInstruction.AddUrlFilter("ShowNearbyUrl", (name, url) =>
             {
