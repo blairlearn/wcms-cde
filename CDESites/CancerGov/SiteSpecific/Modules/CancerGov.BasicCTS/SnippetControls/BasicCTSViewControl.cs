@@ -23,8 +23,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// Gets the Search Parameters for the current request.
         /// </summary>
         public BaseCTSSearchParam SearchParams { get; private set; }
-        public PhraseSearchParam PhraseSearchParams { get; set; }
-        public CancerTypeSearchParam CancerTypeSearchParams { get; set; }
         
         private const string _phaseI = "Phase I";
         private const string _phaseII = "Phase II";
@@ -34,11 +32,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         private const string _phaseI_II = "Phase I/II";
         private const string _phaseII_III = "Phase II/III";
 
-        public ZipLookup ZipLookup { get; set; }
-        public int ZipRadius {
-            get { return BasicCTSPageInfo.DefaultZipProximity;  }
-        }
-
         /// <summary>
         /// Returns the cancer type the user searched for if the current search contains a type/condition.
         /// </summary>
@@ -47,7 +40,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         {
             if (SearchParams is CancerTypeSearchParam)
             {
-                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
+                var CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
 
                 if (!string.IsNullOrWhiteSpace(CancerTypeSearchParams.CancerTypeDisplayName))
                     return CancerTypeSearchParams.CancerTypeDisplayName;
@@ -63,7 +56,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         {
             if (SearchParams is PhraseSearchParam)
             {
-                PhraseSearchParams = (PhraseSearchParam)SearchParams;
+                var PhraseSearchParams = (PhraseSearchParam)SearchParams;
                 if (!string.IsNullOrWhiteSpace(PhraseSearchParams.Phrase))
                     return PhraseSearchParams.Phrase;
             }
@@ -76,7 +69,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// <returns></returns>
         public bool HasZip()
         {
-            return ZipLookup != null;
+            return SearchParams.ZipLookup != null;
         }
 
         /// <summary>
@@ -195,10 +188,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 throw new HttpException(404, "Trial cannot be found.");
 
             // get zip from search parameters
-            ZipLookup = SearchParams.ZipLookup;
-
             string zip = "";
-            if (ZipLookup != null)
+            if (SearchParams.ZipLookup != null)
             {
                 zip = SearchParams.ZipLookup.PostalCode_ZIP;
                 int zipProximity = SearchParams.ZipRadius; //In miles
@@ -249,19 +240,15 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
 
                 //Phrase and type are based on the type of object
-                if (SearchParams is CancerTypeSearchParam)
+                if ((_setFields & SetFields.CancerType) != 0 && SearchParams is CancerTypeSearchParam)
                 {
-                    CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
-
-                    if ((_setFields & SetFields.CancerType) != 0)
-                        url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
+                    url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
                 }
 
-                if (SearchParams is PhraseSearchParam)
+                if ((_setFields & SetFields.Phrase) != 0 && SearchParams is PhraseSearchParam)
                 {
-                    PhraseSearchParams = (PhraseSearchParam)SearchParams;
-                    if ((_setFields & SetFields.Phrase) != 0)
-                        url.QueryParameters.Add(PRASE_PARAM, HttpUtility.UrlEncode(PhraseSearchParams.Phrase));
+                    var PhraseSearchParams = (PhraseSearchParam)SearchParams;
+                    url.QueryParameters.Add(PRASE_PARAM, HttpUtility.UrlEncode(PhraseSearchParams.Phrase));
                 }
 
                 // Page Number
