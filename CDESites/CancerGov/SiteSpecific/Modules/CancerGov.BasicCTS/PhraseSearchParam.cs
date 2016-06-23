@@ -19,7 +19,9 @@ namespace CancerGov.ClinicalTrials.Basic
 
         protected override void AddTemplateParams(Nest.FluentDictionary<string, object> paramdict)
         {
-
+            // The purpose of matching the entered phrase to this pattern is so that certain 
+            // search phrases with only one item in quotes (such as "nci-match", as opposed 
+            // to breast cancer) are passed along with a parameter to ES for a specific search.
             string pattern = @"^""[^""]+""$";
 
             // Set the searchstring only if we have one.  Maybe clean it up too if needbe.
