@@ -22,8 +22,6 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// Gets the Search Parameters for the current request.
         /// </summary>
         public BaseCTSSearchParam SearchParams { get; private set; }
-        public PhraseSearchParam PhraseSearchParams { get; set; }
-        public CancerTypeSearchParam CancerTypeSearchParams { get; set; }
 
         protected override void OnInit(EventArgs e)
         {
@@ -50,7 +48,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 {
                     data.Value = "No Trials Matched Your Search";
                 }
-                else if (invalidSearchParam)
+                else if (hasInvalidSearchParam)
                 {
                     data.Value = "No Results";
                 }
@@ -82,17 +80,14 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 //Phrase and type are based on the type of object
                 if (SearchParams is CancerTypeSearchParam)
                 {
-                    CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
-
                     if ((_setFields & SetFields.CancerType) != 0)
                         url.QueryParameters.Add("t", cancerTypeIDAndHash);
                 }
 
                 if (SearchParams is PhraseSearchParam)
                 {
-                    PhraseSearchParams = (PhraseSearchParam)SearchParams;
                     if ((_setFields & SetFields.Phrase) != 0)
-                        url.QueryParameters.Add("q", HttpUtility.UrlEncode(PhraseSearchParams.Phrase));
+                        url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                 }
 
                 //Items Per Page
@@ -142,31 +137,24 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// Returns the cancer type the user searched for if the current search contains a type/condition.
         /// </summary>
         /// <returns></returns>
-        public string HasType()
+        public string GetCancerType()
         {
-            if (SearchParams is CancerTypeSearchParam)
-            {
-                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
-
-                if (!string.IsNullOrWhiteSpace(CancerTypeSearchParams.CancerTypeDisplayName))
-                    return CancerTypeSearchParams.CancerTypeDisplayName;
-            }
-            return null;
+            string type = SearchParams is CancerTypeSearchParam ? ((CancerTypeSearchParam)SearchParams).CancerTypeDisplayName : null;
+            if (string.IsNullOrWhiteSpace(type))
+                type = null;
+            return type;
         }
 
         /// <summary>
         /// Returns the phrase the user searched for if the current search contains a phrase.
         /// </summary>
         /// <returns></returns>
-        public string HasPhrase()
+        public string GetPhrase()
         {
-            if (SearchParams is PhraseSearchParam)
-            {
-                PhraseSearchParams = (PhraseSearchParam)SearchParams;
-                if (!string.IsNullOrWhiteSpace(PhraseSearchParams.Phrase))
-                        return PhraseSearchParams.Phrase;
-            }
-            return null;
+            string phrase = SearchParams is PhraseSearchParam ? ((PhraseSearchParam)SearchParams).Phrase : null;
+            if (string.IsNullOrWhiteSpace(phrase))
+                phrase = null;
+            return phrase;
         }
 
         /// <summary>
@@ -184,7 +172,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// <returns></returns>
         public bool GetSearchForAllTrials()
         {
-            if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
+            if ((this.hasInvalidSearchParam == false) && (_setFields == SetFields.None))
                 return true;
             else
                 return false;
@@ -210,7 +198,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// <returns></returns>
         public bool HasInvalidParams()
         {
-            return this.invalidSearchParam;
+            return this.hasInvalidSearchParam;
         }
 
         /// <summary>
@@ -245,17 +233,14 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             //Phrase and type are based on the type of object
             if (SearchParams is CancerTypeSearchParam)
             {
-                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
-
                 if ((_setFields & SetFields.CancerType) != 0)
                     url.QueryParameters.Add("t", cancerTypeIDAndHash);
             }
 
             if (SearchParams is PhraseSearchParam)
             {
-                PhraseSearchParams = (PhraseSearchParam)SearchParams;
                 if ((_setFields & SetFields.Phrase) != 0)
-                    url.QueryParameters.Add("q", HttpUtility.UrlEncode(PhraseSearchParams.Phrase));
+                    url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
             }
 
             //Items Per Page

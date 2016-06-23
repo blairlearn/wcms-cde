@@ -37,7 +37,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
 
         protected BasicCTSPageInfo _basicCTSPageInfo = null;
-        public bool invalidSearchParam = false;
+
+        protected bool hasInvalidSearchParam;
 
         protected SetFields _setFields = SetFields.None;
         protected BasicCTSManager _basicCTSManager = null;
@@ -92,7 +93,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     }
                     else
                     {
-                        invalidSearchParam = true;
+                        hasInvalidSearchParam = true;
                         searchParams = new CancerTypeSearchParam()
                         {
                             ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
@@ -138,12 +139,12 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                     }
                     else
                     {
-                        invalidSearchParam = true;
+                        hasInvalidSearchParam = true;
                     }
                 }
                 else
                 {
-                    invalidSearchParam = true;
+                    hasInvalidSearchParam = true;
                 }
             }
 
@@ -165,7 +166,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             {
                 if (age > 120)
                 {
-                    invalidSearchParam = true;
+                    hasInvalidSearchParam = true;
                 }
                 else
                 {
@@ -227,13 +228,13 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 if (int.TryParse(paramval.Trim(), out tmpInt))
                 {
                     if (tmpInt == 0)
-                        invalidSearchParam = true;
+                        hasInvalidSearchParam = true;
 
                     return tmpInt;
                 }
                 else
                 {
-                    invalidSearchParam = true;
+                    hasInvalidSearchParam = true;
                     return def;
                 }
             }
