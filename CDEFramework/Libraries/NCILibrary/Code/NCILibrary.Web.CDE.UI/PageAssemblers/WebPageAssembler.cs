@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -13,6 +15,7 @@ using NCI.Logging;
 using NCI.Web.Extensions;
 using NCI.Web.CDE;
 using NCI.Web.UI.WebControls;
+using System.Security.Cryptography;
 
 
 namespace NCI.Web.CDE.UI
@@ -218,6 +221,74 @@ namespace NCI.Web.CDE.UI
             hm.Content = content;
 
             htmlHead.Controls.Add(hm);
+        }
+
+        /// <summary>
+        /// Modify a URL string to include a "fingerprint" containing the physical file's
+        /// last update time. This provides a way around caching issues for JavaScript, CSS
+        /// and other static resources.
+        /// Based on http://madskristensen.net/post/cache-busting-in-aspnet.
+        /// </summary>
+        /// <param name="rootRelativePath">The server-relative URL to modify.</param>
+        /// <returns>The url, modified to include ".__v##### before the extension.</returns>
+        private string appendFileFingerprint(string rootRelativePath)
+        {
+            string returnUrl = rootRelativePath;
+
+            // Don't rewrite anything from external sites.
+            if (rootRelativePath[0] == '~' || rootRelativePath[0] == '/')
+            {
+                string dateTicks = GetFileFingerprint(rootRelativePath);
+                int index = rootRelativePath.LastIndexOf('.');
+
+                // Append finger print after the '.' before the extension.
+                returnUrl = rootRelativePath.Insert(index, ".__v" + dateTicks);
+            }
+
+            return returnUrl;
+        }
+
+        /// <summary>
+        /// Calculate a fingerprint for the current version of a file.
+        /// </summary>
+        /// <param name="rootRelativePath">Server-relative URL</param>
+        /// <returns>String containing the file's fingerprint..</returns>
+        private string GetFileFingerprint(string rootRelativePath)
+        {
+            // Try first to retrieve the time from cache.
+            if (HttpRuntime.Cache[rootRelativePath] == null)
+            {
+                try
+                {
+                    // Need a leading ~ for MapPath().
+                    string absolute = rootRelativePath;
+                    if (absolute[0] != '~')
+                        absolute = "~" + absolute;
+
+                    // Get the *really* absolute name.
+                    absolute = Server.MapPath(rootRelativePath);
+
+                    // Get the file's MD5, stripping out dashes from the byte string.
+                    string md5hash;
+                    using (var md5 = MD5.Create())
+                    {
+                        using (var stream = File.OpenRead(absolute))
+                        {
+                            md5hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                        }
+                    }
+
+
+                    HttpRuntime.Cache.Insert(rootRelativePath, md5hash, new CacheDependency(absolute));
+                }
+                catch
+                {
+                    // In the case of an error (e.g. missing file), return emptystring. We can't cache this 
+                    // value because you can't put a dependency on a non-existant file.
+                    return String.Empty;
+                }
+            }
+            return (string)HttpRuntime.Cache[rootRelativePath];
         }
 
         #endregion
@@ -431,19 +502,31 @@ namespace NCI.Web.CDE.UI
 
                     //Load first Javascript
                     foreach (JavascriptInfo jsBeginningInfo in firstJavaScript)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsBeginningInfo.JavascriptPath);
+                    {
+                        String url = appendFileFingerprint(jsBeginningInfo.JavascriptPath);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
+                    }
 
                     //Load first Stylesheet
                     foreach (StyleSheetInfo cssBeginningInfo in firstStylesheet)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssBeginningInfo.StyleSheetPath, cssBeginningInfo.Media);
+                    {
+                        String url = appendFileFingerprint(cssBeginningInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, cssBeginningInfo.Media);
+                    }
 
 
                     // Load the css resources and js resource with no specified location
                     foreach (StyleSheetInfo ssInfo in unspecifiedStylesheets)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath, ssInfo.Media);
+                    {
+                        String url = appendFileFingerprint(ssInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, ssInfo.Media);
+                    }
 
                     foreach (JavascriptInfo jsInfo in unspecifiedJavaScripts)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsInfo.JavascriptPath);
+                    {
+                        String url = appendFileFingerprint(jsInfo.JavascriptPath);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
+                    }
                 }
             }
         }
@@ -482,11 +565,17 @@ namespace NCI.Web.CDE.UI
 
                     //Load Stylesheets marked as "End"
                     foreach (StyleSheetInfo cssLastInfo in lastStylesheet)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssLastInfo.StyleSheetPath, cssLastInfo.Media);
+                    {
+                        String url = appendFileFingerprint(cssLastInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, cssLastInfo.Media);
+                    }
 
                     //Load Javascript marked as "End"
                     foreach (JavascriptInfo jsLastInfo in lastJavaScript)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsLastInfo.JavascriptPath);
+                    {
+                        String url = appendFileFingerprint(jsLastInfo.JavascriptPath);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
+                    }
                 }
             }
         }
