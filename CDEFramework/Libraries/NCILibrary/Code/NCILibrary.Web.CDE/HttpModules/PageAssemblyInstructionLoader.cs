@@ -18,7 +18,7 @@ namespace NCI.Web.CDE
         private static readonly object REQUEST_URL_KEY = new object();        
 
         //HACK: This is the file regex to handle cache-busting js & css filenames
-        private static Regex UniqueStaticFileCleaner = new Regex("\\__.v[0-9]+\\.", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static Regex UniqueStaticFileCleaner = new Regex("\\.__v[0-9]+\\.", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         
         /// <summary>
         /// You will need to configure this module in the web.config file of your
@@ -60,7 +60,7 @@ namespace NCI.Web.CDE
             {
                 //This replaces "\.v[0-9]+\." with .  -- I don't like the "." portion below, but I want the
                 //regex to be static and compiled.
-                UniqueStaticFileCleaner.Replace(url, ".");
+                url = UniqueStaticFileCleaner.Replace(url, ".");
             }
 
             if (url.ToLower().IndexOf(".ico") != -1 
