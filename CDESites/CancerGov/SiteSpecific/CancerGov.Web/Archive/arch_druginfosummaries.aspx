@@ -11,7 +11,6 @@
 	<meta content="JavaScript" name="vs_defaultClientScript" />
 	<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema" />
 	<link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css" />
-	<script src="/JS/JSLoader/JSLoader.js" type="text/javascript"></script>
 </head>
 <body>
 		<h1>Drug Info Summaries</h1>

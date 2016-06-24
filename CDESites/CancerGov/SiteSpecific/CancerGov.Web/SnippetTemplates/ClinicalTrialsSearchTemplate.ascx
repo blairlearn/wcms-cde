@@ -578,7 +578,6 @@
         <div class="large-8 columns right">
             <asp:button id="submit" CssClass="submit button" Text="Search" runat="server"
                 OnClick="SubmitButton_Click" />
-            <a id="clear" class="reset button" href="#" runat="server">Start Over</a>
         </div>
     </div>
 

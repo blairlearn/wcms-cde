@@ -22,7 +22,7 @@ function doWebAnalyticsStuff() {
 <div class="directory-search">
     <form class="genetics-directory-form" id="searchForm" name="searchForm" action="<%=SearchPageInfo.SearchResultsPrettyUrl%>"  
         method="post" onsubmit="return doWebAnalyticsStuff();" 
-        aria-label="Search the Cancer Genetics Services Directory">
+        aria-label="Search the Cancer Genetics Services Directory" data-prevent-enter="true">
         <fieldset aria-labelledby="legend-specialty">
             <div class="row collapse-edges">
                 <div id="legend-specialty" class="large-4 columns legend">Specialty</div>
@@ -58,7 +58,7 @@ function doWebAnalyticsStuff() {
                     <label for="txtCity" class="field inline">City:</label>
                 </div>
                 <div class="large-8 columns">                                      
-                    <input type="text" name="txtCity" id="txtCity" maxlength="40">
+                    <input type="text" name="txtCity" id="txtCity" maxlength="40" data-prevent-enter="false">
                 </div>
             </div>
             <div class="row collapse-edges">
@@ -91,14 +91,13 @@ function doWebAnalyticsStuff() {
                     <label for="txtLastName" class="field inline">Last name:</label>
                 </div>
                 <div class="large-8 columns">
-                    <input type="text" name="txtLastName" id="txtLastName" maxlength="40">
+                    <input type="text" name="txtLastName" id="txtLastName" maxlength="40" data-prevent-enter="false">
                 </div>
             </div>
         </fieldset>
         <div class="row collapse-edges">
             <div class="large-8 columns large-offset-4">
-                <button type="submit" name="searchBtn" class="submit button">Search</button>
-                <button type="reset" name="clearBtn" class="reset button">Clear</button>
+                <button type="submit" name="searchBtn" class="submit button" data-prevent-enter="false">Search</button>
             </div>
         </div>
     </form>

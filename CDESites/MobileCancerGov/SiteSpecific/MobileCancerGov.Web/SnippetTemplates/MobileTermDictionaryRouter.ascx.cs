@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml.Linq;
+using NCI.Util;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
-using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE.UI.SnippetControls;
-using NCI.Web.CDE.InformationRequest;
-using CancerGov.Text;
-using CancerGov.CDR.TermDictionary;
 
 
 namespace MobileCancerGov.Web.SnippetTemplates
@@ -29,7 +16,8 @@ namespace MobileCancerGov.Web.SnippetTemplates
             String term = Strings.Clean(Request.QueryString["term"]);
             String cdrId = Strings.Clean(Request.QueryString["cdrid"]);
             String id = Strings.Clean(Request.QueryString["id"]);
-            String expand = Strings.Clean(Request.QueryString["expand"]);
+            // default results to 'A' if no term chosen
+            String expand = Strings.Clean(Request.QueryString["expand"], "A");
             String language = Strings.Clean(Request.QueryString["language"]);
             Control localControl = null;
 

@@ -152,24 +152,24 @@
             //alphaListItems += "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"98%\">\n";
             //alphaListItems += "	<tbody><tr>\n";
 
-            alphaListItems = "<ul>\n";
+            alphaListItems = "<ul>";
 
             if (boxItems == null || boxItems.Length == 0)
             {
-                if (numericItems)
-                {
-                    if (doWebAnalytics)
-                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'#') >#</a></li>\n";
-                    else
-                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\">#</a></li>\n";
-                }
-
                 for (int i = 65; i < 91; i++)
                 {
                     if (doWebAnalytics)
                         alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + (char)i + "') >" + (char)i + "</a></li>\n";
                     else
                         alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\">" + (char)i + "</a></li>\n";
+                }
+
+                if (numericItems)
+                {
+                    if (doWebAnalytics)
+                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'#') >#</a></li>\n";
+                    else
+                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\">#</a></li>\n";
                 }
             }
             else
@@ -195,6 +195,18 @@
             //alphaListItems += "	</tr></tbody>\n";
             //alphaListItems += "</table>\n";
             alphaListItems += "</ul>\n";
+
+            //set visibilty for the English versus Spanish text
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+            {
+                phBrowseEnglish.Visible = false;
+                phBrowseSpanish.Visible = true;
+            }
+            else
+            {
+                phBrowseEnglish.Visible = true;
+                phBrowseSpanish.Visible = false;
+            }
         }
 
         protected void Page_Init(object sender, EventArgs e)

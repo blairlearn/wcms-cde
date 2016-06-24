@@ -23,6 +23,7 @@ namespace NCI.Web.CDE.Modules
         public string KeyWord { get; set; }
         public string SiteName { get; set; }
         public string DisqusShortname { get; set; }
+        public string SearchTitle { get; set; }
 
         public DynamicSearch()
         {

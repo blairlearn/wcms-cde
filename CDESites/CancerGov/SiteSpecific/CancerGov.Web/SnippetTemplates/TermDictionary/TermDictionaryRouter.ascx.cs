@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using NCI.Util;
 using NCI.Web.CDE.UI;
-using CancerGov.Text;
-using CancerGov.Common;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -18,7 +13,8 @@ namespace CancerGov.Web.SnippetTemplates
             String term = Strings.Clean(Request.QueryString["term"]);
             String cdrId = Strings.Clean(Request.QueryString["cdrid"]);
             String id = Strings.Clean(Request.QueryString["id"]);
-            String expand = Strings.Clean(Request.QueryString["expand"]);
+            // default results to 'A' if no term chosen
+            String expand = Strings.Clean(Request.QueryString["expand"], "A");
             String language = Strings.Clean(Request.QueryString["language"]);
             Control localControl = null;
 

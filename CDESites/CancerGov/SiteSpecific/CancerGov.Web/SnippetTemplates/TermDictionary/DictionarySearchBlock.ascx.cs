@@ -242,6 +242,10 @@ namespace CancerGov.Web.SnippetTemplates
                         
             btnSearch.Text = "Buscar";
             btnSearch.ToolTip = "Buscar";
+
+            // hide english help text and show espanol
+            englishHelpText.Visible = false;
+            espanolHelpText.Visible = true;
                         
         }
 
@@ -255,6 +259,10 @@ namespace CancerGov.Web.SnippetTemplates
             AutoComplete1.Attributes.Add("placeholder", "Enter keywords or phrases");
 
             btnSearch.Text = "Search";
+
+            // show english help text and hide espanol
+            englishHelpText.Visible = true;
+            espanolHelpText.Visible = false;
 
         }
                

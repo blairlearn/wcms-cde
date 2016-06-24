@@ -271,14 +271,26 @@ namespace CancerGov.Web.SnippetTemplates
                     url.QueryParameters.Add(key, Request.QueryString[key]);
             });
 
+            //Set the canonical URL to just be the cdrid as that is really the Unique element in the
+            //query parameters.
             this.PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
             {
-                string localUrl = url.ToString();
+                //NOTE: If you change currentURL, then this should change to REMOVE unwanted parameters.  
+                //However, that is not being changed anywhere in this file, so we are good for now just 
+                //setting the CDRID
+                if (!url.QueryParameters.ContainsKey("cdrid") && iProtocolID > -1)
+                    url.QueryParameters.Add("cdrid", iProtocolID.ToString());
+            });
 
-                if (iProtocolID > -1)
-                    localUrl += "?cdrid=" + iProtocolID;
+            // Override the social media URL (og:url)
+            PageInstruction.AddFieldFilter("og:url", (fieldName, data) =>
+            {
+                //Ok, this is weird, but...  The OpenGraph URL is actually a field. It kind of makes sense,
+                //and it kind of does not.  Really it should be a field that gets the og:url instead of the 
+                //pretty URL.
+                //BUt here we are, and it is what we have.  So let's replace the og:url with the canonical URL.
 
-                url.SetUrl(localUrl);
+                data.Value = PageInstruction.GetUrl(PageAssemblyInstructionUrls.CanonicalUrl).ToString();
             });
 
 

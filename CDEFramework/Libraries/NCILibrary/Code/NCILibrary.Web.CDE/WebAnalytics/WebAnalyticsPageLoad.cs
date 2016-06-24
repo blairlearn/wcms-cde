@@ -33,7 +33,8 @@ namespace NCI.Web.CDE.WebAnalytics
         private IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
 
         // Get paths for WCMS analytics code
-        // Dev tiers are hosted locally (/JS/Omniture/), Prod is hosted on static.cancer.gov/wcms
+        // Dev/QA/Stage tiers are hosted on static-dev.cancer.gov/wcms
+		// Prod is hosted on static.cancer.gov/wcms
         private string WaPre = ConfigurationManager.AppSettings["WAWCMSPre"].ToString();
         private string WaSCode = ConfigurationManager.AppSettings["SCode"].ToString();
         private string WaFunctions = ConfigurationManager.AppSettings["NCIAnalyticsFunctions"].ToString();

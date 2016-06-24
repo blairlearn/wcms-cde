@@ -17,11 +17,19 @@ namespace NCI.Web.CDE
     {
 
         /// <summary>
+        /// Gets or sets a collection of CDE Page Template Themes.
+        /// </summary>
+        /// <value>The template theme collections.</value>
+        [XmlArray(ElementName = "TemplateThemeCollection", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
+        [XmlArrayItem(ElementName="TemplateThemeInfo", Form=XmlSchemaForm.Unqualified)]
+        public TemplateThemeInfo[] TemplateThemeCollection { get; set; }
+
+        /// <summary>
         /// Gets or sets a collection of CDE Page Templates.
         /// </summary>
         /// <value>The page template collections.</value>
         [XmlArray(ElementName = "PageTemplateCollections", Form = XmlSchemaForm.Unqualified, IsNullable = false)]
-        [XmlArrayItem(ElementName="PageTemplateCollection", Form=XmlSchemaForm.Unqualified)]
+        [XmlArrayItem(ElementName = "PageTemplateCollection", Form = XmlSchemaForm.Unqualified)]
         public PageTemplateCollection[] PageTemplateCollections { get; set; }
 
         /// <summary>
@@ -29,6 +37,7 @@ namespace NCI.Web.CDE
         /// </summary>
         public PageTemplateConfiguration()
         {
+            TemplateThemeCollection = new TemplateThemeInfo[] { };
             PageTemplateCollections = new PageTemplateCollection[] { };
         }
 
@@ -48,6 +57,33 @@ namespace NCI.Web.CDE
 
             if (target == null)
                 return false;
+
+            if (
+                (TemplateThemeCollection == null && target.TemplateThemeCollection != null) ||
+                (TemplateThemeCollection != null && target.TemplateThemeCollection == null)
+                )
+            {
+                return false;
+            }
+
+            if (TemplateThemeCollection.Length != target.TemplateThemeCollection.Length)
+                return false;
+
+            for (int i = 0; i < TemplateThemeCollection.Length; i++)
+            {
+                if (TemplateThemeCollection[i] == null)
+                {
+                    if (target.TemplateThemeCollection[i] != null)
+                        return false;
+
+                    //If we did not return then we know that target.TemplateThemeCollection[i] is also null
+                }
+                else
+                {
+                    if (!TemplateThemeCollection[i].Equals(target.TemplateThemeCollection[i]))
+                        return false;
+                }
+            }
 
             if (
                 (PageTemplateCollections == null && target.PageTemplateCollections != null) ||
@@ -75,6 +111,7 @@ namespace NCI.Web.CDE
                         return false;
                 }
             }
+
 
             return true;
         }

@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Web;
+using System.Text;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-
-using CancerGov.CDR.TermDictionary;
 using NCI.Util;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
-using System.Text;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -234,7 +231,8 @@ namespace CancerGov.Web.SnippetTemplates
             if (resultCollection != null && resultCollection.Count() > 0)
             {
                 //if there is only 1 record - go directly to definition view
-                if ((resultCollection.ResultsCount == 1) && string.IsNullOrEmpty(Expand))
+                //check if expand equals "A", as this is the default value
+                if ((resultCollection.ResultsCount == 1) && (Expand == "A"))
                 {
                     // Get the first (only) item so we can redirect to it specifically
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
@@ -344,7 +342,7 @@ namespace CancerGov.Web.SnippetTemplates
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = Convert.ToBoolean(SrcGroup);
 
-            if (!string.IsNullOrEmpty(Expand))
+            if (!string.IsNullOrEmpty(Expand) && string.IsNullOrEmpty(SearchStr))
             {
                 if (Expand.Trim() == "#")
                 {
@@ -386,7 +384,7 @@ namespace CancerGov.Web.SnippetTemplates
         /// </summary>
         private void GetQueryParams()
         {
-            Expand = Strings.Clean(Request.Params["expand"]);
+            Expand = Strings.Clean(Request.Params["expand"], "A");
             CdrID = Strings.Clean(Request.Params["cdrid"]);
             SearchStr = Strings.Clean(Request.Params["search"]);
             SrcGroup = Strings.Clean(Request.Params["contains"]);

@@ -50,8 +50,6 @@
 				}
 			}
 		</script>
-		<script src="/JS/JSLoader/JSLoader.js" type="text/javascript"></script>	
-
 
 
 
