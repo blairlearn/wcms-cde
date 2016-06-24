@@ -3,9 +3,11 @@ using System.Web;
 using System.Globalization;
 using System.Configuration;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Reflection;
+
 using NCI.Web.CDE.Configuration;
 using NCI.Logging;
-using System.Reflection;
 
 namespace NCI.Web.CDE
 {
@@ -14,6 +16,9 @@ namespace NCI.Web.CDE
         private const string PRINT_URL_ENDING = "/print";
         private const string VIEWALL_URL_ENDING = "/allpages";
         private static readonly object REQUEST_URL_KEY = new object();        
+
+        //HACK: This is the file regex to handle cache-busting js & css filenames
+        private static Regex UniqueStaticFileCleaner = new Regex("\\__.v[0-9]+\\.", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         
         /// <summary>
         /// You will need to configure this module in the web.config file of your
@@ -46,7 +51,24 @@ namespace NCI.Web.CDE
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
 
-            if (url.ToLower().IndexOf(".ico") != -1 || url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
+            //HACK: We need to generate unique filepaths for JS & CSS based on timestamp. So we will rewrite 
+            //any URL that matches yyyy.v12353432.js or xxxx.v1233454.css to yyyy.js and xxxx.css respectively.
+            //
+            //This should move to another module when we have more time.
+            if (url.ToLower().IndexOf(".js") != -1
+                || url.IndexOf(".css") != -1)
+            {
+                //This replaces "\.v[0-9]+\." with .  -- I don't like the "." portion below, but I want the
+                //regex to be static and compiled.
+                UniqueStaticFileCleaner.Replace(url, ".");
+            }
+
+            if (url.ToLower().IndexOf(".ico") != -1 
+                || url.IndexOf(".css") != -1 
+                || url.IndexOf(".gif") != -1 
+                || url.IndexOf(".jpg") != -1 
+                || url.IndexOf(".js") != -1 
+                || url.IndexOf(".axd") != -1) 
                 return;
 
             //Check if the url has been rewritten yet.
