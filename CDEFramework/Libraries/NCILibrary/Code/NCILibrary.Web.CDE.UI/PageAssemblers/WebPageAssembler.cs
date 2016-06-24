@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -220,6 +222,48 @@ namespace NCI.Web.CDE.UI
             htmlHead.Controls.Add(hm);
         }
 
+        // Based on http://madskristensen.net/post/cache-busting-in-aspnet.
+        private string appendFileFingerprint(string rootRelativePath)
+        {
+            string returnUrl = rootRelativePath;
+
+            // Don't mangle anything from external sites.
+            if (rootRelativePath[0] == '~' || rootRelativePath[0] == '/')
+            {
+                long dateTicks = GetFileDateAsTicks(rootRelativePath);
+                int index = rootRelativePath.LastIndexOf('.');
+
+                // Append finger print after the '.' before the extension.
+                returnUrl = rootRelativePath.Insert(index, ".__v" + dateTicks);
+            }
+
+            return returnUrl;
+        }
+
+        private long GetFileDateAsTicks(string rootRelativePath)
+        {
+            if (HttpRuntime.Cache[rootRelativePath] == null)
+            {
+                try
+                {
+                    // Need a leading ~ for MapPath().
+                    string absolute = rootRelativePath;
+                    if (absolute[0] != '~')
+                        absolute = "~" + absolute;
+
+                    // Get the *really* absolute name.
+                    absolute = Server.MapPath(rootRelativePath);
+                    DateTime date = File.GetLastWriteTime(absolute);
+                    HttpRuntime.Cache.Insert(rootRelativePath, date.Ticks, new CacheDependency(absolute));
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            return (long)HttpRuntime.Cache[rootRelativePath];
+        }
+
         #endregion
 
         #region Public Members
@@ -431,19 +475,31 @@ namespace NCI.Web.CDE.UI
 
                     //Load first Javascript
                     foreach (JavascriptInfo jsBeginningInfo in firstJavaScript)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsBeginningInfo.JavascriptPath);
+                    {
+                        String url = appendFileFingerprint(jsBeginningInfo.JavascriptPath);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
+                    }
 
                     //Load first Stylesheet
                     foreach (StyleSheetInfo cssBeginningInfo in firstStylesheet)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssBeginningInfo.StyleSheetPath, cssBeginningInfo.Media);
+                    {
+                        String url = appendFileFingerprint(cssBeginningInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, cssBeginningInfo.Media);
+                    }
 
 
                     // Load the css resources and js resource with no specified location
                     foreach (StyleSheetInfo ssInfo in unspecifiedStylesheets)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, ssInfo.StyleSheetPath, ssInfo.Media);
+                    {
+                        String url = appendFileFingerprint(ssInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, ssInfo.Media);
+                    }
 
                     foreach (JavascriptInfo jsInfo in unspecifiedJavaScripts)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsInfo.JavascriptPath);
+                    {
+                        String url = appendFileFingerprint(jsInfo.JavascriptPath);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
+                    }
                 }
             }
         }
@@ -482,11 +538,17 @@ namespace NCI.Web.CDE.UI
 
                     //Load Stylesheets marked as "End"
                     foreach (StyleSheetInfo cssLastInfo in lastStylesheet)
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, cssLastInfo.StyleSheetPath, cssLastInfo.Media);
+                    {
+                        String url = appendFileFingerprint(cssLastInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, cssLastInfo.Media);
+                    }
 
                     //Load Javascript marked as "End"
                     foreach (JavascriptInfo jsLastInfo in lastJavaScript)
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, jsLastInfo.JavascriptPath);
+                    {
+                        String url = appendFileFingerprint(jsLastInfo.JavascriptPath);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
+                    }
                 }
             }
         }
