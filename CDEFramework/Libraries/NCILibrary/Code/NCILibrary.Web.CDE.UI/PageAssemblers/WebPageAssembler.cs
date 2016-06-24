@@ -222,12 +222,19 @@ namespace NCI.Web.CDE.UI
             htmlHead.Controls.Add(hm);
         }
 
-        // Based on http://madskristensen.net/post/cache-busting-in-aspnet.
+        /// <summary>
+        /// Modify a URL string to include a "fingerprint" containing the physical file's
+        /// last update time. This provides a way around caching issues for JavaScript, CSS
+        /// and other static resources.
+        /// Based on http://madskristensen.net/post/cache-busting-in-aspnet.
+        /// </summary>
+        /// <param name="rootRelativePath">The server-relative URL to modify.</param>
+        /// <returns>The url, modified to include ".__v##### before the extension.</returns>
         private string appendFileFingerprint(string rootRelativePath)
         {
             string returnUrl = rootRelativePath;
 
-            // Don't mangle anything from external sites.
+            // Don't rewrite anything from external sites.
             if (rootRelativePath[0] == '~' || rootRelativePath[0] == '/')
             {
                 long dateTicks = GetFileDateAsTicks(rootRelativePath);
@@ -240,8 +247,16 @@ namespace NCI.Web.CDE.UI
             return returnUrl;
         }
 
+        /// <summary>
+        /// Finds the last modified date of a file and return it as the 
+        /// number of ten-millionths of a second since 0:00:00 UTC on January 1, 0001.
+        /// </summary>
+        /// <param name="rootRelativePath">Server-relative URL</param>
+        /// <returns>The file's last modified date as the number of ten-millionths of a
+        /// second since 0:00:00 UTC on January 1, 0001.</returns>
         private long GetFileDateAsTicks(string rootRelativePath)
         {
+            // Try first to retrieve the time from cache.
             if (HttpRuntime.Cache[rootRelativePath] == null)
             {
                 try
@@ -258,6 +273,8 @@ namespace NCI.Web.CDE.UI
                 }
                 catch
                 {
+                    // In the case of an error (e.g. missing file), return 0. We can't cache this 
+                    // value because you can't put a dependency on a non-existant file.
                     return 0;
                 }
             }
