@@ -51,6 +51,9 @@ namespace NCI.Web.CDE
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture));
 
+
+
+            #region CSS/JS File Stamp Removal (Will Rewrite and Return if Conditions Met)
             //HACK: We need to generate unique filepaths for JS & CSS based on timestamp. So we will rewrite 
             //any URL that matches yyyy.v12353432.js or xxxx.v1233454.css to yyyy.js and xxxx.css respectively.
             //
@@ -61,7 +64,31 @@ namespace NCI.Web.CDE
                 //This replaces "\.v[0-9]+\." with .  -- I don't like the "." portion below, but I want the
                 //regex to be static and compiled.
                 url = UniqueStaticFileCleaner.Replace(url, ".");
+
+                // Append original parameters in the request URL
+                if (!String.IsNullOrEmpty(context.Request.Url.Query))
+                {
+                    //The query should contain a ?
+                    url += context.Request.Url.Query;
+                }
+
+
+                //rewrite the URL.
+                try
+                {
+                    context.RewritePath(url, false);
+                    return; //Done rewriting, let's get out of here.
+                }
+
+                catch (HttpException ex)
+                {
+                    string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.";
+                    Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.", NCIErrorLevel.Error, ex);
+                    RaiseErrorPage(errMessage, ex);
+                }
+
             }
+            #endregion
 
             if (url.ToLower().IndexOf(".ico") != -1 
                 || url.IndexOf(".css") != -1 
