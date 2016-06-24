@@ -15,6 +15,7 @@ using NCI.Logging;
 using NCI.Web.Extensions;
 using NCI.Web.CDE;
 using NCI.Web.UI.WebControls;
+using System.Security.Cryptography;
 
 
 namespace NCI.Web.CDE.UI
@@ -237,7 +238,7 @@ namespace NCI.Web.CDE.UI
             // Don't rewrite anything from external sites.
             if (rootRelativePath[0] == '~' || rootRelativePath[0] == '/')
             {
-                long dateTicks = GetFileDateAsTicks(rootRelativePath);
+                string dateTicks = GetFileFingerprint(rootRelativePath);
                 int index = rootRelativePath.LastIndexOf('.');
 
                 // Append finger print after the '.' before the extension.
@@ -248,13 +249,11 @@ namespace NCI.Web.CDE.UI
         }
 
         /// <summary>
-        /// Finds the last modified date of a file and return it as the 
-        /// number of ten-millionths of a second since 0:00:00 UTC on January 1, 0001.
+        /// Calculate a fingerprint for the current version of a file.
         /// </summary>
         /// <param name="rootRelativePath">Server-relative URL</param>
-        /// <returns>The file's last modified date as the number of ten-millionths of a
-        /// second since 0:00:00 UTC on January 1, 0001.</returns>
-        private long GetFileDateAsTicks(string rootRelativePath)
+        /// <returns>String containing the file's fingerprint..</returns>
+        private string GetFileFingerprint(string rootRelativePath)
         {
             // Try first to retrieve the time from cache.
             if (HttpRuntime.Cache[rootRelativePath] == null)
@@ -268,17 +267,28 @@ namespace NCI.Web.CDE.UI
 
                     // Get the *really* absolute name.
                     absolute = Server.MapPath(rootRelativePath);
-                    DateTime date = File.GetLastWriteTime(absolute);
-                    HttpRuntime.Cache.Insert(rootRelativePath, date.Ticks, new CacheDependency(absolute));
+
+                    // Get the file's MD5, stripping out dashes from the byte string.
+                    string md5hash;
+                    using (var md5 = MD5.Create())
+                    {
+                        using (var stream = File.OpenRead(absolute))
+                        {
+                            md5hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                        }
+                    }
+
+
+                    HttpRuntime.Cache.Insert(rootRelativePath, md5hash, new CacheDependency(absolute));
                 }
                 catch
                 {
-                    // In the case of an error (e.g. missing file), return 0. We can't cache this 
+                    // In the case of an error (e.g. missing file), return emptystring. We can't cache this 
                     // value because you can't put a dependency on a non-existant file.
-                    return 0;
+                    return String.Empty;
                 }
             }
-            return (long)HttpRuntime.Cache[rootRelativePath];
+            return (string)HttpRuntime.Cache[rootRelativePath];
         }
 
         #endregion
