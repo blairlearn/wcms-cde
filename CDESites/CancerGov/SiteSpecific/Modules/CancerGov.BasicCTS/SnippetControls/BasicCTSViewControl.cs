@@ -12,6 +12,7 @@ using System.Web.UI.WebControls;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
 using NCI.Web;
+using NCI.Logging;
 
 
 
@@ -78,7 +79,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// <returns></returns>
         public bool GetSearchForAllTrials()
         {
-            if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
+            if ((this.hasInvalidSearchParam == false) && (_setFields == SetFields.None))
                 return true;
             else
                 return false;
@@ -182,7 +183,18 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             }
 
             // Get Trial by ID
-            var trial = _basicCTSManager.Get(nctid);
+            TrialDescription trial;
+            try
+            {
+                trial = _basicCTSManager.Get(nctid);
+            }
+            catch (Exception ex)
+            {
+                string errMessage = "CDE:BasicCTSViewControl.cs:OnLoad" + " Requested NCTid: " + nctid + "\nException thrown by _basicCTSManager.get(nctid) call.";
+                Logger.LogError(errMessage, NCIErrorLevel.Error, ex);
+                ErrorPageDisplayer.RaisePageError(errMessage);
+                return;
+            }
 
             if (trial == null)
                 throw new HttpException(404, "Trial cannot be found.");
