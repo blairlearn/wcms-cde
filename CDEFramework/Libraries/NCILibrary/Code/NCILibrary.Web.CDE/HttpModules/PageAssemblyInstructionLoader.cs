@@ -65,30 +65,41 @@ namespace NCI.Web.CDE
                 || url.IndexOf(".jpg") != -1
                 || url.IndexOf(".svg") != -1)
             {
-                //This replaces "\.v[0-9]+\." with .  -- I don't like the "." portion below, but I want the
-                //regex to be static and compiled.
-                url = UniqueStaticFileCleaner.Replace(url, ".");
-
-                // Append original parameters in the request URL
-                if (!String.IsNullOrEmpty(context.Request.Url.Query))
+                //Only go through with the change if this path matches our string.  We experienced an issue in production
+                //where rewriting the URL to the same path can mangle the response.  This also seems to be an "known" or
+                //at least often complained about issue, where calling RewritePath on static assets confuses the static
+                //compression stuff built into IIS.  So this should minimize our possible issues to only versioned URLs. 
+                if (UniqueStaticFileCleaner.IsMatch(url))
                 {
-                    //The query should contain a ?
-                    url += context.Request.Url.Query;
-                }
+
+                    //This replaces "\.v[0-9]+\." with .  -- I don't like the "." portion below, but I want the
+                    //regex to be static and compiled.
+                    url = UniqueStaticFileCleaner.Replace(url, ".");
+
+                    // Append original parameters in the request URL
+                    if (!String.IsNullOrEmpty(context.Request.Url.Query))
+                    {
+                        //The query should contain a ?
+                        url += context.Request.Url.Query;
+                    }
 
 
-                //rewrite the URL.
-                try
-                {
-                    context.RewritePath(url, false);
-                    return; //Done rewriting, let's get out of here.
-                }
+                    //rewrite the URL.
+                    try
+                    {
+                        //The general consensus is that rewritepath does not work with static assets well, so use TransferRequest as it
+                        //will go back into the IIS pipeline as if a normal file.
+                        //NOTE: definately do not call this on files that exist or a loop will occur.
+                        context.Server.TransferRequest(url, false);                        
+                        return; //Done rewriting, let's get out of here.
+                    }
 
-                catch (HttpException ex)
-                {
-                    string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.";
-                    Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.", NCIErrorLevel.Error, ex);
-                    RaiseErrorPage(errMessage, ex);
+                    catch (HttpException ex)
+                    {
+                        string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.";
+                        Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.", NCIErrorLevel.Error, ex);
+                        RaiseErrorPage(errMessage, ex);
+                    }
                 }
 
             }
