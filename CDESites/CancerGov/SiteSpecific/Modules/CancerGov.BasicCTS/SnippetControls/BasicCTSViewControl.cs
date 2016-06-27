@@ -259,8 +259,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
                 if ((_setFields & SetFields.Phrase) != 0 && SearchParams is PhraseSearchParam)
                 {
-                    var PhraseSearchParams = (PhraseSearchParam)SearchParams;
-                    url.QueryParameters.Add(PRASE_PARAM, HttpUtility.UrlEncode(PhraseSearchParams.Phrase));
+                    if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
+                        url.QueryParameters.Add(CANCERTYPEASPHRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                    else
+                        url.QueryParameters.Add(PRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                 }
 
                 // Page Number

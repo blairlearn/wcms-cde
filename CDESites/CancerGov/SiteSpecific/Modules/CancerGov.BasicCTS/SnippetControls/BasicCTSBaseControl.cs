@@ -34,7 +34,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         protected const string AGE_PARAM = "a";
         protected const string GENDER_PARAM = "g";
         protected const string CANCERTYPE_PARAM = "t";
-
+        protected const string CANCERTYPEASPHRASE_PARAM = "ct";
 
         protected BasicCTSPageInfo _basicCTSPageInfo = null;
 
@@ -55,6 +55,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             int age = this.ParmAsInt(AGE_PARAM, 0);
             int gender = this.ParmAsInt(GENDER_PARAM, 0); //0 = decline, 1 = female, 2 = male, 
             string cancerType = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
+            string cancerTypeAsPhrase = this.ParmAsStr(CANCERTYPEASPHRASE_PARAM, string.Empty); // if autosuggest is broken, the cancer type field will be parsed as a phrase search
             string cancerTypeDisplayName = null;
 
             BaseCTSSearchParam searchParams = null;
@@ -68,10 +69,10 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
                 if (ctarr.Length >= 1)
                 {
-                    if (ctarr.Length > 1)
-                        cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], ctarr[1]);
-                    else if (ctarr.Length == 1)
-                        cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], null);
+                    // Determine cancer type display name from CDRID and Hash (if there is no match with the Hash,
+                    // the first cancer type display name is chosen using the CDRID)
+                    string hash = ctarr.Length >= 1 ? ctarr[1] : null;
+                    cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], hash);
 
                     if (cancerTypeDisplayName != null)
                     {
@@ -106,17 +107,24 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             }
             else
             {
+                /*bool brokenCTParam = false;
+                if (string.IsNullOrWhiteSpace(phrase) && !string.IsNullOrWhiteSpace(cancerTypeAsPhrase))
+                    brokenCTParam = true;*/
+
+                // If phrase is set, use phrase for search. Otherwise use cancerTypeAsPhrase (which will be
+                // empty string if not set, and work the same as an empty phrase search). Also only set
+                // Is BrokenCTSearchParam if just cancerTypeAsPhrase (and not phrase) is set.
                 searchParams = new PhraseSearchParam()
                 {
-                    Phrase = phrase,
+                    Phrase = !string.IsNullOrWhiteSpace(phrase) ? phrase : cancerTypeAsPhrase,
+                    IsBrokenCTSearchParam = (string.IsNullOrWhiteSpace(phrase) && !string.IsNullOrWhiteSpace(cancerTypeAsPhrase)) ? true : false,
                     ESTemplateFile = BasicCTSPageInfo.ESTemplateFullText
                 };
 
-                if (!string.IsNullOrWhiteSpace(phrase))
+                if (!string.IsNullOrWhiteSpace(phrase) || !string.IsNullOrWhiteSpace(cancerTypeAsPhrase))
                 {
                     _setFields |= SetFields.Phrase;
                 }
-
             }
 
             #endregion

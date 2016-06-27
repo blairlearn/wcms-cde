@@ -17,6 +17,11 @@ namespace CancerGov.ClinicalTrials.Basic
         /// </summary>
         public string Phrase { get; set; }
 
+        /// <summary>
+        /// If autosuggest is broken, the cancer type entered will be parsed and searched like a phrase
+        /// </summary>
+        public bool IsBrokenCTSearchParam { get; set; }
+
         protected override void AddTemplateParams(Nest.FluentDictionary<string, object> paramdict)
         {
             // The purpose of matching the entered phrase to this pattern is so that certain 

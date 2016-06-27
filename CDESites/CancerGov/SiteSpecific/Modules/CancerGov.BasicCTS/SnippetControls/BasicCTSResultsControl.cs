@@ -87,7 +87,12 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 if (SearchParams is PhraseSearchParam)
                 {
                     if ((_setFields & SetFields.Phrase) != 0)
-                        url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                    {
+                        if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
+                            url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                        else
+                            url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                    }
                 }
 
                 //Items Per Page
@@ -202,6 +207,16 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         }
 
         /// <summary>
+        /// Returns a boolean that defines whether the cancer type is being searched for as a phrase.
+        /// This will happen when autosuggest is broken.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasBrokenCTSearchParam()
+        {
+            return SearchParams is PhraseSearchParam ? ((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam : false;
+        }
+
+        /// <summary>
         /// Gets the View URL for an ID
         /// </summary>
         /// <param name="id"></param>
@@ -240,7 +255,12 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             if (SearchParams is PhraseSearchParam)
             {
                 if ((_setFields & SetFields.Phrase) != 0)
-                    url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                {
+                    if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
+                        url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                    else
+                        url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                }
             }
 
             //Items Per Page
