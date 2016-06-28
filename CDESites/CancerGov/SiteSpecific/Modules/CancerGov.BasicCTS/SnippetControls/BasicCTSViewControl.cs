@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-
-using NCI.Web.CDE.UI;
-using NCI.Web.CDE.Modules;
-using NCI.Web;
 using NCI.Logging;
+using NCI.Web.CDE;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.UI;
 
 
 
@@ -228,6 +222,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
             {
+                //NOTE: If you add more params, please remove them from CanonicalURL,
+                //unless they substantially change the rendered HTML markup.  (e.g. like id does)
                 url.QueryParameters.Add("id", nctid);
                 if (GetShowAll() > -1)
                 {
@@ -316,9 +312,24 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             PageInstruction.AddUrlFilter("CanonicalUrl", (name, url) =>
             {
+                // only the id should be provided for the canonical URL, so clear all query parameters and
+                // then add back id
                 url.QueryParameters.Clear();
                 url.QueryParameters.Add("id", nctid);
             });
+
+            // Override the social media URL (og:url)
+            PageInstruction.AddFieldFilter("og:url", (fieldName, data) =>
+            {
+                //Ok, this is weird, but...  The OpenGraph URL is actually a field. It kind of makes sense,
+                //and it kind of does not.  Really it should be a field that gets the og:url instead of the 
+                //pretty URL.
+                //BUt here we are, and it is what we have.  So let's replace the og:url with the canonical URL.
+
+                data.Value = PageInstruction.GetUrl(PageAssemblyInstructionUrls.CanonicalUrl).ToString();
+            });
+
+
 
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                     BasicCTSPageInfo.DetailedViewPageTemplatePath, 
