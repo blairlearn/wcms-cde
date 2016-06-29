@@ -16,8 +16,6 @@ namespace NCI.Web.CDE.Modules
     {
         private static VelocityEngineManager _engineManager = new VelocityEngineManager();
 
-        private static FileSystemWatcher templateDirectoryWatcher;
-
         [Obsolete("Use MergeTemplateWithResultsByFilepath() instead.")]
         public static string MergeTemplateWithResults(string template, object obj)
         {
@@ -43,7 +41,7 @@ namespace NCI.Web.CDE.Modules
             try
             {
                 VelocityEngine velocity = _engineManager.Engine;
-                WatchTemplateDirectory(filepath);
+                _engineManager.WatchTemplateDirectory(filepath);
 
                 velocity.Init();
                 VelocityContext context = new VelocityContext();
@@ -63,39 +61,6 @@ namespace NCI.Web.CDE.Modules
                 Logger.LogError("VelocityTemplate:MergeTemplateWithResultsByFilepath", "Failed when evaluating results template and object.", NCIErrorLevel.Error, ex);
                 throw;
             }
-        }
-
-        private static void WatchTemplateDirectory(string filepath)
-        {
-            if (templateDirectoryWatcher == null)
-            {
-                lock (typeof(VelocityTemplate))
-                {
-                    if(templateDirectoryWatcher == null)
-                    {
-                        filepath = HttpContext.Current.Server.MapPath(filepath);
-
-                        templateDirectoryWatcher = new FileSystemWatcher((Path.GetDirectoryName(filepath)));
-                        templateDirectoryWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.Size | NotifyFilters.LastAccess | NotifyFilters.Attributes;
-                        templateDirectoryWatcher.EnableRaisingEvents = true;
-
-                        templateDirectoryWatcher.Changed += new FileSystemEventHandler(TemplatesChanged);
-                        templateDirectoryWatcher.Created += new FileSystemEventHandler(TemplatesChanged);
-                        templateDirectoryWatcher.Deleted += new FileSystemEventHandler(TemplatesChanged);
-                        templateDirectoryWatcher.Renamed += new RenamedEventHandler(TemplatesChanged);
-                    }
-                }
-            }
-        }
-
-        private static void TemplatesChanged(object src, FileSystemEventArgs e)
-        {
-            _engineManager.ResetVelocityEngine();
-        }
-
-        private static void TemplatesRenamed(object src, RenamedEventArgs e)
-        {
-            _engineManager.ResetVelocityEngine();
         }
 
         class CDEContext
@@ -140,13 +105,29 @@ namespace NCI.Web.CDE.Modules
 
         /// <summary>
         /// Helper class to manage use of a single instance of the Velocity Engine.
+        /// The managed instance of the engine may be released by either calling 
+        /// ResetVelocityEngine() directly, or by using WatchTemplateDirectory() to
+        /// set a file watcher on the directory where the templates are stored.
+        /// 
         /// </summary>
+        /// <remarks>
+        /// If WatchTemplateDirectory() is used, it is assumed that all templates
+        /// are stored in the same directory structure.  Although changes to files
+        /// in the directory structure will trigger replacement of the managed engine,
+        /// create, delete, rename operations on directories will not.
+        /// </remarks>
         private class VelocityEngineManager
         {
             /// <summary>
             /// The instance. Not available for access outside this helper class.
             /// </summary>
             private static VelocityEngine _velocityEngine = null;
+
+            /// <summary>
+            ///  Used by WatchTemplateDirectory() to watch for changes in the
+            ///  directory structure where templates are stored.
+            /// </summary>
+            private static FileSystemWatcher templateDirectoryWatcher;
 
             /// <summary>
             /// Read-only property for accessing the managed instance of VelocityEngine.
@@ -178,6 +159,59 @@ namespace NCI.Web.CDE.Modules
                     _velocityEngine = null;
                 }
             }
+
+            /// <summary>
+            /// Sets a file system watcher in the directory which contains filepath. In the event that any files
+            /// are created, deleted, modified, or renamed, the current velocity engine will be released and the
+            /// next access to the Engine property will result in a new one being allocated.
+            /// </summary>
+            /// <param name="filepath">The path to a velocity template.</param>
+            public void WatchTemplateDirectory(string filepath)
+            {
+                if (templateDirectoryWatcher == null)
+                {
+                    lock (typeof(VelocityTemplate.VelocityEngineManager))
+                    {
+                        if(templateDirectoryWatcher == null)
+                        {
+                            filepath = HttpContext.Current.Server.MapPath(filepath);
+
+                            // Set the watcher on the directory.
+                            templateDirectoryWatcher = new FileSystemWatcher((Path.GetDirectoryName(filepath)));
+                            templateDirectoryWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.Size | NotifyFilters.LastAccess | NotifyFilters.Attributes;
+                            templateDirectoryWatcher.EnableRaisingEvents = true;
+
+                            templateDirectoryWatcher.Changed += new FileSystemEventHandler(TemplatesChanged);
+                            templateDirectoryWatcher.Created += new FileSystemEventHandler(TemplatesChanged);
+                            templateDirectoryWatcher.Deleted += new FileSystemEventHandler(TemplatesChanged);
+                            templateDirectoryWatcher.Renamed += new RenamedEventHandler(TemplatesChanged);
+                        }
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Event handler for files in the template directory being modified, created, or deleted.
+            /// Removes the reference to the managed velocity template
+            /// </summary>
+            /// <param name="src">event source (not used)</param>
+            /// <param name="e">event arguments (not used)</param>
+            private void TemplatesChanged(object src, FileSystemEventArgs e)
+            {
+                ResetVelocityEngine();
+            }
+
+            /// <summary>
+            /// Event handler for files in the template directory being renamed.
+            /// Removes the reference to the managed velocity template
+            /// </summary>
+            /// <param name="src">event source (not used)</param>
+            /// <param name="e">event arguments (not used)</param>
+            private void TemplatesRenamed(object src, RenamedEventArgs e)
+            {
+                ResetVelocityEngine();
+            }
+
         }
     }
 }
