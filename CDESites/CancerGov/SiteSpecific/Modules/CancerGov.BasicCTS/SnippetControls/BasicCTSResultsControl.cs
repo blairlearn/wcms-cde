@@ -19,191 +19,15 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
     public class BasicCTSResultsControl : BasicCTSBaseControl
     {
         /// <summary>
-        /// Enumeration representing a bitmap for the fields that are set.
-        /// </summary>
-        [Flags]
-        private enum SetFields
-        {
-            None = 0,
-            Age = 1,
-            Gender = Age << 1,
-            ZipCode = Gender << 1,
-            ZipProximity = ZipCode << 1,
-            Phrase = ZipProximity << 1,
-            CancerType = Phrase << 1
-        }
-
-        /// <summary>
         /// Gets the Search Parameters for the current request.
         /// </summary>
         public BaseCTSSearchParam SearchParams { get; private set; }
-        public PhraseSearchParam PhraseSearchParams { get; set; }
-        public CancerTypeSearchParam CancerTypeSearchParams { get; set; }
-
-        private SetFields _setFields = SetFields.None;
-        private BasicCTSManager _basicCTSManager = null;
-        private string cancerTypeIDAndHash = null;
-
-        private void SetSearchParams()
-        {
-            //Parse Parameters
-            int pageNum = this.ParmAsInt(PAGENUM_PARAM, 1);
-            int itemsPerPage = this.ParmAsInt(ITEMSPP_PARAM, BasicCTSPageInfo.DefaultItemsPerPage);
-            string phrase = this.ParmAsStr(PRASE_PARAM, string.Empty);
-            string zip = this.ParmAsStr(ZIP_PARAM, string.Empty);
-            int zipProximity = this.ParmAsInt(ZIPPROX_PARAM, BasicCTSPageInfo.DefaultZipProximity); //In miles
-            int age = this.ParmAsInt(AGE_PARAM, 0);
-            int gender = this.ParmAsInt(GENDER_PARAM, 0); //0 = decline, 1 = female, 2 = male, 
-            string cancerType = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
-            string cancerTypeDisplayName = null;
-
-            BaseCTSSearchParam searchParams = null;
-
-            #region Set Cancer Type or Phrase
-
-            if (cancerType != string.Empty)
-            {
-                //cancerTypeIDAndHash = cancerType;
-                string[] ctarr = cancerType.Split(new Char[]{'|'}, StringSplitOptions.RemoveEmptyEntries);
-
-                if (ctarr.Length >= 1)
-                {
-                    if(ctarr.Length > 1)    
-                        cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], ctarr[1]);
-                    else if(ctarr.Length == 1)
-                        cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], null);
-
-                    if(cancerTypeDisplayName != null)
-                    {
-                        cancerTypeIDAndHash = cancerType;
-
-                        //Test id to match ^CDR\d+$
-                        searchParams = new CancerTypeSearchParam()
-                        {
-                            //get cancer type.
-                            CancerTypeID = ctarr[0],
-
-                            CancerTypeDisplayName = cancerTypeDisplayName,
-
-                            //Add in the label which is go to ElasticSearch, fetch ctarr[1] (the hash) and get the text
-                            ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
-                        };
-
-                        _setFields |= SetFields.CancerType;
-                    }
-                    else
-                    {
-                        invalidSearchParam = true;
-                        searchParams = new CancerTypeSearchParam()
-                        {
-                            ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
-                        };
-                    }
-
-
-                }
-
-            }
-            else
-            {
-                searchParams = new PhraseSearchParam()
-                {
-                    Phrase = phrase,
-                    ESTemplateFile = BasicCTSPageInfo.ESTemplateFullText
-                };
-
-                if (!string.IsNullOrWhiteSpace(phrase))
-                {
-                    _setFields |= SetFields.Phrase;
-                }
-                
-            }
-
-            #endregion
-
-            // Fill in common parameters
-
-            #region Set Zip Code + GeoLocation
-            if (!string.IsNullOrWhiteSpace(zip))
-            {
-                string pattern = @"^[0-9]{5}$";
-
-                if (Regex.IsMatch(zip, pattern))
-                {
-                    searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
-                    if (searchParams.ZipLookup != null)
-                    {
-                        _setFields |= SetFields.ZipCode;
-                        if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
-                            _setFields |= SetFields.ZipProximity;
-                    }
-                    else
-                    {
-                        invalidSearchParam = true;
-                    }
-                }
-                else
-                {
-                    invalidSearchParam = true;
-                }
-            }
-
-            #endregion
-
-            #region Set Page and Items Per Page
-            if (pageNum < 1)
-                SearchParams.Page = 1;
-            else
-                searchParams.Page = pageNum;
-
-            searchParams.ItemsPerPage = itemsPerPage;
-            #endregion
-
-            #region Set Age
-
-            //Handle Age
-            if (age > 0)
-            {
-                if (age > 120)
-                {
-                    invalidSearchParam = true;
-                }
-                else
-                {
-                    searchParams.Age = age;
-                    _setFields |= SetFields.Age;
-                }
-            }
-
-            #endregion
-
-            #region Set Gender
-
-            //Handle Gender if specified
-            switch (gender)
-            {
-                case 1: 
-                    searchParams.Gender = BaseCTSSearchParam.GENDER_FEMALE;
-                    _setFields |= SetFields.Gender;
-                    break;
-                case 2:
-                    searchParams.Gender = BaseCTSSearchParam.GENDER_MALE;
-                    _setFields |= SetFields.Gender;
-                    break;
-            }
-
-            #endregion
-
-            SearchParams = searchParams;
-        }
 
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
-            _basicCTSManager = new BasicCTSManager();
-
-            SetSearchParams();
+            SearchParams = GetSearchParams();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -224,7 +48,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 {
                     data.Value = "No Trials Matched Your Search";
                 }
-                else if (invalidSearchParam)
+                else if (hasInvalidSearchParam)
                 {
                     data.Value = "No Results";
                 }
@@ -256,17 +80,19 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 //Phrase and type are based on the type of object
                 if (SearchParams is CancerTypeSearchParam)
                 {
-                    CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
-
                     if ((_setFields & SetFields.CancerType) != 0)
                         url.QueryParameters.Add("t", cancerTypeIDAndHash);
                 }
 
                 if (SearchParams is PhraseSearchParam)
                 {
-                    PhraseSearchParams = (PhraseSearchParam)SearchParams;
                     if ((_setFields & SetFields.Phrase) != 0)
-                        url.QueryParameters.Add("q", HttpUtility.UrlEncode(PhraseSearchParams.Phrase));
+                    {
+                        if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
+                            url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                        else
+                            url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                    }
                 }
 
                 //Items Per Page
@@ -316,31 +142,24 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// Returns the cancer type the user searched for if the current search contains a type/condition.
         /// </summary>
         /// <returns></returns>
-        public string HasType()
+        public string GetCancerType()
         {
-            if (SearchParams is CancerTypeSearchParam)
-            {
-                CancerTypeSearchParams = (CancerTypeSearchParam)SearchParams;
-
-                if (!string.IsNullOrWhiteSpace(CancerTypeSearchParams.CancerTypeDisplayName))
-                    return CancerTypeSearchParams.CancerTypeDisplayName;
-            }
-            return null;
+            string type = SearchParams is CancerTypeSearchParam ? ((CancerTypeSearchParam)SearchParams).CancerTypeDisplayName : null;
+            if (string.IsNullOrWhiteSpace(type))
+                type = null;
+            return type;
         }
 
         /// <summary>
         /// Returns the phrase the user searched for if the current search contains a phrase.
         /// </summary>
         /// <returns></returns>
-        public string HasPhrase()
+        public string GetPhrase()
         {
-            if (SearchParams is PhraseSearchParam)
-            {
-                PhraseSearchParams = (PhraseSearchParam)SearchParams;
-                if (!string.IsNullOrWhiteSpace(PhraseSearchParams.Phrase))
-                    return PhraseSearchParams.Phrase;
-            }
-            return null;
+            string phrase = SearchParams is PhraseSearchParam ? ((PhraseSearchParam)SearchParams).Phrase : null;
+            if (string.IsNullOrWhiteSpace(phrase))
+                phrase = null;
+            return phrase;
         }
 
         /// <summary>
@@ -358,7 +177,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// <returns></returns>
         public bool GetSearchForAllTrials()
         {
-            if ((this.invalidSearchParam == false) && (_setFields == SetFields.None))
+            if ((this.hasInvalidSearchParam == false) && (_setFields == SetFields.None))
                 return true;
             else
                 return false;
@@ -384,7 +203,17 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
         /// <returns></returns>
         public bool HasInvalidParams()
         {
-            return this.invalidSearchParam;
+            return this.hasInvalidSearchParam;
+        }
+
+        /// <summary>
+        /// Returns a boolean that defines whether the cancer type is being searched for as a phrase.
+        /// This will happen when autosuggest is broken.
+        /// </summary>
+        /// <returns></returns>
+        public bool HasBrokenCTSearchParam()
+        {
+            return SearchParams is PhraseSearchParam ? ((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam : false;
         }
 
         /// <summary>
@@ -404,6 +233,41 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 
             if ((_setFields & SetFields.ZipProximity) != 0)
                 url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
+
+            if ((_setFields & SetFields.Age) != 0)
+                url.QueryParameters.Add("a", SearchParams.Age.ToString());
+
+            if ((_setFields & SetFields.Gender) != 0)
+            {
+                if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
+                    url.QueryParameters.Add("g", "1");
+                else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
+                    url.QueryParameters.Add("g", "2");
+            }
+
+            //Phrase and type are based on the type of object
+            if (SearchParams is CancerTypeSearchParam)
+            {
+                if ((_setFields & SetFields.CancerType) != 0)
+                    url.QueryParameters.Add("t", cancerTypeIDAndHash);
+            }
+
+            if (SearchParams is PhraseSearchParam)
+            {
+                if ((_setFields & SetFields.Phrase) != 0)
+                {
+                    if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
+                        url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                    else
+                        url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                }
+            }
+
+            //Items Per Page
+            url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString());
+
+            // Page number
+            url.QueryParameters.Add("pn", SearchParams.Page.ToString());
 
             return url.ToString();
         }
@@ -442,7 +306,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage);
             int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage;
             if (SearchParams.Page > endPage)
-                startPage = endPage - numLeft;
+                startPage = (endPage - numLeft) >= 1 ? endPage - numLeft : 1;
 
             // If maxPage == 1, then only one page of results is found. Therefore, return null for the pager items.
             // Otherwise, set up the pager accordingly.

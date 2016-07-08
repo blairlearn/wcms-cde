@@ -17,9 +17,16 @@ namespace CancerGov.ClinicalTrials.Basic
         /// </summary>
         public string Phrase { get; set; }
 
+        /// <summary>
+        /// If autosuggest is broken, the cancer type entered will be parsed and searched like a phrase
+        /// </summary>
+        public bool IsBrokenCTSearchParam { get; set; }
+
         protected override void AddTemplateParams(Nest.FluentDictionary<string, object> paramdict)
         {
-
+            // The purpose of matching the entered phrase to this pattern is so that certain 
+            // search phrases with only one item in quotes (such as "nci-match", as opposed 
+            // to breast cancer) are passed along with a parameter to ES for a specific search.
             string pattern = @"^""[^""]+""$";
 
             // Set the searchstring only if we have one.  Maybe clean it up too if needbe.
