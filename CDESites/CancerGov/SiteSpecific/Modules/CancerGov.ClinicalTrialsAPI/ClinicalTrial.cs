@@ -331,7 +331,7 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <summary>
         /// Gets or sets the primary protocol ID of this trial
         /// </summary>
-        [JsonProperty("property_id")]
+        [JsonProperty("protocol_id")]
         public string ProtocolID { get; set; }
 
         /// <summary>

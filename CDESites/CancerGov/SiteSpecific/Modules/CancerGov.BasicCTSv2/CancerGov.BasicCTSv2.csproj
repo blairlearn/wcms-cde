@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicCTSManager.cs" />
+    <Compile Include="ClinicalTrialExtensions.cs" />
     <Compile Include="GeoLocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchParams\BaseCTSSearchParam.cs" />
