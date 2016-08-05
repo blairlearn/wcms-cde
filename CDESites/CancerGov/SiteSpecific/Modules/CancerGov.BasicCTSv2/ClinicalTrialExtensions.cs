@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CancerGov.ClinicalTrialsAPI;
 
-namespace CancerGov.BasicCTSv2
+namespace CancerGov.ClinicalTrials.Basic.v2
 {
     public static class ClinicalTrialExtensions
     {
