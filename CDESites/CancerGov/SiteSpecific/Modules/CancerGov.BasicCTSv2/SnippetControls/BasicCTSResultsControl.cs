@@ -35,7 +35,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             base.OnLoad(e);
 
             //Do the search
-            var results = _basicCTSManager.SearchTemplate(SearchParams);
+            var results = _basicCTSManager.Search(SearchParams);
 
             // Copying the Title & Short Title logic from Advanced Form
             //set the page title as the protocol title

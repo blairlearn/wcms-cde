@@ -73,6 +73,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     // the first cancer type display name is chosen using the CDRID)
                     string hash = ctarr.Length >= 1 ? ctarr[1] : null;
                     cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], hash);
+                    
 
                     if (cancerTypeDisplayName != null)
                     {
@@ -84,10 +85,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                             //get cancer type.
                             CancerTypeID = ctarr[0],
 
-                            CancerTypeDisplayName = cancerTypeDisplayName,
-
-                            //Add in the label which is go to ElasticSearch, fetch ctarr[1] (the hash) and get the text
-                            ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
+                            CancerTypeDisplayName = cancerTypeDisplayName
                         };
 
                         _setFields |= SetFields.CancerType;
@@ -95,10 +93,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     else
                     {
                         hasInvalidSearchParam = true;
-                        searchParams = new CancerTypeSearchParam()
-                        {
-                            ESTemplateFile = BasicCTSPageInfo.ESTemplateCancerType
-                        };
+                        searchParams = new CancerTypeSearchParam();
                     }
 
 
@@ -117,8 +112,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 searchParams = new PhraseSearchParam()
                 {
                     Phrase = !string.IsNullOrWhiteSpace(phrase) ? phrase : cancerTypeAsPhrase,
-                    IsBrokenCTSearchParam = (string.IsNullOrWhiteSpace(phrase) && !string.IsNullOrWhiteSpace(cancerTypeAsPhrase)) ? true : false,
-                    ESTemplateFile = BasicCTSPageInfo.ESTemplateFullText
+                    IsBrokenCTSearchParam = (string.IsNullOrWhiteSpace(phrase) && !string.IsNullOrWhiteSpace(cancerTypeAsPhrase)) ? true : false
                 };
 
                 if (!string.IsNullOrWhiteSpace(phrase) || !string.IsNullOrWhiteSpace(cancerTypeAsPhrase))
@@ -281,7 +275,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnInit(e);
 
-            _basicCTSManager = new BasicCTSManager();
+            //TODO: Make this a config setting
+            _basicCTSManager = new BasicCTSManager("clinicaltrialsapi.cancer.gov");
 
         }
     }

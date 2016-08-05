@@ -17,7 +17,7 @@ namespace CancerGov.ClinicalTrialsAPI
         /// Gets the total number of results
         /// </summary>
         [JsonProperty("total")]
-        public int Total { get; set; }
+        public int TotalResults { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of trials

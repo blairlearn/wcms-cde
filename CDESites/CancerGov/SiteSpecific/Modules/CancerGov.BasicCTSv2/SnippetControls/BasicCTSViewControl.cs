@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
+using CancerGov.ClinicalTrialsAPI;
 using NCI.Logging;
 using NCI.Web.CDE;
 using NCI.Web.CDE.Modules;
@@ -177,7 +178,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             // Get Trial by ID
-            TrialDescription trial;
+            ClinicalTrial trial;
             try
             {
                 trial = _basicCTSManager.Get(nctid);
@@ -330,14 +331,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             });
 
 
-
+            //TODO: Fix Glossified Phase
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                     BasicCTSPageInfo.DetailedViewPageTemplatePath, 
                     new
                     {
                         Trial = trial,
                         Control = this,
-                        GlossifiedPhase = GetGlossifiedTrialPhase(trial.ProtocolPhases)
+                        //GlossifiedPhase = GetGlossifiedTrialPhase(trial.ProtocolPhases)
+                        GlossifiedPhase = "FIX ME"
                     }
                 )
             );
