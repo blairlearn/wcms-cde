@@ -101,7 +101,18 @@ namespace NCI.Web.CDE.Modules
                 string rtn = str.Replace(pattern1, pattern2);
                 return rtn;
             }
-        }
+
+            public string Join(string[] strArr)
+            {
+                if(strArr != null) 
+                {
+                   return string.Join("",strArr);
+                }
+                else 
+                { 
+                    return string.Empty;
+                }
+            }
 
         /// <summary>
         /// Helper class to manage use of a single instance of the Velocity Engine.
