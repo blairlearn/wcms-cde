@@ -76,7 +76,9 @@
     <Compile Include="SnippetControls\BasicCTSViewControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\BasicCTSBaseControl.cs" />
+    <Compile Include="SnippetControls\BasicCTSBaseControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="TrialBase.cs" />
     <Compile Include="TrialContact.cs" />
     <Compile Include="TrialDescription.cs" />

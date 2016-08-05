@@ -208,7 +208,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //set the page title as the protocol title
             PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
             {
-                data.Value = trial.BriefTitle;
+                int i = 1;
+                //data.Value = trial.BriefTitle;
             });
 
             PageInstruction.AddFieldFilter("short_title", (fieldName, data) =>
