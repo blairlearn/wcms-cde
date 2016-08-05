@@ -102,6 +102,9 @@
     <Content Include="Global.asax" />
     <Content Include="JS\popEvents.js" />
     <Content Include="Common\PopUps\PopEmail.aspx" />
+    <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSResults.ascx" />
+    <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSSearch.ascx" />
+    <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSView.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSResults.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSView.ascx" />
