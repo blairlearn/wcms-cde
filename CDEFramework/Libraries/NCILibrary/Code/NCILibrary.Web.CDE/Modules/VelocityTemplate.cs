@@ -113,6 +113,7 @@ namespace NCI.Web.CDE.Modules
                     return string.Empty;
                 }
             }
+		}
 
         /// <summary>
         /// Helper class to manage use of a single instance of the Velocity Engine.
