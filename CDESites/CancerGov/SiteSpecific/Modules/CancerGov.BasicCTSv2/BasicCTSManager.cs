@@ -37,19 +37,61 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return Client.Get(id);
         }
 
+        /// <summary>
+        /// Performs a search against the Clinical Trials API
+        /// </summary>
+        /// <param name="searchParams"></param>
+        /// <returns></returns>
         public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams) {
-            throw new NotImplementedException();
+            
+            //Set page
+            //Set size
+            //Get only the fields we want
+            //Get only "active" statuses
+            //Then get additional filters based on type of search.
+
+            //From starts at 0
+            int from = 0;
+
+            if (searchParams.Page > 1)
+            {
+                from = searchParams.Page * searchParams.ItemsPerPage;
+            }
+
+            Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
+
+            //This is for only searching open trials.
+            filterCriteria.Add("current_trial_status", new string[] {
+//                "Closed to Accrual and Intervention",
+                "In Review",
+                "Temporarily Closed to Accrual and Intervention",
+//                "Administratively Complete",
+                "Temporarily Closed to Accrual",
+                "Enrolling by Invitation",
+//                "Closed to Accrual",
+                "Active",
+//                "Complete",
+//                "Withdrawn",
+                "Approved"
+            });
+
+            //TODO: Actually handle search criteria
+            return Client.List(
+                size: searchParams.ItemsPerPage,
+                from: from,
+                includeFields: new string[] {
+                    "nct_id",
+                    "brief_title",
+                    "sites.org.name",
+                    "sites.org.postal_code",
+                    "eligibility.structured",
+                    "current_trial_status"
+                },
+                searchParams: filterCriteria
+            );
+
         }
 
-        public ClinicalTrialsCollection SearchByDisease(string diseaseCode)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ClinicalTrialsCollection SearchByPhrase(string keyword)
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// Gets the Geo Location for a ZipCode

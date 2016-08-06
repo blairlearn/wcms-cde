@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace CancerGov.ClinicalTrialsAPI
 {
     public class ClinicalTrialsAPIClient
@@ -18,41 +21,6 @@ namespace CancerGov.ClinicalTrialsAPI
         }
 
         /// <summary>
-        /// When Performing a Search we Need to Limit the Fields We Retrieve.
-        /// </summary>
-        private string[] GetListOfResultsFields()
-        {
-            return new string[] {
-                "nct_id",
-                "brief_title",
-                "sites.org.name",
-                "sites.org.postal_code",
-                "eligibility.structured",
-                "current_trial_status"
-            };
-        }
-
-        /// <summary>
-        /// When Performing a Search we Need to Limit the Statuses we will search.
-        /// </summary>
-        /*
-        private string[] GetListOfActiveStatuses()
-        {
- Closed to Accrual and Intervention
- In Review
- Temporarily Closed to Accrual and Intervention
- Administratively Complete
- Temporarily Closed to Accrual
- Enrolling by Invitation
- Closed to Accrual
- Active
- Complete
- Withdrawn
- Approved
-        }
-         */
-
-        /// <summary>
         /// Calls the listing endpoint (/clinical-trials) of the clinical trials API
         /// </summary>
         /// <param name="size"></param>
@@ -60,13 +28,20 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <param name="includeFields"></param>
         /// <param name="excludeFields"></param>
         /// <returns></returns>
-        public ClinicalTrialsCollection List(int size = 10, int from = 0, string[] includeFields = null, string[] excludeFields = null)
+        public ClinicalTrialsCollection List(
+            int size = 10, 
+            int from = 0, 
+            string[] includeFields = null, 
+            string[] excludeFields = null,
+            Dictionary<string, object> searchParams = null
+            )
         {
             ClinicalTrialsCollection rtnResults = null;
 
-            //Handle Null include/exclude fields
+            //Handle Null include/exclude field
             includeFields = includeFields ?? new string[0];
             excludeFields = excludeFields ?? new string[0];
+            searchParams = searchParams ?? new Dictionary<string, object>();
 
             using (var client = new HttpClient())
             {
@@ -74,9 +49,29 @@ namespace CancerGov.ClinicalTrialsAPI
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = client.GetAsync("/clinical-trials").Result;
+                JObject requestBody = new JObject();
+                requestBody.Add(new JProperty("size", size));
+                requestBody.Add(new JProperty("from", from));
+                
+                if (includeFields.Length > 0)
+                {
+                    requestBody.Add(new JProperty("include", includeFields));
+                }
 
+                if (excludeFields.Length > 0)
+                {
+                    requestBody.Add(new JProperty("exclude", includeFields));
+                }
+
+                foreach (KeyValuePair<string, object> sp in searchParams)
+                {
+                    requestBody.Add(new JProperty(sp.Key, sp.Value));
+                } 
+
+
+                //We want this to be synchronus, so call Result right away.
+                HttpResponseMessage response = client.PostAsync("/clinical-trials", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+                
                 if (response.IsSuccessStatusCode)
                 {
                     rtnResults = response.Content.ReadAsAsync<ClinicalTrialsCollection>().Result;

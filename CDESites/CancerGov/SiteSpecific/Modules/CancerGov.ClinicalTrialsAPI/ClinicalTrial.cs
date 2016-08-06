@@ -279,6 +279,14 @@ namespace CancerGov.ClinicalTrialsAPI
             public List<UnstructuredCriterion> UnstructuredCriteria { get; set; }
 
             //Expose some helper properties and methods.  (Age, Gender, Inclusion and exclusion
+
+            /// <summary>
+            /// Gets the Gender Criterion
+            /// </summary>
+            public string Gender
+            {
+                get { return StructuredCriteria.Gender; }
+            }
         }
 
         public class Intervention
@@ -398,6 +406,13 @@ namespace CancerGov.ClinicalTrialsAPI
         [JsonProperty("primary_purpose")]
         public PrimaryPurposeInformation PrimaryPurpose { get; set; }
 
+        /// <summary>
+        /// Gets or sets the status of this trial
+        /// </summary>
+        [JsonProperty("current_trial_status")]
+        public string CurrentTrialStatus { get; set; }
+
+
         #region lead organization and sponsor information
 
         /// <summary>
@@ -455,10 +470,6 @@ namespace CancerGov.ClinicalTrialsAPI
 
         [JsonProperty("")]
         public object date_last_updated { get; set; }
-
-        [JsonProperty("")]
-        public string current_trial_status { get; set; }
-
 
         [JsonProperty("")]
         public string current_trial_status_date { get; set; }
