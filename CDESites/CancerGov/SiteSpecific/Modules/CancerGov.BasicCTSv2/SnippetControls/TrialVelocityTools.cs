@@ -105,5 +105,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string purpose = trial.GetPrimaryPurpose();
             return char.ToString(purpose[0]) + purpose.Substring(1).ToLower();
         }
+
+        /// <summary>
+        /// Gets the Lead Organization string
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String leadOrg</returns>
+        public string GetLeadOrgString(ClinicalTrial trial)
+        {
+            string leadOrg = trial.GetLeadOrg();
+            return leadOrg;
+        }
     }
 }

@@ -112,6 +112,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Gets the Lead Organization
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns></returns>
+        public static string GetLeadOrg(this ClinicalTrial trial)
+        {
+            string leadOrg = String.Empty;
+            if (!String.IsNullOrEmpty(trial.LeadOrganizationName))
+            {
+                leadOrg = trial.LeadOrganizationName;
+            }
+            return leadOrg;
+        }
+
+        /// <summary>
         /// Gets an array of all of the secondary IDs, which are those that are not the NCT ID or the Primary ID
         /// </summary>
         /// <param name="trial"></param>
