@@ -292,7 +292,7 @@ namespace CancerGov.ClinicalTrialsAPI
         /// Gets or sets the NCI Center for Cancer Research identifier of this trial, if it exists
         /// </summary>
         [JsonProperty("ccr_id")]
-        public object CCRID { get; set; }
+        public string CCRID { get; set; }
 
         /// <summary>
         /// Gets or sets the NCI Cancer Therapy Evaluation Program identifier of this trial, if it exists
@@ -304,7 +304,7 @@ namespace CancerGov.ClinicalTrialsAPI
         /// Gets or sets the NCI Division of Cancer Prevention identifier of this trial, if it exists
         /// </summary>
         [JsonProperty("dcp_id")]
-        public object DCPID { get; set; }
+        public string DCPID { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of additional unspecified trial identifiers

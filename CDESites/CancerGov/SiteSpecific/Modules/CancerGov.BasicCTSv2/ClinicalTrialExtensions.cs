@@ -83,12 +83,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public static string[] GetSecondaryIDs(this ClinicalTrial trial)
         {
             List<String> rtnIds = new List<String>();
-            // logic goes here
-            // if primary id == ctep id, don't include, etc
+            String[] secIds = { trial.NCIID, trial.CCRID, trial.CTEPID, trial.DCPID };
+            String dupe = "";
 
-            //TODO: Add other IDs
+            // Add secondary IDs (NCI, CCR, CTEP, DCP) to list
+            foreach(String sid in secIds)
+            {
+                if(sid != null) 
+                {
+                    rtnIds.Add(sid);
+                }
+            }
 
-            // Add trials IDs in the listing of other_ids
+            // Add other secondary IDs to list
             if (trial.OtherTrialIDs != null)
             {
                 rtnIds.AddRange(
@@ -96,6 +103,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     select id.Value
                 );
             }
+
+            // Remove any duplicate found in Primary or Secondary IDs 
+            foreach (String rtnid in rtnIds.ToList())
+            {
+                if(rtnid == trial.NCTID || rtnid == trial.ProtocolID || rtnid == dupe)
+                {
+                    rtnIds.Remove(rtnid);
+                }
+                dupe = rtnid;
+            }
+
             return rtnIds.ToArray();
         }
 
