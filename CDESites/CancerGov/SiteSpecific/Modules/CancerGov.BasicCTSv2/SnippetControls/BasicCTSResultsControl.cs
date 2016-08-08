@@ -9,10 +9,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using CancerGov.ClinicalTrialsAPI;
+
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE;
 using NCI.Web;
+
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -215,6 +218,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             return SearchParams is PhraseSearchParam ? ((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam : false;
         }
+
 
         /// <summary>
         /// Gets the View URL for an ID

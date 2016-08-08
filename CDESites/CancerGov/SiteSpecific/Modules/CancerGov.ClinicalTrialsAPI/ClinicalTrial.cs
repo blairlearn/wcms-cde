@@ -141,60 +141,6 @@ namespace CancerGov.ClinicalTrialsAPI
             public string status { get; set; }
         }
 
-        public class Org
-        {
-            [JsonProperty("")]
-            public string address_line_1 { get; set; }
-            [JsonProperty("")]
-            public string address_line_2 { get; set; }
-            [JsonProperty("")]
-            public string postal_code { get; set; }
-            [JsonProperty("")]
-            public string city { get; set; }
-            [JsonProperty("")]
-            public string state_or_province { get; set; }
-            [JsonProperty("")]
-            public string country { get; set; }
-            [JsonProperty("")]
-            public string name { get; set; }
-            [JsonProperty("")]
-            public string status { get; set; }
-            [JsonProperty("")]
-            public string status_date { get; set; }
-            [JsonProperty("")]
-            public string email { get; set; }
-            [JsonProperty("")]
-            public string fax { get; set; }
-            [JsonProperty("")]
-            public string phone { get; set; }
-            [JsonProperty("")]
-            public string tty { get; set; }
-            [JsonProperty("")]
-            public string family { get; set; }
-            [JsonProperty("")]
-            public string org_to_family_relationship { get; set; }
-        }
-
-        public class Site
-        {
-            [JsonProperty("")]
-            public string contact_email { get; set; }
-            [JsonProperty("")]
-            public object contact_name { get; set; }
-            [JsonProperty("")]
-            public string contact_phone { get; set; }
-            [JsonProperty("")]
-            public object generic_contact { get; set; }
-            [JsonProperty("")]
-            public Org org { get; set; }
-            [JsonProperty("")]
-            public string recruitment_status { get; set; }
-            [JsonProperty("")]
-            public string recruitment_status_date { get; set; }
-            [JsonProperty("")]
-            public string local_site_identifier { get; set; }
-        }
-
         public class Disease2
         {
             [JsonProperty("")]
@@ -441,6 +387,167 @@ namespace CancerGov.ClinicalTrialsAPI
 
         #endregion
 
+        #region Study Site Specific Classes and Properties
+
+        /// <summary>
+        /// Class Representing a Study Site where the trials are being held
+        /// </summary>
+        public class StudySite
+        {
+            /// <summary>
+            /// Represents the location information for this site
+            /// </summary>
+            public class SiteLocationInformation
+            {
+                /// <summary>
+                /// Gets or sets the first line of an address for this trial site
+                /// </summary>
+                [JsonProperty("address_line_1")]
+                public string AddressLine1 { get; set; }
+
+                /// <summary>
+                /// Gets or sets the second line of an address for this trial site
+                /// </summary>
+                [JsonProperty("address_line_2")]
+                public string AddressLine2 { get; set; }
+
+                /// <summary>
+                /// Gets or sets the postal code for this trial site
+                /// </summary>
+                [JsonProperty("postal_code")]
+                public string PostalCode { get; set; }
+
+                /// <summary>
+                /// Gets or sets the city for this trial site
+                /// </summary>
+                [JsonProperty("city")]
+                public string City { get; set; }
+
+                /// <summary>
+                /// Gets or sets the state/province of this trial site
+                /// </summary>
+                [JsonProperty("state_or_province")]
+                public string StateOrProvince { get; set; }
+
+                /// <summary>
+                /// Gets or sets the country of this trial site
+                /// </summary>
+                [JsonProperty("country")]
+                public string Country { get; set; }
+
+                /// <summary>
+                /// Gets or sets the name of this organization
+                /// </summary>
+                [JsonProperty("name")]
+                public string Name { get; set; }
+
+                /// <summary>
+                /// Gets or sets the name of the parent organization for this site.  (e.g. Albert Einstein Cancer Center)
+                /// </summary>
+                [JsonProperty("family")]
+                public string Family { get; set; }
+
+                /// <summary>
+                /// Gets or sets the relationship of this organization to its parent organization. (Sub-Organization, Affiliated Organization
+                /// </summary>
+                [JsonProperty("org_to_family_relationship")]
+                public string OrgToFamilyRelationship { get; set; }
+
+                //TODO: Determine what status is for
+                //[JsonProperty("status")]
+                //public string Status { get; set; }
+
+                //[JsonProperty("status_date")]
+                //public string StatusDate { get; set; }
+
+                /// <summary>
+                /// Gets or sets the email address of this site
+                /// </summary>
+                [JsonProperty("email")]
+                public string Email { get; set; }
+
+                /// <summary>
+                /// Gets or sets the fax number of this site
+                /// </summary>
+                [JsonProperty("fax")]
+                public string Fax { get; set; }
+
+                /// <summary>
+                /// Gets or sets the phone number of this site
+                /// </summary>
+                [JsonProperty("phone")]
+                public string Phone { get; set; }
+
+                /// <summary>
+                /// Gets or sets the TTY number of this site
+                /// </summary>
+                [JsonProperty("tty")]
+                public string TTY { get; set; }
+            }
+
+            /// <summary>
+            /// Gets or sets the email address used to contact this site.
+            /// </summary>
+            [JsonProperty("contact_email")]
+            public string ContactEmail { get; set; }
+
+            /// <summary>
+            /// Gets or sets the name, if any, of the contact person at this site.
+            /// </summary>
+            [JsonProperty("contact_name")]
+            public string ContactName { get; set; }
+
+            /// <summary>
+            /// Gets or sets the phone number used to contact this site.
+            /// </summary>
+            [JsonProperty("contact_phone")]
+            public string ContactPhone { get; set; }
+
+            // Unknown for now what this property provides.
+            //[JsonProperty("generic_contact")]
+            //public object GenericContact { get; set; }
+
+            /// <summary>
+            /// Gets or sets the location information for this site
+            /// </summary>
+            [JsonProperty("org")]
+            public SiteLocationInformation Org { get; set; }
+
+            /// <summary>
+            /// Gets or sets the recruitment status for this site.
+            /// </summary>
+            [JsonProperty("recruitment_status")]
+            public string RecruitmentStatus { get; set; }
+
+            // What exactlyh is the recruitment_status_date indicate?
+            //[JsonProperty("recruitment_status_date")]
+            //public string RecruitmentStatusDate { get; set; }
+
+            /// <summary>
+            /// Gets or sets the ID of the trial at this site.  (as each site can have its own ID for the trial)
+            /// </summary>
+            [JsonProperty("local_site_identifier")]
+            public string LocalSiteIdentifier { get; set; }
+        }
+
+        /// <summary>
+        /// Gets or sets a list of trials sites and thier locations for this trial
+        /// </summary>
+        [JsonProperty("sites")]
+        public List<StudySite> Sites { get; set; }
+
+        #endregion
+
+        /// <summary>
+        /// Constructs a new instance of a ClinicalTrial
+        /// </summary>
+        public ClinicalTrial()
+        {
+            //Ensure we have one of these in case the trial does not
+            OtherTrialIDs = new List<OtherId>();
+            Sites = new List<StudySite>();
+
+        }
 
         #region Composite Properties to Bubble Up information from embedded objects
 
@@ -457,6 +564,8 @@ namespace CancerGov.ClinicalTrialsAPI
         }
 
         #endregion
+
+
 
         /*
         [JsonProperty("")]
@@ -524,9 +633,6 @@ namespace CancerGov.ClinicalTrialsAPI
 
         [JsonProperty("")]
         public Masking masking { get; set; }
-
-        [JsonProperty("")]
-        public List<Site> sites { get; set; }
 
         [JsonProperty("")]
         public List<string> anatomic_sites { get; set; }
