@@ -339,8 +339,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     {
                         Trial = trial,
                         Control = this,
-                        //GlossifiedPhase = GetGlossifiedTrialPhase(trial.ProtocolPhases)
-                        GlossifiedPhase = "FIX ME",
+                        //GlossifiedPhase = GetGlossifiedTrialPhase(trial.ProtocolPhases),
                         TrialTools = new TrialVelocityTools()
                     }
                 )

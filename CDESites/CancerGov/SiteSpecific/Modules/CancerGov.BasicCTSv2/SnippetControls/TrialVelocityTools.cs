@@ -81,5 +81,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             else
                 return string.Join(", ", ids);
         }
+
+        /// <summary>
+        /// Gets the Phase number and adds glossification markup
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String glossifedPhase</returns>
+        public string GetGlossifiedPhase(ClinicalTrial trial)
+        {
+            string glossifiedPhase = trial.GetTrialPhase();
+            ///TODO: add logic for glossification
+            return glossifiedPhase;
+        }
     }
 }

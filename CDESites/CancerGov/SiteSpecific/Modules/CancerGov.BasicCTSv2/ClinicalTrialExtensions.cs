@@ -76,6 +76,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Gets the phase number only
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String - phase</returns>
+        public static String GetTrialPhase(this ClinicalTrial trial)
+        {
+            string rtnPhase = "";
+            if (trial.TrialPhase != null)
+            {
+                rtnPhase = trial.TrialPhase.phaseNumber;
+                if(!String.IsNullOrEmpty(rtnPhase))
+                {
+                    return rtnPhase;
+                }
+            }
+            return rtnPhase;
+        }
+
+        /// <summary>
         /// Gets an array of all of the secondary IDs, which are those that are not the NCT ID or the Primary ID
         /// </summary>
         /// <param name="trial"></param>
@@ -89,7 +108,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             // Add secondary IDs (NCI, CCR, CTEP, DCP) to list
             foreach(String sid in secIds)
             {
-                if(sid != null) 
+                if(!String.IsNullOrEmpty(sid)) 
                 {
                     rtnIds.Add(sid);
                 }
@@ -100,6 +119,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 rtnIds.AddRange(
                     from id in trial.OtherTrialIDs
+                    where !String.IsNullOrEmpty(id.Value)
                     select id.Value
                 );
             }
