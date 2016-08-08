@@ -89,9 +89,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>String glossifedPhase</returns>
         public string GetGlossifiedPhase(ClinicalTrial trial)
         {
-            string glossifiedPhase = trial.GetTrialPhase();
             ///TODO: add logic for glossification
+            string glossifiedPhase = trial.GetTrialPhase();
             return glossifiedPhase;
+        }
+
+        /// <summary>
+        /// Gets the Primary Purpose and formats text
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String purpose</returns>
+        public string GetPrimaryPurpose(ClinicalTrial trial)
+        {
+            ///TODO: Verify if we need to add other_text and additioncal_qualifier_code to this text
+            string purpose = trial.GetPrimaryPurpose();
+            return char.ToString(purpose[0]) + purpose.Substring(1).ToLower();
         }
     }
 }

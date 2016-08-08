@@ -58,17 +58,28 @@ namespace CancerGov.ClinicalTrialsAPI
             /// <remarks>This is not currently in use</remarks>
             /// </summary>
             [JsonProperty("primary_purpose_additional_qualifier_code")]
-            public object AdditionalQualifierCode { get; set; }
+            public string AdditionalQualifierCode { get; set; }
         }
 
         public class Phase
         {
+            /// <summary>
+            /// Gets or sets the purpose code for this trial. (e.g. "I", "I_II", "NA")
+            /// </summary>
             [JsonProperty("phase")]
-            public string phaseNumber { get; set; }
+            public string PhaseNumber { get; set; }
+
+            /// <summary>
+            /// Gets or sets additional text for this trial's phase.
+            /// </summary>
             [JsonProperty("phase_other_text")]
-            public object phaseOtherText { get; set; }
+            public string PhaseOtherText { get; set; }
+
+            /// <summary>
+            /// Gets or Sets an additional phase qualifier code for this trial.  
+            /// </summary>
             [JsonProperty("phase_additional_qualifier_code")]
-            public object phaseAdditionalQualifierCode { get; set; }
+            public string PhaseAdditionalQualifierCode { get; set; }
         }
 
         public class Masking
@@ -313,11 +324,10 @@ namespace CancerGov.ClinicalTrialsAPI
         public List<OtherId> OtherTrialIDs { get; set; }
 
         /// <summary>
-        /// Gets or sets the phase object
+        /// Gets or sets the Phase object
         /// </summary>
         [JsonProperty("phase")]
         public Phase TrialPhase { get; set; }
-
 
         #endregion
 

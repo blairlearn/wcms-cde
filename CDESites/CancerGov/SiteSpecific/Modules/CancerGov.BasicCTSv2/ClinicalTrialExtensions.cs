@@ -82,16 +82,33 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns>String - phase</returns>
         public static String GetTrialPhase(this ClinicalTrial trial)
         {
-            string rtnPhase = "";
+            string rtnPhase = String.Empty;
             if (trial.TrialPhase != null)
             {
-                rtnPhase = trial.TrialPhase.phaseNumber;
-                if(!String.IsNullOrEmpty(rtnPhase))
+                if (!String.IsNullOrEmpty(trial.TrialPhase.PhaseNumber))
                 {
-                    return rtnPhase;
+                    rtnPhase = trial.TrialPhase.PhaseNumber;
                 }
             }
             return rtnPhase;
+        }
+
+        /// <summary>
+        /// Gets the Primary Purpose
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String - purpose</returns>
+        public static String GetPrimaryPurpose(this ClinicalTrial trial)
+        {
+            string purpose = String.Empty;
+            if (trial.PrimaryPurpose != null)
+            {
+                if (!String.IsNullOrEmpty(trial.PrimaryPurpose.Code))
+                {
+                    purpose = trial.PrimaryPurpose.Code;
+                }
+            }
+            return purpose;
         }
 
         /// <summary>
