@@ -116,5 +116,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string sponsor = trial.GetLeadOrg();
             return sponsor;
         }
+
+        /// <summary>
+        /// Gets the Principal Investigator string
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>string - principal</returns>
+        public string[] GetPrincipalArray(ClinicalTrial trial)
+        {
+            List<String> principal = new List<String>();
+            if (!String.IsNullOrWhiteSpace(trial.GetPrincipalInvestigator()))
+            { 
+                principal.Add(trial.GetPrincipalInvestigator());
+            }
+            /* TODO - Verify if there actually any instances where we 
+             * have more than one Principal Investigator - OR if there
+             * is another value from the API that we should combine with 
+             * this
+             */
+            // principal.Add(trial.GetSomeOtherValue());
+            return principal.ToArray();
+        }
     }
 }

@@ -385,6 +385,12 @@ namespace CancerGov.ClinicalTrialsAPI
         public string LeadOrganizationName { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of the collaborators for this trial
+        /// </summary>
+        [JsonProperty("collaborators")]
+        public List<Collaborator> Collaborators { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the overall principal investigator of this trial
         /// </summary>
         [JsonProperty("principal_investigator")]
@@ -396,11 +402,6 @@ namespace CancerGov.ClinicalTrialsAPI
         [JsonProperty("central_contact")]
         public CentralContactInformation CentralContact { get; set; }
 
-        /// <summary>
-        /// Gets or sets a list of the collaborators for this trial
-        /// </summary>
-        [JsonProperty("collaborators")]
-        public List<Collaborator> Collaborators { get; set; }
 
         #endregion
 

@@ -127,6 +127,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Gets the Principal Investigator
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>string - principal</returns>
+        public static string GetPrincipalInvestigator(this ClinicalTrial trial)
+        {
+            string principal = String.Empty;
+            if (!String.IsNullOrEmpty(trial.PrincipalInvestigator))
+            {
+                principal = trial.PrincipalInvestigator;
+            }
+            return principal;
+        }
+
+        /// <summary>
         /// Gets an array of all of the secondary IDs, which are those that are not the NCT ID or the Primary ID
         /// </summary>
         /// <param name="trial"></param>
