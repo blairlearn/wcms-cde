@@ -127,6 +127,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Gets an array of all of the collaborator names
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>string[] collaborators</returns>
+        public static string[] GetCollaborators(this ClinicalTrial trial)
+        {
+            List<String> collaborators = new List<String>();
+            if (trial.Collaborators != null)
+            {
+                collaborators.AddRange(
+                    from collab in trial.Collaborators
+                    select collab.Name
+                );
+            }
+            return collaborators.ToArray();
+        }
+
+        /// <summary>
         /// Gets the Principal Investigator
         /// </summary>
         /// <param name="trial"></param>

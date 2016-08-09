@@ -562,6 +562,7 @@ namespace CancerGov.ClinicalTrialsAPI
         public ClinicalTrial()
         {
             //Ensure we have one of these in case the trial does not
+            Collaborators = new List<Collaborator>();
             OtherTrialIDs = new List<OtherId>();
             Sites = new List<StudySite>();
 

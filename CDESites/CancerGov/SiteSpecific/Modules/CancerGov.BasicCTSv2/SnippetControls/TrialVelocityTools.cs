@@ -118,7 +118,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Gets the Principal Investigator string
+        /// Gets array of Collaborator name strings
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>string[] collaborators</returns>
+        public string[] GetCollabsArray(ClinicalTrial trial)
+        {
+            return trial.GetCollaborators();
+        }
+
+        /// <summary>
+        /// Gets Principal Investigator strings and joins them into an array
         /// </summary>
         /// <param name="trial"></param>
         /// <returns>string - principal</returns>
@@ -127,7 +137,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             List<String> principal = new List<String>();
             if (!String.IsNullOrWhiteSpace(trial.GetPrincipalInvestigator()))
             { 
-                principal.Add(trial.GetPrincipalInvestigator());
+                principal.Add(trial.GetPrincipalInvestigator()); 
             }
             /* TODO - Verify if there actually any instances where we 
              * have more than one Principal Investigator - OR if there
