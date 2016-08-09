@@ -98,7 +98,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// Gets the Primary Purpose and formats text
         /// </summary>
         /// <param name="trial"></param>
-        /// <returns>String purpose</returns>
+        /// <returns>String - purpose</returns>
         public string GetPrimaryPurpose(ClinicalTrial trial)
         {
             ///TODO: Verify if we need to add other_text and additioncal_qualifier_code to this text
@@ -110,11 +110,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// Gets the Lead Organization string
         /// </summary>
         /// <param name="trial"></param>
-        /// <returns>String leadOrg</returns>
-        public string GetLeadOrgString(ClinicalTrial trial)
+        /// <returns>String - sponsor</returns>
+        public string GetLeadSponsor(ClinicalTrial trial)
         {
-            string leadOrg = trial.GetLeadOrg();
-            return leadOrg;
+            string sponsor = trial.GetLeadOrg();
+            return sponsor;
         }
     }
 }
