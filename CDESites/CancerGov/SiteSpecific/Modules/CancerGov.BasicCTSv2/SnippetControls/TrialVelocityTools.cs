@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +57,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public object GetAllSortedLocations(ClinicalTrial trial)
         {
             return trial.GetAllSortedLocations();
+        }
+
+        /// <summary>
+        /// Returns the number of locations for a given country sites collection
+        /// </summary>
+        /// <param name="trial">OrderedDictionary countryLocations</param>
+        /// <returns>int - number of locations for given country</returns>
+        public int GetLocCount(OrderedDictionary countryLocations)
+        {
+            return countryLocations.Count;
         }
 
         /// <summary>
