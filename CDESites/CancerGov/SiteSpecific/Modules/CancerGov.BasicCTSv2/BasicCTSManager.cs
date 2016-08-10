@@ -100,6 +100,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns></returns>
         public ZipLookup GetZipLookupForZip(string zipCode)
         {
+            ///ZipCodeGeoLookup.GetJson(zipCode);
             //TODO: Fix This
             return new ZipLookup()
             {
