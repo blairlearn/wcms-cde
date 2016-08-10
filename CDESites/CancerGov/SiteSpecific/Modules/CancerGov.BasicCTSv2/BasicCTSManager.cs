@@ -103,7 +103,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //TODO: Fix This
             return new ZipLookup()
             {
-                PostalCode_ZIP = "20874",
+                PostalCode_ZIP = zipCode,
                 GeoCode = new GeoLocation(39.1349, -77.2922)
             };            
         }
