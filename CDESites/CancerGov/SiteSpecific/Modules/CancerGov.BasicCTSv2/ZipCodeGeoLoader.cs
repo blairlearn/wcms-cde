@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     {
         /*
          * Class to load and do heavy lifting on the json data
-		 * TODO: fix the file path!!!
          */
+        static string zipFilePath = ConfigurationSettings.AppSettings["ZipCodesJsonMap"].ToString();
+
         public static ZipCodeDictionary LoadDictionary()
         {
-            try { 
-                using (StreamReader r = new StreamReader(@"C:\Development\WCMS\sites\CancerGov\PublishedContent\Files\Configuration\data\zip_codes.json"))
+            try {
+                using (StreamReader r = new StreamReader(zipFilePath))
                 {
                     string json = r.ReadToEnd();
                     ZipCodeDictionary zipCodes = JsonConvert.DeserializeObject<ZipCodeDictionary>(json);
