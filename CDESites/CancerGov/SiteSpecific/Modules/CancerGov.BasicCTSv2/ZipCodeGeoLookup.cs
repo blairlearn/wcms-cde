@@ -11,28 +11,31 @@ using Newtonsoft.Json;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
+    /*
+     * This will be our manager class
+     */
     public static class ZipCodeGeoLookup
     {
-        ///// public ZipCodeGeoEntry zipCode;
-        /*
-         * This will be our manager class
-         */
-
-        /*
-        public static void GetJson(string zipcode)
-        {
-            using (StreamReader r = new StreamReader(@"C:\Development\WCMS\sites\CancerGov\PublishedContent\Files\Configuration\data\zip_codes.json"))
-            {
-                string json = r.ReadToEnd();
-                ZipCodeDictionary zipCodes = JsonConvert.DeserializeObject<ZipCodeDictionary>(json);
-            }
-        }
-         */
+        private static ZipCodeDictionary zipCodeDict;
 
         // Constructor 
         static ZipCodeGeoLookup()
         {
-           ///// ZipCodeGeoLoader.GetJson();
+            zipCodeDict = ZipCodeGeoLoader.LoadDictionary();
+        }
+
+        
+        public static void GetJson(string zipcode)
+        {
+            double lat;
+            double lon;
+            ZipCodeDictionary zips = zipCodeDict;
+            if(zips.ContainsKey(zipcode))
+            {
+                lat = zips[zipcode].Latitude;
+                lon = zips[zipcode].Longitude;
+            }
+
         }
     }
 }

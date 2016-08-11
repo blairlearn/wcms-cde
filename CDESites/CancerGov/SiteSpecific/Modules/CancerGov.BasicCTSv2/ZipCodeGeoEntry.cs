@@ -13,12 +13,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// Zip code atitude
         /// </summary>
         [JsonProperty("lat")]
-        public string Latitude { get; set; }
+        public double Latitude { get; set; }
 
         /// <summary>
         /// Zip code longitude
         /// </summary>
         [JsonProperty("lon")]
-        public string Longitude { get; set; }
+        public double Longitude { get; set; }
     }
 }
