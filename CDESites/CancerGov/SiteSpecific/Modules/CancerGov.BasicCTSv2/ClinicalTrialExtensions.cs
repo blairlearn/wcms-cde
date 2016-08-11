@@ -106,6 +106,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 if (!String.IsNullOrEmpty(trial.PrimaryPurpose.Code))
                 {
                     purpose = trial.PrimaryPurpose.Code;
+                    if(purpose.ToLower() == "other")
+                    {
+                        purpose = trial.PrimaryPurpose.OtherText;
+                    }
                 }
             }
             return purpose;
