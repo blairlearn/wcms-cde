@@ -62,17 +62,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             //This is for only searching open trials.
             filterCriteria.Add("current_trial_status", new string[] {
-//                "Closed to Accrual and Intervention",
-                "In Review",
-                "Temporarily Closed to Accrual and Intervention",
-//                "Administratively Complete",
-                "Temporarily Closed to Accrual",
-                "Enrolling by Invitation",
-//                "Closed to Accrual",
+                // These CTRP statuses appear in results:
                 "Active",
-//                "Complete",
-//                "Withdrawn",
-                "Approved"
+                "Approved", 
+                "Enrolling by Invitation",
+                "In Review",
+                "Temporarily Closed to Accrual",
+                "Temporarily Closed to Accrual and Intervention"
+                // These CTRP statuses DO NOT appear in results:
+                /// "Administratively Complete",
+                /// "Closed to Accrual",
+                /// "Closed to Accrual and Intervention",
+                /// "Complete",
+                /// "Withdrawn",
             });
 
             //TODO: Actually handle search criteria
