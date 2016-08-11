@@ -100,12 +100,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns></returns>
         public ZipLookup GetZipLookupForZip(string zipCode)
         {
-            ///ZipCodeGeoLookup.GetJson(zipCode);
-            //TODO: Fix This
+            // Get the zip code dictionary entry object
+			// TODO: test check for null values
+            ZipCodeGeoEntry zipEntry = ZipCodeGeoLookup.GetZipCodeGeoEntry(zipCode);
             return new ZipLookup()
             {
                 PostalCode_ZIP = zipCode,
-                GeoCode = new GeoLocation(39.1349, -77.2922)
+                GeoCode = new GeoLocation(zipEntry.Latitude, zipEntry.Longitude)
             };            
         }
 
