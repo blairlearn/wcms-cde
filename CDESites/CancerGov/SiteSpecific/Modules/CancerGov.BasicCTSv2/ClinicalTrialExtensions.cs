@@ -76,6 +76,36 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Get min age eligibility info for trial
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public static int GetMinAge(this ClinicalTrial trial)
+        {
+            int age = 0;
+            if(trial.EligibilityInfo.StructuredCriteria.MinAgeInt != null)
+            {
+                age = trial.EligibilityInfo.StructuredCriteria.MinAgeInt;
+            }
+            return age;
+        }
+
+        /// <summary>
+        /// Get max age eligibility info for trial
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public static int GetMaxAge(this ClinicalTrial trial)
+        {
+            int age = 999;
+            if (trial.EligibilityInfo.StructuredCriteria.MaxAgeInt != null)
+            {
+                age = trial.EligibilityInfo.StructuredCriteria.MaxAgeInt;
+            }
+            return age;
+        }
+
+        /// <summary>
         /// Gets the phase number only
         /// </summary>
         /// <param name="trial"></param>

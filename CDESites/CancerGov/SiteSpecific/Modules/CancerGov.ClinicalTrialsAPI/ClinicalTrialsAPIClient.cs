@@ -76,6 +76,12 @@ namespace CancerGov.ClinicalTrialsAPI
                 {
                     rtnResults = response.Content.ReadAsAsync<ClinicalTrialsCollection>().Result;
                 }
+                else
+                {
+                    //TODO: Add more checking here if the respone does not actually have any content
+                    string errorMessage = response.Content.ReadAsStringAsync().Result;
+                    throw new Exception(errorMessage);
+                }
             }
 
             return rtnResults;
@@ -108,6 +114,12 @@ namespace CancerGov.ClinicalTrialsAPI
                 if (response.IsSuccessStatusCode)
                 {
                     rtnTrial = response.Content.ReadAsAsync<ClinicalTrial>().Result;                    
+                }
+                else
+                {
+                    //TODO: Add more checking here if the respone does not actually have any content
+                    string errorMessage = response.Content.ReadAsStringAsync().Result;
+                    throw new Exception(errorMessage);
                 }
             }
 

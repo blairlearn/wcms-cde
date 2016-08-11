@@ -34,7 +34,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns></returns>
         public ClinicalTrial Get(string id)
         {
-            return Client.Get(id);
+            ClinicalTrial trial = Client.Get(id);
+            RemoveNonRecruitingSites(trial);
+            return trial;
         }
 
         /// <summary>
@@ -77,8 +79,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 /// "Withdrawn",
             });
 
+            if (searchParams.ZipLookup != null)
+            {
+                filterCriteria.Add("sites.org.coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
+                filterCriteria.Add("sites.org.coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
+                filterCriteria.Add("sites.org.coordinates_dist", "100mi");
+                filterCriteria.Add("sites.recruitment_status", new string[] {
+                    // TODO: make this a constant and update IsActivelyRecruiting() to check all valid values
+                    // These CTRP statuses appear in results:
+                    "Active",
+                    "Approved", 
+                    "Enrolling by Invitation",
+                    "In Review",
+                    "Temporarily Closed to Accrual",
+                    "Temporarily Closed to Accrual and Intervention"
+                    // These CTRP statuses DO NOT appear in results:
+                    /// "Administratively Complete",
+                    /// "Closed to Accrual",
+                    /// "Closed to Accrual and Intervention",
+                    /// "Complete",
+                    /// "Withdrawn",
+                });
+            }
+
+
             //TODO: Actually handle search criteria
-            return Client.List(
+            ClinicalTrialsCollection rtnResults = Client.List(
                 size: searchParams.ItemsPerPage,
                 from: from,
                 includeFields: new string[] {
@@ -87,11 +113,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     "sites.org.name",
                     "sites.org.postal_code",
                     "eligibility.structured",
-                    "current_trial_status"
+                    "current_trial_status",
+                    "sites.recruitment_status"
                 },
                 searchParams: filterCriteria
             );
 
+            foreach(ClinicalTrial trial in rtnResults.Trials)
+            {
+                RemoveNonRecruitingSites(trial);
+            }
+
+            return rtnResults;
+
+        }
+
+        private static void RemoveNonRecruitingSites(ClinicalTrial trial)
+        {
+            trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));
+        }
+
+        private static bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
+        {
+            return site.RecruitmentStatus == "Active";
         }
 
 
@@ -109,7 +153,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 PostalCode_ZIP = zipCode,
                 GeoCode = new GeoLocation(zipEntry.Latitude, zipEntry.Longitude)
-            };            
+            };
         }
 
         /// <summary>
