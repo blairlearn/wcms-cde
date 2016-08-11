@@ -12,6 +12,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     {
         /*
          * Class to load and do heavy lifting on the json data
+		 * TODO: fix the file path!!!
          */
         public static ZipCodeDictionary LoadDictionary()
         {

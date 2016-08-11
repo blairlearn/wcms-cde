@@ -19,23 +19,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private static ZipCodeDictionary zipCodeDict;
 
         // Constructor 
+		// TODO: add Reloader to constructor once it's built out
         static ZipCodeGeoLookup()
         {
             zipCodeDict = ZipCodeGeoLoader.LoadDictionary();
         }
 
         
-        public static void GetJson(string zipcode)
+        public static ZipCodeGeoEntry GetZipCodeGeoEntry(string zipcode)
         {
-            double lat;
-            double lon;
             ZipCodeDictionary zips = zipCodeDict;
             if(zips.ContainsKey(zipcode))
             {
-                lat = zips[zipcode].Latitude;
-                lon = zips[zipcode].Longitude;
+                return zips[zipcode];
             }
-
+            else
+            {
+                return null;
+            }
         }
     }
 }
