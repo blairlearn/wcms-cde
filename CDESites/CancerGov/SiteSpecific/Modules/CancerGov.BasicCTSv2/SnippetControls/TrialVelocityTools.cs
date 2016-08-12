@@ -70,13 +70,34 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Wraper around site Extension method
+        /// Wrapper around site Extension method
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
         public bool SiteHasContact(ClinicalTrial.StudySite site)
         {
             return site.HasContact();
+        }
+
+        /// <summary>
+        /// Get formatted age range string
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public string GetAgeText(ClinicalTrial trial)
+        {
+            int minAge = trial.GetMinAge();
+            int maxAge = trial.GetMaxAge();
+            String rtn = minAge.ToString() + " to " + maxAge.ToString();
+            if(minAge < 1 && maxAge <= 120)
+            {
+                rtn = maxAge.ToString() + " and under";
+            }
+            if(minAge > 0 && maxAge > 120)
+            {
+                rtn = minAge.ToString() + " and over";
+            }
+            return maxAge.ToString();
         }
 
         /// <summary>
