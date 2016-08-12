@@ -276,7 +276,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             base.OnInit(e);
 
             //TODO: Make this a config setting
-            _basicCTSManager = new BasicCTSManager("clinicaltrialsapi.cancer.gov");
+            _basicCTSManager = new BasicCTSManager("nci-ocdev09-v.nci.nih.gov:3000");
 
         }
     }

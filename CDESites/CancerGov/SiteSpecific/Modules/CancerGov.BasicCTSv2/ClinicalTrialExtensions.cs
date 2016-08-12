@@ -82,11 +82,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns></returns>
         public static int GetMinAge(this ClinicalTrial trial)
         {
-            int age = 0;
-            if(trial.EligibilityInfo.StructuredCriteria.MinAgeInt != null)
-            {
-                age = trial.EligibilityInfo.StructuredCriteria.MinAgeInt;
-            }
+            int age = trial.EligibilityInfo.StructuredCriteria.MinAgeInt;
             return age;
         }
 
@@ -97,11 +93,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns></returns>
         public static int GetMaxAge(this ClinicalTrial trial)
         {
-            int age = 999;
-            if (trial.EligibilityInfo.StructuredCriteria.MaxAgeInt != null)
-            {
-                age = trial.EligibilityInfo.StructuredCriteria.MaxAgeInt;
-            }
+            int age = trial.EligibilityInfo.StructuredCriteria.MaxAgeInt;
             return age;
         }
 

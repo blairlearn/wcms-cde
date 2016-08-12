@@ -123,6 +123,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             ///TODO: add logic for glossification
             string glossifiedPhase = trial.GetTrialPhase();
+            if(glossifiedPhase == "NA")
+            {
+                glossifiedPhase = "No phase specified";
+            }
+            else
+            {
+                glossifiedPhase = "Phase " + glossifiedPhase.Replace("_", "/");
+            }
             return glossifiedPhase;
         }
 
