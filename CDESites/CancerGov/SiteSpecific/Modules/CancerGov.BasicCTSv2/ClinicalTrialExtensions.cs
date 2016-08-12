@@ -98,6 +98,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Get gender eligibility info for trial
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public static String GetGender(this ClinicalTrial trial)
+        {
+            string gender = trial.EligibilityInfo.StructuredCriteria.Gender;
+            return gender;
+        }
+
+        /// <summary>
         /// Gets the phase number only
         /// </summary>
         /// <param name="trial"></param>

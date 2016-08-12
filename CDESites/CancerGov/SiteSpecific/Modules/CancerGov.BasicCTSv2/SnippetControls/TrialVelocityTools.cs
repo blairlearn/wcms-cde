@@ -80,24 +80,54 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
+        /// Capitalizes first letter and removes underscores
+        /// </summary>
+        public string GetFormattedString(String str)
+        {
+            str = char.ToString(str[0]).ToUpper() + str.Substring(1).ToLower();
+            str = str.Replace("_", " ");
+            return str;
+        }
+
+        /// <summary>
         /// Get formatted age range string
         /// </summary>
-        /// <param name="site"></param>
+        /// <param name="trial"></param>
         /// <returns></returns>
-        public string GetAgeText(ClinicalTrial trial)
+        public string GetAgeString(ClinicalTrial trial)
         {
             int minAge = trial.GetMinAge();
             int maxAge = trial.GetMaxAge();
-            String rtn = minAge.ToString() + " to " + maxAge.ToString();
+            String ageRange = minAge.ToString() + " to " + maxAge.ToString();
             if(minAge < 1 && maxAge <= 120)
             {
-                rtn = maxAge.ToString() + " and under";
+                ageRange = maxAge.ToString() + " and under";
             }
-            if(minAge > 0 && maxAge > 120)
+            else if (minAge > 0 && maxAge > 120)
             {
-                rtn = minAge.ToString() + " and over";
+                ageRange = minAge.ToString() + " and over";
             }
-            return maxAge.ToString();
+            else if (minAge < 1 && maxAge > 120)
+            {
+                ageRange = "Not specified";
+            }
+            return ageRange;
+        }
+
+        /// <summary>
+        /// Get formatted gender string
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns></returns>
+        public string GetGenderString(ClinicalTrial trial)
+        {
+            String gender = trial.GetGender();
+            if(gender.ToLower() == "both")
+            {
+                gender = "Male or Female";
+                return gender;
+            }
+            return GetFormattedString(gender);
         }
 
         /// <summary>
@@ -139,11 +169,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         /// <param name="trial"></param>
         /// <returns>String - purpose</returns>
-        public string GetPrimaryPurpose(ClinicalTrial trial)
+        public string GetTrialType(ClinicalTrial trial)
         {
             ///TODO: Verify if we need to add other_text and additioncal_qualifier_code to this text
             string purpose = trial.GetPrimaryPurpose();
-            return char.ToString(purpose[0]) + purpose.Substring(1).ToLower();
+            return GetFormattedString(purpose);
         }
 
         /// <summary>
