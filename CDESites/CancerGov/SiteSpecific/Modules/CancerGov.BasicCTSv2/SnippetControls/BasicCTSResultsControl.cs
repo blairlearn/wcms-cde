@@ -110,7 +110,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 new
                 {
                     Results = results,
-                    Control = this
+                    Control = this,
+                    TrialTools = new TrialVelocityTools()
                 }
             ));
             Controls.Add(ltl);
