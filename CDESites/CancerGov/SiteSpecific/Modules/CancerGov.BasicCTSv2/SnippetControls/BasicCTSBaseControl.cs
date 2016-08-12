@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Text.RegularExpressions;
 using NCI.Logging;
 using NCI.Web.CDE.Modules;
@@ -43,6 +44,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected SetFields _setFields = SetFields.None;
         protected BasicCTSManager _basicCTSManager = null;
         protected string cancerTypeIDAndHash = null;
+
+        protected string APIURL = ConfigurationSettings.AppSettings["ClinicalTrialSearchAPIURL"].ToString();
+
 
         protected BaseCTSSearchParam GetSearchParams()
         {
@@ -275,8 +279,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnInit(e);
 
-            //TODO: Make this a config setting
-            _basicCTSManager = new BasicCTSManager("nci-ocdev09-v.nci.nih.gov:3000");
+            _basicCTSManager = new BasicCTSManager(APIURL);
 
         }
     }
