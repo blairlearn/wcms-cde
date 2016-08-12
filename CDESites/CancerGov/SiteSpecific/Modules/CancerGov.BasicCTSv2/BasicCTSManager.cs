@@ -137,6 +137,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     "current_trial_status",
                     "sites.org.country",
                     "sites.org.state_or_province",
+                    "sites.org.city",
                     "sites.recruitment_status"
                 },
                 searchParams: filterCriteria
