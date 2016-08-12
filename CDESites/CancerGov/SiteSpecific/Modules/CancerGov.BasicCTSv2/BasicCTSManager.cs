@@ -135,6 +135,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     "sites.org.postal_code",
                     "eligibility.structured",
                     "current_trial_status",
+                    "sites.org.country",
+                    "sites.org.state_or_province",
                     "sites.recruitment_status"
                 },
                 searchParams: filterCriteria
