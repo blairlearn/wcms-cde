@@ -15,7 +15,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         private ClinicalTrialsAPIClient Client { get; set; }
 
-        private static readonly string[] ActiveStatuses = {
+        private static readonly string[] ActiveTrialStatuses = {
             // These CTRP statuses appear in results:
             "Active",
             "Approved", 
@@ -29,6 +29,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             /// "Closed to Accrual and Intervention",
             /// "Complete",
             /// "Withdrawn"
+        };
+
+        //ActiveRecruitmentStatuses (filter study sites) query for open or not based on trial statuses to lower
+        private static readonly string[] ActiveRecruitmentStatuses = {
+            // These statuses appear in results:
+            "active",
+            "approved", 
+            "enrolling_by_invitation",
+            "in_review",
+            "temporarily_closed_to_accrual"
+            // These statuses DO NOT appear in results:
+            /// "closed_to_accrual",
+            /// "completed",
+            /// "administratively_complete",
+            /// "closed_to_accrual_and_intervention",
+            /// "withdrawn"
         };
 
         /// <summary>
@@ -79,14 +95,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
 
             //This is for only searching open trials.
-            filterCriteria.Add("current_trial_status", ActiveStatuses);
+            filterCriteria.Add("current_trial_status", ActiveTrialStatuses);
 
             if (searchParams.ZipLookup != null)
             {
                 filterCriteria.Add("sites.org.coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
                 filterCriteria.Add("sites.org.coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
                 filterCriteria.Add("sites.org.coordinates_dist", "100mi");
-                filterCriteria.Add("sites.recruitment_status", ActiveStatuses);
+                filterCriteria.Add("sites.recruitment_status", ActiveRecruitmentStatuses);
             }
 
             //Add Age Filter
@@ -140,7 +156,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         private static bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
         {
-            return ActiveStatuses.Contains(site.RecruitmentStatus);
+            return ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower());
         }
 
 
