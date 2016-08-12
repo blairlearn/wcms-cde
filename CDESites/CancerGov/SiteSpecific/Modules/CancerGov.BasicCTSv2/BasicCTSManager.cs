@@ -89,6 +89,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 filterCriteria.Add("sites.recruitment_status", ActiveStatuses);
             }
 
+            //Add Age Filter
+            //<field>_gte, <field>_lte
+
+            //Add Gender Filter
+            if (!string.IsNullOrWhiteSpace(searchParams.Gender))
+            {
+                filterCriteria.Add("eligibility.structured.gender", searchParams.Gender);
+            }
+
+            //Add phrase if this is a phrase search
+            if (searchParams is PhraseSearchParam)
+            {
+                filterCriteria.Add("_all", ((PhraseSearchParam)searchParams).Phrase);
+            }
+            else if (searchParams is CancerTypeSearchParam)
+            {
+                filterCriteria.Add("diseases.disease.id", ((CancerTypeSearchParam)searchParams).CancerTypeID);
+            }
+
             //TODO: Actually handle search criteria
             ClinicalTrialsCollection rtnResults = Client.List(
                 size: searchParams.ItemsPerPage,
