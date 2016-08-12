@@ -15,6 +15,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         private ClinicalTrialsAPIClient Client { get; set; }
 
+        private static readonly string[] ActiveStatuses = {
+            // These CTRP statuses appear in results:
+            "Active",
+            "Approved", 
+            "Enrolling by Invitation",
+            "In Review",
+            "Temporarily Closed to Accrual",
+            "Temporarily Closed to Accrual and Intervention"
+            // These CTRP statuses DO NOT appear in results:
+            /// "Administratively Complete",
+            /// "Closed to Accrual",
+            /// "Closed to Accrual and Intervention",
+            /// "Complete",
+            /// "Withdrawn"
+        };
+
         /// <summary>
         /// Creates a new instance of a BasicCTSManager
         /// </summary>
@@ -63,45 +79,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
 
             //This is for only searching open trials.
-            filterCriteria.Add("current_trial_status", new string[] {
-                // These CTRP statuses appear in results:
-                "Active",
-                "Approved", 
-                "Enrolling by Invitation",
-                "In Review",
-                "Temporarily Closed to Accrual",
-                "Temporarily Closed to Accrual and Intervention"
-                // These CTRP statuses DO NOT appear in results:
-                /// "Administratively Complete",
-                /// "Closed to Accrual",
-                /// "Closed to Accrual and Intervention",
-                /// "Complete",
-                /// "Withdrawn",
-            });
+            filterCriteria.Add("current_trial_status", ActiveStatuses);
 
             if (searchParams.ZipLookup != null)
             {
                 filterCriteria.Add("sites.org.coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
                 filterCriteria.Add("sites.org.coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
                 filterCriteria.Add("sites.org.coordinates_dist", "100mi");
-                filterCriteria.Add("sites.recruitment_status", new string[] {
-                    // TODO: make this a constant and update IsActivelyRecruiting() to check all valid values
-                    // These CTRP statuses appear in results:
-                    "Active",
-                    "Approved", 
-                    "Enrolling by Invitation",
-                    "In Review",
-                    "Temporarily Closed to Accrual",
-                    "Temporarily Closed to Accrual and Intervention"
-                    // These CTRP statuses DO NOT appear in results:
-                    /// "Administratively Complete",
-                    /// "Closed to Accrual",
-                    /// "Closed to Accrual and Intervention",
-                    /// "Complete",
-                    /// "Withdrawn",
-                });
+                filterCriteria.Add("sites.recruitment_status", ActiveStatuses);
             }
-
 
             //TODO: Actually handle search criteria
             ClinicalTrialsCollection rtnResults = Client.List(
@@ -135,7 +121,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         private static bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
         {
-            return site.RecruitmentStatus == "Active";
+            return ActiveStatuses.Contains(site.RecruitmentStatus);
         }
 
 
