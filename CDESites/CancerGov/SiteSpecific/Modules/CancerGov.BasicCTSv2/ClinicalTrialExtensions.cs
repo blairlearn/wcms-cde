@@ -271,16 +271,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (trial.Sites != null)
             {
                 var sortedSites = from site in trial.Sites
-                                  where site.Org.Country == country
-                                  orderby site.Org.StateOrProvince, site.Org.Name
+                                  where site.Country == country
+                                  orderby site.StateOrProvince, site.Name
                                   select site;
 
                 foreach (ClinicalTrial.StudySite site in sortedSites)
                 {
-                    if (!locations.Contains(site.Org.StateOrProvince))
-                        locations.Add(site.Org.StateOrProvince, new List<ClinicalTrial.StudySite>());
+                    if (!locations.Contains(site.StateOrProvince))
+                        locations.Add(site.StateOrProvince, new List<ClinicalTrial.StudySite>());
 
-                    ((List<ClinicalTrial.StudySite>)locations[site.Org.StateOrProvince]).Add(site);
+                    ((List<ClinicalTrial.StudySite>)locations[site.StateOrProvince]).Add(site);
                 }
             }
 
@@ -295,17 +295,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (trial.Sites != null)
             {
                 var sortedSites = from site in trial.Sites
-                                  where (site.Org.Country != "United States"
-                                        && site.Org.Country != "Canada")
-                                  orderby site.Org.Country, site.Org.StateOrProvince, site.Org.Name
+                                  where (site.Country != "United States"
+                                        && site.Country != "Canada")
+                                  orderby site.Country, site.StateOrProvince, site.Name
                                   select site;
 
                 foreach (ClinicalTrial.StudySite site in sortedSites)
                 {
-                    if (!locations.Contains(site.Org.Country))
-                        locations.Add(site.Org.Country, new List<ClinicalTrial.StudySite>());
+                    if (!locations.Contains(site.Country))
+                        locations.Add(site.Country, new List<ClinicalTrial.StudySite>());
 
-                    ((List<ClinicalTrial.StudySite>)locations[site.Org.Country]).Add(site);
+                    ((List<ClinicalTrial.StudySite>)locations[site.Country]).Add(site);
                 }
             }
             return locations;

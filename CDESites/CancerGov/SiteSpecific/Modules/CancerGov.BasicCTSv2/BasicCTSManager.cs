@@ -99,9 +99,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (searchParams.ZipLookup != null)
             {
-                filterCriteria.Add("sites.org.coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
-                filterCriteria.Add("sites.org.coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
-                filterCriteria.Add("sites.org.coordinates_dist", "100mi");
+                filterCriteria.Add("sites.coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
+                filterCriteria.Add("sites.coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
+                filterCriteria.Add("sites.coordinates_dist", "100mi");
                 filterCriteria.Add("sites.recruitment_status", ActiveRecruitmentStatuses);
             }
 
@@ -131,13 +131,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 includeFields: new string[] {
                     "nct_id",
                     "brief_title",
-                    "sites.org.name",
-                    "sites.org.postal_code",
+                    "sites.org_name",
+                    "sites.org_postal_code",
                     "eligibility.structured",
                     "current_trial_status",
-                    "sites.org.country",
-                    "sites.org.state_or_province",
-                    "sites.org.city",
+                    "sites.org_country",
+                    "sites.org_state_or_province",
+                    "sites.org_city",
+                    "sites.org_coordinates",
                     "sites.recruitment_status"
                 },
                 searchParams: filterCriteria

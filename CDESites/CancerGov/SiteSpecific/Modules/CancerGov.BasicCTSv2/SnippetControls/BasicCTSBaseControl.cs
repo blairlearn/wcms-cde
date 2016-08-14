@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Configuration;
 using System.Text.RegularExpressions;
+
 using NCI.Logging;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
+
+using CancerGov.ClinicalTrials.Basic.v2.Configuration;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -45,7 +48,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected BasicCTSManager _basicCTSManager = null;
         protected string cancerTypeIDAndHash = null;
 
-        protected string APIURL = ConfigurationSettings.AppSettings["ClinicalTrialSearchAPIURL"].ToString();
+        private static readonly string CONFIG_SECTION_NAME = "nci/search/basicClinicalTrialSearchAPI";
+
+        private string _APIURL = string.Empty;
+
+        /// <summary>
+        /// Gets the URL for the ClinicalTrials API from the configuration
+        /// </summary>
+        protected string APIURL {
+            get {
+                if (String.IsNullOrWhiteSpace(_APIURL))
+                {
+                    string url = "";
+
+                    BasicClinicalTrialSearchAPISection config = (BasicClinicalTrialSearchAPISection)ConfigurationManager.GetSection(CONFIG_SECTION_NAME);
+
+                    if (config == null)
+                        throw new ConfigurationErrorsException("The configuration section, " + CONFIG_SECTION_NAME + ", cannot be found");
+
+                    if (string.IsNullOrWhiteSpace(config.APIProtocol))
+                        throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: apiProtocol cannot be null or empty");
+
+                    if (string.IsNullOrWhiteSpace(config.APIHost))
+                        throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: apiHost cannot be null or empty");
+
+                    url = string.Format("{0}://{1}", config.APIProtocol, config.APIHost);
+
+                    if (!string.IsNullOrWhiteSpace(config.APIPort))
+                    {
+                        url += ":" + config.APIPort;
+                    }
+
+                    _APIURL = url;
+                }
+
+                return this._APIURL;
+            }
+        }
 
 
         protected BaseCTSSearchParam GetSearchParams()
