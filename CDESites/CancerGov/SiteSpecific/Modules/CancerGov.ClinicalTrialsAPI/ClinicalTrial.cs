@@ -412,6 +412,23 @@ namespace CancerGov.ClinicalTrialsAPI
         /// </summary>
         public class StudySite
         {
+            /// <summary>
+            /// Represents a GeoLocation as returned by the API
+            /// </summary>
+            public class GeoLocation
+            {
+                /// <summary>
+                /// Gets or sets the latitude for this location
+                /// </summary>
+                [JsonProperty("lat")]
+                public double Latitude { get; set; }
+
+                /// <summary>
+                /// Gets or sets the longitude for this location
+                /// </summary>
+                [JsonProperty("lon")]
+                public double Longitude { get; set; }
+            }
 
             /// <summary>
             /// Gets or sets the first line of an address for this trial site
@@ -430,6 +447,12 @@ namespace CancerGov.ClinicalTrialsAPI
             /// </summary>
             [JsonProperty("org_postal_code")]
             public string PostalCode { get; set; }
+
+            /// <summary>
+            /// Gets or sets the coordinates for this trial site
+            /// </summary>
+            [JsonProperty("org_coordinates")]
+            public GeoLocation Coordinates { get; set; }
 
             /// <summary>
             /// Gets or sets the city for this trial site

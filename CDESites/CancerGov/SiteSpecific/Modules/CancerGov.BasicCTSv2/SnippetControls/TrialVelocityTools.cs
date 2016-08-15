@@ -59,6 +59,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return trial.GetAllSortedLocations();
         }
 
+        //$trial.GetUSLocations($SearchResults.Control.SearchParams.ZipLookup.GeoCode, $SearchResults.Control.SearchParams.ZipRadius).length
+        
+        /// <summary>
+        /// Get all us Locations, but filtered by origin and radius in miles
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        public ClinicalTrial.StudySite[] GetFilteredLocations(ClinicalTrial trial, GeoLocation origin, int radius)
+        {
+                return (from location in trial.Sites
+                                where location.Coordinates != null && origin.DistanceBetween(new GeoLocation(location.Coordinates.Latitude, location.Coordinates.Longitude)) <= radius
+                                select location).ToArray();
+        }
+
         /// <summary>
         /// Returns the number of locations for a given country sites collection
         /// </summary>
@@ -67,7 +82,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public int GetLocCount(OrderedDictionary countryLocations)
         {
             return countryLocations.Count;
-        }
+        }        
 
         /// <summary>
         /// Wrapper around site Extension method
@@ -217,5 +232,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // principal.Add(trial.GetSomeOtherValue());
             return principal.ToArray();
         }
+
     }
 }
