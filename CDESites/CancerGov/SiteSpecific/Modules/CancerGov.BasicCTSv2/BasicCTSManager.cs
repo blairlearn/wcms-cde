@@ -101,7 +101,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 filterCriteria.Add("sites.org_coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
                 filterCriteria.Add("sites.org_coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
-                filterCriteria.Add("sites.org_coordinates_dist", "100mi");
+                filterCriteria.Add("sites.org_coordinates_dist", searchParams.ZipRadius.ToString() + "mi");
                 filterCriteria.Add("sites.recruitment_status", ActiveRecruitmentStatuses);
             }
 
