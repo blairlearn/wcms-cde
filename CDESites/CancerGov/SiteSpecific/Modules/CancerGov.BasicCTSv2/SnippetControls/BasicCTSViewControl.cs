@@ -209,7 +209,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
             {
                 int i = 1;
-                //data.Value = trial.BriefTitle;
+                data.Value = trial.BriefTitle;
             });
 
             PageInstruction.AddFieldFilter("short_title", (fieldName, data) =>

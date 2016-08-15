@@ -104,7 +104,7 @@ namespace CancerGov.ClinicalTrialsAPI
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("http://" + this.Host);
+                client.BaseAddress = new Uri(this.Host);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
