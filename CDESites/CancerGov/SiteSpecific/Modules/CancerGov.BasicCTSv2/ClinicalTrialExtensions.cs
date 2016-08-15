@@ -204,7 +204,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public static string[] GetSecondaryIDs(this ClinicalTrial trial)
         {
             List<String> rtnIds = new List<String>();
-            String[] secIds = { trial.NCIID, trial.CCRID, trial.CTEPID, trial.DCPID };
+            String[] secIds = { trial.CTEPID, trial.DCPID, trial.CCRID, trial.NCIID };
             String dupe = "";
 
             // Add secondary IDs (NCI, CCR, CTEP, DCP) to list
