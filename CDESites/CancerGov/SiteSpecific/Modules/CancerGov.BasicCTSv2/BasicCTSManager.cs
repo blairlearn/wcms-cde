@@ -99,9 +99,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (searchParams.ZipLookup != null)
             {
-                filterCriteria.Add("sites.coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
-                filterCriteria.Add("sites.coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
-                filterCriteria.Add("sites.coordinates_dist", "100mi");
+                filterCriteria.Add("sites.org_coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
+                filterCriteria.Add("sites.org_coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
+                filterCriteria.Add("sites.org_coordinates_dist", "100mi");
                 filterCriteria.Add("sites.recruitment_status", ActiveRecruitmentStatuses);
             }
 
@@ -117,7 +117,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //Add phrase if this is a phrase search
             if (searchParams is PhraseSearchParam)
             {
-                filterCriteria.Add("_all", ((PhraseSearchParam)searchParams).Phrase);
+                filterCriteria.Add("_fulltext", ((PhraseSearchParam)searchParams).Phrase);
             }
             else if (searchParams is CancerTypeSearchParam)
             {
