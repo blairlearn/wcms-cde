@@ -15,8 +15,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /*
      * This will be our manager class
      */
+    /**
+
+     * TODO: 
+     *  - Debug RenamedEventHandler
+     *  - Update ConfigurationSettings.AppSettings to non-deprecated version
+     *  - Comment "OnRemove" 
+     *  - Add null check on initial load
+     */
+
     public static class ZipCodeGeoLookup
     {
+
         /// <summary>
         /// ZipCodeDictionary field that will be used for Loader/Reloader
         /// </summary>
@@ -39,8 +49,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public static ZipCodeGeoEntry GetZipCodeGeoEntry(string zipcode)
         {
             ZipCodeDictionary zips = zipCodeDict;
-
-
             zips = ReloadDictionary(zips);
             if(zips.ContainsKey(zipcode))
             {
@@ -59,39 +67,36 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             zipCodeFileWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.Size | NotifyFilters.LastAccess | NotifyFilters.Attributes;
             zipCodeFileWatcher.Filter = "*.json";
             zipCodeFileWatcher.EnableRaisingEvents = true;
+            zipCodeFileWatcher.Created += new FileSystemEventHandler(OnChange);
             zipCodeFileWatcher.Changed += new FileSystemEventHandler(OnChange);
-            //zipCodeFileWatcher.Created += new FileSystemEventHandler(OnChange);
-            //zipCodeFileWatcher.Deleted += new FileSystemEventHandler(OnChange);
-            //zipCodeFileWatcher.Renamed += new RenamedEventHandler(OnChange);
+            zipCodeFileWatcher.Deleted += new FileSystemEventHandler(OnRemove);
+            zipCodeFileWatcher.Renamed += new RenamedEventHandler(OnRemove);
 
-                            
+            //if zips == null, do something
 
-            try
-            {
-                using (StreamReader r = new StreamReader(zipFilePath))
-                {
-                    string json = r.ReadToEnd();
-                    ZipCodeDictionary zipCodes = JsonConvert.DeserializeObject<ZipCodeDictionary>(json);
-                    return zipCodes;
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            return zipCodeDict;
         }
 
                     
 
         /// <summary>
-        /// Event handler for json files in the Configuration\files directory being modified, created, or deleted.
+        /// Event handler for .json file in the Configuration\files directory being modified or created.
         /// </summary>
         /// <param name="src">event source (not used)</param>
         /// <param name="e">event arguments (not used)</param>
         private static void OnChange(object src, FileSystemEventArgs e)
         {
-            ZipCodeGeoLoader.LoadDictionary();
+            zipCodeDict = ZipCodeGeoLoader.LoadDictionary();
         }
 
+        /// <summary>
+        /// Event handler for .json file in the Configuration\files directory being renamed or deleted.
+        /// </summary>
+        /// <param name="src">event source (not used)</param>
+        /// <param name="e">event arguments (not used)</param>
+        private static void OnRemove(object src, FileSystemEventArgs e)
+        {
+
+        }
     }
 }
