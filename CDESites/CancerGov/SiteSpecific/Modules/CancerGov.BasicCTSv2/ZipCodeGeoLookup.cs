@@ -18,8 +18,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /**
 
      * TODO: 
+     *  - FIX INVALID ZIP LOGIC
      *  - Debug RenamedEventHandler
-     *  - Update ConfigurationSettings.AppSettings to non-deprecated version
      *  - Comment "OnRemove" 
      *  - Add null check on initial load
      */
@@ -30,7 +30,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// ZipCodeDictionary field that will be used for Loader/Reloader
         /// </summary>
-        private static ZipCodeDictionary zipCodeDict;
+        private static ZipCodeDictionary zipCodeDictionary;
 
         /// <summary>
         /// Used by WatchTemplateDirectory() to watch for changes to zip_code.json
@@ -42,17 +42,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         static ZipCodeGeoLookup()
         {
-            zipCodeDict = ZipCodeGeoLoader.LoadDictionary();
+            zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
         }
 
         
-        public static ZipCodeGeoEntry GetZipCodeGeoEntry(string zipcode)
+        public static ZipCodeGeoEntry GetZipCodeGeoEntry(string zipcodeEntry)
         {
-            ZipCodeDictionary zips = zipCodeDict;
-            zips = ReloadDictionary(zips);
-            if(zips.ContainsKey(zipcode))
+            ZipCodeDictionary zipDict = zipCodeDictionary;
+
+            ReloadDictionary(zipDict);
+
+            if(zipDict.ContainsKey(zipcodeEntry))
             {
-                return zips[zipcode];
+                return zipDict[zipcodeEntry];
             }
             else
             {
@@ -60,9 +62,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        static ZipCodeDictionary ReloadDictionary(ZipCodeDictionary zips)
+        static void ReloadDictionary(ZipCodeDictionary zips)
         {
-            String zipFilePath = ConfigurationSettings.AppSettings["ZipCodesJsonMap"].ToString();
+            String zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"].ToString();
             zipCodeFileWatcher = new FileSystemWatcher((Path.GetDirectoryName(zipFilePath)));
             zipCodeFileWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.Size | NotifyFilters.LastAccess | NotifyFilters.Attributes;
             zipCodeFileWatcher.Filter = "*.json";
@@ -72,9 +74,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             zipCodeFileWatcher.Deleted += new FileSystemEventHandler(OnRemove);
             zipCodeFileWatcher.Renamed += new RenamedEventHandler(OnRemove);
 
-            //if zips == null, do something
+            /*
+            (if zips == null) 
+            {
+                zips.Add
+            }
+             */
 
-            return zipCodeDict;
+            //return zipCodeDict;
         }
 
                     
@@ -86,7 +93,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="e">event arguments (not used)</param>
         private static void OnChange(object src, FileSystemEventArgs e)
         {
-            zipCodeDict = ZipCodeGeoLoader.LoadDictionary();
+            zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
         }
 
         /// <summary>

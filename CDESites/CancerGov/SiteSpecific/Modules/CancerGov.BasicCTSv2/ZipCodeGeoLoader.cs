@@ -14,7 +14,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /*
          * Class to load and do heavy lifting on the json data
          */
-        static string zipFilePath = ConfigurationSettings.AppSettings["ZipCodesJsonMap"].ToString();
+        static string zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"].ToString();
 
         public static ZipCodeDictionary LoadDictionary()
         {
