@@ -16,7 +16,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         public string GetPrettyDescription(ClinicalTrial trial)
         {
-            return trial.DetailedDescription.Replace("\r\n", "<br>");
+            String rtn = "<p class='ctrp'>" + trial.DetailedDescription + "</p>";
+            return rtn.Replace("\r\n", "</p><p class='ctrp'>");
         }
 
         /// <summary>
