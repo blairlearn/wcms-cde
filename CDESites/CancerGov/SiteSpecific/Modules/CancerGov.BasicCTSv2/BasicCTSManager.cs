@@ -121,7 +121,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             else if (searchParams is CancerTypeSearchParam)
             {
-                filterCriteria.Add("diseases.disease.id", ((CancerTypeSearchParam)searchParams).CancerTypeID);
+                filterCriteria.Add("diseases.disease.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeID);
             }
 
             //TODO: Actually handle search criteria
@@ -139,7 +139,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     "sites.org_state_or_province",
                     "sites.org_city",
                     "sites.org_coordinates",
-                    "sites.recruitment_status"
+                    "sites.recruitment_status",
+                    "diseases"
                 },
                 searchParams: filterCriteria
             );

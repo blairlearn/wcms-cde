@@ -114,6 +114,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             if (cancerType != string.Empty)
             {
                 //cancerTypeIDAndHash = cancerType;
+                //ctarr is assuming a pipe in the 't' parameter - fix this
                 string[] ctarr = cancerType.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (ctarr.Length >= 1)
