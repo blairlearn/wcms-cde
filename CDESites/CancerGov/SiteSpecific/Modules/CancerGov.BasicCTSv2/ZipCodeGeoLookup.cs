@@ -34,6 +34,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         static ZipCodeGeoLookup()
         {
             zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
+            ReloadDictionary();
         }
 
         /// <summary>
@@ -44,23 +45,34 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns>ZipCodeGeoEntry or null if no match</returns>
         public static ZipCodeGeoEntry GetZipCodeGeoEntry(string zipCodeEntry)
         {
-            ReloadDictionary(); // Call this to reaload the JSON file if anything changes
             ZipCodeDictionary zipDict = zipCodeDictionary;
+            GenerateData();
 
-            if(zipDict != null)
-            { 
-                if(zipDict.ContainsKey(zipCodeEntry))
-                {
-                    return zipDict[zipCodeEntry];
-                }
-                else
-                {
-                    return null;
-                }
+            if(zipDict.ContainsKey(zipCodeEntry))
+            {
+                return zipDict[zipCodeEntry];
             }
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        static void GenerateData()
+        {
+            Object lockObject = new Object();
+            if(zipCodeDictionary == null)
+            {
+                lock(lockObject)
+                {
+                    if(zipCodeDictionary == null)
+                    {
+                        zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
+                    }
+                }
             }
         }
 
