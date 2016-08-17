@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using NCI.Web;
 using NCI.Web.CDE.Modules;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
@@ -18,6 +19,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     ResultsPagePrettyUrl = BasicCTSPageInfo.ResultsPagePrettyUrl
                 }));
             Controls.Add(ltl);
+        }
+
+        /// <summary>
+        /// Get the working URL of this control for additional modifications
+        /// </summary>
+        protected override NciUrl WorkingUrl
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

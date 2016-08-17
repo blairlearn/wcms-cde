@@ -7,10 +7,11 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
+using NCI.Web;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
-    public class BasicCTSBaseControl : SnippetControl
+    public abstract class BasicCTSBaseControl : SnippetControl
     {
         /// <summary>
         /// Enumeration representing a bitmap for the fields that are set.
@@ -51,6 +52,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         private static readonly string CONFIG_SECTION_NAME = "nci/search/basicClinicalTrialSearchAPI";
 
         private string _APIURL = string.Empty;
+
+        /// <summary>
+        /// Get the working URL of this control for additional modifications
+        /// </summary>
+        protected abstract NciUrl WorkingUrl { get; }
 
         /// <summary>
         /// Gets the URL for the ClinicalTrials API from the configuration
@@ -112,6 +118,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
                 if (ctarr.Length >= 1)
                 {
+                    /* if the cancer type id passed in begins with "CDR"
+                     *   then lookup the appropriate CID from the mapping table
+                     *   redirect to the appropriate control page
+                     * Get the current url, replace the 't' param in the current URL
+                     * with the appropriate thesaurus ID, then do a response.redirect 
+                     * to the new page
+                     * 
+                     * We should add in a parameter to alert user that we have redirected 
+                     * and that they should update bookmarks
+                     * 
+                    
+                     */
+                    //
                     // Determine cancer type display name from CDRID and Hash (if there is no match with the Hash,
                     // the first cancer type display name is chosen using the CDRID)
                     string hash = ctarr.Length >= 1 ? ctarr[1] : null;

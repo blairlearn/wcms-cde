@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using CancerGov.ClinicalTrialsAPI;
 using NCI.Logging;
+using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
@@ -27,6 +28,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         private const string _phaseI_II = "Phase I/II";
         private const string _phaseII_III = "Phase II/III";
+
+        /// <summary>
+        /// Get the working URL of this control for additional modifications
+        /// </summary>
+        protected override NciUrl WorkingUrl
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         /// <summary>
         /// Returns the cancer type the user searched for if the current search contains a type/condition.

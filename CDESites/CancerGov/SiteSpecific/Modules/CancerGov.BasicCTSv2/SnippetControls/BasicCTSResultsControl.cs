@@ -26,6 +26,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         public BaseCTSSearchParam SearchParams { get; private set; }
 
+        /// <summary>
+        /// Get the working URL of this control for additional modifications
+        /// </summary>
+        protected override NciUrl WorkingUrl
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
