@@ -34,7 +34,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         protected override NciUrl WorkingUrl
         {
-            get { throw new NotImplementedException(); }
+            get { return PageInstruction.GetUrl("CurrentUrl"); }
         }
 
         /// <summary>
@@ -170,6 +170,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         protected override void OnLoad(EventArgs e)
         {
+
             base.OnLoad(e);
 
             // Get ID
@@ -354,6 +355,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 )
             );
             Controls.Add(ltl);
+
+            // Pass the URL through the URL redirect logic if 't' is set
+            // TODO: clean this up 
+            String term = WorkingUrl.ToString();
+            if(term.Contains(@"?t=") || term.Contains(@"&t="))
+            {
+                RedirectCDRUrl(WorkingUrl);
+            }
         }
     }
 }

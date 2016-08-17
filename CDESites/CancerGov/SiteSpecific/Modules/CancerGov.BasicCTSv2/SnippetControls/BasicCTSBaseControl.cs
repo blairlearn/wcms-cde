@@ -119,19 +119,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 // Otherwise, make the whole parameter string the first item in an array 
                 String[] ctarr = (cancerType.Contains("|") ? cancerType.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { cancerType });
                 {
-                    /* if the cancer type id passed in begins with "CDR"
-                     *   then lookup the appropriate CID from the mapping table
-                     *   redirect to the appropriate control page
-                     * Get the current url, replace the 't' param in the current URL
-                     * with the appropriate thesaurus ID, then do a response.redirect 
-                     * to the new page
-                     * 
-                     * We should add in a parameter to alert user that we have redirected 
-                     * and that they should update bookmarks
-                     * 
-                    
-                     */
-                    //
                     // Determine cancer type display name from CDRID and Hash (if there is no match with the Hash,
                     // the first cancer type display name is chosen using the CDRID)
                     string hash = ctarr.Length > 1 ? ctarr[1] : null;
@@ -262,6 +249,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return searchParams;
         }
 
+        /// TODO:
+        /// - Implement CDRID / nci_thesaurus_concept_id mapping
+        /// - Add in a parameter to alert user that we have redirected 
+        ///   and that they should update bookmarks
+        /// - Make the redirect a timed event
+        /// <summary>
+        /// if the cancer type id passed in begins with "CDR":
+        /// - Lookup the appropriate thesaurus ID from the mapping table
+        /// - Get the current url, replace the 't' param in the current URL
+        ///   with the appropriate thesaurus ID, then do a response.redirect 
+        ///   to the new page
+        /// </summary>
+        /// <params>NciUrl url</params>
+        protected void RedirectCDRUrl(NciUrl url)
+        {
+            String term = url.QueryParameters["t"];
+            if(term.ToLower().StartsWith("cdr"))
+            {
+                url.QueryParameters["t"] = "C_redirect-to-concept-id"; //placeholder value
+                Response.Redirect(url.ToString(), true);
+            }
+        }
 
         /// <summary>
         /// Gets a query parameter as a string or uses a default
