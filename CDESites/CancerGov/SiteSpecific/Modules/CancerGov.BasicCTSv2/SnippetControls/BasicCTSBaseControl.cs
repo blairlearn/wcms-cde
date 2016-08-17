@@ -114,10 +114,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             if (cancerType != string.Empty)
             {
                 //cancerTypeIDAndHash = cancerType;
-                //ctarr is assuming a pipe in the 't' parameter - fix this
-                string[] ctarr = cancerType.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 
-                if (ctarr.Length >= 1)
+                // The cancerType param may not always contain a pipe. If it does, split the param and key into an array.
+                // Otherwise, make the whole parameter string the first item in an array 
+                String[] ctarr = (cancerType.Contains("|") ? cancerType.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { cancerType });
                 {
                     /* if the cancer type id passed in begins with "CDR"
                      *   then lookup the appropriate CID from the mapping table
@@ -134,7 +134,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     //
                     // Determine cancer type display name from CDRID and Hash (if there is no match with the Hash,
                     // the first cancer type display name is chosen using the CDRID)
-                    string hash = ctarr.Length >= 1 ? ctarr[1] : null;
+                    string hash = ctarr.Length > 1 ? ctarr[1] : null;
                     cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], hash);
                     
 
