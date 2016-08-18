@@ -123,14 +123,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             ));
             Controls.Add(ltl);
-
-            // Pass the URL through the URL redirect logic if 't' is set
-            // TODO: clean this up 
-            String term = WorkingUrl.ToString();
-            if (term.Contains(@"?t=") || term.Contains(@"&t="))
-            {
-                RedirectCDRUrl(WorkingUrl);
-            }
+            RedirectCDRUrl(WorkingUrl); // Redirect for URLs containing "t=CDRXXXX"
         }
 
         #region Velocity Helpers

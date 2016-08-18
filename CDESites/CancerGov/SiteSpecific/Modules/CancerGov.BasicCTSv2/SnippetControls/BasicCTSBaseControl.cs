@@ -264,11 +264,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <params>NciUrl url</params>
         protected void RedirectCDRUrl(NciUrl url)
         {
-            String term = url.QueryParameters["t"];
-            if(term.ToLower().StartsWith("cdr"))
-            {
-                url.QueryParameters["t"] = "C_redirect-to-concept-id"; //placeholder value
-                Response.Redirect(url.ToString(), true);
+            if(url.QueryParameters.ContainsKey("t"))
+            { 
+                String term = url.QueryParameters["t"];
+                if(term.ToLower().StartsWith("cdr"))
+                {
+                    url.QueryParameters["t"] = "C-ID_REDIRECT_PLACEHOLDER"; //placeholder value
+                    Response.Redirect(url.ToString(), true);
+                }
             }
         }
 
