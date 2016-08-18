@@ -12,9 +12,9 @@ using Newtonsoft.Json;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
-    /*
-     * This will be our manager class
-     */
+    /// <summary>
+    /// Manager class for looking up a given zip code in the ZipCodeDictionary
+    /// </summary>
     public static class ZipCodeGeoLookup
     {
 
@@ -34,7 +34,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         static ZipCodeGeoLookup()
         {
             zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
-            ReloadDictionary();
+            WatchDictionaryFile();
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
-        /// 
+        /// Locking method to safely handle file removal after the initial load
         /// </summary>
         static void GenerateData()
         {
@@ -79,7 +79,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Watch for and handle changes to the zip codes JSON file usied for the search params mapping.
         /// </summary>
-        static void ReloadDictionary()
+        static void WatchDictionaryFile()
         {
             String zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"].ToString();
             zipCodeFileWatcher = new FileSystemWatcher((Path.GetDirectoryName(zipFilePath)));
@@ -94,28 +94,36 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         /// <summary>
         /// Event handler for .json file in the Configuration\files directory being modified or created.
-        /// Load the dictionary again upon file update.
+        /// Loads the dictionary again upon file update and logs modify/create event.
         /// </summary>
         /// <param name="src">event source (not used)</param>
         /// <param name="e">event arguments (not used)</param>
         private static void OnChange(object src, FileSystemEventArgs e)
         {
             zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
+            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLookup.cs:OnChange()", "Dictionary file was updated.", NCIErrorLevel.Warning);
         }
 
         /// <summary>
         /// Event handler for .json file in the Configuration\files directory being deleted.
+        /// Logs deletion event.
         /// </summary>
         /// <param name="src">event source (not used)</param>
         /// <param name="e">event arguments (not used)</param>
-        private static void OnRemove(object src, FileSystemEventArgs e) { }
+        private static void OnRemove(object src, FileSystemEventArgs e) 
+        {
+            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLookup.cs:OnRemove()", "Dictionary file was deleted.", NCIErrorLevel.Warning);
+        }
 
         /// <summary>
         /// Event handler for .json file in the Configuration\files directory being renamed.
+        /// Logs rename event.
         /// </summary>
         /// <param name="src">event source (not used)</param>
         /// <param name="e">event arguments (not used)</param>
-        private static void OnRename(object source, RenamedEventArgs e) { }
-
+        private static void OnRename(object source, RenamedEventArgs e) 
+        {
+            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLookup.cs:OnRename()", "Dictionary file was updated", NCIErrorLevel.Warning);
+        }
     }
 }
