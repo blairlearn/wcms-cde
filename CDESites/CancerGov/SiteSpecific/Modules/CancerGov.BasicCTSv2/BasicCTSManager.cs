@@ -121,7 +121,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             else if (searchParams is CancerTypeSearchParam)
             {
-                filterCriteria.Add("diseases.disease.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeID);
+                //This is now an array of codes.
+                filterCriteria.Add("diseases.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeIDs);
             }
 
             //TODO: Actually handle search criteria
@@ -200,13 +201,53 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Gets the cancer type display name the user selected
         /// </summary>
-        /// <param name="cancertypeid">The ID of the term</param>
-        /// <param name="hashid">The hash id of the unique menu name</param>
+        /// <param name="cancertypeids">The IDs of the term</param>
+        /// <param name="key">The term key of the unique menu name</param>
         /// <returns></returns>
-        public string GetCancerTypeDisplayName(string cancertypeid, string hashid)
+        public string GetCancerTypeDisplayName(string[] cancertypeids, string key)
         {
-            //This may not be needed in phase 2
-            return "NOT IMPLEMENTED";
+            string displayName = string.Empty;
+
+            if (!String.IsNullOrWhiteSpace(key))
+            {
+                Term term = Client.GetTerm(key);
+                if (term == null)
+                {
+                    return GetCancerTypeDisplayName(cancertypeids, null);
+                }
+                else
+                {
+                    return term.DisplayText;
+                }
+            }
+            else
+            {
+                //If we did not have a key, OR we did not find an entry
+                //in either case we need to try and find it by ID.
+                Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
+
+                //If we have a key, then look it up by key
+                filterCriteria.Add("codes", cancertypeids);
+
+                TermCollection rtnResults = Client.Terms(
+                    size: 100,
+                    from: 0,
+                    searchParams: filterCriteria
+                );
+
+                if (rtnResults.TotalResults > 0)
+                {
+                    //This is hacky!!
+                    //TODO: Clean this up and check for errors
+                    //TODO: Some terms may have 2 IDs, this query will return anything with either term,
+                    //not just the terms with both.  We should iterate through the results and find the first
+                    //with both.
+                    return rtnResults.Terms[0].DisplayText;
+                }
+
+            }
+
+            return string.Empty; //Nothing found
         }
 
 

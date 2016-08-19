@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 namespace CancerGov.ClinicalTrialsAPI
 {
     /// <summary>
-    /// Represents a collection of terms as returned by the terms endpoint
+    /// Represents a collection of clinical trials as returned by the listing endpoint
     /// </summary>
-    public class TermCollection
+    public class ClinicalTrialsCollection
     {
         /// <summary>
         /// Gets the total number of results
@@ -20,11 +20,11 @@ namespace CancerGov.ClinicalTrialsAPI
         public int TotalResults { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of terms
-        /// <remarks>NOTE: this will not be *all* of the terms, but a subset based on the size parameter passed to the API</remarks>
+        /// Gets or sets the collection of trials
+        /// <remarks>NOTE: this will not be *all* of the trials, but a subset based on the size parameter passed to the API</remarks>
         /// </summary>
-        [JsonProperty("terms")]
-        public Term[] Terms { get; set; }
+        [JsonProperty("trials")]
+        public ClinicalTrial[] Trials { get; set; }
 
     }
 }

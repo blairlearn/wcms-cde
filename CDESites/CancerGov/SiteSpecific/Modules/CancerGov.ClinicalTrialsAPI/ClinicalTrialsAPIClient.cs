@@ -126,6 +126,92 @@ namespace CancerGov.ClinicalTrialsAPI
             return rtnTrial;
         }
 
+
+        public TermCollection Terms(
+            int size = 10, 
+            int from = 0, 
+            //string[] includeFields = null, 
+            //string[] excludeFields = null,
+            Dictionary<string, object> searchParams = null
+        )
+        {
+            TermCollection rtnResults = null;
+
+            searchParams = searchParams ?? new Dictionary<string, object>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(this.Host);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                JObject requestBody = new JObject();
+                requestBody.Add(new JProperty("size", size));
+                requestBody.Add(new JProperty("from", from));
+
+                foreach (KeyValuePair<string, object> sp in searchParams)
+                {
+                    requestBody.Add(new JProperty(sp.Key, sp.Value));
+                }
+
+
+                //We want this to be synchronus, so call Result right away.
+                HttpResponseMessage response = client.PostAsync("/terms", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    rtnResults = response.Content.ReadAsAsync<TermCollection>().Result;
+                }
+                else
+                {
+                    //TODO: Add more checking here if the respone does not actually have any content
+                    string errorMessage = response.Content.ReadAsStringAsync().Result;
+                    throw new Exception(errorMessage);
+                }
+            }
+
+            return rtnResults;
+        }
+
+        /// <summary>
+        /// Gets a term from the API via its key.
+        /// </summary>
+        /// <param name="key">the key</param>
+        /// <returns>The term</returns>
+        public Term GetTerm(string key)
+        {
+
+            Term rtnTerm = null;
+
+            if (String.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException("The term key is null or an empty string");
+            }
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(this.Host);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                //We want this to be synchronus, so call Result right away.
+                HttpResponseMessage response = client.GetAsync("/term/" + key).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    rtnTerm = response.Content.ReadAsAsync<Term>().Result;
+                }
+                else
+                {
+                    //TODO: Add more checking here if the respone does not actually have any content
+                    string errorMessage = response.Content.ReadAsStringAsync().Result;
+                    throw new Exception(errorMessage);
+                }
+            }
+
+            return rtnTerm;
+        }
+
         
 
 

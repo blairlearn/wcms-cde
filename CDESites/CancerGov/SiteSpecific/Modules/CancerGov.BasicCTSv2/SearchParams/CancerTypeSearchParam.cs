@@ -14,7 +14,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Get and Set the Cancer Type ID for this search
         /// </summary>
-        public string CancerTypeID { get; set; }
+        public string[] CancerTypeIDs { get; set; }
 
         /// <summary>
         /// Gets and Sets the cancer type display name to use for this search

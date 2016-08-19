@@ -115,14 +115,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 //cancerTypeIDAndHash = cancerType;
 
+                //Ok, with the new clinical trials API & EVS terms, an autosuggestion can have multiple ids.  So what the front end will do is produce a t= paramater such as:
+                //C12345,C78904|cleaned_up_term_key                
+
                 // The cancerType param may not always contain a pipe. If it does, split the param and key into an array.
                 // Otherwise, make the whole parameter string the first item in an array 
                 String[] ctarr = (cancerType.Contains("|") ? cancerType.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { cancerType });
                 {
-                    // Determine cancer type display name from CDRID and Hash (if there is no match with the Hash,
-                    // the first cancer type display name is chosen using the CDRID)
-                    string hash = ctarr.Length > 1 ? ctarr[1] : null;
-                    cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(ctarr[0], hash);
+
+                    //split up the disease ids
+                    string[] diseaseIDs = ctarr[0].Split(',');
+
+                    // Determine cancer type display name from CIDs and key (if there is no match with the key,
+                    // then first term with matching ids is used)
+                    string termKey = ctarr.Length > 1 ? ctarr[1] : null;
+                    cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
                     
 
                     if (cancerTypeDisplayName != null)
@@ -133,7 +140,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         searchParams = new CancerTypeSearchParam()
                         {
                             //get cancer type.
-                            CancerTypeID = ctarr[0],
+                            CancerTypeIDs = diseaseIDs,
 
                             CancerTypeDisplayName = cancerTypeDisplayName
                         };
