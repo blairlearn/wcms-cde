@@ -110,9 +110,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (searchParams.Age != null)
             {
                 //TODO: Deal with units that are not year.   For example 36 months should not match 36 years.
-                filterCriteria.Add("eligibility.structured.max_age_number_gte", searchParams.Age);
-                filterCriteria.Add("eligibility.structured.min_age_number_lte", searchParams.Age);
-            }
+                filterCriteria.Add("eligibility.structured.max_age_in_years_gte", searchParams.Age);
+                filterCriteria.Add("eligibility.structured.min_age_in_years_lte", searchParams.Age);
+            } 
 
 
             //Add Gender Filter
