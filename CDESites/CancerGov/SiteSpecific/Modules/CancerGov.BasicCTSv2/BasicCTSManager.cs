@@ -89,7 +89,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (searchParams.Page > 1)
             {
-                from = searchParams.Page * searchParams.ItemsPerPage;
+                from = (searchParams.Page - 1) * searchParams.ItemsPerPage;
             }
 
             Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
