@@ -107,28 +107,96 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Get formatted age range string
+        /// Get formatted age range string. Based on the max and min age for the trial, display the 
+        /// resulting age in a pretty format and with units specified.
+        /// TODO: Handle any edge cases with redundant units
         /// </summary>
         /// <param name="trial"></param>
         /// <returns></returns>
-        public string GetAgeString(ClinicalTrial trial)
+        public String GetAgeString(ClinicalTrial trial)
         {
-            int minAge = trial.GetMinAge();
-            int maxAge = trial.GetMaxAge();
-            String ageRange = minAge.ToString() + " to " + maxAge.ToString();
-            if(minAge < 1 && maxAge <= 120)
+            int minAgeNum = trial.GetMinAgeNum();
+            int maxAgeNum = trial.GetMaxAgeNum();
+            string minAgeUnit = trial.GetMinAgeUnit();
+            string maxAgeUnit = trial.GetMaxAgeUnit();
+            string minAgeText = CleanAgeText(minAgeNum, minAgeUnit);
+            string maxAgeText = CleanAgeText(maxAgeNum, maxAgeUnit);
+            string ageRange = minAgeText + " to " + maxAgeText;
+
+            // Set age range string for years if both max and min units are years
+            if ((maxAgeUnit.ToLower() == "years") && (minAgeUnit.ToLower() == "years"))
             {
-                ageRange = maxAge.ToString() + " and under";
+                ageRange = minAgeNum.ToString() + " to " + maxAgeNum.ToString() + " years";
+                if (minAgeNum < 1 && maxAgeNum <= 120)
+                {
+                    ageRange = maxAgeText + " and under";
+                }
+                else if (minAgeNum > 0 && maxAgeNum > 120)
+                {
+                    ageRange = minAgeText + " and over";
+                }
+                else if (minAgeNum < 1 && maxAgeNum > 120)
+                {
+                    ageRange = "Not specified";
+                }
             }
-            else if (minAge > 0 && maxAge > 120)
+
+            // Set age range string for max and min if units match 
+            else if (maxAgeUnit.ToLower() == minAgeUnit.ToLower())
             {
-                ageRange = minAge.ToString() + " and over";
+                ageRange = minAgeNum.ToString() + " to " + maxAgeNum.ToString() + maxAgeUnit;
+                if (minAgeNum < 1 && maxAgeNum <= 999)
+                {
+                    ageRange = maxAgeText + " and under";
+                }
+                else if (minAgeNum > 0 && maxAgeNum >= 999)
+                {
+                    ageRange = minAgeText + " and over";
+                }
             }
-            else if (minAge < 1 && maxAge > 120)
+
+            // Set age range string if units do not match
+            else
             {
-                ageRange = "Not specified";
+                if (maxAgeNum > 120 && maxAgeUnit.ToLower() == "years")
+                {
+                    ageRange = minAgeText + " and over";
+                }
             }
-            return ageRange;
+            return ageRange.ToLower();
+        }
+
+        /// <summary>
+        /// Additional formatting for non-year age range increments
+        ///  - Converts days/months into years if no remainder 
+        ///  - Changes unit name to singular if we encounter a count of "1"
+        /// </summary>
+        /// <param name="number">int</param>
+        /// <param name="unit">string</param>
+        /// <returns>string - agerange</returns>
+        protected String CleanAgeText(int number, string unit)
+        {
+            // Convert day/month values to years if needed
+            if (number > 0)
+            {
+                if (number % 365 == 0 && unit.ToLower() == "days")
+                {
+                    number = (number / 365);
+                    unit = "years";
+                }
+                if (number % 12 == 0 && unit.ToLower() == "months")
+                {
+                    number = (number / 12);
+                    unit = "years";
+                }
+            }
+            // Change plural units to singular if needed
+            if (number == 1)
+            {
+                unit = unit.Remove(unit.LastIndexOf("s"));
+            }
+
+            return number.ToString() + " " + unit;
         }
 
         /// <summary>
