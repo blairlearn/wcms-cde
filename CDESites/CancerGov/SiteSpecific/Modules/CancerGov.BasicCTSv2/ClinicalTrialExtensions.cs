@@ -80,10 +80,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
-        public static int GetMinAge(this ClinicalTrial trial)
+        public static int GetMinAgeNum(this ClinicalTrial trial)
         {
             int age = trial.EligibilityInfo.StructuredCriteria.MinAgeInt;
             return age;
+        }
+
+        /// <summary>
+        /// Get min age unit info for trial
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public static String GetMinAgeUnit(this ClinicalTrial trial)
+        {
+            string unit = trial.EligibilityInfo.StructuredCriteria.MinAgeUnits;
+            return unit;
         }
 
         /// <summary>
@@ -91,10 +102,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="site"></param>
         /// <returns></returns>
-        public static int GetMaxAge(this ClinicalTrial trial)
+        public static int GetMaxAgeNum(this ClinicalTrial trial)
         {
             int age = trial.EligibilityInfo.StructuredCriteria.MaxAgeInt;
             return age;
+        }
+
+        /// <summary>
+        /// Get max age unit info for trial
+        /// </summary>
+        /// <param name="site"></param>
+        /// <returns></returns>
+        public static String GetMaxAgeUnit(this ClinicalTrial trial)
+        {
+            string unit = trial.EligibilityInfo.StructuredCriteria.MaxAgeUnits;
+            return unit;
         }
 
         /// <summary>
