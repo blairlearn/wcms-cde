@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
 using System.IO;
-using NCI.Web.CDE;
-using NCI.Web.CDE.Configuration;
-using System.Configuration;
 using NCI.Logging;
+using NCI.Web.CDE.Configuration;
 
-namespace DCEG.Web
+namespace NCI.Web.CDE.UI.Base
 {
-    public class Global : System.Web.HttpApplication
+    public class GlobalApplication : System.Web.HttpApplication
     {
         private FileSystemWatcher fsw;
 
