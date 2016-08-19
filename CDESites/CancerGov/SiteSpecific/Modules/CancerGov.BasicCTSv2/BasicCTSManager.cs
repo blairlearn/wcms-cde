@@ -107,6 +107,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             //Add Age Filter
             //<field>_gte, <field>_lte
+            if (searchParams.Age != null)
+            {
+                //TODO: Deal with units that are not year.   For example 36 months should not match 36 years.
+                filterCriteria.Add("eligibility.structured.max_age_lte", searchParams.Age);
+                filterCriteria.Add("eligibility.structured.min_age_gte", searchParams.Age);
+            }
+
 
             //Add Gender Filter
             if (!string.IsNullOrWhiteSpace(searchParams.Gender))
@@ -124,7 +131,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 //This is now an array of codes.
                 filterCriteria.Add("diseases.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeIDs);
             }
-
+            
             //TODO: Actually handle search criteria
             ClinicalTrialsCollection rtnResults = Client.List(
                 size: searchParams.ItemsPerPage,
