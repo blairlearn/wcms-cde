@@ -137,7 +137,7 @@ namespace CancerGov.Web.UI.SnippetControls
             if (path.Equals(item.SectionPath))
             {
                 liClass = " contains-current";
-                if (item.URL == url)
+                if (String.Equals(item.URL, url, StringComparison.OrdinalIgnoreCase))
                 {
                     divClass = "current-page";
                 }
