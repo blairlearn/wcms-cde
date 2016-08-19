@@ -236,18 +236,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>String glossifedPhase</returns>
         public string GetGlossifiedPhase(ClinicalTrial trial)
         {
-            ///TODO: add logic for glossification
-            string glossifiedPhase = trial.GetTrialPhase();
-            if(glossifiedPhase == "NA")
+            string phase = trial.GetTrialPhase();
+            string cdrID = "";
+            string htmlBlobOpen;
+            string htmlBlobClose;
+
+            // Check the API trial values and assign to a CDR ID if valid
+            switch(phase)
             {
-                glossifiedPhase = "No phase specified";
+                case "I" : cdrID = "45830";
+                    break;
+                case "I_II" : cdrID = "45832";
+                    break;
+                case "II" : cdrID = "45831";
+                    break;
+                case "II_III" : cdrID = "45834";
+                    break;
+                case "III" : cdrID = "45833";
+                    break;
+                case "IV" : cdrID = "45835";
+                    break;
+            }
+
+            if (String.IsNullOrEmpty(cdrID))
+            {
+                phase = "No phase specified";
             }
             else
             {
-                glossifiedPhase = "Phase " + glossifiedPhase.Replace("_", "/");
+                htmlBlobOpen = @"<a onclick=""javascript:popWindow('defbyid','CDR00000" + cdrID + 
+                               @"&amp;version=Patient&amp;language=English'); return false;"" href=""/Common/PopUps/popDefinition.aspx?id=CDR00000" + cdrID + 
+                               @"45830&amp;version=Patient&amp;language=English"" class=""definition"">";
+                htmlBlobClose = @"</a>";
+                phase = htmlBlobOpen + "Phase " + phase.Replace("_", "/") + htmlBlobClose;
             }
-            return glossifiedPhase;
+            return phase;
         }
+
 
         /// <summary>
         /// Gets the Primary Purpose and formats text
