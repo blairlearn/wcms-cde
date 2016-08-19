@@ -121,6 +121,11 @@ namespace NCI.Web.CDE.Modules
                     return string.Empty;
                 }
             }
+
+            public string Enc(string str)
+            {
+                return HttpUtility.HtmlEncode(str);
+            }
 		}
 
         /// <summary>
