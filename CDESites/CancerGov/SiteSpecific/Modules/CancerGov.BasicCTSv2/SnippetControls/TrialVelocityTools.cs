@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using CancerGov.ClinicalTrialsAPI;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
@@ -16,7 +17,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         public string GetPrettyDescription(ClinicalTrial trial)
         {
-            String rtn = "<p class='ctrp'>" + trial.DetailedDescription + "</p>";
+            String rtn = "<p class='ctrp'>" + HttpUtility.HtmlEncode(trial.DetailedDescription) + "</p>";
             return rtn.Replace("\r\n", "</p><p class='ctrp'>");
         }
 
