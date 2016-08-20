@@ -45,10 +45,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns>ZipCodeGeoEntry or null if no match</returns>
         public static ZipCodeGeoEntry GetZipCodeGeoEntry(string zipCodeEntry)
         {
-            ZipCodeDictionary zipDict = zipCodeDictionary;
-            GenerateData();
+            GuaranteeData();  // Guarantee we have data before trying to load it.
 
-            if(zipDict.ContainsKey(zipCodeEntry))
+            ZipCodeDictionary zipDict = zipCodeDictionary;
+
+            if (zipDict != null && zipDict.ContainsKey(zipCodeEntry))
             {
                 return zipDict[zipCodeEntry];
             }
@@ -61,7 +62,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Locking method to safely handle file removal after the initial load
         /// </summary>
-        static void GenerateData()
+        static void GuaranteeData()
         {
             Object lockObject = new Object();
             if(zipCodeDictionary == null)
