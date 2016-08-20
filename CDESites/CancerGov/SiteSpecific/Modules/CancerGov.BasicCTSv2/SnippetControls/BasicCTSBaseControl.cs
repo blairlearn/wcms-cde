@@ -8,6 +8,7 @@ using NCI.Web.CDE.UI;
 
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
 using NCI.Web;
+using System.Web;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -259,9 +260,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         /// TODO:
         /// - Implement CDRID / nci_thesaurus_concept_id mapping
-        /// - Add in a parameter to alert user that we have redirected 
-        ///   and that they should update bookmarks
-        /// - Make the redirect a timed event
         /// <summary>
         /// if the cancer type id passed in begins with "CDR":
         /// - Lookup the appropriate thesaurus ID from the mapping table
@@ -272,29 +270,46 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <params>NciUrl url</params>
         protected void HandleLegacyCancerTypeID()
         {
+            // Pattern for a CDRID with appended hash.  The capture group ([1-9][0-9]*) will
+            // contain the actual numeric portion of the ID without any leading zeros.
+            Regex cdrIDRegex = new Regex("CDR0+([1-9][0-9]*)\\|?.*", RegexOptions.IgnoreCase);
+
             string cancerTypeID = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
 
             if (!String.IsNullOrWhiteSpace(cancerTypeID) &&
                 cancerTypeID.ToLower().StartsWith("cdr"))
             {
-                // Do something about it.
+                // Strip the legacy ID of its leading "CDR0" and trailing pipe and hash
+                Match matches = cdrIDRegex.Match(cancerTypeID);
+                if (matches.Success && matches.Groups.Count > 1)
+                {
+                    cancerTypeID = matches.Groups[1].Value;
 
-                NciUrl redirectURL = new NciUrl();
+                    // Check to see if the CDR cancer type ID has an NCI Thesarus concept ID.
+                    string conceptID = LegacyIDLookup.MapLegacyCancerTypeID(cancerTypeID);
 
-                // Get the page's URL path from the page XML.
-                redirectURL.SetUrl(this.WorkingUrl);
+                    // If a concept ID was found, then redirect the search to use it.
+                    if (!String.IsNullOrWhiteSpace(conceptID))
+                    {
+                        NciUrl redirectURL = new NciUrl();
 
-                // Copy querystring parameters from the request.
-                foreach (string key in Request.QueryString.AllKeys)
-                    redirectURL.QueryParameters.Add(key, Request.QueryString[key]);
+                        // Get the page's URL path from the page XML.
+                        redirectURL.SetUrl(this.WorkingUrl);
 
-                redirectURL.QueryParameters.Remove(CANCERTYPE_PARAM);
+                        // Copy querystring parameters from the request.
+                        foreach (string key in Request.QueryString.AllKeys)
+                            redirectURL.QueryParameters.Add(key, Request.QueryString[key]);
 
-                redirectURL.QueryParameters.Add(CANCERTYPE_PARAM, "C123456");
+                        redirectURL.QueryParameters.Remove(CANCERTYPE_PARAM);
 
-                redirectURL.QueryParameters.Add(REDIRECTED_FLAG, String.Empty);
-                Response.Redirect(redirectURL.ToString(), true);
-                // Use the redirector from SimpleRedirector.
+                        redirectURL.QueryParameters.Add(CANCERTYPE_PARAM, conceptID);
+
+                        redirectURL.QueryParameters.Add(REDIRECTED_FLAG, String.Empty);
+
+                        // Force page reload with an HTTP 301 resposne code.
+                        DoPermanentRedirect(Response, redirectURL.ToString());
+                    }
+                }
             }
         }
 
@@ -377,6 +392,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             _basicCTSManager = new BasicCTSManager(APIURL);
 
+        }
+
+        /// <summary>
+        /// Clears the Response text, issues an HTTP redirect using status 301, and ends
+        /// the current request.
+        /// </summary>
+        /// <param name="Response">The current response object.</param>
+        /// <param name="url">The redirection's target URL.</param>
+        /// <remarks>Response.Redirect() issues its redirect with a 301 (temporarily moved) status code.
+        /// We want these redirects to be permanent so search engines will link to the new
+        /// location. Unfortunately, HttpResponse.RedirectPermanent() isn't implemented until
+        /// at version 4.0 of the .NET Framework.</remarks>
+        /// <exception cref="ThreadAbortException">Called when the redirect takes place and the current
+        /// request is ended.</exception>
+        private void DoPermanentRedirect(HttpResponse Response, String url)
+        {
+            Response.Clear();
+            Response.Status = "301 Moved Permanently";
+            Response.AddHeader("Location", url);
+            Response.End();
         }
     }
 }
