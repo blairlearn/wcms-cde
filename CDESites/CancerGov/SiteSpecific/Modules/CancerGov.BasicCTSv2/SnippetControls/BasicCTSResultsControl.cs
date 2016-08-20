@@ -27,11 +27,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public BaseCTSSearchParam SearchParams { get; private set; }
 
         /// <summary>
-        /// Get the working URL of this control for additional modifications
+        /// Retrieve the working URL of this control from the page XML.
         /// </summary>
-        protected override NciUrl WorkingUrl
+        protected override String WorkingUrl
         {
-            get { return PageInstruction.GetUrl("CurrentUrl"); }
+            get { return BasicCTSPageInfo.ResultsPagePrettyUrl; }
         }
 
         protected override void OnInit(EventArgs e)
@@ -123,7 +123,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             ));
             Controls.Add(ltl);
-            RedirectCDRUrl(WorkingUrl); // Redirect for URLs containing "t=CDRXXXX"
         }
 
         #region Velocity Helpers

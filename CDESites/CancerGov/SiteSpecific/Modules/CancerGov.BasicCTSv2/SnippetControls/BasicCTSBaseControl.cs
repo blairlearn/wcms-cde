@@ -40,6 +40,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected const string GENDER_PARAM = "g";
         protected const string CANCERTYPE_PARAM = "t";
         protected const string CANCERTYPEASPHRASE_PARAM = "ct";
+        protected const string REDIRECTED_FLAG = "r";
 
         protected BasicCTSPageInfo _basicCTSPageInfo = null;
 
@@ -54,9 +55,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         private string _APIURL = string.Empty;
 
         /// <summary>
-        /// Get the working URL of this control for additional modifications
+        /// Retrieve the working URL of this control from the page XML.
         /// </summary>
-        protected abstract NciUrl WorkingUrl { get; }
+        protected abstract String WorkingUrl { get; }
 
         /// <summary>
         /// Gets the URL for the ClinicalTrials API from the configuration
@@ -269,16 +270,31 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         ///   to the new page
         /// </summary>
         /// <params>NciUrl url</params>
-        protected void RedirectCDRUrl(NciUrl url)
+        protected void HandleLegacyCancerTypeID()
         {
-            if(url.QueryParameters.ContainsKey("t"))
-            { 
-                String term = url.QueryParameters["t"];
-                if(term.ToLower().StartsWith("cdr"))
-                {
-                    url.QueryParameters["t"] = "C-ID_REDIRECT_PLACEHOLDER"; //placeholder value
-                    Response.Redirect(url.ToString(), true);
-                }
+            string cancerTypeID = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
+
+            if (!String.IsNullOrWhiteSpace(cancerTypeID) &&
+                cancerTypeID.ToLower().StartsWith("cdr"))
+            {
+                // Do something about it.
+
+                NciUrl redirectURL = new NciUrl();
+
+                // Get the page's URL path from the page XML.
+                redirectURL.SetUrl(this.WorkingUrl);
+
+                // Copy querystring parameters from the request.
+                foreach (string key in Request.QueryString.AllKeys)
+                    redirectURL.QueryParameters.Add(key, Request.QueryString[key]);
+
+                redirectURL.QueryParameters.Remove(CANCERTYPE_PARAM);
+
+                redirectURL.QueryParameters.Add(CANCERTYPE_PARAM, "C123456");
+
+                redirectURL.QueryParameters.Add(REDIRECTED_FLAG, String.Empty);
+                Response.Redirect(redirectURL.ToString(), true);
+                // Use the redirector from SimpleRedirector.
             }
         }
 
@@ -356,6 +372,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
+
+            HandleLegacyCancerTypeID(); // Redirect for URLs containing "t=CDRXXXX"
 
             _basicCTSManager = new BasicCTSManager(APIURL);
 

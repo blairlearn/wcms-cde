@@ -17,7 +17,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     public partial class BasicCTSViewControl : BasicCTSBaseControl
     {
         /// <summary>
-        /// Gets the Search Parameters for the current request.
+        /// Retrieve the working URL of this control from the page XML.
         /// </summary>
         public BaseCTSSearchParam SearchParams { get; private set; }
         
@@ -32,9 +32,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <summary>
         /// Get the working URL of this control for additional modifications
         /// </summary>
-        protected override NciUrl WorkingUrl
+        protected override String WorkingUrl
         {
-            get { return PageInstruction.GetUrl("CurrentUrl"); }
+            get { return BasicCTSPageInfo.DetailedViewPagePrettyUrl; }
         }
 
         /// <summary>
@@ -166,6 +166,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             base.OnInit(e);
 
             SearchParams = GetSearchParams();
+            HandleLegacyCancerTypeID(); // Redirect for URLs containing "t=CDRXXXX"
         }
 
         protected override void OnLoad(EventArgs e)
@@ -355,7 +356,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 )
             );
             Controls.Add(ltl);
-            RedirectCDRUrl(WorkingUrl); // Redirect for URLs containing "t=CDRXXXX"
         }
     }
 }

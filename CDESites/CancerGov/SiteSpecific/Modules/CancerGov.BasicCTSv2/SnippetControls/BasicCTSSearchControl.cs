@@ -22,11 +22,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Get the working URL of this control for additional modifications
+        /// Retrieve the working URL of this control from the page XML.
         /// </summary>
-        protected override NciUrl WorkingUrl
+        protected override String WorkingUrl
         {
-            get { throw new NotImplementedException(); }
+            get { return BasicCTSPageInfo.SearchPagePrettyUrl; }
         }
     }
 }
