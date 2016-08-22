@@ -464,7 +464,7 @@ namespace CancerGov.ClinicalTrialsAPI
             /// Gets or sets the state/province of this trial site
             /// </summary>
             [JsonProperty("org_state_or_province")]
-            public string StateOrProvince { get; set; }
+            public string StateOrProvinceAbbreviation { get; set; }
 
             /// <summary>
             /// Gets or sets the country of this trial site
@@ -551,6 +551,19 @@ namespace CancerGov.ClinicalTrialsAPI
             /// </summary>
             [JsonProperty("local_site_identifier")]
             public string LocalSiteIdentifier { get; set; }
+
+            /// <summary>
+            /// Gets the full spelling of the state or province
+            /// TODO: Get the full spelling / mapping of states/provinces
+            /// </summary>
+            [JsonIgnore()]
+            public string StateOrProvince
+            {
+                get
+                {
+                    return this.StateOrProvinceAbbreviation;
+                }
+            }
         }
 
         /// <summary>
