@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 using NCI.Logging;
 using Newtonsoft.Json;
@@ -24,7 +25,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns>ZipCodeDictionary zipCodes</returns>
         public static ZipCodeDictionary LoadDictionary()
         {
+            // - Get the context object for the current HTTP request and map the physical filepath to the 
+            //   relative filepath (the relative filepath is specified in the Web.config).
+            // - Read the json file using StreamReader.
+            // - Deserialize the json data into a ZipCodeDictionary object.
             try {
+                zipFilePath = HttpContext.Current.Server.MapPath(zipFilePath);
                 using (StreamReader r = new StreamReader(zipFilePath))
                 {
                     string json = r.ReadToEnd();

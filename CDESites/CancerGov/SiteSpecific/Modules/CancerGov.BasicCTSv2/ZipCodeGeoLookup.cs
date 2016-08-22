@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using NCI.Logging;
 using NCI.Util;
 
@@ -82,7 +83,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         static void WatchDictionaryFile()
         {
+            // Get the .json relative filepath from the Web.config map to the full filepath on the machine.
             String zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"].ToString();
+            if (String.IsNullOrWhiteSpace(zipFilePath))
+            {
+                Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLookup:WatchDictionaryFile()", "'ZipCodesJsonMap' value not set.", NCIErrorLevel.Error);
+                return;
+            }
+            zipFilePath = HttpContext.Current.Server.MapPath(zipFilePath);
+
+            // Set FileSystemWatcher for the file path and set properties/event methods.
             zipCodeFileWatcher = new FileSystemWatcher((Path.GetDirectoryName(zipFilePath)));
             zipCodeFileWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.Size | NotifyFilters.LastAccess | NotifyFilters.Attributes;
             zipCodeFileWatcher.Filter = "*.json";
