@@ -29,8 +29,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //   relative filepath (the relative filepath is specified in the Web.config).
             // - Read the json file using StreamReader.
             // - Deserialize the json data into a ZipCodeDictionary object.
+            zipFilePath = HttpContext.Current.Server.MapPath(zipFilePath);
             try {
-                zipFilePath = HttpContext.Current.Server.MapPath(zipFilePath);
                 using (StreamReader r = new StreamReader(zipFilePath))
                 {
                     string json = r.ReadToEnd();
