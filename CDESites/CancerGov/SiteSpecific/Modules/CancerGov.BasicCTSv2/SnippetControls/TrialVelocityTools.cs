@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -83,7 +84,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>int - number of locations for given country</returns>
         public int GetLocCount(OrderedDictionary countryLocations)
         {
-            return countryLocations.Count;
+            int count = 0;
+
+            foreach (string key in countryLocations.Keys)
+            {
+                count += ((List<ClinicalTrial.StudySite>)countryLocations[key]).Count;
+            }
+
+            return count;
         }        
 
         /// <summary>
