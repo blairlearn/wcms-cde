@@ -88,8 +88,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             cancerMappingFileWatcher = new FileSystemWatcher((Path.GetDirectoryName(cancerTypeFilePath)));
             cancerMappingFileWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.Size | NotifyFilters.LastAccess | NotifyFilters.Attributes;
-            cancerMappingFileWatcher.Filter = "*.txt";
+            cancerMappingFileWatcher.Filter = Path.GetFileName(cancerTypeFilePath);
             cancerMappingFileWatcher.EnableRaisingEvents = true;
+            cancerMappingFileWatcher.IncludeSubdirectories = false;
             cancerMappingFileWatcher.Created += new FileSystemEventHandler(OnChange);
             cancerMappingFileWatcher.Changed += new FileSystemEventHandler(OnChange);
             cancerMappingFileWatcher.Deleted += new FileSystemEventHandler(OnRemove);
