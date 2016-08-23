@@ -70,7 +70,8 @@ namespace CancerGov.ClinicalTrialsAPI
 
 
                 //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = client.PostAsync("/clinical-trials", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+                //TODO: refactor version as string to pass into Post
+                HttpResponseMessage response = client.PostAsync("/v1/clinical-trials", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
                 
                 if (response.IsSuccessStatusCode)
                 {
@@ -109,7 +110,7 @@ namespace CancerGov.ClinicalTrialsAPI
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                 //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = client.GetAsync("/clinical-trial/" + id).Result;
+                HttpResponseMessage response = client.GetAsync("/v1/clinical-trial/" + id).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
