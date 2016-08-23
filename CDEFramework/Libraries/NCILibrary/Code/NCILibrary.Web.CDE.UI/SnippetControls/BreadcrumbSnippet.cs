@@ -126,14 +126,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     RenderBreadcrumbSections(section.Parent, writer);
                 }
 
-                //Get relative depth to this content's nav root (not necessarily the site root)
-                int navItemDepth = totalCount - NavTreeDepth;
                 //If the LandingPageURL is not set, DO NOT DRAW A BAD LINK!!!
-                if (!String.IsNullOrEmpty(section.LandingPageURL) && !String.IsNullOrEmpty(section.NavTitle) && section.LandingPageURL != CurrUrl && navItemDepth > 1)
+                if (!String.IsNullOrEmpty(section.LandingPageURL) && !String.IsNullOrEmpty(section.NavTitle) && section.LandingPageURL != CurrUrl && totalCount > 1)
                 {
                     // Increment the count with each pass through the method and update the <li> tag on the last item
                     recurseCount++;
-                    if (recurseCount == navItemDepth)
+                    if (recurseCount == totalCount)
                     {
                         writer.AddAttribute(HtmlTextWriterAttribute.Class, "last-breadcrumb");
                     }
