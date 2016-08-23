@@ -43,7 +43,7 @@ namespace NCI.Web.CDE.HttpHandlers
             body.AppendLine(req.Message);
 
             string subject = "CancerGov Feedback Submission";
-            string toAddr = ConfigurationManager.AppSettings[req.MailRecipiantKey];
+            string toAddr = ConfigurationManager.AppSettings[req.MailRecipientKey];
 
             try
             {
@@ -93,7 +93,7 @@ namespace NCI.Web.CDE.HttpHandlers
             ErrorResponse res = new ErrorResponse() { ErrorMessage = message, Status = status };
 
             context.Response.Write(JsonConvert.SerializeObject(res));
-            context.Response.Status = message;
+            context.Response.StatusDescription = message;
             context.Response.StatusCode = status;
             context.Response.TrySkipIisCustomErrors = true;
             context.Response.End();
@@ -117,7 +117,7 @@ namespace NCI.Web.CDE.HttpHandlers
                     rtnReq = (Request)serializer.Deserialize(inputStream, typeof(Request));
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Could not parse request.");
             }
@@ -128,7 +128,9 @@ namespace NCI.Web.CDE.HttpHandlers
             }
             else
             {
-                //TODO: Validate this url is server relative (i.e. /foo/bar)
+                string url = rtnReq.URL.Trim();
+                if (url[0] != '/')
+                    throw new Exception("URL must be relative to '/'.");
             }
 
             if (String.IsNullOrWhiteSpace(rtnReq.Message))
@@ -136,16 +138,16 @@ namespace NCI.Web.CDE.HttpHandlers
                 throw new Exception("Message is null or empty");
             }
 
-            if (String.IsNullOrWhiteSpace(rtnReq.MailRecipiantKey))
+            if (String.IsNullOrWhiteSpace(rtnReq.MailRecipientKey))
             {
-                throw new Exception("MailRecipiantKey is null or empty");
+                throw new Exception("MailRecipientKey is null or empty");
             }
             else
             {
                 //Test Key
-                if (String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings[rtnReq.MailRecipiantKey]))
+                if (String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings[rtnReq.MailRecipientKey]))
                 {
-                    throw new Exception("Mail Recipiant Key is not configured: " + rtnReq.MailRecipiantKey);
+                    throw new Exception("Mail Recipient Key is not configured: " + rtnReq.MailRecipientKey);
                 }
             }
 
@@ -166,9 +168,9 @@ namespace NCI.Web.CDE.HttpHandlers
             /// </summary>
             public string Message { get; set; }
             /// <summary>
-            /// Gets the recipiant key to send the message to
+            /// Gets the recipient key to send the message to
             /// </summary>
-            public string MailRecipiantKey { get; set; }
+            public string MailRecipientKey { get; set; }
         }
 
         /// <summary>
