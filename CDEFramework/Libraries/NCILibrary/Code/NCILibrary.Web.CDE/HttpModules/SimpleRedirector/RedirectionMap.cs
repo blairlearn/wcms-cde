@@ -113,25 +113,33 @@ namespace NCI.Web.CDE.SimpleRedirector
                     log.error(String.Format("Datafile '{0}' not found.", datafile));
                     throw new FileNotFoundException(datafile);
                 }
-
-                String[] listOfUrlPairs = File.ReadAllLines(datafile);
-                foreach (String urlPair in listOfUrlPairs)
-                {
-                    String[] urls = urlPair.Trim().Split(separators);
-                    if (urls.Length >= 2)
-                        map.Add(urls[0], urls[1]);
-                    if (urls.Length != 2)
-                    {
-                        // We can recover from this problem. No exception needed.
-                        log.warning(String.Format("Expected only two urls, found {0} in '{1}'.", urls.Length, urlPair));
-                    }
-                }
             }
             catch (Exception ex)
             {
                 log.error(String.Format("Error '{0}' while loading urls from {1}.", ex.Message, datafile), ex);
                 // Swallow the exception.  The worst case is we return an empty dictionary
                 // and nothing gets redirected.
+            }
+                
+            String[] listOfUrlPairs = File.ReadAllLines(datafile);
+            foreach (String urlPair in listOfUrlPairs)
+            {
+                String[] urls = urlPair.Trim().Split(separators);
+                if (urls.Length >= 2)
+                    try
+                    {
+                        map.Add(urls[0], urls[1]);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.error(String.Format("Duplicate URL found in RedirectMap: {0}", urls[0]), ex);
+                    }
+                        
+                if (urls.Length != 2)
+                {
+                    // We can recover from this problem. No exception needed.
+                    log.warning(String.Format("Expected only two urls, found {0} in '{1}'.", urls.Length, urlPair));
+                }
             }
 
             return map;
