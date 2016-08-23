@@ -63,7 +63,10 @@ namespace NCI.Web.CDE.HttpHandlers
         private static void SendEmail(string toAddr, string subject, string body)
         {
             //TODO: Get better from address
-            string fromAddr = "cancergovtest@mail.nih.gov";
+            // 
+            string fromAddr = ConfigurationManager.AppSettings["CTSFeedbackSender"];
+            if (String.IsNullOrWhiteSpace(fromAddr))
+                throw new Exception("CTSFeedbackSender not set");
 
             try
             {
