@@ -125,14 +125,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             int minAgeNum = trial.GetMinAgeNum();
             int maxAgeNum = trial.GetMaxAgeNum();
-            string minAgeUnit = trial.GetMinAgeUnit();
-            string maxAgeUnit = trial.GetMaxAgeUnit();
+            string minAgeUnit = trial.GetMinAgeUnit().ToLower();
+            string maxAgeUnit = trial.GetMaxAgeUnit().ToLower();
             string minAgeText = CleanAgeText(minAgeNum, minAgeUnit);
             string maxAgeText = CleanAgeText(maxAgeNum, maxAgeUnit);
             string ageRange = minAgeText + " to " + maxAgeText;
 
             // Set age range string for years if both max and min units are years
-            if ((maxAgeUnit.ToLower() == "years") && (minAgeUnit.ToLower() == "years"))
+            if ((maxAgeUnit == "years") && (minAgeUnit == "years"))
             {
                 ageRange = minAgeNum.ToString() + " to " + maxAgeNum.ToString() + " years";
                 if (minAgeNum < 1 && maxAgeNum <= 120)
@@ -150,7 +150,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             // Set age range string for max and min if units match 
-            else if (maxAgeUnit.ToLower() == minAgeUnit.ToLower())
+            else if (maxAgeUnit == minAgeUnit)
             {
                 ageRange = minAgeNum.ToString() + " to " + maxAgeNum.ToString() + maxAgeUnit;
                 if (minAgeNum < 1 && maxAgeNum <= 999)
@@ -166,12 +166,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Set age range string if units do not match
             else
             {
-                if (maxAgeNum > 120 && maxAgeUnit.ToLower() == "years")
+                if (maxAgeNum > 120 && maxAgeUnit == "years")
                 {
                     ageRange = minAgeText + " and over";
                 }
             }
-            return ageRange.ToLower();
+
+            ageRange = ageRange.Replace("year to", "to").Replace("years to", "to");
+            return GetFormattedString(ageRange);
         }
 
         /// <summary>
@@ -187,12 +189,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Convert day/month values to years if needed
             if (number > 0)
             {
-                if (number % 365 == 0 && unit.ToLower() == "days")
+                if (number % 365 == 0 && unit == "days")
                 {
                     number = (number / 365);
                     unit = "years";
                 }
-                if (number % 12 == 0 && unit.ToLower() == "months")
+                if (number % 12 == 0 && unit == "months")
                 {
                     number = (number / 12);
                     unit = "years";
