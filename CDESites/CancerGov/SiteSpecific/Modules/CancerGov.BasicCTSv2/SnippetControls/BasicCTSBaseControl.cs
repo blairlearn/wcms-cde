@@ -407,7 +407,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// at version 4.0 of the .NET Framework.</remarks>
         /// <exception cref="ThreadAbortException">Called when the redirect takes place and the current
         /// request is ended.</exception>
-        private void DoPermanentRedirect(HttpResponse Response, String url)
+        protected void DoPermanentRedirect(HttpResponse Response, String url)
         {
             Response.Clear();
             Response.Status = "301 Moved Permanently";
