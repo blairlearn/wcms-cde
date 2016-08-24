@@ -258,8 +258,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return searchParams;
         }
 
-        /// TODO:
-        /// - Implement CDRID / nci_thesaurus_concept_id mapping
+        /// Tentatively Deprecated.
+        /// 
         /// <summary>
         /// if the cancer type id passed in begins with "CDR":
         /// - Lookup the appropriate thesaurus ID from the mapping table
@@ -388,7 +388,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnInit(e);
 
-            HandleLegacyCancerTypeID(); // Redirect for URLs containing "t=CDRXXXX"
+            // Removed due to concerns over differing search results for CDRID vs. conept ID.
+            //HandleLegacyCancerTypeID(); // Redirect for URLs containing "t=CDRXXXX"
 
             _basicCTSManager = new BasicCTSManager(APIURL);
 
