@@ -22,15 +22,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Configuration
         }
 
         /// <summary>
-        /// Gets the API version 
-        /// </summary>
-        [ConfigurationProperty("apiVersion", IsRequired=true)]
-        public string APIVersion
-        {
-            get { return (string)base["apiVersion"]; }
-        }
-
-        /// <summary>
         /// Gets the port number for the API
         /// </summary>
         [ConfigurationProperty("apiPort", IsRequired=false)]

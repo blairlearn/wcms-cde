@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,27 @@ namespace CancerGov.ClinicalTrialsAPI
     public class ClinicalTrialsAPIClient
     {
         public string Host { get; private set; }
+
+        /// <summary>
+        /// Base path (API version) set in the web.config.
+        /// This can also be an empty string
+        /// </summary>
+        protected string BasePath
+        {
+            get
+            {
+                string basepath = ConfigurationManager.AppSettings["ClinicalTrialsAPIBasepath"].ToString();
+                if (basepath == null)
+                {
+                    basepath = String.Empty;
+                }
+                else
+                {
+                    basepath = "/" + basepath;
+                }
+                return basepath;
+            }
+        }
 
         public ClinicalTrialsAPIClient(string host)
         {
@@ -71,7 +93,7 @@ namespace CancerGov.ClinicalTrialsAPI
 
                 //We want this to be synchronus, so call Result right away.
                 //TODO: refactor version as string to pass into Post
-                HttpResponseMessage response = client.PostAsync("/v1/clinical-trials", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = client.PostAsync(BasePath + "/clinical-trials", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
                 
                 if (response.IsSuccessStatusCode)
                 {
@@ -110,7 +132,7 @@ namespace CancerGov.ClinicalTrialsAPI
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                 //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = client.GetAsync("/v1/clinical-trial/" + id).Result;
+                HttpResponseMessage response = client.GetAsync(BasePath + "/clinical-trial/" + id).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -157,7 +179,7 @@ namespace CancerGov.ClinicalTrialsAPI
 
 
                 //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = client.PostAsync("/v1/terms", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+                HttpResponseMessage response = client.PostAsync(BasePath + "/terms", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -196,7 +218,7 @@ namespace CancerGov.ClinicalTrialsAPI
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
                 //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = client.GetAsync("/v1/term/" + key).Result;
+                HttpResponseMessage response = client.GetAsync(BasePath + "/term/" + key).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
