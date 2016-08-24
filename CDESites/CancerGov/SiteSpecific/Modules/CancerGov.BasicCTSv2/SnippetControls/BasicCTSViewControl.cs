@@ -183,7 +183,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             nctid = nctid.Trim();
 
-            if (!Regex.IsMatch(nctid, "^NCT[0-9]+$"))
+            if (!Regex.IsMatch(nctid, "^NCT[0-9]+$") && !Regex.IsMatch(nctid, "^NCI-"))
             {
                 throw new HttpException(404, "Invalid trial ID.");
             }
@@ -196,7 +196,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
             catch (Exception ex)
             {
-                string errMessage = "CDE:BasicCTSViewControl.cs:OnLoad" + " Requested NCTid: " + nctid + "\nException thrown by _basicCTSManager.get(nctid) call.";
+                string errMessage = "CDE:BasicCTSViewControl.cs:OnLoad" + " Requested trial ID: " + nctid + "\nException thrown by _basicCTSManager.get(nctid) call.";
                 Logger.LogError(errMessage, NCIErrorLevel.Error, ex);
                 ErrorPageDisplayer.RaisePageError(errMessage);
                 return;
