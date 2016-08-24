@@ -177,14 +177,26 @@ namespace CancerGov.Web
                   <error statusCode="404" redirect="/PublishedContent/ErrorMessages/pagenotfound.html" />
                   <error statusCode="500" redirect="/PublishedContent/ErrorMessages/error.html" />
                 </customErrors>            
-            */              
-             
+            */
+
 
             Exception objErr = Server.GetLastError();
 
             if (objErr != null)
             {
-                if (objErr is HttpException)
+                // any thrown exception (including the base HttpException becomes wrapped in an 
+                // HttpUnhandledException, so retrieve the inner exception in this case
+                if (objErr is HttpUnhandledException)
+                {
+                    objErr = objErr.InnerException;
+                }
+
+                if (objErr is HttpException && !(
+                    objErr is HttpCompileException ||
+                    objErr is HttpParseException ||
+                    objErr is HttpRequestValidationException ||
+                    objErr is HttpUnhandledException
+                    ))
                 {   
                     //Make sure the response's status code matches the correct response for 
                     //things like search engines.
