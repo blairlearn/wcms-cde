@@ -137,6 +137,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 from: from,
                 includeFields: new string[] {
                     "nct_id",
+                    "nci_id",
                     "brief_title",
                     "sites.org_name",
                     "sites.org_postal_code",
