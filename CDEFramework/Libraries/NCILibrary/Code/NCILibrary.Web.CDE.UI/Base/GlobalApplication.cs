@@ -141,7 +141,7 @@ namespace NCI.Web.CDE.UI.Base
             }
             else
             {
-                Response.Redirect(System.Configuration.ConfigurationManager.AppSettings["ErrorPage"], true);
+                ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
             }
         }
 
