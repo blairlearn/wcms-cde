@@ -15,6 +15,7 @@ using NCI.Web.CDE;
 using NCI.Web.CDE.Configuration;
 using NCI.Logging;
 using NCI.Search.BestBets.Index;
+using NCI.Web.CDE.UI;
 
 namespace CancerGov.Web
 {
@@ -217,13 +218,11 @@ namespace CancerGov.Web
                 {
 
                     string err = "Error Caught in Application_Error event\n" +
-                        "Error in: " + Request.Url.ToString() +
-                        "\nError Message:" + objErr.Message.ToString() +
-                        "\nStack Trace:" + objErr.ToString();
+                        "Error in: " + Request.Url.ToString();
 
                     try
                     {
-                        NCI.Logging.Logger.LogError("Application Exception", err, NCIErrorLevel.Error);
+                        NCI.Logging.Logger.LogError("Application Exception", err, NCIErrorLevel.Error, objErr);
                     }
                     catch (System.ComponentModel.Win32Exception)
                     { //Since we cannot log to the eventlog, then we should not try again
@@ -232,13 +231,7 @@ namespace CancerGov.Web
                 }
             }
 
-            Server.ClearError();
-
-            //Set the status code so we know some bad mojo happened.
-            Response.StatusDescription = "Application Error";
-            Response.StatusCode = 500;
-
-            return;
+            ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
         }
 
         #endregion
