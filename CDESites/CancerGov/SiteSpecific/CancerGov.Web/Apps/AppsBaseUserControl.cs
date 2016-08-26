@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text.RegularExpressions;
-using System.Web.UI.HtmlControls;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Text;
-using System.Configuration;
-using System.Xml;
-using System.Globalization;
-using NCI.Util;
-using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE;
+using NCI.Web.CDE.Application;
 using NCI.Web.CDE.UI;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace NCI.Web.CancerGov.Apps
 {
