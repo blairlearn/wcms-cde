@@ -5,9 +5,8 @@ using System.Web;
 using System.Web.UI;
 using NCI.Logging;
 using NCI.Web.CDE;
+using NCI.Web.CDE.Application;
 using NCI.Web.CDE.Modules;
-using NCI.Web.CDE.UI;
-
 
 
 namespace CancerGov.ClinicalTrials.Basic.SnippetControls
