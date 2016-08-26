@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Configuration;
-
-using CancerGov.CDR.DataManager;
-using CancerGov.Common.ErrorHandling;
-using CancerGov.CDR.ClinicalTrials.Search;
-using CancerGov.UI.CDR;
+using System.Web;
 using CancerGov.CDR.ClinicalTrials.Helpers;
-
-using NCI.Util;
+using CancerGov.CDR.ClinicalTrials.Search;
+using CancerGov.CDR.DataManager;
 using NCI.Logging;
-using NCI.Web.CDE.UI;
+using NCI.Util;
+using NCI.Web.CDE.Application;
 
 namespace CancerGov.Handlers
 {
