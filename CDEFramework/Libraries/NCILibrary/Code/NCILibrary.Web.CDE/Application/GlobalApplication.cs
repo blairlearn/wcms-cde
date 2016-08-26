@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Web;
 using NCI.Logging;
 using NCI.Web.CDE.Configuration;
 
-namespace NCI.Web.CDE.UI.Base
+namespace NCI.Web.CDE.Application
 {
     public class GlobalApplication : System.Web.HttpApplication
     {
@@ -87,7 +88,7 @@ namespace NCI.Web.CDE.UI.Base
                 if (System.Configuration.ConfigurationManager.AppSettings["EventLogName"] != null)
                     return System.Configuration.ConfigurationManager.AppSettings["EventLogName"];
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
             return "CancerGov";
@@ -104,7 +105,7 @@ namespace NCI.Web.CDE.UI.Base
                 if (System.Configuration.ConfigurationManager.AppSettings["EventLogSourceName"] != null)
                     return System.Configuration.ConfigurationManager.AppSettings["EventLogSourceName"];
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
             return "CancerGov";
@@ -112,37 +113,71 @@ namespace NCI.Web.CDE.UI.Base
 
         protected void Application_Error(object sender, EventArgs e)
         {
+
+            /* In order for the error handling to return the correct codes and display the right
+             * pages, the customErrors section of the web.config needs to look like:
+                <customErrors mode="On" defaultRedirect="/PublishedContent/ErrorMessages/error.html" redirectMode="ResponseRewrite">
+                  <error statusCode="404" redirect="/PublishedContent/ErrorMessages/pagenotfound.html" />
+                  <error statusCode="500" redirect="/PublishedContent/ErrorMessages/error.html" />
+                </customErrors>            
+            */
+
+
             Exception objErr = Server.GetLastError();
 
             if (objErr != null)
             {
-
-                string err = "Error Caught in Application_Error event\n" +
-                    "Error in: " + Request.Url.ToString() +
-                    "\nError Message:" + objErr.Message.ToString() +
-                    "\nStack Trace:" + objErr.ToString();
-
-                try
+                // any thrown exception (including the base HttpException becomes wrapped in an 
+                // HttpUnhandledException, so retrieve the inner exception in this case
+                if (objErr is HttpUnhandledException)
                 {
-                    NCI.Logging.Logger.LogError("Application Exception", err, NCIErrorLevel.Error);
+                    objErr = objErr.InnerException;
                 }
-                catch (System.ComponentModel.Win32Exception)
-                { //Since we cannot log to the eventlog, then we should not try again
+
+                if (objErr is HttpException && !(
+                    objErr is HttpCompileException ||
+                    objErr is HttpParseException ||
+                    objErr is HttpRequestValidationException ||
+                    objErr is HttpUnhandledException
+                    ))
+                {
+                    //Make sure the response's status code matches the correct response for 
+                    //things like search engines.
+                    int statusCode = 404;
+                    if (objErr is HttpRequestValidationException)
+                    {
+                        // By default .NET uses 500 for a malformed URL or unsafe request.  This 
+                        // is exactly what the 400 status is for.  See:
+                        // https://tools.ietf.org/html/rfc7231#section-6.5.1
+                        statusCode = 400;
+                    }
+                    else
+                    {
+                        statusCode = ((HttpException)objErr).GetHttpCode();
+                    }
+
+                    ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), statusCode);
+
+                    return;
                 }
-                catch { }
+                else
+                {
+
+                    string err = "Error Caught in Application_Error event\n" +
+                        "Error in: " + Request.Url.ToString();
+
+                    try
+                    {
+                        NCI.Logging.Logger.LogError("Application Exception", err, NCIErrorLevel.Error, objErr);
+                    }
+                    catch (System.ComponentModel.Win32Exception)
+                    { //Since we cannot log to the eventlog, then we should not try again
+                    }
+                    catch { }
+                }
             }
 
-            Server.ClearError();
-            string error = Request.Params["TransferredByError"];
-
-            if ((error != null) && (error == "1"))
-            {
-                //Response.Write("<b>Unexpected errors occurred. Our technicians have been notified and are working to correct the situation.</b>");
-            }
-            else
-            {
-                ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
-            }
+            ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
         }
 
         #endregion
