@@ -69,6 +69,8 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\ErrorPageDisplayer.cs" />
+    <Compile Include="Application\GlobalApplication.cs" />
     <Compile Include="CapabilitiesDetection\CapabilitiesDetector.cs" />
     <Compile Include="CapabilitiesDetection\DisplayDeviceDetector.cs" />
     <Compile Include="Conditional\ConditionalConfig.cs" />

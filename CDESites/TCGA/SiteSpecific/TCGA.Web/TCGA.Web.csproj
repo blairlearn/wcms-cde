@@ -157,9 +157,6 @@
     <Compile Include="Common\PopUps\popImage.aspx.designer.cs">
       <DependentUpon>popImage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnippetTemplates\SiteWideSearch.ascx.cs">
       <DependentUpon>SiteWideSearch.ascx</DependentUpon>
