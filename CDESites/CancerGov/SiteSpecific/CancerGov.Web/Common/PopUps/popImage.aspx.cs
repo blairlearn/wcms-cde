@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Text;
 using System.Text.RegularExpressions;
 using CancerGov.Web;
+using NCI.Web.CDE.Application;
 namespace Www.Common.PopUps
 {
     public partial class popImage : PopUpPage
@@ -33,7 +34,7 @@ namespace Www.Common.PopUps
                 imageName = o.ToString();
             if (imageName == "")
             {
-                Response.Redirect(ConfigurationSettings.AppSettings["NotFoundPage"], true);
+                ErrorPageDisplayer.RaisePageNotFound(this.GetType().ToString());
             }
 
             o = Request.Params["caption"];

@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using NCI.Web.CDE;
 using CancerGov.UI;
 using TCGA.Web;
+using NCI.Web.CDE.Application;
 
 namespace TCGA.Web.Common.PopUps
 {
@@ -38,7 +39,7 @@ namespace TCGA.Web.Common.PopUps
                 imageName = o.ToString();
             if (imageName == "")
             {
-                Response.Redirect(ConfigurationSettings.AppSettings["NotFoundPage"], true);
+                ErrorPageDisplayer.RaisePageNotFound(this.GetType().ToString());
             }
 
             o = Request.Params["caption"];
