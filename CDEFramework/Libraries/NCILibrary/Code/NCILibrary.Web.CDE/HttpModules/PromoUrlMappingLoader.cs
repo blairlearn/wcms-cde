@@ -91,6 +91,20 @@ namespace NCI.Web.CDE
                         else
                             DoPermanentRedirect(context.Response, mappedToUrl);
                     }
+                    else if (!url.EndsWith("/") && promoUrlMapping.PromoUrls.ContainsKey(url.ToLower() + "/"))
+                    {
+                        promoUrl = promoUrlMapping.PromoUrls[url.ToLower() + "/"];
+                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query);
+
+                        // If the original request is post then save target promo url
+                        // for use in the page instructions assembly loader.
+                        if (context.Request.RequestType == "POST")
+                        {
+                            context.RewritePath(mappedToUrl);
+                        }
+                        else
+                            DoPermanentRedirect(context.Response, mappedToUrl);
+                    }
                     else
                     {
                         //1. Remove last part of path, e.g. /cancertopics/wyntk/bladder/page10 becomes /cancertopics/wyntk/bladder

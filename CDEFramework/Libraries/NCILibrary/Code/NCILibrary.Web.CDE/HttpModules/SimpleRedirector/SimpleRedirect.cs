@@ -73,10 +73,16 @@ namespace NCI.Web.CDE
         private String GetRedirectUrl(String url, HttpContext context)
         {
             String redirect = null;
+            string urlWithSlash;
 
             if (url.LastIndexOf("/") == url.Length-1)
             {
+                urlWithSlash = url;
                 url = url.Substring(0, url.Length - 1);
+            }
+            else
+            {
+                urlWithSlash = url + "/";
             }
 
             SimpleRedirectorConfigurationSection config = SimpleRedirectorConfigurationSection.Get();
@@ -92,6 +98,15 @@ namespace NCI.Web.CDE
                 }
                 redirect = urlMap[url];
                 log.debug(String.Format("Url '{0}' found; redirects to '{1}'.", url, redirect));
+            }
+            else if (urlMap.Contains(urlWithSlash))
+            {
+                if (urlMap.ContainsMultiple(urlWithSlash))
+                {
+                    log.debug(String.Format("Url: '{0}' has multiple instances in redirect map.", urlWithSlash));
+                }
+                redirect = urlMap[urlWithSlash];
+                log.debug(String.Format("Url '{0}' found; redirects to '{1}'.", urlWithSlash, redirect));
             }
             else
             {
