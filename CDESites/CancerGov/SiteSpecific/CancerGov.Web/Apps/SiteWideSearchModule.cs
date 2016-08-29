@@ -60,7 +60,6 @@ namespace NCI.Web.CancerGov.Apps
         protected Button btnSWRTxtSearch;
         protected Label lblDDLPageUnitResultsPPText;
         protected Button btnTextChangePageUnit;
-        protected JavascriptProbeControl jsProbe;
         protected SimpleUlPager spPager;
         #endregion
 
@@ -475,54 +474,14 @@ namespace NCI.Web.CancerGov.Apps
                 }
             }
         }
-
-        /// <summary>
-        /// This is the callback for the page size dropdown.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void ChangePageUnit(object sender, EventArgs e)
+        
+        protected void ChangeItemsPerPageAndBind(object sender, EventArgs e)
         {
-            //This handler fires whenever the page unit dropdown is changed.  With Javascript enabled, it
-            //will always postback to the server.  So there is NO way that a user can change the dropdown 
-            //and then submit the form with the search button.  So we throw away the text of the
-            //txtSWRKeyword textbox since they did not click the search button.
-
-            //With Javascript disabled, you can change the number of items and then click the search within
-            //results button, click the go button, or etc... AND THIS WILL FIRE.  So without JS this handler is
-            //ALWAYS called if the selected index changes.  Since pressing enter while in the search box in
-            //firefox causes the go button to be clicked and not the search within results button to be 
-            //clicked we decided that when JS is disabled and there is text in the search box, then whatever
-            //caused the form to be posted back will do a new search with the new keyword.
-
-            //The only real purpose of this handler is to change the current page so that the user
-            //is not taken to page that still shows the records they were looking at before.  So
-            //if the user were to input a new keyword to search for, they must go back to page 1.  In this 
-            //case the code is meaningless and therefore we should do nothing.  We should instead let the
-            //Go button's onclick handler to do the work.
-
             _hasPageUnitChanged = true; //This fired so it must have changed.
 
-            if ((jsProbe.HasJavascript) || (!jsProbe.HasJavascript && Strings.Clean(txtSWRKeyword.Text) == null))
-            {
-                //Just to be consistant about things, if a user typed something in the search within results text box then they
-                //changed the page size, then the text will still show, so lets clear it out.
-                txtSWRKeyword.Text = "";
+            // clear the keyword search field
+            txtSWRKeyword.Text = "";
 
-                if (Keyword == string.Empty)
-                {
-                    ShowErrorMessage();
-                    return;
-                }
-                else
-                {
-                    ChangeItemsPerPageAndBind();
-                }
-            }
-        }
-
-        private void ChangeItemsPerPageAndBind()
-        {
             //Get the last total number of results so if the user changes the ItemsPerPage(pageunit)
             //then we can move them to the closest page.  Say you are viewing 10 items per page and
             //you are on page 6. This shows 51-60.  If you change to 50 items per page you should put
