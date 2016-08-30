@@ -14,6 +14,7 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+using Microsoft.Security.Application;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -79,7 +80,9 @@ namespace CancerGov.Web.SnippetTemplates
             SrcGroup = "";
             Expand = Strings.Clean(Request.Params["expand"]);
             CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Strings.Clean(Request.Params["search"]);
+            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["search"]);
+            SearchStr = Strings.Clean(SearchStr);
+            //SearchStr = Strings.Clean(Request.Params["search"]);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
         }
 
@@ -160,7 +163,11 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             if (!string.IsNullOrEmpty(SearchStr))
+            {
+                SearchStr = Sanitizer.GetSafeHtmlFragment(SearchStr);
                 AutoComplete1.Text = SearchStr;
+            }
+                
 
             if (!string.IsNullOrEmpty(Expand))
             {
@@ -319,8 +326,8 @@ namespace CancerGov.Web.SnippetTemplates
         }
 
         protected void btnSearch_OnClick(object sender, EventArgs e)
-        {
-            SearchStr = AutoComplete1.Text;
+        {           
+            SearchStr = Sanitizer.GetSafeHtmlFragment(AutoComplete1.Text);
             SearchStr = SearchStr.Replace("[", "[[]");
             CdrID = string.Empty;
             
