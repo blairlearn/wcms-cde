@@ -85,6 +85,7 @@
     <Compile Include="Configuration\FileInstructionElement.cs" />
     <Compile Include="Configuration\FileInstructionTypeElement.cs" />
     <Compile Include="Configuration\FileInstructionTypeElementCollection.cs" />
+    <Compile Include="Configuration\ReCaptchaConfig.cs" />
     <Compile Include="Configuration\MobileRedirectorElement.cs" />
     <Compile Include="Configuration\MobileRedirectorInformationElement.cs" />
     <Compile Include="Configuration\PageAssemblyInfoTypeElement.cs" />

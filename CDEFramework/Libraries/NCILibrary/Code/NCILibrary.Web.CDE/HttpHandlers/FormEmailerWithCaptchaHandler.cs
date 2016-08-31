@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using Recaptcha;
 
 using NCI.Web.UI.WebControls.Infrastructure;
+using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE.HttpHandlers
 {
@@ -19,9 +20,6 @@ namespace NCI.Web.CDE.HttpHandlers
     /// </summary>
     public class FormEmailerWithCaptchaHandler : IHttpHandler
     {
-        private const string CAPTCHA_PRIVATE_KEY = "6LcQe-MSAAAAALjG1vwiC_iSkbNKjQMYXUA9B69p";
-        private const string CAPTCHA_PUBLIC_KEY = "6LcQe-MSAAAAAAG-lHJXWqCfOQQVVx9JMkv0rzDO";
-
         private string from, to, subject, body, redirect, requiredFields, splitFields;
 
         // Re-Captcha
@@ -76,7 +74,7 @@ namespace NCI.Web.CDE.HttpHandlers
                         break;
                     case "__subject": subject = context.Request.Params[key]; break;
                     case "__recipient":
-                        to = ConfigurationSettings.AppSettings[context.Request.Params[key]];
+                        to = ConfigurationManager.AppSettings[context.Request.Params[key]];
                         if ((to == null) || (to == ""))
                         {
                             errorList.Add("Error: recipient '" + context.Request.Params[key] + "' is not configured.");
@@ -173,7 +171,7 @@ namespace NCI.Web.CDE.HttpHandlers
         protected RecaptchaResponse ValidateCaptcha(String challenge, String response, String userIPAddress)
         {
             RecaptchaValidator validator = new RecaptchaValidator();
-            validator.PrivateKey = CAPTCHA_PRIVATE_KEY;
+            validator.PrivateKey = ReCaptchaConfig.PrivateKey;
             validator.Challenge = challenge;
             validator.Response = response;
             validator.RemoteIP = userIPAddress;

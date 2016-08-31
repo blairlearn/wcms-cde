@@ -148,6 +148,9 @@
     <Compile Include="SnippetControls\DynamicNewsDescImgDate.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\ReCaptchaControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\IntenseDebateComments.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
