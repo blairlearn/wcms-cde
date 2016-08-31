@@ -30,11 +30,12 @@
         <![endif]-->
     <div class="popup">
         <div class="clearfix">
-            <div class="nci-logo">
-                <a>NATIONAL CANCER INSTITUTE
-                    <br />
-                    <span>at the National Institutes of Health</span></a>
+            <div class="popuplogo">
+              <a href="/">
+                <img onerror="this.src='/PublishedContent/Images/SharedItems/Images/TCGA_54px-Logo.png';this.removeAttribute('onerror');" src="/PublishedContent/images/images/design-elements/logos/TCGA_54.svg" alt="The Cancer Genome Atlas">
+              </a>
             </div>
+
             <div class="popup-close">
                 <a href="javascript:window.parent.window.close();"><span class="hidden" id="closeWindowText"
                     runat="server" /></a>

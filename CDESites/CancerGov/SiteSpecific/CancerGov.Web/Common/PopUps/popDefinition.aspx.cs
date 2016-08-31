@@ -42,15 +42,17 @@ namespace Www.Common.PopUps
                 if (Request.QueryString["language"] == "Spanish")
                 {
                     dictionaryLanguage = "es";
-                    logoText1.InnerText = "INSTITUTO NACIONAL DEL CÁNCER";
-                    logoText2.InnerText = "de los Institutos Nacionales de la Salud de EE. UU.";
+                    logoAnchor.HRef = "/espanol";
+                    logoImage.Alt = "Instituto Nacional Del Cáncer";
+                    logoImage.Src = "/publishedcontent/images/images/design-elements/logos/nci-logo-full-es.svg";
                     closeWindowText.InnerText = "Cerrar";
                     definitionLabel.Text = "Definición:";
                 }
                 else
                 {
-                    logoText1.InnerText = "NATIONAL CANCER INSTITUTE";
-                    logoText2.InnerText = "at the National Institutes of Health";
+                    logoAnchor.HRef = "/";
+                    logoImage.Alt = "National Cancer Institute";
+                    logoImage.Src = "/publishedcontent/images/images/design-elements/logos/nci-logo-full.svg";
                     closeWindowText.InnerText = "Close Window";
                     definitionLabel.Text = "Definition:";
                 }

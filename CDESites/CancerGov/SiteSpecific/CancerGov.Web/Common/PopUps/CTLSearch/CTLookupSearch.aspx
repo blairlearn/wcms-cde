@@ -20,9 +20,12 @@
 	<body class="popup">
         <!-- Top Header Section -->
         <div class="clearfix">
-		    <div class="nci-logo">
-			    <a>NATIONAL CANCER INSTITUTE<br> <span>at the National Institutes of Health</span></a>
-		    </div>
+		    <div class="popuplogo">
+              <a href="/">
+                <img alt="National Cancer Institute" src="/publishedcontent/images/images/design-elements/logos/nci-logo-full.svg"/>
+              </a> 
+            </div>
+
 	    </div> 
         <!-- end Top Header Section -->
 
