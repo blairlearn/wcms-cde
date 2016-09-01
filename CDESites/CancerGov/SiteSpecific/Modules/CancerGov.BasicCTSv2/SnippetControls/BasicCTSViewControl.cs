@@ -7,6 +7,7 @@ using CancerGov.ClinicalTrialsAPI;
 using NCI.Logging;
 using NCI.Web;
 using NCI.Web.CDE;
+using NCI.Web.CDE.Application;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 
