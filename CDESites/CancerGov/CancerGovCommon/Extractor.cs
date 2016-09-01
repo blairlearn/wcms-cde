@@ -149,7 +149,7 @@ namespace CancerGov.Common.Extraction
 							extract = HttpUtility.UrlDecode(extract.Substring(pos, extract.IndexOf("&", pos) - pos));
 						}
 
-                        if ((extract.IndexOf("http://") == -1) && extract.StartsWith("/"))
+                        if (((extract.IndexOf("http://") == -1) || (extract.IndexOf("https://") == -1)) && extract.StartsWith("/"))
                         {
                             extract = ConfigurationSettings.AppSettings["RootUrl"] + extract;
                             //throw new Exception("Got: '" + extract + "'");
