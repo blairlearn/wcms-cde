@@ -11,6 +11,7 @@ using NCI.DataManager;
 using NCI.Web.UI.WebControls;
 using NCI.Web.CDE.UI.Configuration;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
@@ -145,6 +146,14 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     else if (this.SearchList.SearchType == "date")
                     {
                         keyWord = string.Empty;
+                    }
+
+                    Dictionary<string, string> filters = GetUrlFilters();
+                    if (startDate == DateTime.MinValue && endDate == DateTime.MaxValue && filters.ContainsKey("year"))
+                    {
+                        int year = Int32.Parse(filters["year"]);
+                        startDate = new DateTime(year, 1, 1);
+                        endDate = new DateTime(year, 12, 31);
                     }
 
                     // Call the  datamanger to perform the search
@@ -332,7 +341,23 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         }
 
-        private DataTable ReturnTaxonomySqlParam(TaxonomyFilter[] taxonomyFiltersList)
+        private Dictionary<string, string> GetUrlFilters()
+        {
+            Dictionary<string, string> urlParams = new Dictionary<string, string>();
+            Regex pattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
+            {
+                if (pattern.IsMatch(key))
+                {
+                    Match match = pattern.Match(key);
+                    urlParams.Add(match.Groups[1].Value, HttpContext.Current.Request.QueryString[match.Value]);
+                }
+            }
+
+            return urlParams;
+        }
+
+        private DataTable GetTaxonomyDataTable()
         {
             // This datatable must be structured like the datatable in the stored proc, 
             // in order to be passed in correctly as a parameter.
@@ -350,6 +375,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
             dc1.DataType = System.Type.GetType("System.Int32");
             dc1.ColumnName = "taxonID";
             dt.Columns.Add(dc1);
+
+            return dt;
+        }
+
+        private DataTable ReturnTaxonomySqlParam(TaxonomyFilter[] taxonomyFiltersList)
+        {
+            // This datatable must be structured like the datatable in the stored proc, 
+            // in order to be passed in correctly as a parameter.
+            DataTable dt = GetTaxonomyDataTable();
 
             // Loop through each of the different TaxonomyFilters (for different taxonomies)
             foreach (TaxonomyFilter filter in taxonomyFiltersList)
