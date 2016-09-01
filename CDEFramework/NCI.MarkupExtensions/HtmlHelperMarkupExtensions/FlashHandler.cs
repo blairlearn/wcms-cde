@@ -153,7 +153,7 @@ namespace NCI.Web
 
             if (!HasSWFObjectBeenLoaded)
             {
-                sb.AppendLine(@"<script type=""text/javascript"" src=""http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js""></script>");
+                sb.AppendLine(@"<script type=""text/javascript"" src=""//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js""></script>");
                 HasSWFObjectBeenLoaded = true;
             }
 
