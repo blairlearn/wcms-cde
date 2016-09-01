@@ -80,8 +80,16 @@ namespace NCI.Web.CDE.Modules
             }
         }
 
+        /// <summary>
+        /// Helper Class that is bound to all Velocity Template contexts
+        /// </summary>
         class VelocityTools
         {
+            /// <summary>
+            /// Deterines if the object is null or not.
+            /// </summary>
+            /// <param name="obj"></param>
+            /// <returns></returns>
             public bool IsNull(object obj)
             {
                 return obj == null;
@@ -101,7 +109,24 @@ namespace NCI.Web.CDE.Modules
                 string rtn = str.Replace(pattern1, pattern2);
                 return rtn;
             }
-        }
+
+            public string Join(string[] strArr)
+            {
+                if(strArr != null) 
+                {
+                   return string.Join("",strArr);
+                }
+                else 
+                { 
+                    return string.Empty;
+                }
+            }
+
+            public string Enc(string str)
+            {
+                return HttpUtility.HtmlEncode(str);
+            }
+		}
 
         /// <summary>
         /// Helper class to manage use of a single instance of the Velocity Engine.

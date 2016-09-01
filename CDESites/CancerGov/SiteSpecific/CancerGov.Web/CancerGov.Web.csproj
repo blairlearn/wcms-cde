@@ -102,6 +102,9 @@
     <Content Include="Global.asax" />
     <Content Include="JS\popEvents.js" />
     <Content Include="Common\PopUps\PopEmail.aspx" />
+    <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSResults.ascx" />
+    <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSSearch.ascx" />
+    <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSView.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSResults.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSView.ascx" />
@@ -642,6 +645,10 @@
     <ProjectReference Include="..\..\PresentationClasses\PresentationClasses.csproj">
       <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
       <Name>PresentationClasses</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.BasicCTSv2\CancerGov.BasicCTSv2.csproj">
+      <Project>{96f6420f-f16d-4873-af3a-5d22e9ffbd55}</Project>
+      <Name>CancerGov.BasicCTSv2</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.BasicCTS\CancerGov.BasicCTS.csproj">
       <Project>{d3896177-dbf5-45e4-bc4c-9d53e8341015}</Project>
