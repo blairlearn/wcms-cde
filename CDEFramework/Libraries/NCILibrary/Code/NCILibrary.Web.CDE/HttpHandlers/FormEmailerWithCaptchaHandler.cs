@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Configuration;
-using System.Net.Mail;
-using System.Web.Mail;
 using System.Text.RegularExpressions;
-
-using Recaptcha;
-
+using System.Web;
+using NCI.Web.CDE.Util;
 using NCI.Web.UI.WebControls.Infrastructure;
-using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE.HttpHandlers
 {
@@ -23,8 +16,7 @@ namespace NCI.Web.CDE.HttpHandlers
         private string from, to, subject, body, redirect, requiredFields, splitFields;
 
         // Re-Captcha
-        private string recaptchaChallengeField = string.Empty,
-            recaptchaResponseField = string.Empty;
+        private string recaptchaResponseField = string.Empty;
 
         // For outputting errors
         private bool error_p;
@@ -86,8 +78,7 @@ namespace NCI.Web.CDE.HttpHandlers
                     case "__splitFields": splitFields = "," + context.Request.Params[key].Replace(" ", "") + ","; break;
 
                     // Recaptcha fields
-                    case "recaptcha_challenge_field": recaptchaChallengeField = context.Request[key]; break;
-                    case "recaptcha_response_field": recaptchaResponseField = context.Request[key]; break;
+                    case "g-recaptcha-response": recaptchaResponseField = context.Request.Form[key]; break;
 
                     default:
                         if (key.StartsWith("__linebreak"))
@@ -128,11 +119,15 @@ namespace NCI.Web.CDE.HttpHandlers
             }
 
             // Verify captcha was submitted, and is valid
-            RecaptchaResponse captcha = ValidateCaptcha(recaptchaChallengeField,
-                    recaptchaResponseField, context.Request.UserHostAddress);
-            if (!captcha.IsValid)
+            ReCaptchaValidator captcha = ValidateCaptcha(recaptchaResponseField, context.Request.UserHostAddress);
+            if (!captcha.Success)
             {
-                errorList.Add(captcha.ErrorMessage);
+                if (captcha.ErrorCodes == null) {
+                    errorList.Add("reCAPTCHA check not completed!");
+                }
+                else {
+                    errorList.AddRange(captcha.ErrorCodes);
+                }
                 error_p = true;
             }
 
@@ -168,15 +163,11 @@ namespace NCI.Web.CDE.HttpHandlers
 
         #endregion
 
-        protected RecaptchaResponse ValidateCaptcha(String challenge, String response, String userIPAddress)
+        protected ReCaptchaValidator ValidateCaptcha(String response, String userIPAddress)
         {
-            RecaptchaValidator validator = new RecaptchaValidator();
-            validator.PrivateKey = ReCaptchaConfig.PrivateKey;
-            validator.Challenge = challenge;
-            validator.Response = response;
-            validator.RemoteIP = userIPAddress;
-
-            return validator.Validate();
+            ReCaptchaValidator validator = new ReCaptchaValidator();
+            validator.Validate(response, userIPAddress);
+            return validator;
         }
 
 
