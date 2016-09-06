@@ -336,13 +336,6 @@
     <Compile Include="Common\PopUps\popHelp.aspx.designer.cs">
       <DependentUpon>popHelp.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Common\PopUps\popImage.aspx.cs">
-      <DependentUpon>popImage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\popImage.aspx.designer.cs">
-      <DependentUpon>popImage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Common\UserControls\AlphaListBox.ascx.cs">
       <DependentUpon>AlphaListBox.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -703,7 +696,6 @@
     <Content Include="Common\PopUps\popDefinition.aspx" />
     <Content Include="Common\PopUps\popHelp.aspx" />
     <Content Include="Common\PopUps\popHelp.html" />
-    <Content Include="Common\PopUps\popImage.aspx" />
     <Content Include="Common\UserControls\AlphaListBox.ascx" />
     <Content Include="Common\UserControls\LangSwitch.ascx" />
     <Content Include="App_GlobalResources\SiteWideSearch.resx">
