@@ -144,13 +144,13 @@ namespace NCI.Web.UI.WebControls
 
             output.RenderBeginTag(HtmlTextWriterTag.Noscript);
             output.Write("Please enable JavaScript to view the ");
-            output.AddAttribute(HtmlTextWriterAttribute.Href, "http://disqus.com/?ref_noscript");
+            output.AddAttribute(HtmlTextWriterAttribute.Href, "https://disqus.com/?ref_noscript");
             output.RenderBeginTag(HtmlTextWriterTag.A);
             output.Write("comments powered by Disqus.");
             output.RenderEndTag();//end A tag
             output.RenderEndTag();//end noscript
 
-            output.AddAttribute(HtmlTextWriterAttribute.Href, "http://disqus.com");
+            output.AddAttribute(HtmlTextWriterAttribute.Href, "https://disqus.com");
             // ADDED CLASS TO AVOID EXIT LINK NOTIFICATION
             output.AddAttribute(HtmlTextWriterAttribute.Class, "dsq-brlink no-exit-notification");
             output.RenderBeginTag(HtmlTextWriterTag.A);

@@ -126,7 +126,7 @@ namespace NCI.Web.UI.WebControls
                     writer.RenderBeginTag(HtmlTextWriterTag.Li);
 
                     //This should be configurable.
-                    writer.AddAttribute(HtmlTextWriterAttribute.Src, "http://s7.addthis.com/js/200/addthis_widget.js");
+                    writer.AddAttribute(HtmlTextWriterAttribute.Src, "//s7.addthis.com/js/200/addthis_widget.js");
                     writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
                     writer.RenderBeginTag(HtmlTextWriterTag.Script);
                     writer.RenderEndTag();
