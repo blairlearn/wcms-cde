@@ -141,28 +141,22 @@ namespace NCI.Web.CDE.Application
                     objErr is HttpUnhandledException
                     ))
                 {
-                    //Make sure the response's status code matches the correct response for 
-                    //things like search engines.
-                    int statusCode = 404;
-                    if (objErr is HttpRequestValidationException)
-                    {
-                        // By default .NET uses 500 for a malformed URL or unsafe request.  This 
-                        // is exactly what the 400 status is for.  See:
-                        // https://tools.ietf.org/html/rfc7231#section-6.5.1
-                        statusCode = 400;
-                    }
-                    else
-                    {
-                        statusCode = ((HttpException)objErr).GetHttpCode();
-                    }
+                    // Retrieve the HttpException's status code
+                    int statusCode = ((HttpException)objErr).GetHttpCode();
 
                     ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), statusCode);
 
                     return;
                 }
+                else if (objErr is HttpRequestValidationException)
+                {
+                    // By default .NET uses 500 for a malformed URL or unsafe request.  This 
+                    // is exactly what the 400 status is for.  See:
+                    // https://tools.ietf.org/html/rfc7231#section-6.5.1
+                    ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400);
+                }
                 else
                 {
-
                     string err = "Error Caught in Application_Error event\n" +
                         "Error in: " + Request.Url.ToString();
 
