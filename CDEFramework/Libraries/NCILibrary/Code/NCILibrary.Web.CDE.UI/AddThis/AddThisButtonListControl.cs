@@ -257,7 +257,7 @@ namespace NCI.Web.CDE.UI.WebControls
         public override void RenderEndTag(HtmlTextWriter writer)
         {
             base.RenderEndTag(writer);
-            writer.AddAttribute(HtmlTextWriterAttribute.Src, "http://s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ed7cc9f006efaac");
+            writer.AddAttribute(HtmlTextWriterAttribute.Src, "//s7.addthis.com/js/250/addthis_widget.js#pubid=xa-4ed7cc9f006efaac");
             writer.AddAttribute(HtmlTextWriterAttribute.Type, "text/javascript");
             writer.RenderBeginTag(HtmlTextWriterTag.Script);
             writer.RenderEndTag();
