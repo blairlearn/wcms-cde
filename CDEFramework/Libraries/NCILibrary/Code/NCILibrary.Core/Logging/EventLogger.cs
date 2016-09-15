@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Logging;
-using Common.Logging.Factory;
 using Common.Logging.Simple;
 using NCI.Util;
 
@@ -49,19 +44,21 @@ namespace NCI.Logging
         {
             try
             {
+                string exString = (exception != null) ? exception.ToString() : "";
+
                 EventLog.WriteEntry(
                     LogSource,
                     String.Format(
                         _loggingFormat,
                         this.Name,
                         level.ToString(),
-                        message,
-                        exception.ToString()),
+                        message != null ? message : "",
+                        exString),
                     GetEventLogETFromLogLevel(level));
             }
             catch (Exception newex)
             {
-                throw new NCILoggingException("NCI.Logging.Providers.EventLogProvider: Could not write error to Event Log ", newex);
+                throw new NCILoggingException("NCI.Logging.EventLogger: Could not write error to Event Log.", newex);
             }
         }
 

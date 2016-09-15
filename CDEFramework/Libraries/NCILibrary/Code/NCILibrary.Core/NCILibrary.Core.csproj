@@ -90,11 +90,15 @@
     <Compile Include="Data\SqlHelper.cs" />
     <Compile Include="Data\UsesSProcAttribute.cs" />
     <Compile Include="HashMaster.cs" />
+    <Compile Include="Logging\EmailLogger.cs" />
+    <Compile Include="Logging\EventAndEmailLogger.cs" />
     <Compile Include="Logging\EventLogger.cs" />
     <Compile Include="Logging\Configuration\FacilityMatchStringElement.cs" />
     <Compile Include="Logging\Configuration\FacilityMatchStringsCollection.cs" />
     <Compile Include="Logging\Configuration\LoggingSinkElement.cs" />
     <Compile Include="Logging\Configuration\LoggingSinksCollection.cs" />
+    <Compile Include="Logging\Factories\EmailLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\Factories\EventAndEmailLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\Factories\EventLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LoggingHelper.cs" />

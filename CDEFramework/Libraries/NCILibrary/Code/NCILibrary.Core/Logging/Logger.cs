@@ -52,7 +52,14 @@ namespace NCI.Logging
 
         static Logger()
         {
-            log = Common.Logging.LogManager.GetLogger(typeof(Logger));
+            try
+            {
+                log = Common.Logging.LogManager.GetLogger(typeof(Logger));
+            }
+            catch (Exception ex)
+            {
+                throw new TypeInitializationException("NCI.Logging.Logger", ex);
+            }
         }
 
         /// <summary>

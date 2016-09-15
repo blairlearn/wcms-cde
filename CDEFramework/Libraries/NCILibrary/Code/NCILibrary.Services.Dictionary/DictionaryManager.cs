@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Collections.Generic;
-
-using NCI.Logging;
+using Common.Logging;
 using NCI.Services.Dictionary.BusinessObjects;
 using NCI.Util;
 
@@ -15,7 +14,7 @@ namespace NCI.Services.Dictionary
     /// </summary>
     internal class DictionaryManager
     {
-        static Log log = new Log(typeof(DictionaryManager));
+        static ILog log = Common.Logging.LogManager.GetLogger(typeof(DictionaryManager));
 
          // Where are the Audio and Image files found? (JSON will contain placeholders.)
         private String _audioFileLocation;
@@ -32,19 +31,19 @@ namespace NCI.Services.Dictionary
         public DictionaryManager()
         {
             // Prevent null value.
-            _imageFileLocation = ConfigurationSettings.AppSettings["CDRImageLocation"] ?? String.Empty;
+            _imageFileLocation = ConfigurationManager.AppSettings["CDRImageLocation"] ?? String.Empty;
             _imageFileLocation = _imageFileLocation.Trim();
             if (String.IsNullOrEmpty(_imageFileLocation))
-                log.error("appSetting value 'CDRImageLocation' not set.");
+                log.Error("appSetting value 'CDRImageLocation' not set.");
             // Make sure the path ends with a slash.
             else if (_imageFileLocation[_imageFileLocation.Length - 1] != '/')
                 _imageFileLocation += '/';
 
             // Prevent null value.
-            _audioFileLocation = ConfigurationSettings.AppSettings["CDRAudioMediaLocation"] ?? String.Empty;
+            _audioFileLocation = ConfigurationManager.AppSettings["CDRAudioMediaLocation"] ?? String.Empty;
             _audioFileLocation = _audioFileLocation.Trim();
             if(String.IsNullOrEmpty(_audioFileLocation))
-                log.error("appSetting value 'CDRAudioMediaLocation' not set.");
+                log.Error("appSetting value 'CDRAudioMediaLocation' not set.");
             // Make sure the path ends with a slash.
             else if (_audioFileLocation[_audioFileLocation.Length - 1] != '/')
                 _audioFileLocation += '/';
@@ -73,35 +72,36 @@ namespace NCI.Services.Dictionary
         [Obsolete("Use the five-argument GetTerm method instead.")]
         public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, String version)
         {
-            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language, version));
+            log.DebugFormat("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language, version);
 
             #region Argument Validation
 
             if (termId <= 0)
             {
                 string msg = string.Format("termId - expected a positive value, found '{0}'.", termId);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
             {
                 string msg = string.Format("dictionary contains invalid value '{0}'.", dictionary);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
             {
                 string msg = string.Format("language contains invalid value '{0}'.", language);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (string.IsNullOrEmpty(version))
             {
-                log.error("version is null or empty.");
-                throw new ArgumentException("version is null or empty.");
+                string msg = "version is null or empty.";
+                log.Error(msg);
+                throw new ArgumentException(msg);
             }
 
             #endregion
@@ -138,42 +138,43 @@ namespace NCI.Services.Dictionary
         /// </returns>
         public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}, {4}).", termId, dictionary, language, version, audience));
+            log.DebugFormat("Enter GetTerm( {0}, {1}, {2}, {4}).", termId, dictionary, language, version, audience);
 
             #region Argument Validation
 
             if (termId <= 0)
             {
                 string msg = string.Format("termId - expected a positive value, found '{0}'.", termId);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (!Enum.IsDefined(typeof(DictionaryType), dictionary) || dictionary == DictionaryType.Unknown)
             {
                 string msg = string.Format("dictionary contains invalid value '{0}'.", dictionary);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
             {
                 string msg = string.Format("language contains invalid value '{0}'.", language);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (!Enum.IsDefined(typeof(AudienceType), audience) || audience == AudienceType.Unknown)
             {
                 string msg = string.Format("audience contains invalid value '{0}'.", audience);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (string.IsNullOrEmpty(version))
             {
-                log.error("version is null or empty.");
-                throw new ArgumentException("version is null or empty.");
+                string msg = "version is null or empty.";
+                log.Error(msg);
+                throw new ArgumentException(msg);
             }
 
             #endregion
@@ -208,35 +209,36 @@ namespace NCI.Services.Dictionary
         [Obsolete("Use the five-argument GetTerm method instead.")]
         public TermReturn GetTermForAudience(int termId, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, language, version));
+            log.DebugFormat("Enter GetTerm( {0}, {1}, {2}).", termId, language, version);
 
             #region Argument Validation
 
             if (termId <= 0)
             {
                 string msg = string.Format("termId - expected a positive value, found '{0}'.", termId);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (!Enum.IsDefined(typeof(Language), language) || language == Language.Unknown)
             {
                 string msg = string.Format("language contains invalid value '{0}'.", language);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (!Enum.IsDefined(typeof(AudienceType), audience) || audience == AudienceType.Unknown)
             {
                 string msg = string.Format("audience contains invalid value '{0}'.", audience);
-                log.error(msg);
+                log.Error(msg);
                 throw new ArgumentException(msg);
             }
 
             if (string.IsNullOrEmpty(version))
             {
-                log.error("version is null or empty.");
-                throw new ArgumentException("version is null or empty.");
+                string msg = "version is null or empty.";
+                log.Error(msg);
+                throw new ArgumentException(msg);
             }
 
             #endregion
@@ -275,7 +277,7 @@ namespace NCI.Services.Dictionary
             int resultCount = dtTerm.Rows.Count;
             if (resultCount == 1)
             {
-                log.debug("Found 1 result.");
+                log.Debug("Found 1 result.");
                 messages.Add("OK");
                 term = dtTerm.Rows[0].Field<string>("object");
                 term = RewriteMediaFileLocations(term);
@@ -283,14 +285,14 @@ namespace NCI.Services.Dictionary
             // "Normal", found no matches.
             else if (resultCount == 0)
             {
-                log.debug("Found 0 results.");
+                log.Debug("Found 0 results.");
                 messages.Add("No result found.");
                 term = string.Empty;
             }
             // "Odd" case. With multiple matches, return the first one.
             else // result count must be greater than 1
             {
-                log.warning(string.Format("Expected to find one result for term {0}, found {1} instead.", termId, resultCount));
+                log.WarnFormat("Expected to find one result for term {0}, found {1} instead.", termId, resultCount);
                 messages.Add("OK");
                 term = dtTerm.Rows[0].Field<string>("object");
                 term = RewriteMediaFileLocations(term);
@@ -338,7 +340,8 @@ namespace NCI.Services.Dictionary
         /// <returns></returns>
         public SearchReturn Search(String searchText, SearchType searchType, int offset, int numResults, DictionaryType dictionary, Language language, String version)
         {
-            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6}).", searchText, searchType, offset, numResults, dictionary, language, version));
+            log.DebugFormat("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6}).", searchText, searchType, offset, 
+                numResults, dictionary, language, version);
 
             // Sanity check for the offset and numResults
             if (offset < 0) offset = 0;
@@ -381,7 +384,7 @@ namespace NCI.Services.Dictionary
         /// <returns></returns>
         public SuggestReturn SearchSuggest(String searchText, SearchType searchType, int numResults, DictionaryType dictionary, Language language, String version)
         {
-            log.debug(string.Format("Enter ValidateSearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, numResults, dictionary, language, version));
+            log.DebugFormat("Enter ValidateSearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, numResults, dictionary, language, version);
 
             // Sanity check for numResults
             if (numResults < 10) numResults = 10;
@@ -398,7 +401,7 @@ namespace NCI.Services.Dictionary
 
             // Report the count in a human-readable format.
             String message = String.Format("Found {0} results.", resultCount);
-            log.debug(message);
+            log.Debug(message);
             messages.Add(message);
 
             // Retrieve results.  We already know the number of results, so let's preset the
@@ -453,7 +456,7 @@ namespace NCI.Services.Dictionary
         /// <returns>An object structure containing the results of the search and various metadata.</returns>
         public SearchReturn Expand(String searchText, String includeTypes, int offset, int numResults, DictionaryType dictionary, Language language, String version)
         {
-            log.debug("Enter ValidateSearchSuggest().");
+            log.Debug("Enter ValidateSearchSuggest().");
 
             // Sanity check for the offset and numResults
             if (offset < 0) offset = 0;
@@ -485,7 +488,7 @@ namespace NCI.Services.Dictionary
 
             // Report the count in a human-readable format.
             String message = String.Format("Found {0} results.", resultCount);
-            log.debug(message);
+            log.Debug(message);
             messages.Add(message);
 
             // Retrieve results.  We already know the number of results, so let's preset the
@@ -504,7 +507,7 @@ namespace NCI.Services.Dictionary
                 }
                 catch (Exception ex)
                 {
-                    log.error("Error retrieving search results.", ex);
+                    log.Debug("Error retrieving search results.", ex);
                 }
             }
 
@@ -555,7 +558,7 @@ namespace NCI.Services.Dictionary
                 default:
                     {
                         string msg = string.Format("Unspported dictionary type '{0}'.", dictionary);
-                        log.error(msg);
+                        log.Debug(msg);
                         throw new ArgumentException(msg);
                     }
             }
