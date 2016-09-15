@@ -155,7 +155,6 @@ namespace CancerGov.Common.Extraction
                             //throw new Exception("Got: '" + extract + "'");
                         }
 
-
 						/*if (extract.StartsWith("mailto:")) 
 						{
 							extract = extract.Substring(7);
