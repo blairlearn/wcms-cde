@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-
-using NCI.Logging;
+using Common.Logging;
 using Newtonsoft.Json;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
@@ -17,6 +12,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// </summary>
     class ZipCodeGeoLoader
     {
+        static ILog log = LogManager.GetLogger(typeof(ZipCodeGeoLoader));
+
         static string zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"].ToString();
 
         /// <summary>
@@ -40,12 +37,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             catch(FileNotFoundException ex) 
             {
-                Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLoader.cs:LoadDictionary()", "Path " + zipFilePath + " not found.", NCIErrorLevel.Error, ex);
+                log.ErrorFormat("LoadDictionary(): Path {0} not found.", ex, zipFilePath);
                 return null;
             }
             catch (Exception ex)
             {
-                Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLoader.cs:LoadDictionary()", "Failed to read dictionary file on path " + zipFilePath, NCIErrorLevel.Error, ex);
+                log.ErrorFormat("LoadDictionary(): Failed to read dictionary file on path {0}", ex, zipFilePath);
                 return null;
             }
         }

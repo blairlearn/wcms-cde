@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-using NCI.Util;
-using NCI.Web.CDE.WebAnalytics;
-using NCI.Web.CDE.UI.WebControls;
+using Common.Logging;
 using NCI.Web.CDE.Modules;
-using NCI.Web.UI.WebControls;
-using NCI.Logging;
-using NCI.Search.Endeca;
-//using CancerGov.Modules.Search.Endeca;
-using NCI.Web.CDE;
-//using NCI.Web.CancerGov.Apps;
 
 namespace DCEG.Web.Apps
 {
     public class SearchBaseUserControl:AppsBaseUserControl
     {
+        static ILog log = LogManager.GetLogger(typeof(SearchBaseUserControl));
+
         private SearchResultPageInfo _searchPageInfo = null;
 
         protected SearchResultPageInfo SearchPageInfo
@@ -44,7 +34,7 @@ namespace DCEG.Web.Apps
                 }
                 catch (Exception ex)
                 {
-                    NCI.Logging.Logger.LogError("ClinicalTrialsResults", "could not load the SearchResultPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
+                    log.Error("could not load the SearchResultPageInfo, check the config info of the application module in percussion", ex);
                     throw ex;
                 }
             }

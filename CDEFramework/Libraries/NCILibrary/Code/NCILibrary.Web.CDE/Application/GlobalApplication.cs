@@ -1,13 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Web;
-using NCI.Logging;
+using Common.Logging;
 using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE.Application
 {
     public class GlobalApplication : System.Web.HttpApplication
     {
+        static ILog log = LogManager.GetLogger(typeof(GlobalApplication));
+
         private FileSystemWatcher fsw;
 
         protected void Application_Start(object sender, EventArgs e)
@@ -20,7 +22,7 @@ namespace NCI.Web.CDE.Application
             }
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("Monitoring of PromoUrl mapping file could not be established", NCI.Logging.NCIErrorLevel.Error, ex);
+                log.Error("Monitoring of PromoUrl mapping file could not be established", ex);
             }
 
             #endregion
@@ -52,7 +54,7 @@ namespace NCI.Web.CDE.Application
                     fsw.Deleted += new FileSystemEventHandler(OnPromoUrlFileDeleted);
                 }
                 else
-                    NCI.Logging.Logger.LogError("Global:monitorPromoUrlMappingFile", "ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath is empty, cannot set the file monitoring", NCI.Logging.NCIErrorLevel.Error);
+                    log.Error("monitorPromoUrlMappingFile(): ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath is empty, cannot set the file monitoring");
             }
         }
 
@@ -162,7 +164,7 @@ namespace NCI.Web.CDE.Application
 
                     try
                     {
-                        NCI.Logging.Logger.LogError("Application Exception", err, NCIErrorLevel.Error, objErr);
+                        log.Error(err, objErr);
                     }
                     catch (System.ComponentModel.Win32Exception)
                     { //Since we cannot log to the eventlog, then we should not try again

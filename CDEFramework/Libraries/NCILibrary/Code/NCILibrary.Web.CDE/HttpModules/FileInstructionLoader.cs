@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Web;
-using NCI.Logging;
 using System.Globalization;
+using System.Web;
+using Common.Logging;
 
 namespace NCI.Web.CDE
 {
     public class FileInstructionLoader : IHttpModule
     {
+        static ILog log = LogManager.GetLogger(typeof(FileInstructionLoader));
+
         private static readonly object REQUEST_URL_KEY = new object();
 
         /// <summary>
@@ -116,7 +118,7 @@ namespace NCI.Web.CDE
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:FileInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to Create IFileInstruction with the XML file Provided.", NCIErrorLevel.Error, ex);
+                log.Error("RewriteUrl(): Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to Create IFileInstruction with the XML file Provided.", ex);
                 RaiseErrorPage();
                 return;
             }
@@ -140,7 +142,7 @@ namespace NCI.Web.CDE
 
             catch (HttpException ex)
             {
-                Logger.LogError("CDE:FileInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.", NCIErrorLevel.Error, ex);
+                log.Error("RewriteUrl(): Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.", ex);
                 RaiseErrorPage();
             }
         }

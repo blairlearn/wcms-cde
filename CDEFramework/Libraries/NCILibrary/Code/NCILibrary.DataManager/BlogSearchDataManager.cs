@@ -8,11 +8,14 @@ using System.Data;
 using System.Data.SqlClient;
 using NCI.Data;
 using NCI.Logging;
+using Common.Logging;
 
 namespace NCI.DataManager
 {
     public class BlogSearchDataManager 
     {
+        static ILog log = LogManager.GetLogger(typeof(BlogSearchDataManager));
+
         /// <summary>
         /// Connects to the database , and executes the stored proc with the required parameter. The 
         /// results are processed as SearchResult object.
@@ -55,7 +58,7 @@ namespace NCI.DataManager
                         {
                             if (ds.Tables.Count != 2)
                             {
-                                Logger.LogError("BlogSearchDataManager:Execute", "Failed in BlogDataManager", NCIErrorLevel.Error);
+                                log.Error("Execute(): Failed in BlogDataManager");
                                 return searchResults;
                             }
 
@@ -68,7 +71,7 @@ namespace NCI.DataManager
                             {
                                 //log error
                                 //return what should be returned
-                                Logger.LogError("BlogSearchDataManager:Execute", "Failed in BlogDataManager", NCIErrorLevel.Error);
+                                log.Error("Execute(): Failed in BlogDataManager");
                                 return searchResults;
                             }
 
@@ -77,7 +80,7 @@ namespace NCI.DataManager
                             {
                                 //log error
                                 //return what should be returned
-                                Logger.LogError("BlogSearchDataManager:Execute", "Failed in BlogDataManager", NCIErrorLevel.Error);
+                                log.Error("Execute(): Failed in BlogDataManager");
                                 return searchResults;
                             }
 
@@ -105,7 +108,7 @@ namespace NCI.DataManager
             }
             catch (Exception ex)
             {
-                Logger.LogError("SearchDataManager:Execute", "Failed in DataManager", NCIErrorLevel.Error);
+                log.Error("Execute(): Failed in DataManager", ex);
                 throw;
             }
         }
@@ -163,7 +166,7 @@ namespace NCI.DataManager
                         {
                             if (ds.Tables.Count != 2)
                             {
-                                Logger.LogError("BlogSearchDataManager:Execute", "Failed in BlogDataManager", NCIErrorLevel.Error);
+                                log.Error("Execute: Failed in BlogDataManager");
                                 return searchResults;
                             }
 
@@ -178,7 +181,7 @@ namespace NCI.DataManager
                             {
                                 //log error
                                 //return what should be returned
-                                Logger.LogError("BlogSearchDataManager:Execute", "Failed in BlogDataManager", NCIErrorLevel.Error);
+                                log.Error("Execute: Failed in BlogDataManager");
                                 return searchResults;
                             }
                             if (ds.Tables[0].Rows.Count != 0)
@@ -191,7 +194,7 @@ namespace NCI.DataManager
                             {
                                 //log error
                                 //return what should be returned
-                                Logger.LogError("BlogSearchDataManager:Execute", "Failed in BlogDataManager", NCIErrorLevel.Error);
+                                log.Error("Execute(): Failed in BlogDataManager");
                                 return searchResults;
                             }
 
@@ -219,7 +222,7 @@ namespace NCI.DataManager
             }
             catch (Exception ex)
             {
-                Logger.LogError("SearchDataManager:Execute", "Failed in DataManager", NCIErrorLevel.Error);
+                log.Error("Execute(): Failed in DataManager");
                 throw;
             }
         }

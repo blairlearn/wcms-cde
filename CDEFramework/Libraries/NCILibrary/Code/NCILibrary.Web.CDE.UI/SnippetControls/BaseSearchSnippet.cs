@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.ComponentModel;
-using NCI.Web.CDE.Modules;
-using NCI.DataManager;
-using NCI.Web.UI.WebControls;
-using NCI.Web.CDE.UI.Configuration;
 using System.Data;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web;
+using System.Web.UI;
+using Common.Logging;
+using NCI.DataManager;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.UI.Configuration;
+using NCI.Web.UI.WebControls;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
@@ -23,6 +21,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
     public abstract class BaseSearchSnippet : SnippetControl
     {
         #region Private Members
+        static ILog log = LogManager.GetLogger(typeof(BaseSearchSnippet));
+
         SearchList _searchList = null;
         private DataTable _taxonomyFilters = null;
 
@@ -292,7 +292,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             }
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("this.SearchListSnippet:processData", NCI.Logging.NCIErrorLevel.Error, ex);
+                log.Error("this.SearchListSnippet:processData", ex);
             }
         }
         /// <summary>

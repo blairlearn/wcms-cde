@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.ComponentModel;
-using NCI.Web.CDE.Modules;
+using System.Web.UI;
+using Common.Logging;
 using NCI.DataManager;
-using NCI.Web.UI.WebControls;
+using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI.Configuration;
 
 namespace NCI.Web.CDE.UI.SnippetControls
@@ -17,7 +13,9 @@ namespace NCI.Web.CDE.UI.SnippetControls
     [ToolboxData("<{0}:BlogPostNewerOlder runat=server></{0}:BlogPostNewerOlder>")]
     public class BlogPostNewerOlder : SnippetControl
     {
-         #region Private Members
+        #region Private Members
+        static ILog log = LogManager.GetLogger(typeof(BlogPostNewerOlder));
+
          BlogSearchList _blogSearchList = null;
 
         /// <summary>
@@ -105,7 +103,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             }
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("this.SearchListSnippet:processData", NCI.Logging.NCIErrorLevel.Error, ex);
+                log.Error("this.SearchListSnippet:processData", ex);
             }
         }
 

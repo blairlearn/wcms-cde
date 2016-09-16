@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Configuration;
+using System.Linq;
+using Common.Logging;
 using NCI.Web.CDE.WebAnalytics.Configuration;
-using System.Text.RegularExpressions;
-using NCI.Logging;
-
 
 namespace NCI.Web.CDE.WebAnalytics
 {
     public static class WebAnalyticsOptions
     {
+        static ILog log = LogManager.GetLogger(typeof(WebAnalyticsOptions));
+
         private static readonly string webAnalyticsPath = "nci/web/analytics";
         private static WebAnalyticsSection _webAnalyticsConfig;
         private static Dictionary<string, UrlPathChannelElement> urlPathChannelLookUp = new Dictionary<string, UrlPathChannelElement>();
@@ -106,9 +105,7 @@ namespace NCI.Web.CDE.WebAnalytics
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:WebAnalyticsOptions.cs:GetReportSuitesFromSectionDetail()",
-                      "Exception encountered while retrieving web analytics suites.",
-                      NCIErrorLevel.Warning, ex);
+                log.Warn("GetReportSuitesFromSectionDetail(): Exception encountered while retrieving web analytics suites.", ex);
                 return "";
             }
         }
@@ -189,9 +186,7 @@ namespace NCI.Web.CDE.WebAnalytics
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:WebAnalyticsOptions.cs:GetChannelsFromSectionDetail()",
-                      "Error retrieving Web Analytics channel. Check analytics values in section details.",
-                      NCIErrorLevel.Debug, ex);
+                log.Debug("GetChannelsFromSectionDetail(): Error retrieving Web Analytics channel. Check analytics values in section details.", ex);
                 return "";
             }
         }
@@ -249,15 +244,14 @@ namespace NCI.Web.CDE.WebAnalytics
                     }
 
                     // if it reaches here then, no mapping could be found.
-                    Logger.LogError("GetChannelForUrlPath", "No channel mapping exists for pretty url:" + urlFolderPath, NCIErrorLevel.Info);
+                    log.InfoFormat("GetChannelForUrlPath(): No channel mapping exists for pretty url: {0}", urlFolderPath);
                 }
                 else
-                    Logger.LogError("GetChannelForUrlPath", "Url to channel mapping information not present in config file.", NCIErrorLevel.Info);
-
+                    log.Info("GetChannelForUrlPath(): Url to channel mapping information not present in config file.");
             }
             catch (Exception ex)
             {
-                Logger.LogError("GetChannelForUrlPath", "Failed to process url to channel mapping", NCIErrorLevel.Error, ex);
+                log.Error("GetChannelForUrlPath(): Failed to process url to channel mapping", ex);
             }
 
             // Should never be executed.

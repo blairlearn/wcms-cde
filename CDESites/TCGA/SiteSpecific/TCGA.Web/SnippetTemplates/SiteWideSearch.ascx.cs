@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Configuration;
-using TCGA.Apps;
-using NCI.Web.CDE;
-using NCI.Web.UI.WebControls;
-using NCI.Logging;
-using NCI.Util;
-using NCI.Search.Endeca;
+using System.Web.UI.WebControls;
+using Common.Logging;
 using NCI.Search;
-using NCI.Web.CDE.Modules;
+using NCI.Util;
+using NCI.Web.CDE;
 using NCI.Web.CDE.Configuration;
+using NCI.Web.CDE.Modules;
+using NCI.Web.UI.WebControls;
+using TCGA.Apps;
 
 namespace TCGA.Web.SnippetTemplates
 {
     public partial class SiteWideSearch : AppsBaseUserControl
     {
+        static ILog log = LogManager.GetLogger(typeof(SiteWideSearch));
+
         private int _currentPage = 1;
         private int _offSet = 0;
         private int _recordsPerPage = 10;
@@ -99,7 +96,7 @@ namespace TCGA.Web.SnippetTemplates
                     catch (Exception ex)
                     {                        
                         //capture exactly which keyword caused the error
-                        Logger.LogError("SiteWideSearch", "Search with the following keyword returned an error: " + Keyword, NCIErrorLevel.Error, ex);
+                        log.ErrorFormat("Search with the following keyword returned an error: {0}", ex, Keyword);
 
                     }
 

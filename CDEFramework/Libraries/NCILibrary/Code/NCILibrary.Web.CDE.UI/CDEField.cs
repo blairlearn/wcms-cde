@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Globalization;
-using NCI.Web.CDE.UI.Configuration;
-using NCI.Logging;
+using Common.Logging;
 
 namespace NCI.Web.CDE.UI
 {
@@ -34,6 +27,8 @@ namespace NCI.Web.CDE.UI
     
     public class CDEField : WebControl
     {
+        static ILog log = LogManager.GetLogger(typeof(CDEField));
+
         private string _wrappingTagName = "span";
         private CDEFieldScope _scope = CDEFieldScope.Page;
 
@@ -72,7 +67,7 @@ namespace NCI.Web.CDE.UI
             try
             {
                 if (String.IsNullOrEmpty(this.FieldName))
-                    NCI.Logging.Logger.LogError("CDEField", "CDEField cannot be null or empty", NCI.Logging.NCIErrorLevel.Warning);
+                    log.Warn("CDEField cannot be null or empty");
 
                 string DesiredField = null;
 
@@ -111,7 +106,7 @@ namespace NCI.Web.CDE.UI
             {
                 // On the chance that the page- or snippet-level field is incorrect or missing, this catches the error,
                 // logs the error, and ignores the exception.
-                NCI.Logging.Logger.LogError("CDEField", "CDEField cannot be null or empty", NCI.Logging.NCIErrorLevel.Warning);
+                log.Warn("CDEField cannot be null or empty");
             }
         }
     }
