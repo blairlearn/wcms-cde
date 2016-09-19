@@ -12,7 +12,7 @@
           </StyleSheets>
           <Javascripts>
             <JavascriptInfo Begining="true" End="" Type="external">
-              <JavaScriptPath>http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js</JavaScriptPath>
+              <JavaScriptPath>https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js</JavaScriptPath>
             </JavascriptInfo>
           </Javascripts>
         </PageTemplateInfo>
@@ -25,7 +25,7 @@
           </StyleSheets>
           <Javascripts>
             <JavascriptInfo Begining="true" End="" Type="external">
-              <JavaScriptPath>http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js</JavaScriptPath>
+              <JavaScriptPath>https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js</JavaScriptPath>
             </JavascriptInfo>
           </Javascripts>
           </PageTemplateInfo>
