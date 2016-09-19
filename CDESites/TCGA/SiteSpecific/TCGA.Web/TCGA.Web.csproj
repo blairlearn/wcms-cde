@@ -81,6 +81,9 @@
     <None Include="Web.Blue-Preview.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <None Include="Web.COLO.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <None Include="Web.config" />
     <None Include="Web.DT-Live.config">
       <DependentUpon>Web.config</DependentUpon>

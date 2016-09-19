@@ -64,6 +64,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Web.COLO.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <None Include="Web.config">
     </None>
     <None Include="Web.Blue-Live.config">

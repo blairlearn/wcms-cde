@@ -144,6 +144,9 @@
     <None Include="Web.Blue-Preview.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <None Include="Web.COLO.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
