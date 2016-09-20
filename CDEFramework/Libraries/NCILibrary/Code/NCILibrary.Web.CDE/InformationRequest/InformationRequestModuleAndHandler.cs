@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Web;
-using System.Web.SessionState;
 using System.Globalization;
-using System.Configuration;
-using System.IO;
+using System.Web;
 using NCI.Web.CDE.Configuration;
-using NCI.Web.CDE.CapabilitiesDetection;
 using NCI.Web.CDE.InformationRequest;
-using NCI.Logging;
-using System.Reflection;
-using NCI.Web.CDE.InformationRequest.Configuration;
-using NCI.Web.CDE.WebAnalytics;
 
 namespace NCI.Web.CDE
 {

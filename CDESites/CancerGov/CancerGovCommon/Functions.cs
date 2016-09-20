@@ -317,7 +317,7 @@ namespace CancerGov.Common {
 						hostip=ipheHost.AddressList[0].ToString(); 
 					}
 
-					if ((hostip == ConfigurationSettings.AppSettings["CancerGovIPAddress"].ToString()) && (!Regex.IsMatch(host,"preview")))  {
+					if ((hostip == ConfigurationManager.AppSettings["CancerGovIPAddress"].ToString()) && (!Regex.IsMatch(host,"preview")))  {
 						host="cancer.gov";
 					}
 				}

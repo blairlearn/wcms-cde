@@ -1,20 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
-using System.ComponentModel;
 using NCI.Web.CDE.Modules;
-using NCI.DataManager;
 using NCI.Web.UI.WebControls;
-using NCI.Web.CDE.UI.Configuration;
-using NCI.Text;
-using NCI.Web.CDE.UI;
-using NCI.Web.CDE;
 
 
 namespace NCI.Web.CDE.UI.SnippetControls

@@ -364,7 +364,7 @@ namespace CancerGov.Handlers
 
         private string SearchResultsPrettyUrl
         {
-            get { return ConfigurationSettings.AppSettings["ClinicalTrailsResultsPage"]; }
+            get { return ConfigurationManager.AppSettings["ClinicalTrailsResultsPage"]; }
         }
     }
 }

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using NCI.Data;
-using NCI.Logging;
 using Common.Logging;
+using NCI.Data;
 
 namespace NCI.DataManager
 {

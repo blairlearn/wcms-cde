@@ -21,7 +21,7 @@ namespace Imaging.Web
             }
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("Monitoring of PromoUrl mapping file could not be established", NCI.Logging.NCIErrorLevel.Error, ex);
+                log.Error("Monitoring of PromoUrl mapping file could not be established", ex);
             }
 
             #endregion
@@ -53,7 +53,7 @@ namespace Imaging.Web
                     fsw.Deleted += new FileSystemEventHandler(OnPromoUrlFileDeleted);
                 }
                 else
-                    NCI.Logging.Logger.LogError("Global:monitorPromoUrlMappingFile", "ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath is empty, cannot set the file monitoring", NCI.Logging.NCIErrorLevel.Error);
+                    log.Error("monitorPromoUrlMappingFile(): ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath is empty, cannot set the file monitoring");
             }
         }
 

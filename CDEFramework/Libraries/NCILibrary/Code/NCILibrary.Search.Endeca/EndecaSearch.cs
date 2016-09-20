@@ -59,8 +59,8 @@ namespace NCI.Search.Endeca
 		public EndecaSearch(string searchTerms, long numberOfRecords, long firstRecord, string doc_type)
 		{
 			//Step 1.  Create a connection.
-			string host = ConfigurationSettings.AppSettings["EndecaSearchIP"];
-			string port = ConfigurationSettings.AppSettings["EndecaSearchPort"];
+			string host = ConfigurationManager.AppSettings["EndecaSearchIP"];
+			string port = ConfigurationManager.AppSettings["EndecaSearchPort"];
 			CreateConnection(host,port);
 
 			//Step 2.  Create a query
@@ -69,9 +69,9 @@ namespace NCI.Search.Endeca
 			//Step 2a.  Setup the ENEQuery
 			
 			//Get the default search interface
-			searchInterface = ConfigurationSettings.AppSettings["EndecaSearchInterface"];
+			searchInterface = ConfigurationManager.AppSettings["EndecaSearchInterface"];
 			//Get the default search mode
-			string searchOptions = ConfigurationSettings.AppSettings["EndecaSearchMode"];
+			string searchOptions = ConfigurationManager.AppSettings["EndecaSearchMode"];
 
 			//Setup the queries.  An ERecSearch defines the search query.  See the comment in GetSearchItem.
 			//I will probably create a class for these, and pass this in to this constructor... but for now.
@@ -183,8 +183,8 @@ namespace NCI.Search.Endeca
 		{
 			//This Endeca Search is for searching Cancer Bulletin individual pages
 			//Step 1.  Create a connection.
-			string host = ConfigurationSettings.AppSettings["EndecaSearchIP"];
-			string port = ConfigurationSettings.AppSettings["EndecaSearchPort"];
+			string host = ConfigurationManager.AppSettings["EndecaSearchIP"];
+			string port = ConfigurationManager.AppSettings["EndecaSearchPort"];
 			CreateConnection(host,port);
 
 			//Step 2.  Create a query
@@ -193,9 +193,9 @@ namespace NCI.Search.Endeca
 			//Step 2a.  Setup the ENEQuery
 			
 			//Get the default search interface
-			searchInterface = ConfigurationSettings.AppSettings["EndecaSearchInterface"];
+			searchInterface = ConfigurationManager.AppSettings["EndecaSearchInterface"];
 			//Get the default search mode
-			string searchOptions = ConfigurationSettings.AppSettings["EndecaSearchMode"];
+			string searchOptions = ConfigurationManager.AppSettings["EndecaSearchMode"];
 
 			//Setup the queries.  An ERecSearch defines the search query.  See the comment in GetSearchItem.
 			//I will probably create a class for these, and pass this in to this constructor... but for now.

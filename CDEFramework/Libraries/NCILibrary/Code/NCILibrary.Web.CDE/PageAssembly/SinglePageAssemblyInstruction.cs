@@ -1,21 +1,15 @@
 using System;
 using System.Collections;
-using System.Collections.Specialized;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
-using System.Xml.Serialization;
 using System.Xml.Schema;
-using System.Text.RegularExpressions;
-using System.Globalization;
+using System.Xml.Serialization;
+using Common.Logging;
 using NCI.Web.CDE.Configuration;
-using NCI.Web.CDE.WebAnalytics; 
-using NCI.Web.CDE.CapabilitiesDetection;
-using NCI.Util;
-using NCI.Core;
-using NCI.Logging;
+using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.ProductionHost;
 
 
@@ -28,6 +22,7 @@ namespace NCI.Web.CDE
     [System.Xml.Serialization.XmlRootAttribute("SinglePageAssemblyInstruction", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
     public class SinglePageAssemblyInstruction : BasePageAssemblyInstruction, IPageAssemblyInstruction
     {
+        static ILog log = LogManager.GetLogger(typeof(SinglePageAssemblyInstruction));
 
         #region Private Member Variables
 
@@ -899,8 +894,7 @@ namespace NCI.Web.CDE
             }
             else
             {
-                Logger.LogError("SinglePageAssemblyInstruction.cs:RegisterCustomWebAnalytics()",
-                    "SectionDetails XML not found.", NCIErrorLevel.Debug);
+                log.Debug("RegisterCustomWebAnalytics(): SectionDetails XML not found.");
                 return;
             }
         }

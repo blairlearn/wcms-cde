@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Globalization;
-using NCI.Web.CDE;
+using Common.Logging;
 using NCI.Web.CDE.WebAnalytics;
-using NCI.Logging;
 
 namespace NCI.Web.CDE.UI.WebControls
 {
@@ -20,6 +15,8 @@ namespace NCI.Web.CDE.UI.WebControls
     [ToolboxData("<{0}:WebAnalyticsControl runat=server></{0}:WebAnalyticsControl>")]
     public class WebAnalyticsControl : WebControl
     {
+        static ILog log = LogManager.GetLogger(typeof(WebAnalyticsControl));
+
         protected override void OnInit(EventArgs e)
         {
         }
@@ -67,8 +64,7 @@ namespace NCI.Web.CDE.UI.WebControls
                 }
                 catch (Exception ex)
                 {
-                    NCI.Logging.Logger.LogError("WebAnalyticsControl.cs:RenderContents()",
-                        "Error retrieving analytics channel.", NCIErrorLevel.Warning, ex);
+                    log.Warn("RenderContents(): Error retrieving analytics channel.", ex);
                     webAnalyticsPageLoad.SetChannel(configChannelName);
                 }
                 foreach (KeyValuePair<WebAnalyticsOptions.eVars, string> kvp in webAnalyticsSettings.Evars)

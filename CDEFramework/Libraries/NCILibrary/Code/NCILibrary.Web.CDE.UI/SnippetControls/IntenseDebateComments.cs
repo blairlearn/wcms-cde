@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
-using NCI.Logging;
+using Common.Logging;
+using NCI.Util;
 using NCI.Web.CDE.Modules;
 using NCI.Web.UI.WebControls;
-using NCI.Util;
 
 namespace NCI.Web.CDE.UI.Modules
 {
@@ -20,6 +16,8 @@ namespace NCI.Web.CDE.UI.Modules
     [ToolboxData("<{0}:IntenseDebateComments runat=server></{0}:IntenseDebateComments>")]
     public class IntenseDebateComments : SnippetControl
     {
+        static ILog log = LogManager.GetLogger(typeof(IntenseDebateComments));
+
         protected IntenseDebateControl theControl = null;
         public void Page_Load(object sender, EventArgs e)
         {
@@ -28,7 +26,7 @@ namespace NCI.Web.CDE.UI.Modules
             if (basePage == null)
                 return;
             bool isCommentingAvailable = Strings.ToBoolean(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("is_commenting_available"), false, false);
-            Logger.LogError("CDE:IntenseDebateComments.cs:Page_Load", "SocialMetadata isCommentingAvailable value is " + isCommentingAvailable, NCIErrorLevel.Debug);
+            log.DebugFormat("Page_Load(): SocialMetadata isCommentingAvailable value is {0}", isCommentingAvailable);
             // if commenting is not available, then done with processing
             if (!isCommentingAvailable)
                 return;

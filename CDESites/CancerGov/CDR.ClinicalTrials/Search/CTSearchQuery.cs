@@ -303,7 +303,7 @@ namespace CancerGov.CDR.ClinicalTrials.Search
                 using (SqlDataAdapter adapter = new SqlDataAdapter("usp_GetProtocolsBySearchID", conn))
                 {
                     adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-                    adapter.SelectCommand.CommandTimeout = Convert.ToInt32(ConfigurationSettings.AppSettings["CTSearchTimeout"]);
+                    adapter.SelectCommand.CommandTimeout = Convert.ToInt32(ConfigurationManager.AppSettings["CTSearchTimeout"]);
 
                     // This is a reference, not a new object!
                     SqlParameterCollection paramAlias = adapter.SelectCommand.Parameters;

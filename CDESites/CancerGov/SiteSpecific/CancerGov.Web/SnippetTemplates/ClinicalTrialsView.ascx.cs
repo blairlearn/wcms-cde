@@ -35,7 +35,7 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     //only show this survey if the other survey was not shown
                     //look at the persistant cookie  for that survey  ascookie parameter in the tiggerParams file 
-                    string no_results_survey = ConfigurationSettings.AppSettings["NoResCTSurveyShown"].ToString();
+                    string no_results_survey = ConfigurationManager.AppSettings["NoResCTSurveyShown"].ToString();
                     if (Request.Cookies.Get(no_results_survey) == null)
                         return true;
                 }

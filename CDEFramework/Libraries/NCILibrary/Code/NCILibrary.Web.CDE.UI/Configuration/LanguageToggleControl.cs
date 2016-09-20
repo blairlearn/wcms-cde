@@ -1,20 +1,16 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using NCI.Logging;
+using Common.Logging;
 
 namespace NCI.Web.CDE.UI.WebControls
 {
-
     [ToolboxData("<{0}:LanguageToggleList runat=server></{0}:LanguageToggleList>")]
     public class LanguageToggleControl : WebControl
     {
+        static ILog log = LogManager.GetLogger(typeof(LanguageToggleControl));
 
         private LanguageToggleLanguageCollection _itemsCollection;
 
@@ -192,9 +188,7 @@ namespace NCI.Web.CDE.UI.WebControls
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:LanguageToggleControl.cs:GetCanonicalTranslation()",
-                @"Exception encountered while retrieving ""DictionaryOfcancerTermsURL..."" from Web.config",
-                NCIErrorLevel.Warning, ex);
+                log.Warn(@"GetCanonicalTranslation(): Exception encountered while retrieving ""DictionaryOfcancerTermsURL..."" from Web.config", ex);
                 return null;
             }
         }

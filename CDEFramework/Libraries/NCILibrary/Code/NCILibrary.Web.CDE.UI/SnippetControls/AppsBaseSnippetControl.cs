@@ -66,7 +66,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         virtual public void RaiseErrorPage(string messageKey)
         {
-            string systemMessagePageUrl = ConfigurationSettings.AppSettings["SystemMessagePage"].Trim();
+            string systemMessagePageUrl = ConfigurationManager.AppSettings["SystemMessagePage"].Trim();
 
             if (systemMessagePageUrl.Substring(systemMessagePageUrl.Length - 1, 1) != "?")
                 systemMessagePageUrl += "?";

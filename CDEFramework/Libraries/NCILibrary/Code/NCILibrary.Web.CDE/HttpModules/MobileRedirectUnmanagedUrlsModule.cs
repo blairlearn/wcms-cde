@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Web;
-using System.Web.Caching;
-using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
 using System.Globalization;
-using System.Text.RegularExpressions;
-using System.IO;
-using System.Net;
-using NCI.Web.CDE.InformationRequest;
 using System.Threading;
-using NCI.Logging;
-using NCI.Web.CDE.CapabilitiesDetection;
+using System.Web;
+using NCI.Web.CDE.InformationRequest;
 
 namespace NCI.Web.CDE
 {
