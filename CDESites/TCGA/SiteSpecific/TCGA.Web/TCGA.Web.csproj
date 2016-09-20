@@ -92,7 +92,10 @@
     <None Include="Web.Blue-Preview.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="Web.COLO.config">
+    <None Include="Web.COLO-Live.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.COLO-Preview.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.config" />
@@ -377,7 +380,16 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'COLO|AnyCPU'">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'COLO-Live|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'COLO-Preview|AnyCPU'">
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
