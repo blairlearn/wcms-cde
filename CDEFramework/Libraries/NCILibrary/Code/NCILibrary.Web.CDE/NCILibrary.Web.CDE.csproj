@@ -132,7 +132,6 @@
     <Compile Include="HttpModules\PromoUrlMappingLoader.cs" />
     <Compile Include="HttpModules\SimpleRedirector\Configuration\DataSourceElement.cs" />
     <Compile Include="HttpModules\SimpleRedirector\Configuration\SimpleRedirectorConfigurationSection.cs" />
-    <Compile Include="HttpModules\SimpleRedirector\Log.cs" />
     <Compile Include="HttpModules\SimpleRedirector\RedirectionMap.cs" />
     <Compile Include="HttpModules\SimpleRedirector\SimpleRedirect.cs" />
     <Compile Include="HttpModules\Utility.cs" />

@@ -69,7 +69,6 @@
   <ItemGroup>
     <Compile Include="CachableProtocolSearchIDMap.cs" />
     <Compile Include="LegacyCTSResultRedirector.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
