@@ -70,8 +70,6 @@ namespace NCI.Logging
         /// <param name="level">Specifies the level of Error Messages.</param>
         public static void LogError(string facility, string message, NCIErrorLevel level)
         {
-            LoggingHelper helper = LoggingHelper.Instance;
-            helper.LogError(facility, message, level);
             RouteToLogger(level, null, facility, message);
         }
 
@@ -84,8 +82,6 @@ namespace NCI.Logging
         /// <param name="ex">Actual Exception object.</param>
         public static void LogError(string facility, string message, NCIErrorLevel level, Exception ex)
         {
-            LoggingHelper helper = LoggingHelper.Instance;
-            helper.LogError(facility, message, level, ex);
             RouteToLogger(level, ex, facility, message);
         }
 
@@ -97,8 +93,6 @@ namespace NCI.Logging
         /// <param name="ex">Actual Exception object.</param>
         public static void LogError(string facility, NCIErrorLevel level, Exception ex)
         {
-            LoggingHelper helper = LoggingHelper.Instance;
-            helper.LogError(facility, level, ex);
             RouteToLogger(level, ex, facility);
         }
 

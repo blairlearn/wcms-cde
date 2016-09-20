@@ -1,13 +1,8 @@
 using System;
 using System.Configuration;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
-using NCI.Logging.Providers;
-using NCI.Logging;
 using NCI.Logging.Configuration;
+using NCI.Logging.Providers;
 using NCI.Util;
 
 namespace NCI.Logging

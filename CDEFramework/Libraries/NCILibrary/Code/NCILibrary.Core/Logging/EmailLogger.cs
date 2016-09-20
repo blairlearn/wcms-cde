@@ -2,7 +2,6 @@
 using System.Net.Mail;
 using Common.Logging;
 using Common.Logging.Simple;
-using NCI.Util;
 
 namespace NCI.Logging
 {
@@ -24,16 +23,13 @@ namespace NCI.Logging
         private const string _loggingFormat = "Facility: {0} \n\nError Level: {1} \n\nMessage:\n{2}\n\nException:\n{3}";
 
         /// <summary>
-        /// 
+        /// Constructor for an EmailLogger object.
         /// </summary>
-        /// <param name="logName"></param>
-        /// <param name="logLevel"></param>
-        /// <param name="showLevel"></param>
-        /// <param name="showDateTime"></param>
-        /// <param name="showLogName"></param>
-        /// <param name="dateTimeFormat"></param>
-        /// <param name="emailAddressFrom"></param>
-        /// <param name="emailAddressesTo"></param>
+        /// <param name="logName">The name of the logger.</param>
+        /// <param name="logLevel">The minimum LogLevel of messages that will be logged.</param>
+        /// ...
+        /// <param name="emailAddressFrom">The email address that will be used in the From field.</param>
+        /// <param name="emailAddressesTo">The email addresses that will be used in the To field.</param>
         public EmailLogger(string logName, LogLevel logLevel, bool showLevel, bool showDateTime, bool showLogName,
             string dateTimeFormat, string emailAddressFrom, string emailAddressesTo)
             : base(logName, logLevel, showLevel, showDateTime, showLogName, dateTimeFormat)
@@ -43,23 +39,21 @@ namespace NCI.Logging
         }
 
         /// <summary>
-        /// 
+        /// The internal write method that will be called once a message has been determined to be of the configured log level.
         /// </summary>
-        /// <param name="level"></param>
-        /// <param name="message"></param>
-        /// <param name="exception"></param>
+        /// <param name="level">The LogLevel of the message.</param>
+        /// <param name="message">The message to log.</param>
+        /// <param name="exception">Any exception that has been passed along with the message.</param>
         protected override void WriteInternal(LogLevel level, object message, Exception exception)
         {
-            string exString = (exception != null) ? exception.ToString() : "";
+            string fullMessage = String.Format(
+                            _loggingFormat,
+                            Name,
+                            level,
+                            message,
+                            exception);
 
-            SendEmail(
-                Name,
-                String.Format(
-                        _loggingFormat,
-                        Name,
-                        level.ToString(),
-                        message != null ? message : "",
-                        exString));
+            SendEmail(Name, fullMessage);
         }
 
         /// <summary>
