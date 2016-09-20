@@ -1,9 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Collections;
-using NCI.Logging.Configuration;
-using System.Configuration;
 using NCI.Util;
 
 namespace NCI.Logging

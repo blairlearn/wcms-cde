@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
 using System.IO;
-using NCI.Web.CDE;
+using Common.Logging;
 using NCI.Web.CDE.Configuration;
-using System.Configuration;
-using NCI.Logging;
 
 namespace Imaging.Web
 {
     public class Global : System.Web.HttpApplication
     {
-        private FileSystemWatcher fsw;
+        static ILog log = LogManager.GetLogger(typeof(Global));
 
+        private FileSystemWatcher fsw;
+         
         protected void Application_Start(object sender, EventArgs e)
         {
             #region Set Promo URl File Monitoring
@@ -27,7 +21,7 @@ namespace Imaging.Web
             }
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("Monitoring of PromoUrl mapping file could not be established", NCI.Logging.NCIErrorLevel.Error, ex);
+                log.Error("Monitoring of PromoUrl mapping file could not be established", ex);
             }
 
             #endregion
@@ -59,7 +53,7 @@ namespace Imaging.Web
                     fsw.Deleted += new FileSystemEventHandler(OnPromoUrlFileDeleted);
                 }
                 else
-                    NCI.Logging.Logger.LogError("Global:monitorPromoUrlMappingFile", "ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath is empty, cannot set the file monitoring", NCI.Logging.NCIErrorLevel.Error);
+                    log.Error("monitorPromoUrlMappingFile(): ContentDeliveryEngineConfig.PathInformation.PromoUrlMappingPath is empty, cannot set the file monitoring");
             }
         }
 
@@ -132,7 +126,7 @@ namespace Imaging.Web
 
                 try
                 {
-                    NCI.Logging.Logger.LogError("Application Exception", err, NCIErrorLevel.Error);
+                    log.Error(err);
                 }
                 catch (System.ComponentModel.Win32Exception)
                 { //Since we cannot log to the eventlog, then we should not try again

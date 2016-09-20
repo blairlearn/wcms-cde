@@ -269,7 +269,7 @@ namespace CancerGov.Web.SnippetTemplates
         /// <returns></returns>
         private string GetDrugDictionaryFilter()
         {
-            string filter = ConfigurationSettings.AppSettings["DrugDictionaryFilter"];
+            string filter = ConfigurationManager.AppSettings["DrugDictionaryFilter"];
             if (string.IsNullOrEmpty(filter))
                 filter = String.Empty;
             else
@@ -357,7 +357,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             // Initialize number of results per page.
-            string pgSize = ConfigurationSettings.AppSettings["DrugDictionaryPageSize"];
+            string pgSize = ConfigurationManager.AppSettings["DrugDictionaryPageSize"];
             if (string.IsNullOrEmpty(pgSize))
                 PageSize = 100;
             else

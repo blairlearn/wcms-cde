@@ -225,7 +225,7 @@ namespace CancerGov.Web.SnippetTemplates
                         suffix = " - AlphaNumericBrowse";
                     else if (!string.IsNullOrEmpty(CdrID))
                         suffix = " - Definition";
-                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
+                    wbField.Value = ConfigurationManager.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
 
                 Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.TermsDictionarySearch(this," + _isSpanish.ToString().ToLower() + ");"); // Load from onsubit script
@@ -292,7 +292,7 @@ namespace CancerGov.Web.SnippetTemplates
                         suffix = " - AlphaNumericBrowse";
                     else if (!string.IsNullOrEmpty(CdrID))
                         suffix = " - Definition";
-                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
+                    wbField.Value = ConfigurationManager.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
 
                 Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.GeneticsDictionarySearchNew(this);");
@@ -317,7 +317,7 @@ namespace CancerGov.Web.SnippetTemplates
                         suffix = " - AlphaNumericBrowse";
                     else if (!string.IsNullOrEmpty(CdrID))
                         suffix = " - Definition";
-                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
+                    wbField.Value = ConfigurationManager.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
 
                 Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.DrugDictionarySearch(this);"); // Load from onsubmit script

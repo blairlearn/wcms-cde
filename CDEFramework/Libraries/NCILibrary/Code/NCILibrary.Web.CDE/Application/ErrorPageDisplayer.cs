@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web;
+using Common.Logging;
 
 namespace NCI.Web.CDE.Application
 {
@@ -8,6 +9,7 @@ namespace NCI.Web.CDE.Application
     /// </summary>
     public static class ErrorPageDisplayer
     {
+        static ILog log = LogManager.GetLogger(typeof(ErrorPageDisplayer));
 
         /// <summary>
         /// Display the "ErrorPage" page and a status of 500.
@@ -103,12 +105,12 @@ namespace NCI.Web.CDE.Application
                 }
                 else
                 {
-                    Logging.Logger.LogError(callingClass, pageDescription + " URL is null or empty", NCI.Logging.NCIErrorLevel.Warning);
+                    log.WarnFormat("{0} URL is null or empty", pageDescription);
                 }
             }
             catch (Exception ex)
             {
-                Logging.Logger.LogError(callingClass, "Could not display '" + pageDescription + "' page.", NCI.Logging.NCIErrorLevel.Warning, ex);
+                log.WarnFormat("Could not display '{0}' page.", ex, pageDescription);
             }
 
             if (!hasDisplayedMessage)

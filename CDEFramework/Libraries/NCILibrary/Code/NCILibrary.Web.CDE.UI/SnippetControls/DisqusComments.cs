@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.Web;
 using System.Web.UI;
-using NCI.Logging;
+using Common.Logging;
+using NCI.Util;
 using NCI.Web.CDE.Modules;
 using NCI.Web.UI.WebControls;
-using NCI.Util;
 
 namespace NCI.Web.CDE.UI.Modules
 {
@@ -16,6 +16,8 @@ namespace NCI.Web.CDE.UI.Modules
     [ToolboxData("<{0}:DisqusComments runat=server></{0}:DisqusComments>")]
     public class DisqusComments : SnippetControl
     {
+        static ILog log = LogManager.GetLogger(typeof(DisqusComments));
+
         protected DisqusControl theControl = null;
 
         public void Page_Load(object sender, EventArgs e)
@@ -27,7 +29,7 @@ namespace NCI.Web.CDE.UI.Modules
 
             bool isCommentingAvailable = Strings.ToBoolean(PageAssemblyContext.Current.PageAssemblyInstruction.GetField("is_commenting_available"), false, false);
 
-            Logger.LogError("CDE:DisqusComments.cs:Page_Load", "SocialMetadata isCommentingAvailable value is " + isCommentingAvailable, NCIErrorLevel.Debug);
+            log.DebugFormat("Page_Load(): SocialMetadata isCommentingAvailable value is {0}", isCommentingAvailable);
 
             // if commenting is not available, then done with processing
             if (!isCommentingAvailable)

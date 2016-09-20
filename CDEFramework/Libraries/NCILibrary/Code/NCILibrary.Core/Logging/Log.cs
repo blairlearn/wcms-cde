@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Logging;
 
 namespace NCI.Logging
 {
@@ -8,7 +9,7 @@ namespace NCI.Logging
     /// </summary>
     public class Log
     {
-        private String classname;
+        private ILog log;
 
         /// <summary>
         /// Public constructor.
@@ -16,7 +17,7 @@ namespace NCI.Logging
         /// <param name="classType">The class where the logger will be used.</param>
         public Log(Type classType)
         {
-            classname = classType.FullName;
+            log = LogManager.GetLogger(classType);
         }
 
         /// <summary>
@@ -25,7 +26,7 @@ namespace NCI.Logging
         /// <param name="message">The message to log</param>
         public void trace(String message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Info);
+            log.Trace(message);
         }
 
         /// <summary>
@@ -35,7 +36,7 @@ namespace NCI.Logging
         /// <param name="ex">An exception to be recorded</param>
         public void trace(String message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Info, ex);
+            log.Trace(message, ex);
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace NCI.Logging
         /// <param name="message">The message to log</param>
         public void debug(String message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Debug);
+            log.Debug(message);
         }
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace NCI.Logging
         /// <param name="ex">An exception to be recorded</param>
         public void debug(String message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Debug, ex);
+            log.Debug(message, ex);
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace NCI.Logging
         /// <param name="message">The message to log</param>
         public void warning(string message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Warning);
+            log.Warn(message);
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace NCI.Logging
         /// <param name="ex">An exception to be recorded</param>
         public void warning(string message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Warning, ex);
+            log.Warn(message, ex);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace NCI.Logging
         /// <param name="message">The message to log</param>
         public void error(string message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Error);
+            log.Error(message);
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace NCI.Logging
         /// <param name="ex">An exception to be recorded</param>
         public void error(string message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Error, ex);
+            log.Error(message, ex);
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace NCI.Logging
         /// <param name="message">The message to log</param>
         public void fatal(string message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Critical);
+            log.Fatal(message);
         }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace NCI.Logging
         /// <param name="ex">An exception to be recorded</param>
         public void fatal(string message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Critical, ex);
+            log.Fatal(message, ex);
         }
     }
 }

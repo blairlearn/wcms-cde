@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Web;
 using System.Web.Caching;
+using Common.Logging;
 
 namespace CancerGov.HttpModules
 {
@@ -13,7 +14,7 @@ namespace CancerGov.HttpModules
     /// </summary>
     internal class CachableProtocolSearchIDMap
     {
-        static Log log = new Log(typeof(CachableProtocolSearchIDMap));
+        static ILog log = LogManager.GetLogger(typeof(CachableProtocolSearchIDMap));
         static string LEGACY_CTS_REDIRECTION_MAP_CACHE_KEY = "LEGACY_CTS_REDIRECTION_MAP_CACHE_KEY";        
 
         /// <summary>
@@ -23,14 +24,14 @@ namespace CancerGov.HttpModules
         /// <returns>A (possibly empty) RedirectionMap.</returns>
         public static CachableProtocolSearchIDMap GetMap()
         {
-            log.trace("Enter CachableProtocolSearchIDMap.GetMap().");
+            log.Trace("Enter CachableProtocolSearchIDMap.GetMap().");
 
             CachableProtocolSearchIDMap map;
             Cache cache = HttpContext.Current.Cache;
 
             try
             {
-                log.debug("Load cache for legacy CTS redirect map.");
+                log.Debug("Load cache for legacy CTS redirect map.");
 
 
                 //Try and get the map from the cache
@@ -47,7 +48,7 @@ namespace CancerGov.HttpModules
                         {
                             //Actually try and load the file
                             // There was no cached redirection map.  Load it from the file system.
-                            log.debug("Cache miss. Loading Legacy CTS redirection map");
+                            log.Debug("Cache miss. Loading Legacy CTS redirection map");
 
                             //Now load and store the map file.
                             map = LoadAndStoreMapFile();
@@ -55,19 +56,19 @@ namespace CancerGov.HttpModules
                         }
                         else
                         {
-                            log.debug("Cached redirection map found on second chance retrieval.");
+                            log.Debug("Cached redirection map found on second chance retrieval.");
                         }
                     }
                 }
                 else
                 {
                     // A cached redirection map was found. Return it.
-                    log.debug("Loading cached redirection map.");
+                    log.Debug("Loading cached redirection map.");
                 }
             }
             catch (Exception ex)
             {
-                log.error("Error while getting the redirection map.", ex);
+                log.Error("Error while getting the redirection map.", ex);
 
                 // Instead of letting the request die,
                 // swallow the exception and return an empty map.
@@ -104,7 +105,7 @@ namespace CancerGov.HttpModules
 
             if (string.IsNullOrEmpty(datafile))
             {
-                log.warning("LegacyCTSResultRedirectMap AppSetting is not set");
+                log.Warn("LegacyCTSResultRedirectMap AppSetting is not set");
                 return StoreEmptyFile(); //Return empty map
             }
 
@@ -128,7 +129,7 @@ namespace CancerGov.HttpModules
             catch (Exception ex)
             {
                 //Log Warning that we could not load item
-                log.warning(string.Format("Error loading LegacyCTSResultRedirectMap, {0}", datafile), ex);
+                log.WarnFormat("Error loading LegacyCTSResultRedirectMap, {0}", ex, datafile);
 
                 return StoreEmptyFile(); //Return empty map.
             }
@@ -145,7 +146,7 @@ namespace CancerGov.HttpModules
         /// <param name="reason">Enum explaining why the item was removed.</param>
         private static void RemovedItemCallback(String key, Object item, CacheItemRemovedReason reason)
         {
-            log.trace(String.Format("'{0}' removed from cache because '{1}'.", key, reason));
+            log.TraceFormat("'{0}' removed from cache because '{1}'.", key, reason);
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace CancerGov.HttpModules
         /// <returns></returns>
         private static CachableProtocolSearchIDMap LoadMapFromFile(String fullPath)
         {
-            log.trace("Enter LoadMapFromFile().");
+            log.Trace("Enter LoadMapFromFile().");
 
             char[] separators = new char[1];
             separators[0] = ',';
@@ -167,7 +168,7 @@ namespace CancerGov.HttpModules
 
             if (!File.Exists(fullPath))
             {
-                log.error(String.Format("LegacyCTSResultRedirectMap file full path '{0}' not found.", fullPath));
+                log.ErrorFormat("LegacyCTSResultRedirectMap file full path '{0}' not found.", fullPath);
                 throw new FileNotFoundException(fullPath);
             }
 
@@ -180,7 +181,7 @@ namespace CancerGov.HttpModules
                 if (ids.Length != 2)
                 {
                     // We can recover from this problem. No exception needed.
-                    log.warning(String.Format("Expected only two protocol search IDs, found {0} in '{1}'.", ids.Length, idPair));
+                    log.WarnFormat("Expected only two protocol search IDs, found {0} in '{1}'.", ids.Length, idPair);
                 }
             }
             

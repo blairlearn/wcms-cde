@@ -1,6 +1,5 @@
 ﻿using System;
-
-using NCI.Logging;
+using Common.Logging;
 
 namespace NCI.Web.CDE.SimpleRedirector
 {
@@ -8,61 +7,61 @@ namespace NCI.Web.CDE.SimpleRedirector
     // similar to log4net.
     internal class Log
     {
-        private String classname;
+        private ILog log { get; set; }
 
         public Log(Type classType)
         {
-            classname = classType.FullName;
+            log = LogManager.GetLogger(classType);
         }
 
         public void trace(String message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Info);
+            log.Trace(message);
         }
 
         public void trace(String message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Info, ex);
+            log.Trace(message, ex);
         }
 
         public void debug(String message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Debug);
+            log.Debug(message);
         }
 
         public void debug(String message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Debug, ex);
+            log.Debug(message, ex);
         }
 
         public void warning(string message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Warning);
+            log.Warn(message);
         }
 
         public void warning(string message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Warning, ex);
+            log.Warn(message, ex);
         }
 
         public void error(string message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Error);
+            log.Error(message);
         }
 
         public void error(string message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Error, ex);
+            log.Error(message, ex);
         }
 
         public void fatal(string message)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Critical);
+            log.Fatal(message);
         }
 
         public void fatal(string message, Exception ex)
         {
-            Logger.LogError(classname, message, NCIErrorLevel.Critical, ex);
+            log.Fatal(message, ex);
         }
     }
 }

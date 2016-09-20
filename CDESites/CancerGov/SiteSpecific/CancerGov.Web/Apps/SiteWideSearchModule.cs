@@ -1,29 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
+using System.ComponentModel;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web.UI.HtmlControls;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Text;
-using System.Configuration;
-using System.Xml;
-using System.Globalization;
-
-using NCI.Util;
-using NCI.Web.CDE.WebAnalytics;
-using NCI.Web.CDE.UI.WebControls;
-using NCI.Web.UI.WebControls;
-using NCI.Logging;
-using NCI.Search.Endeca;
 using CancerGov.Search.BestBets;
-using NCI.Web.CDE; 
+using Common.Logging;
 using NCI.Search;
-using System.ComponentModel;
-using NCI.Web.CDE.Modules;
+using NCI.Util;
+using NCI.Web.CDE;
 using NCI.Web.CDE.Configuration;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.UI.WebControls;
 
 
 namespace NCI.Web.CancerGov.Apps
@@ -32,6 +21,8 @@ namespace NCI.Web.CancerGov.Apps
     [ToolboxData("<{0}:SiteWideSearchModule runat=server></{0}:SiteWideSearchModule>")]
     public class SiteWideSearchModule : AppsBaseUserControl
     {
+        static ILog log = LogManager.GetLogger(typeof(SiteWideSearchModule));
+
         #region Control Members
         protected DropDownList ddlPageUnit;
         protected Label lblResultsForText;
@@ -668,7 +659,7 @@ namespace NCI.Web.CancerGov.Apps
             catch (Exception e)
             {
                 //capture exactly which keyword caused the error
-                Logger.LogError(this.GetType().ToString(), "Search with the following keyword returned an error: " + KeywordText, NCIErrorLevel.Error, e);
+                log.ErrorFormat("Search with the following keyword returned an error: {0}", e, KeywordText);
             }
 
             //Set the last total number of results so if the user changes the ItemsPerPage(pageunit)
@@ -884,7 +875,7 @@ namespace NCI.Web.CancerGov.Apps
             {
                 //Search results should be retrieved even if Best Bets fail
                 //log the error  but don't throw an exception
-                Logging.Logger.LogError(Request.Url.AbsoluteUri, "Error in GetBestBetsResults", NCIErrorLevel.Error, ex);
+                log.ErrorFormat("Error in GetBestBetsResults - {0}", ex, Request.Url.AbsoluteUri);
             }
 
             return results;

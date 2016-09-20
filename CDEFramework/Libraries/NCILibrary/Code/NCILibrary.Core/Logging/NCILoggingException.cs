@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace NCI.Util
+namespace NCI.Logging
 {
     /// <summary>
     /// This Class has behaviour that raises Exceptions raised on performing logging operations.

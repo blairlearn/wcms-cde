@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
-using System.IO;
-using NCI.Logging;
-using System.Web;
+using Common.Logging;
 
 namespace NCI.Web.CDE.Modules
 {
     public class ModuleObjectFactory<ModuleObjectType>
     {
+        static ILog log = LogManager.GetLogger(typeof(ModuleObjectFactory<ModuleObjectType>));
+
         private static System.Collections.Generic.Dictionary<string,XmlSerializer> serializers = new Dictionary<string,XmlSerializer>();
 
         public static ModuleObjectType GetModuleObject(string snippetXmlData)
@@ -26,7 +26,7 @@ namespace NCI.Web.CDE.Modules
             }
             catch (Exception ex)
             {
-                Logger.LogError("cde:ModuleObjectFactory.cs.GetModuleObject", "Invalid xml data in the snippet for " + typeof(ModuleObjectType).ToString() + " , check xml received from Percussion", NCIErrorLevel.Error);
+                log.Error("GetModuleObject(): Invalid xml data in the snippet for " + typeof(ModuleObjectType).ToString() + " , check xml received from Percussion");
                 throw ex;
             }
         }
@@ -59,8 +59,8 @@ namespace NCI.Web.CDE.Modules
             }
             catch (Exception ex)
             {
-                string message = String.Format("Unable to load object from file \"{0}.\"  The file may not exist or the XML in the file may not be deserializable into a valid object.", filePath);
-                Logger.LogError("CDE:SectionDetailFactory.cs:GetObjectFromFile", message, NCIErrorLevel.Error, ex);
+                string message = String.Format("GetObjectFromFile(): Unable to load object from file \"{0}.\"  The file may not exist or the XML in the file may not be deserializable into a valid object.", filePath);
+                log.Error(message, ex);
                 throw ex;
             }
         }

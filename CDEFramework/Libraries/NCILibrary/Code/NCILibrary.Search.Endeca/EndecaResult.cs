@@ -99,7 +99,7 @@ namespace NCI.Search.Endeca
 			}
 
 			bool show_summary=false;
-			string set=ConfigurationSettings.AppSettings["EndecaDocSummaryMode"];
+			string set=ConfigurationManager.AppSettings["EndecaDocSummaryMode"];
 			if (set!=null && set.ToLower().Equals("true"))
 				show_summary=true;
 

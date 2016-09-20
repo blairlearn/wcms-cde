@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Configuration;
-using NCI.Web.CDE;
-using NCI.Web.UI.WebControls;
-using NCI.Logging;
-using NCI.Util;
-using NCI.Search.Endeca;
+using Common.Logging;
 using NCI.Search;
-using NCI.Web.CDE.Modules;
+using NCI.Util;
 using NCI.Web.CDE.Configuration;
+using NCI.Web.CDE.Modules;
+using NCI.Web.UI.WebControls;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
     public partial class SiteWideSearch : AppsBaseSnippetControl
     {
+        static ILog log = LogManager.GetLogger(typeof(SiteWideSearch));
+
         #region Control Members
         protected Repeater rptSearchResults = null;
         protected SimplePager spPager = null;
@@ -102,8 +97,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     catch (Exception ex)
                     {                       
                         //capture exactly which keyword caused the error
-                        Logger.LogError("SiteWideSearch", "Search with the following keyword returned an error: " + Keyword, NCIErrorLevel.Error, ex);
-
+                        log.Error("Search with the following keyword returned an error: " + Keyword, ex);
                     }
 
                 }

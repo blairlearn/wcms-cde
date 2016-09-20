@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Text;
-
-using NCI.Logging;
+using Common.Logging;
 using NCI.Services.Dictionary.BusinessObjects;
-using NCI.Util;
 
 namespace NCI.Services.Dictionary
 {
@@ -38,7 +32,7 @@ namespace NCI.Services.Dictionary
     [ServiceContract]
     public class DictionaryService
     {
-        static Log log = new Log(typeof(DictionaryService));
+        static ILog log = Common.Logging.LogManager.GetLogger(typeof(DictionaryService));
 
         const String API_VERSION = "v1";
 
@@ -81,7 +75,7 @@ namespace NCI.Services.Dictionary
 
                 if (failed)
                 {
-                    log.debug(message);
+                    log.Debug(message);
                     throw new DictionaryValidationException(message);
                 }
             }
@@ -125,7 +119,7 @@ namespace NCI.Services.Dictionary
 
                 if (failed)
                 {
-                    log.debug(message);
+                    log.Debug(message);
                     throw new DictionaryValidationException(message);
                 }
             }
@@ -162,7 +156,7 @@ namespace NCI.Services.Dictionary
 
                 if (failed)
                 {
-                    log.debug(message);
+                    log.Debug(message);
                     throw new DictionaryValidationException(message);
                 }
             }
@@ -200,7 +194,7 @@ namespace NCI.Services.Dictionary
 
                 if (failed)
                 {
-                    log.debug(message);
+                    log.Debug(message);
                     throw new DictionaryValidationException(message);
                 }
             }
@@ -237,7 +231,7 @@ namespace NCI.Services.Dictionary
 
                 if (failed)
                 {
-                    log.debug(message);
+                    log.Debug(message);
                     throw new DictionaryValidationException(message);
                 }
             }
@@ -266,7 +260,7 @@ namespace NCI.Services.Dictionary
 
                 if (failed)
                 {
-                    log.debug(message);
+                    log.Debug(message);
                     throw new DictionaryValidationException(message);
                 }
 
@@ -293,7 +287,7 @@ namespace NCI.Services.Dictionary
         /// <returns></returns>
         public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language)
         {
-            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language));
+            log.DebugFormat("Enter GetTerm( {0}, {1}, {2}).", termId, dictionary, language);
 
             AudienceType audience = AudienceType.Patient;
 
@@ -332,7 +326,7 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         public TermReturn GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience)
         {
-            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}, {3}).", termId, dictionary, language, audience));
+            log.DebugFormat("Enter GetTerm( {0}, {1}, {2}, {3}).", termId, dictionary, language, audience);
 
             TermReturn ret = null;
 
@@ -358,7 +352,7 @@ namespace NCI.Services.Dictionary
                 };
             }
 
-            log.debug("Successfully retrieved a term.");
+            log.Debug("Successfully retrieved a term.");
 
             return ret;
         }
@@ -383,7 +377,7 @@ namespace NCI.Services.Dictionary
         /// <returns></returns>
         public TermReturn GetTermForAudience(int termId, Language language, AudienceType audience)
         {
-            log.debug(string.Format("Enter GetTermForAudience( {0}, {1}, {2}).", termId, language, audience));
+            log.DebugFormat("Enter GetTermForAudience( {0}, {1}, {2}).", termId, language, audience);
 
             DictionaryType dictionary = DictionaryType.term;
 
@@ -429,7 +423,7 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         public SearchReturn Search(String searchText, SearchType searchType, int offset, int numResults, DictionaryType dictionary, Language language)
         {
-            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, numResults, dictionary, language));
+            log.DebugFormat("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}).", searchText, searchType, offset, numResults, dictionary, language);
 
             SearchReturn ret;
 
@@ -440,7 +434,7 @@ namespace NCI.Services.Dictionary
                 DictionaryManager mgr = new DictionaryManager();
                 ret = mgr.Search(searchText, searchType, offset, numResults, dictionary, language, API_VERSION);
 
-                log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
+                log.DebugFormat("Returning {0} results.", ret.Result.Count());
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.
@@ -493,7 +487,7 @@ namespace NCI.Services.Dictionary
             // This should possibly be made a parameter
             int MaxResultsAllowed = 10;
 
-            log.debug(string.Format("Enter ValidateSearchSuggest( {0}, {1}, {2}, {3}).", searchText, searchType, dictionary, language));
+            log.DebugFormat("Enter ValidateSearchSuggest( {0}, {1}, {2}, {3}).", searchText, searchType, dictionary, language);
 
             SuggestReturn ret;
 
@@ -504,7 +498,7 @@ namespace NCI.Services.Dictionary
                 DictionaryManager mgr = new DictionaryManager();
                 ret = mgr.SearchSuggest(searchText, searchType, MaxResultsAllowed, dictionary, language, API_VERSION);
 
-                log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
+                log.DebugFormat("Returning {0} results.", ret.Result.Count());
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.
@@ -554,7 +548,7 @@ namespace NCI.Services.Dictionary
         [OperationContract]
         public SearchReturn Expand(String searchText, String includeTypes, int offset, int numResults, DictionaryType dictionary, Language language)
         {
-            log.debug(string.Format("Enter searchText( {0}, {1}, {2}, {3}, {4}, {5} ).", searchText, includeTypes, offset, numResults, dictionary, language));
+            log.DebugFormat("Enter searchText( {0}, {1}, {2}, {3}, {4}, {5} ).", searchText, includeTypes, offset, numResults, dictionary, language);
 
             SearchReturn ret;
 
@@ -565,7 +559,7 @@ namespace NCI.Services.Dictionary
                 DictionaryManager mgr = new DictionaryManager();
                 ret = mgr.Expand(searchText, includeTypes, offset, numResults, dictionary, language, API_VERSION);
 
-                log.debug(string.Format("Returning {0} results.", ret.Result.Count()));
+                log.DebugFormat("Returning {0} results.", ret.Result.Count());
             }
             // If there was a problem with the inputs for this request, fail with
             // an HTTP status message and an explanation.

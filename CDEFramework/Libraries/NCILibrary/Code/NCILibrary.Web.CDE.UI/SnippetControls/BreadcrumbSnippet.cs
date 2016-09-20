@@ -1,23 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Xml;
-using System.Xml.Linq;
-
-using NCI.Logging;
-using NCI.Text;
-
+using Common.Logging;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
     public class BreadcrumbSnippet : SnippetControl
     {
+        static ILog log = LogManager.GetLogger(typeof(BreadcrumbSnippet));
 
         // Get root path from SectionDetails.xml
         public string _breadcrumbData = String.Empty;
@@ -43,7 +33,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogError("NCI.Web.CDE.SectionDetail", "Unable to load XML document", NCIErrorLevel.Error, ex);
+                        log.Error("Unable to load XML document", ex);
                     }
 
                     XmlNode rootPathNode = doc.DocumentElement;
@@ -82,7 +72,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
             if (details == null)
             {
-                NCI.Logging.Logger.LogError("BreadcrumbSnippet", "Section detail cannot be null.", NCIErrorLevel.Error);
+                log.Error("Section detail cannot be null.");
                 return;
             }
 

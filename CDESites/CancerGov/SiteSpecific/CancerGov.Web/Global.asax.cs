@@ -1,5 +1,5 @@
 ﻿using System;
-using NCI.Logging;
+using Common.Logging;
 using NCI.Search.BestBets.Index;
 using NCI.Web.CDE.Application;
 using Quartz;
@@ -9,7 +9,9 @@ namespace CancerGov.Web
 {
     public class Global : GlobalApplication
     {
-        protected void Application_Start(object sender, EventArgs e)
+        static ILog log = LogManager.GetLogger(typeof(Global));
+
+        protected new void Application_Start(object sender, EventArgs e)
         {
             base.Application_Start(sender, e);
 
@@ -17,7 +19,7 @@ namespace CancerGov.Web
 
             if (BestBetsIndex.IndexRebuilderJob.ExecutionSchedule == string.Empty)
             {
-                Logger.LogError(this.GetType().ToString(), "BestBets Reindexing Schedule not set.  Skipping QuartzScheduler for Best Bets.", NCI.Logging.NCIErrorLevel.Info);
+                log.Info("BestBets Reindexing Schedule not set.  Skipping QuartzScheduler for Best Bets.");
             }
             else
             {
@@ -51,7 +53,7 @@ namespace CancerGov.Web
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(this.GetType().ToString(), "An error occured while setting up QuartzScheduler for Best Bets.", NCI.Logging.NCIErrorLevel.Error, ex);
+                    log.Error("An error occured while setting up QuartzScheduler for Best Bets.", ex);
                 }
             }
 

@@ -81,12 +81,12 @@ namespace DCEG.Web.Apps
             string systemMessagePageUrl;
             if (messageKey == "InvalidSearchID")
             {
-                systemMessagePageUrl = ConfigurationSettings.AppSettings["ClinicalTrialInvalidSearchID"].Trim();
+                systemMessagePageUrl = ConfigurationManager.AppSettings["ClinicalTrialInvalidSearchID"].Trim();
                 Response.Redirect(systemMessagePageUrl, true);
             }
             else
             {
-                systemMessagePageUrl = ConfigurationSettings.AppSettings["SystemMessagePage"].Trim();
+                systemMessagePageUrl = ConfigurationManager.AppSettings["SystemMessagePage"].Trim();
 
                 if (systemMessagePageUrl.Substring(systemMessagePageUrl.Length - 1, 1) != "?")
                     systemMessagePageUrl += "?";

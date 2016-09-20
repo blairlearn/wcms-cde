@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Xml;
-using NCI.Web.CDE;
-using NCI.Web.CDE.UI;
-using NCI.Web.CDE.Modules;
-
+using Common.Logging;
 using NCI.Web.CancerGov.Apps;
-using NCI.Logging;
+using NCI.Web.CDE;
+using NCI.Web.CDE.Modules;
 
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class DocTitleBlock : AppsBaseUserControl
     {
+        static ILog log = LogManager.GetLogger(typeof(DocTitleBlock));
+
         NCI.Web.CDE.Modules.DockTitleBlock moduleData = null;
         string title = string.Empty;
 
@@ -157,7 +151,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
             catch (Exception ex)
             {
-                Logger.LogError("Docktitle Snippet Control", NCIErrorLevel.Error, ex);
+                log.Error("Page_Load()", ex);
             }
         }
 

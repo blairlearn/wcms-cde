@@ -1,27 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Diagnostics;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Diagnostics;
-using System.Collections;
-using System.Configuration;
-
-using CancerGov.CDR.ClinicalTrials.Search;
 using CancerGov.CDR.ClinicalTrials.Helpers;
+using CancerGov.CDR.ClinicalTrials.Search;
 using CancerGov.Common.HashMaster;
+using Common.Logging;
 using NCI.Util;
 using NCI.Web.UI.WebControls;
-using NCI.Web.UI.WebControls.FormControls;
-using NCI.Logging;
-using NCI.Web.CDE.Modules; 
+using NCI.Web.UI.WebControls.FormControls; 
 
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class ClinicalTrialsSearchTemplate : SearchBaseUserControl
     {
+        static ILog log = LogManager.GetLogger(typeof(ClinicalTrialsSearchTemplate));
+
         #region Constants
 
         // The only allowed values for marking a section as collapsed/expanded.
@@ -98,7 +93,7 @@ namespace CancerGov.Web.SnippetTemplates
                     }
                     catch (Exception ex)
                     {
-                        NCI.Logging.Logger.LogError("", "CTSearchManager.LoadSavedCriteria", NCIErrorLevel.Error, ex);
+                        log.Error("CTSearchManager.LoadSavedCriteria", ex);
                         this.RaiseErrorPage("InvalidSearchID");
                     }
 

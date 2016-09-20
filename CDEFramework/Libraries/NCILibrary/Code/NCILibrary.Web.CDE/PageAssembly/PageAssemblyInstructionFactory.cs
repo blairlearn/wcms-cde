@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using System.Web;
 using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 using NCI.Web.CDE.Configuration;
-using System.Web;
-using System.IO;
-using System.Xml.Schema;
-using NCI.Logging;
+
 namespace NCI.Web.CDE
 {
     public class PageAssemblyInstructionFactory
