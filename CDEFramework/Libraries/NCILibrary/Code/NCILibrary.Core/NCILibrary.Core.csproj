@@ -95,6 +95,7 @@
     <Compile Include="Logging\Factories\EmailLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\Factories\EventLoggerFactoryAdapter.cs" />
     <Compile Include="Logging\Factories\MultiLoggerFactoryAdapter.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\MultiLogger.cs" />
     <Compile Include="Messaging\MSMQReceiver.cs" />
     <Compile Include="Messaging\MSMQSender.cs" />
