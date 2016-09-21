@@ -156,15 +156,24 @@ namespace NCI.Web.CDE.Application
                     // is exactly what the 400 status is for.  See:
                     // https://tools.ietf.org/html/rfc7231#section-6.5.1
                     ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400);
+
+                    // log validation errors even though we generate a 400
+                    try
+                    {
+                        log.ErrorFormat("HttpRequestValidationException Caught in Application_Error event\nError in: {0}", objErr, Request.Url.ToString());
+                    }
+                    catch (System.ComponentModel.Win32Exception)
+                    { //Since we cannot log to the eventlog, then we should not try again
+                    }
+                    catch { }
+
+                    return;
                 }
                 else
                 {
-                    string err = "Error Caught in Application_Error event\n" +
-                        "Error in: " + Request.Url.ToString();
-
                     try
                     {
-                        log.Error(err, objErr);
+                        log.ErrorFormat("Error Caught in Application_Error event\nError in: {0}", objErr, Request.Url.ToString());
                     }
                     catch (System.ComponentModel.Win32Exception)
                     { //Since we cannot log to the eventlog, then we should not try again
