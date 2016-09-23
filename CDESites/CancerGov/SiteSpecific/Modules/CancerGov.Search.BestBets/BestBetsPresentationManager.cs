@@ -23,7 +23,11 @@ namespace CancerGov.Search.BestBets
             if (lang == DisplayLanguage.Spanish)
             {
                 twoCharLang = "es";
-            } 
+            }
+            else 
+            {
+                twoCharLang = "en";
+            }
 
             //TODO: Language!!!!
             //NOTE: This can throw an exception - in the past we left it unhandled.  That is stupid, because
