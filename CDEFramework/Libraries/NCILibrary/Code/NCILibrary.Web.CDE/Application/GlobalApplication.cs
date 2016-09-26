@@ -147,8 +147,6 @@ namespace NCI.Web.CDE.Application
                     int statusCode = ((HttpException)objErr).GetHttpCode();
 
                     ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), statusCode);
-
-                    return;
                 }
                 else if (objErr is HttpRequestValidationException)
                 {
@@ -160,20 +158,20 @@ namespace NCI.Web.CDE.Application
                     // log validation errors even though we generate a 400
                     try
                     {
-                        log.ErrorFormat("HttpRequestValidationException Caught in Application_Error event\nError in: {0}", objErr, Request.Url.ToString());
+                        log.ErrorFormat("HttpRequestValidationException caught in Application_Error event\nError in: {0}", objErr, Request.Url.ToString());
                     }
                     catch (System.ComponentModel.Win32Exception)
                     { //Since we cannot log to the eventlog, then we should not try again
                     }
                     catch { }
-
-                    return;
                 }
                 else
                 {
+                    ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
+
                     try
                     {
-                        log.ErrorFormat("Error Caught in Application_Error event\nError in: {0}", objErr, Request.Url.ToString());
+                        log.ErrorFormat("Error caught in Application_Error event\nError in: {0}", objErr, Request.Url.ToString());
                     }
                     catch (System.ComponentModel.Win32Exception)
                     { //Since we cannot log to the eventlog, then we should not try again
@@ -182,7 +180,7 @@ namespace NCI.Web.CDE.Application
                 }
             }
 
-            ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
+            Server.ClearError();            
         }
 
         #endregion
