@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Specialized;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
+using System.Linq;
+using System.Web;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using System.Web;
-
-using NCI.Web.CDE.WebAnalytics;
+using Common.Logging;
 using NCI.Core;
-using NCI.Text;
 using NCI.Util;
-using NCI.Logging;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace NCI.Web.CDE
 {
@@ -24,6 +20,8 @@ namespace NCI.Web.CDE
     abstract public class BasePageAssemblyInstruction
     {
         #region Private
+        static ILog log = LogManager.GetLogger(typeof(BasePageAssemblyInstruction));
+
         /// <summary>
         /// Collection of FieldFilter delegates for Web analytics fields.
         /// </summary>
@@ -246,9 +244,7 @@ namespace NCI.Web.CDE
                 // check provided PageAssemblyInstruction
                 if (pai == null)
                 {
-                    Logger.LogError("CDE:BasePageAssemblyInstruction.cs:RegisterSocialMetadataFieldFilters()",
-                        "null PageAssemblyInstruction provided.",
-                        NCIErrorLevel.Warning);
+                    log.Warn("RegisterSocialMetadataFieldFilters(): null PageAssemblyInstruction provided.");
 
                     return;
                 }
@@ -270,9 +266,7 @@ namespace NCI.Web.CDE
             }
             catch (Exception e)
             {
-                Logger.LogError("CDE:SocialMetadata.cs:InitializeFieldFilters()",
-                       "Exception encountered while initializing field filters.",
-                       NCIErrorLevel.Error, e);
+                log.Error("InitializeFieldFilters(): Exception encountered while initializing field filters.", e);
             }
         }
 

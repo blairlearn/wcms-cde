@@ -63,11 +63,13 @@
         <![endif]-->
     <div class="popup">
         <div class="clearfix">
-            <div class="nci-logo">
-                <a id="logoText1" runat="server">
-                    <br />
-                    <span id="logoText2" runat="server" /></a>
+           
+            <div class="popuplogo">
+              <a id="logoAnchor" runat="server">
+                <img id="logoImage" runat="server" alt="National Cancer Institute" src="/publishedcontent/images/images/design-elements/logos/nci-logo-full.svg"/>
+              </a> 
             </div>
+
             <div class="popup-close">
                 <a href="javascript:window.parent.window.close();"><span class="hidden" id="closeWindowText"
                     runat="server" /></a>

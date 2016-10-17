@@ -1,5 +1,6 @@
 ﻿<%@ Page language="c#" trace="false" Codebehind="Email.aspx.cs" AutoEventWireup="True" Inherits="CancerGov.Web.Email" %>
-<%@ Register TagPrefix="recaptcha" Namespace="Recaptcha" Assembly="Recaptcha" %>
+<%@ Register Assembly="NCILibrary.Web.ContentDeliveryEngine.UI" Namespace="NCI.Web.CDE.UI.SnippetControls"
+    TagPrefix="NCI" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <HTML>
   <HEAD id="header" runat="server">
@@ -10,7 +11,7 @@
   </HEAD>
 	<body style="background:#FFFFFF" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 	<div align="center">
-		<p>
+		<p />
 		<table border="0" cellpadding="10" cellspacing="0" width="100%"><TBODY>
 			<tr>
 				<td align="center" valign="top">
@@ -20,7 +21,7 @@
 						<input type="hidden" id="Document" runat="server" NAME="Document">
 						
 						<asp:Label ID="Title" Runat="server" CssClass="black-text-b"></asp:Label>
-						<p>
+						<p />
 						<table cellpadding="0" cellspacing="0" border="0">
 							<tr valign="middle">
 								<td align="right" valign="middle" nowrap><label for="To"><%=strSendtoEmail%></label></td>
@@ -40,17 +41,14 @@
 							</tr>
 						</table>
 						<p>
-						<recaptcha:RecaptchaControl
+						<NCI:ReCaptchaControl
                             ID="recaptcha"
-                            runat="server"
-                            PublicKey="6LcQe-MSAAAAAAG-lHJXWqCfOQQVVx9JMkv0rzDO"
-                            PrivateKey="6LcQe-MSAAAAALjG1vwiC_iSkbNKjQMYXUA9B69p"/>
+                            runat="server"/>
 						<p>
 						<input type="submit" value="<%=strSend%>">
 					</form>
 				</div>
 				<div id="confirmDiv" runat="server">
-				</div>
 					<%=strConfirm%>
 				</div>
 				</TD>

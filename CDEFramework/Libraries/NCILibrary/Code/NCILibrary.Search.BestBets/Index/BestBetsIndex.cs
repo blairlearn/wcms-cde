@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using IO = System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-
-using Lucene.Net.Documents;
+using Common.Logging;
 using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.Standard;
+using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
-
-using Quartz;
-
 using NCI.Search.BestBets.Configuration;
 using NCI.Search.BestBets.Lucene;
+using Quartz;
+using IO = System.IO;
 
 
 namespace NCI.Search.BestBets.Index
@@ -29,6 +23,7 @@ namespace NCI.Search.BestBets.Index
     /// </summary>
     public sealed class BestBetsIndex
     {
+        static ILog log = LogManager.GetLogger(typeof(BestBetsIndex));
 
         #region Singleton things
 
@@ -266,7 +261,7 @@ namespace NCI.Search.BestBets.Index
             {
                 //TODO: Log debug statement that we are skipping indexing.  This may be due to another 
                 //job running an index.  This condition should not happen often.
-                NCI.Logging.Logger.LogError(this.GetType().ToString(), "BestBetsIndex lock obtained by other thread, skipping indexing.", Logging.NCIErrorLevel.Info);
+                log.Info("BestBetsIndex lock obtained by other thread, skipping indexing.");
             }
 
         }
@@ -421,7 +416,7 @@ namespace NCI.Search.BestBets.Index
                 }
                 else
                 {
-                    NCI.Logging.Logger.LogError(this.GetType().ToString(), "IndexRebuilderJob lock obtained by other thread, skipping indexing.", Logging.NCIErrorLevel.Info);
+                    log.Info("IndexRebuilderJob lock obtained by other thread, skipping indexing.");
                 }
 
             }

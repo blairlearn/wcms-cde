@@ -65,7 +65,7 @@ namespace NCI.Web.CDE.HttpHandlers
                         break;
                     case "__subject": subject = context.Request.Params[key]; break;
                     case "__recipient":
-                        to = ConfigurationSettings.AppSettings[context.Request.Params[key]];
+                        to = ConfigurationManager.AppSettings[context.Request.Params[key]];
                         if ((to == null) || (to == ""))
                         {
                             content += "Error: recipient '" + context.Request.Params[key] + "' is not configured.<br>\n";

@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-
-using NCI.Logging;
-using Newtonsoft.Json;
+using Common.Logging;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -17,6 +11,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// </summary>
     class LegacyIDLoader
     {
+        static ILog log = LogManager.GetLogger(typeof(LegacyIDLoader));
+
         /// <summary>
         /// Retrieves pipe 
         /// </summary>
@@ -49,8 +45,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         // Check for insufficient pieces.
                         if (parts.Length == 1)
                         {
-                            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLoader:LoadCancerTypeDictionary()",
-                                String.Format("Partial entry '{0}'", entry), NCIErrorLevel.Error);
+                            log.ErrorFormat("LoadCancerTypeDictionary(): Partial entry '{0}'", entry);
                             return; // Bad entry, go to next entry.
                         }
 
@@ -58,8 +53,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         if (parts.Length > 2)
                         {
                             // Log, but keep going.
-                            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLoader:LoadCancerTypeDictionary()",
-                                String.Format("Entry has more than one mapping '{0}'", entry), NCIErrorLevel.Error);
+                            log.ErrorFormat("LoadCancerTypeDictionary(): Entry has more than one mapping '{0}'", entry);
                         }
 
                         // We know we have a key and value.
@@ -69,16 +63,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         // Check for blanks.   
                         if(String.IsNullOrWhiteSpace(key) || String.IsNullOrWhiteSpace(value))
                         {
-                            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLoader:LoadCancerTypeDictionary()",
-                                String.Format("Blank key or value '{0}'", entry), NCIErrorLevel.Error);
+                           log.ErrorFormat("LoadCancerTypeDictionary(): Blank key or value '{0}'", entry);
                             return; // Bad entry, go to the next one.
                         }
 
                         // Check for duplicates
                         if (map.ContainsKey(key))
                         {
-                            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLoader:LoadCancerTypeDictionary()",
-                            String.Format("duplicate key '{0}'", entry), NCIErrorLevel.Error);
+                            log.ErrorFormat("LoadCancerTypeDictionary(): duplicate key '{0}'", entry);
                             return; // Continue with next array entry.
                         }
 
@@ -90,7 +82,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             catch (Exception ex)
             {
-                Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLoader:LoadCancerTypeDictionary()", "Error loading cancer ID mapping file.", NCIErrorLevel.Error, ex);
+                log.Error("LoadCancerTypeDictionary(): Error loading cancer ID mapping file.", ex);
                 return null;
             }
         }
@@ -104,7 +96,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 cancerTypeFilePath = ConfigurationManager.AppSettings["CancerIDMapping"].ToString();
                 if (String.IsNullOrWhiteSpace(cancerTypeFilePath))
                 {
-                    Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLoader:LoadCancerTypeDictionary()", "CancerIDMapping not set.", NCIErrorLevel.Error);
+                    log.Error("LoadCancerTypeDictionary(): CancerIDMapping not set.");
                     return null;
                 }
 
@@ -115,12 +107,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             catch (FileNotFoundException ex)
             {
-                Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLoader:LoadCancerTypeDictionary()", "Path " + cancerTypeFilePath + " not found.", NCIErrorLevel.Error, ex);
+                log.ErrorFormat("LoadCancerTypeDictionary(): Path {0} not found.", ex, cancerTypeFilePath);
                 return null;
             }
             catch (Exception ex)
             {
-                Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLoader:LoadCancerTypeDictionary()", "Failed to read dictionary file on path " + cancerTypeFilePath, NCIErrorLevel.Error, ex);
+                log.ErrorFormat("LoadCancerTypeDictionary(): Failed to read dictionary file on path {0}", ex, cancerTypeFilePath);
                 return null;
             }
         }

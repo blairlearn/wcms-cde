@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Web;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Data;
-using System.Linq;
-using CancerGov.Modules.CDR;
-using NCI.Web.CDE;
-using NCI.Logging;
 using System.Configuration;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
+using CancerGov.Modules.CDR;
+using Common.Logging;
+using NCI.Web.CDE;
 
 namespace CancerGov.Modules
 {
     public class CDRPrettyUrlModule : IHttpModule
     {
+        static ILog log = LogManager.GetLogger(typeof(CDRPrettyUrlModule));
+
         private string SearchResultsPrettyUrl
         {
             get {
-                if (!String.IsNullOrEmpty(ConfigurationSettings.AppSettings["ClinicalTrialsViewPage"]))
+                if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["ClinicalTrialsViewPage"]))
                 {
-                    return ConfigurationSettings.AppSettings["ClinicalTrialsViewPage"];
+                    return ConfigurationManager.AppSettings["ClinicalTrialsViewPage"];
                 }
 
                 return "/about-cancer/treatment/clinical-trials/search/view";
@@ -81,23 +80,23 @@ namespace CancerGov.Modules
                         }
                         else
                         {
-                            Logger.LogError("CDRPrettyUrlModule", "protocoloId not found in database for oldId " + oldId, NCIErrorLevel.Debug);
+                            log.DebugFormat("protocoloId not found in database for oldId {0}", oldId);
 
                             // If this is an NCT ID, redirect to the trial's page at CTGov.
                             if (IsNctID(oldId))
                             {
-                                Logger.LogError("CDRPrettyUrlModule", oldId + " is an NCT ID.", NCIErrorLevel.Debug);
+                                log.DebugFormat("CDRPrettyUrlModule {0} is an NCT ID.", oldId);
 
                                 // Format for a CTGov URL is https://clinicaltrials.gov/show/<<NCT_ID>>
                                 String nlmUrl = String.Format("https://clinicaltrials.gov/show/{0}", oldId.Trim());
 
-                                Logger.LogError("CDRPrettyUrlModule", "Redirecting to " + nlmUrl, NCIErrorLevel.Debug);
+                                log.DebugFormat("Redirecting to {0}", nlmUrl);
                                 context.Response.Redirect(nlmUrl, true);
                             }
                         }
                     }
                     else
-                        Logger.LogError("CDRPrettyUrlModule", "oldId is null or empty", NCIErrorLevel.Debug);
+                        log.Debug("oldId is null or empty");
                 }
             }
             // Response.Redirect() throws a ThreadAbortException.  This is normal behavior.
@@ -106,7 +105,7 @@ namespace CancerGov.Modules
             { }
             catch (Exception ex)
             {
-                Logger.LogError("CDRPrettyUrlModule:OnBeginRequest", NCIErrorLevel.Error, ex);
+                log.Error("OnBeginRequest", ex);
             }
         }
 

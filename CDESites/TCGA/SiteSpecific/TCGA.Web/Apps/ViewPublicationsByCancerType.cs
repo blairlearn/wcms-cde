@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Configuration;
+using System.Linq;
 using System.Web.UI.WebControls;
-using TCGA.Apps;
 using System.Xml.Linq;
-using NCI.Web.CDE;
-using NCI.Web.UI.WebControls;
-using NCI.Logging;
+using Common.Logging;
+using TCGA.Apps;
 
 namespace TCGA.Web.SnippetTemplates
 {
     public partial class ViewPublicationsByCancerType : AppsBaseUserControl
     {
+        static ILog log = LogManager.GetLogger(typeof(ViewPublicationsByCancerType));
+
         #region Define Controls 
         protected global::System.Web.UI.HtmlControls.HtmlForm frmViewPublications;
         protected global::System.Web.UI.WebControls.DropDownList ddlCancerType;
@@ -46,7 +44,7 @@ namespace TCGA.Web.SnippetTemplates
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError("ViewPublicationsByCancerType", NCIErrorLevel.Error, ex);
+                    log.Error(ex);
                 }
             }
         }
@@ -99,7 +97,7 @@ namespace TCGA.Web.SnippetTemplates
             }
             catch(Exception ex)
             {
-                Logger.LogError("ViewPublicationsByCancerType", "could not Populate Publications Results", NCIErrorLevel.Error);
+                log.Error("could not Populate Publications Results", ex);
                 throw ex;
             }
 
@@ -170,7 +168,7 @@ namespace TCGA.Web.SnippetTemplates
             }
             catch (Exception ex)
             {
-                Logger.LogError("ViewPublicationsByCancerType", "could not Populate CancerType DropDown", NCIErrorLevel.Error);
+                log.Error("could not Populate CancerType DropDown", ex);
                 throw ex;
             }
         }
@@ -231,7 +229,7 @@ namespace TCGA.Web.SnippetTemplates
             }
             catch (Exception ex)
             {
-                Logger.LogError("ViewPublicationsByCancerType", "GetPublications failed", NCIErrorLevel.Error);
+                log.Error("GetPublications failed", ex);
                 throw ex;
             }
         }
@@ -286,7 +284,7 @@ namespace TCGA.Web.SnippetTemplates
             }
             catch (Exception ex)
             {
-                Logger.LogError("ViewPublicationsByCancerType", NCIErrorLevel.Error, ex);
+                log.Error("ddlCancerType_SelectedIndexChanged()", ex);
             }
         }
 
@@ -327,7 +325,7 @@ namespace TCGA.Web.SnippetTemplates
             }
             catch (Exception ex)
             {
-                Logger.LogError("ViewPublicationsByCancerType", NCIErrorLevel.Error, ex);
+                log.Error("pager_PageChanged()", ex);
             }
         }
 

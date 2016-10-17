@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections;
-using System.Configuration;
 using System.Web.UI;
-
-using NCI.Logging;
-using NCI.Search.Endeca;
-using NCI.Util;
-using NCI.Web.CDE.WebAnalytics;
-using NCI.Search;
-
-using DCEG.Web.Apps;
-using NCI.Web.CDE.Modules;
 using System.Web.UI.WebControls;
+using Common.Logging;
+using DCEG.Web.Apps;
+using NCI.Search;
+using NCI.Util;
 using NCI.Web.CDE.Configuration;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace DCEG.Web.SnippetTemplates
 {
@@ -21,6 +17,8 @@ namespace DCEG.Web.SnippetTemplates
     /// </summary>
     public partial class NewsletterSearchResults : SearchBaseUserControl
     {
+        static ILog log = LogManager.GetLogger(typeof(NewsletterSearchResults));
+
         protected ArrayList eSearchResults = new ArrayList();
 
         private string pager;
@@ -177,7 +175,7 @@ namespace DCEG.Web.SnippetTemplates
                 catch (Exception ex)
                 {                    
                     //capture exactly which keyword caused the error
-                    Logger.LogError("NewsletterSearchResults", PrettyUrl + ". Search with the following keyword returned an error: " + Keyword, NCIErrorLevel.Error, ex);
+                    log.ErrorFormat( "{0} - Search with the following keyword returned an error: {1}", ex, PrettyUrl, Keyword);
                     this.RaiseErrorPage();
                 }
 

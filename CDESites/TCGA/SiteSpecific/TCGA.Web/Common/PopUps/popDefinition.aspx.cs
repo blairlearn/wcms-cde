@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
+using Common.Logging;
 using NCI.Util;
 using NCI.Web.CDE;
 using NCI.Web.CDE.WebAnalytics;
@@ -22,6 +23,8 @@ namespace TCGA.Web.Common.PopUps
     ///</summary>
     public partial class PopDefinition : System.Web.UI.Page
     {
+        static ILog log = LogManager.GetLogger(typeof(PopDefinition));
+
         private string urlArgs = "";
         public string CdrID { get; set; }
         //set the language to English by default
@@ -177,7 +180,7 @@ namespace TCGA.Web.Common.PopUps
 
                             //if either the regular image size or the enlarge image size is not in the config file
                             //default to the full image in the database
-                            if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageRegular"]) || string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageEnlarge"]))
+                            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["CDRImageRegular"]) || string.IsNullOrEmpty(ConfigurationManager.AppSettings["CDRImageEnlarge"]))
                             {
                                 termImage.Src = imageDetails.Filename;
 
@@ -188,7 +191,7 @@ namespace TCGA.Web.Common.PopUps
                                 }
 
                                 //log a warning
-                                NCI.Logging.Logger.LogError("TermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
+                                log.WarnFormat("Web.Config file does not specify image sizes for term id: {0}. Display full image.", CdrID);
                             }
                             else
                             {
@@ -197,12 +200,12 @@ namespace TCGA.Web.Common.PopUps
                                 {
                                     //termImage image size is 571
                                     //example format CDR526538-571.jpg
-                                    termImage.Src = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
+                                    termImage.Src = regularTermImage[0] + "-" + ConfigurationManager.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
 
                                     //enlarge image size is 750
                                     //example format CDR526538-750.jpg
                                     if (termEnlargeImage != null)
-                                        termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
+                                        termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationManager.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
 
                                 }
                             }

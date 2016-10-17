@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
-using NCI.Logging;
+using Common.Logging;
 using NCI.Web.CDE;
+using NCI.Web.CDE.Application;
 using NCI.Web.CDE.Modules;
-using NCI.Web.CDE.UI;
-
-
 
 namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 {
     public partial class BasicCTSViewControl : BasicCTSBaseControl
     {
+        static ILog log = LogManager.GetLogger(typeof(BasicCTSViewControl));
+
         /// <summary>
         /// Gets the Search Parameters for the current request.
         /// </summary>
@@ -185,7 +185,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
             catch (Exception ex)
             {
                 string errMessage = "CDE:BasicCTSViewControl.cs:OnLoad" + " Requested NCTid: " + nctid + "\nException thrown by _basicCTSManager.get(nctid) call.";
-                Logger.LogError(errMessage, NCIErrorLevel.Error, ex);
+                log.Error(errMessage, ex);
                 ErrorPageDisplayer.RaisePageError(errMessage);
                 return;
             }

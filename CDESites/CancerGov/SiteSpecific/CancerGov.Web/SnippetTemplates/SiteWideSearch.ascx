@@ -123,7 +123,7 @@
                     <asp:DropDownList
                         id="ddlPageUnit"
                         AutoPostBack="true"
-                        OnSelectedIndexChanged="ChangePageUnit"
+                        OnSelectedIndexChanged="ChangeItemsPerPageAndBind"
                         Style="width: 88px"
                         runat="server">
                         <asp:ListItem Text="10" Value="10" />

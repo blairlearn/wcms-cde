@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
-using System.Web;
-using NCI.Web.CDE.Configuration;
-using System.Web.Caching;
 using System.Linq;
 using System.Xml.Schema;
-using NCI.Logging;
+using System.Xml.Serialization;
+using Common.Logging;
 
 namespace NCI.Web.CDE
 {
@@ -19,6 +15,7 @@ namespace NCI.Web.CDE
     [System.Xml.Serialization.XmlRootAttribute("SectionDetail", Namespace = "http://www.example.org/CDESchema", IsNullable = false)] 
     public class SectionDetail
     {
+        static ILog log = LogManager.GetLogger(typeof(SectionDetail));
 
         private SectionDetail _parent;
 
@@ -88,7 +85,7 @@ namespace NCI.Web.CDE
                     }
                     catch(Exception ex)
                     {
-                        Logger.LogError("CDE:SectionDetail.cs:Parent", "Failed to load the section detail for the parent path: "+ _parentpath, NCIErrorLevel.Error, ex);
+                        log.Error("Parent(): Failed to load the section detail for the parent path: "+ _parentpath, ex);
                     }
                 }
                 return _parent;

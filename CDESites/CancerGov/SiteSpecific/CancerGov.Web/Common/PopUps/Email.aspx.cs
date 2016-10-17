@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Net.Mail;
-using System.Configuration;
-using System.Text.RegularExpressions;
-using System.Data;
-using System.Data.SqlClient;
-using System.Collections;
 using System.Web;
 using NCI.Core;
 using NCI.Util;
+
+using NCI.Web.CDE.Util;
 
 namespace CancerGov.Web
 {
@@ -20,6 +17,8 @@ namespace CancerGov.Web
         protected string strName = "Your name&nbsp;&nbsp;";
         protected string strSend = "Send";
         protected string strConfirm = "";
+
+        protected ReCaptchaValidator reCaptchaValidator = new ReCaptchaValidator();
 
         enum WhoCalled
         {
@@ -65,7 +64,7 @@ namespace CancerGov.Web
             if (!this.IsPostBack)
             {
                 //assign passed in variables to controls
-                Document.Value = HttpUtility.UrlEncodeUnicode(Strings.IfNull(Strings.Clean(Request.Params["title"]), ""));
+                Document.Value = HttpUtility.UrlEncode(Strings.IfNull(Strings.Clean(Request.Params["title"]), ""));
                 Title.Text = HttpUtility.UrlDecode(Document.Value).Replace("__tm;", "&#153;");
                 Url.Value = Strings.IfNull(Strings.Clean(Request.QueryString["docurl"]), "").Replace("__amp;", "&");
                 //if(Url.Value.StartsWith("/"))
@@ -89,17 +88,18 @@ namespace CancerGov.Web
                 toValid.Validate();
                 fromValid.Validate();
                 revFromName.Validate();
-                recaptcha.Validate();
+                string EncodedResponse = Request.Form["g-recaptcha-response"];
+                reCaptchaValidator.Validate(EncodedResponse, Request.UserHostAddress);
 
                 //Send Email Required Controls Are Valid
-                if (toValid.IsValid && fromValid.IsValid && revFromName.IsValid && recaptcha.IsValid)
+                if (toValid.IsValid && fromValid.IsValid && revFromName.IsValid && reCaptchaValidator.Success)
                 {
                     confirmDiv.Visible = true;
                     formDiv.Visible = false;
 
                     if (HashMaster.SaltedHashCompare(HttpUtility.UrlDecode(Document.Value) + Strings.IfNull(Strings.Clean(Request.QueryString["docurl"]), "").Replace("__amp;", "&"),
-                                                     HttpUtility.UrlEncodeUnicode(Strings.IfNull(Strings.Clean(Request.Params["a"]), "")),
-                                                     HttpUtility.UrlEncodeUnicode(Strings.IfNull(Strings.Clean(Request.Params["b"]), ""))))
+                                                     HttpUtility.UrlEncode(Strings.IfNull(Strings.Clean(Request.Params["a"]), "")),
+                                                     HttpUtility.UrlEncode(Strings.IfNull(Strings.Clean(Request.Params["b"]), ""))))
                     {
                         //Create document hyperlink
                         if (Url.Value.StartsWith("/"))

@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using NCI.Web.CDE;
 using System.Collections;
-using System.Text.RegularExpressions;
-using System.Data;
 using System.Configuration;
-using NCI.Util;
-using CancerGov.CDR.TermDictionary;
+using System.Text.RegularExpressions;
 using CancerGov.UI;
-using CancerGov.Common;
 using CancerGov.UI.HTML;
-using NCI.Logging;
+using Common.Logging;
+using NCI.Util;
+using NCI.Web.CDE;
+
 namespace TCGA.Web.Common.PopUps
 {
     public partial class Definition : PopUpPage
     {
+        static ILog log = LogManager.GetLogger(typeof(Definition));
+
         private IRenderer content;
         protected string strSendPrinter = "Send to Printer";
         //protected string strHeading = "<h3 class='popup-definition'>Definition from NCI's Dictionary of Cancer Terms</h3>";
@@ -73,7 +68,7 @@ namespace TCGA.Web.Common.PopUps
             }
             catch(Exception ex)
             {
-                Logger.LogError("TCGA:Definition.cs:PageLoad", "", NCIErrorLevel.Error, ex);
+                log.Error("TCGA:Definition.cs:PageLoad", ex);
 
             }
             version = PDQVersionResolver.GetPDQVersion(Strings.Clean(Request.Params["version"]));
@@ -139,13 +134,13 @@ namespace TCGA.Web.Common.PopUps
                         pronunciation = result[1].ToString();
                         termDefinition = result[2].ToString();
                         mediaHtml = result[3].ToString();
-                        mediaHtml = mediaHtml.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+                        mediaHtml = mediaHtml.Replace("[__imagelocation]", ConfigurationManager.AppSettings["CDRImageLocation"]);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Logger.LogError("TCGA:Definition.cs:PageLoad", "", NCIErrorLevel.Error, ex);
+                log.Error("TCGA:Definition.cs:PageLoad", ex);
 
             }
             if (dl == DisplayLanguage.Spanish)

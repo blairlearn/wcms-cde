@@ -1,30 +1,14 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-
+using CancerGov.CDR.ClinicalTrials.Search;
 using CancerGov.CDR.DataManager;
 using CancerGov.Common.ErrorHandling;
-using CancerGov.CDR.ClinicalTrials.Search;
 using CancerGov.UI.CDR;
-
-using NCI.Web.UI.WebControls;
 using NCI.Util;
-using NCI.Web.UI.WebControls.FormControls;  // For the CTSearchCriteriaDisplay object.
-using NCI.Web.CancerGov.Apps;
-using NCI.Logging;
 using NCI.Web.CDE;
-using NCI.Web.CDE.Modules;
-using NCI.Web.CDE.WebAnalytics;
+using NCI.Web.UI.WebControls;
+using NCI.Web.UI.WebControls.FormControls;  // For the CTSearchCriteriaDisplay object.
 
 namespace CancerGov.Web.SnippetTemplates
 {

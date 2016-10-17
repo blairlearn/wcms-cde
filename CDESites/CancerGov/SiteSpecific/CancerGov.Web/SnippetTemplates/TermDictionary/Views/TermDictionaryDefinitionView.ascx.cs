@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
 using CancerGov.Text;
+using Common.Logging;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
@@ -15,6 +15,8 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class TermDictionaryDefinitionView : SnippetControl
     {
+        static ILog log = LogManager.GetLogger(typeof(TermDictionaryDefinitionView));
+
         public string SearchStr { get; set; }
 
         public string Expand { get; set; }
@@ -375,7 +377,7 @@ namespace CancerGov.Web.SnippetTemplates
 
                             //if either the regular image size or the enlarge image size is not in the config file
                             //default to the full image in the database
-                            if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageRegular"]) || string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageEnlarge"]))
+                            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["CDRImageRegular"]) || string.IsNullOrEmpty(ConfigurationManager.AppSettings["CDRImageEnlarge"]))
                             {
                                 termImage.Src = imageDetails.Filename;
 
@@ -386,7 +388,7 @@ namespace CancerGov.Web.SnippetTemplates
                                 }
 
                                 //log a warning
-                                NCI.Logging.Logger.LogError("TermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
+                                log.WarnFormat("Web.Config file does not specify image sizes for term id: {0}. Display full image.", CdrID);
                             }
                             else
                             {
@@ -395,13 +397,13 @@ namespace CancerGov.Web.SnippetTemplates
                                 {
                                     //termImage image size is 571
                                     //example format CDR526538-571.jpg
-                                    termImage.Src = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
+                                    termImage.Src = regularTermImage[0] + "-" + ConfigurationManager.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
 
                                     //enlarge image size is 750
                                     //example format CDR526538-750.jpg
                                     if (termEnlargeImage != null)
                                     {
-                                        termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
+                                        termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationManager.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
                                         termEnlargeImage.InnerText = DictionaryLanguage == "es" ? "Ampliar" : "Enlarge";
                                     }
 

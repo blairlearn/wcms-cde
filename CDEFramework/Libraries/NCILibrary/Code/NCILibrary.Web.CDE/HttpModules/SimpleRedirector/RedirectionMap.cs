@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web;
 using System.Web.Caching;
-
+using Common.Logging;
 using NCI.Web.CDE.SimpleRedirector.Configuration;
 
 namespace NCI.Web.CDE.SimpleRedirector
@@ -14,7 +14,7 @@ namespace NCI.Web.CDE.SimpleRedirector
     /// </summary>
     internal class RedirectionMap
     {
-        static Log log = new Log(typeof(RedirectionMap));
+        static ILog log = LogManager.GetLogger(typeof(RedirectionMap));
 
         /// <summary>
         /// Returns a RedirectionMap created from the specified datafile.  If avaialble, a cached
@@ -26,7 +26,7 @@ namespace NCI.Web.CDE.SimpleRedirector
         /// <returns>A (possibly empty) RedirectionMap.</returns>
         public static RedirectionMap GetMap(String datafile, HttpContext context)
         {
-            log.trace("Enter GetMap().");
+            log.Trace("Enter GetMap().");
 
             RedirectionMap map;
             Cache cache = context.Cache;
@@ -35,7 +35,7 @@ namespace NCI.Web.CDE.SimpleRedirector
 
             try
             {
-                log.debug(String.Format("Load cache for '{0}'.", datafile));
+                log.DebugFormat("Load cache for '{0}'.", datafile);
                 map = (RedirectionMap)cache[datafile];
                 if (map == null)
                 {
@@ -46,7 +46,7 @@ namespace NCI.Web.CDE.SimpleRedirector
                         if (map == null)
                         {
                             // There was no cached redirection map.  Load it from the file system.
-                            log.debug(String.Format("Cache miss. Loading redirection map from '{0}'.", datafile));
+                            log.DebugFormat("Cache miss. Loading redirection map from '{0}'.", datafile);
 
                             CacheItemRemovedCallback onRemove = new CacheItemRemovedCallback(RemovedItemCallback);
                             CacheDependency fileDependency = new CacheDependency(datafile);
@@ -56,19 +56,19 @@ namespace NCI.Web.CDE.SimpleRedirector
                         }
                         else
                         {
-                            log.debug("Cached redirection map found on second chance retrieval.");
+                            log.Debug("Cached redirection map found on second chance retrieval.");
                         }
                     }
                 }
                 else
                 {
                     // A cached redirection map was found. Return it.
-                    log.debug("Loading cached redirection map.");
+                    log.Debug("Loading cached redirection map.");
                 }
             }
             catch (Exception ex)
             {
-                log.error("Error while getting the redirection map.", ex);
+                log.Error("Error while getting the redirection map.", ex);
 
                 // Instead of letting the request die,
                 // swallow the exception and return an empty map.
@@ -86,7 +86,7 @@ namespace NCI.Web.CDE.SimpleRedirector
         /// <param name="reason">Enum explaining why the item was removed.</param>
         private static void RemovedItemCallback(String key, Object item, CacheItemRemovedReason reason)
         {
-            log.trace(String.Format("'{0}' removed from cache because '{1}'.", key, reason));
+            log.TraceFormat("'{0}' removed from cache because '{1}'.", key, reason);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace NCI.Web.CDE.SimpleRedirector
         /// <returns></returns>
         private static RedirectionMap LoadMapFromFile(String datafile)
         {
-            log.trace("Enter LoadMapFromFile().");
+            log.Trace("Enter LoadMapFromFile().");
 
             SimpleRedirectorConfigurationSection config = SimpleRedirectorConfigurationSection.Get();
 
@@ -110,28 +110,36 @@ namespace NCI.Web.CDE.SimpleRedirector
             {
                 if (!File.Exists(datafile))
                 {
-                    log.error(String.Format("Datafile '{0}' not found.", datafile));
+                    log.ErrorFormat("Datafile '{0}' not found.", datafile);
                     throw new FileNotFoundException(datafile);
-                }
-
-                String[] listOfUrlPairs = File.ReadAllLines(datafile);
-                foreach (String urlPair in listOfUrlPairs)
-                {
-                    String[] urls = urlPair.Trim().Split(separators);
-                    if (urls.Length >= 2)
-                        map.Add(urls[0], urls[1]);
-                    if (urls.Length != 2)
-                    {
-                        // We can recover from this problem. No exception needed.
-                        log.warning(String.Format("Expected only two urls, found {0} in '{1}'.", urls.Length, urlPair));
-                    }
                 }
             }
             catch (Exception ex)
             {
-                log.error(String.Format("Error '{0}' while loading urls from {1}.", ex.Message, datafile), ex);
+                log.ErrorFormat("Error while loading urls from {0}.", ex, datafile);
                 // Swallow the exception.  The worst case is we return an empty dictionary
                 // and nothing gets redirected.
+            }
+                
+            String[] listOfUrlPairs = File.ReadAllLines(datafile);
+            foreach (String urlPair in listOfUrlPairs)
+            {
+                String[] urls = urlPair.Trim().Split(separators);
+                if (urls.Length >= 2)
+                    try
+                    {
+                        map.Add(urls[0], urls[1]);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.ErrorFormat("Duplicate URL found in RedirectMap: {0}", ex, urls[0]);
+                    }
+                        
+                if (urls.Length != 2)
+                {
+                    // We can recover from this problem. No exception needed.
+                    log.WarnFormat("Expected only two urls, found {0} in '{1}'.", urls.Length, urlPair);
+                }
             }
 
             return map;

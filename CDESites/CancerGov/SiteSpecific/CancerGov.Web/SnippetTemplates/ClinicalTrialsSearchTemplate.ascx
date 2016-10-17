@@ -219,7 +219,7 @@
                 
         <div class="row">
             <div class="large-4 columns">
-                <label class="field" for="<%= cancerStage.ClientID %>">Stage/Subtype</label>
+                <div class="label field">Stage/Subtype</div>
             </div>
             <div class="large-7 left columns">
                 <CancerGov:AccessibleCheckBoxList 
@@ -243,7 +243,7 @@
                 <div class="row">
                     <div class="cts-location roundy-box">
                         <div class="row">
-                            <asp:DropDownList CssClass="fullwidth location-chooser" ID="LocationTypeSelector" runat="server">
+                            <asp:DropDownList CssClass="fullwidth location-chooser" ID="LocationTypeSelector" runat="server" title="Choose how to search for a location.">
                                 <asp:ListItem Value="all" Selected="True">All</asp:ListItem>
                                 <asp:ListItem Value="zip">Near ZIP Code</asp:ListItem>
                                 <asp:ListItem Value="city">In City/State/Country</asp:ListItem>
@@ -312,7 +312,7 @@
                                     <input id="city" type="text" size="14" name="city" runat="server" />
                                 </div>
                                 <div class="ct-state-area">
-                                    <label class="ct-state-label">State</label>
+                                    <div class="label ct-state-label">State</div>
                                     <CancerGov:AccessibleCheckBoxList
                                         id="state"
                                         runat="server"
@@ -354,7 +354,7 @@
         <div id="interventionArea" class="collapsible">
             <div class="row">
                 <div class="large-4 columns">
-                    <label class="field">Type of Trial</label>
+                    <div class="label field">Type of Trial</div>
                 </div>
                 <div class="large-7 left columns">
                     <CancerGov:AccessibleCheckBoxList 
@@ -367,7 +367,7 @@
 
             <div class="row" id="drugListArea" runat="server">
                 <div class="large-4 columns">
-                    <label class="field">Drug</label>
+                    <div class="label field">Drug</div>
                 </div>
                 <div class="large-7 left columns">
                     <div id="showDrugListButtonArea" style="display: none;">
@@ -400,7 +400,7 @@
             
             <div class="row" id="interventionListArea" runat="server">
                 <div class="large-4 columns">
-                    <label class="field">Treatment/Intervention</label>
+                    <div class="label field">Treatment/Intervention</div>
                 </div>
                 <div class="large-7 left columns">
                     <em>Examples: chemotherapy, adjuvant therapy, colonoscopy</em>
@@ -442,10 +442,10 @@
             <div id="legend-keyword" class="large-4 small-11 columns legend">Keywords/Phrases</div>
             <div class="large-1 small-1 right columns"><a href="<% =SearchHelpPrettyUrl %>#4" class="text-icon-help" target="_blank" aria-label="Help">?</a></div>
             <div class="large-7 columns">
-                <div class="row">Search by word or phrase (use quotation marks with phrases)</div>
+                <div id="txtKeywordsDesc" class="row">Search by word or phrase (use quotation marks with phrases)</div>
                 <div class="row">
                 <asp:TextBox id="txtKeywords" maxlength="100"
-                    name="txtKeywords" runat="server" />
+                    name="txtKeywords" runat="server" aria-labelledby="txtKeywordsDesc"/>
                 </div>
             </div>
         </div>
@@ -500,7 +500,7 @@
             <div class="large-7 columns">
                 <div class="row">Separate multiple IDs with commas or semicolons</div>
                 <div class="row">
-					<asp:TextBox ID="protocolID" MaxLength="50" runat="server" />
+					<asp:TextBox ID="protocolID" MaxLength="50" runat="server" title="Trial ID - separate multiple IDs with commas or semicolons."/>
                 </div>
             </div>
         </div>
@@ -522,7 +522,7 @@
         </div>
         <div id="trialSponsorArea" class="collapsible">
             <div id="trialInvestigatorsRow" runat="server" class="row">
-                <div class="large-4 columns"><label class="field">Trial Investigators</label></div>
+                <div class="large-4 columns"><div class="label field">Trial Investigators</div></div>
                 <div class="large-7 left columns">
                     <div id="showInvestigatorListButtonArea" style="display: none;">
                         <button id="showInvestigatorListButton" class="action" type="button">Choose From List</button></div>
@@ -546,7 +546,7 @@
                 </div>
             </div>        
             <div id="trialLeadOrganizationRow" runat="server" class="row">
-                <div class="large-4 columns"><label class="field">Lead Organization</label></div>
+                <div class="large-4 columns"><div class="label field">Lead Organization</div></div>
                 <div class="large-7 left columns">
                     <div id="showLeadOrgListButtonArea" style="display: none;">
                         <button id="showLeadOrgListButton" class="action" type="button">Choose From List</button></div>

@@ -1,27 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Xml;
-using System.Xml.Linq;
 using CancerGov.CDR.DataManager;
-using CancerGov.DataAccessClasses.UI.Types;
-using CancerGov.UI.PageObjects;
-using NCI.Data;
-using NCI.Logging;
 using NCI.Util;
-using NCI.Web.CancerGov.Apps;
 using NCI.Web.CDE;
 using NCI.Web.CDE.WebAnalytics;
+
 namespace CancerGov.Web.SnippetTemplates
 {
     public partial class ViewGenericsProfessionals : SearchBaseUserControl
@@ -104,7 +87,7 @@ namespace CancerGov.Web.SnippetTemplates
                 // Add page name to analytics
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar1, wbField =>
                 {
-                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + SearchPageInfo.SearchResultsPrettyUrl;
+                    wbField.Value = ConfigurationManager.AppSettings["HostName"] + SearchPageInfo.SearchResultsPrettyUrl;
                 });
                 //End of Web Anlytics
             }

@@ -1,15 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using NCI.Logging;
-using NCI.Util;
-
-using Newtonsoft.Json;
+using Common.Logging;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -18,6 +11,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// </summary>
     public static class ZipCodeGeoLookup
     {
+        static ILog log = LogManager.GetLogger(typeof(ZipCodeGeoLookup));
 
         /// <summary>
         /// ZipCodeDictionary field that will be used for Loader/Reloader
@@ -87,7 +81,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             String zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"].ToString();
             if (String.IsNullOrWhiteSpace(zipFilePath))
             {
-                Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLookup:WatchDictionaryFile()", "'ZipCodesJsonMap' value not set.", NCIErrorLevel.Error);
+                log.Error("WatchDictionaryFile(): 'ZipCodesJsonMap' value not set.");
                 return;
             }
             zipFilePath = HttpContext.Current.Server.MapPath(zipFilePath);
@@ -112,7 +106,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private static void OnChange(object src, FileSystemEventArgs e)
         {
             zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
-            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLookup.cs:OnChange()", "Dictionary file was updated.", NCIErrorLevel.Warning);
+            log.Warn("OnChange(): Dictionary file was updated.");
         }
 
         /// <summary>
@@ -123,7 +117,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="e">event arguments (not used)</param>
         private static void OnRemove(object src, FileSystemEventArgs e) 
         {
-            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLookup.cs:OnRemove()", "Dictionary file was deleted.", NCIErrorLevel.Warning);
+            log.Warn("OnRemove(): Dictionary file was deleted.");
         }
 
         /// <summary>
@@ -134,7 +128,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="e">event arguments (not used)</param>
         private static void OnRename(object source, RenamedEventArgs e) 
         {
-            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:ZipCodeGeoLookup.cs:OnRename()", "Dictionary file was updated", NCIErrorLevel.Warning);
+            log.Warn("OnRename(): Dictionary file was updated");
         }
     }
 }

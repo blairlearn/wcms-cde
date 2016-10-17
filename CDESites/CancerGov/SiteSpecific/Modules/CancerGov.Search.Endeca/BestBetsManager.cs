@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
+using Common.Logging;
+using NCI.Search.Endeca;
 using NCI.Util;
 using NCI.Web.CDE;
-using NCI.Search.Endeca;
-using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.Configuration;
+using NCI.Web.CDE.Modules;
 
 namespace CancerGov.Modules.Search.Endeca
 {
@@ -19,6 +17,8 @@ namespace CancerGov.Modules.Search.Endeca
     {
         public static BestBetsResults GetBestBets(string searchTerm, DisplayLanguage lang)
         {
+            ILog log = LogManager.GetLogger(typeof(BestBetsResults));
+
             BestBetsResults rtnResults = new BestBetsResults();
 
             //Remove those characters that are not valid
@@ -27,7 +27,7 @@ namespace CancerGov.Modules.Search.Endeca
             string dimIDs = "0";
             if (lang == DisplayLanguage.Spanish)
             {
-                dimIDs = Strings.Clean(ConfigurationSettings.AppSettings["EndecaSpanishBestBets"]) ?? dimIDs;
+                dimIDs = Strings.Clean(ConfigurationManager.AppSettings["EndecaSpanishBestBets"]) ?? dimIDs;
             }
 
             EndecaBestBetsSearch bbs = new EndecaBestBetsSearch(searchTerm, dimIDs);
@@ -45,7 +45,7 @@ namespace CancerGov.Modules.Search.Endeca
                 {
                     if (string.IsNullOrEmpty(res.CategoryID))
                     {
-                        NCI.Logging.Logger.LogError("GetBestBets", "category id is null/empty", NCI.Logging.NCIErrorLevel.Warning);
+                        log.Warn("GetBestBets(): category id is null/empty");
                         continue;
                     }
 
@@ -63,7 +63,7 @@ namespace CancerGov.Modules.Search.Endeca
                 { 
                     // The bestbet result xml file may not always be there, so catch the exception and log the error
                     // and ignore the exception
-                    NCI.Logging.Logger.LogError("GetBestBets", "could not find bb result for category id " + res.CategoryID + " Category name " + res.CategoryName, NCI.Logging.NCIErrorLevel.Warning, ex);
+                    log.WarnFormat("GetBestBets(): could not find bb result for category id {0} Category name {1}", ex, res.CategoryID, res.CategoryName);
 
                 }
             }

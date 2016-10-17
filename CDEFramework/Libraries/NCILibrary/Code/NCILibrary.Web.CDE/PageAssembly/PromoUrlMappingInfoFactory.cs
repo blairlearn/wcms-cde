@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
+using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Web;
-using System.IO;
-
-using NCI.Logging;
+using Common.Logging;
 using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE
 {
     public static class PromoUrlMappingInfoFactory
     {
+        static ILog log = LogManager.GetLogger(typeof(PromoUrlMappingInfoFactory));
+
         // XmlSerializer to deserialization PromoUrlMapping
         private static XmlSerializer _serializer = new XmlSerializer(typeof(PromoUrlMapping));
 
@@ -42,7 +40,7 @@ namespace NCI.Web.CDE
                 FileInfo promoUrlFileInfo = new FileInfo(xmlFileName);
                 if (!promoUrlFileInfo.Exists)
                 {
-                    Logger.LogError("CDE:promoUrlMappingFactory.cs:GetPromoUrlMapping", "PromoUrl Mapping file does not exists", NCIErrorLevel.Warning);
+                    log.Warn("GetPromoUrlMapping(): PromoUrl Mapping file does not exist");
                     return null;
                 }
                 else
@@ -60,8 +58,8 @@ namespace NCI.Web.CDE
             }
             catch (Exception ex)
             {
-                string message = String.Format("Unable to load section Promo Url mapping from file \"{0}.\"  The file may not exist or the XML in the file may not be serializable into a valid promoUrlMapping object.", xmlFileName);
-                Logger.LogError("CDE:promoUrlMappingFactory.cs:GetPromoUrlMapping", message, NCIErrorLevel.Error, ex);
+                string message = String.Format("GetPromoUrlMapping(): Unable to load section Promo Url mapping from file \"{0}.\"  The file may not exist or the XML in the file may not be serializable into a valid promoUrlMapping object.", xmlFileName);
+                log.Error(message, ex);
                 return null;
             }
             return promoUrlMapping;

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.ComponentModel;
-using NCI.Web.CDE.Modules;
+using Common.Logging;
 using NCI.DataManager;
-using NCI.Web.UI.WebControls;
+using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI.Configuration;
-using System.Data;
+using NCI.Web.UI.WebControls;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
@@ -21,7 +21,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
     public abstract class BaseSearchSnippet : SnippetControl
     {
         #region Private Members
+        static ILog log = LogManager.GetLogger(typeof(BaseSearchSnippet));
+
         SearchList _searchList = null;
+        private DataTable _taxonomyFilters = null;
 
         /// <summary>
         /// The current page that is being used.
@@ -100,15 +103,17 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// for each taxonomy filter selected on a dynamic list.
         /// If there are no filters selected, then send null.
         /// </summary>
-        virtual protected DataTable TaxonomyFilters
+        /*virtual protected DataTable TaxonomyFilters
         {
             get
             {
-                if (this.SearchList.SearchFilters == null || this.SearchList.SearchFilters.TaxonomyFilters.Length == 0)
-                    return null;
-                return ReturnTaxonomySqlParam(this.SearchList.SearchFilters.TaxonomyFilters);
+                if (_taxonomyFilters == null)
+                {
+                    _taxonomyFilters = ReturnTaxonomySqlParam(this.SearchList.SearchFilters.TaxonomyFilters.OfType<TaxonomyFilter>().ToList());
+                }
+                return _taxonomyFilters;
             }
-        }
+        }*/
 
         protected virtual SearchList SearchList
         { get; set; }
@@ -147,11 +152,61 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         keyWord = string.Empty;
                     }
 
+                    Dictionary<string, string> filters = GetUrlFilters();
+                    if (startDate == DateTime.MinValue && endDate == DateTime.MaxValue && filters.ContainsKey("year"))
+                    {
+                        try
+                        {
+                            int year = Int32.Parse(filters["year"]);
+                            startDate = new DateTime(year, 1, 1);
+                            endDate = new DateTime(year, 12, 31);
+                        }
+                        catch
+                        {
+                            NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("BaseSearchSnippet", 400, "Invalid year parameter in dynamic list filter");
+                        }
+                    }
+
+                    List<TaxonomyFilter> filtersForSql = new List<TaxonomyFilter>(this.SearchList.SearchFilters.TaxonomyFilters.Where(filter => filter.Taxons.Count() > 0));
+                    foreach (KeyValuePair<string, string> entry in filters)
+                    {
+                        if(entry.Key != "year")
+                        {
+                            bool contains = filtersForSql.Any(filter => filter.TaxonomyName == entry.Key);
+                            if(!contains)
+                            {
+                                TaxonomyFilter newFilter = new TaxonomyFilter();
+                                newFilter.TaxonomyName = entry.Key;
+                                List<int> taxonIDs = entry.Value.Split(',').Select(Int32.Parse).ToList();
+                                List<Taxon> newTaxons = new List<Taxon>();
+                                foreach (int ID in taxonIDs)
+                                {
+                                    Taxon newTaxon = new Taxon();
+                                    newTaxon.ID = ID;
+                                    newTaxons.Add(newTaxon);
+                                }
+                                newFilter.Taxons = newTaxons.ToArray<Taxon>();
+                                filtersForSql.Add(newFilter);
+                            }
+                        }
+                    }
+
+
                     // Call the  datamanger to perform the search
                     ICollection<SearchResult> searchResults =
-                                SearchDataManager.Execute(CurrentPage, startDate, endDate, keyWord, TaxonomyFilters,
-                                    this.SearchList.RecordsPerPage, this.SearchList.MaxResults, this.SearchList.SearchFilter,
-                                    this.SearchList.ExcludeSearchFilter, this.SearchList.ResultsSortOrder, this.SearchList.Language, Settings.IsLive, out actualMaxResult, siteName);
+                                SearchDataManager.Execute(CurrentPage,
+                                    startDate,
+                                    endDate, 
+                                    keyWord, 
+                                    ReturnTaxonomySqlParam(filtersForSql),
+                                    this.SearchList.RecordsPerPage, 
+                                    this.SearchList.MaxResults, 
+                                    this.SearchList.SearchFilter,
+                                    this.SearchList.ExcludeSearchFilter, 
+                                    this.SearchList.ResultsSortOrder, 
+                                    this.SearchList.Language, 
+                                    Settings.IsLive, 
+                                    out actualMaxResult, siteName);
 
                     DynamicSearch dynamicSearch = new DynamicSearch();
                     dynamicSearch.Results = searchResults;
@@ -231,9 +286,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     }
                 }
             }
+            catch (ThreadAbortException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("this.SearchListSnippet:processData", NCI.Logging.NCIErrorLevel.Error, ex);
+                log.Error("this.SearchListSnippet:processData", ex);
             }
         }
         /// <summary>
@@ -332,7 +391,23 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
         }
 
-        private DataTable ReturnTaxonomySqlParam(TaxonomyFilter[] taxonomyFiltersList)
+        private Dictionary<string, string> GetUrlFilters()
+        {
+            Dictionary<string, string> urlParams = new Dictionary<string, string>();
+            Regex pattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
+            {
+                if (pattern.IsMatch(key))
+                {
+                    Match match = pattern.Match(key);
+                    urlParams.Add(match.Groups[1].Value, HttpContext.Current.Request.QueryString[match.Value]);
+                }
+            }
+
+            return urlParams;
+        }
+
+        private DataTable GetTaxonomyDataTable()
         {
             // This datatable must be structured like the datatable in the stored proc, 
             // in order to be passed in correctly as a parameter.
@@ -350,6 +425,15 @@ namespace NCI.Web.CDE.UI.SnippetControls
             dc1.DataType = System.Type.GetType("System.Int32");
             dc1.ColumnName = "taxonID";
             dt.Columns.Add(dc1);
+
+            return dt;
+        }
+
+        private DataTable ReturnTaxonomySqlParam(List<TaxonomyFilter> taxonomyFiltersList)
+        {
+            // This datatable must be structured like the datatable in the stored proc, 
+            // in order to be passed in correctly as a parameter.
+            DataTable dt = GetTaxonomyDataTable();
 
             // Loop through each of the different TaxonomyFilters (for different taxonomies)
             foreach (TaxonomyFilter filter in taxonomyFiltersList)

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Web;
-using System.Configuration;
 using System.Diagnostics;
-using NCI.Logging;
+using Common.Logging;
+
 namespace CancerGov.Common.ErrorHandling
 {
     ///<summary>
@@ -75,6 +74,8 @@ namespace CancerGov.Common.ErrorHandling
     ///</summary>
     public class CancerGovError
     {
+        static ILog log = LogManager.GetLogger(typeof(CancerGovError));
+
         /// <summary>
         /// Get the name of the event log to write to
         /// </summary>
@@ -108,8 +109,7 @@ namespace CancerGov.Common.ErrorHandling
                 //    EventLog.WriteEntry(source, errString, type, eventID);
                 //}
                 Exception ex = new Exception("Event ID-" + eventID + "-Type-" + type);                
-                LoggingHelper helper = LoggingHelper.Instance;
-                helper.LogError("CancerGovSpecific", errString, NCIErrorLevel.Error, ex);
+                log.Error(errString, ex);
 
             }
             catch { }

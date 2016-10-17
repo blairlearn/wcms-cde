@@ -1,29 +1,17 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-
+using Common.Logging;
+using NCI.Search.BestBets;
 using NCI.Web.CDE;
 using NCI.Web.CDE.Configuration;
 using NCI.Web.CDE.Modules;
-using NCI.Search.BestBets;
-
-
-
-/*
-using NCI.Util;
-using NCI.Search.Endeca;
-*/
 
 namespace CancerGov.Search.BestBets
 {
     public static class BestBetsPresentationManager
     {
+        static ILog log = LogManager.GetLogger(typeof(BestBetsPresentationManager));
+
         public static BestBetUIResult[] GetBestBets(string searchTerm, DisplayLanguage lang)
         {
             List<BestBetUIResult> rtnResults = new List<BestBetUIResult>();
@@ -35,7 +23,11 @@ namespace CancerGov.Search.BestBets
             if (lang == DisplayLanguage.Spanish)
             {
                 twoCharLang = "es";
-            } 
+            }
+            else 
+            {
+                twoCharLang = "en";
+            }
 
             //TODO: Language!!!!
             //NOTE: This can throw an exception - in the past we left it unhandled.  That is stupid, because
@@ -50,7 +42,7 @@ namespace CancerGov.Search.BestBets
                 {
                     if (string.IsNullOrEmpty(res.CategoryID))
                     {
-                        NCI.Logging.Logger.LogError("GetBestBets", "category id is null/empty", NCI.Logging.NCIErrorLevel.Warning);
+                        log.Warn("GetBestBets(): category id is null/empty");
                         continue;
                     }
 
@@ -65,7 +57,7 @@ namespace CancerGov.Search.BestBets
                 { 
                     // The bestbet result xml file may not always be there, so catch the exception and log the error
                     // and ignore the exception
-                    NCI.Logging.Logger.LogError("GetBestBets", "could not find bb result for category id " + res.CategoryID + " Category name " + res.CategoryName, NCI.Logging.NCIErrorLevel.Warning, ex);
+                    log.WarnFormat("GetBestBets(): could not find bb result for category id {0} Category name {1}", ex, res.CategoryID,  res.CategoryName);
                 }
             }
 

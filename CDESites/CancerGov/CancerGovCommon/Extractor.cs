@@ -138,7 +138,7 @@ namespace CancerGov.Common.Extraction
 			{
 				case ExtractionTypes.URL:		//URL extraction
 					if (! (Regex.IsMatch(extract, "^(#|mailto|/common/popups/popdefinition.aspx|/dictionary|^\\s+$|^\"|javascript:)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline)
-                        || Regex.IsMatch(extract, "^(#|mailto|" + ConfigurationSettings.AppSettings["RootUrl"] + "/common/popups/popdefinition.aspx|/dictionary/db_alpha.aspx|^\\s+$|^\"|javascript:)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline)
+                        || Regex.IsMatch(extract, "^(#|mailto|" + ConfigurationManager.AppSettings["RootUrl"] + "/common/popups/popdefinition.aspx|/dictionary/db_alpha.aspx|^\\s+$|^\"|javascript:)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline)
 						   || mt.Groups["linkText"].Value.StartsWith("http")
 						   || mt.Groups["linkText"].Value.StartsWith("www.")) ) {
 
@@ -149,11 +149,11 @@ namespace CancerGov.Common.Extraction
 							extract = HttpUtility.UrlDecode(extract.Substring(pos, extract.IndexOf("&", pos) - pos));
 						}
 
-						if (((extract.IndexOf("http://") == -1) || (extract.IndexOf("https://") == -1)) && extract.StartsWith("/"))
-						{
-							extract = ConfigurationSettings.AppSettings["RootUrl"] + extract;
-							//throw new Exception("Got: '" + extract + "'");
-						}
+                        if (((extract.IndexOf("http://") == -1) || (extract.IndexOf("https://") == -1)) && extract.StartsWith("/"))
+                        {
+                            extract = ConfigurationManager.AppSettings["RootUrl"] + extract;
+                            //throw new Exception("Got: '" + extract + "'");
+                        }
 
 						/*if (extract.StartsWith("mailto:")) 
 						{

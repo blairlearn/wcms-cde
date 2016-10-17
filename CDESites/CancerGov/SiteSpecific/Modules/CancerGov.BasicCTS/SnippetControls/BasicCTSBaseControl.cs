@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using NCI.Logging;
+using Common.Logging;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 
@@ -8,6 +8,8 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
 {
     public class BasicCTSBaseControl : SnippetControl
     {
+        static ILog log = LogManager.GetLogger(typeof(BasicCTSBaseControl));
+
         /// <summary>
         /// Enumeration representing a bitmap for the fields that are set.
         /// </summary>
@@ -271,7 +273,7 @@ namespace CancerGov.ClinicalTrials.Basic.SnippetControls
                 }
                 catch (Exception ex)
                 {
-                    NCI.Logging.Logger.LogError("BasicCTSBaseControl", "could not load the BasicCTSPageInfo, check the config info of the application module in percussion", NCIErrorLevel.Error, ex);
+                    log.Error("could not load the BasicCTSPageInfo, check the config info of the application module in percussion", ex);
                     throw ex;
                 }
             }

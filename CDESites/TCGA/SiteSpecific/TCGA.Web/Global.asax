@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="TCGA.Web.Global" Language="C#" %>
+﻿<%@ Application Codebehind="GlobalApplication.cs" Inherits="NCI.Web.CDE.Application.GlobalApplication" Language="C#" %>

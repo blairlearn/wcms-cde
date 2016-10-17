@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Newtonsoft.Json;
-
-using NCI.Logging;
-using NCI.Web.Dictionary.BusinessObjects;
+using Common.Logging;
 using NCI.Services.Dictionary;
-
-using svcDictionaryType = NCI.Services.Dictionary.DictionaryType;
-using svcSearchType = NCI.Services.Dictionary.SearchType;
-using svcLanguage = NCI.Services.Dictionary.Language;
+using NCI.Web.Dictionary.BusinessObjects;
+using Newtonsoft.Json;
 using svcAudienceType = NCI.Services.Dictionary.AudienceType;
+using svcDictionaryType = NCI.Services.Dictionary.DictionaryType;
+using svcLanguage = NCI.Services.Dictionary.Language;
+using svcSearchType = NCI.Services.Dictionary.SearchType;
 
 namespace NCI.Web.Dictionary
 {
     public class DictionaryAppManager
     {
-        static Log log = new Log(typeof(DictionaryAppManager));
-
+        static ILog log = LogManager.GetLogger(typeof(DictionaryAppManager));
 
         /// <summary>
         /// Get Term from Dictionary Service to be deserialized and returned to the app module
@@ -46,7 +42,7 @@ namespace NCI.Web.Dictionary
             }
             catch (Exception ex)
             {
-                log.error("Error in Dictionary Web Service for Get Term: " + ex);
+                log.Error("Error in Dictionary Web Service for Get Term.", ex);
             }
 
             //String of JSON returned from the Database to be deserialized.
@@ -59,7 +55,7 @@ namespace NCI.Web.Dictionary
             }
             catch (JsonReaderException ex)
             {
-                log.error("Error in Json string from service: " + ex.ToString());
+                log.Error("Error in Json string from service.", ex);
             }
 
            return dicTerm;
@@ -97,7 +93,7 @@ namespace NCI.Web.Dictionary
             }
             catch (Exception ex)
             {
-                log.error("Error in Dictionary Web Service for Get Term: " + ex);
+                log.Error("Error in Dictionary Web Service for Get Term.", ex);
             }
 
             //String of JSON returned from the Database to be deserialized.
@@ -110,7 +106,7 @@ namespace NCI.Web.Dictionary
             }
             catch (JsonReaderException ex)
             {
-                log.error("Error in Json string from service: " + ex.ToString());
+                log.Error("Error in Json string from service.", ex);
             }
 
             return dicTerm;
@@ -145,7 +141,7 @@ namespace NCI.Web.Dictionary
             }
             catch (Exception ex)
             {
-                log.error("Error in Dictionary Web Service for Get Term: " + ex);
+                log.Error("Error in Dictionary Web Service for Get Term.", ex);
             }
 
             //String of JSON returned from the Database to be deserialized.
@@ -158,7 +154,7 @@ namespace NCI.Web.Dictionary
             }
             catch (JsonReaderException ex)
             {
-                log.error("Error in Json string from service: " + ex.ToString());
+                log.Error("Error in Json string from service.", ex);
             }
 
             return dicTerm;
@@ -194,7 +190,7 @@ namespace NCI.Web.Dictionary
             }
             catch (Exception ex)
             {
-                log.error("There is an error in the Search Method of the Dictionary Service: " + ex);
+                log.Error("There is an error in the Search Method of the Dictionary Service.", ex);
             }
 
             List<DictionarySearchResult> resultList = DeserializeList(searchRet.Result, svcDictionary);
@@ -231,7 +227,7 @@ namespace NCI.Web.Dictionary
             }   
             catch(Exception ex)
             {
-                log.error("Error in search suggest method in Dictionary Web Service: " + ex);
+                log.Error("Error in search suggest method in Dictionary Web Service.", ex);
             }
 
             //sets up the suggest so the list of suggestions
@@ -276,7 +272,7 @@ namespace NCI.Web.Dictionary
             }
             catch (Exception ex)
             {
-                log.error("Error in Expand Method in Dictionary Web Service: " + ex);
+                log.Error("Error in Expand Method in Dictionary Web Service.", ex);
             }
 
             List<DictionarySearchResult> expansionList = DeserializeList(expandRet.Result, svcDictionary);
@@ -310,7 +306,8 @@ namespace NCI.Web.Dictionary
                 }
                 catch (JsonReaderException ex)
                 {
-                    log.error("Error in Json string from service: " + ex.ToString() + "\nDictionary: " + dictionaryType + "\nTerm ID: " + m.ID + "\nTerm Name: " + m.MatchedTerm);
+                    log.ErrorFormat("Error in Json string from service.\nDictionary: {0}\nTerm ID: {1}\nTerm Name: {2}",
+                        ex, dictionaryType, m.ID, m.MatchedTerm);
                 }
 
             }

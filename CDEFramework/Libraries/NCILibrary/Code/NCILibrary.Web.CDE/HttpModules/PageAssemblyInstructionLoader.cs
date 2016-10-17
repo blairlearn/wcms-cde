@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Web;
 using System.Globalization;
-using System.Configuration;
-using System.IO;
 using System.Text.RegularExpressions;
-using System.Reflection;
-
+using System.Web;
+using Common.Logging;
 using NCI.Web.CDE.Configuration;
-using NCI.Logging;
 
 namespace NCI.Web.CDE
 {
     public class PageAssemblyInstructionLoader : IHttpModule
     {
+        static ILog log = LogManager.GetLogger(typeof(PageAssemblyInstructionLoader));
+
         private const string PRINT_URL_ENDING = "/print";
         private const string VIEWALL_URL_ENDING = "/allpages";
         private static readonly object REQUEST_URL_KEY = new object();        
@@ -96,8 +94,8 @@ namespace NCI.Web.CDE
 
                     catch (HttpException ex)
                     {
-                        string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.";
-                        Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.", NCIErrorLevel.Error, ex);
+                        string errMessage = "RewriteUrl(): Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.";
+                        log.Error(errMessage, ex);
                         RaiseErrorPage(errMessage, ex);
                     }
                 }
@@ -270,8 +268,8 @@ namespace NCI.Web.CDE
             }
             catch(Exception ex)
             {
-                string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to Create IPageAssemblyInstruction with the XML file Provided.";
-                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to Create IPageAssemblyInstruction with the XML file Provided.", NCIErrorLevel.Error, ex);
+                string errMessage = "RewriteUrl(): Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to Create IPageAssemblyInstruction with the XML file Provided.";
+                log.Error(errMessage, ex);
                 RaiseErrorPage( errMessage,ex);
                 return;
             }
@@ -289,16 +287,16 @@ namespace NCI.Web.CDE
             }
             catch(Exception ex)
             {
-                string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nCannot Load the pageTemplateInfo problem with the PageTemplateConfiguration XML file ";
-                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nCannot Load the pageTemplateInfo problem with the PageTemplateConfiguration XML file ", NCIErrorLevel.Error, ex);
+                string errMessage = "RewriteUrl(): Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nCannot Load the pageTemplateInfo problem with the PageTemplateConfiguration XML file ";
+                log.Error(errMessage, ex);
                 RaiseErrorPage(errMessage, ex);
                 return;
             }
 
             if (pageTemplateInfo == null)
             {
-                string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nPage Template Not Found";
-                Logger.LogError( "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nPage Template Not Found", NCIErrorLevel.Error);
+                string errMessage = "RewriteUrl(): Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nPage Template Not Found";
+                log.Error(errMessage);
                 RaiseErrorPage(errMessage, null);
                 return;
             }
@@ -351,8 +349,8 @@ namespace NCI.Web.CDE
 
             catch (HttpException ex)
             {
-                string errMessage = "CDE:PageAssemblyInstructionLoader.cs:RewriteUrl" + " Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.";
-                Logger.LogError("CDE:PageAssemblyInstructionLoader.cs:RewriteUrl", "Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.", NCIErrorLevel.Error, ex);
+                string errMessage = "RewriteUrl(): Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to rewrite URL.";
+                log.Error(errMessage, ex);
                 RaiseErrorPage(errMessage, ex);
             }
 

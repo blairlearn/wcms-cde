@@ -277,7 +277,7 @@ namespace CancerGov.CDR.DataManager
 				//11-23-2004 BryanP: SCR1002 Changed the database object fetching from adhoc to stored proc. 
                 daProtocol = new SqlDataAdapter("usp_GetProtocolByProtocolID", ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
 				daProtocol.SelectCommand.CommandType = CommandType.StoredProcedure;
-				daProtocol.SelectCommand.CommandTimeout = Strings.ToInt(ConfigurationSettings.AppSettings["CTSearchTimeout"]);
+				daProtocol.SelectCommand.CommandTimeout = Strings.ToInt(ConfigurationManager.AppSettings["CTSearchTimeout"]);
 				daProtocol.SelectCommand.Parameters.Add(new SqlParameter("@ProtocolID", iProtocolID));
 				daProtocol.SelectCommand.Parameters.Add(new SqlParameter("@SectionList", strSectionList));
 				daProtocol.SelectCommand.Parameters.Add(new SqlParameter("@Version", (int)pvVersion));
@@ -386,7 +386,7 @@ namespace CancerGov.CDR.DataManager
 			this.dateLastModified = dateLastModified;
 			this.dateFirstPublished = dateFirstPublished;
 			this.documentTypeID = (ProtocolTypes)documentTypeID;
-			this.pvVersion = pvVersion;
+			this.pvVersion = version;
 
 			//We could create sections here, but they may be null...
 

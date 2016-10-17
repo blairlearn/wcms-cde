@@ -52,7 +52,7 @@ namespace CancerGov.Web
 						break;
 					case "__subject": subject = Request.Params[key]; break;
 					case "__recipient": 
-						to = ConfigurationSettings.AppSettings[Request.Params[key]];
+						to = ConfigurationManager.AppSettings[Request.Params[key]];
 						if ((to == null) || (to == ""))
 						{
 							content += "Error: recipient '" + Request.Params[key] + "' is not configured.<br>\n";

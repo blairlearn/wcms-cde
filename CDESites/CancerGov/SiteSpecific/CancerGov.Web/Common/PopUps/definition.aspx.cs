@@ -137,12 +137,12 @@ namespace CancerGov.Web.Common.PopUps
                     pronunciation = result[1].ToString();
                     termDefinition = result[2].ToString();
                     mediaHtml = result[3].ToString();
-                    mediaHtml = mediaHtml.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+                    mediaHtml = mediaHtml.Replace("[__imagelocation]", ConfigurationManager.AppSettings["CDRImageLocation"]);
 
                     if (result[4] != null)
                     {
                         audioMediaHTML = result[4].ToString();
-                        audioMediaHTML = audioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
+                        audioMediaHTML = audioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationManager.AppSettings["CDRAudioMediaLocation"]);
                     }
                 }
             }

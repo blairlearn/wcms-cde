@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text.RegularExpressions;
-using System.Web.UI.HtmlControls;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Text;
-using System.Configuration;
-using System.Xml;
-using System.Globalization;
-using NCI.Util;
-using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.CDE;
+using NCI.Web.CDE.Application;
 using NCI.Web.CDE.UI;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace NCI.Web.CancerGov.Apps
 {
@@ -82,24 +71,12 @@ namespace NCI.Web.CancerGov.Apps
             //refactoring 
             if (messageKey == "InvalidSearchID")
             {
-                string systemMessagePageUrl;
-
-                systemMessagePageUrl = ConfigurationSettings.AppSettings["ClinicalTrialInvalidSearchID"].Trim();
-                
-                //Bypass the custom error messages and return our content
-                Response.TrySkipIisCustomErrors = true;
-
-                //Setup the 404 response code.
-                Response.StatusCode = 404;
-
-                //System.IO.StringWriter writer = new System.IO.StringWriter();
-                Server.Execute(systemMessagePageUrl);
-
-                Response.End();
+                // use ErrorPageDisplayer to call id-not-found error page 
+                ErrorPageDisplayer.RaiseClinicalTrialsIdNotFound(this.GetType().ToString());
             }
             else
             {
-                //Use the common ErrorPageDisplayer so we do not duplicate the logic
+                // Use the common ErrorPageDisplayer so we do not duplicate the logic
                 ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
             }
         }
