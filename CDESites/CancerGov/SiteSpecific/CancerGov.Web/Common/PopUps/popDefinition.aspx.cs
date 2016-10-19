@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
+using Common.Logging;
 using NCI.Util;
 using NCI.Web.CDE;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+
 namespace Www.Common.PopUps
 {
     ///<summary>
@@ -21,6 +23,8 @@ namespace Www.Common.PopUps
     ///</summary>
     public partial class PopDefinition : System.Web.UI.Page
     {
+        static ILog log = LogManager.GetLogger(typeof(PopDefinition));
+
         private string urlArgs = "";
         public string CdrID { get; set; }
 
@@ -42,15 +46,17 @@ namespace Www.Common.PopUps
                 if (Request.QueryString["language"] == "Spanish")
                 {
                     dictionaryLanguage = "es";
-                    logoText1.InnerText = "INSTITUTO NACIONAL DEL CÁNCER";
-                    logoText2.InnerText = "de los Institutos Nacionales de la Salud de EE. UU.";
+                    logoAnchor.HRef = "/espanol";
+                    logoImage.Alt = "Instituto Nacional Del Cáncer";
+                    logoImage.Src = "/publishedcontent/images/images/design-elements/logos/nci-logo-full-es.svg";
                     closeWindowText.InnerText = "Cerrar";
                     definitionLabel.Text = "Definición:";
                 }
                 else
                 {
-                    logoText1.InnerText = "NATIONAL CANCER INSTITUTE";
-                    logoText2.InnerText = "at the National Institutes of Health";
+                    logoAnchor.HRef = "/";
+                    logoImage.Alt = "National Cancer Institute";
+                    logoImage.Src = "/publishedcontent/images/images/design-elements/logos/nci-logo-full.svg";
                     closeWindowText.InnerText = "Close Window";
                     definitionLabel.Text = "Definition:";
                 }
@@ -206,7 +212,7 @@ namespace Www.Common.PopUps
 
                             //if either the regular image size or the enlarge image size is not in the config file
                             //default to the full image in the database
-                            if (string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageRegular"]) || string.IsNullOrEmpty(ConfigurationSettings.AppSettings["CDRImageEnlarge"]))
+                            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["CDRImageRegular"]) || string.IsNullOrEmpty(ConfigurationManager.AppSettings["CDRImageEnlarge"]))
                             {
                                 termImage.Src = imageDetails.Filename;
 
@@ -217,7 +223,7 @@ namespace Www.Common.PopUps
                                 }
 
                                 //log a warning
-                                NCI.Logging.Logger.LogError("TermDictionaryDefinitionView.ascx", "Web.Config file does not specify image sizes for term id: " + CdrID + ". Display full image.", NCI.Logging.NCIErrorLevel.Warning);
+                                log.WarnFormat("Web.Config file does not specify image sizes for term id: {0}. Display full image.", CdrID);
                             }
                             else
                             {
@@ -226,13 +232,13 @@ namespace Www.Common.PopUps
                                 {
                                     //termImage image size is 571
                                     //example format CDR526538-571.jpg
-                                    termImage.Src = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
+                                    termImage.Src = regularTermImage[0] + "-" + ConfigurationManager.AppSettings["CDRImageRegular"] + "." + regularTermImage[1];
 
                                     //enlarge image size is 750
                                     //example format CDR526538-750.jpg
                                     if (termEnlargeImage != null)
                                     {
-                                        termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationSettings.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
+                                        termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationManager.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
                                         termEnlargeImage.InnerText = dictionaryLanguage == "es" ? "Ampliar" : "Enlarge";
                                     }
                                 }

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Configuration;
-using NCI.Logging;
+using Common.Logging;
 using NCI.Web.ProductionHost.Configuration;
 
 namespace NCI.Web.ProductionHost
 {
     public static class ProductionHostConfig
     {
+        static ILog log = LogManager.GetLogger(typeof(ProductionHostConfig));
+
         private static string _hostname = String.Empty;
         private static string _sitename = String.Empty;
 
@@ -27,9 +29,7 @@ namespace NCI.Web.ProductionHost
                 ProductionHostSection section = (ProductionHostSection)ConfigurationManager.GetSection("nci/web/productionHost");
                 if (section != null)
                 {
-                    Logger.LogError("NCI:ProductionHostConfig.cs:ProductionHostConfig",
-                        "Found ProductionHostSection.",
-                        NCIErrorLevel.Debug);
+                    log.Debug("ProductionHostConfig(): Found ProductionHostSection.");
 
                     foreach (StringProductionHostElement elem in section.StringConditions)
                     {
@@ -44,23 +44,16 @@ namespace NCI.Web.ProductionHost
                         }
                     }
 
-                    Logger.LogError("NCI:ProductionHostConfig.cs:ProductionHostConfig",
-                            "members after searching StringConditions - _hostname = " + _hostname + 
-                            ", _sitename = " + _sitename,
-                            NCIErrorLevel.Debug);
+                    log.DebugFormat("ProductionHostConfig(): members after searching StringConditions - _hostname = {0}, _sitename = {1}", _hostname, _sitename);
                 }
                 else
                 {
-                    Logger.LogError("NCI:ProductionHostConfig.cs:ProductionHostConfig",
-                        "No ProductionHostSection found.",
-                        NCIErrorLevel.Debug);
+                    log.Debug("ProductionHostConfig(): No ProductionHostSection found.");
                 }
             }
             catch (Exception e)
             {
-                Logger.LogError("NCI:ProductionHostConfig.cs:ProductionHostConfig",
-                    "Error encountered while loading configuration.",
-                    NCIErrorLevel.Error, e);
+                log.Error("ProductionHostConfig(): Error encountered while loading configuration.", e);
             }
         }
     }

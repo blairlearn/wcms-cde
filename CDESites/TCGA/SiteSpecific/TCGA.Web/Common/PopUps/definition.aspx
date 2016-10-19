@@ -7,10 +7,10 @@
 	<script src="/PublishedContent/js/popEvents.js" type="text/javascript"></script>
     <script type="text/javascript" language="JavaScript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script src="/PublishedContent/js/jquery.jplayer.min.js" type="text/javascript"></script>
-    <link href="/PublishedContent/Styles/nvcg.css" rel="stylesheet" />
+<link rel="stylesheet" href="/PublishedContent/Styles/tcga.css" type="text/css" />
 	
   </HEAD>
-	<body>
+	<body class="popup-pages">
 	    <div class="popup">
 			<%=strHeading%>
 			<%=this.Content.Render()%>

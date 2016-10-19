@@ -16,10 +16,10 @@ namespace NCI.Search.Endeca
 		public EndecaBestBetsSearch(string searchTerms, string doc_type) : base(
 			searchTerms, 
 			10000, 
-			ConfigurationSettings.AppSettings["EndecaBBIP"], 
-			ConfigurationSettings.AppSettings["EndecaBBPort"], 
-			ConfigurationSettings.AppSettings["EndecaBBSearchInterface"], 
-			ConfigurationSettings.AppSettings["EndecaBBSearchMode"],
+			ConfigurationManager.AppSettings["EndecaBBIP"], 
+			ConfigurationManager.AppSettings["EndecaBBPort"], 
+			ConfigurationManager.AppSettings["EndecaBBSearchInterface"], 
+			ConfigurationManager.AppSettings["EndecaBBSearchMode"],
 			doc_type
 			) 
 		{
@@ -29,7 +29,7 @@ namespace NCI.Search.Endeca
 		private ArrayList GetStopWords() 
 		{
 			ArrayList rtnList = new ArrayList();
-			string stw = ConfigurationSettings.AppSettings["EndecaBBStopWords"];
+			string stw = ConfigurationManager.AppSettings["EndecaBBStopWords"];
 
 			if (stw != null) 
 			{

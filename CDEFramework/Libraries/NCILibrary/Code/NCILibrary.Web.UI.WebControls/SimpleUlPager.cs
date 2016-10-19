@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI;
-using NCI.Logging;
+using Common.Logging;
 
 namespace NCI.Web.UI.WebControls
 {
     public class SimpleUlPager : SimplePager
     {
+        static ILog log = LogManager.GetLogger(typeof(SimpleUlPager));
+
         protected override void RenderNextLink(HtmlTextWriter output)
         {
             //If there is no image, and there is not text, then there is nothing to write.
@@ -286,9 +285,7 @@ namespace NCI.Web.UI.WebControls
             }
             catch (Exception e)
             {
-                Logger.LogError("NCI:SimpleUlPager.cs:RenderContents",
-                            "encountered error while rendering",
-                            NCIErrorLevel.Error, e);
+                log.Error("RenderContents(): encountered error while rendering", e);
             }
         }
     }

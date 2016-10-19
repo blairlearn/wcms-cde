@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
 using System.Web;
-
-using NCI.Util;
-using NCI.EmergencyAlert;
-
 using CancerGov.Common.ErrorHandling;
+using NCI.EmergencyAlert;
+using NCI.Util;
 
 namespace CancerGov.EmergencyAlert
 {
@@ -161,9 +156,9 @@ namespace CancerGov.EmergencyAlert
         /// </summary>
         private void InitProperties()
         {
-            string siteName = Strings.Clean(ConfigurationSettings.AppSettings[_siteNameAppKey]);
+            string siteName = Strings.Clean(ConfigurationManager.AppSettings[_siteNameAppKey]);
 
-            _emergencyUrl = Strings.Clean(ConfigurationSettings.AppSettings[_emergencyUrlAppKey]);
+            _emergencyUrl = Strings.Clean(ConfigurationManager.AppSettings[_emergencyUrlAppKey]);
 
             if (siteName == null)
                 CancerGovError.LogError(this.GetType().ToString(), 4, "Could not load emergency. Missing siteName appSetting: " + _siteNameAppKey);

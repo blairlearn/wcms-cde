@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Configuration;
-
-using CancerGov.CDR.DataManager;
-using CancerGov.Common.ErrorHandling;
-using CancerGov.CDR.ClinicalTrials.Search;
-using CancerGov.UI.CDR;
+using System.Web;
 using CancerGov.CDR.ClinicalTrials.Helpers;
-
+using CancerGov.CDR.ClinicalTrials.Search;
+using CancerGov.CDR.DataManager;
+using Common.Logging;
 using NCI.Util;
-using NCI.Logging;
-using NCI.Web.CDE.UI;
+using NCI.Web.CDE.Application;
 
 namespace CancerGov.Handlers
 {
     public class ClinicalTrialsLinkHandler : IHttpHandler
     {
+        static ILog log = LogManager.GetLogger(typeof(ClinicalTrialsLinkHandler));
+
         HttpContext currentContext = null;
 
         /// <summary>
@@ -66,27 +62,27 @@ namespace CancerGov.Handlers
             catch (ProtocolSearchExecutionFailureException eSearchFailure)
             {
                 //Log Error
-                NCI.Logging.Logger.LogError("ClinicalTrialsLink", NCIErrorLevel.Error, eSearchFailure);
+                log.Error("ClinicalTrialsLink", eSearchFailure);
                 this.RaiseErrorPage();
             }
             catch (NullProtocolSearchIDException eSearchFailure)
             {
-                NCI.Logging.Logger.LogError("ClinicalTrialsLink", "ProtocolSearchID that was returned is invalid", NCIErrorLevel.Error, eSearchFailure);
+                log.Error("ProtocolSearchID that was returned is invalid", eSearchFailure);
                 this.RaiseErrorPage();
             }
             catch (CancerGov.Exceptions.SqlTimeoutException eSearchFailure)
             {
-                NCI.Logging.Logger.LogError("ClinicalTrialsLink", NCIErrorLevel.Error, eSearchFailure);
+                log.Error("ClinicalTrialsLink", eSearchFailure);
                 this.RaiseErrorPage();
             }
             catch (ProtocolSearchParameterException eSearchFailure)
             {
-                NCI.Logging.Logger.LogError("ClinicalTrialsLink", NCIErrorLevel.Error, eSearchFailure);
+                log.Error("ClinicalTrialsLink", eSearchFailure);
                 this.RaiseErrorPage();
             }
             catch (Exception eo)
             {
-                NCI.Logging.Logger.LogError("ClinicalTrialsLink", NCIErrorLevel.Error, eo);
+                log.Error("ClinicalTrialsLink", eo);
                 this.RaiseErrorPage();
             }
 
@@ -162,7 +158,7 @@ namespace CancerGov.Handlers
                 }
                 catch (Exception)
                 {
-                    NCI.Logging.Logger.LogError("ClinicalTrialsLink", "Invalid parameters provided.  Search type is not valid", NCIErrorLevel.Error);
+                    log.Error("Invalid parameters provided.  Search type is not valid");
                     throw new ProtocolSearchParameterException("Specified search format is not valid. Specify 1 for the patient and 2 for the health professional version.");
                     throw;
                 }
@@ -197,7 +193,7 @@ namespace CancerGov.Handlers
             }
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("ClinicalTrialsLink", "Invalid parameters provided. Conversion failed.", NCIErrorLevel.Error, ex);
+                log.Error("Invalid parameters provided. Conversion failed.", ex);
                 throw new ProtocolSearchParameterException("Please check your URL query paramters for the clinical trials search.");
             }
 
@@ -212,16 +208,16 @@ namespace CancerGov.Handlers
                 }
                 catch (Exception ex)
                 {
-                    NCI.Logging.Logger.LogError("ClinicalTrialsLink", "Invalid parameters provided. Conversion failed.", NCIErrorLevel.Error, ex);
+                    log.Error("Invalid parameters provided. Conversion failed.", ex);
                     throw new ProtocolSearchParameterException("Please make sure the country in your URL query paramters for the clinical trials search should be integer.");
                 }
                 try
                 {
-                    country = ConfigurationSettings.AppSettings["ClinicalTrialsSearchLinkCountry"].ToString();
+                    country = ConfigurationManager.AppSettings["ClinicalTrialsSearchLinkCountry"].ToString();
                 }
                 catch (Exception ex)
                 {
-                    NCI.Logging.Logger.LogError("ClinicalTrialsLink", "ClinicalTrialsSearchLinkCountry AppSetting missing. Conversion failed. ", NCIErrorLevel.Error, ex);
+                    log.Error("ClinicalTrialsSearchLinkCountry AppSetting missing. Conversion failed. ", ex);
                     throw new ProtocolSearchParameterException("Please make sure the ClinicalTrialsSearchLinkCountry AppSetting is set in web.config.");
                 }
             }
@@ -368,7 +364,7 @@ namespace CancerGov.Handlers
 
         private string SearchResultsPrettyUrl
         {
-            get { return ConfigurationSettings.AppSettings["ClinicalTrailsResultsPage"]; }
+            get { return ConfigurationManager.AppSettings["ClinicalTrailsResultsPage"]; }
         }
     }
 }

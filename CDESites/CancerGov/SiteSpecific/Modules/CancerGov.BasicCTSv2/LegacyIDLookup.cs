@@ -1,17 +1,15 @@
-﻿using NCI.Logging;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
+using Common.Logging;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
     public static class LegacyIDLookup
     {
+        static ILog log = LogManager.GetLogger(typeof(LegacyIDLookup));
+
         /// <summary>
         /// LegacyCancerTypeDictionary lookup dictionary.
         /// </summary>
@@ -80,7 +78,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             String cancerTypeFilePath = ConfigurationManager.AppSettings["CancerIDMapping"].ToString();
             if (String.IsNullOrWhiteSpace(cancerTypeFilePath))
             {
-                Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLoader:WatchDictionaryFile()", "CancerIDMapping not set.", NCIErrorLevel.Error);
+                log.Error("WatchDictionaryFile(): CancerIDMapping not set.");
                 return;
             }
             cancerTypeFilePath = HttpContext.Current.Server.MapPath(cancerTypeFilePath);
@@ -110,7 +108,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             // and that's not avaialble during a change event.
             // The next request attempting to use the dictionary will be responsible for loading it.
             cancerTypeDictionary = null;
-            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLookup.cs:OnChange()", "Dictionary file was updated.", NCIErrorLevel.Warning);
+            log.Warn("OnChange(): Dictionary file was updated.");
         }
 
         /// <summary>
@@ -121,7 +119,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="e">event arguments (not used)</param>
         private static void OnRemove(object src, FileSystemEventArgs e)
         {
-            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLookup.cs:OnRemove()", "Dictionary file was deleted.", NCIErrorLevel.Warning);
+            log.Warn("OnRemove(): Dictionary file was deleted.");
         }
 
         /// <summary>
@@ -132,7 +130,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="e">event arguments (not used)</param>
         private static void OnRename(object source, RenamedEventArgs e)
         {
-            Logger.LogError("CancerGov.ClinicalTrials.Basic.v2:LegacyIDLookup.cs:OnRename()", "Dictionary file was updated", NCIErrorLevel.Warning);
+            log.Warn("OnRename(): Dictionary file was updated");
         }
     
     }

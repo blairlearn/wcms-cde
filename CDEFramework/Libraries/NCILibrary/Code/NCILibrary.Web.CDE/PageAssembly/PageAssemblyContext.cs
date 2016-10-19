@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Web;
-using NCI.Logging;
-using NCI.Web.CDE;
+using Common.Logging;
 using NCI.Web.CDE.CapabilitiesDetection;
-using NCI.Web.CDE.Configuration;
 using NCI.Web.ProductionHost;
-
 
 namespace NCI.Web.CDE
 {
@@ -20,6 +12,8 @@ namespace NCI.Web.CDE
     /// </summary>
     public class PageAssemblyContext
     {
+        static ILog log = LogManager.GetLogger(typeof(PageAssemblyContext));
+
         private static object PAGE_ASSEMBLY_CONTEXT_KEY = new object();
 
         private static object PAGE_ASSEMBLY_DISPLAYVERSION_KEY = new object();
@@ -64,9 +58,7 @@ namespace NCI.Web.CDE
             {
                 string prodHost = ProductionHostConfig.Hostname;
                 string requestHost = HttpContext.Current.Request.Url.Host;
-                Logger.LogError("NCI:PageAssemblyContext.cs:IsProd",
-                        "Prod hostname = " + prodHost + ", request hostname = " + requestHost,
-                        NCIErrorLevel.Debug);
+                log.DebugFormat("IsProd(): Prod hostname = {0}, request hostname = {1}", prodHost, requestHost);
                 return !String.IsNullOrEmpty(prodHost) && String.Compare(prodHost, requestHost, StringComparison.OrdinalIgnoreCase) == 0;
             }
         }

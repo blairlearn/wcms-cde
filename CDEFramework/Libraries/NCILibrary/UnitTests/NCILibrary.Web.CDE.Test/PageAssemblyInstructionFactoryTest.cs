@@ -1,17 +1,9 @@
-﻿using NCI.Web.CDE;
+﻿using System;
+using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCI.Test.Web;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
 using NCI.Web.CDE.Configuration;
-using System.Web;
-using System.IO;
-using System.Xml.Schema;
-using NCI.Logging;
+
 namespace NCI.Web.CDE.Test
 {
     

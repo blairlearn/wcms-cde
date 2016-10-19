@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using Common.Logging;
 using NCI.Data;
-using NCI.Logging;
-using NCI.Text;
 
 namespace CancerGov.Modules.CDR
 {
     internal class CDRPrettyURLQuery
     {
+        static ILog log = LogManager.GetLogger(typeof(CDRPrettyURLQuery));
+
         public static string GetProtocolByOldId(string oldId)
         {
 
@@ -44,7 +43,7 @@ namespace CancerGov.Modules.CDR
             }
             catch (Exception ex)
             {
-                Logger.LogError("CDRPrettyURLQuery:GetProtocolByOldId", "Failed in DataManager", NCIErrorLevel.Error);
+                log.Error("GetProtocolByOldId(): Failed in DataManager", ex);
                 throw ex;
             }
         }
@@ -63,7 +62,7 @@ namespace CancerGov.Modules.CDR
             catch (SqlException sqlE)
             {
                 //throw InvalidGuidException;
-                Logger.LogError("CDRPrettyURLQuery:GetOldProtocolAndAlternateIDs", NCIErrorLevel.Error, sqlE);
+                log.Error("CDRPrettyURLQuery:GetOldProtocolAndAlternateIDs", sqlE);
             }
             finally
             {

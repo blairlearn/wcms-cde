@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Caching;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Globalization;
+using Common.Logging;
 using NCI.Web.CDE.Configuration;
-using NCI.Web.CDE.HttpHeaders;
-using NCI.Util;
-using NCI.Logging;
 using NCI.Web.Extensions;
-using NCI.Web.CDE;
-using NCI.Web.UI.WebControls;
-using System.Security.Cryptography;
-
 
 namespace NCI.Web.CDE.UI
 {
@@ -30,6 +24,7 @@ namespace NCI.Web.CDE.UI
     public class WebPageAssembler : Page, IPageAssembler
     {
         #region Private Members
+        static ILog log = LogManager.GetLogger(typeof(WebPageAssembler));
 
         /// <summary>
         /// Loads a collection of all template slots that are declaratively 
@@ -88,7 +83,7 @@ namespace NCI.Web.CDE.UI
                             catch (Exception ex)
                             {
                                 //Failed to load the slot template control. Log this error.
-                                Logger.LogError("CDE:WebPageAssembler.cs:WebPageAssembler", "Failed to load snippet control-" + snippet.SnippetTemplatePath, NCIErrorLevel.Error, ex);
+                                log.ErrorFormat("Failed to load snippet control: {0}", ex, snippet.SnippetTemplatePath);
                             }
                         }
                     }
@@ -103,7 +98,7 @@ namespace NCI.Web.CDE.UI
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogError("CDE:WebPageAssembler.cs:WebPageAssembler", "Failed to add supporting snippet control", NCIErrorLevel.Error, ex);
+                        log.Error("Failed to add supporting snippet control", ex);
                     }
                 }
 

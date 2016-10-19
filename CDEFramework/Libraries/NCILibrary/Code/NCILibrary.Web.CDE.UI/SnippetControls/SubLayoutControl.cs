@@ -1,26 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
-using System.Globalization;
-using NCI.Web.CDE.Configuration;
-using NCI.Web.CDE.HttpHeaders;
-using NCI.Util;
-using NCI.Logging;
-using NCI.Web.Extensions;
-using NCI.Web.CDE;
-using NCI.Web.UI.WebControls;
+using Common.Logging;
 using NCI.Web.CDE.Modules;
+using NCI.Web.Extensions;
 
 namespace NCI.Web.CDE.UI.SnippetControls
 {
     public class SubLayoutControl : SnippetControl
     {
         #region Private Members
+        static ILog log = LogManager.GetLogger(typeof(SubLayoutControl));
+
         /// <summary>
         /// Loads a collection of all template slots that are declaratively 
         /// defined  in the page template. The slots that are specified as being blocked
@@ -77,7 +69,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                             catch (Exception ex)
                             {
                                 //Failed to load the slot template control. Log this error.
-                                Logger.LogError("CDE:SubLayoutControl.cs:SubLayoutControl", "Failed to load snippet control-" + snippet.SnippetTemplatePath, NCIErrorLevel.Error, ex);
+                                log.Error("Failed to load snippet control-" + snippet.SnippetTemplatePath, ex);
                             }
                         }
                     }
@@ -92,7 +84,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogError("CDE:SubLayoutControl.cs:SubLayoutControl", "Failed to add supporting snippet control", NCIErrorLevel.Error, ex);
+                        log.Error("Failed to add supporting snippet control", ex);
                     }
                 }
 

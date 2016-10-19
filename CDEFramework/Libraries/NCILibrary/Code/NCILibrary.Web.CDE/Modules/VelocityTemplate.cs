@@ -1,19 +1,17 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using NCI.Logging;
+using System.IO;
+using System.Web;
+using Common.Logging;
 using NVelocity;
 using NVelocity.App;
-using NVelocity.Context;
-using System.Threading;
-using System.Web;
-using System.Web.Caching;
-using System.Globalization;
 
 namespace NCI.Web.CDE.Modules
 {
     public class VelocityTemplate
     {
+        static ILog log = LogManager.GetLogger(typeof(VelocityTemplate));
+
         private static VelocityEngineManager _engineManager = new VelocityEngineManager();
 
         [Obsolete("Use MergeTemplateWithResultsByFilepath() instead.")]
@@ -31,7 +29,7 @@ namespace NCI.Web.CDE.Modules
             }
             catch (Exception ex)
             {
-                Logger.LogError("VelocityTemplate:MergeTemplateWithResults", "Failed when evaluating results template and object.", NCIErrorLevel.Error, ex);
+                log.Error("MergeTemplateWithResults(): Failed when evaluating results template and object.", ex);
                 throw (ex);
             }
         }
@@ -58,7 +56,7 @@ namespace NCI.Web.CDE.Modules
             }
             catch (Exception ex)
             {
-                Logger.LogError("VelocityTemplate:MergeTemplateWithResultsByFilepath", "Failed when evaluating results template and object.", NCIErrorLevel.Error, ex);
+                log.Error("MergeTemplateWithResultsByFilepath(): Failed when evaluating results template and object.", ex);
                 throw;
             }
         }

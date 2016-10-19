@@ -12,6 +12,7 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+using Microsoft.Security.Application;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -207,6 +208,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {
+                SearchStr = Sanitizer.GetSafeHtmlFragment(SearchStr);
                 resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
             }
             else if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
@@ -267,7 +269,7 @@ namespace CancerGov.Web.SnippetTemplates
         /// <returns></returns>
         private string GetDrugDictionaryFilter()
         {
-            string filter = ConfigurationSettings.AppSettings["DrugDictionaryFilter"];
+            string filter = ConfigurationManager.AppSettings["DrugDictionaryFilter"];
             if (string.IsNullOrEmpty(filter))
                 filter = String.Empty;
             else
@@ -355,7 +357,7 @@ namespace CancerGov.Web.SnippetTemplates
             }
 
             // Initialize number of results per page.
-            string pgSize = ConfigurationSettings.AppSettings["DrugDictionaryPageSize"];
+            string pgSize = ConfigurationManager.AppSettings["DrugDictionaryPageSize"];
             if (string.IsNullOrEmpty(pgSize))
                 PageSize = 100;
             else
@@ -386,7 +388,8 @@ namespace CancerGov.Web.SnippetTemplates
         {
             Expand = Strings.Clean(Request.Params["expand"], "A");
             CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Strings.Clean(Request.Params["search"]);
+            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["search"]);
+            SearchStr = Strings.Clean(SearchStr);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
             CurrentPageIndex = Strings.ToInt(Request.Params["page"], 1);
         }

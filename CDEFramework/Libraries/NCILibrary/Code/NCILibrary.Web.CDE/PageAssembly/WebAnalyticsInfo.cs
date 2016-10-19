@@ -1,12 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using System.Xml.Schema;
-using System.Configuration;
-using NCI.Logging;
-using NCI.Web.CDE.WebAnalytics;
+using System.Xml.Serialization;
 
 namespace NCI.Web.CDE
 {

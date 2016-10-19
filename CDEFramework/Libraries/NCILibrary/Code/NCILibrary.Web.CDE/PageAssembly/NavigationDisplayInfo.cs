@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
-using System.Xml.Linq;
-
-using NCI.Logging;
+using Common.Logging;
 
 namespace NCI.Web.CDE
 {
@@ -14,6 +9,8 @@ namespace NCI.Web.CDE
     /// </summary>
     public class NavigationDisplayInfo
     {
+        static ILog log = LogManager.GetLogger(typeof(NavigationDisplayInfo));
+
         public NavigationDisplayParams displayParams { get; private set; }
         public NavigationItem rootNavItem { get; private set; }
 
@@ -49,7 +46,7 @@ namespace NCI.Web.CDE
             {
                 // Swallow the exception. We still get an error recorded, and
                 // the user still gets content, just without the navigation element.
-                Logger.LogError("NCI.Web.CDE.NavigationDisplayInfo.NavigationDisplayInfo", "Unable to load XML document" + xml, NCIErrorLevel.Error, ex);
+                log.Error("ParseTree(): Unable to load XML document" + xml, ex);
             }
 
             // If the XML string wasn't valid, don't try parsing the string.  Just return an empty
@@ -75,8 +72,8 @@ namespace NCI.Web.CDE
 
             if (navDisplayParamNode == null)
             {
-                Logger.LogError("NCI.Web.CDE.NavigationDisplayInfo.NavigationDisplayInfo", "DisplayParams is null.", NCIErrorLevel.Error);
-                Logger.LogError("NCI.Web.CDE.NavigationDisplayInfo.NavigationDisplayInfo", xml.OuterXml, NCIErrorLevel.Error);
+                log.Error("DisplayParams is null.");
+                log.Error(xml.OuterXml);
                 throw new Exception("Error: DisplayParams is null");
             }
 

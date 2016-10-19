@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
+using Common.Logging;
 using NCI.Data;
-using NCI.Logging;
 
 namespace NCI.DataManager
 {
@@ -18,6 +17,8 @@ namespace NCI.DataManager
     /// </summary>
     public class SearchDataManager
     {
+        static ILog log = LogManager.GetLogger(typeof(SearchDataManager));
+
         /// <summary>
         /// Connects to the database , and executes the stored proc with the required parameter. The 
         /// results are processed as SearchResult object.
@@ -177,7 +178,7 @@ namespace NCI.DataManager
             }
             catch (Exception ex)
             {
-                Logger.LogError("SearchDataManager:Execute", "Failed in DataManager", NCIErrorLevel.Error);
+                log.Error("Execute(): Failed in DataManager", ex);
                 throw ex;
             }
         }
@@ -375,7 +376,7 @@ namespace NCI.DataManager
             }
             catch (Exception ex)
             {
-                Logger.LogError("SearchDataManager:Execute", "Failed in DataManager", NCIErrorLevel.Error);
+                log.Error("Execute(): Failed in DataManager", ex);
                 throw;
             }
         }

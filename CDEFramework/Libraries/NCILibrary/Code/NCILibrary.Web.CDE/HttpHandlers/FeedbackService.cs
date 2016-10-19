@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
+using Common.Logging;
 using Newtonsoft.Json;
 
 namespace NCI.Web.CDE.HttpHandlers
 {
     public class FeedbackService : IHttpHandler
     {
+        static ILog log = LogManager.GetLogger(typeof(FeedbackService));
+
         public bool IsReusable
         {
             get { return false; }
@@ -79,7 +79,7 @@ namespace NCI.Web.CDE.HttpHandlers
             }
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("FeedbackService", "Could not send mail", Logging.NCIErrorLevel.Error, ex);
+                log.Error("Could not send mail", ex);
                 throw new Exception("Error Sending Email");
             }
 

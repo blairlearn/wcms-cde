@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Web;
-using System.Web.SessionState;
 using System.Globalization;
-using System.Configuration;
-using System.IO;
-//using NCI.Web.CDE.InformationRequest;
-using NCI.Web.CDE;
+using System.Web;
+using Common.Logging;
 using NCI.Web.CDE.Configuration;
-//using NCI.Web.CDE.CapabilitiesDetection;
-using NCI.Logging;
-using System.Reflection;
 
 namespace NCI.Web.CDE
 {
     public class MobileRedirectCookieDropper : IHttpModule
     {
+        static ILog log = LogManager.GetLogger(typeof(MobileRedirectCookieDropper));
+
         // This modile is used on the mobile site to drop a cookie 
         // so mobile redirect will not take place on the desktop site
         // since we are already on the mobile site
@@ -60,7 +55,7 @@ namespace NCI.Web.CDE
             //happen in this session since we are already on the mobile site
 
             if (string.IsNullOrEmpty(_cookieName))
-                Logger.LogError("CDE:MobileRedirectCookieDropper.cs", "nci/web/cde/mobileRedirector/cookieName was not found", NCIErrorLevel.Error);
+                log.Error("nci/web/cde/mobileRedirector/cookieName was not found");
             else
             {
                 try
@@ -87,7 +82,7 @@ namespace NCI.Web.CDE
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError("CDE:MobileRedirectCookieDropper.cs", "Error dropping mobile redirect cookie", NCIErrorLevel.Error,ex);
+                    log.Error("Error dropping mobile redirect cookie");
                     return;
                 }
             }

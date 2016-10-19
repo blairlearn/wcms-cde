@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
-
-using NCI.Logging;
-using NCI.Text;
-using NCI.Web.CDE.UI;
+using Common.Logging;
 using NCI.Web.CDE;
+using NCI.Web.CDE.UI;
 
 namespace CancerGov.Web.UI.SnippetControls
 {
@@ -22,6 +14,8 @@ namespace CancerGov.Web.UI.SnippetControls
     [ToolboxData("<{0}:CGovSectionNavControl runat=server></{0}:CGovSectionNavControl>")]
     public class CGovSectionNavControl : SnippetControl
     {
+        static ILog log = LogManager.GetLogger(typeof(CGovSectionNavControl));
+
         //My Nav Here
         NavigationDisplayInfo _navItem = null;
         int level = 0;  // level counter for section navigation
@@ -77,7 +71,7 @@ namespace CancerGov.Web.UI.SnippetControls
             }
             else
             {
-                Logger.LogError("CancerGov.Web.UI.SnippetControls.CGovSectionNavControl", "Navigation item is unexpectedly null.", NCIErrorLevel.Error);
+                log.Error("Navigation item is unexpectedly null.");
             }
         }
 
@@ -137,7 +131,7 @@ namespace CancerGov.Web.UI.SnippetControls
             if (path.Equals(item.SectionPath))
             {
                 liClass = " contains-current";
-                if (item.URL == url)
+                if (String.Equals(item.URL, url, StringComparison.OrdinalIgnoreCase))
                 {
                     divClass = "current-page";
                 }

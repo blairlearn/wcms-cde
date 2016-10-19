@@ -22,22 +22,22 @@ namespace Www.Common.PopUps {
         protected global::System.Web.UI.HtmlControls.HtmlHead header;
         
         /// <summary>
-        /// logoText1 control.
+        /// logoAnchor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor logoText1;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor logoAnchor;
         
         /// <summary>
-        /// logoText2 control.
+        /// logoImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl logoText2;
+        protected global::System.Web.UI.HtmlControls.HtmlImage logoImage;
         
         /// <summary>
         /// closeWindowText control.

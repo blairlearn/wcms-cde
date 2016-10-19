@@ -1,8 +1,5 @@
-﻿using System;
+﻿using System.Xml.Schema;
 using System.Xml.Serialization;
-using System.Xml.Schema;
-using System.Configuration;
-using NCI.Logging;
 namespace NCI.Web.CDE
 {
     public class SocialMetadata

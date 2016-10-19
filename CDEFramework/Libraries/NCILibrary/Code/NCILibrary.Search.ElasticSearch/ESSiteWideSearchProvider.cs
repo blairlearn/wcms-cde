@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Threading;
+using Common.Logging;
 using Elasticsearch.Net;
 using Elasticsearch.Net.Connection;
 using Elasticsearch.Net.ConnectionPool;
-
-using NCI.Search.Configuration;
-using NCI.Search;
-using NCI.Logging;
 using Elasticsearch.Net.Exceptions;
-using System.Threading;
-
-
+using NCI.Search.Configuration;
 
 namespace NCI.Search
 {
@@ -24,6 +16,8 @@ namespace NCI.Search
     /// </summary>
     public class ESSiteWideSearchProvider : NCI.Search.SiteWideSearchProviderBase
     {       
+        static ILog log = LogManager.GetLogger(typeof(ESSiteWideSearchProvider));
+
         /// <summary>
         /// Gets the search results from this SiteWideSearch provider.
         /// </summary>
@@ -77,7 +71,7 @@ namespace NCI.Search
                 try 
                 {
                     //log the maximum retry excpetion
-                    Logger.LogError(this.GetType().ToString(), "Error using the ESClient Search Template method. Maximum retry exception: ", NCIErrorLevel.Error, ex);
+                    log.Error("Error using the ESClient Search Template method. Maximum retry exception: ", ex);
                     //sleep for 5 seconds 
                     Thread.Sleep(clusterConfig.ConnectionTimeoutDelay);
                     //try to fetch results again
@@ -85,7 +79,7 @@ namespace NCI.Search
                 }
                 catch (Exception e)
                 {
-                    Logger.LogError(this.GetType().ToString(), "Error using the ESClient Search Template method.", NCIErrorLevel.Error, e);
+                    log.Error("Error using the ESClient Search Template method.", e);
                     throw e;
                 }
 
@@ -124,7 +118,7 @@ namespace NCI.Search
 
                 catch (Exception ex)
                 {
-                    Logger.LogError(this.GetType().ToString(), "Error retrieving search results.", NCIErrorLevel.Error, ex);
+                    log.Error("Error retrieving search results.", ex);
                     throw ex;
 
                 }
@@ -141,7 +135,7 @@ namespace NCI.Search
                 else
                     prettyResponse = "No message in response";
 
-                Logger.LogError(this.GetType().ToString(), "Search failed. Http Status Code:" + results.HttpStatusCode.Value.ToString() + ". Message: " + prettyResponse, NCIErrorLevel.Error);
+                log.ErrorFormat("Search failed. Http Status Code: {0}. Message: {1}", results.HttpStatusCode.Value, prettyResponse);
 
                 throw (new Exception("Search failed. Http Status Code:" + results.HttpStatusCode.Value.ToString() + ". Message: " + prettyResponse));
             }
@@ -179,7 +173,7 @@ namespace NCI.Search
 
             catch (Exception e)
             {
-                Logger.LogError(this.GetType().ToString(), "Error when setting field values for field:" + field, NCIErrorLevel.Error, e);
+                log.ErrorFormat("Error when setting field values for field: {0}", e, field);
                 throw e;
             }
             return fieldValue;

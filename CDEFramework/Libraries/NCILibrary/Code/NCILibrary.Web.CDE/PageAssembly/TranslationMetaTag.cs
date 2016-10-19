@@ -1,8 +1,7 @@
 using System;
-using System.Xml.Serialization;
 using System.Xml.Schema;
-using System.Configuration;
-using NCI.Logging;
+using System.Xml.Serialization;
+
 namespace NCI.Web.CDE
 {
     /// <summary>

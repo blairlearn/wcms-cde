@@ -3,15 +3,11 @@ using System.Collections.Specialized;   // In order to reference Prototype.
 using System.Configuration;
 using System.Text;
 using System.Web;
-using System.Text.RegularExpressions;
-
 using CancerGov.CDR.ClinicalTrials.Search;
 using CancerGov.CDR.DataManager;
 using CancerGov.UI.CDR;
-using CancerGov.UI.PageObjects;
-using NCI.Logging;
+using Common.Logging;
 using NCI.Util;
-using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
@@ -20,6 +16,7 @@ namespace CancerGov.Web.SnippetTemplates
 {
     public partial class ClinicalTrialsView : SearchBaseUserControl, ISupportingSnippet
     {
+        static ILog log = LogManager.GetLogger(typeof(ClinicalTrialsView));
 
         public string strContent = "";
 
@@ -38,7 +35,7 @@ namespace CancerGov.Web.SnippetTemplates
                 {
                     //only show this survey if the other survey was not shown
                     //look at the persistant cookie  for that survey  ascookie parameter in the tiggerParams file 
-                    string no_results_survey = ConfigurationSettings.AppSettings["NoResCTSurveyShown"].ToString();
+                    string no_results_survey = ConfigurationManager.AppSettings["NoResCTSurveyShown"].ToString();
                     if (Request.Cookies.Get(no_results_survey) == null)
                         return true;
                 }
@@ -76,7 +73,7 @@ namespace CancerGov.Web.SnippetTemplates
             catch (CancerGov.Exceptions.ProtocolFetchFailureException fetchError)
             {
 
-                NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
+                log.ErrorFormat("ProtocolID = {0}", fetchError, iProtocolID);
                 //This is an error - maybe no DB connection, who knows what, but stuff broke.
                 this.RaiseErrorPage();
             }
@@ -93,15 +90,14 @@ namespace CancerGov.Web.SnippetTemplates
             }
             catch (CancerGov.Exceptions.ProtocolTableMiscountException fetchError)
             {
-
-                NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + fetchError.Message, NCIErrorLevel.Error, fetchError);
+                log.ErrorFormat("ProtocolID = {0}", fetchError, iProtocolID);
                 //This is an error - basically there are tables we are expecting that are not there
                 //this is probably a stored proc issue.
                 this.RaiseErrorPage();
             }
             catch (Exception ex)
             {
-                NCI.Logging.Logger.LogError("ViewClinicalTrials", "ProtocolID = " + iProtocolID + " Error: " + ex.Message, NCIErrorLevel.Error, ex);
+                log.ErrorFormat("ProtocolID = {0}", ex, iProtocolID);
                 this.RaiseErrorPage();
             }
 

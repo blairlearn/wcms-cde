@@ -1,21 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Configuration;
-
-using NCI.Util;
-using NCI.Web.CDE.WebAnalytics;
-using NCI.Web.CDE.UI.WebControls;
-using NCI.Web.CDE.Modules;
-using NCI.Web.UI.WebControls;
-using NCI.Logging;
-using NCI.Search.Endeca;
-using NCI.Web.CDE;
-
 using DCEG.Web.Apps;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace DCEG.Web.SnippetTemplates
 {
@@ -50,7 +36,7 @@ namespace DCEG.Web.SnippetTemplates
 
         protected string GetYearListItems(string yearType)
         {
-            int yearsAgo = Int32.Parse(ConfigurationSettings.AppSettings["NewsletterSearchYearsAgo"].ToString());
+            int yearsAgo = Int32.Parse(ConfigurationManager.AppSettings["NewsletterSearchYearsAgo"].ToString());
             string html = String.Empty;
             int startYear = DateTime.Now.Year - yearsAgo;
 

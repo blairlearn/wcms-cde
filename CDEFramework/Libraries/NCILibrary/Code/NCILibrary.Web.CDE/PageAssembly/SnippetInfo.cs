@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Xml.XPath;
-using NCI.Logging;
 using System.Xml.Schema;
+using System.Xml.Serialization;
+using Common.Logging;
+
 namespace NCI.Web.CDE
 {
     /// <summary>
@@ -14,6 +12,8 @@ namespace NCI.Web.CDE
     /// </summary>
     public class SnippetInfo : IXmlSerializable
     {
+        static ILog log = LogManager.GetLogger(typeof(SnippetInfo));
+
         private string _snippetData = null;
         private Dictionary<string, string> _configStrings = null;
         private bool correctedCDATA = false;
@@ -177,7 +177,7 @@ namespace NCI.Web.CDE
 
                             if (reader.GetAttribute("Name") == null)
                             {
-                                NCI.Logging.Logger.LogError("SnippetInfo", "Invalid ConfigTextItem - Name cannot be empty", NCIErrorLevel.Error);
+                                log.Error("Invalid ConfigTextItem - Name cannot be empty");
                                 break;
                             }
                                                          
@@ -187,7 +187,7 @@ namespace NCI.Web.CDE
                             }
                             catch (Exception ex)
                             {
-                                NCI.Logging.Logger.LogError("SnippetInfo", "Invalid ConfigTextItem", NCIErrorLevel.Error, ex);
+                                log.Error("Invalid ConfigTextItem", ex);
                                 break;
                             }
                         }

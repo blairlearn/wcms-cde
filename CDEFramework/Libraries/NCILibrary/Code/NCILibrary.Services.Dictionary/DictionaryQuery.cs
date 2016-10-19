@@ -2,15 +2,14 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-
+using Common.Logging;
 using NCI.Data;
-using NCI.Logging;
 
 namespace NCI.Services.Dictionary
 {
     internal class DictionaryQuery
     {
-        static Log log = new Log(typeof(DictionaryQuery));
+        static ILog log = Common.Logging.LogManager.GetLogger(typeof(DictionaryQuery));
 
         const string SP_GET_DICTIONARY_TERM = "usp_GetDictionaryTerm";
         const string SP_GET_DICTIONARY_TERM_FOR_AUDIENCE = "usp_GetDictionaryTermForAudience";
@@ -27,14 +26,14 @@ namespace NCI.Services.Dictionary
         {
             if (ConfigurationManager.ConnectionStrings["CDRDbConnectionString"] == null)
             {
-                log.fatal("Connection string 'CDRDbConnectionString' is missing.");
+                log.Fatal("Connection string 'CDRDbConnectionString' is missing.");
                 throw new ConfigurationErrorsException("Database connection configuration error.");
             }
 
             string connStr = ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString;
             if (string.IsNullOrEmpty(connStr))
             {
-                log.fatal("Connection string 'CDRDbConnectionString' is missing.");
+                log.Fatal("Connection string 'CDRDbConnectionString' is missing.");
                 throw new ConfigurationErrorsException("Database connection configuration error.");
             }
 
@@ -62,7 +61,7 @@ namespace NCI.Services.Dictionary
         /// <returns></returns>
         public DataTable GetTerm(int termId, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter GetTerm( {0}, {1}, {2}, {3}, {4} ).", termId, dictionary, language, audience, version));
+            log.DebugFormat("Enter GetTerm( {0}, {1}, {2}, {3}, {4} ).", termId, dictionary, language, audience, version);
 
             DataTable results = null;
 
@@ -99,7 +98,7 @@ namespace NCI.Services.Dictionary
         /// <returns></returns>
         public DataTable GetTermForAudience(int termId, Language language, AudienceType preferredAudience, String version)
         {
-            log.debug(string.Format("Enter GetTermForAudience( {0}, {1}, {2}, {3} ).", termId, language, preferredAudience, version));
+            log.DebugFormat("Enter GetTermForAudience( {0}, {1}, {2}, {3} ).", termId, language, preferredAudience, version);
 
             DataTable results = null;
 
@@ -146,7 +145,7 @@ namespace NCI.Services.Dictionary
         /// <returns>DataTable containing a list of matching records.  Results are sorted by the matching term name.</returns>
         public SearchResults Search(String searchText, SearchType searchType, int offset, int numResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, offset, numResults, dictionary, language, audience, version));
+            log.DebugFormat("Enter Search( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, offset, numResults, dictionary, language, audience, version);
 
             DataTable results = null;
 
@@ -161,7 +160,7 @@ namespace NCI.Services.Dictionary
                 default:
                     {
                         String message = String.Format("Unsupport search type '{0}'.", searchType);
-                        log.error(message);
+                        log.Error(message);
                         throw new ArgumentException(message);
                     }
             }
@@ -192,7 +191,7 @@ namespace NCI.Services.Dictionary
                 // will allow execution to continue.
                 if (DBNull.Value.Equals(matchCountParam.Value) || matchCountParam.Value == null)
                 {
-                    log.warning("Search() encountered null when attempting to retrieve the @matchCount parameter.");
+                    log.Warn("Search() encountered null when attempting to retrieve the @matchCount parameter.");
                     matchCount = int.MaxValue;
                 }
                 else
@@ -230,7 +229,7 @@ namespace NCI.Services.Dictionary
         /// <returns>DataTable containing a list of matching records.</returns>
         public SuggestionResults SearchSuggest(String searchText, SearchType searchType, int numResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, searchType, numResults, dictionary, language, audience, version));
+            log.DebugFormat("Enter SearchSuggest( {0}, {1}, {2}, {3}, {4}, {5}, {6} ).", searchText, searchType, numResults, dictionary, language, audience, version);
 
             DataTable results = null;
 
@@ -260,7 +259,7 @@ namespace NCI.Services.Dictionary
                 // execution to continue.
                 if (DBNull.Value.Equals(matchCountParam.Value) || matchCountParam.Value == null)
                 {
-                    log.warning("SearchSuggest() encountered null when attempting to retrieve the @matchCount parameter.");
+                    log.Warn("SearchSuggest() encountered null when attempting to retrieve the @matchCount parameter.");
                     matchCount = int.MaxValue;
                 }
                 else
@@ -293,7 +292,7 @@ namespace NCI.Services.Dictionary
         /// <returns>DataTable containing a list of matching records.  Results are sorted by the matching term name.</returns>
         public SearchResults Expand(String searchText, String[] includeTypes, int offset, int numResults, DictionaryType dictionary, Language language, AudienceType audience, String version)
         {
-            log.debug(string.Format("Enter Expand( {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} ).", searchText, includeTypes, offset, numResults, dictionary, language, audience, version));
+            log.DebugFormat("Enter Expand( {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7} ).", searchText, includeTypes, offset, numResults, dictionary, language, audience, version);
 
             DataTable results;
 
@@ -329,7 +328,7 @@ namespace NCI.Services.Dictionary
                 // execution to continue.
                 if (DBNull.Value.Equals(matchCountParam.Value) || matchCountParam.Value == null)
                 {
-                    log.warning("Expand() encountered null when attempting to retrieve the @matchCount parameter.");
+                    log.Warn("Expand() encountered null when attempting to retrieve the @matchCount parameter.");
                     matchCount = int.MaxValue;
                 }
                 else

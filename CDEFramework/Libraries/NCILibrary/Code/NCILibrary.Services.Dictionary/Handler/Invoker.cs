@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Web;
-
-using NCI.Logging;
-using NCI.Util;
-
+using Common.Logging;
 using NCI.Services.Dictionary.BusinessObjects;
+using NCI.Util;
 
 namespace NCI.Services.Dictionary.Handler
 {
@@ -19,7 +17,7 @@ namespace NCI.Services.Dictionary.Handler
     /// </summary>
     abstract class Invoker
     {
-        static Log log = new Log(typeof(Invoker));
+        static ILog log = LogManager.GetLogger(typeof(Invoker));
 
         /// <summary>
         /// Stores a reference to the request's QueryString parameters.
@@ -57,26 +55,26 @@ namespace NCI.Services.Dictionary.Handler
             {
                 case ApiMethodType.GetTerm:
                     invoker = new GetTermInvoker(request);
-                    log.trace("Invoker.Create() - creating GetTermInvoker."); 
+                    log.Trace("Invoker.Create() - creating GetTermInvoker."); 
                     break;
                 case ApiMethodType.Search:
                     invoker = new SearchInvoker(request);
-                    log.trace("Invoker.Create() - creating SearchInvoker.");
+                    log.Trace("Invoker.Create() - creating SearchInvoker.");
                     break;
                 case ApiMethodType.SearchSuggest:
                     invoker = new SearchSuggestInvoker(request);
-                    log.trace("Invoker.Create() - creating SearchSuggestInvoker.");
+                    log.Trace("Invoker.Create() - creating SearchSuggestInvoker.");
                     break;
                 case ApiMethodType.Expand:
                     invoker = new ExpandInvoker(request);
-                    log.trace("Invoker.Create() - creating ExpandInvoker.");
+                    log.Trace("Invoker.Create() - creating ExpandInvoker.");
                     break;
 
                 case ApiMethodType.Unknown:
                 default:
                     {
                         string msg = String.Format("Invoker Create() - Invalid method '{0}' requested.", method);
-                        log.error(msg);
+                        log.Error(msg);
                         throw new DictionaryException(msg);
                     }
             }

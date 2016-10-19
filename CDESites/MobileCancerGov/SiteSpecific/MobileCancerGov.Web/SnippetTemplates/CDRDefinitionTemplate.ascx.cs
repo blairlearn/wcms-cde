@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Configuration;
-using NCI.Web.UI.WebControls;
-using NCI.Web.CDE.UI.Configuration;
-using NCI.Web.CDE;
-using NCI.Web.CDE.UI;
 using CancerGov.CDR.TermDictionary;
+using Common.Logging;
+using NCI.Web.CDE;
 using NCI.Web.CDE.Modules;
-using NCI.Logging;
+using NCI.Web.CDE.UI;
 
 namespace MobileCancerGov.Web.SnippetTemplates
 {
     public partial class CDRDefinitionTemplate : SnippetControl
     {
+        static ILog log = LogManager.GetLogger(typeof(CDRDefinitionTemplate));
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ltDefinitionText.Text = DefinitionText;
@@ -59,7 +54,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     if(dataItem.MediaID != 0)
                     {
                         definitionMedia = "<div class=\"thumb\">" +
-                            "<a href=\"" + ConfigurationSettings.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-750.jpg\" class=\"image ui-link\"><img class=\"thumbimage\" src=\"" + ConfigurationSettings.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-274.jpg\"></a>" +
+                            "<a href=\"" + ConfigurationManager.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-750.jpg\" class=\"image ui-link\"><img class=\"thumbimage\" src=\"" + ConfigurationManager.AppSettings["CDRImageLocation"] + "CDR" + dataItem.MediaID + "-274.jpg\"></a>" +
                             "</div>";
                         definitionMedia = definitionMedia + "<div class=\"caption\">" + dataItem.MediaCaption + "</div>";
                     }
@@ -68,8 +63,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 }
                 catch(Exception ex)
                 {
-                    Logger.LogError("CDE:CDRDefinitionTemplate.ascx.cs:DefinitionText", "Could not load the definition.Requires <CDRId></CDRId> in the CDRDefinitionTemplate.ascx module", NCIErrorLevel.Info,ex);
-
+                    log.Info("DefinitionText(): Could not load the definition.Requires <CDRId></CDRId> in the CDRDefinitionTemplate.ascx module", ex);
                 }
                 return definitionText + definitionMedia;
             }

@@ -48,6 +48,20 @@ namespace NCI.Logging
     /// </summary>
     public static class Logger
     {
+        private static Common.Logging.ILog log;
+
+        static Logger()
+        {
+            try
+            {
+                log = Common.Logging.LogManager.GetLogger(typeof(Logger));
+            }
+            catch (Exception ex)
+            {
+                throw new TypeInitializationException("NCI.Logging.Logger", ex);
+            }
+        }
+
         /// <summary>
         /// Logs Error to the provider by sending facility, message and NCIErrorLevel in the message.
         /// </summary>
@@ -56,9 +70,9 @@ namespace NCI.Logging
         /// <param name="level">Specifies the level of Error Messages.</param>
         public static void LogError(string facility, string message, NCIErrorLevel level)
         {
-            LoggingHelper helper = LoggingHelper.Instance;
-            helper.LogError(facility, message, level);
+            RouteToLogger(level, null, facility, message);
         }
+
         /// <summary>
         /// Logs Error to the provider by sending facility, message, NCIErrorLevel and Exception in the message.
         /// </summary>
@@ -68,9 +82,9 @@ namespace NCI.Logging
         /// <param name="ex">Actual Exception object.</param>
         public static void LogError(string facility, string message, NCIErrorLevel level, Exception ex)
         {
-            LoggingHelper helper = LoggingHelper.Instance;
-            helper.LogError(facility, message, level, ex);
+            RouteToLogger(level, ex, facility, message);
         }
+
         /// <summary>
         /// Logs Error to the provider by sending facility,NCIErrorLevel and Exception in the message.
         /// </summary>
@@ -79,8 +93,64 @@ namespace NCI.Logging
         /// <param name="ex">Actual Exception object.</param>
         public static void LogError(string facility, NCIErrorLevel level, Exception ex)
         {
-            LoggingHelper helper = LoggingHelper.Instance;
-            helper.LogError(facility, level, ex);
+            RouteToLogger(level, ex, facility);
+        }
+
+        private static void RouteToLogger(NCIErrorLevel level, Exception ex, string facility, string message = "")
+        {
+            switch (level)
+            {
+                case NCIErrorLevel.Critical:
+                    if (ex != null)
+                    {
+                        log.Fatal(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message), ex);
+                    }
+                    else
+                    {
+                        log.Fatal(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message));
+                    }
+                    break;
+                case NCIErrorLevel.Error:
+                    if (ex != null)
+                    {
+                        log.Error(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message), ex);
+                    }
+                    else
+                    {
+                        log.Error(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message));
+                    }
+                    break;
+                case NCIErrorLevel.Warning:
+                    if (ex != null)
+                    {
+                        log.Warn(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message), ex);
+                    }
+                    else
+                    {
+                        log.Warn(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message));
+                    }
+                    break;
+                case NCIErrorLevel.Info:
+                    if (ex != null)
+                    {
+                        log.Info(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message), ex);
+                    }
+                    else
+                    {
+                        log.Info(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message));
+                    }
+                    break;
+                case NCIErrorLevel.Debug:
+                    if (ex != null)
+                    {
+                        log.Debug(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message), ex);
+                    }
+                    else
+                    {
+                        log.Debug(facility + (String.IsNullOrWhiteSpace(message) ? "" : ": " + message));
+                    }
+                    break;
+            }
         }
     }
 

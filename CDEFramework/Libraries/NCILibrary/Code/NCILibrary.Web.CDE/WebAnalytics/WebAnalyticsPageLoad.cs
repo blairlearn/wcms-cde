@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
-using System.Configuration;
-using NCI.Logging;
+using Common.Logging;
 
 namespace NCI.Web.CDE.WebAnalytics
 {
@@ -15,6 +15,8 @@ namespace NCI.Web.CDE.WebAnalytics
     /// </summary>
     public class WebAnalyticsPageLoad
     {
+        static ILog log = LogManager.GetLogger(typeof(WebAnalyticsPageLoad));
+
         private const string DELIMITER = "'";
         private const string WEB_ANALYTICS_COMMENT_START = "<!-- ***** NCI Web Analytics - DO NOT ALTER ***** -->";
         private const string WEB_ANALYTICS_COMMENT_END = "<!-- ***** End NCI Web Analytics ***** -->";
@@ -134,9 +136,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError("CDE:WebAnalyticsPageLoad.cs:Tag()",
-                          "Exception encountered while retrieving web analytics suites.",
-                          NCIErrorLevel.Debug, ex);
+                    log.Debug("Tag(): Exception encountered while retrieving web analytics suites.", ex);
                     reportSuites += "";
                 }
 

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Web;
-
-using NCI.Logging;
-using NCI.Util;
-
+using Common.Logging;
 using NCI.Services.Dictionary.BusinessObjects;
 using NCI.Services.Dictionary.Handler;
+using NCI.Util;
 
 namespace NCI.Services.Dictionary
 {
@@ -24,7 +22,10 @@ namespace NCI.Services.Dictionary
     /// </summary>
     public class DictionaryHandler : IHttpHandler
     {
-        static Log log = new Log(typeof(DictionaryHandler));
+        static ILog log = Common.Logging.LogManager.GetLogger(typeof(DictionaryHandler));
+        static string errorProcessFormat = "Error processing dictionary request. Query: {0}";
+        static string errorVersionFormat = "Unknown version '{0}'.";
+        static string errorMethodFormat = "Unknown method '{0}'.";
  
         #region IHttpHandler Members
 
@@ -77,7 +78,7 @@ namespace NCI.Services.Dictionary
                 // Something went wrong in our code.
                 catch (Exception ex)
                 {
-                    log.error(String.Format("Error processing dictionary request. Query: {0}", request.RawUrl), ex);
+                    log.ErrorFormat(errorProcessFormat, ex, request.RawUrl);
                     response.StatusDescription = "Error processing dictionary request.";
                     response.StatusCode = 500;
                 }
@@ -109,8 +110,8 @@ namespace NCI.Services.Dictionary
             // Only version 1 is presently supported.
             if (!string.Equals(path[0], "v1", StringComparison.CurrentCultureIgnoreCase))
             {
-                String msg = String.Format("Unknown version '{0}'.", path[0]);
-                log.error(msg);
+                String msg = String.Format(errorVersionFormat, path[0]);
+                log.Error(msg);
                 throw new HttpParseException(msg);
             }
 
@@ -118,8 +119,8 @@ namespace NCI.Services.Dictionary
             method = ConvertEnum <ApiMethodType>.Convert(path[1], ApiMethodType.Unknown);
             if (method == ApiMethodType.Unknown)
             {
-                String msg = String.Format("Unknown method '{0}'.", path[1]);
-                log.error(msg);
+                String msg = String.Format(errorMethodFormat, path[1]);
+                log.Error(msg);
                 throw new HttpParseException(msg);
             }
 

@@ -33,7 +33,7 @@ namespace CancerGov.CDR.DataManager
 
 			scProtocols.CommandType = CommandType.StoredProcedure;
             scProtocols.Connection = new SqlConnection(ConfigurationManager.ConnectionStrings["CDRDbConnectionString"].ConnectionString);
-			scProtocols.CommandTimeout = Convert.ToInt32(ConfigurationSettings.AppSettings["CTSearchTimeout"]);
+			scProtocols.CommandTimeout = Convert.ToInt32(ConfigurationManager.AppSettings["CTSearchTimeout"]);
 
 			scProtocols.CommandText = "usp_GetProtocolsBySearchID";
 

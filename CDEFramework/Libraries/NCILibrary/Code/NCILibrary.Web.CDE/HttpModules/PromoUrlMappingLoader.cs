@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Globalization;
-using System.Configuration;
 using System.IO;
-
-using NCI.Logging;
-using NCI.Web.CDE;
+using System.Web;
+using Common.Logging;
 using NCI.Web.CDE.Configuration;
 
 namespace NCI.Web.CDE
 {
     public class PromoUrlMappingLoader : IHttpModule
     {
+        static ILog log = LogManager.GetLogger(typeof(PromoUrlMappingLoader));
+
         HttpContext context = null;
         #region IHttpModule Members
 
@@ -68,8 +65,8 @@ namespace NCI.Web.CDE
                     context.Application.UnLock();
 
                     // Log an event saying the promo url mapping file was loaded
-                    Logger.LogError("CDE:PromoUrlMappingLoader", "Promo Url Mapping file successfully loaded reLoad:" +
-                        reLoad.ToString() + ", promoUrlMappingFileChanged: " + promoUrlMappingFileChanged.ToString(), NCIErrorLevel.Debug);
+                    log.DebugFormat("Promo Url Mapping file successfully loaded reLoad: {0}, promoUrlMappingFileChanged: {1}", 
+                        reLoad, promoUrlMappingFileChanged);
                 }
 
                 promoUrlMapping = (PromoUrlMapping)context.Application["PromoUrlMapping"];
@@ -80,6 +77,20 @@ namespace NCI.Web.CDE
                     if (promoUrlMapping.PromoUrls.ContainsKey(url.ToLower()))
                     {
                         promoUrl = promoUrlMapping.PromoUrls[url.ToLower()];
+                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query);
+
+                        // If the original request is post then save target promo url
+                        // for use in the page instructions assembly loader.
+                        if (context.Request.RequestType == "POST")
+                        {
+                            context.RewritePath(mappedToUrl);
+                        }
+                        else
+                            DoPermanentRedirect(context.Response, mappedToUrl);
+                    }
+                    else if (!url.EndsWith("/") && promoUrlMapping.PromoUrls.ContainsKey(url.ToLower() + "/"))
+                    {
+                        promoUrl = promoUrlMapping.PromoUrls[url.ToLower() + "/"];
                         string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query);
 
                         // If the original request is post then save target promo url
@@ -114,21 +125,21 @@ namespace NCI.Web.CDE
                         }
                         else
                         {
-                            Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "Promo Url Mapping information not found for " + url, NCIErrorLevel.Debug);
+                            log.DebugFormat("OnBeginRequest(): Promo Url Mapping information not found for {0}", url);
                         }
 
                     }
                 }
                 else
                 {
-                    Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "No Promo Url Mapping information", NCIErrorLevel.Warning);
+                    log.Warn("OnBeginRequest(): No Promo Url Mapping information");
                 }
             }
             catch (System.Threading.ThreadAbortException)
             { }
             catch (Exception ex)
             {
-                Logger.LogError("CDE:PromoUrlMappingLoader.cs:OnBeginRequest", "\nFailed to Process Promo URL - " + url, NCIErrorLevel.Error, ex);
+                log.Error("OnBeginRequest(): Failed to Process Promo URL - " + url, ex);
             }
 
         }

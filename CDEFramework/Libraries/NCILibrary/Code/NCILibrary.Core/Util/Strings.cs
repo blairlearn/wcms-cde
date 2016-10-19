@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml;
-using System.Text.RegularExpressions;
 using System.Collections;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace NCI.Util
 {
@@ -1291,7 +1289,7 @@ namespace NCI.Util
             pattern = Strings.Clean(pattern,true);
 
             if ((pattern == null) || (stringToMatch == null))
-                throw new NCILoggingException("Pattern to match or the input string to match against the pattern is null");
+                throw new ArgumentNullException("Pattern to match or the input string to match against the pattern is null");
 
             //We are going to ignore casing
             if (ignoreCase)

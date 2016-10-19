@@ -65,7 +65,7 @@ namespace CancerGov.Web.SnippetTemplates
                 // Add page name to analytics
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar1, wbField =>
                 {
-                    wbField.Value = ConfigurationSettings.AppSettings["HostName"] + SearchPageInfo.SearchResultsPrettyUrl;
+                    wbField.Value = ConfigurationManager.AppSettings["HostName"] + SearchPageInfo.SearchResultsPrettyUrl;
                 });
 
             }

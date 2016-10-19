@@ -130,7 +130,7 @@ namespace CancerGov.Common.Extraction
                 Regex exp = new Regex("href=\"(/common/popups/popDefinition.aspx.+?|/dictionary.+?)\"\\s+?onclick=\"(popWindow|javascript:popWindow)\\(\'(definition|defbyid)\',.*?\'(.+?)\'\\).+?\">", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
                 exp.Replace(text, new MatchEvaluator(ChangeLink));
                 
-                exp = new Regex("href=\"(" + ConfigurationSettings.AppSettings["RootUrl"] + "/common/popups/popDefinition.aspx.+?|/dictionary.+?)\"\\s+?onclick=\"(popWindow|javascript:popWindow)\\(\'(definition|defbyid)\',.*?\'(.+?)\'\\).+?\">", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
+                exp = new Regex("href=\"(" + ConfigurationManager.AppSettings["RootUrl"] + "/common/popups/popDefinition.aspx.+?|/dictionary.+?)\"\\s+?onclick=\"(popWindow|javascript:popWindow)\\(\'(definition|defbyid)\',.*?\'(.+?)\'\\).+?\">", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.Singleline);
 				return exp.Replace(text, new MatchEvaluator(ChangeLink));
 			} 
 			else 

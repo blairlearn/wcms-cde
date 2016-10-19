@@ -38,7 +38,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 if (_di != null)
                 {
                     if (!String.IsNullOrEmpty(_di.AudioMediaHTML))
-                        return _di.AudioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationSettings.AppSettings["CDRAudioMediaLocation"]);
+                        return _di.AudioMediaHTML.Replace("[_audioMediaLocation]", ConfigurationManager.AppSettings["CDRAudioMediaLocation"]);
                     else
                         return "";
                 }
@@ -137,7 +137,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 if (_di != null)
                 {
                     if (!String.IsNullOrEmpty(_di.MediaHTML))
-                        return _di.MediaHTML.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+                        return _di.MediaHTML.Replace("[__imagelocation]", ConfigurationManager.AppSettings["CDRImageLocation"]);
 
                     else
                         return "";
@@ -259,7 +259,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                 if (imageLargeStart != -1 && imageLargeEnd != -1 && imageLargeStart < imageLargeEnd)
                 {
                     imageLarge = mediaHTML.Substring(imageLargeStart, imageLargeEnd - imageLargeStart);
-                    imageLarge = imageLarge.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+                    imageLarge = imageLarge.Replace("[__imagelocation]", ConfigurationManager.AppSettings["CDRImageLocation"]);
 
                     imageAltStart = mediaHTML.IndexOf("alt=\"", imageLargeStart) + 5;
                     imageSmallStart = mediaHTML.IndexOf("src=\"", imageLargeStart) + 5;
@@ -267,7 +267,7 @@ namespace MobileCancerGov.Web.SnippetTemplates
                     if (imageSmallStart != -1 && imageSmallEnd != -1 && imageSmallStart < imageSmallEnd)
                     {
                         imageSmall = mediaHTML.Substring(imageSmallStart, imageSmallEnd - imageSmallStart);
-                        imageSmall = imageSmall.Replace("[__imagelocation]", ConfigurationSettings.AppSettings["CDRImageLocation"]);
+                        imageSmall = imageSmall.Replace("[__imagelocation]", ConfigurationManager.AppSettings["CDRImageLocation"]);
                         if (imageAltStart > -1)
                         {
                             imageAltEnd = mediaHTML.IndexOf("\"", imageAltStart);
