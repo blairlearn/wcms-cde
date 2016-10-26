@@ -196,7 +196,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     {
                         _setFields |= SetFields.ZipCode;
                         if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
+                        {
+                            searchParams.ZipRadius = zipProximity;
                             _setFields |= SetFields.ZipProximity;
+                        }
                     }
                     else
                     {
