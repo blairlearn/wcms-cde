@@ -9,9 +9,10 @@ using NCI.Web.CDE;
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
     // NCTIDRedirect module 
-    public class CTSPrettyUrlModule : IHttpModule
+    public class NCTIDRedirectModule : IHttpModule
     {
-        static ILog log = LogManager.GetLogger(typeof(CTSPrettyUrlModule));
+        static ILog log = LogManager.GetLogger(typeof(NCTIDRedirectModule));
+        protected BasicCTSManager _basicCTSManager = null;
 
         private string SearchResultsPrettyUrl
         {
@@ -93,7 +94,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             // If this is an NCT ID, redirect to the trial's page at CTGov.
                             if (IsNctID(oldId))
                             {
-                                log.DebugFormat("CTSPrettyUrlModule {0} is an NCT ID.", oldId);
+                                log.DebugFormat("NCTIDRedirectModule {0} is an NCT ID.", oldId);
 
                                 // Format for a CTGov URL is https://clinicaltrials.gov/show/<<NCT_ID>>
                                 String nlmUrl = String.Format("https://clinicaltrials.gov/show/{0}", oldId.Trim());
