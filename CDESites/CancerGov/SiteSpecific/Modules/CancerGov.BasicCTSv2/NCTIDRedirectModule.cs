@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Common.Logging;
+
+using CancerGov.ClinicalTrialsAPI;
+using CancerGov.ClinicalTrials.Basic.v2.Configuration;
+
 using NCI.Web.CDE;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
@@ -12,7 +16,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     public class NCTIDRedirectModule : IHttpModule
     {
         static ILog log = LogManager.GetLogger(typeof(NCTIDRedirectModule));
-        protected BasicCTSManager _basicCTSManager = null;
+
+        protected string _APIURL = "";
+
+        /// <summary>
+        /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
+        /// TODO: clean up this property
+        /// </summary>
+        protected string APIURL
+        {
+            get
+            {
+                if (String.IsNullOrWhiteSpace(_APIURL))
+                {
+                    this._APIURL = BasicClinicalTrialSearchAPISection.GetAPIUrl();
+                }
+
+                return this._APIURL;
+            }
+        }
 
         private string SearchResultsPrettyUrl
         {
@@ -59,53 +81,50 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             try
             {
-                // Access the database to get protocolid only if the request url has '/clinicaltrials/oldId'
-                // In effect this request should have only three or four parts '/', 'clinicaltrials/' & 'oldid'. Examples of 
-                // oldid are NCT00942578, NCI-W82-0538/patient, MDA-DT-7635A/healthprofessaional, E-4Z93, NCI-93-C-021O, UTHSC-9235011015, etc
+                // The URL should match this pattern: '<hostname>/clinicaltrials/<NCTID>. If it does, proceed with retrieving the ID
+                // We're only concerned about the NCT ID at this point - not NCI, CDR, or any other trial IDs
                 if (context.Request.Url.Segments.Count() >= 3 &&
                     context.Request.Url.Segments[1].ToLower() == "clinicaltrials/")
                 {
-                    string oldId = string.Empty;
-
+                    string id = string.Empty;
                     // The third segment will be the old id that we can use to look up in the database
-                    oldId = context.Request.Url.Segments[2];
+                    id = context.Request.Url.Segments[2];
 
-                    if (!string.IsNullOrEmpty(oldId))
+                    if (!string.IsNullOrEmpty(id))
                     {
                         /**
                          * TODO: 
-                         * Get API host, get clinical trial
-                         * If API has trial ID, go to page on www.cancer.gov
-                         * If not NCT, don't do anything
-                         * Handle exceptions granularly 
+                         * Refactor & specialize error handling
+                         * Add "toUpper()" logic on internal redirect
+                         * 
                          */
-                        oldId = oldId.Replace("/", "");
-                        string cleanId = oldId.Trim();
+                        id = id.Replace("/", "");
+                        string cleanId = id.Trim();
 
-                        if (!string.IsNullOrEmpty(cleanId))
+                        // If API has trial ID, go to page on www.cancer.gov
+                        if (!string.IsNullOrEmpty(cleanId) && IsValidTrial(cleanId, APIURL))
                         {
                             string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}", cleanId);
                             context.Response.Redirect(ctViewUrl, true);
                         }
+                        // If it's a valid NCT ID, redirect to clinicaltrials.gov
+                        // CTGov URL format is "https://clinicaltrials.gov/show/<NCT_ID>"
+                        else if (IsNctID(cleanId))
+                        {
+                            log.DebugFormat("NCT ID {0} not found in API.", cleanId);
+                            String nlmUrl = String.Format("https://clinicaltrials.gov/show/{0}", cleanId);
+                            log.DebugFormat("Redirecting to {0}", nlmUrl);
+                            context.Response.Redirect(nlmUrl, true);
+                        }
+                        // If it's not a valid NCT ID, don't do anything. This will treat the result as a page not found
                         else
                         {
-                            log.DebugFormat("protocoloId not found in database for oldId {0}", oldId);
+                            log.DebugFormat("NCT ID {0} not found in API and is not formatted correctly for clinicaltrials.cancer.gov", cleanId);
 
-                            // If this is an NCT ID, redirect to the trial's page at CTGov.
-                            if (IsNctID(oldId))
-                            {
-                                log.DebugFormat("NCTIDRedirectModule {0} is an NCT ID.", oldId);
-
-                                // Format for a CTGov URL is https://clinicaltrials.gov/show/<<NCT_ID>>
-                                String nlmUrl = String.Format("https://clinicaltrials.gov/show/{0}", oldId.Trim());
-
-                                log.DebugFormat("Redirecting to {0}", nlmUrl);
-                                context.Response.Redirect(nlmUrl, true);
-                            }
                         }
                     }
                     else
-                        log.Debug("oldId is null or empty");
+                        log.Debug("ID is null or empty");
                 }
             }
             // Response.Redirect() throws a ThreadAbortException.  This is normal behavior.
@@ -142,14 +161,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return isAMatch;
         }
 
-        private bool IsValidTrial(string TrialId)
+        private bool IsValidTrial(string TrialId, string host)
         {
             // Is it a valid NCTID
             // If it is valid, go to web service and see if trial exists
             // Only concerned about NCTID at the moment
             // Find link that is not to an NCTID
-            return true;
+            try
+            {
+                ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(host);
+                ClinicalTrial trial = client.Get(TrialId);
+                if (trial != null)
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
         }
+
+
 
     }
 }
