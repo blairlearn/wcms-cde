@@ -30,6 +30,7 @@ namespace CancerGov.HttpModules
 
         #endregion
 
+        [Obsolete("Deprecated function for legacy search functionality; needs to be removed.", false)]
         void OnBeginRequest(object sender, EventArgs e)
         {
             //First we need to load the URL map.
