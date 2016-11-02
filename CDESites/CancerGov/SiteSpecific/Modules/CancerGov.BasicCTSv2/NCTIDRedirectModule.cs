@@ -74,24 +74,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 string id = string.Empty;
                 id = context.Request.Url.Segments[2]; // Get the third segment of the URL
+                id = id.Replace("/", "");
 
                 // If we have an ID, clean and proceed with redirect logic
                 if (!string.IsNullOrEmpty(id))
                 {
-                    id = id.Replace("/", "");
                     string cleanId = id.Trim();
 
-                    // Do an internal redirect, external redirect, or nothing, depending on the ID
+                    // Do behavior based on the given ID
                     try
                     { 
-                        // If API has trial ID, go to page on www.cancer.gov
+                        // If the ID matches a trial in the API, go to the view page on www.cancer.gov
                         if (!string.IsNullOrEmpty(cleanId) && IsValidTrial(cleanId))
                         {
                             string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}", cleanId.ToUpper());
                             context.Response.Redirect(ctViewUrl, true);
                         }
 
-                        // If it's a valid NCT ID, redirect to clinicaltrials.gov
+                        // If there is no matching trial, but it's a valid NCT ID, redirect to clinicaltrials.gov
                         // CTGov URL format is "https://clinicaltrials.gov/show/<NCT_ID>"
                         else if (IsNctID(cleanId))
                         {
@@ -101,7 +101,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             context.Response.Redirect(nlmUrl, true);
                         }
 
-                        // If it's not a valid NCT ID, don't do anything. This will treat the result as a page not found
+                        // If it's not a valid NCT ID, don't do anything; this will result in a Page Not Found.
                         else
                         {
                             log.DebugFormat("NCT ID {0} not found in API and is not formatted correctly for clinicaltrials.cancer.gov", cleanId);
