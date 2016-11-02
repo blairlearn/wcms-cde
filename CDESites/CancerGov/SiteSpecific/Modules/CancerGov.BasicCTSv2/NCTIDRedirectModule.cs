@@ -17,24 +17,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     {
         static ILog log = LogManager.GetLogger(typeof(NCTIDRedirectModule));
 
-        protected string _APIURL = "";
-
-        /// <summary>
-        /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
-        /// TODO: clean up this property
-        /// </summary>
-        protected string APIURL
-        {
-            get
-            {
-                if (String.IsNullOrWhiteSpace(_APIURL))
-                {
-                    this._APIURL = BasicClinicalTrialSearchAPISection.GetAPIUrl();
-                }
-                return this._APIURL;
-            }
-        }
-
         /// <summary>
         /// Get the the path for the Clinical Trials View page from Web.config
         /// </summary>
@@ -103,7 +85,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     try
                     { 
                         // If API has trial ID, go to page on www.cancer.gov
-                        if (!string.IsNullOrEmpty(cleanId) && IsValidTrial(cleanId, APIURL))
+                        if (!string.IsNullOrEmpty(cleanId) && IsValidTrial(cleanId))
                         {
                             string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}", cleanId.ToUpper());
                             context.Response.Redirect(ctViewUrl, true);
@@ -171,20 +153,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="idString"></param>
         /// <param name="host"></param>
         /// <returns></returns>
-        private bool IsValidTrial(string idString, string host)
+        private bool IsValidTrial(string idString)
         {
             // If the ID is a valid NCTID, go to web service and see if trial exists
             try
             {
+                String host = BasicClinicalTrialSearchAPISection.GetAPIUrl();
                 ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(host);
                 ClinicalTrial trial = client.Get(idString);
                 if (trial != null)
                 {
                     return true;
-                }
-                else
-                {
-                    return false;
                 }
             }
             catch (Exception ex)
@@ -192,6 +171,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 log.Error("Error retrieving trial object from API", ex);
                 return false;
             }
+            return false;
         }
 
     }
