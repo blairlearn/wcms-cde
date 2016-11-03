@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 using CancerGov.ClinicalTrialsAPI;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
@@ -165,10 +168,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Performs a search against the Clinical Trials API
         /// Similar to Search(), but allows specified filter criteria 
+        /// TODO: - Add logic to deserialize JSON blob
+        ///       - Better names for vars
         /// </summary>
         /// <param name="searchParams"></param>
+        /// <param name="jsonBody"></param>
         /// <returns></returns>
-        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, String jsonBody)
+        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, JObject jsonBody)
         {
             //Does the same thing as Search(), but with 
             //TODO: clean up and remove unneeded filter criteria
@@ -189,7 +195,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             /*
              * TODO: Add the filter criteria - pulled in from the JSON blob in the Appmodule XML
              */
-            string json = jsonBody;
+            JObject json = jsonBody;
             // filterCriteria.Add(<JSON blob>);
 
 
