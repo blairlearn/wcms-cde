@@ -50,8 +50,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnLoad(e);
 
+            // TODO: update ListingSearch() to overloaded Search() with data args
+            String jsonFilters = BasicCTSPageInfo.JSONBodyRequest;
+
             //Do the search
-            var results = _basicCTSManager.ListingSearch(SearchParams);
+            var results = _basicCTSManager.Search(SearchParams, jsonFilters);
 
             // Copying the Title & Short Title logic from Advanced Form
             //set the page title as the protocol title

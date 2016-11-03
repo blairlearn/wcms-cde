@@ -168,7 +168,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns></returns>
-        public ClinicalTrialsCollection ListingSearch(BaseCTSSearchParam searchParams)
+        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, String jsonBody)
         {
             //Does the same thing as Search(), but with 
             //TODO: clean up and remove unneeded filter criteria
@@ -188,7 +188,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             /*
              * TODO: Add the filter criteria - pulled in from the JSON blob in the Appmodule XML
-             */ 
+             */
+            string json = jsonBody;
             // filterCriteria.Add(<JSON blob>);
 
 
