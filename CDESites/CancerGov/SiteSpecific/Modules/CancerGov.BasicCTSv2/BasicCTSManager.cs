@@ -162,6 +162,67 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         }
 
+        /// <summary>
+        /// Performs a search against the Clinical Trials API
+        /// Similar to Search(), but allows specified filter criteria 
+        /// </summary>
+        /// <param name="searchParams"></param>
+        /// <returns></returns>
+        public ClinicalTrialsCollection ListingSearch(BaseCTSSearchParam searchParams)
+        {
+            //Does the same thing as Search(), but with 
+            //TODO: clean up and remove unneeded filter criteria
+            //From starts at 0
+            int from = 0;
+
+            if (searchParams.Page > 1)
+            {
+                from = (searchParams.Page - 1) * searchParams.ItemsPerPage;
+            }
+
+            Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
+
+            //This is for only searching open trials.
+            filterCriteria.Add("current_trial_status", ActiveTrialStatuses);
+
+
+            /*
+             * TODO: Add the filter criteria - pulled in from the JSON blob in the Appmodule XML
+             */ 
+            // filterCriteria.Add(<JSON blob>);
+
+
+            //TODO: Actually handle search criteria
+            ClinicalTrialsCollection rtnResults = Client.List(
+                size: searchParams.ItemsPerPage,
+                from: from,
+                includeFields: new string[] {
+                    "nct_id",
+                    "nci_id",
+                    "brief_title",
+                    "sites.org_name",
+                    "sites.org_postal_code",
+                    "eligibility.structured",
+                    "current_trial_status",
+                    "sites.org_country",
+                    "sites.org_state_or_province",
+                    "sites.org_city",
+                    "sites.org_coordinates",
+                    "sites.recruitment_status",
+                    "diseases"
+                },
+                searchParams: filterCriteria
+            );
+
+            foreach (ClinicalTrial trial in rtnResults.Trials)
+            {
+                RemoveNonRecruitingSites(trial);
+            }
+
+            return rtnResults;
+
+        }
+
         private static void RemoveNonRecruitingSites(ClinicalTrial trial)
         {
             trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));

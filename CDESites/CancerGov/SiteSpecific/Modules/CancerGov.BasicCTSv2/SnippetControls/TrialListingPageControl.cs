@@ -19,6 +19,7 @@ using NCI.Web;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
+    // TODO: Clean up unused methods
     public class TrialListingPageControl : BasicCTSBaseControl
     {
         /// <summary>
@@ -50,7 +51,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             base.OnLoad(e);
 
             //Do the search
-            var results = _basicCTSManager.Search(SearchParams);
+            var results = _basicCTSManager.ListingSearch(SearchParams);
 
             // Copying the Title & Short Title logic from Advanced Form
             //set the page title as the protocol title
@@ -73,47 +74,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             });
 
-            PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
-            {
-                if ((_setFields & SetFields.Age) != 0)
-                    url.QueryParameters.Add("a", SearchParams.Age.ToString());
-
-                if ((_setFields & SetFields.Gender) != 0)
-                {
-                    if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
-                        url.QueryParameters.Add("g", "1");
-                    else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
-                        url.QueryParameters.Add("g", "2");
-                }
-
-                if ((_setFields & SetFields.ZipCode) != 0)
-                    url.QueryParameters.Add("z", SearchParams.ZipLookup.PostalCode_ZIP);
-
-                if ((_setFields & SetFields.ZipProximity) != 0)
-                    url.QueryParameters.Add("zp", SearchParams.ZipRadius.ToString());
-
-                //Phrase and type are based on the type of object
-                if (SearchParams is CancerTypeSearchParam)
-                {
-                    if ((_setFields & SetFields.CancerType) != 0)
-                        url.QueryParameters.Add("t", cancerTypeIDAndHash);
-                }
-
-                if (SearchParams is PhraseSearchParam)
-                {
-                    if ((_setFields & SetFields.Phrase) != 0)
-                    {
-                        if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
-                            url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
-                        else
-                            url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
-                    }
-                }
-
-                //Items Per Page
-                url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString());
-
-            });
 
 
             // Show Results
