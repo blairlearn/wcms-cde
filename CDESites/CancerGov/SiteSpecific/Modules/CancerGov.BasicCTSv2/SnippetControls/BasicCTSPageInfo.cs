@@ -111,6 +111,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string ESTemplateCancerType { get; set; }
+
+        /// <summary>
+        /// The JSON body used for a request. 
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string JSONBodyRequest { get; set; }
     }
 }
-    
+ 
