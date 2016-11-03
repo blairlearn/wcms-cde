@@ -115,6 +115,7 @@
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSResults.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSView.ascx" />
+    <Content Include="SnippetTemplates\FilterTitle.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\IntenseDebateComments.ascx" />

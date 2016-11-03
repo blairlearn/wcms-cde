@@ -121,6 +121,9 @@
     <Compile Include="SnippetControls\BreadcrumbSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\FilterTitleSnippet.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\ConditionalDisplaySnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
