@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
 using CancerGov.ClinicalTrialsAPI;
+using Newtonsoft.Json;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -168,13 +166,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Performs a search against the Clinical Trials API
         /// Similar to Search(), but allows specified filter criteria 
-        /// TODO: - Add logic to deserialize JSON blob
-        ///       - Better names for vars
         /// </summary>
         /// <param name="searchParams"></param>
-        /// <param name="jsonBody"></param>
+        /// <param name="filterParams"></param>
         /// <returns></returns>
-        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, JObject jsonBody)
+        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, String filterParams)
         {
             //Does the same thing as Search(), but with 
             //TODO: clean up and remove unneeded filter criteria
@@ -191,13 +187,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //This is for only searching open trials.
             filterCriteria.Add("current_trial_status", ActiveTrialStatuses);
 
-
-            /*
-             * TODO: Add the filter criteria - pulled in from the JSON blob in the Appmodule XML
-             */
-            JObject json = jsonBody;
-            // filterCriteria.Add(<JSON blob>);
-
+            //Add dynamic filter criteria
+            if(!String.IsNullOrEmpty(filterParams))
+            {
+                Dictionary<string, object> dynFilters = JsonConvert.DeserializeObject<Dictionary<string, object>>(filterParams);
+                foreach(KeyValuePair<string,object> dynFilter in dynFilters)
+                {
+                    filterCriteria.Add(dynFilter.Key, dynFilter.Value);
+                }
+            }
 
             //TODO: Actually handle search criteria
             ClinicalTrialsCollection rtnResults = Client.List(

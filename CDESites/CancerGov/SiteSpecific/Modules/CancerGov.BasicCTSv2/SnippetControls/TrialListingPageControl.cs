@@ -9,9 +9,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
 using CancerGov.ClinicalTrialsAPI;
 
 using NCI.Web.CDE.UI;
@@ -53,21 +50,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnLoad(e);
 
-            // Get the 
-            /// TODO: - update ListingSearch() to overloaded Search() with data args
-            ///       - Fix error handling
-            JObject jsonFilters = new JObject();
-            try
-            {
-                jsonFilters = JObject.Parse(BasicCTSPageInfo.JSONBodyRequest);
-            }
-            catch(Exception ex)
-            {
-                jsonFilters = null;
-            }
-            
-            //String jsonFilters = BasicCTSPageInfo.JSONBodyRequest;
-            //JObject jsonObj1 = JObject.Parse(jsonFilters);
+            // TODO: update ListingSearch() to overloaded Search() with data args
+            String jsonFilters = BasicCTSPageInfo.JSONBodyRequest;
 
             //Do the search
             var results = _basicCTSManager.Search(SearchParams, jsonFilters);
