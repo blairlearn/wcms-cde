@@ -46,6 +46,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             base.OnLoad(e);
 
             // Get the JSON blob from the XML in the appmodule. This functionality may change in the future.
+            //TODO: update filtering element values / type as needed 
             String jsonFilters = BasicCTSPageInfo.JSONBodyRequest;
 
             //Do the search

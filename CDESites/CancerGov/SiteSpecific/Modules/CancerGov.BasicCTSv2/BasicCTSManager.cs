@@ -47,6 +47,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             /// "withdrawn"
         };
 
+        //Fields to include on returned search results list
+        private static readonly string[] IncludeFields = {
+            "nct_id",
+            "nci_id",
+            "brief_title",
+            "sites.org_name",
+            "sites.org_postal_code",
+            "eligibility.structured",
+            "current_trial_status",
+            "sites.org_country",
+            "sites.org_state_or_province",
+            "sites.org_city",
+            "sites.org_coordinates",
+            "sites.recruitment_status",
+            "diseases"
+        };
+
         /// <summary>
         /// Creates a new instance of a BasicCTSManager
         /// </summary>
@@ -130,29 +147,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 filterCriteria.Add("diseases.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeIDs);
             }
 
-
-            //TODO: Actually handle search criteria
-            ClinicalTrialsCollection rtnResults = Client.FilteredList(
-                size: searchParams.ItemsPerPage,
-                from: from,
-                includeFields: new string[] {
-                    "nct_id",
-                    "nci_id",
-                    "brief_title",
-                    "sites.org_name",
-                    "sites.org_postal_code",
-                    "eligibility.structured",
-                    "current_trial_status",
-                    "sites.org_country",
-                    "sites.org_state_or_province",
-                    "sites.org_city",
-                    "sites.org_coordinates",
-                    "sites.recruitment_status",
-                    "diseases"
-                },
-                searchParams: filterCriteria,
-                dynamicSearchParams: dynamicFilterParams
-            );
+            //Get our list of trials from the API client
+            ClinicalTrialsCollection rtnResults = new ClinicalTrialsCollection();
+            if (String.IsNullOrEmpty(dynamicFilterParams)) // get default results
+            { 
+                rtnResults = Client.List(
+                    size: searchParams.ItemsPerPage,
+                    from: from,
+                    includeFields: IncludeFields,
+                    searchParams: filterCriteria
+                );
+            }
+            else // get results with passed in params
+            { 
+                rtnResults = Client.FilteredList(
+                    size: searchParams.ItemsPerPage,
+                    from: from,
+                    searchParams: filterCriteria,
+                    dynamicSearchParams: dynamicFilterParams
+                );
+            }
 
             foreach(ClinicalTrial trial in rtnResults.Trials)
             {
