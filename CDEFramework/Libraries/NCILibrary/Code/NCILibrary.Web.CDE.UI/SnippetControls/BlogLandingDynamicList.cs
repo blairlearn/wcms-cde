@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Web.UI;
 using NCI.Web.CDE.Modules;
 using NCI.Web.UI.WebControls;
@@ -42,7 +43,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// Override the numerical pager used on other dynamic lists 
         /// Displays 'older' and 'newer' links
         /// </summary>
-        protected override void SetupPager(int recordsPerPage, int totalRecordCount)
+        protected override void SetupPager(int recordsPerPage, int totalRecordCount, Dictionary<string, string> urlFilters)
         {
             BlogPager blogLandingPager = new BlogPager();
             int currentPage = 0;

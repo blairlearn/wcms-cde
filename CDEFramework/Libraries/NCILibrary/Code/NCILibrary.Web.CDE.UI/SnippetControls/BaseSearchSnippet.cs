@@ -296,11 +296,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     if(this.SearchList.ResultsTemplate.Contains("Blog"))
                     {
-                        SetupBlogPager(this.SearchList.RecordsPerPage, validCount);
+                        SetupBlogPager(this.SearchList.RecordsPerPage, validCount, filters);
                     }
                     else
                     {
-                        SetupPager(this.SearchList.RecordsPerPage, validCount);
+                        SetupPager(this.SearchList.RecordsPerPage, validCount, filters);
                     }
                 }
             }
@@ -316,7 +316,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// <summary>
         /// Helper method to setup the pager
         /// </summary>
-        protected virtual void SetupPager(int recordsPerPage, int totalRecordCount)
+        protected virtual void SetupPager(int recordsPerPage, int totalRecordCount, Dictionary<string, string> urlFilters)
         {
             SimplePager pager = new SimplePager();
             pager.RecordCount = totalRecordCount;
@@ -341,12 +341,23 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     searchQueryParams += "startMonth=&startyear=&endMonth=&endYear=";
             }
 
+            foreach (KeyValuePair<string, string> entry in urlFilters)
+            {
+                if (string.IsNullOrEmpty(searchQueryParams))
+                    searchQueryParams = "?";
+                else
+                    searchQueryParams += "&";
+
+                searchQueryParams += string.Format("filter[{0}]={1}", entry.Key, entry.Value);
+            }
+            
+
             pager.BaseUrl += searchQueryParams;
 
             Controls.Add(pager);
         }
 
-        protected virtual void SetupBlogPager(int recordsPerPage, int totalRecordCount)
+        protected virtual void SetupBlogPager(int recordsPerPage, int totalRecordCount, Dictionary<string, string> urlFilters)
         {
             BlogPager blogLandingPager = new BlogPager();
             int currentPage = 0;
@@ -388,6 +399,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     searchQueryParams += string.Format("startMonth={0}&startyear={1}&endMonth={2}&endYear={3}", StartDate.Month, StartDate.Year, EndDate.Month, EndDate.Year);
                 else
                     searchQueryParams += "startMonth=&startyear=&endMonth=&endYear=";
+            }
+
+            foreach (KeyValuePair<string, string> entry in urlFilters)
+            {
+                if (string.IsNullOrEmpty(searchQueryParams))
+                    searchQueryParams = "?";
+                else
+                    searchQueryParams += "&";
+
+                searchQueryParams += string.Format("filter[{0}]={1}", entry.Key, entry.Value);
             }
 
             blogLandingPager.BaseUrl += searchQueryParams;
