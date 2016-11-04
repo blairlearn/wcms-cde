@@ -67,10 +67,6 @@ namespace CancerGov.ClinicalTrialsAPI
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(this.Host);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
                 JObject requestBody = new JObject();
                 requestBody.Add(new JProperty("size", size));
                 requestBody.Add(new JProperty("from", from));
@@ -90,11 +86,8 @@ namespace CancerGov.ClinicalTrialsAPI
                     requestBody.Add(new JProperty(sp.Key, sp.Value));
                 } 
 
-
                 //We want this to be synchronus, so call Result right away.
-                //TODO: refactor version as string to pass into Post
-                HttpResponseMessage response = client.PostAsync(BasePath + "/clinical-trials", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
-                
+                HttpResponseMessage response = Post(client, "clinical-trials", requestBody);
                 if (response.IsSuccessStatusCode)
                 {
                     rtnResults = response.Content.ReadAsAsync<ClinicalTrialsCollection>().Result;
@@ -138,10 +131,6 @@ namespace CancerGov.ClinicalTrialsAPI
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(this.Host);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
                 JObject requestBody = new JObject();
                 requestBody.Add(new JProperty("size", size));
                 requestBody.Add(new JProperty("from", from));
@@ -162,9 +151,7 @@ namespace CancerGov.ClinicalTrialsAPI
                 }
 
                 //We want this to be synchronus, so call Result right away.
-                //TODO: refactor version as string to pass into Post
-                HttpResponseMessage response = client.PostAsync(BasePath + "/clinical-trials", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
-
+                HttpResponseMessage response = Post(client, "clinical-trials", requestBody);
                 if (response.IsSuccessStatusCode)
                 {
                     rtnResults = response.Content.ReadAsAsync<ClinicalTrialsCollection>().Result;
@@ -234,10 +221,6 @@ namespace CancerGov.ClinicalTrialsAPI
 
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(this.Host);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
                 JObject requestBody = new JObject();
                 requestBody.Add(new JProperty("size", size));
                 requestBody.Add(new JProperty("from", from));
@@ -247,10 +230,8 @@ namespace CancerGov.ClinicalTrialsAPI
                     requestBody.Add(new JProperty(sp.Key, sp.Value));
                 }
 
-
                 //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = client.PostAsync(BasePath + "/terms", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
-
+                HttpResponseMessage response = Post(client, "terms", requestBody);
                 if (response.IsSuccessStatusCode)
                 {
                     rtnResults = response.Content.ReadAsAsync<TermCollection>().Result;
@@ -305,8 +286,21 @@ namespace CancerGov.ClinicalTrialsAPI
             return rtnTerm;
         }
 
-        
-
+        /// <summary>
+        /// Gets the Post request message 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="path"></param>
+        /// <param name="requestBody"></param>
+        /// <returns>reponse</returns>
+        public HttpResponseMessage Post(HttpClient client, String path, JObject requestBody)
+        {
+            client.BaseAddress = new Uri(this.Host);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.PostAsync(BasePath + "/" + path, new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+            return response;
+        }
 
     }
 }
