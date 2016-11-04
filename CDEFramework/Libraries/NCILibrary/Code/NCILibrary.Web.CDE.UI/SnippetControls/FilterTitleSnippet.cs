@@ -8,6 +8,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
     public class FilterTitleSnippet : SnippetControl
     {
         private String formattedDate = String.Empty;
+        static private String englishDateFormat = "{1}: {0} Archive";
+        static private String espanolDateFormat = "{1}: {0} Archivo";
+        static private String englishArchiveFormat = "{0} Archive";
+        static private String espanolArchiveFormat = "{0} Archivo";
 
         protected override void OnLoad(EventArgs e)
         {
@@ -20,11 +24,13 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 if (formattedDate == String.Empty)
                 {
-                    data.Value = PageInstruction.GetField("short_title") + " Archive";
+                    data.Value = String.Format((PageInstruction.Language == "es" ? englishArchiveFormat : espanolArchiveFormat),
+                        (String.IsNullOrEmpty(PageInstruction.GetField("short_title")) ? data.Value : PageInstruction.GetField("short_title")));
                 }
                 else
                 {
-                    data.Value = PageInstruction.GetField("short_title") + ": " + formattedDate + " Archive";
+                    data.Value = String.Format((PageInstruction.Language == "es" ? englishArchiveFormat : espanolArchiveFormat),
+                        (String.IsNullOrEmpty(PageInstruction.GetField("short_title")) ? data.Value : PageInstruction.GetField("short_title")), formattedDate);
                 }
             });
         }
