@@ -109,8 +109,78 @@ namespace CancerGov.ClinicalTrialsAPI
 
             return rtnResults;
 
+        }
+
+        /// <summary>
+        /// Calls the listing endpoint (/clinical-trials) of the clinical trials API
+        /// Overload for trial listing pages
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="from"></param>
+        /// <param name="includeFields"></param>
+        /// <param name="excludeFields"></param>
+        /// <param name="dynamicSearchParams"></param>
+        /// <returns></returns>
+        public ClinicalTrialsCollection FilteredList(
+            int size = 10, 
+            int from = 0, 
+            string[] includeFields = null, 
+            string[] excludeFields = null,
+            Dictionary<string, object> searchParams = null,
+            string dynamicSearchParams = null
+            )
+        {
+            ClinicalTrialsCollection rtnResults = null;
+
+            //Handle null fields
+            searchParams = searchParams ?? new Dictionary<string, object>();
+            dynamicSearchParams = dynamicSearchParams ?? String.Empty;
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(this.Host);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                JObject requestBody = new JObject();
+                requestBody.Add(new JProperty("size", size));
+                requestBody.Add(new JProperty("from", from));
+
+                foreach (KeyValuePair<string, object> sp in searchParams)
+                {
+                    requestBody.Add(new JProperty(sp.Key, sp.Value));
+                }
+
+                //Add dynamic filter criteria
+                if (!String.IsNullOrEmpty(dynamicSearchParams))
+                {
+                    Dictionary<string, object> dynFilters = JsonConvert.DeserializeObject<Dictionary<string, object>>(dynamicSearchParams);
+                    foreach (KeyValuePair<string, object> dynFilter in dynFilters)
+                    {
+                        requestBody.Add(new JProperty(dynFilter.Key, dynFilter.Value));
+                    }
+                }
+
+                //We want this to be synchronus, so call Result right away.
+                //TODO: refactor version as string to pass into Post
+                HttpResponseMessage response = client.PostAsync(BasePath + "/clinical-trials", new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    rtnResults = response.Content.ReadAsAsync<ClinicalTrialsCollection>().Result;
+                }
+                else
+                {
+                    //TODO: Add more checking here if the respone does not actually have any content
+                    string errorMessage = response.Content.ReadAsStringAsync().Result;
+                    throw new Exception(errorMessage);
+                }
+            }
+
+            return rtnResults;
 
         }
+
 
         /// <summary>
         /// Gets a clinical trial from the API via its ID.

@@ -45,7 +45,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnLoad(e);
 
-            // TODO: update ListingSearch() to overloaded Search() with data args
+            // Get the JSON blob from the XML in the appmodule. This functionality may change in the future.
             String jsonFilters = BasicCTSPageInfo.JSONBodyRequest;
 
             //Do the search

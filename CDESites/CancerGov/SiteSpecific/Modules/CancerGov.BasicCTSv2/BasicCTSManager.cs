@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using CancerGov.ClinicalTrialsAPI;
-using Newtonsoft.Json;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -77,7 +76,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns></returns>
-        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, String filterParams = "") {
+        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, String dynamicFilterParams = "") {
             //Set page
             //Set size
             //Get only the fields we want
@@ -131,18 +130,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 filterCriteria.Add("diseases.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeIDs);
             }
 
-            //Add dynamic filter criteria
-            if (!String.IsNullOrEmpty(filterParams))
-            {
-                Dictionary<string, object> dynFilters = JsonConvert.DeserializeObject<Dictionary<string, object>>(filterParams);
-                foreach (KeyValuePair<string, object> dynFilter in dynFilters)
-                {
-                    filterCriteria.Add(dynFilter.Key, dynFilter.Value);
-                }
-            }
 
             //TODO: Actually handle search criteria
-            ClinicalTrialsCollection rtnResults = Client.List(
+            ClinicalTrialsCollection rtnResults = Client.FilteredList(
                 size: searchParams.ItemsPerPage,
                 from: from,
                 includeFields: new string[] {
@@ -160,7 +150,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     "sites.recruitment_status",
                     "diseases"
                 },
-                searchParams: filterCriteria
+                searchParams: filterCriteria,
+                dynamicSearchParams: dynamicFilterParams
             );
 
             foreach(ClinicalTrial trial in rtnResults.Trials)
