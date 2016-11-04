@@ -38,11 +38,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-
-            // Only present for BasicCTSResultsControl.
-            // This call is disabled/removed in base.OnInit().
-            HandleOldCancerTypeID();
-
             SearchParams = GetSearchParams();
         }
 
@@ -92,34 +87,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             Controls.Add(ltl);
         }
 
-        /// <summary>
-        /// Looks for bookmarked searches where CANCERTYPE_PARAM contains a CDRID instead of a concept ID.
-        /// When such searches are located, redirect to the main search page, with a flag notifying that
-        /// this is a redirection.
-        /// </summary>
-        protected void HandleOldCancerTypeID()
-        {
-            string cancerTypeID = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
-
-            // Detect legacy CDRID.
-            if (!String.IsNullOrWhiteSpace(cancerTypeID) &&
-                cancerTypeID.ToLower().StartsWith("cdr"))
-            {
-                // Redirect to search page
-                NciUrl redirectURL = new NciUrl();
-                redirectURL.SetUrl(BasicCTSPageInfo.SearchPagePrettyUrl);
-
-                // Copy querystring parameters from the request.
-                foreach (string key in Request.QueryString.AllKeys)
-                    redirectURL.QueryParameters.Add(key, Request.QueryString[key]);
-
-                // Add redirection flag.
-                redirectURL.QueryParameters.Add(REDIRECTED_FLAG, String.Empty);
-
-                DoPermanentRedirect(Response, redirectURL.ToString());
-            }
-        }
-
+        
         #region Velocity Helpers
 
         /// <summary>

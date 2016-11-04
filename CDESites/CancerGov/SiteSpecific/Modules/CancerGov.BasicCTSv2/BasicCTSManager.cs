@@ -77,8 +77,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns></returns>
-        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams) {
-            
+        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, String filterParams = "") {
             //Set page
             //Set size
             //Get only the fields we want
@@ -131,67 +130,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 //This is now an array of codes.
                 filterCriteria.Add("diseases.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeIDs);
             }
-            
-            //TODO: Actually handle search criteria
-            ClinicalTrialsCollection rtnResults = Client.List(
-                size: searchParams.ItemsPerPage,
-                from: from,
-                includeFields: new string[] {
-                    "nct_id",
-                    "nci_id",
-                    "brief_title",
-                    "sites.org_name",
-                    "sites.org_postal_code",
-                    "eligibility.structured",
-                    "current_trial_status",
-                    "sites.org_country",
-                    "sites.org_state_or_province",
-                    "sites.org_city",
-                    "sites.org_coordinates",
-                    "sites.recruitment_status",
-                    "diseases"
-                },
-                searchParams: filterCriteria
-            );
-
-            foreach(ClinicalTrial trial in rtnResults.Trials)
-            {
-                RemoveNonRecruitingSites(trial);
-            }
-
-            return rtnResults;
-
-        }
-
-        /// <summary>
-        /// Performs a search against the Clinical Trials API
-        /// Similar to Search(), but allows specified filter criteria 
-        /// </summary>
-        /// <param name="searchParams"></param>
-        /// <param name="filterParams"></param>
-        /// <returns></returns>
-        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, String filterParams)
-        {
-            //Does the same thing as Search(), but with 
-            //TODO: clean up and remove unneeded filter criteria
-            //From starts at 0
-            int from = 0;
-
-            if (searchParams.Page > 1)
-            {
-                from = (searchParams.Page - 1) * searchParams.ItemsPerPage;
-            }
-
-            Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
-
-            //This is for only searching open trials.
-            filterCriteria.Add("current_trial_status", ActiveTrialStatuses);
 
             //Add dynamic filter criteria
-            if(!String.IsNullOrEmpty(filterParams))
+            if (!String.IsNullOrEmpty(filterParams))
             {
                 Dictionary<string, object> dynFilters = JsonConvert.DeserializeObject<Dictionary<string, object>>(filterParams);
-                foreach(KeyValuePair<string,object> dynFilter in dynFilters)
+                foreach (KeyValuePair<string, object> dynFilter in dynFilters)
                 {
                     filterCriteria.Add(dynFilter.Key, dynFilter.Value);
                 }
@@ -219,7 +163,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 searchParams: filterCriteria
             );
 
-            foreach (ClinicalTrial trial in rtnResults.Trials)
+            foreach(ClinicalTrial trial in rtnResults.Trials)
             {
                 RemoveNonRecruitingSites(trial);
             }
