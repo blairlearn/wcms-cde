@@ -29,7 +29,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                 }
                 else
                 {
-                    data.Value = String.Format((PageInstruction.Language == "es" ? englishArchiveFormat : espanolArchiveFormat),
+                    data.Value = String.Format((PageInstruction.Language == "es" ? englishDateFormat : espanolDateFormat),
                         (String.IsNullOrEmpty(PageInstruction.GetField("short_title")) ? data.Value : PageInstruction.GetField("short_title")), formattedDate);
                 }
             });
