@@ -128,6 +128,7 @@ namespace CancerGov.ClinicalTrialsAPI
                 requestBody.Add(new JProperty("size", size));
                 requestBody.Add(new JProperty("from", from));
 
+                //Add common filter criteria to request
                 foreach (KeyValuePair<string, object> sp in searchParams)
                 {
                     requestBody.Add(new JProperty(sp.Key, sp.Value));
@@ -136,11 +137,15 @@ namespace CancerGov.ClinicalTrialsAPI
                 //Add dynamic filter criteria
                 if (!String.IsNullOrEmpty(dynamicSearchParams))
                 {
+                    JObject dynamicRequestBody = new JObject();
+                    //Deserialize our JSON string into a dictionary object, then add it to our Json.NET object 
                     Dictionary<string, object> dynFilters = JsonConvert.DeserializeObject<Dictionary<string, object>>(dynamicSearchParams);
                     foreach (KeyValuePair<string, object> dynFilter in dynFilters)
                     {
-                        requestBody.Add(new JProperty(dynFilter.Key, dynFilter.Value));
+                        dynamicRequestBody.Add(new JProperty(dynFilter.Key, dynFilter.Value));
                     }
+                    //Merge dynamic and common filters (dynamic values override common)
+                    requestBody.Merge(dynamicRequestBody, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
                 }
 
                 //We want this to be synchronus, so call Result right away.
