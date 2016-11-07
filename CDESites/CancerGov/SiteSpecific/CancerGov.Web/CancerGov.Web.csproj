@@ -106,6 +106,7 @@
     <Content Include="Common\PopUps\popTextFooterSpanish.htm" />
     <Content Include="Common\PopUps\popTextHeader.htm" />
     <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
+    <Content Include="SnippetTemplates\BlogSeriesArchive.ascx" />
     <Content Include="Global.asax" />
     <Content Include="JS\popEvents.js" />
     <Content Include="Common\PopUps\PopEmail.aspx" />
@@ -829,6 +830,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_LocalResources\" />
+    <Folder Include="DynamicData\FieldTemplates\" />
     <Folder Include="UserControls\Footers\" />
   </ItemGroup>
   <PropertyGroup>
