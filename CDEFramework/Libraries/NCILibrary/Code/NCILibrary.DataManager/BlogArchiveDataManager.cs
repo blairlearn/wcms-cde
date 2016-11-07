@@ -22,7 +22,7 @@ namespace NCI.DataManager
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@searchfilter", SqlDbType.VarChar);
-                    cmd.Parameters["@searchfilter"].Value = "Blog Series-828591";
+                    cmd.Parameters["@searchfilter"].Value = blogSeriesId;
                     cmd.Parameters.Add("@numberofpreviousyears", SqlDbType.Int);
                     cmd.Parameters["@numberofpreviousyears"].Value = numberOfYears;
 
