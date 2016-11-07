@@ -10,10 +10,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
     {
         private DateTime filterDate = DateTime.MinValue;
         private String formattedDate = String.Empty;
-        static private String englishDateFormat = "{0} - {1}";
-        static private String espanolDateFormat = "{0} - {1}";
-        static private String englishArchiveFormat = "{0} Archive";
-        static private String espanolArchiveFormat = "{0} Archivo";
+        static private String englishDateFormat = "{1} - {0}";
+        static private String espanolDateFormat = "{1} - {0}";
+        static private String englishArchiveFormat = "Archive - {0}";
+        static private String espanolArchiveFormat = "Archive - {0}";
 
         protected override void OnLoad(EventArgs e)
         {
@@ -52,7 +52,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         {
                             int month = Int32.Parse(filters["month"]);
                             filterDate = new DateTime(year, month, 1);
-                            formattedDate = filterDate.ToString("MMMM yyyy", CultureInfo.CurrentUICulture.DateTimeFormat);
+                            formattedDate = CultureInfo.CurrentUICulture.TextInfo.ToTitleCase(filterDate.ToString("MMMM yyyy", CultureInfo.CurrentUICulture.DateTimeFormat));
                         }
                         catch
                         {
