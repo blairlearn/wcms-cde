@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Web;
 
@@ -7,9 +8,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
 {
     public class FilterTitleSnippet : SnippetControl
     {
+        private DateTime filterDate = DateTime.MinValue;
         private String formattedDate = String.Empty;
-        static private String englishDateFormat = "{1}: {0} Archive";
-        static private String espanolDateFormat = "{1}: {0} Archivo";
+        static private String englishDateFormat = "{0} - {1}";
+        static private String espanolDateFormat = "{0} - {1}";
         static private String englishArchiveFormat = "{0} Archive";
         static private String espanolArchiveFormat = "{0} Archivo";
 
@@ -24,12 +26,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
             {
                 if (formattedDate == String.Empty)
                 {
-                    data.Value = String.Format((PageInstruction.Language == "es" ? englishArchiveFormat : espanolArchiveFormat),
+                    data.Value = String.Format((PageInstruction.Language == "es" ? espanolArchiveFormat : englishArchiveFormat),
                         (String.IsNullOrEmpty(PageInstruction.GetField("short_title")) ? data.Value : PageInstruction.GetField("short_title")));
                 }
                 else
                 {
-                    data.Value = String.Format((PageInstruction.Language == "es" ? englishDateFormat : espanolDateFormat),
+                    data.Value = String.Format((PageInstruction.Language == "es" ? espanolDateFormat : englishDateFormat),
                         (String.IsNullOrEmpty(PageInstruction.GetField("short_title")) ? data.Value : PageInstruction.GetField("short_title")), formattedDate);
                 }
             });
@@ -49,10 +51,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         try
                         {
                             int month = Int32.Parse(filters["month"]);
-                            //int lastDay = DateTime.DaysInMonth(year, month);
-                            //startDate = new DateTime(year, month, 1);
-                            //endDate = new DateTime(year, month, lastDay);
-                            formattedDate = month.ToString() + "/" + year.ToString();
+                            filterDate = new DateTime(year, month, 1);
+                            formattedDate = filterDate.ToString("MMMM yyyy", CultureInfo.CurrentUICulture.DateTimeFormat);
                         }
                         catch
                         {
@@ -61,9 +61,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     }
                     else
                     {
-                        //startDate = new DateTime(year, 1, 1);
-                        //endDate = new DateTime(year, 12, 31);
-                        formattedDate = year.ToString();
+                        filterDate = new DateTime(year, 1, 1);
+                        formattedDate = filterDate.ToString("yyyy");
                     }
                 }
                 catch
