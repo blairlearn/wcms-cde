@@ -52,29 +52,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Do the search
             var results = _basicCTSManager.Search(SearchParams, jsonFilters);
 
-            // Copying the Title & Short Title logic from Advanced Form
-            //set the page title as the protocol title
-            PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
-            {
-                int maxPage = (int)Math.Ceiling((double)results.TotalResults / (double)SearchParams.ItemsPerPage);
-                data.Value = "Results of Your Search";
-
-                if (results.TotalResults == 0)
-                {
-                    data.Value = "No Trials Matched Your Search";
-                }
-                else if (hasInvalidSearchParam)
-                {
-                    data.Value = "No Results";
-                }
-                else if (SearchParams.Page > maxPage)
-                {
-                    data.Value = "No Results";
-                }
-            });
-
-
-
             // Show Results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                 BasicCTSPageInfo.ResultsPageTemplatePath,

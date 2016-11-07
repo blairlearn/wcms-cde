@@ -49,6 +49,7 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <param name="from"></param>
         /// <param name="includeFields"></param>
         /// <param name="excludeFields"></param>
+        /// <param name="searchParams"></param>
         /// <returns></returns>
         public ClinicalTrialsCollection List(
             int size = 10, 
@@ -110,18 +111,10 @@ namespace CancerGov.ClinicalTrialsAPI
         /// </summary>
         /// <param name="size"></param>
         /// <param name="from"></param>
-        /// <param name="includeFields"></param>
-        /// <param name="excludeFields"></param>
+        /// <param name="searchParams"></param>
         /// <param name="dynamicSearchParams"></param>
         /// <returns></returns>
-        public ClinicalTrialsCollection FilteredList(
-            int size = 10, 
-            int from = 0, 
-            string[] includeFields = null, 
-            string[] excludeFields = null,
-            Dictionary<string, object> searchParams = null,
-            string dynamicSearchParams = null
-            )
+        public ClinicalTrialsCollection List(int size, int from, Dictionary<string, object> searchParams, String dynamicSearchParams)
         {
             ClinicalTrialsCollection rtnResults = null;
 

@@ -160,7 +160,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             else // get results with passed in params
             { 
-                rtnResults = Client.FilteredList(
+                rtnResults = Client.List(
                     size: searchParams.ItemsPerPage,
                     from: from,
                     searchParams: filterCriteria,
