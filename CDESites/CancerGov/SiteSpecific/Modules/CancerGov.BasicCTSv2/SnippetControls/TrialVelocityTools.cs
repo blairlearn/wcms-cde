@@ -109,8 +109,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         public string GetFormattedString(String str)
         {
-            str = char.ToString(str[0]).ToUpper() + str.Substring(1).ToLower();
-            str = str.Replace("_", " ");
+            if (!String.IsNullOrEmpty(str))
+            {
+                str = char.ToString(str[0]).ToUpper() + str.Substring(1).ToLower();
+                str = str.Replace("_", " ");
+            } 
             return str;
         }
 
