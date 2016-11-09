@@ -21,7 +21,7 @@ namespace NCI.Web.CDE.UI.Modules
     [ToolboxData("<{0}:BlogSeriesArchive runat=server></{0}:BlogSeriesArchive>")]
     public class BlogSeriesArchive : SnippetControl
     {
-        //String blogSeriesID = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("BlogSeriesId");
+        String blogSeriesID = "Blog Series-" + PageAssemblyContext.Current.PageAssemblyInstruction.GetField("BlogSeriesId");
 
         protected BlogSeriesArchiveControl theControl = null;
         public void Page_Load(object sender, EventArgs e)
@@ -29,17 +29,21 @@ namespace NCI.Web.CDE.UI.Modules
             // FIX THIS COMMENT
             SinglePageAssemblyInstruction basePage = PageAssemblyContext.Current.PageAssemblyInstruction as SinglePageAssemblyInstruction;
             if (basePage == null)
-                return;
+                return;            
             
-            // initialize the control
-            theControl = new BlogSeriesArchiveControl();
-
-            // load the shortname from settings
             BlogSeriesArchiveSettings blogSeriesArchiveSettings = ModuleObjectFactory<BlogSeriesArchiveSettings>.GetModuleObject(SnippetInfo.Data);
-            string years = "";
+
+            // initialize the control
+            var language = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
+            string years = blogSeriesArchiveSettings.Years;
+            string groupBy = blogSeriesArchiveSettings.GroupBy;
+
+            theControl = new BlogSeriesArchiveControl(language, groupBy);
+
+            // load the shortname from settings           
+
             if (blogSeriesArchiveSettings != null)
             {
-                years = blogSeriesArchiveSettings.Years;
 
                 // do not configure the control if no shortname available
                 if (String.IsNullOrEmpty(years))
@@ -47,8 +51,8 @@ namespace NCI.Web.CDE.UI.Modules
                     return;
                 }
             }
-            
-            var results = BlogArchiveDataManager.Execute("Blog Series-860259", Int32.Parse(years));
+
+            var results = BlogArchiveDataManager.Execute(blogSeriesID, Int32.Parse(years));
 
             theControl.results = results;
 

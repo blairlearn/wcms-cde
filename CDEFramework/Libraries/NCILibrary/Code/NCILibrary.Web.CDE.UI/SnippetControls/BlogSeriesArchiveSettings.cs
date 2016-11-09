@@ -14,5 +14,8 @@ namespace NCI.Web.CDE.UI.Modules
     {
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string Years { get; set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string GroupBy { get; set; }
     }
 }

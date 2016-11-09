@@ -18,23 +18,28 @@ namespace NCI.Web.UI.WebControls
     [ToolboxData("<{0}:BlogSeriesArchiveWebControl runat=server></{0}:BlogSeriesArchiveWebControl>")]
     public class BlogSeriesArchiveControl : WebControl
     {
-        public BlogSeriesArchiveControl()
+        public BlogSeriesArchiveControl(string language, string groupBy)
         {
-            Years = 1;
+            Language = language;
+            GroupBy = groupBy;
         }
-        
+
+        private string Language;
+        private string GroupBy;
         [Bindable(true)]
         [Category("Appearance")]
         [DefaultValue("")]
         [Localizable(true)]
         public int Years
         {
-            get {
+            get
+            {
                 object temp = ViewState["Years"];
-                return temp == null ? 0 : 1;
+                return temp == null ? 0 : (int)temp;
             }
             set { ViewState["Years"] = value; }
         }
+
 
         public DataTable results { get; set; }
 
@@ -42,19 +47,73 @@ namespace NCI.Web.UI.WebControls
 
         protected override void RenderContents(HtmlTextWriter output)
         {
-            StringBuilder sb = new StringBuilder();
+            if (GroupBy.ToLower().Equals("year"))
+            {
+                output.Write(RenderAccordionOnYear());
+            }
+            else if (GroupBy.ToLower().Equals("month"))
+            {
+                output.Write(RenderAccordionOnMonth());
+            }
+        }
 
-            sb.Append("<div class=\"blog-archive-accordion managed list\"><p id=\"archive\" class=\"title\">Archive</p><div class=\"archive-accordion-expand global-expand\">+</div></div>");
-            sb.Append("<div class=\"blog-archive-accordion-panel archive-panel\">");
-            sb.Append("<section id=\"select\">");
-            sb.Append("<div class=\"archives-list\">");
-            
+        #endregion
+
+        #region Private Methods
+
+        private string RenderAccordionOnYear()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<div class=\"desktop\">" +
+                      "<div id=\"blog-archive-accordion\">");
+            sb.Append("<h3 id=\"archive\" class=\"blog-archive-header\">Archive</h3>");
+            sb.Append("<div id=\"blog-archive-accordion-year\">");
+            sb.Append("<ul>");
             // Structure for the list is created above, now iterate over the rows
             // and group the dates by year
             List<BlogListItem> monthList = new List<BlogListItem>();
-            for(var i = 0; i< results.Rows.Count; i++){
+            for (var i = 0; i < results.Rows.Count; i++)
+            {
                 var row = results.Rows[i];
-                monthList.Add(new BlogListItem(Convert.ToInt32(row[0]), Convert.ToInt32(row[1]), Convert.ToInt32(row[2])));                
+                monthList.Add(new BlogListItem(Convert.ToInt32(row[0]), Convert.ToInt32(row[1]), Convert.ToInt32(row[2])));
+            }
+            var returnedYears = monthList.Select(e => e.Year).Distinct();
+
+            foreach (var year in returnedYears)
+            {
+                // Get all the months within the row collection for this year.
+                var blogCount = monthList.Where(e => e.Year == year).ToList().Count();
+
+                sb.Append("<li class=\"year\">");
+                if (blogCount > 0) // Print the month as a link
+                    sb.Append("<a class href=\"/news-events/cancer-currents-blog/archive?filter[year]=" + year + "\">" + year + "</a>");
+                else
+                    sb.Append(year);
+                sb.Append(" (" + blogCount + ")");
+                sb.Append("</li>");
+            }
+            sb.Append("</ul>");
+            sb.Append("</div>");
+            sb.Append("</div>");
+            sb.Append("</div>");
+            return sb.ToString();
+        }
+
+        private string RenderAccordionOnMonth()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<div class=\"desktop\">" +
+                      "<div id=\"blog-archive-accordion\">");
+            sb.Append("<h3 id=\"archive\" class=\"blog-archive-header\">Archive</h3>");
+            sb.Append("<div id=\"blog-archive-accordion-year\">");
+
+            // Structure for the list is created above, now iterate over the rows
+            // and group the dates by year
+            List<BlogListItem> monthList = new List<BlogListItem>();
+            for (var i = 0; i < results.Rows.Count; i++)
+            {
+                var row = results.Rows[i];
+                monthList.Add(new BlogListItem(Convert.ToInt32(row[0]), Convert.ToInt32(row[1]), Convert.ToInt32(row[2])));
             }
             var returnedYears = monthList.Select(e => e.Year).Distinct();
 
@@ -68,49 +127,18 @@ namespace NCI.Web.UI.WebControls
                 // Months within that year that actually have blog pots.
                 if (rowsToPrint.Any(month => month.Quantity > 0))
                 {
-                    sb.Append("<div class=\"blog-archive-year-container\">");
-                    sb.Append("<div class=\"blog-archive-accordion\"><div class=\"archive-year-header\">" + year + "</div><div class=\"archive-accordion-expand\">+</div></div>");
-                    sb.Append("<div class=\"blog-archive-accordion-panel archive-year-panel\">");
+                    sb.Append("<h4>" + year + "</h4>");
                     sb.Append("<ul>");
                     foreach (var value in rowsToPrint)
                     {
-                        var rowYear = value.Year;
-                        var month = value.Month;                        
+                        var month = value.Month;
                         var quantity = value.Quantity;
-                        string monthStr = "";
-                        switch (month)
-                        {
-                            case 1: monthStr = "January";
-                                break;
-                            case 2: monthStr = "February";
-                                break;
-                            case 3: monthStr = "March";
-                                break;
-                            case 4: monthStr = "April";
-                                break;
-                            case 5: monthStr = "May";
-                                break;
-                            case 6: monthStr = "June";
-                                break;
-                            case 7: monthStr = "July";
-                                break;
-                            case 8: monthStr = "August";
-                                break;
-                            case 9: monthStr = "September";
-                                break;
-                            case 10: monthStr = "October";
-                                break;
-                            case 11: monthStr = "November";
-                                break;
-                            case 12: monthStr = "December";
-                                break;
-                            default: monthStr = "";
-                                break;
-                        }
+                        string monthStr = GetMonthString(month);
+
 
                         sb.Append("<li class=\"month\">");
 
-                        if(quantity > 0) // Print the month as a link
+                        if (quantity > 0) // Print the month as a link
                             sb.Append("<a class href=\"/news-events/cancer-currents-blog/archive?filter[year]=" + year + "&filter[month]=" + month + "\">" + monthStr + "</a>");
                         else
                             sb.Append(monthStr);
@@ -118,23 +146,99 @@ namespace NCI.Web.UI.WebControls
                         sb.Append("</li>");
                     }
                     sb.Append("</ul>");
-                    sb.Append("</div>"); // End the blog-archive-accordion-panel div
-                    sb.Append("</div>"); // End the blog-archive-year-container div
-                }                
+                }
             }
             sb.Append("</div>");
             sb.Append("</div>");
-            sb.Append("</section>");
             sb.Append("</div>");
-            output.Write(sb.ToString());
-            
+            return sb.ToString();
         }
 
-        #endregion
-
-        #region Private Methods
-
-
+        
+        private string GetMonthString(int month)
+        {
+            var monthStr = "";
+            var isEnglish = Language == "en";
+            switch (month)
+            {
+                case 1:
+                    if (isEnglish)
+                        monthStr = "January";
+                    else
+                        monthStr = "enero";
+                    break;
+                case 2:
+                    if (isEnglish)
+                        monthStr = "February";
+                    else
+                        monthStr = "febrero";
+                    break;
+                    break;
+                case 3:
+                    if (isEnglish)
+                        monthStr = "March";
+                    else
+                        monthStr = "marzo";
+                    break;
+                case 4:
+                    if (isEnglish)
+                        monthStr = "April";
+                    else
+                        monthStr = "abril";
+                    break;
+                case 5:
+                    if (isEnglish)
+                        monthStr = "May";
+                    else
+                        monthStr = "mayo";
+                    break;
+                case 6:
+                    if (isEnglish)
+                        monthStr = "June";
+                    else
+                        monthStr = "junio";
+                    break;
+                case 7:
+                    if (isEnglish)
+                        monthStr = "July";
+                    else
+                        monthStr = "julio";
+                    break;
+                case 8:
+                    if (isEnglish)
+                        monthStr = "August";
+                    else
+                        monthStr = "agosto";
+                    break;
+                case 9:
+                    if (isEnglish)
+                        monthStr = "September";
+                    else
+                        monthStr = "septiembre";
+                    break;
+                case 10:
+                    if (isEnglish)
+                        monthStr = "October";
+                    else
+                        monthStr = "octubre";
+                    break;
+                case 11:
+                    if (isEnglish)
+                        monthStr = "November";
+                    else
+                        monthStr = "noviembre";
+                    break;
+                case 12:
+                    if (isEnglish)
+                        monthStr = "December";
+                    else
+                        monthStr = "deciembre";
+                    break;
+                default: monthStr = "";
+                    break;
+            }
+            return monthStr;
+        }
        
 
         #endregion
