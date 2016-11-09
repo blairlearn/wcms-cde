@@ -45,9 +45,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnLoad(e);
 
-            // Get the JSON blob from the XML in the appmodule. This functionality may change in the future.
-            //TODO: update filtering element values / type as needed 
+            /* TODO: 
+             * - Update logic to handle invalid param names without breaking the page (!)
+             * - Update filtering element values / type as needed 
+             * - Update Search() to accept additional argument OR combine Jsonfilters + urlparamfilters in this control
+             * - Get list of common filter keys
+             * - Clean up GetUrlFilters() 
+             * - Check velocity helper methods against what is actually used in the template
+             */
+            // Get the JSON blob from the XML in the content item (AppModule)
             String jsonFilters = BasicCTSPageInfo.JSONBodyRequest;
+
+            // Get the filter parameters from the URL. URL filter params should NOT override any matching params set in the JSON
+            String urlParamFilters = GetUrlFilters();
 
             //Do the search
             var results = _basicCTSManager.Search(SearchParams, jsonFilters);
@@ -65,7 +75,33 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             Controls.Add(ltl);
         }
 
-        
+
+        #region Filter methods
+        private string GetUrlFilters()
+        {
+            Dictionary<string, string> urlParams = new Dictionary<string, string>();
+            Regex pattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            List<string> values = new List<string>();
+
+            foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
+            {
+                if (pattern.IsMatch(key))
+                {
+                    //ret += key + @"<spacer>";
+                    Match match = pattern.Match(key);
+                    values.Add(@"""" + match.Groups[1].Value + @""":[""" + HttpContext.Current.Request.QueryString[match.Value] + @"""]");
+                }
+            }
+            string result = "{" + string.Join(",", values.ToArray()) + "}";
+
+
+            //            return urlParams;
+            //ret = String.Join("===", urlParams.Select(x => x.Key + ":::" + x.Value).ToArray());
+            return result;
+        }
+        #endregion 
+
+
         #region Velocity Helpers
 
         /// <summary>
