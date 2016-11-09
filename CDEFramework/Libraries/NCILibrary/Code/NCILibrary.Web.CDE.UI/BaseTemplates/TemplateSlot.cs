@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using NCI.Text;
 
 namespace NCI.Web.CDE.UI
 {
@@ -89,12 +90,18 @@ namespace NCI.Web.CDE.UI
                 return;
 
             if (!String.IsNullOrEmpty(HeaderHtml))
-                writer.Write(HeaderHtml);
+            {
+                string tmpHeaderHtml = MarkupExtensionProcessor.Instance.Process(HeaderHtml);
+                writer.Write(tmpHeaderHtml);
+            }
 
             base.Render(writer);
 
             if (!String.IsNullOrEmpty(FooterHtml))
-                writer.Write(FooterHtml);
+            {
+                string tmpFooterHtml = MarkupExtensionProcessor.Instance.Process(FooterHtml);
+                writer.Write(tmpFooterHtml);
+            }
         }
 
         /// <summary>
