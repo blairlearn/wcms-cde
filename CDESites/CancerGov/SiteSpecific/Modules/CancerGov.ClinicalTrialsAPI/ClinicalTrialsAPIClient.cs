@@ -114,13 +114,13 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <param name="searchParams"></param>
         /// <param name="dynamicSearchParams"></param>
         /// <returns></returns>
-        public ClinicalTrialsCollection List(int size, int from, Dictionary<string, object> searchParams, String dynamicSearchParams)
+        public ClinicalTrialsCollection List(int size, int from, Dictionary<string, object> searchParams, JObject dynamicSearchParams)
         {
             ClinicalTrialsCollection rtnResults = null;
 
             //Handle null fields
             searchParams = searchParams ?? new Dictionary<string, object>();
-            dynamicSearchParams = dynamicSearchParams ?? String.Empty;
+            dynamicSearchParams = dynamicSearchParams ?? new JObject();
 
             using (var client = new HttpClient())
             {
@@ -135,17 +135,11 @@ namespace CancerGov.ClinicalTrialsAPI
                 }
 
                 //Add dynamic filter criteria
-                if (!String.IsNullOrEmpty(dynamicSearchParams))
+                if (dynamicSearchParams != null)
                 {
-                    JObject dynamicRequestBody = new JObject();
-                    //Deserialize our JSON string into a dictionary object, then add it to our Json.NET object 
-                    Dictionary<string, object> dynFilters = JsonConvert.DeserializeObject<Dictionary<string, object>>(dynamicSearchParams);
-                    foreach (KeyValuePair<string, object> dynFilter in dynFilters)
-                    {
-                        dynamicRequestBody.Add(new JProperty(dynFilter.Key, dynFilter.Value));
-                    }
                     //Merge dynamic and common filters (dynamic values override common)
-                    requestBody.Merge(dynamicRequestBody, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
+                    //TODO: add checking for invalid params
+                    requestBody.Merge(dynamicSearchParams, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
                 }
 
                 //We want this to be synchronus, so call Result right away.
