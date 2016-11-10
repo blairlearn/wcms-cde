@@ -22,6 +22,7 @@ namespace NCI.Web.UI.WebControls
         {
             Language = language;
             GroupBy = groupBy;
+
         }
 
         private string Language;

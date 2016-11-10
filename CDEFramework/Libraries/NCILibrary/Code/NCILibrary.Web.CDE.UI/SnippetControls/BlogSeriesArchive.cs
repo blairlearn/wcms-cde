@@ -21,7 +21,7 @@ namespace NCI.Web.CDE.UI.Modules
     [ToolboxData("<{0}:BlogSeriesArchive runat=server></{0}:BlogSeriesArchive>")]
     public class BlogSeriesArchive : SnippetControl
     {
-        String blogSeriesID = "Blog Series-" + PageAssemblyContext.Current.PageAssemblyInstruction.GetField("BlogSeriesId");
+
 
         protected BlogSeriesArchiveControl theControl = null;
         public void Page_Load(object sender, EventArgs e)
@@ -37,6 +37,7 @@ namespace NCI.Web.CDE.UI.Modules
             var language = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
             string years = blogSeriesArchiveSettings.Years;
             string groupBy = blogSeriesArchiveSettings.GroupBy;
+            string blogSeriesId = blogSeriesArchiveSettings.BlogSeriesId;
 
             theControl = new BlogSeriesArchiveControl(language, groupBy);
 
@@ -52,7 +53,7 @@ namespace NCI.Web.CDE.UI.Modules
                 }
             }
 
-            var results = BlogArchiveDataManager.Execute(blogSeriesID, Int32.Parse(years));
+            var results = BlogArchiveDataManager.Execute(blogSeriesId, Int32.Parse(years));
 
             theControl.results = results;
 

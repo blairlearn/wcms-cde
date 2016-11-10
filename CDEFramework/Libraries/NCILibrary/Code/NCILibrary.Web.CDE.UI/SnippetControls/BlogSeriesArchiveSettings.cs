@@ -17,5 +17,8 @@ namespace NCI.Web.CDE.UI.Modules
 
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string GroupBy { get; set; }
+
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string BlogSeriesId { get; set; }
     }
 }
