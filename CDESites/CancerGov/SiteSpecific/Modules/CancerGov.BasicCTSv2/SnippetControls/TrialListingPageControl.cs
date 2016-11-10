@@ -9,14 +9,14 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-using CancerGov.ClinicalTrialsAPI;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
+using CancerGov.ClinicalTrialsAPI;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE;
 using NCI.Web;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -47,25 +47,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             base.OnLoad(e);
 
             /* TODO: 
-             * - Update logic to handle invalid param names without breaking the page (!)
+             * - Update logic to handle invalid param names without breaking the page (!!!)
              * - Update filtering element values / type as needed 
-             * - Update Search() to accept additional argument OR combine Jsonfilters + urlparamfilters in this control
              * - Get list of common filter keys
              * - Clean up GetUrlFilters() 
              * - Check velocity helper methods against what is actually used in the template
              */
-            // Get the JSON blob from the XML in the content item (AppModule)
-            String jsonFilters = BasicCTSPageInfo.JSONBodyRequest;
-            JObject jsonParms = GetDeserializedJSON(jsonFilters);
-
+            // Get the JSON blob from the XML in the content item (AppModule). This overrides anything passed via the URL
+            String xmlFilters = BasicCTSPageInfo.JSONBodyRequest;
+            JObject dynamicParams = GetDeserializedJSON(xmlFilters);
 
             // Get the filter parameters from the URL. URL filter params should NOT override any matching params set in the JSON
-            String urlParamFilters = GetUrlFilters();
-            JObject urlParms = GetDeserializedJSON(urlParamFilters);
+            String urlFilters = GetUrlFilters();
+            JObject urlParams = GetDeserializedJSON(urlFilters);
+
+            // Merge both sets of dynamic filter params (first arg is the override)
+            dynamicParams = MergeJObjects(dynamicParams, urlParams);
 
             //Do the search
-            //TODO: add merge() method
-            var results = _basicCTSManager.Search(SearchParams, jsonParms);
+            var results = _basicCTSManager.Search(SearchParams, dynamicParams);
             //var results = _basicCTSManager.Search(SearchParams, urlParms);
 
             // Show Results
@@ -82,8 +82,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
 
-        #region Filter methods
-        private string GetUrlFilters()
+        #region JSON manipulation methods
+
+        /// <summary>
+        /// Get filter params from URL.
+        /// </summary>
+        /// <returns>JSON-formatted string</returns>
+        protected string GetUrlFilters()
         {
             Dictionary<string, string> urlParams = new Dictionary<string, string>();
             Regex pattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -93,22 +98,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 if (pattern.IsMatch(key))
                 {
+                    /* TODO:
+                     * - Clean up
+                     * - Handle comma-separated params 
+                     */
                     //ret += key + @"<spacer>";
                     Match match = pattern.Match(key);
                     values.Add(@"""" + match.Groups[1].Value + @""":[""" + HttpContext.Current.Request.QueryString[match.Value] + @"""]");
                 }
             }
             string result = "{" + string.Join(",", values.ToArray()) + "}";
+            // result = String.Join("===", urlParams.Select(x => x.Key + ":::" + x.Value).ToArray());
 
-
-            //            return urlParams;
-            //ret = String.Join("===", urlParams.Select(x => x.Key + ":::" + x.Value).ToArray());
             return result;
         }
 
-
-        public JObject GetDeserializedJSON(String dynamicSearchParams)
-        {
+        /// <summary>
+        /// Deserialize a JSON-formatted string that into a JObject.
+        /// </summary>
+        /// <param name="dynamicSearchParams"></param>
+        /// <returns>JSON object</returns>
+        protected JObject GetDeserializedJSON(String dynamicSearchParams)
+        {//TODO: rename vars, give option to return as null
             JObject dynamicRequestBody = new JObject();
 
             //Add dynamic filter criteria
@@ -122,6 +133,27 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             }
             return dynamicRequestBody;
+        }
+
+        /// <summary>
+        /// Take two Jobject and merge, with the first arg being the override
+        /// </summary>
+        /// <param name="dom"></param>
+        /// <param name="sub"></param>
+        /// <returns>Merged JSON object</returns>
+        protected JObject MergeJObjects(JObject dom, JObject sub)
+        {
+
+            //Add dynamic filter criteria
+            if (dom != null && sub != null)
+            {
+                //Merge objects (dom overrides sub)
+                //TODO: come up with less gross-sounding names
+                //TODO: add checking for invalid params
+                sub.Merge(dom, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
+            }
+
+            return sub;
         }
 
         #endregion 
@@ -194,6 +226,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             NciUrl url = new NciUrl();
             url.SetUrl(BasicCTSPageInfo.DetailedViewPagePrettyUrl);
+            url.QueryParameters.Add("id", id);
             url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString()); //Items Per Page
             url.QueryParameters.Add("pn", SearchParams.Page.ToString()); //Page number
             return url.ToString();
