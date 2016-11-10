@@ -153,51 +153,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Returns the cancer type the user searched for if the current search contains a type/condition.
-        /// </summary>
-        /// <returns></returns>
-        public string GetCancerType()
-        {
-            string type = SearchParams is CancerTypeSearchParam ? ((CancerTypeSearchParam)SearchParams).CancerTypeDisplayName : null;
-            if (string.IsNullOrWhiteSpace(type))
-                type = null;
-            return type;
-        }
-
-        /// <summary>
-        /// Returns the phrase the user searched for if the current search contains a phrase.
-        /// </summary>
-        /// <returns></returns>
-        public string GetPhrase()
-        {
-            string phrase = SearchParams is PhraseSearchParam ? ((PhraseSearchParam)SearchParams).Phrase : null;
-            if (string.IsNullOrWhiteSpace(phrase))
-                phrase = null;
-            return phrase;
-        }
-
-        /// <summary>
-        /// Determines if the current search has a Zip or not.
-        /// </summary>
-        /// <returns></returns>
-        public bool HasZip()
-        {
-            return SearchParams.ZipLookup != null;
-        }
-
-        /// <summary>
-        /// Returns whether a user searched for all trials.
-        /// </summary>
-        /// <returns></returns>
-        public bool GetSearchForAllTrials()
-        {
-            if ((this.hasInvalidSearchParam == false) && (_setFields == SetFields.None))
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
         /// Determine whether the page number provided is above the maximum number of pages available with results.
         /// </summary>
         /// <param name="totalResults"></param>
@@ -230,7 +185,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return SearchParams is PhraseSearchParam ? ((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam : false;
         }
 
-
         /// <summary>
         /// Gets the View URL for an ID
         /// </summary>
@@ -240,50 +194,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             NciUrl url = new NciUrl();
             url.SetUrl(BasicCTSPageInfo.DetailedViewPagePrettyUrl);
-
-            url.QueryParameters.Add("id", id);
-
-            if ((_setFields & SetFields.ZipCode) != 0)
-                url.QueryParameters.Add(ZIP_PARAM, SearchParams.ZipLookup.PostalCode_ZIP);
-
-            if ((_setFields & SetFields.ZipProximity) != 0)
-                url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
-
-            if ((_setFields & SetFields.Age) != 0)
-                url.QueryParameters.Add("a", SearchParams.Age.ToString());
-
-            if ((_setFields & SetFields.Gender) != 0)
-            {
-                if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
-                    url.QueryParameters.Add("g", "1");
-                else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
-                    url.QueryParameters.Add("g", "2");
-            }
-
-            //Phrase and type are based on the type of object
-            if (SearchParams is CancerTypeSearchParam)
-            {
-                if ((_setFields & SetFields.CancerType) != 0)
-                    url.QueryParameters.Add("t", cancerTypeIDAndHash);
-            }
-
-            if (SearchParams is PhraseSearchParam)
-            {
-                if ((_setFields & SetFields.Phrase) != 0)
-                {
-                    if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
-                        url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
-                    else
-                        url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
-                }
-            }
-
-            //Items Per Page
-            url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString());
-
-            // Page number
-            url.QueryParameters.Add("pn", SearchParams.Page.ToString());
-
+            url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString()); //Items Per Page
+            url.QueryParameters.Add("pn", SearchParams.Page.ToString()); //Page number
             return url.ToString();
         }
 
@@ -355,8 +267,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                             Text = "Next &gt;",
                             PageUrl = GetPageUrl(SearchParams.Page + 1)
                         });
-
-
 
                 return items;
             }
