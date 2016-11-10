@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Common.Logging;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -20,9 +21,10 @@ using NCI.Web;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
-    // TODO: Clean up unused methods
     public class TrialListingPageControl : BasicCTSBaseControl
     {
+        static ILog log = LogManager.GetLogger(typeof(TrialListingPageControl));
+
         /// <summary>
         /// Gets the Search Parameters for the current request.
         /// </summary>
@@ -46,13 +48,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnLoad(e);
 
-            /* TODO: 
-             * - Update logic to handle invalid param names without breaking the page (!!!)
-             * - Update filtering element values / type as needed 
-             * - Get list of common filter keys
-             * - Clean up GetUrlFilters() 
-             * - Check velocity helper methods against what is actually used in the template
-             */
             // Get the JSON blob from the XML in the content item (AppModule). This overrides anything passed via the URL
             String xmlFilters = BasicCTSPageInfo.JSONBodyRequest;
             JObject dynamicParams = GetDeserializedJSON(xmlFilters);
@@ -66,7 +61,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             //Do the search
             var results = _basicCTSManager.Search(SearchParams, dynamicParams);
-            //var results = _basicCTSManager.Search(SearchParams, urlParms);
 
             // Show Results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
@@ -116,44 +110,55 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <summary>
         /// Deserialize a JSON-formatted string that into a JObject.
         /// </summary>
-        /// <param name="dynamicSearchParams"></param>
+        /// <param name="jsonBlob"></param>
         /// <returns>JSON object</returns>
-        protected JObject GetDeserializedJSON(String dynamicSearchParams)
-        {//TODO: rename vars, give option to return as null
-            JObject dynamicRequestBody = new JObject();
+        protected JObject GetDeserializedJSON(String jsonBlob)
+        {
+            /* TODO: 
+             * - Account for all return value possibilities
+             */
+            JObject result = new JObject();
 
             //Add dynamic filter criteria
-            if (!String.IsNullOrEmpty(dynamicSearchParams))
+            if (!String.IsNullOrEmpty(jsonBlob))
             {
                 //Deserialize our JSON string into a dictionary object, then add it to our Json.NET object 
-                Dictionary<string, object> dynFilters = JsonConvert.DeserializeObject<Dictionary<string, object>>(dynamicSearchParams);
-                foreach (KeyValuePair<string, object> dynFilter in dynFilters)
+                try
                 {
-                    dynamicRequestBody.Add(new JProperty(dynFilter.Key, dynFilter.Value));
+                    Dictionary<string, object> kvps = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonBlob);
+                    foreach (KeyValuePair<string, object> kvp in kvps)
+                    {
+                        result.Add(new JProperty(kvp.Key, kvp.Value));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error("TrialListingPageControl:GetDeserializedJSON() - Error converting String to JSON.", ex);
+                    return null;
                 }
             }
-            return dynamicRequestBody;
+            return result;
         }
 
         /// <summary>
-        /// Take two Jobject and merge, with the first arg being the override
+        /// Take two JObjects and merge, with the first arg being the override
         /// </summary>
-        /// <param name="dom"></param>
-        /// <param name="sub"></param>
+        /// <param name="primary"></param>
+        /// <param name="secondary"></param>
         /// <returns>Merged JSON object</returns>
-        protected JObject MergeJObjects(JObject dom, JObject sub)
+        protected JObject MergeJObjects(JObject primary, JObject secondary)
         {
-
+            /*TODO:
+             * - Add checking for invalid params
+             * - Update arg to list, if possible, then wrap below in a foreach
+             */
             //Add dynamic filter criteria
-            if (dom != null && sub != null)
+            if (primary != null && secondary != null)
             {
-                //Merge objects (dom overrides sub)
-                //TODO: come up with less gross-sounding names
-                //TODO: add checking for invalid params
-                sub.Merge(dom, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
+                //Merge objects (primary overrides secondary)
+                secondary.Merge(primary, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
             }
-
-            return sub;
+            return secondary;
         }
 
         #endregion 
