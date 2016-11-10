@@ -79,7 +79,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         #region JSON manipulation methods
 
         /// <summary>
-        /// Get filter params from URL.
+        /// Get filter params from URL and format them.
         /// </summary>
         /// <returns>JSON-formatted string</returns>
         protected string GetUrlFilters()
@@ -87,23 +87,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             Dictionary<string, string> urlParams = new Dictionary<string, string>();
             Regex pattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             List<string> values = new List<string>();
+            String result = "{}";
 
+            // For each query param that matches the "filter[]" pattern, add it to the list of filter values
             foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
             {
-                if (pattern.IsMatch(key))
+                if (!string.IsNullOrEmpty(key) && pattern.IsMatch(key))
                 {
-                    /* TODO:
-                     * - Clean up
-                     * - Handle comma-separated params 
-                     */
-                    //ret += key + @"<spacer>";
                     Match match = pattern.Match(key);
-                    values.Add(@"""" + match.Groups[1].Value + @""":[""" + HttpContext.Current.Request.QueryString[match.Value] + @"""]");
+                    string queryValue = match.Groups[1].Value;
+                    string queryParam = HttpContext.Current.Request.QueryString[match.Value];
+                    values.Add("\"" + queryValue + "\":[\"" + queryParam.Replace(",", "\",\"") + "\"]");
                 }
             }
-            string result = "{" + string.Join(",", values.ToArray()) + "}";
-            // result = String.Join("===", urlParams.Select(x => x.Key + ":::" + x.Value).ToArray());
-
+            // Join all of our valid key-value pairs 
+            result = result.Insert(1, string.Join(",", values.ToArray()));
+            
             return result;
         }
 
