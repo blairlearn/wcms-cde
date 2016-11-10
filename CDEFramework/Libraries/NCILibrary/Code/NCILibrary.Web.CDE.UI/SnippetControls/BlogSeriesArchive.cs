@@ -37,7 +37,7 @@ namespace NCI.Web.CDE.UI.Modules
             var language = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
             string years = blogSeriesArchiveSettings.Years;
             string groupBy = blogSeriesArchiveSettings.GroupBy;
-            string blogSeriesId = blogSeriesArchiveSettings.BlogSeriesId;
+            string blogSeriesId = "Blog Series-" + blogSeriesArchiveSettings.BlogSeriesId;
 
             theControl = new BlogSeriesArchiveControl(language, groupBy);
 
