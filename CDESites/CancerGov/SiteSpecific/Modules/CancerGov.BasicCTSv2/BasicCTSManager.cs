@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 using CancerGov.ClinicalTrialsAPI;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -95,7 +94,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns></returns>
-        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, String dynamicFilterParams = "") {
+        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, JObject dynamicFilterParams = null) {
             //Set page
             //Set size
             //Get only the fields we want
@@ -151,7 +150,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             //Get our list of trials from the API client
             ClinicalTrialsCollection rtnResults = new ClinicalTrialsCollection();
-            if (String.IsNullOrEmpty(dynamicFilterParams)) // get default results
+            if (dynamicFilterParams != null) // get results with passed in params
+            {
+                //JObject ddSearchParams = GetDeserializedJSON(dynamicFilterParams);
+                rtnResults = Client.List(
+                    size: searchParams.ItemsPerPage,
+                    from: from,
+                    searchParams: filterCriteria,
+                    dynamicSearchParams: dynamicFilterParams
+                );
+            }
+            else // get default results
             { 
                 rtnResults = Client.List(
                     size: searchParams.ItemsPerPage,
@@ -160,17 +169,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     searchParams: filterCriteria
                 );
             }
-            else // get results with passed in params
-            {
-                JObject ddSearchParams = GetDeserializedJSON(dynamicFilterParams);
 
-                rtnResults = Client.List(
-                    size: searchParams.ItemsPerPage,
-                    from: from,
-                    searchParams: filterCriteria,
-                    dynamicSearchParams: ddSearchParams
-                );
-            }
 
             foreach(ClinicalTrial trial in rtnResults.Trials)
             {
@@ -276,23 +275,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return string.Empty; //Nothing found
         }
 
-
-        public JObject GetDeserializedJSON(String dynamicSearchParams)
-        {
-            JObject dynamicRequestBody = new JObject();
-
-            //Add dynamic filter criteria
-            if (!String.IsNullOrEmpty(dynamicSearchParams))
-            {
-                //Deserialize our JSON string into a dictionary object, then add it to our Json.NET object 
-                Dictionary<string, object> dynFilters = JsonConvert.DeserializeObject<Dictionary<string, object>>(dynamicSearchParams);
-                foreach (KeyValuePair<string, object> dynFilter in dynFilters)
-                {
-                    dynamicRequestBody.Add(new JProperty(dynFilter.Key, dynFilter.Value));
-                }
-            }
-            return dynamicRequestBody;
-        }
 
     }
 }

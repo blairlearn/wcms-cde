@@ -15,7 +15,8 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE;
 using NCI.Web;
-
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -55,12 +56,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
              */
             // Get the JSON blob from the XML in the content item (AppModule)
             String jsonFilters = BasicCTSPageInfo.JSONBodyRequest;
+            JObject jsonParms = GetDeserializedJSON(jsonFilters);
+
 
             // Get the filter parameters from the URL. URL filter params should NOT override any matching params set in the JSON
             String urlParamFilters = GetUrlFilters();
+            JObject urlParms = GetDeserializedJSON(urlParamFilters);
 
             //Do the search
-            var results = _basicCTSManager.Search(SearchParams, jsonFilters);
+            //TODO: add merge() method
+            var results = _basicCTSManager.Search(SearchParams, jsonParms);
+            //var results = _basicCTSManager.Search(SearchParams, urlParms);
 
             // Show Results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
@@ -99,6 +105,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //ret = String.Join("===", urlParams.Select(x => x.Key + ":::" + x.Value).ToArray());
             return result;
         }
+
+
+        public JObject GetDeserializedJSON(String dynamicSearchParams)
+        {
+            JObject dynamicRequestBody = new JObject();
+
+            //Add dynamic filter criteria
+            if (!String.IsNullOrEmpty(dynamicSearchParams))
+            {
+                //Deserialize our JSON string into a dictionary object, then add it to our Json.NET object 
+                Dictionary<string, object> dynFilters = JsonConvert.DeserializeObject<Dictionary<string, object>>(dynamicSearchParams);
+                foreach (KeyValuePair<string, object> dynFilter in dynFilters)
+                {
+                    dynamicRequestBody.Add(new JProperty(dynFilter.Key, dynFilter.Value));
+                }
+            }
+            return dynamicRequestBody;
+        }
+
         #endregion 
 
 
