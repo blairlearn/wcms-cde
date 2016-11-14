@@ -117,6 +117,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string JSONBodyRequest { get; set; }
+
+        /// <summary>
+        /// Minimum number of results to return.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public int ListingMinResults { get; set; }
+
+        /// <summary>
+        /// Maximum number of results to return.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public int ListingMaxResults { get; set; }
+
+        /// <summary>
+        /// Boolean deciding whether or not to redirect if there are zero result items.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool RedirectOnNoResults { get; set; }
+
     }
 }
  

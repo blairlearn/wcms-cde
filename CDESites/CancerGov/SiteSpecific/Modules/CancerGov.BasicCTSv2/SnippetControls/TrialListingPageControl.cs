@@ -68,7 +68,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
              * - Add params for max/min return values
              * - Add param to take in error page option
              */
-            if (results.TotalResults <= 0) // If there are no results, raise the "No Results" error page (URL stays the same)
+            bool isRedirectable = BasicCTSPageInfo.RedirectOnNoResults;
+            if (isRedirectable && results.TotalResults <= 0) // If there are no results, raise the "No Results" error page (URL stays the same)
             {
                 ErrorPageDisplayer.RaiseClinicalTrialsNoResults(this.GetType().ToString());
             }
@@ -109,7 +110,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     Match match = pattern.Match(key);
                     string queryValue = match.Groups[1].Value;
                     string queryParam = HttpContext.Current.Request.QueryString[match.Value];
-                    values.Add("\"" + queryValue + "\":[\"" + queryParam.Replace(",", "\",\"") + "\"]");
+                    if (!string.IsNullOrEmpty(queryParam)) // Don't filter empty params
+                    {
+                        values.Add("\"" + queryValue + "\":[\"" + queryParam.Replace(",", "\",\"") + "\"]");
+                    }
                 }
             }
             // Join all of our valid key-value pairs 
@@ -125,9 +129,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>JSON object</returns>
         protected JObject GetDeserializedJSON(String jsonBlob)
         {
-            /* TODO: 
-             * - Account for all return value possibilities, including empty values
-             */
             JObject result = new JObject();
 
             //Add dynamic filter criteria
@@ -159,10 +160,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>Merged JSON object</returns>
         protected JObject MergeJObjects(JObject primary, JObject secondary)
         {
-            /*TODO:
-             * - Add checking for invalid params
-             * - Update arg to list, if possible, then wrap below in a foreach
-             */
             //Add dynamic filter criteria
             if (primary != null && secondary != null)
             {
