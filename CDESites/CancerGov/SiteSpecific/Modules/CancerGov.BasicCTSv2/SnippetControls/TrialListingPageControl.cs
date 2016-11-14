@@ -263,6 +263,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 url.QueryParameters["pn"] = pageNum.ToString();
             }
 
+            // For each query param that matches the "filter[]" pattern, add it to our query parameters 
+            // Logic borrowed from GetUrlFilters() 
+            Regex pattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
+            {
+                if (!string.IsNullOrEmpty(key) && pattern.IsMatch(key))
+                {
+                    Match match = pattern.Match(key);
+                    string queryValue = key;
+                    string queryParam = HttpContext.Current.Request.QueryString[match.Value];
+                    // Don't carry over empty or preexisting contained queries
+                    if (!string.IsNullOrEmpty(queryParam) && !url.QueryParameters.ContainsKey(key))
+                    {
+                        url.QueryParameters.Add(queryValue, queryParam);
+                    }
+                }
+            }
+
             return url.ToString();
         }
 
