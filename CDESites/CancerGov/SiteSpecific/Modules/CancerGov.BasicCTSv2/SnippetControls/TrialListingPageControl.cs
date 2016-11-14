@@ -14,10 +14,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using CancerGov.ClinicalTrialsAPI;
-using NCI.Web.CDE.UI;
-using NCI.Web.CDE.Modules;
-using NCI.Web.CDE;
 using NCI.Web;
+using NCI.Web.CDE;
+using NCI.Web.CDE.Application;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.UI;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -64,18 +65,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             /*TODO:
              * - Demo code - this may be removed depending on feedback 2016/11/15 
-             *    - Handle URL similar to 'ClinicalTrialInvalidSearchID'
-             *    - Make the redirect URL a configurable setting
-             * - Add max/min return values
-             * - Add param to take in error page value (?)
+             * - Add params for max/min return values
+             * - Add param to take in error page option
              */
-            if (results.TotalResults <= 0) // If there are no results, redirect to the "No Results" error page
+            if (results.TotalResults <= 0) // If there are no results, raise the "No Results" error page (URL stays the same)
             {
-                // If there's no valid protocol search ID, redirect to the UI page.
-                // this.RaiseErrorPage("InvalidSearchID");
-
-
-                Response.Redirect("/publishedcontent/errormessage/noresults.html");
+                ErrorPageDisplayer.RaiseClinicalTrialsNoResults(this.GetType().ToString());
             }
             else // Show search results
             {
@@ -131,7 +126,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected JObject GetDeserializedJSON(String jsonBlob)
         {
             /* TODO: 
-             * - Account for all return value possibilities
+             * - Account for all return value possibilities, including empty values
              */
             JObject result = new JObject();
 
