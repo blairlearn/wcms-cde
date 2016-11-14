@@ -65,11 +65,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             /*TODO:
              * - Demo code - this may be removed depending on feedback 2016/11/15 
-             * - Add params for max/min return values
-             * - Add param to take in error page option
+             * - Add params for max # of return values
              */
-            bool isRedirectable = BasicCTSPageInfo.RedirectOnNoResults;
-            if (isRedirectable && results.TotalResults <= 0) // If there are no results, raise the "No Results" error page (URL stays the same)
+            bool isRedirectable = (BasicCTSPageInfo.RedirectOnNoResults) ? BasicCTSPageInfo.RedirectOnNoResults : false;
+            int minResults = (BasicCTSPageInfo.ListingMinResults != null) ? BasicCTSPageInfo.ListingMinResults : 0;
+            if (isRedirectable && results.TotalResults <= minResults) // If there are not enough results, raise the "No Results" error page (URL stays the same)
             {
                 ErrorPageDisplayer.RaiseClinicalTrialsNoResults(this.GetType().ToString());
             }
