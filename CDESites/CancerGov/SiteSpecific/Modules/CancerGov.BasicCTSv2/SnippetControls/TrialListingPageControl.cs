@@ -62,17 +62,34 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Do the search
             var results = _basicCTSManager.Search(SearchParams, dynamicParams);
 
-            // Show Results
-            LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                BasicCTSPageInfo.ResultsPageTemplatePath,
-                new
-                {
-                    Results = results,
-                    Control = this,
-                    TrialTools = new TrialVelocityTools()
-                }
-            ));
-            Controls.Add(ltl);
+            /*TODO:
+             * - Demo code - this may be removed depending on feedback 2016/11/15 
+             *    - Handle URL similar to 'ClinicalTrialInvalidSearchID'
+             *    - Make the redirect URL a configurable setting
+             * - Add max/min return values
+             * - Add param to take in error page value (?)
+             */
+            if (results.TotalResults <= 0) // If there are no results, redirect to the "No Results" error page
+            {
+                // If there's no valid protocol search ID, redirect to the UI page.
+                // this.RaiseErrorPage("InvalidSearchID");
+
+
+                Response.Redirect("/publishedcontent/errormessage/noresults.html");
+            }
+            else // Show search results
+            {
+                LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
+                    BasicCTSPageInfo.ResultsPageTemplatePath,
+                    new
+                    {
+                        Results = results,
+                        Control = this,
+                        TrialTools = new TrialVelocityTools()
+                    }
+                ));
+                Controls.Add(ltl);
+            }
         }
 
 
