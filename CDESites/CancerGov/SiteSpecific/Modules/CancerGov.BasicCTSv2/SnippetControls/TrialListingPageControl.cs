@@ -330,6 +330,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
+        /// <summary>
+        /// Gets the "No Trials" HTML blob from the xml to pass to the velocity template
+        /// </summary>
+        /// <returns>HTML string</returns>
+        public String GetNoTrialsHTML()
+        {
+            String htmlValue = BasicCTSPageInfo.NoTrialsHTML;
+            return htmlValue;
+        }
+
+
         #endregion
 
     }

@@ -130,6 +130,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public int ListingMaxResults { get; set; }
 
+        /// <summary>
+        /// HTML block for page with no trials
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string NoTrialsHTML { get; set; }
+
     }
 }
  
