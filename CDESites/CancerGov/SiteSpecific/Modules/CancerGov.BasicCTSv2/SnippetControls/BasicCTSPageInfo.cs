@@ -130,12 +130,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public int ListingMaxResults { get; set; }
 
-        /// <summary>
-        /// Boolean deciding whether or not to redirect if there are zero result items.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public bool RedirectOnNoResults { get; set; }
-
     }
 }
  

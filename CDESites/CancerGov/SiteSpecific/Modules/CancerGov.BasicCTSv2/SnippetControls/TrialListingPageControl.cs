@@ -63,30 +63,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Do the search
             var results = _basicCTSManager.Search(SearchParams, dynamicParams);
 
-            /*TODO:
-             * - Demo code - this may be removed depending on feedback 2016/11/15 
-             * - Add params for max # of return values
-             */
-            bool isRedirectable = (BasicCTSPageInfo.RedirectOnNoResults) ? BasicCTSPageInfo.RedirectOnNoResults : false;
-            int minResults = (BasicCTSPageInfo.ListingMinResults != null) ? BasicCTSPageInfo.ListingMinResults : 0;
-            if (isRedirectable && results.TotalResults <= minResults) // If there are not enough results, raise the "No Results" error page (URL stays the same)
-            {
-                ErrorPageDisplayer.RaiseClinicalTrialsNoResults(this.GetType().ToString());
-            }
-            else // Show search results
-            {
-                LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                    BasicCTSPageInfo.ResultsPageTemplatePath,
-                    new
-                    {
-                        Results = results,
-                        Control = this,
-                        TrialTools = new TrialVelocityTools()
-                    }
-                ));
-                Controls.Add(ltl);
-            }
+            // Show search results
+            LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
+                BasicCTSPageInfo.ResultsPageTemplatePath,
+                new
+                {
+                    Results = results,
+                    Control = this,
+                    TrialTools = new TrialVelocityTools()
+                }
+            ));
+            Controls.Add(ltl);
+
         }
+        
 
 
         #region JSON manipulation methods
