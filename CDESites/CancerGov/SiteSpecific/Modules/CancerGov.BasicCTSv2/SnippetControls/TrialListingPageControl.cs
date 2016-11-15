@@ -60,7 +60,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Merge both sets of dynamic filter params (first arg is the override)
             dynamicParams = MergeJObjects(dynamicParams, urlParams);
 
-            //Do the search
+            // Set the number of items per page
+            SearchParams.ItemsPerPage = GetItemsPerPage();
+
+            // Do the search
             var results = _basicCTSManager.Search(SearchParams, dynamicParams);
 
             // Show search results
@@ -344,6 +347,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return htmlValue;
         }
 
+        /// <summary>
+        /// Gets the items per page from DefaultItemsPerPage in the XML or sets default
+        /// </summary>
+        /// <returns>int - items per page</returns>
+        public int GetItemsPerPage()
+        {
+            int number = 50;
+            if(BasicCTSPageInfo.DefaultItemsPerPage > 0)
+            {
+                number = BasicCTSPageInfo.DefaultItemsPerPage;
+            }
+            return number;
+        }
 
         #endregion
 
