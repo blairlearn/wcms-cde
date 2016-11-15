@@ -15,11 +15,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     /// </summary>
     public class TrialVelocityTools
     {
-
+        /// <summary>
+        /// Gets and formats the Trial Objectives and Outline
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String - detailed description</returns>
         public string GetPrettyDescription(ClinicalTrial trial)
         {
             String rtn = "<p class='ctrp'>" + HttpUtility.HtmlEncode(trial.DetailedDescription) + "</p>";
             return rtn.Replace("\r\n", "</p><p class='ctrp'>");
+        }
+
+        /// <summary>
+        /// Get a brief summary of the trial ("Description" accordion section on view page)
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String - brief summary</returns>
+        public string GetBriefSummary(ClinicalTrial trial)
+        {
+            String rtn = trial.BriefSummary;
+            return rtn;
         }
 
         /// <summary>
