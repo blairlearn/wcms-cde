@@ -336,7 +336,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>HTML string</returns>
         public String GetNoTrialsHTML()
         {
-            String htmlValue = BasicCTSPageInfo.NoTrialsHTML;
+            string htmlValue = string.Empty;
+            if (BasicCTSPageInfo.NoTrialsHTML != null)
+            {
+                htmlValue = BasicCTSPageInfo.NoTrialsHTML;
+            }
             return htmlValue;
         }
 
