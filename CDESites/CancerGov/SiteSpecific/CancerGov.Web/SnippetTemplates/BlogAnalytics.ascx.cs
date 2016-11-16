@@ -31,6 +31,8 @@ namespace CancerGov.Web.SnippetTemplates
                     });
                 }
             }
+
+            this.Visible = false;
         }
     }
 }
