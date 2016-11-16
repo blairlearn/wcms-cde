@@ -294,7 +294,7 @@ namespace NCI.Web.CDE.HttpHandlers
 
                 context.Response.Write(
                     GetFullHTML(
-                        "Published Content Folders",
+                    String.Format("Displaying {0} for root {1}", (subfolder.StartsWith("/") ? subfolder : "/" + subfolder), rootPath),
                         builder.ToString()
                     )
                 );
@@ -370,6 +370,7 @@ namespace NCI.Web.CDE.HttpHandlers
                     <html>
                         <head>
                             <title>{0}</title>
+                            <meta name=""robots"" content=""noindex, nofollow"">
                         </head>
                         <body>{1}</body>
                     </html>
