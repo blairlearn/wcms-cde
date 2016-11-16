@@ -221,7 +221,9 @@ namespace NCI.Web.CDE.HttpHandlers
             //Get the server path so we can give the full web site URL to the file.
             string serverPath = VirtualPathUtility.ToAbsolute(pathConfig.Path);
 
-            RespondItemsForPath(context, format, rootPath, serverPath, subfolder, pathConfig.GetAllowedTypesAsArray(), fullPath);
+            string cleanSubfolder = fullPath.Replace(rootPhysicalPath, "").Replace("\\", "/");
+
+            RespondItemsForPath(context, format, rootPath, serverPath, cleanSubfolder, pathConfig.GetAllowedTypesAsArray(), fullPath);
             
         }
 
@@ -235,14 +237,6 @@ namespace NCI.Web.CDE.HttpHandlers
             string fullPath)
         {
 
-            var output = new
-            {
-                RootPath = rootPath,
-                Subfolder = subfolder,
-                FullPath = fullPath
-            };
-
-
             var subDirectories = 
                 from dir in Directory.GetDirectories(fullPath)
                 select dir.Replace(fullPath + "\\", "");
@@ -250,7 +244,7 @@ namespace NCI.Web.CDE.HttpHandlers
             var files = from file in Directory.GetFiles(fullPath)
                         where (allowedFileTypes.Length == 0 || allowedFileTypes.Contains(Path.GetExtension(file)))
                         select new { 
-                            FullWebPath = serverPath + file.Replace(fullPath + "\\", "/ADD_SUBFOLDER_HERE/"), //need the subfolder too...
+                            FullWebPath = serverPath + file.Replace(fullPath + "\\", subfolder + "/"), //need the subfolder too...
                             FileName = file.Replace(fullPath + "\\", ""),
                             CreationTime = File.GetCreationTime(file),
                             LastWriteTime = File.GetLastWriteTime(file)
