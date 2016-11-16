@@ -87,7 +87,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         // If the ID matches a trial in the API, go to the view page on www.cancer.gov
                         if (!string.IsNullOrEmpty(cleanId) && IsValidTrial(cleanId))
                         {
-                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}", cleanId.ToUpper());
+                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}&q={0}", cleanId.ToUpper());
                             context.Response.Redirect(ctViewUrl, true);
                         }
 
