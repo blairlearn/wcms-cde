@@ -34,6 +34,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         static ILog log = LogManager.GetLogger(typeof(TrialListingPageControl));
 
         /// <summary>
+        /// Create the Regex pattern for finding filters in the URL
+        /// TODO: explain
+        /// </summary>
+        private readonly Regex FilterPattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>
         /// Gets the Search Parameters for the current request.
         /// </summary>
         public BaseCTSSearchParam SearchParams { get; private set; }
@@ -73,7 +79,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             String urlFilters = GetUrlFilters();
             JObject urlParams = GetDeserializedJSON(urlFilters);
 
-            // Merge both sets of dynamic filter params (first arg is the override)
+            // Merge both sets of dynamic filter params.'dynamicParams' override 'urlParams', meaning that any duplicate elements in urlParams 
+            // will not be included, e.g., given
+            // dynamicParams == { "key1":value1, "key2":["value2,value3"] }
+            // and urlParms == { "key2":["value4,value5"], "key3":"value6" }
+            // merged dynamicParams == { "key1":value1, "key2":["value2,value3"], "key3":"value6" }
             dynamicParams = MergeJObjects(dynamicParams, urlParams);
 
             // Set the number of items per page
@@ -106,19 +116,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected string GetUrlFilters()
         {
             Dictionary<string, string> urlParams = new Dictionary<string, string>();
-            Regex pattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             List<string> values = new List<string>();
             String result = "{}";
 
             // For each query param that matches the "filter[]" pattern, add it to the list of filter values
             foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
             {
-                if (!string.IsNullOrEmpty(key) && pattern.IsMatch(key))
+                if (!string.IsNullOrWhiteSpace(key) && FilterPattern.IsMatch(key))
                 {
-                    Match match = pattern.Match(key);
+                    Match match = FilterPattern.Match(key);
                     string queryValue = match.Groups[1].Value;
                     string queryParam = HttpContext.Current.Request.QueryString[match.Value];
-                    if (!string.IsNullOrEmpty(queryParam)) // Don't filter empty params
+                    if (!string.IsNullOrWhiteSpace(queryParam)) // Don't filter empty params
                     {
                         values.Add("\"" + queryValue + "\":[\"" + queryParam.Replace(",", "\",\"") + "\"]");
                     }
@@ -139,8 +148,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             JObject result = new JObject();
 
-            //Add dynamic filter criteria
-            if (!String.IsNullOrEmpty(jsonBlob))
+            if (!String.IsNullOrWhiteSpace(jsonBlob))
             {
                 //Deserialize our JSON string into a dictionary object, then add it to our Json.NET object 
                 try
@@ -273,16 +281,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             // For each query param that matches the "filter[]" pattern, add it to our query parameters 
             // Logic borrowed from GetUrlFilters() 
-            Regex pattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
             {
-                if (!string.IsNullOrEmpty(key) && pattern.IsMatch(key))
+                if (!string.IsNullOrWhiteSpace(key) && FilterPattern.IsMatch(key))
                 {
-                    Match match = pattern.Match(key);
+                    Match match = FilterPattern.Match(key);
                     string queryValue = key;
                     string queryParam = HttpContext.Current.Request.QueryString[match.Value];
                     // Don't carry over empty or preexisting contained queries
-                    if (!string.IsNullOrEmpty(queryParam) && !url.QueryParameters.ContainsKey(key))
+                    if (!string.IsNullOrWhiteSpace(queryParam) && !url.QueryParameters.ContainsKey(key))
                     {
                         url.QueryParameters.Add(queryValue, queryParam);
                     }
