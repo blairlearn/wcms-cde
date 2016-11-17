@@ -22,8 +22,15 @@ using NCI.Web.CDE.UI;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
+    /// <summary>
+    /// Page control for Trial Listing pages.
+    /// This is the code behind for TrialListingPage.ascx snippet template.
+    /// </summary>
     public class TrialListingPageControl : BasicCTSBaseControl
     {
+        /// <summary>
+        /// Set logging for this class.
+        /// </summary>
         static ILog log = LogManager.GetLogger(typeof(TrialListingPageControl));
 
         /// <summary>
@@ -39,17 +46,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             get { return BasicCTSPageInfo.ResultsPagePrettyUrl; }
         }
 
+        /// <summary>
+        /// Override method to raise the Init event.
+        /// </summary>
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
             SearchParams = GetSearchParams();
         }
 
+        /// <summary>
+        /// Override method to raise the Load event.
+        /// </summary>
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
-            // Get the JSON blob from the XML in the content item (AppModule). This overrides anything passed via the URL
+            // Get the JSON blob set in the content item.
+            // This is a JSON-formatted string that has been wrapped in a CDATA block within the content item's Page Instruction snippet info.
+            // The generation of the data may change in a future release, but for now, this requires a properly-formatted 
+            // JSON string entered as in the <JSONBodyRequest> element in the 'Config' field of an Application Module Page content item. (2016-11-17)
             String xmlFilters = BasicCTSPageInfo.JSONBodyRequest;
             JObject dynamicParams = GetDeserializedJSON(xmlFilters);
 
@@ -80,7 +96,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         }
         
-
 
         #region JSON manipulation methods
 
@@ -118,7 +133,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <summary>
         /// Deserialize a JSON-formatted string that into a JObject.
         /// </summary>
-        /// <param name="jsonBlob"></param>
+        /// <param name="jsonBlob">JSON-formatted String object</param>
         /// <returns>JSON object</returns>
         protected JObject GetDeserializedJSON(String jsonBlob)
         {
@@ -148,8 +163,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <summary>
         /// Take two JObjects and merge, with the first arg being the override
         /// </summary>
-        /// <param name="primary"></param>
-        /// <param name="secondary"></param>
+        /// <param name="primary">Primary JSON object (overrides duplicates)</param>
+        /// <param name="secondary">Secondary JSON object (duplicates are overridden)</param>
         /// <returns>Merged JSON object</returns>
         protected JObject MergeJObjects(JObject primary, JObject secondary)
         {

@@ -16,6 +16,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         private ClinicalTrialsAPIClient Client { get; set; }
 
+        //CTRP trial statuses that qualify as "active" - used as filter criteria
         private static readonly string[] ActiveTrialStatuses = {
             // These CTRP statuses appear in results:
             "Active",
@@ -92,8 +93,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Performs a search against the Clinical Trials API
         /// </summary>
-        /// <param name="searchParams"></param>
-        /// <returns></returns>
+        /// <param name="searchParams">Search paramesters</param>
+        /// <param name="dynamicFilterParams">Deserialized dynamic search parameters</param>
+        /// <returns>Clinical Trials collection</returns>
         public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, JObject dynamicFilterParams = null) {
             //Set page
             //Set size
@@ -170,7 +172,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 );
             }
 
-
             foreach(ClinicalTrial trial in rtnResults.Trials)
             {
                 RemoveNonRecruitingSites(trial);
@@ -180,16 +181,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         }
 
+        /// <summary>
+        /// Creates a list of actively recruiting sites only 
+        /// </summary>
+        /// <param name="trial">Clinical trial</param>
         private static void RemoveNonRecruitingSites(ClinicalTrial trial)
         {
             trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));
         }
 
+        /// <summary>
+        /// Set to true if site status matches an item in ActiveRecruitmentStatuses
+        /// </summary>
+        /// <param name="site">Study site</param>
         private static bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
         {
             return ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower());
         }
-
 
         /// <summary>
         /// Gets the Geo Location for a ZipCode
