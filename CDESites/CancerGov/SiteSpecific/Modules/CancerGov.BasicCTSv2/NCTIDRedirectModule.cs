@@ -13,8 +13,12 @@ using NCI.Web.CDE;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
+    /// <summary>
+    /// Handles redirection logic for Clinical Trial View pretty URLs.
+    /// </summary>
     public class NCTIDRedirectModule : IHttpModule
     {
+        /// <summary>Set logging for this class.</summary>
         static ILog log = LogManager.GetLogger(typeof(NCTIDRedirectModule));
 
         /// <summary>
@@ -24,7 +28,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             get
             {
-                if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["ClinicalTrialsViewPage"]))
+                if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["ClinicalTrialsViewPage"]))
                 {
                     return ConfigurationManager.AppSettings["ClinicalTrialsViewPage"];
                 }
@@ -32,22 +36,27 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        /// <summary>
-        /// You will need to configure this module in the web.config file of your
-        /// web and register it with IIS before being able to use it. For more information
-        /// see the following link: http://go.microsoft.com/?linkid=8101007
-        /// </summary>
+
         #region IHttpModule Members
 
+        /// <summary>
+        /// Performs any final cleanup work prior to removal of the module from the execution pipeline.
+        /// </summary>
         public void Dispose()
         {
         }
 
+        /// <summary>
+        /// Initialize the module. 
+        /// </summary>
         public void Init(HttpApplication context)
         {
             context.BeginRequest += new EventHandler(OnBeginRequest);
         }
 
+        /// <summary>
+        /// Main chain of events in the module execution.
+        /// </summary>
         void OnBeginRequest(object sender, EventArgs e)
         {
             HttpContext context = ((HttpApplication)sender).Context;
@@ -56,7 +65,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
 
             // Don't proceed if this is a file.
-            // TODO: clean up this list
+            // TODO: Make this a configuration setting and reuse (future release)
             if (url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
             {
                 return;
@@ -77,7 +86,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 id = id.Replace("/", "");
 
                 // If we have an ID, clean and proceed with redirect logic
-                if (!string.IsNullOrEmpty(id))
+                if (!string.IsNullOrWhiteSpace(id))
                 {
                     string cleanId = id.Trim();
 
@@ -85,7 +94,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     try
                     { 
                         // If the ID matches a trial in the API, go to the view page on www.cancer.gov
-                        if (!string.IsNullOrEmpty(cleanId) && IsValidTrial(cleanId))
+                        if (!string.IsNullOrWhiteSpace(cleanId) && IsValidTrial(cleanId))
                         {
                             string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}&q={0}", cleanId.ToUpper());
                             context.Response.Redirect(ctViewUrl, true);
@@ -131,15 +140,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Determines whether the value contained by a string is an NCT ID.
         /// </summary>
-        /// <param name="IDString"></param>
-        /// <returns></returns>
+        /// <param name="IDString">NCT ID string</param>
+        /// <returns>True if matches NCTID pattern</returns>
         private bool IsNctID(string idString)
         {
             // Per http://www.nlm.nih.gov/bsd/policy/clin_trials.html, 
             // "The format for the ClinicalTrials.gov registry number is "NCT" followed by an 8-digit number, e.g.: NCT00000419."
             bool isAMatch = false;
 
-            if (!string.IsNullOrEmpty(idString))
+            if (!string.IsNullOrWhiteSpace(idString))
             {
                 isAMatch = Regex.IsMatch(idString.Trim(), "^NCT[0-9]{1,8}$", RegexOptions.IgnoreCase);
             }
@@ -150,9 +159,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Checks whether the given trial ID exists in the API.
         /// </summary>
-        /// <param name="idString"></param>
-        /// <param name="host"></param>
-        /// <returns></returns>
+        /// <param name="idString">NCT ID</param>
+        /// <returns>True if trial is found in API.</returns>
         private bool IsValidTrial(string idString)
         {
             // If the ID is a valid NCTID, go to web service and see if trial exists

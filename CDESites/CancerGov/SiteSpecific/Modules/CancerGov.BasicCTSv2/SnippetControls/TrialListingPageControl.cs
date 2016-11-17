@@ -280,7 +280,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             // For each query param that matches the "filter[]" pattern, add it to our query parameters 
-            // Logic borrowed from GetUrlFilters() 
             foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
             {
                 if (!string.IsNullOrWhiteSpace(key) && FilterPattern.IsMatch(key))

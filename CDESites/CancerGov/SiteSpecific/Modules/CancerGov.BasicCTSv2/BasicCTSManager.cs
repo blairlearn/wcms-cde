@@ -185,7 +185,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// Creates a list of actively recruiting sites only 
         /// </summary>
         /// <param name="trial">Clinical trial</param>
-        private static void RemoveNonRecruitingSites(ClinicalTrial trial)
+        private void RemoveNonRecruitingSites(ClinicalTrial trial)
         {
             trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));
         }
@@ -194,7 +194,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// Set to true if site status matches an item in ActiveRecruitmentStatuses
         /// </summary>
         /// <param name="site">Study site</param>
-        private static bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
+        private bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
         {
             return ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower());
         }
