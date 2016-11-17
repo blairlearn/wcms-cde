@@ -45,12 +45,12 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <summary>
         /// Calls the listing endpoint (/clinical-trials) of the clinical trials API
         /// </summary>
-        /// <param name="size"></param>
-        /// <param name="from"></param>
-        /// <param name="includeFields"></param>
-        /// <param name="excludeFields"></param>
-        /// <param name="searchParams"></param>
-        /// <returns></returns>
+        /// <param name="size"># of results to return (optional)</param>
+        /// <param name="from">Beginning index for results (optional)</param>
+        /// <param name="includeFields">Fields to include (optional)</param>
+        /// <param name="excludeFields">Fields to exclude (optional)</param>
+        /// <param name="searchParams">Search parameters (optional)</param>
+        /// <returns>Collection of Clinical Trials</returns>
         public ClinicalTrialsCollection List(
             int size = 10, 
             int from = 0, 
@@ -66,55 +66,43 @@ namespace CancerGov.ClinicalTrialsAPI
             excludeFields = excludeFields ?? new string[0];
             searchParams = searchParams ?? new Dictionary<string, object>();
 
-            using (var client = new HttpClient())
+            JObject requestBody = new JObject();
+            requestBody.Add(new JProperty("size", size));
+            requestBody.Add(new JProperty("from", from));
+
+            if (includeFields.Length > 0)
             {
-                JObject requestBody = new JObject();
-                requestBody.Add(new JProperty("size", size));
-                requestBody.Add(new JProperty("from", from));
-                
-                if (includeFields.Length > 0)
-                {
-                    requestBody.Add(new JProperty("include", includeFields));
-                }
-
-                if (excludeFields.Length > 0)
-                {
-                    requestBody.Add(new JProperty("exclude", includeFields));
-                }
-
-                foreach (KeyValuePair<string, object> sp in searchParams)
-                {
-                    requestBody.Add(new JProperty(sp.Key, sp.Value));
-                } 
-
-                //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = Post(client, "clinical-trials", requestBody);
-                if (response.IsSuccessStatusCode)
-                {
-                    rtnResults = response.Content.ReadAsAsync<ClinicalTrialsCollection>().Result;
-                }
-                else
-                {
-                    //TODO: Add more checking here if the respone does not actually have any content
-                    string errorMessage = response.Content.ReadAsStringAsync().Result;
-                    throw new Exception(errorMessage);
-                }
+                requestBody.Add(new JProperty("include", includeFields));
             }
+
+            if (excludeFields.Length > 0)
+            {
+                requestBody.Add(new JProperty("exclude", includeFields));
+            }
+
+            foreach (KeyValuePair<string, object> sp in searchParams)
+            {
+                requestBody.Add(new JProperty(sp.Key, sp.Value));
+            }
+
+            //Get the HTTP response content from POST request
+            HttpContent httpContent = ReturnPostRespContent("clinical-trials", requestBody);
+            rtnResults = httpContent.ReadAsAsync<ClinicalTrialsCollection>().Result;
 
             return rtnResults;
 
         }
 
         /// <summary>
-        /// Calls the listing endpoint (/clinical-trials) of the clinical trials API
-        /// Overload for trial listing pages
+        /// Calls the listing endpoint (/clinical-trials) of the clinical trials API using dynamically
+        /// created search params (see Trial Listing pages)
         /// </summary>
-        /// <param name="size"></param>
-        /// <param name="from"></param>
-        /// <param name="searchParams"></param>
-        /// <param name="dynamicSearchParams"></param>
-        /// <returns></returns>
-        public ClinicalTrialsCollection List(int size, int from, Dictionary<string, object> searchParams, JObject dynamicSearchParams)
+        /// <param name="size"># of results to return</param>
+        /// <param name="from">Beginning index for results</param>
+        /// <param name="searchParams">Default search parameters</param>
+        /// <param name="dynamicSearchParams">Dynamic search parameters</param>
+        /// <returns>Collection of Clinical Trials</returns>
+        public ClinicalTrialsCollection GetTrialsList(int size, int from, Dictionary<string, object> searchParams, JObject dynamicSearchParams)
         {
             ClinicalTrialsCollection rtnResults = null;
 
@@ -122,8 +110,6 @@ namespace CancerGov.ClinicalTrialsAPI
             searchParams = searchParams ?? new Dictionary<string, object>();
             dynamicSearchParams = dynamicSearchParams ?? new JObject();
 
-            using (var client = new HttpClient())
-            {
                 JObject requestBody = new JObject();
                 requestBody.Add(new JProperty("size", size));
                 requestBody.Add(new JProperty("from", from));
@@ -134,32 +120,20 @@ namespace CancerGov.ClinicalTrialsAPI
                     requestBody.Add(new JProperty(sp.Key, sp.Value));
                 }
 
-                //Add dynamic filter criteria
+                //Add dynamic filter criteria to request
                 if (dynamicSearchParams != null)
                 {
                     //Merge dynamic and common filters (dynamic values override common)
-                    //TODO: add checking for invalid params
                     requestBody.Merge(dynamicSearchParams, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
                 }
 
-                //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = Post(client, "clinical-trials", requestBody);
-                if (response.IsSuccessStatusCode)
-                {
-                    rtnResults = response.Content.ReadAsAsync<ClinicalTrialsCollection>().Result;
-                }
-                else
-                {
-                    //TODO: Add more checking here if the respone does not actually have any content
-                    string errorMessage = response.Content.ReadAsStringAsync().Result;
-                    throw new Exception(errorMessage);
-                }
-            }
+                //Get the HTTP response content from POST request
+                HttpContent httpContent = ReturnPostRespContent("clinical-trials", requestBody);
+                rtnResults = httpContent.ReadAsAsync<ClinicalTrialsCollection>().Result;
 
             return rtnResults;
 
         }
-
 
         /// <summary>
         /// Gets a clinical trial from the API via its ID.
@@ -170,35 +144,25 @@ namespace CancerGov.ClinicalTrialsAPI
 
             ClinicalTrial rtnTrial = null;
 
-            if (String.IsNullOrWhiteSpace(id)) {
+            if (String.IsNullOrWhiteSpace(id)) 
+            {
                 throw new ArgumentNullException("The trial identifier is null or an empty string");
             }
 
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(this.Host);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = client.GetAsync(BasePath + "/clinical-trial/" + id).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    rtnTrial = response.Content.ReadAsAsync<ClinicalTrial>().Result;                    
-                }
-                else
-                {
-                    //TODO: Add more checking here if the respone does not actually have any content
-                    string errorMessage = response.Content.ReadAsStringAsync().Result;
-                    throw new Exception(errorMessage);
-                }
-            }
+            //Get the HTTP response content from GET request
+            HttpContent httpContent = ReturnGetRespContent("clinical-trial", id);
+            rtnTrial = httpContent.ReadAsAsync<ClinicalTrial>().Result;
 
             return rtnTrial;
         }
 
-
+        /// <summary>
+        /// Gets a collection of terms from the API.
+        /// </summary>
+        /// <param name="size"># of results to return (optional)</param>
+        /// <param name="from">Beginning index for results (optional)</param>
+        /// <param name="searchParams">Default search parameters (optional)</param>
+        /// <returns>Collection of terms</returns>
         public TermCollection Terms(
             int size = 10, 
             int from = 0, 
@@ -211,30 +175,18 @@ namespace CancerGov.ClinicalTrialsAPI
 
             searchParams = searchParams ?? new Dictionary<string, object>();
 
-            using (var client = new HttpClient())
+            JObject requestBody = new JObject();
+            requestBody.Add(new JProperty("size", size));
+            requestBody.Add(new JProperty("from", from));
+
+            foreach (KeyValuePair<string, object> sp in searchParams)
             {
-                JObject requestBody = new JObject();
-                requestBody.Add(new JProperty("size", size));
-                requestBody.Add(new JProperty("from", from));
-
-                foreach (KeyValuePair<string, object> sp in searchParams)
-                {
-                    requestBody.Add(new JProperty(sp.Key, sp.Value));
-                }
-
-                //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = Post(client, "terms", requestBody);
-                if (response.IsSuccessStatusCode)
-                {
-                    rtnResults = response.Content.ReadAsAsync<TermCollection>().Result;
-                }
-                else
-                {
-                    //TODO: Add more checking here if the respone does not actually have any content
-                    string errorMessage = response.Content.ReadAsStringAsync().Result;
-                    throw new Exception(errorMessage);
-                }
+                requestBody.Add(new JProperty(sp.Key, sp.Value));
             }
+
+            //Get the HTTP response content from our Post request
+            HttpContent httpContent = ReturnPostRespContent("terms", requestBody);
+            rtnResults = httpContent.ReadAsAsync<TermCollection>().Result;
 
             return rtnResults;
         }
@@ -246,7 +198,6 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <returns>The term</returns>
         public Term GetTerm(string key)
         {
-
             Term rtnTerm = null;
 
             if (String.IsNullOrWhiteSpace(key))
@@ -254,18 +205,35 @@ namespace CancerGov.ClinicalTrialsAPI
                 throw new ArgumentNullException("The term key is null or an empty string");
             }
 
-            using (var client = new HttpClient())
+            //Get the HTTP response content from GET request
+            HttpContent httpContent = ReturnGetRespContent("term", key);
+            rtnTerm = httpContent.ReadAsAsync<Term>().Result;
+
+            return rtnTerm;
+        }
+
+        /// <summary>
+        /// Gets the response content of a GET request.
+        /// </summary>
+        /// <param name="path">Path for client address</param>
+        /// <param name="param">Param in URL</param>
+        /// <returns>HTTP response content</returns>
+        public HttpContent ReturnGetRespContent(String path, String param)
+        {
+            HttpResponseMessage response = null;
+            HttpContent content = null;
+
+            using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(this.Host);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                //We want this to be synchronus, so call Result right away.
-                HttpResponseMessage response = client.GetAsync(BasePath + "/term/" + key).Result;
-
+                // We want this to be synchronus, so call Result right away.
+                response = client.GetAsync(BasePath + "/" + path + "/" + param).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    rtnTerm = response.Content.ReadAsAsync<Term>().Result;
+                    content = response.Content;
                 }
                 else
                 {
@@ -274,25 +242,43 @@ namespace CancerGov.ClinicalTrialsAPI
                     throw new Exception(errorMessage);
                 }
             }
-
-            return rtnTerm;
+            return content;
         }
+
 
         /// <summary>
-        /// Gets the Post request message 
+        /// Gets the response content of a POST request.
         /// </summary>
-        /// <param name="client"></param>
-        /// <param name="path"></param>
-        /// <param name="requestBody"></param>
-        /// <returns>reponse</returns>
-        public HttpResponseMessage Post(HttpClient client, String path, JObject requestBody)
+        /// <param name="path">Path for client address</param>
+        /// <param name="request">Params passed in with request body</param>
+        /// <returns>HTTP response content</returns>
+        public HttpContent ReturnPostRespContent(String path, JObject requestBody)
         {
-            client.BaseAddress = new Uri(this.Host);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.PostAsync(BasePath + "/" + path, new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
-            return response;
+            HttpResponseMessage response = null;
+            HttpContent content = null;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(this.Host);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                //We want this to be synchronus, so call Result right away.
+                response = client.PostAsync(BasePath + "/" + path, new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    content = response.Content;
+                }
+                else
+                {
+                    //TODO: Add more checking here if the respone does not actually have any content
+                    string errorMessage = response.Content.ReadAsStringAsync().Result;
+                    throw new Exception(errorMessage);
+                }
+            }
+            return content;
         }
+
 
     }
 }

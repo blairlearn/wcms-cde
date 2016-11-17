@@ -153,7 +153,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (dynamicFilterParams != null) // get results with passed in params
             {
                 //JObject ddSearchParams = GetDeserializedJSON(dynamicFilterParams);
-                rtnResults = Client.List(
+                rtnResults = Client.GetTrialsList(
                     size: searchParams.ItemsPerPage,
                     from: from,
                     searchParams: filterCriteria,
