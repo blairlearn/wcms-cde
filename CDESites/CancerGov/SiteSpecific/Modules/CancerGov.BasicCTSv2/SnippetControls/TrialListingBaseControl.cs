@@ -15,42 +15,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         static ILog log = LogManager.GetLogger(typeof(TrialListingBaseControl));
 
         /// <summary>
-        /// Enumeration representing a bitmap for the fields that are set.
-        /// </summary>
-        [Flags]
-        protected enum SetFields
-        {
-            None = 0,
-            Age = 1,
-            Gender = Age << 1,
-            ZipCode = Gender << 1,
-            ZipProximity = ZipCode << 1,
-            Phrase = ZipProximity << 1,
-            CancerType = Phrase << 1
-        }
-
-        /// <summary>
         /// basic CTS query parameters
         /// </summary>
         protected const string PAGENUM_PARAM = "pn";
         protected const string ITEMSPP_PARAM = "ni";
-        protected const string PRASE_PARAM = "q";
-        protected const string ZIP_PARAM = "z";
-        protected const string ZIPPROX_PARAM = "zp";
-        protected const string AGE_PARAM = "a";
-        protected const string GENDER_PARAM = "g";
-        protected const string CANCERTYPE_PARAM = "t";
-        protected const string CANCERTYPEASPHRASE_PARAM = "ct";
         protected const string REDIRECTED_FLAG = "r";
 
-        protected BasicCTSPageInfo _basicCTSPageInfo = null;
         protected TrialListingPageInfo _trialListingPageInfo = null;
 
         protected bool hasInvalidSearchParam;
 
-        protected SetFields _setFields = SetFields.None;
+        // This control still shares BasicCTSManager with the CTS controls
         protected BasicCTSManager _basicCTSManager = null;
-        protected string cancerTypeIDAndHash = null;
 
         private string _APIURL = string.Empty;
 
@@ -75,33 +51,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
-
         /// <summary>
         /// Assemble the default (non-dynamic) search parameters for a listing page.
         /// </summary>
         /// <returns>Search params object</returns>
         protected BaseCTSSearchParam GetSearchParamsForListing()
         {
-
             //Parse Parameters
             int pageNum = this.ParmAsInt(PAGENUM_PARAM, 1);
             int itemsPerPage = this.ParmAsInt(ITEMSPP_PARAM, TrialListingPageInfo.DefaultItemsPerPage);
-            string phrase = this.ParmAsStr(PRASE_PARAM, string.Empty);
-            string zip = this.ParmAsStr(ZIP_PARAM, string.Empty);
-            int age = this.ParmAsInt(AGE_PARAM, 0);
-            int gender = this.ParmAsInt(GENDER_PARAM, 0); //0 = decline, 1 = female, 2 = male, 
-            string cancerType = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
-            string cancerTypeAsPhrase = this.ParmAsStr(CANCERTYPEASPHRASE_PARAM, string.Empty); // if autosuggest is broken, the cancer type field will be parsed as a phrase search
 
             //BaseCTSSearchParam searchParams = null;
             BaseCTSSearchParam searchParams = new ListingSearchParam();
 
             // Set Page and Items Per Page
             if (pageNum < 1)
+            {
                 searchParams.Page = 1;
+            }
             else
+            {
                 searchParams.Page = pageNum;
-
+            }
             searchParams.ItemsPerPage = itemsPerPage;
 
             return searchParams;
@@ -123,6 +94,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 return paramval.Trim();
         }
 
+        /// <summary>
+        /// Gets a query parameter as an int or uses a default
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="def"></param>
+        /// <returns></returns>
         protected int ParmAsInt(string param, int def)
         {
             string paramval = Request.QueryString[param];
@@ -182,10 +159,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-
-            // Removed due to concerns over differing search results for CDRID vs. conept ID.
-            //HandleLegacyCancerTypeID(); // Redirect for URLs containing "t=CDRXXXX"
-
             _basicCTSManager = new BasicCTSManager(APIURL);
 
         }
