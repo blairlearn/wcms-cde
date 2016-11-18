@@ -26,7 +26,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     /// Page control for Trial Listing pages.
     /// This is the code behind for TrialListingPage.ascx snippet template.
     /// </summary>
-    public class TrialListingPageControl : BasicCTSBaseControl
+    public class TrialListingPageControl : TrialListingBaseControl
     {
         /// <summary>
         /// Set logging for this class.
@@ -49,7 +49,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         protected override String WorkingUrl
         {
-            get { return BasicCTSPageInfo.ResultsPagePrettyUrl; }
+            get { return TrialListingPageInfo.ResultsPagePrettyUrl; }
         }
 
         /// <summary>
@@ -58,7 +58,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            SearchParams = GetSearchParams();
+            //SearchParams = GetSearchParams();
+            SearchParams = GetSearchParamsForListing();
         }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // This is a JSON-formatted string that has been wrapped in a CDATA block within the content item's Page Instruction snippet info.
             // The generation of the data may change in a future release, but for now, this requires a properly-formatted 
             // JSON string entered as in the <JSONBodyRequest> element in the 'Config' field of an Application Module Page content item. (2016-11-17)
-            String xmlFilters = BasicCTSPageInfo.JSONBodyRequest;
+            String xmlFilters = TrialListingPageInfo.JSONBodyRequest;
             JObject dynamicParams = GetDeserializedJSON(xmlFilters);
 
             // Get the filter parameters from the URL. URL filter params should NOT override any matching params set in the JSON
@@ -94,7 +95,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             // Show search results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                BasicCTSPageInfo.ResultsPageTemplatePath,
+                TrialListingPageInfo.ResultsPageTemplatePath,
                 new
                 {
                     Results = results,
@@ -105,7 +106,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             Controls.Add(ltl);
 
         }
-        
+
 
         #region JSON manipulation methods
 
@@ -135,7 +136,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
             // Join all of our valid key-value pairs 
             result = result.Insert(1, string.Join(",", values.ToArray()));
-            
+
             return result;
         }
 
@@ -185,7 +186,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return secondary;
         }
 
-        #endregion 
+        #endregion
 
 
         #region Velocity Helpers
@@ -254,7 +255,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public string GetDetailedViewUrl(string id)
         {
             NciUrl url = new NciUrl();
-            url.SetUrl(BasicCTSPageInfo.DetailedViewPagePrettyUrl);
+            url.SetUrl(TrialListingPageInfo.DetailedViewPagePrettyUrl);
             url.QueryParameters.Add("id", id);
             url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString()); //Items Per Page
             url.QueryParameters.Add("pn", SearchParams.Page.ToString()); //Page number
@@ -361,9 +362,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public String GetNoTrialsHTML()
         {
             string htmlValue = string.Empty;
-            if (BasicCTSPageInfo.NoTrialsHTML != null)
+            if (TrialListingPageInfo.NoTrialsHTML != null)
             {
-                htmlValue = BasicCTSPageInfo.NoTrialsHTML;
+                htmlValue = TrialListingPageInfo.NoTrialsHTML;
             }
             return htmlValue;
         }
@@ -375,9 +376,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public int GetItemsPerPage()
         {
             int number = 50;
-            if(BasicCTSPageInfo.DefaultItemsPerPage > 0)
+            if (TrialListingPageInfo.DefaultItemsPerPage > 0)
             {
-                number = BasicCTSPageInfo.DefaultItemsPerPage;
+                number = TrialListingPageInfo.DefaultItemsPerPage;
             }
             return number;
         }

@@ -112,29 +112,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string ESTemplateCancerType { get; set; }
 
-        /// <summary>
-        /// The JSON body used for a request. 
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string JSONBodyRequest { get; set; }
-
-        /// <summary>
-        /// Minimum number of results to return.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public int ListingMinResults { get; set; }
-
-        /// <summary>
-        /// Maximum number of results to return.
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public int ListingMaxResults { get; set; }
-
-        /// <summary>
-        /// HTML block for page with no trials
-        /// </summary>
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string NoTrialsHTML { get; set; }
 
     }
 }

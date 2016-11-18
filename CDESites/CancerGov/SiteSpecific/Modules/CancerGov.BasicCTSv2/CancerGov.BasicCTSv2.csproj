@@ -67,6 +67,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchParams\BaseCTSSearchParam.cs" />
     <Compile Include="SearchParams\CancerTypeSearchParam.cs" />
+    <Compile Include="SearchParams\ListingSearchParam.cs" />
     <Compile Include="SearchParams\PhraseSearchParam.cs" />
     <Compile Include="SnippetControls\BasicCTSBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -81,9 +82,13 @@
     <Compile Include="SnippetControls\BasicCTSViewControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\TrialListingBaseControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\TrialListingPageControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\TrialListingPageInfo.cs" />
     <Compile Include="SnippetControls\TrialVelocityTools.cs" />
     <Compile Include="ZipCodeDictionary.cs" />
     <Compile Include="ZipCodeGeoEntry.cs" />
