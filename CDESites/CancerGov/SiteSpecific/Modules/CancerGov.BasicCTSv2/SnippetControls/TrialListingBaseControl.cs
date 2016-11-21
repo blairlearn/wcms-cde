@@ -132,25 +132,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             get
             {
                 if (_trialListingPageInfo != null)
+                { 
                     return _trialListingPageInfo;
-                // Read the basic CTS page information xml
+                }
+
+                // Read the basic CTS page information JSON
                 string spidata = this.SnippetInfo.Data;
+
                 try
                 {
-                    if (string.IsNullOrEmpty(spidata))
-                        throw new Exception("TrialListingPageInfo not present in JSON, associate an application module item with this page in Percussion");
-
+                    if (string.IsNullOrWhiteSpace(spidata))
+                    {
+                        throw new Exception("TrialListingPageInfo not present in JSON, associate an Application Module item with this page in Percussion");
+                    }
                     spidata = spidata.Trim();
-                    if (string.IsNullOrEmpty(spidata))
-                        throw new Exception("TrialListingPageInfo not present in JSON, associate an application module item with this page in Percussion");
-
-                    TrialListingPageInfo trialListingPageInfo = ModuleObjectFactory<TrialListingPageInfo>.GetModuleObject(spidata);
+                    
+                    // Get our TrialListingPageInfo object this is JSON data that includes template and URL paths and result count parameters.
+                    // It also includes a nested, JSON-formatted string "RequestFilters", which represents the JSON passed in with the API body request - this is
+                    // deserialized in TrialListingPageControl.
+                    // TODO: handle all deserialization in once place, if possible. This will avoid having to go through the process twice
+                    TrialListingPageInfo trialListingPageInfo = ModuleObjectFactory<TrialListingPageInfo>.GetJsonObject(spidata);
 
                     return _trialListingPageInfo = trialListingPageInfo;
                 }
                 catch (Exception ex)
                 {
-                    log.Error("could not load the TrialListingPageInfo, check the config info of the application module in percussion", ex);
+                    log.Error("Could not load the TrialListingPageInfo; check the config info of the Application Module item in Percussion", ex);
                     throw ex;
                 }
             }
