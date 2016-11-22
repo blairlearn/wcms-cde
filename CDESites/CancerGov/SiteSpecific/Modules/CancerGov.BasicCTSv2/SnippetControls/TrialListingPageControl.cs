@@ -69,12 +69,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnLoad(e);
 
-            // Get the JSON blob set in the content item.
-            // This is a JSON-formatted string that has been wrapped in a CDATA block within the content item's Page Instruction snippet info.
-            // The generation of the data may change in a future release, but for now, this requires a properly-formatted 
-            // JSON string entered as in the <RequestFilters> element in the 'Config' field of an Application Module Page content item. (2016-11-17)
-            String xmlFilters = TrialListingPageInfo.RequestFilters;
-            JObject dynamicParams = GetDeserializedJSON(xmlFilters);
+            // Get the RequestFilters element that was set in the content item JSON. 
+            // These filter params cannot be overridden by the URL filter params below.
+            JObject dynamicParams = TrialListingPageInfo.RequestFilters;
 
             // Get the filter parameters from the URL. URL filter params should NOT override any matching params set in the JSON
             String urlFilters = GetUrlFilters();

@@ -1,12 +1,14 @@
 ﻿using System.Xml.Schema;
 using System.Xml.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
     /// <summary>
-    /// This class defines the properties of search result. Like the prettyUrl of the 
-    /// search results page. This information should be made avaliable in the instruction 
-    /// that defines the search page.
+    /// This class represents the data that is set in a Trial Listing Page content item. 
+    /// The data is JSON-formatte wrapped in a CDATA block within the content item's Page Instruction snippet info.
+    /// The generation of the data may change in a future release, but for now, this requires a properly-formatted 
+    /// JSON string entered as in the "Config:" field of an Application Module Page content item. (2016-11-17)
     /// </summary>
     public class TrialListingPageInfo
     {
@@ -39,7 +41,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Nested JSON-formatted string representing search filters
         /// </summary>
-        public string RequestFilters { get; set; }
+        public JObject RequestFilters { get; set; }
 
         /// <summary>
         /// Minimum number of results to return.
