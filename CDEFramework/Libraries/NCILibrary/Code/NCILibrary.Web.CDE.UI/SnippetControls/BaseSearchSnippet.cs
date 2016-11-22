@@ -185,6 +185,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         }
                     }
 
+                    if (startDate == DateTime.MinValue && endDate == DateTime.MaxValue && filters.ContainsKey("month") && !filters.ContainsKey("year"))
+                    {
+                        NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("BaseSearchSnippet", 404, "Invalid parameter in dynamic list filter: cannot have month without year");
+                    }
+
                     List<TaxonomyFilter> filtersForSql = new List<TaxonomyFilter>(this.SearchList.SearchFilters.TaxonomyFilters.Where(filter => filter.Taxons.Count() > 0));
                     foreach (KeyValuePair<string, string> entry in filters)
                     {
