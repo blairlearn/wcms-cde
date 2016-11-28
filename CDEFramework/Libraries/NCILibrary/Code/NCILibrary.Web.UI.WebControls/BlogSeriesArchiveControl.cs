@@ -86,7 +86,8 @@ namespace NCI.Web.UI.WebControls
                 // Get all the months within the row collection for this year.
                 var blogCount = monthList.Where(e => e.Year == year).Select(i => i.Quantity).Aggregate((x, y) => x + y);
 
-                BlogMainPage = BlogMainPage.TrimEnd('/');
+                BlogMainPage = BlogMainPage.TrimEnd('/').TrimStart('/');
+
                 var archiveLang = Language == "en" ? "archive" : "archivo";
                 sb.Append("<li class=\"year\">");
                 if (blogCount > 0) // Print the month as a link
@@ -142,7 +143,7 @@ namespace NCI.Web.UI.WebControls
 
                         sb.Append("<li class=\"month\">");
 
-                        BlogMainPage = BlogMainPage.TrimEnd('/');
+                        BlogMainPage = BlogMainPage.TrimEnd('/').TrimStart('/');
                         var archiveLang = Language == "en" ? "archive" : "archivo";
                         if (quantity > 0) // Print the month as a link
                             sb.Append("<a class href=\"/" + BlogMainPage + "/" + archiveLang + "?filter[year]=" + year + "&filter[month]=" + month + "\">" + monthStr + "</a>");
