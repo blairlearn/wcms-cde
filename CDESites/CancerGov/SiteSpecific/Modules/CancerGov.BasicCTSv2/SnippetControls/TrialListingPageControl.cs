@@ -127,7 +127,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     string queryParam = HttpContext.Current.Request.QueryString[match.Value];
                     if (!string.IsNullOrWhiteSpace(queryParam)) // Don't filter empty params
                     {
-                        values.Add("\"" + queryValue + "\":[\"" + queryParam.Replace(",", "\",\"") + "\"]");
+                        if (queryParam.IndexOf(",") > -1) // Splic comma-separated values
+                        {
+                            values.Add("\"" + queryValue + "\":[\"" + queryParam.Replace(",", "\",\"") + "\"]");
+                        }
+                        else
+                        {
+                            values.Add("\"" + queryValue + "\":\"" + queryParam + "\"");
+                        }
                     }
                 }
             }
