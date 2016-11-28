@@ -18,13 +18,14 @@ namespace NCI.Web.UI.WebControls
     [ToolboxData("<{0}:BlogSeriesArchiveWebControl runat=server></{0}:BlogSeriesArchiveWebControl>")]
     public class BlogSeriesArchiveControl : WebControl
     {
-        public BlogSeriesArchiveControl(string language, string groupBy)
+        public BlogSeriesArchiveControl(string language, string groupBy, string blogMainPage)
         {
             Language = language;
             GroupBy = groupBy;
-
+            BlogMainPage = blogMainPage;
         }
 
+        private string BlogMainPage;
         private string Language;
         private string GroupBy;
         [Bindable(true)]
@@ -83,11 +84,13 @@ namespace NCI.Web.UI.WebControls
             foreach (var year in returnedYears)
             {
                 // Get all the months within the row collection for this year.
-                var blogCount = monthList.Where(e => e.Year == year).ToList().Count();
+                var blogCount = monthList.Where(e => e.Year == year).Select(i => i.Quantity).Aggregate((x, y) => x + y);
 
+                BlogMainPage = BlogMainPage.TrimEnd('/');
+                var archiveLang = Language == "en" ? "archive" : "archivo";
                 sb.Append("<li class=\"year\">");
                 if (blogCount > 0) // Print the month as a link
-                    sb.Append("<a class href=\"/news-events/cancer-currents-blog/archive?filter[year]=" + year + "\">" + year + "</a>");
+                    sb.Append("<a class href=\"/" + BlogMainPage + "/" + archiveLang + "?filter[year]=" + year + "\">" + year + "</a>");
                 else
                     sb.Append(year);
                 sb.Append(" (" + blogCount + ")");
@@ -139,8 +142,10 @@ namespace NCI.Web.UI.WebControls
 
                         sb.Append("<li class=\"month\">");
 
+                        BlogMainPage = BlogMainPage.TrimEnd('/');
+                        var archiveLang = Language == "en" ? "archive" : "archivo";
                         if (quantity > 0) // Print the month as a link
-                            sb.Append("<a class href=\"/news-events/cancer-currents-blog/archive?filter[year]=" + year + "&filter[month]=" + month + "\">" + monthStr + "</a>");
+                            sb.Append("<a class href=\"/" + BlogMainPage + "/" + archiveLang + "?filter[year]=" + year + "&filter[month]=" + month + "\">" + monthStr + "</a>");
                         else
                             sb.Append(monthStr);
                         sb.Append(" (" + quantity + ")");
