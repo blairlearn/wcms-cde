@@ -34,8 +34,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         static ILog log = LogManager.GetLogger(typeof(TrialListingPageControl));
 
         /// <summary>
-        /// Create the Regex pattern for finding filters in the URL
-        /// TODO: explain
+        /// Create the Regex pattern for finding filters in the URL.
+        /// Match the following pattern: "filter" + open square bracket ([) + any string value + close square bracket (]).
         /// </summary>
         private readonly Regex FilterPattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
