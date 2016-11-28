@@ -13,7 +13,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         static private String englishDateFormat = "{1} - {0}";
         static private String espanolDateFormat = "{1} - {0}";
         static private String englishArchiveFormat = "Archive - {0}";
-        static private String espanolArchiveFormat = "Archive - {0}";
+        static private String espanolArchiveFormat = "Archivo - {0}";
 
         protected override void OnLoad(EventArgs e)
         {
