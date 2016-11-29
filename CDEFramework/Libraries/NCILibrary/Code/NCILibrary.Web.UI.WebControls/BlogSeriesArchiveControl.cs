@@ -65,12 +65,8 @@ namespace NCI.Web.UI.WebControls
 
         private string RenderAccordionOnYear()
         {
-            var archiveLang = Language == "en" ? "Archive" : "Archivo";
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<div class=\"desktop\">" +
-                      "<div id=\"blog-archive-accordion\">");
-            sb.Append("<h3 id=\"archive\" class=\"blog-archive-header\">" + archiveLang  + "</h3>");
-            sb.Append("<div id=\"blog-archive-accordion-year\">");
+            StringBuilder sb = StartAccordion();
+
             sb.Append("<ul>");
             // Structure for the list is created above, now iterate over the rows
             // and group the dates by year
@@ -89,7 +85,7 @@ namespace NCI.Web.UI.WebControls
 
                 BlogMainPage = BlogMainPage.TrimEnd('/').TrimStart('/');
 
-                
+                var archiveLang = Language == "en" ? "archive" : "archivo";
                 sb.Append("<li class=\"year\">");
                 if (blogCount > 0) // Print the month as a link
                     sb.Append("<a class href=\"/" + BlogMainPage + "/" + archiveLang + "?filter[year]=" + year + "\">" + year + "</a>");
@@ -99,19 +95,15 @@ namespace NCI.Web.UI.WebControls
                 sb.Append("</li>");
             }
             sb.Append("</ul>");
-            sb.Append("</div>");
-            sb.Append("</div>");
-            sb.Append("</div>");
+
+            EndAccordion(sb);
             return sb.ToString();
         }
 
         private string RenderAccordionOnMonth()
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<div class=\"desktop\">" +
-                      "<div id=\"blog-archive-accordion\">");
-            sb.Append("<h3 id=\"archive\" class=\"blog-archive-header\">Archive</h3>");
-            sb.Append("<div id=\"blog-archive-accordion-year\">");
+
+            StringBuilder sb = StartAccordion();
 
             // Structure for the list is created above, now iterate over the rows
             // and group the dates by year
@@ -156,12 +148,31 @@ namespace NCI.Web.UI.WebControls
                     sb.Append("</ul>");
                 }
             }
-            sb.Append("</div>");
-            sb.Append("</div>");
-            sb.Append("</div>");
+
+            EndAccordion(sb);
             return sb.ToString();
         }
 
+        private StringBuilder StartAccordion()
+        {
+            var archiveLang = Language == "en" ? "Archive" : "Archivo";
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<div class=\"desktop\">" +
+                      "<div id=\"blog-archive-accordion\">");
+            sb.Append("<h3 id=\"archive\" class=\"blog-archive-header\">" + archiveLang + "</h3>");
+            sb.Append("<div id=\"blog-archive-accordion-year\">");
+
+            return sb;
+        }
+
+        private StringBuilder EndAccordion(StringBuilder sb)
+        {
+            sb.Append("</div>");
+            sb.Append("</div>");
+            sb.Append("</div>");
+
+            return sb;
+        }
         
         private string GetMonthString(int month)
         {
