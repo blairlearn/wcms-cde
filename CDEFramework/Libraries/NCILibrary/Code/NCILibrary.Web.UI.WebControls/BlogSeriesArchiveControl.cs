@@ -65,10 +65,11 @@ namespace NCI.Web.UI.WebControls
 
         private string RenderAccordionOnYear()
         {
+            var archiveLang = Language == "en" ? "Archive" : "Archivo";
             StringBuilder sb = new StringBuilder();
             sb.Append("<div class=\"desktop\">" +
                       "<div id=\"blog-archive-accordion\">");
-            sb.Append("<h3 id=\"archive\" class=\"blog-archive-header\">Archive</h3>");
+            sb.Append("<h3 id=\"archive\" class=\"blog-archive-header\">" + archiveLang  + "</h3>");
             sb.Append("<div id=\"blog-archive-accordion-year\">");
             sb.Append("<ul>");
             // Structure for the list is created above, now iterate over the rows
@@ -88,7 +89,7 @@ namespace NCI.Web.UI.WebControls
 
                 BlogMainPage = BlogMainPage.TrimEnd('/').TrimStart('/');
 
-                var archiveLang = Language == "en" ? "archive" : "archivo";
+                
                 sb.Append("<li class=\"year\">");
                 if (blogCount > 0) // Print the month as a link
                     sb.Append("<a class href=\"/" + BlogMainPage + "/" + archiveLang + "?filter[year]=" + year + "\">" + year + "</a>");
