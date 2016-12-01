@@ -77,6 +77,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
+        /// Check for the presence of the OTHER_LINK_FLAG ("ol=" param in the URL). 
+        /// If not present, then this page load is the result of a CTS Results Page link.
+        /// </summary>
+        /// <returns>bool - true if no "ol" query param</returns>
+        public bool IsSearchResult()
+        {
+            bool rtn = (Request.QueryString[OTHER_LINK_FLAG] == null) ? true : false;
+            return rtn;
+        }
+
+        /// <summary>
         /// Returns whether a user searched for all trials.
         /// </summary>
         /// <returns></returns>

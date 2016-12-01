@@ -20,6 +20,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected const string PAGENUM_PARAM = "pn";
         protected const string ITEMSPP_PARAM = "ni";
         protected const string REDIRECTED_FLAG = "r";
+        protected const string OTHER_LINK_FLAG = "ol";
 
         protected TrialListingPageInfo _trialListingPageInfo = null;
 

@@ -42,6 +42,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected const string CANCERTYPE_PARAM = "t";
         protected const string CANCERTYPEASPHRASE_PARAM = "ct";
         protected const string REDIRECTED_FLAG = "r";
+        protected const string OTHER_LINK_FLAG = "ol";
 
         protected BasicCTSPageInfo _basicCTSPageInfo = null;
 
