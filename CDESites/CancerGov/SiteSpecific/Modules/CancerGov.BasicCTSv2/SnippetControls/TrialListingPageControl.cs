@@ -263,7 +263,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             url.QueryParameters.Add("id", id);
             url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString()); //Items Per Page
             url.QueryParameters.Add("pn", SearchParams.Page.ToString()); //Page number
-            url.QueryParameters.Add("ol", string.Empty); //Add the "ol" flag - this will allow us to add custom logic to CT View pages not linked from the CTS Results page
             return url.ToString();
         }
 

@@ -314,6 +314,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Page number
             url.QueryParameters.Add("pn", SearchParams.Page.ToString());
 
+            // Add the "rl" flag, indicating that this is a link coming from the CTS Results Page
+            url.QueryParameters.Add("rl", string.Empty); 
+
             return url.ToString();
         }
 

@@ -77,13 +77,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Check for the presence of the OTHER_LINK_FLAG ("ol=" param in the URL). 
-        /// If not present, then this page load is the result of a CTS Results Page link.
+        /// Check for the presence of the RESULTS_LINK_FLAG ("rl=" param in the URL). 
+        /// If it is present, then this page load is the result of a CTS Results Page link.
         /// </summary>
-        /// <returns>bool - true if no "ol" query param</returns>
+        /// <returns>bool - true if "rl" query param exists</returns>
         public bool IsSearchResult()
         {
-            bool rtn = (Request.QueryString[OTHER_LINK_FLAG] == null) ? true : false;
+            bool rtn = (Request.QueryString[RESULTS_LINK_FLAG] == null) ? false : true;
             return rtn;
         }
 
