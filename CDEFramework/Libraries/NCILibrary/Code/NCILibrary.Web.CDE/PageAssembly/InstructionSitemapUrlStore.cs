@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
-using NCI.Web.Sitemap;
-using System.IO;
+using System.Web;
 using System.Xml;
 using System.Xml.XPath;
-using System.Web;
+
 using NCI.Web.CDE.Configuration;
+using NCI.Web.Sitemap;
 
 namespace NCI.Web.CDE.PageAssembly
 {
@@ -67,6 +69,12 @@ namespace NCI.Web.CDE.PageAssembly
             return url;
         }
 
+        /// <summary>
+        /// Create a collection of URL elements from XML files
+        /// </summary>
+        /// <returns>SitemapUrlSet</returns>
+        // TODO: clean up/comment, encapsulate for loops, set up email and log file logging
+        //       set up logic to hit 500 (or other response) on error
         public override SitemapUrlSet GetSitemapUrls()
         {
             List<SitemapUrl> sitemapUrls = new List<SitemapUrl>();
@@ -75,39 +83,50 @@ namespace NCI.Web.CDE.PageAssembly
             double priority;
             String directory = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/"));
             string fileDirectory = Path.GetDirectoryName(directory);
+            SitemapProviderConfiguration config = (SitemapProviderConfiguration)ConfigurationManager.GetSection("Sitemap");
+            int maxErrorCount = config.ErrorCount.Max; 
+            int errorCount = 0; 
 
             // Find all Page Instruction files and add them to the list of URLs
             foreach (string file in Directory.GetFiles(fileDirectory, "*.xml", SearchOption.AllDirectories))
             {
-                // Open new XPathDocument from file and create navigator
-                XPathDocument doc = new XPathDocument(file);
-                XPathNavigator nav = doc.CreateNavigator();
-
-                // Add CDE namespace to parse through document
-                XmlNamespaceManager manager = new XmlNamespaceManager(nav.NameTable);
-                manager.AddNamespace("cde", "http://www.example.org/CDESchema");
-                
-                //If this item is marked as DoNotIndex, then skip it.
-                if (DoNotIndex(nav, manager, "SinglePageAssemblyInstruction"))
-                    continue;
-
-                // Get pretty url from PrettyUrl node
-                path = GetURL(nav, manager, "SinglePageAssemblyInstruction");
-                if (path == null)
-                    continue;
-
-                // Get content type and set priority accordingly
-                contentType = nav.SelectSingleNode("//cde:SinglePageAssemblyInstruction/ContentItemInfo/ContentItemType", manager).Value;
-                if (contentType == "rx:nciHome" || contentType == "rx:nciLandingPage" || contentType == "rx:cgvCancerTypeHome" ||
-                    contentType == "rx:cgvCancerResearch" || contentType == "rx:nciAppModulePage" || contentType == "rx:pdqCancerInfoSummary" ||
-                    contentType == "rx:pdqDrugInfoSummary" || contentType == "rx:cgvFactSheet" || contentType == "rx:cgvTopicPage")
-                    priority = 1.0;
-                else
+                try
                 {
-                    priority = 0.5;
-                }
+                    // Open new XPathDocument from file and create navigator
+                    XPathDocument doc = new XPathDocument(file);
+                    XPathNavigator nav = doc.CreateNavigator();
 
-                sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.weekly, priority));
+                    // Add CDE namespace to parse through document
+                    XmlNamespaceManager manager = new XmlNamespaceManager(nav.NameTable);
+                    manager.AddNamespace("cde", "http://www.example.org/CDESchema");
+
+                    //If this item is marked as DoNotIndex, then skip it.
+                    if (DoNotIndex(nav, manager, "SinglePageAssemblyInstruction"))
+                        continue;
+
+                    // Get pretty url from PrettyUrl node
+                    path = GetURL(nav, manager, "SinglePageAssemblyInstruction");
+                    if (path == null)
+                        continue;
+
+                    // Get content type and set priority accordingly
+                    contentType = nav.SelectSingleNode("//cde:SinglePageAssemblyInstruction/ContentItemInfo/ContentItemType", manager).Value;
+                    if (contentType == "rx:nciHome" || contentType == "rx:nciLandingPage" || contentType == "rx:cgvCancerTypeHome" ||
+                        contentType == "rx:cgvCancerResearch" || contentType == "rx:nciAppModulePage" || contentType == "rx:pdqCancerInfoSummary" ||
+                        contentType == "rx:pdqDrugInfoSummary" || contentType == "rx:cgvFactSheet" || contentType == "rx:cgvTopicPage")
+                        priority = 1.0;
+                    else
+                    {
+                        priority = 0.5;
+                    }
+
+                    sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.weekly, priority));
+                }
+                catch (XmlException ex)
+                {
+                    ++errorCount;
+                    continue;
+                }
             }
 
             directory = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.FilePathFormat.Path, "/"));
@@ -116,6 +135,7 @@ namespace NCI.Web.CDE.PageAssembly
             // Find all File Instruction files and add them to the list of URLs
             foreach (string file in Directory.GetFiles(fileDirectory, "*.xml", SearchOption.AllDirectories))
             {
+                try { 
                 // Open new XPathDocument from file and create navigator
                 XPathDocument doc = new XPathDocument(file);
                 XPathNavigator nav = doc.CreateNavigator();
@@ -134,9 +154,22 @@ namespace NCI.Web.CDE.PageAssembly
                     continue;
 
                 sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.always, 0.5));
+                }
+                catch (XmlException ex)
+                {
+                    ++errorCount;
+                    continue;
+                }
             }
 
-            return new SitemapUrlSet(sitemapUrls);
+            if (errorCount < maxErrorCount)
+            {
+                return new SitemapUrlSet(sitemapUrls);
+            }
+            else
+            {
+                throw new Exception("nope");
+            }
         }
     }
 }
