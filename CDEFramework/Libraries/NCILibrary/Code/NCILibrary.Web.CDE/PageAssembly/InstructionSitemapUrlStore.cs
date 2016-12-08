@@ -20,6 +20,8 @@ namespace NCI.Web.CDE.PageAssembly
     {
         static ILog log = LogManager.GetLogger(typeof(EmailLogger));
 
+        private String hostName = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName;
+
         /// <summary>
         /// Selects out the DoNotIndex property
         /// </summary>
@@ -61,7 +63,7 @@ namespace NCI.Web.CDE.PageAssembly
                 if (url != null && url.Trim() != "")
                 {
                     // If the URL is good, remove outer text and concatenate with base URL
-                    url = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + url;
+                    url = hostName + url;
                 }
                 else
                 {
@@ -78,8 +80,6 @@ namespace NCI.Web.CDE.PageAssembly
         /// Create a collection of URL elements from XML files
         /// </summary>
         /// <returns>SitemapUrlSet</returns>
-        // TODO: clean up/comment, encapsulate for loops, set up email and log file logging
-        //       set up logic to hit 500 (or other response) on error
         public override SitemapUrlSet GetSitemapUrls()
         {
             List<SitemapUrl> sitemapUrls = new List<SitemapUrl>();
@@ -127,10 +127,12 @@ namespace NCI.Web.CDE.PageAssembly
 
                     sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.weekly, priority));
                 }
+
+                // If we hit missing or malformed XML, increment the error counter, send an error email, and move on to the next file without adding this to the sitemap
                 catch (XmlException ex)
                 {
                     ++errorCount;
-                    log.Fatal("A PageInstruction XML file has failed parsing. IntructionSitemapUrlStore:GetSitemapUrls()", ex);
+                    log.Fatal("A PageInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nHostname: " + hostName, ex);
                     continue;
                 }
             }
@@ -162,22 +164,27 @@ namespace NCI.Web.CDE.PageAssembly
 
                     sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.always, 0.5));
                 }
+
+                // If we hit missing or malformed XML, increment the error counter, send an error email, and move on to the next file without adding this to the sitemap
                 catch (XmlException ex)
                 {
                     ++errorCount;
-                    log.Fatal("A FileInstruction XML file has failed parsing. IntructionSitemapUrlStore:GetSitemapUrls()", ex);
+                    log.Fatal("A FileInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nHostname: " + hostName, ex);
                     continue;
                 }
             }
 
-            if (errorCount < maxErrorCount)
+            // The maximum number of allowable errors is set in the web config. 
+            // If our error count is greater than that number, stop trying to build the sitemap and throw an exception.
+            if (errorCount <= maxErrorCount)
             {
                 return new SitemapUrlSet(sitemapUrls);
             }
             else
             {
-                log.Error("Error generating sitemap. Check page and file instruction XML files. IntructionSitemapUrlStore:GetSitemapUrls()");
-                throw new Exception("nope");
+                String err = "Error generating sitemap. Check page and file instruction XML files. IntructionSitemapUrlStore:GetSitemapUrls()";
+                log.Error(err);
+                throw new Exception(err);
             }
         }
     }
