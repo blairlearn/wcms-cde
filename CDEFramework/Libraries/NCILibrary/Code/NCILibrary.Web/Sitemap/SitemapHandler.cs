@@ -48,7 +48,7 @@ namespace NCI.Web.Sitemap
                 {
                     ser.Serialize(writer, Sitemaps.GetSitemap(), ns);
                     utf8 = memStream.ToArray();
-                    HttpContext.Current.Cache.Add("sitemap", utf8, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
+                    HttpContext.Current.Cache.Add("sitemap", utf8, null, DateTime.Now.AddSeconds(1), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
                     response.OutputStream.Write(utf8, 0, utf8.Length);
                 }
             }
