@@ -133,7 +133,7 @@ namespace NCI.Web.CDE.PageAssembly
                 catch (XmlException ex)
                 {
                     ++errorCount;
-                    errorMessages.Add("A PageInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nHostname: " + ex.ToString());
+                    errorMessages.Add("A PageInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString());
                     continue;
                 }
             }
@@ -170,7 +170,7 @@ namespace NCI.Web.CDE.PageAssembly
                 catch (XmlException ex)
                 {
                     ++errorCount;
-                    errorMessages.Add("A FileInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nHostname: " + ex.ToString());
+                    errorMessages.Add("A FileInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString());
                     continue;
                 }
             }
