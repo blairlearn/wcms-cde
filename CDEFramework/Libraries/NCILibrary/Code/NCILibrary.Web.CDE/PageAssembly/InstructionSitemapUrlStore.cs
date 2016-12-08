@@ -18,7 +18,7 @@ namespace NCI.Web.CDE.PageAssembly
 {
     public class InstructionSitemapUrlStore : SitemapUrlStoreBase
     {
-        static ILog log = LogManager.GetLogger(typeof(EmailLogger));
+        static ILog log = LogManager.GetLogger(typeof(InstructionSitemapUrlStore));
 
         private String hostName = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName;
 
@@ -91,6 +91,7 @@ namespace NCI.Web.CDE.PageAssembly
             SitemapProviderConfiguration config = (SitemapProviderConfiguration)ConfigurationManager.GetSection("Sitemap");
             int maxErrorCount = config.ErrorCount.Max;
             int errorCount = 0;
+            List<String> errorMessages = new List<String>();
 
             // Find all Page Instruction files and add them to the list of URLs
             foreach (string file in Directory.GetFiles(fileDirectory, "*.xml", SearchOption.AllDirectories))
@@ -132,7 +133,7 @@ namespace NCI.Web.CDE.PageAssembly
                 catch (XmlException ex)
                 {
                     ++errorCount;
-                    log.Fatal("A PageInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nHostname: " + hostName, ex);
+                    errorMessages.Add("A PageInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nHostname: " + ex.ToString());
                     continue;
                 }
             }
@@ -169,7 +170,7 @@ namespace NCI.Web.CDE.PageAssembly
                 catch (XmlException ex)
                 {
                     ++errorCount;
-                    log.Fatal("A FileInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nHostname: " + hostName, ex);
+                    errorMessages.Add("A FileInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nHostname: " + ex.ToString());
                     continue;
                 }
             }
@@ -178,11 +179,16 @@ namespace NCI.Web.CDE.PageAssembly
             // If our error count is greater than that number, stop trying to build the sitemap and throw an exception.
             if (errorCount <= maxErrorCount)
             {
+                if(errorCount > 0)
+                {
+                    String err = String.Join("\n", errorMessages.ToArray());
+                    log.Fatal(err);
+                }
                 return new SitemapUrlSet(sitemapUrls);
             }
             else
             {
-                String err = "Error generating sitemap. Check page and file instruction XML files. IntructionSitemapUrlStore:GetSitemapUrls()";
+                String err = "Error generating sitemap above threshold of " + maxErrorCount.ToString() + "Check page and file instruction XML files. IntructionSitemapUrlStore:GetSitemapUrls()";
                 log.Error(err);
                 throw new Exception(err);
             }

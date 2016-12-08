@@ -364,6 +364,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SnippetTemplates\BlogAnalytics.ascx.cs">
       <DependentUpon>BlogAnalytics.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
