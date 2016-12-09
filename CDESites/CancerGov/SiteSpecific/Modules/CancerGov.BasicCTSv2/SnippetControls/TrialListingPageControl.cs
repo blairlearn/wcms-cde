@@ -325,15 +325,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 List<object> items = new List<object>();
 
                 if (SearchParams.Page != 1)
+                { 
+                    // Link to previous page
                     items.Add(
+                    new
+                    {
+                        Text = "&lt; Previous",
+                        PageUrl = GetPageUrl(SearchParams.Page - 1)
+                    });
+
+                    // Link to first page
+                    if (SearchParams.Page > (numLeft + 1))
+                    {
+                        items.Add(
                         new
                         {
-                            Text = "&lt; Previous",
-                            PageUrl = GetPageUrl(SearchParams.Page - 1)
+                            Text = "1",
+                            PageUrl = GetPageUrl(1)
                         });
+                    }
+                }
 
                 for (int i = startPage; i <= endPage; i++)
                 {
+                    // Build links before and after current
                     items.Add(
                         new
                         {
@@ -344,12 +359,27 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
 
                 if (SearchParams.Page < endPage)
-                    items.Add(
+                {
+                    // Link to last page
+                    if (SearchParams.Page < (maxPage - numRight))
+                    {
+                        items.Add(
                         new
                         {
-                            Text = "Next &gt;",
-                            PageUrl = GetPageUrl(SearchParams.Page + 1)
+                            Text = maxPage.ToString(),
+                            PageUrl = GetPageUrl(maxPage)
                         });
+                    }
+
+                    // Link to next page
+                    items.Add(
+                    new
+                    {
+                        Text = "Next &gt;",
+                        PageUrl = GetPageUrl(SearchParams.Page + 1)
+                    });
+
+                }
 
                 return items;
             }
