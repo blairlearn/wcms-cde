@@ -344,13 +344,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                             PageUrl = GetPageUrl(1)
                         });
 
+                        // Add elipses to delimit first page
                         if (SearchParams.Page > (numLeft + 2))
                         {
                             items.Add(
                             new
                             {
                                 Text = "...",
-                                PageUrl = String.Empty
+                                IsLink = false
                             });
                         }
                     }
@@ -373,13 +374,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     // Link to last page
                     if (SearchParams.Page < (maxPage - numRight))
                     {
+                        // Add elipses to delimit last page
                         if (SearchParams.Page < (maxPage - numRight - 1))
                         {
                             items.Add(
                             new
                             {
                                 Text = "...",
-                                PageUrl = String.Empty
+                                IsLink = false
                             });
                         }
 
