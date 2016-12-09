@@ -322,11 +322,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Otherwise, set up the pager accordingly.
             if (maxPage > 1)
             {
+                // Creat a list of pager item objects:
+                //  Text (string) = link text
+                //  PageUrl (string) = href value for item 
+                //  IsLink (bool) - whether or not this item will be used as a link
                 List<object> items = new List<object>();
 
                 if (SearchParams.Page != 1)
                 { 
-                    // Link to previous page
+                    // Draw link to previous page
                     items.Add(
                     new
                     {
@@ -334,9 +338,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         PageUrl = GetPageUrl(SearchParams.Page - 1)
                     });
 
-                    // Link to first page
+                    // Draw first page links and text
                     if (SearchParams.Page > (numLeft + 1))
                     {
+                        // Draw link to first page
                         items.Add(
                         new
                         {
@@ -344,22 +349,35 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                             PageUrl = GetPageUrl(1)
                         });
 
-                        // Add elipses to delimit first page
+                        // Draw elipses to delimit first page. 
+                        // If the ellipses only represent a single digit, draw that instead (in this case it will always be 2).
                         if (SearchParams.Page > (numLeft + 2))
                         {
-                            items.Add(
-                            new
+                            if (SearchParams.Page == (numLeft + 3))
                             {
-                                Text = "...",
-                                IsLink = false
-                            });
+                                items.Add(
+                                new
+                                {
+                                    Text = "2",
+                                    PageUrl = GetPageUrl(2)
+                                });
+                            }
+                            else
+                            {
+                                items.Add(
+                                new
+                                {
+                                    Text = "...",
+                                    IsLink = false
+                                });
+                            }
                         }
                     }
                 }
 
+                // Draw links before and after current
                 for (int i = startPage; i <= endPage; i++)
                 {
-                    // Build links before and after current
                     items.Add(
                         new
                         {
@@ -369,22 +387,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     );
                 }
 
+                // Draw last page links and text
                 if (SearchParams.Page < endPage)
                 {
-                    // Link to last page
+                    // Draw iink to last page
                     if (SearchParams.Page < (maxPage - numRight))
                     {
-                        // Add elipses to delimit last page
+                        // Draw elipses to delimit last page. 
+                        // If the ellipses only represent a single digit, draw that instead (in this case it will always maxmimum page minus one).
                         if (SearchParams.Page < (maxPage - numRight - 1))
                         {
-                            items.Add(
-                            new
+                            if (SearchParams.Page == (maxPage - numRight - 2))
                             {
-                                Text = "...",
-                                IsLink = false
-                            });
+                                items.Add(
+                                new
+                                {
+                                    Text = (maxPage - 1).ToString(),
+                                    PageUrl = GetPageUrl(maxPage - 1)
+                                });
+                            }
+                            else
+                            {
+                                items.Add(
+                                new
+                                {
+                                    Text = "...",
+                                    IsLink = false
+                                });
+                            }
                         }
 
+                        // Draw link to last page
                         items.Add(
                         new
                         {
@@ -393,7 +426,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         });
                     }
 
-                    // Link to next page
+                    // Draw link to next page
                     items.Add(
                     new
                     {
