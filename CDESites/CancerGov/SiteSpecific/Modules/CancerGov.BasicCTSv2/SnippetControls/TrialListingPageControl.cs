@@ -343,6 +343,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                             Text = "1",
                             PageUrl = GetPageUrl(1)
                         });
+
+                        if (SearchParams.Page > (numLeft + 2))
+                        {
+                            items.Add(
+                            new
+                            {
+                                Text = "...",
+                                PageUrl = String.Empty
+                            });
+                        }
                     }
                 }
 
@@ -363,6 +373,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     // Link to last page
                     if (SearchParams.Page < (maxPage - numRight))
                     {
+                        if (SearchParams.Page < (maxPage - numRight - 1))
+                        {
+                            items.Add(
+                            new
+                            {
+                                Text = "...",
+                                PageUrl = String.Empty
+                            });
+                        }
+
                         items.Add(
                         new
                         {
