@@ -68,7 +68,7 @@ namespace NCI.Web.Sitemap
                 catch (Exception ex)
                 {
                     HttpContext.Current.Cache.Add("sitemap_ex", ex, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
-                    log.Fatal("Error generating sitemap. Check page and file instruction XML files. \nEnvironment: " + System.Environment.MachineName + ". \nSitemapHandler.cs:ProcessRequest()", ex);
+                    log.Fatal("Error generating sitemap. Check page and file instruction XML files. \nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + " \nSitemapHandler.cs:ProcessRequest()", ex);
                     response.Status = "500";
                     response.End();
                 }

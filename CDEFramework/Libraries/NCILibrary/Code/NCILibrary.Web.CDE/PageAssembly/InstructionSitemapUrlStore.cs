@@ -133,7 +133,7 @@ namespace NCI.Web.CDE.PageAssembly
                 catch (XmlException ex)
                 {
                     ++errorCount;
-                    errorMessages.Add("A PageInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString());
+                    errorMessages.Add("A PageInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString() + "\n");
                     continue;
                 }
             }
@@ -170,7 +170,7 @@ namespace NCI.Web.CDE.PageAssembly
                 catch (XmlException ex)
                 {
                     ++errorCount;
-                    errorMessages.Add("A FileInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString());
+                    errorMessages.Add("A FileInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString() + "\n");
                     continue;
                 }
             }
@@ -188,7 +188,7 @@ namespace NCI.Web.CDE.PageAssembly
             }
             else
             {
-                String err = "Error generating sitemap above threshold of " + maxErrorCount.ToString() + "Check page and file instruction XML files. IntructionSitemapUrlStore:GetSitemapUrls()";
+                String err = "Error generating sitemap above threshold of " + maxErrorCount.ToString() + "\nCheck page and file instruction XML files. IntructionSitemapUrlStore:GetSitemapUrls()";
                 log.Error(err);
                 throw new Exception(err);
             }
