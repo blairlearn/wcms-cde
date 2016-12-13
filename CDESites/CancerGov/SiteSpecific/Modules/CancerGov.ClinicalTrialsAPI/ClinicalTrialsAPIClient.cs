@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using Common.Logging;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,6 +15,8 @@ namespace CancerGov.ClinicalTrialsAPI
 {
     public class ClinicalTrialsAPIClient
     {
+        static ILog log = LogManager.GetLogger(typeof(ClinicalTrialsAPIClient));
+
         /// <summary>
         /// Property for the hostname that requests will be sent to.
         /// </summary>
@@ -241,16 +244,16 @@ namespace CancerGov.ClinicalTrialsAPI
                 }
                 else
                 {
-                    string errorMessage = response.Content.ReadAsStringAsync().Result;
+                    string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + BasePath + "/" + path + "/" + param;
                     if (response.StatusCode.ToString() == notFound)
                     {
-                        /*
-                         * Log error, then continue with null content value
-                         */ 
+                        // If trial is not found, log 404 message and return content as null
+                        log.Debug(errorMessage);
                     }
                     else
                     {
-                        // Log error
+                        // If response is other error message, log and throw exception
+                        log.Error(errorMessage);
                         throw new Exception(errorMessage);
                     }
                 }
@@ -285,7 +288,7 @@ namespace CancerGov.ClinicalTrialsAPI
                 else
                 {
                     //TODO: Add more checking here if the respone does not actually have any content
-                    string errorMessage = response.Content.ReadAsStringAsync().Result;
+                    string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + BasePath + "/" + path;
                     throw new Exception(errorMessage);
                 }
             }

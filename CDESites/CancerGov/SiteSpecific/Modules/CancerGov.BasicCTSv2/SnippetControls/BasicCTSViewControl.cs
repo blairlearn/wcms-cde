@@ -208,9 +208,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             catch (ArgumentNullException ex)
             {
                 // If we hit a null exception when getting a trial from the API, redirect to the "ID not Found" page
-                string errMessage = "Trial " + nctid + " cannot be found.";
+                string errMessage = "CDE:BasicCTSViewControl.cs:OnLoad" + " Requested trial ID: " + nctid + "\nArgumentNullException thrown by _basicCTSManager.get() call.";
                 log.Debug(errMessage, ex);
-                throw new HttpException(404, errMessage);
+                ErrorPageDisplayer.RaisePageNotFound(errMessage);
+                return;
             }
             catch (Exception ex)
             {
