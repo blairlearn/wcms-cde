@@ -202,18 +202,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             ClinicalTrial trial;
             try
             {
+                // Retrieve a Clinical Trial based on the Trial ID
                 trial = _basicCTSManager.Get(nctid);
+            }
+            catch (ArgumentNullException ex)
+            {
+                // If we hit a null exception when getting a trial from the API, redirect to the "ID not Found" page
+                string errMessage = "Trial " + nctid + " cannot be found.";
+                log.Debug(errMessage, ex);
+                throw new HttpException(404, errMessage);
             }
             catch (Exception ex)
             {
+                // If we hit some other error when getting the trials, redirect to the error page 
                 string errMessage = "CDE:BasicCTSViewControl.cs:OnLoad" + " Requested trial ID: " + nctid + "\nException thrown by _basicCTSManager.get(nctid) call.";
                 log.Error(errMessage, ex);
                 ErrorPageDisplayer.RaisePageError(errMessage);
                 return;
             }
 
+            // If trial value is null, redirect to the 404 page
             if (trial == null)
+            { 
                 throw new HttpException(404, "Trial cannot be found.");
+            }
 
             // get zip from search parameters
             string zip = "";

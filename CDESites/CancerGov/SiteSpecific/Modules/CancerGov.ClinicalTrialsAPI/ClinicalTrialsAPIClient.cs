@@ -14,6 +14,9 @@ namespace CancerGov.ClinicalTrialsAPI
 {
     public class ClinicalTrialsAPIClient
     {
+        /// <summary>
+        /// Property for the hostname that requests will be sent to.
+        /// </summary>
         public string Host { get; private set; }
 
         /// <summary>
@@ -222,6 +225,7 @@ namespace CancerGov.ClinicalTrialsAPI
         {
             HttpResponseMessage response = null;
             HttpContent content = null;
+            String notFound = "NotFound";
 
             using (HttpClient client = new HttpClient())
             {
@@ -237,9 +241,18 @@ namespace CancerGov.ClinicalTrialsAPI
                 }
                 else
                 {
-                    //TODO: Add more checking here if the respone does not actually have any content
                     string errorMessage = response.Content.ReadAsStringAsync().Result;
-                    throw new Exception(errorMessage);
+                    if (response.StatusCode.ToString() == notFound)
+                    {
+                        /*
+                         * Log error, then continue with null content value
+                         */ 
+                    }
+                    else
+                    {
+                        // Log error
+                        throw new Exception(errorMessage);
+                    }
                 }
             }
             return content;
