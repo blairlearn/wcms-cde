@@ -235,17 +235,31 @@ namespace CancerGov.Web.SnippetTemplates
 
             // Add clinical trial view event to analytics
             if (hasProtocolSearchid)
+            {
                 // If viewed from a search
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event4, wbField =>
                 {
                     wbField.Value = "";
                 });
+            }
             else
+            {
                 // If not viewed from a search
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event13, wbField =>
                 {
                     wbField.Value = "";
                 });
+            }
+
+            // Add search type description to page load analytics
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
+            {
+                wbField.Value = "Clinical Trials: Advanced";
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
+            {
+                wbField.Value = "Clinical Trials: Advanced";
+            });
 
             //// End Web Analytics *********************************************
 
