@@ -171,11 +171,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string val = "clinicaltrials_basic";
             string desc = "Clinical Trials: Basic";
             string count = results.TotalResults.ToString();
-
-            /*
-             * TODO: 
-             * - set "all search params" string
-            */
+            string waParm = GetParamsForAnalytics();
 
             // Set event
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
@@ -192,6 +188,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 wbField.Value = val;
             });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop22, wbField =>
+            {
+                wbField.Value = waParm;
+            });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
             {
                 wbField.Value = desc;
@@ -202,12 +202,66 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 wbField.Value = val;
             });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar22, wbField =>
+            {
+                wbField.Value = waParm;
+            });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
             {
                 wbField.Value = desc;
             });
 
         }
+
+        /// <summary>
+        /// Get search query params from URL and format into an analytics-friendly string.
+        /// </summary>
+        /// <returns>Formatted string</returns>
+        protected string GetParamsForAnalytics()
+        {
+            List<string> values = new List<string>();
+            string result = string.Empty;
+            HttpRequest request = HttpContext.Current.Request;
+
+            // Add Cancer Type / Keyword 
+            if(!String.IsNullOrWhiteSpace(request.QueryString["t"]))
+            {
+                values.Add("typecondition|" + request.QueryString["t"]);
+            }
+            else if (!String.IsNullOrWhiteSpace(request.QueryString["q"]))
+            {
+                values.Add("keyword|" + request.QueryString["q"]);
+            }
+            else
+            {
+                values.Add("none");
+            }
+
+            // Add Zipcode
+            if (!String.IsNullOrWhiteSpace(request.QueryString["z"]))
+            {
+                values.Add(request.QueryString["z"]);
+            }
+            else
+            {
+                values.Add("none");
+            }
+
+            // Add age
+            if (!String.IsNullOrWhiteSpace(request.QueryString["a"]))
+            {
+                values.Add(request.QueryString["a"]);
+            }
+            else
+            {
+                values.Add("none");
+            }
+
+            // Join all valid query values 
+            result = String.Join("|", values);
+            return result;
+        }
+
         #endregion
 
         #region Velocity Helpers
