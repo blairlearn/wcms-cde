@@ -129,7 +129,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             Controls.Add(ltl);
 
             // Set analytics page load values
-            SetAnalytics();
+            SetAnalytics(results);
 
         }
 
@@ -166,14 +166,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <summary>
         /// Set default pageLoad analytics for this page
         /// </summary>
-        protected void SetAnalytics()
+        protected void SetAnalytics(ClinicalTrialsCollection results)
         {
             string val = "clinicaltrials_basic";
             string desc = "Clinical Trials: Basic";
+            string count = results.TotalResults.ToString();
 
             /*
              * TODO: 
-             * - set item count
              * - set "all search params" string
             */
 
@@ -184,6 +184,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             });
 
             // Set props
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop10, wbField =>
+            {
+                wbField.Value = count;
+            });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
             {
                 wbField.Value = val;
