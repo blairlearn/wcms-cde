@@ -19,6 +19,7 @@ using NCI.Web.CDE;
 using NCI.Web.CDE.Application;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -102,11 +103,55 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             ));
             Controls.Add(ltl);
 
+            // Set analytics page load values
+            SetAnalytics();
         }
 
 
-        #region JSON manipulation methods
+        #region Analytics methods
+        /// <summary>
+        /// Set default pageLoad analytics for this page
+        /// </summary>
+        protected void SetAnalytics()
+        {
+            string val = "clinicaltrials_custom";
+            string desc = "Clinical Trials: Custom";
 
+            // Set event
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
+            {
+                wbField.Value = WebAnalyticsOptions.Events.event2.ToString();
+            });
+
+            // Set props
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
+            {
+                wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+
+            // Set eVars
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
+            {
+                wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar47, wbField =>
+            {
+                wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+
+        }
+        #endregion
+
+
+        #region JSON manipulation methods
         /// <summary>
         /// Get filter params from URL and format them.
         /// </summary>

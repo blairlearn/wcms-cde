@@ -11,11 +11,11 @@ using System.Web.UI.WebControls;
 
 using CancerGov.ClinicalTrialsAPI;
 
-using NCI.Web.CDE.UI;
-using NCI.Web.CDE.Modules;
-using NCI.Web.CDE;
 using NCI.Web;
-
+using NCI.Web.CDE;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.UI;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -58,7 +58,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 int maxPage = (int)Math.Ceiling((double)results.TotalResults / (double)SearchParams.ItemsPerPage);
                 data.Value = "Results of Your Search";
- 
+
                 if (results.TotalResults == 0)
                 {
                     data.Value = "No Trials Matched Your Search";
@@ -115,10 +115,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             });
 
-           
+
             // Show Results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                BasicCTSPageInfo.ResultsPageTemplatePath, 
+                BasicCTSPageInfo.ResultsPageTemplatePath,
                 new
                 {
                     Results = results,
@@ -127,6 +127,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             ));
             Controls.Add(ltl);
+
+            // Set analytics page load values
+            SetAnalytics();
+
         }
 
         /// <summary>
@@ -134,7 +138,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// When such searches are located, redirect to the main search page, with a flag notifying that
         /// this is a redirection.
         /// </summary>
-        protected  void HandleOldCancerTypeID()
+        protected void HandleOldCancerTypeID()
         {
             string cancerTypeID = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
 
@@ -156,6 +160,51 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 DoPermanentRedirect(Response, redirectURL.ToString());
             }
         }
+
+
+        #region Analytics methods
+        /// <summary>
+        /// Set default pageLoad analytics for this page
+        /// </summary>
+        protected void SetAnalytics()
+        {
+            string val = "clinicaltrials_basic";
+            string desc = "Clinical Trials: Basic";
+
+            /*
+             * TODO: 
+             * - set item count
+             * - set "all search params" string
+            */
+
+            // Set event
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
+            {
+                wbField.Value = WebAnalyticsOptions.Events.event2.ToString();
+            });
+
+            // Set props
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
+            {
+                wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+
+            // Set eVars
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
+            {
+                wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+
+        }
+        #endregion
 
         #region Velocity Helpers
 
