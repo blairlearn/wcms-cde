@@ -8,6 +8,7 @@ using Common.Logging;
 using NCI.Web.CDE;
 using NCI.Web.CDE.Application;
 using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -157,7 +158,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     termIds.Add(45835, _phaseIV);
                     break;
                 default: // unknown, combine all phases
-                    glossPhases.Add("unknown phase pairing: " + string.Join(", ", phases) + " (bits ="  + phaseBits + ")");
+                    glossPhases.Add("unknown phase pairing: " + string.Join(", ", phases) + " (bits =" + phaseBits + ")");
                     return string.Join(", ", glossPhases);
             }
 
@@ -379,6 +380,52 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 )
             );
             Controls.Add(ltl);
+
+            // Set analytics page load values
+            SetAnalytics();
         }
+
+        #region Analytics methods
+        /// <summary>
+        /// Set default pageLoad analytics for this page
+        /// </summary>
+        protected void SetAnalytics()
+        {
+            string desc = GetParamsForAnalytics();
+
+            // Set props and evars
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+        }
+
+        /// <summary>
+        /// Get query params from URL and format for use in analytics.
+        /// </summary>
+        /// <returns>Formatted string</returns>
+        protected String GetParamsForAnalytics()
+        {
+            string result;
+            HttpRequest request = HttpContext.Current.Request;
+
+            // Set result value based on referrer
+            if (request.QueryString["rl"] == null)
+            {
+                result = "Clinical Trials: Custom";
+            }
+            else
+            {
+                result = "Clinical Trials: Basic";
+            }
+
+            return result;
+        }
+        #endregion
+
     }
 }
