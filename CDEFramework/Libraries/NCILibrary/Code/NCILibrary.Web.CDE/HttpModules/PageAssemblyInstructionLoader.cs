@@ -224,47 +224,80 @@ namespace NCI.Web.CDE
 
             try
             {
-                //Load the XML file to create a assemblyinfo object of type ipageassemblyinstruction.If the XML file fails to create IPageAssemblyInstruction
-                //Object log error
-               assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(url);
-                //set Field filters,url filters...and other necessary things which depend on assemblyinfo.
-                //Handle multipage pages               
-               if (assemblyInfo == null)
+                //Try to get the assemblyinfo following these rules.
+                // When depth == 1, and we get an assemblyInfo, then we are looking for 
+                //     the full URL that was requested
+                // When depth == 2, and we get an assemblyInfo, then we are looking for
+                //     either a MPAI, or a SPAI that implements PushState
+                // When depth >= 3, and we get an assemblyInfo, then we are looking for
+                //     only a SPAI that implements PushState
+
+               string currUrlPath = url;
+               int depth = 1;
+
+               while (assemblyInfo == null && currUrlPath != string.Empty) 
                {
-                   //1. Remove last part of path, e.g. /cancertopics/wyntk/bladder/page10 becomes /cancertopics/wyntk/bladder
-                   string truncUrl = url.Substring(0, url.LastIndexOf('/'));
-                   if (truncUrl != string.Empty)
+                   //Load the assembly info from a path/file.
+                   assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(currUrlPath);
+
+                   //Did not find anything, let's continue.
+                   if (assemblyInfo == null)
                    {
-                       assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(truncUrl);
-                       //check if is IMAPI
-                       if (assemblyInfo is IMultiPageAssemblyInstruction)
-                       {
-                           //check if the page requested exists and return null if page does not exists
-                           int index = ((IMultiPageAssemblyInstruction)assemblyInfo).GetPageIndexOfUrl(url);
+                       //Chop off the current path and try again.
+                       currUrlPath = currUrlPath.Substring(0, currUrlPath.LastIndexOf('/'));
 
-                           if (index >= 0)
-                           {
-                               //This url is a page, so set the current index so we can get the page template later.
-                               ((IMultiPageAssemblyInstruction)assemblyInfo).SetCurrentPageIndex(index);
-                               assemblyInfo.Initialize();
-                           }
+                       // Increment the depth one more time as we continue diving.
+                       depth++;
 
-                           else
-                           {
-                               assemblyInfo = null;
-                               return;
-                           }
-                       }
-                       else
-                           assemblyInfo = null;
+                       continue;
                    }
-               }
 
-               else
-               {
-                   assemblyInfo.Initialize();
-               }
+                   // We have an MPAI & depth is greater than 2 (e.g. MPAI is /foo and URL is /foo/bar/bazz)
+                   if (assemblyInfo is IMultiPageAssemblyInstruction && depth != 2) 
+                   {
+                       assemblyInfo = null;
+                       break;
+                   }
 
+                   // We have a Single page that is 2 or more levels deep, and does not implement pushstate
+                   // e.g. SPAI is /foo and URL is /foo/bar.
+                   if (
+                       assemblyInfo is SinglePageAssemblyInstruction 
+                       && depth > 1
+                       && !assemblyInfo.ImplementsPushState
+                      ) 
+                   {
+                       assemblyInfo = null;
+                       break;
+                   }
+
+                   // Good so far, so let's check if it is a MPAI and it has the requested page.
+                   if (assemblyInfo is MultiPageAssemblyInstruction) 
+                   {
+                      int index = ((IMultiPageAssemblyInstruction)assemblyInfo).GetPageIndexOfUrl(url);
+                      if (index >= 0)
+                      {
+                        //This url is a page, so set the current index so we can get the page template later.
+                        ((IMultiPageAssemblyInstruction)assemblyInfo).SetCurrentPageIndex(index);
+                        assemblyInfo.Initialize();
+                      }
+                      else
+                      {
+                        assemblyInfo = null;
+                        break;
+                      }
+                   }
+
+                   //By now we have sussed out if we have a PAI or not.
+                   //If we do, then we need to initialize it.
+                   if (assemblyInfo != null)
+                   {
+                       assemblyInfo.Initialize();
+                   }
+
+                   //Break out of loop.
+                   break;
+               }
             }
             catch(Exception ex)
             {
@@ -273,6 +306,7 @@ namespace NCI.Web.CDE
                 RaiseErrorPage( errMessage,ex);
                 return;
             }
+
             //Exiting because there is no page assembly instruction for the requested URL.
             if (assemblyInfo == null)
             {

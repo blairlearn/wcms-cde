@@ -22,6 +22,23 @@ namespace NCI.Web.CDE
         string PageTemplateName { get; }
 
         /// <summary>
+        /// Gets a bool indicating if this page requires HTTP5 Push State.  This means that this
+        /// PIA will be loaded for any requests to its PrettyURL, even if additional URL segments
+        /// have been added.
+        /// 
+        /// For example, if this PIA has the PrettyURL of /foo, then a request for /foo/bar/bazz
+        /// would load this page as well if this is true.  Otherwise it would return a 404 as normal.
+        /// One thing to note, we do not have a great way to enforce that no other content should
+        /// live under the url of /foo.  So technically a page could live at /foo/bar and 
+        /// a user could request /foo/bar/bazz.  In that case, /foo/bar would be loaded, and if it
+        /// does not implement push state, then a 404 would be returned even if /foo/bar did implement
+        /// it.  This is just a performance thing -- we don't want to load every PIA along the path
+        /// the user has requested.  So basically, don't add a PushState page and add sub folders 
+        /// under that.
+        /// </summary>
+        bool ImplementsPushState { get; }
+
+        /// <summary>
         /// Gets the template theme this page should be using.  (Set on a SectionDetails withing the parent folders of this page)
         /// </summary>
         /// <value>The name of the Template Theme</value>
