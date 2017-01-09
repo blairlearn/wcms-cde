@@ -122,6 +122,7 @@
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\IntenseDebateComments.ascx" />
+    <Content Include="SnippetTemplates\AngularModule.ascx" />
     <Content Include="SnippetTemplates\ModuleSearchBox.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\JSApplicationProxy.ascx" />
@@ -597,6 +598,10 @@
       <Project>{8962B50C-E3A9-4F0A-9E48-7008C40247CD}</Project>
       <Name>NCILibrary.Search</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI.JS\NCILibrary.Web.CDE.UI.JS.csproj">
+      <Project>{44848cc6-3e3b-4ab0-8a1c-349c5acc4e66}</Project>
+      <Name>NCILibrary.Web.CDE.UI.JS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
       <Project>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</Project>
       <Name>NCILibrary.Web.CDE.UI</Name>
@@ -1001,6 +1006,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
