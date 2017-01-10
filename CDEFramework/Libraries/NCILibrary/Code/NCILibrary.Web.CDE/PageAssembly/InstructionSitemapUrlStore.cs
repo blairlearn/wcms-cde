@@ -1,18 +1,27 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
-using NCI.Web.Sitemap;
-using System.IO;
+using System.Web;
 using System.Xml;
 using System.Xml.XPath;
-using System.Web;
+using Common.Logging;
+
 using NCI.Web.CDE.Configuration;
+using NCI.Web.Sitemap;
+using NCI.Logging;
 
 namespace NCI.Web.CDE.PageAssembly
 {
     public class InstructionSitemapUrlStore : SitemapUrlStoreBase
     {
+        static ILog log = LogManager.GetLogger(typeof(InstructionSitemapUrlStore));
+
+        private String hostName = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName;
+
         /// <summary>
         /// Selects out the DoNotIndex property
         /// </summary>
@@ -54,7 +63,7 @@ namespace NCI.Web.CDE.PageAssembly
                 if (url != null && url.Trim() != "")
                 {
                     // If the URL is good, remove outer text and concatenate with base URL
-                    url = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + url;
+                    url = hostName + url;
                 }
                 else
                 {
@@ -67,6 +76,10 @@ namespace NCI.Web.CDE.PageAssembly
             return url;
         }
 
+        /// <summary>
+        /// Create a collection of URL elements from XML files
+        /// </summary>
+        /// <returns>SitemapUrlSet</returns>
         public override SitemapUrlSet GetSitemapUrls()
         {
             List<SitemapUrl> sitemapUrls = new List<SitemapUrl>();
@@ -75,39 +88,54 @@ namespace NCI.Web.CDE.PageAssembly
             double priority;
             String directory = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/"));
             string fileDirectory = Path.GetDirectoryName(directory);
+            SitemapProviderConfiguration config = (SitemapProviderConfiguration)ConfigurationManager.GetSection("Sitemap");
+            int maxErrorCount = config.ErrorCount.Max;
+            int errorCount = 0;
+            List<String> errorMessages = new List<String>();
 
             // Find all Page Instruction files and add them to the list of URLs
             foreach (string file in Directory.GetFiles(fileDirectory, "*.xml", SearchOption.AllDirectories))
             {
-                // Open new XPathDocument from file and create navigator
-                XPathDocument doc = new XPathDocument(file);
-                XPathNavigator nav = doc.CreateNavigator();
-
-                // Add CDE namespace to parse through document
-                XmlNamespaceManager manager = new XmlNamespaceManager(nav.NameTable);
-                manager.AddNamespace("cde", "http://www.example.org/CDESchema");
-                
-                //If this item is marked as DoNotIndex, then skip it.
-                if (DoNotIndex(nav, manager, "SinglePageAssemblyInstruction"))
-                    continue;
-
-                // Get pretty url from PrettyUrl node
-                path = GetURL(nav, manager, "SinglePageAssemblyInstruction");
-                if (path == null)
-                    continue;
-
-                // Get content type and set priority accordingly
-                contentType = nav.SelectSingleNode("//cde:SinglePageAssemblyInstruction/ContentItemInfo/ContentItemType", manager).Value;
-                if (contentType == "rx:nciHome" || contentType == "rx:nciLandingPage" || contentType == "rx:cgvCancerTypeHome" ||
-                    contentType == "rx:cgvCancerResearch" || contentType == "rx:nciAppModulePage" || contentType == "rx:pdqCancerInfoSummary" ||
-                    contentType == "rx:pdqDrugInfoSummary" || contentType == "rx:cgvFactSheet" || contentType == "rx:cgvTopicPage")
-                    priority = 1.0;
-                else
+                try
                 {
-                    priority = 0.5;
+                    // Open new XPathDocument from file and create navigator
+                    XPathDocument doc = new XPathDocument(file);
+                    XPathNavigator nav = doc.CreateNavigator();
+
+                    // Add CDE namespace to parse through document
+                    XmlNamespaceManager manager = new XmlNamespaceManager(nav.NameTable);
+                    manager.AddNamespace("cde", "http://www.example.org/CDESchema");
+
+                    //If this item is marked as DoNotIndex, then skip it.
+                    if (DoNotIndex(nav, manager, "SinglePageAssemblyInstruction"))
+                        continue;
+
+                    // Get pretty url from PrettyUrl node
+                    path = GetURL(nav, manager, "SinglePageAssemblyInstruction");
+                    if (path == null)
+                        continue;
+
+                    // Get content type and set priority accordingly
+                    contentType = nav.SelectSingleNode("//cde:SinglePageAssemblyInstruction/ContentItemInfo/ContentItemType", manager).Value;
+                    if (contentType == "rx:nciHome" || contentType == "rx:nciLandingPage" || contentType == "rx:cgvCancerTypeHome" ||
+                        contentType == "rx:cgvCancerResearch" || contentType == "rx:nciAppModulePage" || contentType == "rx:pdqCancerInfoSummary" ||
+                        contentType == "rx:pdqDrugInfoSummary" || contentType == "rx:cgvFactSheet" || contentType == "rx:cgvTopicPage")
+                        priority = 1.0;
+                    else
+                    {
+                        priority = 0.5;
+                    }
+
+                    sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.weekly, priority));
                 }
 
-                sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.weekly, priority));
+                // If we hit missing or malformed XML, increment the error counter, send an error email, and move on to the next file without adding this to the sitemap
+                catch (XmlException ex)
+                {
+                    ++errorCount;
+                    errorMessages.Add("A PageInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString() + "\n");
+                    continue;
+                }
             }
 
             directory = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.FilePathFormat.Path, "/"));
@@ -116,27 +144,54 @@ namespace NCI.Web.CDE.PageAssembly
             // Find all File Instruction files and add them to the list of URLs
             foreach (string file in Directory.GetFiles(fileDirectory, "*.xml", SearchOption.AllDirectories))
             {
-                // Open new XPathDocument from file and create navigator
-                XPathDocument doc = new XPathDocument(file);
-                XPathNavigator nav = doc.CreateNavigator();
+                try
+                {
+                    // Open new XPathDocument from file and create navigator
+                    XPathDocument doc = new XPathDocument(file);
+                    XPathNavigator nav = doc.CreateNavigator();
 
-                // Add CDE namespace to parse through document
-                XmlNamespaceManager manager = new XmlNamespaceManager(nav.NameTable);
-                manager.AddNamespace("cde", "http://www.example.org/CDESchema");
+                    // Add CDE namespace to parse through document
+                    XmlNamespaceManager manager = new XmlNamespaceManager(nav.NameTable);
+                    manager.AddNamespace("cde", "http://www.example.org/CDESchema");
 
-                //If this item is marked as DoNotIndex, then skip it.
-                if (DoNotIndex(nav, manager, "GenericFileInstruction"))
+                    //If this item is marked as DoNotIndex, then skip it.
+                    if (DoNotIndex(nav, manager, "GenericFileInstruction"))
+                        continue;
+
+                    // Get pretty url from PrettyUrl node
+                    path = GetURL(nav, manager, "GenericFileInstruction");
+                    if (path == null)
+                        continue;
+
+                    sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.always, 0.5));
+                }
+
+                // If we hit missing or malformed XML, increment the error counter, send an error email, and move on to the next file without adding this to the sitemap
+                catch (XmlException ex)
+                {
+                    ++errorCount;
+                    errorMessages.Add("A FileInstruction XML file has failed parsing in IntructionSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString() + "\n");
                     continue;
-
-                // Get pretty url from PrettyUrl node
-                path = GetURL(nav, manager, "GenericFileInstruction");
-                if (path == null)
-                    continue;
-
-                sitemapUrls.Add(new SitemapUrl(path, sitemapChangeFreq.always, 0.5));
+                }
             }
 
-            return new SitemapUrlSet(sitemapUrls);
+            // The maximum number of allowable errors is set in the web config. 
+            // If our error count is greater than that number, stop trying to build the sitemap and throw an exception.
+            if (errorCount <= maxErrorCount)
+            {
+                if(errorCount > 0)
+                {
+                    String err = String.Join("\n", errorMessages.ToArray());
+                    log.Fatal(err);
+                }
+                return new SitemapUrlSet(sitemapUrls);
+            }
+            else
+            {
+                String err = "Error generating sitemap above threshold of " + maxErrorCount.ToString() + "\nCheck page and file instruction XML files. IntructionSitemapUrlStore:GetSitemapUrls()";
+                log.Error(err);
+                throw new Exception(err);
+            }
         }
     }
 }

@@ -22,5 +22,29 @@ namespace NCI.Web.Sitemap
                 return ((ProviderSettingsCollection)base["SitemapStores"]);
             }
         }
+
+        [ConfigurationProperty("SitemapErrorCount")]
+        public SitemapErrorCount ErrorCount
+        {
+            get
+            {
+                return ((SitemapErrorCount)base["SitemapErrorCount"]);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Class representing the "SitemapErrorCount" configuration element.
+    /// </summary>
+    public class SitemapErrorCount : ConfigurationElement
+    {
+        [ConfigurationProperty("max", DefaultValue = "5", IsRequired = true)]
+        public int Max
+        {
+            get
+            { return (int)this["max"]; }
+            set
+            { this["max"] = value; }
+        }
     }
 }

@@ -152,25 +152,48 @@ namespace NCI.Web.CDE.UI.SnippetControls
                         keyWord = string.Empty;
                     }
 
+                    int year = 0;
                     Dictionary<string, string> filters = GetUrlFilters();
                     if (startDate == DateTime.MinValue && endDate == DateTime.MaxValue && filters.ContainsKey("year"))
                     {
                         try
                         {
-                            int year = Int32.Parse(filters["year"]);
-                            startDate = new DateTime(year, 1, 1);
-                            endDate = new DateTime(year, 12, 31);
+                            year = Int32.Parse(filters["year"]);
+                            if (filters.ContainsKey("month"))
+                            {
+                                try
+                                {
+                                    int month = Int32.Parse(filters["month"]);
+                                    int lastDay = DateTime.DaysInMonth(year, month);
+                                    startDate = new DateTime(year, month, 1);
+                                    endDate = new DateTime(year, month, lastDay);
+                                }
+                                catch
+                                {
+                                    NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("BaseSearchSnippet", 404, "Invalid month parameter in dynamic list filter");
+                                }
+                            }
+                            else
+                            {
+                                startDate = new DateTime(year, 1, 1);
+                                endDate = new DateTime(year, 12, 31);
+                            }
                         }
                         catch
                         {
-                            NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("BaseSearchSnippet", 400, "Invalid year parameter in dynamic list filter");
+                            NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("BaseSearchSnippet", 404, "Invalid year parameter in dynamic list filter");
                         }
+                    }
+
+                    if (startDate == DateTime.MinValue && endDate == DateTime.MaxValue && filters.ContainsKey("month") && !filters.ContainsKey("year"))
+                    {
+                        NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("BaseSearchSnippet", 404, "Invalid parameter in dynamic list filter: cannot have month without year");
                     }
 
                     List<TaxonomyFilter> filtersForSql = new List<TaxonomyFilter>(this.SearchList.SearchFilters.TaxonomyFilters.Where(filter => filter.Taxons.Count() > 0));
                     foreach (KeyValuePair<string, string> entry in filters)
                     {
-                        if(entry.Key != "year")
+                        if (entry.Key != "year" && entry.Key != "month")
                         {
                             bool contains = filtersForSql.Any(filter => filter.TaxonomyName == entry.Key);
                             if(!contains)
@@ -278,11 +301,11 @@ namespace NCI.Web.CDE.UI.SnippetControls
 
                     if(this.SearchList.ResultsTemplate.Contains("Blog"))
                     {
-                        SetupBlogPager(this.SearchList.RecordsPerPage, validCount);
+                        SetupBlogPager(this.SearchList.RecordsPerPage, validCount, filters);
                     }
                     else
                     {
-                        SetupPager(this.SearchList.RecordsPerPage, validCount);
+                        SetupPager(this.SearchList.RecordsPerPage, validCount, filters);
                     }
                 }
             }
@@ -298,7 +321,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
         /// <summary>
         /// Helper method to setup the pager
         /// </summary>
-        protected virtual void SetupPager(int recordsPerPage, int totalRecordCount)
+        protected virtual void SetupPager(int recordsPerPage, int totalRecordCount, Dictionary<string, string> urlFilters)
         {
             SimplePager pager = new SimplePager();
             pager.RecordCount = totalRecordCount;
@@ -323,12 +346,23 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     searchQueryParams += "startMonth=&startyear=&endMonth=&endYear=";
             }
 
+            foreach (KeyValuePair<string, string> entry in urlFilters)
+            {
+                if (string.IsNullOrEmpty(searchQueryParams))
+                    searchQueryParams = "?";
+                else
+                    searchQueryParams += "&";
+
+                searchQueryParams += string.Format("filter[{0}]={1}", entry.Key, entry.Value);
+            }
+            
+
             pager.BaseUrl += searchQueryParams;
 
             Controls.Add(pager);
         }
 
-        protected virtual void SetupBlogPager(int recordsPerPage, int totalRecordCount)
+        protected virtual void SetupBlogPager(int recordsPerPage, int totalRecordCount, Dictionary<string, string> urlFilters)
         {
             BlogPager blogLandingPager = new BlogPager();
             int currentPage = 0;
@@ -370,6 +404,16 @@ namespace NCI.Web.CDE.UI.SnippetControls
                     searchQueryParams += string.Format("startMonth={0}&startyear={1}&endMonth={2}&endYear={3}", StartDate.Month, StartDate.Year, EndDate.Month, EndDate.Year);
                 else
                     searchQueryParams += "startMonth=&startyear=&endMonth=&endYear=";
+            }
+
+            foreach (KeyValuePair<string, string> entry in urlFilters)
+            {
+                if (string.IsNullOrEmpty(searchQueryParams))
+                    searchQueryParams = "?";
+                else
+                    searchQueryParams += "&";
+
+                searchQueryParams += string.Format("filter[{0}]={1}", entry.Key, entry.Value);
             }
 
             blogLandingPager.BaseUrl += searchQueryParams;

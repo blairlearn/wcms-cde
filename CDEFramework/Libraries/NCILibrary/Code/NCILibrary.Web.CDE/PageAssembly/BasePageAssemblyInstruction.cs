@@ -138,7 +138,7 @@ namespace NCI.Web.CDE
         /// </summary>
         /// <param name="webAnalyticFieldName">The key or the name of the datapoint</param>
         /// <param name="filter">The actual delegate callback which will modify the FieldFilterData object</param>
-        protected void SetWebAnalytics(string webAnalyticFieldName, WebAnalyticsDataPointDelegate filter)
+        public void SetWebAnalytics(string webAnalyticFieldName, WebAnalyticsDataPointDelegate filter)
         {
             if (string.IsNullOrEmpty(webAnalyticFieldName))
                 throw new ArgumentException("The webAnalyticFieldName parameter may not be null or empty.");
@@ -149,6 +149,36 @@ namespace NCI.Web.CDE
                 _webAnalyticsFieldFilterDelegates.Add(fieldNameKey, filter);
             else
                 _webAnalyticsFieldFilterDelegates[fieldNameKey] += filter;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="webAnalyticFieldName"></param>
+        /// <returns></returns>
+        public string GetWebAnalytics(string webAnalyticFieldName)
+        {
+            // Don't use this for events! As this returns a string, and events need a boolean.
+            if (string.IsNullOrEmpty(webAnalyticFieldName))
+                throw new ArgumentException("The field name may not be null or empty.");
+
+            string rtnValue = string.Empty;
+
+            WebAnalyticsDataPointDelegate del = _webAnalyticsFieldFilterDelegates[webAnalyticFieldName.ToLower()];
+            if (del != null)
+            {
+                //Initialize the field data to empty field data
+                FieldFilterData data = new FieldFilterData();
+
+                //Call delegate, all delegates will modify the FieldData string of the
+                //FieldFilterData object we are passing in.
+                del(data);
+
+                //set the return value to the processed value of the FieldFilterData
+                rtnValue = data.Value;
+            }
+
+            return rtnValue;
         }
 
         protected WebAnalyticsSettings WebAnalyticsSettings

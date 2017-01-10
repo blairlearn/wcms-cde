@@ -102,6 +102,9 @@
     <Compile Include="Configuration\FileInstructionElement.cs" />
     <Compile Include="Configuration\FileInstructionTypeElement.cs" />
     <Compile Include="Configuration\FileInstructionTypeElementCollection.cs" />
+    <Compile Include="Configuration\PublishedContentListingElement.cs" />
+    <Compile Include="Configuration\PublishedContentListingPathElementCollection.cs" />
+    <Compile Include="Configuration\PublishedContentListingPathElement.cs" />
     <Compile Include="Configuration\ReCaptchaConfig.cs" />
     <Compile Include="Configuration\MobileRedirectorElement.cs" />
     <Compile Include="Configuration\MobileRedirectorInformationElement.cs" />
@@ -119,6 +122,7 @@
     <Compile Include="HttpHandlers\FormEmailerWithCaptchaHandler.cs" />
     <Compile Include="HttpHandlers\ListservSubscriptionHandler.cs" />
     <Compile Include="HttpHandlers\PageNotFoundHandler.cs" />
+    <Compile Include="HttpHandlers\PubContentListingHandler.cs" />
     <Compile Include="HttpHeaders\Configuration\HttpHeaderElement.cs" />
     <Compile Include="HttpHeaders\Configuration\HttpHeaderListElement.cs" />
     <Compile Include="HttpHeaders\Configuration\HttpHeadersSection.cs" />
