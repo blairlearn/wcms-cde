@@ -113,6 +113,7 @@
     <Content Include="Global.asax" />
     <Content Include="JS\popEvents.js" />
     <Content Include="Common\PopUps\PopEmail.aspx" />
+    <Content Include="SnippetTemplates\AspnetCoreAngularModule.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSResults.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSView.ascx" />
@@ -598,9 +599,9 @@
       <Project>{8962B50C-E3A9-4F0A-9E48-7008C40247CD}</Project>
       <Name>NCILibrary.Search</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI.JS\NCILibrary.Web.CDE.UI.JS.csproj">
-      <Project>{44848cc6-3e3b-4ab0-8a1c-349c5acc4e66}</Project>
-      <Name>NCILibrary.Web.CDE.UI.JS</Name>
+    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI.AspnetCoreJS\NCILibrary.Web.CDE.UI.AspnetCoreJS.csproj">
+      <Project>{4cc3cb34-08c9-469d-ad9a-ca0184b7573c}</Project>
+      <Name>NCILibrary.Web.CDE.UI.AspnetCoreJS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
       <Project>{AAFA2F86-D3F3-4224-A13E-BA6209A4EBAD}</Project>
