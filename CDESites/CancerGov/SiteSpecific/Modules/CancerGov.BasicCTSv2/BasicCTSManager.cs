@@ -187,7 +187,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="trial">Clinical trial</param>
         private void RemoveNonRecruitingSites(ClinicalTrial trial)
         {
-            trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));
+            if (trial.Sites != null)
+            {
+                trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));
+            }
         }
 
         /// <summary>
