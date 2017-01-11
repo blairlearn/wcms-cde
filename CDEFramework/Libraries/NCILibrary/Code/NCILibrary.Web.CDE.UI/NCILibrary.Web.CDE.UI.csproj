@@ -118,7 +118,14 @@
     <Compile Include="SnippetControls\BlogPostNewerOlder.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\BlogSeriesArchive.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\BlogSeriesArchiveSettings.cs" />
     <Compile Include="SnippetControls\BreadcrumbSnippet.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\FilterTitleSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetControls\ConditionalDisplaySnippet.cs">

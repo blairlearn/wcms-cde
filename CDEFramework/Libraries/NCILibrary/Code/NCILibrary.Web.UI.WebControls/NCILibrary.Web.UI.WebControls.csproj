@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlogPager.cs" />
+    <Compile Include="BlogSeriesArchiveControl.cs" />
     <Compile Include="CheckBoxBoundField.cs" />
     <Compile Include="CollapsiblePanel.cs" />
     <Compile Include="CssBrowserSelectorManager.cs" />

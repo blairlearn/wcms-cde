@@ -106,6 +106,8 @@
     <Content Include="Common\PopUps\popTextFooterSpanish.htm" />
     <Content Include="Common\PopUps\popTextHeader.htm" />
     <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
+    <Content Include="SnippetTemplates\BlogAnalytics.ascx" />
+    <Content Include="SnippetTemplates\BlogSeriesArchive.ascx" />
     <Content Include="Global.asax" />
     <Content Include="JS\popEvents.js" />
     <Content Include="Common\PopUps\PopEmail.aspx" />
@@ -116,6 +118,7 @@
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSResults.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSView.ascx" />
+    <Content Include="SnippetTemplates\FilterTitle.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\IntenseDebateComments.ascx" />
@@ -360,6 +363,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnippetTemplates\BlogAnalytics.ascx.cs">
+      <DependentUpon>BlogAnalytics.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -829,6 +836,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_LocalResources\" />
+    <Folder Include="DynamicData\FieldTemplates\" />
     <Folder Include="UserControls\Footers\" />
   </ItemGroup>
   <PropertyGroup>

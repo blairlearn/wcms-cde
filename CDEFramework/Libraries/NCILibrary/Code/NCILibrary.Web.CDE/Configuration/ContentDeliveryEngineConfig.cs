@@ -3,11 +3,34 @@ using System.Configuration;
 
 namespace NCI.Web.CDE.Configuration
 {
+    /// <summary>
+    /// Helper class that wraps the fetching of CDE configuration information
+    /// </summary>
     public static class ContentDeliveryEngineConfig
     {
         private static string _deliveryEnginePath = "nci/web/cde";
         private static ContentDeliveryEngineSection _deliveryEngine;
 
+        /// <summary>
+        /// Gets the configuration for the PublishedContent Listing Handler, which is
+        /// used to list select contents of the PublishedContent folder.
+        /// </summary>
+        public static PublishedContentListingElement PublishedContentListing
+        {
+            get
+            {
+                //ContentDeliveryEngine will throw ConfigurationErrorsException
+                //So this does not have to...
+                return ContentDeliveryEngine.PublishedContentListing;
+            }
+        }
+
+        /// <summary>
+        /// Gets various information on paths configured within the system.  NOTE: these 
+        /// paths have ended up being string formatters for getting a specific file path
+        /// and less about the paths themselves.  (I.e. the BestBets info is not the BB folder,
+        /// but template for getting a specific BB's FullPath.
+        /// </summary>
         public static PathInformationElement PathInformation
         {
             get
@@ -18,6 +41,10 @@ namespace NCI.Web.CDE.Configuration
             }
         }
 
+        /// <summary>
+        /// Gets the Page Assembly configuration used by the PageAssemblyInstructionLoader
+        /// to determine what assemblers are available
+        /// </summary>
         public static PageAssemblyElement PageAssembly
         {
             get
@@ -28,6 +55,10 @@ namespace NCI.Web.CDE.Configuration
             }
         }
 
+        /// <summary>
+        /// Gets the File Assembly configuration used by the FileAssemblyInstructionLoader
+        /// to determine what assemblers are available
+        /// </summary>
         public static FileInstructionElement FileInstruction
         {
             get
@@ -38,6 +69,9 @@ namespace NCI.Web.CDE.Configuration
             }
         }
 
+        /// <summary>
+        /// Gets the text that should be appended to all Browser Titles. 
+        /// </summary>
         public static PageTitleInformationElement PageTitle
         {
             get
@@ -48,6 +82,9 @@ namespace NCI.Web.CDE.Configuration
             }
         }
 
+        /// <summary>
+        /// Gets information about what the root Canonical host name of this site is.
+        /// </summary>
         public static CanonicalHostNameInformationElement CanonicalHostName
         {
             get
@@ -58,6 +95,10 @@ namespace NCI.Web.CDE.Configuration
             }
         }
 
+        /// <summary>
+        /// Configuration for the old Mobile Redirector that redirected users on mobile
+        /// devices to m.cancer.gov.
+        /// </summary>
         public static MobileRedirectorInformationElement MobileRedirector
         {
             get
@@ -66,7 +107,9 @@ namespace NCI.Web.CDE.Configuration
             }
         }
 
-
+        /// <summary>
+        /// Pretty url of the published page that represents the home page.  (usually /defaultHomePage)
+        /// </summary>
         public static DefaultHomePageElement DefaultHomePage
         {
             get
