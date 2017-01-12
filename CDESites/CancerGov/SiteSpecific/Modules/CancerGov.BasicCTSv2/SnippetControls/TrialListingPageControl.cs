@@ -244,9 +244,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// Gets the Starting Number for the Results Being Displayed
         /// </summary>
         /// <returns></returns>
-        public string GetStartItemNum()
+        public int GetStartItemNum()
         {
-            return (((SearchParams.Page - 1) * SearchParams.ItemsPerPage) + 1).ToString();
+            return (((SearchParams.Page - 1) * SearchParams.ItemsPerPage) + 1);
         }
 
         /// <summary>
@@ -254,13 +254,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         /// <param name="totalResults"></param>
         /// <returns></returns>
-        public string GetEndItemNum(long totalResults)
+        public int GetEndItemNum(long totalResults)
         {
             long possibleLast = (SearchParams.Page * SearchParams.ItemsPerPage);
             if (possibleLast > totalResults)
-                return totalResults.ToString();
-            else
-                return possibleLast.ToString();
+            {
+                possibleLast = totalResults;
+            }
+
+            // Convert long value into int 
+            try {
+                int val = Convert.ToInt32(possibleLast);
+                return val;
+            }
+            catch(OverflowException ex)
+            {
+                log.Error("TrialListingPageControl:GetEndItemNum() - " + possibleLast.ToString() + "is outside the range of the Int32 type.", ex);
+                return 0;
+            }
         }
 
         /// <summary>
