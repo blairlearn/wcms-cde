@@ -357,11 +357,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         public IEnumerable<object> GetPagerItems(int numLeft, int numRight, long totalResults)
         {
-            int startPage = (SearchParams.Page - numLeft) >= 1 ? SearchParams.Page - numLeft : 1;
-            int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage);
-            int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage;
+            int startPage = (SearchParams.Page - numLeft) >= 1 ? SearchParams.Page - numLeft : 1; // Current page minus left limit (numLeft)
+            int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage); // Highest available page
+            int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage; // Current page plus right limit (numRight)
+
+            // If the pageNumber parameter is set above the highest available page number, set the start page to 
+            // the endPage value.
             if (SearchParams.Page > endPage)
+            {
                 startPage = (endPage - numLeft) >= 1 ? endPage - numLeft : 1;
+            }
 
             // If maxPage == 1, then only one page of results is found. Therefore, return null for the pager items.
             // Otherwise, set up the pager accordingly.
