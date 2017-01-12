@@ -361,8 +361,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage); // Highest available page
             int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage; // Current page plus right limit (numRight)
 
-            // If the pageNumber parameter is set above the highest available page number, set the start page to 
-            // the endPage value.
+            // The maximum number of elements that can be drawn in this pager. his would be:
+            // ("< Previous" + 1 + 2/ellipsis + numLeft + current + numRight + next-to-last/ellipsis + "Next >") 
+            int itemsTotalMax = 7 + numLeft + numRight; 
+
+            // If the pageNumber parameter is set above the highest available page number, set the start page to the endPage value.
             if (SearchParams.Page > endPage)
             {
                 startPage = (endPage - numLeft) >= 1 ? endPage - numLeft : 1;
@@ -484,6 +487,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         PageUrl = GetPageUrl(SearchParams.Page + 1)
                     });
 
+                }
+
+                // Remove any duplicate links that may have slipped though. This only occurs in cases where the URL query param 
+                // is greater than the last available page. 
+                if (SearchParams.Page > maxPage)
+                {
+                    items = items.Distinct().ToList();
                 }
 
                 return items;
