@@ -386,14 +386,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Otherwise, set up the pager accordingly.
             if (maxPage > 1)
             {
-                // Creat a list of pager item objects:
+                // Create a list of pager item objects:
                 //  Text (string) = link text
                 //  PageUrl (string) = href value for item 
                 //  IsLink (bool) - whether or not this item will be used as a link
                 List<object> items = new List<object>();
 
+                // Draw text and links for first & previous pages
                 if (SearchParams.Page != 1)
-                { 
+                {
                     // Draw link to previous page
                     items.Add(
                     new
@@ -501,10 +502,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
 
                 // Remove any duplicate links that may have slipped though. This only occurs in cases where the URL query param 
-                // is greater than the last available page. 
+                // is greater than the last available page.
+                // Doing this after the fact to prevent mucking up the code above. This is an edge case and should be handled outside of
+                // the general logic. 
                 if (SearchParams.Page > maxPage)
                 {
                     items = items.Distinct().ToList();
+                    // Remove ellipsis if it shows betweeen two consecutive numbers
+                    if(items.Count - 2 == maxPage)
+                    {
+                        items.RemoveAt(2);
+                    }
                 }
 
                 return items;
