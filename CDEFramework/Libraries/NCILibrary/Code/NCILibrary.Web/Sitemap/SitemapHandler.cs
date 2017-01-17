@@ -1,9 +1,8 @@
 ﻿using System;
-using System.IO;
-using System.Threading;
 using System.Web;
-using System.Xml;
 using System.Xml.Serialization;
+using System.IO;
+using System.Xml;
 using Common.Logging;
 
 namespace NCI.Web.Sitemap
@@ -64,11 +63,6 @@ namespace NCI.Web.Sitemap
                         HttpContext.Current.Cache.Add("sitemap", utf8, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
                         response.OutputStream.Write(utf8, 0, utf8.Length);
                     }
-                }
-                // Handle thread abort exception - throw this exception to the parent method 
-                catch (ThreadAbortException tae)
-                {
-                    throw; 
                 }
                 // Save the exception in the cache and send an error email
                 catch (Exception ex)
