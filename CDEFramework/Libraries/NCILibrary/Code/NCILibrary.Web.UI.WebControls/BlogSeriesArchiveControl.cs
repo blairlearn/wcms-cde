@@ -251,7 +251,7 @@ namespace NCI.Web.UI.WebControls
                     if (isEnglish)
                         monthStr = "December";
                     else
-                        monthStr = "deciembre";
+                        monthStr = "diciembre";
                     break;
                 default: monthStr = "";
                     break;
