@@ -185,6 +185,80 @@ namespace NCI.Web.CDE.UI
         }
 
         /// <summary>
+        /// Every time this method is called, a single metadata element is added to the 
+        /// head of the page.
+        /// </summary>
+        /// <param name="htmlHead">The html header control of the page.The head html tag should have runat="server"</param>
+        /// <param name="htmlMetaDataType">The name of the metadata element you want to add</param>
+        private void addLinkRelItem(HtmlHead htmlHead, HtmlLinkRelType htmlLinkRelType)
+        {
+            List<HtmlLink> linkList = new List<HtmlLink>();
+
+            if (htmlLinkRelType == HtmlLinkRelType.SchemaDcTerms) 
+            {
+                HtmlLink hl = new HtmlLink();
+                hl.Attributes.Add("rel", "schema.dcterms");
+                hl.Href = "http://purl.org/dc/terms/";
+
+                linkList.Add(hl);
+            }
+            else if (htmlLinkRelType == HtmlLinkRelType.Alternate)
+            {
+                // only add any alternate links if some translation exists
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys.Length > 0)
+                {
+                    // retrieve the current language and hostname
+                    string pageLang = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("Language");
+                    bool hasShortLangCode = pageLang.Length <= 2;
+                    bool foundPageLang = false;
+
+                    foreach (string key in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
+                    {
+                        // use the two-character code for this language if the page's language is also two characters
+                        string translationLang = hasShortLangCode ? CultureInfo.GetCultureInfoByIetfLanguageTag(key).TwoLetterISOLanguageName : key;
+
+                        // track if the page's language has been found
+                        if (!foundPageLang && translationLang.Equals(pageLang, StringComparison.OrdinalIgnoreCase))
+                            foundPageLang = true;
+
+                        // retrieve the translation URL
+                        NciUrl url = PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(key);
+
+                        // build and add htmllink to list
+                        HtmlLink hl = new HtmlLink();
+                        hl.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + url.ToString();
+                        hl.Attributes.Add("hreflang", translationLang);
+                        hl.Attributes.Add("rel", "alternate");
+
+                        linkList.Add(hl);
+                    }
+
+                    if (!foundPageLang)
+                    {
+                        // add the canonical url as the rel link for the page's language
+                        string CanonicalUrl = PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.CanonicalUrl).ToString();
+                        if (!string.IsNullOrEmpty(CanonicalUrl))
+                        {
+                            // build and add htmllink
+                            HtmlLink hl = new HtmlLink();
+                            hl.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + CanonicalUrl;
+                            hl.Attributes.Add("hreflang", pageLang);
+                            hl.Attributes.Add("rel", "alternate");
+
+                            linkList.Add(hl);
+                        }
+
+                    }
+                }
+            }
+
+            foreach (HtmlLink hl in linkList)
+            {
+                htmlHead.Controls.Add(hl);
+            }
+        }
+
+        /// <summary>
         /// Every time this method is called, a single social metadata element is added to the 
         /// head of the page.
         /// </summary>
@@ -351,6 +425,7 @@ namespace NCI.Web.CDE.UI
             SetTitle();
             InsertCanonicalURL();
             InsertPageMetaData();
+            InsertPageLinkRels();
             InsertBodyTagAttributes();
             InsertHTMLTagAttributes();
 
@@ -412,6 +487,7 @@ namespace NCI.Web.CDE.UI
         {
             get { return PageAssemblyContext.Current.PageAssemblyInstruction; }
         }
+
         /// <summary>
         /// Adds page meta data information like keyword, description, content type to the head
         /// section.
@@ -420,12 +496,6 @@ namespace NCI.Web.CDE.UI
         {
             if (CurrentPageHead != null)
             {
-                //add in schema for dcterms to head as well - for content type
-                HtmlLink hml = new HtmlLink();
-                hml.Attributes.Add("rel", "schema.dcterms");
-                hml.Href = "http://purl.org/dc/terms/";
-                CurrentPageHead.Controls.Add(hml);
-
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.KeyWords);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Description);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.ContentLanguage);
@@ -439,6 +509,18 @@ namespace NCI.Web.CDE.UI
             foreach (SocialMetaTag tag in tags)
             {
                 addSocialMetaDataItem(CurrentPageHead, tag);
+            }
+        }
+
+        /// <summary>
+        /// Adds link rel items to the head (some for SEO purposes)
+        /// </summary>
+        protected virtual void InsertPageLinkRels()
+        {
+            if (CurrentPageHead != null)
+            {
+                addLinkRelItem(CurrentPageHead, HtmlLinkRelType.SchemaDcTerms);
+                addLinkRelItem(CurrentPageHead, HtmlLinkRelType.Alternate);
             }
         }
 
