@@ -21,6 +21,15 @@ namespace NCI.Web.CDE.UI
     }
 
     /// <summary>
+    /// Enum to define named constants for html link ref types.
+    /// </summary>
+    public enum HtmlLinkRelType
+    {
+        SchemaDcTerms,
+        Alternate
+    }
+
+    /// <summary>
     /// Enum to define named contants for types of page option
     /// </summary>
     public enum PageOptionType
