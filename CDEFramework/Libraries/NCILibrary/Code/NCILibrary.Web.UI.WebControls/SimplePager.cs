@@ -246,6 +246,57 @@ namespace NCI.Web.UI.WebControls
             return offset;
         }
 
+        public virtual int GetPageCount()
+        {
+            if (this.RecordsPerPage > 0)
+            {
+                return (this.RecordCount / this.RecordsPerPage) + ((this.RecordCount % this.RecordsPerPage > 0) ? 1 : 0);
+            }
+
+            return 0;
+            
+        }
+
+        public virtual bool HasPrevLink()
+        {
+            // Ensure that there is an image or text to render, and that the current page is within bounds for a prev link.
+            return this.CurrentPage > 1 && this.CurrentPage <= GetPageCount()
+                && (this.PagerStyleSettings.PrevPageText != string.Empty || this.PagerStyleSettings.PrevPageImageUrl != string.Empty);
+        }
+
+        public virtual bool HasNextLink()
+        {
+            // Ensure that there is an image or text to render, and that the current page is within bounds for a next link.
+            return this.CurrentPage > 0 && this.CurrentPage < GetPageCount() 
+                && (this.PagerStyleSettings.PrevPageText != string.Empty || this.PagerStyleSettings.PrevPageImageUrl != string.Empty);
+        }
+
+        public virtual string GetPrevLinkUrl()
+        {
+            if (HasPrevLink())
+            {
+                //Get the url for the link
+                int offSet = ((this.CurrentPage - 2) * this.RecordsPerPage); //Prettymuch everything is 0 based offset
+                return GetItemUrl(offSet, this.CurrentPage - 1);
+            }
+
+            // return null if no url possible.
+            return null;
+        }
+
+        public virtual string GetNextLinkUrl()
+        {
+            if (HasNextLink())
+            {
+                //Get the url for the link
+                int offSet = ((this.CurrentPage) * this.RecordsPerPage);
+                return GetItemUrl(offSet, this.CurrentPage + 1);
+            }
+
+            // return null if no url possible.
+            return null;
+        }
+
         protected virtual string GetItemUrl(int offSet, int pageNumber)
         {
             //So yea, in the future we could pass in List<Pair>
@@ -283,13 +334,12 @@ namespace NCI.Web.UI.WebControls
 
         protected virtual void RenderPrevLink(HtmlTextWriter output)
         {
-            //If there is no image, and there is not text, then there is nothing to write.
-            if (this.PagerStyleSettings.PrevPageText != string.Empty || this.PagerStyleSettings.PrevPageImageUrl != string.Empty)
-            {
-                //Get the url for the link
-                int offSet = ((this.CurrentPage - 2) * this.RecordsPerPage); //Prettymuch everything is 0 based offset
-                string url = GetItemUrl(offSet, this.CurrentPage - 1);
+            //Get the url for the link
+            string url = GetPrevLinkUrl();
 
+            //If there is no image, and there is not text, then there is nothing to write.
+            if (url != null)
+            {
                 //Begin writing the previous link
                 if (this.PagerStyleSettings.PrevPageCssClass != string.Empty)
                     output.AddAttribute(HtmlTextWriterAttribute.Class, this.PagerStyleSettings.PrevPageCssClass);
@@ -359,12 +409,10 @@ namespace NCI.Web.UI.WebControls
 
         protected virtual void RenderNextLink(HtmlTextWriter output)
         {
-            //If there is no image, and there is not text, then there is nothing to write.
-            if (this.PagerStyleSettings.NextPageText != string.Empty || this.PagerStyleSettings.NextPageImageUrl != string.Empty)
-            {
-                //Get the url for the link
-                int offSet = ((this.CurrentPage) * this.RecordsPerPage);
-                string url = GetItemUrl(offSet, this.CurrentPage + 1);
+            //Get the url for the link
+            string url = GetNextLinkUrl();
+
+            if(url != null) {
 
                 if (this.PagerStyleSettings.NextPageSeparatorImageUrl != string.Empty)
                 {
@@ -542,13 +590,8 @@ namespace NCI.Web.UI.WebControls
         {
             int startIndex = 0; 
             int endIndex = 0;
-            int pages = 0;
-
             //Get number of pages
-            if (this.RecordsPerPage > 0)
-            {
-                pages = (this.RecordCount / this.RecordsPerPage) + ((this.RecordCount % this.RecordsPerPage > 0) ? 1 : 0);
-            }
+            int pages = GetPageCount();
 
             if (pages > 1)
             {
