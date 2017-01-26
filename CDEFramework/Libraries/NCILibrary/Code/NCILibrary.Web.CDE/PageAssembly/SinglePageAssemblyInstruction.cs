@@ -812,6 +812,20 @@ namespace NCI.Web.CDE
             {
                 url.SetUrl(PrettyUrl);
             });
+
+            #region Previous and Next rel link URLs (default to '#', set by pager app modules)
+
+            AddUrlFilter("RelNext", (name, url) =>
+            {
+                url.Clear();
+            });
+
+            AddUrlFilter("RelPrev", (name, url) =>
+            {
+                url.Clear();
+            });
+
+            #endregion
         }
 
 
