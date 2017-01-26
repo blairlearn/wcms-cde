@@ -90,6 +90,26 @@ namespace NCI.Web.CDE.UI.SnippetControls
             blogLandingPager.BaseUrl += searchQueryParams;
 
             Controls.Add(blogLandingPager);
+
+            // check for existence of previous and and next urls
+            string prevUrl = blogLandingPager.GetPrevLinkUrl();
+            string nextUrl = blogLandingPager.GetNextLinkUrl();
+
+            if (prevUrl != null)
+            {
+                this.PageInstruction.AddUrlFilter("RelPrev", (name, url) =>
+                {
+                    url.SetUrl(prevUrl);
+                });
+            }
+
+            if (nextUrl != null)
+            {
+                this.PageInstruction.AddUrlFilter("RelNext", (name, url) =>
+                {
+                    url.SetUrl(nextUrl);
+                });
+            }
         }
         
     }
