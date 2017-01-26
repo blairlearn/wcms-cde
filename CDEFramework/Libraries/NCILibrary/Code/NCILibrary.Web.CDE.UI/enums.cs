@@ -26,7 +26,9 @@ namespace NCI.Web.CDE.UI
     public enum HtmlLinkRelType
     {
         SchemaDcTerms,
-        Alternate
+        Alternate,
+        Next,
+        Prev
     }
 
     /// <summary>
