@@ -185,11 +185,10 @@ namespace NCI.Web.CDE.UI
         }
 
         /// <summary>
-        /// Every time this method is called, a single metadata element is added to the 
-        /// head of the page.
+        /// Adds the specified link rel item to the head of the page.
         /// </summary>
-        /// <param name="htmlHead">The html header control of the page.The head html tag should have runat="server"</param>
-        /// <param name="htmlMetaDataType">The name of the metadata element you want to add</param>
+        /// <param name="htmlHead">The html head of the current page.</param>
+        /// <param name="htmlLinkRelType">The type ofrel item to add.</param>
         private void addLinkRelItem(HtmlHead htmlHead, HtmlLinkRelType htmlLinkRelType)
         {
             List<HtmlLink> linkList = new List<HtmlLink>();
@@ -249,6 +248,32 @@ namespace NCI.Web.CDE.UI
                         }
 
                     }
+                }
+            }
+            else if (htmlLinkRelType == HtmlLinkRelType.Next)
+            {
+                string nextUrl = PageAssemblyInstruction.GetUrl("RelNext").ToString();
+
+                if (!String.IsNullOrEmpty(nextUrl))
+                {
+                    HtmlLink hl = new HtmlLink();
+                    hl.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + nextUrl;
+                    hl.Attributes.Add("rel", "next");
+
+                    linkList.Add(hl);
+                }                
+            }
+            else if (htmlLinkRelType == HtmlLinkRelType.Prev)
+            {
+                string prevUrl = PageAssemblyInstruction.GetUrl("RelPrev").ToString();
+
+                if (!String.IsNullOrEmpty(prevUrl))
+                {
+                    HtmlLink hl = new HtmlLink();
+                    hl.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + prevUrl;
+                    hl.Attributes.Add("rel", "prev");
+
+                    linkList.Add(hl);
                 }
             }
 
@@ -521,6 +546,8 @@ namespace NCI.Web.CDE.UI
             {
                 addLinkRelItem(CurrentPageHead, HtmlLinkRelType.SchemaDcTerms);
                 addLinkRelItem(CurrentPageHead, HtmlLinkRelType.Alternate);
+                addLinkRelItem(CurrentPageHead, HtmlLinkRelType.Next);
+                addLinkRelItem(CurrentPageHead, HtmlLinkRelType.Prev);
             }
         }
 
