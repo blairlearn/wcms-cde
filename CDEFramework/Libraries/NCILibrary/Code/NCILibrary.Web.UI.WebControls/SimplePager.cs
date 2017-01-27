@@ -246,6 +246,10 @@ namespace NCI.Web.UI.WebControls
             return offset;
         }
 
+        /// <summary>
+        /// Gets the number of pages that will be shown by this pager as currently configured. 
+        /// </summary>
+        /// <returns>The number of pages. Will return 0 if not configured with record count and number of records per page.</returns>
         public virtual int GetPageCount()
         {
             if (this.RecordsPerPage > 0)
@@ -257,6 +261,10 @@ namespace NCI.Web.UI.WebControls
             
         }
 
+        /// <summary>
+        /// Determines if the pager can provide a previous URL.
+        /// </summary>
+        /// <returns>True if a previous url can be generated, false if the current page is at the start or no page count is known.</returns>
         public virtual bool HasPrevLink()
         {
             // Ensure that there is an image or text to render, and that the current page is within bounds for a prev link.
@@ -264,6 +272,10 @@ namespace NCI.Web.UI.WebControls
                 && (this.PagerStyleSettings.PrevPageText != string.Empty || this.PagerStyleSettings.PrevPageImageUrl != string.Empty);
         }
 
+        /// <summary>
+        /// Determines if the pager can provide a next URL.
+        /// </summary>
+        /// <returns>True if a next url can be generated, false if the current page is at the end or no page count is known.</returns>
         public virtual bool HasNextLink()
         {
             // Ensure that there is an image or text to render, and that the current page is within bounds for a next link.
@@ -271,6 +283,10 @@ namespace NCI.Web.UI.WebControls
                 && (this.PagerStyleSettings.PrevPageText != string.Empty || this.PagerStyleSettings.PrevPageImageUrl != string.Empty);
         }
 
+        /// <summary>
+        /// Gets a URL pointing to the previous page for this pager.
+        /// </summary>
+        /// <returns>A url in string format, else null if no previous url can be generated.</returns>
         public virtual string GetPrevLinkUrl()
         {
             if (HasPrevLink())
@@ -284,6 +300,10 @@ namespace NCI.Web.UI.WebControls
             return null;
         }
 
+        /// <summary>
+        /// Gets a URL pointing to the next page for this pager.
+        /// </summary>
+        /// <returns>A url in string format, else null if no next url can be generated.</returns>
         public virtual string GetNextLinkUrl()
         {
             if (HasNextLink())
