@@ -265,6 +265,11 @@ namespace NCI.Web.CDE.UI.WebControls
                     {
                         RenderLinkButtonItem(writer, (LinkButtonItem)button);
                     }
+
+                    if (button is ClientSideButtonItem)
+                    {
+                        RenderClientSideButtonItem(writer, (ClientSideButtonItem)button);
+                    }
                     writer.RenderEndTag(); // li
                 }
             }
@@ -337,6 +342,27 @@ namespace NCI.Web.CDE.UI.WebControls
                 writer.AddAttribute(HtmlTextWriterAttribute.Onclick, button.WebAnalytics);
             }
             writer.AddAttribute(HtmlTextWriterAttribute.Href, pgInstruction.GetUrl(button.AlternateContentVersionKey).ToString());
+            writer.RenderBeginTag(HtmlTextWriterTag.A);
+            writer.AddAttribute(HtmlTextWriterAttribute.Alt, btnAlt);
+            writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
+            writer.RenderBeginTag(HtmlTextWriterTag.Img);
+            writer.RenderEndTag(); // img
+            writer.RenderEndTag(); // a
+        }
+
+        private void RenderClientSideButtonItem(HtmlTextWriter writer, ClientSideButtonItem button)
+        {
+            string btnAlt = string.Empty;
+            if (!string.IsNullOrEmpty(button.Title.Trim()))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Title, button.Title);
+                btnAlt = button.Title;
+            }
+            if (!string.IsNullOrEmpty(button.WebAnalytics.Trim()))
+            {
+                writer.AddAttribute(HtmlTextWriterAttribute.Onclick, button.WebAnalytics);
+            }
+            writer.AddAttribute(HtmlTextWriterAttribute.Href, "#");
             writer.RenderBeginTag(HtmlTextWriterTag.A);
             writer.AddAttribute(HtmlTextWriterAttribute.Alt, btnAlt);
             writer.AddAttribute(HtmlTextWriterAttribute.Src, "/publishedcontent/images/images/spacer.gif");
