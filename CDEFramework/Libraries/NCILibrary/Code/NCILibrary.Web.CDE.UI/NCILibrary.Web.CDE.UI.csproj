@@ -99,6 +99,7 @@
     <Compile Include="PageAssemblers\WebPageAssembler.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="PageOptions\ClientSideButtonItem.cs" />
     <Compile Include="PageOptions\PageOptionsButtonLanguageItem.cs" />
     <Compile Include="PageOptions\PageOptionsLanguageCollection.cs" />
     <Compile Include="PageOptions\EmailButtonItem.cs" />
