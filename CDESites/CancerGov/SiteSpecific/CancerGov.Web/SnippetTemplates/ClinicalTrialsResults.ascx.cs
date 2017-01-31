@@ -7,6 +7,7 @@ using CancerGov.Common.ErrorHandling;
 using CancerGov.UI.CDR;
 using NCI.Util;
 using NCI.Web.CDE;
+using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.UI.WebControls;
 using NCI.Web.UI.WebControls.FormControls;  // For the CTSearchCriteriaDisplay object.
 
@@ -177,13 +178,23 @@ namespace CancerGov.Web.SnippetTemplates
                 }
             }
 
-            //WebAnalytics
-            //this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinical Trial Search", this.Request.Url.OriginalString.ToString());
+            /** Web Analytics **/
+            // this.WebAnalyticsPageLoad.SetChannelFromSectionNameAndUrl("Clinical Trial Search", this.Request.Url.OriginalString.ToString());
+            // Add search type description to page load analytics
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
+            {
+                wbField.Value = "Clinical Trials: Advanced";
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
+            {
+                wbField.Value = "Clinical Trials: Advanced";
+            });
+            // End Web Analytics
+
             this.PageInstruction.AddFieldFilter("channelName", (fieldName, data) =>
                 {
                     data.Value = "Clinical Trial Search";
                 });
-            //End Web Analytics
             
             this.PageInstruction.AddFieldFilter("invokedFrom", (name, field) =>
             {

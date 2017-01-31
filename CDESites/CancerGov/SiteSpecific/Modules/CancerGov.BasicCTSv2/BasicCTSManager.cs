@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using CancerGov.ClinicalTrialsAPI;
+using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -15,6 +16,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         private ClinicalTrialsAPIClient Client { get; set; }
 
+        //CTRP trial statuses that qualify as "active" - used as filter criteria
         private static readonly string[] ActiveTrialStatuses = {
             // These CTRP statuses appear in results:
             "Active",
@@ -47,6 +49,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             /// "withdrawn"
         };
 
+        //Fields to include on returned search results list
+        private static readonly string[] IncludeFields = {
+            "nct_id",
+            "nci_id",
+            "brief_title",
+            "sites.org_name",
+            "sites.org_postal_code",
+            "eligibility.structured",
+            "current_trial_status",
+            "sites.org_country",
+            "sites.org_state_or_province",
+            "sites.org_city",
+            "sites.org_coordinates",
+            "sites.recruitment_status",
+            "diseases"
+        };
+
         /// <summary>
         /// Creates a new instance of a BasicCTSManager
         /// </summary>
@@ -74,10 +93,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Performs a search against the Clinical Trials API
         /// </summary>
-        /// <param name="searchParams"></param>
-        /// <returns></returns>
-        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams) {
-            
+        /// <param name="searchParams">Search paramesters</param>
+        /// <param name="dynamicFilterParams">Deserialized dynamic search parameters</param>
+        /// <returns>Clinical Trials collection</returns>
+        public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, JObject dynamicFilterParams = null) {
             //Set page
             //Set size
             //Get only the fields we want
@@ -130,28 +149,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 //This is now an array of codes.
                 filterCriteria.Add("diseases.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeIDs);
             }
-            
-            //TODO: Actually handle search criteria
-            ClinicalTrialsCollection rtnResults = Client.List(
-                size: searchParams.ItemsPerPage,
-                from: from,
-                includeFields: new string[] {
-                    "nct_id",
-                    "nci_id",
-                    "brief_title",
-                    "sites.org_name",
-                    "sites.org_postal_code",
-                    "eligibility.structured",
-                    "current_trial_status",
-                    "sites.org_country",
-                    "sites.org_state_or_province",
-                    "sites.org_city",
-                    "sites.org_coordinates",
-                    "sites.recruitment_status",
-                    "diseases"
-                },
-                searchParams: filterCriteria
-            );
+
+            //Get our list of trials from the API client
+            ClinicalTrialsCollection rtnResults = new ClinicalTrialsCollection();
+            if (dynamicFilterParams != null) // get results with passed in params
+            {
+                //JObject ddSearchParams = GetDeserializedJSON(dynamicFilterParams);
+                rtnResults = Client.GetTrialsList(
+                    size: searchParams.ItemsPerPage,
+                    from: from,
+                    searchParams: filterCriteria,
+                    dynamicSearchParams: dynamicFilterParams
+                );
+            }
+            else // get default results
+            { 
+                rtnResults = Client.List(
+                    size: searchParams.ItemsPerPage,
+                    from: from,
+                    includeFields: IncludeFields,
+                    searchParams: filterCriteria
+                );
+            }
 
             foreach(ClinicalTrial trial in rtnResults.Trials)
             {
@@ -162,16 +181,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         }
 
-        private static void RemoveNonRecruitingSites(ClinicalTrial trial)
+        /// <summary>
+        /// Creates a list of actively recruiting sites only 
+        /// </summary>
+        /// <param name="trial">Clinical trial</param>
+        private void RemoveNonRecruitingSites(ClinicalTrial trial)
         {
-            trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));
+            if (trial.Sites != null)
+            {
+                trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));
+            }
         }
 
-        private static bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
+        /// <summary>
+        /// Set to true if site status matches an item in ActiveRecruitmentStatuses
+        /// </summary>
+        /// <param name="site">Study site</param>
+        private bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
         {
             return ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower());
         }
-
 
         /// <summary>
         /// Gets the Geo Location for a ZipCode

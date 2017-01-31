@@ -111,6 +111,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string ESTemplateCancerType { get; set; }
+
+
     }
 }
-    
+ 

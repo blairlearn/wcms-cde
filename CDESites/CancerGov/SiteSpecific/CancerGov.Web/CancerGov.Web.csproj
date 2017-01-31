@@ -114,6 +114,7 @@
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSResults.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSView.ascx" />
+    <Content Include="SnippetTemplates\BasicCTSv2\TrialListingPage.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSResults.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTS\BasicCTSView.ascx" />

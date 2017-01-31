@@ -42,6 +42,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected const string CANCERTYPE_PARAM = "t";
         protected const string CANCERTYPEASPHRASE_PARAM = "ct";
         protected const string REDIRECTED_FLAG = "r";
+        protected const string RESULTS_LINK_FLAG = "rl";
 
         protected BasicCTSPageInfo _basicCTSPageInfo = null;
 
@@ -51,8 +52,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected BasicCTSManager _basicCTSManager = null;
         protected string cancerTypeIDAndHash = null;
 
-        private static readonly string CONFIG_SECTION_NAME = "nci/search/basicClinicalTrialSearchAPI";
-
         private string _APIURL = string.Empty;
 
         /// <summary>
@@ -61,33 +60,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected abstract String WorkingUrl { get; }
 
         /// <summary>
-        /// Gets the URL for the ClinicalTrials API from the configuration
+        /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
         /// </summary>
         protected string APIURL {
             get {
                 if (String.IsNullOrWhiteSpace(_APIURL))
                 {
-                    string url = "";
-
-                    BasicClinicalTrialSearchAPISection config = (BasicClinicalTrialSearchAPISection)ConfigurationManager.GetSection(CONFIG_SECTION_NAME);
-
-                    if (config == null)
-                        throw new ConfigurationErrorsException("The configuration section, " + CONFIG_SECTION_NAME + ", cannot be found");
-
-                    if (string.IsNullOrWhiteSpace(config.APIProtocol))
-                        throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: apiProtocol cannot be null or empty");
-
-                    if (string.IsNullOrWhiteSpace(config.APIHost))
-                        throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: apiHost cannot be null or empty");
-
-                    url = string.Format("{0}://{1}", config.APIProtocol, config.APIHost);
-
-                    if (!string.IsNullOrWhiteSpace(config.APIPort))
-                    {
-                        url += ":" + config.APIPort;
-                    }
-
-                    _APIURL = url;
+                    this._APIURL = BasicClinicalTrialSearchAPISection.GetAPIUrl();
                 }
 
                 return this._APIURL;
@@ -196,7 +175,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     {
                         _setFields |= SetFields.ZipCode;
                         if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
+                        {
+                            searchParams.ZipRadius = zipProximity;
                             _setFields |= SetFields.ZipProximity;
+                        }
                     }
                     else
                     {
