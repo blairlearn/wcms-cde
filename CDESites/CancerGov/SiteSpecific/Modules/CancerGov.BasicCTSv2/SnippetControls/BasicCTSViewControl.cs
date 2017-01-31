@@ -8,6 +8,7 @@ using Common.Logging;
 using NCI.Web.CDE;
 using NCI.Web.CDE.Application;
 using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -74,6 +75,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public bool HasZip()
         {
             return SearchParams.ZipLookup != null;
+        }
+
+        /// <summary>
+        /// Check for the presence of the RESULTS_LINK_FLAG ("rl=" param in the URL). 
+        /// If it is present, then this page load is the result of a CTS Results Page link.
+        /// </summary>
+        /// <returns>bool - true if "rl" query param exists</returns>
+        public bool IsSearchResult()
+        {
+            bool rtn = (Request.QueryString[RESULTS_LINK_FLAG] == null) ? false : true;
+            return rtn;
         }
 
         /// <summary>
@@ -146,7 +158,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     termIds.Add(45835, _phaseIV);
                     break;
                 default: // unknown, combine all phases
-                    glossPhases.Add("unknown phase pairing: " + string.Join(", ", phases) + " (bits ="  + phaseBits + ")");
+                    glossPhases.Add("unknown phase pairing: " + string.Join(", ", phases) + " (bits =" + phaseBits + ")");
                     return string.Join(", ", glossPhases);
             }
 
@@ -191,18 +203,31 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             ClinicalTrial trial;
             try
             {
+                // Retrieve a Clinical Trial based on the Trial ID
                 trial = _basicCTSManager.Get(nctid);
+            }
+            catch (ArgumentNullException ex)
+            {
+                // If we hit a null exception when getting a trial from the API, redirect to the "ID not Found" page
+                string errMessage = "CDE:BasicCTSViewControl.cs:OnLoad" + " Requested trial ID: " + nctid + "\nArgumentNullException thrown by _basicCTSManager.get() call.";
+                log.Debug(errMessage, ex);
+                ErrorPageDisplayer.RaisePageNotFound(errMessage);
+                return;
             }
             catch (Exception ex)
             {
+                // If we hit some other error when getting the trials, redirect to the error page 
                 string errMessage = "CDE:BasicCTSViewControl.cs:OnLoad" + " Requested trial ID: " + nctid + "\nException thrown by _basicCTSManager.get(nctid) call.";
                 log.Error(errMessage, ex);
                 ErrorPageDisplayer.RaisePageError(errMessage);
                 return;
             }
 
+            // If trial value is null, redirect to the 404 page
             if (trial == null)
+            { 
                 throw new HttpException(404, "Trial cannot be found.");
+            }
 
             // get zip from search parameters
             string zip = "";
@@ -355,6 +380,52 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 )
             );
             Controls.Add(ltl);
+
+            // Set analytics page load values
+            SetAnalytics();
         }
+
+        #region Analytics methods
+        /// <summary>
+        /// Set default pageLoad analytics for this page
+        /// </summary>
+        protected void SetAnalytics()
+        {
+            string desc = GetParamsForAnalytics();
+
+            // Set props and evars
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+        }
+
+        /// <summary>
+        /// Get query params from URL and format for use in analytics.
+        /// </summary>
+        /// <returns>Formatted string</returns>
+        protected String GetParamsForAnalytics()
+        {
+            string result;
+            HttpRequest request = HttpContext.Current.Request;
+
+            // Set result value based on referrer
+            if (request.QueryString["rl"] == null)
+            {
+                result = "Clinical Trials: Custom";
+            }
+            else
+            {
+                result = "Clinical Trials: Basic";
+            }
+
+            return result;
+        }
+        #endregion
+
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
 using Common.Logging;
+using Newtonsoft.Json;
 
 namespace NCI.Web.CDE.Modules
 {
@@ -27,6 +28,25 @@ namespace NCI.Web.CDE.Modules
             catch (Exception ex)
             {
                 log.Error("GetModuleObject(): Invalid xml data in the snippet for " + typeof(ModuleObjectType).ToString() + " , check xml received from Percussion");
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Deserializes the JSON to the specified .NET type.
+        /// </summary>
+        /// <param name="snippetJsonData">JSON in string form</param>
+        /// <returns>Deserialized JSON</returns>
+        public static ModuleObjectType GetJsonObject(string snippetJsonData)
+        {
+            try
+            {
+                // "DeserializeObject<T>(String)" deserializes the JSON to our specified object type
+                return JsonConvert.DeserializeObject<ModuleObjectType>(snippetJsonData);
+            }
+            catch (Exception ex)
+            {
+                log.Error("GetModuleObject(): Invalid JSON data in the snippet for " + typeof(ModuleObjectType).ToString() + " , check JSON received from Percussion");
                 throw ex;
             }
         }

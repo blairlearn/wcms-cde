@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -211,9 +212,11 @@ namespace CancerGov.ClinicalTrialsAPI
             public class UnstructuredCriterion
             {
                 /// <summary>
-                /// Gets or sets a bool indicating if this criterion indications inclusion for the trial
+                /// Gets or sets a bool indicating if this criterion indications inclusion for the trial.
+                /// If JSON property is set to null, set to default value (false).
                 /// </summary>
-                [JsonProperty("inclusion_indicator")]
+                [DefaultValue(false)]
+                [JsonProperty("inclusion_indicator", NullValueHandling = NullValueHandling.Ignore)]
                 public bool IsInclusionCriterion { get; set; }
 
                 /// <summary>
@@ -572,7 +575,7 @@ namespace CancerGov.ClinicalTrialsAPI
             /// <returns>String state</returns>
             public string StateMapping(string state)
             {
-                switch(state)
+                switch (state)
                 {
                     case "AB": return "Alberta";
                     case "AK": return "Alaska";
