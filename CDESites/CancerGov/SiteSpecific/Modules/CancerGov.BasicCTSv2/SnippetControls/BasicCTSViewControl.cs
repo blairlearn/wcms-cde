@@ -238,6 +238,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 throw new HttpException(404, "Trial cannot be found.");
             }
 
+            // Get active trial statuses
+            string[] ActiveTrialStatuses = _basicCTSManager.ActiveTrialStatuses;
+
+
             // get zip from search parameters
             string zip = "";
             if (SearchParams.ZipLookup != null)
