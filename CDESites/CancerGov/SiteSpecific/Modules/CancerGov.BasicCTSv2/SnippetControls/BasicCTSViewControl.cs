@@ -234,13 +234,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             // If trial value is null, redirect to the 404 page
             if (trial == null)
-            { 
+            {
                 throw new HttpException(404, "Trial cannot be found.");
             }
 
-            // Get active trial statuses
-            string[] ActiveTrialStatuses = _basicCTSManager.ActiveTrialStatuses;
-
+            // If the IsRedirectable flag is set to true, check trial status. If not active, go to 404 page.
+            if (IsRedirectable)
+            {
+                string[] actives = _basicCTSManager.ActiveTrialStatuses;
+                if(Array.IndexOf(actives, trial.CurrentTrialStatus) < 0)
+                { 
+                    throw new HttpException(404, "Trial status is not active.");
+                }
+            }
 
             // get zip from search parameters
             string zip = "";
