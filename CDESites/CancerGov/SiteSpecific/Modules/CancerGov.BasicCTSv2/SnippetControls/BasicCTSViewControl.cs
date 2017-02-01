@@ -30,6 +30,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         private const string _phaseII_III = "Phase II/III";
 
         /// <summary>
+        /// Get value of inactive trial redirection flag
+        /// </summary>
+        private bool IsRedirectable
+        {
+            get { return BasicCTSPageInfo.RedirectIfInactive; }
+        }
+
+        /// <summary>
         /// Get the working URL of this control for additional modifications
         /// </summary>
         protected override String WorkingUrl
@@ -37,6 +45,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             get { return BasicCTSPageInfo.DetailedViewPagePrettyUrl; }
         }
 
+        
         /// <summary>
         /// Returns the cancer type the user searched for if the current search contains a type/condition.
         /// </summary>
