@@ -396,11 +396,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 if (SearchParams.Page != 1)
                 {
                     // Draw link to previous page
+                    string PrevUrl = GetPageUrl(SearchParams.Page - 1);
                     items.Add(
                     new
                     {
                         Text = "&lt; Previous",
-                        PageUrl = GetPageUrl(SearchParams.Page - 1)
+                        PageUrl = PrevUrl
+                    });
+
+                    // add previous url to filter
+                    this.PageInstruction.AddUrlFilter("RelPrev", (name, url) =>
+                    {
+                        url.SetUrl(PrevUrl);
                     });
 
                     // Draw first page links and text
@@ -492,11 +499,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     }
 
                     // Draw link to next page
+                    string NextUrl = GetPageUrl(SearchParams.Page + 1);
                     items.Add(
                     new
                     {
                         Text = "Next &gt;",
-                        PageUrl = GetPageUrl(SearchParams.Page + 1)
+                        PageUrl = NextUrl
+                    });
+
+                    this.PageInstruction.AddUrlFilter("RelNext", (name, url) =>
+                    {
+                        url.SetUrl(NextUrl);
                     });
 
                 }
