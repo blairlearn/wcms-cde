@@ -238,13 +238,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 throw new HttpException(404, "Trial cannot be found.");
             }
 
-            // If the IsRedirectable flag is set to true, check trial status. If not active, go to 404 page.
+            // If the IsRedirectable flag is set to true, check trial status. If inactive or has no NCT ID, go to 404 page.
             if (IsRedirectable)
             {
                 string[] actives = _basicCTSManager.ActiveTrialStatuses;
                 if(Array.IndexOf(actives, trial.CurrentTrialStatus) < 0)
                 { 
                     throw new HttpException(404, "Trial status is not active.");
+                }
+                if (string.IsNullOrWhiteSpace(trial.NCTID))
+                {
+                    throw new HttpException(404, "Trial does not have an NCT ID.");
                 }
             }
 
