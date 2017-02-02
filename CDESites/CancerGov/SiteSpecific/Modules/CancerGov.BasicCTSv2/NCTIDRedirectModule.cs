@@ -175,6 +175,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     return true;
                 }
             }
+            catch (ArgumentNullException nx)
+            {
+                log.DebugFormat("Error retrieving trial - value cannot be null. idString = " + idString, nx);
+                return false;
+            }
             catch (Exception ex)
             {
                 log.Error("Error retrieving trial object from API", ex);
