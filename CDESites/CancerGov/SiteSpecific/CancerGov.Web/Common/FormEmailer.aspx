@@ -7,7 +7,8 @@
 		<meta name="CODE_LANGUAGE" Content="C#">
 		<meta name="vs_defaultClientScript" content="JavaScript">
 		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
-	    <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">	    
+	    <link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
+        <meta name="robots" content="noindex,nofollow">
 	</head>
 	<body MS_POSITIONING="GridLayout">
 		<form id="FormEmailer" method="post" runat="server">

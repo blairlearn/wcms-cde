@@ -6,6 +6,7 @@
 	<TITLE>NCI Drug Dictionary</TITLE>
 	<link rel="stylesheet" href="/PublishedContent/Styles/nci.css" type="text/css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="robots" content="noindex,nofollow">
   </HEAD>
   <FRAMESET border=0 frameSpacing=0 rows=80,*,26 frameBorder=no>
 	<FRAME name="Header" title="Header" src="/Common/PopUps/<%=Header%>" noResize scrolling=no>
