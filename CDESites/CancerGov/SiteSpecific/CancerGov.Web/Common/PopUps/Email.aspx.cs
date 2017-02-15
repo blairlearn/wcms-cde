@@ -75,12 +75,12 @@ namespace CancerGov.Web
             else
             {
                 //Validate required controls
-                if (!CancerGov.Web.FormEmailer.EmailSyntaxValidator.Valid(To.Value, true))
+                if (!CancerGov.Web.EmailSyntaxValidator.Valid(To.Value, true))
                 {
                     To.Value = "";
                 }
 
-                if (!CancerGov.Web.FormEmailer.EmailSyntaxValidator.Valid(From.Value, true))
+                if (!CancerGov.Web.EmailSyntaxValidator.Valid(From.Value, true))
                 {
                     From.Value = "";
                 }

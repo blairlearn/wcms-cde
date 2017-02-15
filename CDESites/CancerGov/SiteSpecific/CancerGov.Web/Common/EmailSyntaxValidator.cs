@@ -1,125 +1,15 @@
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using System.Web.Mail;
+﻿using System.Text.RegularExpressions;
 
 namespace CancerGov.Web
 {
-	/// <summary>
-	/// Summary description for FormEmailer.
-	/// </summary> 
-	public partial class FormEmailer : System.Web.UI.Page
-	{
-		private string from, to, subject, body, redirect, requiredFields, splitFields;
-		private string content;
-		private bool error_p;
-
-		public string Content 
-		{
-			get { return content; }
-		}
-
-
-		protected void Page_Load(object sender, System.EventArgs e)
-		{
-			error_p = false;
-			body = "";
-			redirect = "";
-			requiredFields = "";
-			splitFields = "";
-			foreach (string key in Request.Form.AllKeys) 
-			{
-				switch (key) 
-				{
-					case "submit.x": break; // ignore
-					case "submit.y": break; // ignore
-					case "__from": 
-						from = Request.Params[key]; 
-						if (! EmailSyntaxValidator.Valid(from, true))
-						{
-							content += "Error: from email '" + from + "' is invalid. Please go back and enter a valid email address.<br>\n";
-							error_p = true;
-						}
-						break;
-					case "__subject": subject = Request.Params[key]; break;
-					case "__recipient": 
-						to = ConfigurationManager.AppSettings[Request.Params[key]];
-						if ((to == null) || (to == ""))
-						{
-							content += "Error: recipient '" + Request.Params[key] + "' is not configured.<br>\n";
-							error_p = true;
-						}
-						break;
-					case "__redirectto": redirect = Request.Params[key]; break;
-					case "__requiredfields": requiredFields = Request.Params[key].Trim().Replace(" ", ""); break;
-					case "__splitFields": splitFields = "," + Request.Params[key].Trim().Replace(" ", "") + ","; break;
-					default: 
-						if (key.StartsWith("__linebreak")) {
-							body += "\n";
-						} 
-						else {
-							if (! key.StartsWith("__")) { // only send "real" fields
-								if (splitFields.IndexOf(key) == -1) {
-									body += key.Replace("_", " ") + ": " + Request.Params[key] + "\n";
-								} 
-								else {
-									// split the field into multiple lines
-									body += key.Replace("_", " ") + ": \n\t\t" + Server.UrlDecode(Request.Params[key].Replace(",", "\n\t\t")) + "\n";
-								}
-
-							}
-
-						}
-						break;
-				}
-			}
-
-			if (requiredFields != "") 
-			{
-				foreach (string field in requiredFields.Split(',')) 
-				{
-					if ((Request.Params[field] == null) || (Request.Params[field].Trim() == "")) 
-					{
-						content += "Required field missing: " + field + "<br>\n";
-						error_p = true;
-					}
-				}
-			}
-
-			if (! error_p) 
-			{
-				try 
-				{
-					SendEmail();
-				} 
-				catch (Exception exception) 
-				{
-					content = "Error: " + exception.Message + "<br>\n";
-				}
-
-				if (redirect != null) 
-				{
-					Response.Redirect(redirect);
-				}
-			}
-		}
-
-		#region EmailSyntaxValidator
 		/// <summary>
 		/// Taken from http://www.aspemporium.com/aspEmporium/cshrp/emaillib/emaillibEmailSyntaxValidator.html
+        /// 
+        /// Previously in FormEmailer.aspx.cs; preserved in separate file after removal of that file.
 		/// </summary>
 		public class EmailSyntaxValidator
 		{
-			private bool   syntaxvalid = false;
+			private bool syntaxvalid = false;
 			private string account, domain, inputemail;
 
 			/// <summary>
@@ -136,7 +26,7 @@ namespace CancerGov.Web
 			public static bool Valid(string email, bool TLDrequired)
 			{
 				EmailSyntaxValidator v;
-				bool                 valid;
+				bool valid;
 
 				//call syntax validator
 				v = new EmailSyntaxValidator(email, TLDrequired);
@@ -485,39 +375,4 @@ namespace CancerGov.Web
 				}
 			}
 		}
-	#endregion
-			
-		/// <summary>
-		/// Method builds email message and sends it to recipient defined in web.config
-		/// PublicCommentContactEmailRecipient appSetting
-		/// </summary>
-		public void SendEmail()
-		{
-			MailMessage mailMsg = new MailMessage();
-			mailMsg.From = from;
-			mailMsg.Subject = subject;			
-			mailMsg.Body = body;
-			mailMsg.To = to;
-			SmtpMail.Send(mailMsg);			
-		}
-
-		#region Web Form Designer generated code
-		override protected void OnInit(EventArgs e)
-		{
-			//
-			// CODEGEN: This call is required by the ASP.NET Web Form Designer.
-			//
-			InitializeComponent();
-			base.OnInit(e);
-		}
-		
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{    
-		}
-		#endregion
-	}
 }
