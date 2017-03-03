@@ -1057,6 +1057,20 @@ namespace NCI.Web.CDE
 
             #endregion
 
+            #region Previous and Next rel link URLs (default to '#', set by pager app modules)
+
+            AddUrlFilter("RelNext", (name, url) =>
+            {
+                url.Clear();
+            });
+
+            AddUrlFilter("RelPrev", (name, url) =>
+            {
+                url.Clear();
+            });
+
+            #endregion
+
             //AddUrlFilter("PostBackURL", (name, url) =>
             //{
             //    url.SetUrl(GetUrl("CurrentURL").ToString() + "?" + HttpContext.Current.Request.QueryString);

@@ -10,17 +10,16 @@ namespace NCI.Web.UI.WebControls
 
         protected override void RenderNextLink(HtmlTextWriter output)
         {
+            // Get the url for the link
+            string url = GetNextLinkUrl();
+
             //If there is no image, and there is not text, then there is nothing to write.
-            if (this.PagerStyleSettings.NextPageText != string.Empty || this.PagerStyleSettings.NextPageImageUrl != string.Empty)
+            if (url != null)
             {
                 // render the wrapping li and next class if available
                 if (this.PagerStyleSettings.NextPageCssClass != string.Empty)
                     output.AddAttribute(HtmlTextWriterAttribute.Class, this.PagerStyleSettings.NextPageCssClass);
                 output.RenderBeginTag(HtmlTextWriterTag.Li);
-
-                //Get the url for the link
-                int offSet = ((this.CurrentPage) * this.RecordsPerPage);
-                string url = GetItemUrl(offSet, this.CurrentPage + 1);
 
                 if (this.PagerStyleSettings.NextPageSeparatorImageUrl != string.Empty)
                 {
@@ -93,17 +92,16 @@ namespace NCI.Web.UI.WebControls
 
         protected override void RenderPrevLink(HtmlTextWriter output)
         {
+            //Get the url for the link
+            string url = GetPrevLinkUrl();
+
             //If there is no image, and there is not text, then there is nothing to write.
-            if (this.PagerStyleSettings.PrevPageText != string.Empty || this.PagerStyleSettings.PrevPageImageUrl != string.Empty)
+            if (url != null)
             {
                 // render li and class if set
                 if (this.PagerStyleSettings.PrevPageCssClass != string.Empty)
                     output.AddAttribute(HtmlTextWriterAttribute.Class, this.PagerStyleSettings.PrevPageCssClass);
                 output.RenderBeginTag(HtmlTextWriterTag.Li);
-
-                //Get the url for the link
-                int offSet = ((this.CurrentPage - 2) * this.RecordsPerPage); //Prettymuch everything is 0 based offset
-                string url = GetItemUrl(offSet, this.CurrentPage - 1);
 
                 //Begin writing the previous link
                 output.AddAttribute(HtmlTextWriterAttribute.Href, url);

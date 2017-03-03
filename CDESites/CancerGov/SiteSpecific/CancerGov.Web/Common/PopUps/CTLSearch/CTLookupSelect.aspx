@@ -61,6 +61,7 @@
 		    }
 
 		</script>	
+      <meta name="robots" content="noindex,nofollow">
   </head>
     <body class="popup">
         <form>

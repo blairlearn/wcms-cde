@@ -16,8 +16,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         private ClinicalTrialsAPIClient Client { get; set; }
 
-        //CTRP trial statuses that qualify as "active" - used as filter criteria
-        private static readonly string[] ActiveTrialStatuses = {
+        // CTRP trial statuses that qualify as "active"
+        // These are used as filter criteria for returning trials on the results/view/listing pages.
+        public readonly string[] ActiveTrialStatuses = {
             // These CTRP statuses appear in results:
             "Active",
             "Approved", 
@@ -33,7 +34,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             /// "Withdrawn"
         };
 
-        //ActiveRecruitmentStatuses (filter study sites) query for open or not based on trial statuses to lower
+        // Site-specific recruitment statuses that qualify as "active" (not to be confused with the Trial Status).
+        // These are used to filter available study sites on results/view/listing pages.
         private static readonly string[] ActiveRecruitmentStatuses = {
             // These statuses appear in results:
             "active",

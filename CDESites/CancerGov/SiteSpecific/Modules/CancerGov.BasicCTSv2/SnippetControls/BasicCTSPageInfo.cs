@@ -112,7 +112,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string ESTemplateCancerType { get; set; }
 
-
+        /// <summary>
+        /// Flag to redirect if a selected trial is not active.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool RedirectIfInactive { get; set; }
     }
 }
- 

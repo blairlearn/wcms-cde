@@ -30,6 +30,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         private const string _phaseII_III = "Phase II/III";
 
         /// <summary>
+        /// Get value of inactive trial redirection flag
+        /// </summary>
+        private bool IsRedirectable
+        {
+            get { return BasicCTSPageInfo.RedirectIfInactive; }
+        }
+
+        /// <summary>
         /// Get the working URL of this control for additional modifications
         /// </summary>
         protected override String WorkingUrl
@@ -37,6 +45,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             get { return BasicCTSPageInfo.DetailedViewPagePrettyUrl; }
         }
 
+        
         /// <summary>
         /// Returns the cancer type the user searched for if the current search contains a type/condition.
         /// </summary>
@@ -225,8 +234,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             // If trial value is null, redirect to the 404 page
             if (trial == null)
-            { 
+            {
                 throw new HttpException(404, "Trial cannot be found.");
+            }
+
+            // If the IsRedirectable flag is set to true, check trial status. If inactive or has no NCT ID, go to 404 page.
+            if (IsRedirectable)
+            {
+                string[] actives = _basicCTSManager.ActiveTrialStatuses;
+                if(Array.IndexOf(actives, trial.CurrentTrialStatus) < 0)
+                { 
+                    throw new HttpException(404, "Trial status is not active.");
+                }
+                if (string.IsNullOrWhiteSpace(trial.NCTID))
+                {
+                    throw new HttpException(404, "Trial does not have an NCT ID.");
+                }
             }
 
             // get zip from search parameters

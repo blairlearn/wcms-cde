@@ -10,13 +10,7 @@ namespace NCI.Web.UI.WebControls
 
         protected override void RenderContents(System.Web.UI.HtmlTextWriter output)
         {
-            int pages = 0;
-
-
-            if (this.RecordsPerPage > 0)
-            {
-                pages = (this.RecordCount / this.RecordsPerPage) + ((this.RecordCount % this.RecordsPerPage > 0) ? 1 : 0);
-            }
+            int pages = GetPageCount();
 
             if (pages > 1)
             {

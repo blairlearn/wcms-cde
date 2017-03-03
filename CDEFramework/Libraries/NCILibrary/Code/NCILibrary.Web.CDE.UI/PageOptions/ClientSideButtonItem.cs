@@ -6,7 +6,7 @@ using System.Web.UI;
 
 namespace NCI.Web.CDE.UI.WebControls
 {
-    public class EmailButtonItem : PageOptionsButtonItem
+    public class ClientSideButtonItem : PageOptionsButtonItem
     {
         public new string Title
         {
@@ -19,36 +19,36 @@ namespace NCI.Web.CDE.UI.WebControls
                 if (!object.Equals(value, this.ViewState["Title"]))
                 {
                     this.ViewState["Title"] = value;
-                    this.OnEmailButtonItemChanged();
+                    this.OnClientSideButtonItemChanged();
                 }
             }
         }
 
-        internal event EventHandler EmailButtonItemChanged;
+        internal event EventHandler ClientSideButtonItemChanged;
 
-        protected internal void OnEmailButtonItemChanged()
+        protected internal void OnClientSideButtonItemChanged()
         {
-            if (this.EmailButtonItemChanged != null)
+            if (this.ClientSideButtonItemChanged != null)
             {
-                this.EmailButtonItemChanged(this, EventArgs.Empty);
+                this.ClientSideButtonItemChanged(this, EventArgs.Empty);
             }
         }
 
-        protected internal EmailButtonItem CloneEmailButtonItem()
+        protected internal ClientSideButtonItem CloneClientSideButtonItem()
         {
-            EmailButtonItem newEmailButtonItem = this.CreateEmailButtonItem();
-            this.CopyProperties(newEmailButtonItem);
-            return newEmailButtonItem;
+            ClientSideButtonItem newClientSideButtonItem = this.CreateClientSideButtonItem();
+            this.CopyProperties(newClientSideButtonItem);
+            return newClientSideButtonItem;
         }
 
-        protected void CopyProperties(EmailButtonItem newEmailButtonItem)
+        protected void CopyProperties(ClientSideButtonItem newClientSideButtonItem)
         {
-            ((EmailButtonItem)newEmailButtonItem).Title = this.Title;
+            ((ClientSideButtonItem)newClientSideButtonItem).Title = this.Title;
         }
 
-        protected EmailButtonItem CreateEmailButtonItem()
+        protected ClientSideButtonItem CreateClientSideButtonItem()
         {
-            return new EmailButtonItem();
+            return new ClientSideButtonItem();
         }
 
         public virtual string OnClick
@@ -64,7 +64,7 @@ namespace NCI.Web.CDE.UI.WebControls
                 if (!object.Equals(value, this.ViewState["OnClick"]))
                 {
                     this.ViewState["OnClick"] = value;
-                    this.OnEmailButtonItemChanged();
+                    this.OnClientSideButtonItemChanged();
                 }
             }
         }

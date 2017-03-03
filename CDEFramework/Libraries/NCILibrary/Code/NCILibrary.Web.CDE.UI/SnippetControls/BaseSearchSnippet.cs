@@ -360,6 +360,26 @@ namespace NCI.Web.CDE.UI.SnippetControls
             pager.BaseUrl += searchQueryParams;
 
             Controls.Add(pager);
+
+            // check for existence of previous and and next urls
+            string prevUrl = pager.GetPrevLinkUrl();
+            string nextUrl = pager.GetNextLinkUrl();
+
+            if (prevUrl != null)
+            {
+                this.PageInstruction.AddUrlFilter("RelPrev", (name, url) =>
+                {
+                    url.SetUrl(prevUrl);
+                });
+            }
+
+            if (nextUrl != null)
+            {
+                this.PageInstruction.AddUrlFilter("RelNext", (name, url) =>
+                {
+                    url.SetUrl(nextUrl);
+                });
+            }
         }
 
         protected virtual void SetupBlogPager(int recordsPerPage, int totalRecordCount, Dictionary<string, string> urlFilters)
@@ -419,6 +439,26 @@ namespace NCI.Web.CDE.UI.SnippetControls
             blogLandingPager.BaseUrl += searchQueryParams;
 
             Controls.Add(blogLandingPager);
+
+            // check for existence of previous and and next urls
+            string prevUrl = blogLandingPager.GetPrevLinkUrl();
+            string nextUrl = blogLandingPager.GetNextLinkUrl();
+
+            if (prevUrl != null)
+            {
+                this.PageInstruction.AddUrlFilter("RelPrev", (name, url) =>
+                {
+                    url.SetUrl(prevUrl);
+                });
+            }
+
+            if (nextUrl != null)
+            {
+                this.PageInstruction.AddUrlFilter("RelNext", (name, url) =>
+                {
+                    url.SetUrl(nextUrl);
+                });
+            }
         }
 
         /// <summary>
