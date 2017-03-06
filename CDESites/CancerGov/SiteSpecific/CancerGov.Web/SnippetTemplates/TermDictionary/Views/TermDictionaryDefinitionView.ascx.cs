@@ -487,6 +487,13 @@ namespace CancerGov.Web.SnippetTemplates
                         }
                     }
 
+                    // Display the caption
+                    HtmlGenericControl caption = (HtmlGenericControl)e.Item.FindControl("captionContainer");
+                    if (caption != null && !String.IsNullOrWhiteSpace(videoDetails.Caption))
+                    {
+                        caption.Visible = true;
+                        caption.InnerHtml = videoDetails.Caption;
+                    }
                 }
             }
         }
