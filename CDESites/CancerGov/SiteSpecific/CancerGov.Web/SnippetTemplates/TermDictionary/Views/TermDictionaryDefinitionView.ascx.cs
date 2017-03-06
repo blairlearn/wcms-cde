@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+
 using CancerGov.Text;
 using Common.Logging;
+
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
@@ -314,6 +317,20 @@ namespace CancerGov.Web.SnippetTemplates
                                 }
                                 
                             }
+
+
+                            Repeater relatedVideos = (Repeater)e.Item.FindControl("relatedVideos");
+                            if (relatedVideos != null)
+                            {
+                                if (termDetails.HasVideos && termDetails.Videos.Length > 0)
+                                {
+                                    relatedVideos.Visible = true;
+                                    relatedVideos.DataSource = termDetails.Videos;
+                                    relatedVideos.DataBind();
+                                }
+
+                            }
+
                         }
                         else
                         {
@@ -416,6 +433,65 @@ namespace CancerGov.Web.SnippetTemplates
                 }
             }
         }
+
+        protected void relatedVideos_OnItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                //get the ImageReference object that is bound to the current row.
+                VideoReference videoDetails = (VideoReference)e.Item.DataItem;
+
+                if (videoDetails != null)
+                {
+                    // Set the CSS class for the video's containing figure element.
+                    HtmlGenericControl container = (HtmlGenericControl)e.Item.FindControl("videoContainer");
+                    if (container != null)
+                    {
+                        // These are the templates allowed by the CDR's DTD for GlossaryTerm Embedded videos.
+                        // Others do exist in Percussion, but are deprecated per OCECDR-3558.
+                        switch (videoDetails.Template.ToLowerInvariant())
+                        {
+                            case "video100notitle":
+                            case "video100title":
+                                container.Attributes.Add("class", "video center size100");
+                                break;
+
+                            case "video50notitle":
+                                container.Attributes.Add("class", "video center size50");
+                                break;
+
+                            case "video50notitleright":
+                            case "video50titleright":
+                                container.Attributes.Add("class", "video right size50");
+                                break;
+
+                            case "video75notitle":
+                            case "video75title":
+                                container.Attributes.Add("class", "video center size75");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    // Set up the title display.
+                    // Requires a title be present, and not using one of the "NoTitle" templates.
+                    if (!String.IsNullOrWhiteSpace(videoDetails.Title) && !videoDetails.Template.ToLowerInvariant().Contains("notitle"))
+                    {
+                        HtmlGenericControl title = (HtmlGenericControl)e.Item.FindControl("videoTitle");
+                        if (title != null)
+                        {
+                            title.Visible = true;
+                            title.InnerText = videoDetails.Title;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        
         private void ValidateParams()
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);
