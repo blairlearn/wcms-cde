@@ -97,7 +97,7 @@
                                          data-video-title="<%# ((VideoReference)(Container.DataItem)).Title %>">
                                         <noscript><p><a href="https://www.youtube.com/watch?v=<%# ((VideoReference)(Container.DataItem)).UniqueID %>" target="_blank">View this video on YouTube.</a></p></noscript>
                                     </div>
-                                    <figcaption class="caption-container" id="captionContainer" Visible="false" runat="server"></figcaption>
+                                    <figcaption class="caption-container no-resize" id="captionContainer" Visible="false" runat="server"></figcaption>
                                 </figure>
                                 </ItemTemplate>
                             </asp:Repeater>
