@@ -470,7 +470,10 @@ namespace CancerGov.Web.SnippetTemplates
                             case "video75title":
                                 container.Attributes.Add("class", "video center size75");
                                 break;
+
                             default:
+                                log.ErrorFormat("Unknown video template '{0}'.", videoDetails.Template);
+                                container.Attributes.Add("class", "video center size100");
                                 break;
                         }
                     }
