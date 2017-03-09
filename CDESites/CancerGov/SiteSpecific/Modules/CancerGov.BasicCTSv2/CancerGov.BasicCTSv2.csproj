@@ -49,6 +49,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,6 +60,7 @@
     <Compile Include="BasicCTSManager.cs" />
     <Compile Include="ClinicalTrialExtensions.cs" />
     <Compile Include="Configuration\BasicClinicalTrialSearchAPISection.cs" />
+    <Compile Include="HttpHandlers\CTSPrintRequestHandler.cs" />
     <Compile Include="NCTIDRedirectModule.cs" />
     <Compile Include="GeoLocation.cs" />
     <Compile Include="LegacyCancerTypeDictionary.cs" />
