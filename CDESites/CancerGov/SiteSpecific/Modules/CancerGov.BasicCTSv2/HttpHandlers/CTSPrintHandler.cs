@@ -28,6 +28,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             context.Response.ContentType = "text/HTML";
             context.Response.ContentEncoding = Encoding.UTF8;
 
+            bool isError = false;
+
             // Validate if the 
             try
             {
@@ -35,10 +37,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             }
             catch (Exception ex)
             {
-                SendErrorResponse(context, ex.Message, 404);
+                // Incorrect parameter for printid (not guid)
+                SendErrorResponse(context, 400);
+                isError = true;
             }
 
-            context.Response.Write("<html>Successfully check GUID</html>");
+            if(!isError)
+            {
+                context.Response.Write("<html>Successfully check GUID</html>");
+                context.Response.End();
+            }
         }
 
         /// <summary>
@@ -47,14 +55,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
         /// <param name="context">the request context</param>
         /// <param name="message">the error message</param>
         /// <param name="status">the status</param>
-        private static void SendErrorResponse(HttpContext context, string message, int status)
+        private static void SendErrorResponse(HttpContext context, int status)
         {
-            ErrorResponse res = new ErrorResponse() { ErrorMessage = message, Status = status };
+            ErrorResponse res = new ErrorResponse() { Status = status };
 
-            context.Response.Write(JsonConvert.SerializeObject(res));
-            context.Response.StatusDescription = message;
+            //context.Response.Write(JsonConvert.SerializeObject(res));
+            //context.Response.StatusDescription = message;
             context.Response.StatusCode = status;
-            context.Response.TrySkipIisCustomErrors = true;
+            //context.Response.TrySkipIisCustomErrors = true;
             context.Response.End();
         }
 
