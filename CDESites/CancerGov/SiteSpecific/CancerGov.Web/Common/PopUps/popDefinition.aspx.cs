@@ -33,14 +33,15 @@ namespace Www.Common.PopUps
 
         protected void Page_Load(object sender, EventArgs e) 
         {
+            string input_term;
 
             if (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web)
             {
                 urlArgs = Request.Url.Query.Substring(1);
+                input_term = Strings.Clean(Request.Params["term"]);
                 CdrID = Strings.IfNull(Strings.Clean(Request.Params["id"]), Strings.Clean(Request.Params["cdrid"]));
                 AudienceType audience = GetAudienceType(Strings.Clean(Request.Params["version"]));
                 DictionaryType dictionary = GetDictionaryType(Strings.Clean(Request.Params["dictionary"]));
-                string summaryType = GetSummaryType(Strings.Clean(Request.Params["summaryType"]));
 
                 if (Request.QueryString["language"] == "Spanish")
                 {
@@ -67,22 +68,16 @@ namespace Www.Common.PopUps
 
                 if (!string.IsNullOrEmpty(CdrID))
                 {
-                    // Look up terms from dictionary links created via glossificiation.
-                    // Also handles legacy dictionary links on summaries which haven't been processed yet to 
-                    // include the summary type.
-                    if (summaryType == null)
-                    {
-                        CdrID = Regex.Replace(CdrID, "^CDR0+", "", RegexOptions.Compiled);
+                    CdrID = Regex.Replace(CdrID, "^CDR0+", "", RegexOptions.Compiled);
 
-                        // call appropriate method if dictionary type is known
-                        if (dictionary == DictionaryType.Unknown)
-                        {
-                            dataItem = _dictionaryAppManager.GetTermForAudience(Convert.ToInt32(CdrID), dictionaryLanguage, "v1", audience);
-                        }
-                        else
-                        {
-                            dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), dictionary, dictionaryLanguage, "v1", audience);
-                        }
+                    // call appropriate method if dictionary type is known
+                    if (dictionary == DictionaryType.Unknown)
+                    {
+                        dataItem = _dictionaryAppManager.GetTermForAudience(Convert.ToInt32(CdrID), dictionaryLanguage, "v1", audience);
+                    }
+                    else
+                    {
+                        dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), dictionary, dictionaryLanguage, "v1", audience);
                     }
 
                 }
@@ -255,7 +250,6 @@ namespace Www.Common.PopUps
                 }
             }
         }
-
         protected void Page_Init(object sender, EventArgs e)
         {
             //
@@ -297,27 +291,6 @@ namespace Www.Common.PopUps
             dictionary = Strings.Clean(dictionary, "Unknown");
 
             return ConvertEnum<DictionaryType>.Convert(dictionary, DictionaryType.Unknown);
-        }
-
-        /// <summary>
-        /// Normalizes the value for dictionary's optional summaryType parameter.
-        /// </summary>
-        /// <param name="typeParam">String containing the summary type.</param>
-        /// <returns>If typeParam is non-null, returns the value as lowercase with whitespace trimmed.  Null if typeParam is null or empty.</returns>
-        private string GetSummaryType(string typeParam)
-        {
-            string summaryType;
-
-            if (String.IsNullOrWhiteSpace(typeParam))
-            {
-                summaryType = null;
-            }
-            else
-            {
-                summaryType = typeParam.Trim().ToLowerInvariant();
-            }
-
-            return summaryType;
         }
 
         #region Web Form Designer generated code
