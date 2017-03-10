@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using System.Collections;
 using System.Threading.Tasks;
+using NCI.Web.CDE.Application;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 {
@@ -35,11 +36,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             {
                 Guid printID = Guid.Parse(request.QueryString["printid"]);
             }
-            catch (Exception ex)
+            catch (InvalidPrintIDException ex)
             {
                 // Incorrect parameter for printid (not guid)
-                SendErrorResponse(context, 400);
                 isError = true;
+                ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400);
             }
 
             if(!isError)
