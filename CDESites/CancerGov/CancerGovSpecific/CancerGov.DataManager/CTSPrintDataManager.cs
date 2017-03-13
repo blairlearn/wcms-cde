@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using NCI.Data;
-using System.Configuration;
+using NCI.DataManager;
+using CancerGov.ClinicalTrials.Basic.v2;
+using NCI.Web.CDE.Application;
 
 namespace CancerGov.DataManager
 {
@@ -23,10 +26,9 @@ namespace CancerGov.DataManager
         /// <returns>A string.</returns>
         public static string Execute(Guid printID, bool isLive)
         {
+            string printPageHtml = null;
             try
             {
-                string printPageHtml = "";
-
                 string connString = ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString;
 
                 if (!string.IsNullOrEmpty(connString))
@@ -39,24 +41,37 @@ namespace CancerGov.DataManager
                                     new SqlParameter("@isLive", isLive ? 1 : 0)
                             ))
                         {
-                            while (reader.Read())
+                            if (reader.Read())
                             {
-                                //SqlFieldValueReader sqlFVReader = new SqlFieldValueReader(reader);
-                                //printPageHtml = reader.GetString("content");
+                                SqlFieldValueReader sqlFVReader = new SqlFieldValueReader(reader);
+                                printPageHtml = sqlFVReader.GetString("content");
+                            }
+                            else
+                            {
+                                ErrorPageDisplayer.RaisePageByCode("CTSPrintDataManager", 500);
+                                throw new PrintIDNotFoundException("The given printID did not match any cache values in the database");
                             }
                         }
                     }
                 }
                 else
                 {
-                    throw new Exception("Configuration Missing: Connection string is null, update the web config with connection string");
+                    ErrorPageDisplayer.RaisePageByCode("CTSPrintDataManager", 500);
+                    throw new DbConnectionException("Configuration Missing: Connection string is null, update the web config with connection string");
                 }
 
-                return printPageHtml;
+                if (!string.IsNullOrWhiteSpace(printPageHtml))
+                {
+                    return printPageHtml;
+                }
+                else
+                {
+                    throw new PrintFetchFailureException("Failed in CTSPrintDataManager - Cannot return null page HTML");
+                }
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw new PrintFetchFailureException("Failed in CTSPrintDataManager");
             }
         }
     }

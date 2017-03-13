@@ -37,7 +37,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             {
                 printID = Guid.Parse(request.QueryString["printid"]);
             }
-            catch (Exception ex)
+            catch
             {
                 // Incorrect parameter for printid (not guid)
                 isError = true;
@@ -49,7 +49,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             {
                 CTSPrintManager manager = new CTSPrintManager();
                 string printContent = manager.GetPrintContent(printID);
-                context.Response.Write("<html><body>Successfully check GUID</body></html>");
+                context.Response.Write(printContent);
                 context.Response.End();
             }
         }
