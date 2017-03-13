@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Linq;
 using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Web;
+using System.Web.UI;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
-using System.Collections;
+using System.Collections.Generic;
+using CancerGov.ClinicalTrialsAPI;
+using NCI.Web.CDE.Modules;
+using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 {
-    public class CTSPrintRequestHandler : IHttpHandler
+    public class CTSNewPrintRequestHandler : IHttpHandler
     {
         public bool IsReusable
         {
@@ -18,14 +23,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 
         public void ProcessRequest(HttpContext context)
         {
-
-            var request = context.Request;
-            var requestBody = new StreamReader(request.InputStream, request.ContentEncoding).ReadToEnd();
-            var jsonSerializer = new JavaScriptSerializer();
-            var data = jsonSerializer.Deserialize(requestBody, typeof(TrialCollection));
+            //var inputStream = new StreamReader(context.Request.InputStream);
+            //var jsonSerializer = new JsonSerializer();
+            //var data = (Request)jsonSerializer.Deserialize(inputStream, typeof(Request));
 
             //Set our output to be JSON
             context.Response.ContentType = "application/json";
+            context.Response.ContentEncoding = Encoding.UTF8;
+            //context.Response.StatusCode = 404;
+
+            //Guid.Parse("foo");
 
             //Try and get the request.
             Request req = null;
@@ -39,16 +46,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 return;
             }
 
-            //By now our request is good and valid, so let's prep the email.
-            StringBuilder body = new StringBuilder();
+            // Retrieve the collections given the ID's
+            BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+            List<ClinicalTrial> results = manager.GetMultipleTrials(req.TrialIDs).ToList();
 
-            Response response = new Response();
-            context.Response.Write(JsonConvert.SerializeObject(response));
+            // Send results to Velocity template
+            var formattedResult = FormatResults(results);
+             
+            // Save result to cache table
+            var test = CTSPrintResultsDataManager.SavePrintResult(formattedResult, results.ToString(), false);
+
+            // Return result from save to cache 
+            // should be a URL or a GUID.
+
+            context.Response.Write(JsonConvert.SerializeObject(formattedResult));
         }
 
-        private static void QueryDatabase()
+        public string FormatResults(IEnumerable<ClinicalTrial> results)
         {
+            // Show Results
 
+            LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
+                @"~/PublishedContent/VelocityTemplates/BasicCTSPrintResultsv2.vm",
+                 new
+                 {
+                     Results = results
+                 }
+            ));
+
+            File.WriteAllText(@"C:\Development\misc\output.html", ltl.Text);
+                   
+            return (ltl.Text);
         }
 
         /// <summary>
@@ -91,17 +119,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 throw new Exception("Could not parse request.");
             }
 
-            if (String.IsNullOrWhiteSpace(rtnReq.URL))
-            {
-                throw new Exception("URL is null or empty.");
-            }
-            else
-            {
-                string url = rtnReq.URL.Trim();
-                if (url[0] != '/')
-                    throw new Exception("URL must be relative to '/'.");
-            }
-
             return rtnReq;
         }
 
@@ -111,13 +128,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
         public class Request
         {
             /// <summary>
-            /// Gets the URL of the page the visitor is giving feedback on
-            /// </summary>
-            public string URL { get; set; }
-            /// <summary>
             /// Gets the list of TrialIDs
             /// </summary>
-            public string[] TrialIDs;
+            public List<String> TrialIDs;
         }
 
         /// <summary>
@@ -125,7 +138,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
         /// </summary>
         public class Response
         {
-
+            /// <summary>
+            /// URL for Stored Results
+            /// </summary>
+            public String Url;
         }
 
         /// <summary>
@@ -136,11 +152,5 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             public int Status { get; set; }
             public string ErrorMessage { get; set; }
         }
-
-        private class TrialCollection
-        {
-            public string[] TrialIDs;
-        }
-
     }
 }

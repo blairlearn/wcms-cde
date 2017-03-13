@@ -65,8 +65,9 @@
     <Compile Include="Configuration\BasicClinicalTrialSearchAPISection.cs" />
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
-    <Compile Include="HttpHandlers\CTSPrintHandler.cs" />
-    <Compile Include="HttpHandlers\CTSPrintRequestHandler.cs" />
+    <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
+    <Compile Include="HttpHandlers\CTSCachedPrintRequestHandler.cs" />
+    <Compile Include="HttpHandlers\CTSNewPrintRequestHandler.cs" />
     <Compile Include="NCTIDRedirectModule.cs" />
     <Compile Include="GeoLocation.cs" />
     <Compile Include="LegacyCancerTypeDictionary.cs" />
@@ -109,6 +110,10 @@
       <Project>{898ff17c-c94a-4d85-8aad-88764b72cfae}</Project>
       <Name>NCILibrary.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
+      <Project>{f4c37116-861a-4fd6-b45d-578b258fefc7}</Project>
+      <Name>NCILibrary.DataManager</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
       <Project>{aafa2f86-d3f3-4224-a13e-ba6209a4ebad}</Project>
       <Name>NCILibrary.Web.CDE.UI</Name>
@@ -116,6 +121,10 @@
     <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
       <Project>{eee51ba0-18ae-4cf2-876f-7e75b5a2d1ff}</Project>
       <Name>NCILibrary.Web.CDE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CancerGovCommon\CancerGovCommon.csproj">
+      <Project>{6f797b18-ff7e-4963-8e13-5ea26e910198}</Project>
+      <Name>CancerGovCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\CancerGov.ClinicalTrialsAPI\CancerGov.ClinicalTrialsAPI.csproj">
       <Project>{07db8185-53dc-4434-9d4a-ffc0efc9078a}</Project>
@@ -129,9 +138,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataManagers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

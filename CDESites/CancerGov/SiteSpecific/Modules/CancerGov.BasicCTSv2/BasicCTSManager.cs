@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using CancerGov.ClinicalTrialsAPI;
 using Newtonsoft.Json.Linq;
 
@@ -79,6 +78,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             this.Client = new ClinicalTrialsAPIClient(host);
         }
 
+
+        #region Public Methods
 
         /// <summary>
         /// Returns a Clinical Trial
@@ -184,27 +185,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
-        /// Creates a list of actively recruiting sites only 
-        /// </summary>
-        /// <param name="trial">Clinical trial</param>
-        private void RemoveNonRecruitingSites(ClinicalTrial trial)
-        {
-            if (trial.Sites != null)
-            {
-                trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));
-            }
-        }
-
-        /// <summary>
-        /// Set to true if site status matches an item in ActiveRecruitmentStatuses
-        /// </summary>
-        /// <param name="site">Study site</param>
-        private bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
-        {
-            return ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower());
-        }
-
-        /// <summary>
         /// Gets the Geo Location for a ZipCode
         /// </summary>
         /// <param name="zipCode"></param>
@@ -221,7 +201,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             // coordinates if the mapping exists.
             ZipCodeGeoEntry zipEntry = ZipCodeGeoLookup.GetZipCodeGeoEntry(zipCode);
             if (zipEntry != null)
-            { 
+            {
                 if (!Double.IsNaN(zipEntry.Latitude) && !Double.IsNaN(zipEntry.Longitude))
                 {
                     latitude = zipEntry.Latitude;
@@ -287,6 +267,54 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             return string.Empty; //Nothing found
         }
+
+        public IEnumerable<ClinicalTrial> GetMultipleTrials(List<String> ids, int batchVal = 5)
+        {
+            Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
+            ClinicalTrialsCollection ctColl = new ClinicalTrialsCollection();
+                         
+             filterCriteria.Add("nci_id", ids.ToArray());            
+
+            ctColl = Client.List(
+                //size: 10,
+                //from: 0,
+                searchParams: filterCriteria
+            );                
+            
+
+            var returnResult = new List<ClinicalTrial>();
+            returnResult.AddRange(ctColl.Trials);
+            return returnResult;
+        }
+
+        #endregion
+
+        #region Private Members
+
+        /// <summary>
+        /// Creates a list of actively recruiting sites only 
+        /// </summary>
+        /// <param name="trial">Clinical trial</param>
+        private void RemoveNonRecruitingSites(ClinicalTrial trial)
+        {
+            if (trial.Sites != null)
+            {
+                trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => IsActivelyRecruiting(site)));
+            }
+        }
+
+        /// <summary>
+        /// Set to true if site status matches an item in ActiveRecruitmentStatuses
+        /// </summary>
+        /// <param name="site">Study site</param>
+        private bool IsActivelyRecruiting(ClinicalTrial.StudySite site)
+        {
+            return ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower());
+        }
+
+        #endregion
+
+        
 
 
     }

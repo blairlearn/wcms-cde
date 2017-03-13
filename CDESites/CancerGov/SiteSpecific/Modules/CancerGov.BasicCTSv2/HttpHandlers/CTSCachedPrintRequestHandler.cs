@@ -13,7 +13,7 @@ using NCI.Web.CDE.Application;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 {
-    public class CTSPrintHandler : IHttpHandler
+    public class CTSCachedPrintRequestHandler : IHttpHandler
     {
         public bool IsReusable
         {
