@@ -30,22 +30,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             context.Response.ContentEncoding = Encoding.UTF8;
 
             bool isError = false;
+            Guid printID = new Guid();
 
-            // Validate if the 
+            // Validate if the printID passed in through the URL is a valid Guid
             try
             {
-                Guid printID = Guid.Parse(request.QueryString["printid"]);
+                printID = Guid.Parse(request.QueryString["printid"]);
             }
-            catch (InvalidPrintIDException ex)
+            catch (Exception ex)
             {
                 // Incorrect parameter for printid (not guid)
                 isError = true;
                 ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400);
+                throw new InvalidPrintIDException("Invalid PrintID parameter for CTS Print");
             }
 
             if(!isError)
             {
-                context.Response.Write("<html>Successfully check GUID</html>");
+                CTSPrintManager manager = new CTSPrintManager();
+                string printContent = manager.GetPrintContent(printID);
+                context.Response.Write("<html><body>Successfully check GUID</body></html>");
                 context.Response.End();
             }
         }

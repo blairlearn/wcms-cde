@@ -44,5 +44,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public PrintIDNotFoundException(string message) : base(message) { }
     }
 
+    /// <summary>
+    /// This is for when fetching a CTS print page fails
+    /// </summary>
+    public class PrintFetchFailureException : CTSPrintException
+    {
+        public PrintFetchFailureException() : base() { }
+        public PrintFetchFailureException(string message) : base(message) { }
+    }
+
 
 }
