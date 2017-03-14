@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using System.Configuration;
 using NCI.Web.CDE.Application;
 using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
+using NCI.Text;
+using NCI.Web.CDE.UI;
+using NCI.Web.CDE;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -14,9 +17,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     {
         public string GetPrintContent(Guid printID)
         {
-            // To do: add logic for determining isLive
-
-            string printContent = CTSPrintResultsDataManager.RetrieveResult(printID, true);
+            string printContent = CTSPrintResultsDataManager.RetrieveResult(printID, NCI.Web.CDE.UI.Configuration.Settings.IsLive);
 
             return printContent;
         }
