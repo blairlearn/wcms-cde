@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using CancerGov.ClinicalTrialsAPI;
 using NCI.Web.CDE.Modules;
 using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
+using NCI.Web.CDE.UI.Configuration;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 {
@@ -54,7 +55,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             var formattedResult = FormatResults(results);
              
             // Save result to cache table
-            var test = CTSPrintResultsDataManager.SavePrintResult(formattedResult, results.ToString(), false);
+            var test = CTSPrintResultsDataManager.SavePrintResult(formattedResult, results.ToString(), Settings.IsLive);
 
             // Return result from save to cache 
             // should be a URL or a GUID.
