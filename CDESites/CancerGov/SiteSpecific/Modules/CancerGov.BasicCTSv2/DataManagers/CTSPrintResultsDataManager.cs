@@ -80,7 +80,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.DataManagers
                             }
                             else
                             {
-                                ErrorPageDisplayer.RaisePageByCode("CTSPrintDataManager", 500);
+                                ErrorPageDisplayer.RaisePageByCode("CTSPrintDataManager", 404);
                                 throw new PrintIDNotFoundException("The given printID did not match any cache values in the database");
                             }
                         }
