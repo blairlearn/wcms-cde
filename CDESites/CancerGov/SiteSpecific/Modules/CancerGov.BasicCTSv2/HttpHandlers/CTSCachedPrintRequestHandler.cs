@@ -112,11 +112,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 }
 
                 BasicCTSManager APImanager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
-                var formattedResult = FormatResults(APImanager.GetMultipleTrials(req.TrialIDs).ToList(), DateTime.Now, searchTerms);
+                var formattedResult = manager.FormatPrintResults(APImanager.GetMultipleTrials(req.TrialIDs).ToList(), DateTime.Now, searchTerms);
 
                 // Return result from save to cache 
                 // should be a URL or a GUID.
-//                Guid printCacheID = manager.StorePrintContent(req.TrialIDs);
+//                Guid printCacheID = manager.StorePrintContent(formattedResult, searchTerms);
 
 //                response.Write(printCacheID);
                 response.Write("done");
@@ -189,13 +189,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             context.Response.StatusCode = status;
             //context.Response.TrySkipIisCustomErrors = true;
             context.Response.End();
-        }
-
-        private class SearchTerms
-        {
-            public String Age { get; set; }
-            public String ZipCode { get; set; }
-            public String CancerType { get; set; }
         }
 
         /// <summary>

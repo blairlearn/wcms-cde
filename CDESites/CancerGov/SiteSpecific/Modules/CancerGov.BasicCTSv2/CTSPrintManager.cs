@@ -15,35 +15,40 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI.Configuration;
 using CancerGov.ClinicalTrialsAPI;
+using CancerGov.ClinicalTrials.Basic.v2.SnippetControls;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
     public class CTSPrintManager
     {
 
-        public Guid StorePrintContent(List<String> trialIDs)
+        public Guid StorePrintContent(string formattedPrintContent, SearchTerms searchTerms)
         {
             // Retrieve the collections given the ID's
             BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
-            List<ClinicalTrial> results = manager.GetMultipleTrials(trialIDs).ToList();
-
-            // Send results to Velocity template
-            var formattedResults = FormatPrintResults(results);
 
             // Save result to cache table
-            Guid test = CTSPrintResultsDataManager.SavePrintResult(formattedResults, results.ToString(), Settings.IsLive);
+            Guid guid = CTSPrintResultsDataManager.SavePrintResult(formattedPrintContent, searchTerms.ToString(), Settings.IsLive);
 
-            return test;
+            return guid;
         }
 
-        public string FormatPrintResults(IEnumerable<ClinicalTrial> results)
+        public string FormatPrintResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, SearchTerms searchTerms)
         {
-            // Format Print Page HTML by binding results to velocity template for CTS print.
+            // convert description to pretty description
+            foreach (var trial in results)
+            {
+                var desc = trial.DetailedDescription;
+                trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
+            }
+            // Show Results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                 @"~/PublishedContent/VelocityTemplates/BasicCTSPrintResultsv2.vm",
                  new
                  {
-                     Results = results
+                     Results = results,
+                     SearchDate = searchDate.ToString("d/MM/yyyy"),
+                     SearchTerms = searchTerms
                  }
             ));
 
