@@ -22,10 +22,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     public class CTSPrintManager
     {
 
-        public Guid StorePrintContent(string formattedPrintContent, SearchTerms searchTerms)
+        public Guid StorePrintContent(List<string> trialIDs, DateTime date, SearchTerms searchTerms)
         {
             // Retrieve the collections given the ID's
             BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+            List<ClinicalTrial> results = manager.GetMultipleTrials(trialIDs).ToList();
+
+            // Send results to Velocity template
+            var formattedPrintContent = FormatPrintResults(results, date, searchTerms);
 
             // Save result to cache table
             Guid guid = CTSPrintResultsDataManager.SavePrintResult(formattedPrintContent, searchTerms.ToString(), Settings.IsLive);
@@ -48,7 +52,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                  {
                      Results = results,
                      SearchDate = searchDate.ToString("d/MM/yyyy"),
-                     SearchTerms = searchTerms
+                     SearchTerms = searchTerms,
+                     TrialTools = new TrialVelocityTools()
                  }
             ));
 
@@ -63,6 +68,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             return printContent;
         }
+
 
     }
 }

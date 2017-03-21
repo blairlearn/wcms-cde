@@ -111,15 +111,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                     return;
                 }
 
-                BasicCTSManager APImanager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
-                var formattedResult = manager.FormatPrintResults(APImanager.GetMultipleTrials(req.TrialIDs).ToList(), DateTime.Now, searchTerms);
-
+                //BasicCTSManager APImanager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+                //var formattedResult = manager.FormatPrintResults(APImanager.GetMultipleTrials(req.TrialIDs).ToList(), DateTime.Now, searchTerms);
                 // Return result from save to cache 
                 // should be a URL or a GUID.
-//                Guid printCacheID = manager.StorePrintContent(formattedResult, searchTerms);
+                //Guid printCacheID = manager.StorePrintContent(formattedResult, searchTerms);
 
-//                response.Write(printCacheID);
-                response.Write("done");
+                CTSPrintManager printManager = new CTSPrintManager();
+                Guid printCacheID = printManager.StorePrintContent(req.TrialIDs, DateTime.Now, searchTerms);
+
+                var resp = JsonConvert.SerializeObject( new {
+                    printID = printCacheID
+                });
+
+                //var json = new JavaScriptSerializer().Serialize(printCacheID);
+
+                response.Write(resp);
+                //response.Write("done");
                 response.End();
             }
         }
@@ -139,7 +147,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                  {
                      Results = results,
                      SearchDate = searchDate.ToString("d/MM/yyyy"),
-                     SearchTerms = searchTerms
+                     SearchTerms = searchTerms,
+                     TrialTools = new TrialVelocityTools()
                  }
             ));
 
@@ -214,13 +223,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
         /// <summary>
         /// Defines a response from the FeedbackService
         /// </summary>
-        public class Response
+        /*public class Response
         {
             /// <summary>
             /// URL for Stored Results
             /// </summary>
             public String Url;
-        }
+        }*/
     }
 }
 
