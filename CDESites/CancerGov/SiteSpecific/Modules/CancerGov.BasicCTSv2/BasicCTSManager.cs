@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CancerGov.ClinicalTrialsAPI;
 using Newtonsoft.Json.Linq;
+using MoreLinq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -270,22 +271,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         public IEnumerable<ClinicalTrial> GetMultipleTrials(List<String> ids, int batchVal = 5)
         {
-            Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
-            ClinicalTrialsCollection ctColl = new ClinicalTrialsCollection();
-                         
-             filterCriteria.Add("nci_id", ids.ToArray());            
+            foreach (IEnumerable<string> batch in ids.Batch(batchVal))
+            {
+                Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
+                filterCriteria.Add("nci_id", batch.ToArray());
+                ClinicalTrialsCollection ctColl = new ClinicalTrialsCollection();
 
-            ctColl = Client.List(
-                //size: 10,
-                //from: 0,
-                searchParams: filterCriteria
-            );                
-            
+                ctColl = Client.List(
+                    size: 200,
+                    //from: 0,
+                    searchParams: filterCriteria
+                );
 
-            var returnResult = new List<ClinicalTrial>();
-            returnResult.AddRange(ctColl.Trials);
-            return returnResult;
+                foreach (ClinicalTrial c in ctColl.Trials)
+                {
+                    yield return c;
+
+                }
+            }            
         }
+
+
+        
 
         #endregion
 

@@ -9,13 +9,14 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using System.Collections;
+using System.Collections.Specialized;
 using NCI.Web.CDE.Modules;
 using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
 using System.Threading.Tasks;
 using NCI.Web.CDE.Application;
 using NCI.Web.CDE.UI.Configuration;
 using CancerGov.ClinicalTrialsAPI;
-
+using CancerGov.ClinicalTrials.Basic.v2.SnippetControls;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 {
@@ -28,6 +29,34 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 
         public void ProcessRequest(HttpContext context)
         {
+            // Get the Query parameters from the URL
+            NameValueCollection queryParams = HttpUtility.ParseQueryString(context.Request.Url.Query);
+            var cancerType = queryParams.Get("t");
+    
+            if (cancerType != null)
+            {
+                String[] ctarr = (cancerType.Contains("|") ? cancerType.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { cancerType });
+
+                //split up the disease ids
+                string[] diseaseIDs = ctarr[0].Split(',');
+
+                // Determine cancer type display name from CIDs and key (if there is no match with the key,
+                // then first term with matching ids is used)
+                string termKey = ctarr.Length > 1 ? ctarr[1] : null;
+                var _basicCTSManager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+
+                cancerType = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
+            }
+            
+
+            var searchTerms = new SearchTerms()
+            {
+                CancerType = cancerType,
+                ZipCode = queryParams.Get("z"),
+                Age = queryParams.Get("a"),
+            };
+            
+
 
             HttpRequest request = context.Request;
             HttpResponse response = context.Response;
@@ -82,27 +111,35 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                     return;
                 }
 
-                //BasicCTSManager APImanager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
-                //var formattedResult = FormatResults(APImanager.GetMultipleTrials(req.TrialIDs).ToList());
+                BasicCTSManager APImanager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+                var formattedResult = FormatResults(APImanager.GetMultipleTrials(req.TrialIDs).ToList(), DateTime.Now, searchTerms);
 
                 // Return result from save to cache 
                 // should be a URL or a GUID.
-                Guid printCacheID = manager.StorePrintContent(req.TrialIDs);
+//                Guid printCacheID = manager.StorePrintContent(req.TrialIDs);
 
-                response.Write(printCacheID);
+//                response.Write(printCacheID);
+                response.Write("done");
                 response.End();
             }
         }
 
-        public string FormatResults(IEnumerable<ClinicalTrial> results)
+        private string FormatResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, SearchTerms searchTerms)
         {
+            // convert description to pretty description
+            foreach (var trial in results)
+            {
+                var desc = trial.DetailedDescription;
+                trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
+            }
             // Show Results
-
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                 @"~/PublishedContent/VelocityTemplates/BasicCTSPrintResultsv2.vm",
                  new
                  {
-                     Results = results
+                     Results = results,
+                     SearchDate = searchDate.ToString("d/MM/yyyy"),
+                     SearchTerms = searchTerms
                  }
             ));
 
@@ -152,6 +189,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             context.Response.StatusCode = status;
             //context.Response.TrySkipIisCustomErrors = true;
             context.Response.End();
+        }
+
+        private class SearchTerms
+        {
+            public String Age { get; set; }
+            public String ZipCode { get; set; }
+            public String CancerType { get; set; }
         }
 
         /// <summary>

@@ -33,8 +33,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             context.Response.ContentEncoding = Encoding.UTF8;
             //context.Response.StatusCode = 404;
 
-            //Guid.Parse("foo");
-
             //Try and get the request.
             Request req = null;
             try
@@ -55,12 +53,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             var formattedResult = FormatResults(results);
              
             // Save result to cache table
-            var test = CTSPrintResultsDataManager.SavePrintResult(formattedResult, results.ToString(), Settings.IsLive);
+   //         var guid = CTSPrintResultsDataManager.SavePrintResult(formattedResult, results.ToString(), Settings.IsLive);
 
             // Return result from save to cache 
             // should be a URL or a GUID.
-
-            context.Response.Write(JsonConvert.SerializeObject(formattedResult));
+            context.Response.Write(JsonConvert.SerializeObject("516"));
         }
 
         public string FormatResults(IEnumerable<ClinicalTrial> results)
