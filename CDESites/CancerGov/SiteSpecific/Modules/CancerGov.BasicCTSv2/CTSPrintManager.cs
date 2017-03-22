@@ -45,7 +45,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 var desc = trial.DetailedDescription;
                 trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
             }
-            // Show Results
+
+            // Bind results to velocity template
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                 @"~/PublishedContent/VelocityTemplates/BasicCTSPrintResultsv2.vm",
                  new
@@ -57,13 +58,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                  }
             ));
 
-            File.WriteAllText(@"C:\Development\misc\output.html", ltl.Text);
+            //File.WriteAllText(@"C:\Development\misc\output.html", ltl.Text);
 
             return (ltl.Text);
         }
 
         public string GetPrintContent(Guid printID)
         {
+            // Call the data manager to retrieve the cached print results based on guid printID
             string printContent = CTSPrintResultsDataManager.RetrieveResult(printID, Settings.IsLive);
 
             return printContent;

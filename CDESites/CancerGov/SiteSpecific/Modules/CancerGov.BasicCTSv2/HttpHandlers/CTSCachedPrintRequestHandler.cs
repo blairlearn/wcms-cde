@@ -86,6 +86,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 
                 if (!isError)
                 {
+                    // If there is no error, send the printID to the manager to retrieve the cached print content
                     string printContent = manager.GetPrintContent(printID);
                     response.Write(printContent);
                     response.End();
@@ -117,22 +118,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 // should be a URL or a GUID.
                 //Guid printCacheID = manager.StorePrintContent(formattedResult, searchTerms);
 
-                CTSPrintManager printManager = new CTSPrintManager();
-                Guid printCacheID = printManager.StorePrintContent(req.TrialIDs, DateTime.Now, searchTerms);
+                if (!isError)
+                {
+                    // If there is no error, send our trialIDs, timestamp, and search terms to the manager
+                    // to store the cached print content
+                    Guid printCacheID = manager.StorePrintContent(req.TrialIDs, DateTime.Now, searchTerms);
 
-                var resp = JsonConvert.SerializeObject( new {
-                    printID = printCacheID
-                });
+                    // Format our return as JSON
+                    var resp = JsonConvert.SerializeObject(new
+                    {
+                        printID = printCacheID
+                    });
 
-                //var json = new JavaScriptSerializer().Serialize(printCacheID);
-
-                response.Write(resp);
-                //response.Write("done");
-                response.End();
+                    response.Write(resp);
+                    response.End();
+                }
             }
         }
 
-        private string FormatResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, SearchTerms searchTerms)
+        /*private string FormatResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, SearchTerms searchTerms)
         {
             // convert description to pretty description
             foreach (var trial in results)
@@ -155,7 +159,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             File.WriteAllText(@"C:\Development\misc\output.html", ltl.Text);
 
             return (ltl.Text);
-        }
+        }*/
 
         /// <summary>
         /// Parses the request JSON into a request object.
@@ -187,7 +191,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
         /// Send an error response back to the client
         /// </summary>
         /// <param name="context">the request context</param>
-        /// <param name="message">the error message</param>
         /// <param name="status">the status</param>
         private static void SendErrorResponse(HttpContext context, int status)
         {

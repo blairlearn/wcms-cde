@@ -71,7 +71,6 @@
     <Compile Include="CTSPrintManager.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
     <Compile Include="HttpHandlers\CTSCachedPrintRequestHandler.cs" />
-    <Compile Include="HttpHandlers\CTSNewPrintRequestHandler.cs" />
     <Compile Include="NCTIDRedirectModule.cs" />
     <Compile Include="GeoLocation.cs" />
     <Compile Include="LegacyCancerTypeDictionary.cs" />
