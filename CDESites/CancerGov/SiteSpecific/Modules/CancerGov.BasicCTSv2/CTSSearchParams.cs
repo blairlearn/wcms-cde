@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
-    public class SearchTerms
+    public class CTSSearchParams : BaseCTSSearchParam
     {
         public String Age { get; set; }
         public String ZipCode { get; set; }
         public String CancerType { get; set; }
+        public GeoLocation GeoCode { get; set; }
     }
 }

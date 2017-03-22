@@ -29,41 +29,71 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 
         public void ProcessRequest(HttpContext context)
         {
-            // Get the Query parameters from the URL
-            NameValueCollection queryParams = HttpUtility.ParseQueryString(context.Request.Url.Query);
-            var cancerType = queryParams.Get("t");
-    
-            if (cancerType != null)
-            {
-                String[] ctarr = (cancerType.Contains("|") ? cancerType.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { cancerType });
-
-                //split up the disease ids
-                string[] diseaseIDs = ctarr[0].Split(',');
-
-                // Determine cancer type display name from CIDs and key (if there is no match with the key,
-                // then first term with matching ids is used)
-                string termKey = ctarr.Length > 1 ? ctarr[1] : null;
-                var _basicCTSManager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
-
-                cancerType = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
-            }
-            
-
-            var searchTerms = new SearchTerms()
-            {
-                CancerType = cancerType,
-                ZipCode = queryParams.Get("z"),
-                Age = queryParams.Get("a"),
-            };
-            
-
-
             HttpRequest request = context.Request;
             HttpResponse response = context.Response;
             CTSPrintManager manager = new CTSPrintManager();
-            bool isError = false;
+            if (request.HttpMethod == "POST")
+            {
+                // Get the Query parameters from the URL
+                var cancerType = request.QueryString["t"];
 
-            if (request.RequestType.ToLower() == "get")
+                if (cancerType != null)
+                {
+                    String[] ctarr = (cancerType.Contains("|") ? cancerType.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { cancerType });
+
+                    //split up the disease ids
+                    string[] diseaseIDs = ctarr[0].Split(',');
+
+                    // Determine cancer type display name from CIDs and key (if there is no match with the key,
+                    // then first term with matching ids is used)
+                    string termKey = ctarr.Length > 1 ? ctarr[1] : null;
+                    var _basicCTSManager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+
+                    cancerType = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
+                }
+
+                var searchTerms = new CTSSearchParams()
+                {
+                    CancerType = cancerType,
+                    ZipCode = request.QueryString["z"],
+                    Age = request.QueryString["a"],
+                    ZipRadius = 100
+                };
+
+                //Set our output to be JSON
+                response.ContentType = "application/json";
+                response.ContentEncoding = Encoding.UTF8;
+
+                //Try and get the request.
+                Request req = null;
+                try
+                {
+                    req = GetRequestAndValidate(context);
+                }
+                catch (Exception ex)
+                {
+
+                    ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400); //Anything here is just a bad request.
+                    return;
+                }
+
+                BasicCTSManager APImanager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+                //var formattedResult = manager.FormatPrintResults(APImanager.GetMultipleTrials(req.TrialIDs).ToList(), DateTime.Now, searchTerms);
+
+                // Store the cached print content
+                Guid printCacheID = manager.StorePrintContent(req.TrialIDs, DateTime.Now, searchTerms);
+
+                // Format our return as JSON
+                var resp = JsonConvert.SerializeObject(new
+                {
+                    printID = "123" // printCacheID
+                });
+
+                response.Write(resp);
+                response.End();
+            }
+           
+            if (request.HttpMethod == "GET")
             {
                 //Set our output to be HTML
                 response.ContentType = "text/HTML";
@@ -79,87 +109,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 catch
                 {
                     // Incorrect parameter for printid (not guid)
-                    isError = true;
                     ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400);
                     throw new InvalidPrintIDException("Invalid PrintID parameter for CTS Print");
                 }
 
-                if (!isError)
-                {
-                    // If there is no error, send the printID to the manager to retrieve the cached print content
-                    string printContent = manager.GetPrintContent(printID);
-                    response.Write(printContent);
-                    response.End();
-                }
+
+                // If there is no error, send the printID to the manager to retrieve the cached print content
+                string printContent = manager.GetPrintContent(printID);
+                response.Write(printContent);
+                response.End();
+               
             }
 
             else if (request.RequestType.ToLower() == "post")
             {
-                //Set our output to be JSON
-                response.ContentType = "application/json";
-                response.ContentEncoding = Encoding.UTF8;
-
-                //Try and get the request.
-                Request req = null;
-                try
-                {
-                    req = GetRequestAndValidate(context);
-                }
-                catch (Exception ex)
-                {
-                    isError = true;
-                    ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400); //Anything here is just a bad request.
-                    return;
-                }
-
-                //BasicCTSManager APImanager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
-                //var formattedResult = manager.FormatPrintResults(APImanager.GetMultipleTrials(req.TrialIDs).ToList(), DateTime.Now, searchTerms);
-                // Return result from save to cache 
-                // should be a URL or a GUID.
-                //Guid printCacheID = manager.StorePrintContent(formattedResult, searchTerms);
-
-                if (!isError)
-                {
-                    // If there is no error, send our trialIDs, timestamp, and search terms to the manager
-                    // to store the cached print content
-                    Guid printCacheID = manager.StorePrintContent(req.TrialIDs, DateTime.Now, searchTerms);
-
-                    // Format our return as JSON
-                    var resp = JsonConvert.SerializeObject(new
-                    {
-                        printID = printCacheID
-                    });
-
-                    response.Write(resp);
-                    response.End();
-                }
+                
+                
             }
         }
-
-        /*private string FormatResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, SearchTerms searchTerms)
-        {
-            // convert description to pretty description
-            foreach (var trial in results)
-            {
-                var desc = trial.DetailedDescription;
-                trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
-            }
-            // Show Results
-            LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                @"~/PublishedContent/VelocityTemplates/BasicCTSPrintResultsv2.vm",
-                 new
-                 {
-                     Results = results,
-                     SearchDate = searchDate.ToString("d/MM/yyyy"),
-                     SearchTerms = searchTerms,
-                     TrialTools = new TrialVelocityTools()
-                 }
-            ));
-
-            File.WriteAllText(@"C:\Development\misc\output.html", ltl.Text);
-
-            return (ltl.Text);
-        }*/
 
         /// <summary>
         /// Parses the request JSON into a request object.

@@ -22,7 +22,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     public class CTSPrintManager
     {
 
-        public Guid StorePrintContent(List<string> trialIDs, DateTime date, SearchTerms searchTerms)
+        public Guid StorePrintContent(List<string> trialIDs, DateTime date, CTSSearchParams searchTerms)
         {
             // Retrieve the collections given the ID's
             BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
@@ -34,10 +34,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             // Save result to cache table
             Guid guid = CTSPrintResultsDataManager.SavePrintResult(formattedPrintContent, searchTerms.ToString(), Settings.IsLive);
 
-            return guid;
+            return new Guid(); // guid;
         }
 
-        public string FormatPrintResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, SearchTerms searchTerms)
+        private string FormatPrintResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, CTSSearchParams searchTerms)
         {
             // convert description to pretty description
             foreach (var trial in results)
@@ -45,6 +45,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 var desc = trial.DetailedDescription;
                 trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
             }
+
+            BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+            searchTerms.GeoCode = manager.GetZipLookupForZip(searchTerms.ZipCode).GeoCode;
 
             // Bind results to velocity template
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
@@ -57,8 +60,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                      TrialTools = new TrialVelocityTools()
                  }
             ));
-
-            //File.WriteAllText(@"C:\Development\misc\output.html", ltl.Text);
 
             return (ltl.Text);
         }

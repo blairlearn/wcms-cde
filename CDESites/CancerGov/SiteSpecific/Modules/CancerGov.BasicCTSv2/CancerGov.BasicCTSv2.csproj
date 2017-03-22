@@ -81,7 +81,7 @@
     <Compile Include="SearchParams\CancerTypeSearchParam.cs" />
     <Compile Include="SearchParams\ListingSearchParam.cs" />
     <Compile Include="SearchParams\PhraseSearchParam.cs" />
-    <Compile Include="SearchTerm.cs" />
+    <Compile Include="CTSSearchParams.cs" />
     <Compile Include="SnippetControls\BasicCTSBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
