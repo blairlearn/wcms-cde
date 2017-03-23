@@ -86,7 +86,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 // Format our return as JSON
                 var resp = JsonConvert.SerializeObject(new
                 {
-                    printID = "123" // printCacheID
+                    printID = printCacheID
                 });
 
                 response.Write(resp);

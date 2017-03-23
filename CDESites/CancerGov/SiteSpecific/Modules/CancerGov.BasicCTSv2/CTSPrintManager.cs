@@ -34,7 +34,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             // Save result to cache table
             Guid guid = CTSPrintResultsDataManager.SavePrintResult(formattedPrintContent, searchTerms.ToString(), Settings.IsLive);
 
-            return new Guid(); // guid;
+            return guid;
         }
 
         private string FormatPrintResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, CTSSearchParams searchTerms)

@@ -85,22 +85,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <param name="origin"></param>
         /// <param name="radius"></param>
         /// <returns></returns>
-        public ClinicalTrial.StudySite[] GetFilteredLocations(ClinicalTrial trial, GeoLocation origin, int radius, bool sortLocations = false)
+        public IEnumerable<ClinicalTrial.StudySite> GetFilteredLocations(ClinicalTrial trial, GeoLocation origin, int radius)
         {
-            if (sortLocations)
-            {
-                var sortedLocations = GetAllSortedLocations(trial);
+            var test = (trial.Sites.Where(site => site.Coordinates != null && 
+                origin.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= radius)
+            .OrderBy(loc => loc.Country).ThenBy(loc => loc.StateOrProvince).ThenBy(loc => loc.City).ToArray());
+            return test;
+        }
 
-                return (trial.Sites.Where(site => site.Coordinates != null && 
-                    origin.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= radius)
-                .OrderBy(loc => loc.Country).ThenBy(loc => loc.StateOrProvince).ThenBy(loc => loc.City).ToArray());
-            }
-            else
-            {
-                return (from location in trial.Sites
-                        where location.Coordinates != null && origin.DistanceBetween(new GeoLocation(location.Coordinates.Latitude, location.Coordinates.Longitude)) <= radius
-                        select location).ToArray();
-            }                
+        public IEnumerable<ClinicalTrial.StudySite> GetAllStudySites(ClinicalTrial trial)
+        {
+            return(trial.Sites.OrderBy(s => s.Country).ThenBy(s => s.StateOrProvince).ThenBy(s => s.City)).ToArray();
         }
 
 
