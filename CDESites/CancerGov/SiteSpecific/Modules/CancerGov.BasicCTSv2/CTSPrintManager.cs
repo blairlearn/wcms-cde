@@ -45,9 +45,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 var desc = trial.DetailedDescription;
                 trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
             }
-
-            BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
-            searchTerms.GeoCode = manager.GetZipLookupForZip(searchTerms.ZipCode).GeoCode;
+            if (searchTerms.ZipCode != null)
+            {
+                BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+                searchTerms.GeoCode = manager.GetZipLookupForZip(searchTerms.ZipCode).GeoCode;
+            }
+            
 
             // Bind results to velocity template
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
@@ -60,6 +63,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                      TrialTools = new TrialVelocityTools()
                  }
             ));
+
+            File.WriteAllText(@"C:\Development\misc\output.html", ltl.Text);
 
             return (ltl.Text);
         }
