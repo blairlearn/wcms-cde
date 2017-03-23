@@ -87,10 +87,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         public IEnumerable<ClinicalTrial.StudySite> GetFilteredLocations(ClinicalTrial trial, GeoLocation origin, int radius)
         {
-            var test = (trial.Sites.Where(site => site.Coordinates != null && 
-                origin.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= radius)
-            .OrderBy(loc => loc.Country).ThenBy(loc => loc.StateOrProvince).ThenBy(loc => loc.City).ToArray());
-            return test;
+            return (trial.Sites.Where(site => site.Coordinates != null && 
+                                              origin.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= radius &&
+                                              site.Country == "United States")
+                    .OrderBy(loc => loc.Country)
+                    .ThenBy(loc => loc.StateOrProvince)
+                    .ThenBy(loc => loc.City).ToArray());
         }
 
         public IEnumerable<ClinicalTrial.StudySite> GetAllStudySites(ClinicalTrial trial)
