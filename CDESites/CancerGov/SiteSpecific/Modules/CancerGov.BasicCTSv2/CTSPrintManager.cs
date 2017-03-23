@@ -64,8 +64,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                  }
             ));
 
-            File.WriteAllText(@"C:\Development\misc\output.html", ltl.Text);
-
             return (ltl.Text);
         }
 
