@@ -56,7 +56,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 {
                     CancerType = cancerType,
                     ZipCode = request.QueryString["z"],
-                    Age = request.QueryString["a"],
+                    AgeOfEligibility = request.QueryString["a"],
                     ZipRadius = 100
                 };
 
@@ -88,8 +88,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                     ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 500);
                     throw new DbConnectionException("Unable to connect to the database. ");
                 }
-                
-                
 
                 // Format our return as JSON
                 var resp = JsonConvert.SerializeObject(new
@@ -127,12 +125,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 response.Write(printContent);
                 response.End();
                
-            }
-
-            else if (request.RequestType.ToLower() == "post")
-            {
-                
-                
             }
         }
 
