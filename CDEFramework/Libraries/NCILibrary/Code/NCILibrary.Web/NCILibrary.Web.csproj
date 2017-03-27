@@ -78,6 +78,7 @@
     <Compile Include="ProductionHost\Configuration\ProductionHostSection.cs" />
     <Compile Include="ProductionHost\ProductionHostConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sitemap\AsyncSitemapHandler.cs" />
     <Compile Include="Sitemap\ISitemapUrlStore.cs" />
     <Compile Include="Sitemap\SitemapHandler.cs" />
     <Compile Include="Sitemap\SitemapProviderConfiguration.cs" />
