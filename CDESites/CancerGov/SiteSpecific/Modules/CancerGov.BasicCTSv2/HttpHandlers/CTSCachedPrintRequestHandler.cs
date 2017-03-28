@@ -77,9 +77,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                     return;
                 }
 
-                BasicCTSManager APImanager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
-                //var formattedResult = manager.FormatPrintResults(APImanager.GetMultipleTrials(req.TrialIDs).ToList(), DateTime.Now, searchTerms);
-
                 // Store the cached print content
                 Guid printCacheID = manager.StorePrintContent(req.TrialIDs, DateTime.Now, searchTerms);
                 if (printCacheID == Guid.Empty)
