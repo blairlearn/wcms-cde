@@ -50,7 +50,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
                 searchTerms.GeoCode = manager.GetZipLookupForZip(searchTerms.ZipCode).GeoCode;
             }
-            
 
             // Bind results to velocity template
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
@@ -58,7 +57,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                  new
                  {
                      Results = results,
-                     SearchDate = searchDate.ToString("d/MM/yyyy"),
+                     SearchDate = searchDate.ToString("MM/d/yyyy"),
                      SearchTerms = searchTerms,
                      TrialTools = new TrialVelocityTools()
                  }
