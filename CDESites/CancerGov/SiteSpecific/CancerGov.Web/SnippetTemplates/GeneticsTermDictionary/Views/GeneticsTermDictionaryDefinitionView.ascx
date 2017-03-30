@@ -71,6 +71,7 @@
                                     </asp:Repeater>
                                 </p>
                             </asp:PlaceHolder>
+
                             <asp:Repeater ID="relatedImages" runat="server" Visible="false" OnItemDataBound="relatedImages_OnItemDataBound">
                                 <ItemTemplate>
                                     <figure class="image-left-medium">
@@ -84,6 +85,22 @@
                                  </figure>
                                 </ItemTemplate>
                             </asp:Repeater>
+
+                            <asp:Repeater ID="relatedVideos" runat="server" Visible="false" OnItemDataBound="relatedVideos_OnItemDataBound">
+                                <ItemTemplate>
+                                <figure runat="server" id="videoContainer">
+                                    <h4 runat="server" visible="false" id="videoTitle"></h4>
+                                    <div id="ytplayer-<%# ((VideoReference)(Container.DataItem)).UniqueID %>"
+                                         class="flex-video widescreen"
+                                         data-video-id="<%# ((VideoReference)(Container.DataItem)).UniqueID %>"
+                                         data-video-title="<%# ((VideoReference)(Container.DataItem)).Title %>">
+                                        <noscript><p><a href="https://www.youtube.com/watch?v=<%# ((VideoReference)(Container.DataItem)).UniqueID %>" target="_blank">View this video on YouTube.</a></p></noscript>
+                                    </div>
+                                    <figcaption class="caption-container no-resize" id="captionContainer" Visible="false" runat="server"></figcaption>
+                                </figure>
+                                </ItemTemplate>
+                            </asp:Repeater>
+
                         </div>
                     </asp:Panel>
                 </dd>
