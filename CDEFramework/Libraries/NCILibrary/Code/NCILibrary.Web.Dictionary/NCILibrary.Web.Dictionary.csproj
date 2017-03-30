@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\Alias.cs" />
+    <Compile Include="BusinessObjects\VideoReference.cs" />
     <Compile Include="DictionarySuggestionCollection.cs" />
     <Compile Include="DictionarySearchResultCollection.cs" />
     <Compile Include="BusinessObjects\Definition.cs" />
