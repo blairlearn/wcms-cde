@@ -60,8 +60,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                     Phrase = request.QueryString["q"],
                     ZipCode = request.QueryString["z"],
                     AgeOfEligibility = request.QueryString["a"],
-                    ZipRadius = !request.QueryString["zp"].Equals("") ? Int32.Parse(request.QueryString["zp"]) : 100,
-                    Gender = request.QueryString["g"],
+                    ZipRadius = !String.IsNullOrWhiteSpace(request.QueryString["zp"]) ? Int32.Parse(request.QueryString["zp"]) : 100,
+                    Gender = request.QueryString["g"]
 
                 };
 
