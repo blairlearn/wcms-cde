@@ -52,12 +52,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                     cancerType = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
                 }
 
+                
                 var searchTerms = new CTSSearchParams()
                 {
                     CancerType = cancerType,
+                    CancerTypePhrase = request.QueryString["ct"],
+                    Phrase = request.QueryString["q"],
                     ZipCode = request.QueryString["z"],
                     AgeOfEligibility = request.QueryString["a"],
-                    ZipRadius = 100
+                    ZipRadius = !request.QueryString["zp"].Equals("") ? Int32.Parse(request.QueryString["zp"]) : 100,
+                    Gender = request.QueryString["g"],
+
                 };
 
                 //Set our output to be JSON
@@ -79,12 +84,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 
                 // Store the cached print content
                 Guid printCacheID = manager.StorePrintContent(req.TrialIDs, DateTime.Now, searchTerms);
-                if (printCacheID == Guid.Empty)
-                {
-                    // Incorrect parameter for printid (not guid)
-                    ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 500);
-                    throw new DbConnectionException("Unable to connect to the database. ");
-                }
 
                 // Format our return as JSON
                 var resp = JsonConvert.SerializeObject(new

@@ -11,6 +11,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public String AgeOfEligibility { get; set; }
         public String ZipCode { get; set; }
         public String CancerType { get; set; }
+        public String CancerTypePhrase { get; set; }
+        public String Phrase { get; set; }
         public GeoLocation GeoCode { get; set; }
     }
 }

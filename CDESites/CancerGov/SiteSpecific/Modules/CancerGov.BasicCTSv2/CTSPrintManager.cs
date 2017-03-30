@@ -34,6 +34,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             // Save result to cache table
             Guid guid = CTSPrintResultsDataManager.SavePrintResult(formattedPrintContent, searchTerms.ToString(), Settings.IsLive);
 
+            if (guid == Guid.Empty)
+            {
+                // Something went wrong with the save/return from the DB
+                ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 500);
+                throw new DbConnectionException("Unable to connect to the database. ");
+            }
+
             return guid;
         }
 

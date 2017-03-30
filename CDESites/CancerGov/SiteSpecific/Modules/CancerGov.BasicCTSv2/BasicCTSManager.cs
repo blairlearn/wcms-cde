@@ -278,7 +278,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 ClinicalTrialsCollection ctColl = new ClinicalTrialsCollection();
 
                 ctColl = Client.List(
-                    size: 200,
+                    size: 100,
                     //from: 0,
                     searchParams: filterCriteria
                 );
