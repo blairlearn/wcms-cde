@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NCI.Web.Sitemap
 {
@@ -15,7 +16,30 @@ namespace NCI.Web.Sitemap
 
         public static SitemapUrlStoreCollection Stores { get { Initialize(); return s_Stores; } }
 
-        public static SitemapUrlSet GetSitemap()
+        /// <summary>
+        /// Gets a set of Sitemap Urls
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<SitemapUrl> GetSitemap()
+        {
+            Initialize();
+
+            //Loop over each store
+            foreach (SitemapUrlStoreBase S in s_Stores)
+            {
+                //Loop over each URL in the store.
+                foreach (SitemapUrl url in S.GetSitemapUrls())
+                {
+                    yield return url;
+                }                
+            }
+        }
+
+        /// <summary>
+        /// Gets a set of sitemap Urls asynchronously
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<IEnumerable<SitemapUrl>> GetSitemapAsync()
         {
             Initialize();
 
@@ -23,11 +47,12 @@ namespace NCI.Web.Sitemap
 
             foreach (SitemapUrlStoreBase S in s_Stores)
             {
-                sitemapSet.Add(S.GetSitemapUrls());
+                sitemapSet.Add(S.GetSitemapUrlsAsync());
             }
 
             return sitemapSet;
         }
+
 
         public static void Initialize()
         {

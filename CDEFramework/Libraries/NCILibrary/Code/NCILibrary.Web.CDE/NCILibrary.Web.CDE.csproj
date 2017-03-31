@@ -170,6 +170,9 @@
     <Compile Include="PageAssembly\PageTemplateResolution\TemplateThemeCollection.cs" />
     <Compile Include="PageAssembly\PageTemplateResolution\TemplateThemeInfo.cs" />
     <Compile Include="PageAssembly\SearchMetadata.cs" />
+    <Compile Include="PageAssembly\Sitemap\SitemapLoaderImpl.cs" />
+    <Compile Include="PageAssembly\Sitemap\SitemapLoaderAsyncImpl.cs" />
+    <Compile Include="PageAssembly\Sitemap\SitemapResults.cs" />
     <Compile Include="PageAssembly\SocialMetaTag.cs" />
     <Compile Include="PageAssembly\SocialMetaTagData.cs" />
     <Compile Include="PageAssembly\SocialMetadata.cs" />
@@ -273,6 +276,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
