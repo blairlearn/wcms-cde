@@ -64,7 +64,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                  new
                  {
                      Results = results,
-                     SearchDate = searchDate.ToString("MM/d/yyyy"),
+                     SearchDate = searchDate.ToString("M/d/yyyy"),
                      SearchTerms = searchTerms,
                      TrialTools = new TrialVelocityTools()
                  }

@@ -17,6 +17,9 @@ using NCI.Web.CDE.Application;
 using NCI.Web.CDE.UI.Configuration;
 using CancerGov.ClinicalTrialsAPI;
 using CancerGov.ClinicalTrials.Basic.v2.SnippetControls;
+using NCI.Web.CDE;
+using NCI.Util;
+using NCI.Core;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 {
@@ -118,10 +121,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 
                 // If there is no error, send the printID to the manager to retrieve the cached print content
                 string printContent = manager.GetPrintContent(printID);
+                
+                printContent = printContent.Replace("${generatePrintURL}", GetEmailUrl(printID));
+
                 response.Write(printContent);
                 response.End();
                
             }
+        }
+
+        protected virtual string GetEmailUrl(Guid printID)
+        {
+            string popUpemailUrl = "";
+
+            string title = "Clinical Trials Results";
+            title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
+
+            string emailUrl = "/CTS.Print/Display=?PrintID=" + printID.ToString();
+            string invokedFrom = "&invokedFrom=" + EmailPopupInvokedBy.ClinicalTrialPrintableSearchResults.ToString("d");
+
+            popUpemailUrl = "/common/popUps/PopEmail.aspx?title=" + title + invokedFrom + "&docurl=" + System.Web.HttpUtility.UrlEncode(emailUrl.Replace("&", "__amp;")) + "&language=en";
+            popUpemailUrl = popUpemailUrl + HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + emailUrl);
+            
+            return popUpemailUrl;
         }
 
         /// <summary>
