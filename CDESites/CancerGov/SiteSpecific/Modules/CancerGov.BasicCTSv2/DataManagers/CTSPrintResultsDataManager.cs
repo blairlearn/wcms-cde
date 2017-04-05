@@ -1,6 +1,8 @@
 ﻿using System.Web;
 using System;
 using System.Collections;
+using System.Web.Script.Serialization;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -24,7 +26,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.DataManagers
         /// <param name="searchParams"></param>
         /// <param name="isLive"></param>
         /// <returns>A guid.</returns>
-        public static Guid SavePrintResult(string content, string searchParams, bool isLive)
+        public static Guid SavePrintResult(string content, IEnumerable<String> trialIDs, CTSSearchParams searchParams, bool isLive)
         {
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString))
@@ -34,13 +36,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.DataManagers
                 SqlParameter[] parameters = {
                     new SqlParameter("@printid", SqlDbType.UniqueIdentifier),
                     new SqlParameter("@content", SqlDbType.NVarChar, content.Length),
-                    new SqlParameter("@searchparams", SqlDbType.NVarChar, searchParams.Length),
-                    new SqlParameter("@isLive", SqlDbType.Bit)
+                    new SqlParameter("@searchparams", SqlDbType.NVarChar),
+                    new SqlParameter("@isLive", SqlDbType.Bit),
+                    new SqlParameter("@trialids", SqlDbType.Structured)
                 };
                 parameters[0].Direction = ParameterDirection.Output;
                 parameters[1].Value = content;
-                parameters[2].Value = searchParams;
+                parameters[2].Value = new JavaScriptSerializer().Serialize(searchParams);
                 parameters[3].Value = isLive;
+                parameters[4].Value = CreatePrintIdDataTable(trialIDs);
 
                 try
                 {
@@ -54,6 +58,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2.DataManagers
 
                 return printResultGuid;       
             }
+        }
+
+        private static DataTable CreatePrintIdDataTable(IEnumerable<String> trialIDs)
+        {
+            // This datatable must be structured like the datatable in the stored proc, 
+            // in order to be passed in correctly as a parameter.
+            DataTable dt = new DataTable();
+
+            // Second column, "trialid", is an varchar(124)
+            DataColumn dc = new DataColumn();
+            dc.DataType = System.Type.GetType("System.String");
+            dc.MaxLength = 124;
+            dc.ColumnName = "trialid";
+            dt.Columns.Add(dc);
+
+            foreach (var id in trialIDs)
+            {
+                DataRow row = dt.NewRow();
+                row["trialid"] = id;
+                dt.Rows.Add(row);
+            }
+
+            return dt;
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     public class CTSPrintManager
     {
 
-        public Guid StorePrintContent(List<string> trialIDs, DateTime date, CTSSearchParams searchTerms)
+        public Guid StorePrintContent(List<String> trialIDs, DateTime date, CTSSearchParams searchTerms)
         {
             // Retrieve the collections given the ID's
             BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
@@ -32,7 +32,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             var formattedPrintContent = FormatPrintResults(results, date, searchTerms);
 
             // Save result to cache table
-            Guid guid = CTSPrintResultsDataManager.SavePrintResult(formattedPrintContent, searchTerms.ToString(), Settings.IsLive);
+            Guid guid = CTSPrintResultsDataManager.SavePrintResult(formattedPrintContent, trialIDs, searchTerms, Settings.IsLive);
 
             if (guid == Guid.Empty)
             {
