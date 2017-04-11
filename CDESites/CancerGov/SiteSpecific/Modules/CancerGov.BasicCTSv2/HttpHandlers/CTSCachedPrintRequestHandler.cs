@@ -137,7 +137,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             string title = "Clinical Trials Results";
             title = System.Web.HttpUtility.UrlEncode(Strings.StripHTMLTags(title.Replace("&#153;", "__tm;")));
 
-            string emailUrl = "/CTS.Print/Display?PrintID=" + printID.ToString();
+            string emailUrl = "/CTS.Print/Display?printid=" + printID.ToString();
             string invokedFrom = "&invokedFrom=" + EmailPopupInvokedBy.ClinicalTrialPrintableSearchResults.ToString("d");
 
             popUpemailUrl = "/common/popUps/PopEmail.aspx?title=" + title + invokedFrom + "&docurl=" + System.Web.HttpUtility.UrlEncode(emailUrl.Replace("&", "__amp;")) + "&language=en";
