@@ -85,12 +85,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <param name="origin"></param>
         /// <param name="radius"></param>
         /// <returns></returns>
-        public ClinicalTrial.StudySite[] GetFilteredLocations(ClinicalTrial trial, GeoLocation origin, int radius)
+        public IEnumerable<ClinicalTrial.StudySite> GetFilteredLocations(ClinicalTrial trial, GeoLocation origin, int radius)
         {
-                return (from location in trial.Sites
-                                where location.Coordinates != null && origin.DistanceBetween(new GeoLocation(location.Coordinates.Latitude, location.Coordinates.Longitude)) <= radius
-                                select location).ToArray();
+            return (trial.Sites.Where(site => site.Coordinates != null && 
+                                              origin.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= radius &&
+                                              site.Country == "United States")
+                    .OrderBy(loc => loc.Country)
+                    .ThenBy(loc => loc.StateOrProvince)
+                    .ThenBy(loc => loc.City).ToArray());
         }
+
+        public IEnumerable<ClinicalTrial.StudySite> GetAllStudySites(ClinicalTrial trial)
+        {
+            return(trial.Sites.OrderBy(s => s.Country).ThenBy(s => s.StateOrProvince).ThenBy(s => s.City)).ToArray();
+        }
+
 
         /// <summary>
         /// Returns the number of locations for a given country sites collection
