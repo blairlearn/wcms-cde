@@ -33,19 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CancerGov.DataManager">
-      <HintPath>..\..\..\CancerGovSpecific\CancerGov.DataManager\bin\Debug\CancerGov.DataManager.dll</HintPath>
-    </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MoreLinq, Version=2.0.20029.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\packages\morelinq.2.2.0\lib\net35\MoreLinq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -56,7 +49,6 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,10 +59,6 @@
     <Compile Include="BasicCTSManager.cs" />
     <Compile Include="ClinicalTrialExtensions.cs" />
     <Compile Include="Configuration\BasicClinicalTrialSearchAPISection.cs" />
-    <Compile Include="CTSPrintException.cs" />
-    <Compile Include="CTSPrintManager.cs" />
-    <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
-    <Compile Include="HttpHandlers\CTSCachedPrintRequestHandler.cs" />
     <Compile Include="NCTIDRedirectModule.cs" />
     <Compile Include="GeoLocation.cs" />
     <Compile Include="LegacyCancerTypeDictionary.cs" />
@@ -81,7 +69,6 @@
     <Compile Include="SearchParams\CancerTypeSearchParam.cs" />
     <Compile Include="SearchParams\ListingSearchParam.cs" />
     <Compile Include="SearchParams\PhraseSearchParam.cs" />
-    <Compile Include="CTSSearchParams.cs" />
     <Compile Include="SnippetControls\BasicCTSBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -114,10 +101,6 @@
       <Project>{898ff17c-c94a-4d85-8aad-88764b72cfae}</Project>
       <Name>NCILibrary.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
-      <Project>{f4c37116-861a-4fd6-b45d-578b258fefc7}</Project>
-      <Name>NCILibrary.DataManager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\NCILibrary.Web.CDE.UI.csproj">
       <Project>{aafa2f86-d3f3-4224-a13e-ba6209a4ebad}</Project>
       <Name>NCILibrary.Web.CDE.UI</Name>
@@ -125,10 +108,6 @@
     <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
       <Project>{eee51ba0-18ae-4cf2-876f-7e75b5a2d1ff}</Project>
       <Name>NCILibrary.Web.CDE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\CancerGovCommon\CancerGovCommon.csproj">
-      <Project>{6f797b18-ff7e-4963-8e13-5ea26e910198}</Project>
-      <Name>CancerGovCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\CancerGov.ClinicalTrialsAPI\CancerGov.ClinicalTrialsAPI.csproj">
       <Project>{07db8185-53dc-4434-9d4a-ffc0efc9078a}</Project>

@@ -62,18 +62,6 @@
       <Project>{898FF17C-C94A-4D85-8AAD-88764B72CFAE}</Project>
       <Name>NCILibrary.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
-      <Project>{f4c37116-861a-4fd6-b45d-578b258fefc7}</Project>
-      <Name>NCILibrary.DataManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
-      <Project>{eee51ba0-18ae-4cf2-876f-7e75b5a2d1ff}</Project>
-      <Name>NCILibrary.Web.CDE</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SiteSpecific\Modules\CancerGov.BasicCTSv2\CancerGov.BasicCTSv2.csproj">
-      <Project>{96f6420f-f16d-4873-af3a-5d22e9ffbd55}</Project>
-      <Name>CancerGov.BasicCTSv2</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
