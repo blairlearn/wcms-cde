@@ -457,86 +457,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         public IEnumerable<object> GetPagerItems(int numLeft, int numRight, long totalResults)
         {
-            int startPage = (SearchParams.Page - numLeft) >= 1 ? SearchParams.Page - numLeft : 1; // Current page minus left limit (numLeft)
-            int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage); // Highest available page
-            int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage; // Current page plus right limit (numRight)
-
-            // The maximum number of elements that can be drawn in this pager. his would be:
-            // ("< Previous" + 1 + 2/ellipsis + numLeft + current + numRight + next-to-last/ellipsis + "Next >") 
-            int itemsTotalMax = 7 + numLeft + numRight;
-
-            // If the pageNumber parameter is set above the highest available page number, set the start page to the endPage value.
+            int startPage = (SearchParams.Page - numLeft) >= 1 ? SearchParams.Page - numLeft : 1;
+            int maxPage = (int)Math.Ceiling((double)totalResults / (double)SearchParams.ItemsPerPage);
+            int endPage = (SearchParams.Page + numRight) <= maxPage ? SearchParams.Page + numRight : maxPage;
             if (SearchParams.Page > endPage)
-            {
                 startPage = (endPage - numLeft) >= 1 ? endPage - numLeft : 1;
-            }
 
             // If maxPage == 1, then only one page of results is found. Therefore, return null for the pager items.
             // Otherwise, set up the pager accordingly.
             if (maxPage > 1)
             {
-                // Create a list of pager item objects:
-                //  Text (string) = link text
-                //  PageUrl (string) = href value for item 
-                //  IsLink (bool) - whether or not this item will be used as a link
                 List<object> items = new List<object>();
 
-                // Draw text and links for first & previous pages
                 if (SearchParams.Page != 1)
-                {
-                    // Draw link to previous page
-                    string PrevUrl = GetPageUrl(SearchParams.Page - 1);
                     items.Add(
-                    new
-                    {
-                        Text = "&lt; Previous",
-                        PageUrl = PrevUrl
-                    });
-
-                    // add previous url to filter
-                    this.PageInstruction.AddUrlFilter("RelPrev", (name, url) =>
-                    {
-                        url.SetUrl(PrevUrl);
-                    });
-
-                    // Draw first page links and text
-                    if (SearchParams.Page > (numLeft + 1))
-                    {
-                        // Draw link to first page
-                        items.Add(
                         new
                         {
-                            Text = "1",
-                            PageUrl = GetPageUrl(1)
+                            Text = "&lt; Previous",
+                            PageUrl = GetPageUrl(SearchParams.Page - 1)
                         });
 
-                        // Draw elipses to delimit first page. 
-                        // If the ellipses only represent a single digit, draw that instead (in this case it will always be 2).
-                        if (SearchParams.Page > (numLeft + 2))
-                        {
-                            if (SearchParams.Page == (numLeft + 3))
-                            {
-                                items.Add(
-                                new
-                                {
-                                    Text = "2",
-                                    PageUrl = GetPageUrl(2)
-                                });
-                            }
-                            else
-                            {
-                                items.Add(
-                                new
-                                {
-                                    Text = "...",
-                                    IsLink = false
-                                });
-                            }
-                        }
-                    }
-                }
-
-                // Draw links before and after current
                 for (int i = startPage; i <= endPage; i++)
                 {
                     items.Add(
@@ -548,74 +488,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     );
                 }
 
-                // Draw last page links and text
                 if (SearchParams.Page < endPage)
-                {
-                    // Draw iink to last page
-                    if (SearchParams.Page < (maxPage - numRight))
-                    {
-                        // Draw elipses to delimit last page. 
-                        // If the ellipses only represent a single digit, draw that instead (in this case it will always maxmimum page minus one).
-                        if (SearchParams.Page < (maxPage - numRight - 1))
-                        {
-                            if (SearchParams.Page == (maxPage - numRight - 2))
-                            {
-                                items.Add(
-                                new
-                                {
-                                    Text = (maxPage - 1).ToString(),
-                                    PageUrl = GetPageUrl(maxPage - 1)
-                                });
-                            }
-                            else
-                            {
-                                items.Add(
-                                new
-                                {
-                                    Text = "...",
-                                    IsLink = false
-                                });
-                            }
-                        }
-
-                        // Draw link to last page
-                        items.Add(
+                    items.Add(
                         new
                         {
-                            Text = maxPage.ToString(),
-                            PageUrl = GetPageUrl(maxPage)
+                            Text = "Next &gt;",
+                            PageUrl = GetPageUrl(SearchParams.Page + 1)
                         });
-                    }
 
-                    // Draw link to next page
-                    string NextUrl = GetPageUrl(SearchParams.Page + 1);
-                    items.Add(
-                    new
-                    {
-                        Text = "Next &gt;",
-                        PageUrl = NextUrl
-                    });
 
-                    this.PageInstruction.AddUrlFilter("RelNext", (name, url) =>
-                    {
-                        url.SetUrl(NextUrl);
-                    });
-
-                }
-
-                // Remove any duplicate links that may have slipped though. This only occurs in cases where the URL query param 
-                // is greater than the last available page.
-                // Doing this after the fact to prevent mucking up the code above. This is an edge case and should be handled outside of
-                // the general logic. 
-                if (SearchParams.Page > maxPage)
-                {
-                    items = items.Distinct().ToList();
-                    // Remove ellipsis if it shows betweeen two consecutive numbers
-                    if (items.Count - 2 == maxPage)
-                    {
-                        items.RemoveAt(2);
-                    }
-                }
 
                 return items;
             }
