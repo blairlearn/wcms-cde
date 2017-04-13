@@ -16,7 +16,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.DataManagers
 {
     public static class CTSPrintResultsDataManager
     {
-        //Getting the List of years/months from the DB
+        /// <summary>
+        /// Connects to the database, and executes the stored proc with the required parameters. The 
+        /// resulting content is the guid associated with the cached print content.
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="searchParams"></param>
+        /// <param name="isLive"></param>
+        /// <returns>A guid.</returns>
         public static Guid SavePrintResult(string content, string searchParams, bool isLive)
         {
             DataTable dt = new DataTable();
@@ -50,7 +57,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.DataManagers
         }
 
         /// <summary>
-        /// Connects to the database , and executes the stored proc with the required parameter. The 
+        /// Connects to the database , and executes the stored proc with the required parameters. The 
         /// resulting content is the print page HTML.
         /// </summary>
         /// <param name="printId"></param>
@@ -80,7 +87,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.DataManagers
                             }
                             else
                             {
-                                ErrorPageDisplayer.RaisePageByCode("CTSPrintDataManager", 500);
+                                ErrorPageDisplayer.RaisePageByCode("CTSPrintDataManager", 404);
                                 throw new PrintIDNotFoundException("The given printID did not match any cache values in the database");
                             }
                         }
