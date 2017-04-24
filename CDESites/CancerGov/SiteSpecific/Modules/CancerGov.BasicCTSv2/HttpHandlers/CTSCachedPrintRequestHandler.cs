@@ -1,25 +1,27 @@
 ﻿using System;
-using System.Web;
-using System.Web.UI;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
-using System.Web.Script.Serialization;
-using System.Collections;
-using System.Collections.Specialized;
-using NCI.Web.CDE.Modules;
-using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
 using System.Threading.Tasks;
-using NCI.Web.CDE.Application;
-using NCI.Web.CDE.UI.Configuration;
-using CancerGov.ClinicalTrialsAPI;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI;
+using Newtonsoft.Json;
+
+using CancerGov.ClinicalTrials.Basic.v2.Configuration;
+using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
 using CancerGov.ClinicalTrials.Basic.v2.SnippetControls;
-using NCI.Web.CDE;
-using NCI.Util;
+using CancerGov.ClinicalTrialsAPI;
 using NCI.Core;
+using NCI.Util;
+using NCI.Web.CDE;
+using NCI.Web.CDE.Application;
+using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.UI.Configuration;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 {
@@ -28,6 +30,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
         public bool IsReusable
         {
             get { return false; }
+        }
+
+        /// <summary>
+        /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
+        /// </summary>
+        protected string ApiUrl
+        {
+            get { return BasicClinicalTrialSearchAPISection.GetAPIUrl(); }
         }
 
         public void ProcessRequest(HttpContext context)
@@ -50,7 +60,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                     // Determine cancer type display name from CIDs and key (if there is no match with the key,
                     // then first term with matching ids is used)
                     string termKey = ctarr.Length > 1 ? ctarr[1] : null;
-                    var _basicCTSManager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+                    var _basicCTSManager = new BasicCTSManager(ApiUrl);
 
                     cancerType = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
                 }
