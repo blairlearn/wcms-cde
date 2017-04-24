@@ -78,7 +78,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         //$trial.GetUSLocations($SearchResults.Control.SearchParams.ZipLookup.GeoCode, $SearchResults.Control.SearchParams.ZipRadius).length
-        
+
         /// <summary>
         /// Get all us Locations, but filtered by origin and radius in miles
         /// </summary>
@@ -87,7 +87,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         public IEnumerable<ClinicalTrial.StudySite> GetFilteredLocations(ClinicalTrial trial, GeoLocation origin, int radius)
         {
-            return (trial.Sites.Where(site => site.Coordinates != null && 
+            return (trial.Sites.Where(site => site.Coordinates != null &&
                                               origin.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= radius &&
                                               site.Country == "United States")
                     .OrderBy(loc => loc.Country)
@@ -95,11 +95,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     .ThenBy(loc => loc.City).ToArray());
         }
 
+        /// <summary>
+        /// Returns a list of all active study sites. 
+        /// </summary>
+        /// <param name="trial">Clinical trial</param>
+        /// <returns>List of active sites for a given trial</returns>
         public IEnumerable<ClinicalTrial.StudySite> GetAllStudySites(ClinicalTrial trial)
         {
-            return(trial.Sites.OrderBy(s => s.Country).ThenBy(s => s.StateOrProvince).ThenBy(s => s.City)).ToArray();
-        }
+            IEnumerable<ClinicalTrial.StudySite> sites = null;
+            BasicCTSManager mgr = new BasicCTSManager();
 
+            // Assemble list of trial sites to be printed by the Velocity template:
+            // 1. Filter inactive study sites out of our sites list
+            // 2. Make a list of USA sites, sorted by state, then city
+            // 3. Make a list of international sites, sorted by country, then city 
+            // 4. Join the lists with USA as the first group of items
+            if (trial.Sites != null)
+            {
+                trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => mgr.ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower())));
+                var usaSites = trial.Sites.Where(s => s.Country == "United States").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ToArray();
+                var otherSites = trial.Sites.Where(s => s.Country != "United States").OrderBy(s => s.Country).ThenBy(s => s.City).ToArray();
+                sites = usaSites.Concat(otherSites);
+            }
+            return sites;
+        }
 
         /// <summary>
         /// Returns the number of locations for a given country sites collection
@@ -116,7 +135,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             return count;
-        }        
+        }
 
         /// <summary>
         /// Wrapper around site Extension method
@@ -137,7 +156,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 str = char.ToString(str[0]).ToUpper() + str.Substring(1).ToLower();
                 str = str.Replace("_", " ");
-            } 
+            }
             return str;
         }
 
@@ -244,7 +263,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public string GetGenderString(ClinicalTrial trial)
         {
             String gender = trial.GetGender();
-            if(gender.ToLower() == "both")
+            if (gender.ToLower() == "both")
             {
                 gender = "Male or Female";
                 return gender;
@@ -279,19 +298,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string htmlBlobClose;
 
             // Check the API trial values and assign to a CDR ID if valid
-            switch(phase)
+            switch (phase)
             {
-                case "I" : cdrID = "45830";
+                case "I": cdrID = "45830";
                     break;
-                case "I_II" : cdrID = "45832";
+                case "I_II": cdrID = "45832";
                     break;
-                case "II" : cdrID = "45831";
+                case "II": cdrID = "45831";
                     break;
-                case "II_III" : cdrID = "45834";
+                case "II_III": cdrID = "45834";
                     break;
-                case "III" : cdrID = "45833";
+                case "III": cdrID = "45833";
                     break;
-                case "IV" : cdrID = "45835";
+                case "IV": cdrID = "45835";
                     break;
             }
 
@@ -301,8 +320,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
             else
             {
-                htmlBlobOpen = @"<a onclick=""javascript:popWindow('defbyid','CDR00000" + cdrID + 
-                               @"&amp;version=Patient&amp;language=English'); return false;"" href=""/Common/PopUps/popDefinition.aspx?id=CDR00000" + cdrID + 
+                htmlBlobOpen = @"<a onclick=""javascript:popWindow('defbyid','CDR00000" + cdrID +
+                               @"&amp;version=Patient&amp;language=English'); return false;"" href=""/Common/PopUps/popDefinition.aspx?id=CDR00000" + cdrID +
                                @"45830&amp;version=Patient&amp;language=English"" class=""definition"">";
                 htmlBlobClose = @"</a>";
                 phase = htmlBlobOpen + "Phase " + phase.Replace("_", "/") + htmlBlobClose;
@@ -353,8 +372,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             List<String> principal = new List<String>();
             if (!String.IsNullOrWhiteSpace(trial.GetPrincipalInvestigator()))
-            { 
-                principal.Add(trial.GetPrincipalInvestigator()); 
+            {
+                principal.Add(trial.GetPrincipalInvestigator());
             }
             /* TODO - Verify if there actually any instances where we 
              * have more than one Principal Investigator - OR if there
