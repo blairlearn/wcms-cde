@@ -60,7 +60,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             foreach (var trial in results)
             {
                 var desc = trial.DetailedDescription;
-                trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
+                if (!string.IsNullOrWhiteSpace(desc))
+                {
+                    trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
+                }
             }
             if (searchTerms.ZipCode != null)
             {
