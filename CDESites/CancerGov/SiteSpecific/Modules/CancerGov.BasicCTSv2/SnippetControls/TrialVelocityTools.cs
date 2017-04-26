@@ -329,6 +329,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return phase;
         }
 
+        /// <summary>
+        /// Gets the Phase number from the API and formats it for presentation
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String </returns>
+        public string GetPhase(ClinicalTrial trial)
+        {
+            string phase = trial.GetTrialPhase();
+            if (!String.IsNullOrWhiteSpace(phase))
+            {
+                phase = "Phase " + phase.Replace("_", "/");
+            }
+            return phase;
+        }
 
         /// <summary>
         /// Gets the Primary Purpose and formats text
