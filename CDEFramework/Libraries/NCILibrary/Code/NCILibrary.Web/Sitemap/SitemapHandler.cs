@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Web;
-using System.Xml.Serialization;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using System.Web;
 using System.Xml;
+using System.Xml.Serialization;
 using Common.Logging;
 
 namespace NCI.Web.Sitemap
 {
     public class SitemapHandler : IHttpHandler
     {
-        static ILog log = LogManager.GetLogger(typeof(SitemapHandler));        
+        static ILog log = LogManager.GetLogger(typeof(SitemapHandler));
 
 
         /// <summary>
@@ -49,6 +51,10 @@ namespace NCI.Web.Sitemap
             // If it isn't, get the current sitemap, save that in the cache, and output
             else
             {
+                // Create a stopwatch object to time sitemap serialization.
+                Stopwatch stopwatch = new Stopwatch();
+                TimeSpan timeSpan;
+
                 try
                 {
                     XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
@@ -58,17 +64,35 @@ namespace NCI.Web.Sitemap
                     using (MemoryStream memStream = new MemoryStream())
                     using (XmlWriter writer = XmlWriter.Create(memStream))
                     {
+                        stopwatch.Start();
                         ser.Serialize(writer, Sitemaps.GetSitemap(), ns);
                         utf8 = memStream.ToArray();
                         HttpContext.Current.Cache.Add("sitemap", utf8, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
                         response.OutputStream.Write(utf8, 0, utf8.Length);
+                        stopwatch.Stop();
+                    }
+
+                    // Execution timeout is 110±15 seconds. Send an error email if the process takes more than 90 seconds, so that even if we don't hit a thread 
+                    // abort exception, we will have been warned that the sitemap generation is slow.
+                    // See https://blogs.msdn.microsoft.com/pedram/2007/10/02/how-the-execution-timeout-is-managed-in-asp-net/)
+                    timeSpan = stopwatch.Elapsed;
+                    if (timeSpan.TotalSeconds > 90)
+                    {
+                        log.Fatal("Warning: XML sitemap is taking longer than expected to retrieve. Check page and file instruction XML files.\nTime Elapsed for Sitemap Retrieval: " + timeSpan.ToString());
                     }
                 }
                 // Save the exception in the cache and send an error email
                 catch (Exception ex)
                 {
+                    if (stopwatch.IsRunning)
+                    {
+                        stopwatch.Stop();
+                    }
+                    timeSpan = stopwatch.Elapsed;
+
                     HttpContext.Current.Cache.Add("sitemap_ex", ex, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
-                    log.Fatal("Error generating sitemap. Check page and file instruction XML files. \nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + " \nSitemapHandler.cs:ProcessRequest()", ex);
+                    log.Fatal("Error generating sitemap. Check page and file instruction XML files. \nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host
+                              + "\nTime Elapsed for Sitemap Retrieval: " + timeSpan.ToString() + " \nSitemapHandler.cs:ProcessRequest()", ex);
                     response.Status = "500";
                     response.End();
                 }
