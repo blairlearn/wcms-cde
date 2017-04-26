@@ -78,7 +78,11 @@ namespace NCI.Web.Sitemap
                     timeSpan = stopwatch.Elapsed;
                     if (timeSpan.TotalSeconds > 90)
                     {
-                        log.Fatal("Warning: XML sitemap is taking longer than expected to retrieve. Check page and file instruction XML files.\nTime Elapsed for Sitemap Retrieval: " + timeSpan.ToString());
+                        log.Error("Warning: XML sitemap is taking longer than expected to retrieve. Check page and file instruction XML files.\nTime Elapsed for Sitemap Retrieval: " + timeSpan.ToString());
+                    }
+                    else
+                    {
+                        log.Debug("Time Elapsed for Sitemap Retrieval: " + timeSpan.ToString());
                     }
                 }
                 // Save the exception in the cache and send an error email
