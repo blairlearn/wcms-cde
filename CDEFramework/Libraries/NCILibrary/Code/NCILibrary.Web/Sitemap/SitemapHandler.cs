@@ -51,7 +51,7 @@ namespace NCI.Web.Sitemap
             // If it isn't, get the current sitemap, save that in the cache, and output
             else
             {
-                // Create a stopwatch object to time sitemap serialization.
+                // Create a stopwatch object for timing of sitemap retrieval
                 Stopwatch stopwatch = new Stopwatch();
                 TimeSpan timeSpan;
 
@@ -72,8 +72,8 @@ namespace NCI.Web.Sitemap
                         stopwatch.Stop();
                     }
 
-                    // Execution timeout is 110±15 seconds. Send an error email if the process takes more than 90 seconds, so that even if we don't hit a thread 
-                    // abort exception, we will have been warned that the sitemap generation is slow.
+                    // Execution timeout is 110±15 seconds, so we'll log an error if the process takes more than 90 seconds. 
+                    // This will allow us to track instances where sitemap generation is slow, even if we don't hit a ThreadAbortException. 
                     // See https://blogs.msdn.microsoft.com/pedram/2007/10/02/how-the-execution-timeout-is-managed-in-asp-net/)
                     timeSpan = stopwatch.Elapsed;
                     if (timeSpan.TotalSeconds > 90)

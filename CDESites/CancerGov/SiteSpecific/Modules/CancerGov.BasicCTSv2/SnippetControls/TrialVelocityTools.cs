@@ -114,7 +114,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => mgr.ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower())));
                 var usaSites = trial.Sites.Where(s => s.Country == "United States").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ToArray();
-                var otherSites = trial.Sites.Where(s => s.Country != "United States").OrderBy(s => s.Country).ThenBy(s => s.City).ToArray();
+                var otherSites = trial.Sites.Where(s => s.Country != "United States").OrderBy(s => s.Country).ThenBy(s => s.StateOrProvince).ThenBy(s => s.City).ToArray();
                 sites = usaSites.Concat(otherSites);
             }
             return sites;
