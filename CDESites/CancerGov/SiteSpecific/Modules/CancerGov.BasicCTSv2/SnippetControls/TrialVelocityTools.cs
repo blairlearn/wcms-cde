@@ -10,7 +10,7 @@ using CancerGov.ClinicalTrialsAPI;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
-    /// <summary>
+    /// <summary> 
     /// This class houses tools that can be used in the velocity templates for Results and View
     /// </summary>
     public class TrialVelocityTools
@@ -113,8 +113,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             if (trial.Sites != null)
             {
                 trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => mgr.ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower())));
-                var usaSites = trial.Sites.Where(s => s.Country == "United States").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ToArray();
-                var otherSites = trial.Sites.Where(s => s.Country != "United States").OrderBy(s => s.Country).ThenBy(s => s.StateOrProvince).ThenBy(s => s.City).ToArray();
+                var usaSites = trial.Sites.Where(s => s.Country == "United States").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name).ToArray();
+                var otherSites = trial.Sites.Where(s => s.Country != "United States").OrderBy(s => s.Country).ThenBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name).ToArray();
                 sites = usaSites.Concat(otherSites);
             }
             return sites;
