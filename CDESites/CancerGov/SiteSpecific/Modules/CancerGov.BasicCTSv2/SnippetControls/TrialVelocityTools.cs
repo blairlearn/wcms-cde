@@ -108,14 +108,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Assemble list of trial sites to be printed by the Velocity template:
             // 1. Filter inactive study sites out of our sites list
             // 2. Make a list of USA sites, sorted by state, then city
-            // 3. Make a list of international sites, sorted by country, then city 
-            // 4. Join the lists with USA as the first group of items
+            // 3. Make a list of Canada sites, sorted by province, then city
+            // 4. Make a list of international sites, sorted by country, then city 
+            // 5. Join the lists with USA as the first group of items and all other countries alphabetized afterward
             if (trial.Sites != null)
             {
                 trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => mgr.ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower())));
                 var usaSites = trial.Sites.Where(s => s.Country == "United States").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name).ToArray();
-                var otherSites = trial.Sites.Where(s => s.Country != "United States").OrderBy(s => s.Country).ThenBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name).ToArray();
-                sites = usaSites.Concat(otherSites);
+                var canadaSites = trial.Sites.Where(s => s.Country == "Canada").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name).ToArray();
+                var otherSites = trial.Sites.Where(s => s.Country != "United States" && s.Country != "Canada").OrderBy(s => s.City).ThenBy(s => s.Name).ToArray();
+                sites = canadaSites.Concat(otherSites).OrderBy(s => s.Country);
+                sites = usaSites.Concat(sites);
             }
             return sites;
         }
