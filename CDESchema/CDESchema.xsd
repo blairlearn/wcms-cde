@@ -711,6 +711,16 @@
           <documentation>Defines metadata for this Assembly Instruction used for searching</documentation>
         </annotation>
       </element>
+      <element name="ImplementsPushState" type="boolean" minOccurs="0" maxOccurs="1">
+        <annotation>
+          <documentation>
+            Indicates if this page implements push state and will be loaded for any URL
+            path fragments beginning with the contents of the PrettyUrl element.  E.g.
+            if PrettyUrl is /foo, then this page would also be loaded for /foo/bar,
+            /foo/bar/bazz, etc.
+          </documentation>
+        </annotation>
+      </element>
       <element name="PageTemplateName" type="cde:path"
         minOccurs="1" maxOccurs="1">
         <annotation>
