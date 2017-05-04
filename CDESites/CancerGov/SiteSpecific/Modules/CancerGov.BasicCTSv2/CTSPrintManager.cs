@@ -1,31 +1,41 @@
 ﻿using System;
-using System.Web;
-using System.Web.UI;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
 using System.Threading.Tasks;
-using System.Configuration;
-using NCI.Web.CDE.Application;
-using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
+using System.Web;
+using System.Web.UI;
+
 using NCI.Text;
 using NCI.Web.CDE;
-using NCI.Web.CDE.UI;
+using NCI.Web.CDE.Application;
 using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.UI;
 using NCI.Web.CDE.UI.Configuration;
-using CancerGov.ClinicalTrialsAPI;
+using CancerGov.ClinicalTrials.Basic.v2.Configuration;
+using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
 using CancerGov.ClinicalTrials.Basic.v2.SnippetControls;
+using CancerGov.ClinicalTrialsAPI;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
     public class CTSPrintManager
     {
 
+        /// <summary>
+        /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
+        /// </summary>
+        protected string ApiUrl
+        {
+            get { return BasicClinicalTrialSearchAPISection.GetAPIUrl(); }
+        }
+
         public Guid StorePrintContent(List<String> trialIDs, DateTime date, CTSSearchParams searchTerms)
         {
             // Retrieve the collections given the ID's
-            BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+            BasicCTSManager manager = new BasicCTSManager(ApiUrl);
             List<ClinicalTrial> results = manager.GetMultipleTrials(trialIDs).ToList();
 
             // Send results to Velocity template
@@ -50,11 +60,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             foreach (var trial in results)
             {
                 var desc = trial.DetailedDescription;
-                trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
+                if (!string.IsNullOrWhiteSpace(desc))
+                {
+                    trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
+                }
             }
             if (searchTerms.ZipCode != null)
             {
-                BasicCTSManager manager = new BasicCTSManager("https://clinicaltrialsapi.cancer.gov");
+                BasicCTSManager manager = new BasicCTSManager(ApiUrl);
                 searchTerms.GeoCode = manager.GetZipLookupForZip(searchTerms.ZipCode).GeoCode;
             }
 

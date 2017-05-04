@@ -36,7 +36,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         // Site-specific recruitment statuses that qualify as "active" (not to be confused with the Trial Status).
         // These are used to filter available study sites on results/view/listing pages.
-        private static readonly string[] ActiveRecruitmentStatuses = {
+        public readonly string[] ActiveRecruitmentStatuses = {
             // These statuses appear in results:
             "active",
             "approved", 
@@ -69,6 +69,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         };
 
         /// <summary>
+        /// No arg BasicCTSManager constructor
+        /// </summary>
+        public BasicCTSManager() {}
+
+        /// <summary>
         /// Creates a new instance of a BasicCTSManager
         /// </summary>
         /// <param name="host">The hostname of the API</param>        
@@ -78,7 +83,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //that interface is what this wraps. (maybe)
             this.Client = new ClinicalTrialsAPIClient(host);
         }
-
 
         #region Public Methods
 
