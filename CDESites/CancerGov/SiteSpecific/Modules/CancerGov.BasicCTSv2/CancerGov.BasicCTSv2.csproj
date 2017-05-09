@@ -95,6 +95,12 @@
     <Compile Include="SnippetControls\BasicCTSViewControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\DynamicTrialListingPageControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\DynamicTrialListingPageDiseaseControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\TrialListingBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
