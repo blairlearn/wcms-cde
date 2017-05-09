@@ -105,7 +105,7 @@
     <Content Include="Common\PopUps\popTextFooterSpanish.htm" />
     <Content Include="Common\PopUps\popTextHeader.htm" />
     <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
-    <Content Include="SnippetTemplates\BasicCTSv2\DynamicTrialListingPage.ascx" />
+    <Content Include="SnippetTemplates\BasicCTSv2\DynamicTrialListingPageDisease.ascx" />
     <Content Include="SnippetTemplates\BlogAnalytics.ascx" />
     <Content Include="SnippetTemplates\BlogSeriesArchive.ascx" />
     <Content Include="Global.asax" />
