@@ -31,10 +31,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected abstract Type GetConfigType();
 
         protected BaseTrialListingConfig Config { get; private set; }
-
-        protected sealed override void OnPreRender(EventArgs e)
+         
+        protected sealed override void OnInit(EventArgs e)
         {
-            base.OnPreRender(e);
+            base.OnInit(e);
 
             Type configType = this.GetConfigType();
 
