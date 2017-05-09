@@ -13,18 +13,18 @@ namespace NCI.Web.CDE
 
         private const string PRINT_URL_ENDING = "/print";
         private const string VIEWALL_URL_ENDING = "/allpages";
-        private static readonly object REQUEST_URL_KEY = new object();        
+        private static readonly object REQUEST_URL_KEY = new object();
 
         //HACK: This is the file regex to handle cache-busting js & css filenames
         private static Regex UniqueStaticFileCleaner = new Regex("\\.__v[0-9a-z]+\\.", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-        
+
         /// <summary>
         /// You will need to configure this module in the web.config file of your
         /// web and register it with IIS before being able to use it. For more information
         /// see the following link: http://go.microsoft.com/?linkid=8101007
         /// </summary>
         #region IHttpModule Members
-        
+
         public void Dispose()
         {
             //clean-up code here.
@@ -88,7 +88,7 @@ namespace NCI.Web.CDE
                         //The general consensus is that rewritepath does not work with static assets well, so use TransferRequest as it
                         //will go back into the IIS pipeline as if a normal file.
                         //NOTE: definately do not call this on files that exist or a loop will occur.
-                        context.Server.TransferRequest(url, false);                        
+                        context.Server.TransferRequest(url, false);
                         return; //Done rewriting, let's get out of here.
                     }
 
@@ -103,18 +103,18 @@ namespace NCI.Web.CDE
             }
             #endregion
 
-            if (url.ToLower().IndexOf(".ico") != -1 
-                || url.IndexOf(".css") != -1 
-                || url.IndexOf(".gif") != -1 
-                || url.IndexOf(".jpg") != -1 
-                || url.IndexOf(".js") != -1 
-                || url.IndexOf(".axd") != -1) 
+            if (url.ToLower().IndexOf(".ico") != -1
+                || url.IndexOf(".css") != -1
+                || url.IndexOf(".gif") != -1
+                || url.IndexOf(".jpg") != -1
+                || url.IndexOf(".js") != -1
+                || url.IndexOf(".axd") != -1)
                 return;
 
             //Check if the url has been rewritten yet.
             if (PageAssemblyContext.Current.PageAssemblyInstruction != null)
-                return; 
-          
+                return;
+
             //if (url == "/")
             //{
             //    //This may fix a bug with .net, and just use the virdir instead.
@@ -149,7 +149,7 @@ namespace NCI.Web.CDE
             //Store the url so it can be rewritten for logging.
             context.Items[REQUEST_URL_KEY] = url;
 
-            bool isPrint = false;            
+            bool isPrint = false;
 
             if (url.EndsWith(PRINT_URL_ENDING))
             {
@@ -175,7 +175,7 @@ namespace NCI.Web.CDE
                     url = ContentDeliveryEngineConfig.DefaultHomePage.Homepage;
 
                 isPrint = true;
-                displayVersion=DisplayVersions.Print;
+                displayVersion = DisplayVersions.Print;
             }
 
             //Now check to see if it is the view all. (For MultiPageAssemblyInstructions)
@@ -224,55 +224,89 @@ namespace NCI.Web.CDE
 
             try
             {
-                //Load the XML file to create a assemblyinfo object of type ipageassemblyinstruction.If the XML file fails to create IPageAssemblyInstruction
-                //Object log error
-               assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(url);
-                //set Field filters,url filters...and other necessary things which depend on assemblyinfo.
-                //Handle multipage pages               
-               if (assemblyInfo == null)
-               {
-                   //1. Remove last part of path, e.g. /cancertopics/wyntk/bladder/page10 becomes /cancertopics/wyntk/bladder
-                   string truncUrl = url.Substring(0, url.LastIndexOf('/'));
-                   if (truncUrl != string.Empty)
-                   {
-                       assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(truncUrl);
-                       //check if is IMAPI
-                       if (assemblyInfo is IMultiPageAssemblyInstruction)
-                       {
-                           //check if the page requested exists and return null if page does not exists
-                           int index = ((IMultiPageAssemblyInstruction)assemblyInfo).GetPageIndexOfUrl(url);
+                //Try to get the assemblyinfo following these rules.
+                // When depth == 1, and we get an assemblyInfo, then we are looking for 
+                //     the full URL that was requested
+                // When depth == 2, and we get an assemblyInfo, then we are looking for
+                //     either a MPAI, or a SPAI that implements PushState
+                // When depth >= 3, and we get an assemblyInfo, then we are looking for
+                //     only a SPAI that implements PushState
 
-                           if (index >= 0)
-                           {
-                               //This url is a page, so set the current index so we can get the page template later.
-                               ((IMultiPageAssemblyInstruction)assemblyInfo).SetCurrentPageIndex(index);
-                               assemblyInfo.Initialize();
-                           }
+                string currUrlPath = url;
+                int depth = 1;
 
-                           else
-                           {
-                               assemblyInfo = null;
-                               return;
-                           }
-                       }
-                       else
-                           assemblyInfo = null;
-                   }
-               }
+                while (assemblyInfo == null && currUrlPath != string.Empty)
+                {
+                    //Load the assembly info from a path/file.
+                    assemblyInfo = PageAssemblyInstructionFactory.GetPageAssemblyInfo(currUrlPath);
 
-               else
-               {
-                   assemblyInfo.Initialize();
-               }
+                    //Did not find anything, let's continue.
+                    if (assemblyInfo == null)
+                    {
+                        //Chop off the current path and try again.
+                        currUrlPath = currUrlPath.Substring(0, currUrlPath.LastIndexOf('/'));
 
+                        // Increment the depth one more time as we continue diving.
+                        depth++;
+
+                        continue;
+                    }
+
+                    // We have an MPAI & depth is greater than 2 (e.g. MPAI is /foo and URL is /foo/bar/bazz)
+                    if (assemblyInfo is IMultiPageAssemblyInstruction && depth != 2)
+                    {
+                        assemblyInfo = null;
+                        break;
+                    }
+
+                    // We have a Single page that is 2 or more levels deep, and does not implement pushstate
+                    // e.g. SPAI is /foo and URL is /foo/bar.
+                    if (
+                        assemblyInfo is SinglePageAssemblyInstruction
+                        && depth > 1
+                        && !assemblyInfo.ImplementsPushState
+                       )
+                    {
+                        assemblyInfo = null;
+                        break;
+                    }
+
+                    // Good so far, so let's check if it is a MPAI and it has the requested page.
+                    if (assemblyInfo is MultiPageAssemblyInstruction)
+                    {
+                        int index = ((IMultiPageAssemblyInstruction)assemblyInfo).GetPageIndexOfUrl(url);
+                        if (index >= 0)
+                        {
+                            //This url is a page, so set the current index so we can get the page template later.
+                            ((IMultiPageAssemblyInstruction)assemblyInfo).SetCurrentPageIndex(index);
+                            assemblyInfo.Initialize();
+                        }
+                        else
+                        {
+                            assemblyInfo = null;
+                            break;
+                        }
+                    }
+
+                    //By now we have sussed out if we have a PAI or not.
+                    //If we do, then we need to initialize it.
+                    if (assemblyInfo != null)
+                    {
+                        assemblyInfo.Initialize();
+                    }
+
+                    //Break out of loop.
+                    break;
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string errMessage = "RewriteUrl(): Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nFailed to Create IPageAssemblyInstruction with the XML file Provided.";
                 log.Error(errMessage, ex);
-                RaiseErrorPage( errMessage,ex);
+                RaiseErrorPage(errMessage, ex);
                 return;
             }
+
             //Exiting because there is no page assembly instruction for the requested URL.
             if (assemblyInfo == null)
             {
@@ -280,12 +314,12 @@ namespace NCI.Web.CDE
             }
 
             //Load the page template info for the current request
-            PageTemplateInfo pageTemplateInfo=null;
-            try 
+            PageTemplateInfo pageTemplateInfo = null;
+            try
             {
                 pageTemplateInfo = PageTemplateResolver.GetPageTemplateInfo(assemblyInfo.TemplateTheme, assemblyInfo.PageTemplateName, displayVersion);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string errMessage = "RewriteUrl(): Requested URL: " + context.Items[REQUEST_URL_KEY] + "\nCannot Load the pageTemplateInfo problem with the PageTemplateConfiguration XML file ";
                 log.Error(errMessage, ex);
@@ -305,13 +339,13 @@ namespace NCI.Web.CDE
             PageAssemblyContext.Current.InitializePageAssemblyInfo(assemblyInfo, displayVersion, pageTemplateInfo, url);
 
             // Set culture for selected content.
-			// The language and culture are formatted as xx-yy (eg. "en-us") when a locale is chosen in Percussion. 			
+            // The language and culture are formatted as xx-yy (eg. "en-us") when a locale is chosen in Percussion. 			
             // The hyphenated four-letter code is then trimmed to a 2-character neutral culture (eg. "en") by the Velocity
-			// user macros file and is added to the XML file to be published in /PublishedContent/PageInstructions. The 
-			// assemblyInfo object uses the neutral culture (found in the <Language> tag in the XML file) for page assembly.
-			// The only exception to this is the Chinese language, in which the culture MUST be specified as either
-			// "zh-hans" (Simplified Chinese) or "zh-hant" (Traditional Chinese). There is no support for a 2-character "zh" 
-			// culture - see http://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo(v=vs.90).aspx for
+            // user macros file and is added to the XML file to be published in /PublishedContent/PageInstructions. The 
+            // assemblyInfo object uses the neutral culture (found in the <Language> tag in the XML file) for page assembly.
+            // The only exception to this is the Chinese language, in which the culture MUST be specified as either
+            // "zh-hans" (Simplified Chinese) or "zh-hant" (Traditional Chinese). There is no support for a 2-character "zh" 
+            // culture - see http://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo(v=vs.90).aspx for
             // details. The logic below is a workaround to catch the "zh" and convert it to the full "zh-hans" culture.
             if (!string.IsNullOrEmpty(assemblyInfo.Language))
                 if (assemblyInfo.Language == "zh")
@@ -344,7 +378,7 @@ namespace NCI.Web.CDE
             // Do not reset the client path because it'll break form action url's.
             try
             {
-                context.RewritePath(rewriteUrl,  false); 
+                context.RewritePath(rewriteUrl, false);
             }
 
             catch (HttpException ex)
@@ -362,7 +396,7 @@ namespace NCI.Web.CDE
             if (DisplayErrorOnScreen)
             {
                 HttpContext.Current.Response.Write("<br/><br/>Error Message: " + errMessage);
-                if( ex != null )
+                if (ex != null)
                     HttpContext.Current.Response.Write("<br/><br/>Exception Message: " + ex.ToString());
             }
             HttpContext.Current.Response.End();
@@ -408,11 +442,11 @@ namespace NCI.Web.CDE
         }
 
         #region Private Members
-        private bool DisplayErrorOnScreen 
+        private bool DisplayErrorOnScreen
         {
-            get 
+            get
             {
-                string displayErrorOnScreen = 
+                string displayErrorOnScreen =
                     System.Configuration.ConfigurationManager.AppSettings["DisplayErrorOnScreen"];
 
                 if (string.IsNullOrEmpty(displayErrorOnScreen))
