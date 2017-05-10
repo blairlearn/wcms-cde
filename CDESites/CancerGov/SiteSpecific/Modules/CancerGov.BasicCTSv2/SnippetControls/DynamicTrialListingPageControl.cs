@@ -143,15 +143,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnLoad(e);
 
-            
-
             //Step 1. Parse URL and pull out parameters
             this.SetupUrls();
             this.ParseURL();
 
             //Step 2. Get the Pattern for the placeholder text
-            //string pattern = this.GetCurrentPatternKey();
-            string pattern = "";
+            string pattern = this.GetCurrentPatternKey();
+            
             //Step 3. Setup Page Metadata
             this.SetupPageMetadata(pattern);
 
@@ -163,20 +161,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         private void SetupPageMetadata(string patternKey)
         {
+            DynamicTrialListingConfig dynamicConfig = (DynamicTrialListingConfig)this.Config;
+            DynamicTrialListingConfigPattern pattern = dynamicConfig.DynamicListingPatterns[patternKey];
 
-            string browserTitle = this.ReplacePlaceholderText("I AM THE BROWSER TITLE");            
+            string browserTitle = this.ReplacePlaceholderText(pattern.BrowserTitle);            
             this.PageInstruction.AddFieldFilter("browser_title", (name, data) =>
             {
                 data.Value = browserTitle;
             });
 
-            string pageTitle = this.ReplacePlaceholderText("I AM THE PAGE TITLE");            
+            string pageTitle = this.ReplacePlaceholderText(pattern.PageTitle);            
             this.PageInstruction.AddFieldFilter("long_title", (name, data) =>
             {
                 data.Value = pageTitle;
             });
 
-            string metaDescription = this.ReplacePlaceholderText("I AM THE META DESCRIPTION");
+            string metaDescription = this.ReplacePlaceholderText(pattern.MetaDescription);
             this.PageInstruction.AddFieldFilter("meta_description", (name, data) =>
             {
                 data.Value = metaDescription;

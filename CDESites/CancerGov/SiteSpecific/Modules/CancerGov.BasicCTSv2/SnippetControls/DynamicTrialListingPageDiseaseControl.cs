@@ -25,7 +25,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         protected override string GetCurrentPatternKey()
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrWhiteSpace(this.InterventionIDs))
+            {
+                return "DiseaseTypeIntervention";
+            }
+            else if (!string.IsNullOrWhiteSpace(this.TrialType) && string.IsNullOrWhiteSpace(this.InterventionIDs))
+            {
+                return "DiseaseType";
+            }
+            else {
+                return "DiseaseOnly";
+            }
         }
 
         protected override JObject GetTypeSpecificQueryParameters()
