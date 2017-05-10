@@ -335,6 +335,15 @@ namespace CancerGov.Web.SnippetTemplates
  
         }
 
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+            var headers = HttpContext.Current.Response.Headers;
+            if (headers.Get("Cache-Control") != null)
+            {
+                headers.Set("Cache-Control", "private");
+            }
+        }
         
 
         public void Page_Unload(object sender, System.EventArgs e)
