@@ -52,6 +52,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return query;
         }
 
+        /// <summary>
+        /// Implementation of base trial listing page's InternalGetNoTrialsHtml
+        /// </summary>
+        /// <returns></returns>
+        protected override String InternalGetNoTrialsHtml()
+        {
+            return string.Empty;
+        }
+
         protected override Type GetConfigType()
         {
             return typeof(DynamicTrialListingConfig);
