@@ -75,7 +75,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         private string InterventionIDs { get; set; }
 
-
+        /// <summary>
+        /// Parses the URL for all of the parameters for a disease dynamic listing page
+        /// </summary>
         protected override void ParseURL()
         {
             if (this.CurrAppPath == "/")
