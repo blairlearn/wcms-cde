@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using NCI.Web;
 using NCI.Web.CDE;
+using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -27,9 +28,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             throw new NotImplementedException();
         }
 
-        protected override string GetTypeSpecificQueryParameters()
+        protected override JObject GetTypeSpecificQueryParameters()
         {
-            throw new NotImplementedException();
+            JObject queryParams = new JObject();
+            string[] diseaseIDsarr = this.DiseaseIDs.Split(new char[] { ',' });
+
+            queryParams.Add("diseases.nci_thesaurus_concept_id", new JArray(diseaseIDsarr));
+
+            if (!string.IsNullOrWhiteSpace(this.TrialType))
+            {
+                queryParams.Add("primary_purpose.primary_purpose_code", this.TrialType);
+            }
+
+            if (!string.IsNullOrWhiteSpace(this.InterventionIDs))
+            {
+                string[] interventionIDsarr = this.InterventionIDs.Split(new char[] { ',' });
+                queryParams.Add("arms.interventions.intervention_code", new JArray(interventionIDsarr));
+            }
+
+            return queryParams;
         }
 
 

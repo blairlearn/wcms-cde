@@ -9,6 +9,7 @@ using NCI.Web.CDE;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Configs;
+using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -36,15 +37,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// user supplied URL parameters.
         /// </summary>
         /// <returns></returns>
-        protected abstract string GetTypeSpecificQueryParameters();
+        protected abstract JObject GetTypeSpecificQueryParameters();
 
         /// <summary>
         /// Implementation of base trial listing page's Trial Query
         /// </summary>
         /// <returns></returns>
-        protected string GetTrialQuery()
+        protected sealed override JObject GetTrialQuery()
         {
-            return "";
+            JObject query = new JObject(this.GetTypeSpecificQueryParameters());
+
+            //Add any common parameters between all of the items.
+
+            return query;
         }
 
         protected override Type GetConfigType()
