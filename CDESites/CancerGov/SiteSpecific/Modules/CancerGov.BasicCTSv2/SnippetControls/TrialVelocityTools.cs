@@ -344,6 +344,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 phase = "Phase " + phase.Replace("_", "/");
             }
+            if (phase.Equals("Phase O"))
+                phase = "No phase specified";
             return phase;
         }
 
