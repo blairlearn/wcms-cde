@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Common.Logging;
 using NCI.Search.BestBets.Index;
 using NCI.Web.CDE.Application;
@@ -11,9 +12,22 @@ namespace CancerGov.Web
     {
         static ILog log = LogManager.GetLogger(typeof(Global));
 
-        protected new void Application_Start(object sender, EventArgs e)
+        protected override void SiteSpecificAppStart(object sender, EventArgs e)
         {
-            base.Application_Start(sender, e);
+
+            //Setting to allow TLS 1.1 & 1.2 for HttpClient in addition the default 4.5.X TLS 1.0.
+            //NOTE: This is supposed to be set for the AppDomain, however setting this in application start
+            //This affects all connections.
+            if ((ServicePointManager.SecurityProtocol & SecurityProtocolType.Tls12) != SecurityProtocolType.Tls12)
+            {
+                ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls12;
+            }
+
+            if ((ServicePointManager.SecurityProtocol & SecurityProtocolType.Tls11) != SecurityProtocolType.Tls11)
+            {
+                ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls11;
+            }
+
 
             #region Setup Quartz.NET jobs
 
@@ -57,8 +71,7 @@ namespace CancerGov.Web
                 }
             }
 
-            #endregion
-
+            #endregion            
         }
     }
 }
