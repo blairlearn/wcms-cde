@@ -43,8 +43,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         Dictionary<string, string> dictEVS = GetDictionary(EVSMappingFile);
                         Dictionary<string, string> dictOverrides = GetDictionary(OverrideMappingFile);
                         
-
-                        //TODO: Merge 
+                        foreach(string key in dictOverrides.Keys)
+                        {
+                            if(dictEVS.ContainsKey(key))
+                            {
+                                dictEVS[key] = dictOverrides[key];
+                            }
+                        }
+                        
                         instance.Mappings = dictEVS;
                     }
                 }
@@ -60,7 +66,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 while ((line = sr.ReadLine()) != null)
                 {
                     string[] parts = line.Split('|');
-                    parts[0].ToLower();
+                    parts[0] = parts[0].ToLower();
 
                     if(parts[0].Contains(","))
                     {

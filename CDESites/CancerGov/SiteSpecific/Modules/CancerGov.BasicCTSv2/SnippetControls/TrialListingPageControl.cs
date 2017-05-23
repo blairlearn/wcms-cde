@@ -61,19 +61,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Override method to raise the Load event.
-        /// </summary>
-        protected override void OnLoad(EventArgs e)
-        {
-            // Set analytics page load values
-            SetAnalytics();
-        }
-
-        #region Analytics methods
-        /// <summary>
         /// Set default pageLoad analytics for this page
         /// </summary>
-        protected void SetAnalytics()
+        protected override void SetAnalytics()
         {
             string val = "clinicaltrials_custom";
             string desc = "Clinical Trials: Custom";
@@ -113,6 +103,5 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             });
 
         }
-        #endregion
     }
 }

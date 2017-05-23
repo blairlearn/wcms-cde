@@ -59,6 +59,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>HTML string</returns>
         protected abstract String InternalGetNoTrialsHtml();
 
+
+        /// <summary>
+        /// Method called during URL Parsing phase of rendering results.
+        /// </summary>
+        protected abstract void SetAnalytics();
+
         /// <summary>
         /// The configuration from the page xml
         /// </summary>
@@ -164,7 +170,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             ));
             Controls.Add(ltl);
 
-            //TODO: Set Analytics??
+            // Setup web analytics
+            this.SetAnalytics();
         }
 
         /// <summary>

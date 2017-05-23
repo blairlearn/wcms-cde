@@ -7,6 +7,7 @@ using System.Web;
 using NCI.Web;
 using NCI.Web.CDE;
 using Newtonsoft.Json.Linq;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -19,23 +20,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         protected override string ReplacePlaceholderText(string input)
         {
+            // Replace all disease IDs with overrides
             if (!string.IsNullOrWhiteSpace(this.DiseaseIDs))
             {
                 string diseaseOverride = GetCodeOverride(this.DiseaseIDs);
                 input = input.Replace("${disease_name}", diseaseOverride);
                 input = input.Replace("${disease_name_lower}", diseaseOverride.ToLower());
             }
+
+            // Replace all trial types with overrides
             if (!string.IsNullOrWhiteSpace(this.TrialType))
             {
                 input = input.Replace("${type_of_trial}", System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(this.TrialType));
                 input = input.Replace("${type_of_trial_lower}", this.TrialType);
             }
+
+            // Replace all intervention IDs with overrides
             if (!string.IsNullOrWhiteSpace(this.InterventionIDs))
             {
                 string interventionOverride = GetCodeOverride(this.InterventionIDs);
                 input = input.Replace("${intervention}", interventionOverride);
                 input = input.Replace("${intervention_lower}", interventionOverride.ToLower());
             }
+
             return input;
         }
 
@@ -44,14 +51,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         protected override string GetCurrentPatternKey()
         {
+            // If intervention is present, pattern includes all three params
             if (!string.IsNullOrWhiteSpace(this.InterventionIDs))
             {
                 return "DiseaseTypeIntervention";
             }
+            // If trial type is present and intervention is not, pattern includes first two params
             else if (!string.IsNullOrWhiteSpace(this.TrialType) && string.IsNullOrWhiteSpace(this.InterventionIDs))
             {
                 return "DiseaseType";
             }
+            // If only disease is present, pattern includes just that param
             else {
                 return "DiseaseOnly";
             }
@@ -85,13 +95,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>A string with the override text</returns>
         private string GetCodeOverride(string codes)
         {
+            // Get label mappings
             var labelMapping = DynamicTrialListingMapping.Instance;
             string overrideText = "";
-
+            
+            // If combination of codes is in label mappings, set override
             if(labelMapping.MappingContainsKey(codes))
             {
                 overrideText = labelMapping[codes];
             }
+            // If specific combination isn't in label mappings, split them apart and look for
+            // overrides for each individual code
             else if(codes.Contains(","))
             {
                 string[] codeArr = codes.Split(new char[] { ',' });
@@ -99,22 +113,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 {
                     if(labelMapping.MappingContainsKey(codeArr[i]))
                     {
+                        // Replace code with override text
                         codeArr[i] = labelMapping[codeArr[i]];
                     }
                     else
                     {
+                        // Raise 404 error if code doesn't have an override (regardless of whether other codes have them)
                         NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("DynamicTrialListingPageDiseaseControl", 404, "Invalid parameter in dynamic listing page: c-code given does not have override");
                     }
                 }
                 if (codeArr.Length > 1)
                 {
-                    overrideText = string.Format("{0} and {1}", string.Join(", ", codeArr, 0, codeArr.Length - 1), codeArr[codeArr.Length - 1]);
+                    // If there are 3 or more codes, use commas, Oxford comma, and "and" to join string
+                    if(codeArr.Length >= 3)
+                    {
+                        overrideText = string.Format("{0}, and {1}", string.Join(", ", codeArr, 0, codeArr.Length - 1), codeArr[codeArr.Length - 1]);
+
+                    }
+                    // If there are only two codes, just use "and"
+                    else
+                    {
+                        overrideText = string.Format("{0} and {1}", codeArr[0], codeArr[1]);
+                    }
                 }
                 else
                 {
+                    // There is only one code, so just use that override
                     overrideText = codeArr[0];
                 }
             }
+
+            // Raise 404 error if overrides aren't found
             else
             {
                 NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("DynamicTrialListingPageDiseaseControl", 404, "Invalid parameter in dynamic listing page: c-code given does not have override");
@@ -166,14 +195,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
                 else
                 {
-                    this.DiseaseIDs = urlParams[0];
+                    this.DiseaseIDs = urlParams[0].ToLower();
                 }
             }
 
             //Has Type of Trial
             if (urlParams.Length >= 2)
             {
-                this.TrialType = urlParams[1];
+                this.TrialType = urlParams[1].ToLower();
             }
 
             //Has Intervention
@@ -188,9 +217,70 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
                 else
                 {
-                    this.InterventionIDs = urlParams[2];
+                    this.InterventionIDs = urlParams[2].ToLower();
                 }
             }
+        }
+
+        /// <summary>
+        /// Set default pageLoad analytics for this page
+        /// </summary>
+        protected override void SetAnalytics()
+        {
+            string val = "clinicaltrials_custom";
+            string desc = "Clinical Trials: Custom";
+
+            string[] analyticsParams = new string[5];
+            analyticsParams[0] = "Disease";
+            analyticsParams[1] = (!string.IsNullOrWhiteSpace(this.DiseaseIDs)) ? this.DiseaseIDs : "none";
+            analyticsParams[2] = (!string.IsNullOrWhiteSpace(this.TrialType)) ? this.TrialType : "none";
+            analyticsParams[3] = (!string.IsNullOrWhiteSpace(this.InterventionIDs)) ? this.InterventionIDs : "none";
+            analyticsParams[4] = this.TotalSearchResults.ToString();
+
+            string dynamicAnalytics = string.Join("|", analyticsParams);
+
+            // Set event
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
+            {
+                wbField.Value = WebAnalyticsOptions.Events.event2.ToString();
+            });
+
+            // Set props
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
+            {
+                wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop20, wbField =>
+            {
+                wbField.Value = dynamicAnalytics;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+
+            // Set eVars
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar10, wbField =>
+            {
+                wbField.Value = this.Config.DefaultItemsPerPage.ToString();
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
+            {
+                wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar20, wbField =>
+            {
+                wbField.Value = dynamicAnalytics;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar47, wbField =>
+            {
+                wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
+            {
+                wbField.Value = desc;
+            });
+
         }
     }
 }
