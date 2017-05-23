@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Web;
 using Common.Logging;
 using NCI.Web.CDE.Configuration;
@@ -14,6 +15,7 @@ namespace NCI.Web.CDE.Application
 
         protected void Application_Start(object sender, EventArgs e)
         {
+
             #region Set Promo URl File Monitoring
             try
             {
@@ -26,7 +28,17 @@ namespace NCI.Web.CDE.Application
             }
 
             #endregion
+
+            SiteSpecificAppStart(sender, e);
         }
+
+        /// <summary>
+        /// This method should be overriden in site specific global.asax implementations in
+        /// order to handle site specific app initialization.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void SiteSpecificAppStart(object sender, EventArgs e) { }
 
         #region Private Methods
         /// <summary>
