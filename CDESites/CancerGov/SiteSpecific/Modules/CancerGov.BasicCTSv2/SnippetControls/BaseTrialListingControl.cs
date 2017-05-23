@@ -25,6 +25,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     /// </summary>
     public abstract class BaseTrialListingControl : SnippetControl
     {
+        static ILog log = LogManager.GetLogger(typeof(BaseTrialListingControl));
+
         /// <summary>
         /// basic CTS query parameters
         /// </summary>
@@ -36,9 +38,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         // This control still shares BasicCTSManager with the CTS controls
         private BasicCTSManager _basicCTSManager = null;
         private string _APIURL = string.Empty;
-        private bool hasInvalidSearchParam;
-
-        static ILog log = LogManager.GetLogger(typeof(BaseTrialListingControl));
+        protected bool hasInvalidSearchParam;
 
         /// <summary>
         /// Gets the configuration type of the derrieved class
@@ -65,6 +65,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected BaseTrialListingConfig Config { get; private set; }
 
         /// <summary>
+        /// The configuration from the page xml
+        /// </summary>
+        public BaseCTSSearchParam SearchParams { get; private set; }
+
+        /// <summary>
         /// Gets the view page pretty URL
         /// </summary>
         private string DetailedViewPagePrettyUrl
@@ -84,6 +89,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// The current page number (for pager) 
         /// </summary>
         private int PageNum { get; set; }
+
+        /// <summary>
+        /// The total results returned from the API from a search.
+        /// </summary>
+        protected int TotalSearchResults { get; set; }
+        
+        /// <summary>
+        /// Create the Regex pattern for finding filters in the URL.
+        /// Match the following pattern: "filter" + open square bracket ([) + any string value + close square bracket (]).
+        /// </summary>
+        private readonly Regex FilterPattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
         /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
@@ -116,15 +132,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             
             //Get Trial Query, inject pager stuff, call manager
             JObject query = new JObject(this.GetTrialQuery());
-            
-            //add in URL filters to query
+
+            // Get the filter parameters from the URL. URL filter params should NOT override any matching params set in the JSON
+            String urlFilters = GetUrlFilters();
+            JObject urlParams = GetDeserializedJSON(urlFilters);
+
+            // Merge both sets of dynamic filter params.'query' overrides 'urlParams', meaning that any duplicate elements in urlParams 
+            // will not be included, e.g., given
+            // query == { "key1":value1, "key2":["value2,value3"] }
+            // and urlParms == { "key2":["value4,value5"], "key3":"value6" }
+            // merged query == { "key1":value1, "key2":["value2,value3"], "key3":"value6" }
+            query = MergeJObjects(query, urlParams);
 
             //Setup the pager.
-            BaseCTSSearchParam searchParams = this.GetSearchParamsForListing();
+            SearchParams = this.GetSearchParamsForListing();
 
             //fetch results
-            var results = _basicCTSManager.Search(searchParams, query);
-            
+            var results = _basicCTSManager.Search(SearchParams, query);
+
+            this.TotalSearchResults = results.TotalResults;            
 
             //Load VM File and show search results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
@@ -138,7 +164,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             ));
             Controls.Add(ltl);
 
-            //Set Analytics
+            //TODO: Set Analytics??
         }
 
         /// <summary>
@@ -168,7 +194,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
             catch (Exception ex)
             {
-                log.Error("Could not load the TrialListingPageInfo; check the config info of the Application Module item in Percussion", ex);
+                log.Error("Could not load the BaseTrialListingConfig; check the config info of the Application Module item in Percussion", ex);
                 throw ex;
             }
         }
@@ -252,6 +278,91 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
+        #region JSON manipulation methods
+        /// <summary>
+        /// Get filter params from URL and format them.
+        /// </summary>
+        /// <returns>JSON-formatted string</returns>
+        protected string GetUrlFilters()
+        {
+            Dictionary<string, string> urlParams = new Dictionary<string, string>();
+            List<string> values = new List<string>();
+            String result = "{}";
+
+            // For each query param that matches the "filter[]" pattern, add it to the list of filter values
+            foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
+            {
+                if (!string.IsNullOrWhiteSpace(key) && FilterPattern.IsMatch(key))
+                {
+                    Match match = FilterPattern.Match(key);
+                    string queryValue = match.Groups[1].Value;
+                    string queryParam = HttpContext.Current.Request.QueryString[match.Value];
+                    if (!string.IsNullOrWhiteSpace(queryParam)) // Don't filter empty params
+                    {
+                        if (queryParam.IndexOf(",") > -1) // Splic comma-separated values
+                        {
+                            values.Add("\"" + queryValue + "\":[\"" + queryParam.Replace(",", "\",\"") + "\"]");
+                        }
+                        else
+                        {
+                            values.Add("\"" + queryValue + "\":\"" + queryParam + "\"");
+                        }
+                    }
+                }
+            }
+            // Join all of our valid key-value pairs 
+            result = result.Insert(1, string.Join(",", values.ToArray()));
+
+            return result;
+        }
+
+        /// <summary>
+        /// Deserialize a JSON-formatted string that into a JObject.
+        /// </summary>
+        /// <param name="jsonBlob">JSON-formatted String object</param>
+        /// <returns>JSON object</returns>
+        protected JObject GetDeserializedJSON(String jsonBlob)
+        {
+            JObject result = new JObject();
+
+            if (!String.IsNullOrWhiteSpace(jsonBlob))
+            {
+                //Deserialize our JSON string into a dictionary object, then add it to our Json.NET object 
+                try
+                {
+                    Dictionary<string, object> kvps = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonBlob);
+                    foreach (KeyValuePair<string, object> kvp in kvps)
+                    {
+                        result.Add(new JProperty(kvp.Key, kvp.Value));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error("TrialListingPageControl:GetDeserializedJSON() - Error converting String to JSON.", ex);
+                    return null;
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Take two JObjects and merge, with the first arg being the override
+        /// </summary>
+        /// <param name="primary">Primary JSON object (overrides duplicates)</param>
+        /// <param name="secondary">Secondary JSON object (duplicates are overridden)</param>
+        /// <returns>Merged JSON object</returns>
+        protected JObject MergeJObjects(JObject primary, JObject secondary)
+        {
+            //Add dynamic filter criteria
+            if (primary != null && secondary != null)
+            {
+                //Merge objects (primary overrides secondary)
+                secondary.Merge(primary, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
+            }
+            return secondary;
+        }
+
+        #endregion
 
         #region Velocity Helpers
 
@@ -318,10 +429,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// This will happen when autosuggest is broken.
         /// </summary>
         /// <returns></returns>
-        //public bool HasBrokenCTSearchParam()
-        //{
-        //    return SearchParams is PhraseSearchParam ? ((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam : false;
-        //}
+        public bool HasBrokenCTSearchParam()
+        {
+            return SearchParams is PhraseSearchParam ? ((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam : false;
+        }
 
         /// <summary>
         /// Gets the View URL for an ID
@@ -353,7 +464,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 url.QueryParameters["pn"] = pageNum.ToString();
             }
 
-            /*// For each query param that matches the "filter[]" pattern, add it to our query parameters 
+            // For each query param that matches the "filter[]" pattern, add it to our query parameters
             foreach (string key in HttpContext.Current.Request.QueryString.AllKeys)
             {
                 if (!string.IsNullOrWhiteSpace(key) && FilterPattern.IsMatch(key))
@@ -367,7 +478,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         url.QueryParameters.Add(queryValue, queryParam);
                     }
                 }
-            }*/
+            }
 
             return url.ToString();
         }
@@ -574,5 +685,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         #endregion
+
+        /// <summary>
+        /// Clears the Response text, issues an HTTP redirect using status 301, and ends
+        /// the current request.
+        /// </summary>
+        /// <param name="Response">The current response object.</param>
+        /// <param name="url">The redirection's target URL.</param>
+        /// <remarks>Response.Redirect() issues its redirect with a 301 (temporarily moved) status code.
+        /// We want these redirects to be permanent so search engines will link to the new
+        /// location. Unfortunately, HttpResponse.RedirectPermanent() isn't implemented until
+        /// at version 4.0 of the .NET Framework.</remarks>
+        /// <exception cref="ThreadAbortException">Called when the redirect takes place and the current
+        /// request is ended.</exception>
+        protected void DoPermanentRedirect(HttpResponse Response, String url)
+        {
+            Response.Clear();
+            Response.Status = "301 Moved Permanently";
+            Response.AddHeader("Location", url);
+            Response.End();
+        }
     }
 }

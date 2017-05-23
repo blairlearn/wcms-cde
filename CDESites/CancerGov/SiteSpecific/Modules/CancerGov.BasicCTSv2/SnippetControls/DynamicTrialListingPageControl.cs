@@ -58,7 +58,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         protected override String InternalGetNoTrialsHtml()
         {
-            return string.Empty;
+            DynamicTrialListingConfig dynamicConfig = (DynamicTrialListingConfig)this.Config;
+            DynamicTrialListingConfigPattern pattern = dynamicConfig.DynamicListingPatterns[this.GetCurrentPatternKey()];
+
+            if(!string.IsNullOrWhiteSpace(pattern.NoTrialsHtml))
+            {
+                return this.ReplacePlaceholderText(pattern.NoTrialsHtml);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         protected override Type GetConfigType()
@@ -94,7 +104,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
-
         /**
          * 
          * This section is the pipeline of events in order to render the trials.
@@ -126,6 +135,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Now, that we have the PrettyURL, let's figure out what the app paths are...
             NciUrl currURL = new NciUrl();
             currURL.SetUrl(HttpContext.Current.Request.RawUrl);
+            currURL.SetUrl(currURL.UriStem);
 
             //Make sure this URL starts with the pretty url
             if (currURL.UriStem.ToLower().IndexOf(this.PrettyUrl.ToLower()) != 0)
@@ -152,11 +162,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             
             //Step 3. Setup Page Metadata
             this.SetupPageMetadata(pattern);
-
-            //Get Trials -> BaseTrialListingControl's OnPreRender method
-
-            //Bind Trials and Intro Text/NotFound text to template
-                        
         }
 
         private void SetupPageMetadata(string patternKey)
@@ -196,6 +201,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 url.SetUrl(this.CurrentUrl.ToString());
             });
 
+        }
+
+        public string GetIntroText()
+        {
+            DynamicTrialListingConfig dynamicConfig = (DynamicTrialListingConfig)this.Config;
+            DynamicTrialListingConfigPattern pattern = dynamicConfig.DynamicListingPatterns[this.GetCurrentPatternKey()];
+
+            if (!string.IsNullOrWhiteSpace(pattern.IntroText))
+            {
+                return this.ReplacePlaceholderText(pattern.IntroText);
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
     }
 }

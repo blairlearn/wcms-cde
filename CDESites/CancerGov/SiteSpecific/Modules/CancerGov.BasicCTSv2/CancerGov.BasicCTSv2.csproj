@@ -70,6 +70,7 @@
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
+    <Compile Include="DynamicTrialListingMapping.cs" />
     <Compile Include="HttpHandlers\CTSCachedPrintRequestHandler.cs" />
     <Compile Include="NCTIDRedirectModule.cs" />
     <Compile Include="GeoLocation.cs" />
@@ -101,13 +102,16 @@
     <Compile Include="SnippetControls\Configs\BaseTrialListingConfig.cs" />
     <Compile Include="SnippetControls\Configs\DynamicTrialListingConfig.cs" />
     <Compile Include="SnippetControls\Configs\DynamicTrialListingConfigPattern.cs" />
+    <Compile Include="SnippetControls\Configs\TrialListingConfig.cs" />
     <Compile Include="SnippetControls\DynamicTrialListingPageControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetControls\DynamicTrialListingPageDiseaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\DynamicTrialListingPageInterventionControl.cs" />
+    <Compile Include="SnippetControls\DynamicTrialListingPageInterventionControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\TrialListingBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
