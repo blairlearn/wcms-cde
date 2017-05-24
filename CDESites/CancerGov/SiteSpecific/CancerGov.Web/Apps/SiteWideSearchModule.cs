@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using CancerGov.Search.BestBets;
@@ -376,6 +377,12 @@ namespace NCI.Web.CancerGov.Apps
             base.OnPreRender(e);
 
             pnlSWR.DefaultButton = btnSWRTxtSearch.ID;
+
+            var headers = HttpContext.Current.Response.Headers;
+            if (headers.Get("Cache-Control") != null)
+            {
+                headers.Set("Cache-Control", "private");
+            }
         }
 
         protected string BestBetResultsHyperlinkOnclick(RepeaterItem result)
