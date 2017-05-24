@@ -8,6 +8,7 @@ using NCI.Web;
 using NCI.Web.CDE;
 using Newtonsoft.Json.Linq;
 using NCI.Web.CDE.WebAnalytics;
+using Common.Logging;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -23,17 +24,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Replace all intervention IDs with overrides
             if (!string.IsNullOrWhiteSpace(this.InterventionIDs))
             {
-                string interventionOverride = GetCodeOverride(this.InterventionIDs);
-                input.Replace("${intervention}", this.InterventionIDs);
-                input = input.Replace("${intervention_lower}", interventionOverride.ToLower());
+                input = input.Replace("${intervention}", GetOverride(this.InterventionIDs, true));
+                input = input.Replace("${intervention_lower}", GetOverride(this.InterventionIDs, false));
             }
 
             // Replace all trial types with overrides
             if (!string.IsNullOrWhiteSpace(this.TrialType))
             {
-                string trialTypeOverride = GetCodeOverride(this.TrialType);
-                input.Replace("${type_of_trial}", System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(trialTypeOverride));
-                input = input.Replace("${type_of_trial_lower}", trialTypeOverride);
+                input = input.Replace("${type_of_trial}", GetOverride(this.TrialType, true));
+                input = input.Replace("${type_of_trial_lower}", GetOverride(this.TrialType, false));
             }
 
             return input;
@@ -81,61 +80,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         /// <param name="codes"></param>
         /// <returns>A string with the override text</returns>
-        private string GetCodeOverride(string codes)
+        private string GetOverride(string valToOverride, bool needsTitleCase)
         {
             // Get label mappings
             var labelMapping = DynamicTrialListingMapping.Instance;
             string overrideText = "";
 
             // If combination of codes is in label mappings, set override
-            if (labelMapping.MappingContainsKey(codes))
+            if (labelMapping.MappingContainsKey(valToOverride))
             {
-                overrideText = labelMapping[codes];
-            }
-            // If specific combination isn't in label mappings, split them apart and look for
-            // overrides for each individual code
-            else if (codes.Contains(","))
-            {
-                string[] codeArr = codes.Split(new char[] { ',' });
-                for (int i = 0; i < codeArr.Length; i++)
+                if(needsTitleCase)
                 {
-                    if (labelMapping.MappingContainsKey(codeArr[i]))
-                    {
-                        // Replace code with override text
-                        codeArr[i] = labelMapping[codeArr[i]];
-                    }
-                    else
-                    {
-                        Response.Headers.Add("X-CTSMap", "ID not found");
-
-                        // Raise 404 error if code doesn't have an override (regardless of whether other codes have them)
-                        NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("DynamicTrialListingPageInterventionControl", 404, "Invalid parameter in dynamic listing page: c-code given does not have override");
-                    }
-                }
-                if (codeArr.Length > 1)
-                {
-                    // If there are 3 or more codes, use commas, Oxford comma, and "and" to join string
-                    if(codeArr.Length >= 3)
-                    {
-                        overrideText = string.Format("{0}, and {1}", string.Join(", ", codeArr, 0, codeArr.Length - 1), codeArr[codeArr.Length - 1]);
-
-                    }
-                    // If there are only two codes, just use "and"
-                    else
-                    {
-                        overrideText = string.Format("{0} and {1}", codeArr[0], codeArr[1]);
-                    }
+                    overrideText = labelMapping.GetTitleCase(valToOverride);
                 }
                 else
                 {
-                    // There is only one code, so just use that override
-                    overrideText = codeArr[0];
+                    overrideText = labelMapping.Get(valToOverride);
                 }
             }
             // Raise 404 error if overrides aren't found
             else
             {
                 Response.Headers.Add("X-CTSMap", "ID not found");
+                LogManager.GetLogger(typeof(DynamicTrialListingPageInterventionControl)).ErrorFormat("Invalid parameter in dynamic listing page: {0} does not have override", valToOverride);
                 NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("DynamicTrialListingPageInterventionControl", 404, "Invalid parameter in dynamic listing page: c-code given does not have override");
             }
 

@@ -17,8 +17,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         private static readonly string MAP_CACHE_KEY = "LabelMapping";
         private static readonly string EVS_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetEvsMappingFilePath();
-        private static readonly string OVERRIDE_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetMappingOverrideFilePath();
+        private static readonly string OVERRIDE_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetOverrideMappingFilePath();
+        private static readonly string TOKENS_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetTokenMappingFilePath();
         private Dictionary<string, string> Mappings = new Dictionary<string, string>();
+        private HashSet<string> Tokens = new HashSet<string>();
        
         private DynamicTrialListingMapping() { }
 
@@ -60,6 +62,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         }
                         
                         instance.Mappings = dictEVS;
+
+                        instance.Tokens = GetTokens(TOKENS_MAPPING_FILE);
 
                         // Store instance in cache for five minutes
                         HttpContext.Current.Cache.Add(MAP_CACHE_KEY, instance, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
@@ -117,11 +121,70 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return dict;
         }
 
-        public string this[string code]
+        private static HashSet<string> GetTokens(string filePath)
         {
-            get{
-                return Mappings[code];
+            HashSet<string> tokensSet = new HashSet<string>();
+            try
+            {
+                if (File.Exists(HttpContext.Current.Server.MapPath(filePath)))
+                {
+                    // If file exists, use streamreader to load mappings into dictionary
+                    using (StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath(filePath)))
+                    {
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            tokensSet.Add(line);
+                        }
+                    }
+                }
+                else
+                {
+                    // Throw exception if file doesn't exist
+                    LogManager.GetLogger(typeof(DynamicTrialListingMapping)).ErrorFormat("Mapping file '{0}' not found.", filePath);
+                    throw new FileNotFoundException(filePath);
+                }
             }
+            catch (Exception ex)
+            {
+                LogManager.GetLogger(typeof(DynamicTrialListingMapping)).ErrorFormat("Error while getting the mapping file.", ex);
+            }
+
+            return tokensSet;
+        }
+
+        public string GetTitleCase (string value)
+        {
+            return Mappings[value];
+        }
+
+        public string Get(string value)
+        {
+            string overrideText = Mappings[value];
+
+            // Split apart string on known values (space and dash) for comparison to tokens
+            string[] split = overrideText.Split(new char[] {' ', '-'});
+
+            // For use in formatter
+            int i = 0;
+            List<string> keepToken = new List<string>();
+
+            foreach(string part in split)
+            {
+                if(Tokens.Contains(part))
+                {
+                    // If do-not-replace tokens contains this string, replace with value for formatter
+                    // and add token to list for later replace
+                    overrideText = overrideText.Replace(part, "{" + i.ToString() + "}");
+                    keepToken.Add(part);
+                    i++;
+                }
+            }
+
+            overrideText = overrideText.ToLower();
+            overrideText = String.Format(overrideText, keepToken.ToArray());
+
+            return overrideText;
         }
 
         public bool MappingContainsKey(string key)

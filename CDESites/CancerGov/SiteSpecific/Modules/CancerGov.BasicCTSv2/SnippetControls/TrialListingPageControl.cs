@@ -81,6 +81,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string val = "clinicaltrials_custom";
             string desc = "Clinical Trials: Custom";
 
+            string[] analyticsParams = new string[2];
+            analyticsParams[0] = "Manual Parameters";
+            analyticsParams[1] = this.TotalSearchResults.ToString();
+            string manualAnalytics = string.Join("|", analyticsParams);
+
             // Set event
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
             {
@@ -91,6 +96,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
             {
                 wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop20, wbField =>
+            {
+                wbField.Value = manualAnalytics;
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
             {
@@ -105,6 +114,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
             {
                 wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar20, wbField =>
+            {
+                wbField.Value = manualAnalytics;
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar47, wbField =>
             {

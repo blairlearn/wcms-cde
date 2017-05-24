@@ -15,6 +15,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Configuration
         private static readonly string CONFIG_SECTION_NAME = "nci/search/basicClinicalTrialSearchAPI";
         private static readonly string EVS_MAPPING_NAME = "EvsMapping";
         private static readonly string MAPPING_OVERRIDE_NAME = "OverrideMapping";
+        private static readonly string TOKEN_OVERRIDE_NAME = "TokensMapping";
+
 
         /// <summary>
         /// Gets the host name of the ClinicalTrialsAPI server.
@@ -108,7 +110,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Configuration
         /// <summary>
         /// Gets the Override Mapping file path for clinical trial dynamic listing pages from the configuration
         /// </summary>
-        public static string GetMappingOverrideFilePath()
+        public static string GetOverrideMappingFilePath()
         {
             string loc = "";
             BasicClinicalTrialSearchAPISection config = (BasicClinicalTrialSearchAPISection)ConfigurationManager.GetSection(CONFIG_SECTION_NAME);
@@ -126,6 +128,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Configuration
                 throw new ConfigurationErrorsException(MAPPING_OVERRIDE_NAME + "error: element's filePath cannot be null or empty");
 
             loc = config.TermMappingFiles[MAPPING_OVERRIDE_NAME].FilePath;
+            return loc;
+        }
+
+        /// <summary>
+        /// Gets the Token Mapping file path for clinical trial dynamic listing pages from the configuration
+        /// </summary>
+        public static string GetTokenMappingFilePath()
+        {
+            string loc = "";
+            BasicClinicalTrialSearchAPISection config = (BasicClinicalTrialSearchAPISection)ConfigurationManager.GetSection(CONFIG_SECTION_NAME);
+
+            if (config == null)
+                throw new ConfigurationErrorsException("The configuration section, " + CONFIG_SECTION_NAME + ", cannot be found");
+
+            if (config.TermMappingFiles == null)
+                throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: termMappingFiles cannot be null or empty");
+
+            if (config.TermMappingFiles[TOKEN_OVERRIDE_NAME] == null)
+                throw new ConfigurationErrorsException(TOKEN_OVERRIDE_NAME + "error: element cannot be null or empty");
+
+            if (string.IsNullOrWhiteSpace(config.TermMappingFiles[TOKEN_OVERRIDE_NAME].FilePath))
+                throw new ConfigurationErrorsException(TOKEN_OVERRIDE_NAME + "error: element's filePath cannot be null or empty");
+
+            loc = config.TermMappingFiles[TOKEN_OVERRIDE_NAME].FilePath;
             return loc;
         }
     }
