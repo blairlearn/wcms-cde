@@ -18,5 +18,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Configs
         /// </summary>
         public int DefaultItemsPerPage { get; set; }
 
+        /// <summary>
+        /// The detailed view page pretty url formatter.
+        /// </summary>
+        public string DetailedViewPagePrettyUrlFormatter { get; set; }
     }
 }

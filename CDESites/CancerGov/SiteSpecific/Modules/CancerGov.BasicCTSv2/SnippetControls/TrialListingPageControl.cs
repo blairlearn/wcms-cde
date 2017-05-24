@@ -35,6 +35,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         static ILog log = LogManager.GetLogger(typeof(TrialListingPageControl));
 
+        /// <summary>
+        /// Creates a TrialListingConfig for use in implementation methods
+        /// </summary>
+        protected TrialListingConfig Config
+        {
+            get
+            {
+                return (TrialListingConfig)this.BaseConfig;
+            }
+        }
+
+        /// <summary>
+        /// Implementation of base trial listing page's GetConfigType()
+        /// </summary>
+        /// <returns>The type of the current configuration</returns>
         protected override Type GetConfigType()
         {
             return typeof(TrialListingConfig);
@@ -46,8 +61,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>A JObject of request filters from the TrialListingConfig.</returns>
         protected sealed override JObject GetTrialQuery()
         {
-            TrialListingConfig manualConfig = (TrialListingConfig)this.Config;
-            return manualConfig.RequestFilters;
+            return this.Config.RequestFilters;
         }
 
         /// <summary>
@@ -56,8 +70,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>The NoTrialsHTML string from the TrialListingConfig.</returns>
         protected override String InternalGetNoTrialsHtml()
         {
-            TrialListingConfig manualConfig = (TrialListingConfig)this.Config;
-            return manualConfig.NoTrialsHTML;
+            return this.Config.NoTrialsHTML;
         }
 
         /// <summary>
@@ -87,7 +100,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Set eVars
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar10, wbField =>
             {
-                wbField.Value = this.Config.DefaultItemsPerPage.ToString();
+                wbField.Value = this.BaseConfig.DefaultItemsPerPage.ToString();
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
             {

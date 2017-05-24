@@ -13,6 +13,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Configuration
     public class BasicClinicalTrialSearchAPISection : ConfigurationSection
     {
         private static readonly string CONFIG_SECTION_NAME = "nci/search/basicClinicalTrialSearchAPI";
+        private static readonly string EVS_MAPPING_NAME = "EvsMapping";
+        private static readonly string MAPPING_OVERRIDE_NAME = "OverrideMapping";
 
         /// <summary>
         /// Gets the host name of the ClinicalTrialsAPI server.
@@ -42,6 +44,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Configuration
         }
 
         /// <summary>
+        /// Collection of term mapping files
+        /// </summary>
+        [ConfigurationProperty("termMappingFiles")]
+        [ConfigurationCollection(typeof(TermMappingFileElement), AddItemName = "add")]
+        public TermMappingFileElementCollection TermMappingFiles
+        {
+            get { return (TermMappingFileElementCollection)base["termMappingFiles"]; }
+        }
+    
+
+        /// <summary>
         /// Gets the URL for the ClinicalTrials API from the configuration
         /// </summary>
         public static string GetAPIUrl()
@@ -68,5 +81,52 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Configuration
             return url;
         }
 
+        /// <summary>
+        /// Gets the EVS Mapping file path for clinical trial dynamic listing pages from the configuration
+        /// </summary>
+        public static string GetEvsMappingFilePath()
+        {
+            string loc = "";
+            BasicClinicalTrialSearchAPISection config = (BasicClinicalTrialSearchAPISection)ConfigurationManager.GetSection(CONFIG_SECTION_NAME);
+
+            if (config == null)
+                throw new ConfigurationErrorsException("The configuration section, " + CONFIG_SECTION_NAME + ", cannot be found");
+
+            if (config.TermMappingFiles == null)
+                throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: termMappingFiles cannot be null or empty");
+
+            if(config.TermMappingFiles[EVS_MAPPING_NAME] == null)
+                throw new ConfigurationErrorsException(EVS_MAPPING_NAME + "error: element cannot be null or empty");
+
+            if (string.IsNullOrWhiteSpace(config.TermMappingFiles[EVS_MAPPING_NAME].FilePath))
+                throw new ConfigurationErrorsException(EVS_MAPPING_NAME + "error: element's filePath cannot be null or empty");
+
+            loc = config.TermMappingFiles[EVS_MAPPING_NAME].FilePath;
+            return loc;
+        }
+
+        /// <summary>
+        /// Gets the Override Mapping file path for clinical trial dynamic listing pages from the configuration
+        /// </summary>
+        public static string GetMappingOverrideFilePath()
+        {
+            string loc = "";
+            BasicClinicalTrialSearchAPISection config = (BasicClinicalTrialSearchAPISection)ConfigurationManager.GetSection(CONFIG_SECTION_NAME);
+
+            if (config == null)
+                throw new ConfigurationErrorsException("The configuration section, " + CONFIG_SECTION_NAME + ", cannot be found");
+
+            if (config.TermMappingFiles == null)
+                throw new ConfigurationErrorsException(CONFIG_SECTION_NAME + "error: termMappingFiles cannot be null or empty");
+
+            if (config.TermMappingFiles[MAPPING_OVERRIDE_NAME] == null)
+                throw new ConfigurationErrorsException(MAPPING_OVERRIDE_NAME + "error: element cannot be null or empty");
+
+            if (string.IsNullOrWhiteSpace(config.TermMappingFiles[MAPPING_OVERRIDE_NAME].FilePath))
+                throw new ConfigurationErrorsException(MAPPING_OVERRIDE_NAME + "error: element's filePath cannot be null or empty");
+
+            loc = config.TermMappingFiles[MAPPING_OVERRIDE_NAME].FilePath;
+            return loc;
+        }
     }
 }

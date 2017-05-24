@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Configs
 {
-    class TrialListingConfig : BaseTrialListingConfig
+    public class TrialListingConfig : BaseTrialListingConfig
     {
         /// <summary>
         /// The path to the template to use.

@@ -67,6 +67,8 @@
     <Compile Include="BasicCTSManager.cs" />
     <Compile Include="ClinicalTrialExtensions.cs" />
     <Compile Include="Configuration\BasicClinicalTrialSearchAPISection.cs" />
+    <Compile Include="Configuration\TermMappingFileElement.cs" />
+    <Compile Include="Configuration\TermMappingFileElementCollection.cs" />
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />

@@ -68,23 +68,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <summary>
         /// The configuration from the page xml
         /// </summary>
-        protected BaseTrialListingConfig Config { get; private set; }
+        protected BaseTrialListingConfig BaseConfig { get; private set; }
 
         /// <summary>
         /// The configuration from the page xml
         /// </summary>
         public BaseCTSSearchParam SearchParams { get; private set; }
-
-        /// <summary>
-        /// Gets the view page pretty URL
-        /// </summary>
-        private string DetailedViewPagePrettyUrl
-        { 
-            get
-            {
-                return "/clinicaltrials/{0}";
-            }
-        }
 
         /// <summary>
         /// The number of items per page (for pager)
@@ -160,7 +149,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             //Load VM File and show search results
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                this.Config.ResultsPageTemplatePath,
+                this.BaseConfig.ResultsPageTemplatePath,
                 new
                 {
                     Results = results,
@@ -196,7 +185,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 // It also includes a nested, JSON-formatted string "RequestFilters", which represents the JSON passed in with the API body request - this is
                 // deserialized in TrialListingPageControl.
                 // TODO: handle all deserialization in once place, if possible. This will avoid having to go through the process twice
-                this.Config = (BaseTrialListingConfig)JsonConvert.DeserializeObject(sidata, configType);
+                this.BaseConfig = (BaseTrialListingConfig)JsonConvert.DeserializeObject(sidata, configType);
 
             }
             catch (Exception ex)
@@ -214,7 +203,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             //Parse Parameters
             int pageNum = this.ParmAsInt(PAGENUM_PARAM, 1);
-            int itemsPerPage = this.ParmAsInt(ITEMSPP_PARAM, this.Config.DefaultItemsPerPage);
+            int itemsPerPage = this.ParmAsInt(ITEMSPP_PARAM, this.BaseConfig.DefaultItemsPerPage);
 
             //BaseCTSSearchParam searchParams = null;
             BaseCTSSearchParam searchParams = new ListingSearchParam();
@@ -449,7 +438,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public string GetDetailedViewUrl(string id)
         {
             NciUrl url = new NciUrl();
-            url.SetUrl(string.Format(this.DetailedViewPagePrettyUrl, id));
+            url.SetUrl(string.Format(this.BaseConfig.DetailedViewPagePrettyUrlFormatter, id));
             return url.ToString();
         }
 
@@ -684,9 +673,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public int GetItemsPerPage()
         {
             int number = 50;
-            if (this.Config.DefaultItemsPerPage > 0)
+            if (this.BaseConfig.DefaultItemsPerPage > 0)
             {
-                number = this.Config.DefaultItemsPerPage;
+                number = this.BaseConfig.DefaultItemsPerPage;
             }
             return number;
         }

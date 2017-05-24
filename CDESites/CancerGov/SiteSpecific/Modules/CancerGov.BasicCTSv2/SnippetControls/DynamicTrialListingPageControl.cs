@@ -19,6 +19,62 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     public abstract class DynamicTrialListingPageControl : BaseTrialListingControl
     {
         /// <summary>
+        /// Set logging for this class.
+        /// </summary>
+        static ILog log = LogManager.GetLogger(typeof(DynamicTrialListingPageControl));
+
+        /// <summary>
+        /// Creates a DynamicTrialListingConfig for use in implementation methods
+        /// </summary>
+        protected DynamicTrialListingConfig Config
+        {
+            get
+            {
+                return (DynamicTrialListingConfig)this.BaseConfig;
+            }
+        }
+
+        /// <summary>
+        /// Implementation of base trial listing page's GetConfigType()
+        /// </summary>
+        /// <returns>The type of the current configuration</returns>
+        protected override Type GetConfigType()
+        {
+            return typeof(DynamicTrialListingConfig);
+        }
+
+        /// <summary>
+        /// Implementation of base trial listing page's Trial Query
+        /// </summary>
+        /// <returns>A JObject with all of the query parameters for use </returns>
+        protected sealed override JObject GetTrialQuery()
+        {
+            JObject query = new JObject(this.GetTypeSpecificQueryParameters());
+
+            //Add any common parameters between all of the items.
+
+            return query;
+        }
+
+        /// <summary>
+        /// Implementation of base trial listing page's InternalGetNoTrialsHtml
+        /// </summary>
+        /// <returns>A string with the NoTrialsHtml from the configuration</returns>
+        protected override String InternalGetNoTrialsHtml()
+        {
+            DynamicTrialListingConfigPattern pattern = this.Config.DynamicListingPatterns[this.GetCurrentPatternKey()];
+
+            if (!string.IsNullOrWhiteSpace(pattern.NoTrialsHtml))
+            {
+                return this.ReplacePlaceholderText(pattern.NoTrialsHtml);
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
         /// Replaces the place holder text based on this Dynamic Trial Listing control type &
         /// user supplied URL parameters
         /// </summary>
@@ -38,43 +94,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         /// <returns></returns>
         protected abstract JObject GetTypeSpecificQueryParameters();
-
-        /// <summary>
-        /// Implementation of base trial listing page's Trial Query
-        /// </summary>
-        /// <returns></returns>
-        protected sealed override JObject GetTrialQuery()
-        {
-            JObject query = new JObject(this.GetTypeSpecificQueryParameters());
-
-            //Add any common parameters between all of the items.
-
-            return query;
-        }
-
-        /// <summary>
-        /// Implementation of base trial listing page's InternalGetNoTrialsHtml
-        /// </summary>
-        /// <returns></returns>
-        protected override String InternalGetNoTrialsHtml()
-        {
-            DynamicTrialListingConfig dynamicConfig = (DynamicTrialListingConfig)this.Config;
-            DynamicTrialListingConfigPattern pattern = dynamicConfig.DynamicListingPatterns[this.GetCurrentPatternKey()];
-
-            if(!string.IsNullOrWhiteSpace(pattern.NoTrialsHtml))
-            {
-                return this.ReplacePlaceholderText(pattern.NoTrialsHtml);
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-
-        protected override Type GetConfigType()
-        {
-            return typeof(DynamicTrialListingConfig);
-        }
 
         /// <summary>
         /// Gets or sets the PrettyUrl of the page this component lives on.
@@ -164,10 +183,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             this.SetupPageMetadata(pattern);
         }
 
+        /// <summary>
+        /// Sets up the page metadata based on the given pattern key using overrides
+        /// </summary>
+        /// <param name="patternKey"></param>
         private void SetupPageMetadata(string patternKey)
         {
-            DynamicTrialListingConfig dynamicConfig = (DynamicTrialListingConfig)this.Config;
-            DynamicTrialListingConfigPattern pattern = dynamicConfig.DynamicListingPatterns[patternKey];
+            DynamicTrialListingConfigPattern pattern = this.Config.DynamicListingPatterns[patternKey];
 
             string browserTitle = this.ReplacePlaceholderText(pattern.BrowserTitle);            
             this.PageInstruction.AddFieldFilter("browser_title", (name, data) =>
@@ -203,10 +225,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         }
 
+        /// <summary>
+        /// Gets the IntroText for the dynamic trial listing page
+        /// </summary>
+        /// <returns>A string with the NoTrialsHtml from the configuration</returns>
         public string GetIntroText()
         {
-            DynamicTrialListingConfig dynamicConfig = (DynamicTrialListingConfig)this.Config;
-            DynamicTrialListingConfigPattern pattern = dynamicConfig.DynamicListingPatterns[this.GetCurrentPatternKey()];
+            DynamicTrialListingConfigPattern pattern = this.Config.DynamicListingPatterns[this.GetCurrentPatternKey()];
 
             if (!string.IsNullOrWhiteSpace(pattern.IntroText))
             {

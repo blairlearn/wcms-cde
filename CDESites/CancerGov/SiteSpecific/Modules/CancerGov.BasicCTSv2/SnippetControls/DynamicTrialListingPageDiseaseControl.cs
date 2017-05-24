@@ -17,7 +17,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// Replaces the Placeholder Text
         /// </summary>
         /// <param name="input"></param>
-        /// <returns></returns>
+        /// <returns>A string with the placeholder text</returns>
         protected override string ReplacePlaceholderText(string input)
         {
             // Replace all disease IDs with overrides
@@ -31,8 +31,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Replace all trial types with overrides
             if (!string.IsNullOrWhiteSpace(this.TrialType))
             {
-                input = input.Replace("${type_of_trial}", System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(this.TrialType));
-                input = input.Replace("${type_of_trial_lower}", this.TrialType);
+                string trialTypeOverride = GetCodeOverride(this.TrialType);
+                input = input.Replace("${type_of_trial}", System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(trialTypeOverride));
+                input = input.Replace("${type_of_trial_lower}", trialTypeOverride.ToLower());
             }
 
             // Replace all intervention IDs with overrides
@@ -49,6 +50,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <summary>
         /// Gets the current PatternKey based on URL parameters
         /// </summary>
+        /// <returns>A string with the current pattern key</returns>
         protected override string GetCurrentPatternKey()
         {
             // If intervention is present, pattern includes all three params
@@ -67,6 +69,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
+        /// <summary>
+        /// Gets the type specific query parameters to be sent to the API from the given URL params
+        /// </summary>
+        /// <returns>A JObject with all of the parameters converted to those needed by API</returns>
         protected override JObject GetTypeSpecificQueryParameters()
         {
             JObject queryParams = new JObject();
@@ -89,7 +95,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Replaces the Placeholder Codes with Override Labels
+        /// Replaces the Placeholder Codes (or text) with Override Labels
         /// </summary>
         /// <param name="codes"></param>
         /// <returns>A string with the override text</returns>
@@ -118,6 +124,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     }
                     else
                     {
+                        Response.Headers.Add("X-CTSMap", "ID not found");
+
                         // Raise 404 error if code doesn't have an override (regardless of whether other codes have them)
                         NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("DynamicTrialListingPageDiseaseControl", 404, "Invalid parameter in dynamic listing page: c-code given does not have override");
                     }
@@ -146,6 +154,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Raise 404 error if overrides aren't found
             else
             {
+                Response.Headers.Add("X-CTSMap", "ID not found");
+
                 NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("DynamicTrialListingPageDiseaseControl", 404, "Invalid parameter in dynamic listing page: c-code given does not have override");
             }
 
@@ -189,12 +199,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 if (urlParams[0].Contains(","))
                 {
                     string[] split = urlParams[0].Split(',');
+                    // Sort c-codes in alphanumerical order for comparison to items in mapping file
                     Array.Sort(split);
+                    // Lowercase all c-codes for comparison to items in mapping file
                     split = split.Select(s => s.ToLower()).ToArray();
                     this.DiseaseIDs = string.Join(",", split);
                 }
                 else
                 {
+                    // Lowercase all c-codes for comparison to items in mapping file
                     this.DiseaseIDs = urlParams[0].ToLower();
                 }
             }
@@ -202,6 +215,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Has Type of Trial
             if (urlParams.Length >= 2)
             {
+                // Lowercase all c-codes for comparison to items in mapping file
                 this.TrialType = urlParams[1].ToLower();
             }
 
@@ -211,12 +225,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 if (urlParams[2].Contains(","))
                 {
                     string[] split = urlParams[2].Split(',');
+                    // Sort c-codes in alphanumerical order for comparison to items in mapping file
                     Array.Sort(split);
+                    // Lowercase all c-codes for comparison to items in mapping file
                     split = split.Select(s => s.ToLower()).ToArray();
                     this.InterventionIDs = string.Join(",", split);
                 }
                 else
                 {
+                    // Lowercase all c-codes for comparison to items in mapping file
                     this.InterventionIDs = urlParams[2].ToLower();
                 }
             }
@@ -230,6 +247,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string val = "clinicaltrials_custom";
             string desc = "Clinical Trials: Custom";
 
+            // Format string for analytics params: Intervention|Disease IDs|Trial Type|Intervention IDs|Total Results
             string[] analyticsParams = new string[5];
             analyticsParams[0] = "Disease";
             analyticsParams[1] = (!string.IsNullOrWhiteSpace(this.DiseaseIDs)) ? this.DiseaseIDs : "none";
@@ -262,7 +280,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Set eVars
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar10, wbField =>
             {
-                wbField.Value = this.Config.DefaultItemsPerPage.ToString();
+                wbField.Value = this.BaseConfig.DefaultItemsPerPage.ToString();
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
             {
