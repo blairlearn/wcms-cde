@@ -11,6 +11,15 @@ namespace NCI.Web.CDE.Test
     [TestClass]
     public class SnippetInfoTest
     {
+        /*
+         * Serializer for use with nested occurences of the Snippets element. (Used with sub-layouts.)
+         * 
+         * Creating an XmlSerializer object using the XmlSerializer(Type, XmlRootAttribute) overload results in a temporary assembly
+         * being created. Assemblies are not garbage collected until the application shuts down.  (The framework caches the assembly
+         * internally for simpler overloads.)
+         */
+        private static XmlSerializer nestedSnippetSerializer = new XmlSerializer(typeof(List<SnippetInfo>), new XmlRootAttribute("Snippets"));
+
         [TestMethod]
         public void ReadXml_SingleSnippetInfo_CanDeserialize()
         {
@@ -57,8 +66,7 @@ namespace NCI.Web.CDE.Test
                                       </Snippets>";
             using (StringReader s = new StringReader(snippetInfoXml))
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<SnippetInfo>), new XmlRootAttribute("Snippets"));
-                snippetInfos = (List<SnippetInfo>)serializer.Deserialize(s);
+                snippetInfos = (List<SnippetInfo>)nestedSnippetSerializer.Deserialize(s);
             }
 
             // Assert

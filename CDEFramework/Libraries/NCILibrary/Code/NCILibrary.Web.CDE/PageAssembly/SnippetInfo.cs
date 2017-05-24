@@ -20,6 +20,15 @@ namespace NCI.Web.CDE
         private List<DisplayVersions> listOnlyDisplayFor = new List<DisplayVersions>();
         private SnippetInfoCollection _snippets;
 
+        /*
+         * Serializer for use with nested occurences of the Snippets element. (Used with sub-layouts.)
+         * 
+         * Creating an XmlSerializer object using the XmlSerializer(Type, XmlRootAttribute) overload results in a temporary assembly
+         * being created. Assemblies are not garbage collected until the application shuts down.  (The framework caches the assembly
+         * internally for simpler overloads.)
+         */
+        private static XmlSerializer nestedSnippetSerializer = new XmlSerializer(typeof(SnippetInfoCollection),new XmlRootAttribute("Snippets"));
+
         /// <summary>
         /// Gets and sets the path to the user control that will render this
         /// snippet.
@@ -230,8 +239,7 @@ namespace NCI.Web.CDE
                             //}
 
                             
-                            XmlSerializer mySerializer = new XmlSerializer(typeof(SnippetInfoCollection),new XmlRootAttribute("Snippets"));
-                            _snippets = (SnippetInfoCollection)mySerializer.Deserialize(reader);
+                            _snippets = (SnippetInfoCollection)nestedSnippetSerializer.Deserialize(reader);
                         }
                     break;
 
