@@ -150,14 +150,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 else
                 {
                     // Lowercase all c-codes for comparison to items in mapping file
-                    this.InterventionIDs = urlParams[0];
+                    this.InterventionIDs = urlParams[0].ToLower();
                 }
             }
 
             //Has Type of Trial
             if (urlParams.Length >= 2)
             {
-                this.TrialType = urlParams[1];
+                this.TrialType = urlParams[1].ToLower();
             }
         }
 
