@@ -19,6 +19,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private static readonly string EVS_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetEvsMappingFilePath();
         private static readonly string OVERRIDE_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetOverrideMappingFilePath();
         private static readonly string TOKENS_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetTokenMappingFilePath();
+        private static readonly string STAGES_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetStagesMappingFilePath();
         private Dictionary<string, string> Mappings = new Dictionary<string, string>();
         private HashSet<string> Tokens = new HashSet<string>();
        
@@ -46,10 +47,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         // Load up mapping files
                         Dictionary<string, string> dictEVS = GetDictionary(EVS_MAPPING_FILE);
                         Dictionary<string, string> dictOverrides = GetDictionary(OVERRIDE_MAPPING_FILE);
+                        Dictionary<string, string> dictStages = GetDictionary(STAGES_MAPPING_FILE);
                         
-                        foreach(string key in dictOverrides.Keys)
+                        foreach(string key in dictStages.Keys)
                         {
                             if(dictEVS.ContainsKey(key))
+                            {
+                                // Use stage mappings instead of EVS mappings
+                                dictEVS[key] = dictStages[key];
+                            }
+                            else
+                            {
+                                // Add stage mappings if their key/value isn't present in EVS mappings
+                                dictEVS.Add(key, dictStages[key]);
+                            }
+                        }
+
+                        foreach (string key in dictOverrides.Keys)
+                        {
+                            if (dictEVS.ContainsKey(key))
                             {
                                 // Use override mappings instead of EVS mappings
                                 dictEVS[key] = dictOverrides[key];

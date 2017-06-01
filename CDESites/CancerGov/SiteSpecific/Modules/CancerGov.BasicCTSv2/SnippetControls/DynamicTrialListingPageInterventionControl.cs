@@ -175,8 +175,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             analyticsParams[1] = (!string.IsNullOrWhiteSpace(this.InterventionIDs)) ? this.InterventionIDs : "none";
             analyticsParams[2] = (!string.IsNullOrWhiteSpace(this.TrialType)) ? this.TrialType : "none";
             analyticsParams[3] = this.TotalSearchResults.ToString();
-
             string dynamicAnalytics = string.Join("|", analyticsParams);
+
+            string resultsPerPage;
+            if (this.TotalSearchResults < this.BaseConfig.DefaultItemsPerPage)
+            {
+                resultsPerPage = this.TotalSearchResults.ToString();
+            }
+            else
+            {
+                resultsPerPage = this.BaseConfig.DefaultItemsPerPage.ToString();
+            }
 
             // Set event
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
@@ -201,7 +210,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Set eVars
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar10, wbField =>
             {
-                wbField.Value = this.BaseConfig.DefaultItemsPerPage.ToString();
+                wbField.Value = resultsPerPage;
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
             {
