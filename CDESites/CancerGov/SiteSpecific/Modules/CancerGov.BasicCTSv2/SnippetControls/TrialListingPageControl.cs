@@ -87,13 +87,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string manualAnalytics = string.Join("|", analyticsParams);
 
             string resultsPerPage;
-            if (this.TotalSearchResults < this.BaseConfig.DefaultItemsPerPage)
+            if (this.TotalSearchResults < this.GetItemsPerPage())
             {
                 resultsPerPage = this.TotalSearchResults.ToString();
             }
             else
             {
-                resultsPerPage = this.BaseConfig.DefaultItemsPerPage.ToString();
+                resultsPerPage = this.GetItemsPerPage().ToString();
             }
 
             // Set event

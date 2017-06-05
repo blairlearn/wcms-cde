@@ -681,7 +681,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>int - items per page</returns>
         public int GetItemsPerPage()
         {
-            int number = 50;
+            int number = 25;
             if (this.BaseConfig.DefaultItemsPerPage > 0)
             {
                 number = this.BaseConfig.DefaultItemsPerPage;
