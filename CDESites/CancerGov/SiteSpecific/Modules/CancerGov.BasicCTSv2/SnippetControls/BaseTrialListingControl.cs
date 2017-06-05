@@ -126,7 +126,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             base.OnPreRender(e);
             
             //Get Trial Query, inject pager stuff, call manager
-            JObject query = new JObject(this.GetTrialQuery());
+            JObject query;
+
+            if(this.GetTrialQuery() != null)
+            {
+                query = new JObject(this.GetTrialQuery());
+            }
+            else
+            {
+                query = new JObject();
+            }
 
             // Get the filter parameters from the URL. URL filter params should NOT override any matching params set in the JSON
             String urlFilters = GetUrlFilters();
@@ -203,7 +212,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             //Parse Parameters
             int pageNum = this.ParmAsInt(PAGENUM_PARAM, 1);
-            int itemsPerPage = this.ParmAsInt(ITEMSPP_PARAM, this.BaseConfig.DefaultItemsPerPage);
+            int itemsPerPage = this.ParmAsInt(ITEMSPP_PARAM, this.GetItemsPerPage());
 
             //BaseCTSSearchParam searchParams = null;
             BaseCTSSearchParam searchParams = new ListingSearchParam();
