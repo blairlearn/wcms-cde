@@ -180,6 +180,12 @@ namespace NCI.Web.CDE
         }
 
         /// <summary>
+        /// Gets a bool indicating if this page requires HTTP5 Push State.  We are not going to
+        /// support MPAI and PushState. 
+        /// </summary>
+        public bool ImplementsPushState { get { return false; } }
+
+        /// <summary>
         /// Gets the template theme this page should be using.  (Set on a SectionDetails withing the parent folders of this page)
         /// </summary>
         /// <value>The name of the Template Theme</value>

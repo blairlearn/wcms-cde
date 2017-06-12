@@ -105,6 +105,8 @@
     <Content Include="Common\PopUps\popTextFooterSpanish.htm" />
     <Content Include="Common\PopUps\popTextHeader.htm" />
     <Content Include="Common\PopUps\popTextHeaderSpanish.htm" />
+    <Content Include="SnippetTemplates\BasicCTSv2\DynamicTrialListingPageDisease.ascx" />
+    <Content Include="SnippetTemplates\BasicCTSv2\DynamicTrialListingPageIntervention.ascx" />
     <Content Include="SnippetTemplates\BlogAnalytics.ascx" />
     <Content Include="SnippetTemplates\BlogSeriesArchive.ascx" />
     <Content Include="Global.asax" />
@@ -656,10 +658,6 @@
     <ProjectReference Include="..\Modules\CancerGov.BasicCTSv2\CancerGov.BasicCTSv2.csproj">
       <Project>{96f6420f-f16d-4873-af3a-5d22e9ffbd55}</Project>
       <Name>CancerGov.BasicCTSv2</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modules\CancerGov.BasicCTS\CancerGov.BasicCTS.csproj">
-      <Project>{d3896177-dbf5-45e4-bc4c-9d53e8341015}</Project>
-      <Name>CancerGov.BasicCTS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Search.AutoSuggest\CancerGov.Search.AutoSuggest.csproj">
       <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>

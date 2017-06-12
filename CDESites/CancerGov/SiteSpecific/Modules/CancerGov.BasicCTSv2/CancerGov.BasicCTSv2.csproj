@@ -67,9 +67,12 @@
     <Compile Include="BasicCTSManager.cs" />
     <Compile Include="ClinicalTrialExtensions.cs" />
     <Compile Include="Configuration\BasicClinicalTrialSearchAPISection.cs" />
+    <Compile Include="Configuration\TermMappingFileElement.cs" />
+    <Compile Include="Configuration\TermMappingFileElementCollection.cs" />
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
+    <Compile Include="DynamicTrialListingMapping.cs" />
     <Compile Include="HttpHandlers\CTSCachedPrintRequestHandler.cs" />
     <Compile Include="NCTIDRedirectModule.cs" />
     <Compile Include="GeoLocation.cs" />
@@ -82,6 +85,9 @@
     <Compile Include="SearchParams\ListingSearchParam.cs" />
     <Compile Include="SearchParams\PhraseSearchParam.cs" />
     <Compile Include="CTSSearchParams.cs" />
+    <Compile Include="SnippetControls\BaseTrialListingControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\BasicCTSBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -93,6 +99,19 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetControls\BasicCTSViewControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\Configs\BaseTrialListingConfig.cs" />
+    <Compile Include="SnippetControls\Configs\DynamicTrialListingConfig.cs" />
+    <Compile Include="SnippetControls\Configs\DynamicTrialListingConfigPattern.cs" />
+    <Compile Include="SnippetControls\Configs\TrialListingConfig.cs" />
+    <Compile Include="SnippetControls\DynamicTrialListingPageControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\DynamicTrialListingPageDiseaseControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\DynamicTrialListingPageInterventionControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetControls\TrialListingBaseControl.cs">
