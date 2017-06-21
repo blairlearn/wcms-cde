@@ -11,6 +11,7 @@ using System.Web.UI.HtmlControls;
 using Common.Logging;
 using NCI.Web.CDE.Configuration;
 using NCI.Web.Extensions;
+using NCI.Web.CDE.UI.WebControls;
 
 namespace NCI.Web.CDE.UI
 {
@@ -23,8 +24,11 @@ namespace NCI.Web.CDE.UI
     /// </summary>
     public class WebPageAssembler : Page, IPageAssembler
     {
+
         #region Private Members
         static ILog log = LogManager.GetLogger(typeof(WebPageAssembler));
+
+        private HtmlContainerControl _body = null;
 
         /// <summary>
         /// Loads a collection of all template slots that are declaratively 
@@ -493,6 +497,47 @@ namespace NCI.Web.CDE.UI
         }
 
         /// <summary>
+        /// This property returns the current body control. 
+        /// </summary>
+        protected HtmlContainerControl CurrentPageBody
+        {
+            get
+            {
+                if (_body == null)
+                {
+                    // Find the html body control on the template page
+                    foreach (HtmlContainerControl htmlCtl in this.FindAllControlsByType<HtmlContainerControl>())
+                    {
+                        string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
+                        if (htmlTag.Equals("body"))
+                        {
+                            _body = htmlCtl;
+                            break;
+                        }
+                    }
+                }
+
+                return _body;
+            }
+        }
+
+        protected WebAnalyticsControl AnalyticsControl
+        {
+            get
+            {
+                WebAnalyticsControl analyticsControl = null;
+
+                // Find the body control on the template page
+                foreach (WebAnalyticsControl control in CurrentPageBody.FindControlByType<WebAnalyticsControl>())
+                {
+                    analyticsControl = control;
+                    break;
+                }
+                return analyticsControl;
+            }
+        }
+
+        /// <summary>
         /// Sets the title of the page. Uses the GetField method of the Page instructions interface
         /// to get  the value.
         /// </summary>
@@ -645,7 +690,7 @@ namespace NCI.Web.CDE.UI
         /// </summary>
         protected virtual void InsertTrailingStyleSheetsJavascriptsReferences()
         {
-            if (CurrentPageHead != null)
+            if (CurrentPageBody != null)
             {
                 PageTemplateInfo pgTemplateInfo = PageAssemblyContext.Current.PageTemplateInfo;
                 if (pgTemplateInfo != null)
@@ -678,7 +723,8 @@ namespace NCI.Web.CDE.UI
                     foreach (JavascriptInfo jsLastInfo in lastJavaScript)
                     {
                         String url = appendFileFingerprint(jsLastInfo.JavascriptPath);
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
+                        // Add script to end of body control, before WebAnalyticsControl
+                        NCI.Web.UI.WebControls.JSManager.AddEndScript(CurrentPageBody, AnalyticsControl, url);
                     }
                 }
             }
@@ -690,33 +736,25 @@ namespace NCI.Web.CDE.UI
         /// </summary>
         protected virtual void InsertBodyTagAttributes()
         {
+            //Add content type class and data tag to body.  The class can be used for styling
+            //purposes.
+            string contentType = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
+            contentType = string.IsNullOrEmpty(contentType) ? String.Empty : contentType.ToLower();
 
-            foreach (HtmlContainerControl htmlCtl in this.FindAllControlsByType<HtmlContainerControl>())
+            if (contentType != String.Empty)
             {
-                string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
-                if (htmlTag.Equals("body"))
-                {
-                    //Add content type class and data tag to body.  The class can be used for styling
-                    //purposes.
-                    string contentType = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
-                    contentType = string.IsNullOrEmpty(contentType) ? String.Empty : contentType.ToLower();
-
-                    if (contentType != String.Empty)
-                    {
-                        // contentType will contain rx:, etc as part of the value, we need to strip it out.
-                        int index = contentType.IndexOf(':');
-                        contentType = index > -1 ? contentType.Substring(index + 1) : contentType;
-                        htmlCtl.Attributes.Add("class", contentType);
-                        htmlCtl.Attributes.Add("data-cde-contenttype", contentType);
-                    }
-
-                    //Add in additional CDE data
-                    htmlCtl.Attributes.Add("data-cde-pagetemplate", PageAssemblyInstruction.PageTemplateName);
-                    htmlCtl.Attributes.Add("data-cde-templatetheme", PageAssemblyInstruction.TemplateTheme);
-                    htmlCtl.Attributes.Add("data-cde-contentid", ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemID);
-
-                }
+                // contentType will contain rx:, etc as part of the value, we need to strip it out.
+                int index = contentType.IndexOf(':');
+                contentType = index > -1 ? contentType.Substring(index + 1) : contentType;
+                CurrentPageBody.Attributes.Add("class", contentType);
+                CurrentPageBody.Attributes.Add("data-cde-contenttype", contentType);
             }
+
+            //Add in additional CDE data
+            CurrentPageBody.Attributes.Add("data-cde-pagetemplate", PageAssemblyInstruction.PageTemplateName);
+            CurrentPageBody.Attributes.Add("data-cde-templatetheme", PageAssemblyInstruction.TemplateTheme);
+            CurrentPageBody.Attributes.Add("data-cde-contentid", ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemID);
+
         }
 
         /// <summary>

@@ -70,9 +70,57 @@ namespace NCI.Web.UI.WebControls
 
                 script.Attributes.Add("type", "text/javascript");
 
-                //Mark that the stylesheet has been added so no other 
+                //Mark that the javascript has been added so no other 
                 //context menus will add this...
                 HttpContext.Current.Items.Add("LoadedJS_" + scriptFile, true);
+            }
+        }
+
+        public static void AddEndScript(HtmlContainerControl body, WebControl analyticsControl, string scriptFile)
+        {
+            scriptFile = Strings.Clean(scriptFile);
+
+            //Check arguments
+            if (body == null)
+                throw new NullReferenceException("The body html element for the page requires the runat=server property.");
+
+            if (scriptFile == null)
+                throw new ArgumentNullException("The script file name passed in is null");
+
+            if (!IsScriptOnPage(scriptFile))
+            {
+                HtmlGenericControl script = new HtmlGenericControl("script");
+
+                if (analyticsControl != null)
+                {
+                    // If WebAnalyticsControl is on page, insert End Javascripts right before
+                    int index = body.Controls.IndexOf(analyticsControl);
+                    body.Controls.AddAt(index, script);
+                }
+                else
+                {
+                    // If WebAnalyticsControl is not on page, insert End Javascripts right before closing body tag
+                    body.Controls.Add(script);
+                }
+
+                script.Attributes.Add("src", scriptFile);
+                script.Attributes.Add("type", "text/javascript");
+
+                //Mark that the javascript has been added so no other 
+                //context menus will add this...
+                HttpContext.Current.Items.Add("LoadedJS_" + scriptFile, true);
+            }
+        }
+
+        public static bool IsScriptOnPage(string scriptFile)
+        {
+            if(HttpContext.Current.Items.Contains("LoadedJS_" + scriptFile))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
