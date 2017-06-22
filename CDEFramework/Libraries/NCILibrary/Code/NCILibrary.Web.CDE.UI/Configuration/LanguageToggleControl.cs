@@ -77,8 +77,6 @@ namespace NCI.Web.CDE.UI.WebControls
         protected override void RenderContents(HtmlTextWriter writer)
         {
             string translationUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl("TranslationUrls").ToString();
-            string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
-            string canonicalTranslation = GetCanonicalTranslation(canonicalUrl);
 
             if (!String.IsNullOrEmpty(translationUrl))
             {
@@ -131,15 +129,9 @@ namespace NCI.Web.CDE.UI.WebControls
                             {
                                 writer.AddAttribute(HtmlTextWriterAttribute.Onclick, lang.OnClick);
                             }
-
-                            if (!String.IsNullOrEmpty(canonicalTranslation))
-                            {
-                                safeUrl += canonicalTranslation;
-                            }
-                            else
-                            {
-                                safeUrl += PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(key).ToString();
-                            }
+                            
+                            safeUrl += PageAssemblyContext.Current.PageAssemblyInstruction.GetTranslationUrl(key).ToString();
+                            
 
                             writer.AddAttribute(HtmlTextWriterAttribute.Href, safeUrl);
                             writer.RenderBeginTag(HtmlTextWriterTag.A);
@@ -158,40 +150,7 @@ namespace NCI.Web.CDE.UI.WebControls
         {
             base.RenderEndTag(writer);
         }
-
-        /// <summary>
-        /// Gets translation of canonical URL based on path values set in Web.config
-        /// </summary>
-        /// <param name="canonicalUrl">
-        /// The full URL of the page (including query)
-        /// </param>
-        /// <returns>
-        /// The full URL of the page transation, if a translation exists.
-        /// </returns>
-        public String GetCanonicalTranslation(string canonicalUrl)
-        {
-            try
-            {
-                string englishDictUrl = ConfigurationManager.AppSettings["DictionaryOfCancerTermsURLEnglish"].ToString();
-                string spanishDictUrl = ConfigurationManager.AppSettings["DictionaryOfCancerTermsURLSpanish"].ToString();
-
-                string translation = "";
-                if (canonicalUrl.IndexOf(spanishDictUrl) > -1)
-                {
-                    translation = canonicalUrl.Replace(spanishDictUrl, englishDictUrl);
-                }
-                if (canonicalUrl.IndexOf(englishDictUrl) > -1)
-                {
-                    translation = canonicalUrl.Replace(englishDictUrl, spanishDictUrl);
-                }
-                return translation;
-            }
-            catch (Exception ex)
-            {
-                log.Warn(@"GetCanonicalTranslation(): Exception encountered while retrieving ""DictionaryOfcancerTermsURL..."" from Web.config", ex);
-                return null;
-            }
-        }
+        
 
         /// <summary>
         /// Saves any state that was modified after the <see cref="M:System.Web.UI.WebControls.Style.TrackViewState"/> method was invoked.
