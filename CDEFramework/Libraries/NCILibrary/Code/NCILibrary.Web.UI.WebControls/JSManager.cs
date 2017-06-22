@@ -76,7 +76,46 @@ namespace NCI.Web.UI.WebControls
             }
         }
 
-        public static void AddEndScript(HtmlContainerControl body, WebControl analyticsControl, string scriptFile)
+        public static void AddExternalScript(Page p, string scriptFile, bool async, bool defer)
+        {
+            scriptFile = Strings.Clean(scriptFile);
+
+            //Check arguments
+            if (p == null)
+                throw new ArgumentNullException("The page passed in is null");
+
+            if (scriptFile == null)
+                throw new ArgumentNullException("The script file name passed in is null");
+
+            if (p.Header == null)
+                throw new NullReferenceException("The head html element for the page requires the runat=server property.");
+
+            if (!HttpContext.Current.Items.Contains("LoadedJS_" + scriptFile))
+            {
+                HtmlGenericControl script = new HtmlGenericControl("script");
+                p.Header.Controls.Add(script);
+
+                script.Attributes.Add("src", scriptFile);
+
+                if (async)
+                {
+                    script.Attributes.Add("async", "async");
+                }
+
+                if (defer)
+                {
+                    script.Attributes.Add("defer", "defer");
+                }
+
+                script.Attributes.Add("type", "text/javascript");
+
+                //Mark that the javascript has been added so no other 
+                //context menus will add this...
+                HttpContext.Current.Items.Add("LoadedJS_" + scriptFile, true);
+            }
+        }
+
+        public static void AddFooterScript(HtmlContainerControl body, WebControl analyticsControl, string scriptFile, bool async, bool defer)
         {
             scriptFile = Strings.Clean(scriptFile);
 
@@ -103,7 +142,19 @@ namespace NCI.Web.UI.WebControls
                     body.Controls.Add(script);
                 }
 
+                // Add attributes from PageTemplateConfigurations file
                 script.Attributes.Add("src", scriptFile);
+                
+                if (async)
+                {
+                    script.Attributes.Add("async", "async");
+                }
+
+                if (defer)
+                {
+                    script.Attributes.Add("defer", "defer");
+                }
+
                 script.Attributes.Add("type", "text/javascript");
 
                 //Mark that the javascript has been added so no other 

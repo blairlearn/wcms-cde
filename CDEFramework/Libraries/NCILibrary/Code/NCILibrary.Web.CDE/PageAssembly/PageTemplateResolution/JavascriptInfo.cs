@@ -24,6 +24,12 @@ namespace NCI.Web.CDE
         public string End { get; set; }
 
         [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
+        public bool Async { get; set; }
+
+        [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
+        public bool Defer { get; set; }
+
+        [XmlAttribute(Form = XmlSchemaForm.Unqualified)]
         public string Type { get; set; }
 
         public override bool Equals(object obj)

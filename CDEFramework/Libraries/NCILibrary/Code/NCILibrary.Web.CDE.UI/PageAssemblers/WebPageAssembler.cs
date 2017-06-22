@@ -426,7 +426,7 @@ namespace NCI.Web.CDE.UI
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            InsertLeadingStyleSheetsJavascriptsReferences();
+            InsertHeaderLeadingStyleSheetsJavascriptsReferences();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -445,8 +445,8 @@ namespace NCI.Web.CDE.UI
             // Ideally we would load the trailing Stylesheests and JavaScript in OnInitComplete
             // or similar.  The problem is, we can't guarantee that all the other code will get
             // it right.  So we set up the trailing stuff here instead.
-            InsertTrailingStyleSheetsJavascriptsReferences();
-
+            InsertHeaderUnspecifiedStyleSheetsJavascriptsReferences();
+            InsertFooterJavascriptsReferences();
 
             base.OnPreRenderComplete(e);
             SetTitle();
@@ -501,7 +501,6 @@ namespace NCI.Web.CDE.UI
         {
             get
             {
-
                 // Find the html body control on the template page
                 HtmlContainerControl currentPageBody = null;
                 foreach (HtmlContainerControl htmlCtl in this.FindAllControlsByType<HtmlContainerControl>())
@@ -617,10 +616,9 @@ namespace NCI.Web.CDE.UI
         /// This information is found in the PageTemplateInfo object of the
         /// PageAssembleyContext.Current
         /// 
-        /// This method inserts those resources marked as "Beginning" as well as resources
-        /// which have no location specified.
+        /// This method inserts those resources marked as "Beginning".
         /// </summary>
-        protected virtual void InsertLeadingStyleSheetsJavascriptsReferences()
+        protected virtual void InsertHeaderLeadingStyleSheetsJavascriptsReferences()
         {
             if (CurrentPageHead != null)
             {
@@ -640,17 +638,12 @@ namespace NCI.Web.CDE.UI
                     // Capture all items marked as going at the start of the block.
                     IEnumerable<StyleSheetInfo> firstStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning == "true");
                     IEnumerable<JavascriptInfo> firstJavaScript = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning == "true");
-
-                    // Capture all items which aren't marked for a particular location.
-                    IEnumerable<StyleSheetInfo> unspecifiedStylesheets = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning != "true" && fcss.End != "true");
-                    IEnumerable<JavascriptInfo> unspecifiedJavaScripts = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning != "true" && fjs.End != "true");
-
-
+                    
                     //Load first Javascript
                     foreach (JavascriptInfo jsBeginningInfo in firstJavaScript)
                     {
                         String url = appendFileFingerprint(jsBeginningInfo.JavascriptPath);
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url, jsBeginningInfo.Async, jsBeginningInfo.Defer);
                     }
 
                     //Load first Stylesheet
@@ -658,20 +651,6 @@ namespace NCI.Web.CDE.UI
                     {
                         String url = appendFileFingerprint(cssBeginningInfo.StyleSheetPath);
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, cssBeginningInfo.Media);
-                    }
-
-
-                    // Load the css resources and js resource with no specified location
-                    foreach (StyleSheetInfo ssInfo in unspecifiedStylesheets)
-                    {
-                        String url = appendFileFingerprint(ssInfo.StyleSheetPath);
-                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, ssInfo.Media);
-                    }
-
-                    foreach (JavascriptInfo jsInfo in unspecifiedJavaScripts)
-                    {
-                        String url = appendFileFingerprint(jsInfo.JavascriptPath);
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
                     }
                 }
             }
@@ -683,9 +662,56 @@ namespace NCI.Web.CDE.UI
         /// This information is found in the PageTemplateInfo object of the
         /// PageAssembleyContext.Current
         /// 
-        /// This method inserts onoly those resources marked as "End".
+        /// This method inserts those resources which have no location specified
         /// </summary>
-        protected virtual void InsertTrailingStyleSheetsJavascriptsReferences()
+        protected virtual void InsertHeaderUnspecifiedStyleSheetsJavascriptsReferences()
+        {
+            if (CurrentPageBody != null)
+            {
+                PageTemplateInfo pgTemplateInfo = PageAssemblyContext.Current.PageTemplateInfo;
+                if (pgTemplateInfo != null)
+                {
+                    StyleSheetInfo[] colCss = pgTemplateInfo.StyleSheets;
+                    JavascriptInfo[] colJs = pgTemplateInfo.Javascripts;
+
+                    PageResources pgResources = PageAssemblyContext.Current.PageAssemblyInstruction.GetPageResources();
+                    if (pgResources != null)
+                    {
+                        colCss = colCss.Concat(pgResources.StyleSheets).ToArray();
+                        colJs = colJs.Concat(pgResources.Javascripts).ToArray();
+                    }
+
+                    // Capture all items which aren't marked for a particular location.
+                    IEnumerable<StyleSheetInfo> unspecifiedStylesheets = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning != "true" && fcss.End != "true");
+                    IEnumerable<JavascriptInfo> unspecifiedJavaScripts = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning != "true" && fjs.End != "true");
+
+                    //Load Stylesheets marked as neither "Beginning" nor "End"
+                    foreach (StyleSheetInfo cssInfo in unspecifiedStylesheets)
+                    {
+                        String url = appendFileFingerprint(cssInfo.StyleSheetPath);
+                        NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, cssInfo.Media);
+                    }
+
+                    //Load Javascript marked as neither "Beginning" nor "End"
+                    foreach (JavascriptInfo jsInfo in unspecifiedJavaScripts)
+                    {
+                        String url = appendFileFingerprint(jsInfo.JavascriptPath);
+                        // Add script to end of body control, before WebAnalyticsControl
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url, jsInfo.Async, jsInfo.Defer);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserts .css and .js resources at the end of the page's block of CSS and JavaScript files.
+        /// There can be one or more css or js resource for each page template.
+        /// This information is found in the PageTemplateInfo object of the
+        /// PageAssembleyContext.Current
+        /// 
+        /// This method inserts those resources marked as "End".
+        /// </summary>
+        protected virtual void InsertFooterJavascriptsReferences()
         {
             if (CurrentPageBody != null)
             {
@@ -721,12 +747,12 @@ namespace NCI.Web.CDE.UI
                     {
                         String url = appendFileFingerprint(jsLastInfo.JavascriptPath);
                         // Add script to end of body control, before WebAnalyticsControl
-                        NCI.Web.UI.WebControls.JSManager.AddEndScript(CurrentPageBody, AnalyticsControl, url);
+                        NCI.Web.UI.WebControls.JSManager.AddFooterScript(CurrentPageBody, AnalyticsControl, url, jsLastInfo.Async, jsLastInfo.Defer);
                     }
                 }
             }
         }
-
+        
         /// <summary>
         /// Adds a class attribute to the body html tag and assigns the 
         /// contenttype of the pageinstructions as the value
