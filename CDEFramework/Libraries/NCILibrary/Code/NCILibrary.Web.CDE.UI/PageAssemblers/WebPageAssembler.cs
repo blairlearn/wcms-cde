@@ -28,8 +28,6 @@ namespace NCI.Web.CDE.UI
         #region Private Members
         static ILog log = LogManager.GetLogger(typeof(WebPageAssembler));
 
-        private HtmlContainerControl _body = null;
-
         /// <summary>
         /// Loads a collection of all template slots that are declaratively 
         /// defined  in the page template. The slots that are specified as being blocked
@@ -503,21 +501,20 @@ namespace NCI.Web.CDE.UI
         {
             get
             {
-                if (_body == null)
+
+                // Find the html body control on the template page
+                HtmlContainerControl currentPageBody = null;
+                foreach (HtmlContainerControl htmlCtl in this.FindAllControlsByType<HtmlContainerControl>())
                 {
-                    // Find the html body control on the template page
-                    foreach (HtmlContainerControl htmlCtl in this.FindAllControlsByType<HtmlContainerControl>())
+                    string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
+                    if (htmlTag.Equals("body"))
                     {
-                        string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
-                        if (htmlTag.Equals("body"))
-                        {
-                            _body = htmlCtl;
-                            break;
-                        }
+                        currentPageBody = htmlCtl;
+                        break;
                     }
                 }
-
-                return _body;
+                
+                return currentPageBody;
             }
         }
 
@@ -736,25 +733,27 @@ namespace NCI.Web.CDE.UI
         /// </summary>
         protected virtual void InsertBodyTagAttributes()
         {
-            //Add content type class and data tag to body.  The class can be used for styling
-            //purposes.
-            string contentType = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
-            contentType = string.IsNullOrEmpty(contentType) ? String.Empty : contentType.ToLower();
-
-            if (contentType != String.Empty)
+            if (CurrentPageBody != null)
             {
-                // contentType will contain rx:, etc as part of the value, we need to strip it out.
-                int index = contentType.IndexOf(':');
-                contentType = index > -1 ? contentType.Substring(index + 1) : contentType;
-                CurrentPageBody.Attributes.Add("class", contentType);
-                CurrentPageBody.Attributes.Add("data-cde-contenttype", contentType);
+                //Add content type class and data tag to body.  The class can be used for styling
+                //purposes.
+                string contentType = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
+                contentType = string.IsNullOrEmpty(contentType) ? String.Empty : contentType.ToLower();
+
+                if (contentType != String.Empty)
+                {
+                    // contentType will contain rx:, etc as part of the value, we need to strip it out.
+                    int index = contentType.IndexOf(':');
+                    contentType = index > -1 ? contentType.Substring(index + 1) : contentType;
+                    CurrentPageBody.Attributes.Add("class", contentType);
+                    CurrentPageBody.Attributes.Add("data-cde-contenttype", contentType);
+                }
+
+                //Add in additional CDE data
+                CurrentPageBody.Attributes.Add("data-cde-pagetemplate", PageAssemblyInstruction.PageTemplateName);
+                CurrentPageBody.Attributes.Add("data-cde-templatetheme", PageAssemblyInstruction.TemplateTheme);
+                CurrentPageBody.Attributes.Add("data-cde-contentid", ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemID);
             }
-
-            //Add in additional CDE data
-            CurrentPageBody.Attributes.Add("data-cde-pagetemplate", PageAssemblyInstruction.PageTemplateName);
-            CurrentPageBody.Attributes.Add("data-cde-templatetheme", PageAssemblyInstruction.TemplateTheme);
-            CurrentPageBody.Attributes.Add("data-cde-contentid", ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemID);
-
         }
 
         /// <summary>
