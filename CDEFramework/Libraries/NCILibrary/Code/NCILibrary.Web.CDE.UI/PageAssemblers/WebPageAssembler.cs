@@ -331,7 +331,7 @@ namespace NCI.Web.CDE.UI
             string returnUrl = rootRelativePath;
 
             // Don't rewrite anything from external sites.
-            if (rootRelativePath[0] == '~' || rootRelativePath[0] == '/'  && !rootRelativePath.Contains("adobedtm"))
+            if (rootRelativePath[0] == '~' || rootRelativePath[0] == '/')
             {
                 string dateTicks = GetFileFingerprint(rootRelativePath);
                 int index = rootRelativePath.LastIndexOf('.');
@@ -426,13 +426,6 @@ namespace NCI.Web.CDE.UI
         {
             base.OnInit(e);
             InsertHeaderStyleSheetsJavascriptsReferences();
-
-            var bodyTag = this.FindAllControlsByType<HtmlContainerControl>()
-                                .OfType<HtmlContainerControl>()
-                                .Where(c => c.TagName.ToLower().Equals("body"))
-                                .FirstOrDefault();
-
-            bodyTag.Controls.Add(new LiteralControl("<script type=\"text/javascript\">_satellite.pageBottom();</script>"));
         }
 
         protected override void OnLoad(EventArgs e)
@@ -630,13 +623,7 @@ namespace NCI.Web.CDE.UI
             {
                 PageTemplateInfo pgTemplateInfo = PageAssemblyContext.Current.PageTemplateInfo;
                 if (pgTemplateInfo != null)
-                {
-                    //// Add Adobe DTM to head script tag prior to all other scripts.
-                 
-                    Page.Controls.AddAt(0, new LiteralControl("<script src=\"//assets.adobedtm.com/f1bfa9f7170c81b1a9a9ecdcc6c5215ee0b03c84/satelliteLib-9b662a6881ae507cd0697d1c5b0f94bc2d5cb657.js\" type=\"text/javascript\"></script>"));
-                    List<JavascriptInfo> scripts = pgTemplateInfo.Javascripts.ToList<JavascriptInfo>();
-                    pgTemplateInfo.Javascripts = scripts.ToArray();
-
+                {                    
                     StyleSheetInfo[] colCss = pgTemplateInfo.StyleSheets;
                     JavascriptInfo[] colJs = pgTemplateInfo.Javascripts;
 
