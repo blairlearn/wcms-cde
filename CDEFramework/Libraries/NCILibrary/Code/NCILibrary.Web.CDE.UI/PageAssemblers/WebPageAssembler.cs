@@ -11,6 +11,7 @@ using System.Web.UI.HtmlControls;
 using Common.Logging;
 using NCI.Web.CDE.Configuration;
 using NCI.Web.Extensions;
+using NCI.Web.CDE.UI.WebControls;
 
 namespace NCI.Web.CDE.UI
 {
@@ -424,7 +425,7 @@ namespace NCI.Web.CDE.UI
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);
-            InsertLeadingStyleSheetsJavascriptsReferences();
+            InsertHeaderStyleSheetsJavascriptsReferences();
 
             var bodyTag = this.FindAllControlsByType<HtmlContainerControl>()
                                 .OfType<HtmlContainerControl>()
@@ -450,8 +451,7 @@ namespace NCI.Web.CDE.UI
             // Ideally we would load the trailing Stylesheests and JavaScript in OnInitComplete
             // or similar.  The problem is, we can't guarantee that all the other code will get
             // it right.  So we set up the trailing stuff here instead.
-            InsertTrailingStyleSheetsJavascriptsReferences();
-
+            InsertFooterStyleSheetsJavascriptsReferences();
 
             base.OnPreRenderComplete(e);
             SetTitle();
@@ -496,6 +496,45 @@ namespace NCI.Web.CDE.UI
                     break;
                 }
                 return currentPageHead;
+            }
+        }
+
+        /// <summary>
+        /// This property returns the current body control. 
+        /// </summary>
+        protected HtmlContainerControl CurrentPageBody
+        {
+            get
+            {
+                // Find the html body control on the template page
+                HtmlContainerControl currentPageBody = null;
+                foreach (HtmlContainerControl htmlCtl in this.FindAllControlsByType<HtmlContainerControl>())
+                {
+                    string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
+                    if (htmlTag.Equals("body"))
+                    {
+                        currentPageBody = htmlCtl;
+                        break;
+                    }
+                }
+
+                return currentPageBody;
+            }
+        }
+
+        protected WebAnalyticsControl AnalyticsControl
+        {
+            get
+            {
+                WebAnalyticsControl analyticsControl = null;
+
+                // Find the body control on the template page
+                foreach (WebAnalyticsControl control in CurrentPageBody.FindControlByType<WebAnalyticsControl>())
+                {
+                    analyticsControl = control;
+                    break;
+                }
+                return analyticsControl;
             }
         }
 
@@ -585,7 +624,7 @@ namespace NCI.Web.CDE.UI
         /// This method inserts those resources marked as "Beginning" as well as resources
         /// which have no location specified.
         /// </summary>
-        protected virtual void InsertLeadingStyleSheetsJavascriptsReferences()
+        protected virtual void InsertHeaderStyleSheetsJavascriptsReferences()
         {
             if (CurrentPageHead != null)
             {
@@ -616,12 +655,11 @@ namespace NCI.Web.CDE.UI
                     IEnumerable<StyleSheetInfo> unspecifiedStylesheets = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning != "true" && fcss.End != "true");
                     IEnumerable<JavascriptInfo> unspecifiedJavaScripts = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning != "true" && fjs.End != "true");
 
-
                     //Load first Javascript
                     foreach (JavascriptInfo jsBeginningInfo in firstJavaScript)
                     {
                         String url = appendFileFingerprint(jsBeginningInfo.JavascriptPath);
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url, jsBeginningInfo.Async, jsBeginningInfo.Defer);
                     }
 
                     //Load first Stylesheet
@@ -631,18 +669,17 @@ namespace NCI.Web.CDE.UI
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, cssBeginningInfo.Media);
                     }
 
+                    // Load the js and css resources with no specified location
+                    foreach (JavascriptInfo jsInfo in unspecifiedJavaScripts)
+                    {
+                        String url = appendFileFingerprint(jsInfo.JavascriptPath);
+                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url, jsInfo.Async, jsInfo.Defer);
+                    }
 
-                    // Load the css resources and js resource with no specified location
                     foreach (StyleSheetInfo ssInfo in unspecifiedStylesheets)
                     {
                         String url = appendFileFingerprint(ssInfo.StyleSheetPath);
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, ssInfo.Media);
-                    }
-
-                    foreach (JavascriptInfo jsInfo in unspecifiedJavaScripts)
-                    {
-                        String url = appendFileFingerprint(jsInfo.JavascriptPath);
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
                     }
                 }
             }
@@ -654,11 +691,11 @@ namespace NCI.Web.CDE.UI
         /// This information is found in the PageTemplateInfo object of the
         /// PageAssembleyContext.Current
         /// 
-        /// This method inserts onoly those resources marked as "End".
+        /// This method inserts only those resources marked as "End".
         /// </summary>
-        protected virtual void InsertTrailingStyleSheetsJavascriptsReferences()
+        protected virtual void InsertFooterStyleSheetsJavascriptsReferences()
         {
-            if (CurrentPageHead != null)
+            if (CurrentPageBody != null)
             {
                 PageTemplateInfo pgTemplateInfo = PageAssemblyContext.Current.PageTemplateInfo;
                 if (pgTemplateInfo != null)
@@ -680,18 +717,19 @@ namespace NCI.Web.CDE.UI
                     IEnumerable<StyleSheetInfo> lastStylesheet = System.Linq.Enumerable.Where(colCss, fcss => fcss.Beginning != "true" && fcss.End == "true");
                     IEnumerable<JavascriptInfo> lastJavaScript = System.Linq.Enumerable.Where(colJs, fjs => fjs.Beginning != "true" && fjs.End == "true");
 
+                    //Load Javascript marked as "End"
+                    foreach (JavascriptInfo jsLastInfo in lastJavaScript)
+                    {
+                        String url = appendFileFingerprint(jsLastInfo.JavascriptPath);
+                        // Add script to end of body control, before WebAnalyticsControl
+                        NCI.Web.UI.WebControls.JSManager.AddFooterScript(CurrentPageBody, AnalyticsControl, url, jsLastInfo.Async, jsLastInfo.Defer);
+                    }
+
                     //Load Stylesheets marked as "End"
                     foreach (StyleSheetInfo cssLastInfo in lastStylesheet)
                     {
                         String url = appendFileFingerprint(cssLastInfo.StyleSheetPath);
                         NCI.Web.UI.WebControls.CssManager.AddStyleSheet(this, url, cssLastInfo.Media);
-                    }
-
-                    //Load Javascript marked as "End"
-                    foreach (JavascriptInfo jsLastInfo in lastJavaScript)
-                    {
-                        String url = appendFileFingerprint(jsLastInfo.JavascriptPath);
-                        NCI.Web.UI.WebControls.JSManager.AddExternalScript(this, url);
                     }
                 }
             }
@@ -703,32 +741,26 @@ namespace NCI.Web.CDE.UI
         /// </summary>
         protected virtual void InsertBodyTagAttributes()
         {
-
-            foreach (HtmlContainerControl htmlCtl in this.FindAllControlsByType<HtmlContainerControl>())
+            if(CurrentPageBody != null)
             {
-                string htmlTag = string.IsNullOrEmpty(htmlCtl.TagName) ? "" : htmlCtl.TagName.ToLower();
-                if (htmlTag.Equals("body"))
+                //Add content type class and data tag to body.  The class can be used for styling
+                //purposes.
+                string contentType = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
+                contentType = string.IsNullOrEmpty(contentType) ? String.Empty : contentType.ToLower();
+
+                if (contentType != String.Empty)
                 {
-                    //Add content type class and data tag to body.  The class can be used for styling
-                    //purposes.
-                    string contentType = ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemType;
-                    contentType = string.IsNullOrEmpty(contentType) ? String.Empty : contentType.ToLower();
-
-                    if (contentType != String.Empty)
-                    {
-                        // contentType will contain rx:, etc as part of the value, we need to strip it out.
-                        int index = contentType.IndexOf(':');
-                        contentType = index > -1 ? contentType.Substring(index + 1) : contentType;
-                        htmlCtl.Attributes.Add("class", contentType);
-                        htmlCtl.Attributes.Add("data-cde-contenttype", contentType);
-                    }
-
-                    //Add in additional CDE data
-                    htmlCtl.Attributes.Add("data-cde-pagetemplate", PageAssemblyInstruction.PageTemplateName);
-                    htmlCtl.Attributes.Add("data-cde-templatetheme", PageAssemblyInstruction.TemplateTheme);
-                    htmlCtl.Attributes.Add("data-cde-contentid", ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemID);
-
+                    // contentType will contain rx:, etc as part of the value, we need to strip it out.
+                    int index = contentType.IndexOf(':');
+                    contentType = index > -1 ? contentType.Substring(index + 1) : contentType;
+                    CurrentPageBody.Attributes.Add("class", contentType);
+                    CurrentPageBody.Attributes.Add("data-cde-contenttype", contentType);
                 }
+
+                //Add in additional CDE data
+                CurrentPageBody.Attributes.Add("data-cde-pagetemplate", PageAssemblyInstruction.PageTemplateName);
+                CurrentPageBody.Attributes.Add("data-cde-templatetheme", PageAssemblyInstruction.TemplateTheme);
+                CurrentPageBody.Attributes.Add("data-cde-contentid", ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentItemInfo.ContentItemID);
             }
         }
 
@@ -747,7 +779,6 @@ namespace NCI.Web.CDE.UI
                 }
             }
         }
-
 
         /// <summary>
         /// Add custom headers to the HTTP Response.
