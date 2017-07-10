@@ -60,7 +60,7 @@ namespace NCI.Web.CDE
                 redirectUrl += query;
             }
 
-           
+            HttpContext.Current.Response.AddHeader("X-Redirect-Reason", "Redirect Map");
             DoPermanentRedirect(context.Response, redirectUrl);
         }
 

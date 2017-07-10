@@ -390,21 +390,7 @@ namespace NCI.Web.CDE
         {
             get
             {
-                ArrayList keysList = new ArrayList();
-                // Enumerate the Files and set a URL filter.
-                foreach (TranslationMetaTag tmt in Translations.Tags)
-                {
-                    keysList.Add(tmt.Locale.ToLower());
-                    AddTranslationFilter(tmt.Locale.ToLower(), (name, url) =>
-                    {
-                        foreach (TranslationMetaTag tmtu in Translations.Tags)
-                        {
-                            if (tmtu.Locale.ToLower() == name.ToLower())
-                                url.SetUrl(tmtu.Url);
-                        }
-                    });
-                }
-                return (string[])keysList.ToArray(typeof(string));
+                return Translations.Tags.Select(t => t.Locale.ToLower()).ToArray();
             }
         }
 

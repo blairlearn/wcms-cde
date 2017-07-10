@@ -1678,6 +1678,8 @@
     </sequence>
     <attribute name="Beginning" type="string"></attribute>
     <attribute name="End" type="string"></attribute>
+	<attribute name="Async" type="boolean"></attribute>
+	<attribute name="Defer" type="boolean"></attribute>
     <attribute name="Type" type="string"></attribute>
   </complexType>
 
