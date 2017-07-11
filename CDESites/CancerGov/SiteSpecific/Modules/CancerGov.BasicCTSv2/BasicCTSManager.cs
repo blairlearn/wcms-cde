@@ -138,13 +138,80 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 filterCriteria.Add("eligibility.structured.max_age_in_years_gte", searchParams.Age);
                 filterCriteria.Add("eligibility.structured.min_age_in_years_lte", searchParams.Age);
-            } 
+            }
 
+            if (!String.IsNullOrEmpty(searchParams.Query))
+            {
+                filterCriteria.Add("_fulltext", searchParams.Query);
+            }
+
+            if (!String.IsNullOrEmpty(searchParams.Country))
+            {
+                filterCriteria.Add("sites.org_country", searchParams.Country);
+            }
+
+            if (!String.IsNullOrEmpty(searchParams.City))
+            {
+                filterCriteria.Add("sites.org_city", searchParams.City);
+            }
+
+            if (!String.IsNullOrEmpty(searchParams.State))
+            {
+                filterCriteria.Add("sites.org_state_or_province", searchParams.State);
+            }
+            
+            // TBD
+            if (!String.IsNullOrEmpty(searchParams.HospitalOrInstitution))
+            {
+                filterCriteria.Add("sites.org_name_fulltext", searchParams.HospitalOrInstitution);
+            }
+                              
+            if (searchParams.TrialTypeArray != null)
+            {
+                filterCriteria.Add("primary_purpose.primary_purpose_code", searchParams.TrialTypeArray);
+            }
+
+            // Drug and Trial ID's are sent under the same key and should be grouped.
+            List<string> drugAndTrialIds = new List<string>();
+            if(searchParams.DrugIDs != null)
+                drugAndTrialIds.AddRange(searchParams.DrugIDs);
+            if(searchParams.TreatmentInterventionCodes != null)
+                drugAndTrialIds.AddRange(searchParams.TreatmentInterventionCodes);
+            if (drugAndTrialIds.Count > 0)
+            {
+                filterCriteria.Add("arms.interventions.intervention_code", drugAndTrialIds.ToArray());
+            }
+
+            // Array of strings
+            if (searchParams.TrialPhaseArray != null)
+            {
+                filterCriteria.Add("phase.phase", searchParams.TrialPhaseArray);
+            }
+
+            if (searchParams.NewTrialsOnly)
+            {
+                filterCriteria.Add("start_date_gte", searchParams.NewTrialsOnly);
+            }
+
+            if (!String.IsNullOrEmpty(searchParams.PrincipalInvestigator))
+            {
+                filterCriteria.Add("principal_investigator_fulltext", searchParams.PrincipalInvestigator);
+            }
+
+            if (!String.IsNullOrEmpty(searchParams.LeadOrganization))
+            {
+                filterCriteria.Add("lead_org_fulltext", searchParams.LeadOrganization);
+            }
 
             //Add Gender Filter
-            if (!string.IsNullOrWhiteSpace(searchParams.Gender))
+            if (!String.IsNullOrWhiteSpace(searchParams.Gender))
             {
                 filterCriteria.Add("eligibility.structured.gender", searchParams.Gender);
+            }
+
+            if (searchParams.TrialIDs != null)
+            {
+                filterCriteria.Add("_trialids", searchParams.TrialIDs);
             }
 
             //Add phrase if this is a phrase search

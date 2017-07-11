@@ -30,8 +30,8 @@ namespace CancerGov.ClinicalTrialsAPI
         {
             get
             {
-                string basepath = ConfigurationManager.AppSettings["ClinicalTrialsAPIBasepath"].ToString();
-                if (String.IsNullOrWhiteSpace(basepath))
+                string basepath = ConfigurationManager.AppSettings["ClinicalTrialsAPIBasepath"];
+                if (basepath == null)
                 {
                     basepath = String.Empty;
                 }

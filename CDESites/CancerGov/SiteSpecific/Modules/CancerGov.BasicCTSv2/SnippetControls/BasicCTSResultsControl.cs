@@ -75,10 +75,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
             {
-                if ((_setFields & SetFields.Age) != 0)
+                if (_setFields.HasFlag(QueryFieldsSetByUser.Age))
                     url.QueryParameters.Add("a", SearchParams.Age.ToString());
 
-                if ((_setFields & SetFields.Gender) != 0)
+                if (_setFields.HasFlag(QueryFieldsSetByUser.Gender))
                 {
                     if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
                         url.QueryParameters.Add("g", "1");
@@ -86,22 +86,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         url.QueryParameters.Add("g", "2");
                 }
 
-                if ((_setFields & SetFields.ZipCode) != 0)
+                if (_setFields.HasFlag(QueryFieldsSetByUser.ZipCode))
                     url.QueryParameters.Add("z", SearchParams.ZipLookup.PostalCode_ZIP);
 
-                if ((_setFields & SetFields.ZipProximity) != 0)
+                if (_setFields.HasFlag(QueryFieldsSetByUser.ZipProximity))
                     url.QueryParameters.Add("zp", SearchParams.ZipRadius.ToString());
 
                 //Phrase and type are based on the type of object
                 if (SearchParams is CancerTypeSearchParam)
                 {
-                    if ((_setFields & SetFields.CancerType) != 0)
+                    if (_setFields.HasFlag(QueryFieldsSetByUser.CancerType))
                         url.QueryParameters.Add("t", cancerTypeIDAndHash);
                 }
 
                 if (SearchParams is PhraseSearchParam)
                 {
-                    if ((_setFields & SetFields.Phrase) != 0)
+                    if (_setFields.HasFlag(QueryFieldsSetByUser.Phrase))
                     {
                         if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
                             url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
@@ -109,6 +109,55 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                             url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                     }
                 }
+
+                if (_setFields.HasFlag(QueryFieldsSetByUser.Country))
+                    url.QueryParameters.Add(LOCATION_COUNTRY, SearchParams.Country);
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.City))
+                    url.QueryParameters.Add(LOCATION_CITY, SearchParams.City);
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.State))
+                    url.QueryParameters.Add(LOCATION_STATE, SearchParams.State);
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.Hospital))
+                    url.QueryParameters.Add(HOSPITAL_INSTITUTION, SearchParams.HospitalOrInstitution);
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.AtNIH))
+                    url.QueryParameters.Add(AT_NIH, SearchParams.AtNIH.ToString());
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.TrialType))
+                    url.QueryParameters.Add(TRIAL_TYPE, SearchParams.TrialType);
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.DrugCode))
+                    url.QueryParameters.Add(DRUG_CODE, String.Join(",", SearchParams.DrugIDs));
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.DrugName))
+                    url.QueryParameters.Add(DRUG_NAME, SearchParams.DrugName);
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.TreatmentCode))
+                    url.QueryParameters.Add(TREATMENT_CODE, String.Join(",", SearchParams.TreatmentInterventionCodes));
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.TreatmentName))
+                    url.QueryParameters.Add(TREATMENT_NAME, SearchParams.TreatmentInterventionTerm);
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.TrialPhase))
+                    url.QueryParameters.Add(TRIAL_PHASE, SearchParams.TrialPhase);
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.NewTrialsOnly))
+                {
+                    var test = true.ToString();
+                    url.QueryParameters.Add(NEW_TRIALS_ONLY, SearchParams.NewTrialsOnly.ToString());
+                }
+                // This needs to be converted into the csv format.
+                if (_setFields.HasFlag(QueryFieldsSetByUser.TrialIDs))
+                    url.QueryParameters.Add(TRIAL_IDS, String.Join(",", SearchParams.TrialIDs));
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.TrialInvestigator))
+                    url.QueryParameters.Add(TRIAL_INVESTIGATOR, SearchParams.PrincipalInvestigator);
+                
+                if (_setFields.HasFlag(QueryFieldsSetByUser.LeadOrganization))
+                    url.QueryParameters.Add(LEAD_ORGANIZATION, SearchParams.LeadOrganization);
+
 
                 //Items Per Page
                 url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString());
@@ -140,7 +189,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         protected void HandleOldCancerTypeID()
         {
-            string cancerTypeID = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
+            string cancerTypeID = this.ParamAsStr(CANCERTYPE_PARAM);
 
             // Detect legacy CDRID.
             if (!String.IsNullOrWhiteSpace(cancerTypeID) &&
@@ -328,7 +377,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         public bool GetSearchForAllTrials()
         {
-            if ((this.hasInvalidSearchParam == false) && (_setFields == SetFields.None))
+            if ((this.hasInvalidSearchParam == false) && (_setFields == QueryFieldsSetByUser.None))
                 return true;
             else
                 return false;
@@ -380,16 +429,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             url.QueryParameters.Add("id", id);
 
-            if ((_setFields & SetFields.ZipCode) != 0)
+            if (_setFields.HasFlag(QueryFieldsSetByUser.ZipCode))
                 url.QueryParameters.Add(ZIP_PARAM, SearchParams.ZipLookup.PostalCode_ZIP);
 
-            if ((_setFields & SetFields.ZipProximity) != 0)
+            if (_setFields.HasFlag(QueryFieldsSetByUser.ZipProximity))
                 url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
 
-            if ((_setFields & SetFields.Age) != 0)
+            if (_setFields.HasFlag(QueryFieldsSetByUser.Age))
                 url.QueryParameters.Add("a", SearchParams.Age.ToString());
 
-            if ((_setFields & SetFields.Gender) != 0)
+            if (_setFields.HasFlag(QueryFieldsSetByUser.Gender))
             {
                 if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
                     url.QueryParameters.Add("g", "1");
@@ -397,16 +446,79 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     url.QueryParameters.Add("g", "2");
             }
 
+            if (_setFields.HasFlag(QueryFieldsSetByUser.Country))
+            {
+                url.QueryParameters.Add(LOCATION_COUNTRY, SearchParams.Country);
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.City))
+            {
+                url.QueryParameters.Add(LOCATION_CITY, SearchParams.City);
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.State))
+            {
+                url.QueryParameters.Add(LOCATION_STATE, SearchParams.State);
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.Hospital))
+            {
+                url.QueryParameters.Add(HOSPITAL_INSTITUTION, SearchParams.HospitalOrInstitution);
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.AtNIH))
+            {
+                url.QueryParameters.Add(AT_NIH, SearchParams.AtNIH.ToString());
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.TrialType))
+            {
+                url.QueryParameters.Add(TRIAL_TYPE, SearchParams.TrialType);
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.DrugCode))
+            {
+                url.QueryParameters.Add(DRUG_CODE, String.Join(",", SearchParams.DrugIDs));
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.DrugName))
+            {
+                url.QueryParameters.Add(DRUG_NAME, SearchParams.DrugName);
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.TreatmentCode))
+            {
+                url.QueryParameters.Add(TREATMENT_CODE, String.Join(",", SearchParams.TreatmentInterventionCodes));
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.TreatmentName))
+            {
+                url.QueryParameters.Add(TREATMENT_NAME, SearchParams.TreatmentInterventionTerm);
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.TrialPhase))
+            {
+                url.QueryParameters.Add(TRIAL_PHASE, SearchParams.TrialPhase);
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.NewTrialsOnly))
+            {
+                var test = true.ToString();
+                url.QueryParameters.Add(NEW_TRIALS_ONLY, SearchParams.NewTrialsOnly.ToString());
+            }
+            // This needs to be converted into the csv format.
+            if (_setFields.HasFlag(QueryFieldsSetByUser.TrialIDs))
+            {
+                url.QueryParameters.Add(TRIAL_IDS, String.Join(",", SearchParams.TrialIDs));
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.TrialInvestigator))
+            {
+                url.QueryParameters.Add(TRIAL_INVESTIGATOR, SearchParams.PrincipalInvestigator);
+            }
+            if (_setFields.HasFlag(QueryFieldsSetByUser.LeadOrganization))
+            {
+                url.QueryParameters.Add(LEAD_ORGANIZATION, SearchParams.LeadOrganization);
+            }
+
             //Phrase and type are based on the type of object
             if (SearchParams is CancerTypeSearchParam)
             {
-                if ((_setFields & SetFields.CancerType) != 0)
+                if (_setFields.HasFlag(QueryFieldsSetByUser.CancerType))
                     url.QueryParameters.Add("t", cancerTypeIDAndHash);
             }
 
             if (SearchParams is PhraseSearchParam)
             {
-                if ((_setFields & SetFields.Phrase) != 0)
+                if (_setFields.HasFlag(QueryFieldsSetByUser.Phrase))
                 {
                     if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
                         url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));

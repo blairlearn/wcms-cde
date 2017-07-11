@@ -61,5 +61,120 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         public int? Age { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Query { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Country { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string City { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string State { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string HospitalOrInstitution { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool AtNIH { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool AtNIH_IsSet { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TrialType { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] TrialTypeArray { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] DrugIDs { get; set; }
+
+        public string DrugIDsString {
+            get {
+                if (DrugIDs != null)
+                    return String.Join(",", DrugIDs);
+                else
+                    return "";
+            } 
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string DrugName { get; set; }
+                
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] TreatmentInterventionCodes { get; set; }
+        public string TreatmentInterventionCodeString
+        {
+            get
+            {
+                if (TreatmentInterventionCodes != null)
+                    return String.Join(",", TreatmentInterventionCodes);
+                else
+                    return "";
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TreatmentInterventionTerm { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TrialPhase { get; set; }
+
+        ///<summary>
+        ///
+        /// </summary>
+        public string[] TrialPhaseArray { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool NewTrialsOnly { get; set; }
+
+        public bool NewTrialsOnly_IsSet { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string[] TrialIDs { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string PrincipalInvestigator { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string LeadOrganization { get; set; }
+
     }
 }

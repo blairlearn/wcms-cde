@@ -103,7 +103,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         public bool GetSearchForAllTrials()
         {
-            if ((this.hasInvalidSearchParam == false) && (_setFields == SetFields.None))
+            if ((this.hasInvalidSearchParam == false) && (_setFields == QueryFieldsSetByUser.None))
                 return true;
             else
                 return false;
@@ -111,7 +111,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         public int GetShowAll()
         {
-            return ParmAsInt("all", -1);
+            return ParamAsInt("all", -1);
         }
 
         protected string GetGlossifiedTrialPhase(string[] phases)
@@ -290,10 +290,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     url.QueryParameters.Add("all", GetShowAll().ToString());
                 }
 
-                if ((_setFields & SetFields.Age) != 0)
+                if ((_setFields & QueryFieldsSetByUser.Age) != 0)
                     url.QueryParameters.Add(AGE_PARAM, SearchParams.Age.ToString());
 
-                if ((_setFields & SetFields.Gender) != 0)
+                if ((_setFields & QueryFieldsSetByUser.Gender) != 0)
                 {
                     if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
                         url.QueryParameters.Add(GENDER_PARAM, "1");
@@ -301,25 +301,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         url.QueryParameters.Add(GENDER_PARAM, "2");
                 }
 
-                if ((_setFields & SetFields.ZipCode) != 0)
+                if ((_setFields & QueryFieldsSetByUser.ZipCode) != 0)
                     url.QueryParameters.Add(ZIP_PARAM, SearchParams.ZipLookup.PostalCode_ZIP);
 
-                if ((_setFields & SetFields.ZipProximity) != 0)
+                if ((_setFields & QueryFieldsSetByUser.ZipProximity) != 0)
                     url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
 
                 //Phrase and type are based on the type of object
-                if ((_setFields & SetFields.CancerType) != 0 && SearchParams is CancerTypeSearchParam)
+                if ((_setFields & QueryFieldsSetByUser.CancerType) != 0 && SearchParams is CancerTypeSearchParam)
                 {
                     url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
                 }
 
-                if ((_setFields & SetFields.Phrase) != 0 && SearchParams is PhraseSearchParam)
+                if ((_setFields & QueryFieldsSetByUser.Phrase) != 0 && SearchParams is PhraseSearchParam)
                 {
                     if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
                         url.QueryParameters.Add(CANCERTYPEASPHRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                     else
                         url.QueryParameters.Add(PRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                 }
+                              
 
                 // Page Number
                 url.QueryParameters.Add(PAGENUM_PARAM, SearchParams.Page.ToString());
@@ -397,7 +398,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     {
                         Trial = trial,
                         Control = this,
-                        //GlossifiedPhase = GetGlossifiedTrialPhase(trial.ProtocolPhases),
                         TrialTools = new TrialVelocityTools()
                     }
                 )

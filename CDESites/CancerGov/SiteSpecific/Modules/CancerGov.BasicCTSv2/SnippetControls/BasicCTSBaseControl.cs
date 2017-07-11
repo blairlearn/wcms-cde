@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -18,15 +20,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// Enumeration representing a bitmap for the fields that are set.
         /// </summary>
         [Flags]
-        protected enum SetFields
+        protected enum QueryFieldsSetByUser
         {
             None = 0,
-            Age = 1,
-            Gender = Age << 1,
-            ZipCode = Gender << 1,
-            ZipProximity = ZipCode << 1,
-            Phrase = ZipProximity << 1,
-            CancerType = Phrase << 1
+            Age =                   1 << 0,
+            Gender =                1 << 1,
+            ZipCode =               1 << 2,
+            ZipProximity =          1 << 3,
+            Phrase =                1 << 4,
+            CancerType =            1 << 5,
+            Country =               1 << 6,
+            City =                  1 << 7,
+            State =                 1 << 8,
+            Hospital =              1 << 9,
+            AtNIH =                 1 << 10,
+            TrialType =             1 << 11,
+            DrugCode =              1 << 12,
+            DrugName =              1 << 13,
+            TreatmentCode =         1 << 14,
+            TreatmentName =         1 << 15,
+            TrialPhase =            1 << 16,
+            NewTrialsOnly =         1 << 17,
+            TrialIDs =              1 << 18,
+            TrialInvestigator =     1 << 19,
+            LeadOrganization =      1 << 20,
         }
 
         /// <summary>
@@ -43,12 +60,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected const string CANCERTYPEASPHRASE_PARAM = "ct";
         protected const string REDIRECTED_FLAG = "r";
         protected const string RESULTS_LINK_FLAG = "rl";
+        
+        protected const string LOCATION_COUNTRY = "lcnty";
+        protected const string LOCATION_CITY = "lcty";
+        protected const string LOCATION_STATE = "lst";
+        protected const string HOSPITAL_INSTITUTION = "hos";
+        protected const string AT_NIH = "nih";
+        protected const string TRIAL_TYPE = "tt";
+        protected const string DRUG_CODE = "d";
+        protected const string DRUG_NAME = "ds";
+        protected const string TREATMENT_CODE = "i";
+        protected const string TREATMENT_NAME = "is";
+        protected const string TRIAL_PHASE = "tp";
+        protected const string NEW_TRIALS_ONLY = "new";
+        protected const string TRIAL_IDS = "tid";
+        protected const string TRIAL_INVESTIGATOR = "in";
+        protected const string LEAD_ORGANIZATION = "lo";
+
+        protected const string NIH_ZIP_CODE = "20892";
 
         protected BasicCTSPageInfo _basicCTSPageInfo = null;
 
         protected bool hasInvalidSearchParam;
 
-        protected SetFields _setFields = SetFields.None;
+        protected QueryFieldsSetByUser _setFields = QueryFieldsSetByUser.None;
         protected BasicCTSManager _basicCTSManager = null;
         protected string cancerTypeIDAndHash = null;
 
@@ -77,16 +112,40 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected BaseCTSSearchParam GetSearchParams()
         {
             //Parse Parameters
-            int pageNum = this.ParmAsInt(PAGENUM_PARAM, 1);
-            int itemsPerPage = this.ParmAsInt(ITEMSPP_PARAM, BasicCTSPageInfo.DefaultItemsPerPage);
-            string phrase = this.ParmAsStr(PRASE_PARAM, string.Empty);
-            string zip = this.ParmAsStr(ZIP_PARAM, string.Empty);
-            int zipProximity = this.ParmAsInt(ZIPPROX_PARAM, BasicCTSPageInfo.DefaultZipProximity); //In miles
-            int age = this.ParmAsInt(AGE_PARAM, 0);
-            int gender = this.ParmAsInt(GENDER_PARAM, 0); //0 = decline, 1 = female, 2 = male, 
-            string cancerType = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
-            string cancerTypeAsPhrase = this.ParmAsStr(CANCERTYPEASPHRASE_PARAM, string.Empty); // if autosuggest is broken, the cancer type field will be parsed as a phrase search
+            int pageNum = this.ParamAsInt(PAGENUM_PARAM, 1);
+            int itemsPerPage = this.ParamAsInt(ITEMSPP_PARAM, BasicCTSPageInfo.DefaultItemsPerPage);
+            string phrase = this.ParamAsStr(PRASE_PARAM);
+            string zip = this.ParamAsStr(ZIP_PARAM);
+            int zipProximity = this.ParamAsInt(ZIPPROX_PARAM, BasicCTSPageInfo.DefaultZipProximity); //In miles
+            int age = this.ParamAsInt(AGE_PARAM, 0);
+            int gender = this.ParamAsInt(GENDER_PARAM, 0); //0 = decline, 1 = female, 2 = male, 
+            string cancerType = this.ParamAsStr(CANCERTYPE_PARAM);
+            string cancerTypeAsPhrase = this.ParamAsStr(CANCERTYPEASPHRASE_PARAM); // if autosuggest is broken, the cancer type field will be parsed as a phrase search
             string cancerTypeDisplayName = null;
+
+            string country = ParamAsStr(LOCATION_COUNTRY);
+            string city = ParamAsStr(LOCATION_CITY);
+            string state = ParamAsStr(LOCATION_STATE);
+            string hospital = ParamAsStr(HOSPITAL_INSTITUTION);
+
+            bool atNIH_isSet = false;
+            bool atNIH = ParamAsBool(AT_NIH, ref atNIH_isSet);
+
+            bool newTrialsOnly_IsSet = false;
+            bool newTrialsOnly = ParamAsBool(NEW_TRIALS_ONLY, ref newTrialsOnly_IsSet);
+
+            string trialType = ParamAsStr(TRIAL_TYPE);
+            string drugIDs = ParamAsStr(DRUG_CODE);
+            string drugName = ParamAsStr(DRUG_NAME);
+            string treatmentCodes = ParamAsStr(TREATMENT_CODE);
+            string treatmentName = ParamAsStr(TREATMENT_NAME);
+            // "phase"
+            string trialPhase = ParamAsStr(TRIAL_PHASE);
+            string trialIDs = ParamAsStr(TRIAL_IDS);
+            // "principal_investigator"
+            string principalInvestigator = ParamAsStr(TRIAL_INVESTIGATOR);
+            // "lead_org_"
+            string leadOrganization = ParamAsStr(LEAD_ORGANIZATION);
 
             BaseCTSSearchParam searchParams = null;
 
@@ -126,7 +185,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                             CancerTypeDisplayName = cancerTypeDisplayName
                         };
 
-                        _setFields |= SetFields.CancerType;
+                        _setFields |= QueryFieldsSetByUser.CancerType;
                     }
                     else
                     {
@@ -155,14 +214,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
                 if (!string.IsNullOrWhiteSpace(phrase) || !string.IsNullOrWhiteSpace(cancerTypeAsPhrase))
                 {
-                    _setFields |= SetFields.Phrase;
+                    _setFields |= QueryFieldsSetByUser.Phrase;
                 }
             }
 
             #endregion
 
             // Fill in common parameters
-
+            
             #region Set Zip Code + GeoLocation
             if (!string.IsNullOrWhiteSpace(zip))
             {
@@ -171,16 +230,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 if (Regex.IsMatch(zip, pattern))
                 {
                     searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
-                    if (searchParams.ZipLookup != null)
-                    {
-                        _setFields |= SetFields.ZipCode;
-                        if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
-                        {
-                            searchParams.ZipRadius = zipProximity;
-                            _setFields |= SetFields.ZipProximity;
-                        }
-                    }
-                    else
+                    
+                    if(searchParams.ZipLookup == null)
                     {
                         hasInvalidSearchParam = true;
                     }
@@ -188,6 +239,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 else
                 {
                     hasInvalidSearchParam = true;
+                }
+            }
+            else if (atNIH)
+            {
+                searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(NIH_ZIP_CODE);
+            }
+            if (searchParams.ZipLookup != null)
+            {
+                _setFields |= QueryFieldsSetByUser.ZipCode;
+                if (zipProximity != BasicCTSPageInfo.DefaultZipProximity)
+                {
+                    searchParams.ZipRadius = zipProximity;
+                    _setFields |= QueryFieldsSetByUser.ZipProximity;
                 }
             }
 
@@ -214,11 +278,157 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 else
                 {
                     searchParams.Age = age;
-                    _setFields |= SetFields.Age;
+                    _setFields |= QueryFieldsSetByUser.Age;
                 }
             }
 
             #endregion
+
+            #region Set Trial phase
+            trialPhase = trialPhase.ToUpper();
+            searchParams.TrialPhase = trialPhase.Equals("ALL") ? "" : trialPhase;
+            if (!String.IsNullOrWhiteSpace(trialPhase))
+            {
+                var phase = trialPhase.ToUpper();
+                var phaseArray = phase.Split(',');
+                var allPhasesSelected = false;
+                HashSet<String> phaseRange = new HashSet<String>();
+
+
+                foreach (var p in phaseArray)
+                {                       
+                    // phases are searched based on the following rules
+                    // Phase 1 finds trials in phase 1 or 1-2
+                    // Phase 2 finds trials in phase 1-2, 2, or 2-3
+                    // Phase 3 finds trials in phase 2-3, or 3
+                    // Phase 4 finds trials in phase 4
+                    switch (p)
+                    {
+                        case "I":
+                            phaseRange.Add("I");
+                            phaseRange.Add("I_II");
+                            break;
+                        case "II":
+                            phaseRange.Add("I_II");
+                            phaseRange.Add("II");
+                            phaseRange.Add("II_III");
+                            break;
+                        case "III":
+                            phaseRange.Add("II_III");
+                            phaseRange.Add("III");
+                            break;
+                        case "IV":
+                            phaseRange.Add("IV");
+                            break;
+                        case "ALL":
+                            allPhasesSelected = true;
+                            break;
+                        default:
+                            hasInvalidSearchParam = true;
+                            break;
+                    }
+                }
+                
+                var range = phaseRange.ToArray();
+                searchParams.TrialPhaseArray = range.Length > 1 ? range : null;
+                // If all phases are selected, this is the equivalent of not having this search paramin use.
+                if(!allPhasesSelected)
+                    _setFields |= QueryFieldsSetByUser.TrialPhase;
+            }
+
+            #endregion
+
+            // Set advanced CTS properties.
+            searchParams.Country = country;
+            if (!String.IsNullOrEmpty(searchParams.Country))
+            {                
+                _setFields |= QueryFieldsSetByUser.Country;
+            }
+
+            searchParams.City = city;
+            if (!String.IsNullOrEmpty(searchParams.City))            
+                _setFields |= QueryFieldsSetByUser.City;
+            
+
+            searchParams.State = state;
+            if (!String.IsNullOrEmpty(searchParams.State))             
+                _setFields |= QueryFieldsSetByUser.State;
+            
+
+            searchParams.HospitalOrInstitution = hospital;
+            if (!String.IsNullOrEmpty(searchParams.HospitalOrInstitution))
+                _setFields |= QueryFieldsSetByUser.Hospital;
+            
+
+            searchParams.AtNIH = atNIH;
+            if (atNIH_isSet)
+            {
+                // This property is neded to check within the velocity template if this is used.
+                searchParams.AtNIH_IsSet = true; 
+
+                _setFields |= QueryFieldsSetByUser.AtNIH;
+            }
+
+            // If the value is "all" then the parameter is essentially not used
+            trialType = trialType.ToUpper();
+            searchParams.TrialType = trialType.Equals("ALL") ? "" : trialType;
+            searchParams.TrialTypeArray = !String.IsNullOrEmpty(searchParams.TrialType) ? trialType.Split(',') : null;
+            if (trialType != null)
+                _setFields |= QueryFieldsSetByUser.TrialType;
+
+            if (!String.IsNullOrEmpty(drugIDs))
+            {
+                string[] idArray = drugIDs.Split(',').Select(id => id.Trim()).ToArray();
+                searchParams.DrugIDs = idArray;
+                _setFields |= QueryFieldsSetByUser.DrugCode;
+            }               
+            
+
+            searchParams.DrugName = drugName;
+            if (!String.IsNullOrEmpty(searchParams.DrugName))
+                _setFields |= QueryFieldsSetByUser.DrugName;
+
+
+            if (!String.IsNullOrEmpty(treatmentCodes))
+            {
+                string[] idArray = treatmentCodes.Split(',').Select(id => id.Trim()).ToArray();
+                searchParams.TreatmentInterventionCodes = idArray;
+                _setFields |= QueryFieldsSetByUser.TreatmentCode;
+            }  
+            
+
+            searchParams.TreatmentInterventionTerm = treatmentName;
+            if (!String.IsNullOrEmpty(searchParams.TreatmentInterventionTerm))
+                _setFields |= QueryFieldsSetByUser.TreatmentName;
+            
+
+            searchParams.NewTrialsOnly = newTrialsOnly;
+            if (newTrialsOnly_IsSet)
+            {
+                // This property is needed to check within the velocity template if this is used.
+                searchParams.NewTrialsOnly_IsSet = true;
+
+                _setFields |= QueryFieldsSetByUser.NewTrialsOnly;
+            }
+
+            searchParams.PrincipalInvestigator = principalInvestigator;
+            if (!String.IsNullOrEmpty(searchParams.PrincipalInvestigator))
+                _setFields |= QueryFieldsSetByUser.TrialInvestigator;
+
+            searchParams.LeadOrganization = leadOrganization;
+            if (!String.IsNullOrEmpty(searchParams.LeadOrganization))
+                _setFields |= QueryFieldsSetByUser.LeadOrganization;
+
+
+            if (!String.IsNullOrEmpty(trialIDs))
+            {
+                string[] idArray = trialIDs.Split(',').Select(id => id.Trim()).ToArray();
+                searchParams.TrialIDs = idArray;
+                _setFields |= QueryFieldsSetByUser.TrialIDs;
+            }
+            
+            
+            
 
             #region Set Gender
 
@@ -227,11 +437,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 case 1:
                     searchParams.Gender = BaseCTSSearchParam.GENDER_FEMALE;
-                    _setFields |= SetFields.Gender;
+                    _setFields |= QueryFieldsSetByUser.Gender;
                     break;
                 case 2:
                     searchParams.Gender = BaseCTSSearchParam.GENDER_MALE;
-                    _setFields |= SetFields.Gender;
+                    _setFields |= QueryFieldsSetByUser.Gender;
                     break;
             }
 
@@ -256,7 +466,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // contain the actual numeric portion of the ID without any leading zeros.
             Regex cdrIDRegex = new Regex("CDR0+([1-9][0-9]*)\\|?.*", RegexOptions.IgnoreCase);
 
-            string cancerTypeID = this.ParmAsStr(CANCERTYPE_PARAM, string.Empty);
+            string cancerTypeID = this.ParamAsStr(CANCERTYPE_PARAM);
 
             if (!String.IsNullOrWhiteSpace(cancerTypeID) &&
                 cancerTypeID.ToLower().StartsWith("cdr"))
@@ -296,33 +506,59 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Gets a query parameter as a string or uses a default
+        /// Gets a query parameter as a string
         /// </summary>
         /// <param name="param"></param>
         /// <param name="def"></param>
         /// <returns></returns>
-        protected string ParmAsStr(string param, string def)
+        protected string ParamAsStr(string param)
         {
-            string paramval = Request.QueryString[param];
+            string paramVal = Request.QueryString[param];
 
-            if (string.IsNullOrWhiteSpace(paramval))
-                return def;
+            if (string.IsNullOrWhiteSpace(paramVal))
+                return String.Empty;
             else
-                return paramval.Trim();
+                return paramVal.Trim();
         }
 
-        protected int ParmAsInt(string param, int def)
+        // Returns the bool param value or false if not present or invalid
+        protected bool ParamAsBool(string param, ref bool propertyIsUsed)
         {
-            string paramval = Request.QueryString[param];
+            string paramVal = Request.QueryString[param];
 
-            if (string.IsNullOrWhiteSpace(paramval))
+            if (string.IsNullOrWhiteSpace(paramVal))
+            {
+                propertyIsUsed = false;
+                return false;
+            }
+            else
+            {
+                propertyIsUsed = true;
+                bool tempVal = false;
+                if (bool.TryParse(paramVal.Trim(), out tempVal))
+                {
+                    return tempVal;
+                }
+                else
+                {
+                    hasInvalidSearchParam = true;
+                    return false;
+                }
+            }
+        }
+
+        protected int ParamAsInt(string param, int def)
+        {
+            string paramVal = Request.QueryString[param];
+
+            if (string.IsNullOrWhiteSpace(paramVal))
             {
                 return def;
             }
             else
             {
                 int tmpInt = 0;
-                if (int.TryParse(paramval.Trim(), out tmpInt))
+                if (int.TryParse(paramVal.Trim(), out tmpInt))
                 {
                     if (tmpInt == 0)
                         hasInvalidSearchParam = true;

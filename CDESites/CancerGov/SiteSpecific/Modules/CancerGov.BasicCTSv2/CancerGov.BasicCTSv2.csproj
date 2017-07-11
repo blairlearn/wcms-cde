@@ -88,6 +88,7 @@
     <Compile Include="SnippetControls\BaseTrialListingControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\BasicCTSAdvSearchControl.cs" />
     <Compile Include="SnippetControls\BasicCTSBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
