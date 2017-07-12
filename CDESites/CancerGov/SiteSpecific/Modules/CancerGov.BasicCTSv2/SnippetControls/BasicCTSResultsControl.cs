@@ -76,27 +76,27 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
             {
                 if (_setFields.HasFlag(QueryFieldsSetByUser.Age))
-                    url.QueryParameters.Add("a", SearchParams.Age.ToString());
+                    url.QueryParameters.Add(AGE_PARAM, SearchParams.Age.ToString());
 
                 if (_setFields.HasFlag(QueryFieldsSetByUser.Gender))
                 {
                     if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
-                        url.QueryParameters.Add("g", "1");
+                        url.QueryParameters.Add(GENDER_PARAM, "1");
                     else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
-                        url.QueryParameters.Add("g", "2");
+                        url.QueryParameters.Add(GENDER_PARAM, "2");
                 }
 
                 if (_setFields.HasFlag(QueryFieldsSetByUser.ZipCode))
-                    url.QueryParameters.Add("z", SearchParams.ZipLookup.PostalCode_ZIP);
+                    url.QueryParameters.Add(ZIP_PARAM, SearchParams.ZipLookup.PostalCode_ZIP);
 
                 if (_setFields.HasFlag(QueryFieldsSetByUser.ZipProximity))
-                    url.QueryParameters.Add("zp", SearchParams.ZipRadius.ToString());
+                    url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
 
                 //Phrase and type are based on the type of object
                 if (SearchParams is CancerTypeSearchParam)
                 {
                     if (_setFields.HasFlag(QueryFieldsSetByUser.CancerType))
-                        url.QueryParameters.Add("t", cancerTypeIDAndHash);
+                        url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
                 }
 
                 if (SearchParams is PhraseSearchParam)
@@ -104,9 +104,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     if (_setFields.HasFlag(QueryFieldsSetByUser.Phrase))
                     {
                         if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
-                            url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                            url.QueryParameters.Add(CANCERTYPEASPHRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                         else
-                            url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                            url.QueryParameters.Add(PHRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                     }
                 }
 
@@ -160,7 +160,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
 
                 //Items Per Page
-                url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString());
+                url.QueryParameters.Add(ITEMSPP_PARAM, SearchParams.ItemsPerPage.ToString());
 
             });
 
@@ -273,13 +273,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             HttpRequest request = HttpContext.Current.Request;
 
             // Add Cancer Type / Keyword 
-            if(!String.IsNullOrWhiteSpace(request.QueryString["t"]))
+            if(!String.IsNullOrWhiteSpace(request.QueryString[CANCERTYPE_PARAM]))
             {
-                values.Add("typecondition|" + request.QueryString["t"]);
+                values.Add("typecondition|" + request.QueryString[CANCERTYPE_PARAM]);
             }
-            else if (!String.IsNullOrWhiteSpace(request.QueryString["q"]))
+            else if (!String.IsNullOrWhiteSpace(request.QueryString[PHRASE_PARAM]))
             {
-                values.Add("keyword|" + request.QueryString["q"]);
+                values.Add("keyword|" + request.QueryString[PHRASE_PARAM]);
             }
             else
             {
@@ -287,9 +287,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             // Add Zipcode
-            if (!String.IsNullOrWhiteSpace(request.QueryString["z"]))
+            if (!String.IsNullOrWhiteSpace(request.QueryString[ZIP_PARAM]))
             {
-                values.Add(request.QueryString["z"]);
+                values.Add(request.QueryString[ZIP_PARAM]);
             }
             else
             {
@@ -297,9 +297,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             // Add age
-            if (!String.IsNullOrWhiteSpace(request.QueryString["a"]))
+            if (!String.IsNullOrWhiteSpace(request.QueryString[AGE_PARAM]))
             {
-                values.Add(request.QueryString["a"]);
+                values.Add(request.QueryString[AGE_PARAM]);
             }
             else
             {
@@ -427,7 +427,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             NciUrl url = new NciUrl();
             url.SetUrl(BasicCTSPageInfo.DetailedViewPagePrettyUrl);
 
-            url.QueryParameters.Add("id", id);
+            url.QueryParameters.Add(NCT_ID, id);
 
             if (_setFields.HasFlag(QueryFieldsSetByUser.ZipCode))
                 url.QueryParameters.Add(ZIP_PARAM, SearchParams.ZipLookup.PostalCode_ZIP);
@@ -436,14 +436,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 url.QueryParameters.Add(ZIPPROX_PARAM, SearchParams.ZipRadius.ToString());
 
             if (_setFields.HasFlag(QueryFieldsSetByUser.Age))
-                url.QueryParameters.Add("a", SearchParams.Age.ToString());
+                url.QueryParameters.Add(AGE_PARAM, SearchParams.Age.ToString());
 
             if (_setFields.HasFlag(QueryFieldsSetByUser.Gender))
             {
                 if (SearchParams.Gender == BaseCTSSearchParam.GENDER_FEMALE)
-                    url.QueryParameters.Add("g", "1");
+                    url.QueryParameters.Add(GENDER_PARAM, "1");
                 else if (SearchParams.Gender == BaseCTSSearchParam.GENDER_MALE)
-                    url.QueryParameters.Add("g", "2");
+                    url.QueryParameters.Add(GENDER_PARAM, "2");
             }
 
             if (_setFields.HasFlag(QueryFieldsSetByUser.Country))
@@ -513,7 +513,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             if (SearchParams is CancerTypeSearchParam)
             {
                 if (_setFields.HasFlag(QueryFieldsSetByUser.CancerType))
-                    url.QueryParameters.Add("t", cancerTypeIDAndHash);
+                    url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
             }
 
             if (SearchParams is PhraseSearchParam)
@@ -521,20 +521,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 if (_setFields.HasFlag(QueryFieldsSetByUser.Phrase))
                 {
                     if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
-                        url.QueryParameters.Add("ct", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                        url.QueryParameters.Add(CANCERTYPEASPHRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                     else
-                        url.QueryParameters.Add("q", HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                        url.QueryParameters.Add(PHRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                 }
             }
 
             //Items Per Page
-            url.QueryParameters.Add("ni", SearchParams.ItemsPerPage.ToString());
+            url.QueryParameters.Add(ITEMSPP_PARAM, SearchParams.ItemsPerPage.ToString());
 
             // Page number
-            url.QueryParameters.Add("pn", SearchParams.Page.ToString());
+            url.QueryParameters.Add(PAGENUM_PARAM, SearchParams.Page.ToString());
 
             // Add the "rl" flag, indicating that this is a link coming from the CTS Results Page
-            url.QueryParameters.Add("rl", "1"); 
+            url.QueryParameters.Add(RESULTS_LINK_FLAG, "1"); 
 
             return url.ToString();
         }
@@ -548,13 +548,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             NciUrl url = this.PageInstruction.GetUrl("CurrentURL");
 
-            if(!url.QueryParameters.ContainsKey("pn"))
+            if(!url.QueryParameters.ContainsKey(PAGENUM_PARAM))
             {
-                url.QueryParameters.Add("pn", pageNum.ToString());
+                url.QueryParameters.Add(PAGENUM_PARAM, pageNum.ToString());
             }
             else
             {
-                url.QueryParameters["pn"] = pageNum.ToString();
+                url.QueryParameters[PAGENUM_PARAM] = pageNum.ToString();
             }
 
             return url.ToString();

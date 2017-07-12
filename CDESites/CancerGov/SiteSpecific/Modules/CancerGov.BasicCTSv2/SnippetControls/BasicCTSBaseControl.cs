@@ -46,26 +46,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             LeadOrganization =      1 << 20,
         }
 
-        /// <summary>
-        /// basic CTS query parameters
-        /// </summary>
+        #region CTS query parameters
+        // Navigation & display parameters
         protected const string PAGENUM_PARAM = "pn";
         protected const string ITEMSPP_PARAM = "ni";
-        protected const string PRASE_PARAM = "q";
-        protected const string ZIP_PARAM = "z";
-        protected const string ZIPPROX_PARAM = "zp";
-        protected const string AGE_PARAM = "a";
-        protected const string GENDER_PARAM = "g";
-        protected const string CANCERTYPE_PARAM = "t";
-        protected const string CANCERTYPEASPHRASE_PARAM = "ct";
         protected const string REDIRECTED_FLAG = "r";
         protected const string RESULTS_LINK_FLAG = "rl";
-        
+
+        // Type/phrase search parameters
+        protected const string CANCERTYPE_PARAM = "t";
+        protected const string CANCERTYPEASPHRASE_PARAM = "ct";
+        protected const string PHRASE_PARAM = "q";
+
+        // Location search parameters
         protected const string LOCATION_COUNTRY = "lcnty";
         protected const string LOCATION_CITY = "lcty";
         protected const string LOCATION_STATE = "lst";
         protected const string HOSPITAL_INSTITUTION = "hos";
         protected const string AT_NIH = "nih";
+        protected const string NIH_ZIP_CODE = "20892";
+        protected const string ZIP_PARAM = "z";
+        protected const string ZIPPROX_PARAM = "zp";
+        protected const string LOCATION_ALL = "all";
+
+        // Other search parameters
+        protected const string AGE_PARAM = "a";
+        protected const string GENDER_PARAM = "g";
         protected const string TRIAL_TYPE = "tt";
         protected const string DRUG_CODE = "d";
         protected const string DRUG_NAME = "ds";
@@ -73,11 +79,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected const string TREATMENT_NAME = "is";
         protected const string TRIAL_PHASE = "tp";
         protected const string NEW_TRIALS_ONLY = "new";
+        protected const string NCT_ID = "id";
         protected const string TRIAL_IDS = "tid";
         protected const string TRIAL_INVESTIGATOR = "in";
         protected const string LEAD_ORGANIZATION = "lo";
-
-        protected const string NIH_ZIP_CODE = "20892";
+        #endregion
 
         protected BasicCTSPageInfo _basicCTSPageInfo = null;
 
@@ -114,7 +120,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Parse Parameters
             int pageNum = this.ParamAsInt(PAGENUM_PARAM, 1);
             int itemsPerPage = this.ParamAsInt(ITEMSPP_PARAM, BasicCTSPageInfo.DefaultItemsPerPage);
-            string phrase = this.ParamAsStr(PRASE_PARAM);
+            string phrase = this.ParamAsStr(PHRASE_PARAM);
             string zip = this.ParamAsStr(ZIP_PARAM);
             int zipProximity = this.ParamAsInt(ZIPPROX_PARAM, BasicCTSPageInfo.DefaultZipProximity); //In miles
             int age = this.ParamAsInt(AGE_PARAM, 0);

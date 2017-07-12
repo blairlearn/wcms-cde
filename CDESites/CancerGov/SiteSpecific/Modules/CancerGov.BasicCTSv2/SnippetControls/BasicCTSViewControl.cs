@@ -111,7 +111,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         public int GetShowAll()
         {
-            return ParamAsInt("all", -1);
+            return ParamAsInt(LOCATION_ALL, -1);
         }
 
         protected string GetGlossifiedTrialPhase(string[] phases)
@@ -195,7 +195,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             base.OnLoad(e);
 
             // Get ID
-            string nctid = Request.Params["id"];
+            string nctid = Request.Params[NCT_ID];
             if (String.IsNullOrWhiteSpace(nctid))
             {
                 throw new HttpException(404, "Missing trial ID.");
@@ -284,10 +284,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 //NOTE: If you add more params, please remove them from CanonicalURL,
                 //unless they substantially change the rendered HTML markup.  (e.g. like id does)
-                url.QueryParameters.Add("id", nctid);
+                url.QueryParameters.Add(NCT_ID, nctid);
                 if (GetShowAll() > -1)
                 {
-                    url.QueryParameters.Add("all", GetShowAll().ToString());
+                    url.QueryParameters.Add(LOCATION_ALL, GetShowAll().ToString());
                 }
 
                 if ((_setFields & QueryFieldsSetByUser.Age) != 0)
@@ -318,7 +318,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
                         url.QueryParameters.Add(CANCERTYPEASPHRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                     else
-                        url.QueryParameters.Add(PRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
+                        url.QueryParameters.Add(PHRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                 }
                               
 
@@ -332,26 +332,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             PageInstruction.AddUrlFilter("ShowNearbyUrl", (name, url) =>
             {
                 url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
-                if (url.QueryParameters.ContainsKey("all"))
+                if (url.QueryParameters.ContainsKey(LOCATION_ALL))
                 {
-                    url.QueryParameters["all"] = "0";
+                    url.QueryParameters[LOCATION_ALL] = "0";
                 }
                 else
                 {
-                    url.QueryParameters.Add("all", "0");
+                    url.QueryParameters.Add(LOCATION_ALL, "0");
                 }
             });
 
             PageInstruction.AddUrlFilter("ShowAllUrl", (name, url) =>
             {
                 url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
-                if (url.QueryParameters.ContainsKey("all"))
+                if (url.QueryParameters.ContainsKey(LOCATION_ALL))
                 {
-                    url.QueryParameters["all"] = "1";
+                    url.QueryParameters[LOCATION_ALL] = "1";
                 }
                 else
                 {
-                    url.QueryParameters.Add("all", "1");
+                    url.QueryParameters.Add(LOCATION_ALL, "1");
                 }
             });
 
@@ -360,14 +360,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
                 url.UriStem = _basicCTSPageInfo.ResultsPagePrettyUrl;
 
-                if (url.QueryParameters.ContainsKey("all"))
+                if (url.QueryParameters.ContainsKey(LOCATION_ALL))
                 {
-                    url.QueryParameters.Remove("all");
+                    url.QueryParameters.Remove(LOCATION_ALL);
                 }
 
-                if (url.QueryParameters.ContainsKey("id"))
+                if (url.QueryParameters.ContainsKey(NCT_ID))
                 {
-                    url.QueryParameters.Remove("id");
+                    url.QueryParameters.Remove(NCT_ID);
                 }
             });
 
@@ -376,7 +376,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 // only the id should be provided for the canonical URL, so clear all query parameters and
                 // then add back id
                 url.QueryParameters.Clear();
-                url.QueryParameters.Add("id", nctid);
+                url.QueryParameters.Add(NCT_ID, nctid);
             });
 
             // Override the social media URL (og:url)
@@ -437,7 +437,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             HttpRequest request = HttpContext.Current.Request;
 
             // Set result value based on referrer
-            if (request.QueryString["rl"] == null)
+            if (request.QueryString[RESULTS_LINK_FLAG] == null)
             {
                 result = "Clinical Trials: Custom";
             }
