@@ -99,6 +99,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
                 }
 
+                if (_setFields.HasFlag(QueryFieldsSetByUser.CancerSubtype))
+                    url.QueryParameters.Add(CANCERTYPE_SUBTYPE, SearchParams.CancerSubtype);
+                if (_setFields.HasFlag(QueryFieldsSetByUser.CancerStage))
+                    url.QueryParameters.Add(CANCERTYPE_STAGE, SearchParams.CancerStage);
+                if (_setFields.HasFlag(QueryFieldsSetByUser.CancerFindings))
+                    url.QueryParameters.Add(CANCERTYPE_FINDINGS, SearchParams.CancerFindings);
+
+
                 if (SearchParams is PhraseSearchParam)
                 {
                     if (_setFields.HasFlag(QueryFieldsSetByUser.Phrase))

@@ -23,27 +23,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected enum QueryFieldsSetByUser
         {
             None = 0,
-            Age =                   1 << 0,
-            Gender =                1 << 1,
-            ZipCode =               1 << 2,
-            ZipProximity =          1 << 3,
-            Phrase =                1 << 4,
-            CancerType =            1 << 5,
-            Country =               1 << 6,
-            City =                  1 << 7,
-            State =                 1 << 8,
-            Hospital =              1 << 9,
-            AtNIH =                 1 << 10,
-            TrialType =             1 << 11,
-            DrugCode =              1 << 12,
-            DrugName =              1 << 13,
-            TreatmentCode =         1 << 14,
-            TreatmentName =         1 << 15,
-            TrialPhase =            1 << 16,
-            NewTrialsOnly =         1 << 17,
-            TrialIDs =              1 << 18,
-            TrialInvestigator =     1 << 19,
-            LeadOrganization =      1 << 20,
+            CancerType          = 1 << 0,
+            CancerSubtype       = 1 << 1,
+            CancerStage         = 1 << 2,
+            CancerFindings      = 1 << 3,
+            Age                 = 1 << 4,
+            Gender              = 1 << 5,
+            Phrase              = 1 << 6,
+            ZipCode             = 1 << 7,
+            ZipProximity        = 1 << 8,
+            Country             = 1 << 9,
+            City                = 1 << 10,
+            State               = 1 << 11,
+            Hospital            = 1 << 12,
+            AtNIH               = 1 << 13,
+            TrialType           = 1 << 14,
+            DrugCode            = 1 << 15,
+            DrugName            = 1 << 16,
+            TreatmentCode       = 1 << 17,
+            TreatmentName       = 1 << 18,
+            TrialPhase          = 1 << 19,
+            NewTrialsOnly       = 1 << 20,
+            TrialIDs            = 1 << 21,
+            TrialInvestigator   = 1 << 22,
+            LeadOrganization    = 1 << 23
         }
 
         #region CTS query parameters
@@ -57,6 +60,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected const string CANCERTYPE_PARAM = "t";
         protected const string CANCERTYPEASPHRASE_PARAM = "ct";
         protected const string PHRASE_PARAM = "q";
+        protected const string CANCERTYPE_SUBTYPE = "st";
+        protected const string CANCERTYPE_STAGE = "stg";
+        protected const string CANCERTYPE_FINDINGS = "fin";
 
         // Location search parameters
         protected const string LOCATION_COUNTRY = "lcnty";
@@ -128,6 +134,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string cancerType = this.ParamAsStr(CANCERTYPE_PARAM);
             string cancerTypeAsPhrase = this.ParamAsStr(CANCERTYPEASPHRASE_PARAM); // if autosuggest is broken, the cancer type field will be parsed as a phrase search
             string cancerTypeDisplayName = null;
+            string cancerSubtype = this.ParamAsStr(CANCERTYPE_SUBTYPE);
+            string cancerStage = this.ParamAsStr(CANCERTYPE_STAGE);
+            string cancerFindings = this.ParamAsStr(CANCERTYPE_FINDINGS);
 
             string country = ParamAsStr(LOCATION_COUNTRY);
             string city = ParamAsStr(LOCATION_CITY);
@@ -222,6 +231,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 {
                     _setFields |= QueryFieldsSetByUser.Phrase;
                 }
+            }
+
+            // cancerTypeDisplayName = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
+            // Set query field for cancer subtype if exists
+            //searchParams.CancerSubtype = _basicCTSManager.GetCancerTypeDisplayName(cancerSubtype, cancerSubtype);
+            searchParams.CancerSubtype = GetDisplayNameFromCCode(cancerSubtype);
+            if (!String.IsNullOrEmpty(searchParams.CancerSubtype))
+            {
+                _setFields |= QueryFieldsSetByUser.CancerSubtype;
+            }
+
+            // Set query field for cancer stage if exists
+            searchParams.CancerStage = GetDisplayNameFromCCode(cancerStage);
+            if (!String.IsNullOrEmpty(searchParams.CancerStage))
+            {
+                _setFields |= QueryFieldsSetByUser.CancerStage;
+            }
+
+            // Set query field for cancer findings if exists
+            searchParams.CancerFindings = GetDisplayNameFromCCode(cancerFindings);
+            if (!String.IsNullOrEmpty(searchParams.CancerFindings))
+            {
+                _setFields |= QueryFieldsSetByUser.CancerFindings;
             }
 
             #endregion
@@ -510,6 +542,31 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             }
         }
+
+        /// <summary>
+        /// Returns pretty display name for CXXXX value.
+        /// </summary>
+        /// <param name="ccode"></param>
+        /// <returns></returns>
+        protected String GetDisplayNameFromCCode(string ccode)
+        {
+            string prettyDisplayName = string.Empty;
+            // The cancerType/subtype/stage/findings param may not always contain a pipe. If it does, split the param and key into an array.
+            // Otherwise, make the whole parameter string the first item in an array 
+            String[] ctarr = (ccode.Contains("|") ? ccode.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { ccode });
+            {
+                //split up the disease ids
+                string[] diseaseIDs = ctarr[0].Split(',');
+
+                // Determine display name from CIDs and key (if there is no match with the key,
+                // then first term with matching ids is used)
+                string termKey = ctarr.Length > 1 ? ctarr[1] : null;
+                prettyDisplayName = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
+            }
+
+            return prettyDisplayName;
+        }
+
 
         /// <summary>
         /// Gets a query parameter as a string

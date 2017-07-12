@@ -36,6 +36,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             set { _itemsPerPage = value; }
         }
 
+        /// <summary>
+        /// Property to set/get cancer subtype.
+        /// </summary>
+        public string CancerSubtype { get; set; }
+
+        /// <summary>
+        /// Property to set/get cancer type stage.
+        /// </summary>
+        public string CancerStage { get; set; }
+
+        /// <summary>
+        /// Property to set/get cancer type side effects, biomarksers, attributes.
+        /// </summary>
+        public string CancerFindings { get; set; }
 
         /// <summary>
         /// This contains both the ZipCode and Lat/Long for this search zip.
