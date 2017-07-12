@@ -214,6 +214,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 filterCriteria.Add("_trialids", searchParams.TrialIDs);
             }
 
+            if (searchParams.CancerFindings != null)
+            {
+                filterCriteria.Add("diseases.display_name", searchParams.CancerFindings);
+            }
+
+
             //Add phrase if this is a phrase search
             if (searchParams is PhraseSearchParam)
             {
