@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SiteWideSearch" %>
-<%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="NCI" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="NCI.Web.CDE.UI.SnippetControls.SiteWideSearch_v2" %>
+<%--<%@ Register assembly="NCILibrary.Web.UI.WebControls" namespace="NCI.Web.UI.WebControls" tagprefix="NCI" %>
 
 <form id="frmResults" runat="server">
 
@@ -29,4 +29,4 @@
     </div>
     
 <asp:HiddenField ID="itemsPerPage" Value="5" runat="server" />
-</form>
+</form>--%>
