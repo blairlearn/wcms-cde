@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Configuration;
 using System.Web;
 using System.Web.UI;
@@ -168,7 +169,10 @@ namespace NCI.Web.CDE.UI.SnippetControls
             }
             catch (Exception ex)
             {
-                var test = "Invalid results";
+                StringBuilder errorString = new StringBuilder();
+                errorString.AppendFormat("Failed to retrieve results for {0} from the API", searchTerm);                    
+                log.Error(errorString);
+                throw;
             }
 
             // Show Results
