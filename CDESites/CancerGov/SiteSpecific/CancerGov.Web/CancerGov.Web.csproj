@@ -127,6 +127,7 @@
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SearchBox.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
+    <Content Include="SnippetTemplates\SiteWideSearch_v2.ascx" />
     <Content Include="SnippetTemplates\TemplatedDynamicList.ascx" />
     <Content Include="SnippetTemplates\TopicSearchCategorySnippet.ascx">
       <SubType>ASPXCodeBehind</SubType>
