@@ -30,5 +30,10 @@ namespace NCI.Web.CDE.Modules
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public string ResultTitleText { get; set; }
 
+        /// <summary>
+        /// Velocity template.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string ResultsPageTemplatePath { get; set; }
     }
 }

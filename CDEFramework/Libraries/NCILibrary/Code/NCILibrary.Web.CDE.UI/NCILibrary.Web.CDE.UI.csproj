@@ -57,6 +57,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
@@ -191,6 +192,9 @@
     <Compile Include="SnippetControls\SideWideSearch.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\SiteWideSearch_v2.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\SubLayoutControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -211,6 +215,14 @@
     <ProjectReference Include="..\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
       <Project>{F4C37116-861A-4FD6-B45D-578B258FEFC7}</Project>
       <Name>NCILibrary.DataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.Search.Client\NCILibrary.Search.Client.csproj">
+      <Project>{dc6fb23c-016c-40f8-873e-1ad16ecbfa9a}</Project>
+      <Name>NCILibrary.Search.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NCILibrary.Search.ElasticSearch\NCILibrary.Search.ElasticSearch.csproj">
+      <Project>{0af8d250-e5a2-4195-8940-54f806acf5f2}</Project>
+      <Name>NCILibrary.Search.ElasticSearch</Name>
     </ProjectReference>
     <ProjectReference Include="..\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
       <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>

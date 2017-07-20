@@ -63,8 +63,8 @@ namespace NCI.Logging
                 }
             }
 
-            if (exceptions != null)
-                throw new AggregateException("One or more exceptions occured while forwarding log message to multiple loggers", exceptions);
+            //if (exceptions != null)
+            //    throw new AggregateException("One or more exceptions occured while forwarding log message to multiple loggers", exceptions);
         }
     }
 }

@@ -724,7 +724,7 @@ namespace NCI.Web.CDE
 
             AddFieldFilter("site_name", (name, data) =>
             {
-                data.Value = ProductionHostConfig.Sitename;
+                data.Value = "DCEG";
             });
 
             // also initialize social metadata field filters
