@@ -15,6 +15,7 @@ using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
 using Microsoft.Security.Application;
+using NCI.Web;
 
 namespace CancerGov.Web.SnippetTemplates
 {
@@ -109,33 +110,29 @@ namespace CancerGov.Web.SnippetTemplates
       */
         private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
         {
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
+                       
+            foreach (var lang in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
             {
-                if (!string.IsNullOrEmpty(CdrID))
-                    url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
-                else if (!string.IsNullOrEmpty(Expand))
-                {
-                    if (Expand.Trim() == "#")
-                    {
-                        Expand = "%23";
-                    }
-                    url.SetUrl(url.ToString() + "?expand=" + Expand);
-                }
-                else
-                    url.SetUrl(url.ToString());
-            });
-            
-            string canonicalUrl = PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CanonicalUrl").ToString();
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter("CanonicalTranslation", (name, url) =>
-            {
-                if (canonicalUrl.IndexOf(englishDurl) > -1)
-                    url.SetUrl(canonicalUrl.Replace(englishDurl, spanishDurl));
-                else if (canonicalUrl.IndexOf(spanishDurl) > -1)
-                    url.SetUrl(canonicalUrl.Replace(spanishDurl, englishDurl));
-                else
-                    url.SetUrl("");
-            });
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlFilter);
+            }
 
+        }
+
+        private void SetupUrlFilter(string name, NciUrl url)
+        {
+            if (!string.IsNullOrEmpty(CdrID))
+                url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
+            else if (!string.IsNullOrEmpty(Expand))
+            {
+                if (Expand.Trim() == "#")
+                {
+                    Expand = "%23";
+                }
+                url.SetUrl(url.ToString() + "?expand=" + Expand);
+            }
+            else
+                url.SetUrl(url.ToString());
         }
 
         /// <summary>
