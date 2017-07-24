@@ -168,16 +168,6 @@
       <DependentUpon>popDefinition.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnippetControls\SiteWideSearchSnippetControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\SiteWideSearch.ascx.cs">
-      <DependentUpon>SiteWideSearch.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\SiteWideSearch.ascx.designer.cs">
-      <DependentUpon>SiteWideSearch.ascx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">

@@ -22,9 +22,8 @@ namespace NCI.Web.CDE.UI.SnippetControls
     public partial class SiteWideSearch_v2 : AppsBaseSnippetControl
     {
         static ILog log = LogManager.GetLogger(typeof(SiteWideSearch_v2));
-        private IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
-        SiteWideSearchAPIClient searchClient = new SiteWideSearchAPIClient(SitewideSearchBasePath, new HttpClient());
         SiteWideSearchConfig _searchPageInfo;
+        SiteWideSearchAPIClient searchClient = new SiteWideSearchAPIClient(SitewideSearchBasePath, new HttpClient());
         BestBetsAPIClient bestBetsClient = new BestBetsAPIClient(BestBetsBasePath, new HttpClient());
 
         private int _PageNumber = 1;
@@ -32,6 +31,12 @@ namespace NCI.Web.CDE.UI.SnippetControls
         private int _ItemsPerPage;
         private const int ITEMS_PER_PAGE_DEFAULT = 10;
 
+
+        public void SitewideSearch_v2()
+        {
+            searchClient = new SiteWideSearchAPIClient(SitewideSearchBasePath, new HttpClient());
+            bestBetsClient = new BestBetsAPIClient(BestBetsBasePath, new HttpClient());
+        }
         protected SiteWideSearchConfig SearchConfig
         {
             get
@@ -144,7 +149,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             var language = Request.QueryString["Language"];
             if (String.IsNullOrEmpty(language))
             {
-                language = pgInstruction.GetField("Language");
+                language = PageInstruction.GetField("Language");
             }
 
 
