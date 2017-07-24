@@ -99,6 +99,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected BasicCTSManager _basicCTSManager = null;
         protected string cancerTypeIDAndHash = null;
 
+        //Variables used to preserve C-code for other Cancer Type fields. 
+        // TODO: find a cleaner way to do this and create reusable parseURL() method instead of 
+        // copy/pasting "url.QueryParameters.Add" spaghetti everywhere.
+        protected String subtypeCCode = null;
+        protected String stageCCode = null;
+        protected String findingsCCode = null;
+
         private string _APIURL = string.Empty;
 
         /// <summary>
@@ -239,6 +246,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             searchParams.CancerSubtype = GetDisplayNameFromCCode(cancerSubtype);
             if (!String.IsNullOrEmpty(searchParams.CancerSubtype))
             {
+                subtypeCCode = cancerSubtype;
                 _setFields |= QueryFieldsSetByUser.CancerSubtype;
             }
 
@@ -246,6 +254,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             searchParams.CancerStage = GetDisplayNameFromCCode(cancerStage);
             if (!String.IsNullOrEmpty(searchParams.CancerStage))
             {
+                stageCCode = cancerStage;
                 _setFields |= QueryFieldsSetByUser.CancerStage;
             }
 
@@ -253,6 +262,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             searchParams.CancerFindings = GetDisplayNameFromCCode(cancerFindings);
             if (!String.IsNullOrEmpty(searchParams.CancerFindings))
             {
+                findingsCCode = cancerFindings;
                 _setFields |= QueryFieldsSetByUser.CancerFindings;
             }
 
@@ -411,8 +421,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             trialType = trialType.ToUpper();
             searchParams.TrialType = trialType.Equals("ALL") ? "" : trialType;
             searchParams.TrialTypeArray = !String.IsNullOrEmpty(searchParams.TrialType) ? trialType.Split(',') : null;
-            if (trialType != null)
+            if (!string.IsNullOrWhiteSpace(trialType))
+            {
                 _setFields |= QueryFieldsSetByUser.TrialType;
+            }
 
             if (!String.IsNullOrEmpty(drugIDs))
             {

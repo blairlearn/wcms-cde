@@ -312,7 +312,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 {
                     url.QueryParameters.Add(CANCERTYPE_PARAM, cancerTypeIDAndHash);
                 }
-
                 if ((_setFields & QueryFieldsSetByUser.Phrase) != 0 && SearchParams is PhraseSearchParam)
                 {
                     if (((PhraseSearchParam)SearchParams).IsBrokenCTSearchParam)
@@ -320,7 +319,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     else
                         url.QueryParameters.Add(PHRASE_PARAM, HttpUtility.UrlEncode(((PhraseSearchParam)SearchParams).Phrase));
                 }
-                              
+
+                // Add subtypes, stage, and findings to query params
+                if (_setFields.HasFlag(QueryFieldsSetByUser.CancerSubtype))
+                    url.QueryParameters.Add(CANCERTYPE_SUBTYPE, subtypeCCode);
+                if (_setFields.HasFlag(QueryFieldsSetByUser.CancerStage))
+                    url.QueryParameters.Add(CANCERTYPE_STAGE, stageCCode);
+                if (_setFields.HasFlag(QueryFieldsSetByUser.CancerFindings))
+                    url.QueryParameters.Add(CANCERTYPE_FINDINGS, findingsCCode);
 
                 // Page Number
                 url.QueryParameters.Add(PAGENUM_PARAM, SearchParams.Page.ToString());
