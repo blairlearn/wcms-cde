@@ -13,7 +13,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
     /// </summary>
     public class CTSSearchParamFactory_Test
     {
-        //Test cases for Create test method.
+        //Test cases for Create test method. 
+        //@Sarina and @Dion - You will want to create your expected objects in another file at some point.
         public static IEnumerable<object[]> URLParsingData {
             get
             {
@@ -22,7 +23,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 {
                     //This array of objects maps to the parameters of the create method.
                     //URL at index 0, Expected object at index 1.
-                    new object[] { "", new CTSSearchParams() }
+
+                    //TEST 1 - No parameters.
+                    new object[] { "", new CTSSearchParams() },
+
+                    //TEST2 2 - Keyword.
+                    new object[] { "?q=chicken", new CTSSearchParams() {
+                        Phrase = "chicken"
+                    }}
                 };
             }
         }

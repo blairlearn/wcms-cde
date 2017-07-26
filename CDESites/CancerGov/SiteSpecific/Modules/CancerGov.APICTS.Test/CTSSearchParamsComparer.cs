@@ -16,12 +16,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
         public bool Equals(CTSSearchParams x, CTSSearchParams y)
         {
-            return false;
+            // If the items are both null, or if one or the other is null, return 
+            // the correct response right away.
+            if (x == null && y == null)
+            {
+                return true;
+            }
+            else if (x == null || y == null)
+            {
+                return false;
+            }
+
+            //This should compare every single property.
+            bool isEqual =
+                x.Phrase == y.Phrase;
+
+            return isEqual;
         }
 
         public int GetHashCode(CTSSearchParams obj)
         {
-            return 0;
+            int hash = 0;
+            hash ^= obj.Phrase.GetHashCode();
+
+            return hash;
         }
 
         #endregion

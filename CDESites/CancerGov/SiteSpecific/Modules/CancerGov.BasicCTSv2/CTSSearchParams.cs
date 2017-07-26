@@ -13,5 +13,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// </summary>
     public class CTSSearchParams
     {
+        /// <summary>
+        /// Gets or sets the Phrase/Keyword used in the search
+        /// </summary>
+        public String Phrase { get; set; }
     }
 }
