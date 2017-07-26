@@ -44,7 +44,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         protected override String WorkingUrl
         {
-            get { return BasicCTSPageInfo.SearchPagePrettyUrl; }
+            get { return BasicCTSPageInfo.BasicSearchPagePrettyUrl; }
         }
     }
 }

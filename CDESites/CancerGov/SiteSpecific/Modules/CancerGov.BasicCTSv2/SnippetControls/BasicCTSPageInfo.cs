@@ -59,10 +59,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public string SearchPageTemplatePath { get; set; }
 
         /// <summary>
-        /// The pretty url of the search page.
+        /// The pretty url of the basic search page.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string SearchPagePrettyUrl { get; set; }
+        public string BasicSearchPagePrettyUrl { get; set; }
+
+        /// <summary>
+        /// The pretty url of the advanced search page.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string AdvSearchPagePrettyUrl { get; set; }
 
         /// <summary>
         /// The path to the template to use.

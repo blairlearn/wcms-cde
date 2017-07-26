@@ -333,6 +333,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
                 //Items Per Page
                 url.QueryParameters.Add(ITEMSPP_PARAM, SearchParams.ItemsPerPage.ToString());
+
+                // Add the "rl" flag, indicating that this is a link coming from the CTS Results Page
+                url.QueryParameters.Add(RESULTS_LINK_FLAG, SearchParams.ResultsLinkFlag.ToString());
             });
 
             PageInstruction.AddUrlFilter("ShowNearbyUrl", (name, url) =>
@@ -456,5 +459,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
         #endregion
 
+        #region Velocity helpers
+        public string GetSearchFormUrl()
+        {
+            if (SearchParams.ResultsLinkFlag == 2)
+            {
+                return BasicCTSPageInfo.AdvSearchPagePrettyUrl;
+            }
+            else
+            {
+                return BasicCTSPageInfo.BasicSearchPagePrettyUrl;
+            }
+        }
+        #endregion
     }
 }

@@ -16,6 +16,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         int _pageNum = 1;
         int _itemsPerPage = 10;
+        int _resultsLinkFlag = 1;
         int _zipRadius = 100;
 
         /// <summary>
@@ -35,6 +36,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             get { return _itemsPerPage; }
             set { _itemsPerPage = value; }
         }
+
+        /// <summary>
+        /// Gets/Sets the Results Link Flag
+        /// </summary>
+        public int ResultsLinkFlag
+        {
+            get { return _resultsLinkFlag; }
+            set { _resultsLinkFlag = value; }
+        }
+
 
         /// <summary>
         /// Property to set/get cancer subtype.
@@ -189,6 +200,5 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// 
         /// </summary>
         public string LeadOrganization { get; set; }
-
     }
 }

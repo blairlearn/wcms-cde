@@ -46,7 +46,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             NewTrialsOnly       = 1 << 20,
             TrialIDs            = 1 << 21,
             TrialInvestigator   = 1 << 22,
-            LeadOrganization    = 1 << 23
+            LeadOrganization    = 1 << 23,
+            ResultsLinkFlag     = 1 << 24
         }
 
         #region CTS query parameters
@@ -133,6 +134,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Parse Parameters
             int pageNum = this.ParamAsInt(PAGENUM_PARAM, 1);
             int itemsPerPage = this.ParamAsInt(ITEMSPP_PARAM, BasicCTSPageInfo.DefaultItemsPerPage);
+            int resultsLinkFlag = this.ParamAsInt(RESULTS_LINK_FLAG, 1);
             string phrase = this.ParamAsStr(PHRASE_PARAM);
             string zip = this.ParamAsStr(ZIP_PARAM);
             int zipProximity = this.ParamAsInt(ZIPPROX_PARAM, BasicCTSPageInfo.DefaultZipProximity); //In miles
@@ -313,6 +315,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             searchParams.ItemsPerPage = itemsPerPage;
             #endregion
+
+            searchParams.ResultsLinkFlag = resultsLinkFlag;
 
             #region Set Age
 

@@ -41,7 +41,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Only present for BasicCTSResultsControl.
             // This call is disabled/removed in base.OnInit().
             HandleOldCancerTypeID();
-
+            
             SearchParams = GetSearchParams();
         }
 
@@ -165,7 +165,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 if (_setFields.HasFlag(QueryFieldsSetByUser.LeadOrganization))
                     url.QueryParameters.Add(LEAD_ORGANIZATION, SearchParams.LeadOrganization);
 
-
                 //Items Per Page
                 url.QueryParameters.Add(ITEMSPP_PARAM, SearchParams.ItemsPerPage.ToString());
 
@@ -204,8 +203,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 // Redirect to search page
                 NciUrl redirectURL = new NciUrl();
-                redirectURL.SetUrl(BasicCTSPageInfo.SearchPagePrettyUrl);
+                if(SearchParams.ResultsLinkFlag == 2)
+                {
+                    redirectURL.SetUrl(BasicCTSPageInfo.AdvSearchPagePrettyUrl);
 
+                }
+                else
+                {
+                    redirectURL.SetUrl(BasicCTSPageInfo.BasicSearchPagePrettyUrl);
+                }
+                
                 // Copy querystring parameters from the request.
                 foreach (string key in Request.QueryString.AllKeys)
                     redirectURL.QueryParameters.Add(key, Request.QueryString[key]);
@@ -548,7 +555,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             url.QueryParameters.Add(PAGENUM_PARAM, SearchParams.Page.ToString());
 
             // Add the "rl" flag, indicating that this is a link coming from the CTS Results Page
-            url.QueryParameters.Add(RESULTS_LINK_FLAG, "1"); 
+            url.QueryParameters.Add(RESULTS_LINK_FLAG, SearchParams.ResultsLinkFlag.ToString());
+
+            // Add the "form" flag, which 
 
             return url.ToString();
         }
@@ -748,6 +757,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             else
             {
                 return null;
+            }
+        }
+
+        public string GetSearchFormUrl()
+        {
+            if (SearchParams.ResultsLinkFlag == 2)
+            {
+                return BasicCTSPageInfo.AdvSearchPagePrettyUrl;
+            }
+            else
+            {
+                return BasicCTSPageInfo.BasicSearchPagePrettyUrl;
             }
         }
 
