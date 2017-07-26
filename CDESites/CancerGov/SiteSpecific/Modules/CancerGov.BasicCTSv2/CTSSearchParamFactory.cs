@@ -12,10 +12,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     public class CTSSearchParamFactory
     {
 
-
-        public CTSPrintSearchParams Create(string url)
+        /// <summary>
+        /// Gets an instance of a CTSSearchParams object based on params in URL.
+        /// </summary>
+        /// <param name="url">The URL to parse</param>
+        /// <returns></returns>
+        public CTSSearchParams Create(string url)
         {
-            return new CTSPrintSearchParams();
+            return new CTSSearchParams();
         }
     }
 }

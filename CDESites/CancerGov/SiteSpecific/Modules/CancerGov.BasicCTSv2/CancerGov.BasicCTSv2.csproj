@@ -72,6 +72,7 @@
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
     <Compile Include="CTSSearchParamFactory.cs" />
+    <Compile Include="CTSSearchParams.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
     <Compile Include="DynamicTrialListingMapping.cs" />
     <Compile Include="HttpHandlers\CTSCachedPrintRequestHandler.cs" />

@@ -72,10 +72,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CTSSearchParamFactory.Test.cs" />
+    <Compile Include="CTSSearchParamsComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CancerGov.BasicCTSv2\CancerGov.BasicCTSv2.csproj">
+      <Project>{96f6420f-f16d-4873-af3a-5d22e9ffbd55}</Project>
+      <Name>CancerGov.BasicCTSv2</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
