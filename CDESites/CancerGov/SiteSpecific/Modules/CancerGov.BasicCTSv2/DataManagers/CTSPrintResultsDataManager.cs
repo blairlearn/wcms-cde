@@ -26,7 +26,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.DataManagers
         /// <param name="searchParams"></param>
         /// <param name="isLive"></param>
         /// <returns>A guid.</returns>
-        public static Guid SavePrintResult(string content, IEnumerable<String> trialIDs, CTSSearchParams searchParams, bool isLive)
+        public static Guid SavePrintResult(string content, IEnumerable<String> trialIDs, CTSPrintSearchParams searchParams, bool isLive)
         {
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConnectionString"].ConnectionString))

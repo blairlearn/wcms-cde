@@ -71,6 +71,7 @@
     <Compile Include="Configuration\TermMappingFileElementCollection.cs" />
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
+    <Compile Include="CTSSearchParamFactory.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
     <Compile Include="DynamicTrialListingMapping.cs" />
     <Compile Include="HttpHandlers\CTSCachedPrintRequestHandler.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="SearchParams\CancerTypeSearchParam.cs" />
     <Compile Include="SearchParams\ListingSearchParam.cs" />
     <Compile Include="SearchParams\PhraseSearchParam.cs" />
-    <Compile Include="CTSSearchParams.cs" />
+    <Compile Include="CTSPrintSearchParams.cs" />
     <Compile Include="SnippetControls\BaseTrialListingControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

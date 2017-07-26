@@ -66,7 +66,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 }
 
                 
-                var searchTerms = new CTSSearchParams()
+                var searchTerms = new CTSPrintSearchParams()
                 {
                     CancerType = cancerType,
                     CancerTypePhrase = request.QueryString["ct"],

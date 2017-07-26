@@ -32,7 +32,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             get { return BasicClinicalTrialSearchAPISection.GetAPIUrl(); }
         }
 
-        public Guid StorePrintContent(List<String> trialIDs, DateTime date, CTSSearchParams searchTerms)
+        public Guid StorePrintContent(List<String> trialIDs, DateTime date, CTSPrintSearchParams searchTerms)
         {
             // Retrieve the collections given the ID's
             BasicCTSManager manager = new BasicCTSManager(ApiUrl);
@@ -54,7 +54,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return guid;
         }
 
-        private string FormatPrintResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, CTSSearchParams searchTerms)
+        private string FormatPrintResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, CTSPrintSearchParams searchTerms)
         {
             // convert description to pretty description
             foreach (var trial in results)

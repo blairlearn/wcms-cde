@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
-    public class CTSSearchParams : BaseCTSSearchParam
+    public class CTSPrintSearchParams : BaseCTSSearchParam
     {
         public String AgeOfEligibility { get; set; }
         public String ZipCode { get; set; }
