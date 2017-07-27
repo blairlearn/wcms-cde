@@ -12,7 +12,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// </summary>
     public class CTSSearchParamFactory
     {
+        ///Delegate definition so we can more cleanly list the parsers we will call.
+        private delegate void ParameterParserDelegate(NciUrl url, CTSSearchParams searchParams);
+
+
         private ITerminologyLookupService _lookupSvc;
+        private ParameterParserDelegate _parsers;
 
         /// <summary>
         /// Creates new instance of a search param factory
@@ -21,6 +26,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public CTSSearchParamFactory(ITerminologyLookupService lookupSvc)
         {
             this._lookupSvc = lookupSvc;
+
+            //Add parser methods here
+            this._parsers = 
+                (ParameterParserDelegate) ParseKeyword + //First param needs the cast.
+                ParseCancerType;
         }
 
         /// <summary>
@@ -35,10 +45,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             NciUrl reqUrl = new NciUrl();
             reqUrl.SetUrl(url);
 
-            ParseKeyword(reqUrl, rtnParams);
+            _parsers(reqUrl, rtnParams); //This calls each of the parsers, one chained after another.
 
             return rtnParams; 
         }
+
+        #region Parameter Parsers 
 
         //Parameter q
         private void ParseKeyword(NciUrl url, CTSSearchParams searchParams)
@@ -67,5 +79,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 searchParms.MainType = type;
             }
         }
+
+        #endregion
+
     }
 }
