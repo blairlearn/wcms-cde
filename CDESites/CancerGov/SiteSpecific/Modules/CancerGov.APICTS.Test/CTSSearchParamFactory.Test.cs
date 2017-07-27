@@ -38,13 +38,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
         /// <summary>
         /// Main test method.  Takes in a URL and an expected object and sees if Create(url) returns that object.
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="expected"></param>
+        /// <param name="url">The "URL" with query parameters</param>
+        /// <param name="expected">An instance of a CTSSearchParams object that represents the expected result after parsing the URL.</param>
         [Theory, MemberData("URLParsingData")]
         public void Create(string url, CTSSearchParams expected)
         {
             //Create a new instance of the factory
-            CTSSearchParamFactory factory = new CTSSearchParamFactory();
+            CTSSearchParamFactory factory = new CTSSearchParamFactory(null);
 
             //Get the results of parsing the URL
             CTSSearchParams actual = factory.Create(url);

@@ -12,6 +12,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// </summary>
     public class CTSSearchParamFactory
     {
+        private ITerminologyLookupService _lookupSvc;
+
+        /// <summary>
+        /// Creates new instance of a search param factory
+        /// </summary>
+        /// <param name="lookupSvc">An instance of a ITerminologyLookupService </param>
+        public CTSSearchParamFactory(ITerminologyLookupService lookupSvc)
+        {
+            this._lookupSvc = lookupSvc;
+        }
 
         /// <summary>
         /// Gets an instance of a CTSSearchParams object based on params in URL.

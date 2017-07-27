@@ -15,7 +15,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// one or more NCI Thesaurus codes.  This is used by the DynamicTrialListing pages
     /// and allows for overrides and other special rules.
     /// </summary>
-    public class DynamicTrialListingMapping : ITerminologyLookup
+    public class DynamicTrialListingMapping : ITerminologyLookupService
     {   
         // Lock synchronization object
         private static object syncLock = new Object();

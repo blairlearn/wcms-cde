@@ -10,7 +10,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// This interface represents a class that is able to lookup terminology names given one or more NCI Thesaurus 
     /// entity ids.
     /// </summary>
-    public interface ITerminologyLookup
+    public interface ITerminologyLookupService
     {
         /// <summary>
         /// Gets the title-cased term. (I.E. first letter of each word is upper case)
