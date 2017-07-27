@@ -88,6 +88,7 @@
     <Compile Include="SearchParams\ListingSearchParam.cs" />
     <Compile Include="SearchParams\PhraseSearchParam.cs" />
     <Compile Include="SearchParams\CTSPrintSearchParams.cs" />
+    <Compile Include="SearchParams\StateSearchParam.cs" />
     <Compile Include="SearchParams\TerminologyFieldSearchParam.cs" />
     <Compile Include="SnippetControls\BaseTrialListingControl.cs">
       <SubType>ASPXCodeBehind</SubType>
