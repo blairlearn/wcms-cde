@@ -52,10 +52,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
+                    // TEST - Cancer Stage
+                    new object[] {"?stg=C88375", new CTSSearchParams() {
+                        SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C88375" },
+                                Label = "Stage I Breast Cancer"
+                            }
+                        }
+                    }},
+
+                    // TEST - Cancer subtype
+                    new object[] {"?fin=C26696", new CTSSearchParams() {
+                        SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C26696" },
+                                Label = "Anxiety"
+                            }
+                        }
+                    }},
+
                     //TEST - Lead Organization
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
                         LeadOrg = "Mayo Clinic"
-                    }},
+                    }}
 
 
                 };
@@ -103,6 +123,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             rtnMock.Setup(lookup => lookup.GetTitleCase("C7771"))
                 .Returns("Recurrent Breast Cancer");
 
+            rtnMock.Setup(lookup => lookup.GetTitleCase("C88375"))
+                .Returns("Stage I Breast Cancer");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("C26696"))
+                .Returns("Anxiety");
 
 
             //@Sarina and @Dion - Add other instances for GetTitleCase to support your unit tests.

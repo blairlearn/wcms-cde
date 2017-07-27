@@ -35,6 +35,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             bool isEqual =
                 _termComp.Equals(x.MainType, y.MainType) &&
                 this.AreTermParamListsEqual(x.SubTypes, y.SubTypes) &&
+                this.AreTermParamListsEqual(x.Stages, y.Stages) &&
+                this.AreTermParamListsEqual(x.Findings, y.Findings) &&
                 x.Phrase == y.Phrase && // Keyword
                 x.LeadOrg == y.LeadOrg; 
 
