@@ -17,5 +17,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// Gets or sets the Phrase/Keyword used in the search
         /// </summary>
         public String Phrase { get; set; }
+
+        /// <summary>
+        /// Gets or sets the main cancer type that was selected.
+        /// </summary>
+        public TerminologyFieldSearchParam MainType { get; set; }
+
+        //Add some sort of Errors array so we can identify when a parse error occurred.
     }
 }

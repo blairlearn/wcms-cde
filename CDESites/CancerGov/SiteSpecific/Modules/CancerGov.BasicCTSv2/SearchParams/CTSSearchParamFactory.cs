@@ -43,10 +43,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter q
         private void ParseKeyword(NciUrl url, CTSSearchParams searchParams)
         {
+            //TODO: Handle lowercase
             if (url.QueryParameters.ContainsKey("q"))
             {
                 //TODO: Clean Param
                 searchParams.Phrase = url.QueryParameters["q"];                
+            }
+        }
+        
+        //Parameter t
+        private void ParseCancerType(NciUrl url, CTSSearchParams searchParms)
+        {
+            //TODO: Extra credit, refactor the term extraction logic so it does not get repeated for each type
+            //TODO: Handle Lowercase
+            if (url.QueryParameters.ContainsKey("t"))
+            {
+                TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
+
+                //TODO: Handle validating codes, handling multiple codes, etc.
+                type.Codes = new string[] { url.QueryParameters["t"] };
+                type.Label = this._lookupSvc.GetTitleCase(String.Join(",", type.Codes));
+
+                searchParms.MainType = type;
             }
         }
     }

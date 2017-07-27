@@ -28,9 +28,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     //TEST 1 - No parameters.
                     new object[] { "", new CTSSearchParams() },
 
-                    //TEST2 2 - Keyword.
+                    //TEST 2 - Keyword.
                     new object[] { "?q=chicken", new CTSSearchParams() {
                         Phrase = "chicken"
+                    }},
+
+                    //TEST 3 - Main Cancer Type
+                    new object[] {"?t=C4872", new CTSSearchParams() {
+                        MainType = new TerminologyFieldSearchParam() {
+                            Codes = new string[] { "C4872" },
+                            Label = "Breast Cancer"
+                        }
                     }}
                 };
             }
