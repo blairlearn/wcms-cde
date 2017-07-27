@@ -10,7 +10,12 @@ using Common.Logging;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
-    public class DynamicTrialListingMapping
+    /// <summary>
+    /// Class represents a singleton that can be used to lookup a display label for
+    /// one or more NCI Thesaurus codes.  This is used by the DynamicTrialListing pages
+    /// and allows for overrides and other special rules.
+    /// </summary>
+    public class DynamicTrialListingMapping : ITerminologyLookup
     {   
         // Lock synchronization object
         private static object syncLock = new Object();
@@ -25,6 +30,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
        
         private DynamicTrialListingMapping() { }
 
+        /// <summary>
+        /// Gets an instance of the DynamicTrialListingMapping
+        /// </summary>
         public static DynamicTrialListingMapping Instance
         {
             get
@@ -169,11 +177,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return tokensSet;
         }
 
+        /// <summary>
+        /// Gets the title-cased term. (I.E. first letter of each word is upper case)
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>The display label</returns>
         public string GetTitleCase (string value)
         {
             return Mappings[value];
         }
 
+        /// <summary>
+        /// Gets the non-title-cased term.  This accounts for special initials, proper nouns and roman numerals though.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>The display label</returns>
         public string Get(string value)
         {
             string overrideText = Mappings[value];
@@ -203,6 +221,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return overrideText;
         }
 
+        /// <summary>
+        /// Checks to see if the lookup contains an entry for the ID(s)
+        /// </summary>
+        /// <param name="key">The ID(s) to lookup</param>
+        /// <returns>True or false based on the existance of the ID(s) in the lookup</returns>
         public bool MappingContainsKey(string key)
         {
             return Mappings.ContainsKey(key);

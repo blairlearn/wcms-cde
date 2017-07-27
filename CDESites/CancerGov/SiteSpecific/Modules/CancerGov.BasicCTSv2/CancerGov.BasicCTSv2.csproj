@@ -71,6 +71,7 @@
     <Compile Include="Configuration\TermMappingFileElementCollection.cs" />
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
+    <Compile Include="ITerminologyLookup.cs" />
     <Compile Include="SearchParams\CTSSearchParamFactory.cs" />
     <Compile Include="SearchParams\CTSSearchParams.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
