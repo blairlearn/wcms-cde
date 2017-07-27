@@ -20,6 +20,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             get
             {
                 //Array of tests
+                //TODO: put these in some kind of order
                 return new[]
                 {
                     //This array of objects maps to the parameters of the create method.
@@ -28,7 +29,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     //TEST 1 - No parameters.
                     new object[] { "", new CTSSearchParams() },
 
-                    //TEST 2 - Keyword.
+                    //TEST 2 - Phrase/Keyword.
                     new object[] { "?q=chicken", new CTSSearchParams() {
                         Phrase = "chicken"
                     }},
@@ -41,6 +42,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
+                    // TEST - Cancer subtype
                     new object[] {"?st=C7771", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -49,6 +51,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     }},
+
+                    //TEST - Lead Organization
+                    new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
+                        LeadOrg = "Mayo Clinic"
+                    }},
+
 
                 };
             }

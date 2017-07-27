@@ -35,7 +35,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             bool isEqual =
                 _termComp.Equals(x.MainType, y.MainType) &&
                 this.AreTermParamListsEqual(x.SubTypes, y.SubTypes) &&
-                x.Phrase == y.Phrase;
+                x.Phrase == y.Phrase && // Keyword
+                x.LeadOrg == y.LeadOrg; 
 
             //ADD A FIELD TO SearchParams, NEED to add here.
 
@@ -75,6 +76,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             hash ^= _termComp.GetHashCode(obj.MainType);
             hash ^= obj.SubTypes.GetHashCode();
             hash ^= obj.Phrase.GetHashCode();
+            hash ^= obj.LeadOrg.GetHashCode();
 
             //ADD A FIELD TO SearchParams, NEED to add here.
 
