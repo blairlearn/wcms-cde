@@ -30,7 +30,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //Add parser methods here
             this._parsers = 
                 (ParameterParserDelegate) ParseKeyword + //First param needs the cast.
-                ParseCancerType +
+                ParseCancerType + ParseCity +
                 ParseSubTypes;
         }
 
@@ -92,6 +92,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (url.QueryParameters.ContainsKey("st"))
             {
                 searchParms.SubTypes = GetTermFieldFromParam(url.QueryParameters["st"]);
+            }
+        }
+
+        //Parameter lcty
+        private void ParseCity(NciUrl url, CTSSearchParams searchParams)
+        {
+            //TODO: Handle lowercase
+            if (url.QueryParameters.ContainsKey("lcty"))
+            {
+                //TODO: Clean Param
+                searchParams.City = url.QueryParameters["lcty"];
             }
         }
 

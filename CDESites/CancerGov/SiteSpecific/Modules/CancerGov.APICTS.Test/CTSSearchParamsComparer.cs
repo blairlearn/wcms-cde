@@ -38,6 +38,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 this.AreTermParamListsEqual(x.Stages, y.Stages) &&
                 this.AreTermParamListsEqual(x.Findings, y.Findings) &&
                 x.Phrase == y.Phrase && // Keyword
+                x.Country == y.Country &&
+                x.City == y.City &&
+                x.Hospital == y.Hospital &&
+                x.Investigator == y.Investigator &&
                 x.LeadOrg == y.LeadOrg; 
 
             //ADD A FIELD TO SearchParams, NEED to add here.
@@ -78,6 +82,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             hash ^= _termComp.GetHashCode(obj.MainType);
             hash ^= obj.SubTypes.GetHashCode();
             hash ^= obj.Phrase.GetHashCode();
+            hash ^= obj.Country.GetHashCode();
+            hash ^= obj.City.GetHashCode();
+            hash ^= obj.Hospital.GetHashCode();
+            hash ^= obj.Investigator.GetHashCode();
             hash ^= obj.LeadOrg.GetHashCode();
 
             //ADD A FIELD TO SearchParams, NEED to add here.

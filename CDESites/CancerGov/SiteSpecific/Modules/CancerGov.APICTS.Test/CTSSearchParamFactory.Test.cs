@@ -72,6 +72,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
+                    //TEST - Country
+                    new object[] { "?lcnty=United+States", new CTSSearchParams() {
+                        Country = "United States"
+                    }},
+                    
+                    //TEST - City
+                    new object[] { "?lcty=Baltimore", new CTSSearchParams() {
+                        City = "Baltimore"
+                    }},
+
+                    //TEST - Hospital
+                    new object[] { "?hos=M+D+Anderson+Cancer+Center", new CTSSearchParams() {
+                        Hospital = "M D Anderson Cancer Center"
+                    }},
+
+                    //TEST - Principal investigator
+                    new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
+                        Investigator = "Sophia Smith"
+                    }},
+
                     //TEST - Lead Organization
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
                         LeadOrg = "Mayo Clinic"
