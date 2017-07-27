@@ -39,7 +39,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             Codes = new string[] { "C4872" },
                             Label = "Breast Cancer"
                         }
-                    }}
+                    }},
+
+                    new object[] {"?st=C7771", new CTSSearchParams() {
+                        SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C7771" },
+                                Label = "Recurrent Breast Cancer"
+                            }
+                        }
+                    }},
+
                 };
             }
         }
@@ -81,6 +91,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             //This makes it so that we do not have to create a fake class that returns fake data.
             rtnMock.Setup(lookup => lookup.GetTitleCase("C4872"))
                 .Returns("Breast Cancer");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("C7771"))
+                .Returns("Recurrent Breast Cancer");
+
+
 
             //@Sarina and @Dion - Add other instances for GetTitleCase to support your unit tests.
 

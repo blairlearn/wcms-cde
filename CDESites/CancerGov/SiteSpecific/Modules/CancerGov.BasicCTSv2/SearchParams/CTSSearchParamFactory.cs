@@ -30,7 +30,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //Add parser methods here
             this._parsers = 
                 (ParameterParserDelegate) ParseKeyword + //First param needs the cast.
-                ParseCancerType;
+                ParseCancerType +
+                ParseSubTypes;
         }
 
         /// <summary>
@@ -46,6 +47,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             reqUrl.SetUrl(url);
 
             _parsers(reqUrl, rtnParams); //This calls each of the parsers, one chained after another.
+            
 
             return rtnParams; 
         }
@@ -70,14 +72,42 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //TODO: Handle Lowercase
             if (url.QueryParameters.ContainsKey("t"))
             {
-                TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
-
-                //TODO: Handle validating codes, handling multiple codes, etc.
-                type.Codes = new string[] { url.QueryParameters["t"] };
-                type.Label = this._lookupSvc.GetTitleCase(String.Join(",", type.Codes));
-
-                searchParms.MainType = type;
+                TerminologyFieldSearchParam[] terms = GetTermFieldFromParam(url.QueryParameters["t"]);
+                if (terms.Length == 1)
+                {
+                    searchParms.MainType = terms[0];
+                }
+                else if (terms.Length > 1)
+                {
+                    //Add error??
+                }
             }
+        }
+
+        //Parameter st
+        private void ParseSubTypes(NciUrl url, CTSSearchParams searchParms)
+        {
+            //TODO: Extra credit, refactor the term extraction logic so it does not get repeated for each type
+            //TODO: Handle Lowercase
+            if (url.QueryParameters.ContainsKey("st"))
+            {
+                searchParms.SubTypes = GetTermFieldFromParam(url.QueryParameters["st"]);
+            }
+        }
+
+        private TerminologyFieldSearchParam[] GetTermFieldFromParam(string paramData)
+        {
+            List<TerminologyFieldSearchParam> rtnParams = new List<TerminologyFieldSearchParam>();
+
+            TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
+
+            //TODO: Handle validating codes, handling multiple codes, etc.
+            type.Codes = new string[] { paramData };
+            type.Label = this._lookupSvc.GetTitleCase(String.Join(",", type.Codes));
+
+            rtnParams.Add(type);
+
+            return rtnParams.ToArray();
         }
 
         #endregion

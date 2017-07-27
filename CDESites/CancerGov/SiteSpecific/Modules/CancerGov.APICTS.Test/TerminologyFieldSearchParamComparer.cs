@@ -28,12 +28,40 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
             //This should compare every single property.
             bool isEqual =
-                x.Codes == y.Codes &&
+                this.AreCodesListsEqual(x.Codes, y.Codes) &&
                 x.Label == y.Label;
 
             return isEqual;
 
         }
+
+        /// <summary>
+        /// Helper function to determine if two synonym lists are equal, order does not matter.
+        /// </summary>
+        /// <param name="x">Synonym list 1</param>
+        /// <param name="y">Synonym list 2</param>
+        /// <returns></returns>
+        private bool AreCodesListsEqual(string[] x, string[] y)
+        {
+            // If the items are both null, or if one or the other is null, return 
+            // the correct response right away.
+
+            if (x == null && y == null)
+            {
+                return true;
+            }
+            else if (x == null || y == null)
+            {
+                return false;
+            }
+
+            //Generate a set of those values that are not in both lists.
+            //if this is not 0, then there is an error.
+            var diffxy = x.Except(y, StringComparer.CurrentCulture);
+
+            return diffxy.Count() == 0;
+        }
+
 
         public int GetHashCode(TerminologyFieldSearchParam obj)
         {
