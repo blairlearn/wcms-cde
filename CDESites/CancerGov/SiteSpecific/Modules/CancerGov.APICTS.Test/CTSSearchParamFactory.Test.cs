@@ -73,6 +73,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
 
                     // TEST 6 - Gender
+                    new object[] { "?g=male", new CTSSearchParams() {
+                        Gender = "male"
+                    }},
 
                     // TEST 7 - Phrase/keyword
                     new object[] { "?q=chicken", new CTSSearchParams() {
@@ -80,8 +83,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
 
                     // TEST 8 - Location
+                    new object[] { "?loc=all", new CTSSearchParams() {
+                        Location = "all"
+                    }},
+
                     // TEST 9 - Zip code
+                    new object[] { "?z=20850", new CTSSearchParams() {
+                        ZipCode = "20850"
+                    }},
+
                     // TEST 10 - Zip radius
+                    new object[] { "?zp=500", new CTSSearchParams() {
+                        ZipRadius = 500
+                    }},
+
 
                     // TEST 11 - Country
                     new object[] { "?lcnty=United+States", new CTSSearchParams() {
