@@ -33,25 +33,67 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             }
 
             //This should compare every single property.
+            // "_termComp.Equals()" - compare two TerminologyFieldSearchParam objects
+            // "_labelledParamComp.Equals() - compare two LabelledSearchParam objects
+            // "this.AreTermParamListsEqual()" - compare two arrays of TerminologyFieldSearchParam objects
+            // "this.AreLabelledParamListsEqual()" - compare two arrays of LabelledSearchParam objects
+            // "this.AreParamArraysEqual()" - compare two String arrays of CTSSearchParams properties 
+            // "x.<object> == y.<object>" - compare two CTSSearchParam properies
             bool isEqual =
                 _termComp.Equals(x.MainType, y.MainType) &&
                 this.AreTermParamListsEqual(x.SubTypes, y.SubTypes) &&
                 this.AreTermParamListsEqual(x.Stages, y.Stages) &&
                 this.AreTermParamListsEqual(x.Findings, y.Findings) &&
+                this.AreTermParamListsEqual(x.Drugs, y.Drugs) &&
+                this.AreTermParamListsEqual(x.OtherTreatments, y.OtherTreatments) &&
                 _labelledParamComp.Equals(x.State, y.State) &&
-                //this.AreLabelledParamListsEqual(x.TrialPhases, y.TrialPhases) &&
+                this.AreLabelledParamListsEqual(x.TrialTypes, y.TrialTypes) &&
+                this.AreLabelledParamListsEqual(x.TrialPhases, y.TrialPhases) &&
+                this.AreParamArraysEqual(x.TrialIDs, y.TrialIDs) &&
                 x.Age == y.Age &&
                 x.Phrase == y.Phrase && // Keyword
-                x.City == y.City &&
+                x.Location == y.Location &&
+                x.ZipCode == y.ZipCode &&
+                x.ZipRadius == y.ZipRadius &&
                 x.Country == y.Country &&
+                x.City == y.City &&
                 x.Hospital == y.Hospital &&
+                x.AtNIH == y.AtNIH &&
                 x.Investigator == y.Investigator &&
                 x.LeadOrg == y.LeadOrg; 
-
             //ADD A FIELD TO SearchParams, NEED to add here.
 
             return isEqual;
         }
+
+
+        /// <summary>
+        /// Helper function to determine param arrays are equal, order does not matter.
+        /// </summary>
+        /// <param name="x">Param array 1</param>
+        /// <param name="y">Param array 2</param>
+        /// <returns></returns>
+        private bool AreParamArraysEqual(string[] x, string[] y)
+        {
+            // If the items are both null, or if one or the other is null, return 
+            // the correct response right away.
+
+            if (x == null && y == null)
+            {
+                return true;
+            }
+            else if (x == null || y == null)
+            {
+                return false;
+            }
+
+            //Generate a set of those values that are not in both lists.
+            //if this is not 0, then there is an error.
+            var diffxy = x.Except(y);
+
+            return diffxy.Count() == 0;
+        }
+
 
         /// <summary>
         /// Helper function to determine if two synonym lists are equal, order does not matter.
@@ -111,11 +153,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             int hash = 0;
             hash ^= _termComp.GetHashCode(obj.MainType);
             hash ^= obj.SubTypes.GetHashCode();
+            hash ^= obj.Stages.GetHashCode();
+            hash ^= obj.Findings.GetHashCode();
+            hash ^= obj.Age.GetHashCode();
             hash ^= obj.Phrase.GetHashCode();
+            hash ^= obj.Location.GetHashCode();
+            hash ^= obj.ZipCode.GetHashCode();
+            hash ^= obj.ZipRadius.GetHashCode();
             hash ^= obj.Country.GetHashCode();
+            hash ^= _labelledParamComp.GetHashCode(obj.State);            
             hash ^= obj.City.GetHashCode();
-            hash ^= obj.State.GetHashCode();
             hash ^= obj.Hospital.GetHashCode();
+            hash ^= obj.AtNIH.GetHashCode();
+            hash ^= obj.TrialTypes.GetHashCode();
+            hash ^= obj.Drugs.GetHashCode();
+            hash ^= obj.OtherTreatments.GetHashCode();
+            hash ^= obj.TrialPhases.GetHashCode();
+            hash ^= obj.TrialIDs.GetHashCode();
             hash ^= obj.Investigator.GetHashCode();
             hash ^= obj.LeadOrg.GetHashCode();
 
@@ -123,7 +177,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
             return hash;
         }
-
 
 
         #endregion

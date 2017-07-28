@@ -19,22 +19,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
         public static IEnumerable<object[]> URLParsingData {
             get
             {
-                //Array of tests
-                //TODO: put these in some kind of order
+                // Array of tests
                 return new[]
                 {
                     //This array of objects maps to the parameters of the create method.
                     //URL at index 0, Expected object at index 1.
 
-                    //TEST 1 - No parameters.
+                    //TEST 0 - No parameters.
                     new object[] { "", new CTSSearchParams() },
 
-                    //TEST 2 - Phrase/Keyword.
-                    new object[] { "?q=chicken", new CTSSearchParams() {
-                        Phrase = "chicken"
-                    }},
-
-                    //TEST 3 - Main Cancer Type
+                    //TEST 1 - Main Cancer Type
                     new object[] {"?t=C4872", new CTSSearchParams() {
                         MainType = new TerminologyFieldSearchParam() {
                             Codes = new string[] { "C4872" },
@@ -42,7 +36,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST - Cancer subtype
+                    // TEST 2 - Cancer subtype
                     new object[] {"?st=C7771", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -52,7 +46,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST - Cancer Stage
+                    // TEST 3 - Cancer stage
                     new object[] {"?stg=C88375", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -62,7 +56,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST - Cancer subtype
+                    // TEST 4 - Cancer findings 
                     new object[] {"?fin=C26696", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -72,17 +66,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    //TEST - Age
+                    // TEST 5 - Age
                     new object[] { "?a=35", new CTSSearchParams() {
                         Age = 35
                     }},
 
-                    //TEST - Country
+                    // TEST 6 - Phrase/keyword
+                    new object[] { "?q=chicken", new CTSSearchParams() {
+                        Phrase = "chicken"
+                    }},
+
+                    // TEST 7 - Location
+                    // TEST 8 - Zip code
+                    // TEST 9 - Zip radius
+
+                    // TEST 10 - Country
                     new object[] { "?lcnty=United+States", new CTSSearchParams() {
                         Country = "United States"
                     }},
 
-                    //TEST - State
+                    // TEST 11 - State 
                     new object[] { "?lst=MD", new CTSSearchParams() {
                         State = new LabelledSearchParam() { 
                             Key = "MD",
@@ -90,26 +93,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }}, 
 
-                    //TEST - City
+                    // TEST 12 - City 
                     new object[] { "?lcty=Baltimore", new CTSSearchParams() {
                         City = "Baltimore"
                     }},
 
-                    //TEST - Hospital
+                    // TEST 13 - Hospital 
                     new object[] { "?hos=M+D+Anderson+Cancer+Center", new CTSSearchParams() {
                         Hospital = "M D Anderson Cancer Center"
                     }},
 
-                    //TEST - Principal investigator
+                    // TEST 14 - Is location NIH?  
+                    // TEST 15 - Trial type
+                    // TEST 16 - Drug
+                    // TEST 17 - Other treatments/interventions
+                    // TEST 18 - Trial phase 
+                    // TEST 19 - Trial ID 
+
+                    // TEST 20 - Principal investigator 
                     new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
                         Investigator = "Sophia Smith"
                     }},
 
-                    //TEST - Lead Organization
+                    // TEST 21 - Lead organization
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
                         LeadOrg = "Mayo Clinic"
                     }}
-
 
                 };
             }
