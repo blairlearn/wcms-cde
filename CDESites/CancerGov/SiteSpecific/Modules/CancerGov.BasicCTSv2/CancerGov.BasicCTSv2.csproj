@@ -72,6 +72,7 @@
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
     <Compile Include="ITerminologyLookupService.cs" />
+    <Compile Include="SearchParams\CTSSearchParamError.cs" />
     <Compile Include="SearchParams\CTSSearchParamFactory.cs" />
     <Compile Include="SearchParams\CTSSearchParams.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
@@ -94,7 +95,9 @@
     <Compile Include="SnippetControls\BaseTrialListingControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\BasicCTSAdvSearchControl.cs" />
+    <Compile Include="SnippetControls\BasicCTSAdvSearchControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\BasicCTSBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

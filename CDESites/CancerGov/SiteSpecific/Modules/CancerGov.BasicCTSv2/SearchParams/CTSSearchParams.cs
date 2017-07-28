@@ -13,6 +13,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// </summary>
     public class CTSSearchParams
     {
+        int _pageNum = 1;
+        int _itemsPerPage = 10;
+        int _zipRadius = 100;
+
         /// <summary>
         /// Gets or sets the main cancer type that was selected.
         /// </summary>
@@ -126,9 +130,27 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public String LeadOrg { get; set; }
 
         /// <summary>
-        /// Gets or sets an array of error messages to identify when a parse error occurred.
+        /// Gets or sets the page number for the search
         /// </summary>
-        public String[] ParseErrors { get; set; }
+        public int Page
+        {
+            get { return _pageNum; }
+            set { _pageNum = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the items per page for the search
+        /// </summary>
+        public int ItemsPerPage
+        {
+            get { return _itemsPerPage; }
+            set { _itemsPerPage = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets an array of CTS Search Param Errors to identify when a parse error occurred.
+        /// </summary>
+        public List<CTSSearchParamError> ParseErrors { get; set; }
 
     }
 }

@@ -63,13 +63,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //TODO: Handle lowercase
             if (url.QueryParameters.ContainsKey("q"))
             {
-                //TODO: Clean Param
-                searchParams.Phrase = url.QueryParameters["q"];                
+                string phrase = ParamAsStr(url.QueryParameters["q"]);
+                if(!string.IsNullOrWhiteSpace(phrase))
+                {
+                    searchParams.Phrase = phrase;
+                }
+                else
+                {
+                    LogParseError("Keyword/Phrase", "Please enter a valid keyword parameter.", searchParams);
+                }
             }
         }
         
         //Parameter t
-        private void ParseCancerType(NciUrl url, CTSSearchParams searchParms)
+        private void ParseCancerType(NciUrl url, CTSSearchParams searchParams)
         {
             //TODO: Extra credit, refactor the term extraction logic so it does not get repeated for each type
             //TODO: Handle Lowercase
@@ -78,11 +85,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 TerminologyFieldSearchParam[] terms = GetTermFieldFromParam(url.QueryParameters["t"]);
                 if (terms.Length == 1)
                 {
-                    searchParms.MainType = terms[0];
+                    searchParams.MainType = terms[0];
                 }
                 else if (terms.Length > 1)
                 {
-                    //Add error??
+                    LogParseError("MainType", "Please include only one main cancer type in your search.", searchParams);
+
                 }
             }
         }
@@ -102,8 +110,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if(url.QueryParameters.ContainsKey("a"))
             {
-                // TODO: Clean param
-                searchParams.Age = Int32.Parse(url.QueryParameters["a"]);
+                int age = this.ParamAsInt(url.QueryParameters["a"], 0);
+                if(age == 0)
+                {
+                    LogParseError("Age", "Please enter a valid age parameter.", searchParams);
+                }
+                else
+                {
+                    searchParams.Age = age;
+                }
             }
         }
 
@@ -120,7 +135,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 }
                 else
                 {
-                    // throw error
+                    LogParseError("State", "Please include only one state in your search.", searchParams);
                 }
             }
         }
@@ -131,8 +146,49 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //TODO: Handle lowercase
             if (url.QueryParameters.ContainsKey("lcty"))
             {
-                //TODO: Clean Param
-                searchParams.City = url.QueryParameters["lcty"];
+                string city = ParamAsStr(url.QueryParameters["lcty"]);
+                if(!string.IsNullOrWhiteSpace(city))
+                {
+                    searchParams.City = city;
+                }
+                else
+                {
+                    LogParseError("City", "Please enter a valid city parameter.", searchParams);
+                }
+            }
+        }
+
+        // Parameter Investigator
+        private void ParseInvestigator(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("in"))
+            {
+                string investigator = ParamAsStr(url.QueryParameters["in"]);
+                if (!string.IsNullOrWhiteSpace(investigator))
+                {
+                    searchParams.City = investigator;
+                }
+                else
+                {
+                    LogParseError("Investigator", "Please enter a valid trial investigator parameter.", searchParams);
+                }
+            }
+        }
+
+        // Parameter Lead Org
+        private void ParseLeadOrg(NciUrl url, CTSSearchParams searchParams)
+        {
+            if(url.QueryParameters.ContainsKey("lo"))
+            {
+                string leadOrg = ParamAsStr(url.QueryParameters["lo"]);
+                if (!string.IsNullOrWhiteSpace(leadOrg))
+                {
+                    searchParams.City = leadOrg;
+                }
+                else
+                {
+                    LogParseError("LeadOrg", "Please enter a valid lead organization parameter.", searchParams);
+                }
             }
         }
 
@@ -178,8 +234,51 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             return rtnParams.ToArray();
         }
-       
 
+        /// <summary>
+        /// Gets a query parameter as a string
+        /// </summary>
+        protected string ParamAsStr(string paramVal)
+        {
+            if (string.IsNullOrWhiteSpace(paramVal))
+                return String.Empty;
+            else
+                return paramVal.Trim();
+        }
+
+        /// <summary>
+        /// Converts a query param to an int; returns 0 if unable to parse
+        /// </summary>
+        private int ParamAsInt(string paramVal, int def)
+        {
+            if (string.IsNullOrWhiteSpace(paramVal))
+            {
+                return def;
+            }
+            else
+            {
+                int tmpInt = 0;
+                if (int.TryParse(paramVal.Trim(), out tmpInt))
+                {
+                    return tmpInt;
+                }
+                else
+                {
+                    return def;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Logs an error in the ParseErrors array on the Search Params
+        /// </summary>
+        private void LogParseError(string param, string errorMessage, CTSSearchParams searchParams)
+        {
+            CTSSearchParamError error = new CTSSearchParamError();
+            error.Param = param;
+            error.ErrorMessage = errorMessage;
+            searchParams.ParseErrors.Add(error);
+        }
         #endregion
 
     }
