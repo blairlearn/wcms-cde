@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="CTSSearchParamFactory.Test.cs" />
     <Compile Include="CTSSearchParamsComparer.cs" />
+    <Compile Include="LabelledSearchParamComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TerminologyFieldSearchParamComparer.cs" />
   </ItemGroup>

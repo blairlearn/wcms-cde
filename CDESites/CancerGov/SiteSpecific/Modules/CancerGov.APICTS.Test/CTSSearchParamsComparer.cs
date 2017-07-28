@@ -15,6 +15,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
     {
 
         private TerminologyFieldSearchParamComparer _termComp = new TerminologyFieldSearchParamComparer();
+        private LabelledSearchParamComparer _labelledParamComp = new LabelledSearchParamComparer();
 
         #region IEqualityComparer<CTSSearchParams> Members
          
@@ -37,6 +38,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 this.AreTermParamListsEqual(x.SubTypes, y.SubTypes) &&
                 this.AreTermParamListsEqual(x.Stages, y.Stages) &&
                 this.AreTermParamListsEqual(x.Findings, y.Findings) &&
+                _labelledParamComp.Equals(x.State, y.State) &&
+                //this.AreLabelledParamListsEqual(x.TrialPhases, y.TrialPhases) &&
                 x.Age == y.Age &&
                 x.Phrase == y.Phrase && // Keyword
                 x.City == y.City &&
@@ -77,6 +80,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             return diffxy.Count() == 0;
         }
 
+        /// <summary>
+        /// Helper function to determine if two labelled objects are equal.
+        /// </summary>
+        /// <param name="x">Labelled object 1</param>
+        /// <param name="y">Labelled object 2</param>
+        /// <returns></returns>
+        private bool AreLabelledParamListsEqual(LabelledSearchParam[] x, LabelledSearchParam[] y)
+        {
+            // If the items are both null, or if one or the other is null, return 
+            // the correct response right away.
+            if (x == null && y == null)
+            {
+                return true;
+            }
+            else if (x == null || y == null)
+            {
+                return false;
+            }
+
+            //Generate a set of those values that are not in both lists.
+            //if this is not 0, then there is an error.
+            var diffxy = x.Except(y, new LabelledSearchParamComparer());
+
+            return diffxy.Count() == 0;
+        }
+
         public int GetHashCode(CTSSearchParams obj)
         {
             int hash = 0;
@@ -85,6 +114,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             hash ^= obj.Phrase.GetHashCode();
             hash ^= obj.Country.GetHashCode();
             hash ^= obj.City.GetHashCode();
+            hash ^= obj.State.GetHashCode();
             hash ^= obj.Hospital.GetHashCode();
             hash ^= obj.Investigator.GetHashCode();
             hash ^= obj.LeadOrg.GetHashCode();

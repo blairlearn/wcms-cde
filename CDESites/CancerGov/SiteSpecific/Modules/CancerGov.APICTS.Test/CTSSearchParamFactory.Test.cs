@@ -81,7 +81,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     new object[] { "?lcnty=United+States", new CTSSearchParams() {
                         Country = "United States"
                     }},
-                    
+
+                    //TEST - State
+                    new object[] { "?lst=MD", new CTSSearchParams() {
+                        State = new LabelledSearchParam() { 
+                            Key = "MD",
+                            Label = "Maryland"
+                        }
+                    }}, 
+
                     //TEST - City
                     new object[] { "?lcty=Baltimore", new CTSSearchParams() {
                         City = "Baltimore"
@@ -154,6 +162,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             rtnMock.Setup(lookup => lookup.GetTitleCase("C26696"))
                 .Returns("Anxiety");
 
+            rtnMock.Setup(lookup => lookup.Get("MD"))
+                .Returns("Maryland");
 
             //@Sarina and @Dion - Add other instances for GetTitleCase to support your unit tests.
 
