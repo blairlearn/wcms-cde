@@ -33,6 +33,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 ParseCancerType +
                 ParseSubTypes +
                 ParseAge +
+                ParseGender +
+                ParseLocation +
+                ParseZipCode +
+                ParseZipRadius +
                 ParseState +
                 ParseCity;
         }
@@ -118,6 +122,76 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 else
                 {
                     searchParams.Age = age;
+                }
+            }
+        }
+
+        // Parameter g
+        private void ParseGender(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("g"))
+            {
+                string gender = ParamAsStr(url.QueryParameters["g"]);
+                if (!string.IsNullOrWhiteSpace(gender))
+                {
+                    searchParams.Gender = gender;
+                }
+                else
+                {
+                    LogParseError("Gender", "Please enter a valid gender.", searchParams);
+                }
+            }
+        }
+
+        // Parameter loc
+        private void ParseLocation(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("loc"))
+            {
+                string location = ParamAsStr(url.QueryParameters["loc"]);
+                if (!string.IsNullOrWhiteSpace(location))
+                {
+                    searchParams.Location = location;
+                }
+                else
+                {
+                    LogParseError("Location", "Please enter a valid location type.", searchParams);
+                }
+            }
+        }
+
+        // Parameter z
+        private void ParseZipCode(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("z"))
+            {
+                string zipCode = ParamAsStr(url.QueryParameters["z"]);
+                if (string.IsNullOrWhiteSpace(zipCode) || (zipCode.Length < 5))
+                // TODO: add regex to check for chars other than numbers or "-"
+                {
+                    LogParseError("ZipCode", "Please enter a valid zip code value.", searchParams);
+                }
+                else
+                {
+                    searchParams.ZipCode = zipCode;
+                }
+            }
+        }
+
+        // Parameter zp
+        private void ParseZipRadius(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("zp"))
+            {
+                int zipRadius = ParamAsInt(url.QueryParameters["zp"], 100);
+                if (zipRadius < 1 || zipRadius > 12451)
+                // TODO: check for type mismatch
+                {
+                    LogParseError("ZipRadius", "Please enter a valid zip radius value.", searchParams);
+                }
+                else
+                {
+                    searchParams.ZipRadius = zipRadius;
                 }
             }
         }
