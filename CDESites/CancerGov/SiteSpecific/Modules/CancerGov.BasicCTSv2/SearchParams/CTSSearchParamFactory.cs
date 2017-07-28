@@ -32,12 +32,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 (ParameterParserDelegate)ParseKeyword + //First param needs the cast.
                 ParseCancerType +
                 ParseSubTypes +
+                ParseStages +
+                ParseFindings +
                 ParseAge +
                 ParseGender +
                 ParseLocation +
                 ParseZipCode +
                 ParseZipRadius +
                 ParseState +
+                ParseDrugs +
+                ParseOtherTreatments +
                 ParseCity;
         }
 
@@ -106,6 +110,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (url.QueryParameters.ContainsKey("st"))
             {
                 searchParms.SubTypes = GetTermFieldFromParam(url.QueryParameters["st"]);
+            }
+        }
+
+        //Parameter stg
+        private void ParseStages(NciUrl url, CTSSearchParams searchParms)
+        {
+            //TODO: Handle Lowercase
+            if (url.QueryParameters.ContainsKey("stg"))
+            {
+                searchParms.Stages = GetTermFieldFromParam(url.QueryParameters["stg"]);
+            }
+        }
+
+        //Parameter fin
+        private void ParseFindings(NciUrl url, CTSSearchParams searchParms)
+        {
+            //TODO: Handle Lowercase
+            if (url.QueryParameters.ContainsKey("fin"))
+            {
+                searchParms.Findings = GetTermFieldFromParam(url.QueryParameters["fin"]);
             }
         }
 
@@ -229,6 +253,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 {
                     LogParseError("City", "Please enter a valid city parameter.", searchParams);
                 }
+            }
+        }
+
+        //Parameter d (Drugs)
+        private void ParseDrugs(NciUrl url, CTSSearchParams searchParms)
+        {
+            //TODO: Handle Lowercase
+            if (url.QueryParameters.ContainsKey("d"))
+            {
+                searchParms.Drugs = GetTermFieldFromParam(url.QueryParameters["d"]);
+            }
+        }
+
+        //Parameter i (Other treatments / interventions)
+        private void ParseOtherTreatments(NciUrl url, CTSSearchParams searchParms)
+        {
+            //TODO: Handle Lowercase
+            if (url.QueryParameters.ContainsKey("i"))
+            {
+                searchParms.OtherTreatments = GetTermFieldFromParam(url.QueryParameters["i"]);
             }
         }
 

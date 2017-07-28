@@ -49,7 +49,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
                     // TEST 3 - Cancer stage
                     new object[] {"?stg=C88375", new CTSSearchParams() {
-                        SubTypes = new TerminologyFieldSearchParam[] { 
+                        Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C88375" },
                                 Label = "Stage I Breast Cancer"
@@ -59,7 +59,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
                     // TEST 4 - Cancer findings 
                     new object[] {"?fin=C26696", new CTSSearchParams() {
-                        SubTypes = new TerminologyFieldSearchParam[] { 
+                        Findings = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C26696" },
                                 Label = "Anxiety"
@@ -122,9 +122,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
 
                     // TEST 15 - Is location NIH?  
+                    new object[] { "?nih=", new CTSSearchParams() {
+                        AtNIH = true
+                    }},
+
                     // TEST 16 - Trial type
+
                     // TEST 17 - Drug
+                    new object[] {"?d=C1647", new CTSSearchParams() {
+                        Drugs = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C1647" },
+                                Label = "Trastuzumab"
+                            }
+                        }
+                    }},
+
                     // TEST 18 - Other treatments/interventions
+                    new object[] {"?i=C131060", new CTSSearchParams() {
+                        OtherTreatments = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C131060" },
+                                Label = "Checkpoint Blockade Immunotherapy"
+                            }
+                        }
+                    }},
+
                     // TEST 19 - Trial phase 
                     // TEST 20 - Trial ID 
 
@@ -188,6 +211,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("C26696"))
                 .Returns("Anxiety");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("C1647"))
+                .Returns("Trastuzumab");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("C131060"))
+                .Returns("Checkpoint Blockade Immunotherapy");
 
             rtnMock.Setup(lookup => lookup.Get("MD"))
                 .Returns("Maryland");
