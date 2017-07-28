@@ -44,9 +44,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public String Phrase { get; set; }
 
         /// <summary>
-        /// Gets or sets the city used in the search
+        /// Gets or sets the location type value
         /// </summary>
-        public String City { get; set; }
+        public String Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets the zip code value
+        /// TODO: verify how this should work with updated API
+        /// </summary>
+        public String ZipCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the zip code search radius
+        /// TODO: verify how this should work with updated API
+        /// </summary>
+        public int ZipRadius { get; set; }
+
+        /// <summary>
+        /// Gets or sets the country used in the search
+        /// </summary>
+        public String Country { get; set; }
 
         /// <summary>
         /// Gets or sets the state used in the search
@@ -54,9 +71,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public LabelledSearchParam State { get; set; }
 
         /// <summary>
-        /// Gets or sets the country used in the search
+        /// Gets or sets the city used in the search
         /// </summary>
-        public String Country { get; set; }
+        public String City { get; set; }
 
         /// <summary>
         /// Gets or sets the Hospital used in the search
@@ -94,15 +111,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public string[] TrialIDs { get; set; }
 
         /// <summary>
+        /// Gets or sets the Investigator used in the search
+        /// </summary>
+        public String Investigator { get; set; }
+
+        /// <summary>
         /// Gets or sets the lead org used in the search
         /// </summary>
         public String LeadOrg { get; set; }
 
         /// <summary>
-        /// Gets or sets the Investigator used in the search
+        /// Gets or sets an array of error messages to identify when a parse error occurred.
         /// </summary>
-        public String Investigator { get; set; }
+        public String[] ParseErrors { get; set; }
 
-        //Add some sort of Errors array so we can identify when a parse error occurred.
     }
 }
