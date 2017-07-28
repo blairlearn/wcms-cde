@@ -33,6 +33,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 ParseCancerType +
                 ParseSubTypes +
                 ParseAge +
+                ParseState +
                 ParseCity;
         }
 
@@ -89,7 +90,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter st
         private void ParseSubTypes(NciUrl url, CTSSearchParams searchParms)
         {
-            //TODO: Extra credit, refactor the term extraction logic so it does not get repeated for each type
             //TODO: Handle Lowercase
             if (url.QueryParameters.ContainsKey("st"))
             {
@@ -107,6 +107,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
+        //Parameter lst
+        private void ParseState(NciUrl url, CTSSearchParams searchParams)
+        {
+            //TODO: Handle label conversion
+            if (url.QueryParameters.ContainsKey("lst"))
+            {
+                LabelledSearchParam[] states = GetLabelledFieldFromParam(url.QueryParameters["lst"]);
+                if (states.Length == 1)
+                {
+                    searchParams.State = states[0];
+                }
+                else
+                {
+                    // throw error
+                }
+            }
+        }
+
         //Parameter lcty
         private void ParseCity(NciUrl url, CTSSearchParams searchParams)
         {
@@ -118,6 +136,34 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
+        #endregion
+
+        #region Utility methods 
+
+        /// <summary>
+        /// Extract property values for 'Labelled' Field search params (e.g. state, phase, trial type)
+        /// </summary>
+        /// <param name="paramData"></param>
+        /// <returns>Array of param objects</returns>
+        private LabelledSearchParam[] GetLabelledFieldFromParam(string paramData)
+        {
+            List<LabelledSearchParam> rtnParams = new List<LabelledSearchParam>();
+            LabelledSearchParam type = new LabelledSearchParam();
+
+            //TODO: Update mapping to handle different cases (like state abbreviation vs primary purpose label)
+            type.Key = paramData;
+            type.Label = this._lookupSvc.Get(type.Key);
+
+            rtnParams.Add(type);
+
+            return rtnParams.ToArray();
+        }
+
+        /// <summary>
+        /// Extract property values for Terminology Field search params (e.g. cancer type, subtype, drug)
+        /// </summary>
+        /// <param name="paramData"></param>
+        /// <returns>Array of param objects</returns>
         private TerminologyFieldSearchParam[] GetTermFieldFromParam(string paramData)
         {
             List<TerminologyFieldSearchParam> rtnParams = new List<TerminologyFieldSearchParam>();
@@ -132,6 +178,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             return rtnParams.ToArray();
         }
+       
 
         #endregion
 
