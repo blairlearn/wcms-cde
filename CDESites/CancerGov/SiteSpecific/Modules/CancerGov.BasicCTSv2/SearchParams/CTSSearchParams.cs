@@ -51,7 +51,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Gets or sets the state used in the search
         /// </summary>
-        public StateSearchParam State { get; set; }
+        public LabelledSearchParam State { get; set; }
 
         /// <summary>
         /// Gets or sets the country used in the search
@@ -69,6 +69,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public bool AtNIH { get; set; }
 
         /// <summary>
+        /// Gets or sets an array of the trial types in the search
+        /// </summary>
+        public LabelledSearchParam[] TrialTypes { get; set; }
+
+        /// <summary>
         /// Gets or sets an array of the drugs for this search definition
         /// </summary>
         public TerminologyFieldSearchParam[] Drugs { get; set; }
@@ -77,6 +82,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// Gets or sets an array of the other treatments for this search definition
         /// </summary>
         public TerminologyFieldSearchParam[] OtherTreatments { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of the trial phases in the search
+        /// </summary>
+        public LabelledSearchParam[] TrialPhases { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of the trial IDs in the search
+        /// </summary>
+        public string[] TrialIDs { get; set; }
 
         /// <summary>
         /// Gets or sets the lead org used in the search

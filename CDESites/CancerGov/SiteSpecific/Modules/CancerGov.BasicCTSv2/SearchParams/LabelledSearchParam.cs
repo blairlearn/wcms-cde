@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
     /// <summary>
-    /// Represents the state search parameter.
+    /// Represents a search parameter that needs a label. (e.g. state, trial type, or trial phase)
     /// </summary>
-    public class StateSearchParam
+    public class LabelledSearchParam
     {
         /// <summary>
-        /// The state abbreviation for this item.
+        /// The key value that is passed in for this search param.
         /// </summary>
-        public string Abbreviation { get; set; }
+        public string Key { get; set; }
 
         /// <summary>
         /// The label to display in criteria.
