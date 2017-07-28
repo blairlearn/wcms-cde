@@ -51,6 +51,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 this.AreLabelledParamListsEqual(x.TrialPhases, y.TrialPhases) &&
                 this.AreParamArraysEqual(x.TrialIDs, y.TrialIDs) &&
                 x.Age == y.Age &&
+                x.Gender == y.Gender &&
                 x.Phrase == y.Phrase && // Keyword
                 x.Location == y.Location &&
                 x.ZipCode == y.ZipCode &&
@@ -156,6 +157,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             hash ^= obj.Stages.GetHashCode();
             hash ^= obj.Findings.GetHashCode();
             hash ^= obj.Age.GetHashCode();
+            hash ^= obj.Gender.GetHashCode();
             hash ^= obj.Phrase.GetHashCode();
             hash ^= obj.Location.GetHashCode();
             hash ^= obj.ZipCode.GetHashCode();

@@ -39,6 +39,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public int Age { get; set; }
 
         /// <summary>
+        /// Gets or sets the gender for this search definition
+        /// </summary>
+        public String Gender { get; set; }
+
+        /// <summary>
         /// Gets or sets the Phrase/Keyword used in the search
         /// </summary>
         public String Phrase { get; set; }
