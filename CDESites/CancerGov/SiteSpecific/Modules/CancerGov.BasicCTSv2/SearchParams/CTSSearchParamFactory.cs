@@ -28,10 +28,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             this._lookupSvc = lookupSvc;
 
             //Add parser methods here
-            this._parsers = 
-                (ParameterParserDelegate) ParseKeyword + //First param needs the cast.
-                ParseCancerType + ParseCity +
-                ParseSubTypes;
+            this._parsers =
+                (ParameterParserDelegate)ParseKeyword + //First param needs the cast.
+                ParseCancerType +
+                ParseSubTypes +
+                ParseAge +
+                ParseCity;
         }
 
         /// <summary>
@@ -92,6 +94,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (url.QueryParameters.ContainsKey("st"))
             {
                 searchParms.SubTypes = GetTermFieldFromParam(url.QueryParameters["st"]);
+            }
+        }
+
+        // Parameter a
+        private void ParseAge(NciUrl url, CTSSearchParams searchParams)
+        {
+            if(url.QueryParameters.ContainsKey("a"))
+            {
+                // TODO: Clean param
+                searchParams.Age = Int32.Parse(url.QueryParameters["a"]);
             }
         }
 

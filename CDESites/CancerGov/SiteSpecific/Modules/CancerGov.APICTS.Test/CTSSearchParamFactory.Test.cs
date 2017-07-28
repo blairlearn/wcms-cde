@@ -72,6 +72,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
+                    //TEST - Age
+                    new object[] { "?a=35", new CTSSearchParams() {
+                        Age = 35
+                    }},
+
                     //TEST - Country
                     new object[] { "?lcnty=United+States", new CTSSearchParams() {
                         Country = "United States"

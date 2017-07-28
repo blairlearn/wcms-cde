@@ -37,9 +37,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 this.AreTermParamListsEqual(x.SubTypes, y.SubTypes) &&
                 this.AreTermParamListsEqual(x.Stages, y.Stages) &&
                 this.AreTermParamListsEqual(x.Findings, y.Findings) &&
+                x.Age == y.Age &&
                 x.Phrase == y.Phrase && // Keyword
-                x.Country == y.Country &&
                 x.City == y.City &&
+                x.Country == y.Country &&
                 x.Hospital == y.Hospital &&
                 x.Investigator == y.Investigator &&
                 x.LeadOrg == y.LeadOrg; 
