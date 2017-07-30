@@ -25,6 +25,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     //This array of objects maps to the parameters of the create method.
                     //URL at index 0, Expected object at index 1.
                     //TODO: fill out the rest of these tests
+                    //TODO: get the tests to actually work - still having the equals/equivalent
+                    //      errors with array comparer 
 
                     // TEST 0 - No parameters.
                     new object[] { "", new CTSSearchParams() },
@@ -127,6 +129,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
 
                     // TEST 16 - Trial type
+                    new object[] {"?tt=basic_science", new CTSSearchParams() {
+                        TrialTypes = new LabelledSearchParam[] { 
+                            new LabelledSearchParam() {
+                                Key = "basic_science",
+                                Label = "Basic science"
+                            }
+                        }
+                    }},
 
                     // TEST 17 - Drug
                     new object[] {"?d=C1647", new CTSSearchParams() {
@@ -149,7 +159,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
 
                     // TEST 19 - Trial phase 
+                    new object[] {"?tp=i", new CTSSearchParams() {
+                        TrialPhases = new LabelledSearchParam[] { 
+                            new LabelledSearchParam() {
+                                Key = "i",
+                                Label = "I"
+                            }
+                        }
+                    }},
+
                     // TEST 20 - Trial ID 
+                    new object[] {"tid=NCI-2014-01509", new CTSSearchParams() {
+                        TrialIDs = new string[] {"NCI-2014-01509"}
+                    }},
 
                     // TEST 21 - Principal investigator 
                     new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
