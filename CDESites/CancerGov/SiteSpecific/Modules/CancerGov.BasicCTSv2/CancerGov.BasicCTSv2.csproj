@@ -92,45 +92,45 @@
     <Compile Include="SearchParams\PhraseSearchParam.cs" />
     <Compile Include="SearchParams\CTSPrintSearchParams.cs" />
     <Compile Include="SearchParams\TerminologyFieldSearchParam.cs" />
-    <Compile Include="SnippetControls\BaseTrialListingControl.cs">
+    <Compile Include="SnippetControls\TrialListings\BaseTrialListingControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\BasicCTSAdvSearchControl.cs">
+    <Compile Include="SnippetControls\Search\BasicCTSAdvSearchControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\BasicCTSBaseControl.cs">
+    <Compile Include="SnippetControls\Search\BasicCTSBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\BasicCTSPageInfo.cs" />
-    <Compile Include="SnippetControls\BasicCTSResultsControl.cs">
+    <Compile Include="SnippetControls\Search\BasicCTSPageInfo.cs" />
+    <Compile Include="SnippetControls\Search\BasicCTSResultsControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\BasicCTSSearchControl.cs">
+    <Compile Include="SnippetControls\Search\BasicCTSSearchControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\BasicCTSViewControl.cs">
+    <Compile Include="SnippetControls\Search\BasicCTSViewControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetControls\Configs\BaseTrialListingConfig.cs" />
     <Compile Include="SnippetControls\Configs\DynamicTrialListingConfig.cs" />
     <Compile Include="SnippetControls\Configs\DynamicTrialListingConfigPattern.cs" />
     <Compile Include="SnippetControls\Configs\TrialListingConfig.cs" />
-    <Compile Include="SnippetControls\DynamicTrialListingPageControl.cs">
+    <Compile Include="SnippetControls\TrialListings\DynamicTrialListingPageControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\DynamicTrialListingPageDiseaseControl.cs">
+    <Compile Include="SnippetControls\TrialListings\DynamicTrialListingPageDiseaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\DynamicTrialListingPageInterventionControl.cs">
+    <Compile Include="SnippetControls\TrialListings\DynamicTrialListingPageInterventionControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\TrialListingBaseControl.cs">
+    <Compile Include="SnippetControls\TrialListings\TrialListingBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\TrialListingPageControl.cs">
+    <Compile Include="SnippetControls\TrialListings\TrialListingPageControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\TrialListingPageInfo.cs" />
+    <Compile Include="SnippetControls\TrialListings\TrialListingPageInfo.cs" />
     <Compile Include="SnippetControls\TrialVelocityTools.cs" />
     <Compile Include="ZipCodeDictionary.cs" />
     <Compile Include="ZipCodeGeoEntry.cs" />
