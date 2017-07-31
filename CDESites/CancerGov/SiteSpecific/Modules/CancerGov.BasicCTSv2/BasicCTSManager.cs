@@ -317,6 +317,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="cancertypeids">The IDs of the term</param>
         /// <param name="key">The term key of the unique menu name</param>
         /// <returns></returns>
+        [Obsolete("With the new SDS release this will be obsolete.")]
         public string GetCancerTypeDisplayName(string[] cancertypeids, string key)
         {
             string displayName = string.Empty;
