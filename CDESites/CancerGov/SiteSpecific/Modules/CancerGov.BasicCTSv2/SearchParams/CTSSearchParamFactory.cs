@@ -42,7 +42,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 ParseState +
                 ParseDrugs +
                 ParseOtherTreatments +
-                ParseCity;
+                ParseCity +
+                ParsePageNum +
+                ParseItemsPerPage +
+                ParseResultsLinkFlag;
         }
 
         /// <summary>
@@ -65,7 +68,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         #region Parameter Parsers 
 
-        //Parameter q
+        //Parameter q (Keyword/Phrase)
         private void ParseKeyword(NciUrl url, CTSSearchParams searchParams)
         {
             //TODO: Handle lowercase
@@ -83,7 +86,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
         
-        //Parameter t
+        //Parameter t (Main Cancer Type)
         private void ParseCancerType(NciUrl url, CTSSearchParams searchParams)
         {
             //TODO: Extra credit, refactor the term extraction logic so it does not get repeated for each type
@@ -103,7 +106,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        //Parameter st
+        //Parameter st (SubTypes)
         private void ParseSubTypes(NciUrl url, CTSSearchParams searchParms)
         {
             //TODO: Handle Lowercase
@@ -113,7 +116,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        //Parameter stg
+        //Parameter stg (Stages)
         private void ParseStages(NciUrl url, CTSSearchParams searchParms)
         {
             //TODO: Handle Lowercase
@@ -123,7 +126,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        //Parameter fin
+        //Parameter fin (Findings)
         private void ParseFindings(NciUrl url, CTSSearchParams searchParms)
         {
             //TODO: Handle Lowercase
@@ -133,7 +136,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        // Parameter a
+        // Parameter a (Age)
         private void ParseAge(NciUrl url, CTSSearchParams searchParams)
         {
             if(url.QueryParameters.ContainsKey("a"))
@@ -150,7 +153,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        // Parameter g
+        // Parameter g (Gender)
         private void ParseGender(NciUrl url, CTSSearchParams searchParams)
         {
             if (url.QueryParameters.ContainsKey("g"))
@@ -167,7 +170,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        // Parameter loc
+        // Parameter loc (Location)
         private void ParseLocation(NciUrl url, CTSSearchParams searchParams)
         {
             if (url.QueryParameters.ContainsKey("loc"))
@@ -184,7 +187,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        // Parameter z
+        // Parameter z (Zip Code)
         private void ParseZipCode(NciUrl url, CTSSearchParams searchParams)
         {
             if (url.QueryParameters.ContainsKey("z"))
@@ -202,7 +205,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        // Parameter zp
+        // Parameter zp (Zip Radius)
         private void ParseZipRadius(NciUrl url, CTSSearchParams searchParams)
         {
             if (url.QueryParameters.ContainsKey("zp"))
@@ -220,7 +223,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        //Parameter lst
+        //Parameter lst (State)
         private void ParseState(NciUrl url, CTSSearchParams searchParams)
         {
             //TODO: Handle label conversion
@@ -238,7 +241,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        //Parameter lcty
+        //Parameter lcty (City)
         private void ParseCity(NciUrl url, CTSSearchParams searchParams)
         {
             //TODO: Handle lowercase
@@ -276,7 +279,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        // Parameter Investigator
+        // Parameter in (Investigator)
         private void ParseInvestigator(NciUrl url, CTSSearchParams searchParams)
         {
             if (url.QueryParameters.ContainsKey("in"))
@@ -293,7 +296,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        // Parameter Lead Org
+        // Parameter lo (Lead Org)
         private void ParseLeadOrg(NciUrl url, CTSSearchParams searchParams)
         {
             if(url.QueryParameters.ContainsKey("lo"))
@@ -306,6 +309,57 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 else
                 {
                     LogParseError("LeadOrg", "Please enter a valid lead organization parameter.", searchParams);
+                }
+            }
+        }
+
+        // Parameter pn (Page Number)
+        private void ParsePageNum(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("pn"))
+            {
+                int pageNum = ParamAsInt(url.QueryParameters["pn"], 10);
+                if (pageNum < 1)
+                {
+                    LogParseError("Page", "Please enter a valid page number.", searchParams);
+                }
+                else
+                {
+                    searchParams.Page = pageNum;
+                }
+            }
+        }
+
+        // Parameter ni (Items Per Page)
+        private void ParseItemsPerPage(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("ni"))
+            {
+                int itemsPerPage = ParamAsInt(url.QueryParameters["ni"], 10);
+                if (itemsPerPage < 1)
+                {
+                    LogParseError("ItemsPerPage", "Please enter a valid number of items to display per page.", searchParams);
+                }
+                else
+                {
+                    searchParams.ItemsPerPage = itemsPerPage;
+                }
+            }
+        }
+
+        // Parameter rl (Results Link Flag)
+        private void ParseResultsLinkFlag(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("rl"))
+            {
+                int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], 0);
+                if (resLinkFlag == 0)
+                {
+                    LogParseError("ResultsLinkFlag", "Please enter a valid results link flag value (1 or 2).", searchParams);
+                }
+                else
+                {
+                    searchParams.ResultsLinkFlag = resLinkFlag;
                 }
             }
         }

@@ -136,6 +136,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             get { return _pageNum; }
             set { _pageNum = value; }
+
         }
 
         /// <summary>
@@ -146,6 +147,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             get { return _itemsPerPage; }
             set { _itemsPerPage = value; }
         }
+
+        /// <summary>
+        /// Gets or sets the results link flag for the search
+        /// </summary>
+        public int ResultsLinkFlag { get; set; }
 
         /// <summary>
         /// Gets or sets an array of CTS Search Param Errors to identify when a parse error occurred.

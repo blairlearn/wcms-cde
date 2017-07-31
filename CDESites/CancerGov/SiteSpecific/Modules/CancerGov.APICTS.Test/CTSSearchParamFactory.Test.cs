@@ -181,8 +181,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 22 - Lead organization
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
                         LeadOrg = "Mayo Clinic"
-                    }}
+                    }},
 
+                    // TEST 23 - Page number
+                    new object[] { "?pn=3", new CTSSearchParams() {
+                        Page = 3
+                    }},
+
+                    // TEST 24 - Items per page
+                    new object[] { "?ni=25", new CTSSearchParams() {
+                        ItemsPerPage = 25
+                    }}
                 };
             }
         }
