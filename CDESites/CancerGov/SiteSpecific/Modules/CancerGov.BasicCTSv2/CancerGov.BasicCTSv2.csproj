@@ -111,10 +111,10 @@
     <Compile Include="SnippetControls\Search\BasicCTSViewControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\Configs\BaseTrialListingConfig.cs" />
-    <Compile Include="SnippetControls\Configs\DynamicTrialListingConfig.cs" />
-    <Compile Include="SnippetControls\Configs\DynamicTrialListingConfigPattern.cs" />
-    <Compile Include="SnippetControls\Configs\TrialListingConfig.cs" />
+    <Compile Include="SnippetControls\TrialListings\Configs\BaseTrialListingConfig.cs" />
+    <Compile Include="SnippetControls\TrialListings\Configs\DynamicTrialListingConfig.cs" />
+    <Compile Include="SnippetControls\TrialListings\Configs\DynamicTrialListingConfigPattern.cs" />
+    <Compile Include="SnippetControls\TrialListings\Configs\TrialListingConfig.cs" />
     <Compile Include="SnippetControls\TrialListings\DynamicTrialListingPageControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
