@@ -72,10 +72,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicCTSManager.SearchTests.cs" />
     <Compile Include="CTSSearchParamFactory.Test.cs" />
     <Compile Include="CTSSearchParamFactory.TestErrors.cs" />
     <Compile Include="CTSSearchParamsComparer.cs" />
     <Compile Include="LabelledSearchParamComparer.cs" />
+    <Compile Include="LocationSearchParamsComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TerminologyFieldSearchParamComparer.cs" />
   </ItemGroup>

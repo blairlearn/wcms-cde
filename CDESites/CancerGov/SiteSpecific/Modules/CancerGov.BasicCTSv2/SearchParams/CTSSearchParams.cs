@@ -13,86 +13,109 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// </summary>
     public class CTSSearchParams
     {
-        int _pageNum = 1;
-        int _itemsPerPage = 10;
-        int _zipRadius = 100;
+        /// <summary>
+        /// Identifies which fields of the form were used.
+        /// </summary>
+        FormFields _usedFields = FormFields.None;
+
+        TerminologyFieldSearchParam _mainType       = null;
+        TerminologyFieldSearchParam[] _subTypes     = { };
+        TerminologyFieldSearchParam[] _stages       = { };
+        TerminologyFieldSearchParam[] _findings     = { };
+        int _pageNum                = 1;
+        int _itemsPerPage           = 10;
+        int _age                    = 0;
+        string _gender              = string.Empty;
+        string _phrase              = string.Empty;
+        string _investigator        = string.Empty;
+        string _leadOrg             = string.Empty;
+        LocationType _locationType  = LocationType.None;
+
+        LocationSearchParams _locationParams = null;
+
+        /// <summary>
+        /// Identified is a field within this location parameter is set.
+        /// </summary>
+        /// <param name="field">The field to check</param>
+        /// <returns>true if set, false if not.</returns>
+        public bool IsFieldSet(FormFields field)
+        {
+            return (_usedFields & field) == field;
+        }
 
         /// <summary>
         /// Gets or sets the main cancer type that was selected.
         /// </summary>
-        public TerminologyFieldSearchParam MainType { get; set; }
+        public TerminologyFieldSearchParam MainType
+        {
+            get { return _mainType; }
+            set { _mainType = value; _usedFields |= FormFields.MainType; }
+        }
 
         /// <summary>
         /// Gets or sets an array of the subtypes for this search definition
         /// </summary>
-        public TerminologyFieldSearchParam[] SubTypes { get; set; }
+        public TerminologyFieldSearchParam[] SubTypes {
+            get { return _subTypes; }
+            set { _subTypes = value; _usedFields |= FormFields.SubTypes; }
+        }
 
         /// <summary>
         /// Gets or sets an array of the stages for this search definition
         /// </summary>
-        public TerminologyFieldSearchParam[] Stages { get; set; }
+        public TerminologyFieldSearchParam[] Stages {
+            get { return _stages; }
+            set { _stages = value; _usedFields |= FormFields.Stages; }
+        }
 
         /// <summary>
         /// Gets or sets an array of the findings for this search definition
         /// </summary>
-        public TerminologyFieldSearchParam[] Findings { get; set; }
+        public TerminologyFieldSearchParam[] Findings {
+            get { return _findings; }
+            set { _findings = value; _usedFields |= FormFields.Findings; }
+        }
 
         /// <summary>
         /// Gets or sets the age for this search definition
         /// </summary>
-        public int Age { get; set; }
+        public int Age {
+            get { return _age; }
+            set { _age = value; _usedFields |= FormFields.Age; }
+        }
 
         /// <summary>
         /// Gets or sets the gender for this search definition
         /// </summary>
-        public String Gender { get; set; }
+        public String Gender {
+            get { return _gender;  }
+            set { _gender = value; _usedFields |= FormFields.Gender; }
+        }
 
         /// <summary>
         /// Gets or sets the Phrase/Keyword used in the search
         /// </summary>
-        public String Phrase { get; set; }
+        public String Phrase {
+            get { return _phrase; }
+            set { _phrase = value; _usedFields |= FormFields.Phrase; } 
+        }
 
         /// <summary>
         /// Gets or sets the location type value
         /// </summary>
-        public String Location { get; set; }
+        public LocationType Location {
+            get { return _locationType; }
+            set { _locationType = value; _usedFields |= FormFields.Location; } 
+        }
 
         /// <summary>
-        /// Gets or sets the zip code value
-        /// TODO: verify how this should work with updated API
+        /// Gets or sets the parameters for the selected location type
         /// </summary>
-        public String ZipCode { get; set; }
-
-        /// <summary>
-        /// Gets or sets the zip code search radius
-        /// TODO: verify how this should work with updated API
-        /// </summary>
-        public int ZipRadius { get; set; }
-
-        /// <summary>
-        /// Gets or sets the country used in the search
-        /// </summary>
-        public String Country { get; set; }
-
-        /// <summary>
-        /// Gets or sets the state used in the search
-        /// </summary>
-        public LabelledSearchParam State { get; set; }
-
-        /// <summary>
-        /// Gets or sets the city used in the search
-        /// </summary>
-        public String City { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Hospital used in the search
-        /// </summary>
-        public String Hospital { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether to filter only trials At NIH in the search
-        /// </summary>
-        public bool AtNIH { get; set; }
+        public LocationSearchParams LocationParams
+        {
+            get { return _locationParams; }
+            set { _locationParams = value; }
+        }
 
         /// <summary>
         /// Gets or sets an array of the trial types in the search
@@ -122,12 +145,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Gets or sets the Investigator used in the search
         /// </summary>
-        public String Investigator { get; set; }
+        public String Investigator {
+            get { return _investigator; }
+            set { _investigator = value; _usedFields |= FormFields.Investigator; }
+        }
 
         /// <summary>
         /// Gets or sets the lead org used in the search
         /// </summary>
-        public String LeadOrg { get; set; }
+        public String LeadOrg {
+            get { return _leadOrg; }
+            set { _leadOrg = value; _usedFields |= FormFields.LeadOrg; }
+        }
 
         /// <summary>
         /// Gets or sets the page number for the search

@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Web;
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
+using CancerGov.ClinicalTrialsAPI;
 using Common.Logging;
 using NCI.Web;
 using NCI.Web.CDE.Modules;
@@ -166,8 +167,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         protected override void OnInit(EventArgs e)
         {
-            base.OnInit(e);
-            _basicCTSManager = new BasicCTSManager(APIURL);
+            base.OnInit(e); 
+            _basicCTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(APIURL));
 
         }
 

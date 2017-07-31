@@ -35,7 +35,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public Guid StorePrintContent(List<String> trialIDs, DateTime date, CTSPrintSearchParams searchTerms)
         {
             // Retrieve the collections given the ID's
-            BasicCTSManager manager = new BasicCTSManager(ApiUrl);
+            BasicCTSManager manager = new BasicCTSManager(new ClinicalTrialsAPIClient(ApiUrl));
             List<ClinicalTrial> results = manager.GetMultipleTrials(trialIDs).ToList();
 
             // Send results to Velocity template
@@ -66,8 +66,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 }
             }
             if (searchTerms.ZipCode != null)
-            {
-                BasicCTSManager manager = new BasicCTSManager(ApiUrl);
+            { 
+                BasicCTSManager manager = new BasicCTSManager(new ClinicalTrialsAPIClient(ApiUrl));
                 searchTerms.GeoCode = manager.GetZipLookupForZip(searchTerms.ZipCode).GeoCode;
             }
 

@@ -17,6 +17,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using System.Web.UI;
+using CancerGov.ClinicalTrialsAPI;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -118,7 +119,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             this.LoadConfig();
 
-            _basicCTSManager = new BasicCTSManager(APIURL);
+            _basicCTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(APIURL));
         }
 
         protected sealed override void OnPreRender(EventArgs e)

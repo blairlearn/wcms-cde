@@ -9,6 +9,7 @@ using Common.Logging;
 using NCI.Web;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
+using CancerGov.ClinicalTrialsAPI;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -688,7 +689,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Removed due to concerns over differing search results for CDRID vs. conept ID.
             //HandleLegacyCancerTypeID(); // Redirect for URLs containing "t=CDRXXXX"
 
-            _basicCTSManager = new BasicCTSManager(APIURL);
+            _basicCTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(APIURL));
 
         }
 

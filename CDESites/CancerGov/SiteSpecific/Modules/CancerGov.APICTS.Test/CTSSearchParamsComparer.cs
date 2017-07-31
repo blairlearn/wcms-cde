@@ -16,6 +16,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
         private TerminologyFieldSearchParamComparer _termComp = new TerminologyFieldSearchParamComparer();
         private LabelledSearchParamComparer _labelledParamComp = new LabelledSearchParamComparer();
+        private LocationSearchParamsComparer _locParamComp = new LocationSearchParamsComparer();
 
         #region IEqualityComparer<CTSSearchParams> Members
          
@@ -46,7 +47,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 this.AreTermParamListsEqual(x.Findings, y.Findings) &&
                 this.AreTermParamListsEqual(x.Drugs, y.Drugs) &&
                 this.AreTermParamListsEqual(x.OtherTreatments, y.OtherTreatments) &&
-                _labelledParamComp.Equals(x.State, y.State) &&
                 this.AreLabelledParamListsEqual(x.TrialTypes, y.TrialTypes) &&
                 this.AreLabelledParamListsEqual(x.TrialPhases, y.TrialPhases) &&
                 this.AreParamArraysEqual(x.TrialIDs, y.TrialIDs) &&
@@ -54,12 +54,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 x.Gender == y.Gender &&
                 x.Phrase == y.Phrase && // Keyword
                 x.Location == y.Location &&
-                x.ZipCode == y.ZipCode &&
-                x.ZipRadius == y.ZipRadius &&
-                x.Country == y.Country &&
-                x.City == y.City &&
-                x.Hospital == y.Hospital &&
-                x.AtNIH == y.AtNIH &&
+                _locParamComp.Equals(x.LocationParams, y.LocationParams) &&
                 x.Investigator == y.Investigator &&
                 x.LeadOrg == y.LeadOrg &&
                 x.Page == y.Page &&
@@ -163,13 +158,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             hash ^= obj.Gender.GetHashCode();
             hash ^= obj.Phrase.GetHashCode();
             hash ^= obj.Location.GetHashCode();
-            hash ^= obj.ZipCode.GetHashCode();
-            hash ^= obj.ZipRadius.GetHashCode();
-            hash ^= obj.Country.GetHashCode();
-            hash ^= _labelledParamComp.GetHashCode(obj.State);            
-            hash ^= obj.City.GetHashCode();
-            hash ^= obj.Hospital.GetHashCode();
-            hash ^= obj.AtNIH.GetHashCode();
+            hash ^= _locParamComp.GetHashCode(obj.LocationParams);
             hash ^= obj.TrialTypes.GetHashCode();
             hash ^= obj.Drugs.GetHashCode();
             hash ^= obj.OtherTreatments.GetHashCode();

@@ -99,6 +99,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return trial;
         }
 
+
         /// <summary>
         /// Performs a search against the Clinical Trials API
         /// </summary>
@@ -266,6 +267,137 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return rtnResults;
 
         }
+
+        /// <summary>
+        /// Helper function to convert between CTSSearchParams and filter criteria for the API
+        /// </summary>
+        /// <param name="searchParams"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> MapSearchParamsToFilterCriteria(CTSSearchParams searchParams)
+        {
+            Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
+
+            //TODO: Fix issues with zip code.  Either get back geocoordinates back from API, or keep looking them up.
+            /**
+            if (searchParams.ZipLookup != null)
+            {
+                filterCriteria.Add("sites.org_coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
+                filterCriteria.Add("sites.org_coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
+                filterCriteria.Add("sites.org_coordinates_dist", searchParams.ZipRadius.ToString() + "mi");
+                FilterActiveSites(filterCriteria);
+            }
+            **/
+             
+            //Add Age Filter
+            //<field>_gte, <field>_lte
+            if (searchParams.Age != null)
+            {
+                filterCriteria.Add("eligibility.structured.max_age_in_years_gte", searchParams.Age);
+                filterCriteria.Add("eligibility.structured.min_age_in_years_lte", searchParams.Age);
+            }
+
+            if (!String.IsNullOrEmpty(searchParams.Phrase))
+            {
+                filterCriteria.Add("_fulltext", searchParams.Phrase);
+            }
+            /*
+            if (!String.IsNullOrEmpty(searchParams.Country))
+            {
+                filterCriteria.Add("sites.org_country", searchParams.Country);
+                FilterActiveSites(filterCriteria);
+            }
+
+            if (!String.IsNullOrEmpty(searchParams.City))
+            {
+                filterCriteria.Add("sites.org_city", searchParams.City);
+                FilterActiveSites(filterCriteria);
+            }
+             */
+            /*
+            if (searchParams)
+            {
+                filterCriteria.Add("sites.org_state_or_province", searchParams.State);
+                FilterActiveSites(filterCriteria);
+            }
+
+            // TBD
+            if (!String.IsNullOrEmpty(searchParams.HospitalOrInstitution))
+            {
+                filterCriteria.Add("sites.org_name_fulltext", searchParams.HospitalOrInstitution);
+                FilterActiveSites(filterCriteria);
+            }
+
+            if (searchParams.TrialTypeArray != null)
+            {
+                filterCriteria.Add("primary_purpose.primary_purpose_code", searchParams.TrialTypeArray);
+            }
+
+            // Drug and Trial ID's are sent under the same key and should be grouped.
+            List<string> drugAndTrialIds = new List<string>();
+            if (searchParams.DrugIDs != null)
+                drugAndTrialIds.AddRange(searchParams.DrugIDs);
+            if (searchParams.TreatmentInterventionCodes != null)
+                drugAndTrialIds.AddRange(searchParams.TreatmentInterventionCodes);
+            if (drugAndTrialIds.Count > 0)
+            {
+                filterCriteria.Add("arms.interventions.intervention_code", drugAndTrialIds.ToArray());
+            }
+
+            // Array of strings
+            if (searchParams.TrialPhaseArray != null)
+            {
+                filterCriteria.Add("phase.phase", searchParams.TrialPhaseArray);
+            }
+
+            if (searchParams.NewTrialsOnly)
+            {
+                filterCriteria.Add("start_date_gte", searchParams.NewTrialsOnly);
+            }
+
+            if (!String.IsNullOrEmpty(searchParams.PrincipalInvestigator))
+            {
+                filterCriteria.Add("principal_investigator_fulltext", searchParams.PrincipalInvestigator);
+            }
+
+            if (!String.IsNullOrEmpty(searchParams.LeadOrganization))
+            {
+                filterCriteria.Add("lead_org_fulltext", searchParams.LeadOrganization);
+            }
+
+            //Add Gender Filter
+            if (!String.IsNullOrWhiteSpace(searchParams.Gender))
+            {
+                filterCriteria.Add("eligibility.structured.gender", searchParams.Gender);
+            }
+
+            if (searchParams.TrialIDs != null)
+            {
+                filterCriteria.Add("_trialids", searchParams.TrialIDs);
+            }
+
+            if (searchParams.CancerFindings != null)
+            {
+                filterCriteria.Add("diseases.display_name", searchParams.CancerFindings);
+            }
+
+
+            //Add phrase if this is a phrase search
+            if (searchParams is PhraseSearchParam)
+            {
+                filterCriteria.Add("_fulltext", ((PhraseSearchParam)searchParams).Phrase);
+            }
+            else if (searchParams is CancerTypeSearchParam)
+            {
+                //This is now an array of codes.
+                filterCriteria.Add("diseases.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeIDs);
+            }
+
+            */
+
+            return filterCriteria;
+        }
+
+
 
         /// <summary>
         /// Adds criteria to only match locations that are actively recruiting sites.  Only adds the filter if it has not been added before.

@@ -85,47 +85,67 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
 
                     // TEST 8 - Location
-                    new object[] { "?loc=all", new CTSSearchParams() {
-                        Location = "all"
+                    new object[] { "?loc=0", new CTSSearchParams() {
+                        Location = LocationType.None
                     }},
 
                     // TEST 9 - Zip code
-                    new object[] { "?z=20850", new CTSSearchParams() {
-                        ZipCode = "20850"
+                    new object[] { "?loc=1&z=20850", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams() {
+                            ZipCode = "20850"
+                        }
                     }},
 
                     // TEST 10 - Zip radius
-                    new object[] { "?zp=500", new CTSSearchParams() {
-                        ZipRadius = 500
+                    new object[] { "?loc=1&z=20850&zp=500", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams() {
+                            ZipCode = "20850",
+                            ZipRadius = 500
+                        }
                     }},
 
 
                     // TEST 11 - Country
-                    new object[] { "?lcnty=United+States", new CTSSearchParams() {
-                        Country = "United States"
+                    new object[] { "?loc=2&lcnty=United+States", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams() {
+                            Country = "United States"
+                        }
                     }},
 
                     // TEST 12 - State 
-                    new object[] { "?lst=MD", new CTSSearchParams() {
-                        State = new LabelledSearchParam() { 
-                            Key = "MD",
-                            Label = "Maryland"
+                    new object[] { "?loc=2&lst=MD", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams() {
+                            State = new LabelledSearchParam() { 
+                                Key = "MD",
+                                Label = "Maryland"
+                            }
                         }
                     }}, 
 
                     // TEST 13 - City 
-                    new object[] { "?lcty=Baltimore", new CTSSearchParams() {
-                        City = "Baltimore"
+                    new object[] { "?loc=2&lcty=Baltimore", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams() {
+                            City = "Baltimore"
+                        }
                     }},
                     
                     // TEST 14 - Hospital 
-                    new object[] { "?hos=M+D+Anderson+Cancer+Center", new CTSSearchParams() {
-                        Hospital = "M D Anderson Cancer Center"
+                    new object[] { "?loc=3&hos=M+D+Anderson+Cancer+Center", new CTSSearchParams() {
+                        Location = LocationType.Hospital,
+                        LocationParams = new HospitalLocationSearchParams() {
+                            Hospital = "M D Anderson Cancer Center"
+                        }
                     }},
                     
                     // TEST 15 - Is location NIH?  
-                    new object[] { "?loc=nih", new CTSSearchParams() {
-                        AtNIH = true
+                    new object[] { "?loc=4", new CTSSearchParams() {
+                        Location = LocationType.AtNIH,
+                        LocationParams = new AtNIHLocationSearchParams()
                     }},
 
                     // TEST 16 - Trial type

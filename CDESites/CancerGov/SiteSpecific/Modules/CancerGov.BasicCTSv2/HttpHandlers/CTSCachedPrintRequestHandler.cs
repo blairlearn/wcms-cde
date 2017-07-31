@@ -60,11 +60,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                     // Determine cancer type display name from CIDs and key (if there is no match with the key,
                     // then first term with matching ids is used)
                     string termKey = ctarr.Length > 1 ? ctarr[1] : null;
-                    var _basicCTSManager = new BasicCTSManager(ApiUrl);
+                    var _basicCTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(ApiUrl));
 
                     cancerType = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
                 }
-
+                
                 
                 var searchTerms = new CTSPrintSearchParams()
                 {
@@ -88,7 +88,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
                 {
                     req = GetRequestAndValidate(context);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                     ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400); //Anything here is just a bad request.

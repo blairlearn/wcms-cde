@@ -117,7 +117,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             log.DebugFormat("NCT ID {0} not found in API and is not formatted correctly for clinicaltrials.cancer.gov", cleanId);
                         }
                     }
-                    catch (ThreadAbortException ex)
+                    catch (ThreadAbortException)
                     {
                         // Response.Redirect() throws a ThreadAbortException. This is normal behavior.
                         // Hide the "normal error" by swallowing the exception.
