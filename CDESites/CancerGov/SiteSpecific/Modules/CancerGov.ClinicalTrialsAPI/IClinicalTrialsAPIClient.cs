@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrialsAPI
 {
-    interface IClinicalTrialsAPIClient
+    public interface IClinicalTrialsAPIClient
     {
         /// <summary>
         /// Calls the listing endpoint (/clinical-trials) of the clinical trials API
