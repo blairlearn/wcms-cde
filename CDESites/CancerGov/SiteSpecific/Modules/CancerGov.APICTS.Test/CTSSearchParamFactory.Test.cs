@@ -12,7 +12,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
     /// <summary>
     /// Tests for the CTSearchParamFactory
     /// </summary>
-    public class CTSSearchParamFactory_Test
+    public partial class CTSSearchParamFactory_Test
     {
         //Test cases for Create test method. 
         //@Sarina and @Dion - You will want to create your expected objects in another file at some point.
@@ -27,7 +27,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     //TODO: fill out the rest of these tests
                     //TODO: get the tests to actually work - still having the equals/equivalent
                     //      errors with array comparer 
-
+                    
                     // TEST 0 - No parameters.
                     new object[] { "", new CTSSearchParams() },
 
@@ -117,14 +117,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     new object[] { "?lcty=Baltimore", new CTSSearchParams() {
                         City = "Baltimore"
                     }},
-
+                    
                     // TEST 14 - Hospital 
                     new object[] { "?hos=M+D+Anderson+Cancer+Center", new CTSSearchParams() {
                         Hospital = "M D Anderson Cancer Center"
                     }},
-
+                    
                     // TEST 15 - Is location NIH?  
-                    new object[] { "?nih=", new CTSSearchParams() {
+                    new object[] { "?loc=nih", new CTSSearchParams() {
                         AtNIH = true
                     }},
 

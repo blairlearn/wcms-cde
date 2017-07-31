@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CTSSearchParamFactory.Test.cs" />
+    <Compile Include="CTSSearchParamFactory.TestErrors.cs" />
     <Compile Include="CTSSearchParamsComparer.cs" />
     <Compile Include="LabelledSearchParamComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

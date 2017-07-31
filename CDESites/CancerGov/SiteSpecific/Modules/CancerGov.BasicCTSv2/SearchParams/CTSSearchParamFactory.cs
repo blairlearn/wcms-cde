@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NCI.Web;
+using System.Web;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -39,10 +40,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 ParseLocation +
                 ParseZipCode +
                 ParseZipRadius +
+                ParseCity +
                 ParseState +
+                ParseCountry +
+                ParseHospital +
                 ParseDrugs +
                 ParseOtherTreatments +
-                ParseCity +
+                ParseInvestigator +
+                ParseLeadOrg +
                 ParsePageNum +
                 ParseItemsPerPage +
                 ParseResultsLinkFlag;
@@ -57,8 +62,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             CTSSearchParams rtnParams = new CTSSearchParams();
 
-            NciUrl reqUrl = new NciUrl();
-            reqUrl.SetUrl(url);
+            NciUrl reqUrl = new NciUrl(true);
+            reqUrl.SetUrl(HttpUtility.UrlDecode(url));
 
             // Get lowercase query params for parsing
             reqUrl = reqUrl.CopyWithLowerCaseQueryParams();
@@ -167,7 +172,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        // Parameter loc (Location)
+        // Parameter loc (Location, and AtNIH if loc=nih)
         private void ParseLocation(NciUrl url, CTSSearchParams searchParams)
         {
             if (url.QueryParameters.ContainsKey("loc"))
@@ -176,6 +181,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 if (!string.IsNullOrWhiteSpace(location))
                 {
                     searchParams.Location = location;
+                    if(location.ToLower() == "nih")
+                    {
+                        searchParams.AtNIH = true;
+                    }
                 }
                 else
                 {
@@ -255,6 +264,40 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
+        //Parameter lcnty (Country)
+        private void ParseCountry(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("lcnty"))
+            {
+                string country = ParamAsStr(url.QueryParameters["lcnty"]);
+                if (!string.IsNullOrWhiteSpace(country))
+                {
+                    searchParams.Country = country;
+                }
+                else
+                {
+                    LogParseError("Country", "Please enter a valid country parameter.", searchParams);
+                }
+            }
+        }
+
+        //Parameter hos (Hospital)
+        private void ParseHospital(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("hos"))
+            {
+                string hospital = ParamAsStr(url.QueryParameters["hos"]);
+                if (!string.IsNullOrWhiteSpace(hospital))
+                {
+                    searchParams.Hospital = hospital;
+                }
+                else
+                {
+                    LogParseError("Hospital", "Please enter a valid hospital/institution parameter.", searchParams);
+                }
+            }
+        }
+
         //Parameter d (Drugs)
         private void ParseDrugs(NciUrl url, CTSSearchParams searchParms)
         {
@@ -282,7 +325,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 string investigator = ParamAsStr(url.QueryParameters["in"]);
                 if (!string.IsNullOrWhiteSpace(investigator))
                 {
-                    searchParams.City = investigator;
+                    searchParams.Investigator = investigator;
                 }
                 else
                 {
@@ -299,7 +342,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 string leadOrg = ParamAsStr(url.QueryParameters["lo"]);
                 if (!string.IsNullOrWhiteSpace(leadOrg))
                 {
-                    searchParams.City = leadOrg;
+                    searchParams.LeadOrg = leadOrg;
                 }
                 else
                 {

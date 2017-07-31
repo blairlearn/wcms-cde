@@ -8,7 +8,7 @@ namespace NCI.Web
     public class NciUrl
     {
         private string _uriStem;
-
+        private bool _decodeParameters = false;
 
         public string UriStem
         {
@@ -28,9 +28,12 @@ namespace NCI.Web
         public Dictionary<string, string> QueryParameters { get; set; }
 
 
-        public NciUrl()
+        public NciUrl() : this(false) {}
+
+        public NciUrl(bool decodeParameters)
         {
             QueryParameters = new Dictionary<string, string>();
+            _decodeParameters = decodeParameters;
         }
 
         public void Clear()
@@ -90,6 +93,12 @@ namespace NCI.Web
                 string[] nameAndValue = nameValuePair.Split(new char[] { '=' }, StringSplitOptions.None);
                 string name = nameAndValue[0];
                 string value = nameAndValue[1];
+
+                if(_decodeParameters)
+                {
+                    value = HttpUtility.UrlDecode(value);
+                }
+
                 QueryParameters.Add(name, value);
             }
         }
