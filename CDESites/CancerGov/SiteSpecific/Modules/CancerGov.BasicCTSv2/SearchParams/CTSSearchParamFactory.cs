@@ -60,8 +60,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             NciUrl reqUrl = new NciUrl();
             reqUrl.SetUrl(url);
 
+            // Get lowercase query params for parsing
+            reqUrl = reqUrl.CopyWithLowerCaseQueryParams();
+
             _parsers(reqUrl, rtnParams); //This calls each of the parsers, one chained after another.
-            
 
             return rtnParams; 
         }
@@ -71,7 +73,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter q (Keyword/Phrase)
         private void ParseKeyword(NciUrl url, CTSSearchParams searchParams)
         {
-            //TODO: Handle lowercase
             if (url.QueryParameters.ContainsKey("q"))
             {
                 string phrase = ParamAsStr(url.QueryParameters["q"]);
@@ -90,7 +91,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private void ParseCancerType(NciUrl url, CTSSearchParams searchParams)
         {
             //TODO: Extra credit, refactor the term extraction logic so it does not get repeated for each type
-            //TODO: Handle Lowercase
             if (url.QueryParameters.ContainsKey("t"))
             {
                 TerminologyFieldSearchParam[] terms = GetTermFieldFromParam(url.QueryParameters["t"]);
@@ -109,7 +109,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter st (SubTypes)
         private void ParseSubTypes(NciUrl url, CTSSearchParams searchParms)
         {
-            //TODO: Handle Lowercase
             if (url.QueryParameters.ContainsKey("st"))
             {
                 searchParms.SubTypes = GetTermFieldFromParam(url.QueryParameters["st"]);
@@ -119,7 +118,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter stg (Stages)
         private void ParseStages(NciUrl url, CTSSearchParams searchParms)
         {
-            //TODO: Handle Lowercase
             if (url.QueryParameters.ContainsKey("stg"))
             {
                 searchParms.Stages = GetTermFieldFromParam(url.QueryParameters["stg"]);
@@ -129,7 +127,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter fin (Findings)
         private void ParseFindings(NciUrl url, CTSSearchParams searchParms)
         {
-            //TODO: Handle Lowercase
             if (url.QueryParameters.ContainsKey("fin"))
             {
                 searchParms.Findings = GetTermFieldFromParam(url.QueryParameters["fin"]);
@@ -244,7 +241,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter lcty (City)
         private void ParseCity(NciUrl url, CTSSearchParams searchParams)
         {
-            //TODO: Handle lowercase
             if (url.QueryParameters.ContainsKey("lcty"))
             {
                 string city = ParamAsStr(url.QueryParameters["lcty"]);
@@ -272,7 +268,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter i (Other treatments / interventions)
         private void ParseOtherTreatments(NciUrl url, CTSSearchParams searchParms)
         {
-            //TODO: Handle Lowercase
             if (url.QueryParameters.ContainsKey("i"))
             {
                 searchParms.OtherTreatments = GetTermFieldFromParam(url.QueryParameters["i"]);

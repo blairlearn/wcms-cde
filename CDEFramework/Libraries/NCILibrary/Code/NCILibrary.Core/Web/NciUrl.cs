@@ -94,6 +94,19 @@ namespace NCI.Web
             }
         }
 
+        public NciUrl CopyWithLowerCaseQueryParams()
+        {
+            NciUrl rtn = new NciUrl();
+            rtn._uriStem = this._uriStem;
+
+            foreach (KeyValuePair<string, string> item in this.QueryParameters)
+            {
+                rtn.QueryParameters.Add(item.Key.ToLower(), item.Value);
+            }
+
+            return rtn;
+        }
+
         /// <summary>
         /// Appends a segment onto the end of an existing url path, handling "slash issues" so we 
         /// are sure we have one and only one slash.
