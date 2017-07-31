@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrialsAPI
 {
-    public class ClinicalTrialsAPIClient
+    public class ClinicalTrialsAPIClient : IClinicalTrialsAPIClient
     {
         static ILog log = LogManager.GetLogger(typeof(ClinicalTrialsAPIClient));
 
