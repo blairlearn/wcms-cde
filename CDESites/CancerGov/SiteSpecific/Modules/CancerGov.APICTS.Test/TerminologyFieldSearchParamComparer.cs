@@ -66,12 +66,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
         public int GetHashCode(TerminologyFieldSearchParam obj)
         {
             int hash = 0;
-            hash ^= obj.Codes.GetHashCode();
+            hash ^= GetOrderIndependentHashCode<string>(obj.Codes);
             hash ^= obj.Label.GetHashCode();
 
             return hash;
         }
 
         #endregion
+
+        //Used to make sure hash of codes is same for two arrays with same codes.
+        //Found at https://stackoverflow.com/questions/670063/getting-hash-of-a-list-of-strings-regardless-of-order
+        private int GetOrderIndependentHashCode<T>(IEnumerable<T> source)
+        {
+            int hash = 0;
+            int curHash;
+            int bitOffset = 0;
+            // Stores number of occurences so far of each value.
+            var valueCounts = new Dictionary<T, int>();
+
+            foreach (T element in source)
+            {
+                curHash = EqualityComparer<T>.Default.GetHashCode(element);
+                if (valueCounts.TryGetValue(element, out bitOffset))
+                    valueCounts[element] = bitOffset + 1;
+                else
+                    valueCounts.Add(element, bitOffset);
+
+                // The current hash code is shifted (with wrapping) one bit
+                // further left on each successive recurrence of a certain
+                // value to widen the distribution.
+                // 37 is an arbitrary low prime number that helps the
+                // algorithm to smooth out the distribution.
+                hash = unchecked(hash + ((curHash << bitOffset) |
+                    (curHash >> (32 - bitOffset))) * 37);
+            }
+
+            return hash;
+        }
+
     }
 }
