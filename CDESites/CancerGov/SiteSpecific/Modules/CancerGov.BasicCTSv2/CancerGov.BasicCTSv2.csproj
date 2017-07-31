@@ -101,7 +101,7 @@
     <Compile Include="SnippetControls\Search\BasicCTSBaseControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\Search\BasicCTSPageInfo.cs" />
+    <Compile Include="SnippetControls\Search\Configs\BasicCTSPageInfo.cs" />
     <Compile Include="SnippetControls\Search\BasicCTSResultsControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
