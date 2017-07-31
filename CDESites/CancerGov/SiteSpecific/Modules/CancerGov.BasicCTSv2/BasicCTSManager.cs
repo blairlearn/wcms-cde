@@ -129,7 +129,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 filterCriteria.Add("sites.org_coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
                 filterCriteria.Add("sites.org_coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
                 filterCriteria.Add("sites.org_coordinates_dist", searchParams.ZipRadius.ToString() + "mi");
-                filterCriteria.Add("sites.recruitment_status", ActiveRecruitmentStatuses);
+                FilterActiveSites(filterCriteria);                
             }
 
             //Add Age Filter
@@ -148,22 +148,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (!String.IsNullOrEmpty(searchParams.Country))
             {
                 filterCriteria.Add("sites.org_country", searchParams.Country);
+                FilterActiveSites(filterCriteria);
             }
 
             if (!String.IsNullOrEmpty(searchParams.City))
             {
                 filterCriteria.Add("sites.org_city", searchParams.City);
+                FilterActiveSites(filterCriteria);
             }
 
             if (!String.IsNullOrEmpty(searchParams.State))
             {
                 filterCriteria.Add("sites.org_state_or_province", searchParams.State);
+                FilterActiveSites(filterCriteria);
             }
             
             // TBD
             if (!String.IsNullOrEmpty(searchParams.HospitalOrInstitution))
             {
                 filterCriteria.Add("sites.org_name_fulltext", searchParams.HospitalOrInstitution);
+                FilterActiveSites(filterCriteria);
             }
                               
             if (searchParams.TrialTypeArray != null)
@@ -260,6 +264,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             return rtnResults;
 
+        }
+
+        /// <summary>
+        /// Adds criteria to only match locations that are actively recruiting sites.  Only adds the filter if it has not been added before.
+        /// </summary>
+        /// <param name="filterCriteria"></param>
+        private void FilterActiveSites(Dictionary<string, object> filterCriteria)
+        {
+            if (!filterCriteria.ContainsKey("sites.recruitment_status"))
+            {
+                filterCriteria.Add("sites.recruitment_status", ActiveRecruitmentStatuses);
+            }
         }
 
         /// <summary>
