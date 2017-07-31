@@ -14,18 +14,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Gets the API client this instance of a BasicCTSManager will use
         /// </summary>
-        private ClinicalTrialsAPIClient Client { get; set; }
+        private IClinicalTrialsAPIClient Client { get; set; }
 
         // CTRP trial statuses that qualify as "active"
         // These are used as filter criteria for returning trials on the results/view/listing pages.
-        public readonly string[] ActiveTrialStatuses = {
+        public static readonly string[] ActiveTrialStatuses = {
             // These CTRP statuses appear in results:
             "Active",
             "Approved", 
             "Enrolling by Invitation",
             "In Review",
             "Temporarily Closed to Accrual",
-            "Temporarily Closed to Accrual and Intervention"
+            "Temporarily Closed to Accrual and Intervention" 
             // These CTRP statuses DO NOT appear in results:
             /// "Administratively Complete",
             /// "Closed to Accrual",
@@ -36,7 +36,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         // Site-specific recruitment statuses that qualify as "active" (not to be confused with the Trial Status).
         // These are used to filter available study sites on results/view/listing pages.
-        public readonly string[] ActiveRecruitmentStatuses = {
+        public static readonly string[] ActiveRecruitmentStatuses = {
             // These statuses appear in results:
             "active",
             "approved", 
@@ -69,19 +69,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         };
 
         /// <summary>
-        /// No arg BasicCTSManager constructor
+        /// Creates a new instance of a BasicCTSManager
         /// </summary>
-        public BasicCTSManager() {}
+        /// <param name="host">The hostname of the API</param>        
+        [Obsolete("This will need to be retired before SDS")]
+        public BasicCTSManager(string host)
+            : this(new ClinicalTrialsAPIClient(host)){}
 
         /// <summary>
         /// Creates a new instance of a BasicCTSManager
         /// </summary>
-        /// <param name="host">The hostname of the API</param>        
-        public BasicCTSManager(string host)
+        /// <param name="client"></param>
+        public BasicCTSManager(IClinicalTrialsAPIClient client)
         {
-            //TODO: This should take in an interface for when we change this next time. 
-            //that interface is what this wraps. (maybe)
-            this.Client = new ClinicalTrialsAPIClient(host);
+            this.Client = client;
         }
 
         #region Public Methods
