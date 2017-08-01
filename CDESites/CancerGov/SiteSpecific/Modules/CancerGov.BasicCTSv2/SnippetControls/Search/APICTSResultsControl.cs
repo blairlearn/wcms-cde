@@ -9,7 +9,7 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrialsAPI;
 
-namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
+namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
     /// <summary>
     /// Represents the new CTAPI Driven Results page for Basic & Advanced.
@@ -45,6 +45,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
             {
                 Results = results,
                 Control = this,
+                Parameters = SearchParams,
                 TrialTools = new TrialVelocityTools()
             };
         }

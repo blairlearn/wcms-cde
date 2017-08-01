@@ -9,7 +9,7 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrialsAPI;
 
-namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
+namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
     /// <summary>
     /// This is the base control for anything that needs to interact with the CTAPI (e.g. Results and Details view)
@@ -22,8 +22,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
         protected BasicCTSManager CTSManager { get; private set; }
         protected CTSSearchParams SearchParams { get; private set; }
 
-        public BaseMgrAPICTSControl()
+        protected override void Init()
         {
+            base.Init();
+
             //////////////////////////////
             // Create an instance of a BasicCTSManager.
             string apiURL = BasicClinicalTrialSearchAPISection.GetAPIUrl();
@@ -47,7 +49,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
                 log.Error("could not parse the CTS search parameters", ex);
                 throw ex;
             }
-
         }
+
     }
 }

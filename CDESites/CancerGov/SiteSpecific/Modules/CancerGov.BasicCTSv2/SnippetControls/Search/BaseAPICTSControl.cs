@@ -10,7 +10,7 @@ using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrialsAPI;
 using System.Web.UI;
 
-namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
+namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
     /// <summary>
     /// This is the base class for all API-Based Clinical Trial Search controls.
@@ -27,33 +27,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
         protected BasicCTSPageInfo Config { get; private set; }
 
         /// <summary>
-        /// Create a new instance of a APICTS Control
-        /// </summary>
-        public BaseAPICTSControl()
-        {
-
-            //////////////////////////////
-            // Load the configuration from the SnippetInfo data
-            string spidata = this.SnippetInfo.Data;
-            try
-            {
-                if (string.IsNullOrEmpty(spidata))
-                    throw new Exception("BasicCTSPageInfo not present in xml, associate an application module item  with this page in percussion");
-
-                spidata = spidata.Trim();
-                if (string.IsNullOrEmpty(spidata))
-                    throw new Exception("BasicCTSPageInfo not present in xml, associate an application module item  with this page in percussion");
-
-                Config = ModuleObjectFactory<BasicCTSPageInfo>.GetModuleObject(spidata);
-            }
-            catch (Exception ex)
-            {
-                log.Error("could not load the BasicCTSPageInfo, check the config info of the application module in percussion", ex);
-                throw ex;
-            }
-        }
-
-        /// <summary>
         /// Gets the path to the template.
         /// </summary>
         /// <returns></returns>
@@ -63,6 +36,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
         /// Gets the data that should be bound to the Velocity Control
         /// </summary>
         protected abstract object GetDataForTemplate();
+
+        /// <summary>
+        /// Provides a method to be called on initialization.  If overridden you must call base!
+        /// </summary>
+        protected virtual void Init()
+        {
+        }
 
         /// <summary>
         /// Overrides the OnPreRender event and forces derrived classes to handle events here.
@@ -83,6 +63,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
             Controls.Add(ltl);
         }
 
+
+
         /// <summary>
         /// DO NOT IMPLEMENT ANYTHING HERE OR IN DERRIVED CLASSES.
         /// </summary>
@@ -90,6 +72,31 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
         protected override sealed void OnInit(EventArgs e)
         {
             base.OnInit(e);
+
+            //Force config to be loaded here and not rely on others to call base from init. :)
+
+            //////////////////////////////
+            // Load the configuration from the SnippetInfo data
+            string spidata = this.SnippetInfo.Data;
+            try
+            {
+                if (string.IsNullOrEmpty(spidata))
+                    throw new Exception("BasicCTSPageInfo not present in xml, associate an application module item  with this page in percussion");
+
+                spidata = spidata.Trim();
+                if (string.IsNullOrEmpty(spidata))
+                    throw new Exception("BasicCTSPageInfo not present in xml, associate an application module item  with this page in percussion");
+
+                Config = ModuleObjectFactory<BasicCTSPageInfo>.GetModuleObject(spidata);
+            }
+            catch (Exception ex)
+            {
+                log.Error("could not load the BasicCTSPageInfo, check the config info of the application module in percussion", ex);
+                throw ex;
+            }
+
+
+            Init();
         }
 
         /// <summary>
