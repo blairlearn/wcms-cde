@@ -74,7 +74,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter q (Keyword/Phrase)
         private void ParseKeyword(NciUrl url, CTSSearchParams searchParams)
         {
-            if (url.QueryParameters.ContainsKey("q"))
+            if (IsInUrl(url, "q"))
             {
                 string phrase = ParamAsStr(url.QueryParameters["q"]);
                 if(!string.IsNullOrWhiteSpace(phrase))
@@ -92,7 +92,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private void ParseCancerType(NciUrl url, CTSSearchParams searchParams)
         {
             //TODO: Extra credit, refactor the term extraction logic so it does not get repeated for each type
-            if (url.QueryParameters.ContainsKey("t"))
+            if (IsInUrl(url, "t"))
             {
                 TerminologyFieldSearchParam[] terms = GetTermFieldFromParam(url.QueryParameters["t"]);
                 if (terms.Length == 1)
@@ -110,7 +110,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter st (SubTypes)
         private void ParseSubTypes(NciUrl url, CTSSearchParams searchParms)
         {
-            if (url.QueryParameters.ContainsKey("st"))
+            if (IsInUrl(url, "st"))
             {
                 searchParms.SubTypes = GetTermFieldFromParam(url.QueryParameters["st"]);
             }
@@ -121,7 +121,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter stg (Stages)
         private void ParseStages(NciUrl url, CTSSearchParams searchParms)
         {
-            if (url.QueryParameters.ContainsKey("stg"))
+            if (IsInUrl(url, "stg"))
             {
                 searchParms.Stages = GetTermFieldFromParam(url.QueryParameters["stg"]);
             }
@@ -132,7 +132,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter fin (Findings)
         private void ParseFindings(NciUrl url, CTSSearchParams searchParms)
         {
-            if (url.QueryParameters.ContainsKey("fin"))
+            if (IsInUrl(url, "fin"))
             {
                 searchParms.Findings = GetTermFieldFromParam(url.QueryParameters["fin"]);
             }
@@ -143,7 +143,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter a (Age)
         private void ParseAge(NciUrl url, CTSSearchParams searchParams)
         {
-            if(url.QueryParameters.ContainsKey("a"))
+            if (IsInUrl(url, "a"))
             {
                 int age = this.ParamAsInt(url.QueryParameters["a"], 0);
                 if(age == 0)
@@ -164,7 +164,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter g (Gender)
         private void ParseGender(NciUrl url, CTSSearchParams searchParams)
         {
-            if (url.QueryParameters.ContainsKey("g"))
+            if (IsInUrl(url, "g"))
             {
                 string gender = ParamAsStr(url.QueryParameters["g"]);
                 if (!string.IsNullOrWhiteSpace(gender))
@@ -225,7 +225,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             ZipCodeLocationSearchParams locParams = new ZipCodeLocationSearchParams();
 
-            if (url.QueryParameters.ContainsKey("z"))
+            if (IsInUrl(url, "z"))
             {
                 string zipCode = ParamAsStr(url.QueryParameters["z"]);
  
@@ -250,7 +250,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 LogParseError(FormFields.ZipCode, "Please enter a valid zip code value.", searchParams);
             }
 
-            if (url.QueryParameters.ContainsKey("zp"))
+            if (IsInUrl(url, "zp"))
             {
                 int zipRadius = ParamAsInt(url.QueryParameters["zp"], 100);
                 if (zipRadius < 1 || zipRadius > 12451)
@@ -274,7 +274,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             CountryCityStateLocationSearchParams locParams = new CountryCityStateLocationSearchParams();
 
             //TODO: Handle label conversion
-            if (url.QueryParameters.ContainsKey("lst"))
+            if (IsInUrl(url, "lst"))
             {
                 LabelledSearchParam[] states = GetLabelledFieldFromParam(url.QueryParameters["lst"]);
                 if (states.Length == 1)
@@ -287,7 +287,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 }
             }
 
-            if (url.QueryParameters.ContainsKey("lcty"))
+            if (IsInUrl(url, "lcty"))
             {
                 string city = ParamAsStr(url.QueryParameters["lcty"]);
                 if (!string.IsNullOrWhiteSpace(city))
@@ -300,7 +300,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 }
             }
 
-            if (url.QueryParameters.ContainsKey("lcnty"))
+            if (IsInUrl(url, "lcnty"))
             {
                 string country = ParamAsStr(url.QueryParameters["lcnty"]);
                 if (!string.IsNullOrWhiteSpace(country))
@@ -325,7 +325,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             HospitalLocationSearchParams locParams = new HospitalLocationSearchParams();
 
-            if (url.QueryParameters.ContainsKey("hos"))
+            if (IsInUrl(url, "hos"))
             {
                 string hospital = ParamAsStr(url.QueryParameters["hos"]);
                 if (!string.IsNullOrWhiteSpace(hospital))
@@ -350,7 +350,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private void ParseDrugs(NciUrl url, CTSSearchParams searchParms)
         {
             //TODO: Handle Lowercase
-            if (url.QueryParameters.ContainsKey("d"))
+            if (IsInUrl(url, "d"))
             {
                 searchParms.Drugs = GetTermFieldFromParam(url.QueryParameters["d"]);
             }
@@ -361,7 +361,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter i (Other treatments / interventions)
         private void ParseOtherTreatments(NciUrl url, CTSSearchParams searchParms)
         {
-            if (url.QueryParameters.ContainsKey("i"))
+            if (IsInUrl(url, "i"))
             {
                 searchParms.OtherTreatments = GetTermFieldFromParam(url.QueryParameters["i"]);
             }
@@ -372,7 +372,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter tp (Trial Phase)
         private void ParseTrialPhases(NciUrl url, CTSSearchParams searchParams)
         {
-            if (url.QueryParameters.ContainsKey("tp"))
+            if (IsInUrl(url, "tp"))
             {
                 LabelledSearchParam[] phases = GetLabelledFieldFromParam(url.QueryParameters["tp"]);
                 searchParams.TrialPhases = phases;
@@ -384,7 +384,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter tid (Trial IDs)
         private void ParseTrialIDs(NciUrl url, CTSSearchParams searchParams)
         {
-            if(url.QueryParameters.ContainsKey("tid"))
+            if (IsInUrl(url, "tid"))
             {
                 string[] idArray = ParamAsStr(url.QueryParameters["tid"]).Split(new Char[] {',',';'} ).Select(id => id.Trim()).ToArray();
                 if(idArray.Length == 1 && string.IsNullOrWhiteSpace(idArray[0]))
@@ -403,7 +403,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter in (Investigator)
         private void ParseInvestigator(NciUrl url, CTSSearchParams searchParams)
         {
-            if (url.QueryParameters.ContainsKey("in"))
+            if (IsInUrl(url, "in"))
             {
                 string investigator = ParamAsStr(url.QueryParameters["in"]);
                 if (!string.IsNullOrWhiteSpace(investigator))
@@ -420,7 +420,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter lo (Lead Org)
         private void ParseLeadOrg(NciUrl url, CTSSearchParams searchParams)
         {
-            if(url.QueryParameters.ContainsKey("lo"))
+            if (IsInUrl(url, "lo"))
             {
                 string leadOrg = ParamAsStr(url.QueryParameters["lo"]);
                 if (!string.IsNullOrWhiteSpace(leadOrg))
@@ -473,7 +473,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter rl (Results Link Flag)
         private void ParseResultsLinkFlag(NciUrl url, CTSSearchParams searchParams)
         {
-            if (url.QueryParameters.ContainsKey("rl"))
+            if (IsInUrl(url, "rl"))
             {
                 int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], 0);
                 if (resLinkFlag == 0)
@@ -488,6 +488,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         #endregion
+
+        /// <summary>
+        /// Helper function to check if a param is used. (And not just set with an empty string.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="paramName"></param>
+        /// <returns></returns>
+        private bool IsInUrl(NciUrl url, string paramName)
+        {
+            return url.QueryParameters.ContainsKey(paramName) && !String.IsNullOrWhiteSpace(url.QueryParameters[paramName]);
+        }
 
         #region Utility methods 
 
