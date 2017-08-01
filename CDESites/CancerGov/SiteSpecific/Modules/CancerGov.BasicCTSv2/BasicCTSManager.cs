@@ -99,13 +99,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return trial;
         }
 
-
         /// <summary>
         /// Performs a search against the Clinical Trials API
         /// </summary>
         /// <param name="searchParams">Search paramesters</param>
         /// <param name="dynamicFilterParams">Deserialized dynamic search parameters</param>
         /// <returns>Clinical Trials collection</returns>
+        [Obsolete("This should be replaced with a more appropriate GetList for the listing pages.")]
         public ClinicalTrialsCollection Search(BaseCTSSearchParam searchParams, JObject dynamicFilterParams = null) {
             //Set page
             //Set size
@@ -269,135 +269,189 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Performs a search against the Clinical Trials API
+        /// </summary>
+        /// <param name="searchParams">Search paramesters</param>
+        /// <param name="dynamicFilterParams">Deserialized dynamic search parameters</param>
+        /// <returns>Clinical Trials collection</returns>
+        public ClinicalTrialsCollection Search(CTSSearchParams searchParams)
+        {
+            //TODO: Determine if the searchParams really are the best place for the pager.  I am thinking NO.
+            int from = 0;
+
+            if (searchParams.Page > 1)
+            {
+                from = (searchParams.Page - 1) * searchParams.ItemsPerPage;
+            }
+
+            Dictionary<string, object> filterCriteria = MapSearchParamsToFilterCriteria(searchParams);
+
+            //Get our list of trials from the API client
+            ClinicalTrialsCollection rtnResults = new ClinicalTrialsCollection();
+
+            //Fetch results
+            rtnResults = Client.List(
+                size: searchParams.ItemsPerPage,
+                from: from,
+                includeFields: IncludeFields,
+                searchParams: filterCriteria
+            );
+
+            //Remove all the inactive sites from all the trials.
+            foreach (ClinicalTrial trial in rtnResults.Trials)
+            {
+                RemoveNonRecruitingSites(trial);
+            }
+
+            return rtnResults;
+        }
+
+        /// <summary>
         /// Helper function to convert between CTSSearchParams and filter criteria for the API
         /// </summary>
-        /// <param name="searchParams"></param>
-        /// <returns></returns>
+        /// <param name="searchParams">The search parameters</param>
+        /// <returns>Filter criteria to perform that search</returns>
         private Dictionary<string, object> MapSearchParamsToFilterCriteria(CTSSearchParams searchParams)
         {
             Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
 
-            //TODO: Fix issues with zip code.  Either get back geocoordinates back from API, or keep looking them up.
-            /**
-            if (searchParams.ZipLookup != null)
+            //Diseases
+            if (searchParams.IsFieldSet(FormFields.MainType))
             {
-                filterCriteria.Add("sites.org_coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
-                filterCriteria.Add("sites.org_coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
-                filterCriteria.Add("sites.org_coordinates_dist", searchParams.ZipRadius.ToString() + "mi");
-                FilterActiveSites(filterCriteria);
+                filterCriteria.Add("diseases.nci_thesaurus_concept_id", searchParams.MainType.Codes);
             }
-            **/
-             
+            //TODO: Subtype
+            //TODO: Stages
+            //TODO: Findings
+
+            //For Sept 2017 SDS release we will combine drug and other using an OR query.  Future releases should
+            //use AND between Drugs and Other.
+            if (searchParams.IsFieldSet(FormFields.Drugs) || searchParams.IsFieldSet(FormFields.OtherTreatments))
+            {
+                // Drug and Trial ID's are sent under the same key and should be grouped.
+                List<string> drugAndTrialIds = new List<string>();
+
+                if (searchParams.IsFieldSet(FormFields.Drugs))
+                {
+                    drugAndTrialIds.AddRange(searchParams.Drugs.SelectMany(d => d.Codes));
+                }
+                if (searchParams.IsFieldSet(FormFields.OtherTreatments))
+                {
+                    drugAndTrialIds.AddRange(searchParams.OtherTreatments.SelectMany(ot => ot.Codes));
+                }
+
+                if (drugAndTrialIds.Count > 0)
+                {
+                    filterCriteria.Add("arms.interventions.intervention_code", drugAndTrialIds.ToArray());
+                }
+            }
+
             //Add Age Filter
             //<field>_gte, <field>_lte
-            if (searchParams.Age != null)
+            if (searchParams.IsFieldSet(FormFields.Age))
             {
                 filterCriteria.Add("eligibility.structured.max_age_in_years_gte", searchParams.Age);
                 filterCriteria.Add("eligibility.structured.min_age_in_years_lte", searchParams.Age);
             }
 
-            if (!String.IsNullOrEmpty(searchParams.Phrase))
+            if (searchParams.IsFieldSet(FormFields.Phrase))
             {
                 filterCriteria.Add("_fulltext", searchParams.Phrase);
             }
-            /*
-            if (!String.IsNullOrEmpty(searchParams.Country))
-            {
-                filterCriteria.Add("sites.org_country", searchParams.Country);
-                FilterActiveSites(filterCriteria);
-            }
 
-            if (!String.IsNullOrEmpty(searchParams.City))
+            if (searchParams.IsFieldSet(FormFields.TrialTypes))
             {
-                filterCriteria.Add("sites.org_city", searchParams.City);
-                FilterActiveSites(filterCriteria);
-            }
-             */
-            /*
-            if (searchParams)
-            {
-                filterCriteria.Add("sites.org_state_or_province", searchParams.State);
-                FilterActiveSites(filterCriteria);
-            }
-
-            // TBD
-            if (!String.IsNullOrEmpty(searchParams.HospitalOrInstitution))
-            {
-                filterCriteria.Add("sites.org_name_fulltext", searchParams.HospitalOrInstitution);
-                FilterActiveSites(filterCriteria);
-            }
-
-            if (searchParams.TrialTypeArray != null)
-            {
-                filterCriteria.Add("primary_purpose.primary_purpose_code", searchParams.TrialTypeArray);
-            }
-
-            // Drug and Trial ID's are sent under the same key and should be grouped.
-            List<string> drugAndTrialIds = new List<string>();
-            if (searchParams.DrugIDs != null)
-                drugAndTrialIds.AddRange(searchParams.DrugIDs);
-            if (searchParams.TreatmentInterventionCodes != null)
-                drugAndTrialIds.AddRange(searchParams.TreatmentInterventionCodes);
-            if (drugAndTrialIds.Count > 0)
-            {
-                filterCriteria.Add("arms.interventions.intervention_code", drugAndTrialIds.ToArray());
+                filterCriteria.Add("primary_purpose.primary_purpose_code", searchParams.TrialTypes.Select(tt => tt.Key));
             }
 
             // Array of strings
-            if (searchParams.TrialPhaseArray != null)
+            if (searchParams.IsFieldSet(FormFields.TrialPhases))
             {
-                filterCriteria.Add("phase.phase", searchParams.TrialPhaseArray);
+                //TODO: Expand phases here?? II -> I_II, II, II_III.  I think it best to expand it here.
+                filterCriteria.Add("phase.phase", searchParams.TrialPhases.Select(tp => tp.Key));
             }
 
-            if (searchParams.NewTrialsOnly)
+            if (searchParams.IsFieldSet(FormFields.Investigator))
             {
-                filterCriteria.Add("start_date_gte", searchParams.NewTrialsOnly);
+                filterCriteria.Add("principal_investigator_fulltext", searchParams.Investigator);
             }
 
-            if (!String.IsNullOrEmpty(searchParams.PrincipalInvestigator))
+            if (searchParams.IsFieldSet(FormFields.LeadOrg))
             {
-                filterCriteria.Add("principal_investigator_fulltext", searchParams.PrincipalInvestigator);
-            }
-
-            if (!String.IsNullOrEmpty(searchParams.LeadOrganization))
-            {
-                filterCriteria.Add("lead_org_fulltext", searchParams.LeadOrganization);
+                filterCriteria.Add("lead_org_fulltext", searchParams.LeadOrg);
             }
 
             //Add Gender Filter
-            if (!String.IsNullOrWhiteSpace(searchParams.Gender))
+            if (searchParams.IsFieldSet(FormFields.Gender))
             {
                 filterCriteria.Add("eligibility.structured.gender", searchParams.Gender);
             }
 
-            if (searchParams.TrialIDs != null)
+            if (searchParams.IsFieldSet(FormFields.TrialIDs))
             {
                 filterCriteria.Add("_trialids", searchParams.TrialIDs);
             }
 
-            if (searchParams.CancerFindings != null)
+            if (searchParams.IsFieldSet(FormFields.Location) && searchParams.Location != LocationType.None)
             {
-                filterCriteria.Add("diseases.display_name", searchParams.CancerFindings);
+                switch (searchParams.Location)
+                {
+                    case LocationType.AtNIH:
+                        {
+                            //NIH has their own postal code, so this means @NIH
+                            filterCriteria.Add("sites.org_postal_code", "20892");
+                            break;
+                        }
+                    case LocationType.Hospital:
+                        {
+                            filterCriteria.Add("sites.org_name_fulltext", ((HospitalLocationSearchParams)searchParams.LocationParams).Hospital);
+                            break;
+                        }
+                    case LocationType.CountryCityState:
+                        {
+                            CountryCityStateLocationSearchParams locParams = (CountryCityStateLocationSearchParams)searchParams.LocationParams;
+
+                            if (locParams.IsFieldSet(FormFields.Country))
+                            {
+                                filterCriteria.Add("sites.org_country", locParams.Country);
+                            }
+
+                            if (locParams.IsFieldSet(FormFields.City))
+                            {
+                                filterCriteria.Add("sites.org_city", locParams.City);
+                            }
+                            if (locParams.IsFieldSet(FormFields.State))
+                            {
+                                filterCriteria.Add("sites.org_state_or_province", locParams.State.Key);
+                            }
+                            break;
+                        }
+                        //Not going to handle zip for now
+                    //TODO: Fix issues with zip code.  Either get back geocoordinates back from API, or keep looking them up.
+                    /**
+                    if (searchParams.ZipLookup != null)
+                    {
+                        filterCriteria.Add("sites.org_coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
+                        filterCriteria.Add("sites.org_coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
+                        filterCriteria.Add("sites.org_coordinates_dist", searchParams.ZipRadius.ToString() + "mi");
+                        FilterActiveSites(filterCriteria);
+                    }
+                    **/
+
+                    default:
+                        {
+                            throw new Exception(String.Format("Location type, {0} not supported.", searchParams.Location));
+                        }
+                }
+                //All locations need filtering of active sites.
+                FilterActiveSites(filterCriteria);
             }
 
-
-            //Add phrase if this is a phrase search
-            if (searchParams is PhraseSearchParam)
-            {
-                filterCriteria.Add("_fulltext", ((PhraseSearchParam)searchParams).Phrase);
-            }
-            else if (searchParams is CancerTypeSearchParam)
-            {
-                //This is now an array of codes.
-                filterCriteria.Add("diseases.nci_thesaurus_concept_id", ((CancerTypeSearchParam)searchParams).CancerTypeIDs);
-            }
-
-            */
+            //This is for only searching open trials.
+            filterCriteria.Add("current_trial_status", ActiveTrialStatuses);
 
             return filterCriteria;
         }
-
-
 
         /// <summary>
         /// Adds criteria to only match locations that are actively recruiting sites.  Only adds the filter if it has not been added before.
@@ -496,6 +550,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return string.Empty; //Nothing found
         }
 
+        /// <summary>
+        /// Gets a collection of trials based on trial ids, batchVal at a time.
+        /// </summary>
+        /// <param name="ids">An array of trial IDs to fetch</param>
+        /// <param name="batchVal">The number of trials to retrieve at a time</param>
+        /// <returns>An enumerable list of ClinicalTrial objects</returns>
         public IEnumerable<ClinicalTrial> GetMultipleTrials(List<String> ids, int batchVal = 5)
         {
             foreach (IEnumerable<string> batch in ids.Batch(batchVal))
@@ -516,6 +576,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
                 }
             }            
+            //TODO: Shouldn't we be filtering out study sites?
         }
 
 

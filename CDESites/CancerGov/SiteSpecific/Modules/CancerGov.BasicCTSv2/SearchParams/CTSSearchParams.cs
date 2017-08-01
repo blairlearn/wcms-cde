@@ -18,10 +18,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         FormFields _usedFields = FormFields.None;
 
-        TerminologyFieldSearchParam _mainType       = null;
-        TerminologyFieldSearchParam[] _subTypes     = { };
-        TerminologyFieldSearchParam[] _stages       = { };
-        TerminologyFieldSearchParam[] _findings     = { };
+        TerminologyFieldSearchParam _mainType           = null;
+        TerminologyFieldSearchParam[] _subTypes         = { };
+        TerminologyFieldSearchParam[] _stages           = { };
+        TerminologyFieldSearchParam[] _findings         = { };
+        TerminologyFieldSearchParam[] _drugs            = { };
+        TerminologyFieldSearchParam[] _otherTreatments  = { };
+
+        LabelledSearchParam[] _trialTypes   = { };
+        LabelledSearchParam[] _trialPhases  = { };
+
         int _pageNum                = 1;
         int _itemsPerPage           = 10;
         int _age                    = 0;
@@ -29,6 +35,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         string _phrase              = string.Empty;
         string _investigator        = string.Empty;
         string _leadOrg             = string.Empty;
+        string[] _trialIDs          = { };
         LocationType _locationType  = LocationType.None;
 
         LocationSearchParams _locationParams = null;
@@ -120,27 +127,42 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Gets or sets an array of the trial types in the search
         /// </summary>
-        public LabelledSearchParam[] TrialTypes { get; set; }
+        public LabelledSearchParam[] TrialTypes {
+            get { return _trialTypes; }
+            set { _trialTypes = value; _usedFields |= FormFields.TrialTypes; } 
+        }
 
         /// <summary>
         /// Gets or sets an array of the drugs for this search definition
         /// </summary>
-        public TerminologyFieldSearchParam[] Drugs { get; set; }
+        public TerminologyFieldSearchParam[] Drugs {
+            get { return _drugs; }
+            set { _drugs = value; _usedFields |= FormFields.Drugs; } 
+        }
 
         /// <summary>
         /// Gets or sets an array of the other treatments for this search definition
         /// </summary>
-        public TerminologyFieldSearchParam[] OtherTreatments { get; set; }
+        public TerminologyFieldSearchParam[] OtherTreatments {
+            get { return _otherTreatments; }
+            set { _otherTreatments = value; _usedFields |= FormFields.OtherTreatments; } 
+        }
 
         /// <summary>
         /// Gets or sets an array of the trial phases in the search
         /// </summary>
-        public LabelledSearchParam[] TrialPhases { get; set; }
+        public LabelledSearchParam[] TrialPhases {
+            get { return _trialPhases; }
+            set { _trialPhases = value; _usedFields |= FormFields.TrialPhases; }
+        }
 
         /// <summary>
         /// Gets or sets an array of the trial IDs in the search
         /// </summary>
-        public string[] TrialIDs { get; set; }
+        public string[] TrialIDs {
+            get { return _trialIDs; }
+            set { _trialIDs = value; _usedFields |= FormFields.TrialIDs; }
+        }
 
         /// <summary>
         /// Gets or sets the Investigator used in the search
