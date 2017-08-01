@@ -73,10 +73,10 @@
     <Compile Include="CTSPrintManager.cs" />
     <Compile Include="ITerminologyLookupService.cs" />
     <Compile Include="SearchParams\LocationEnum.cs" />
-    <Compile Include="SearchParams\AtNIHLocationSearchParams.cs" />
-    <Compile Include="SearchParams\CountryCityStateLocationSearchParams.cs" />
-    <Compile Include="SearchParams\CTSSearchFieldParamError.cs" />
-    <Compile Include="SearchParams\CTSSearchParamError.cs" />
+    <Compile Include="SearchParams\LocationParams\AtNIHLocationSearchParams.cs" />
+    <Compile Include="SearchParams\LocationParams\CountryCityStateLocationSearchParams.cs" />
+    <Compile Include="SearchParams\ParamErrors\CTSSearchFieldParamError.cs" />
+    <Compile Include="SearchParams\ParamErrors\CTSSearchParamError.cs" />
     <Compile Include="SearchParams\CTSSearchParamFactory.cs" />
     <Compile Include="SearchParams\CTSSearchParams.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
@@ -91,14 +91,14 @@
     <Compile Include="SearchParams\Legacy\BaseCTSSearchParam.cs" />
     <Compile Include="SearchParams\Legacy\CancerTypeSearchParam.cs" />
     <Compile Include="SearchParams\FormFieldsEnum.cs" />
-    <Compile Include="SearchParams\HospitalLocationSearchParams.cs" />
-    <Compile Include="SearchParams\LocationSearchParams.cs" />
+    <Compile Include="SearchParams\LocationParams\HospitalLocationSearchParams.cs" />
+    <Compile Include="SearchParams\LocationParams\LocationSearchParams.cs" />
     <Compile Include="SearchParams\LabelledSearchParam.cs" />
     <Compile Include="SearchParams\ListingSearchParam.cs" />
     <Compile Include="SearchParams\Legacy\PhraseSearchParam.cs" />
     <Compile Include="SearchParams\Legacy\CTSPrintSearchParams.cs" />
     <Compile Include="SearchParams\TerminologyFieldSearchParam.cs" />
-    <Compile Include="SearchParams\ZipCodeLocationSearchParams.cs" />
+    <Compile Include="SearchParams\LocationParams\ZipCodeLocationSearchParams.cs" />
     <Compile Include="SnippetControls\TrialListings\BaseTrialListingControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
