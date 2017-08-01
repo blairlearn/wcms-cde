@@ -89,6 +89,10 @@
       <Project>{96f6420f-f16d-4873-af3a-5d22e9ffbd55}</Project>
       <Name>CancerGov.BasicCTSv2</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CancerGov.ClinicalTrialsAPI\CancerGov.ClinicalTrialsAPI.csproj">
+      <Project>{07db8185-53dc-4434-9d4a-ffc0efc9078a}</Project>
+      <Name>CancerGov.ClinicalTrialsAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
