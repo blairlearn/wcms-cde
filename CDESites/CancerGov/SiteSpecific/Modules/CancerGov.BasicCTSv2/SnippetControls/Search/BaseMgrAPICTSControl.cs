@@ -19,8 +19,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
         static ILog log = LogManager.GetLogger(typeof(BaseMgrAPICTSControl));
 
         //An instance of the BasicCTSManager for interacting with the CTSAPI
-        protected BasicCTSManager _basicCTSManager = null;
-        protected CTSSearchParams _searchParams = null;
+        protected BasicCTSManager CTSManager { get; private set; }
+        protected CTSSearchParams SearchParams { get; private set; }
 
         public BaseMgrAPICTSControl()
         {
@@ -33,14 +33,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
                 log.Error(err);
                 throw new Exception(err);
             }
-            _basicCTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(apiURL));
+            CTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(apiURL));
 
             /////////////////////////////
             // Parse the Query to get the search params.
             try
             {
                 CTSSearchParamFactory factory = new CTSSearchParamFactory(DynamicTrialListingMapping.Instance);
-                _searchParams = factory.Create(this.Request.Url.Query);
+                SearchParams = factory.Create(this.Request.Url.Query);
             }
             catch (Exception ex)
             {

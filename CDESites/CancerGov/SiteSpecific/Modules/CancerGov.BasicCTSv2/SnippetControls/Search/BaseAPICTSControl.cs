@@ -9,8 +9,6 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrialsAPI;
 using System.Web.UI;
-using System.Dynamic;
-using System.Collections.Generic;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
 {
@@ -23,7 +21,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
     {
         static ILog log = LogManager.GetLogger(typeof(BaseAPICTSControl));
 
-        protected BasicCTSPageInfo _config = null;
+        /// <summary>
+        /// Gets the Snippet Controls Config.
+        /// </summary>
+        protected BasicCTSPageInfo Config { get; private set; }
 
         /// <summary>
         /// Create a new instance of a APICTS Control
@@ -43,7 +44,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
                 if (string.IsNullOrEmpty(spidata))
                     throw new Exception("BasicCTSPageInfo not present in xml, associate an application module item  with this page in percussion");
 
-                _config = ModuleObjectFactory<BasicCTSPageInfo>.GetModuleObject(spidata);
+                Config = ModuleObjectFactory<BasicCTSPageInfo>.GetModuleObject(spidata);
             }
             catch (Exception ex)
             {
@@ -64,7 +65,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
         protected abstract object GetDataForTemplate();
 
         /// <summary>
-        /// Overrides the OnPreRender event and 
+        /// Overrides the OnPreRender event and forces derrived classes to handle events here.
         /// </summary>
         /// <param name="e"></param>
         protected override sealed void OnPreRender(EventArgs e)
@@ -80,6 +81,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Search
                 )
             );
             Controls.Add(ltl);
+        }
+
+        /// <summary>
+        /// DO NOT IMPLEMENT ANYTHING HERE OR IN DERRIVED CLASSES.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override sealed void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+        }
+
+        /// <summary>
+        /// DO NOT IMPLEMENT ANYTHING HERE OR IN DERRIVED CLASSES.
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
         }
     }
 }
