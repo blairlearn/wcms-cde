@@ -274,14 +274,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="searchParams">Search paramesters</param>
         /// <param name="dynamicFilterParams">Deserialized dynamic search parameters</param>
         /// <returns>Clinical Trials collection</returns>
-        public ClinicalTrialsCollection Search(CTSSearchParams searchParams)
+        public ClinicalTrialsCollection Search(CTSSearchParams searchParams, int pageNumber = 0, int itemsPerPage = 10)
         {
             //TODO: Determine if the searchParams really are the best place for the pager.  I am thinking NO.
             int from = 0;
 
-            if (searchParams.Page > 1)
+            if (pageNumber > 1)
             {
-                from = (searchParams.Page - 1) * searchParams.ItemsPerPage;
+                from = (pageNumber - 1) * itemsPerPage;
             }
 
             Dictionary<string, object> filterCriteria = MapSearchParamsToFilterCriteria(searchParams);
@@ -291,7 +291,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             //Fetch results
             rtnResults = Client.List(
-                size: searchParams.ItemsPerPage,
+                size: itemsPerPage,
                 from: from,
                 includeFields: IncludeFields,
                 searchParams: filterCriteria

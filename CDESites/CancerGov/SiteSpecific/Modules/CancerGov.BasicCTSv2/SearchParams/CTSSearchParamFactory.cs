@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NCI.Web;
 using System.Web;
+using System.Text.RegularExpressions;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -40,10 +41,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 ParseLocation +
                 ParseDrugs +
                 ParseOtherTreatments +
+                ParseTrialIDs +
                 ParseInvestigator +
                 ParseLeadOrg +
-                ParsePageNum +
-                ParseItemsPerPage +
+                //ParsePageNum +
+                //ParseItemsPerPage +
                 ParseResultsLinkFlag;
         }
          
@@ -148,6 +150,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 {
                     LogParseError(FormFields.Age, "Please enter a valid age parameter.", searchParams);
                 }
+                else if (age > 120)
+                {
+                    LogParseError(FormFields.Age, "Please enter a valid age parameter.", searchParams);
+                }
                 else
                 {
                     searchParams.Age = age;
@@ -214,7 +220,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        // Parameter z (Zip Code) && ZP
+        // Parameter z (Zip Code) && zp (Zip Proximity)
         private void ParseZipCode(NciUrl url, CTSSearchParams searchParams)
         {
             ZipCodeLocationSearchParams locParams = new ZipCodeLocationSearchParams();
@@ -222,14 +228,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (url.QueryParameters.ContainsKey("z"))
             {
                 string zipCode = ParamAsStr(url.QueryParameters["z"]);
+ 
                 if (string.IsNullOrWhiteSpace(zipCode) || (zipCode.Length < 5))
-                // TODO: add regex to check for chars other than numbers or "-"
                 {
                     LogParseError(FormFields.ZipCode, "Please enter a valid zip code value.", searchParams);
                 }
-                else
+                
+                string pattern = @"^[0-9]{5}$";
+                if(Regex.IsMatch(zipCode, pattern))
                 {
                     locParams.ZipCode = zipCode;
+                }
+                else
+                {
+                    LogParseError(FormFields.ZipCode, "Please enter a valid zip code value.", searchParams);
                 }
             }
             else
@@ -357,6 +369,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //TODO: Error handling
         }
 
+        // Parameter tp (Trial Phase)
+        private void ParseTrialPhases(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (url.QueryParameters.ContainsKey("tp"))
+            {
+                LabelledSearchParam[] phases = GetLabelledFieldFromParam(url.QueryParameters["tp"]);
+                searchParams.TrialPhases = phases;
+            }
+
+            // TODO: Error handling
+        }
+
+        // Parameter tid (Trial IDs)
+        private void ParseTrialIDs(NciUrl url, CTSSearchParams searchParams)
+        {
+            if(url.QueryParameters.ContainsKey("tid"))
+            {
+                string[] idArray = ParamAsStr(url.QueryParameters["tid"]).Split(new Char[] {',',';'} ).Select(id => id.Trim()).ToArray();
+                if(idArray.Length == 1 && string.IsNullOrWhiteSpace(idArray[0]))
+                {
+                    LogParseError(FormFields.TrialIDs, "Please enter a valid trial ID parameter.", searchParams);
+                }
+                else
+                {
+                    searchParams.TrialIDs = idArray;
+                }
+            }
+
+            //TODO: More error handling
+        }
+
         // Parameter in (Investigator)
         private void ParseInvestigator(NciUrl url, CTSSearchParams searchParams)
         {
@@ -391,6 +434,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
+        /*
         // Parameter pn (Page Number)
         private void ParsePageNum(NciUrl url, CTSSearchParams searchParams)
         {
@@ -399,7 +443,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 int pageNum = ParamAsInt(url.QueryParameters["pn"], 10);
                 if (pageNum < 1)
                 {
-                    LogParseError("Page", "Please enter a valid page number.", searchParams);
+
+                    searchParams.Page = 1;
                 }
                 else
                 {
@@ -423,7 +468,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     searchParams.ItemsPerPage = itemsPerPage;
                 }
             }
-        }
+        }*/
 
         // Parameter rl (Results Link Flag)
         private void ParseResultsLinkFlag(NciUrl url, CTSSearchParams searchParams)
@@ -473,14 +518,58 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private TerminologyFieldSearchParam[] GetTermFieldFromParam(string paramData)
         {
             List<TerminologyFieldSearchParam> rtnParams = new List<TerminologyFieldSearchParam>();
-
-            TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
+            string codePattern = @"(?i)c\d{4}";
 
             //TODO: Handle validating codes, handling multiple codes, etc.
-            type.Codes = new string[] { paramData };
-            type.Label = this._lookupSvc.GetTitleCase(String.Join(",", type.Codes));
+            try 
+            {
+                string[] items = paramData.Split(',');
+                for (int i = 0; i < items.Length; i++)
+                {
+                    //items[i] = items[i].ToLower();
 
-            rtnParams.Add(type);
+                    if(items[i].Contains('|'))
+                    {
+                        string[] multiple = items[i].Split('|');
+                        Array.Sort(multiple);
+
+                        bool allMatchCodePattern = true;
+                        for(int j = 0; j < multiple.Length; j++)
+                        {
+                            if(Regex.IsMatch(multiple[j], codePattern))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                allMatchCodePattern = false;
+                            }
+                        }
+
+                        if(allMatchCodePattern)
+                        {
+                            TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
+                            type.Codes = multiple;
+                            type.Label = this._lookupSvc.GetTitleCase(string.Join(",", multiple).ToLower());
+                            rtnParams.Add(type);
+                        }
+                    }
+                    else
+                    {
+                        if(Regex.IsMatch(items[i], codePattern))
+                        {
+                            TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
+                            type.Codes = new string[] { items[i] };
+                            type.Label = this._lookupSvc.GetTitleCase(items[i].ToLower());
+                            rtnParams.Add(type);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
 
             return rtnParams.ToArray();
         }

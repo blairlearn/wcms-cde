@@ -28,8 +28,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         LabelledSearchParam[] _trialTypes   = { };
         LabelledSearchParam[] _trialPhases  = { };
 
-        int _pageNum                = 1;
-        int _itemsPerPage           = 10;
+        //int _pageNum                = 1;
+        //int _itemsPerPage           = 10;
+        int _resultsLinkFlag        = 0;
         int _age                    = 0;
         string _gender              = string.Empty;
         string _phrase              = string.Empty;
@@ -179,7 +180,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             get { return _leadOrg; }
             set { _leadOrg = value; _usedFields |= FormFields.LeadOrg; }
         }
-
+        /*
         /// <summary>
         /// Gets or sets the page number for the search
         /// </summary>
@@ -197,12 +198,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             get { return _itemsPerPage; }
             set { _itemsPerPage = value; }
-        }
+        }*/
 
         /// <summary>
         /// Gets or sets the results link flag for the search
         /// </summary>
-        public int ResultsLinkFlag { get; set; }
+        public int ResultsLinkFlag
+        {
+            get { return _resultsLinkFlag; }
+            set { _resultsLinkFlag = value; }
+        }
 
         /// <summary>
         /// Gets or sets an array of CTS Search Param Errors to identify when a parse error occurred.

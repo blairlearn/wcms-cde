@@ -8,5 +8,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 {
     public partial class CTSSearchParamFactory_Test
     {
+
     }
 }

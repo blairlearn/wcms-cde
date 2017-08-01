@@ -40,8 +40,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
 
                     // TEST 2 - Cancer subtype
-                    new object[] {"?st=C7771", new CTSSearchParams() {
+                    new object[] {"?stg=C7771", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C7771" },
+                                Label = "Recurrent Breast Cancer"
+                            }
+                        }
+                    }},
+
+                    // TEST 2 - Cancer subtype
+                    new object[] {"?stg=C7771|C4001", new CTSSearchParams() {
+                        SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C4001" , "C7771" },
+                                Label = "Recurrent Inflammatory Breast Cancer"
+                            }
+                        }
+                    }},
+
+                    // TEST 2 - Cancer subtype
+                    new object[] {"?stg=C7771|C4001,C7771", new CTSSearchParams() {
+                        SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C4001" , "C7771" },
+                                Label = "Recurrent Inflammatory Breast Cancer"
+                            },
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C7771" },
                                 Label = "Recurrent Breast Cancer"
@@ -187,12 +211,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     }},
-
+                    
                     // TEST 20 - Trial ID 
-                    new object[] {"tid=NCI-2014-01509", new CTSSearchParams() {
+                    new object[] {"?tid=NCI-2014-01509", new CTSSearchParams() {
                         TrialIDs = new string[] {"NCI-2014-01509"}
                     }},
-
+                    
                     // TEST 21 - Principal investigator 
                     new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
                         Investigator = "Sophia Smith"
@@ -202,7 +226,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
                         LeadOrg = "Mayo Clinic"
                     }},
-
+                    /*
                     // TEST 23 - Page number
                     new object[] { "?pn=3", new CTSSearchParams() {
                         Page = 3
@@ -211,7 +235,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 24 - Items per page
                     new object[] { "?ni=25", new CTSSearchParams() {
                         ItemsPerPage = 25
-                    }}
+                    }}*/
                 };
             }
         }
@@ -251,22 +275,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
             //Handle the case when a string of C4872 is passed in to GetTitleCase and return the label "Breast Cancer"
             //This makes it so that we do not have to create a fake class that returns fake data.
-            rtnMock.Setup(lookup => lookup.GetTitleCase("C4872"))
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c4872"))
                 .Returns("Breast Cancer");
 
-            rtnMock.Setup(lookup => lookup.GetTitleCase("C7771"))
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c7771"))
                 .Returns("Recurrent Breast Cancer");
 
-            rtnMock.Setup(lookup => lookup.GetTitleCase("C88375"))
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c4001,c7771"))
+                .Returns("Recurrent Inflammatory Breast Cancer");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c88375"))
                 .Returns("Stage I Breast Cancer");
 
-            rtnMock.Setup(lookup => lookup.GetTitleCase("C26696"))
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c26696"))
                 .Returns("Anxiety");
 
-            rtnMock.Setup(lookup => lookup.GetTitleCase("C1647"))
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c1647"))
                 .Returns("Trastuzumab");
 
-            rtnMock.Setup(lookup => lookup.GetTitleCase("C131060"))
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c131060"))
                 .Returns("Checkpoint Blockade Immunotherapy");
 
             rtnMock.Setup(lookup => lookup.Get("MD"))

@@ -57,8 +57,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 _locParamComp.Equals(x.LocationParams, y.LocationParams) &&
                 x.Investigator == y.Investigator &&
                 x.LeadOrg == y.LeadOrg &&
-                x.Page == y.Page &&
-                x.ItemsPerPage == y.ItemsPerPage &&
+                //x.Page == y.Page &&
+                //x.ItemsPerPage == y.ItemsPerPage &&
                 x.ResultsLinkFlag == y.ResultsLinkFlag; 
             //ADD A FIELD TO SearchParams, NEED to add here.
 
@@ -166,8 +166,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             hash ^= obj.TrialIDs.GetHashCode();
             hash ^= obj.Investigator.GetHashCode();
             hash ^= obj.LeadOrg.GetHashCode();
-            hash ^= obj.Page.GetHashCode();
-            hash ^= obj.ItemsPerPage.GetHashCode();
+            //hash ^= obj.Page.GetHashCode();
+            //hash ^= obj.ItemsPerPage.GetHashCode();
             hash ^= obj.ResultsLinkFlag.GetHashCode();
             //ADD A FIELD TO SearchParams, NEED to add here.
 
