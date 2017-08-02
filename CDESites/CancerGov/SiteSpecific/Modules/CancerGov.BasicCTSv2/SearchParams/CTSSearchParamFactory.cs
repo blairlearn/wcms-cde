@@ -65,22 +65,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             //Add parser methods here
             this._parsers =
-                (ParameterParserDelegate)ParseKeyword + //First param needs the cast.
+                (ParameterParserDelegate)ParseResultsLinkFlag + //First param needs the cast.
                 ParseCancerType +
                 ParseSubTypes +
                 ParseStages +
                 ParseFindings +
                 ParseAge +
+                ParseKeyword +
                 ParseGender +
                 ParseLocation +
+                ParseTrialTypes +
                 ParseDrugs +
                 ParseOtherTreatments +
                 ParseTrialIDs +
                 ParseInvestigator +
-                ParseLeadOrg +
-                //ParsePageNum +
-                //ParseItemsPerPage +
-                ParseResultsLinkFlag;
+                ParseLeadOrg;
         }
          
         /// <summary>
@@ -137,7 +136,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 codes.Add(string.Join("|", termField.Codes));
             }
 
-            return string.Join("|", codes.ToArray());
+            return string.Join(",", codes.ToArray());
         }
 
         //Parameter t (Main Cancer Type)
@@ -345,20 +344,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         #endregion
 
         #region Parameter Parsers 
-
-        //Parameter q (Keyword/Phrase)
-        private void ParseKeyword(NciUrl url, CTSSearchParams searchParams)
+        // Parameter rl (Results Link Flag)
+        private void ParseResultsLinkFlag(NciUrl url, CTSSearchParams searchParams)
         {
-            if (IsInUrl(url, "q"))
+            //TODO: Fix this to handle the enum parsing better.
+            //Also if it is not in the URL we should set it to basic
+            if (IsInUrl(url, "rl"))
             {
-                string phrase = ParamAsStr(url.QueryParameters["q"]);
-                if(!string.IsNullOrWhiteSpace(phrase))
+                int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], 0);
+                if (resLinkFlag == 0)
                 {
-                    searchParams.Phrase = phrase;
+                    LogParseError("ResultsLinkFlag", "Please enter a valid results link flag value (1 or 2).", searchParams);
                 }
                 else
                 {
-                    LogParseError(FormFields.Phrase, "Please enter a valid keyword parameter.", searchParams);
+                    searchParams.ResultsLinkFlag = (ResultsLinkType)resLinkFlag;
                 }
             }
         }
@@ -369,7 +369,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //TODO: Extra credit, refactor the term extraction logic so it does not get repeated for each type
             if (IsInUrl(url, "t"))
             {
-                TerminologyFieldSearchParam[] terms = GetTermFieldFromParam(url.QueryParameters["t"]);
+                TerminologyFieldSearchParam[] terms = GetTermFieldFromParam(url.QueryParameters["t"], FormFields.MainType, searchParams);
                 if (terms.Length == 1)
                 {
                     searchParams.MainType = terms[0];
@@ -383,33 +383,33 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         //Parameter st (SubTypes)
-        private void ParseSubTypes(NciUrl url, CTSSearchParams searchParms)
+        private void ParseSubTypes(NciUrl url, CTSSearchParams searchParams)
         {
             if (IsInUrl(url, "st"))
             {
-                searchParms.SubTypes = GetTermFieldFromParam(url.QueryParameters["st"]);
+                searchParams.SubTypes = GetTermFieldFromParam(url.QueryParameters["st"], FormFields.SubTypes, searchParams);
             }
 
             //TODO: Error Handling
         }
 
         //Parameter stg (Stages)
-        private void ParseStages(NciUrl url, CTSSearchParams searchParms)
+        private void ParseStages(NciUrl url, CTSSearchParams searchParams)
         {
             if (IsInUrl(url, "stg"))
             {
-                searchParms.Stages = GetTermFieldFromParam(url.QueryParameters["stg"]);
+                searchParams.Stages = GetTermFieldFromParam(url.QueryParameters["stg"], FormFields.Stages, searchParams);
             }
 
             //TODO: Error Handling
         }
 
         //Parameter fin (Findings)
-        private void ParseFindings(NciUrl url, CTSSearchParams searchParms)
+        private void ParseFindings(NciUrl url, CTSSearchParams searchParams)
         {
             if (IsInUrl(url, "fin"))
             {
-                searchParms.Findings = GetTermFieldFromParam(url.QueryParameters["fin"]);
+                searchParams.Findings = GetTermFieldFromParam(url.QueryParameters["fin"], FormFields.Findings, searchParams);
             }
 
             //TODO: Error Handling
@@ -436,6 +436,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
+        //Parameter q (Keyword/Phrase)
+        private void ParseKeyword(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (IsInUrl(url, "q"))
+            {
+                string phrase = ParamAsStr(url.QueryParameters["q"]);
+                if (!string.IsNullOrWhiteSpace(phrase))
+                {
+                    searchParams.Phrase = phrase;
+                }
+                else
+                {
+                    LogParseError(FormFields.Phrase, "Please enter a valid keyword parameter.", searchParams);
+                }
+            }
+        }
+
         // Parameter g (Gender)
         private void ParseGender(NciUrl url, CTSSearchParams searchParams)
         {
@@ -456,16 +473,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter loc (Location, and AtNIH if loc=nih)
         private void ParseLocation(NciUrl url, CTSSearchParams searchParams)
         {
-            //TODO: Handle basic form where this parameter will not be passed in??
+            searchParams.Location = LocationType.None;
 
             if (url.QueryParameters.ContainsKey("loc"))
             {
-                searchParams.Location = LocationType.None;
-
                 try
                 {
                     searchParams.Location = (LocationType)ParamAsInt(url.QueryParameters["loc"], 0);
                 } catch(Exception) {
+                    // 
                     LogParseError(FormFields.Location, "Please enter a valid location type.", searchParams);
                     return;
                 }
@@ -492,6 +508,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             break;
                         }
                 }
+            }
+            else if (searchParams.ResultsLinkFlag == ResultsLinkType.Basic && IsInUrl(url, "z"))
+            {
+                ParseZipCode(url, searchParams);
             }
         }
 
@@ -551,7 +571,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //TODO: Handle label conversion
             if (IsInUrl(url, "lst"))
             {
-                LabelledSearchParam[] states = GetLabelledFieldFromParam(url.QueryParameters["lst"]);
+                LabelledSearchParam[] states = GetLabelledFieldFromParam(url.QueryParameters["lst"], FormFields.State, searchParams);
                 if (states.Length == 1)
                 {
                     locParams.State = states[0];
@@ -620,24 +640,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             searchParams.LocationParams = locParams;
         }
 
-        //Parameter d (Drugs)
-        private void ParseDrugs(NciUrl url, CTSSearchParams searchParms)
+        //Parameter tt (Trial Type)
+        private void ParseTrialTypes(NciUrl url, CTSSearchParams searchParams)
         {
-            //TODO: Handle Lowercase
+            if (IsInUrl(url, "tt"))
+            {
+                searchParams.TrialTypes = GetLabelledFieldFromParam(url.QueryParameters["tt"], FormFields.TrialTypes, searchParams);
+            }
+        }
+
+        //Parameter d (Drugs)
+        private void ParseDrugs(NciUrl url, CTSSearchParams searchParams)
+        {
             if (IsInUrl(url, "d"))
             {
-                searchParms.Drugs = GetTermFieldFromParam(url.QueryParameters["d"]);
+                searchParams.Drugs = GetTermFieldFromParam(url.QueryParameters["d"], FormFields.Drugs, searchParams);
             }
 
             //TODO: Error handling
         }
 
         //Parameter i (Other treatments / interventions)
-        private void ParseOtherTreatments(NciUrl url, CTSSearchParams searchParms)
+        private void ParseOtherTreatments(NciUrl url, CTSSearchParams searchParams)
         {
             if (IsInUrl(url, "i"))
             {
-                searchParms.OtherTreatments = GetTermFieldFromParam(url.QueryParameters["i"]);
+                searchParams.OtherTreatments = GetTermFieldFromParam(url.QueryParameters["i"], FormFields.OtherTreatments, searchParams);
             }
 
             //TODO: Error handling
@@ -648,7 +676,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "tp"))
             {
-                LabelledSearchParam[] phases = GetLabelledFieldFromParam(url.QueryParameters["tp"]);
+                LabelledSearchParam[] phases = GetLabelledFieldFromParam(url.QueryParameters["tp"], FormFields.TrialPhases, searchParams);
                 searchParams.TrialPhases = phases;
             }
 
@@ -707,26 +735,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 }
             }
         }
-
-        // Parameter rl (Results Link Flag)
-        private void ParseResultsLinkFlag(NciUrl url, CTSSearchParams searchParams)
-        {
-            //TODO: Fix this to handle the enum parsing better.
-            //Also if it is not in the URL we should set it to basic
-            if (IsInUrl(url, "rl"))
-            {
-                int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], 0);
-                if (resLinkFlag == 0)
-                {
-                    LogParseError("ResultsLinkFlag", "Please enter a valid results link flag value (1 or 2).", searchParams);
-                }
-                else
-                {
-                    searchParams.ResultsLinkFlag = (ResultsLinkType)resLinkFlag;
-                }
-            }
-        }
-
         #endregion
 
 
@@ -748,16 +756,34 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="paramData"></param>
         /// <returns>Array of param objects</returns>
-        private LabelledSearchParam[] GetLabelledFieldFromParam(string paramData)
+        private LabelledSearchParam[] GetLabelledFieldFromParam(string paramData, FormFields field, CTSSearchParams searchParams)
         {
             List<LabelledSearchParam> rtnParams = new List<LabelledSearchParam>();
-            LabelledSearchParam type = new LabelledSearchParam();
 
             //TODO: Update mapping to handle different cases (like state abbreviation vs primary purpose label)
-            type.Key = paramData;
-            type.Label = this._lookupSvc.Get(type.Key);
-
-            rtnParams.Add(type);
+            try
+            {
+                string[] items = paramData.Split(',');
+                for (int i = 0; i < items.Length; i++)
+                {
+                    bool contains = this._lookupSvc.MappingContainsKey(items[i]);
+                    if(this._lookupSvc.MappingContainsKey(items[i]))
+                    {
+                        LabelledSearchParam type = new LabelledSearchParam();
+                        type.Key = items[i];
+                        type.Label = this._lookupSvc.Get(type.Key);
+                        rtnParams.Add(type);
+                    }
+                    else
+                    {
+                        LogParseError(field, "Invalid param(s) for lookup: " + items[i], searchParams);
+                    }
+                }
+            }
+            catch
+            {
+                LogParseError(field, "Please enter a valid parameter.", searchParams);
+            }
 
             return rtnParams.ToArray();
         }
@@ -767,7 +793,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="paramData"></param>
         /// <returns>Array of param objects</returns>
-        private TerminologyFieldSearchParam[] GetTermFieldFromParam(string paramData)
+        private TerminologyFieldSearchParam[] GetTermFieldFromParam(string paramData, FormFields field, CTSSearchParams searchParams)
         {
             List<TerminologyFieldSearchParam> rtnParams = new List<TerminologyFieldSearchParam>();
             string codePattern = @"(?i)c\d{4}";
@@ -778,8 +804,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 string[] items = paramData.Split(',');
                 for (int i = 0; i < items.Length; i++)
                 {
-                    //items[i] = items[i].ToLower();
-
                     if(items[i].Contains('|'))
                     {
                         string[] multiple = items[i].Split('|');
@@ -800,27 +824,41 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
                         if(allMatchCodePattern)
                         {
-                            TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
-                            type.Codes = multiple;
-                            type.Label = this._lookupSvc.GetTitleCase(string.Join(",", multiple).ToLower());
-                            rtnParams.Add(type);
+                            if(this._lookupSvc.MappingContainsKey(string.Join(",", multiple).ToLower()))
+                            {
+                                TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
+                                type.Codes = multiple;
+                                type.Label = this._lookupSvc.GetTitleCase(string.Join(",", multiple).ToLower());
+                                rtnParams.Add(type);
+                            }
+                            else
+                            {
+                                LogParseError(field, "Invalid code(s) for lookup: " + string.Join(",", multiple).ToLower(), searchParams);
+                            }
                         }
                     }
                     else
                     {
                         if(Regex.IsMatch(items[i], codePattern))
                         {
-                            TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
-                            type.Codes = new string[] { items[i] };
-                            type.Label = this._lookupSvc.GetTitleCase(items[i].ToLower());
-                            rtnParams.Add(type);
+                            if (this._lookupSvc.MappingContainsKey(items[i].ToLower()))
+                            {
+                                TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
+                                type.Codes = new string[] { items[i] };
+                                type.Label = this._lookupSvc.GetTitleCase(items[i].ToLower());
+                                rtnParams.Add(type);
+                            }
+                            else
+                            {
+                                LogParseError(field, "Invalid code(s) for lookup: " + items[i].ToLower(), searchParams);
+                            }
                         }
                     }
                 }
             }
             catch
             {
-
+                LogParseError(field, "Please enter a valid parameter.", searchParams);
             }
 
             return rtnParams.ToArray();

@@ -171,13 +171,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.AtNIH,
                         LocationParams = new AtNIHLocationSearchParams()
                     }},
-
+                    
                     // TEST 16 - Trial type
                     new object[] {"?tt=basic_science", new CTSSearchParams() {
                         TrialTypes = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
                                 Key = "basic_science",
-                                Label = "Basic science"
+                                Label = "Basic Science"
                             }
                         }
                     }},
@@ -225,17 +225,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 22 - Lead organization
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
                         LeadOrg = "Mayo Clinic"
-                    }},
-                    /*
-                    // TEST 23 - Page number
-                    new object[] { "?pn=3", new CTSSearchParams() {
-                        Page = 3
-                    }},
-
-                    // TEST 24 - Items per page
-                    new object[] { "?ni=25", new CTSSearchParams() {
-                        ItemsPerPage = 25
-                    }}*/
+                    }}
                 };
             }
         }
@@ -298,6 +288,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
             rtnMock.Setup(lookup => lookup.Get("MD"))
                 .Returns("Maryland");
+
+            rtnMock.Setup(lookup => lookup.Get("basic_science"))
+                .Returns("Basic Science");
+
+            rtnMock.Setup(lookup => lookup.MappingContainsKey(It.IsAny<string>()))
+                .Returns(true);
 
             //@Sarina and @Dion - Add other instances for GetTitleCase to support your unit tests.
 
