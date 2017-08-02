@@ -52,6 +52,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Determines if the parameters had parse errors
+        /// </summary>
+        /// <returns></returns>
+        public bool HasInvalidParams()
+        {
+            return this.ParseErrors.Count > 0;
+        }
+
+        /// <summary>
         /// Gets or sets the main cancer type that was selected.
         /// </summary>
         public TerminologyFieldSearchParam MainType
