@@ -17,6 +17,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// Identifies which fields of the form were used.
         /// </summary>
         FormFields _usedFields = FormFields.None;
+        List<CTSSearchParamError> _parseErrors = new List<CTSSearchParamError>();
 
         TerminologyFieldSearchParam _mainType           = null;
         TerminologyFieldSearchParam[] _subTypes         = { };
@@ -221,7 +222,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Gets or sets an array of CTS Search Param Errors to identify when a parse error occurred.
         /// </summary>
-        public List<CTSSearchParamError> ParseErrors { get; set; }
+        public List<CTSSearchParamError> ParseErrors { 
+            get { return _parseErrors;}
+            set { _parseErrors = value; }
+        }
 
     }
 }
