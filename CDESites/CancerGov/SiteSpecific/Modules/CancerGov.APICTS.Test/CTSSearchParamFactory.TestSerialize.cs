@@ -163,7 +163,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             Assert.Equal(expected.QueryParameters, actual.QueryParameters);
         }
 
-
+          
 
 
     }
