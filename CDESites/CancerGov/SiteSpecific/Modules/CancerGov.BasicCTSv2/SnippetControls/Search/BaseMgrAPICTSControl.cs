@@ -18,10 +18,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     {
         static ILog log = LogManager.GetLogger(typeof(BaseMgrAPICTSControl));
 
+        private int _pageNum = 1;
+        private int _itemsPerPage = 10;
+        //We may need to know if pagenum or ipp were actually set in the URL or not.  Specifically for the details page.
+
+        public int PageNum { get { return _pageNum; } }
+        public int ItemsPerPage { get { return _itemsPerPage; } }        
+
         //An instance of the BasicCTSManager for interacting with the CTSAPI
         protected BasicCTSManager CTSManager { get; private set; }
-        protected CTSSearchParams SearchParams { get; private set; }
+        protected CTSSearchParams SearchParams { get; private set; }        
 
+        /// <summary>
+        /// Initializes the CTSManager and Parses the Query Params
+        /// </summary>
         protected override void Init()
         {
             base.Init();
@@ -49,7 +59,55 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 log.Error("could not parse the CTS search parameters", ex);
                 throw ex;
             }
+
+            ///////////////////////////
+            // Parse the page specific parameters
+            NciUrl reqUrl = new NciUrl(true, true);
+            reqUrl.SetUrl(this.Request.Url.Query);
+
+            if (IsInUrl(reqUrl, "pn")) {
+                this._pageNum = ParamAsInt(reqUrl.QueryParameters["pn"], 1);
+            }
+
+            _itemsPerPage = Config.DefaultItemsPerPage;
+            if (IsInUrl(reqUrl, "ni"))
+            {
+                this._itemsPerPage = ParamAsInt(reqUrl.QueryParameters["ni"], _itemsPerPage);
+            }
         }
 
+        /// <summary>
+        /// Helper function to check if a param is used. (And not just set with an empty string.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="paramName"></param>
+        /// <returns></returns>
+        protected bool IsInUrl(NciUrl url, string paramName)
+        {
+            return url.QueryParameters.ContainsKey(paramName) && !String.IsNullOrWhiteSpace(url.QueryParameters[paramName]);
+        }
+
+        /// <summary>
+        /// Converts a query param to an int; returns 0 if unable to parse
+        /// </summary>
+        protected int ParamAsInt(string paramVal, int def)
+        {
+            if (string.IsNullOrWhiteSpace(paramVal))
+            {
+                return def;
+            }
+            else
+            {
+                int tmpInt = 0;
+                if (int.TryParse(paramVal.Trim(), out tmpInt))
+                {
+                    return tmpInt;
+                }
+                else
+                {
+                    return def;
+                }
+            }
+        }
     }
 }
