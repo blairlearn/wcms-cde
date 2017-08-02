@@ -16,10 +16,44 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     {
         ///Delegate definition so we can more cleanly list the parsers we will call.
         private delegate void ParameterParserDelegate(NciUrl url, CTSSearchParams searchParams);
-
+        private delegate void ParameterSerializerDelegate(NciUrl url, CTSSearchParams searchParams);
 
         private ITerminologyLookupService _lookupSvc;
         private ParameterParserDelegate _parsers;
+
+        private static ParameterSerializerDelegate _basicParamSerializers;
+        private static ParameterSerializerDelegate _advParamSerializers;
+
+        /// <summary>
+        /// Static constructor to initialize 
+        /// </summary>
+        static CTSSearchParamFactory() {
+            _basicParamSerializers = 
+                (ParameterSerializerDelegate) SerializeCancerType + //First param needs the cast.
+                SerializeSubTypes +
+                SerializeStages +
+                SerializeAge +
+                SerializeKeyword +
+                SerializeGender +
+                SerializeLocation + //Theoretically this should only ever end up Zip or None
+                SerializeResultsLinkFlag;
+
+            _advParamSerializers =
+                (ParameterSerializerDelegate)SerializeCancerType + //First param needs the cast.
+                SerializeSubTypes +
+                SerializeStages +
+                SerializeFindings +
+                SerializeAge +
+                SerializeKeyword +
+                SerializeGender +
+                SerializeLocation +
+                SerializeDrugs +
+                SerializeOtherTreatments +
+                SerializeTrialIDs +
+                SerializeInvestigator +
+                SerializeLeadOrg +
+                SerializeResultsLinkFlag;
+        }
 
         /// <summary>
         /// Creates new instance of a search param factory
@@ -68,6 +102,247 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             return rtnParams; 
         }
+
+        /// <summary>
+        /// Serialize the parameters to a URL
+        /// </summary>
+        /// <param name="searchParams">The search parameters to serialize</param>
+        /// <returns>A URL with query params.</returns>
+        public static NciUrl ConvertParamsToUrl(CTSSearchParams searchParams)
+        {
+            NciUrl url = new NciUrl();
+
+            switch (searchParams.ResultsLinkFlag)
+            {
+                case ResultsLinkType.Basic: { _basicParamSerializers(url, searchParams); break; }
+                case ResultsLinkType.Advanced: { _advParamSerializers(url, searchParams); break; }
+            }
+
+            return url;
+        }
+
+        #region Param Serializers
+
+        /// <summary>
+        /// Converts a TerminologyFieldSearchParam[] to a string for serialization
+        /// </summary>
+        /// <param name="fieldValues">An array of TerminologyFieldSearchParam[]</param>
+        /// <returns></returns>
+        private static string SerializeMultiTermFields(TerminologyFieldSearchParam[] fieldValues)
+        {
+            List<string> codes = new List<string>();
+
+            foreach (TerminologyFieldSearchParam termField in fieldValues)
+            {
+                codes.Add(string.Join("|", termField.Codes));
+            }
+
+            return string.Join("|", codes.ToArray());
+        }
+
+        //Parameter t (Main Cancer Type)
+        private static void SerializeCancerType(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.MainType))
+            {
+                url.QueryParameters.Add("t", string.Join("|", searchParams.MainType.Codes));
+            }
+        }
+
+        //Parameter st (SubTypes)
+        private static void SerializeSubTypes(NciUrl url, CTSSearchParams searchParms)
+        {
+            if (searchParms.IsFieldSet(FormFields.SubTypes))
+            {
+                url.QueryParameters.Add("st", SerializeMultiTermFields(searchParms.SubTypes));
+            }
+        }
+
+        //Parameter stg (Stages)
+        private static void SerializeStages(NciUrl url, CTSSearchParams searchParms)
+        {
+            if (searchParms.IsFieldSet(FormFields.Stages))
+            {
+                url.QueryParameters.Add("stg", SerializeMultiTermFields(searchParms.Stages));
+            }
+        }
+
+        //Parameter fin (Findings)
+        private static void SerializeFindings(NciUrl url, CTSSearchParams searchParms)
+        {
+            if (searchParms.IsFieldSet(FormFields.Findings))
+            {
+                url.QueryParameters.Add("fin", SerializeMultiTermFields(searchParms.Findings));
+            }
+        }
+
+        // Parameter a (Age)
+        private static void SerializeAge(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.Age))
+            {
+                url.QueryParameters.Add("a", searchParams.Age.ToString());
+            }
+        }
+
+        // Parameter g (Gender)
+        private static void SerializeGender(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.Gender))
+            {
+                url.QueryParameters.Add("g", HttpUtility.UrlEncode(searchParams.Gender));
+            }
+        }
+
+        // Parameter loc (Location, and AtNIH if loc=nih)
+        private static void SerializeLocation(NciUrl url, CTSSearchParams searchParams)
+        {
+            url.QueryParameters.Add("loc", searchParams.Location.ToString("d"));
+
+            if (url.QueryParameters.ContainsKey("loc"))
+            {
+                switch (searchParams.Location)
+                {
+                    //None needs not to be set
+                    //AtNIH is all that is needed for NIH
+                    case LocationType.Zip:
+                        {
+                            SerializeZipCode(url, searchParams);
+                            break;
+                        }
+                    case LocationType.CountryCityState:
+                        {
+                            SerializeCountryCityState(url, searchParams);
+                            break;
+                        }
+                    case LocationType.Hospital:
+                        {
+                            SerializeHospital(url, searchParams);
+                            break;
+                        }
+                }
+            }
+        }
+
+        // Parameter z (Zip Code) && zp (Zip Proximity)
+        private static void SerializeZipCode(NciUrl url, CTSSearchParams searchParams)
+        {
+            ZipCodeLocationSearchParams locParams = new ZipCodeLocationSearchParams();
+
+            if (locParams.IsFieldSet(FormFields.ZipCode))
+            {
+                url.QueryParameters.Add("z", locParams.ZipCode);
+                url.QueryParameters.Add("zp", locParams.ZipRadius.ToString()); //This has default, so might as well set it.
+            }
+        }
+
+        //Parameter lst (State) && Parameter lcty (City) && Parameter lcnty (Country)
+        private static void SerializeCountryCityState(NciUrl url, CTSSearchParams searchParams)
+        {
+            CountryCityStateLocationSearchParams locParams = new CountryCityStateLocationSearchParams();
+            if (locParams.IsFieldSet(FormFields.State))
+            {
+                //TODO: do we need to encode the state?
+                url.QueryParameters.Add("lst", locParams.State.Key);
+            }
+
+            if (locParams.IsFieldSet(FormFields.City))
+            {
+                url.QueryParameters.Add("lcty", HttpUtility.UrlEncode(locParams.City));
+            }
+
+            if (locParams.IsFieldSet(FormFields.Country))
+            {
+                url.QueryParameters.Add("lcnty", HttpUtility.UrlEncode(locParams.Country));
+            }
+        }
+
+        //Parameter hos (Hospital)
+        private static void SerializeHospital(NciUrl url, CTSSearchParams searchParams)
+        {
+            HospitalLocationSearchParams locParams = new HospitalLocationSearchParams();
+            if (locParams.IsFieldSet(FormFields.Hospital))
+            {
+                url.QueryParameters.Add("hos", HttpUtility.UrlEncode(locParams.Hospital));
+            }
+        }
+
+        //Parameter d (Drugs)
+        private static void SerializeDrugs(NciUrl url, CTSSearchParams searchParms)
+        {
+            if (searchParms.IsFieldSet(FormFields.Drugs))
+            {
+                url.QueryParameters.Add("d", SerializeMultiTermFields(searchParms.Drugs));
+            }
+        }
+
+        //Parameter i (Other treatments / interventions)
+        private static void SerializeOtherTreatments(NciUrl url, CTSSearchParams searchParms)
+        {
+            if (searchParms.IsFieldSet(FormFields.OtherTreatments))
+            {
+                url.QueryParameters.Add("i", SerializeMultiTermFields(searchParms.OtherTreatments));
+            }
+        }
+
+        // Parameter tp (Trial Phase)
+        private static void SerializeTrialPhases(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.TrialPhases))
+            {
+                url.QueryParameters.Add(
+                    "tp", 
+                    string.Join(",", searchParams.TrialPhases.Select(tp => tp.Key))
+                );
+            }
+        }
+
+        // Parameter tid (Trial IDs)
+        private static void SerializeTrialIDs(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.TrialIDs))
+            {
+                url.QueryParameters.Add(
+                    "tid", 
+                    string.Join(",", searchParams.TrialIDs.Select(tid => HttpUtility.UrlEncode(tid)))
+                );
+            }
+        }
+
+        //Parameter q (Keyword/Phrase)
+        private static void SerializeKeyword(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.Phrase))
+            {
+                url.QueryParameters.Add("q", HttpUtility.UrlEncode(searchParams.Phrase));
+            }
+        }
+
+        // Parameter in (Investigator)
+        private static void SerializeInvestigator(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.Investigator))
+            {
+                url.QueryParameters.Add("in", HttpUtility.UrlEncode(searchParams.Investigator));
+            }
+        }
+
+        // Parameter lo (Lead Org)
+        private static void SerializeLeadOrg(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.LeadOrg))
+            {
+                url.QueryParameters.Add("lo", HttpUtility.UrlEncode(searchParams.LeadOrg));
+            }
+        }
+
+        // Parameter rl (Results Link Flag)
+        private static void SerializeResultsLinkFlag(NciUrl url, CTSSearchParams searchParams)
+        {
+            url.QueryParameters.Add("rl", searchParams.ResultsLinkFlag.ToString("d"));
+        }
+
+        #endregion
 
         #region Parameter Parsers 
 
@@ -319,7 +594,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             searchParams.LocationParams = locParams;
         }
 
-
         //Parameter hos (Hospital)
         private void ParseHospital(NciUrl url, CTSSearchParams searchParams)
         {
@@ -434,45 +708,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        /*
-        // Parameter pn (Page Number)
-        private void ParsePageNum(NciUrl url, CTSSearchParams searchParams)
-        {
-            if (url.QueryParameters.ContainsKey("pn"))
-            {
-                int pageNum = ParamAsInt(url.QueryParameters["pn"], 10);
-                if (pageNum < 1)
-                {
-
-                    searchParams.Page = 1;
-                }
-                else
-                {
-                    searchParams.Page = pageNum;
-                }
-            }
-        }
-
-        // Parameter ni (Items Per Page)
-        private void ParseItemsPerPage(NciUrl url, CTSSearchParams searchParams)
-        {
-            if (url.QueryParameters.ContainsKey("ni"))
-            {
-                int itemsPerPage = ParamAsInt(url.QueryParameters["ni"], 10);
-                if (itemsPerPage < 1)
-                {
-                    LogParseError("ItemsPerPage", "Please enter a valid number of items to display per page.", searchParams);
-                }
-                else
-                {
-                    searchParams.ItemsPerPage = itemsPerPage;
-                }
-            }
-        }*/
-
         // Parameter rl (Results Link Flag)
         private void ParseResultsLinkFlag(NciUrl url, CTSSearchParams searchParams)
         {
+            //TODO: Fix this to handle the enum parsing better.
+            //Also if it is not in the URL we should set it to basic
             if (IsInUrl(url, "rl"))
             {
                 int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], 0);
@@ -482,12 +722,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 }
                 else
                 {
-                    searchParams.ResultsLinkFlag = resLinkFlag;
+                    searchParams.ResultsLinkFlag = (ResultsLinkType)resLinkFlag;
                 }
             }
         }
 
         #endregion
+
+
+        #region Utility methods 
 
         /// <summary>
         /// Helper function to check if a param is used. (And not just set with an empty string.
@@ -499,8 +742,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             return url.QueryParameters.ContainsKey(paramName) && !String.IsNullOrWhiteSpace(url.QueryParameters[paramName]);
         }
-
-        #region Utility methods 
 
         /// <summary>
         /// Extract property values for 'Labelled' Field search params (e.g. state, phase, trial type)

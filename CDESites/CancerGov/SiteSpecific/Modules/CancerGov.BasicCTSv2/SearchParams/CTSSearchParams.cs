@@ -30,7 +30,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         //int _pageNum                = 1;
         //int _itemsPerPage           = 10;
-        int _resultsLinkFlag        = 0;
+        ResultsLinkType _resultsLinkFlag = ResultsLinkType.Unknown;
         int _age                    = 0;
         string _gender              = string.Empty;
         string _phrase              = string.Empty;
@@ -203,7 +203,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Gets or sets the results link flag for the search
         /// </summary>
-        public int ResultsLinkFlag
+        public ResultsLinkType ResultsLinkFlag
         {
             get { return _resultsLinkFlag; }
             set { _resultsLinkFlag = value; }

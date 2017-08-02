@@ -78,6 +78,7 @@
     <Compile Include="BasicCTSManager.SearchTests.cs" />
     <Compile Include="CTSSearchParamFactory.Test.cs" />
     <Compile Include="CTSSearchParamFactory.TestErrors.cs" />
+    <Compile Include="CTSSearchParamFactory.TestSerialize.cs" />
     <Compile Include="CTSSearchParamsComparer.cs" />
     <Compile Include="LabelledSearchParamComparer.cs" />
     <Compile Include="LocationSearchParamsComparer.cs" />
@@ -88,6 +89,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
+      <Project>{898ff17c-c94a-4d85-8aad-88764b72cfae}</Project>
+      <Name>NCILibrary.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CancerGov.BasicCTSv2\CancerGov.BasicCTSv2.csproj">
       <Project>{96f6420f-f16d-4873-af3a-5d22e9ffbd55}</Project>
       <Name>CancerGov.BasicCTSv2</Name>

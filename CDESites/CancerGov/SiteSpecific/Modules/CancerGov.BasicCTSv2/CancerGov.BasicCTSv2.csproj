@@ -97,6 +97,7 @@
     <Compile Include="SearchParams\ListingSearchParam.cs" />
     <Compile Include="SearchParams\Legacy\PhraseSearchParam.cs" />
     <Compile Include="SearchParams\Legacy\CTSPrintSearchParams.cs" />
+    <Compile Include="SearchParams\ResultsLinkEnum.cs" />
     <Compile Include="SearchParams\TerminologyFieldSearchParam.cs" />
     <Compile Include="SearchParams\LocationParams\ZipCodeLocationSearchParams.cs" />
     <Compile Include="SnippetControls\Search\APICTSResultsControl.cs">
