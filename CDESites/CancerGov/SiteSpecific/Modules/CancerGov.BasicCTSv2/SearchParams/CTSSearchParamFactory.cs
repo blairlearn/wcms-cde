@@ -77,6 +77,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 ParseTrialTypes +
                 ParseDrugs +
                 ParseOtherTreatments +
+                ParseTrialPhases +
                 ParseTrialIDs +
                 ParseInvestigator +
                 ParseLeadOrg;
@@ -92,7 +93,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             CTSSearchParams rtnParams = new CTSSearchParams();
 
             NciUrl reqUrl = new NciUrl(true);
-            reqUrl.SetUrl(HttpUtility.UrlDecode(url));
+            reqUrl.SetUrl(url);
 
             // Get lowercase query params for parsing
             reqUrl = reqUrl.CopyWithLowerCaseQueryParams();
@@ -242,7 +243,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (locParams.IsFieldSet(FormFields.State))
             {
                 //TODO: do we need to encode the state?
-                url.QueryParameters.Add("lst", locParams.State.Key);
+                url.QueryParameters.Add(
+                    "lst",
+                    string.Join(",", locParams.State.Select(lst => lst.Key))
+                );
             }
 
             if (locParams.IsFieldSet(FormFields.City))
@@ -571,15 +575,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //TODO: Handle label conversion
             if (IsInUrl(url, "lst"))
             {
-                LabelledSearchParam[] states = GetLabelledFieldFromParam(url.QueryParameters["lst"], FormFields.State, searchParams);
-                if (states.Length == 1)
-                {
-                    locParams.State = states[0];
-                }
-                else
-                {
-                    LogParseError(FormFields.State, "Please include only one state in your search.", searchParams);
-                }
+                locParams.State = GetLabelledFieldFromParam(url.QueryParameters["lst"], FormFields.State, searchParams);
             }
 
             if (IsInUrl(url, "lcty"))
@@ -676,8 +672,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "tp"))
             {
-                LabelledSearchParam[] phases = GetLabelledFieldFromParam(url.QueryParameters["tp"], FormFields.TrialPhases, searchParams);
-                searchParams.TrialPhases = phases;
+                searchParams.TrialPhases = GetLabelledFieldFromParam(url.QueryParameters["tp"], FormFields.TrialPhases, searchParams);
             }
 
             // TODO: Error handling

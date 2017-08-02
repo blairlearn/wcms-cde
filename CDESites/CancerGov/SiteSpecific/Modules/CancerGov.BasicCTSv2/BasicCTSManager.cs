@@ -422,7 +422,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             }
                             if (locParams.IsFieldSet(FormFields.State))
                             {
-                                filterCriteria.Add("sites.org_state_or_province", locParams.State.Key);
+                                filterCriteria.Add("sites.org_state_or_province", locParams.State.Select(lst => lst.Key));
                             }
                             break;
                         }

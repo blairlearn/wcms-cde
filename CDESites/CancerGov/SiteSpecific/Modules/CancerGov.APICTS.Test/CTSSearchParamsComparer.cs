@@ -57,8 +57,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 _locParamComp.Equals(x.LocationParams, y.LocationParams) &&
                 x.Investigator == y.Investigator &&
                 x.LeadOrg == y.LeadOrg &&
-                //x.Page == y.Page &&
-                //x.ItemsPerPage == y.ItemsPerPage &&
                 x.ResultsLinkFlag == y.ResultsLinkFlag; 
             //ADD A FIELD TO SearchParams, NEED to add here.
 
@@ -147,8 +145,49 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             return diffxy.Count() == 0;
         }
 
+        //Used to make sure hash of codes is same for two arrays with same values.
+        //Found at https://stackoverflow.com/questions/670063/getting-hash-of-a-list-of-strings-regardless-of-order
+        private int GetOrderIndependentHashCode<T>(IEnumerable<T> source)
+        {
+            EqualityComparer<T> comparer = EqualityComparer<T>.Default;
+            return GetOrderIndependentHashCode(source, comparer);
+        }
+
+        //Used to make sure hash of codes is same for two arrays with same codes.
+        //Found at https://stackoverflow.com/questions/670063/getting-hash-of-a-list-of-strings-regardless-of-order
+        private int GetOrderIndependentHashCode<T>(IEnumerable<T> source, IEqualityComparer<T> comparer)
+        {
+            int hash = 0;
+            int curHash;
+            int bitOffset = 0;
+            // Stores number of occurences so far of each value.
+            var valueCounts = new Dictionary<T, int>();
+
+            foreach (T element in source)
+            {
+                curHash = comparer.GetHashCode(element);
+                if (valueCounts.TryGetValue(element, out bitOffset))
+                    valueCounts[element] = bitOffset + 1;
+                else
+                    valueCounts.Add(element, bitOffset);
+
+                // The current hash code is shifted (with wrapping) one bit
+                // further left on each successive recurrence of a certain
+                // value to widen the distribution.
+                // 37 is an arbitrary low prime number that helps the
+                // algorithm to smooth out the distribution.
+                hash = unchecked(hash + ((curHash << bitOffset) |
+                    (curHash >> (32 - bitOffset))) * 37);
+            }
+
+            return hash;
+        }
+
         public int GetHashCode(CTSSearchParams obj)
         {
+            
+            throw new NotImplementedException("CTS Search Param Comparer Hash has not been implemented");
+            /* code below does not work when there are arrays of objects. This needs to be updated to use the new helper functions.
             int hash = 0;
             hash ^= _termComp.GetHashCode(obj.MainType);
             hash ^= obj.SubTypes.GetHashCode();
@@ -166,12 +205,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             hash ^= obj.TrialIDs.GetHashCode();
             hash ^= obj.Investigator.GetHashCode();
             hash ^= obj.LeadOrg.GetHashCode();
-            //hash ^= obj.Page.GetHashCode();
-            //hash ^= obj.ItemsPerPage.GetHashCode();
             hash ^= obj.ResultsLinkFlag.GetHashCode();
             //ADD A FIELD TO SearchParams, NEED to add here.
-
             return hash;
+            */
         }
 
 

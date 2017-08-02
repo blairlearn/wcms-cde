@@ -48,7 +48,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },                        
                         new NciUrl() {
                             QueryParameters = new Dictionary<string,string>() {
-                                //Params HERE
+                                { "a", "35" }
                             }
                         }
                     },

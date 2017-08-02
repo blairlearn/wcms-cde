@@ -38,9 +38,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             Label = "Breast Cancer"
                         }
                     }},
-
+                    
                     // TEST 2 - Cancer subtype
-                    new object[] {"?stg=C7771", new CTSSearchParams() {
+                    new object[] {"?st=C7771", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C7771" },
@@ -49,19 +49,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST 2 - Cancer subtype
-                    new object[] {"?stg=C7771|C4001", new CTSSearchParams() {
+                    // TEST 3 - Cancer subtype
+                    new object[] {"?st=C7771|C4001", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C7771", "C4001" },
+                                Label = "Recurrent Inflammatory Breast Cancer"
+                            }
+                        }
+                    }},
+                    
+                    // TEST 4 - Cancer subtype
+                    new object[] {"?st=C7771|C4001,C7771", new CTSSearchParams() {
+                        SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C7771" },
+                                Label = "Recurrent Breast Cancer"
+                            },
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C7771", "C4001" },
+                                Label = "Recurrent Inflammatory Breast Cancer"
+                            },
+                        }
+                    }},
+                    
+                    // TEST 5 - Cancer stages
+                    new object[] {"?stg=C7771|C4001", new CTSSearchParams() {
+                        Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C4001" , "C7771" },
                                 Label = "Recurrent Inflammatory Breast Cancer"
                             }
                         }
                     }},
-
-                    // TEST 2 - Cancer subtype
+                    
+                    // TEST 6 - Cancer stages
                     new object[] {"?stg=C7771|C4001,C7771", new CTSSearchParams() {
-                        SubTypes = new TerminologyFieldSearchParam[] { 
+                        Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C4001" , "C7771" },
                                 Label = "Recurrent Inflammatory Breast Cancer"
@@ -72,8 +96,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     }},
-
-                    // TEST 3 - Cancer stage
+                    
+                    // TEST 7 - Cancer stage
                     new object[] {"?stg=C88375", new CTSSearchParams() {
                         Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -82,8 +106,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     }},
-
-                    // TEST 4 - Cancer findings 
+                    
+                    // TEST 8 - Cancer findings 
                     new object[] {"?fin=C26696", new CTSSearchParams() {
                         Findings = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -93,27 +117,41 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST 5 - Age
+                    // TEST 9 - Cancer findings 
+                    new object[] {"?fin=C26696,C35014", new CTSSearchParams() {
+                        Findings = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C26696" },
+                                Label = "Anxiety"
+                            },
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C35014" },
+                                Label = "Separation Anxiety Disorder"
+                            }
+                        }
+                    }},
+
+                    // TEST 10 - Age
                     new object[] { "?a=35", new CTSSearchParams() {
                         Age = 35
                     }},
 
-                    // TEST 6 - Gender
+                    // TEST 11 - Gender
                     new object[] { "?g=male", new CTSSearchParams() {
                         Gender = "male"
                     }},
 
-                    // TEST 7 - Phrase/keyword
+                    // TEST 12 - Phrase/keyword
                     new object[] { "?q=chicken", new CTSSearchParams() {
                         Phrase = "chicken"
                     }},
 
-                    // TEST 8 - Location
+                    // TEST 13 - Location
                     new object[] { "?loc=0", new CTSSearchParams() {
                         Location = LocationType.None
                     }},
 
-                    // TEST 9 - Zip code
+                    // TEST 14 - Zip code
                     new object[] { "?loc=1&z=20850", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
@@ -121,7 +159,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST 10 - Zip radius
+                    // TEST 15 - Zip radius
                     new object[] { "?loc=1&z=20850&zp=500", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
@@ -130,8 +168,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-
-                    // TEST 11 - Country
+                    // TEST 16 - Country
                     new object[] { "?loc=2&lcnty=United+States", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
@@ -139,18 +176,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST 12 - State 
+                    // TEST 17 - State 
                     new object[] { "?loc=2&lst=MD", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
-                            State = new LabelledSearchParam() { 
-                                Key = "MD",
-                                Label = "Maryland"
+                            State = new LabelledSearchParam[] {
+                                new LabelledSearchParam() {
+                                    Key = "MD",
+                                    Label = "Maryland"
+                                }
+                            }
+                        }
+                    }},
+
+                    // TEST 18 - State 
+                    new object[] { "?loc=2&lst=MD,VA", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams() {
+                            State = new LabelledSearchParam[] {
+                                new LabelledSearchParam() {
+                                    Key = "MD",
+                                    Label = "Maryland"
+                                },
+                                new LabelledSearchParam() {
+                                    Key = "VA",
+                                    Label = "Virginia"
+                                }
                             }
                         }
                     }}, 
-
-                    // TEST 13 - City 
+                    
+                    // TEST 19 - City 
                     new object[] { "?loc=2&lcty=Baltimore", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
@@ -158,7 +214,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
                     
-                    // TEST 14 - Hospital 
+                    // TEST 20 - Hospital 
                     new object[] { "?loc=3&hos=M+D+Anderson+Cancer+Center", new CTSSearchParams() {
                         Location = LocationType.Hospital,
                         LocationParams = new HospitalLocationSearchParams() {
@@ -166,10 +222,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
                     
-                    // TEST 15 - Is location NIH?  
+                    // TEST 21 - Is location NIH?  
                     new object[] { "?loc=4", new CTSSearchParams() {
                         Location = LocationType.AtNIH,
                         LocationParams = new AtNIHLocationSearchParams()
+                    }},
+                    
+                    // TEST 22 - Zip code on basic page
+                    new object[] { "?rl=1&z=20850", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams() {
+                            ZipCode = "20850"
+                        }
                     }},
                     
                     // TEST 16 - Trial type
@@ -208,6 +272,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             new LabelledSearchParam() {
                                 Key = "i",
                                 Label = "I"
+                            }
+                        }
+                    }},
+                   
+                    // TEST 19 - Trial phase 
+                    new object[] {"?tp=i,ii", new CTSSearchParams() {
+                        TrialPhases = new LabelledSearchParam[] { 
+                            new LabelledSearchParam() {
+                                Key = "i",
+                                Label = "I"
+                            },
+                            new LabelledSearchParam() {
+                                Key = "ii",
+                                Label = "II"
                             }
                         }
                     }},
@@ -280,6 +358,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             rtnMock.Setup(lookup => lookup.GetTitleCase("c26696"))
                 .Returns("Anxiety");
 
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c35014"))
+                .Returns("Separation Anxiety Disorder");
+
             rtnMock.Setup(lookup => lookup.GetTitleCase("c1647"))
                 .Returns("Trastuzumab");
 
@@ -289,8 +370,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             rtnMock.Setup(lookup => lookup.Get("MD"))
                 .Returns("Maryland");
 
+            rtnMock.Setup(lookup => lookup.Get("VA"))
+                .Returns("Virginia");
+
             rtnMock.Setup(lookup => lookup.Get("basic_science"))
                 .Returns("Basic Science");
+
+            rtnMock.Setup(lookup => lookup.Get("i"))
+                .Returns("I");
+
+            rtnMock.Setup(lookup => lookup.Get("ii"))
+                .Returns("II");
 
             rtnMock.Setup(lookup => lookup.MappingContainsKey(It.IsAny<string>()))
                 .Returns(true);

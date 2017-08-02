@@ -13,7 +13,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     {
 
         string _country = string.Empty;
-        LabelledSearchParam _state = null;
+        LabelledSearchParam[] _state = { };
         string _city = string.Empty;        
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Gets or sets the state used in the search
         /// </summary>
-        public LabelledSearchParam State {
+        public LabelledSearchParam[] State {
             get { return _state; }
             set { _state = value; _usedFields |= FormFields.State; } 
         }

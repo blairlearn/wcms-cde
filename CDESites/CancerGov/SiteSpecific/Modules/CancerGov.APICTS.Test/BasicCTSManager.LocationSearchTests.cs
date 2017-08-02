@@ -66,9 +66,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         new CTSSearchParams() {
                             Location = LocationType.CountryCityState,
                             LocationParams = new CountryCityStateLocationSearchParams() {
-                                State = new LabelledSearchParam() { 
-                                    Key = "MD",
-                                    Label = "Maryland"
+                                State = new LabelledSearchParam[] {
+                                    new LabelledSearchParam() {
+                                        Key = "MD",
+                                        Label = "Maryland"
+                                    }
                                 }
                             }
                         },
@@ -99,9 +101,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             Location = LocationType.CountryCityState,
                             LocationParams = new CountryCityStateLocationSearchParams() {
                                 City = "Baltimore",
-                                State = new LabelledSearchParam() { 
-                                    Key = "MD",
-                                    Label = "Maryland"
+                                State = new LabelledSearchParam[] {
+                                    new LabelledSearchParam() {
+                                        Key = "MD",
+                                        Label = "Maryland"
+                                    }
                                 }
                             }
                         },
@@ -118,9 +122,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             Location = LocationType.CountryCityState,
                             LocationParams = new CountryCityStateLocationSearchParams() {
                                 City = "Baltimore",
-                                State = new LabelledSearchParam() { 
-                                    Key = "MD",
-                                    Label = "Maryland"
+                                State = new LabelledSearchParam[] {
+                                    new LabelledSearchParam() {
+                                        Key = "MD",
+                                        Label = "Maryland"
+                                    }
                                 },
                                 Country = "United States"
                             }
