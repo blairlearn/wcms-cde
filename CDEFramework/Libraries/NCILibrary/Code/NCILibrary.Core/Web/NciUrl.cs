@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text;
 using System.Web;
 
@@ -9,6 +10,7 @@ namespace NCI.Web
     {
         private string _uriStem;
         private bool _decodeParameters = false;
+        private bool _isCaseInsensitive = false;
 
         public string UriStem
         {
@@ -26,13 +28,34 @@ namespace NCI.Web
         }
 
         public Dictionary<string, string> QueryParameters { get; set; }
-
-
+        
+        /// <summary>
+        /// Creates a new instance of a case-sensitive NciUrl that does not decode parameters
+        /// </summary>
         public NciUrl() : this(false) {}
 
-        public NciUrl(bool decodeParameters)
+        /// <summary>
+        /// Creates a new instance of a case-sensitive NciUrl that will optionally decode parameters
+        /// </summary>
+        /// <param name="decodeParameters"></param>
+        public NciUrl(bool decodeParameters) : this(decodeParameters, false) { }
+
+        /// <summary>
+        /// Creates a new instance of a NciUrl that will optionally decode parameters and optionally be case-insensitive
+        /// </summary>
+        /// <param name="decodeParameters"></param>
+        /// <param name="caseInsensative"></param>
+        public NciUrl(bool decodeParameters, bool caseInsensitive)
         {
-            QueryParameters = new Dictionary<string, string>();
+            if (caseInsensitive)
+            {
+                QueryParameters = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
+            }
+            else
+            {
+                QueryParameters = new Dictionary<string, string>();
+            }
+            
             _decodeParameters = decodeParameters;
         }
 
