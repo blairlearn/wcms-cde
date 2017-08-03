@@ -96,6 +96,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             return url.ToString();
         }
+
         #endregion
 
     }

@@ -111,5 +111,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             }
         }
+
+        #region Common Velocity Helpers
+
+        /// <summary>
+        /// Gets the search form URL for Start Over
+        /// </summary>
+        /// <returns></returns>
+        public string GetSearchFormUrl()
+        {
+            if (SearchParams.ResultsLinkFlag == ResultsLinkType.Advanced)
+            {
+                return Config.AdvSearchPagePrettyUrl;
+            }
+            else
+            {
+                return Config.BasicSearchPagePrettyUrl;
+            }
+        }
+
+        #endregion
+
     }
 }
