@@ -11,6 +11,7 @@ namespace NCI.Web
         private string _uriStem;
         private bool _decodeParameters = false;
         private bool _isCaseInsensitive = false;
+        private bool _collapseSameParams = false;
 
         public string UriStem
         {
@@ -37,15 +38,23 @@ namespace NCI.Web
         /// <summary>
         /// Creates a new instance of a case-sensitive NciUrl that will optionally decode parameters
         /// </summary>
-        /// <param name="decodeParameters"></param>
+        /// <param name="decodeParameters">True if we should decode the individual parameters</param>
         public NciUrl(bool decodeParameters) : this(decodeParameters, false) { }
+
+        /// <summary>
+        /// Creates a new instance of a case-sensitive NciUrl that will optionally decode parameters
+        /// </summary>
+        /// <param name="decodeParameters">True if we should decode the individual parameters</param>
+        /// <param name="caseInsensitive">Treat parameters as case insensative</param>
+        public NciUrl(bool decodeParameters, bool caseInsensitive) : this(decodeParameters, caseInsensitive, false) { }
 
         /// <summary>
         /// Creates a new instance of a NciUrl that will optionally decode parameters and optionally be case-insensitive
         /// </summary>
-        /// <param name="decodeParameters"></param>
-        /// <param name="caseInsensative"></param>
-        public NciUrl(bool decodeParameters, bool caseInsensitive)
+        /// <param name="decodeParameters">True if we should decode the individual parameters</param>
+        /// <param name="caseInsensitive">Treat parameters as case insensative</param>
+        /// <param name="collapseSameParams">When handling urls with multiple params with the same name, combine the values using commas</param>
+        public NciUrl(bool decodeParameters, bool caseInsensitive, bool collapseSameParams)
         {
             if (caseInsensitive)
             {
@@ -57,6 +66,7 @@ namespace NCI.Web
             }
             
             _decodeParameters = decodeParameters;
+            _collapseSameParams = collapseSameParams;
         }
 
         public void Clear()
@@ -122,7 +132,14 @@ namespace NCI.Web
                     value = HttpUtility.UrlDecode(value);
                 }
 
-                QueryParameters.Add(name, value);
+                if (_collapseSameParams && QueryParameters.ContainsKey(name))
+                {
+                    QueryParameters[name] += "," + value;
+                }
+                else
+                {
+                    QueryParameters.Add(name, value);
+                }                
             }
         }
 
@@ -138,7 +155,7 @@ namespace NCI.Web
 
             return rtn;
         }
-
+         
         /// <summary>
         /// Appends a segment onto the end of an existing url path, handling "slash issues" so we 
         /// are sure we have one and only one slash.

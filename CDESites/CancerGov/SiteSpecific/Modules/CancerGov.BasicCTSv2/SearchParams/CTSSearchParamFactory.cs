@@ -90,15 +90,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns></returns>
         public CTSSearchParams Create(string url)
         {
-            CTSSearchParams rtnParams = new CTSSearchParams();
-
-            NciUrl reqUrl = new NciUrl(true, true);
+            NciUrl reqUrl = new NciUrl(true, true, true);
             reqUrl.SetUrl(url);
+
+            return Create(reqUrl); 
+        }
+
+        /// <summary>
+        /// Gets an instance of a CTSSearchParams object based on params in URL.
+        /// </summary>
+        /// <param name="reqUrl">The URL to parse</param>
+        /// <returns></returns>
+        public CTSSearchParams Create(NciUrl reqUrl)
+        {
+            CTSSearchParams rtnParams = new CTSSearchParams();
 
             _parsers(reqUrl, rtnParams); //This calls each of the parsers, one chained after another.
 
-            return rtnParams; 
+            return rtnParams;
         }
+
 
         /// <summary>
         /// Serialize the parameters to a URL

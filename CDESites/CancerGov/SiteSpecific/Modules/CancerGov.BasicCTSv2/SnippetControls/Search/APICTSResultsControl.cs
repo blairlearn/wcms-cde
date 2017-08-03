@@ -72,9 +72,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             };
         }
 
-        #region Velocity Helpers
+        #region Velocity Helpers 
 
+        /// <summary>
+        /// Gets a detailed view URL
+        /// </summary>
+        /// <param name="nciID"></param>
+        /// <returns></returns>
+        public string GetDetailedViewUrl(string nciID)
+        {
+            //Create a new url for the current details page.
+            NciUrl url = new NciUrl();
+            url.SetUrl(this.Config.DetailedViewPagePrettyUrl);
 
+            //Convert the current search parameters into a NciUrl
+            NciUrl paramsUrl = CTSSearchParamFactory.ConvertParamsToUrl(this.SearchParams);
+
+            //Copy the params 
+            url.QueryParameters = paramsUrl.QueryParameters;
+
+            //Add the NCI URL param.
+            url.QueryParameters.Add("id", nciID);
+
+            return url.ToString();
+        }
         #endregion
 
     }

@@ -27,7 +27,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         //An instance of the BasicCTSManager for interacting with the CTSAPI
         protected BasicCTSManager CTSManager { get; private set; }
-        protected CTSSearchParams SearchParams { get; private set; }        
+        protected CTSSearchParams SearchParams { get; private set; }
+        protected NciUrl ParsedReqUrlParams { get; private set; }
 
         /// <summary>
         /// Initializes the CTSManager and Parses the Query Params
@@ -35,6 +36,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override void Init()
         {
             base.Init();
+
+            ParsedReqUrlParams = new NciUrl(true, true, true);  //We need this to be lowercase and collapse duplicate params. (Or not use an NCI URL)
+            ParsedReqUrlParams.SetUrl(this.Request.Url.Query);
 
             //////////////////////////////
             // Create an instance of a BasicCTSManager.
@@ -52,7 +56,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             try
             {
                 CTSSearchParamFactory factory = new CTSSearchParamFactory(DynamicTrialListingMapping.Instance);
-                SearchParams = factory.Create(this.Request.Url.Query);
+                SearchParams = factory.Create(ParsedReqUrlParams);
             }
             catch (Exception ex)
             {
@@ -61,18 +65,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             ///////////////////////////
-            // Parse the page specific parameters
-            NciUrl reqUrl = new NciUrl(true, true);
-            reqUrl.SetUrl(this.Request.Url.Query);
-
-            if (IsInUrl(reqUrl, "pn")) {
-                this._pageNum = ParamAsInt(reqUrl.QueryParameters["pn"], 1);
+            // Parse the page specific parameters            
+            if (IsInUrl(ParsedReqUrlParams, "pn"))
+            {
+                this._pageNum = ParamAsInt(ParsedReqUrlParams.QueryParameters["pn"], 1);
             }
 
             _itemsPerPage = Config.DefaultItemsPerPage;
-            if (IsInUrl(reqUrl, "ni"))
+            if (IsInUrl(ParsedReqUrlParams, "ni"))
             {
-                this._itemsPerPage = ParamAsInt(reqUrl.QueryParameters["ni"], _itemsPerPage);
+                this._itemsPerPage = ParamAsInt(ParsedReqUrlParams.QueryParameters["ni"], _itemsPerPage);
             }
         }
 
