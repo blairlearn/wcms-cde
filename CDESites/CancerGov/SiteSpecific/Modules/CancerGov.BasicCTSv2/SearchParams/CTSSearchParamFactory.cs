@@ -182,6 +182,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
+        //Parameter q (Keyword/Phrase)
+        private static void SerializeKeyword(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.Phrase))
+            {
+                url.QueryParameters.Add("q", HttpUtility.UrlEncode(searchParams.Phrase));
+            }
+        }
+
         // Parameter g (Gender)
         private static void SerializeGender(NciUrl url, CTSSearchParams searchParams)
         {
@@ -309,15 +318,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        //Parameter q (Keyword/Phrase)
-        private static void SerializeKeyword(NciUrl url, CTSSearchParams searchParams)
-        {
-            if (searchParams.IsFieldSet(FormFields.Phrase))
-            {
-                url.QueryParameters.Add("q", HttpUtility.UrlEncode(searchParams.Phrase));
-            }
-        }
-
         // Parameter in (Investigator)
         private static void SerializeInvestigator(NciUrl url, CTSSearchParams searchParams)
         {
@@ -352,15 +352,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //Also if it is not in the URL we should set it to basic
             if (IsInUrl(url, "rl"))
             {
-                int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], 0);
+                int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], -1);
+                if(resLinkFlag == -1)
+                {
+                    LogParseError("ResultsLinkFlag", "Results Link Flag can only equal 1 or 2.", searchParams);
+                }
                 if (resLinkFlag == 0)
                 {
-                    LogParseError("ResultsLinkFlag", "Please enter a valid results link flag value (1 or 2).", searchParams);
+                    searchParams.ResultsLinkFlag = ResultsLinkType.Basic;
                 }
                 else
                 {
                     searchParams.ResultsLinkFlag = (ResultsLinkType)resLinkFlag;
                 }
+            }
+            else
+            {
+                searchParams.ResultsLinkFlag = ResultsLinkType.Basic;
             }
         }
         
