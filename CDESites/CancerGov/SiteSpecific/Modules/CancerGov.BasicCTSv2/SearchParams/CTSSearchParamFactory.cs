@@ -47,6 +47,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 SerializeKeyword +
                 SerializeGender +
                 SerializeLocation +
+                SerializeTrialTypes +
                 SerializeDrugs +
                 SerializeOtherTreatments +
                 SerializeTrialIDs +
@@ -284,6 +285,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (locParams.IsFieldSet(FormFields.Hospital))
             {
                 url.QueryParameters.Add("hos", HttpUtility.UrlEncode(locParams.Hospital));
+            }
+        }
+
+        // Parameter tt (Trial Type)
+        private static void SerializeTrialTypes(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.TrialTypes))
+            {
+                url.QueryParameters.Add(
+                    "tt",
+                    string.Join(",", searchParams.TrialTypes.Select(tp => tp.Key))
+                );
             }
         }
 

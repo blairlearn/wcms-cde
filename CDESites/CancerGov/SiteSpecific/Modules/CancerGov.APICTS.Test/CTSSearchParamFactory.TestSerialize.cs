@@ -272,8 +272,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     },
+                     
+                    // TEST 12 - Phrase/keyword
+                    new object[] {
+                        new CTSSearchParams() {
+                            Phrase = "chicken",
+                            ResultsLinkFlag = ResultsLinkType.Basic,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "q", "chicken" },
+                                { "rl", "1" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
                     
-                    // TEST 6 - Gender
+                    // TEST 13 - Gender
                     new object[] {
                         new CTSSearchParams() {
                             Gender = "male",
@@ -288,48 +304,149 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     },
-                    /*
-                    // TEST 7 - Phrase/keyword
+
+                    // TEST 14 - Trial type
                     new object[] {
                         new CTSSearchParams() {
-                            Phrase = "chicken"
+                            TrialTypes = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "basic_science",
+                                    Label = "Basic science"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
                         },
                         new NciUrl() {
                             QueryParameters = new Dictionary<string,string>() {
-                                //Params HERE
+                                { "tt", "basic_science"},
+                                { "rl", "2" },
+                                { "loc", "0" }
                             }
                         }
                     },
-                    // TEST 16 - Trial type
-                    new object[] {"?tt=basic_science", new CTSSearchParams() {
-                        TrialTypes = new LabelledSearchParam[] { 
-                            new LabelledSearchParam() {
-                                Key = "basic_science",
-                                Label = "Basic science"
+
+                    // TEST 15 - Trial types
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialTypes = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "basic_science",
+                                    Label = "Basic science"
+                                },
+                                new LabelledSearchParam() {
+                                    Key = "supportive_care",
+                                    Label = "Supportive Care"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "tt", "basic_science,supportive_care"},
+                                { "rl", "2" },
+                                { "loc", "0" }
                             }
                         }
-                    }},
+                    },
 
-                    // TEST 17 - Drug
-                    new object[] {"?d=C1647", new CTSSearchParams() {
-                        Drugs = new TerminologyFieldSearchParam[] { 
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C1647" },
-                                Label = "Trastuzumab"
+                    // TEST 16 - Drugs
+                    new object[] {
+                        new CTSSearchParams() {
+                            Drugs = new TerminologyFieldSearchParam[] { 
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C1647" },
+                                    Label = "Trastuzumab"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "d", "C1647"},
+                                { "rl", "2" },
+                                { "loc", "0" }
                             }
                         }
-                    }},
+                    },
 
+                    // TEST 17 - Drugs
+                    new object[] {
+                        new CTSSearchParams() {
+                            Drugs = new TerminologyFieldSearchParam[] { 
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C1647" },
+                                    Label = "Trastuzumab"
+                                },
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C2039" },
+                                    Label = "Bevacizumab"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "d", "C1647,C2039"},
+                                { "rl", "2" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+                    
                     // TEST 18 - Other treatments/interventions
-                    new object[] {"?i=C131060", new CTSSearchParams() {
-                        OtherTreatments = new TerminologyFieldSearchParam[] { 
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C131060" },
-                                Label = "Checkpoint Blockade Immunotherapy"
+                    new object[] {
+                        new CTSSearchParams() {
+                            OtherTreatments = new TerminologyFieldSearchParam[] { 
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C131060" },
+                                    Label = "Checkpoint Blockade Immunotherapy"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "i", "C131060"},
+                                { "rl", "2" },
+                                { "loc", "0" }
                             }
                         }
-                    }},
-
+                    },
+                    /*
+                    // TEST 18 - Other treatments/interventions
+                    new object[] {
+                        new CTSSearchParams() {
+                            Location = LocationType.None,
+                            OtherTreatments = new TerminologyFieldSearchParam[] { 
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C131060" },
+                                    Label = "Checkpoint Blockade Immunotherapy"
+                                },
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C26665" },
+                                    Label = "Pomegranate Juice"
+                                },
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C107350", "c26665" },
+                                    Label = "Pomegranate"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "0" },    
+                                { "i", "C131060,C26665,C107350|C26665"},
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
                     // TEST 19 - Trial phase 
                     new object[] {"?tp=i", new CTSSearchParams() {
                         TrialPhases = new LabelledSearchParam[] { 
