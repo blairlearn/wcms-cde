@@ -27,39 +27,55 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     //TODO: fill out the rest of these tests
                     //TODO: get the tests to actually work - still having the equals/equivalent
                     //      errors with array comparer 
-                    
+                    /*
                     // TEST 0 - No parameters.
                     new object[] { "", new CTSSearchParams() },
-
+                    */
                     // TEST 1 - Main Cancer Type
                     new object[] {"?t=C4872", new CTSSearchParams() {
                         MainType = new TerminologyFieldSearchParam() {
                             Codes = new string[] { "C4872" },
                             Label = "Breast Cancer"
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 2 - Cancer subtype
+                    // TEST 2 - Main Cancer Type
+                    new object[] {"?t=C4872|C3995", new CTSSearchParams() {
+                        MainType = new TerminologyFieldSearchParam() {
+                            Codes = new string[] { "C3995", "C4872" },
+                            Label = "Stage IV Breast Cancer"
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
+                    }},
+                    
+                    // TEST 3 - Cancer subtype
                     new object[] {"?st=C7771", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C7771" },
                                 Label = "Recurrent Breast Cancer"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
 
-                    // TEST 3 - Cancer subtype
+                    // TEST 4 - Cancer subtype
                     new object[] {"?st=C7771|C4001", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C7771", "C4001" },
                                 Label = "Recurrent Inflammatory Breast Cancer"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 4 - Cancer subtypes
+                    // TEST 5 - Cancer subtypes
                     new object[] {"?st=C7771|C4001,C7771", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -70,20 +86,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 Codes = new string[] { "C7771", "C4001" },
                                 Label = "Recurrent Inflammatory Breast Cancer"
                             },
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 5 - Cancer stage
+                    // TEST 6 - Cancer stage
                     new object[] {"?stg=C7771|C4001", new CTSSearchParams() {
                         Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C4001" , "C7771" },
                                 Label = "Recurrent Inflammatory Breast Cancer"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 6 - Cancer stages
+                    // TEST 7 - Cancer stages
                     new object[] {"?stg=C7771|C4001,C7771", new CTSSearchParams() {
                         Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -94,30 +114,36 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 Codes = new string[] { "C7771" },
                                 Label = "Recurrent Breast Cancer"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 7 - Cancer stage
+                    // TEST 8 - Cancer stage
                     new object[] {"?stg=C88375", new CTSSearchParams() {
                         Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C88375" },
                                 Label = "Stage I Breast Cancer"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 8 - Cancer findings 
+                    // TEST 9 - Cancer findings 
                     new object[] {"?fin=C26696", new CTSSearchParams() {
                         Findings = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C26696" },
                                 Label = "Anxiety"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
 
-                    // TEST 9 - Cancer findings 
+                    // TEST 10 - Cancer findings 
                     new object[] {"?fin=C26696,C35014", new CTSSearchParams() {
                         Findings = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -128,55 +154,67 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 Codes = new string[] { "C35014" },
                                 Label = "Separation Anxiety Disorder"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
 
-                    // TEST 10 - Age
+                    // TEST 11 - Age
                     new object[] { "?a=35", new CTSSearchParams() {
-                        Age = 35
+                        Age = 35,
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
 
                     // TEST 11 - Gender
                     new object[] { "?g=male", new CTSSearchParams() {
-                        Gender = "male"
-                    }},
-
-                    // TEST 12 - Phrase/keyword
-                    new object[] { "?q=chicken", new CTSSearchParams() {
-                        Phrase = "chicken"
-                    }},
-
-                    // TEST 13 - Location
-                    new object[] { "?loc=0", new CTSSearchParams() {
+                        Gender = "male",
+                        ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 14 - Zip code
+                    // TEST 13 - Phrase/keyword
+                    new object[] { "?q=chicken", new CTSSearchParams() {
+                        Phrase = "chicken",
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
+                    }},
+
+                    // TEST 14 - Location
+                    new object[] { "?loc=0", new CTSSearchParams() {
+                        Location = LocationType.None,
+                        ResultsLinkFlag = ResultsLinkType.Basic
+                    }},
+
+                    // TEST 15 - Zip code
                     new object[] { "?loc=1&z=20850", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
                             ZipCode = "20850"
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 15 - Zip radius
+                    // TEST 16 - Zip radius
                     new object[] { "?loc=1&z=20850&zp=500", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
                             ZipCode = "20850",
                             ZipRadius = 500
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 16 - Country
+                    // TEST 17 - Country
                     new object[] { "?loc=2&lcnty=United+States", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
                             Country = "United States"
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 17 - State 
+                    // TEST 18 - State 
                     new object[] { "?loc=2&lst=MD", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
@@ -186,10 +224,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                     Label = "Maryland"
                                 }
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 18 - States
+                    // TEST 19 - States
                     new object[] { "?loc=2&lst=MD,VA", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
@@ -203,32 +242,36 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                     Label = "Virginia"
                                 }
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic
                     }}, 
                     
-                    // TEST 19 - City 
+                    // TEST 20 - City 
                     new object[] { "?loc=2&lcty=Baltimore", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
                             City = "Baltimore"
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 20 - Hospital 
+                    // TEST 21 - Hospital 
                     new object[] { "?loc=3&hos=M+D+Anderson+Cancer+Center", new CTSSearchParams() {
                         Location = LocationType.Hospital,
                         LocationParams = new HospitalLocationSearchParams() {
                             Hospital = "M D Anderson Cancer Center"
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 21 - Is location NIH? 
+                    // TEST 22 - Is location NIH? 
                     new object[] { "?loc=4", new CTSSearchParams() {
                         Location = LocationType.AtNIH,
-                        LocationParams = new AtNIHLocationSearchParams()
+                        LocationParams = new AtNIHLocationSearchParams(),
+                        ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 22 - Zip code on basic page
+                    // TEST 23 - Zip code on basic page
                     new object[] { "?rl=1&z=20850", new CTSSearchParams() {
                         LocationParams = new ZipCodeLocationSearchParams() {
                             ZipCode = "20850"
@@ -236,25 +279,27 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 23 - Results link flag
+                    // TEST 24 - Results link flag
                     new object[] { "?rl=1", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
-                    // TEST 24 - Results link flag
+                    // TEST 25 - Results link flag
                     new object[] { "?rl=2", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
-                    // TEST 25 - Trial type
+                    // TEST 26 - Trial type
                     new object[] {"?tt=basic_science", new CTSSearchParams() {
                         TrialTypes = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
                                 Key = "basic_science",
                                 Label = "Basic Science"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
-                    // TEST 26 - Trial types
+                    // TEST 27 - Trial types
                     new object[] {"?tt=basic_science,supportive_care", new CTSSearchParams() {
                         TrialTypes = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
@@ -265,20 +310,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 Key = "supportive_care",
                                 Label = "Supportive Care"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 27 - Drug
+                    // TEST 28 - Drug
                     new object[] {"?d=C1647", new CTSSearchParams() {
                         Drugs = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C1647" },
                                 Label = "Trastuzumab"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
 
-                    // TEST 28 - Drugs
+                    // TEST 29 - Drugs
                     new object[] {"?d=C1647,C2039", new CTSSearchParams() {
                         Drugs = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -289,20 +338,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 Codes = new string[] { "C2039" },
                                 Label = "Bevacizumab"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 29 - Other treatments/interventions
+                    // TEST 30 - Other treatments/interventions
                     new object[] {"?i=C131060", new CTSSearchParams() {
                         OtherTreatments = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C131060" },
                                 Label = "Checkpoint Blockade Immunotherapy"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
 
-                    // TEST 30 - Other treatments/interventions
+                    // TEST 31 - Other treatments/interventions
                     new object[] {"?i=C131060,C26665", new CTSSearchParams() {
                         OtherTreatments = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -313,10 +366,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 Codes = new string[] { "C26665" },
                                 Label = "Pomegranate Juice"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 31 - Other treatments/interventions
+                    // TEST 32 - Other treatments/interventions
                     new object[] {"?i=C131060,C107350|C26665", new CTSSearchParams() {
                         OtherTreatments = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -327,20 +382,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 Codes = new string[] { "C26665" , "C107350" },
                                 Label = "Pomegranate"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 32 - Trial phase 
+                    // TEST 33 - Trial phase 
                     new object[] {"?tp=i", new CTSSearchParams() {
                         TrialPhases = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
                                 Key = "i",
                                 Label = "I"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                    
-                    // TEST 33 - Trial phases
+                    // TEST 34 - Trial phases
                     new object[] {"?tp=i,ii", new CTSSearchParams() {
                         TrialPhases = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
@@ -351,27 +410,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 Key = "ii",
                                 Label = "II"
                             }
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 34 - Trial ID 
+                    // TEST 35 - Trial ID 
                     new object[] {"?tid=NCI-2014-01509", new CTSSearchParams() {
-                        TrialIDs = new string[] {"NCI-2014-01509"}
+                        TrialIDs = new string[] {"NCI-2014-01509"},
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
 
-                    // TEST 35 - Trial IDs
+                    // TEST 36 - Trial IDs
                     new object[] {"?tid=NCI-2014-01509,NCI-2014-01507", new CTSSearchParams() {
-                        TrialIDs = new string[] { "NCI-2014-01509", "NCI-2014-01507" }
+                        TrialIDs = new string[] { "NCI-2014-01509", "NCI-2014-01507" },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
                     
-                    // TEST 29 - Principal investigator 
+                    // TEST 37 - Principal investigator 
                     new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
-                        Investigator = "Sophia Smith"
+                        Investigator = "Sophia Smith",
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }},
 
-                    // TEST 30 - Lead organization
+                    // TEST 38 - Lead organization
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
-                        LeadOrg = "Mayo Clinic"
+                        LeadOrg = "Mayo Clinic",
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }}
                 };
             }
@@ -414,6 +483,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             //This makes it so that we do not have to create a fake class that returns fake data.
             rtnMock.Setup(lookup => lookup.GetTitleCase("c4872"))
                 .Returns("Breast Cancer");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c3995,c4872"))
+                .Returns("Stage IV Breast Cancer");
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c7771"))
                 .Returns("Recurrent Breast Cancer");
