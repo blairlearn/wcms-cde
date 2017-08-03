@@ -43,6 +43,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         LocationSearchParams _locationParams = null;
 
         /// <summary>
+        /// Identified is a field within this location parameter is set.  This is a helper for Velocity that
+        /// does not understand enums.
+        /// </summary>
+        /// <param name="field">The field to check using the String representation of its name</param>
+        /// <returns>true if set, false if not.</returns>
+        public bool IsFieldSet(string fieldName)
+        {
+            FormFields field = (FormFields)Enum.Parse(typeof(FormFields), fieldName, true);
+            return IsFieldSet(field);
+        }
+
+        /// <summary>
         /// Identified is a field within this location parameter is set.
         /// </summary>
         /// <param name="field">The field to check</param>
@@ -53,6 +65,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Determines if this search parameters has not set form fields
+        /// </summary>
+        /// <returns>true if no fields were set, false if a field has been set</returns>
+        public bool IsEmpty()
+        {
+            return _usedFields == FormFields.None;
+        }
+
+        /// <summary>
         /// Determines if the parameters had parse errors
         /// </summary>
         /// <returns></returns>
@@ -60,6 +81,171 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             return this.ParseErrors.Count > 0;
         }
+
+        /// <summary>
+        /// Gets a fields value as a string suitable for things like, oh, a velocity template
+        /// </summary>
+        /// <param name="fieldName">The string representation of a FormFields enum value</param>
+        /// <returns>The value of the field, OR, and error message</returns>
+        public string GetFieldAsString(string fieldName)
+        {
+            try
+            {
+                FormFields field = (FormFields)Enum.Parse(typeof(FormFields), fieldName, true);
+                return GetFieldAsString(field);
+            }
+            catch (Exception)
+            {
+                return "Error Retrieving Field";
+            }
+
+        }
+
+        /// <summary>
+        /// Gets a fields value as a string suitable for things like, oh, a velocity template
+        /// </summary>
+        /// <param name="field">A FormFields enum value</param>
+        /// <returns>The value of the field, OR, and error message</returns>
+        public string GetFieldAsString(FormFields field)
+        {
+            try
+            {
+                switch (field)
+                {
+                    case FormFields.MainType:
+                        {
+                            return MainType.Label;
+                        }
+                    case FormFields.SubTypes:
+                        {
+                            return String.Join(", ", SubTypes.Select(st => st.Label));
+                        }
+                    case FormFields.Stages:
+                        {
+                            return String.Join(", ", Stages.Select(stg => stg.Label));;
+                        }
+                    case FormFields.Findings:
+                        {
+                            return String.Join(", ", Findings.Select(fin => fin.Label));
+                        }
+                    case FormFields.Age:
+                        {
+                            return Age.ToString();
+                        }
+                    case FormFields.Phrase:
+                        {
+                            return Phrase;
+                        }
+                    case FormFields.Gender:
+                        {
+                            return Gender;
+                        }
+                    case FormFields.TrialTypes:
+                        {
+                            return String.Join(", ", TrialTypes.Select(tt => tt.Label));
+                        }
+                    case FormFields.Drugs:
+                        {
+                            return String.Join(", ", Drugs.Select(d => d.Label));
+                        }
+                    case FormFields.OtherTreatments:
+                        {
+                            return String.Join(", ", OtherTreatments.Select(ot => ot.Label)); ;
+                        }
+                    case FormFields.TrialPhases:
+                        {
+                            return String.Join(", ", TrialPhases.Select(tp => tp.Label));
+                        }
+                    case FormFields.TrialIDs:
+                        {
+                            return String.Join(", ", TrialIDs);
+                        }
+                    case FormFields.Investigator:
+                        {
+                            return Investigator;
+                        }
+                    case FormFields.LeadOrg:
+                        {
+                            return LeadOrg;
+                        }
+                    case FormFields.AtNIH:
+                    case FormFields.City:
+                    case FormFields.State:
+                    case FormFields.Country:
+                    case FormFields.Hospital:
+                    case FormFields.ZipCode:
+                    case FormFields.ZipRadius:
+                        {
+                            return GetLocFieldAsString(field);
+                        }
+                    default:
+                        {
+                            return "Error Retrieving Field";
+                        }
+                }
+            }
+            catch (Exception)
+            {
+                return "Error Retrieving Field";
+            }
+        }
+
+        /// <summary>
+        /// Gets a location field value as a string suitable for things like, oh, a velocity template
+        /// </summary>
+        /// <param name="field">A FormFields enum value</param>
+        /// <returns>The value of the field, OR, and error message</returns>
+        private string GetLocFieldAsString(FormFields field)
+        {
+            CountryCityStateLocationSearchParams cLoc = LocationParams as CountryCityStateLocationSearchParams;
+            HospitalLocationSearchParams hLoc = LocationParams as HospitalLocationSearchParams;
+            ZipCodeLocationSearchParams zLoc = LocationParams as ZipCodeLocationSearchParams;
+
+            switch (field)
+            {
+                case FormFields.AtNIH:
+                    {
+                        if (Location == LocationType.AtNIH)
+                        {
+                            return "Yes";
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                case FormFields.City:
+                    {
+                        return cLoc.City;
+                    }
+                case FormFields.Country:
+                    {
+                        return cLoc.Country;
+                    }
+                case FormFields.State:
+                    {
+                        return String.Join(", ", cLoc.State.Select(st => st.Label));
+                    }
+                case FormFields.Hospital:
+                    {
+                        return hLoc.Hospital;
+                    }
+
+                case FormFields.ZipCode:
+                    {
+                        return zLoc.ZipCode;
+                    }
+                case FormFields.ZipRadius:
+                    {
+                        return zLoc.ZipRadius.ToString();
+                    }
+                default:
+                    {
+                        throw new Exception();
+                    }
+            }
+        }
+
 
         /// <summary>
         /// Gets or sets the main cancer type that was selected.

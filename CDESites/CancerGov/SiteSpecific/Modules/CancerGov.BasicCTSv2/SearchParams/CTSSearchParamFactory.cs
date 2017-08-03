@@ -575,7 +575,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //TODO: Handle label conversion
             if (IsInUrl(url, "lst"))
             {
-                locParams.State = GetLabelledFieldFromParam(url.QueryParameters["lst"], FormFields.State, searchParams);
+                //Skip parsing if it is all, which is the default I have not set criteria setting
+                if (url.QueryParameters["lst"].ToLower().Trim() != "all")
+                {
+                    locParams.State = GetLabelledFieldFromParam(url.QueryParameters["lst"], FormFields.State, searchParams);
+                }
             }
 
             if (IsInUrl(url, "lcty"))
@@ -593,14 +597,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (IsInUrl(url, "lcnty"))
             {
-                string country = ParamAsStr(url.QueryParameters["lcnty"]);
-                if (!string.IsNullOrWhiteSpace(country))
+                //Skip parsing if it is all, which is the default I have not set criteria setting
+                if (url.QueryParameters["lcnty"].ToLower().Trim() != "all")
                 {
-                    locParams.Country = country;
-                }
-                else
-                {
-                    LogParseError(FormFields.Country, "Please enter a valid country parameter.", searchParams);
+                    string country = ParamAsStr(url.QueryParameters["lcnty"]);
+                    if (!string.IsNullOrWhiteSpace(country))
+                    {
+                        locParams.Country = country;
+                    }
+                    else
+                    {
+                        LogParseError(FormFields.Country, "Please enter a valid country parameter.", searchParams);
+                    }
                 }
             }
 
@@ -639,9 +647,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter tt (Trial Type)
         private void ParseTrialTypes(NciUrl url, CTSSearchParams searchParams)
         {
-            if (IsInUrl(url, "tt"))
+            //Skip parsing if it is all, which is the default I have not set criteria setting
+            if (url.QueryParameters["tt"].ToLower().Trim() != "all")
             {
-                searchParams.TrialTypes = GetLabelledFieldFromParam(url.QueryParameters["tt"], FormFields.TrialTypes, searchParams);
+                if (IsInUrl(url, "tt"))
+                {
+                    searchParams.TrialTypes = GetLabelledFieldFromParam(url.QueryParameters["tt"], FormFields.TrialTypes, searchParams);
+                }
             }
         }
 
@@ -672,7 +684,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "tp"))
             {
-                searchParams.TrialPhases = GetLabelledFieldFromParam(url.QueryParameters["tp"], FormFields.TrialPhases, searchParams);
+                //Skip parsing if it is all, which is the default I have not set criteria setting
+                if (url.QueryParameters["tp"].ToLower().Trim() != "all")
+                {
+                    searchParams.TrialPhases = GetLabelledFieldFromParam(url.QueryParameters["tp"], FormFields.TrialPhases, searchParams);
+                }
             }
 
             // TODO: Error handling
