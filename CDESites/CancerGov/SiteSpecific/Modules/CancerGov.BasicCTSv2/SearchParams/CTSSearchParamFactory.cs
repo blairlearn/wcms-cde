@@ -824,19 +824,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             List<TerminologyFieldSearchParam> rtnParams = new List<TerminologyFieldSearchParam>();
             string codePattern = @"(?i)c\d{4}";
+            bool allMatchCodePattern = true;
 
-            //TODO: Handle validating codes, handling multiple codes, etc.
             try 
             {
+                // Split params on comma for separate params
                 string[] items = paramData.Split(',');
+
                 for (int i = 0; i < items.Length; i++)
                 {
+                    // Capitalize all items
+                    items[i] = items[i].ToUpper();
+
+                    // Check if there are multiple codes for one param
                     if(items[i].Contains('|'))
                     {
+                        // Split items on | as there are multiple codes in one param
                         string[] multiple = items[i].Split('|');
+
+                        // Sort in alphanumerical order for label lookup
                         Array.Sort(multiple);
 
-                        bool allMatchCodePattern = true;
+                        // Match all codes to C-code pattern
                         for(int j = 0; j < multiple.Length; j++)
                         {
                             if(Regex.IsMatch(multiple[j], codePattern))
@@ -849,10 +858,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             }
                         }
 
+                        // If all match the C-code pattern, attempt lookup forlabel
                         if(allMatchCodePattern)
                         {
                             if(this._lookupSvc.MappingContainsKey(string.Join(",", multiple).ToLower()))
                             {
+                                // Only add to the stored parameters if a label is found for the combination of codes
                                 TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
                                 type.Codes = multiple;
                                 type.Label = this._lookupSvc.GetTitleCase(string.Join(",", multiple).ToLower());
@@ -866,12 +877,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     }
                     else
                     {
+                        // There are no params with multiple codes
                         if(Regex.IsMatch(items[i], codePattern))
                         {
+                            // If this code matches the C-code pattern, attempt the lookup for the label
                             if (this._lookupSvc.MappingContainsKey(items[i].ToLower()))
                             {
+                                // Only add to the stored parameters if a label is found for the code
                                 TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
-                                type.Codes = new string[] { items[i] };
+                                type.Codes = new string[] { items[i].ToUpper() };
                                 type.Label = this._lookupSvc.GetTitleCase(items[i].ToLower());
                                 rtnParams.Add(type);
                             }
@@ -879,6 +893,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             {
                                 LogParseError(field, "Invalid code(s) for lookup: " + items[i].ToLower(), searchParams);
                             }
+                        }
+                        else
+                        {
+                            allMatchCodePattern = false;
                         }
                     }
                 }
@@ -888,7 +906,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 LogParseError(field, "Please enter a valid parameter.", searchParams);
             }
 
-            return rtnParams.ToArray();
+            if(allMatchCodePattern == false)
+            {
+                // If any of the params have an invalid C-code, log an error and return an empty array.
+                LogParseError(field, "Please enter a valid parameter.", searchParams);
+                return new TerminologyFieldSearchParam[]{};
+            }
+            else
+            {
+                return rtnParams.ToArray();
+            }
         }
 
         /// <summary>

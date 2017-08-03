@@ -30,43 +30,265 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     //TODO: get the tests to actually work - still having the equals/equivalent
                     //      errors with array comparer 
                     
-                    
                     // TEST 0 - No parameters.
                     new object[] { 
                         new CTSSearchParams(),
                         new NciUrl() {
                             QueryParameters = new Dictionary<string,string>() {
-                                //Params HERE
                             }
                         }
                     },
 
-                    // TEST 5 - Age
+                    // TEST 1 - Main Cancer Type
+                    new object[] { 
+                        new CTSSearchParams() {
+                            MainType = new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C4872" },
+                                Label = "Breast Cancer"
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Basic,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "t", "C4872"},
+                                { "rl", "1" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+
+                    // TEST 2 - Main Cancer Type
+                    new object[] { 
+                        new CTSSearchParams() {
+                            MainType = new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C3995", "C4872" },
+                                Label = "Stage IV Breast Cancer"
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Basic,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "t", "C3995|C4872"},
+                                { "rl", "1" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 3 - Cancer SubType
+                    new object[] { 
+                        new CTSSearchParams() {
+                            SubTypes = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C7771" },
+                                    Label = "Recurrent Breast Cancer"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "st", "C7771"},
+                                { "rl", "2" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 4 - Cancer SubType
+                    new object[] { 
+                        new CTSSearchParams() {
+                            SubTypes = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C4001", "C7771" },
+                                    Label = "Recurrent Inflammatory Breast Cancer"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "st", "C4001|C7771"},
+                                { "rl", "2" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 5 - Cancer SubType
+                    new object[] { 
+                        new CTSSearchParams() {
+                            SubTypes = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C4001", "C7771" },
+                                    Label = "Recurrent Inflammatory Breast Cancer"
+                                },
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C7771" },
+                                    Label = "Recurrent Breast Cancer"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "st", "C4001|C7771,C7771"},
+                                { "rl", "2" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+
+                    // TEST 6 - Cancer Stage
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Stages = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C7768" },
+                                    Label = "Stage II Breast Cancer"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "stg", "C7768"},
+                                { "rl", "2" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+
+                    // TEST 7 - Cancer Stages
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Stages = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C5454", "C7768" },
+                                    Label = "Stage II Breast Cancer"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "stg", "C5454|C7768"},
+                                { "rl", "2" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+
+                    // TEST 8 - Cancer Stages
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Stages = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C3641" },
+                                    Label = "Stage 0 Breast Cancer"
+                                },
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C5454", "C7768" },
+                                    Label = "Stage II Breast Cancer"
+                                },
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "stg", "C3641,C5454|C7768"},
+                                { "rl", "2" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+
+                    // TEST 9 - Findings
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Findings = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C26696" },
+                                    Label = "Anxiety"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "fin", "C26696"},
+                                { "rl", "2" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+
+                    // TEST 10 - Findings
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Findings = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C26696" },
+                                    Label = "Anxiety"
+                                },
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C35014" },
+                                    Label = "Separation Anxiety Disorder"
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "fin", "C26696,C35014"},
+                                { "rl", "2" },
+                                { "loc", "0" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 11 - Age
                     new object[] {
                         new CTSSearchParams() {
-                            Age = 35
+                            Age = 35,
+                            ResultsLinkFlag = ResultsLinkType.Basic,
+                            Location = LocationType.None
                         },                        
                         new NciUrl() {
                             QueryParameters = new Dictionary<string,string>() {
-                                { "a", "35" }
+                                { "a", "35" },
+                                { "rl", "1" },
+                                { "loc", "0" }
                             }
                         }
                     },
-
                     
                     // TEST 6 - Gender
                     new object[] {
                         new CTSSearchParams() {
-                            Gender = "male"
+                            Gender = "male",
+                            ResultsLinkFlag = ResultsLinkType.Basic,
+                            Location = LocationType.None
                         },
                         new NciUrl() {
                             QueryParameters = new Dictionary<string,string>() {
-                                //Params HERE
+                                { "g", "male" },
+                                { "rl", "1" },
+                                { "loc", "0" }
                             }
                         }
                     },
-                    
-
+                    /*
                     // TEST 7 - Phrase/keyword
                     new object[] {
                         new CTSSearchParams() {
@@ -77,7 +299,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 //Params HERE
                             }
                         }
-                    }/*,
+                    },
                     // TEST 16 - Trial type
                     new object[] {"?tt=basic_science", new CTSSearchParams() {
                         TrialTypes = new LabelledSearchParam[] { 

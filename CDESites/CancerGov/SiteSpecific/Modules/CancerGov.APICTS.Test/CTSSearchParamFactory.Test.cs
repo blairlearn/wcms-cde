@@ -27,10 +27,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     //TODO: fill out the rest of these tests
                     //TODO: get the tests to actually work - still having the equals/equivalent
                     //      errors with array comparer 
-                    /*
+                    
                     // TEST 0 - No parameters.
-                    new object[] { "", new CTSSearchParams() },
-                    */
+                    new object[] { "", new CTSSearchParams() {
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
+                    }},
+                    
                     // TEST 1 - Main Cancer Type
                     new object[] {"?t=C4872", new CTSSearchParams() {
                         MainType = new TerminologyFieldSearchParam() {
@@ -104,7 +107,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
                     
                     // TEST 7 - Cancer stages
-                    new object[] {"?stg=C7771|C4001,C7771", new CTSSearchParams() {
+                    new object[] {"?stg=c7771|c4001,c7771", new CTSSearchParams() {
                         Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C4001" , "C7771" },
