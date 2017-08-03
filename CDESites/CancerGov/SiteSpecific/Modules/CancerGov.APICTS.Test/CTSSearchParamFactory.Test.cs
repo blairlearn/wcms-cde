@@ -59,7 +59,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
                     
-                    // TEST 4 - Cancer subtype
+                    // TEST 4 - Cancer subtypes
                     new object[] {"?st=C7771|C4001,C7771", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -73,7 +73,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
                     
-                    // TEST 5 - Cancer stages
+                    // TEST 5 - Cancer stage
                     new object[] {"?stg=C7771|C4001", new CTSSearchParams() {
                         Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -189,7 +189,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST 18 - State 
+                    // TEST 18 - States
                     new object[] { "?loc=2&lst=MD,VA", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
@@ -222,7 +222,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
                     
-                    // TEST 21 - Is location NIH?  
+                    // TEST 21 - Is location NIH? 
                     new object[] { "?loc=4", new CTSSearchParams() {
                         Location = LocationType.AtNIH,
                         LocationParams = new AtNIHLocationSearchParams()
@@ -230,13 +230,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     
                     // TEST 22 - Zip code on basic page
                     new object[] { "?rl=1&z=20850", new CTSSearchParams() {
-                        Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
                             ZipCode = "20850"
-                        }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic
+                    }},
+
+                    // TEST 23 - Results link flag
+                    new object[] { "?rl=1", new CTSSearchParams() {
+                        ResultsLinkFlag = ResultsLinkType.Basic
+                    }},
+                    // TEST 24 - Results link flag
+                    new object[] { "?rl=2", new CTSSearchParams() {
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
-                    // TEST 16 - Trial type
+                    // TEST 25 - Trial type
                     new object[] {"?tt=basic_science", new CTSSearchParams() {
                         TrialTypes = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
@@ -245,8 +254,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     }},
-
-                    // TEST 17 - Drug
+                    // TEST 26 - Trial types
+                    new object[] {"?tt=basic_science,supportive_care", new CTSSearchParams() {
+                        TrialTypes = new LabelledSearchParam[] { 
+                            new LabelledSearchParam() {
+                                Key = "basic_science",
+                                Label = "Basic Science"
+                            },
+                            new LabelledSearchParam() {
+                                Key = "supportive_care",
+                                Label = "Supportive Care"
+                            }
+                        }
+                    }},
+                    
+                    // TEST 27 - Drug
                     new object[] {"?d=C1647", new CTSSearchParams() {
                         Drugs = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -256,7 +278,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST 18 - Other treatments/interventions
+                    // TEST 28 - Drugs
+                    new object[] {"?d=C1647,C2039", new CTSSearchParams() {
+                        Drugs = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C1647" },
+                                Label = "Trastuzumab"
+                            },
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C2039" },
+                                Label = "Bevacizumab"
+                            }
+                        }
+                    }},
+                    
+                    // TEST 29 - Other treatments/interventions
                     new object[] {"?i=C131060", new CTSSearchParams() {
                         OtherTreatments = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -266,7 +302,35 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
 
-                    // TEST 19 - Trial phase 
+                    // TEST 30 - Other treatments/interventions
+                    new object[] {"?i=C131060,C26665", new CTSSearchParams() {
+                        OtherTreatments = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C131060" },
+                                Label = "Checkpoint Blockade Immunotherapy"
+                            },
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C26665" },
+                                Label = "Pomegranate Juice"
+                            }
+                        }
+                    }},
+                    
+                    // TEST 31 - Other treatments/interventions
+                    new object[] {"?i=C131060,C107350|C26665", new CTSSearchParams() {
+                        OtherTreatments = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C131060" },
+                                Label = "Checkpoint Blockade Immunotherapy"
+                            },
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C26665" , "C107350" },
+                                Label = "Pomegranate"
+                            }
+                        }
+                    }},
+                    
+                    // TEST 32 - Trial phase 
                     new object[] {"?tp=i", new CTSSearchParams() {
                         TrialPhases = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
@@ -276,7 +340,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
                    
-                    // TEST 19 - Trial phase 
+                    // TEST 33 - Trial phases
                     new object[] {"?tp=i,ii", new CTSSearchParams() {
                         TrialPhases = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
@@ -290,17 +354,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     }},
                     
-                    // TEST 20 - Trial ID 
+                    // TEST 34 - Trial ID 
                     new object[] {"?tid=NCI-2014-01509", new CTSSearchParams() {
                         TrialIDs = new string[] {"NCI-2014-01509"}
                     }},
+
+                    // TEST 35 - Trial IDs
+                    new object[] {"?tid=NCI-2014-01509,NCI-2014-01507", new CTSSearchParams() {
+                        TrialIDs = new string[] { "NCI-2014-01509", "NCI-2014-01507" }
+                    }},
                     
-                    // TEST 21 - Principal investigator 
+                    // TEST 29 - Principal investigator 
                     new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
                         Investigator = "Sophia Smith"
                     }},
 
-                    // TEST 22 - Lead organization
+                    // TEST 30 - Lead organization
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
                         LeadOrg = "Mayo Clinic"
                     }}
@@ -361,12 +430,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             rtnMock.Setup(lookup => lookup.GetTitleCase("c35014"))
                 .Returns("Separation Anxiety Disorder");
 
-            rtnMock.Setup(lookup => lookup.GetTitleCase("c1647"))
-                .Returns("Trastuzumab");
-
-            rtnMock.Setup(lookup => lookup.GetTitleCase("c131060"))
-                .Returns("Checkpoint Blockade Immunotherapy");
-
             rtnMock.Setup(lookup => lookup.Get("MD"))
                 .Returns("Maryland");
 
@@ -375,6 +438,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
             rtnMock.Setup(lookup => lookup.Get("basic_science"))
                 .Returns("Basic Science");
+
+            rtnMock.Setup(lookup => lookup.Get("supportive_care"))
+                .Returns("Supportive Care");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c1647"))
+                .Returns("Trastuzumab");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c2039"))
+                .Returns("Bevacizumab");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c131060"))
+                .Returns("Checkpoint Blockade Immunotherapy");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c26665"))
+                .Returns("Pomegranate Juice");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c107350,c26665"))
+                .Returns("Pomegranate");
 
             rtnMock.Setup(lookup => lookup.Get("i"))
                 .Returns("I");

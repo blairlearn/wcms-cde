@@ -92,11 +92,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             CTSSearchParams rtnParams = new CTSSearchParams();
 
-            NciUrl reqUrl = new NciUrl(true);
+            NciUrl reqUrl = new NciUrl(true, true);
             reqUrl.SetUrl(url);
-
-            // Get lowercase query params for parsing
-            reqUrl = reqUrl.CopyWithLowerCaseQueryParams();
 
             _parsers(reqUrl, rtnParams); //This calls each of the parsers, one chained after another.
 
@@ -425,7 +422,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (IsInUrl(url, "a"))
             {
                 int age = this.ParamAsInt(url.QueryParameters["a"], 0);
-                if(age == 0)
+                if(age <= 0)
                 {
                     LogParseError(FormFields.Age, "Please enter a valid age parameter.", searchParams);
                 }
@@ -648,9 +645,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private void ParseTrialTypes(NciUrl url, CTSSearchParams searchParams)
         {
             //Skip parsing if it is all, which is the default I have not set criteria setting
-            if (url.QueryParameters["tt"].ToLower().Trim() != "all")
+            if (IsInUrl(url, "tt"))
             {
-                if (IsInUrl(url, "tt"))
+                if (url.QueryParameters["tt"].ToLower().Trim() != "all")
                 {
                     searchParams.TrialTypes = GetLabelledFieldFromParam(url.QueryParameters["tt"], FormFields.TrialTypes, searchParams);
                 }

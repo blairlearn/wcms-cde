@@ -376,25 +376,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             get { return _leadOrg; }
             set { _leadOrg = value; _usedFields |= FormFields.LeadOrg; }
         }
-        /*
-        /// <summary>
-        /// Gets or sets the page number for the search
-        /// </summary>
-        public int Page
-        {
-            get { return _pageNum; }
-            set { _pageNum = value; }
-
-        }
-
-        /// <summary>
-        /// Gets or sets the items per page for the search
-        /// </summary>
-        public int ItemsPerPage
-        {
-            get { return _itemsPerPage; }
-            set { _itemsPerPage = value; }
-        }*/
 
         /// <summary>
         /// Gets or sets the results link flag for the search
