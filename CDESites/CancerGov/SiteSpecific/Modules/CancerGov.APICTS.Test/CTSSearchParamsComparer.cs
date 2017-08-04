@@ -57,7 +57,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 _locParamComp.Equals(x.LocationParams, y.LocationParams) &&
                 x.Investigator == y.Investigator &&
                 x.LeadOrg == y.LeadOrg &&
-                x.ResultsLinkFlag == y.ResultsLinkFlag; 
+                x.ResultsLinkFlag == y.ResultsLinkFlag &&
+                x.ParseErrors.Count == y.ParseErrors.Count; 
             //ADD A FIELD TO SearchParams, NEED to add here.
 
             return isEqual;

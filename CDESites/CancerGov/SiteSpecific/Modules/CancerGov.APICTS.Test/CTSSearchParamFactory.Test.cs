@@ -185,26 +185,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
-
+                    
                     // TEST 15 - Zip code
                     new object[] { "?loc=1&z=20850", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
-                            ZipCode = "20850"
+                            ZipCode = "20850",
+                            GeoLocation = new GeoLocation(39.0897, -77.1798)
                         },
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
-
+                    
                     // TEST 16 - Zip radius
                     new object[] { "?loc=1&z=20850&zp=500", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
                             ZipCode = "20850",
-                            ZipRadius = 500
+                            ZipRadius = 500,
+                            GeoLocation = new GeoLocation(39.0897, -77.1798)
                         },
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
-
+                    
                     // TEST 17 - Country
                     new object[] { "?loc=2&lcnty=United+States", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
@@ -273,9 +275,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     
                     // TEST 23 - Zip code on basic page
                     new object[] { "?rl=1&z=20850", new CTSSearchParams() {
+                        Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
                             ZipCode = "20850",
-                            ZipRadius = 100
+                            ZipRadius = 100,
+                            GeoLocation = new GeoLocation(39.0897, -77.1798)
                         },
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
@@ -488,6 +492,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
         private Mock<IZipCodeGeoLookupService> GetZipLookupMock()
         {
             Mock<IZipCodeGeoLookupService> rtnMock = new Mock<IZipCodeGeoLookupService>();
+            rtnMock.Setup(lookup => lookup.GetZipCodeGeoEntry("20850"))
+                .Returns(new GeoLocation(39.0897, -77.1798)); 
 
             return rtnMock;
         }
@@ -507,6 +513,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             //This makes it so that we do not have to create a fake class that returns fake data.
             rtnMock.Setup(lookup => lookup.GetTitleCase("c4872"))
                 .Returns("Breast Cancer");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c4878"))
+                .Returns("Lung Cancer");
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c3995,c4872"))
                 .Returns("Stage IV Breast Cancer");

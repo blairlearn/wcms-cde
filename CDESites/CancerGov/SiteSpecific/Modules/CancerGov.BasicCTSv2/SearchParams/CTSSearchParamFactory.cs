@@ -32,23 +32,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 (ParameterSerializerDelegate) SerializeCancerType + //First param needs the cast.
                 SerializeSubTypes +
                 SerializeStages +
-                SerializeAge +
-                SerializeKeyword +
-                SerializeGender +
-                SerializeLocation + //Theoretically this should only ever end up Zip or None
-                SerializeTrialTypes +
-                SerializeDrugs +
-                SerializeOtherTreatments +
-                SerializeTrialPhases +
-                SerializeTrialIDs +
-                SerializeInvestigator +
-                SerializeLeadOrg +
-                SerializeResultsLinkFlag;
-
-            /*_advParamSerializers =
-                (ParameterSerializerDelegate)SerializeCancerType + //First param needs the cast.
-                SerializeSubTypes +
-                SerializeStages +
                 SerializeFindings +
                 SerializeAge +
                 SerializeKeyword +
@@ -62,7 +45,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 SerializeInvestigator +
                 SerializeLeadOrg +
                 SerializeResultsLinkFlag;
-             */
         }
 
         /// <summary>
@@ -222,8 +204,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private static void SerializeLocation(NciUrl url, CTSSearchParams searchParams)
         {
             url.QueryParameters.Add("loc", searchParams.Location.ToString("d"));
-            ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
-
+            
             if (url.QueryParameters.ContainsKey("loc"))
             {
                 switch (searchParams.Location)
@@ -245,11 +226,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             SerializeHospital(url, searchParams);
                             break;
                         }
-                }
-
-                if (searchParams.ResultsLinkFlag == ResultsLinkType.Basic && locParams.IsFieldSet(FormFields.ZipCode))
-                {
-                    SerializeZipCode(url, searchParams);
                 }
             }
         }
@@ -543,6 +519,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             else if (searchParams.ResultsLinkFlag == ResultsLinkType.Basic && IsInUrl(url, "z"))
             {
+                searchParams.Location = LocationType.Zip;
                 ParseZipCode(url, searchParams);
             }
         }
@@ -564,8 +541,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 string pattern = @"^[0-9]{5}$";
                 if(Regex.IsMatch(zipCode, pattern))
                 {
-                    //TODO: Implement geolookup
-                    locParams.ZipCode = zipCode;
+                    GeoLocation geolocation = this._zipLookupSvc.GetZipCodeGeoEntry(zipCode);
+                    if (geolocation != null)
+                    {
+                        locParams.ZipCode = zipCode;
+                        locParams.GeoLocation = geolocation;
+                    }
+                    else
+                    {
+                        LogParseError(FormFields.ZipCode, "Please enter a valid zip code value.", searchParams);
+                    }
                 }
                 else
                 {

@@ -26,19 +26,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 {
                     //This array of objects maps to the parameters of the create method.
                     //URL at index 0, Expected object at index 1.
-                    //TODO: fill out the rest of these tests
-                    //TODO: get the tests to actually work - still having the equals/equivalent
-                    //      errors with array comparer 
                     
                     // TEST 0 - No parameters.
                     new object[] { 
-                        new CTSSearchParams(),
+                        new CTSSearchParams() {
+                            ResultsLinkFlag = ResultsLinkType.Basic
+                        },
                         new NciUrl() {
                             QueryParameters = new Dictionary<string,string>() {
+                                { "rl", "1" },
+                                { "loc", "0" }
                             }
                         }
                     },
-
+                    
                     // TEST 1 - Main Cancer Type
                     new object[] { 
                         new CTSSearchParams() {
@@ -210,7 +211,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     },
-
+                    
                     // TEST 9 - Findings
                     new object[] { 
                         new CTSSearchParams() {
@@ -304,8 +305,203 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     },
+                    
+                    // TEST 14 - Location
+                    new object[] {
+                        new CTSSearchParams() {
+                            Location = LocationType.None,
+                            ResultsLinkFlag = ResultsLinkType.Basic
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "0" },
+                                { "rl", "1" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 15 - Zip code
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Location = LocationType.Zip,
+                            LocationParams = new ZipCodeLocationSearchParams() {
+                                ZipCode = "20850",
+                                GeoLocation = new GeoLocation(39.0897, -77.1798)
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "1" },
+                                { "z", "20850" },
+                                { "zp", "100" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 16 - Zip radius
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Location = LocationType.Zip,
+                            LocationParams = new ZipCodeLocationSearchParams() {
+                                ZipCode = "20850",
+                                ZipRadius = 500,
+                                GeoLocation = new GeoLocation(39.0897, -77.1798)
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "1" },
+                                { "z", "20850" },
+                                { "zp", "500" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 17 - Country
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Location = LocationType.CountryCityState,
+                            LocationParams = new CountryCityStateLocationSearchParams() {
+                                Country = "United States"
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl () {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "2" },
+                                { "lcnty", "United+States" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
 
-                    // TEST 14 - Trial type
+                    // TEST 18 - State 
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Location = LocationType.CountryCityState,
+                            LocationParams = new CountryCityStateLocationSearchParams() {
+                                State = new LabelledSearchParam[] {
+                                    new LabelledSearchParam() {
+                                        Key = "MD",
+                                        Label = "Maryland"
+                                    }
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl () {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "2" },
+                                { "lst", "MD" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 19 - States
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Location = LocationType.CountryCityState,
+                            LocationParams = new CountryCityStateLocationSearchParams() {
+                                State = new LabelledSearchParam[] {
+                                    new LabelledSearchParam() {
+                                        Key = "MD",
+                                        Label = "Maryland"
+                                    },
+                                    new LabelledSearchParam() {
+                                        Key = "VA",
+                                        Label = "Virginia"
+                                    }
+                                }
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl () {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "2" },
+                                { "lst", "MD,VA" },
+                                { "rl", "2" }
+                            }
+                        }
+                    }, 
+                    
+                    // TEST 20 - City 
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Location = LocationType.CountryCityState,
+                            LocationParams = new CountryCityStateLocationSearchParams() {
+                                City = "Baltimore"
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl () {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "2" },
+                                { "lcty", "Baltimore" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 21 - Hospital 
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Location = LocationType.Hospital,
+                            LocationParams = new HospitalLocationSearchParams() {
+                                Hospital = "M D Anderson Cancer Center"
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl () {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "3" },
+                                { "hos", "M+D+Anderson+Cancer+Center" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 22 - Is location NIH? 
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Location = LocationType.AtNIH,
+                            LocationParams = new AtNIHLocationSearchParams(),
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl () {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "4" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 23 - Zip code on basic page
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Location = LocationType.Zip,
+                            LocationParams = new ZipCodeLocationSearchParams() {
+                                ZipCode = "20850",
+                                ZipRadius = 100,
+                                GeoLocation = new GeoLocation(39.0897, -77.1798)
+                            },
+                            ResultsLinkFlag = ResultsLinkType.Basic,
+                        },
+                        new NciUrl () {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "1" },
+                                { "z", "20850" },
+                                { "zp", "100" },
+                                { "rl", "1" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 24 - Trial type
                     new object[] {
                         new CTSSearchParams() {
                             TrialTypes = new LabelledSearchParam[] { 
@@ -325,8 +521,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     },
-
-                    // TEST 15 - Trial types
+                    
+                    // TEST 25 - Trial types
                     new object[] {
                         new CTSSearchParams() {
                             TrialTypes = new LabelledSearchParam[] { 
@@ -351,7 +547,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     },
 
-                    // TEST 16 - Drugs
+                    // TEST 26 - Drugs
                     new object[] {
                         new CTSSearchParams() {
                             Drugs = new TerminologyFieldSearchParam[] { 
@@ -372,7 +568,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     },
 
-                    // TEST 17 - Drugs
+                    // TEST 27 - Drugs
                     new object[] {
                         new CTSSearchParams() {
                             Drugs = new TerminologyFieldSearchParam[] { 
@@ -397,7 +593,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     },
                     
-                    // TEST 18 - Other treatments/interventions
+                    // TEST 28 - Other treatments/interventions
                     new object[] {
                         new CTSSearchParams() {
                             OtherTreatments = new TerminologyFieldSearchParam[] { 
@@ -417,11 +613,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         }
                     },
-                    /*
-                    // TEST 18 - Other treatments/interventions
+                    
+                    // TEST 29 - Other treatments/interventions
                     new object[] {
                         new CTSSearchParams() {
-                            Location = LocationType.None,
                             OtherTreatments = new TerminologyFieldSearchParam[] { 
                                 new TerminologyFieldSearchParam() {
                                     Codes = new string[] { "C131060" },
@@ -432,56 +627,131 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                     Label = "Pomegranate Juice"
                                 },
                                 new TerminologyFieldSearchParam() {
-                                    Codes = new string[] { "C107350", "c26665" },
+                                    Codes = new string[] { "C107350", "C26665" },
                                     Label = "Pomegranate"
                                 }
                             },
-                            ResultsLinkFlag = ResultsLinkType.Advanced,
+                            Location = LocationType.None,
+                            ResultsLinkFlag = ResultsLinkType.Advanced
                         },
                         new NciUrl() {
-                            QueryParameters = new Dictionary<string,string>() {
-                                { "loc", "0" },    
+                            QueryParameters = new Dictionary<string,string>() {  
+                                { "loc", "0" },
                                 { "i", "C131060,C26665,C107350|C26665"},
                                 { "rl", "2" }
                             }
                         }
                     },
                     
-                    // TEST 19 - Trial phase 
-                    new object[] {"?tp=i", new CTSSearchParams() {
-                        TrialPhases = new LabelledSearchParam[] { 
-                            new LabelledSearchParam() {
-                                Key = "i",
-                                Label = "I"
+                    // TEST 30 - Trial phase 
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialPhases = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "i",
+                                    Label = "I"
+                                }
+                            },
+                            Location = LocationType.None,
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "0" },
+                                { "tp", "i" },
+                                { "rl", "2" }
                             }
                         }
-                    }},
+                    },
+                    
+                    // TEST 31 - Trial phase 
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialPhases = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "i",
+                                    Label = "I"
+                                },
+                                new LabelledSearchParam() {
+                                    Key = "ii",
+                                    Label = "II"
+                                }
+                            },
+                            Location = LocationType.None,
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "0" },
+                                { "tp", "i,ii" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 32 - Trial ID
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialIDs = new string[] {"NCI-2014-01509"},
+                            Location = LocationType.None,
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "0" },
+                                { "tid", "NCI-2014-01509" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
 
-                    // TEST 20 - Trial ID 
-                    new object[] {"tid=NCI-2014-01509", new CTSSearchParams() {
-                        TrialIDs = new string[] {"NCI-2014-01509"}
-                    }},
-
-                    // TEST 21 - Principal investigator 
-                    new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
-                        Investigator = "Sophia Smith"
-                    }},
-
-                    // TEST 22 - Lead organization
-                    new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
-                        LeadOrg = "Mayo Clinic"
-                    }},
-
-                    // TEST 23 - Page number
-                    new object[] { "?pn=3", new CTSSearchParams() {
-                        Page = 3
-                    }},
-
-                    // TEST 24 - Items per page
-                    new object[] { "?ni=25", new CTSSearchParams() {
-                        ItemsPerPage = 25
-                    }}
-                    */
+                    // TEST 33 - Trial IDs
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialIDs = new string[] {"NCI-2014-01509", "NCI-2014-0157"},
+                            Location = LocationType.None,
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "0" },
+                                { "tid", "NCI-2014-01509,NCI-2014-0157" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 34 - Principal investigator 
+                    new object[] { 
+                        new CTSSearchParams() {
+                            Investigator = "Sophia Smith",
+                            Location = LocationType.None,
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "0" },
+                                { "in", "Sophia+Smith" },
+                                { "rl", "2" }
+                            }
+                        }
+                    },
+                    
+                    // TEST 35 - Lead organization
+                    new object[] { 
+                        new CTSSearchParams() {
+                            LeadOrg = "Mayo Clinic",
+                            Location = LocationType.None,
+                            ResultsLinkFlag = ResultsLinkType.Advanced
+                        },
+                        new NciUrl() {
+                            QueryParameters = new Dictionary<string,string>() {
+                                { "loc", "0" },
+                                { "lo", "Mayo+Clinic" },
+                                { "rl", "2" }
+                            }
+                        }
+                    }
                 };
             }
         }

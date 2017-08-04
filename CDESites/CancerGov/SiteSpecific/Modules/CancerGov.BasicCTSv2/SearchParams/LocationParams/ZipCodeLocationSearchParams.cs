@@ -33,6 +33,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             set { _zipRadius = value; _usedFields |= FormFields.ZipRadius;  } //Don't set as used field because it is really zipcode that matters.
         }
 
-
+        public GeoLocation GeoLocation { get; set; }
     }
 }
