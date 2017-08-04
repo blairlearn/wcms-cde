@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Help"  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Import required targets and configuration items. -->
+  <Import Project="bin\MSBuild.Community.Tasks.Targets"/>
+  <Import Project="build.config"/>
+
+  
+  <!--
+    Determine directory tree and subversion URLs from user input values.
+    
+    $(BuildLocation) is specified in build.config and is used as the root
+    location for all files in the build.  Beneath it are three sub-trees:
+
+      source - Retrieval destination for Subversion.
+      output - Holding bin for compiled binaries.
+      staging - Copy of all files to be deployed.
+
+    $(SVNBaseFolder) is specified in build.config and is the application's
+    root URL in Subversion.  The folder structure is assumed to follow the
+    standard pattern with trunk, branches, and tags folders as immediate
+    children of the base.
+  -->
+  <PropertyGroup>
+    <SourceLocation>$(BuildLocation)\source</SourceLocation>
+	<OutputFolder>$(BuildLocation)\output\</OutputFolder>
+    <StagingLocation>$(BuildLocation)\staging</StagingLocation>
+	<ConfigFileLocation>$(StagingLocation)\_configFiles</ConfigFileLocation>
+    <SVNRetrieveFromCDEFrameWork>$(SVNBaseFolder)/branches/$(Branch)$(SVNSubBranchFolderCDEFramework)</SVNRetrieveFromCDEFrameWork>
+    <SVNRetrieveFrom>$(SVNBaseFolder)/branches/$(Branch)</SVNRetrieveFrom>
+    <SVNBranchFolder>$(SVNBaseFolder)/branches/$(Branch)</SVNBranchFolder>
+    <SVNTagsFolder>$(SVNBaseFolder)/tags/</SVNTagsFolder>
+    <SVNBuildsFolder>$(SVNBaseFolder)/Builds/</SVNBuildsFolder>
+  </PropertyGroup>
+
+  <!--
+   
+    The revision number is returned to the calling target as the
+    $(Revision) output property.
+  -->
+  <Target Name="FetchSourceCode" Outputs="$(Revision)">
+    
+    <Message Text="Fetching latest source code from $(SVNRetrieveFrom)"/>
+
+    <RemoveDir Directories="$(SourceLocation)" />
+
+    <SvnExport RepositoryPath="$(SVNRetrieveFrom)"
+      LocalPath="$(SourceLocation)">
+      <Output TaskParameter="Revision" PropertyName="Revision" />
+    </SvnExport>
+
+    <Message Text="Revision: $(Revision)"/>
+  </Target>
+
+
+  <!--
+    Tags the code revision used in the build based on the $(Revision)
+    value retrieved from the FetchSourceCode target.
+  -->
+  <Target Name="ApplySourceCodeTag">
+
+    <!--
+      Tag Name = R + RevisionNumber + TargetEnvironment
+    -->
+	
+    <CreateProperty Value="$(Branch)-$(TargetEnvironment)-R$(Revision)">
+      <Output TaskParameter="Value" PropertyName="TagName"/>
+    </CreateProperty>
+    
+    <CreateProperty Value="$(SVNTagsFolder)$(TagName)">
+      <Output TaskParameter="Value" PropertyName="TagUrl" />
+    </CreateProperty>
+	
+	
+    <Message Text="Creating tag: $(TagName)"/>
+
+    <SvnCopy SourcePath="$(SVNBranchFolder)"
+             DestinationPath="$(TagUrl)"
+             Revision="$(Revision)"
+             Message="Automatic build of Revision $(Revision) for the $(TargetEnvironment) environment."/>
+	
+	</Target>
+
+  
+  <!--
+    Build the solution and copy only the necessary files to the staging folder.
+  -->
+  <Target Name="Build">
+
+    <!-- Clean up old output locations. -->
+    <RemoveDir Directories="$(StagingLocation)" />
+    <RemoveDir Directories="$(OutputFolder)" />
+	<RemoveDir Directories="$(ConfigFileLocation)" />
+
+    <!-- 
+        A given target can only be run once. We need to build a list of sites, and we don't want to maintain a list of
+        solution items, so we go out to a command shell and run a series of smaller builds.  For ease of maintenance,
+        computed property values (e.g. output and staging paths) are passed to the inner build as command-line parameters.
+        Because of command-line length limits, configured properties (e.g. version number) are allowed to be imported
+        from the build.config.
+    -->
+    <Exec IgnoreExitCode="true" Command="for %%a in ($(CDE_Site_List)) do msbuild buildInner.xml /t:Build /p:CDE_Site=%%a /p:StagingLocation=$(StagingLocation) /p:OutputFolder=$(OutputFolder) /p:SourceLocation=$(SourceLocation) /p:Revision=$(Revision) /p:TargetEnvironment=$(TargetEnvironment) /p:Branch=$(Branch)" />
+
+	<!--
+		Similar to the build, we want to execute the ConfigTransform target multiple times, with varying
+		combinations of CDE sites, environments, and preview/live.
+	-->
+    <Exec IgnoreExitCode="true" Command="for %%a in ($(CDE_Site_List)) do for %%b in ($(Config_Environment_List)) do for %%c in ($(Config_Site_List)) do msbuild buildInner.xml /nologo /t:ConfigTransform /p:CDE_Site=%%a /p:ENVIRON=%%b /p:SITE=%%c /p:ConfigFileLocation=$(ConfigFileLocation) /p:SourceLocation=$(SourceLocation) /p:Revision=$(Revision) /p:TargetEnvironment=$(TargetEnvironment) /p:Branch=$(Branch)" />
+	
+  </Target>
+
+  
+  <!--
+    Deploy the built code (.as?x and .dll) to the location set in
+    the $(DeployLocation) value, defined in build.config.  (If the
+    value is not defined, this step will be skipped.)
+  -->
+  <Target Name="Deploy" Condition="$(DeployLocation) != ''">
+
+    <!-- 
+        A given target can only be run once. We need to deploy multiple sites, so use a command shell
+        to run a series of deploy operations.  See the Build target for addtional information
+    -->
+    <Exec IgnoreExitCode="true" Command="for %%a in ($(CDE_Site_List)) do msbuild buildInner.xml /t:Deploy /p:CDE_Site=%%a /p:StagingLocation=$(StagingLocation) /p:TargetEnvironment=$(TargetEnvironment) /p:ConfigFileLocation=$(ConfigFileLocation)" />
+  </Target>
+
+
+  <Target Name="SaveExecutables">
+
+    <!--
+      Tag Name = R + RevisionNumber + TargetEnvironment
+    -->
+    <CreateProperty Value="$(Branch)-$(TargetEnvironment)-R$(Revision)">
+      <Output TaskParameter="Value" PropertyName="TagName"/>
+    </CreateProperty>
+
+    <CreateProperty Value="$(SVNBuildsFolder)$(TagName)/$(CDE_Site)">
+      <Output TaskParameter="Value" PropertyName="BuildsUrl" />
+    </CreateProperty>
+
+    <Message Text="Saving executables to: $(TagName)"/>
+    <!--
+      SvnClient is a wrapper for the svn command line.
+      The import command line orders repository and file system path
+      opposite of most other commands, so we have to put the "wrong"
+      values in RepositoryPath and LocalPath.
+    -->
+    <SvnClient RepositoryPath="$(StagingLocation)"
+      LocalPath="$(BuildsUrl)"
+      Command="import"
+      Message="Automatic build of Revision $(Revision) for the $(TargetEnvironment) environment."
+    />
+
+  </Target>
+
+  <!-- This target validates properties that are expected to be passed into msbuild -->
+  <Target Name="ValidateProps">
+	<Error Condition=" '$(TargetEnvironment)'=='' "
+          Text=" Missing required property [TargetEnvironment]" />
+		  
+	<Error Condition=" '$(Branch)'=='' "
+          Text=" Missing required property [Branch]" />
+  
+  </Target>  
+  
+  <!--
+    The "main" target which defines the list and order of other
+    targets to be run.
+  -->
+  <Target Name="All" DependsOnTargets="ValidateProps">
+  
+	<Message Text="Building Branch: $(Branch) for target $(TargetEnvironment)" />
+
+	
+    <CallTarget Targets="FetchSourceCode">
+      <Output TaskParameter="TargetOutputs" PropertyName="Revision"/>
+    </CallTarget>
+
+    <CallTarget Targets="Build"/>
+
+    <CallTarget Targets="SaveExecutables"/>
+
+    <CallTarget Targets="ApplySourceCodeTag"/>
+
+    <CallTarget Targets="Deploy"/>
+	
+	
+  </Target>
+
+  <Target Name="Help">
+    <Message Text=" " />
+    <Message Text="This is the CDE Build script" />
+    <Message Text=" " />
+    <Message Text="To run this script, enter the command:" />
+    <Message Text=" " />
+    <Message Text="  msbuild BuildCDE.xml /target:All" />
+    <Message Text=" " />
+  </Target>
+  
+</Project>
