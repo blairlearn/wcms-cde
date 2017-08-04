@@ -21,14 +21,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private ITerminologyLookupService _lookupSvc;
         private ParameterParserDelegate _parsers;
 
-        private static ParameterSerializerDelegate _basicParamSerializers;
-        private static ParameterSerializerDelegate _advParamSerializers;
+        private static ParameterSerializerDelegate _paramSerializers;
 
         /// <summary>
         /// Static constructor to initialize 
         /// </summary>
         static CTSSearchParamFactory() {
-            _basicParamSerializers = 
+            _paramSerializers = 
                 (ParameterSerializerDelegate) SerializeCancerType + //First param needs the cast.
                 SerializeSubTypes +
                 SerializeStages +
@@ -36,9 +35,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 SerializeKeyword +
                 SerializeGender +
                 SerializeLocation + //Theoretically this should only ever end up Zip or None
+                SerializeTrialTypes +
+                SerializeDrugs +
+                SerializeOtherTreatments +
+                SerializeTrialPhases +
+                SerializeTrialIDs +
+                SerializeInvestigator +
+                SerializeLeadOrg +
                 SerializeResultsLinkFlag;
 
-            _advParamSerializers =
+            /*_advParamSerializers =
                 (ParameterSerializerDelegate)SerializeCancerType + //First param needs the cast.
                 SerializeSubTypes +
                 SerializeStages +
@@ -50,10 +56,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 SerializeTrialTypes +
                 SerializeDrugs +
                 SerializeOtherTreatments +
+                SerializeTrialPhases +
                 SerializeTrialIDs +
                 SerializeInvestigator +
                 SerializeLeadOrg +
                 SerializeResultsLinkFlag;
+             */
         }
 
         /// <summary>
@@ -121,11 +129,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             NciUrl url = new NciUrl();
 
-            switch (searchParams.ResultsLinkFlag)
-            {
-                case ResultsLinkType.Basic: { _basicParamSerializers(url, searchParams); break; }
-                case ResultsLinkType.Advanced: { _advParamSerializers(url, searchParams); break; }
-            }
+            _paramSerializers(url, searchParams);
 
             return url;
         }
@@ -216,6 +220,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private static void SerializeLocation(NciUrl url, CTSSearchParams searchParams)
         {
             url.QueryParameters.Add("loc", searchParams.Location.ToString("d"));
+            ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
 
             if (url.QueryParameters.ContainsKey("loc"))
             {
@@ -239,13 +244,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             break;
                         }
                 }
+
+                if (searchParams.ResultsLinkFlag == ResultsLinkType.Basic && locParams.IsFieldSet(FormFields.ZipCode))
+                {
+                    SerializeZipCode(url, searchParams);
+                }
             }
         }
 
         // Parameter z (Zip Code) && zp (Zip Proximity)
         private static void SerializeZipCode(NciUrl url, CTSSearchParams searchParams)
         {
-            ZipCodeLocationSearchParams locParams = new ZipCodeLocationSearchParams();
+            ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
 
             if (locParams.IsFieldSet(FormFields.ZipCode))
             {
@@ -257,7 +267,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter lst (State) && Parameter lcty (City) && Parameter lcnty (Country)
         private static void SerializeCountryCityState(NciUrl url, CTSSearchParams searchParams)
         {
-            CountryCityStateLocationSearchParams locParams = new CountryCityStateLocationSearchParams();
+            CountryCityStateLocationSearchParams locParams = (CountryCityStateLocationSearchParams)searchParams.LocationParams;
             if (locParams.IsFieldSet(FormFields.State))
             {
                 //TODO: do we need to encode the state?
@@ -281,7 +291,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter hos (Hospital)
         private static void SerializeHospital(NciUrl url, CTSSearchParams searchParams)
         {
-            HospitalLocationSearchParams locParams = new HospitalLocationSearchParams();
+            HospitalLocationSearchParams locParams = (HospitalLocationSearchParams) searchParams.LocationParams;
             if (locParams.IsFieldSet(FormFields.Hospital))
             {
                 url.QueryParameters.Add("hos", HttpUtility.UrlEncode(locParams.Hospital));
@@ -372,22 +382,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter rl (Results Link Flag)
         private void ParseResultsLinkFlag(NciUrl url, CTSSearchParams searchParams)
         {
-            //TODO: Fix this to handle the enum parsing better.
-            //Also if it is not in the URL we should set it to basic
             if (IsInUrl(url, "rl"))
             {
-                int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], -1);
-                if(resLinkFlag == -1)
+                int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], 0);
+                if(resLinkFlag == 1 || resLinkFlag == 2)
                 {
-                    LogParseError("ResultsLinkFlag", "Results Link Flag can only equal 1 or 2.", searchParams);
-                }
-                if (resLinkFlag == 0)
-                {
-                    searchParams.ResultsLinkFlag = ResultsLinkType.Basic;
+                    searchParams.ResultsLinkFlag = (ResultsLinkType)resLinkFlag;
                 }
                 else
                 {
-                    searchParams.ResultsLinkFlag = (ResultsLinkType)resLinkFlag;
+                    LogParseError("ResultsLinkFlag", "Results Link Flag can only equal 1 or 2.", searchParams);
                 }
             }
             else
@@ -399,7 +403,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter t (Main Cancer Type)
         private void ParseCancerType(NciUrl url, CTSSearchParams searchParams)
         {
-            //TODO: Extra credit, refactor the term extraction logic so it does not get repeated for each type
             if (IsInUrl(url, "t"))
             {
                 TerminologyFieldSearchParam[] terms = GetTermFieldFromParam(url.QueryParameters["t"], FormFields.MainType, searchParams);
@@ -422,8 +425,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 searchParams.SubTypes = GetTermFieldFromParam(url.QueryParameters["st"], FormFields.SubTypes, searchParams);
             }
-
-            //TODO: Error Handling
         }
 
         //Parameter stg (Stages)
@@ -433,8 +434,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 searchParams.Stages = GetTermFieldFromParam(url.QueryParameters["stg"], FormFields.Stages, searchParams);
             }
-
-            //TODO: Error Handling
         }
 
         //Parameter fin (Findings)
@@ -444,8 +443,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 searchParams.Findings = GetTermFieldFromParam(url.QueryParameters["fin"], FormFields.Findings, searchParams);
             }
-
-            //TODO: Error Handling
         }
 
         // Parameter a (Age)
@@ -565,6 +562,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 string pattern = @"^[0-9]{5}$";
                 if(Regex.IsMatch(zipCode, pattern))
                 {
+                    //TODO: Implement geolookup
                     locParams.ZipCode = zipCode;
                 }
                 else
@@ -601,7 +599,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             CountryCityStateLocationSearchParams locParams = new CountryCityStateLocationSearchParams();
 
-            //TODO: Handle label conversion
             if (IsInUrl(url, "lst"))
             {
                 //Skip parsing if it is all, which is the default I have not set criteria setting
@@ -693,8 +690,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 searchParams.Drugs = GetTermFieldFromParam(url.QueryParameters["d"], FormFields.Drugs, searchParams);
             }
-
-            //TODO: Error handling
         }
 
         //Parameter i (Other treatments / interventions)
@@ -704,8 +699,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 searchParams.OtherTreatments = GetTermFieldFromParam(url.QueryParameters["i"], FormFields.OtherTreatments, searchParams);
             }
-
-            //TODO: Error handling
         }
 
         // Parameter tp (Trial Phase)

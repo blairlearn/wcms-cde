@@ -23,10 +23,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 return new[]
                 {
                     //This array of objects maps to the parameters of the create method.
-                    //URL at index 0, Expected object at index 1.
-                    //TODO: fill out the rest of these tests
-                    //TODO: get the tests to actually work - still having the equals/equivalent
-                    //      errors with array comparer 
+                    //URL at index 0, Expected object at index 1. 
                     
                     // TEST 0 - No parameters.
                     new object[] { "", new CTSSearchParams() {
@@ -277,7 +274,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 23 - Zip code on basic page
                     new object[] { "?rl=1&z=20850", new CTSSearchParams() {
                         LocationParams = new ZipCodeLocationSearchParams() {
-                            ZipCode = "20850"
+                            ZipCode = "20850",
+                            ZipRadius = 100
                         },
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
@@ -431,15 +429,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
+
+                    // TEST 37 - Trial IDs
+                    new object[] {"?tid=NCI-2014-01509;NCI-2014-01507", new CTSSearchParams() {
+                        TrialIDs = new string[] { "NCI-2014-01509", "NCI-2014-01507" },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
+                    }},
                     
-                    // TEST 37 - Principal investigator 
+                    // TEST 38 - Principal investigator 
                     new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
                         Investigator = "Sophia Smith",
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 38 - Lead organization
+                    // TEST 39 - Lead organization
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
                         LeadOrg = "Mayo Clinic",
                         ResultsLinkFlag = ResultsLinkType.Basic,

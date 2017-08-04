@@ -187,7 +187,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
         {
             
             throw new NotImplementedException("CTS Search Param Comparer Hash has not been implemented");
-            /* code below does not work when there are arrays of objects. This needs to be updated to use the new helper functions.
+            /* TODO: code below does not work when there are arrays of objects. This needs to be updated to use the new helper functions.
             int hash = 0;
             hash ^= _termComp.GetHashCode(obj.MainType);
             hash ^= obj.SubTypes.GetHashCode();
