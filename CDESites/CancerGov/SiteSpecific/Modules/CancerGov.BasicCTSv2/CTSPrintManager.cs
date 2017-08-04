@@ -68,7 +68,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (searchTerms.ZipCode != null)
             { 
                 BasicCTSManager manager = new BasicCTSManager(new ClinicalTrialsAPIClient(ApiUrl));
-                searchTerms.GeoCode = manager.GetZipLookupForZip(searchTerms.ZipCode).GeoCode;
+                //TODO: Use SearchParameters to determine lookup.
+                //searchTerms.GeoCode = manager.GetZipLookupForZip(searchTerms.ZipCode).GeoCode;
             }
 
             // Bind results to velocity template

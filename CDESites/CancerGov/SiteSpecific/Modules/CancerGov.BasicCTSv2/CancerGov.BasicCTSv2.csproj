@@ -72,6 +72,7 @@
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
     <Compile Include="ITerminologyLookupService.cs" />
+    <Compile Include="IZipCodeGeoLookupService.cs" />
     <Compile Include="SearchParams\LocationEnum.cs" />
     <Compile Include="SearchParams\LocationParams\AtNIHLocationSearchParams.cs" />
     <Compile Include="SearchParams\LocationParams\CountryCityStateLocationSearchParams.cs" />
@@ -154,7 +155,6 @@
     <Compile Include="SnippetControls\TrialVelocityTools.cs" />
     <Compile Include="ZipCodeDictionary.cs" />
     <Compile Include="ZipCodeGeoEntry.cs" />
-    <Compile Include="ZipCodeGeoLoader.cs" />
     <Compile Include="ZipCodeGeoLookup.cs" />
     <Compile Include="ZipLookup.cs" />
   </ItemGroup>

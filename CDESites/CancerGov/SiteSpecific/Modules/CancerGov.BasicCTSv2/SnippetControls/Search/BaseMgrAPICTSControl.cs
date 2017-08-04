@@ -55,7 +55,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Parse the Query to get the search params.
             try
             {
-                CTSSearchParamFactory factory = new CTSSearchParamFactory(DynamicTrialListingMapping.Instance);
+                CTSSearchParamFactory factory = new CTSSearchParamFactory(DynamicTrialListingMapping.Instance, new ZipCodeGeoLookup());
                 SearchParams = factory.Create(ParsedReqUrlParams);
             }
             catch (Exception ex)

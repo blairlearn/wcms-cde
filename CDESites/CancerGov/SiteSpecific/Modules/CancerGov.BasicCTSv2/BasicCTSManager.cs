@@ -470,32 +470,33 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="zipCode"></param>
         /// <returns></returns>
-        public ZipLookup GetZipLookupForZip(string zipCode)
-        {
-            // Setting the default latitude and longitude values for the middle of Antarctica.
-            // This way, if a user enters a properly formatted, but invalid zip, we won't hit a 
-            // null exception error when retrieving the coordinates.
-            double latitude = -89.9999;
-            double longitude = -89.9999;
+        //Removing as part of CTS SDS.  This comment should be removed once the old code is purged
+        //public ZipLookup GetZipLookupForZip(string zipCode)
+        //{
+        //    // Setting the default latitude and longitude values for the middle of Antarctica.
+        //    // This way, if a user enters a properly formatted, but invalid zip, we won't hit a 
+        //    // null exception error when retrieving the coordinates.
+        //    double latitude = -89.9999;
+        //    double longitude = -89.9999;
 
-            // Look up our ZipCodeGeoEntry object from the JSON reference file and pass in the 
-            // coordinates if the mapping exists.
-            ZipCodeGeoEntry zipEntry = ZipCodeGeoLookup.GetZipCodeGeoEntry(zipCode);
-            if (zipEntry != null)
-            {
-                if (!Double.IsNaN(zipEntry.Latitude) && !Double.IsNaN(zipEntry.Longitude))
-                {
-                    latitude = zipEntry.Latitude;
-                    longitude = zipEntry.Longitude;
-                }
-            }
+        //    // Look up our ZipCodeGeoEntry object from the JSON reference file and pass in the 
+        //    // coordinates if the mapping exists.
+        //    ZipCodeGeoEntry zipEntry = ZipCodeGeoLookup.GetZipCodeGeoEntry(zipCode);
+        //    if (zipEntry != null)
+        //    {
+        //        if (!Double.IsNaN(zipEntry.Latitude) && !Double.IsNaN(zipEntry.Longitude))
+        //        {
+        //            latitude = zipEntry.Latitude;
+        //            longitude = zipEntry.Longitude;
+        //        }
+        //    }
 
-            return new ZipLookup()
-            {
-                PostalCode_ZIP = zipCode,
-                GeoCode = new GeoLocation(latitude, longitude)
-            };
-        }
+        //    return new ZipLookup()
+        //    {
+        //        PostalCode_ZIP = zipCode,
+        //        GeoCode = new GeoLocation(latitude, longitude)
+        //    };
+        //}
 
         /// <summary>
         /// Gets the cancer type display name the user selected

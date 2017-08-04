@@ -463,10 +463,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
         public void Create(string url, CTSSearchParams expected)
         {
             var mockLookupSvc = GetLookupMock();
+            var mockZipLookupSvc = GetZipLookupMock();
 
             //Create a new instance of the factory, passing in the Mock's version of an implementation
             //of our ITerminologyLookupService interface.
-            CTSSearchParamFactory factory = new CTSSearchParamFactory(mockLookupSvc.Object);
+            CTSSearchParamFactory factory = new CTSSearchParamFactory(mockLookupSvc.Object, mockZipLookupSvc.Object);
 
             //Get the results of parsing the URL
             CTSSearchParams actual = factory.Create(url);
@@ -474,6 +475,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             //Test the actual result to the expected.  NOTE: If you add fields to the CTSSearchParams, you need
             //to also modify the comparer
             Assert.Equal(expected, actual, new CTSSearchParamsComparer());
+        }
+
+
+        /// <summary>
+        /// Gets a mock that can be used for a ITerminologyLookupService
+        /// See https://github.com/moq/moq4 for more details on the mock library.
+        /// (You can do cool thinks like make sure a method was called a certain number of times too...)
+        /// (You can pretend to throw an exception if this are not right...)
+        /// </summary>s
+        /// <returns>A mock to be used as the service.</returns>
+        private Mock<IZipCodeGeoLookupService> GetZipLookupMock()
+        {
+            Mock<IZipCodeGeoLookupService> rtnMock = new Mock<IZipCodeGeoLookupService>();
+
+            return rtnMock;
         }
 
         /// <summary>

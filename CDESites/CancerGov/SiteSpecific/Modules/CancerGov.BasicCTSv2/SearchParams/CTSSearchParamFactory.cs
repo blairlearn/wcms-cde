@@ -19,6 +19,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private delegate void ParameterSerializerDelegate(NciUrl url, CTSSearchParams searchParams);
 
         private ITerminologyLookupService _lookupSvc;
+        private IZipCodeGeoLookupService _zipLookupSvc;
         private ParameterParserDelegate _parsers;
 
         private static ParameterSerializerDelegate _paramSerializers;
@@ -68,9 +69,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// Creates new instance of a search param factory
         /// </summary>
         /// <param name="lookupSvc">An instance of a ITerminologyLookupService </param>
-        public CTSSearchParamFactory(ITerminologyLookupService lookupSvc)
+        public CTSSearchParamFactory(ITerminologyLookupService lookupSvc, IZipCodeGeoLookupService zipLookupSvc)
         {
             this._lookupSvc = lookupSvc;
+            this._zipLookupSvc = zipLookupSvc;
 
             //Add parser methods here
             this._parsers =

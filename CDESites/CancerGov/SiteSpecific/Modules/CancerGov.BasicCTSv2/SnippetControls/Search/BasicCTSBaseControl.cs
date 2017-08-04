@@ -280,7 +280,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
                 if (Regex.IsMatch(zip, pattern))
                 {
-                    searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
+                    //Commented out for CTS-SDS.  This file will go away at some point
+                    //searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(zip);
                     
                     if(searchParams.ZipLookup == null)
                     {
@@ -294,7 +295,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
             else if (atNIH)
             {
-                searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(NIH_ZIP_CODE);
+                //Commented out for CTS-SDS.  This file will go away at some point
+                //searchParams.ZipLookup = _basicCTSManager.GetZipLookupForZip(NIH_ZIP_CODE);
             }
             if (searchParams.ZipLookup != null)
             {
