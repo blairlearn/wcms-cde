@@ -113,6 +113,7 @@
     <Compile Include="SnippetControls\Search\BaseMgrAPICTSControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\Search\TrialSiteLocationFilterExtension.cs" />
     <Compile Include="SnippetControls\TrialListings\BaseTrialListingControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
