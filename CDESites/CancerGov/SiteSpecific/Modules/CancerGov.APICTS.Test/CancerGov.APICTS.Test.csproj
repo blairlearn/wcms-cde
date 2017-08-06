@@ -89,8 +89,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TrialExamples\2AtNIH.json" />
-    <None Include="TrialExamples\NCIMatch.json" />
+    <Content Include="TrialExamples\2AtNIH.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TrialExamples\NCIMatch.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
@@ -100,6 +104,10 @@
     <ProjectReference Include="..\CancerGov.BasicCTSv2\CancerGov.BasicCTSv2.csproj">
       <Project>{96f6420f-f16d-4873-af3a-5d22e9ffbd55}</Project>
       <Name>CancerGov.BasicCTSv2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CancerGov.ClinicalTrialsAPI.Test\CancerGov.ClinicalTrialsAPI.Test.csproj">
+      <Project>{b18dfb80-d029-4d54-80a1-e16361e8914a}</Project>
+      <Name>CancerGov.ClinicalTrialsAPI.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\CancerGov.ClinicalTrialsAPI\CancerGov.ClinicalTrialsAPI.csproj">
       <Project>{07db8185-53dc-4434-9d4a-ffc0efc9078a}</Project>
