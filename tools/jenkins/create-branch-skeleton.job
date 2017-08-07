@@ -3,9 +3,9 @@
     individual branches.  It is installed by the setup job.
 */
 
-def folderName  = 'wcms-front-end'    // Jenkins folder where the jbos will be placed.
+def folderName  = 'wcms-cde'    // Jenkins folder where the jbos will be placed.
 
-def GH_REPO_NAME = 'wcms-front-end'      // The project's repository name (as used in the URL).
+def GH_REPO_NAME = 'wcms-cde'      // The project's repository name (as used in the URL).
 def GH_ORGANIZATION_NAME = 'NCIOCPL'   // GitHub Organization name (as used in the URL/userid).
 def GH_USER_TOKEN_KEY = 'NCIOCPL-GitHub-Token'  // Jenkins ID of the credential string containing the GitHub access token for creating releases.
 
@@ -15,7 +15,7 @@ def sourceRepository = "$GH_ORGANIZATION_NAME/$GH_REPO_NAME"
 /*
     Definition for a job to check out and build a specific branch.
 */
-job("${folderName}/_lower/Build for $BRANCH") {
+job("${folderName}/_lower/Build for $BRANCH on $ENVIRONMENT") {
   
   wrappers {
     credentialsBinding {
@@ -26,7 +26,8 @@ job("${folderName}/_lower/Build for $BRANCH") {
       envs (
         GH_ORGANIZATION_NAME : GH_ORGANIZATION_NAME,
         GH_REPO_NAME : GH_REPO_NAME,
-        BRANCH_NAME : BRANCH
+        BRANCH_NAME : BRANCH,
+        ENVIRONMENT : ENVIRONMENT
       )
     }
   }
