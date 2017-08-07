@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CancerGov.ClinicalTrialsAPI;
 
-namespace CancerGov.ClinicalTrials.Basic.v2
+namespace CancerGov.ClinicalTrials.Basic.v2 
 {
     public static class ClinicalTrialExtensions
     {
@@ -266,6 +266,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="trial"></param>
         /// <returns></returns>
+        [Obsolete("This should be replaced by the new helper functions for SDS")]
         public static object GetAllSortedLocations(this ClinicalTrial trial)
         {
             return new
@@ -276,16 +277,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             };
         }
 
+        [Obsolete("This should be replaced by the new helper functions for SDS")]
         private static object GetUSASortedLocations(ClinicalTrial trial)
         {
             return GetNASortedLocations(trial, "United States");
         }
 
+        [Obsolete("This should be replaced by the new helper functions for SDS")]
         private static object GetCanadianSortedLocations(ClinicalTrial trial)
         {
             return GetNASortedLocations(trial, "Canada");
         }
 
+        [Obsolete("This should be replaced by the new helper functions for SDS")]
         private static object GetNASortedLocations(ClinicalTrial trial, string country)
         {
             OrderedDictionary locations = new OrderedDictionary();

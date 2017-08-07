@@ -112,6 +112,38 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
+        /// <summary>
+        /// Converts a query param to a bool; returns 0 if unable to parse
+        /// </summary>
+        protected bool ParamAsBool(string paramVal, bool def)
+        {
+            if (string.IsNullOrWhiteSpace(paramVal))
+            {
+                return def;
+            }
+            else if (paramVal.Trim() == "1")
+            {
+                return true;
+            }
+            else if (paramVal.Trim() == "0")
+            {
+                return false;
+            }
+            else
+            {
+                bool tmpBool = def;
+                
+                if (bool.TryParse(paramVal.Trim(), out tmpBool))
+                {
+                    return tmpBool;
+                }
+                else
+                {
+                    return def;
+                }
+            }
+        }
+
         #region Common Velocity Helpers
 
         /// <summary>

@@ -22,6 +22,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     {
         static ILog log = LogManager.GetLogger(typeof(BasicCTSViewControl));
 
+        private bool _showingAll = false;
+        private string _trialID = string.Empty;
+
+        public bool ShowingAll { get { return _showingAll; } }
+        public string TrialID { get { return _trialID;  } }
+
+        protected override void Init()
+        {
+            //MAKE SURE THE BASE IS CALLED!!!
+            base.Init();
+
+            if (IsInUrl(ParsedReqUrlParams, "all"))
+            {
+                this._showingAll = ParamAsBool(ParsedReqUrlParams.QueryParameters["all"], false);
+            }
+
+        }
+
         /// <summary>
         /// Gets the path to the template
         /// </summary>
@@ -37,19 +55,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         protected override object GetDataForTemplate()
         {
-            string nctid = ValidateID();
+            ParseAndValidateID();
 
             // Get Trial by ID
             ClinicalTrial trial;
             try
             {
                 // Retrieve a Clinical Trial based on the Trial ID
-                trial = this.CTSManager.Get(nctid);
+                trial = this.CTSManager.Get(TrialID);
             }
             catch (Exception ex)
             {
                 // If we hit some other error when getting the trials, redirect to the error page 
-                string errMessage = "CDE:APICTSDetailsControl.cs:OnLoad" + " Requested trial ID: " + nctid + "\nException thrown by CTSManager.get(nctid) call.";
+                string errMessage = "CDE:APICTSDetailsControl.cs:OnLoad" + " Requested trial ID: " + TrialID + "\nException thrown by CTSManager.get(nctid) call.";
                 log.Error(errMessage, ex);
                 ErrorPageDisplayer.RaisePageError(errMessage);
 
@@ -78,7 +96,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         /// <exception cref="HttpException">Thrown when an id is missing or malformed.</exception>
         /// <returns>A string that represents the trial ID.</returns>
-        private string ValidateID()
+        private void ParseAndValidateID()
         {
             if (!IsInUrl(this.ParsedReqUrlParams, "id"))
             {
@@ -92,7 +110,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 throw new HttpException(400, "Invalid trial ID.");
             }
 
-            return nctid;
+            this._trialID = nctid;
         }
 
         /// <summary>
@@ -127,53 +145,60 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         public string GetShowNearbyUrl()
         {
-            /*
-            url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
-            if (url.QueryParameters.ContainsKey(LOCATION_ALL))
-            {
-                url.QueryParameters[LOCATION_ALL] = "0";
-            }
-            else
-            {
-                url.QueryParameters.Add(LOCATION_ALL, "0");
-            }
-             */
-            return "/shownear";
+            //Create a new url for the current details page.
+            NciUrl url = new NciUrl();
+            url.SetUrl(this.Config.DetailedViewPagePrettyUrl);
+
+            //Convert the current search parameters into a NciUrl
+            NciUrl paramsUrl = CTSSearchParamFactory.ConvertParamsToUrl(this.SearchParams);
+
+            //Copy the params 
+            url.QueryParameters = paramsUrl.QueryParameters;
+
+            url.QueryParameters.Add("id", TrialID);
+            url.QueryParameters.Add("pn", this.PageNum.ToString());
+            url.QueryParameters.Add("ni", this.ItemsPerPage.ToString());
+            url.QueryParameters.Add("all", "0");
+
+            return url.ToString();
         }
 
         public string GetShowAllUrl()
         {
-            /*
-            url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
-            if (url.QueryParameters.ContainsKey(LOCATION_ALL))
-            {
-                url.QueryParameters[LOCATION_ALL] = "1";
-            }
-            else
-            {
-                url.QueryParameters.Add(LOCATION_ALL, "1");
-            }
-             */
-            return "/AllUrl";
+            //Create a new url for the current details page.
+            NciUrl url = new NciUrl();
+            url.SetUrl(this.Config.DetailedViewPagePrettyUrl);
+
+            //Convert the current search parameters into a NciUrl
+            NciUrl paramsUrl = CTSSearchParamFactory.ConvertParamsToUrl(this.SearchParams);
+
+            //Copy the params 
+            url.QueryParameters = paramsUrl.QueryParameters;
+
+            url.QueryParameters.Add("id", TrialID);
+            url.QueryParameters.Add("pn", this.PageNum.ToString());
+            url.QueryParameters.Add("ni", this.ItemsPerPage.ToString());
+            url.QueryParameters.Add("all", "1");
+
+            return url.ToString();
         }
 
         public string GetBackToResultsUrl()
         {
-            /*
-            url.SetUrl(PageInstruction.GetUrl("CurrentUrl").ToString());
-            url.UriStem = _basicCTSPageInfo.ResultsPagePrettyUrl;
+            //Create a new url for the current details page.
+            NciUrl url = new NciUrl();
+            url.SetUrl(this.Config.ResultsPagePrettyUrl);
 
-            if (url.QueryParameters.ContainsKey(LOCATION_ALL))
-            {
-                url.QueryParameters.Remove(LOCATION_ALL);
-            }
+            //Convert the current search parameters into a NciUrl
+            NciUrl paramsUrl = CTSSearchParamFactory.ConvertParamsToUrl(this.SearchParams);
 
-            if (url.QueryParameters.ContainsKey(NCT_ID))
-            {
-                url.QueryParameters.Remove(NCT_ID);
-            }
-             */
-            return "/backtores";
+            //Copy the params 
+            url.QueryParameters = paramsUrl.QueryParameters;
+
+            url.QueryParameters.Add("pn", this.PageNum.ToString());
+            url.QueryParameters.Add("ni", this.ItemsPerPage.ToString());
+
+            return url.ToString();
         }
 
         #endregion

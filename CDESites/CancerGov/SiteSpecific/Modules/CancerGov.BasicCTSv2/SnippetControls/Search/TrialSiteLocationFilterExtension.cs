@@ -37,12 +37,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         
                         if (locParams.IsFieldSet(FormFields.Country))
                         {
-                            rtnSites = rtnSites.Where(s => s.Country == locParams.Country);
+                            rtnSites = rtnSites.Where(s => StringComparer.CurrentCultureIgnoreCase.Equals(s.Country, locParams.Country));
                         }
 
                         if (locParams.IsFieldSet(FormFields.City))
                         {
-                            rtnSites = rtnSites.Where(s => s.City == locParams.City);
+                            rtnSites = rtnSites.Where(s => StringComparer.CurrentCultureIgnoreCase.Equals(s.City, locParams.City));
                         }
 
                         if (locParams.IsFieldSet(FormFields.State))
@@ -90,6 +90,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             return usaSites.Union(canadaSites).Union(otherSites);            
         }
-
+        
     }
 }
