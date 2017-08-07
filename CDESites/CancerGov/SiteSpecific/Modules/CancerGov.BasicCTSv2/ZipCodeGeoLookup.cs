@@ -17,7 +17,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// The path to the zip file
         /// </summary>
-        static string zipFilePath;
+        static string _zipFilePath;
 
         /// <summary>
         /// ZipCodeDictionary field that will be used for Loader/Reloader
@@ -35,7 +35,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         static ZipCodeGeoLookup()
         {
-            zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"];
+            _zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"];
 
             log = LogManager.GetLogger(typeof(ZipCodeGeoLookup));
             zipCodeDictionary = LoadDictionary();
@@ -94,10 +94,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //   relative filepath (the relative filepath is specified in the Web.config).
             // - Read the json file using StreamReader.
             // - Deserialize the json data into a ZipCodeDictionary object.
-            zipFilePath = HttpContext.Current.Server.MapPath(zipFilePath);
+            string locZipFilePath = HttpContext.Current.Server.MapPath(_zipFilePath);
             try
             {
-                using (StreamReader r = new StreamReader(zipFilePath))
+                using (StreamReader r = new StreamReader(locZipFilePath))
                 {
                     string json = r.ReadToEnd();
                     ZipCodeDictionary zipCodes = JsonConvert.DeserializeObject<ZipCodeDictionary>(json);
@@ -106,12 +106,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             catch (FileNotFoundException ex)
             {
-                log.ErrorFormat("LoadDictionary(): Path {0} not found.", ex, zipFilePath);
+                log.ErrorFormat("LoadDictionary(): Path {0} not found.", ex, locZipFilePath);
                 return null;
             }
             catch (Exception ex)
             {
-                log.ErrorFormat("LoadDictionary(): Failed to read dictionary file on path {0}", ex, zipFilePath);
+                log.ErrorFormat("LoadDictionary(): Failed to read dictionary file on path {0}", ex, locZipFilePath);
                 return null;
             }
         }
@@ -123,12 +123,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             // Get the .json relative filepath from the Web.config map to the full filepath on the machine.
             
-            if (String.IsNullOrWhiteSpace(zipFilePath))
+            if (String.IsNullOrWhiteSpace(_zipFilePath))
             {
                 log.Error("WatchDictionaryFile(): 'ZipCodesJsonMap' value not set.");
                 return;
             }
-            string mappedZipFilePath = HttpContext.Current.Server.MapPath(zipFilePath);
+            string mappedZipFilePath = HttpContext.Current.Server.MapPath(_zipFilePath);
 
             // Set FileSystemWatcher for the file path and set properties/event methods.
             zipCodeFileWatcher = new FileSystemWatcher((Path.GetDirectoryName(mappedZipFilePath)));

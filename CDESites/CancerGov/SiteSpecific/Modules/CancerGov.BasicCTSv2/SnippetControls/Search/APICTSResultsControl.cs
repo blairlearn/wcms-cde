@@ -40,7 +40,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override object GetDataForTemplate()
         {
 
-            //TODO: Get the page number & items per page
+            //TODO: Don't do a search if there are param errors.
 
             _results = CTSManager.Search(SearchParams, this.PageNum, this.ItemsPerPage);
 
@@ -303,6 +303,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 return null;
             }
         }
+
 
 
         #endregion

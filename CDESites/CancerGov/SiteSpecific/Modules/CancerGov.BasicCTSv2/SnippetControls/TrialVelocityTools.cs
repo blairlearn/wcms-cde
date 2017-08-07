@@ -84,15 +84,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         /// <param name="origin"></param>
         /// <param name="radius"></param>
-        /// <returns></returns>
-        public IEnumerable<ClinicalTrial.StudySite> GetFilteredLocations(ClinicalTrial trial, GeoLocation origin, int radius)
+        /// <returns></returns> 
+        public IEnumerable<ClinicalTrial.StudySite> GetFilteredLocations(ClinicalTrial trial, CTSSearchParams searchParams)
         {
-            return (trial.Sites.Where(site => site.Coordinates != null &&
-                                              origin.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= radius &&
-                                              site.Country == "United States")
-                    .OrderBy(loc => loc.Country)
-                    .ThenBy(loc => loc.StateOrProvince)
-                    .ThenBy(loc => loc.City).ToArray());
+            return trial.FilterSitesByLocation(searchParams);
         }
 
         /// <summary>
