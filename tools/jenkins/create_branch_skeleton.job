@@ -36,13 +36,13 @@ job("${FOLDER_NAME}/_lower/Build for $BRANCH on $ENVIRONMENT") {
     stringParam('RELEASE_LABEL', 'latest', 'Release label')
   }
 
-  //label('docker && linux') // Require Linux and Docker
+  label(ENVIRONMENT) // Require the specific build environment.
 
   scm {
     github(sourceRepository, "*/$BRANCH")
   }
 
   steps {
-    /*shell("./tools/build/build.sh")*/
+    batchFile("tools\build\build.bat $ENVIRONMENT")
   }
 }
