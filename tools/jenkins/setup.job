@@ -16,11 +16,23 @@ def sourceRepository = "$GH_ORGANIZATION_NAME/$GH_REPO_NAME"
 job("${FOLDER_NAME}/Create build job for a branch") {
   description("Creates the jobs that build individual branches.\n\nTo modify this job, see the contents of setup.job and create-branch-skeleton.job.")
 
+  wrappers {
+    environmentVariables {
+      envs (
+        // Values common to the setup and job creation scripts that we don't want to maintain in two places.
+        FOLDER_NAME : FOLDER_NAME,
+        GH_REPO_NAME : GH_REPO_NAME,
+        TARGET_BRANCH : TARGET_BRANCH,
+        GH_ORGANIZATION_NAME : GH_ORGANIZATION_NAME,
+        GH_USER_TOKEN_KEY : GH_USER_TOKEN_KEY
+      )
+    }
+  }
+  
   parameters {
     stringParam('BRANCH', '', 'New Branch\'s Name')
     choiceParam('ENVIRONMENT', ['pink', 'blue', 'red'], 'WCMS build environment.\n\nBlue - Dev\nRed - Hotfixes\nPink - Special projects')
   }
-  
   
   scm {
     github(sourceRepository, "*/$TARGET_BRANCH")
@@ -28,7 +40,7 @@ job("${FOLDER_NAME}/Create build job for a branch") {
 
   steps {
     dsl {
-      external("tools/build/create_branch_skeleton.job")
+      external("tools/jenkins/create_branch_skeleton.job")
     }
   }
 }
