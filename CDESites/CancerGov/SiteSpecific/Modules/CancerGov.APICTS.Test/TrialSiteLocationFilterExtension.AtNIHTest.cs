@@ -88,28 +88,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         //Order matters for the study sites.
                         new ClinicalTrial.StudySite[] {
                             new ClinicalTrial.StudySite() {
-                               AddressLine1 = "10 Center Drive",
-                               AddressLine2 = null,
-                               City ="Bethesda",
-                               ContactEmail = "widemanb@pbmac.nci.nih.gov",
-                               ContactName = "Brigitte C. Widemann",
-                               ContactPhone = "301-496-7387",
-                               Coordinates = new ClinicalTrial.StudySite.GeoLocation() {
-                                   Latitude = 39.0003, Longitude = -77.1056
-                               },
-                               Country = "United States",
-                               Family = null,
-                               LocalSiteIdentifier = string.Empty,
-                               Name = "National Institutes of Health Clinical Center",
-                               OrgEmail = null, OrgFax = null, 
-                               OrgPhone = "800-411-1222",
-                               OrgToFamilyRelationship = null,
-                               OrgTTY = null,
-                               PostalCode = "20892",
-                               RecruitmentStatus = "ACTIVE",
-                               StateOrProvinceAbbreviation = "MD"
-                           },
-                            new ClinicalTrial.StudySite() {
                                AddressLine1 = "9000 Rockville Pike",
                                AddressLine2 = null,
                                City ="Bethesda",
@@ -121,7 +99,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                },
                                Country = "United States",
                                Family = "NCI Center for Cancer Research (CCR)",
-                               LocalSiteIdentifier = string.Empty,
+                               LocalSiteIdentifier = null,
                                Name = "National Cancer Institute Pediatric Oncology Branch",
                                OrgEmail = null, OrgFax = null, 
                                OrgPhone = "877-624-4878",
@@ -131,11 +109,31 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                RecruitmentStatus = "ACTIVE",
                                StateOrProvinceAbbreviation = "MD"
                            },
-
-                           
+                            new ClinicalTrial.StudySite() {
+                               AddressLine1 = "10 Center Drive",
+                               AddressLine2 = null,
+                               City ="Bethesda",
+                               ContactEmail = "widemanb@pbmac.nci.nih.gov",
+                               ContactName = "Brigitte C. Widemann",
+                               ContactPhone = "301-496-7387",
+                               Coordinates = new ClinicalTrial.StudySite.GeoLocation() {
+                                   Latitude = 39.0003, Longitude = -77.1056
+                               },
+                               Country = "United States",
+                               Family = null,
+                               LocalSiteIdentifier = null,
+                               Name = "National Institutes of Health Clinical Center",
+                               OrgEmail = null, OrgFax = null, 
+                               OrgPhone = "800-411-1222",
+                               OrgToFamilyRelationship = null,
+                               OrgTTY = null,
+                               PostalCode = "20892",
+                               RecruitmentStatus = "ACTIVE",
+                               StateOrProvinceAbbreviation = "MD"
+                           }
                         }
                     }
-                    //Find one with no NIH sites, but other trial sites.
+                    //TODO: Find a trial with no NIH sites, but other trial sites.
                 };
             }
         }
