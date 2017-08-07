@@ -166,27 +166,34 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
 
-                    // TEST 11 - Gender
+                    // TEST 12 - Gender
                     new object[] { "?g=male", new CTSSearchParams() {
                         Gender = "male",
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 13 - Phrase/keyword
+                    // TEST 13 - Gender
+                    new object[] { "?g=female", new CTSSearchParams() {
+                        Gender = "female",
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
+                    }},
+
+                    // TEST 14 - Phrase/keyword
                     new object[] { "?q=chicken", new CTSSearchParams() {
                         Phrase = "chicken",
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 14 - Location
+                    // TEST 15 - Location
                     new object[] { "?loc=0", new CTSSearchParams() {
                         Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 15 - Zip code
+                    // TEST 16 - Zip code
                     new object[] { "?loc=1&z=20850", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
@@ -196,7 +203,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 16 - Zip radius
+                    // TEST 17 - Zip radius
                     new object[] { "?loc=1&z=20850&zp=500", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
@@ -207,7 +214,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 17 - Country
+                    // TEST 18 - Country
                     new object[] { "?loc=2&lcnty=United+States", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
@@ -216,7 +223,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 18 - State 
+                    // TEST 19 - State 
                     new object[] { "?loc=2&lst=MD", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
@@ -230,7 +237,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 19 - States
+                    // TEST 20 - States
                     new object[] { "?loc=2&lst=MD,VA", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
@@ -248,7 +255,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }}, 
                     
-                    // TEST 20 - City 
+                    // TEST 21 - City 
                     new object[] { "?loc=2&lcty=Baltimore", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
@@ -257,7 +264,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 21 - Hospital 
+                    // TEST 22 - Hospital 
                     new object[] { "?loc=3&hos=M+D+Anderson+Cancer+Center", new CTSSearchParams() {
                         Location = LocationType.Hospital,
                         LocationParams = new HospitalLocationSearchParams() {
@@ -266,14 +273,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 22 - Is location NIH? 
+                    // TEST 23 - Is location NIH? 
                     new object[] { "?loc=4", new CTSSearchParams() {
                         Location = LocationType.AtNIH,
                         LocationParams = new AtNIHLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 23 - Zip code on basic page
+                    // TEST 24 - Zip code on basic page
                     new object[] { "?rl=1&z=20850", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
@@ -284,16 +291,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 24 - Results link flag
+                    // TEST 25 - Results link flag
                     new object[] { "?rl=1", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
-                    // TEST 25 - Results link flag
+                    // TEST 26 - Results link flag
                     new object[] { "?rl=2", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
-                    // TEST 26 - Trial type
+                    // TEST 27 - Trial type
                     new object[] {"?tt=basic_science", new CTSSearchParams() {
                         TrialTypes = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
@@ -304,7 +311,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
-                    // TEST 27 - Trial types
+                    // TEST 28 - Trial types
                     new object[] {"?tt=basic_science,supportive_care", new CTSSearchParams() {
                         TrialTypes = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
@@ -320,7 +327,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
                     
-                    // TEST 28 - Drug
+                    // TEST 29 - Drug
                     new object[] {"?d=C1647", new CTSSearchParams() {
                         Drugs = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -332,7 +339,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
 
-                    // TEST 29 - Drugs
+                    // TEST 30 - Drugs
                     new object[] {"?d=C1647,C2039", new CTSSearchParams() {
                         Drugs = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -348,7 +355,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
                     
-                    // TEST 30 - Other treatments/interventions
+                    // TEST 31 - Other treatments/interventions
                     new object[] {"?i=C131060", new CTSSearchParams() {
                         OtherTreatments = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -360,7 +367,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
 
-                    // TEST 31 - Other treatments/interventions
+                    // TEST 32 - Other treatments/interventions
                     new object[] {"?i=C131060,C26665", new CTSSearchParams() {
                         OtherTreatments = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -376,7 +383,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
                     
-                    // TEST 32 - Other treatments/interventions
+                    // TEST 33 - Other treatments/interventions
                     new object[] {"?i=C131060,C107350|C26665", new CTSSearchParams() {
                         OtherTreatments = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -392,7 +399,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
                     
-                    // TEST 33 - Trial phase 
+                    // TEST 34 - Trial phase 
                     new object[] {"?tp=i", new CTSSearchParams() {
                         TrialPhases = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
@@ -404,7 +411,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
                    
-                    // TEST 34 - Trial phases
+                    // TEST 35 - Trial phases
                     new object[] {"?tp=i,ii", new CTSSearchParams() {
                         TrialPhases = new LabelledSearchParam[] { 
                             new LabelledSearchParam() {
@@ -420,35 +427,35 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
                     
-                    // TEST 35 - Trial ID 
+                    // TEST 36 - Trial ID 
                     new object[] {"?tid=NCI-2014-01509", new CTSSearchParams() {
                         TrialIDs = new string[] {"NCI-2014-01509"},
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 36 - Trial IDs
+                    // TEST 37 - Trial IDs
                     new object[] {"?tid=NCI-2014-01509,NCI-2014-01507", new CTSSearchParams() {
                         TrialIDs = new string[] { "NCI-2014-01509", "NCI-2014-01507" },
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 37 - Trial IDs
+                    // TEST 38 - Trial IDs
                     new object[] {"?tid=NCI-2014-01509;NCI-2014-01507", new CTSSearchParams() {
                         TrialIDs = new string[] { "NCI-2014-01509", "NCI-2014-01507" },
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 38 - Principal investigator 
+                    // TEST 39 - Principal investigator 
                     new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
                         Investigator = "Sophia Smith",
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 39 - Lead organization
+                    // TEST 40 - Lead organization
                     new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
                         LeadOrg = "Mayo Clinic",
                         ResultsLinkFlag = ResultsLinkType.Basic,
