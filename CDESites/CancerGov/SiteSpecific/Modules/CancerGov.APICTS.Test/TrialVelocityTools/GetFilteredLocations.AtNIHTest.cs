@@ -25,7 +25,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
             AssemblyFileName = Assembly.GetExecutingAssembly().CodeBase;
             Uri fileNameURI = new Uri(AssemblyFileName);
             AssemblyPath = Path.GetDirectoryName(fileNameURI.LocalPath);
-        }
+        } 
 
         /// <summary>
         /// Loads a test trial from TrialExamples folder.  
@@ -88,28 +88,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
                         //Order matters for the study sites.
                         new ClinicalTrial.StudySite[] {
                             new ClinicalTrial.StudySite() {
-                               AddressLine1 = "9000 Rockville Pike",
-                               AddressLine2 = null,
-                               City ="Bethesda",
-                               ContactEmail = "widemanb@mail.nih.gov",
-                               ContactName = "Brigitte C. Widemann",
-                               ContactPhone = "301-496-7387",
-                               Coordinates = new ClinicalTrial.StudySite.GeoLocation() {
-                                   Latitude = 39.0003, Longitude = -77.1056
-                               },
-                               Country = "United States",
-                               Family = "NCI Center for Cancer Research (CCR)",
-                               LocalSiteIdentifier = null,
-                               Name = "National Cancer Institute Pediatric Oncology Branch",
-                               OrgEmail = null, OrgFax = null, 
-                               OrgPhone = "877-624-4878",
-                               OrgToFamilyRelationship = "ORGANIZATIONAL",
-                               OrgTTY = null,
-                               PostalCode = "20892",
-                               RecruitmentStatus = "ACTIVE",
-                               StateOrProvinceAbbreviation = "MD"
-                           },
-                            new ClinicalTrial.StudySite() {
                                AddressLine1 = "10 Center Drive",
                                AddressLine2 = null,
                                City ="Bethesda",
@@ -126,6 +104,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
                                OrgEmail = null, OrgFax = null, 
                                OrgPhone = "800-411-1222",
                                OrgToFamilyRelationship = null,
+                               OrgTTY = null,
+                               PostalCode = "20892",
+                               RecruitmentStatus = "ACTIVE",
+                               StateOrProvinceAbbreviation = "MD"
+                           },
+                            new ClinicalTrial.StudySite() {
+                               AddressLine1 = "9000 Rockville Pike",
+                               AddressLine2 = null,
+                               City ="Bethesda",
+                               ContactEmail = "widemanb@mail.nih.gov",
+                               ContactName = "Brigitte C. Widemann",
+                               ContactPhone = "301-496-7387",
+                               Coordinates = new ClinicalTrial.StudySite.GeoLocation() {
+                                   Latitude = 39.0003, Longitude = -77.1056
+                               },
+                               Country = "United States",
+                               Family = "NCI Center for Cancer Research (CCR)",
+                               LocalSiteIdentifier = null,
+                               Name = "National Cancer Institute Pediatric Oncology Branch",
+                               OrgEmail = null, OrgFax = null, 
+                               OrgPhone = "877-624-4878",
+                               OrgToFamilyRelationship = "ORGANIZATIONAL",
                                OrgTTY = null,
                                PostalCode = "20892",
                                RecruitmentStatus = "ACTIVE",

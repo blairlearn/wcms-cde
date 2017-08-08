@@ -88,7 +88,59 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns> 
         public ClinicalTrial.StudySite[] GetFilteredLocations(ClinicalTrial trial, CTSSearchParams searchParams)
         {
-            return trial.FilterSitesByLocation(searchParams).ToArray();
+            IEnumerable<ClinicalTrial.StudySite> rtnSites = trial.Sites;
+
+            switch (searchParams.Location)
+            {
+                case LocationType.AtNIH:
+                    {
+                        rtnSites = rtnSites.Where(s => s.PostalCode == "20892");
+                        break;
+                    }
+                case LocationType.CountryCityState:
+                    {
+
+                        CountryCityStateLocationSearchParams locParams = (CountryCityStateLocationSearchParams)searchParams.LocationParams;
+
+                        if (locParams.IsFieldSet(FormFields.Country))
+                        {
+                            rtnSites = rtnSites.Where(s => StringComparer.CurrentCultureIgnoreCase.Equals(s.Country, locParams.Country));
+                        }
+
+                        if (locParams.IsFieldSet(FormFields.City))
+                        {
+                            rtnSites = rtnSites.Where(s => StringComparer.CurrentCultureIgnoreCase.Equals(s.City, locParams.City));
+                        }
+
+                        if (locParams.IsFieldSet(FormFields.State))
+                        {
+                            var states = locParams.State.Select(s => s.Key); //Get Abbreviations
+                            rtnSites = rtnSites.Where(s => states.Contains(s.StateOrProvinceAbbreviation));
+                        }
+
+                        break;
+                    }
+                case LocationType.Zip:
+                    {
+                        ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
+
+                        rtnSites = rtnSites.Where(site =>
+                                    site.Coordinates != null &&
+                                    locParams.GeoLocation.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= locParams.ZipRadius &&
+                                    site.Country == "United States"
+                        );
+
+                        break;
+                    }
+                default:
+                    {
+                        //Basically we can't/shouldn't filter.
+                        break;
+                    }
+            }
+
+            //Now that we have the sites filtered, now we need to sort.
+            return rtnSites.ToArray();
         }
 
         /// <summary>

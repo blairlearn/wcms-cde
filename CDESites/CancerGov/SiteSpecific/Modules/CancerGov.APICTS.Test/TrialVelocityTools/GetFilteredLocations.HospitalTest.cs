@@ -43,7 +43,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
             SnippetControls.TrialVelocityTools tvt = new SnippetControls.TrialVelocityTools();
             IEnumerable<ClinicalTrial.StudySite> actual = tvt.GetFilteredLocations(trial, searchParams);
 
-            Assert.Equal(expectedSites, actual, new ClinicalTrialsAPI.Test.StudySiteComparer());
+            //TODO: Implement this.
+            Assert.Equal(true, false);
+            //Assert.Equal(expectedSites, actual, new ClinicalTrialsAPI.Test.StudySiteComparer());
         }
 
     }

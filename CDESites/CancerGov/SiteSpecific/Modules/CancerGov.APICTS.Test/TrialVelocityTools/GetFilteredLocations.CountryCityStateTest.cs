@@ -210,21 +210,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
                 new ClinicalTrial.StudySite[] {
                     new ClinicalTrial.StudySite()
                     {
-                        Name = "Another Hospital C",
+                        Name = "Hospital A",
                         City = "Berlin",
-                        Country = "United States",
-                        StateOrProvinceAbbreviation = "AK"
+                        Country = "Germany",
+                        StateOrProvinceAbbreviation = null
+                    },
+                    new ClinicalTrial.StudySite()
+                    {
+                        Name = "Hospital O",
+                        City = "Berlin",
+                        Country = "Canada",
+                        StateOrProvinceAbbreviation = "ON"
                     },
                     new ClinicalTrial.StudySite()
                     {
                         Name = "Hospital B",
-                        City = "Berlin",
-                        Country = "United States",
-                        StateOrProvinceAbbreviation = "MD"
-                    },
-                    new ClinicalTrial.StudySite()
-                    {
-                        Name = "Hospital C",
                         City = "Berlin",
                         Country = "United States",
                         StateOrProvinceAbbreviation = "MD"
@@ -238,18 +238,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
                     },
                     new ClinicalTrial.StudySite()
                     {
-                        Name = "Hospital O",
+                        Name = "Hospital C",
                         City = "Berlin",
-                        Country = "Canada",
-                        StateOrProvinceAbbreviation = "ON"
+                        Country = "United States",
+                        StateOrProvinceAbbreviation = "MD"
                     },
                     new ClinicalTrial.StudySite()
                     {
-                        Name = "Hospital A",
+                        Name = "Another Hospital C",
                         City = "Berlin",
-                        Country = "Germany",
-                        StateOrProvinceAbbreviation = null
-                    }
+                        Country = "United States",
+                        StateOrProvinceAbbreviation = "AK"
+                    }                    
                 }
             );
 
@@ -304,6 +304,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
                     },
                     new ClinicalTrial.StudySite()
                     {
+                        Name = "Hospital P",
+                        City = "Berlin",
+                        Country = "United States",
+                        StateOrProvinceAbbreviation = "PA"
+                    },
+                    new ClinicalTrial.StudySite()
+                    {
                         Name = "Hospital C",
                         City = "Berlin",
                         Country = "United States",
@@ -315,13 +322,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
                         City = "Bethesda",
                         Country = "United States",
                         StateOrProvinceAbbreviation = "MD"
-                    },
-                    new ClinicalTrial.StudySite()
-                    {
-                        Name = "Hospital P",
-                        City = "Berlin",
-                        Country = "United States",
-                        StateOrProvinceAbbreviation = "PA"
                     }
                 }
             );
