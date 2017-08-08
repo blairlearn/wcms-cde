@@ -12,7 +12,7 @@ using Moq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
 {
-    public partial class GetFilteredLocations_Test
+    public partial class GetFilteredLocations
     {
         public static IEnumerable<object[]> CCSFilteringData
         {
@@ -378,7 +378,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
         [Theory, MemberData("CCSFilteringData")]
         public void FilterByCCS(ClinicalTrial trial, CTSSearchParams searchParams, IEnumerable<ClinicalTrial.StudySite> expectedSites)
         {
-            IEnumerable<ClinicalTrial.StudySite> actual = trial.FilterSitesByLocation(searchParams);
+            SnippetControls.TrialVelocityTools tvt = new SnippetControls.TrialVelocityTools();
+            IEnumerable<ClinicalTrial.StudySite> actual = tvt.GetFilteredLocations(trial, searchParams);
 
             Assert.Equal(expectedSites, actual, new ClinicalTrialsAPI.Test.StudySiteComparer());
         }

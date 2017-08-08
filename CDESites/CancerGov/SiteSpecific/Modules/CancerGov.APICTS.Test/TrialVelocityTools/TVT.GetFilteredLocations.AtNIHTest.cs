@@ -15,12 +15,12 @@ using Newtonsoft.Json;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
 {
-    public partial class GetFilteredLocations_Test
+    public partial class GetFilteredLocations
     {
         static readonly string AssemblyFileName;
         static readonly string AssemblyPath;
 
-        static GetFilteredLocations_Test()
+        static GetFilteredLocations()
         {
             AssemblyFileName = Assembly.GetExecutingAssembly().CodeBase;
             Uri fileNameURI = new Uri(AssemblyFileName);
@@ -141,9 +141,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
         [Theory, MemberData("AtNIHFilteringData")]
         public void FilterByAtNIH(ClinicalTrial trial, IEnumerable<ClinicalTrial.StudySite> expectedSites)
         {
-
+            SnippetControls.TrialVelocityTools tvt = new SnippetControls.TrialVelocityTools();
             CTSSearchParams searchParams = new CTSSearchParams() { Location = LocationType.AtNIH };
-            IEnumerable<ClinicalTrial.StudySite> actual = trial.FilterSitesByLocation(searchParams);
+            IEnumerable<ClinicalTrial.StudySite> actual = tvt.GetFilteredLocations(trial, searchParams);
 
             Assert.Equal(expectedSites, actual, new ClinicalTrialsAPI.Test.StudySiteComparer());
         }
