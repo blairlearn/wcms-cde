@@ -22,7 +22,7 @@
     children of the base.
   -->
   <PropertyGroup>
-    <SourceLocation>$(BuildLocation)\source</SourceLocation>
+    <SourceLocation>$(Workspace)</SourceLocation>
 	<OutputFolder>$(BuildLocation)\output\</OutputFolder>
     <StagingLocation>$(BuildLocation)\staging</StagingLocation>
 	<ConfigFileLocation>$(StagingLocation)\_configFiles</ConfigFileLocation>
