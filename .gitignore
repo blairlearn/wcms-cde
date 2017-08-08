@@ -3,6 +3,8 @@
 /*.suo
 /packages
 
+msbuild.log
+
 # /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/
 /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/[Bb]in
 /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/obj
