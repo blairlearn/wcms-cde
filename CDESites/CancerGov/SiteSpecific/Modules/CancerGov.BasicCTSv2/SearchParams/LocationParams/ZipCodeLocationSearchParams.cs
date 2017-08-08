@@ -15,6 +15,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         string _zip = string.Empty;
 
         /// <summary>
+        /// Gets a fields value as a string suitable for things like, oh, a velocity template
+        /// </summary>
+        /// <param name="field">A FormFields enum value</param>
+        /// <returns>The value of the field, OR, and error message</returns>
+        public override string GetFieldAsString(FormFields field)
+        {
+            switch (field)
+            {
+                case FormFields.ZipRadius: return ZipRadius.ToString();
+                case FormFields.ZipCode: return ZipCode;
+                default: return "Error Retrieving Field";
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the zip code value
         /// TODO: verify how this should work with updated API
         /// </summary>
