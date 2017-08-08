@@ -14,7 +14,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
 {
     public partial class GetFilteredLocations
     {
-        public static IEnumerable<object[]> ZipFilteringData
+        public static IEnumerable<object[]> HospitalFilteringData
         {
             get
             {
@@ -25,10 +25,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
                     new object[] {
                         new ClinicalTrial(),
                         new CTSSearchParams() {
-                            Location = LocationType.Zip,
-                            LocationParams = new ZipCodeLocationSearchParams() {
-                                ZipCode = "20852",
-                                ZipRadius = 10
+                            Location = LocationType.Hospital,
+                            LocationParams = new HospitalLocationSearchParams() {
+                                Hospital = "Mayo"
                             }
                         },
                         new ClinicalTrial.StudySite[] { }
@@ -38,8 +37,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
         }
 
 
-        [Theory, MemberData("ZipFilteringData")]
-        public void FilterByZip(ClinicalTrial trial, CTSSearchParams searchParams, IEnumerable<ClinicalTrial.StudySite> expectedSites)
+        [Theory, MemberData("HospitalFilteringData")]
+        public void FilterByHospital(ClinicalTrial trial, CTSSearchParams searchParams, IEnumerable<ClinicalTrial.StudySite> expectedSites)
         {
             SnippetControls.TrialVelocityTools tvt = new SnippetControls.TrialVelocityTools();
             IEnumerable<ClinicalTrial.StudySite> actual = tvt.GetFilteredLocations(trial, searchParams);
