@@ -12,7 +12,7 @@ set my_branch=%1
 REM Determine the Build Environment Name.  This is used for tagging and proper config deployment
 
 rem TODO: Pass target in from Jenkins.
-set my_target=
+set my_target=%2
 
 
 
@@ -32,4 +32,4 @@ IF "%my_target%"=="" (
 )
 
 ECHO Building for %my_target% using Branch %my_branch%
-msbuild /fileLogger /t:ALL /p:TargetEnvironment=%my_target%;Branch=%my_branch% BuildCDE.xml
+msbuild /fileLogger /t:Build /p:TargetEnvironment=%my_target%;Branch=%my_branch% "%WORKSPACE%\tools\build\BuildCDE.xml"

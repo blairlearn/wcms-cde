@@ -43,6 +43,6 @@ job("${FOLDER_NAME}/_lower/Build for $BRANCH on $ENVIRONMENT") {
   }
 
   steps {
-    batchFile("tools\build\build.bat $ENVIRONMENT")
+    batchFile("call \"%WORKSPACE%\\tools\\build\\build.bat\" %BRANCH_NAME% %ENVIRONMENT%")
   }
 }
