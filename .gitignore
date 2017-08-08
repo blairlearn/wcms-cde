@@ -1,0 +1,505 @@
+
+# /
+/*.suo
+/packages
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Core/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Core/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Core/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Core/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Core/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Core/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Core/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Core/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Core/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.DataManager/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.DataManager/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.DataManager/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.DataManager/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.DataManager/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.DataManager/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.DataManager/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.DataManager/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.DataManager/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/*.eto
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/ClientBin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/GeneratedArtifacts
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/_Pvt_Extensions
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/*.eto
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/ClientBin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/GeneratedArtifacts
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.ElasticSearch/_Pvt_Extensions
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.Endeca/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.Endeca/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.Endeca/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.Endeca/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.Endeca/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.Endeca/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.Endeca/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.Endeca/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.Endeca/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/*.eto
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/ClientBin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/GeneratedArtifacts
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/_Pvt_Extensions
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.TestingTools/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.TestingTools/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.TestingTools/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.TestingTools/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.TestingTools/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.TestingTools/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.TestingTools/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.TestingTools/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.TestingTools/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Authentication.SimpleSSOAuthModule/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Authentication.SimpleSSOAuthModule/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Authentication.SimpleSSOAuthModule/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Authentication.SimpleSSOAuthModule/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Authentication.SimpleSSOAuthModule/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Authentication.SimpleSSOAuthModule/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Authentication.SimpleSSOAuthModule/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Authentication.SimpleSSOAuthModule/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Authentication.SimpleSSOAuthModule/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Dictionary/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Dictionary/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.Dictionary/obj
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.Icons/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.Icons/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.Icons/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.Icons/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.Icons/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.Icons/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.Icons/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.Icons/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.Icons/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.WebControls/
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.WebControls/bin
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.WebControls/obj
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.WebControls/[Bb]in
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.WebControls/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.WebControls/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.WebControls/*.user
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.WebControls/*.aps
+/CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.UI.WebControls/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Core.Tests/
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Core.Tests/bin
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Core.Tests/obj
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Core.Tests/[Bb]in
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Core.Tests/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Core.Tests/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Core.Tests/*.user
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Core.Tests/*.aps
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Core.Tests/*.eto
+
+# /CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/bin
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/obj
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/[Bb]in
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/[Dd]ebug
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/[Rr]elease
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/*.user
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/*.aps
+/CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/*.eto
+
+# /CDESites/CancerGov/CDR.ClinicalTrials/
+/CDESites/CancerGov/CDR.ClinicalTrials/bin
+/CDESites/CancerGov/CDR.ClinicalTrials/obj
+/CDESites/CancerGov/CDR.ClinicalTrials/[Bb]in
+/CDESites/CancerGov/CDR.ClinicalTrials/[Dd]ebug
+/CDESites/CancerGov/CDR.ClinicalTrials/[Rr]elease
+/CDESites/CancerGov/CDR.ClinicalTrials/*.user
+/CDESites/CancerGov/CDR.ClinicalTrials/*.aps
+/CDESites/CancerGov/CDR.ClinicalTrials/*.eto
+
+# /CDESites/CancerGov/CDR.Common/
+/CDESites/CancerGov/CDR.Common/bin
+/CDESites/CancerGov/CDR.Common/obj
+/CDESites/CancerGov/CDR.Common/[Bb]in
+/CDESites/CancerGov/CDR.Common/[Dd]ebug
+/CDESites/CancerGov/CDR.Common/[Rr]elease
+/CDESites/CancerGov/CDR.Common/*.user
+/CDESites/CancerGov/CDR.Common/*.aps
+/CDESites/CancerGov/CDR.Common/*.eto
+
+# /CDESites/CancerGov/CDR.DataManager/
+/CDESites/CancerGov/CDR.DataManager/bin
+/CDESites/CancerGov/CDR.DataManager/obj
+/CDESites/CancerGov/CDR.DataManager/[Bb]in
+/CDESites/CancerGov/CDR.DataManager/[Dd]ebug
+/CDESites/CancerGov/CDR.DataManager/[Rr]elease
+/CDESites/CancerGov/CDR.DataManager/*.user
+/CDESites/CancerGov/CDR.DataManager/*.aps
+/CDESites/CancerGov/CDR.DataManager/*.eto
+
+# /CDESites/CancerGov/CDR.DrugDictionary/
+/CDESites/CancerGov/CDR.DrugDictionary/bin
+/CDESites/CancerGov/CDR.DrugDictionary/obj
+/CDESites/CancerGov/CDR.DrugDictionary/[Bb]in
+/CDESites/CancerGov/CDR.DrugDictionary/[Dd]ebug
+/CDESites/CancerGov/CDR.DrugDictionary/[Rr]elease
+/CDESites/CancerGov/CDR.DrugDictionary/*.user
+/CDESites/CancerGov/CDR.DrugDictionary/*.aps
+/CDESites/CancerGov/CDR.DrugDictionary/*.eto
+
+# /CDESites/CancerGov/CDR.TermDictionary/
+/CDESites/CancerGov/CDR.TermDictionary/[Bb]in
+/CDESites/CancerGov/CDR.TermDictionary/obj
+/CDESites/CancerGov/CDR.TermDictionary/[Dd]ebug
+/CDESites/CancerGov/CDR.TermDictionary/[Rr]elease
+/CDESites/CancerGov/CDR.TermDictionary/*.user
+/CDESites/CancerGov/CDR.TermDictionary/*.aps
+/CDESites/CancerGov/CDR.TermDictionary/*.eto
+
+# /CDESites/CancerGov/CancerGovCommon/
+/CDESites/CancerGov/CancerGovCommon/[Bb]in
+/CDESites/CancerGov/CancerGovCommon/obj
+/CDESites/CancerGov/CancerGovCommon/[Dd]ebug
+/CDESites/CancerGov/CancerGovCommon/[Rr]elease
+/CDESites/CancerGov/CancerGovCommon/*.user
+/CDESites/CancerGov/CancerGovCommon/*.aps
+/CDESites/CancerGov/CancerGovCommon/*.eto
+
+# /CDESites/CancerGov/CancerGovSpecific/CancerGov.DataManager/
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.DataManager/bin
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.DataManager/obj
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.DataManager/[Bb]in
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.DataManager/[Dd]ebug
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.DataManager/[Rr]elease
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.DataManager/*.user
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.DataManager/*.aps
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.DataManager/*.eto
+
+# /CDESites/CancerGov/CancerGovSpecific/CancerGov.Database/
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Database/[Bb]in
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Database/obj
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Database/[Dd]ebug
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Database/[Rr]elease
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Database/*.user
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Database/*.aps
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Database/*.eto
+
+# /CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/bin
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/obj
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/[Bb]in
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/[Dd]ebug
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/[Rr]elease
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/*.user
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/*.aps
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/*.eto
+
+# /CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/bin
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/obj
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/[Bb]in
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/[Dd]ebug
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/[Rr]elease
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/*.user
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/*.aps
+/CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/*.eto
+
+# /CDESites/CancerGov/CancerGovSpecific/ClinicalTrialControls/
+/CDESites/CancerGov/CancerGovSpecific/ClinicalTrialControls/bin
+/CDESites/CancerGov/CancerGovSpecific/ClinicalTrialControls/obj
+/CDESites/CancerGov/CancerGovSpecific/ClinicalTrialControls/[Bb]in
+/CDESites/CancerGov/CancerGovSpecific/ClinicalTrialControls/[Dd]ebug
+/CDESites/CancerGov/CancerGovSpecific/ClinicalTrialControls/[Rr]elease
+/CDESites/CancerGov/CancerGovSpecific/ClinicalTrialControls/*.user
+/CDESites/CancerGov/CancerGovSpecific/ClinicalTrialControls/*.aps
+/CDESites/CancerGov/CancerGovSpecific/ClinicalTrialControls/*.eto
+
+# /CDESites/CancerGov/EmergencyAlert/
+/CDESites/CancerGov/EmergencyAlert/bin
+/CDESites/CancerGov/EmergencyAlert/obj
+/CDESites/CancerGov/EmergencyAlert/[Bb]in
+/CDESites/CancerGov/EmergencyAlert/[Dd]ebug
+/CDESites/CancerGov/EmergencyAlert/[Rr]elease
+/CDESites/CancerGov/EmergencyAlert/*.user
+/CDESites/CancerGov/EmergencyAlert/*.aps
+/CDESites/CancerGov/EmergencyAlert/*.eto
+
+# /CDESites/CancerGov/PresentationClasses/
+/CDESites/CancerGov/PresentationClasses/bin
+/CDESites/CancerGov/PresentationClasses/obj
+/CDESites/CancerGov/PresentationClasses/[Bb]in
+/CDESites/CancerGov/PresentationClasses/[Dd]ebug
+/CDESites/CancerGov/PresentationClasses/[Rr]elease
+/CDESites/CancerGov/PresentationClasses/*.user
+/CDESites/CancerGov/PresentationClasses/*.aps
+/CDESites/CancerGov/PresentationClasses/*.eto
+
+# /CDESites/CancerGov/SiteSpecific/CancerGov.Web/
+/CDESites/CancerGov/SiteSpecific/CancerGov.Web/*.aps
+/CDESites/CancerGov/SiteSpecific/CancerGov.Web/*.eto
+/CDESites/CancerGov/SiteSpecific/CancerGov.Web/*.user
+/CDESites/CancerGov/SiteSpecific/CancerGov.Web/Web.config
+/CDESites/CancerGov/SiteSpecific/CancerGov.Web/[Bb]in
+/CDESites/CancerGov/SiteSpecific/CancerGov.Web/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/CancerGov.Web/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/CancerGov.Web/obj
+/CDESites/CancerGov/SiteSpecific/CancerGov.Web/aspnet_client
+
+# /CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/obj
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/*.eto
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/ClientBin
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/GeneratedArtifacts
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/_Pvt_Extensions
+
+# /CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/obj
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/*.eto
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/ClientBin
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/GeneratedArtifacts
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/_Pvt_Extensions
+
+# /CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/obj
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/*.eto
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/ClientBin
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/GeneratedArtifacts
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/_Pvt_Extensions
+
+# /CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/obj
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/*.eto
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/ClientBin
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/GeneratedArtifacts
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/_Pvt_Extensions
+
+# /CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/obj
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/*.eto
+
+# /CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/obj
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/*.eto
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/ClientBin
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/GeneratedArtifacts
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/_Pvt_Extensions
+
+# /CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/bin
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/obj
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/*.eto
+
+# /CDESites/CancerGov/SiteSpecific/Modules/CancerGov.TopicSearch/
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.TopicSearch/bin
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.TopicSearch/obj
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.TopicSearch/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.TopicSearch/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.TopicSearch/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.TopicSearch/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.TopicSearch/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.TopicSearch/*.eto
+
+# /CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/obj
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/*.eto
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/ClientBin
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/GeneratedArtifacts
+/CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Web.UI/_Pvt_Extensions
+
+# /CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/[Bb]in
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/obj
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/[Dd]ebug
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/[Rr]elease
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/*.user
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/*.aps
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/*.eto
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/ClientBin
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/GeneratedArtifacts
+/CDESites/CancerGov/SiteSpecific/Modules/LegacyCTSResultRedirector/_Pvt_Extensions
+
+# /CDESites/DCEG/SiteSpecific/DCEG.Web/
+/CDESites/DCEG/SiteSpecific/DCEG.Web/[Bb]in
+/CDESites/DCEG/SiteSpecific/DCEG.Web/obj
+/CDESites/DCEG/SiteSpecific/DCEG.Web/[Dd]ebug
+/CDESites/DCEG/SiteSpecific/DCEG.Web/[Rr]elease
+/CDESites/DCEG/SiteSpecific/DCEG.Web/*.user
+/CDESites/DCEG/SiteSpecific/DCEG.Web/*.aps
+/CDESites/DCEG/SiteSpecific/DCEG.Web/*.eto
+
+# /CDESites/Imaging/SiteSpecific/Imaging.Web/
+/CDESites/Imaging/SiteSpecific/Imaging.Web/[Bb]in
+/CDESites/Imaging/SiteSpecific/Imaging.Web/obj
+/CDESites/Imaging/SiteSpecific/Imaging.Web/[Dd]ebug
+/CDESites/Imaging/SiteSpecific/Imaging.Web/[Rr]elease
+/CDESites/Imaging/SiteSpecific/Imaging.Web/*.user
+/CDESites/Imaging/SiteSpecific/Imaging.Web/*.aps
+/CDESites/Imaging/SiteSpecific/Imaging.Web/*.eto
+
+# /CDESites/MobileCancerGov/
+/CDESites/MobileCancerGov/[Bb]in
+/CDESites/MobileCancerGov/obj
+/CDESites/MobileCancerGov/[Dd]ebug
+/CDESites/MobileCancerGov/[Rr]elease
+/CDESites/MobileCancerGov/*.user
+/CDESites/MobileCancerGov/*.aps
+/CDESites/MobileCancerGov/*.eto
+
+# /CDESites/MobileCancerGov/SiteSpecific/
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web.csproj
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web.csproj.user
+/CDESites/MobileCancerGov/SiteSpecific/bin
+/CDESites/MobileCancerGov/SiteSpecific/obj
+
+# /CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/MobileCancerGov.Web.csproj.user
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/bin
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/obj
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/[Bb]in
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/[Dd]ebug
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/[Rr]elease
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/*.user
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/*.aps
+/CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/*.eto
+
+# /CDESites/Proteomics/SiteSpecific/Proteomics.Web/
+/CDESites/Proteomics/SiteSpecific/Proteomics.Web/[Bb]in
+/CDESites/Proteomics/SiteSpecific/Proteomics.Web/obj
+/CDESites/Proteomics/SiteSpecific/Proteomics.Web/[Dd]ebug
+/CDESites/Proteomics/SiteSpecific/Proteomics.Web/[Rr]elease
+/CDESites/Proteomics/SiteSpecific/Proteomics.Web/*.user
+/CDESites/Proteomics/SiteSpecific/Proteomics.Web/*.aps
+/CDESites/Proteomics/SiteSpecific/Proteomics.Web/*.eto
+
+# /CDESites/TCGA/SiteSpecific/TCGA.Web/
+/CDESites/TCGA/SiteSpecific/TCGA.Web/[Bb]in
+/CDESites/TCGA/SiteSpecific/TCGA.Web/obj
+/CDESites/TCGA/SiteSpecific/TCGA.Web/[Dd]ebug
+/CDESites/TCGA/SiteSpecific/TCGA.Web/[Rr]elease
+/CDESites/TCGA/SiteSpecific/TCGA.Web/*.user
+/CDESites/TCGA/SiteSpecific/TCGA.Web/*.aps
+/CDESites/TCGA/SiteSpecific/TCGA.Web/*.eto
