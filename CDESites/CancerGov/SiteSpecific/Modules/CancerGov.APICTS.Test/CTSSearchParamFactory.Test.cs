@@ -194,37 +194,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
                     
                     // TEST 16 - Zip code
-                    new object[] { "?loc=1&z=20850", new CTSSearchParams() {
+                    new object[] { "?loc=1&z=20850&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
                             ZipCode = "20850",
                             GeoLocation = new GeoLocation(39.0897, -77.1798)
                         },
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 17 - Zip radius
-                    new object[] { "?loc=1&z=20850&zp=500", new CTSSearchParams() {
+                    new object[] { "?loc=1&z=20850&zp=500&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
                             ZipCode = "20850",
                             ZipRadius = 500,
                             GeoLocation = new GeoLocation(39.0897, -77.1798)
                         },
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 18 - Country
-                    new object[] { "?loc=2&lcnty=United+States", new CTSSearchParams() {
+                    new object[] { "?loc=2&lcnty=United+States&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
                             Country = "United States"
                         },
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
                     // TEST 19 - State 
-                    new object[] { "?loc=2&lst=MD", new CTSSearchParams() {
+                    new object[] { "?loc=2&lst=MD&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
                             State = new LabelledSearchParam[] {
@@ -234,11 +234,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 }
                             }
                         },
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
                     // TEST 20 - States
-                    new object[] { "?loc=2&lst=MD,VA", new CTSSearchParams() {
+                    new object[] { "?loc=2&lst=MD,VA&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
                             State = new LabelledSearchParam[] {
@@ -252,32 +252,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 }
                             }
                         },
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }}, 
                     
                     // TEST 21 - City 
-                    new object[] { "?loc=2&lcty=Baltimore", new CTSSearchParams() {
+                    new object[] { "?loc=2&lcty=Baltimore&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams() {
                             City = "Baltimore"
                         },
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 22 - Hospital 
-                    new object[] { "?loc=3&hos=M+D+Anderson+Cancer+Center", new CTSSearchParams() {
+                    new object[] { "?loc=3&hos=M+D+Anderson+Cancer+Center&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
                         LocationParams = new HospitalLocationSearchParams() {
                             Hospital = "M D Anderson Cancer Center"
                         },
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 23 - Is location NIH? 
-                    new object[] { "?loc=4", new CTSSearchParams() {
+                    new object[] { "?loc=4&rl=2", new CTSSearchParams() {
                         Location = LocationType.AtNIH,
                         LocationParams = new AtNIHLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 24 - Zip code on basic page
@@ -460,6 +460,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         LeadOrg = "Mayo Clinic",
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
+                    }},
+                    
+                    // TEST 41 - Multiple C-codes that map to same label
+                    new object[] { "?st=C7880,C7110,C7839", new CTSSearchParams() {
+                        SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C7110", "C7839", "C7880" },
+                                Label = "Recurrent Liver Cancer"
+                            }
+                        },
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
                     }}
                 };
             }
@@ -526,6 +538,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c3995,c4872"))
                 .Returns("Stage IV Breast Cancer");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c7110"))
+                .Returns("Recurrent Liver Cancer");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c7880"))
+                .Returns("Recurrent Liver Cancer");
+
+            rtnMock.Setup(lookup => lookup.GetTitleCase("c7839"))
+                .Returns("Recurrent Liver Cancer");
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c7771"))
                 .Returns("Recurrent Breast Cancer");

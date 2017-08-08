@@ -25,43 +25,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     //This array of objects maps to the parameters of the create method.
                     //URL at index 0, Expected object at index 1. 
                     
-                    // TEST 0 - Main Cancer Type with invalid param (not matching C-code pattern)
+                    // TEST 1.0 - Main Cancer Type with invalid param (not matching C-code pattern)
                     new object[] {"?t=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 1 - Main Cancer Type with C-code that has no lookup
+                    // TEST 1.1 - Main Cancer Type with C-code that has no lookup
                     new object[] {"?t=C4873", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 2 - Main Cancer Type with a multiple-coded param, one invalid
+                    // TEST 1.2 - Main Cancer Type with a multiple-coded param, one invalid
                     new object[] {"?t=C4872|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                      
-                    // TEST 3 - Main Cancer Type with multiple C-codes
+                    // TEST 1.3 - Main Cancer Type with multiple C-codes
                     new object[] {"?t=C4872,C4878", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 4 - Cancer Subtype with invalid param (not matching C-code pattern)
+                    // TEST 2.0 - Cancer Subtype with invalid param (not matching C-code pattern)
                     new object[] {"?st=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 5 - Cancer Subtype with C-code that has no lookup
+                    // TEST 2.1 - Cancer Subtype with C-code that has no lookup
                     new object[] {"?st=C7772", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 6 - Cancer Subtypes with same C-code multiple times
+                    // TEST 2.2 - Cancer Subtypes with same C-code multiple times
                     new object[] {"?st=C7771,C133092,C7771", new CTSSearchParams() {
                         SubTypes = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -77,31 +77,31 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
                     
-                    // TEST 7 - Cancer Subtypes with a multiple-coded param, one invalid
+                    // TEST 2.3 - Cancer Subtypes with a multiple-coded param, one invalid
                     new object[] {"?st=C133092|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 8 - Cancer Subtypes with multiple codes, one with no lookup
+                    // TEST 2.4 - Cancer Subtypes with multiple codes, one with no lookup
                     new object[] {"?st=C4001|C7771,C7772", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 9 - Cancer stage with invalid param (not matching C-code pattern)
+                    // TEST 3.0 - Cancer stage with invalid param (not matching C-code pattern)
                     new object[] {"?stg=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 10 - Cancer stages with C-code that has no lookup
+                    // TEST 3.1 - Cancer stages with C-code that has no lookup
                     new object[] {"?stg=C88376", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 11 - Cancer stages with same C-code multiple times
+                    // TEST 3.2 - Cancer stages with same C-code multiple times
                     new object[] {"?stg=C88375,C3641,C88375", new CTSSearchParams() {
                         Stages = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -117,31 +117,31 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
 
-                    // TEST 12 - Cancer Subtypes with a multiple-coded param, one invalid
+                    // TEST 3.3 - Cancer Subtypes with a multiple-coded param, one invalid
                     new object[] {"?st=C88375|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 13 - Cancer Subtypes with multiple codes, one with no lookup
+                    // TEST 3.4 - Cancer Subtypes with multiple codes, one with no lookup
                     new object[] {"?st=C3995|C4872,C88376", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 14 - Cancer findings with invalid param (not matching C-code pattern)
+                    // TEST 4.0 - Cancer findings with invalid param (not matching C-code pattern)
                     new object[] {"?fin=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 15 - Cancer findings with C-code that has no lookup
+                    // TEST 4.1 - Cancer findings with C-code that has no lookup
                     new object[] {"?fin=C35015", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 16 - Cancer findings with same C-code multiple times
+                    // TEST 4.2 - Cancer findings with same C-code multiple times
                     new object[] {"?fin=C26696,C35014,C26696", new CTSSearchParams() {
                         Findings = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
@@ -157,116 +157,62 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
 
-                    // TEST 17 - Cancer findings with a multiple-coded param, one invalid
-                    new object[] {"?st=C26696|chicken", new CTSSearchParams() {
+                    // TEST 4.3 - Cancer findings with a multiple-coded param, one invalid
+                    new object[] {"?fin=C26696|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 18 - Cancer Subtypes with multiple codes, one with no lookup
-                    new object[] {"?st=C2878|C35014,C35015", new CTSSearchParams() {
+                    // TEST 4.4 - Cancer Subtypes with multiple codes, one with no lookup
+                    new object[] {"?fin=C2878|C35014,C35015", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 19 - Age not an int
+                    // TEST 5.0 - Age not an int
                     new object[] { "?a=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 20 - Age invalid (>120)
+                    // TEST 5.1 - Age invalid (>120)
                     new object[] { "?a=122", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 21 - Age invalid (<0)
+                    // TEST 5.2 - Age invalid (<0)
                     new object[] { "?a=-1", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 22 - Gender not "male" or "female"
+                    // TEST 6.0 - Gender not "male" or "female"
                     new object[] { "?g=1", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 23 - Gender not "male" or "female"
+                    // TEST 6.1 - Gender not "male" or "female"
                     new object[] { "?g=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
-
-                    // TEST 24 - Location with invalid param (not int)
+                    
+                    // TEST 7.0 - Location with invalid param (not int)
                     new object[] { "?loc=chicken", new CTSSearchParams() {
                         Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 25 - Location with invalid param (not 0-4) 
+                    // TEST 7.1 - Location with invalid param (not 0-4) 
                     new object[] { "?loc=5", new CTSSearchParams() {
                         Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
-
-                    // TEST 26.0 - Location all with zip code set
-                    new object[] { "?loc=0&z=20850", new CTSSearchParams() {
-                        Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 26.1 - Location all with state set
-                    new object[] { "?loc=0&st=VA", new CTSSearchParams() {
-                        Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 26.2 - Location all with city set
-                    new object[] { "?loc=0&lcty=Arlington", new CTSSearchParams() {
-                        Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 26.3 - Location all with country set
-                    new object[] { "?loc=0&lcnty=United+States", new CTSSearchParams() {
-                        Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 26.4 - Location all with hospital set
-                    new object[] { "?loc=0&hos=Mayo+Clinic", new CTSSearchParams() {
-                        Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
                     
-                    // TEST 26.5 - Location none and zip
-                    new object[] { "?loc=0&loc=1", new CTSSearchParams() {
-                        Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 27.0 - Location zip without a zip code param
-                    new object[] { "?loc=1", new CTSSearchParams() {
-                        Location = LocationType.Zip,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 27.1 - Location zip with an invalid zip code
-                    new object[] { "?loc=1&z=chicken", new CTSSearchParams() {
-                        Location = LocationType.Zip,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 27.2 - Location zip with an invalid zip code
-                    new object[] { "?loc=1&z=11111", new CTSSearchParams() {
-                        Location = LocationType.Zip,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 27.3 - Location zip with invalid zip proximity
-                    new object[] { "?loc=1&z=20850&zp=chicken", new CTSSearchParams() {
+                    // TEST 7.2 - Location all with zip code set
+                    new object[] { "?loc=0&z=20850", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams() {
                             ZipCode = "20850",
@@ -275,140 +221,213 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
-
-                    // TEST 27.4 - Location zip with invalid zip proximity
-                    new object[] { "?loc=1&z=20850&zp=-1", new CTSSearchParams() {
-                        Location = LocationType.Zip,
+                    
+                    // TEST 7.3 - Location all with state set
+                    new object[] { "?loc=0&st=VA", new CTSSearchParams() {
+                        Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 27.5 - Location zip with city/state/country
-                    new object[] { "?loc=1&lcty=Arlington&lst=VA&lcnty=United+States", new CTSSearchParams() {
-                        Location = LocationType.Zip,
+                    // TEST 7.4 - Location all with city set
+                    new object[] { "?loc=0&lcty=Arlington", new CTSSearchParams() {
+                        Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
 
-                    // TEST 27.6 - Location zip with hospital
-                    new object[] { "?loc=1&hos=Mayo+Clinic", new CTSSearchParams() {
-                        Location = LocationType.Zip,
+                    // TEST 7.5 - Location all with country set
+                    new object[] { "?loc=0&lcnty=United+States", new CTSSearchParams() {
+                        Location = LocationType.None,
+                        ResultsLinkFlag = ResultsLinkType.Basic
+                    }},
+
+                    // TEST 7.6 - Location all with hospital set
+                    new object[] { "?loc=0&hos=Mayo+Clinic", new CTSSearchParams() {
+                        Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 28.0 - Location City/State/Country without any values set
+                    // TEST 7.7 - Location none and zip
+                    new object[] { "?loc=0&loc=1", new CTSSearchParams() {
+                        Location = LocationType.None,
+                        ResultsLinkFlag = ResultsLinkType.Basic
+                    }},
+                    
+                    // TEST 8.0 - Location zip without a zip code param
+                    new object[] { "?loc=1&rl=2", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+                    
+                    // TEST 8.1 - Location zip with an invalid zip code
+                    new object[] { "?loc=1&z=chicken&rl=2", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 8.2 - Location zip with an invalid zip code
+                    new object[] { "?loc=1&z=11111&rl=2", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 8.3 - Location zip with invalid zip proximity
+                    new object[] { "?loc=1&z=20850&zp=chicken&rl=2", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 8.4 - Location zip with invalid zip proximity
+                    new object[] { "?loc=1&z=20850&zp=-1&rl=2", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 8.5 - Location zip with city/state/country
+                    new object[] { "?loc=1&lcty=Arlington&lst=VA&lcnty=United+States&rl=2", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 8.6 - Location zip with hospital
+                    new object[] { "?loc=1&hos=Mayo+Clinic&rl=2", new CTSSearchParams() {
+                        Location = LocationType.Zip,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 8.7 - Location zip without Advanced search form
+                    new object[] { "?loc=1", new CTSSearchParams() {
+                        Location = LocationType.None,
+                        ResultsLinkFlag = ResultsLinkType.Basic
+
+                    }},
+                    
+                    // TEST 9.0 - Location City/State/Country without any values set
+                    new object[] { "?loc=2&rl=2", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 9.1 - Invalid State
+                    new object[] { "?loc=2&lst=VI&rl=2", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+                    
+                    // TEST 9.2 - Multiple states, one invalid
+                    new object[] { "?loc=2&lst=MD,chicken&rl=2", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 9.3 - Location city/state/country with zip code
+                    new object[] { "?loc=2&z=11111&rl=2", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+                    
+                    // TEST 9.4 - Location city/state/country with hospital
+                    new object[] { "?loc=2&hos=Mayo+Clinic&rl=2", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 9.5 - Location city/state/country without Advanced search form
                     new object[] { "?loc=2", new CTSSearchParams() {
-                        Location = LocationType.CountryCityState,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 28.1 - Invalid State
-                    new object[] { "?loc=2&lst=VI", new CTSSearchParams() {
-                        Location = LocationType.CountryCityState,
+                        Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 28.2 - Multiple states, one invalid
-                    new object[] { "?loc=2&lst=MD,chicken", new CTSSearchParams() {
-                        Location = LocationType.CountryCityState,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-
-                    // TEST 28.3 - Location city/state/country with zip code
-                    new object[] { "?loc=2&z=11111", new CTSSearchParams() {
-                        Location = LocationType.CountryCityState,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-                    
-                    // TEST 28.4 - Location city/state/country with hospital
-                    new object[] { "?loc=2&hos=Mayo+Clinic", new CTSSearchParams() {
-                        Location = LocationType.CountryCityState,
-                        ResultsLinkFlag = ResultsLinkType.Basic
-                    }},
-                    
-                    // TEST 29.0 - Location hospital without hospital set
-                    new object[] { "?loc=3", new CTSSearchParams() {
+                    // TEST 10.0 - Location hospital without hospital set
+                    new object[] { "?loc=3&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                      
-                    // TEST 29.1 - Location hospital with zip code
-                    new object[] { "?loc=3&z=11111", new CTSSearchParams() {
+                    // TEST 10.1 - Location hospital with zip code
+                    new object[] { "?loc=3&z=11111&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
-                    // TEST 29.2 - Location hospital with city/state/country
-                    new object[] { "?loc=3&lcty=Arlington&lst=VA&lcnty=United+States", new CTSSearchParams() {
+                    // TEST 10.2 - Location hospital with city/state/country
+                    new object[] { "?loc=3&lcty=Arlington&lst=VA&lcnty=United+States&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 10.3 - Location hospital without Advanced search form
+                    new object[] { "?loc=3", new CTSSearchParams() {
+                        Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 30.0 - Is location NIH with zip
-                    new object[] { "?loc=4&z=11111", new CTSSearchParams() {
+                    // TEST 11.0 - Is location NIH with zip
+                    new object[] { "?loc=4&z=11111&rl=2", new CTSSearchParams() {
                         Location = LocationType.AtNIH,
                         LocationParams = new AtNIHLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
-                    // TEST 30.1 - Location hospital with city/state/country
-                    new object[] { "?loc=4&lcty=Arlington&lst=VA&lcnty=United+States", new CTSSearchParams() {
+                    // TEST 11.1 - Location hospital with city/state/country
+                    new object[] { "?loc=4&lcty=Arlington&lst=VA&lcnty=United+States&rl=2", new CTSSearchParams() {
                         Location = LocationType.AtNIH,
                         LocationParams = new AtNIHLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
-                    // TEST 30.2 - Location city/state/country with hospital
-                    new object[] { "?loc=4&hos=Mayo+Clinic", new CTSSearchParams() {
+                    // TEST 11.2 - Location city/state/country with hospital
+                    new object[] { "?loc=4&hos=Mayo+Clinic&rl=2", new CTSSearchParams() {
                         Location = LocationType.AtNIH,
                         LocationParams = new AtNIHLocationSearchParams(),
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+
+                    // TEST 11.3 - Location city/state/country with hospital
+                    new object[] { "?loc=4", new CTSSearchParams() {
+                        Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
-                    // TEST 31 - Results link flag invalid (string)
+                    // TEST 12.0 - Results link flag invalid (string)
                     new object[] { "?rl=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Unknown
                     }},
-                    // TEST 32 - Results link flag (not 1 or 2)
+                    // TEST 12.1 - Results link flag (not 1 or 2)
                     new object[] { "?rl=-1", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Unknown
                     }},
                     
-                    // TEST 33 - Trial type invalid
+                    // TEST 13.0 - Trial type invalid
                     new object[] {"?tt=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 34 - Trial type all with type
+                    // TEST 13.1 - Trial type all with type
                     new object[] {"?tt=all,basic_science", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 35 - Trial type all with type
-                    new object[] {"?tt=12345", new CTSSearchParams() {
-                        ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
-                    }},
-                    
-                    // TEST 36.0 - Drug with invalid param
+                    // TEST 14.0 - Drug with invalid param
                     new object[] {"?d=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 36.1 - Drugs with multiple codes, one invalid
+                    // TEST 14.1 - Drugs with invalid param (no lookup)
                     new object[] {"?d=C1648", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 36.2 - Drugs with multiple codes, one invalid
+                    // TEST 14.2 - Drugs with multiple codes, one invalid
                     new object[] {"?d=C1647,chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 36.3 - Drugs with multiple codes, one repeated
+                    // TEST 14.3 - Drugs with multiple codes, one repeated
                     new object[] {"?d=C1647,C2039,C1647", new CTSSearchParams() {
                         Drugs = new TerminologyFieldSearchParam[] {
                             new TerminologyFieldSearchParam() {
@@ -423,37 +442,27 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
-                    /*
-                    // TEST 30 - Other treatments/interventions
-                    new object[] {"?i=C131060", new CTSSearchParams() {
-                        OtherTreatments = new TerminologyFieldSearchParam[] { 
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C131060" },
-                                Label = "Checkpoint Blockade Immunotherapy"
-                            }
-                        },
+                    
+                    // TEST 15.0 - Other treatments/interventions with invalid param
+                    new object[] {"?i=chicken", new CTSSearchParams() {
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
+                    }},
+                     
+                    // TEST 15.1 - Other treatments/interventions with invalid param (no lookup)
+                    new object[] {"?i=c131061", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
 
-                    // TEST 31 - Other treatments/interventions
-                    new object[] {"?i=C131060,C26665", new CTSSearchParams() {
-                        OtherTreatments = new TerminologyFieldSearchParam[] { 
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C131060" },
-                                Label = "Checkpoint Blockade Immunotherapy"
-                            },
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C26665" },
-                                Label = "Pomegranate Juice"
-                            }
-                        },
+                    // TEST 15.2 - Other treatments/interventions with multiple codes, one invalid
+                    new object[] {"?i=c131060,c131061", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                     
-                    // TEST 32 - Other treatments/interventions
-                    new object[] {"?i=C131060,C107350|C26665", new CTSSearchParams() {
+                    // TEST 15.3 - Other treatments/interventions with multiple codes, one repeated
+                    new object[] {"?i=C131060,C107350|C26665,C131060", new CTSSearchParams() {
                         OtherTreatments = new TerminologyFieldSearchParam[] { 
                             new TerminologyFieldSearchParam() {
                                 Codes = new string[] { "C131060" },
@@ -467,26 +476,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
+
+                    // TEST 15.4 - Other treatments/interventions with multiple codes, one without lookup
+                    new object[] {"?i=C131060,C107350|C26665,C131061", new CTSSearchParams() {
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
+                    }},
                     
-                    // TEST 33 - Trial phase 
-                    new object[] {"?tp=i", new CTSSearchParams() {
-                        TrialPhases = new LabelledSearchParam[] { 
-                            new LabelledSearchParam() {
-                                Key = "i",
-                                Label = "I"
-                            }
-                        },
+                    // TEST 16.0 - Trial phase with invalid param (no lookup)
+                    new object[] {"?tp=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
                    
-                    // TEST 34 - Trial phases
-                    new object[] {"?tp=i,ii", new CTSSearchParams() {
+                    // TEST 16.1 - Trial phases with all ("") and another value selected
+                    new object[] {"?tp=,ii", new CTSSearchParams() {
                         TrialPhases = new LabelledSearchParam[] { 
-                            new LabelledSearchParam() {
-                                Key = "i",
-                                Label = "I"
-                            },
                             new LabelledSearchParam() {
                                 Key = "ii",
                                 Label = "II"
@@ -495,7 +500,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
-                    */
+
+                    // TEST 16.2 - Trial phases with multiple values, one invalid (without lookup)
+                    new object[] {"?tp=ii,chicken", new CTSSearchParams() {
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        Location = LocationType.None
+                    }},
                 };
             }
         }
@@ -661,6 +671,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 .Returns("Checkpoint Blockade Immunotherapy");
             rtnMock.Setup(lookup => lookup.MappingContainsKey("c131060"))
                 .Returns(true);
+
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c131061"))
+                .Returns(false);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c26665"))
                 .Returns("Pomegranate Juice");

@@ -490,40 +490,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             searchParams.Location = LocationType.None;
 
-            if (url.QueryParameters.ContainsKey("loc"))
+            if (searchParams.ResultsLinkFlag == ResultsLinkType.Advanced)
             {
-                int locType = ParamAsInt(url.QueryParameters["loc"], -1);
-                if(locType == 0 || locType == 1 || locType == 2 || locType == 3 || locType == 4)
+                if (url.QueryParameters.ContainsKey("loc"))
                 {
-                    searchParams.Location = (LocationType)locType;
-
-                    switch (searchParams.Location)
+                    int locType = ParamAsInt(url.QueryParameters["loc"], -1);
+                    if (locType == 0 || locType == 1 || locType == 2 || locType == 3 || locType == 4)
                     {
-                        case LocationType.AtNIH:
-                            {
-                                searchParams.LocationParams = new AtNIHLocationSearchParams();
-                                break;
-                            }
-                        case LocationType.Zip:
-                            {
-                                ParseZipCode(url, searchParams);
-                                break;
-                            }
-                        case LocationType.CountryCityState:
-                            {
-                                ParseCountryCityState(url, searchParams);
-                                break;
-                            }
-                        case LocationType.Hospital:
-                            {
-                                ParseHospital(url, searchParams);
-                                break;
-                            }
+                        searchParams.Location = (LocationType)locType;
+
+                        switch (searchParams.Location)
+                        {
+                            case LocationType.AtNIH:
+                                {
+                                    searchParams.LocationParams = new AtNIHLocationSearchParams();
+                                    break;
+                                }
+                            case LocationType.Zip:
+                                {
+                                    ParseZipCode(url, searchParams);
+                                    break;
+                                }
+                            case LocationType.CountryCityState:
+                                {
+                                    ParseCountryCityState(url, searchParams);
+                                    break;
+                                }
+                            case LocationType.Hospital:
+                                {
+                                    ParseHospital(url, searchParams);
+                                    break;
+                                }
+                        }
                     }
-                }
-                else
-                {
-                    LogParseError(FormFields.Location, "Please enter a valid location type.", searchParams);
+                    else
+                    {
+                        LogParseError(FormFields.Location, "Please enter a valid location type.", searchParams);
+                    }
                 }
             }
             else if (searchParams.ResultsLinkFlag == ResultsLinkType.Basic && IsInUrl(url, "z"))
@@ -558,9 +561,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
                         if (IsInUrl(url, "zp"))
                         {
-                            int zipRadius = ParamAsInt(url.QueryParameters["zp"], 100);
+                            int zipRadius = ParamAsInt(url.QueryParameters["zp"], -1);
                             if (zipRadius < 1 || zipRadius > 12451)
-                            // TODO: check for type mismatch
                             {
                                 LogParseError(FormFields.ZipRadius, "Please enter a valid zip radius value.", searchParams);
                             }
@@ -600,14 +602,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (IsInUrl(url, "lst"))
             {
-                //Skip parsing if it is all, which is the default I have not set criteria setting
-                if (url.QueryParameters["lst"].ToLower().Trim() != "all" && !url.QueryParameters["lst"].ToLower().Trim().Contains("all"))
+                locParams.State = GetLabelledFieldFromParam(url.QueryParameters["lst"], FormFields.State, searchParams);
+                if(locParams.State.Length == 0)
                 {
-                    locParams.State = GetLabelledFieldFromParam(url.QueryParameters["lst"], FormFields.State, searchParams);
-                    if(locParams.State.Length == 0)
-                    {
-                        hasInvalidParam = true;
-                    }
+                    hasInvalidParam = true;
                 }
             }
 
@@ -627,19 +625,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (IsInUrl(url, "lcnty"))
             {
-                //Skip parsing if it is all, which is the default I have not set criteria setting
-                if (url.QueryParameters["lcnty"].ToLower().Trim() != "all" && !url.QueryParameters["lcnty"].ToLower().Trim().Contains("all"))
+                string country = ParamAsStr(url.QueryParameters["lcnty"]);
+                if (!string.IsNullOrWhiteSpace(country))
                 {
-                    string country = ParamAsStr(url.QueryParameters["lcnty"]);
-                    if (!string.IsNullOrWhiteSpace(country))
-                    {
-                        locParams.Country = country;
-                    }
-                    else
-                    {
-                        hasInvalidParam = true;
-                        LogParseError(FormFields.Country, "Please enter a valid country parameter.", searchParams);
-                    }
+                    locParams.Country = country;
+                }
+                else
+                {
+                    hasInvalidParam = true;
+                    LogParseError(FormFields.Country, "Please enter a valid country parameter.", searchParams);
                 }
             }
 
@@ -689,13 +683,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter tt (Trial Type)
         private void ParseTrialTypes(NciUrl url, CTSSearchParams searchParams)
         {
-            //Skip parsing if it is all, which is the default I have not set criteria setting
             if (IsInUrl(url, "tt"))
             {
-                if (url.QueryParameters["tt"].ToLower().Trim() != "all" && !url.QueryParameters["tt"].ToLower().Trim().Contains("all"))
-                {
-                    searchParams.TrialTypes = GetLabelledFieldFromParam(url.QueryParameters["tt"], FormFields.TrialTypes, searchParams);
-                }
+                searchParams.TrialTypes = GetLabelledFieldFromParam(url.QueryParameters["tt"], FormFields.TrialTypes, searchParams);
             }
         }
 
@@ -722,11 +712,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "tp"))
             {
-                //Skip parsing if it is all, which is the default I have not set criteria setting
-                if (url.QueryParameters["tp"].ToLower().Trim() != "all" && !url.QueryParameters["tp"].ToLower().Trim().Contains("all"))
-                {
-                    searchParams.TrialPhases = GetLabelledFieldFromParam(url.QueryParameters["tp"], FormFields.TrialPhases, searchParams);
-                }
+                searchParams.TrialPhases = GetLabelledFieldFromParam(url.QueryParameters["tp"], FormFields.TrialPhases, searchParams);
             }
 
             // TODO: Error handling
@@ -816,18 +802,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 string[] items = paramData.Split(',');
                 for (int i = 0; i < items.Length; i++)
                 {
-                    bool contains = this._lookupSvc.MappingContainsKey(items[i]);
-                    if(this._lookupSvc.MappingContainsKey(items[i]))
+                    if (!string.IsNullOrWhiteSpace(items[i]))
                     {
-                        LabelledSearchParam type = new LabelledSearchParam();
-                        type.Key = items[i];
-                        type.Label = this._lookupSvc.Get(type.Key);
-                        rtnParams.Add(type);
-                    }
-                    else
-                    {
-                        hasInvalidParam = true;
-                        LogParseError(field, "Invalid param(s) for lookup: " + items[i], searchParams);
+                        bool contains = this._lookupSvc.MappingContainsKey(items[i]);
+                        if (this._lookupSvc.MappingContainsKey(items[i]))
+                        {
+                            LabelledSearchParam type = new LabelledSearchParam();
+                            type.Key = items[i];
+                            type.Label = this._lookupSvc.Get(type.Key);
+                            rtnParams.Add(type);
+                        }
+                        else
+                        {
+                            hasInvalidParam = true;
+                            LogParseError(field, "Invalid param(s) for lookup: " + items[i], searchParams);
+                        }
                     }
                 }
             }
@@ -889,7 +878,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             }
                         }
 
-                        // If all match the C-code pattern, attempt lookup forlabel
+                        // If all match the C-code pattern, attempt lookup for label
                         if(allMatchCodePattern)
                         {
                             if(this._lookupSvc.MappingContainsKey(string.Join(",", multiple).ToLower()))
@@ -899,8 +888,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                                 type.Codes = multiple;
                                 type.Label = this._lookupSvc.GetTitleCase(string.Join(",", multiple).ToLower());
 
-                                bool contains = rtnParams.Any(p => p.Codes == type.Codes);
-                                if (!contains)
+                                bool containsCode = rtnParams.Any(p => p.Codes == type.Codes);
+                                if (!containsCode)
                                 {
                                     rtnParams.Add(type);
                                 }
@@ -924,8 +913,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                                 type.Codes = new string[] { items[i].ToUpper() };
                                 type.Label = this._lookupSvc.GetTitleCase(items[i].ToLower());
 
-                                bool contains = rtnParams.Any(p => p.Codes == type.Codes);
-                                if (!contains)
+                                bool containsCode = rtnParams.Any(p => p.Codes == type.Codes);
+                                if (!containsCode)
                                 {
                                     rtnParams.Add(type);
                                 }
@@ -955,7 +944,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             else
             {
-                return rtnParams.ToArray();
+                //TODO: Comment!!!
+                List<TerminologyFieldSearchParam> filteredParams = rtnParams.Select(p => p.Label).Distinct().Select(l => new TerminologyFieldSearchParam() { Label = l }).ToList();
+                foreach(TerminologyFieldSearchParam param in filteredParams)
+                {
+                    param.Codes = rtnParams.Where(p => p.Label == param.Label).SelectMany(p => p.Codes).Distinct().ToArray();
+                    Array.Sort(param.Codes);
+                }
+                return filteredParams.ToArray();
             }
         }
 
