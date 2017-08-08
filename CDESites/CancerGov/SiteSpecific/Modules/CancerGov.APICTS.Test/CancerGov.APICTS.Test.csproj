@@ -84,8 +84,8 @@
     <Compile Include="LocationSearchParamsComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TerminologyFieldSearchParamComparer.cs" />
-    <Compile Include="TrialSiteLocationFilterExtension.CountryCityStateTest.cs" />
-    <Compile Include="TrialSiteLocationFilterExtension.AtNIHTest.cs" />
+    <Compile Include="TVT.GetFilteredLocations.CountryCityStateTest.cs" />
+    <Compile Include="TVT.GetFilteredLocations.AtNIHTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

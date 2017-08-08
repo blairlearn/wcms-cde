@@ -10,9 +10,9 @@ using CancerGov.ClinicalTrialsAPI;
 using Xunit;
 using Moq;
 
-namespace CancerGov.ClinicalTrials.Basic.v2.Test
+namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
 {
-    public partial class TrialSiteLocationFilterExtension_Test
+    public partial class GetFilteredLocations_Test
     {
         public static IEnumerable<object[]> CCSFilteringData
         {

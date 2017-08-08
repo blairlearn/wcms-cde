@@ -13,14 +13,14 @@ using System.Reflection;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace CancerGov.ClinicalTrials.Basic.v2.Test
+namespace CancerGov.ClinicalTrials.Basic.v2.Test.TrialVelocityTools
 {
-    public partial class TrialSiteLocationFilterExtension_Test
+    public partial class GetFilteredLocations_Test
     {
         static readonly string AssemblyFileName;
         static readonly string AssemblyPath;
 
-        static TrialSiteLocationFilterExtension_Test()
+        static GetFilteredLocations_Test()
         {
             AssemblyFileName = Assembly.GetExecutingAssembly().CodeBase;
             Uri fileNameURI = new Uri(AssemblyFileName);
