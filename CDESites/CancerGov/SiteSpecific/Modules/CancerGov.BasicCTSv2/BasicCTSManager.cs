@@ -426,18 +426,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             }
                             break;
                         }
-                        //Not going to handle zip for now
-                    //TODO: Fix issues with zip code.  Either get back geocoordinates back from API, or keep looking them up.
-                    /**
-                    if (searchParams.ZipLookup != null)
-                    {
-                        filterCriteria.Add("sites.org_coordinates_lat", searchParams.ZipLookup.GeoCode.Lat);
-                        filterCriteria.Add("sites.org_coordinates_lon", searchParams.ZipLookup.GeoCode.Lon);
-                        filterCriteria.Add("sites.org_coordinates_dist", searchParams.ZipRadius.ToString() + "mi");
-                        FilterActiveSites(filterCriteria);
-                    }
-                    **/
-
+                    case LocationType.Zip: 
+                        {
+                            ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
+                   
+                            if (locParams.IsFieldSet(FormFields.ZipCode))
+                            {
+                                filterCriteria.Add("sites.org_coordinates_lat", locParams.GeoLocation.Lat);
+                                filterCriteria.Add("sites.org_coordinates_lon", locParams.GeoLocation.Lon);
+                                filterCriteria.Add("sites.org_coordinates_dist", locParams.ZipRadius.ToString() + "mi");
+                            }
+                            break;
+                        }
                     default:
                         {
                             throw new Exception(String.Format("Location type, {0} not supported.", searchParams.Location));
