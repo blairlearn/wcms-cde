@@ -75,7 +75,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         },
                         new Dictionary<string, object> {
-                            { "sites.org_state_or_province", "MD" },
+                            { "sites.org_state_or_province", new string[] { "MD" } },
                             { "sites.recruitment_status", BasicCTSManager.ActiveRecruitmentStatuses },
                             { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
                         }
@@ -111,7 +111,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object> {
                             { "sites.org_city", "Baltimore" },
-                            { "sites.org_state_or_province", "MD" },
+                            { "sites.org_state_or_province", new string[] { "MD" } },
                             { "sites.recruitment_status", BasicCTSManager.ActiveRecruitmentStatuses },
                             { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
                         }
@@ -134,7 +134,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         new Dictionary<string, object> {
                             { "sites.org_country", "United States" },
                             { "sites.org_city", "Baltimore" },
-                            { "sites.org_state_or_province", "MD" },
+                            { "sites.org_state_or_province", new string[] { "MD" } },
                             { "sites.recruitment_status", BasicCTSManager.ActiveRecruitmentStatuses },
                             { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
                         }
