@@ -153,6 +153,8 @@
     </Compile>
     <Compile Include="SnippetControls\TrialListings\TrialListingPageInfo.cs" />
     <Compile Include="SnippetControls\TrialVelocityTools.cs" />
+    <Compile Include="TrialTermLookupConfig.cs" />
+    <Compile Include="TrialTermLookupService.cs" />
     <Compile Include="ZipCodeDictionary.cs" />
     <Compile Include="ZipCodeGeoEntry.cs" />
     <Compile Include="ZipCodeGeoLookup.cs" />
