@@ -76,6 +76,8 @@
     <Compile Include="BasicCTSManager.DiseaseSearchTests.cs" />
     <Compile Include="BasicCTSManager.LocationSearchTests.cs" />
     <Compile Include="BasicCTSManager.SearchTests.cs" />
+    <Compile Include="ConfigTest\ConfigMappingLoader.Test.cs" />
+    <Compile Include="ConfigTest\MappingsComparer.cs" />
     <Compile Include="SearchParams\AtNIHLocationSearchParams.Test.cs" />
     <Compile Include="SearchParams\CountryCityStateLocationSearchParams.Test.cs" />
     <Compile Include="SearchParams\CTSSearchParamFactory.Test.cs" />
@@ -96,6 +98,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="MappingFiles\EVSWithMultiple.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\Other.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TrialExamples\2AtNIH.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -591,6 +591,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 //Handle when zipcode has not been specified, but location type is zip code
                 LogParseError(FormFields.ZipCode, "Please enter a valid zip code value.", searchParams);
+                searchParams.LocationParams = new ZipCodeLocationSearchParams();
             }
         }
 
@@ -647,6 +648,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 searchParams.LocationParams = locParams;
             }
+            else
+            {
+                searchParams.LocationParams = new CountryCityStateLocationSearchParams();
+            }
         }
 
         //Parameter hos (Hospital)
@@ -677,6 +682,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if(!hasInvalidParam)
             {
                 searchParams.LocationParams = locParams;
+            }
+            else
+            {
+                searchParams.LocationParams = new HospitalLocationSearchParams();
             }
         }
 

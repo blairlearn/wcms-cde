@@ -16,7 +16,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Gets a list of files to be used for lookups
         /// </summary>
-        public List<string> MappingFiles { get { return MappingFiles; } }
-
+        public List<string> MappingFiles { get { return _mappingFiles; } }
     }
 }
