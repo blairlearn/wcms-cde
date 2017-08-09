@@ -15,80 +15,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     /// </summary>
     public class TrialVelocityTools
     {
-        /// <summary>
-        /// Gets and formats the Trial Objectives and Outline
-        /// </summary>
-        /// <param name="trial"></param>
-        /// <returns>String - detailed description</returns>
-        public string GetPrettyDescription(ClinicalTrial trial)
-        {
-            String rtn = "<p class='ctrp'>" + HttpUtility.HtmlEncode(trial.DetailedDescription) + "</p>";
-            return rtn.Replace("\r\n", "</p><p class='ctrp'>");
-        }
+
+        #region SDS-Release Validated Methods
 
         /// <summary>
-        /// Get a brief summary of the trial ("Description" accordion section on view page)
-        /// </summary>
-        /// <param name="trial"></param>
-        /// <returns>String - brief summary</returns>
-        public string GetBriefSummary(ClinicalTrial trial)
-        {
-            String rtn = trial.BriefSummary;
-            return rtn;
-        }
-
-        /// <summary>
-        /// Determines if this trial has eligibility criteria
+        /// Get the number of USA sites for a trial 
         /// </summary>
         /// <param name="trial"></param>
         /// <returns></returns>
-        public bool HasEligibilityCriteria(ClinicalTrial trial)
+        public ClinicalTrial.StudySite[] GetUSASites(ClinicalTrial trial)
         {
-            return trial.HasEligibilityCriteria();
+            return trial.Sites.Where(s => s.Country == "United States").ToArray();
         }
 
         /// <summary>
-        /// Gets the inclusion criteria for a trial
-        /// </summary>
-        /// <param name="trial"></param>
-        /// <returns></returns>
-        public string[] GetInclusionCriteria(ClinicalTrial trial)
-        {
-            return trial.GetInclusionCriteria();
-        }
-
-        /// <summary>
-        /// Gets the exclusion criteria for a trial
-        /// </summary>
-        /// <param name="trial"></param>
-        /// <returns></returns>
-        public string[] GetExclusionCriteria(ClinicalTrial trial)
-        {
-            return trial.GetExclusionCriteria();
-        }
-
-        /// <summary>
-        /// Wrapper around trial Extension Method.
-        /// </summary>
-        /// <param name="trial"></param>
-        /// <returns></returns>
-        [Obsolete("CTS-SDS")]
-        public object GetAllSortedLocations(ClinicalTrial trial)
-        {
-            return trial.GetAllSortedLocations();
-        }
-
-
-
-
-        /// <summary>
-        /// Get all us Locations, but filtered by location parameters.
+        /// Get all Locations, but filtered by location parameters.
         /// NOTE: LocationTypes for Hospital and None will not be filtered, but will be sorted.
         /// </summary>
         /// <returns></returns> 
         public ClinicalTrial.StudySite[] GetFilteredLocations(ClinicalTrial trial, CTSSearchParams searchParams)
         {
-            IEnumerable<ClinicalTrial.StudySite> rtnSites = trial.Sites;
+            return GetFilteredLocations(trial.Sites, searchParams);
+        }
+
+        /// <summary>
+        /// Get all Locations, but filtered by location parameters.
+        /// NOTE: LocationTypes for Hospital and None will not be filtered, but will be sorted.
+        /// </summary>
+        /// <returns></returns> 
+        public ClinicalTrial.StudySite[] GetFilteredLocations(IEnumerable<ClinicalTrial.StudySite> sites, CTSSearchParams searchParams)
+        {
+            IEnumerable<ClinicalTrial.StudySite> rtnSites = sites;
 
             switch (searchParams.Location)
             {
@@ -154,7 +111,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             var canadaSites = sites.Where(s => s.Country == "Canada").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name);
             var otherSites = sites.Where(s => s.Country != "United States" && s.Country != "Canada").OrderBy(s => s.City).ThenBy(s => s.Name);
 
-            return usaSites.Union(canadaSites).Union(otherSites).ToArray(); 
+            return usaSites.Union(canadaSites).Union(otherSites).ToArray();
         }
 
         /// <summary>
@@ -164,7 +121,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         public OrderedDictionary GetGroupedSites(IEnumerable<ClinicalTrial.StudySite> sites)
         {
             OrderedDictionary locations = new OrderedDictionary();
-            
+
             var usaSites = sites.Where(s => s.Country == "United States");
             var canadaSites = sites.Where(s => s.Country == "Canada");
             var otherSites = sites.Where(s => s.Country != "United States" && s.Country != "Canada");
@@ -175,7 +132,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 OrderedDictionary states = new OrderedDictionary();
 
                 //Group and loop over states
-                foreach (IGrouping<string, ClinicalTrial.StudySite> group in usaSites.GroupBy(s => s.StateOrProvince)) {
+                foreach (IGrouping<string, ClinicalTrial.StudySite> group in usaSites.GroupBy(s => s.StateOrProvince))
+                {
                     states.Add(group.Key, new OrderedDictionary());
 
                     //Now do the same for cities
@@ -230,6 +188,76 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             return locations;
         }
+
+        #endregion
+
+
+
+        /// <summary>
+        /// Gets and formats the Trial Objectives and Outline
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String - detailed description</returns>
+        public string GetPrettyDescription(ClinicalTrial trial)
+        {
+            String rtn = "<p class='ctrp'>" + HttpUtility.HtmlEncode(trial.DetailedDescription) + "</p>";
+            return rtn.Replace("\r\n", "</p><p class='ctrp'>");
+        }
+
+        /// <summary>
+        /// Get a brief summary of the trial ("Description" accordion section on view page)
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns>String - brief summary</returns>
+        public string GetBriefSummary(ClinicalTrial trial)
+        {
+            String rtn = trial.BriefSummary;
+            return rtn;
+        }
+
+        /// <summary>
+        /// Determines if this trial has eligibility criteria
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns></returns>
+        public bool HasEligibilityCriteria(ClinicalTrial trial)
+        {
+            return trial.HasEligibilityCriteria();
+        }
+
+        /// <summary>
+        /// Gets the inclusion criteria for a trial
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns></returns>
+        public string[] GetInclusionCriteria(ClinicalTrial trial)
+        {
+            return trial.GetInclusionCriteria();
+        }
+
+        /// <summary>
+        /// Gets the exclusion criteria for a trial
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns></returns>
+        public string[] GetExclusionCriteria(ClinicalTrial trial)
+        {
+            return trial.GetExclusionCriteria();
+        }
+
+        /// <summary>
+        /// Wrapper around trial Extension Method.
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns></returns>
+        [Obsolete("CTS-SDS")]
+        public object GetAllSortedLocations(ClinicalTrial trial)
+        {
+            return trial.GetAllSortedLocations();
+        }
+
+
+
 
         /// <summary>
         /// Returns a list of all active study sites. 
