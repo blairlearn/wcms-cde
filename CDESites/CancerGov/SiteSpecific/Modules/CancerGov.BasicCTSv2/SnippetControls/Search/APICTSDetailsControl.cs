@@ -77,7 +77,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             RedirectIfTrialNotValid(trial);
 
-            //TODO: Add Field Filters
+            SetupFieldAndUrlFilters(trial);
+
+            //TODO: Glossification????
 
             //TODO: Setup analytics
 
@@ -89,6 +91,55 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 Control = this,
                 TrialTools = new TrialVelocityTools()
             };
+        }
+
+        private void SetupFieldAndUrlFilters(ClinicalTrial trial)
+        {
+            // Copying the Title & Short Title logic from Advanced Form
+            //set the page title as the protocol title
+            PageInstruction.AddFieldFilter("long_title", (fieldName, data) =>
+            {
+                data.Value = trial.BriefTitle;
+            });
+
+            PageInstruction.AddFieldFilter("short_title", (fieldName, data) =>
+            {
+                //Eh, When would this happen???
+                if (!string.IsNullOrWhiteSpace(trial.NCTID))
+                    data.Value = "View Clinical Trial " + trial.NCTID;
+                else
+                    data.Value = "View Clinical Trial";
+            });
+
+            PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+            {
+                //Copy the params
+                //TODO: Really determine what to do with these params.  If the search is invalid, we probably
+                //hsould not show them all.
+                foreach (KeyValuePair<string, string> param in this.ParsedReqUrlParams.QueryParameters)
+                {
+                    url.QueryParameters.Add(param.Key, param.Value);
+                }
+            });
+
+            PageInstruction.AddUrlFilter("CanonicalUrl", (name, url) =>
+            {
+                // only the id should be provided for the canonical URL, so clear all query parameters and
+                // then add back id
+                url.QueryParameters.Clear();
+                url.QueryParameters.Add("id", TrialID);
+            });
+
+            // Override the social media URL (og:url)
+            PageInstruction.AddFieldFilter("og:url", (fieldName, data) =>
+            {
+                //Ok, this is weird, but...  The OpenGraph URL is actually a field. It kind of makes sense,
+                //and it kind of does not.  Really it should be a field that gets the og:url instead of the 
+                //pretty URL.
+                //BUt here we are, and it is what we have.  So let's replace the og:url with the canonical URL.
+
+                data.Value = PageInstruction.GetUrl(NCI.Web.CDE.PageAssemblyInstructionUrls.CanonicalUrl).ToString();
+            });
         }
 
         /// <summary>
