@@ -571,13 +571,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     searchParams: filterCriteria
                 );
 
-                foreach (ClinicalTrial c in ctColl.Trials)
+                foreach (ClinicalTrial c in ctColl.Trials)                
                 {
+                    //Remove all the inactive sites from the trial.
+                    RemoveNonRecruitingSites(c);
                     yield return c;
 
                 }
             }            
-            //TODO: Shouldn't we be filtering out study sites?
         }
 
 

@@ -32,7 +32,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             get { return BasicClinicalTrialSearchAPISection.GetAPIUrl(); }
         }
 
-        public Guid StorePrintContent(List<String> trialIDs, DateTime date, CTSPrintSearchParams searchTerms)
+        public Guid StorePrintContent(List<String> trialIDs, DateTime date, CTSSearchParams searchTerms)
         {
             // Retrieve the collections given the ID's
             BasicCTSManager manager = new BasicCTSManager(new ClinicalTrialsAPIClient(ApiUrl));
@@ -54,24 +54,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return guid;
         }
 
-        private string FormatPrintResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, CTSPrintSearchParams searchTerms)
+        private string FormatPrintResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, CTSSearchParams searchTerms)
         {
-            // convert description to pretty description
-            foreach (var trial in results)
-            {
-                var desc = trial.DetailedDescription;
-                if (!string.IsNullOrWhiteSpace(desc))
-                {
-                    trial.DetailedDescription = new TrialVelocityTools().GetPrettyDescription(trial);
-                }
-            }
-            if (searchTerms.ZipCode != null)
-            { 
-                BasicCTSManager manager = new BasicCTSManager(new ClinicalTrialsAPIClient(ApiUrl));
-                //TODO: Use SearchParameters to determine lookup.
-                //searchTerms.GeoCode = manager.GetZipLookupForZip(searchTerms.ZipCode).GeoCode;
-            }
-
             // Bind results to velocity template
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                 @"~/PublishedContent/VelocityTemplates/BasicCTSPrintResultsv2.vm",
@@ -79,7 +63,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                  {
                      Results = results,
                      SearchDate = searchDate.ToString("M/d/yyyy"),
-                     SearchTerms = searchTerms,
+                     Parameters = searchTerms,
                      TrialTools = new TrialVelocityTools()
                  }
             ));
