@@ -540,6 +540,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private void ParseZipCode(NciUrl url, CTSSearchParams searchParams)
         {
             ZipCodeLocationSearchParams locParams = new ZipCodeLocationSearchParams();
+            searchParams.LocationParams = locParams;
 
             if (IsInUrl(url, "z"))
             {
@@ -565,6 +566,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             if (zipRadius < 1 || zipRadius > 12451)
                             {
                                 LogParseError(FormFields.ZipRadius, "Please enter a valid zip radius value.", searchParams);
+                                searchParams.LocationParams = new ZipCodeLocationSearchParams();
                             }
                             else
                             {
@@ -591,7 +593,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 //Handle when zipcode has not been specified, but location type is zip code
                 LogParseError(FormFields.ZipCode, "Please enter a valid zip code value.", searchParams);
-                searchParams.LocationParams = new ZipCodeLocationSearchParams();
             }
         }
 
@@ -953,7 +954,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             else
             {
-                //TODO: Comment!!!
+                // If multiple codes map to the same label, combine those codes and add them to the
+                // array of TerminologyFieldSearchParams as one entry.
+                // i.e. "?stg=C88375,C85385,C85386 
+                // C88375, C85385, and C85386 all map to "Stage I Breast Cancer" label
+                // TerminologyFieldSearchParam: Key = "C88375,C85385,C85386" and Label = "Stage I Breast Cancer"
                 List<TerminologyFieldSearchParam> filteredParams = rtnParams.Select(p => p.Label).Distinct().Select(l => new TerminologyFieldSearchParam() { Label = l }).ToList();
                 foreach(TerminologyFieldSearchParam param in filteredParams)
                 {

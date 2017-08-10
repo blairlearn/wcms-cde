@@ -134,13 +134,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             foreach (string val in lookup)
             {
-                if (_mappingDict.ContainsKey(key))
+                if (!_mappingDict.ContainsKey(val))
                 {
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         }
 
         #endregion

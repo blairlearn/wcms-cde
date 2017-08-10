@@ -212,88 +212,90 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
                     
                     // TEST 7.2 - Location all with zip code set
-                    new object[] { "?loc=0&z=20850", new CTSSearchParams() {
-                        Location = LocationType.Zip,
-                        LocationParams = new ZipCodeLocationSearchParams() {
-                            ZipCode = "20850",
-                            ZipRadius = 100,
-                            GeoLocation = new GeoLocation(39.0897, -77.1798)
-                        },
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                    new object[] { "?loc=0&z=20850&rl=2", new CTSSearchParams() {
+                        Location = LocationType.None,
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 7.3 - Location all with state set
-                    new object[] { "?loc=0&st=VA", new CTSSearchParams() {
+                    new object[] { "?loc=0&st=VA&rl=2", new CTSSearchParams() {
                         Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
                     // TEST 7.4 - Location all with city set
-                    new object[] { "?loc=0&lcty=Arlington", new CTSSearchParams() {
+                    new object[] { "?loc=0&lcty=Arlington&rl=2", new CTSSearchParams() {
                         Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
                     // TEST 7.5 - Location all with country set
-                    new object[] { "?loc=0&lcnty=United+States", new CTSSearchParams() {
+                    new object[] { "?loc=0&lcnty=United+States&rl=2", new CTSSearchParams() {
                         Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
                     // TEST 7.6 - Location all with hospital set
-                    new object[] { "?loc=0&hos=Mayo+Clinic", new CTSSearchParams() {
+                    new object[] { "?loc=0&hos=Mayo+Clinic&rl=2", new CTSSearchParams() {
                         Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 7.7 - Location none and zip
-                    new object[] { "?loc=0&loc=1", new CTSSearchParams() {
+                    new object[] { "?loc=0&loc=1&rl=2", new CTSSearchParams() {
                         Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 8.0 - Location zip without a zip code param
                     new object[] { "?loc=1&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 8.1 - Location zip with an invalid zip code
                     new object[] { "?loc=1&z=chicken&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
-
+                    
                     // TEST 8.2 - Location zip with an invalid zip code
                     new object[] { "?loc=1&z=11111&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
-
+                    
                     // TEST 8.3 - Location zip with invalid zip proximity
                     new object[] { "?loc=1&z=20850&zp=chicken&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
                     // TEST 8.4 - Location zip with invalid zip proximity
                     new object[] { "?loc=1&z=20850&zp=-1&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
-
+                    
                     // TEST 8.5 - Location zip with city/state/country
                     new object[] { "?loc=1&lcty=Arlington&lst=VA&lcnty=United+States&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
-
+                    
                     // TEST 8.6 - Location zip with hospital
                     new object[] { "?loc=1&hos=Mayo+Clinic&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
+                        LocationParams = new ZipCodeLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
-
+                
                     // TEST 8.7 - Location zip without Advanced search form
                     new object[] { "?loc=1", new CTSSearchParams() {
                         Location = LocationType.None,
@@ -304,30 +306,35 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 9.0 - Location City/State/Country without any values set
                     new object[] { "?loc=2&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
                     // TEST 9.1 - Invalid State
                     new object[] { "?loc=2&lst=VI&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 9.2 - Multiple states, one invalid
                     new object[] { "?loc=2&lst=MD,chicken&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
                     // TEST 9.3 - Location city/state/country with zip code
                     new object[] { "?loc=2&z=11111&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                     
                     // TEST 9.4 - Location city/state/country with hospital
                     new object[] { "?loc=2&hos=Mayo+Clinic&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
@@ -340,18 +347,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 10.0 - Location hospital without hospital set
                     new object[] { "?loc=3&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
+                        LocationParams = new HospitalLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
                      
                     // TEST 10.1 - Location hospital with zip code
                     new object[] { "?loc=3&z=11111&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
+                        LocationParams = new HospitalLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
                     // TEST 10.2 - Location hospital with city/state/country
                     new object[] { "?loc=3&lcty=Arlington&lst=VA&lcnty=United+States&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
+                        LocationParams = new HospitalLocationSearchParams(),
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 

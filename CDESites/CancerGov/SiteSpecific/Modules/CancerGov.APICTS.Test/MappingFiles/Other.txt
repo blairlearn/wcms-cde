@@ -2,3 +2,6 @@
 DC|Washington, D.C.
 MD|Maryland
 I|Phase I
+II|Phase II
+tt_treatment|Treatment
+tt_supportive_care|Supportive Care

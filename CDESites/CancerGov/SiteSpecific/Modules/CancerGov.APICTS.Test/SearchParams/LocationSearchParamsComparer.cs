@@ -55,10 +55,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             }
             else if (x is ZipCodeLocationSearchParams)
             {
-                bool isEqual = ((ZipCodeLocationSearchParams)(x)).ZipCode == ((ZipCodeLocationSearchParams)(y)).ZipCode &&
+                bool isEqual = false;
+                if(((ZipCodeLocationSearchParams)(x)).GeoLocation != null && ((ZipCodeLocationSearchParams)(y)).GeoLocation != null)
+                {
+                    isEqual = ((ZipCodeLocationSearchParams)(x)).ZipCode == ((ZipCodeLocationSearchParams)(y)).ZipCode &&
                     ((ZipCodeLocationSearchParams)(x)).ZipRadius == ((ZipCodeLocationSearchParams)(y)).ZipRadius &&
                     ((ZipCodeLocationSearchParams)(x)).GeoLocation.Lat == ((ZipCodeLocationSearchParams)(y)).GeoLocation.Lat &&
                     ((ZipCodeLocationSearchParams)(x)).GeoLocation.Lon == ((ZipCodeLocationSearchParams)(y)).GeoLocation.Lon;
+                }
+                else if(((ZipCodeLocationSearchParams)(x)).GeoLocation == null && ((ZipCodeLocationSearchParams)(y)).GeoLocation == null)
+                {
+                    isEqual = ((ZipCodeLocationSearchParams)(x)).ZipCode == ((ZipCodeLocationSearchParams)(y)).ZipCode &&
+                    ((ZipCodeLocationSearchParams)(x)).ZipRadius == ((ZipCodeLocationSearchParams)(y)).ZipRadius;
+                }
+                
 
 
                 return isEqual;
