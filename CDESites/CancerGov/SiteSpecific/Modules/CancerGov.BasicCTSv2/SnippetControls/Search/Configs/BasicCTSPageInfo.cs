@@ -53,10 +53,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public string SearchClusterName { get; set; }
 
         /// <summary>
-        /// The path to the template to use.
+        /// The path to the template to use for basic search.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string SearchPageTemplatePath { get; set; }
+        public string BasicSearchPageTemplatePath { get; set; }
+
+        /// <summary>
+        /// The path to the template to use for advanced search.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string AdvSearchPageTemplatePath { get; set; }
+
 
         /// <summary>
         /// The pretty url of the basic search page.
@@ -95,6 +102,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public string DetailedViewPagePrettyUrl { get; set; }
 
         /// <summary>
+        /// The path to the print template to use.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string PrintPageTemplatePath { get; set; }
+
+        /// <summary>
         /// The default number of search result items per page.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
@@ -123,5 +136,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool RedirectIfInactive { get; set; }
+
+        /// <summary>
+        /// Filepaths for mapping files needed.
+        /// </summary>
+        [XmlArray(ElementName = "MappingFiles", Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem("MappingFile", typeof(string), Form = XmlSchemaForm.Unqualified)]
+        public string[] MappingFiles { get; set; }
     }
 }

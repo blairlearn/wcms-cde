@@ -31,7 +31,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             base.OnLoad(e);
 
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                BasicCTSPageInfo.SearchPageTemplatePath, new
+                BasicCTSPageInfo.AdvSearchPageTemplatePath, new
                 {
                     Control = this,
                     ResultsPagePrettyUrl = BasicCTSPageInfo.ResultsPagePrettyUrl

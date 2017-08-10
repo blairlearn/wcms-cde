@@ -101,6 +101,12 @@
     <Compile Include="SearchParams\ResultsLinkEnum.cs" />
     <Compile Include="SearchParams\TerminologyFieldSearchParam.cs" />
     <Compile Include="SearchParams\LocationParams\ZipCodeLocationSearchParams.cs" />
+    <Compile Include="SnippetControls\APICTSAdvancedSearchControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetControls\Search\APICTSBasicSearchControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="SnippetControls\Search\APICTSDetailsControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

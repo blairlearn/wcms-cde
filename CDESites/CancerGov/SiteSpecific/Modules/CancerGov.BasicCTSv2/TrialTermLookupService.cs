@@ -49,17 +49,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
                                     // For each individual code associated with a label (when multiple), add separately to the dictionary with the label
                                     // BIG ASSUMPTION: A C-code will only ever exist in one Label definition.  (e.g. C1234,C6789|Label)
-                                    foreach(string part in parts)
+                                    foreach (string part in parts)
                                     {
-                                        if(Regex.IsMatch(part, codePattern))
+                                        if (Regex.IsMatch(part, codePattern))
                                         {
-                                            _mappingDict.Add(part.ToLower(), entry[1]);
+                                            if (!_mappingDict.ContainsKey(part.ToLower()))
+                                                _mappingDict.Add(part.ToLower(), entry[1]);
                                         }
                                         else
                                         {
+                                            if (!_mappingDict.ContainsKey(part))
                                             _mappingDict.Add(part, entry[1]);
                                         }
-                                        
                                     }
                                 }
                                 // If there is only one code associated with the label, add to dictionary
@@ -67,13 +68,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                                 {
                                     if (Regex.IsMatch(entry[0], codePattern))
                                     {
-                                        _mappingDict.Add(entry[0].ToLower(), entry[1]);
+                                        if (!_mappingDict.ContainsKey(entry[0].ToLower()))
+                                            _mappingDict.Add(entry[0].ToLower(), entry[1]);
                                     }
                                     else
                                     {
-                                        _mappingDict.Add(entry[0], entry[1]);
+                                        if (!_mappingDict.ContainsKey(entry[0]))
+                                            _mappingDict.Add(entry[0], entry[1]);
                                     }
-                                        
                                 }
                             }
                         }

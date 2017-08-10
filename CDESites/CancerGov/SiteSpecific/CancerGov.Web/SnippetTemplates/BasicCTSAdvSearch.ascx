@@ -1,1 +1,1 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.ClinicalTrials.Basic.v2.SnippetControls.BasicCTSAdvSearchControl" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.ClinicalTrials.Basic.v2.SnippetControls.APICTSAdvancedSearchControl" %>

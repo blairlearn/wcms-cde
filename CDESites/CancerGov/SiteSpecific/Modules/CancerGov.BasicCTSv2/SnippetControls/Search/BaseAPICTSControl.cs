@@ -9,6 +9,10 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrialsAPI;
 using System.Web.UI;
+using System.IO;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -76,25 +80,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Force config to be loaded here and not rely on others to call base from init. :)
 
             //////////////////////////////
-            // Load the configuration from the SnippetInfo data
-            string spidata = this.SnippetInfo.Data;
+            // Load the configuration XML from the App Settings
+            string configPath = ConfigurationManager.AppSettings["CTSConfigFilePath"];
+            Config = ModuleObjectFactory<BasicCTSPageInfo>.GetObjectFromFile(configPath);
+
+            /*
             try
             {
-                if (string.IsNullOrEmpty(spidata))
-                    throw new Exception("BasicCTSPageInfo not present in xml, associate an application module item  with this page in percussion");
+                if (string.IsNullOrEmpty(configPath))
+                    throw new Exception("CTSConfigFilePath XML file name cannot be null.");
 
-                spidata = spidata.Trim();
-                if (string.IsNullOrEmpty(spidata))
-                    throw new Exception("BasicCTSPageInfo not present in xml, associate an application module item  with this page in percussion");
+                try
+                {
+                    using (FileStream xmlFile = File.Open(configPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+                    {
+                        using (XmlReader xmlReader = XmlReader.Create(xmlFile))
+                        {
+                            // Get the serializer for the BasicCTSPageInfo configuration.
+                            XmlSerializer serializer = new XmlSerializer(typeof(BasicCTSPageInfo), "cde");
 
-                Config = ModuleObjectFactory<BasicCTSPageInfo>.GetModuleObject(spidata);
+                            // Deserialize the XML into an object.
+                            Config = (BasicCTSPageInfo)serializer.Deserialize(xmlReader);
+                        }
+                    }
+                }
+                catch
+                {
+                    throw new Exception(String.Format("Unable to create BasicCTSPageInfo Config for file \"{0}.\"", configPath));
+                }
+
+                //Config = ModuleObjectFactory<BasicCTSPageInfo>.GetModuleObject(spidata);
             }
             catch (Exception ex)
             {
-                log.Error("could not load the BasicCTSPageInfo, check the config info of the application module in percussion", ex);
+                log.Error("could not load the BasicCTSPageInfo, check the configuration file in Percussion", ex);
                 throw ex;
             }
-
+            */
 
             Init();
         }

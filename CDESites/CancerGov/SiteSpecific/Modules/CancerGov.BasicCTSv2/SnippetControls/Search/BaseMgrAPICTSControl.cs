@@ -8,6 +8,7 @@ using NCI.Web;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrialsAPI;
+using System.Linq;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -55,7 +56,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Parse the Query to get the search params.
             try
             {
-                CTSSearchParamFactory factory = new CTSSearchParamFactory(DynamicTrialListingMapping.Instance, new ZipCodeGeoLookup());
+                // Get mapping file names from configuration
+                TrialTermLookupConfig mappingConfig = new TrialTermLookupConfig();
+                mappingConfig.MappingFiles.AddRange(Config.MappingFiles.Select(fp => HttpContext.Current.Server.MapPath(fp)));
+
+                CTSSearchParamFactory factory = new CTSSearchParamFactory(new TrialTermLookupService(mappingConfig), new ZipCodeGeoLookup());
                 SearchParams = factory.Create(ParsedReqUrlParams);
             }
             catch (Exception ex)
