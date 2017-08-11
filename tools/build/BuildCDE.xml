@@ -16,72 +16,17 @@
       output - Holding bin for compiled binaries.
       staging - Copy of all files to be deployed.
 
-    $(SVNBaseFolder) is specified in build.config and is the application's
-    root URL in Subversion.  The folder structure is assumed to follow the
-    standard pattern with trunk, branches, and tags folders as immediate
-    children of the base.
   -->
   <PropertyGroup>
     <SourceLocation>$(Workspace)</SourceLocation>
 	<OutputFolder>$(BuildLocation)\output\</OutputFolder>
     <StagingLocation>$(BuildLocation)\staging</StagingLocation>
 	<ConfigFileLocation>$(StagingLocation)\_configFiles</ConfigFileLocation>
-    <SVNRetrieveFromCDEFrameWork>$(SVNBaseFolder)/branches/$(Branch)$(SVNSubBranchFolderCDEFramework)</SVNRetrieveFromCDEFrameWork>
-    <SVNRetrieveFrom>$(SVNBaseFolder)/branches/$(Branch)</SVNRetrieveFrom>
-    <SVNBranchFolder>$(SVNBaseFolder)/branches/$(Branch)</SVNBranchFolder>
-    <SVNTagsFolder>$(SVNBaseFolder)/tags/</SVNTagsFolder>
-    <SVNBuildsFolder>$(SVNBaseFolder)/Builds/</SVNBuildsFolder>
   </PropertyGroup>
 
-  <!--
-   
-    The revision number is returned to the calling target as the
-    $(Revision) output property.
-  -->
-  <Target Name="FetchSourceCode" Outputs="$(Revision)">
+
+
     
-    <Message Text="Fetching latest source code from $(SVNRetrieveFrom)"/>
-
-    <RemoveDir Directories="$(SourceLocation)" />
-
-    <SvnExport RepositoryPath="$(SVNRetrieveFrom)"
-      LocalPath="$(SourceLocation)">
-      <Output TaskParameter="Revision" PropertyName="Revision" />
-    </SvnExport>
-
-    <Message Text="Revision: $(Revision)"/>
-  </Target>
-
-
-  <!--
-    Tags the code revision used in the build based on the $(Revision)
-    value retrieved from the FetchSourceCode target.
-  -->
-  <Target Name="ApplySourceCodeTag">
-
-    <!--
-      Tag Name = R + RevisionNumber + TargetEnvironment
-    -->
-	
-    <CreateProperty Value="$(Branch)-$(TargetEnvironment)-R$(Revision)">
-      <Output TaskParameter="Value" PropertyName="TagName"/>
-    </CreateProperty>
-    
-    <CreateProperty Value="$(SVNTagsFolder)$(TagName)">
-      <Output TaskParameter="Value" PropertyName="TagUrl" />
-    </CreateProperty>
-	
-	
-    <Message Text="Creating tag: $(TagName)"/>
-
-    <SvnCopy SourcePath="$(SVNBranchFolder)"
-             DestinationPath="$(TagUrl)"
-             Revision="$(Revision)"
-             Message="Automatic build of Revision $(Revision) for the $(TargetEnvironment) environment."/>
-	
-	</Target>
-
-  
   <!--
     Build the solution and copy only the necessary files to the staging folder.
   -->
@@ -125,33 +70,6 @@
   </Target>
 
 
-  <Target Name="SaveExecutables">
-
-    <!--
-      Tag Name = R + RevisionNumber + TargetEnvironment
-    -->
-    <CreateProperty Value="$(Branch)-$(TargetEnvironment)-R$(Revision)">
-      <Output TaskParameter="Value" PropertyName="TagName"/>
-    </CreateProperty>
-
-    <CreateProperty Value="$(SVNBuildsFolder)$(TagName)/$(CDE_Site)">
-      <Output TaskParameter="Value" PropertyName="BuildsUrl" />
-    </CreateProperty>
-
-    <Message Text="Saving executables to: $(TagName)"/>
-    <!--
-      SvnClient is a wrapper for the svn command line.
-      The import command line orders repository and file system path
-      opposite of most other commands, so we have to put the "wrong"
-      values in RepositoryPath and LocalPath.
-    -->
-    <SvnClient RepositoryPath="$(StagingLocation)"
-      LocalPath="$(BuildsUrl)"
-      Command="import"
-      Message="Automatic build of Revision $(Revision) for the $(TargetEnvironment) environment."
-    />
-
-  </Target>
 
   <!-- This target validates properties that are expected to be passed into msbuild -->
   <Target Name="ValidateProps">
@@ -171,16 +89,7 @@
   
 	<Message Text="Building Branch: $(Branch) for target $(TargetEnvironment)" />
 
-	
-    <CallTarget Targets="FetchSourceCode">
-      <Output TaskParameter="TargetOutputs" PropertyName="Revision"/>
-    </CallTarget>
-
     <CallTarget Targets="Build"/>
-
-    <CallTarget Targets="SaveExecutables"/>
-
-    <CallTarget Targets="ApplySourceCodeTag"/>
 
     <CallTarget Targets="Deploy"/>
 	
