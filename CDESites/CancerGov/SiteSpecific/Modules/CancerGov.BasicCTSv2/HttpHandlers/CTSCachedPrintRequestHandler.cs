@@ -28,6 +28,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 {
     public class CTSCachedPrintRequestHandler : IHttpHandler
     {
+
+        /// <summary>
+        /// Gets the Snippet Controls Config.
+        /// </summary>
+        private static BasicCTSPageInfo _config = null;
+
+        static CTSCachedPrintRequestHandler()
+        {
+            //TODO: Validate this, and maybe cache it, and well, pull this out into something so it can be shared.
+            //TODO: Add watcher for config.
+
+            //////////////////////////////
+            // Load the configuration XML from the App Settings
+            string configPath = ConfigurationManager.AppSettings["CTSConfigFilePath"];
+            _config = ModuleObjectFactory<BasicCTSPageInfo>.GetObjectFromFile(configPath);
+
+        }
+
         public bool IsReusable
         {
             get { return false; }
@@ -45,7 +63,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
         {
             HttpRequest request = context.Request;
 
-            CTSPrintManager manager = new CTSPrintManager();
+            CTSPrintManager manager = new CTSPrintManager(_config);
 
             if (request.HttpMethod == "POST")
             {

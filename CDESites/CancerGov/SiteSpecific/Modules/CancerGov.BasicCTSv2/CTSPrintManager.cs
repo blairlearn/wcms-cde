@@ -23,6 +23,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 {
     public class CTSPrintManager
     {
+        private static BasicCTSPageInfo _config = null;
+
+        /// <summary>
+        /// Creates a new instance of a CTSPrintManager
+        /// </summary>
+        /// <param name="config">CTS Config</param>
+        public CTSPrintManager(BasicCTSPageInfo config)
+        {
+            _config = config;
+        }
 
         /// <summary>
         /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
@@ -58,7 +68,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             // Bind results to velocity template
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                @"~/PublishedContent/VelocityTemplates/BasicCTSPrintResultsv2.vm",
+                _config.PrintPageTemplatePath,
                  new
                  {
                      Results = results,
