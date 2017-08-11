@@ -7,10 +7,7 @@ using Newtonsoft.Json;
 
 namespace CancerGov.ClinicalTrialsAPI
 {
-    /// <summary>
-    /// Represents a collection of diseases as returned by the disease endpoint
-    /// </summary>
-    public class DiseaseCollection
+    public class InterventionCollection
     {
         /// <summary>
         /// Gets the total number of results
@@ -19,10 +16,10 @@ namespace CancerGov.ClinicalTrialsAPI
         public int TotalResults { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of diseases
-        /// <remarks>NOTE: this will not be *all* of the diseases, but a subset based on the size and code parameters passed to the API</remarks>
+        /// Gets or sets the collection of interventions
+        /// <remarks>NOTE: this will not be *all* of the interventions, but a subset based on the size and code parameters passed to the API</remarks>
         /// </summary>
         [JsonProperty("terms")]
-        public Disease[] DiseaseTerms { get; set; }
+        public Intervention[] IntervetionTerms { get; set; }
     }
 }

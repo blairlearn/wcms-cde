@@ -62,6 +62,8 @@
     <Compile Include="Disease.cs" />
     <Compile Include="DiseaseCollection.cs" />
     <Compile Include="IClinicalTrialsAPIClient.cs" />
+    <Compile Include="Intervention.cs" />
+    <Compile Include="InterventionCollection.cs" />
     <Compile Include="TermCollection.cs" />
     <Compile Include="ClinicalTrialsCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
