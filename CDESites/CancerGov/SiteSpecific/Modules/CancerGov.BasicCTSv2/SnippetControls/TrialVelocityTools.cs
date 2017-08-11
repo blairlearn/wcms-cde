@@ -109,7 +109,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             var usaSites = sites.Where(s => s.Country == "United States").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name);
             var canadaSites = sites.Where(s => s.Country == "Canada").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name);
-            var otherSites = sites.Where(s => s.Country != "United States" && s.Country != "Canada").OrderBy(s => s.City).ThenBy(s => s.Name);
+            var otherSites = sites.Where(s => s.Country != "United States" && s.Country != "Canada").OrderBy(s => s.Country).ThenBy(s => s.City).ThenBy(s => s.Name);
 
             return usaSites.Union(canadaSites).Union(otherSites).ToArray();
         }
