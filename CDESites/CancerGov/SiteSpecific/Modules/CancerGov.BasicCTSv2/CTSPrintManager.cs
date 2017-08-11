@@ -66,11 +66,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
         private string FormatPrintResults(IEnumerable<ClinicalTrial> results, DateTime searchDate, CTSSearchParams searchTerms)
         {
+            string searchUrl = _config.BasicSearchPagePrettyUrl;
+            if (searchTerms.ResultsLinkFlag == ResultsLinkType.Advanced)
+            {
+                searchUrl = _config.AdvSearchPagePrettyUrl;
+            }
+
             // Bind results to velocity template
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                 _config.PrintPageTemplatePath,
                  new
                  {
+                     Control = new { SearchFormUrl = searchUrl },
                      Results = results,
                      SearchDate = searchDate.ToString("M/d/yyyy"),
                      Parameters = searchTerms,
@@ -88,7 +95,5 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             return printContent;
         }
-
-
     }
 }

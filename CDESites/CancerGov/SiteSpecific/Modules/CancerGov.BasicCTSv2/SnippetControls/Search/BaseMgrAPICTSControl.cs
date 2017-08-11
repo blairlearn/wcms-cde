@@ -24,8 +24,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         //We may need to know if pagenum or ipp were actually set in the URL or not.  Specifically for the details page.
 
         public int PageNum { get { return _pageNum; } }
-        public int ItemsPerPage { get { return _itemsPerPage; } }        
-
+        public int ItemsPerPage { get { return _itemsPerPage; } }
+    
         //An instance of the BasicCTSManager for interacting with the CTSAPI
         protected BasicCTSManager CTSManager { get; private set; }
         protected CTSSearchParams SearchParams { get; private set; }
@@ -151,19 +151,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         #region Common Velocity Helpers
 
-        /// <summary>
-        /// Gets the search form URL for Start Over
-        /// </summary>
-        /// <returns></returns>
-        public string GetSearchFormUrl()
+        // SearchFormUrl is needed for certain page links
+        public string SearchFormUrl
         {
-            if (SearchParams.ResultsLinkFlag == ResultsLinkType.Advanced)
+            get
             {
-                return Config.AdvSearchPagePrettyUrl;
-            }
-            else
-            {
-                return Config.BasicSearchPagePrettyUrl;
+                if (SearchParams.ResultsLinkFlag == ResultsLinkType.Advanced)
+                {
+                    return Config.AdvSearchPagePrettyUrl;
+                }
+                else
+                {
+                    return Config.BasicSearchPagePrettyUrl;
+                }
             }
         }
 
