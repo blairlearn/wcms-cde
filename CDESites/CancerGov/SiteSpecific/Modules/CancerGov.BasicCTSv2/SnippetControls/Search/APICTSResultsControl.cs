@@ -105,6 +105,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
+        /// Gets the search parameter Query items for print URL.
+        /// </summary>
+        /// <returns></returns>
+        public string GetSearchParamsForPrint()
+        {
+            //Convert the current search parameters into a NciUrl
+            NciUrl paramsUrl = CTSSearchParamFactory.ConvertParamsToUrl(this.SearchParams);
+
+            //TODO: ensure double quotes are encoded.
+
+            return paramsUrl.ToString();
+        }
+
+        /// <summary>
         /// Gets URL for a Single Page of Results
         /// </summary>
         /// <param name="pageNum"></param>
