@@ -13,16 +13,16 @@ namespace CancerGov.ClinicalTrialsAPI
     public class DiseaseCollection
     {
         /// <summary>
-        /// Gets the total number of results
+        /// Gets the total number of results.  The API does not currently support TotalResults for diseases endpoint.
         /// </summary>
-        [JsonProperty("total")]
-        public int TotalResults { get; set; }
+        //[JsonProperty("total")]
+        //public int TotalResults { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of diseases
         /// <remarks>NOTE: this will not be *all* of the diseases, but a subset based on the size and code parameters passed to the API</remarks>
         /// </summary>
         [JsonProperty("terms")]
-        public Disease[] DiseaseTerms { get; set; }
+        public Disease[] Terms { get; set; }
     }
 }

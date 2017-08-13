@@ -42,14 +42,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
         /// </summary>
         /// <param name="trialName">The name of the file to load.</param>
         /// <returns>A mapping lookup service.</returns>
-        public static TrialTermLookupService GetMappingService(string[] filePaths)
+        public TrialTermLookupService GetMappingService(string[] filePaths)
         {
+            Mock<IClinicalTrialsAPIClient> clientMock = GetAPIClientMock();
+
             TrialTermLookupConfig config = new TrialTermLookupConfig();
             foreach(string path in filePaths)
             {
                 config.MappingFiles.Add(LoadMappingPath(path));
             }
-            return new TrialTermLookupService(config);
+
+            return new TrialTermLookupService(config, clientMock.Object);
         }
 
         /// <summary>
@@ -62,6 +65,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
             Mock<IZipCodeGeoLookupService> rtnMock = new Mock<IZipCodeGeoLookupService>();
             rtnMock.Setup(lookup => lookup.GetZipCodeGeoEntry("20850"))
                 .Returns(new GeoLocation(39.0897, -77.1798));
+
+            return rtnMock;
+        }
+
+        /// <summary>
+        /// Gets a mock that can be used for a IClinicalTrialsAPIClient
+        /// See https://github.com/moq/moq4 for more details on the mock library.
+        /// </summary>
+        /// <returns>A mock to be used as the API Client.</returns>
+        private Mock<IClinicalTrialsAPIClient> GetAPIClientMock()
+        {
+            Mock<IClinicalTrialsAPIClient> rtnMock = new Mock<IClinicalTrialsAPIClient>();
+
+            //Mock Diseases
+            rtnMock.Setup(client => client.Diseases(It.IsAny<int>(), It.IsAny<Dictionary<string, object>>()))
+                .Returns(new DiseaseCollection() {
+                    Terms = new Disease[] {
+                        new Disease() { Name = "Fill me in" }
+                    }
+                });
+
+            //Mock Interventions
+            rtnMock.Setup(client => client.Interventions(It.IsAny<int>(), It.IsAny<Dictionary<string, object>>()))
+                .Returns(new InterventionCollection()
+                {
+                    Terms = new Intervention[] {
+                        new Intervention() { Name = "Fill me in" }
+                    }
+                });
+
+
 
             return rtnMock;
         }

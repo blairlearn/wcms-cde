@@ -6,17 +6,26 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Web;
 using System.Text.RegularExpressions;
+using CancerGov.ClinicalTrialsAPI;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
+    /// <summary>
+    /// Represents a service that can be used to lookup terminology items for the CTS results pages.
+    /// <remarks>This will use a mapping, and if a code is not found, it will go to the Clinical Trials API</remarks>
+    /// </summary>
     public class TrialTermLookupService: ITerminologyLookupService
     {
+        private IClinicalTrialsAPIClient _client = null;
         private TrialTermLookupConfig _config = null;
         private Dictionary<string, string> _mappingDict = new Dictionary<string, string>();
+        private static Regex CCODE_REGEX = new Regex("C[0-9]+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public TrialTermLookupService(TrialTermLookupConfig config)
+        public TrialTermLookupService(TrialTermLookupConfig config, IClinicalTrialsAPIClient client)
         {
+            _client = client;
             _config = config;
+            
             LoadMappings();
         }
 
@@ -102,12 +111,64 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             // Break up value on comma, as we are looking for the first match we find in the dictionary
             string[] lookup = value.Split(',');
 
+            bool allKeysAreConceptIDs = true;
+ 
             foreach (string key in lookup)
             {
+                if (!CCODE_REGEX.IsMatch(key))
+                {
+                    allKeysAreConceptIDs = false;
+                }
+
                 if (_mappingDict.ContainsKey(key))
                 {
                     rtn = _mappingDict[key];
                 }
+            }
+
+            if (rtn == string.Empty && allKeysAreConceptIDs)
+            {
+                Dictionary<string, object> searchParams = new Dictionary<string, object>();
+                searchParams.Add("code", lookup.Select(c => c.ToUpper()).ToArray());
+                DiseaseCollection dcoll = null;
+
+                try
+                {
+                    dcoll = _client.Diseases(1, searchParams);
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Determine if we should log an error here or throw a specialized exception
+                    throw;
+                }
+
+                if (dcoll.Terms.Length == 1)
+                {
+                    rtn = dcoll.Terms[0].Name;
+                }
+                else
+                {
+                    InterventionCollection icoll = null;
+
+                    try
+                    {
+                        icoll = _client.Interventions(1, searchParams);
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO: Determine if we should log an error here or throw a specialized exception
+                        throw;
+                    }
+
+                    if (icoll.Terms.Length == 1)
+                    {
+                        rtn = icoll.Terms[0].Name;
+                    }
+
+                }
+
+
+
             }
 
             return rtn;
@@ -133,16 +194,62 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             // Break up value on comma, as we are looking for the first match we find in the dictionary
             string[] lookup = key.Split(',');
+            bool allKeysAreConceptIDs = true;
 
             foreach (string val in lookup)
             {
-                if (!_mappingDict.ContainsKey(val))
+                if (!CCODE_REGEX.IsMatch(key))
                 {
-                    return false;
+                    allKeysAreConceptIDs = false;
+                }
+
+                if (_mappingDict.ContainsKey(val))
+                {
+                    return true;
                 }
             }
 
-            return true;
+            //If they are CCode, then go query the API
+            if (allKeysAreConceptIDs)
+            {
+                Dictionary<string, object> searchParams = new Dictionary<string, object>();
+                searchParams.Add("code", lookup.Select(c => c.ToUpper()).ToArray());
+                DiseaseCollection dcoll = null;
+
+                try
+                {
+                    dcoll = _client.Diseases(1, searchParams);
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Determine if we should log an error here or throw a specialized exception
+                    throw;
+                }
+
+                if (dcoll.Terms.Length == 1)
+                {
+                    return true;
+                }
+                InterventionCollection icoll = null;
+
+                try
+                {
+                    icoll = _client.Interventions(1, searchParams);
+                }
+                catch (Exception ex)
+                {
+                    //TODO: Determine if we should log an error here or throw a specialized exception
+                    throw;
+                }
+
+                if (icoll.Terms.Length == 1)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
         }
 
         #endregion

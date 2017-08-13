@@ -55,7 +55,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             HttpClient httpClient = new HttpClient();
             httpClient.BaseAddress = new Uri(apiURL);
 
-            CTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(httpClient));
+            ClinicalTrialsAPIClient apiClient = new ClinicalTrialsAPIClient(httpClient);
+
+            CTSManager = new BasicCTSManager(apiClient);
 
             /////////////////////////////
             // Parse the Query to get the search params.
@@ -65,7 +67,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 TrialTermLookupConfig mappingConfig = new TrialTermLookupConfig();
                 mappingConfig.MappingFiles.AddRange(Config.MappingFiles.Select(fp => HttpContext.Current.Server.MapPath(fp)));
 
-                CTSSearchParamFactory factory = new CTSSearchParamFactory(new TrialTermLookupService(mappingConfig), new ZipCodeGeoLookup());
+                CTSSearchParamFactory factory = new CTSSearchParamFactory(new TrialTermLookupService(mappingConfig, apiClient), new ZipCodeGeoLookup());
                 SearchParams = factory.Create(ParsedReqUrlParams);
             }
             catch (Exception ex)

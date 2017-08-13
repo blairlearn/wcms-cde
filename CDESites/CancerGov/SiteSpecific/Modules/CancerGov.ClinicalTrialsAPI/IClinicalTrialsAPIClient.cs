@@ -50,10 +50,38 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <param name="size"># of results to return (optional)</param>
         /// <param name="from">Beginning index for results (optional)</param>
         /// <param name="searchParams">Default search parameters (optional)</param>
-        /// <returns>Collection of terms</returns>
+        /// <returns>Collection of terms</returns> 
         TermCollection Terms(
             int size = 10,
             int from = 0,
+            //string[] includeFields = null, 
+            //string[] excludeFields = null,
+            Dictionary<string, object> searchParams = null
+        );
+
+        /// <summary>
+        /// Gets a collection of Diseases from the API.
+        /// </summary>
+        /// <param name="size"># of results to return (optional)</param>
+        /// <param name="from">Beginning index for results (optional)</param>
+        /// <param name="searchParams">Default search parameters (optional)</param>
+        /// <returns>Collection of diseases</returns> 
+        DiseaseCollection Diseases(
+            int size = 10,
+            //string[] includeFields = null, 
+            //string[] excludeFields = null,
+            Dictionary<string, object> searchParams = null
+        );
+
+        /// <summary>
+        /// Gets a collection of Interventions from the API.
+        /// </summary>
+        /// <param name="size"># of results to return (optional)</param>
+        /// <param name="from">Beginning index for results (optional)</param>
+        /// <param name="searchParams">Default search parameters (optional)</param>
+        /// <returns>Collection of Interventions</returns> 
+        InterventionCollection Interventions(
+            int size = 10,
             //string[] includeFields = null, 
             //string[] excludeFields = null,
             Dictionary<string, object> searchParams = null

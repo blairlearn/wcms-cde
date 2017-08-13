@@ -205,12 +205,11 @@ namespace CancerGov.ClinicalTrialsAPI
         /// Gets a collection of diseases from the API.
         /// </summary>
         /// <param name="size"># of results to return (optional)</param>
-        /// <param name="from">Beginning index for results (optional)</param>
         /// <param name="searchParams">Default search parameters (optional)</param>
         /// <returns>Collection of diseases</returns>
         public DiseaseCollection Diseases(
             int size = 10,
-            int from = 0,
+            //API CurrentlyDoes not support from
             //string[] includeFields = null, 
             //string[] excludeFields = null,
             Dictionary<string, object> searchParams = null
@@ -222,7 +221,6 @@ namespace CancerGov.ClinicalTrialsAPI
 
             JObject requestBody = new JObject();
             requestBody.Add(new JProperty("size", size));
-            requestBody.Add(new JProperty("from", from));
 
             foreach (KeyValuePair<string, object> sp in searchParams)
             {
@@ -240,12 +238,11 @@ namespace CancerGov.ClinicalTrialsAPI
         /// Gets a collection of interventions from the API.
         /// </summary>
         /// <param name="size"># of results to return (optional)</param>
-        /// <param name="from">Beginning index for results (optional)</param>
         /// <param name="searchParams">Default search parameters (optional)</param>
         /// <returns>Collection of interventions</returns>
         public InterventionCollection Interventions(
             int size = 10,
-            int from = 0,
+            // API currently does not support from
             //string[] includeFields = null, 
             //string[] excludeFields = null,
             Dictionary<string, object> searchParams = null
@@ -257,7 +254,6 @@ namespace CancerGov.ClinicalTrialsAPI
 
             JObject requestBody = new JObject();
             requestBody.Add(new JProperty("size", size));
-            requestBody.Add(new JProperty("from", from));
 
             foreach (KeyValuePair<string, object> sp in searchParams)
             {
@@ -265,7 +261,7 @@ namespace CancerGov.ClinicalTrialsAPI
             }
 
             //Get the HTTP response content from our Post request
-            HttpContent httpContent = ReturnPostRespContent("diseases", requestBody);
+            HttpContent httpContent = ReturnPostRespContent("interventions", requestBody);
             rtnResults = httpContent.ReadAsAsync<InterventionCollection>().Result;
 
             return rtnResults;
