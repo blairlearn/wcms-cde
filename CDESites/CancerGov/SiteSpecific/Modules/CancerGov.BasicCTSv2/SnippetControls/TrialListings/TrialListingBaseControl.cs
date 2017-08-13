@@ -38,22 +38,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected abstract String WorkingUrl { get; }
 
         /// <summary>
-        /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
-        /// </summary>
-        protected string APIURL
-        {
-            get
-            {
-                if (String.IsNullOrWhiteSpace(_APIURL))
-                {
-                    this._APIURL = BasicClinicalTrialSearchAPISection.GetAPIUrl();
-                }
-
-                return this._APIURL;
-            }
-        }
-
-        /// <summary>
         /// Assemble the default (non-dynamic) search parameters for a listing page.
         /// </summary>
         /// <returns>Search params object</returns>
@@ -168,9 +152,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e); 
-            _basicCTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(APIURL));
+            _basicCTSManager = new BasicCTSManager(APIClientHelper.GetV1ClientInstance());
 
-        }
+        } 
 
         /// <summary>
         /// Clears the Response text, issues an HTTP redirect using status 301, and ends

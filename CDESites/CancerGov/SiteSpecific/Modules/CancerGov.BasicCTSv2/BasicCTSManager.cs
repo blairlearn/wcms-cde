@@ -74,7 +74,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="host">The hostname of the API</param>        
         [Obsolete("This will need to be retired before SDS")]
         public BasicCTSManager(string host)
-            : this(new ClinicalTrialsAPIClient(host)){}
+            : this(APIClientHelper.GetV1ClientInstance()){}
 
         /// <summary>
         /// Creates a new instance of a BasicCTSManager

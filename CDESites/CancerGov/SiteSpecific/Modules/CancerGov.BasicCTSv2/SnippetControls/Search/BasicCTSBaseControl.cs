@@ -115,21 +115,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         protected abstract String WorkingUrl { get; }
 
-        /// <summary>
-        /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
-        /// </summary>
-        protected string APIURL {
-            get {
-                if (String.IsNullOrWhiteSpace(_APIURL))
-                {
-                    this._APIURL = BasicClinicalTrialSearchAPISection.GetAPIUrl();
-                }
-
-                return this._APIURL;
-            }
-        }
-
-
         protected BaseCTSSearchParam GetSearchParams()
         {
             //Parse Parameters
@@ -691,7 +676,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Removed due to concerns over differing search results for CDRID vs. conept ID.
             //HandleLegacyCancerTypeID(); // Redirect for URLs containing "t=CDRXXXX"
 
-            _basicCTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(APIURL));
+            _basicCTSManager = new BasicCTSManager(APIClientHelper.GetV1ClientInstance());
 
         }
 

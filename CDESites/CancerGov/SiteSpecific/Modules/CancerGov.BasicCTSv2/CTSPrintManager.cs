@@ -18,6 +18,7 @@ using CancerGov.ClinicalTrials.Basic.v2.Configuration;
 using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
 using CancerGov.ClinicalTrials.Basic.v2.SnippetControls;
 using CancerGov.ClinicalTrialsAPI;
+using System.Net.Http;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -34,18 +35,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             _config = config;
         }
 
-        /// <summary>
-        /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
-        /// </summary>
-        protected string ApiUrl
-        {
-            get { return BasicClinicalTrialSearchAPISection.GetAPIUrl(); }
-        }
-
         public Guid StorePrintContent(List<String> trialIDs, DateTime date, CTSSearchParams searchTerms)
         {
             // Retrieve the collections given the ID's
-            BasicCTSManager manager = new BasicCTSManager(new ClinicalTrialsAPIClient(ApiUrl));
+            //TODO: THese dependencies should be passed in!
+            BasicCTSManager manager = new BasicCTSManager(APIClientHelper.GetV1ClientInstance());
+
             List<ClinicalTrial> results = manager.GetMultipleTrials(trialIDs).ToList();
 
             // Send results to Velocity template

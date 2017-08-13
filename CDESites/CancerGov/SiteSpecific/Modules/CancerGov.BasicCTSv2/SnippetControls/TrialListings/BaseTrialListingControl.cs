@@ -38,7 +38,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         // This control still shares BasicCTSManager with the CTS controls
         private BasicCTSManager _basicCTSManager = null;
-        private string _APIURL = string.Empty;
         protected bool hasInvalidSearchParam;
 
         /// <summary>
@@ -97,29 +96,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         private readonly Regex FilterPattern = new Regex(@"filter\[([^]]*)\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        /// <summary>
-        /// Gets the URL for the ClinicalTrials API from BasicClinicalTrialSearchAPISection:GetAPIUrl()
-        /// </summary>
-        protected string APIURL
-        {
-            get
-            {
-                if (String.IsNullOrWhiteSpace(_APIURL))
-                {
-                    this._APIURL = BasicClinicalTrialSearchAPISection.GetAPIUrl();
-                }
-
-                return this._APIURL;
-            }
-        }
-
         protected sealed override void OnInit(EventArgs e)
         {
             base.OnInit(e);
 
             this.LoadConfig();
 
-            _basicCTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(APIURL));
+            _basicCTSManager = new BasicCTSManager(APIClientHelper.GetV1ClientInstance());
         }
 
         protected sealed override void OnPreRender(EventArgs e)

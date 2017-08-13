@@ -166,9 +166,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             // If the ID is a valid NCTID, go to web service and see if trial exists
             try
-            {
-                String host = BasicClinicalTrialSearchAPISection.GetAPIUrl();
-                ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(host);
+            {                
+                ClinicalTrialsAPIClient client = APIClientHelper.GetV1ClientInstance();
                 ClinicalTrial trial = client.Get(idString);
                 if (trial != null)
                 {

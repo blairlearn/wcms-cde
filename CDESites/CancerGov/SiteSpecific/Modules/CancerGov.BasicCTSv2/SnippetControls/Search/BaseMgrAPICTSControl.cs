@@ -9,6 +9,7 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrialsAPI;
 using System.Linq;
+using System.Net.Http;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -50,7 +51,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 log.Error(err);
                 throw new Exception(err);
             }
-            CTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(apiURL));
+
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(apiURL);
+
+            CTSManager = new BasicCTSManager(new ClinicalTrialsAPIClient(httpClient));
 
             /////////////////////////////
             // Parse the Query to get the search params.
