@@ -8,5 +8,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.SearchParams
 {
     public class CountryCityStateLocationSearchParams_Test
     {
+        //TODO: Test all combos, and ensure _usedFields is set correctly
     }
 }

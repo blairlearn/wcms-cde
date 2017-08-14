@@ -14,6 +14,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
     /// </summary>
     public partial class CTSSearchParamFactory_Test
     {
+        //TODO: Test all combos, and ensure _usedFields is set correctly
+
         //Test cases for Create test method. 
         //@Sarina and @Dion - You will want to create your expected objects in another file at some point.
         public static IEnumerable<object[]> URLParsingData {
