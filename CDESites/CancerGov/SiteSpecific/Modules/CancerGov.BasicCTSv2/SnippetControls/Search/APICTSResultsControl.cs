@@ -339,10 +339,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         /// <summary>
         /// Set additional, page-specific analytics values.
+        /// TODO: Clean up
+        ///     - Fix basic/advanced logic
         /// </summary>
         protected override void AddAdditionalAnalytics() 
         {
 
+            // Dynamic value for prop11/eVar11
             string val = "clinicaltrials_";
             if (IsAdvancedResult())
             {
@@ -353,6 +356,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 val += "basic";
             }
 
+            // Built out param string for prop22/eVar22
+            List<string> paramList = CTSWebAnalyticsHelper.GetAnalyticsArray(this.SearchParams);
+            string paramBlob = String.Join("|", paramList.ToArray());
+            
             // Set event2
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
             {
@@ -365,10 +372,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 wbField.Value = val;
             });
 
+            // Set prop22
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop22, wbField =>
+            {
+                wbField.Value = paramBlob;
+            });
+
             // Set evar11
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
             {
                 wbField.Value = val;
+            });
+
+            // Set evar22
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar22, wbField =>
+            {
+                wbField.Value = paramBlob;
             });
 
         }
