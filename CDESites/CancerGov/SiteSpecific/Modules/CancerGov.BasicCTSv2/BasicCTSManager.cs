@@ -367,8 +367,39 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             // Array of strings
             if (searchParams.IsFieldSet(FormFields.TrialPhases))
             {
-                //TODO: Expand phases here?? II -> I_II, II, II_III.  I think it best to expand it here.
-                filterCriteria.Add("phase.phase", searchParams.TrialPhases.Select(tp => tp.Key));
+                //We must expand the phases into the i_ii and ii_iii trials.
+                List<string> phases = new List<string>();
+
+                foreach(string phase in searchParams.TrialPhases.Select(tp => tp.Key)) 
+                {
+                    phases.Add(phase);
+
+                    switch(phase) {                        
+                        case "i" : {
+                            if (!phases.Contains("i_ii")) {
+                                phases.Add("i_ii");
+                            }
+                            break;
+                        }
+                        case "ii" : {
+                            if (!phases.Contains("i_ii")) {
+                                phases.Add("i_ii");
+                            }
+                            if (!phases.Contains("ii_iii")) {
+                                phases.Add("ii_iii");
+                            }
+                            break;
+                        }
+                        case "iii" : {
+                            if (!phases.Contains("ii_iii")) {
+                                phases.Add("ii_iii");
+                            }
+                                break;
+                        }
+                    }
+                }
+                
+                filterCriteria.Add("phase.phase", phases.ToArray());
             }
 
             if (searchParams.IsFieldSet(FormFields.Investigator))
