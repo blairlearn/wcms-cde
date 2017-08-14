@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web;
-
 using Common.Logging;
-
 using NCI.Web;
 using NCI.Web.CDE.Application;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
-
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
 using CancerGov.ClinicalTrialsAPI;
-using System.Threading;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -262,7 +259,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         protected override String GetPageTypeForAnalytics()
         {
-            return "Clinical Trials: Basic (details page)";
+            string type = "Basic";
+            if (IsAdvancedResult())
+            {
+                type = "Advanced";
+            }
+
+            return "Clinical Trials: " + type;
+        }
+
+        /// <summary>
+        /// Check query params to determine whether this is an avanced or basic search.
+        /// TODO: fix this
+        /// </summary>
+        /// <returns></returns>
+        private bool IsAdvancedResult()
+        {
+            bool advanced = false;
+
+            //Create a new url for the current details page.
+            NciUrl url = new NciUrl();
+            url.SetUrl(this.Config.ResultsPagePrettyUrl);
+
+            if (url.QueryParameters.ContainsKey("rl"))
+            {
+                if (url.QueryParameters["rl"] == "2")
+                {
+                    advanced = true;
+                }
+            }
+
+            return advanced;
         }
 
         #endregion

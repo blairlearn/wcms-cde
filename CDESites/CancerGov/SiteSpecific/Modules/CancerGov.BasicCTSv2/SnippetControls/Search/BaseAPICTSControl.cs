@@ -91,14 +91,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 wbField.Value = pageType;
             });
 
-            //AddAdditionalAnalytics() // protected virtual method
-            // only implement in results for now
+            // Set additional analytics values.
+            // Only implemented in results control for now.
+            this.AddAdditionalAnalytics();
         }
 
         /// <summary>
         /// Abstract method to get the search page type for analytics.
         /// </summary>
         protected abstract String GetPageTypeForAnalytics();
+
+        /// <summary>
+        /// Virtual method to set additional, page-specific analytics values.
+        /// </summary>
+        protected virtual void AddAdditionalAnalytics(){}
 
         /// <summary>
         /// DO NOT IMPLEMENT ANYTHING HERE OR IN DERRIVED CLASSES.

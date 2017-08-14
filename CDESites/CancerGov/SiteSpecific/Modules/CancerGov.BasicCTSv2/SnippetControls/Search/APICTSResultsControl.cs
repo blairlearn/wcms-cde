@@ -4,13 +4,11 @@ using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-
 using Common.Logging;
-
 using NCI.Web;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
-
+using NCI.Web.CDE.WebAnalytics;
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
 using CancerGov.ClinicalTrialsAPI;
 
@@ -330,7 +328,74 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         protected override String GetPageTypeForAnalytics()
         {
-            return "Clinical Trials: Basic (results page)";
+            string type = "Basic";
+            if(IsAdvancedResult())
+            {
+                type = "Advanced";
+            }
+
+            return "Clinical Trials: " + type;
+        }
+
+        /// <summary>
+        /// Set additional, page-specific analytics values.
+        /// </summary>
+        protected override void AddAdditionalAnalytics() 
+        {
+
+            string val = "clinicaltrials_";
+            if (IsAdvancedResult())
+            {
+                val += "advanced";
+            }
+            else
+            {
+                val += "basic";
+            }
+
+            // Set event2
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
+            {
+                wbField.Value = WebAnalyticsOptions.Events.event2.ToString();
+            });
+
+            // Set prop11
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
+            {
+                wbField.Value = val;
+            });
+
+            // Set evar11
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
+            {
+                wbField.Value = val;
+            });
+
+        }
+
+        /// <summary>
+        /// Check query params to determine whether this is an avanced or basic search.
+        /// TODO: fix this
+        /// </summary>
+        /// <returns></returns>
+        private bool IsAdvancedResult()
+        {
+            bool advanced = false;
+
+            //Create a new url for the current details page.
+            NciUrl url = new NciUrl();
+            url.SetUrl(this.Config.ResultsPagePrettyUrl);
+
+
+            if(url.QueryParameters.ContainsKey("rl"))
+            {
+                if(url.QueryParameters["rl"] == "2")
+                {
+                    advanced = true;
+                }
+            }
+
+            return advanced;
         }
 
         #endregion
