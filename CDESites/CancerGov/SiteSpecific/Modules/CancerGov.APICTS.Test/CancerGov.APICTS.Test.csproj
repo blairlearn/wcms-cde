@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicCTSManager.CommonUtil.cs" />
+    <Compile Include="BasicCTSManager.TreatmentSearchTests.cs" />
     <Compile Include="BasicCTSManager.DiseaseSearchTests.cs" />
     <Compile Include="BasicCTSManager.LocationSearchTests.cs" />
     <Compile Include="BasicCTSManager.SearchTests.cs" />

@@ -21,7 +21,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 // Array of tests
                 return new[]
                 {
-
                     // TEST 1 - Main Cancer Type
                     new object[] {
                         new CTSSearchParams() {
@@ -31,43 +30,174 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             }
                         },
                         new Dictionary<string, object>{
-                            { "diseases.nci_thesaurus_concept_id", new string[] { "C4872" }},
+                            { "_maintypes", new string[] { "C4872" }},
                             { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
                         }
-                    }//,
-                    //TODO: Handle Cancer subtypes, stages and findings
-                    // with multiple IDs too!
-                    /*
-                    // TEST 2 - Cancer subtype
-                    new object[] {"?st=C7771", new CTSSearchParams() {
-                        SubTypes = new TerminologyFieldSearchParam[] { 
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C7771" },
-                                Label = "Recurrent Breast Cancer"
+                    },
+                    //One maintype, one code
+                    new object[] {
+                        new CTSSearchParams() {
+                            MainType = new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C4872", "C6789" },
+                                Label = "TEST Cancer"
                             }
+                        },
+                        new Dictionary<string, object>{
+                            { "_maintypes", new string[] { "C4872", "C6789" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
                         }
-                    }},
+                    },
+                    //One Subtype/One Code
+                    new object[] {
+                        new CTSSearchParams() {
+                            SubTypes = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C4001" },
+                                    Label = "Inflammatory Breast Cancer"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>{
+                            { "_subtypes", new string[] { "C4001" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    //One Subtype/Two Code
+                    new object[] {
+                        new CTSSearchParams() {
+                            SubTypes = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C5678", "C1234" },
+                                    Label = "Test Subtype Cancer"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>{
+                            { "_subtypes", new string[] { "C5678", "C1234" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    //Two Subtype/One and Two
+                    new object[] {
+                        new CTSSearchParams() {
+                            SubTypes = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C4001" },
+                                    Label = "Inflammatory Breast Cancer"
+                                },
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C5678", "C1234" },
+                                    Label = "Test Subtype Cancer"
+                                }
 
-                    // TEST 3 - Cancer stage
-                    new object[] {"?stg=C88375", new CTSSearchParams() {
-                        Stages = new TerminologyFieldSearchParam[] { 
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C88375" },
-                                Label = "Stage I Breast Cancer"
                             }
+                        },
+                        new Dictionary<string, object>{
+                            { "_subtypes", new string[] { "C4001", "C5678", "C1234" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
                         }
-                    }},
+                    },
+                    //One Stage/One Code
+                    new object[] {
+                        new CTSSearchParams() {
+                            Stages = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C9246" },
+                                    Label = "Stage IIIB Inflammatory Breast Cancer"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>{
+                            { "_stages", new string[] { "C9246" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    //One Stage/Two Code
+                    new object[] {
+                        new CTSSearchParams() {
+                            Stages = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C12345", "C678910" },
+                                    Label = "Test Cancer Stage"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>{
+                            { "_stages", new string[] { "C12345", "C678910" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    //Two Stage/One and Two
+                    new object[] {
+                        new CTSSearchParams() {
+                            Stages = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C9246" },
+                                    Label = "Stage IIIB Inflammatory Breast Cancer"
+                                },
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C12345", "C678910" },
+                                    Label = "Test Cancer Stage"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>{
+                            { "_stages", new string[] { "C9246", "C12345", "C678910" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    //One Finding/One Code
+                    new object[] {
+                        new CTSSearchParams() {
+                            Findings = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C1234" },
+                                    Label = "Test Finding"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>{
+                            { "_findings", new string[] { "C1234" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    //One Finding/Two Code
+                    new object[] {
+                        new CTSSearchParams() {
+                            Findings = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C2345", "C3456" },
+                                    Label = "Test Finding 2"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>{
+                            { "_findings", new string[] { "C2345", "C3456" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    //Two Findings/One and Two
+                    new object[] {
+                        new CTSSearchParams() {
+                            Findings = new TerminologyFieldSearchParam[] {
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C1234" },
+                                    Label = "Test Finding"
+                                },
+                                new TerminologyFieldSearchParam() {
+                                    Codes = new string[] { "C2345", "C3456" },
+                                    Label = "Test Finding 2"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>{
+                            { "_findings", new string[] { "C1234", "C2345", "C3456" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    //TODO: Handle combo
 
-                    // TEST 4 - Cancer findings 
-                    new object[] {"?fin=C26696", new CTSSearchParams() {
-                        Findings = new TerminologyFieldSearchParam[] { 
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C26696" },
-                                Label = "Anxiety"
-                            }
-                        }
-                    }},
-                    */
+                    //TODO: Test case for Subtype same as Stage, e.g. DCIS
                 };
             }
         }

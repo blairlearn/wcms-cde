@@ -286,6 +286,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             Dictionary<string, object> filterCriteria = MapSearchParamsToFilterCriteria(searchParams);
 
+            //HACK: I need the unit tests in place for handling maintypes, subtypes, stages and findings, but I need searches to work.
+            //REMOVE THIS ONCE THE API HANDLES DISEASES, basically if we are in Unit Tests this is skipped, but for now we will remap
+            //the results so they don't break.
+            if (this.Client is ClinicalTrialsAPIClient)
+            {
+                List<string> diseaseIDs = new List<string>();
+                if (filterCriteria.ContainsKey("_maintypes"))
+                {
+                    diseaseIDs.AddRange((string[])filterCriteria["_maintypes"]);
+                    filterCriteria.Remove("_maintypes");
+                }
+
+                if (filterCriteria.ContainsKey("_subtypes"))
+                {
+                    diseaseIDs.AddRange((string[])filterCriteria["_subtypes"]);
+                    filterCriteria.Remove("_subtypes");
+                }
+
+                if (filterCriteria.ContainsKey("_stages"))
+                {
+                    diseaseIDs.AddRange((string[])filterCriteria["_stages"]);
+                    filterCriteria.Remove("_stages");
+                }
+
+                if (filterCriteria.ContainsKey("_findings"))
+                {
+                    diseaseIDs.AddRange((string[])filterCriteria["_findings"]);
+                    filterCriteria.Remove("_findings");
+                }
+
+                if (diseaseIDs.Count > 0)
+                {
+                    //Add back in the diseases, but 
+                    filterCriteria.Add("diseases.nci_thesaurus_concept_id", diseaseIDs.Distinct().ToArray());
+                }
+            }
+
             //Get our list of trials from the API client
             ClinicalTrialsCollection rtnResults = new ClinicalTrialsCollection();
 
@@ -318,11 +355,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             //Diseases
             if (searchParams.IsFieldSet(FormFields.MainType))
             {
-                filterCriteria.Add("diseases.nci_thesaurus_concept_id", searchParams.MainType.Codes);
+                filterCriteria.Add("_maintypes", searchParams.MainType.Codes);
             }
-            //TODO: Subtype
-            //TODO: Stages
-            //TODO: Findings
+
+            if (searchParams.IsFieldSet(FormFields.SubTypes))
+            {
+                filterCriteria.Add("_subtypes", searchParams.SubTypes.SelectMany(st => st.Codes).ToArray());
+            }
+
+            if (searchParams.IsFieldSet(FormFields.Stages))
+            {
+                filterCriteria.Add("_stages", searchParams.Stages.SelectMany(st => st.Codes).ToArray());
+            }
+
+            if (searchParams.IsFieldSet(FormFields.Findings))
+            {
+                filterCriteria.Add("_findings", searchParams.Findings.SelectMany(st => st.Codes).ToArray());
+            }
 
             //For Sept 2017 SDS release we will combine drug and other using an OR query.  Future releases should
             //use AND between Drugs and Other.
@@ -361,7 +410,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (searchParams.IsFieldSet(FormFields.TrialTypes))
             {
-                filterCriteria.Add("primary_purpose.primary_purpose_code", searchParams.TrialTypes.Select(tt => tt.Key));
+                filterCriteria.Add("primary_purpose.primary_purpose_code", searchParams.TrialTypes.Select(tt => tt.Key).ToArray());
             }
 
             // Array of strings

@@ -149,25 +149,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
 
                     /*
-                    // TEST 17 - Drug
-                    new object[] {"?d=C1647", new CTSSearchParams() {
-                        Drugs = new TerminologyFieldSearchParam[] { 
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C1647" },
-                                Label = "Trastuzumab"
-                            }
-                        }
-                    }},
 
-                    // TEST 18 - Other treatments/interventions
-                    new object[] {"?i=C131060", new CTSSearchParams() {
-                        OtherTreatments = new TerminologyFieldSearchParam[] { 
-                            new TerminologyFieldSearchParam() {
-                                Codes = new string[] { "C131060" },
-                                Label = "Checkpoint Blockade Immunotherapy"
-                            }
-                        }
-                    }}
 
                     // TEST 20 - Trial ID 
                     new object[] {"tid=NCI-2014-01509", new CTSSearchParams() {
