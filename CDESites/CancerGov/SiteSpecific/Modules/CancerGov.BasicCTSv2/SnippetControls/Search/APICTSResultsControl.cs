@@ -356,8 +356,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 val += "basic";
             }
 
-            // Built out param string for prop22/eVar22
-            List<string> paramList = CTSWebAnalyticsHelper.GetAnalyticsArray(this.SearchParams);
+            // Build out param string for prop22/eVar22
+            List<string> paramList = CTSWebAnalyticsHelper.GetAnalyticsParamsList(this.SearchParams);
             string paramBlob = String.Join("|", paramList.ToArray());
             
             // Set event2

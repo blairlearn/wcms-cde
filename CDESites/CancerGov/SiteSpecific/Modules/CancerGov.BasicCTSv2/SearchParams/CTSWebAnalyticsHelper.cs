@@ -21,104 +21,174 @@ namespace CancerGov.ClinicalTrials.Basic.v2
          */
 
         ///Delegate definition so we can more cleanly list the parsers we will call.
-        private delegate void ParameterAnalyticsDelegate(List<String> arr, CTSSearchParams searchParams);
-        private static ParameterAnalyticsDelegate _paramAnalytics;
+        private delegate void AnalyticsParamsDelegate(List<string> paramsList, CTSSearchParams searchParams);
+        private static AnalyticsParamsDelegate _analyticsParams;
 
         /// <summary>
-        /// Static constructor to initialize 
+        /// Static constructor to initialize.
         /// </summary>
         static CTSWebAnalyticsHelper() {
-            _paramAnalytics =
-                (ParameterAnalyticsDelegate)SerializeCancerType + //First param needs the cast.
-                SerializeAge;
+            _analyticsParams =
+                (AnalyticsParamsDelegate)AddAnalyticsCancerType + //First param needs the cast.
+                AddAnalyticsSubTypes +
+                AddAnalyticsStages +
+                AddAnalyticsFindings +
+                AddAnalyticsAge +
+                AddAnalyticsKeyword +
+                AddAnalyticsGender +
+
+                AddAnalyticsInvestigator +
+                AddAnalyticsLeadOrg;
         }
 
         /// <summary>
-        /// Serialize the parameters to a URL
+        /// Get a list of search parameters
         /// </summary>
-        /// <param name="searchParams">The search parameters to serialize</param>
-        /// <returns>A URL with query params.</returns>
-        public static List<String> GetAnalyticsArray(CTSSearchParams searchParams)
+        /// <param name="searchParams"></param>
+        /// <returns>A list of search parameter value</returns>
+        public static List<String> GetAnalyticsParamsList(CTSSearchParams searchParams)
         {
-            NciUrl url = new NciUrl();
-            List<string> aarr = new List<string>();
+            List<string> waParamsList = new List<string>();
 
-            _paramAnalytics(aarr, searchParams);
+            // Call each of our delegate methods to build out the parameter list
+            _analyticsParams(waParamsList, searchParams);
 
-            return aarr;
-            // for imeplementation, see GetPageUrl() in results control
+            // Return the assembled list of params
+            return waParamsList;
         }
 
 
-
-        #region Param Serializers
-
-
+        #region Analytics param adders
 
         //Parameter t (Main Cancer Type)
-        private static void SerializeCancerType(List<String> arr, CTSSearchParams searchParams)
+        private static void AddAnalyticsCancerType(List<string> waList, CTSSearchParams searchParams)
         {
             string value = "none";
             if (searchParams.IsFieldSet(FormFields.MainType))
             {
                 value = searchParams.MainType.Label;
             }
-            arr.Add(value);
+            waList.Add(value);
         }
 
+        //Parameter st (SubTypes)
+        private static void AddAnalyticsSubTypes(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.SubTypes))
+            {
+                value = AddAnalyticsMultiTermFields(searchParams.SubTypes);
+            }
+            waList.Add(value);
+        }
 
+        //Parameter stg (Stages)
+        private static void AddAnalyticsStages(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Stages))
+            {
+                value = AddAnalyticsMultiTermFields(searchParams.Stages);
+            }
+            waList.Add(value);
+        }
+
+        //Parameter fin (Findings)
+        private static void AddAnalyticsFindings(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Findings))
+            {
+                value = AddAnalyticsMultiTermFields(searchParams.Findings);
+            }
+            waList.Add(value);
+        }
 
         // Parameter a (Age)
-        private static void SerializeAge(List<String> arr, CTSSearchParams searchParams)
+        private static void AddAnalyticsAge(List<string> waList, CTSSearchParams searchParams)
         {
             string value = "none";
             if (searchParams.IsFieldSet(FormFields.Age))
             {
                 value = searchParams.Age.ToString();
             }
-            arr.Add(value);
-
+            waList.Add(value);
         }
 
-        
+        //Parameter q (Keyword/Phrase)
+        private static void AddAnalyticsKeyword(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Phrase))
+            {
+                value = HttpUtility.UrlEncode(searchParams.Phrase);
+            }
+            waList.Add(value);
+        }
 
+        // Parameter g (Gender)
+        private static void AddAnalyticsGender(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Gender))
+            {
+                value = HttpUtility.UrlEncode(searchParams.Gender);
+            }
+            waList.Add(value);
+        }
+
+
+
+
+
+
+
+
+        // Parameter in (Investigator)
+        private static void AddAnalyticsInvestigator(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Investigator))
+            {
+                value = HttpUtility.UrlEncode(searchParams.Investigator);
+            }
+            waList.Add(value);
+        }
+
+        // Parameter lo (Lead Org)
+        private static void AddAnalyticsLeadOrg(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.LeadOrg))
+            {
+                value = HttpUtility.UrlEncode(searchParams.LeadOrg);
+            }
+            waList.Add(value);
+        }
 
         #endregion
 
 
-        #region util methods
+        #region Util methods
 
         /// <summary>
-        /// Logs an error in the ParseErrors array on the Search Params
+        /// Converts a TerminologyFieldSearchParam[] to a string
         /// </summary>
-        private void LogParseError(FormFields field, string errorMessage, CTSSearchParams searchParams)
+        /// <param name="fieldValues">An array of TerminologyFieldSearchParam[]</param>
+        /// <returns></returns>
+        private static string AddAnalyticsMultiTermFields(TerminologyFieldSearchParam[] fieldValues)
         {
-            CTSSearchFieldParamError error = new CTSSearchFieldParamError();
-            error.Field = field;
-            error.ErrorMessage = errorMessage;
-            searchParams.ParseErrors.Add(error);
-        }
+            List<string> labels = new List<string>();
 
-        /// <summary>
-        /// Logs an error in the ParseErrors array on the Search Params
-        /// </summary>
-        private void LogParseError(string param, string errorMessage, CTSSearchParams searchParams)
-        {
-            CTSSearchParamError error = new CTSSearchParamError();
-            error.Param = param;
-            error.ErrorMessage = errorMessage;
-            searchParams.ParseErrors.Add(error);
+            foreach (TerminologyFieldSearchParam termField in fieldValues)
+            {
+                labels.Add(string.Join("/", termField.Label));
+            }
+
+            return string.Join(",", labels.ToArray());
         }
 
         #endregion
-
-
-
-
-
-
-
-
 
     }
 }
