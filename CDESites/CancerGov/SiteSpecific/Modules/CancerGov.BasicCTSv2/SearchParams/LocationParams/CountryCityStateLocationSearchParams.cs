@@ -56,7 +56,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public String City
         {
             get { return _city; }
-            set { _city = value; _usedFields = FormFields.City; }
+            set { _city = value; _usedFields |= FormFields.City; }
         }
 
     }
