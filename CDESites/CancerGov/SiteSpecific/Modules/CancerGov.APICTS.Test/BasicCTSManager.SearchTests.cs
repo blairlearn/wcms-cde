@@ -12,6 +12,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 {
     public partial class BasicCTSManager_Test
     {
+
         //Placeholder for testing CTSSearchParam -> FilterCriteria mapping.
         public static IEnumerable<object[]> OtherFieldsMappingData
         {
@@ -69,17 +70,42 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             { "_fulltext", "chicken" },
                             { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
                         }
-                    }/*,
+                    },
                     // TEST 16 - Trial type
-                    new object[] {"?tt=basic_science", new CTSSearchParams() {
-                        TrialTypes = new LabelledSearchParam[] { 
-                            new LabelledSearchParam() {
-                                Key = "basic_science",
-                                Label = "Basic science"
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialTypes = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "basic_science",
+                                    Label = "Basic science"
+                                }
                             }
+                        },
+                        new Dictionary<string, object>() {
+                            { "primary_purpose.primary_purpose_code", new string[] { "basic_science" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
                         }
-                    }},
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialTypes = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "basic_science",
+                                    Label = "Basic science"
+                                },
+                                new LabelledSearchParam() {
+                                    Key = "treatment",
+                                    Label = "Treatment"
+                                },
+                            }
+                        },
+                        new Dictionary<string, object>() {
+                            { "primary_purpose.primary_purpose_code", new string[] { "basic_science", "treatment" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
 
+                    /*
                     // TEST 17 - Drug
                     new object[] {"?d=C1647", new CTSSearchParams() {
                         Drugs = new TerminologyFieldSearchParam[] { 
@@ -150,7 +176,112 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             this.MappingTest(searchParams, expectedCriteria);
         }
 
+        #region Phase Field Tests
 
+        public static IEnumerable<object[]> PhaseFieldMappingData
+        {
+            get
+            {
+                return new[] {
+                    // TEST 19 - Trial phase 
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialPhases = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "i",
+                                    Label = "I"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>() {
+                            { "phase.phase", new string[] { "i", "i_ii" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialPhases = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "ii",
+                                    Label = "II"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>() {
+                            { "phase.phase", new string[] { "ii", "i_ii", "ii_iii" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialPhases = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "iii",
+                                    Label = "III"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>() {
+                            { "phase.phase", new string[] { "iii", "ii_iii" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialPhases = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "iv",
+                                    Label = "IV"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>() {
+                            { "phase.phase", new string[] { "iv" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialPhases = new LabelledSearchParam[] { 
+                                new LabelledSearchParam() {
+                                    Key = "i",
+                                    Label = "I"
+                                },
+                                new LabelledSearchParam() {
+                                    Key = "ii",
+                                    Label = "II"
+                                },
+                                new LabelledSearchParam() {
+                                    Key = "iii",
+                                    Label = "III"
+                                },
+                                new LabelledSearchParam() {
+                                    Key = "iv",
+                                    Label = "IV"
+                                }
+                            }
+                        },
+                        new Dictionary<string, object>() {
+                            { "phase.phase", new string[] { "i", "i_ii", "ii", "ii_iii", "iii", "iv" }},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    }
+                };
+            }
+        }
+
+        /// <summary>
+        /// CTSSearchParams -> filterCriterea mapping tests
+        /// </summary>
+        /// <param name="searchParams">An instance of a CTSSearchParams object</param>
+        /// <param name="expectedCriteria">The expected criteria for the search</param>
+        [Theory, MemberData("PhaseFieldMappingData")]
+        public void MappingPhaseFields(CTSSearchParams searchParams, Dictionary<string, object> expectedCriteria)
+        {
+            this.MappingTest(searchParams, expectedCriteria);
+        }
+
+        #endregion
 
     }
 }
