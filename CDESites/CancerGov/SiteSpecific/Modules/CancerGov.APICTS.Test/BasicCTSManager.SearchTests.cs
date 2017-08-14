@@ -71,6 +71,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
                         }
                     },
+
                     // TEST 16 - Trial type
                     new object[] {
                         new CTSSearchParams() {
@@ -105,6 +106,48 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     },
 
+                    // TEST 21 - Principal investigator 
+                    new object[] {
+                        new CTSSearchParams() {
+                            Investigator = "Sophia Smith"
+                        },
+                        new Dictionary<string, object>() {
+                            { "principal_investigator_fulltext", "Sophia Smith"},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+
+                    // TEST 22 - Lead organization
+                    new object[] {
+                        new CTSSearchParams() {
+                            LeadOrg = "Mayo Clinic"
+                        },
+                        new Dictionary<string, object>() {
+                            { "lead_org_fulltext", "Mayo Clinic"},
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialIDs = new string[] { "NCI-2015-00054" }
+                        },
+                        new Dictionary<string, object>() {
+                            { "_trialids", new string[] {"NCI-2015-00054"} },
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            TrialIDs = new string[] { "SWOG", "CCOG" }
+                        },
+                        new Dictionary<string, object>() {
+                            { "_trialids", new string[] { "SWOG", "CCOG" } },
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    },
+
+
+
                     /*
                     // TEST 17 - Drug
                     new object[] {"?d=C1647", new CTSSearchParams() {
@@ -124,32 +167,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                                 Label = "Checkpoint Blockade Immunotherapy"
                             }
                         }
-                    }},
-
-                    // TEST 19 - Trial phase 
-                    new object[] {"?tp=i", new CTSSearchParams() {
-                        TrialPhases = new LabelledSearchParam[] { 
-                            new LabelledSearchParam() {
-                                Key = "i",
-                                Label = "I"
-                            }
-                        }
-                    }},
+                    }}
 
                     // TEST 20 - Trial ID 
                     new object[] {"tid=NCI-2014-01509", new CTSSearchParams() {
                         TrialIDs = new string[] {"NCI-2014-01509"}
                     }},
 
-                    // TEST 21 - Principal investigator 
-                    new object[] { "?in=Sophia+Smith", new CTSSearchParams() {
-                        Investigator = "Sophia Smith"
-                    }},
-
-                    // TEST 22 - Lead organization
-                    new object[] { "?lo=Mayo+Clinic", new CTSSearchParams() {
-                        LeadOrg = "Mayo Clinic"
-                    }},
 
                     // TEST 23 - Page number
                     new object[] { "?pn=3", new CTSSearchParams() {

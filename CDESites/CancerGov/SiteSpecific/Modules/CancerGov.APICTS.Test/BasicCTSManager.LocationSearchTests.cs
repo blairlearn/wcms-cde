@@ -140,6 +140,24 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         }
                     },
 
+                    new object[] {
+                        new CTSSearchParams() {
+                            Location = LocationType.Zip,
+                            LocationParams = new ZipCodeLocationSearchParams() {
+                                ZipCode = "20850",
+                                ZipRadius = 500,
+                                GeoLocation = new GeoLocation(39.0897, -77.1798)
+                            }
+                        },
+                        new Dictionary<string, object> {
+                            { "sites.org_coordinates_lat", 39.0897 },
+                            { "sites.org_coordinates_lon", -77.1798 },
+                            { "sites.org_coordinates_dist", "500mi" },
+                            { "sites.recruitment_status", BasicCTSManager.ActiveRecruitmentStatuses },
+                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                        }
+                    }
+
 
                     /*
                     // TEST 9 - Zip code
