@@ -75,6 +75,7 @@
     <Compile Include="CTSPrintManager.cs" />
     <Compile Include="ITerminologyLookupService.cs" />
     <Compile Include="IZipCodeGeoLookupService.cs" />
+    <Compile Include="SearchParams\CTSWebAnalyticsHelper.cs" />
     <Compile Include="SearchParams\LocationEnum.cs" />
     <Compile Include="SearchParams\LocationParams\AtNIHLocationSearchParams.cs" />
     <Compile Include="SearchParams\LocationParams\CountryCityStateLocationSearchParams.cs" />
