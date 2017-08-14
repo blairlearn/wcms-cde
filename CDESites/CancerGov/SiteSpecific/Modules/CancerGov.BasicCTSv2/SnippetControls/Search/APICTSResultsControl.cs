@@ -322,5 +322,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         #endregion
 
+        #region Analytics methods
+
+        /// <summary>
+        /// Get the search page type for analytics.
+        /// </summary>
+        /// <returns></returns>
+        protected override String GetPageTypeForAnalytics()
+        {
+            return "Clinical Trials: Basic (results page)";
+        }
+
+        #endregion
+
     }
 }

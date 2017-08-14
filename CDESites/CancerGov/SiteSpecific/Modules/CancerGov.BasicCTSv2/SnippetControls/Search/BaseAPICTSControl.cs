@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Configuration;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Web.UI;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+using CancerGov.ClinicalTrialsAPI;
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
 using Common.Logging;
 using NCI.Web;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
-using CancerGov.ClinicalTrialsAPI;
-using System.Web.UI;
-using System.IO;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -65,9 +66,39 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 )
             );
             Controls.Add(ltl);
+
+            SetAnalytics();
         }
 
+        /// <summary>
+        /// Implement shared analytics values 
+        /// </summary>
+        private void SetAnalytics()
+        {
+            // Call the GetPageTypeForAnalytics abstract method; each control must have a concrete implementation to populate the 
+            // page type (e.g. Basic, Advanced, Custom)
+            String pageType = this.GetPageTypeForAnalytics();// abstract method
 
+            // Set prop62
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
+            {
+                wbField.Value = pageType;
+            });
+
+            // Set evar62
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
+            {
+                wbField.Value = pageType;
+            });
+
+            //AddAdditionalAnalytics() // protected virtual method
+            // only implement in results for now
+        }
+
+        /// <summary>
+        /// Abstract method to get the search page type for analytics.
+        /// </summary>
+        protected abstract String GetPageTypeForAnalytics();
 
         /// <summary>
         /// DO NOT IMPLEMENT ANYTHING HERE OR IN DERRIVED CLASSES.

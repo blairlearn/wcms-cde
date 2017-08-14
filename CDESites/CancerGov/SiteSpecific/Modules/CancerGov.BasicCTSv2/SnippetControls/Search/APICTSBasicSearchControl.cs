@@ -31,5 +31,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 TrialTools = new TrialVelocityTools()
             };
         }
+
+        /// <summary>
+        /// Get the search page type for analytics.
+        /// </summary>
+        /// <returns></returns>
+        protected override String GetPageTypeForAnalytics()
+        {
+            return "Clinical Trials: Basic";
+        }
     }
 }
