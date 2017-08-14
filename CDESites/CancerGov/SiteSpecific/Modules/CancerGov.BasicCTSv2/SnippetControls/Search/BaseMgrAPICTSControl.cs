@@ -7,7 +7,6 @@ using Common.Logging;
 using NCI.Web;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
-using NCI.Web.CDE.WebAnalytics;
 using CancerGov.ClinicalTrialsAPI;
 using System.Linq;
 using System.Net.Http;
@@ -89,40 +88,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 this._itemsPerPage = ParamAsInt(ParsedReqUrlParams.QueryParameters["ni"], _itemsPerPage);
             }
-
-            ///////////////////////////
-            // Set analytics values for the pageLoad event
-            SetAnalytics();
         }
-
-        /// <summary>
-        /// Helper function to set values for analytics pageload event.
-        /// </summary>
-        protected void SetAnalytics()
-        {
-            string desc = "Placeholder - Clinical Trials <my_search_type>";
-
-            // Set event
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
-            {
-                wbField.Value = WebAnalyticsOptions.Events.event2.ToString();
-            });
-
-            // Set props/evars 
-            // TODO: fill in correct values per requirements 
-            // TODO: use our new CTSWebAnalyticsHelper method
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
-            {
-                wbField.Value = desc;
-            });
-
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
-            {
-                wbField.Value = desc;
-            });
-
-        }
-
 
         /// <summary>
         /// Helper function to check if a param is used. (And not just set with an empty string.
