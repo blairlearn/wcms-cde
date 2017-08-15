@@ -99,6 +99,7 @@
     <Compile Include="SearchParams\CTSSearchParamFactory.TestErrors.cs" />
     <Compile Include="SearchParams\CTSSearchParamFactory.TestSerialize.cs" />
     <Compile Include="SearchParams\CTSSearchParamsComparer.cs" />
+    <Compile Include="SearchParams\CTSSearchParams_Test.cs" />
     <Compile Include="SearchParams\HospitalLocationSearchParams.Test.cs" />
     <Compile Include="SearchParams\LabelledSearchParamComparer.cs" />
     <Compile Include="SearchParams\LocationSearchParamsComparer.cs" />
