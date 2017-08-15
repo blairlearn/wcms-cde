@@ -488,8 +488,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter loc (Location, and AtNIH if loc=nih)
         private void ParseLocation(NciUrl url, CTSSearchParams searchParams)
         {
-            searchParams.Location = LocationType.None;
-
             if (searchParams.ResultsLinkFlag == ResultsLinkType.Advanced)
             {
                 if (url.QueryParameters.ContainsKey("loc"))

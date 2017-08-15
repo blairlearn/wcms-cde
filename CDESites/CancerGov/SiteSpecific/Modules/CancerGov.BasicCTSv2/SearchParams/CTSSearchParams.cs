@@ -308,8 +308,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// Gets or sets the location type value
         /// </summary>
         public LocationType Location {
-            get { return _locationType; }
-            set { _locationType = value; _usedFields |= FormFields.Location; } 
+            get 
+            { 
+                return _locationType; 
+            }
+            set 
+            { 
+                _locationType = value; 
+                if(value != LocationType.None)
+                {
+                    _usedFields |= FormFields.Location;
+                }
+            } 
         }
 
         /// <summary>

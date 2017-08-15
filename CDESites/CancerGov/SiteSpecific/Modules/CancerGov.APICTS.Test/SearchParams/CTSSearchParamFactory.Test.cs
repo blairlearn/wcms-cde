@@ -240,7 +240,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             Location = LocationType.None,
                             ResultsLinkFlag = ResultsLinkType.Basic
                         },
-                        FormFields.Location
+                        FormFields.None
                     },
                     
                     // TEST 16 - Zip code
