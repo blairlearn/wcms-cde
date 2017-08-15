@@ -56,8 +56,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             //TODO: Setup field filters
 
-            //TODO: Add Analytics Filters?
-
             //Return the object for binding.
             return new
             {
@@ -328,6 +326,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         protected override String GetPageTypeForAnalytics()
         {
+            //if(CTSWebAnalyticsHelper.IsAdvancedResult(this.SearchParams)...
+
+
             string type = "Basic";
             if(IsAdvancedResult())
             {
@@ -356,7 +357,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 val += "basic";
             }
 
-            // Build out param string for prop22/eVar22
+            // Build out param string for prop22/eVar22 using the CTSWebAnalyticsHelpder
             List<string> paramList = CTSWebAnalyticsHelper.GetAnalyticsParamsList(this.SearchParams);
             string paramBlob = String.Join("|", paramList.ToArray());
             
