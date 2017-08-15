@@ -156,6 +156,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
+        /// <summary>
+        /// Check search params to determine whether this is an avanced, basic, or other search. 
+        /// </summary>
+        /// <returns></returns>
+        protected String GetSearchType(CTSSearchParams searchParams)
+        {
+            string ctsType = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(searchParams.ResultsLinkFlag.ToString()))
+            { 
+                switch (searchParams.ResultsLinkFlag)
+                {
+                    case ResultsLinkType.Advanced:
+                    {
+                        ctsType = "Advanced";
+                        break;
+                    }
+                    case ResultsLinkType.Basic:
+                    {
+                        ctsType = "Basic";
+                        break;
+                    }
+                    case ResultsLinkType.Unknown:
+                    {
+                        ctsType = "Other";
+                        break;
+                    }
+                    default:
+                    {
+                        ctsType = "Other";
+                        break;
+                    }
+                }
+            }
+            return ctsType;
+        }
+
         #region Common Velocity Helpers
 
         // SearchFormUrl is needed for certain page links

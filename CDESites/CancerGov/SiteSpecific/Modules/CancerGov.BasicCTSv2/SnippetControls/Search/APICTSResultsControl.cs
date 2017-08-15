@@ -326,36 +326,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         protected override String GetPageTypeForAnalytics()
         {
-            //if(CTSWebAnalyticsHelper.IsAdvancedResult(this.SearchParams)...
-
-
-            string type = "Basic";
-            if(IsAdvancedResult())
-            {
-                type = "Advanced";
-            }
-
+            string type = GetSearchType(this.SearchParams);
             return "Clinical Trials: " + type;
         }
 
         /// <summary>
         /// Set additional, page-specific analytics values.
-        /// TODO: Clean up
-        ///     - Fix basic/advanced logic
         /// </summary>
         protected override void AddAdditionalAnalytics() 
         {
-
             // Dynamic value for prop11/eVar11
-            string val = "clinicaltrials_";
-            if (IsAdvancedResult())
-            {
-                val += "advanced";
-            }
-            else
-            {
-                val += "basic";
-            }
+            string val = "clinicaltrials_" + GetSearchType(this.SearchParams).ToLower();
 
             // Build out param string for prop22/eVar22 using the CTSWebAnalyticsHelpder
             List<string> paramList = CTSWebAnalyticsHelper.GetAnalyticsParamsList(this.SearchParams);
@@ -391,31 +372,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 wbField.Value = paramBlob;
             });
 
-        }
-
-        /// <summary>
-        /// Check query params to determine whether this is an avanced or basic search.
-        /// TODO: fix this
-        /// </summary>
-        /// <returns></returns>
-        private bool IsAdvancedResult()
-        {
-            bool advanced = false;
-
-            //Create a new url for the current details page.
-            NciUrl url = new NciUrl();
-            url.SetUrl(this.Config.ResultsPagePrettyUrl);
-
-
-            if(url.QueryParameters.ContainsKey("rl"))
-            {
-                if(url.QueryParameters["rl"] == "2")
-                {
-                    advanced = true;
-                }
-            }
-
-            return advanced;
         }
 
         #endregion

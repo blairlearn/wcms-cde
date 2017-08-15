@@ -259,37 +259,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns></returns>
         protected override String GetPageTypeForAnalytics()
         {
-            string type = "Basic";
-            if (IsAdvancedResult())
-            {
-                type = "Advanced";
-            }
-
+            string type = GetSearchType(this.SearchParams);
             return "Clinical Trials: " + type;
-        }
-
-        /// <summary>
-        /// Check query params to determine whether this is an avanced or basic search.
-        /// TODO: fix this
-        /// </summary>
-        /// <returns></returns>
-        private bool IsAdvancedResult()
-        {
-            bool advanced = false;
-
-            //Create a new url for the current details page.
-            NciUrl url = new NciUrl();
-            url.SetUrl(this.Config.ResultsPagePrettyUrl);
-
-            if (url.QueryParameters.ContainsKey("rl"))
-            {
-                if (url.QueryParameters["rl"] == "2")
-                {
-                    advanced = true;
-                }
-            }
-
-            return advanced;
         }
 
         #endregion

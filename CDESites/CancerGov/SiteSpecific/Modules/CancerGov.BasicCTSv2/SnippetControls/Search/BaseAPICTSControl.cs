@@ -71,42 +71,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Implement shared analytics values 
-        /// </summary>
-        private void SetAnalytics()
-        {
-            // Call the GetPageTypeForAnalytics abstract method; each control must have a concrete implementation to populate the 
-            // page type (e.g. Basic, Advanced, Custom)
-            String pageType = this.GetPageTypeForAnalytics();// abstract method
-
-            // Set prop62
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
-            {
-                wbField.Value = pageType;
-            });
-
-            // Set evar62
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
-            {
-                wbField.Value = pageType;
-            });
-
-            // Set additional analytics values.
-            // Only implemented in results control for now.
-            this.AddAdditionalAnalytics();
-        }
-
-        /// <summary>
-        /// Abstract method to get the search page type for analytics.
-        /// </summary>
-        protected abstract String GetPageTypeForAnalytics();
-
-        /// <summary>
-        /// Virtual method to set additional, page-specific analytics values.
-        /// </summary>
-        protected virtual void AddAdditionalAnalytics(){}
-
-        /// <summary>
         /// DO NOT IMPLEMENT ANYTHING HERE OR IN DERRIVED CLASSES.
         /// </summary>
         /// <param name="e"></param>
@@ -166,5 +130,45 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             base.OnLoad(e);
         }
+
+        #region Analytics functions
+
+        /// <summary>
+        /// Implement shared analytics values 
+        /// </summary>
+        private void SetAnalytics()
+        {
+            // Call the GetPageTypeForAnalytics abstract method; each control must have a concrete implementation to populate the 
+            // page type (e.g. Basic, Advanced, Custom)
+            String pageType = this.GetPageTypeForAnalytics();// abstract method
+
+            // Set prop62
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop62, wbField =>
+            {
+                wbField.Value = pageType;
+            });
+
+            // Set evar62
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar62, wbField =>
+            {
+                wbField.Value = pageType;
+            });
+
+            // Set additional analytics values.
+            // Only implemented in results control for now.
+            this.AddAdditionalAnalytics();
+        }
+
+        /// <summary>
+        /// Abstract method to get the search page type for analytics.
+        /// </summary>
+        protected abstract String GetPageTypeForAnalytics();
+
+        /// <summary>
+        /// Virtual method to set additional, page-specific analytics values.
+        /// </summary>
+        protected virtual void AddAdditionalAnalytics() { }
+
+        #endregion
     }
 }
