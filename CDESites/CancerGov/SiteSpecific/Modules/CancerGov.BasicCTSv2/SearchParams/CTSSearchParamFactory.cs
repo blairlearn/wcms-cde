@@ -613,15 +613,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (IsInUrl(url, "lcty"))
             {
-                string city = ParamAsStr(url.QueryParameters["lcty"]);
-                if (!string.IsNullOrWhiteSpace(city))
+                if (!IsInUrl(url, "lcnty"))
                 {
-                    locParams.City = city;
+                    hasInvalidParam = true;
+                    LogParseError(FormFields.City, "Please enter a country parameter if entering a city parameter.", searchParams);
                 }
                 else
                 {
-                    hasInvalidParam = true;
-                    LogParseError(FormFields.City, "Please enter a valid city parameter.", searchParams);
+                    string city = ParamAsStr(url.QueryParameters["lcty"]);
+                    if (!string.IsNullOrWhiteSpace(city))
+                    {
+                        locParams.City = city;
+                    }
+                    else
+                    {
+                        hasInvalidParam = true;
+                        LogParseError(FormFields.City, "Please enter a valid city parameter.", searchParams);
+                    }
                 }
             }
 

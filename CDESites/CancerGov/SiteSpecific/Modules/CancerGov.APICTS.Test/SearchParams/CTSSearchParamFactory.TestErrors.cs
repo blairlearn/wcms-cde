@@ -344,6 +344,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic
                     }},
                     
+                    // TEST 9.6 - Location city/state/country with only state (without country)
+                    new object[] { "?loc=2&lst=Baltimore&rl=2", new CTSSearchParams() {
+                        Location = LocationType.CountryCityState,
+                        LocationParams = new CountryCityStateLocationSearchParams(),
+                        ResultsLinkFlag = ResultsLinkType.Advanced
+                    }},
+                    
                     // TEST 10.0 - Location hospital without hospital set
                     new object[] { "?loc=3&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
