@@ -338,9 +338,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Dynamic value for prop11/eVar11
             string val = "clinicaltrials_" + GetSearchType(this.SearchParams).ToLower();
 
-            // Build out param string for prop22/eVar22 using the CTSWebAnalyticsHelpder
+            // Build out the param string using the CTSWebAnalyticsHelpder
             List<string> paramList = CTSWebAnalyticsHelper.GetAnalyticsParamsList(this.SearchParams);
-            string paramBlob = String.Join("|", paramList.ToArray());
+            string paramBlob = String.Join(":", paramList.ToArray());
             
             // Set event2
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
@@ -348,29 +348,40 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 wbField.Value = WebAnalyticsOptions.Events.event2.ToString();
             });
 
-            // Set prop11
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
+            // Set prop15 & eVar 15
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop15, wbField =>
             {
-                wbField.Value = val;
+                wbField.Value = paramBlob;
             });
-
-            // Set prop22
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop22, wbField =>
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar15, wbField =>
             {
                 wbField.Value = paramBlob;
             });
 
-            // Set evar11
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
-            {
-                wbField.Value = val;
-            });
 
-            // Set evar22
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar22, wbField =>
-            {
-                wbField.Value = paramBlob;
-            });
+            //// Set prop11
+            //this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
+            //{
+            //    wbField.Value = val;
+            //});
+
+            //// Set prop22
+            //this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop22, wbField =>
+            //{
+            //    wbField.Value = paramBlob;
+            //});
+
+            //// Set evar11
+            //this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
+            //{
+            //    wbField.Value = val;
+            //});
+
+            //// Set evar22
+            //this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar22, wbField =>
+            //{
+            //    wbField.Value = paramBlob;
+            //});
 
         }
 

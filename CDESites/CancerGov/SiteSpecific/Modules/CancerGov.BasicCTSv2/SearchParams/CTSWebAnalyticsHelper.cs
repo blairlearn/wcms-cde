@@ -66,258 +66,458 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter t (Main Cancer Type)
         private static void AddAnalyticsCancerType(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.MainType))
             {
-                value = searchParams.MainType.Label;
+                waList.Add("t");
             }
-            waList.Add(value);
         }
 
         //Parameter st (SubTypes)
         private static void AddAnalyticsSubTypes(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.SubTypes))
             {
-                value = AddAnalyticsMultiTermFields(searchParams.SubTypes);
+                waList.Add("st");
             }
-            waList.Add(value);
         }
 
         //Parameter stg (Stages)
         private static void AddAnalyticsStages(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.Stages))
             {
-                value = AddAnalyticsMultiTermFields(searchParams.Stages);
+                waList.Add("stg");
             }
-            waList.Add(value);
         }
 
         //Parameter fin (Findings)
         private static void AddAnalyticsFindings(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.Findings))
             {
-                value = AddAnalyticsMultiTermFields(searchParams.Findings);
+                waList.Add("fin");
             }
-            waList.Add(value);
         }
 
         // Parameter a (Age)
         private static void AddAnalyticsAge(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.Age))
             {
-                value = searchParams.Age.ToString();
+                waList.Add("a");
             }
-            waList.Add(value);
         }
 
         //Parameter q (Keyword/Phrase)
         private static void AddAnalyticsKeyword(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.Phrase))
             {
-                value = HttpUtility.UrlEncode(searchParams.Phrase);
+                waList.Add("q");
             }
-            waList.Add(value);
         }
 
         // Parameter g (Gender)
         private static void AddAnalyticsGender(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.Gender))
             {
-                value = HttpUtility.UrlEncode(searchParams.Gender);
+                waList.Add("g");
             }
-            waList.Add(value);
         }
 
         // Parameter loc (Location, and AtNIH if loc=nih)
         private static void AddAnalyticsLocation(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.Location))
             {
+                waList.Add("loc");
                 switch (searchParams.Location)
                 {
                     case LocationType.Zip:
                     {
-                        value = "zip";
-                        waList.Add(value);
                         AddAnalyticsZip(waList, searchParams);
                         break;
                     }
                     case LocationType.CountryCityState:
                     {
-                        value = "country_city_state";
-                        waList.Add(value);
                         AddAnalyticsCountryCityState(waList, searchParams);
                         break;
                     }
                     case LocationType.Hospital:
                     {
-                        value = "hospital";
-                        waList.Add(value);
                         AddAnalyticsHospital(waList, searchParams);
                         break;
                     }
-                    case LocationType.AtNIH:
+                    case LocationType.None:
                     {
-                        value = "at_nih";
-                        waList.Add(value);
+                        waList.Remove("loc");
                         break;
                     }
-                    default:
-                    {
-                        waList.Add(value);
-                        break;
-                    }
-                }
-            }
+                } // End switch
+            } // End if
         }
 
         // Parameter z (Zipcode) and parameter zp (Zip proximity/radius)
         private static void AddAnalyticsZip(List<string> waList, CTSSearchParams searchParams)
         {
             ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
-            string valZip = "none";
-            string valProx = "none";
-
             if (locParams.IsFieldSet(FormFields.ZipCode))
             {
-                valZip = HttpUtility.UrlEncode(locParams.ZipCode);
+                waList.Add("z");
             }
             if (locParams.IsFieldSet(FormFields.ZipRadius))
             {
-                valProx = locParams.ZipRadius.ToString();
+                waList.Add("zp");
             }
-
-            waList.Add(valZip);
-            waList.Add(valProx);
         }
 
         ////Parameter lst (State) && Parameter lcty (City) && Parameter lcnty (Country)
         private static void AddAnalyticsCountryCityState(List<string> waList, CTSSearchParams searchParams)
         {
             CountryCityStateLocationSearchParams locParams = (CountryCityStateLocationSearchParams)searchParams.LocationParams;
-            string valCountry = "none";
-            string valState = "none";
-            string valCity = "none";
-
             if (locParams.IsFieldSet(FormFields.Country))
             {
-                valCountry = HttpUtility.UrlEncode(locParams.Country);
+                waList.Add("lcnty");
             }
             if (locParams.IsFieldSet(FormFields.State))
             {
-                valState = string.Join(",", locParams.State.Select(lst => lst.Key));
+                waList.Add("lst");
             }
             if (locParams.IsFieldSet(FormFields.City))
             {
-                valCity = HttpUtility.UrlEncode(locParams.City);
+                waList.Add("lcty");
             }
-
-            waList.Add(valCountry);
-            waList.Add(valState);
-            waList.Add(valCity);
         }
 
         //Parameter hos (Hospital)
         private static void AddAnalyticsHospital(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             HospitalLocationSearchParams locParams = (HospitalLocationSearchParams)searchParams.LocationParams;
             if (locParams.IsFieldSet(FormFields.Hospital))
             {
-                value = HttpUtility.UrlEncode(locParams.Hospital);
+                waList.Add("hos");
             }
-            waList.Add(value);
         }
 
         // Parameter tt (Trial Type)
         private static void AddAnalyticsTrialTypes(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.TrialTypes))
             {
-                value = string.Join(",", searchParams.TrialTypes.Select(tp => tp.Key));
+                waList.Add("tt");
             }
-            waList.Add(value);
         }
 
         //Parameter d (Drugs)
         private static void AddAnalyticsDrugs(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.Drugs))
             {
-                value = AddAnalyticsMultiTermFields(searchParams.Drugs);
+                waList.Add("d");
             }
-            waList.Add(value);
         }
 
         //Parameter i (Other treatments / interventions)
         private static void AddAnalyticsOtherTreatments(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.OtherTreatments))
             {
-                value = AddAnalyticsMultiTermFields(searchParams.OtherTreatments);
+                waList.Add("i");
             }
-            waList.Add(value);
         }
 
         // Parameter tp (Trial Phase)
         private static void AddAnalyticsTrialPhases(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.TrialPhases))
             {
-                value = string.Join(",", searchParams.TrialPhases.Select(tp => tp.Key));
+                waList.Add("tp");
             }
-            waList.Add(value);
         }
 
         // Parameter tid (Trial IDs)
         private static void AddAnalyticsTrialIDs(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.TrialIDs))
             {
-                value = string.Join(",", searchParams.TrialIDs.Select(tid => HttpUtility.UrlEncode(tid)));
+                waList.Add("tid");
             }
-            waList.Add(value);
         }
 
         // Parameter in (Investigator)
         private static void AddAnalyticsInvestigator(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.Investigator))
             {
-                value = HttpUtility.UrlEncode(searchParams.Investigator);
+                waList.Add("in");
             }
-            waList.Add(value);
         }
 
         // Parameter lo (Lead Org)
         private static void AddAnalyticsLeadOrg(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
             if (searchParams.IsFieldSet(FormFields.LeadOrg))
             {
-                value = HttpUtility.UrlEncode(searchParams.LeadOrg);
+                waList.Add("lo");
             }
-            waList.Add(value);
         }
+
+        ////Parameter t (Main Cancer Type)
+        //private static void AddAnalyticsCancerType(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.MainType))
+        //    {
+        //        value = searchParams.MainType.Label;
+        //    }
+        //    waList.Add(value);
+        //}
+
+        ////Parameter st (SubTypes)
+        //private static void AddAnalyticsSubTypes(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.SubTypes))
+        //    {
+        //        value = AddAnalyticsMultiTermFields(searchParams.SubTypes);
+        //    }
+        //    waList.Add(value);
+        //}
+
+        ////Parameter stg (Stages)
+        //private static void AddAnalyticsStages(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.Stages))
+        //    {
+        //        value = AddAnalyticsMultiTermFields(searchParams.Stages);
+        //    }
+        //    waList.Add(value);
+        //}
+
+        ////Parameter fin (Findings)
+        //private static void AddAnalyticsFindings(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.Findings))
+        //    {
+        //        value = AddAnalyticsMultiTermFields(searchParams.Findings);
+        //    }
+        //    waList.Add(value);
+        //}
+
+        //// Parameter a (Age)
+        //private static void AddAnalyticsAge(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.Age))
+        //    {
+        //        value = searchParams.Age.ToString();
+        //    }
+        //    waList.Add(value);
+        //}
+
+        ////Parameter q (Keyword/Phrase)
+        //private static void AddAnalyticsKeyword(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.Phrase))
+        //    {
+        //        value = HttpUtility.UrlEncode(searchParams.Phrase);
+        //    }
+        //    waList.Add(value);
+        //}
+
+        //// Parameter g (Gender)
+        //private static void AddAnalyticsGender(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.Gender))
+        //    {
+        //        value = HttpUtility.UrlEncode(searchParams.Gender);
+        //    }
+        //    waList.Add(value);
+        //}
+
+        //// Parameter loc (Location, and AtNIH if loc=nih)
+        //private static void AddAnalyticsLocation(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.Location))
+        //    {
+        //        switch (searchParams.Location)
+        //        {
+        //            case LocationType.Zip:
+        //            {
+        //                value = "zip";
+        //                waList.Add(value);
+        //                AddAnalyticsZip(waList, searchParams);
+        //                break;
+        //            }
+        //            case LocationType.CountryCityState:
+        //            {
+        //                value = "country_city_state";
+        //                waList.Add(value);
+        //                AddAnalyticsCountryCityState(waList, searchParams);
+        //                break;
+        //            }
+        //            case LocationType.Hospital:
+        //            {
+        //                value = "hospital";
+        //                waList.Add(value);
+        //                AddAnalyticsHospital(waList, searchParams);
+        //                break;
+        //            }
+        //            case LocationType.AtNIH:
+        //            {
+        //                value = "at_nih";
+        //                waList.Add(value);
+        //                break;
+        //            }
+        //            default:
+        //            {
+        //                waList.Add(value);
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
+
+        //// Parameter z (Zipcode) and parameter zp (Zip proximity/radius)
+        //private static void AddAnalyticsZip(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
+        //    string valZip = "none";
+        //    string valProx = "none";
+
+        //    if (locParams.IsFieldSet(FormFields.ZipCode))
+        //    {
+        //        valZip = HttpUtility.UrlEncode(locParams.ZipCode);
+        //    }
+        //    if (locParams.IsFieldSet(FormFields.ZipRadius))
+        //    {
+        //        valProx = locParams.ZipRadius.ToString();
+        //    }
+
+        //    waList.Add(valZip);
+        //    waList.Add(valProx);
+        //}
+
+        //////Parameter lst (State) && Parameter lcty (City) && Parameter lcnty (Country)
+        //private static void AddAnalyticsCountryCityState(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    CountryCityStateLocationSearchParams locParams = (CountryCityStateLocationSearchParams)searchParams.LocationParams;
+        //    string valCountry = "none";
+        //    string valState = "none";
+        //    string valCity = "none";
+
+        //    if (locParams.IsFieldSet(FormFields.Country))
+        //    {
+        //        valCountry = HttpUtility.UrlEncode(locParams.Country);
+        //    }
+        //    if (locParams.IsFieldSet(FormFields.State))
+        //    {
+        //        valState = string.Join(",", locParams.State.Select(lst => lst.Key));
+        //    }
+        //    if (locParams.IsFieldSet(FormFields.City))
+        //    {
+        //        valCity = HttpUtility.UrlEncode(locParams.City);
+        //    }
+
+        //    waList.Add(valCountry);
+        //    waList.Add(valState);
+        //    waList.Add(valCity);
+        //}
+
+        ////Parameter hos (Hospital)
+        //private static void AddAnalyticsHospital(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    HospitalLocationSearchParams locParams = (HospitalLocationSearchParams)searchParams.LocationParams;
+        //    if (locParams.IsFieldSet(FormFields.Hospital))
+        //    {
+        //        value = HttpUtility.UrlEncode(locParams.Hospital);
+        //    }
+        //    waList.Add(value);
+        //}
+
+        //// Parameter tt (Trial Type)
+        //private static void AddAnalyticsTrialTypes(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.TrialTypes))
+        //    {
+        //        value = string.Join(",", searchParams.TrialTypes.Select(tp => tp.Key));
+        //    }
+        //    waList.Add(value);
+        //}
+
+        ////Parameter d (Drugs)
+        //private static void AddAnalyticsDrugs(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.Drugs))
+        //    {
+        //        value = AddAnalyticsMultiTermFields(searchParams.Drugs);
+        //    }
+        //    waList.Add(value);
+        //}
+
+        ////Parameter i (Other treatments / interventions)
+        //private static void AddAnalyticsOtherTreatments(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.OtherTreatments))
+        //    {
+        //        value = AddAnalyticsMultiTermFields(searchParams.OtherTreatments);
+        //    }
+        //    waList.Add(value);
+        //}
+
+        //// Parameter tp (Trial Phase)
+        //private static void AddAnalyticsTrialPhases(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.TrialPhases))
+        //    {
+        //        value = string.Join(",", searchParams.TrialPhases.Select(tp => tp.Key));
+        //    }
+        //    waList.Add(value);
+        //}
+
+        //// Parameter tid (Trial IDs)
+        //private static void AddAnalyticsTrialIDs(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.TrialIDs))
+        //    {
+        //        value = string.Join(",", searchParams.TrialIDs.Select(tid => HttpUtility.UrlEncode(tid)));
+        //    }
+        //    waList.Add(value);
+        //}
+
+        //// Parameter in (Investigator)
+        //private static void AddAnalyticsInvestigator(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.Investigator))
+        //    {
+        //        value = HttpUtility.UrlEncode(searchParams.Investigator);
+        //    }
+        //    waList.Add(value);
+        //}
+
+        //// Parameter lo (Lead Org)
+        //private static void AddAnalyticsLeadOrg(List<string> waList, CTSSearchParams searchParams)
+        //{
+        //    string value = "none";
+        //    if (searchParams.IsFieldSet(FormFields.LeadOrg))
+        //    {
+        //        value = HttpUtility.UrlEncode(searchParams.LeadOrg);
+        //    }
+        //    waList.Add(value);
+        //}
 
         #endregion
 
