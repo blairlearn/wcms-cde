@@ -24,7 +24,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private static AnalyticsParamsDelegate _analyticsParams;
         private static AnalyticsCancerInfoFieldsDelegate _cancerInfoFields;
         private static AnalyticsLocFieldsDelegate _locationFields;
-        private static AnalyticsTrialDrugTreatFieldsDelegate _trialDrugTreatFields;
+        private static AnalyticsTrialDrugTreatFieldsDelegate _ttDrugTreatFields;
         private static AnalyticsPhaseIDInvOrgFieldsDelegate _phaseIDInvOrgFields;
 
         /// <summary>
@@ -34,24 +34,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             _analyticsParams = (AnalyticsParamsDelegate)AddAllUsedParams;
 
-            _phaseIDInvOrgFields = (AnalyticsPhaseIDInvOrgFieldsDelegate)AddAnalyticsTrialPhases +  //First param needs the cast.
-                AddAnalyticsTrialIDs +
-                AddAnalyticsInvestigator +
-                AddAnalyticsLeadOrg;
-
-            _cancerInfoFields = (AnalyticsCancerInfoFieldsDelegate)AddAnalyticsCancerType +
+            _cancerInfoFields = (AnalyticsCancerInfoFieldsDelegate)AddAnalyticsCancerType + //First param needs the cast.
                 AddAnalyticsSubTypes +
                 AddAnalyticsStages +
                 AddAnalyticsFindings +
                 AddAnalyticsAge +
                 AddAnalyticsKeyword;
 
-                //AddAnalyticsGender +
-                //AddAnalyticsLocation +
-                //AddAnalyticsTrialTypes +
-                //AddAnalyticsDrugs +
-                //AddAnalyticsOtherTreatments +
+            _locationFields = (AnalyticsLocFieldsDelegate)AddAnalyticsLocation;
 
+            _ttDrugTreatFields = (AnalyticsTrialDrugTreatFieldsDelegate)AddAnalyticsTrialTypes +
+                AddAnalyticsDrugs +
+                AddAnalyticsOtherTreatments;
+
+            _phaseIDInvOrgFields = (AnalyticsPhaseIDInvOrgFieldsDelegate)AddAnalyticsTrialPhases +
+                AddAnalyticsTrialIDs +
+                AddAnalyticsInvestigator +
+                AddAnalyticsLeadOrg;
         }
 
         /// <summary>
@@ -78,11 +77,31 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public static List<String> GetAnalyticsCancerInfoList(CTSSearchParams searchParams)
         {
             List<string> waFieldsList = new List<string>();
-
-            // Call each of our delegate methods to build out the parameter list
             _cancerInfoFields(waFieldsList, searchParams);
+            return waFieldsList;
+        }
 
-            // Return the assembled list of params
+        /// <summary>
+        /// Get a list of Location search values.
+        /// </summary>
+        /// <param name="searchParams"></param>
+        /// <returns>A list of search parameter values</returns>
+        public static List<String> GetAnalyticsLocationList(CTSSearchParams searchParams)
+        {
+            List<string> waFieldsList = new List<string>();
+            _locationFields(waFieldsList, searchParams);
+            return waFieldsList;
+        }
+
+        /// <summary>
+        /// Get a list of Trial Phase, Trial ID, Investigator, and Lead Organization values.
+        /// </summary>
+        /// <param name="searchParams"></param>
+        /// <returns>A list of search parameter values</returns>
+        public static List<String> GetAnalyticsTTDrugInterventionList(CTSSearchParams searchParams)
+        {
+            List<string> waFieldsList = new List<string>();
+            _ttDrugTreatFields(waFieldsList, searchParams);
             return waFieldsList;
         }
 
@@ -94,16 +113,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public static List<String> GetAnalyticsPhaseIDInvOrgList(CTSSearchParams searchParams)
         {
             List<string> waFieldsList = new List<string>();
-
-            // Call each of our delegate methods to build out the parameter list
             _phaseIDInvOrgFields(waFieldsList, searchParams);
-
-            // Return the assembled list of params
             return waFieldsList;
         }
 
-
         #region Big dumb param function
+        // TODO: refactor and clean up names
+
         /// <summary>
         /// Build the list of query abbreviations from completed search fields.
         /// </summary>
@@ -330,145 +346,148 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             waList.Add(value);
         }
 
-        //// Parameter loc (Location, and AtNIH if loc=nih)
-        //private static void AddAnalyticsLocation(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.Location))
-        //    {
-        //        switch (searchParams.Location)
-        //        {
-        //            case LocationType.Zip:
-        //            {
-        //                value = "zip";
-        //                waList.Add(value);
-        //                AddAnalyticsZip(waList, searchParams);
-        //                break;
-        //            }
-        //            case LocationType.CountryCityState:
-        //            {
-        //                value = "country_city_state";
-        //                waList.Add(value);
-        //                AddAnalyticsCountryCityState(waList, searchParams);
-        //                break;
-        //            }
-        //            case LocationType.Hospital:
-        //            {
-        //                value = "hospital";
-        //                waList.Add(value);
-        //                AddAnalyticsHospital(waList, searchParams);
-        //                break;
-        //            }
-        //            case LocationType.AtNIH:
-        //            {
-        //                value = "at_nih";
-        //                waList.Add(value);
-        //                break;
-        //            }
-        //            default:
-        //            {
-        //                waList.Add(value);
-        //                break;
-        //            }
-        //        }
-        //    }
-        //}
+        // Parameter loc (Location, and AtNIH if loc=nih)
+        private static void AddAnalyticsLocation(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "All Locations";
+            if (searchParams.IsFieldSet(FormFields.Location))
+            {
+                switch (searchParams.Location)
+                {
+                    case LocationType.Zip:
+                        {
+                            value = "zip";
+                            waList.Add(value);
+                            AddAnalyticsZip(waList, searchParams);
+                            break;
+                        }
+                    case LocationType.CountryCityState:
+                        {
+                            value = "csc";
+                            waList.Add(value);
+                            AddAnalyticsCountryCityState(waList, searchParams);
+                            break;
+                        }
+                    case LocationType.Hospital:
+                        {
+                            value = "hi";
+                            waList.Add(value);
+                            AddAnalyticsHospital(waList, searchParams);
+                            break;
+                        }
+                    case LocationType.AtNIH:
+                        {
+                            value = "At NIH";
+                            waList.Add(value);
+                            break;
+                        }
+                    default:
+                        {
+                            waList.Add(value);
+                            break;
+                        }
+                }
+            }
+        }
 
-        //// Parameter z (Zipcode) and parameter zp (Zip proximity/radius)
-        //private static void AddAnalyticsZip(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
-        //    string valZip = "none";
-        //    string valProx = "none";
+        // Parameter z (Zipcode) and parameter zp (Zip proximity/radius)
+        private static void AddAnalyticsZip(List<string> waList, CTSSearchParams searchParams)
+        {
+            ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
+            string valZip = "none";
+            string valProx = "none";
 
-        //    if (locParams.IsFieldSet(FormFields.ZipCode))
-        //    {
-        //        valZip = HttpUtility.UrlEncode(locParams.ZipCode);
-        //    }
-        //    if (locParams.IsFieldSet(FormFields.ZipRadius))
-        //    {
-        //        valProx = locParams.ZipRadius.ToString();
-        //    }
+            if (locParams.IsFieldSet(FormFields.ZipCode))
+            {
+                valZip = HttpUtility.UrlEncode(locParams.ZipCode);
+            }
+            if (locParams.IsFieldSet(FormFields.ZipRadius))
+            {
+                valProx = locParams.ZipRadius.ToString();
+            }
 
-        //    waList.Add(valZip);
-        //    waList.Add(valProx);
-        //}
+            waList.Add(valZip);
+            waList.Add(valProx);
+        }
 
-        //////Parameter lst (State) && Parameter lcty (City) && Parameter lcnty (Country)
-        //private static void AddAnalyticsCountryCityState(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    CountryCityStateLocationSearchParams locParams = (CountryCityStateLocationSearchParams)searchParams.LocationParams;
-        //    string valCountry = "none";
-        //    string valState = "none";
-        //    string valCity = "none";
+        ////Parameter lst (State) && Parameter lcty (City) && Parameter lcnty (Country)
+        private static void AddAnalyticsCountryCityState(List<string> waList, CTSSearchParams searchParams)
+        {
+            CountryCityStateLocationSearchParams locParams = (CountryCityStateLocationSearchParams)searchParams.LocationParams;
+            string valCountry = "none";
+            string valState = "none";
+            string valCity = "none";
 
-        //    if (locParams.IsFieldSet(FormFields.Country))
-        //    {
-        //        valCountry = HttpUtility.UrlEncode(locParams.Country);
-        //    }
-        //    if (locParams.IsFieldSet(FormFields.State))
-        //    {
-        //        valState = string.Join(",", locParams.State.Select(lst => lst.Key));
-        //    }
-        //    if (locParams.IsFieldSet(FormFields.City))
-        //    {
-        //        valCity = HttpUtility.UrlEncode(locParams.City);
-        //    }
+            if (locParams.IsFieldSet(FormFields.State))
+            {
+                valState = string.Join(",", locParams.State.Select(lst => lst.Key));
+            }
+            if (locParams.IsFieldSet(FormFields.City))
+            {
+                valCity = HttpUtility.UrlEncode(locParams.City);
+            }
+            if (locParams.IsFieldSet(FormFields.Country))
+            {
+                valCountry = HttpUtility.UrlEncode(locParams.Country);
+            }
 
-        //    waList.Add(valCountry);
-        //    waList.Add(valState);
-        //    waList.Add(valCity);
-        //}
+            waList.Add(valCountry);
+            waList.Add(valState);
+            waList.Add(valCity);
 
-        ////Parameter hos (Hospital)
-        //private static void AddAnalyticsHospital(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    HospitalLocationSearchParams locParams = (HospitalLocationSearchParams)searchParams.LocationParams;
-        //    if (locParams.IsFieldSet(FormFields.Hospital))
-        //    {
-        //        value = HttpUtility.UrlEncode(locParams.Hospital);
-        //    }
-        //    waList.Add(value);
-        //}
+            //TODO: add logic to draw state only if USA?
+        }
 
-        //// Parameter tt (Trial Type)
-        //private static void AddAnalyticsTrialTypes(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.TrialTypes))
-        //    {
-        //        value = string.Join(",", searchParams.TrialTypes.Select(tp => tp.Key));
-        //    }
-        //    waList.Add(value);
-        //}
+        //Parameter hos (Hospital)
+        private static void AddAnalyticsHospital(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            HospitalLocationSearchParams locParams = (HospitalLocationSearchParams)searchParams.LocationParams;
+            if (locParams.IsFieldSet(FormFields.Hospital))
+            {
+                value = HttpUtility.UrlEncode(locParams.Hospital);
+            }
+            waList.Add(value);
+        }
 
-        ////Parameter d (Drugs)
-        //private static void AddAnalyticsDrugs(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.Drugs))
-        //    {
-        //        value = AddAnalyticsMultiTermFields(searchParams.Drugs);
-        //    }
-        //    waList.Add(value);
-        //}
+        // Parameter tt (Trial Type)
+        private static void AddAnalyticsTrialTypes(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "all";
+            if (searchParams.IsFieldSet(FormFields.TrialTypes))
+            {
+                value = string.Join(",", searchParams.TrialTypes.Select(tp => tp.Key.Substring(0,3)));
+            }
+            waList.Add(value);
+        }
 
-        ////Parameter i (Other treatments / interventions)
-        //private static void AddAnalyticsOtherTreatments(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.OtherTreatments))
-        //    {
-        //        value = AddAnalyticsMultiTermFields(searchParams.OtherTreatments);
-        //    }
-        //    waList.Add(value);
-        //}
+        //Parameter d (Drugs)
+        private static void AddAnalyticsDrugs(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Drugs))
+            {
+                value = AddAnalyticsMultiTermFieldCodes(searchParams.Drugs);
+            }
+            // TODO: handle manual entry (if available)
+            waList.Add(value);
+        }
+
+        //Parameter i (Other treatments / interventions)
+        private static void AddAnalyticsOtherTreatments(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.OtherTreatments))
+            {
+                value = AddAnalyticsMultiTermFieldCodes(searchParams.OtherTreatments);
+            }
+            // TODO: handle manual entry (if available)
+            waList.Add(value);
+        }
 
         // Parameter tp (Trial Phase)
         private static void AddAnalyticsTrialPhases(List<string> waList, CTSSearchParams searchParams)
         {
-            //TODO: differentiate between 'all' and 'none' if possible
             string value = "all";
             if (searchParams.IsFieldSet(FormFields.TrialPhases))
             {

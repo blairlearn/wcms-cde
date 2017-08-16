@@ -335,6 +335,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         protected override void AddAdditionalAnalytics() 
         {
+            // TODO: refactor and clean up names
+
             // Get total results count
             string count = this._results.TotalResults.ToString();
 
@@ -349,7 +351,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             List<string> ciList = CTSWebAnalyticsHelper.GetAnalyticsCancerInfoList(this.SearchParams);
             string ciBlob = String.Join("|", ciList.ToArray());            
 
-            // Build out the Phase/TrialID/Inestigator/Org string using the CTSWebAnalyticsHelpder
+            // Build out the Location string using the CTSWebAnalyticsHelpder
+            List<string> locList = CTSWebAnalyticsHelper.GetAnalyticsLocationList(this.SearchParams);
+            string locBlob = String.Join("|", locList.ToArray());
+
+            // Build out the TrialType/Drug/Intervention string using the CTSWebAnalyticsHelpder
+            List<string> drugList = CTSWebAnalyticsHelper.GetAnalyticsTTDrugInterventionList(this.SearchParams);
+            string drugBlob = string.Join("|", drugList.ToArray());
+
+            // Build out the Phase/TrialID/Investigator/Org string using the CTSWebAnalyticsHelpder
             List<string> orgList = CTSWebAnalyticsHelper.GetAnalyticsPhaseIDInvOrgList(this.SearchParams);
             string orgBlob = String.Join("|", orgList.ToArray());            
 
@@ -398,21 +408,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Set prop18 & eVar 18
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop18, wbField =>
             {
-                wbField.Value = "placeholder_prop18";
+                wbField.Value = locBlob;
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar18, wbField =>
             {
-                wbField.Value = "placeholder_eVar18";
+                wbField.Value = locBlob;
             });
 
             // Set prop19 & eVar 19
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop19, wbField =>
             {
-                wbField.Value = "placeholder_prop19";
+                wbField.Value = drugBlob;
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar19, wbField =>
             {
-                wbField.Value = "placeholder_eVar19";
+                wbField.Value = drugBlob;
             });
 
             // Set prop20 & eVar20
@@ -424,22 +434,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 wbField.Value = orgBlob;
             });
-
-            //// Set prop22
-            //this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop22, wbField =>
-            //{
-            //    wbField.Value = paramBlob;
-            //});
-
-            //// Set evar22
-            //this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar22, wbField =>
-            //{
-            //    wbField.Value = paramBlob;
-            //});
-
         }
 
         #endregion
-
     }
 }
