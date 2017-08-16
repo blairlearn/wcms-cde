@@ -39,21 +39,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 AddAnalyticsInvestigator +
                 AddAnalyticsLeadOrg;
 
+            _cancerInfoFields = (AnalyticsCancerInfoFieldsDelegate)AddAnalyticsCancerType +
+                AddAnalyticsSubTypes +
+                AddAnalyticsStages +
+                AddAnalyticsFindings +
+                AddAnalyticsAge +
+                AddAnalyticsKeyword;
 
-                //AddAnalyticsSubTypes +
-                //AddAnalyticsStages +
-                //AddAnalyticsFindings +
-                //AddAnalyticsAge +
-                //AddAnalyticsKeyword +
                 //AddAnalyticsGender +
                 //AddAnalyticsLocation +
                 //AddAnalyticsTrialTypes +
                 //AddAnalyticsDrugs +
                 //AddAnalyticsOtherTreatments +
-                //AddAnalyticsTrialPhases +
-                //AddAnalyticsTrialIDs +
-                //AddAnalyticsInvestigator +
-                //AddAnalyticsLeadOrg;
+
         }
 
         /// <summary>
@@ -72,6 +70,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return waParamsList;
         }
 
+        /// <summary>
+        /// Get a list of main Cancer Type, Subtype, Stages, Findings, Age, and Keyword values.
+        /// </summary>
+        /// <param name="searchParams"></param>
+        /// <returns>A list of search parameter values</returns>
+        public static List<String> GetAnalyticsCancerInfoList(CTSSearchParams searchParams)
+        {
+            List<string> waFieldsList = new List<string>();
+
+            // Call each of our delegate methods to build out the parameter list
+            _cancerInfoFields(waFieldsList, searchParams);
+
+            // Return the assembled list of params
+            return waFieldsList;
+        }
 
         /// <summary>
         /// Get a list of Trial Phase, Trial ID, Investigator, and Lead Organization values.
@@ -89,8 +102,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return waFieldsList;
         }
 
-        #region Analytics param adders
 
+        #region Big dumb param function
         /// <summary>
         /// Build the list of query abbreviations from completed search fields.
         /// </summary>
@@ -236,84 +249,86 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-       
+        #endregion
 
-        ////Parameter t (Main Cancer Type)
-        //private static void AddAnalyticsCancerType(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.MainType))
-        //    {
-        //        value = searchParams.MainType.Label;
-        //    }
-        //    waList.Add(value);
-        //}
+        #region Analytics param adders
 
-        ////Parameter st (SubTypes)
-        //private static void AddAnalyticsSubTypes(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.SubTypes))
-        //    {
-        //        value = AddAnalyticsMultiTermFields(searchParams.SubTypes);
-        //    }
-        //    waList.Add(value);
-        //}
+        //Parameter t (Main Cancer Type)
+        private static void AddAnalyticsCancerType(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.MainType))
+            {
+                value = string.Join(",", searchParams.MainType.Codes);
+            }
+            waList.Add(value);
+        }
 
-        ////Parameter stg (Stages)
-        //private static void AddAnalyticsStages(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.Stages))
-        //    {
-        //        value = AddAnalyticsMultiTermFields(searchParams.Stages);
-        //    }
-        //    waList.Add(value);
-        //}
+        //Parameter st (SubTypes)
+        private static void AddAnalyticsSubTypes(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.SubTypes))
+            {
+                value = AddAnalyticsMultiTermFieldCodes(searchParams.SubTypes);
+            }
+            waList.Add(value);
+        }
 
-        ////Parameter fin (Findings)
-        //private static void AddAnalyticsFindings(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.Findings))
-        //    {
-        //        value = AddAnalyticsMultiTermFields(searchParams.Findings);
-        //    }
-        //    waList.Add(value);
-        //}
+        //Parameter stg (Stages)
+        private static void AddAnalyticsStages(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Stages))
+            {
+                value = AddAnalyticsMultiTermFieldCodes(searchParams.Stages);
+            }
+            waList.Add(value);
+        }
 
-        //// Parameter a (Age)
-        //private static void AddAnalyticsAge(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.Age))
-        //    {
-        //        value = searchParams.Age.ToString();
-        //    }
-        //    waList.Add(value);
-        //}
+        //Parameter fin (Findings)
+        private static void AddAnalyticsFindings(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Findings))
+            {
+                value = AddAnalyticsMultiTermFieldCodes(searchParams.Findings);
+            }
+            waList.Add(value);
+        }
 
-        ////Parameter q (Keyword/Phrase)
-        //private static void AddAnalyticsKeyword(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.Phrase))
-        //    {
-        //        value = HttpUtility.UrlEncode(searchParams.Phrase);
-        //    }
-        //    waList.Add(value);
-        //}
+        // Parameter a (Age)
+        private static void AddAnalyticsAge(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Age))
+            {
+                value = searchParams.Age.ToString();
+            }
+            waList.Add(value);
+        }
 
-        //// Parameter g (Gender)
-        //private static void AddAnalyticsGender(List<string> waList, CTSSearchParams searchParams)
-        //{
-        //    string value = "none";
-        //    if (searchParams.IsFieldSet(FormFields.Gender))
-        //    {
-        //        value = HttpUtility.UrlEncode(searchParams.Gender);
-        //    }
-        //    waList.Add(value);
-        //}
+        //Parameter q (Keyword/Phrase)
+        private static void AddAnalyticsKeyword(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Phrase))
+            {
+                value = HttpUtility.UrlEncode(searchParams.Phrase);
+            }
+            waList.Add(value);
+        }
+
+        // Parameter g (Gender)
+        private static void AddAnalyticsGender(List<string> waList, CTSSearchParams searchParams)
+        {
+            string value = "none";
+            if (searchParams.IsFieldSet(FormFields.Gender))
+            {
+                value = HttpUtility.UrlEncode(searchParams.Gender);
+            }
+            waList.Add(value);
+        }
 
         //// Parameter loc (Location, and AtNIH if loc=nih)
         //private static void AddAnalyticsLocation(List<string> waList, CTSSearchParams searchParams)
@@ -509,20 +524,39 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         #region Util methods
 
         /// <summary>
-        /// Converts a TerminologyFieldSearchParam[] to a string
+        /// Converts a TerminologyFieldSearchParam[] to a string of labels
         /// </summary>
         /// <param name="fieldValues">An array of TerminologyFieldSearchParam[]</param>
         /// <returns></returns>
-        private static string AddAnalyticsMultiTermFields(TerminologyFieldSearchParam[] fieldValues)
+        private static string AddAnalyticsMultiTermFieldLabels(TerminologyFieldSearchParam[] fieldValues)
         {
             List<string> labels = new List<string>();
-
             foreach (TerminologyFieldSearchParam termField in fieldValues)
             {
                 labels.Add(string.Join("/", termField.Label));
             }
-
             return string.Join(",", labels.ToArray());
+        }
+
+        /// <summary>
+        /// Converts a TerminologyFieldSearchParam[] to a string of codes
+        /// </summary>
+        /// <param name="fieldValues">An array of TerminologyFieldSearchParam[]</param>
+        /// <returns></returns>
+        private static string AddAnalyticsMultiTermFieldCodes(TerminologyFieldSearchParam[] fieldValues)
+        {
+            List<string> codes = new List<string>();
+
+            if(fieldValues.Length > 5)
+            {
+                return "more than 5";
+            }
+
+            foreach (TerminologyFieldSearchParam termField in fieldValues)
+            {
+                codes.Add(string.Join(",", termField.Codes));
+            }
+            return string.Join(",", codes.ToArray());
         }
 
         #endregion

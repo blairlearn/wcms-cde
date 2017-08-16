@@ -345,6 +345,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             List<string> paramList = CTSWebAnalyticsHelper.GetAnalyticsParamsList(this.SearchParams);
             string paramBlob = String.Join(":", paramList.ToArray());
 
+            // Build out the Type/Subtype/Stage/Findings/Age/Keyword string using the CTSWebAnalyticsHelpder
+            List<string> ciList = CTSWebAnalyticsHelper.GetAnalyticsCancerInfoList(this.SearchParams);
+            string ciBlob = String.Join("|", ciList.ToArray());            
+
             // Build out the Phase/TrialID/Inestigator/Org string using the CTSWebAnalyticsHelpder
             List<string> orgList = CTSWebAnalyticsHelper.GetAnalyticsPhaseIDInvOrgList(this.SearchParams);
             string orgBlob = String.Join("|", orgList.ToArray());            
@@ -384,11 +388,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Set prop17 & eVar 17
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop17, wbField =>
             {
-                wbField.Value = "placeholder_prop17";
+                wbField.Value = ciBlob;
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar17, wbField =>
             {
-                wbField.Value = "placeholder_eVar17";
+                wbField.Value = ciBlob;
             });
 
             // Set prop18 & eVar 18
