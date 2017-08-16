@@ -344,7 +344,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Build out the param string using the CTSWebAnalyticsHelpder
             List<string> paramList = CTSWebAnalyticsHelper.GetAnalyticsParamsList(this.SearchParams);
             string paramBlob = String.Join(":", paramList.ToArray());
-            
+
+            // Build out the Phase/TrialID/Inestigator/Org string using the CTSWebAnalyticsHelpder
+            List<string> orgList = CTSWebAnalyticsHelper.GetAnalyticsPhaseIDInvOrgList(this.SearchParams);
+            string orgBlob = String.Join("|", orgList.ToArray());            
+
             // Set event2
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
             {
@@ -410,11 +414,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Set prop20 & eVar20
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop20, wbField =>
             {
-                wbField.Value = "placeholder_prop20";
+                wbField.Value = orgBlob;
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar20, wbField =>
             {
-                wbField.Value = "placeholder_eVar20";
+                wbField.Value = orgBlob;
             });
 
             //// Set prop22
