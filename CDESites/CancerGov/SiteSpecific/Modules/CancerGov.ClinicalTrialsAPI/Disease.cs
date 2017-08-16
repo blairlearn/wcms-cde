@@ -40,6 +40,6 @@ namespace CancerGov.ClinicalTrialsAPI
         /// Gets or sets the type of this term.  (e.g. subtype)
         /// </summary>
         [JsonProperty("type")]
-        public string Type { get; set; }
+        public string[] Type { get; set; }
     }
 }
