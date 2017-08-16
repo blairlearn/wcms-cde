@@ -335,6 +335,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         protected override void AddAdditionalAnalytics() 
         {
+            // Get total results count
+            string count = this._results.TotalResults.ToString();
+
             // Dynamic value for prop11/eVar11
             string val = "clinicaltrials_" + GetSearchType(this.SearchParams).ToLower();
 
@@ -348,6 +351,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 wbField.Value = WebAnalyticsOptions.Events.event2.ToString();
             });
 
+            // Set prop10
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop10, wbField =>
+            {
+                wbField.Value = count;
+            });
+
+            // Set prop11 & eVar11
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
+            {
+                wbField.Value = val;
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
+            {
+                wbField.Value = val;
+            });
+
             // Set prop15 & eVar 15
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop15, wbField =>
             {
@@ -358,23 +377,50 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 wbField.Value = paramBlob;
             });
 
+            // Set prop17 & eVar 17
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop17, wbField =>
+            {
+                wbField.Value = "placeholder_prop17";
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar17, wbField =>
+            {
+                wbField.Value = "placeholder_eVar17";
+            });
 
-            //// Set prop11
-            //this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
-            //{
-            //    wbField.Value = val;
-            //});
+            // Set prop18 & eVar 18
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop18, wbField =>
+            {
+                wbField.Value = "placeholder_prop18";
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar18, wbField =>
+            {
+                wbField.Value = "placeholder_eVar18";
+            });
+
+            // Set prop19 & eVar 19
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop19, wbField =>
+            {
+                wbField.Value = "placeholder_prop19";
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar19, wbField =>
+            {
+                wbField.Value = "placeholder_eVar19";
+            });
+
+            // Set prop20 & eVar20
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop20, wbField =>
+            {
+                wbField.Value = "placeholder_prop20";
+            });
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar20, wbField =>
+            {
+                wbField.Value = "placeholder_eVar20";
+            });
 
             //// Set prop22
             //this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop22, wbField =>
             //{
             //    wbField.Value = paramBlob;
-            //});
-
-            //// Set evar11
-            //this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
-            //{
-            //    wbField.Value = val;
             //});
 
             //// Set evar22
