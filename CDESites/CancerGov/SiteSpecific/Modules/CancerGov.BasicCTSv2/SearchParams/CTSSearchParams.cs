@@ -83,6 +83,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         }
 
         /// <summary>
+        /// Identified is a field within this location parameter is set.  This is a helper for Velocity that
+        /// does not understand enums.
+        /// </summary>
+        /// <param name="field">The field to check using the String representation of its name</param>
+        /// <returns>true if set, false if not.</returns>
+        public bool IsFieldInvalid(string fieldName)
+        {
+            FormFields field = (FormFields)Enum.Parse(typeof(FormFields), fieldName, true);
+            return IsFieldInvalid(field);
+        }
+
+        /// <summary>
+        /// Identified is a field within this location parameter is set.
+        /// Parse errors can contain either a FormField or a string.
+        /// </summary>
+        /// <param name="field">The field to check</param>
+        /// <returns>true if set, false if not.</returns>
+        public bool IsFieldInvalid(FormFields field)
+        {
+            bool invalid = _parseErrors.Exists(pe => pe.Param == field.ToString());
+            return invalid;
+        }
+
+        /// <summary>
         /// Gets a fields value as a string suitable for things like, oh, a velocity template
         /// </summary>
         /// <param name="fieldName">The string representation of a FormFields enum value</param>

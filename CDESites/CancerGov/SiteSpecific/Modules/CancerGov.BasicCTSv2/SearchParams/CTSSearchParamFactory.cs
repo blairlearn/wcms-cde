@@ -614,7 +614,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 if (!IsInUrl(url, "lcnty"))
                 {
                     hasInvalidParam = true;
-                    LogParseError(FormFields.City, "Please enter a country parameter if entering a city parameter.", searchParams);
+                    LogParseError(FormFields.Country, "Please enter a country parameter if entering a city parameter.", searchParams);
                 }
                 else
                 {

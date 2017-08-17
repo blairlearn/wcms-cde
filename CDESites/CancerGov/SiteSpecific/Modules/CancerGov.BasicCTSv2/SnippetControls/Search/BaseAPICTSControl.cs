@@ -85,40 +85,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string configPath = ConfigurationManager.AppSettings["CTSConfigFilePath"];
             Config = ModuleObjectFactory<BasicCTSPageInfo>.GetObjectFromFile(configPath);
 
-            /*
-            try
-            {
-                if (string.IsNullOrEmpty(configPath))
-                    throw new Exception("CTSConfigFilePath XML file name cannot be null.");
-
-                try
-                {
-                    using (FileStream xmlFile = File.Open(configPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
-                    {
-                        using (XmlReader xmlReader = XmlReader.Create(xmlFile))
-                        {
-                            // Get the serializer for the BasicCTSPageInfo configuration.
-                            XmlSerializer serializer = new XmlSerializer(typeof(BasicCTSPageInfo), "cde");
-
-                            // Deserialize the XML into an object.
-                            Config = (BasicCTSPageInfo)serializer.Deserialize(xmlReader);
-                        }
-                    }
-                }
-                catch
-                {
-                    throw new Exception(String.Format("Unable to create BasicCTSPageInfo Config for file \"{0}.\"", configPath));
-                }
-
-                //Config = ModuleObjectFactory<BasicCTSPageInfo>.GetModuleObject(spidata);
-            }
-            catch (Exception ex)
-            {
-                log.Error("could not load the BasicCTSPageInfo, check the configuration file in Percussion", ex);
-                throw ex;
-            }
-            */
-
             Init();
         }
 
