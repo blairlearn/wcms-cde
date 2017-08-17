@@ -19,8 +19,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     /// </summary>
     public class APICTSResultsControl : BaseMgrAPICTSControl
     {
-        private ClinicalTrialsCollection _results = null;
-        
+        static ILog log = LogManager.GetLogger(typeof(APICTSResultsControl));
+
+        private ClinicalTrialsCollection _results = null;        
 
         /// <summary>
         /// Gets the path to the template
@@ -315,7 +316,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
 
-
         #endregion
 
         #region Analytics methods
@@ -332,36 +332,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         /// <summary>
         /// Set additional, page-specific analytics values.
+        /// Set search string analytics values.
         /// </summary>
         protected override void AddAdditionalAnalytics() 
         {
-            // TODO: refactor and clean up names
-
             // Get total results count
             string count = this._results.TotalResults.ToString();
 
-            // Dynamic value for prop11/eVar11
-            string val = "clinicaltrials_" + GetSearchType(this.SearchParams).ToLower();
+            // Dynamic value the search type (e.g. basic or advanced)
+            string searchType =  GetSearchType(this.SearchParams).ToLower();
 
-            // Build out the param string using the CTSWebAnalyticsHelpder
-            List<string> paramList = CTSWebAnalyticsHelper.GetAnalyticsParamsList(this.SearchParams);
-            string paramBlob = String.Join(":", paramList.ToArray());
-
-            // Build out the Type/Subtype/Stage/Findings/Age/Keyword string using the CTSWebAnalyticsHelpder
-            List<string> ciList = CTSWebAnalyticsHelper.GetAnalyticsCancerInfoList(this.SearchParams);
-            string ciBlob = String.Join("|", ciList.ToArray());            
-
-            // Build out the Location string using the CTSWebAnalyticsHelpder
-            List<string> locList = CTSWebAnalyticsHelper.GetAnalyticsLocationList(this.SearchParams);
-            string locBlob = String.Join("|", locList.ToArray());
-
-            // Build out the TrialType/Drug/Intervention string using the CTSWebAnalyticsHelpder
-            List<string> drugList = CTSWebAnalyticsHelper.GetAnalyticsTTDrugInterventionList(this.SearchParams);
-            string drugBlob = string.Join("|", drugList.ToArray());
-
-            // Build out the Phase/TrialID/Investigator/Org string using the CTSWebAnalyticsHelpder
-            List<string> orgList = CTSWebAnalyticsHelper.GetAnalyticsPhaseIDInvOrgList(this.SearchParams);
-            string orgBlob = String.Join("|", orgList.ToArray());            
+            // Retrieve concatenated param/field strings using the CTSWebAnalyticsHelpder. 
+            // These values will be used to populate props and evars below.
+            string paramBlob = CTSWebAnalyticsHelper.GetAnalyticsAllParams(this.SearchParams); // List of all used parameters
+            string ciBlob = CTSWebAnalyticsHelper.GetAnalyticsCancerInfo(this.SearchParams); // Type/Subtype/Stage/Findings/Age/Keyword
+            string locBlob = CTSWebAnalyticsHelper.GetAnalyticsLocation(this.SearchParams); // Location
+            string ttDrugBlob = CTSWebAnalyticsHelper.GetAnalyticsTmntDrugOther(this.SearchParams); // TrialType/Drug/Other Intervention
+            string idOrgBlob = CTSWebAnalyticsHelper.GetAnalyticsPhaseIdInvOrg(this.SearchParams); // Phase/Trial ID/Investigator/Org
 
             // Set event2
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
@@ -378,11 +365,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Set prop11 & eVar11
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop11, wbField =>
             {
-                wbField.Value = val;
+                wbField.Value = "clinicaltrials_" + searchType;
             });
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar11, wbField =>
             {
-                wbField.Value = val;
+                wbField.Value = "clinicaltrials_" + searchType;
             });
 
             // Set prop15 & eVar 15
@@ -415,25 +402,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 wbField.Value = locBlob;
             });
 
-            // Set prop19 & eVar 19
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop19, wbField =>
+            // Set these fields only if we're on an advanced search.
+            if (searchType == "advanced")
             {
-                wbField.Value = drugBlob;
-            });
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar19, wbField =>
-            {
-                wbField.Value = drugBlob;
-            });
+                // Set prop19 & eVar 19
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop19, wbField =>
+                {
+                    wbField.Value = ttDrugBlob;
+                });
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar19, wbField =>
+                {
+                    wbField.Value = ttDrugBlob;
+                });
 
-            // Set prop20 & eVar20
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop20, wbField =>
-            {
-                wbField.Value = orgBlob;
-            });
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar20, wbField =>
-            {
-                wbField.Value = orgBlob;
-            });
+                // Set prop20 & eVar20
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop20, wbField =>
+                {
+                    wbField.Value = idOrgBlob;
+                });
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar20, wbField =>
+                {
+                    wbField.Value = idOrgBlob;
+                });
+            }
         }
 
         #endregion

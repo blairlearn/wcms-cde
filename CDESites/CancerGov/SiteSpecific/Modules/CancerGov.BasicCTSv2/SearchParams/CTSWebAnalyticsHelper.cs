@@ -14,40 +14,40 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     class CTSWebAnalyticsHelper
     {
         // Delegate definition so we can more cleanly list the parsers we will call.
-        private delegate void AnalyticsParamsDelegate(List<string> paramsList, CTSSearchParams searchParams);
-        private delegate void AnalyticsCancerInfoFieldsDelegate(List<string> paramsList, CTSSearchParams searchParams);
-        private delegate void AnalyticsLocFieldsDelegate(List<string> paramsList, CTSSearchParams searchParams);
-        private delegate void AnalyticsTrialDrugTreatFieldsDelegate(List<string> paramsList, CTSSearchParams searchParams);
-        private delegate void AnalyticsPhaseIDInvOrgFieldsDelegate(List<string> paramsList, CTSSearchParams searchParams);
+        private delegate void WADelegateAllParams(List<string> paramsList, CTSSearchParams searchParams);
+        private delegate void WADelegateCancerInfoFields(List<string> paramsList, CTSSearchParams searchParams);
+        private delegate void WADelegateLocationFields(List<string> paramsList, CTSSearchParams searchParams);
+        private delegate void WADelegateTmntDrugOtherFields(List<string> paramsList, CTSSearchParams searchParams);
+        private delegate void WADelegatePhaseIdInvOrgFields(List<string> paramsList, CTSSearchParams searchParams);
         
         // Member variables 
-        private static AnalyticsParamsDelegate _analyticsParams;
-        private static AnalyticsCancerInfoFieldsDelegate _cancerInfoFields;
-        private static AnalyticsLocFieldsDelegate _locationFields;
-        private static AnalyticsTrialDrugTreatFieldsDelegate _ttDrugTreatFields;
-        private static AnalyticsPhaseIDInvOrgFieldsDelegate _phaseIDInvOrgFields;
+        private static WADelegateAllParams _waAllParams;
+        private static WADelegateCancerInfoFields _waCancerInfoFields;
+        private static WADelegateLocationFields _waLocationFields;
+        private static WADelegateTmntDrugOtherFields _waTmntDrugOtherFields;
+        private static WADelegatePhaseIdInvOrgFields _waPhaseIdInvOrgFields;
 
         /// <summary>
         /// Static constructor to initialize.
         /// </summary>
         static CTSWebAnalyticsHelper() {
 
-            _analyticsParams = (AnalyticsParamsDelegate)AddAllUsedParams;
+            _waAllParams = (WADelegateAllParams)AddAllUsedParams;
 
-            _cancerInfoFields = (AnalyticsCancerInfoFieldsDelegate)AddAnalyticsCancerType + //First param needs the cast.
+            _waCancerInfoFields = (WADelegateCancerInfoFields)AddAnalyticsCancerType + //First param needs the cast.
                 AddAnalyticsSubTypes +
                 AddAnalyticsStages +
                 AddAnalyticsFindings +
                 AddAnalyticsAge +
                 AddAnalyticsKeyword;
 
-            _locationFields = (AnalyticsLocFieldsDelegate)AddAnalyticsLocation;
+            _waLocationFields = (WADelegateLocationFields)AddAnalyticsLocation;
 
-            _ttDrugTreatFields = (AnalyticsTrialDrugTreatFieldsDelegate)AddAnalyticsTrialTypes +
+            _waTmntDrugOtherFields = (WADelegateTmntDrugOtherFields)AddAnalyticsTrialTypes +
                 AddAnalyticsDrugs +
                 AddAnalyticsOtherTreatments;
 
-            _phaseIDInvOrgFields = (AnalyticsPhaseIDInvOrgFieldsDelegate)AddAnalyticsTrialPhases +
+            _waPhaseIdInvOrgFields = (WADelegatePhaseIdInvOrgFields)AddAnalyticsTrialPhases +
                 AddAnalyticsTrialIDs +
                 AddAnalyticsInvestigator +
                 AddAnalyticsLeadOrg;
@@ -58,15 +58,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns>A list of search parameter values</returns>
-        public static List<String> GetAnalyticsParamsList(CTSSearchParams searchParams)
+        public static String GetAnalyticsAllParams(CTSSearchParams searchParams)
         {
             List<string> waParamsList = new List<string>();
 
             // Call each of our delegate methods to build out the parameter list
-            _analyticsParams(waParamsList, searchParams);
+            _waAllParams(waParamsList, searchParams);
 
-            // Return the assembled list of params
-            return waParamsList;
+            // Return the concatenated list of params
+            return string.Join(":", waParamsList.ToArray());
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns>A list of search parameter values</returns>
-        public static List<String> GetAnalyticsCancerInfoList(CTSSearchParams searchParams)
+        public static String GetAnalyticsCancerInfo(CTSSearchParams searchParams)
         {
             List<string> waFieldsList = new List<string>();
-            _cancerInfoFields(waFieldsList, searchParams);
-            return waFieldsList;
+            _waCancerInfoFields(waFieldsList, searchParams);
+            return string.Join("|", waFieldsList.ToArray());
         }
 
         /// <summary>
@@ -86,11 +86,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns>A list of search parameter values</returns>
-        public static List<String> GetAnalyticsLocationList(CTSSearchParams searchParams)
+        public static String GetAnalyticsLocation(CTSSearchParams searchParams)
         {
             List<string> waFieldsList = new List<string>();
-            _locationFields(waFieldsList, searchParams);
-            return waFieldsList;
+            _waLocationFields(waFieldsList, searchParams);
+            return string.Join("|", waFieldsList.ToArray());
         }
 
         /// <summary>
@@ -98,11 +98,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns>A list of search parameter values</returns>
-        public static List<String> GetAnalyticsTTDrugInterventionList(CTSSearchParams searchParams)
+        public static String GetAnalyticsTmntDrugOther(CTSSearchParams searchParams)
         {
             List<string> waFieldsList = new List<string>();
-            _ttDrugTreatFields(waFieldsList, searchParams);
-            return waFieldsList;
+            _waTmntDrugOtherFields(waFieldsList, searchParams);
+            return string.Join("|", waFieldsList.ToArray());
         }
 
         /// <summary>
@@ -110,11 +110,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns>A list of search parameter values</returns>
-        public static List<String> GetAnalyticsPhaseIDInvOrgList(CTSSearchParams searchParams)
+        public static String GetAnalyticsPhaseIdInvOrg(CTSSearchParams searchParams)
         {
             List<string> waFieldsList = new List<string>();
-            _phaseIDInvOrgFields(waFieldsList, searchParams);
-            return waFieldsList;
+            _waPhaseIdInvOrgFields(waFieldsList, searchParams);
+            return string.Join("|", waFieldsList.ToArray());
         }
 
         #region Big dumb param function
@@ -552,7 +552,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             List<string> labels = new List<string>();
             foreach (TerminologyFieldSearchParam termField in fieldValues)
             {
-                labels.Add(string.Join("/", termField.Label));
+                labels.Add(string.Join(",", termField.Label));
             }
             return string.Join(",", labels.ToArray());
         }
