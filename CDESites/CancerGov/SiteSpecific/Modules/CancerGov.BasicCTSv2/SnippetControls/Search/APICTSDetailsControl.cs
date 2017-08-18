@@ -21,9 +21,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         private bool _showingAll = false;
         private string _trialID = string.Empty;
+        private bool _showCriteria = false;
 
         public bool ShowingAll { get { return _showingAll; } }
         public string TrialID { get { return _trialID;  } }
+
+        public bool ShowCriteria { get { return _showCriteria; } }
 
         protected override void Init()
         {
@@ -80,11 +83,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             //TODO: Setup analytics
 
+            //We did not come from a search, so don't show the criteria.
+            //this also applies if we can from a print result.
+            if (this.ParsedReqUrlParams.QueryParameters.ContainsKey("rl"))
+            {
+                _showCriteria = true;
+            }
 
             return new
             {
                 Trial = trial,
-                Parameters = this.ParsedReqUrlParams.QueryParameters.ContainsKey("rl") ? SearchParams : null,
+                Parameters = SearchParams,
                 Control = this,
                 TrialTools = new TrialVelocityTools()
             };
