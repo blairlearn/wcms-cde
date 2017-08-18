@@ -163,6 +163,13 @@ namespace CancerGov.ClinicalTrialsAPI
             HttpContent httpContent = ReturnGetRespContent("clinical-trial", id);
             rtnTrial = httpContent.ReadAsAsync<ClinicalTrial>().Result;
 
+            // If there are no sites for a trial in the API, the ClinicalTrial object will return Sites == null.  
+            // If this is the case, make ClinicalTrial.Sites an empty list.
+            if(rtnTrial.Sites == null)
+            {
+                rtnTrial.Sites = new List<ClinicalTrial.StudySite>();
+            }
+
             return rtnTrial;
         }
 
