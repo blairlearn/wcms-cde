@@ -19,6 +19,7 @@ using CancerGov.ClinicalTrials.Basic.v2.DataManagers;
 using CancerGov.ClinicalTrials.Basic.v2.SnippetControls;
 using CancerGov.ClinicalTrialsAPI;
 using System.Net.Http;
+using NCI.Web;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -67,6 +68,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 searchUrl = _config.AdvSearchPagePrettyUrl;
             }
 
+            PrintVelocityHelpers helpers = new PrintVelocityHelpers(_config);
+
             // Bind results to velocity template
             LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
                 _config.PrintPageTemplatePath,
@@ -76,6 +79,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                      Results = results,
                      SearchDate = searchDate.ToString("M/d/yyyy"),
                      Parameters = searchTerms,
+                     PrintHelper = helpers,
                      TrialTools = new TrialVelocityTools()
                  }
             ));
@@ -89,6 +93,40 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             string printContent = CTSPrintResultsDataManager.RetrieveResult(printID, Settings.IsLive);
 
             return printContent;
+        }
+    }
+
+    /// <summary>
+    /// Helper class for Velocity Template specifically for print.
+    /// </summary>
+    public class PrintVelocityHelpers
+    {
+        private static BasicCTSPageInfo _config = null;
+
+        /// <summary>
+        /// Creates a new instance of a PrintVelocityHelpers
+        /// </summary>
+        /// <param name="config">CTS Config</param>
+        public PrintVelocityHelpers(BasicCTSPageInfo config)
+        {
+            _config = config;
+        }
+
+        public string GetCheckForUpdatesURL(string trialID, CTSSearchParams searchParams)
+        {
+            //Create a new url for the current details page.
+            NciUrl url = new NciUrl();
+            url.SetUrl(_config.DetailedViewPagePrettyUrl);
+
+            //Convert the current search parameters into a NciUrl
+            NciUrl paramsUrl = CTSSearchParamFactory.ConvertParamsToUrl(searchParams);
+
+            //Copy the params 
+            url.QueryParameters = paramsUrl.QueryParameters;
+
+            url.QueryParameters.Add("id", trialID);
+
+            return url.ToString();
         }
     }
 }
