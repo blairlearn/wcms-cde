@@ -90,6 +90,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public string ResultsPagePrettyUrl { get; set; }
 
         /// <summary>
+        /// The pretty url of the redirected search options page.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string RedirectPagePrettyUrl { get; set; }
+
+        /// <summary>
         /// The path to the template to use.
         /// </summary>
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
