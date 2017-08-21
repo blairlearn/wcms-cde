@@ -38,6 +38,8 @@ namespace CancerGov.HttpModules
 
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
+            String parms = context.Server.UrlDecode(context.Request.Url.Query);
+            String reqType = context.Request.HttpMethod.ToLower();
 
             //If this is the homepage, then exit.
             if (url == "/")
@@ -47,28 +49,39 @@ namespace CancerGov.HttpModules
             if (url.EndsWith("/"))
                 url = url.Substring(0, url.Length - 1);
 
-            //Check if it is one of the URLs to remap
+            // Redirect pre-NVCG search URLs to advanced search
             if (
                 url.Equals("/clinicaltrials/search/results", StringComparison.OrdinalIgnoreCase) ||
                 url.Equals("/clinicaltrials/search/printresults", StringComparison.OrdinalIgnoreCase)
                 )
             {
-                string psid = context.Request.QueryString["protocolsearchid"];
+                DoPermanentRedirect(context.Response, "/about-cancer/treatment/clinical-trials/advanced-search");
+            }
 
-                //Check if the PSID is empty or not - if so, this is not something
-                //we can redirect, so just return.
-                if (string.IsNullOrEmpty(psid))
-                    return;
+            // Redirect old Advanced Search Results to search options content page
+            if (url.Equals("/about-cancer/treatment/clinical-trials/search/results", StringComparison.OrdinalIgnoreCase))
+            {
+                ///TODO: replace with URL from config file
+                DoPermanentRedirect(context.Response, "/about-cancer/treatment/clinical-trials/search/options");
+            }
 
-                //if redirect map contains A, then redirect.
-                CachableProtocolSearchIDMap map = CachableProtocolSearchIDMap.GetMap();
-
-                if (map.Contains(psid))
+            // Redirect old Advanced Search form page:
+            // 1. If protocolsearchid query is present, redirect to search options content page
+            // 2. Otherwise, if a POST request is made, redirect to current Advanced Search form
+            if (url.Equals("/about-cancer/treatment/clinical-trials/advanced-search", StringComparison.OrdinalIgnoreCase))
+            {
+                if (parms.ToLower().IndexOf("protocolsearchid") > -1)
                 {
-                    //redirect 
-                    DoPermanentRedirect(context.Response, string.Format("/about-cancer/treatment/clinical-trials/search/results?protocolsearchid={0}", map[psid]));
+                    ///TODO: replace with URL from config file
+                    DoPermanentRedirect(context.Response, "/about-cancer/treatment/clinical-trials/search/options");
                 }
-
+                // E.g. if a user is on a cached version of the legacy Advanced Search page and then does a postBack call by selecting a 
+                // Type/Condition, redirect to the current Advanced Search page
+                else if (reqType == "post")
+                {
+                    ///TODO: replace with URL from config file
+                    DoPermanentRedirect(context.Response, "/about-cancer/treatment/clinical-trials/search/a");
+                }
             }
 
         }
