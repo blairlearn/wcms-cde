@@ -859,7 +859,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private TerminologyFieldSearchParam[] GetTermFieldFromParam(string paramData, FormFields field, CTSSearchParams searchParams)
         {
             List<TerminologyFieldSearchParam> rtnParams = new List<TerminologyFieldSearchParam>();
-            string codePattern = @"(?i)c\d{4}";
+            string codePattern = @"(?i)c\d+";
             bool allMatchCodePattern = true;
 
             try 
