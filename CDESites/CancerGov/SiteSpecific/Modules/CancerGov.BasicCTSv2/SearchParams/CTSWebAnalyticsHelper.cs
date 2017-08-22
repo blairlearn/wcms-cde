@@ -347,7 +347,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             string value = "none";
             if (searchParams.IsFieldSet(FormFields.Phrase))
             {
-                value = HttpUtility.UrlEncode(searchParams.Phrase);
+                value = searchParams.Phrase;
             }
             waList.Add(value);
         }
@@ -358,7 +358,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             string value = "none";
             if (searchParams.IsFieldSet(FormFields.Gender))
             {
-                value = HttpUtility.UrlEncode(searchParams.Gender);
+                value = searchParams.Gender;
             }
             waList.Add(value);
         }
@@ -416,7 +416,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (locParams.IsFieldSet(FormFields.ZipCode))
             {
-                valZip = HttpUtility.UrlEncode(locParams.ZipCode);
+                valZip = locParams.ZipCode;
             }
             if (locParams.IsFieldSet(FormFields.ZipRadius))
             {
@@ -441,11 +441,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             if (locParams.IsFieldSet(FormFields.City))
             {
-                valCity = HttpUtility.UrlEncode(locParams.City);
+                valCity = locParams.City;
             }
             if (locParams.IsFieldSet(FormFields.Country))
             {
-                valCountry = HttpUtility.UrlEncode(locParams.Country);
+                valCountry = locParams.Country;
             }
 
             waList.Add(valCountry);
@@ -462,7 +462,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             HospitalLocationSearchParams locParams = (HospitalLocationSearchParams)searchParams.LocationParams;
             if (locParams.IsFieldSet(FormFields.Hospital))
             {
-                value = HttpUtility.UrlEncode(locParams.Hospital);
+                value = locParams.Hospital;
             }
             waList.Add(value);
         }
@@ -527,7 +527,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 {
                     value = "multiple:";
                 }
-                value += string.Join(",", searchParams.TrialIDs.Select(tid => HttpUtility.UrlEncode(tid)));
+                value += string.Join(",", searchParams.TrialIDs.Select(tid => tid));
             }
             waList.Add(value);
         }
@@ -538,7 +538,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             string value = "none";
             if (searchParams.IsFieldSet(FormFields.Investigator))
             {
-                value = HttpUtility.UrlEncode(searchParams.Investigator);
+                value = searchParams.Investigator;
             }
             waList.Add(value);
         }
@@ -549,7 +549,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             string value = "none";
             if (searchParams.IsFieldSet(FormFields.LeadOrg))
             {
-                value = HttpUtility.UrlEncode(searchParams.LeadOrg);
+                value = searchParams.LeadOrg;
             }
             waList.Add(value);
         }
