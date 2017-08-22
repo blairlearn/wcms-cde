@@ -345,10 +345,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Retrieve concatenated param/field strings using the CTSWebAnalyticsHelpder. 
             // These values will be used to populate props and evars below.
             string paramBlob = CTSWebAnalyticsHelper.GetAnalyticsAllParams(this.SearchParams); // List of all used parameters
-            string ciBlob = CTSWebAnalyticsHelper.GetAnalyticsCancerInfo(this.SearchParams); // Type/Subtype/Stage/Findings/Age/Keyword
             string locBlob = CTSWebAnalyticsHelper.GetAnalyticsLocation(this.SearchParams); // Location
-            string ttDrugBlob = CTSWebAnalyticsHelper.GetAnalyticsTmntDrugOther(this.SearchParams); // TrialType/Drug/Other Intervention
-            string idOrgBlob = CTSWebAnalyticsHelper.GetAnalyticsPhaseIdInvOrg(this.SearchParams); // Phase/Trial ID/Investigator/Org
+            string ciBlob = string.Empty;
+            string ttDrugBlob = string.Empty;
+            string idOrgBlob = string.Empty;
 
             // Set event2
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event2, wbField =>
@@ -382,16 +382,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 wbField.Value = paramBlob;
             });
 
-            // Set prop17 & eVar 17
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop17, wbField =>
-            {
-                wbField.Value = ciBlob;
-            });
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar17, wbField =>
-            {
-                wbField.Value = ciBlob;
-            });
-
             // Set prop18 & eVar 18
             this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop18, wbField =>
             {
@@ -402,9 +392,41 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 wbField.Value = locBlob;
             });
 
+            // Set these fields only if we're on a basic search.
+            if (searchType == "basic")
+            {
+                // Retrieve concatenated param/field strings using the CTSWebAnalyticsHelpder. 
+                ciBlob = CTSWebAnalyticsHelper.GetAnalyticsBasicCancerInfo(this.SearchParams); // Type/Subtype/Stage/Findings/Age/Keyword
+
+                // Set prop17 & eVar 17
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop17, wbField =>
+                {
+                    wbField.Value = ciBlob;
+                });
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar17, wbField =>
+                {
+                    wbField.Value = ciBlob;
+                });
+            }
+
             // Set these fields only if we're on an advanced search.
             if (searchType == "advanced")
             {
+                // Retrieve concatenated param/field strings using the CTSWebAnalyticsHelpder. 
+                ciBlob = CTSWebAnalyticsHelper.GetAnalyticsAdvCancerInfo(this.SearchParams); // Type/Subtype/Stage/Findings/Age/Keyword
+                ttDrugBlob = CTSWebAnalyticsHelper.GetAnalyticsTmntDrugOther(this.SearchParams); // TrialType/Drug/Other Intervention
+                idOrgBlob = CTSWebAnalyticsHelper.GetAnalyticsPhaseIdInvOrg(this.SearchParams); // Phase/Trial ID/Investigator/Org
+
+                // Set prop17 & eVar 17
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop17, wbField =>
+                {
+                    wbField.Value = ciBlob;
+                });
+                this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar17, wbField =>
+                {
+                    wbField.Value = ciBlob;
+                });
+
                 // Set prop19 & eVar 19
                 this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop19, wbField =>
                 {

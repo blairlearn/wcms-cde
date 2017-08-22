@@ -22,7 +22,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         
         // Member variables 
         private static WADelegateAllParams _waAllParams;
-        private static WADelegateCancerInfoFields _waCancerInfoFields;
+        private static WADelegateCancerInfoFields _waAdvCancerInfoFields;
+        private static WADelegateCancerInfoFields _waBasicCancerInfoFields;
         private static WADelegateLocationFields _waLocationFields;
         private static WADelegateTmntDrugOtherFields _waTmntDrugOtherFields;
         private static WADelegatePhaseIdInvOrgFields _waPhaseIdInvOrgFields;
@@ -34,12 +35,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             _waAllParams = (WADelegateAllParams)AddAllUsedParams;
 
-            _waCancerInfoFields = (WADelegateCancerInfoFields)AddAnalyticsCancerType + //First param needs the cast.
+            _waAdvCancerInfoFields = (WADelegateCancerInfoFields)AddAnalyticsCancerType + //First param needs the cast.
                 AddAnalyticsSubTypes +
                 AddAnalyticsStages +
                 AddAnalyticsFindings +
                 AddAnalyticsAge +
                 AddAnalyticsKeyword;
+
+            _waBasicCancerInfoFields = (WADelegateCancerInfoFields)AddAnalyticsCancerType + //First param needs the cast.
+                AddAnalyticsKeyword +
+                AddAnalyticsAge;
 
             _waLocationFields = (WADelegateLocationFields)AddAnalyticsLocation;
 
@@ -75,7 +80,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             return allParams;
         }
 
-
         /// <summary>
         /// Get a list of Location search values.
         /// </summary>
@@ -99,12 +103,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="searchParams"></param>
         /// <returns>A list of search parameter values</returns>
-        public static String GetAnalyticsCancerInfo(CTSSearchParams searchParams)
+        public static String GetAnalyticsAdvCancerInfo(CTSSearchParams searchParams)
         {
             List<string> waFieldsList = new List<string>();
 
             // Call each of our delegate methods to build out the parameter list
-            _waCancerInfoFields(waFieldsList, searchParams);
+            _waAdvCancerInfoFields(waFieldsList, searchParams);
+
+            // Return the concatenated list of params
+            return string.Join("|", waFieldsList.ToArray());
+        }
+
+        /// <summary>
+        /// Get a list of main Cancer Type/Keyword and Age values.
+        /// </summary>
+        /// <param name="searchParams"></param>
+        /// <returns>A list of search parameter values</returns>
+        public static String GetAnalyticsBasicCancerInfo(CTSSearchParams searchParams)
+        {
+            List<string> waFieldsList = new List<string>();
+
+            // Call each of our delegate methods to build out the parameter list
+            _waBasicCancerInfoFields(waFieldsList, searchParams);
 
             // Return the concatenated list of params
             return string.Join("|", waFieldsList.ToArray());
