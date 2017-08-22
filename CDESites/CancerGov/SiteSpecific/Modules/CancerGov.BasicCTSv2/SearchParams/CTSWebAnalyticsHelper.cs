@@ -42,8 +42,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 AddAnalyticsAge +
                 AddAnalyticsKeyword;
 
-            _waBasicCancerInfoFields = (WADelegateCancerInfoFields)AddAnalyticsCancerType + //First param needs the cast.
-                AddAnalyticsKeyword +
+            _waBasicCancerInfoFields = (WADelegateCancerInfoFields)AddAnalyticsTypeOrKeyword +
                 AddAnalyticsAge;
 
             _waLocationFields = (WADelegateLocationFields)AddAnalyticsLocation;
@@ -305,6 +304,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         #endregion
 
         #region Analytics param adders
+
+        //Use either the main type (param 't') or keyword (param 'q'
+        private static void AddAnalyticsTypeOrKeyword(List<string> waList, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.MainType))
+            {
+                waList.Add("typecondition");
+                AddAnalyticsCancerType(waList, searchParams);
+            }
+            else if (searchParams.IsFieldSet(FormFields.Phrase))
+            {
+                waList.Add("keyword");
+                AddAnalyticsKeyword(waList, searchParams);
+            }
+            else
+            {
+                waList.Add("none");
+            }
+        }
 
         //Parameter t (Main Cancer Type)
         private static void AddAnalyticsCancerType(List<string> waList, CTSSearchParams searchParams)
