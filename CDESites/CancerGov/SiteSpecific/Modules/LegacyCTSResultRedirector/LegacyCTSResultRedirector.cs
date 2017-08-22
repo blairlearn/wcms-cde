@@ -75,7 +75,6 @@ namespace CancerGov.HttpModules
             // Redirect old Advanced Search Results to search options content page
             if (url.Equals("/about-cancer/treatment/clinical-trials/search/results", StringComparison.OrdinalIgnoreCase))
             {
-                ///TODO: replace with URL from config file
                 DoPermanentRedirect(context.Response, ctsRedirPage);
             }
 
@@ -86,14 +85,12 @@ namespace CancerGov.HttpModules
             {
                 if (parms.ToLower().IndexOf("protocolsearchid") > -1)
                 {
-                    ///TODO: replace with URL from config file
                     DoPermanentRedirect(context.Response, ctsRedirPage);
                 }
                 // E.g. if a user is on a cached version of the legacy Advanced Search page and then does a postBack call by selecting a 
                 // Type/Condition, redirect to the current Advanced Search page
                 else if (reqType == "post")
                 {
-                    ///TODO: replace with URL from config file
                     DoPermanentRedirect(context.Response, ctsAdvSearchPage);
                 }
             }

@@ -354,6 +354,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             url.QueryParameters.Add("rl", searchParams.ResultsLinkFlag.ToString("d"));
         }
 
+        // Parameter r (Redirect Flag)
+        private static void SerializeRedirectFlag(NciUrl url, CTSSearchParams searchParams)
+        {
+            url.QueryParameters.Add("r", searchParams.RedirectFlag.ToString());
+        }
+
         #endregion
 
         #region Parameter Parsers 
@@ -374,7 +380,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             else
             {
-                searchParams.ResultsLinkFlag = ResultsLinkType.Basic;
+                searchParams.ResultsLinkFlag = ResultsLinkType.Unknown;
+            }
+        }
+
+        // Parameter r (Redirect Flag)
+        private void ParseRedirectFlag(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (IsInUrl(url, "r"))
+            {
+                searchParams.RedirectFlag = true;
             }
         }
         

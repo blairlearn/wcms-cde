@@ -32,6 +32,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //int _pageNum                = 1;
         //int _itemsPerPage           = 10;
         ResultsLinkType _resultsLinkFlag = ResultsLinkType.Unknown;
+        bool _redirectFlag          = false;
         int _age                    = 0;
         string _gender              = string.Empty;
         string _phrase              = string.Empty;
@@ -418,6 +419,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             get { return _resultsLinkFlag; }
             set { _resultsLinkFlag = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the redirect flag for the results/view
+        /// </summary>
+        public bool RedirectFlag
+        {
+            get { return _redirectFlag; }
+            set { _redirectFlag = value; }
         }
 
         /// <summary>

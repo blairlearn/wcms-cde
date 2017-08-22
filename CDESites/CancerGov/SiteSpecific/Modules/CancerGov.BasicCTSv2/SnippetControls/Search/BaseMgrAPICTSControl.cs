@@ -180,7 +180,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     }
                     case ResultsLinkType.Unknown:
                     {
-                        ctsType = "Other";
+                        ctsType = "Custom";
                         break;
                     }
                     default:
