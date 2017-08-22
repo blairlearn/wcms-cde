@@ -61,12 +61,37 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public static String GetAnalyticsAllParams(CTSSearchParams searchParams)
         {
             List<string> waParamsList = new List<string>();
+            string allParams = "none";
 
             // Call each of our delegate methods to build out the parameter list
             _waAllParams(waParamsList, searchParams);
 
-            // Return the concatenated list of params
-            return string.Join(":", waParamsList.ToArray());
+            // Build a concatenated list of search params if present
+            if(waParamsList.Count > 0)
+            {
+                allParams = string.Join(":", waParamsList.ToArray());
+            }
+
+            return allParams;
+        }
+
+
+        /// <summary>
+        /// Get a list of Location search values.
+        /// </summary>
+        /// <param name="searchParams"></param>
+        /// <returns>A list of search parameter values</returns>
+        public static String GetAnalyticsLocation(CTSSearchParams searchParams)
+        {
+            List<string> waFieldsList = new List<string>();
+            string locValues = "all";
+
+            _waLocationFields(waFieldsList, searchParams);
+            if (waFieldsList.Count > 0)
+            {
+                locValues = string.Join("|", waFieldsList.ToArray());
+            }
+            return locValues;
         }
 
         /// <summary>
@@ -77,19 +102,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public static String GetAnalyticsCancerInfo(CTSSearchParams searchParams)
         {
             List<string> waFieldsList = new List<string>();
-            _waCancerInfoFields(waFieldsList, searchParams);
-            return string.Join("|", waFieldsList.ToArray());
-        }
 
-        /// <summary>
-        /// Get a list of Location search values.
-        /// </summary>
-        /// <param name="searchParams"></param>
-        /// <returns>A list of search parameter values</returns>
-        public static String GetAnalyticsLocation(CTSSearchParams searchParams)
-        {
-            List<string> waFieldsList = new List<string>();
-            _waLocationFields(waFieldsList, searchParams);
+            // Call each of our delegate methods to build out the parameter list
+            _waCancerInfoFields(waFieldsList, searchParams);
+
+            // Return the concatenated list of params
             return string.Join("|", waFieldsList.ToArray());
         }
 
@@ -272,7 +289,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter t (Main Cancer Type)
         private static void AddAnalyticsCancerType(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
+            string value = "all";
             if (searchParams.IsFieldSet(FormFields.MainType))
             {
                 value = string.Join(",", searchParams.MainType.Codes);
@@ -283,7 +300,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter st (SubTypes)
         private static void AddAnalyticsSubTypes(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
+            string value = "all";
             if (searchParams.IsFieldSet(FormFields.SubTypes))
             {
                 value = AddAnalyticsMultiTermFieldCodes(searchParams.SubTypes);
@@ -294,7 +311,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter stg (Stages)
         private static void AddAnalyticsStages(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
+            string value = "all";
             if (searchParams.IsFieldSet(FormFields.Stages))
             {
                 value = AddAnalyticsMultiTermFieldCodes(searchParams.Stages);
@@ -305,7 +322,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         //Parameter fin (Findings)
         private static void AddAnalyticsFindings(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "none";
+            string value = "all";
             if (searchParams.IsFieldSet(FormFields.Findings))
             {
                 value = AddAnalyticsMultiTermFieldCodes(searchParams.Findings);
