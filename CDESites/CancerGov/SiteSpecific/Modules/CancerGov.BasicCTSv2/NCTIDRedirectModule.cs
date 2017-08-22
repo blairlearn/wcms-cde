@@ -97,7 +97,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         if (!string.IsNullOrWhiteSpace(cleanId) && IsValidTrial(cleanId))
                         {
                             //In addition to the id param, add the "r" redirect flag
-                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}&r=", cleanId.ToUpper());
+                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}&r=1", cleanId.ToUpper());
                             context.Response.Redirect(ctViewUrl, true);
                         }
 

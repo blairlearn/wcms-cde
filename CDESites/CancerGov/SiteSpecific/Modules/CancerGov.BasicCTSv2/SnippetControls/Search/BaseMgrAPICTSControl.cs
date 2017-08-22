@@ -164,6 +164,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             string ctsType = string.Empty;
 
+            // Get page type from 'rl' param
             if (!string.IsNullOrWhiteSpace(searchParams.ResultsLinkFlag.ToString()))
             { 
                 switch (searchParams.ResultsLinkFlag)
@@ -180,16 +181,23 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     }
                     case ResultsLinkType.Unknown:
                     {
-                        ctsType = "Custom";
+                        ctsType = "Unknown";
                         break;
                     }
                     default:
                     {
-                        ctsType = "Other";
+                        ctsType = "Basic";
                         break;
                     }
                 }
             }
+
+            // If this is redirect/non-form search, set type as "Custom"
+            if (searchParams.RedirectFlag == true)
+            {
+                ctsType = "Custom";
+            }
+
             return ctsType;
         }
 

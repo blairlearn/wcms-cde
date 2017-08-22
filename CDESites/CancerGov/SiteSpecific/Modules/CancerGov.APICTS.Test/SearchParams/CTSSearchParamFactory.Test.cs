@@ -602,6 +602,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                             Location = LocationType.None
                         },
                         FormFields.SubTypes
+                    },
+
+                    // TEST 42 - Redirect page flag
+                    new object[] { "?r=1", 
+                        new CTSSearchParams() {
+                            RedirectFlag = true,
+                            ResultsLinkFlag = ResultsLinkType.Basic,
+                            Location = LocationType.None
+                        },
+                        FormFields.SubTypes
                     }
                 };
             }

@@ -44,7 +44,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 SerializeTrialIDs +
                 SerializeInvestigator +
                 SerializeLeadOrg +
-                SerializeResultsLinkFlag;
+                SerializeResultsLinkFlag +
+                SerializeRedirectFlag;
         }
 
         /// <summary>
@@ -73,7 +74,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 ParseTrialPhases +
                 ParseTrialIDs +
                 ParseInvestigator +
-                ParseLeadOrg;
+                ParseLeadOrg +
+                ParseRedirectFlag;
         }
          
         /// <summary>
@@ -380,7 +382,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
             else
             {
-                searchParams.ResultsLinkFlag = ResultsLinkType.Unknown;
+                searchParams.ResultsLinkFlag = ResultsLinkType.Basic;
             }
         }
 
