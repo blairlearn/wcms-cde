@@ -359,7 +359,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter r (Redirect Flag)
         private static void SerializeRedirectFlag(NciUrl url, CTSSearchParams searchParams)
         {
-            url.QueryParameters.Add("r", searchParams.RedirectFlag.ToString());
+            if (searchParams.RedirectFlag == true)
+            {
+                url.QueryParameters.Add("r", "1");
+            }
         }
 
         #endregion
