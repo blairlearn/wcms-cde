@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Text.RegularExpressions;
 using System.Web;
 using CancerGov.ClinicalTrials.Basic.v2;
 using NCI.Web.CDE.Modules;
@@ -47,9 +48,12 @@ namespace CancerGov.HttpModules
              * TODO: handle the following path 90 days after 2017-09-15
              * /about-cancer/treatment/clinical-trials/search/printresults
              */
-
-            //First we need to load the URL map.
+            // First we need to load the URL map.
             HttpContext context = ((HttpApplication)sender).Context;
+
+            // Create constants 
+            const String TYPE_PARAM = "t";
+            const String PSID_PARAM = "protocolsearchid";
 
             // Get absolute path of the request URL as pretty URL
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
@@ -89,7 +93,7 @@ namespace CancerGov.HttpModules
             // 2. Otherwise, if a POST request is made, redirect to current Advanced Search form
             if (url.Equals(ctsAdvSearchPage, StringComparison.OrdinalIgnoreCase))
             {
-                if (parms.ToLower().IndexOf("protocolsearchid") > -1)
+                if (parms.ToLower().IndexOf(PSID_PARAM) > -1)
                 {
                     DoPermanentRedirect(context.Response, ctsRedirPage);
                 }
@@ -101,25 +105,45 @@ namespace CancerGov.HttpModules
                 }
             }
 
-            // Clean up cancer type parameter ('t') from legacy Basic CTS
+            // Clean up cancer type parameter ('t') from legacy Basic CTS on Results and View Details pages
+            // TODO: refactor and unit tests
             if (url.Equals(ctsResultsPage, StringComparison.OrdinalIgnoreCase) || url.Equals(ctsDetailsPage, StringComparison.OrdinalIgnoreCase))
             {
                 // Check if parameter exists
-                if (!string.IsNullOrWhiteSpace(context.Request.QueryString["t"]))
+                if (!string.IsNullOrWhiteSpace(context.Request.QueryString[TYPE_PARAM]))
                 {
+                    // Now check that the parameter has a value and if so, run it through the cleanup method
                     var values = HttpUtility.ParseQueryString(parms);
-
-                    // Now check that the parameter has a value
-                    if(!string.IsNullOrWhiteSpace(values.Get("t")))
+                    string typeValue = values.Get(TYPE_PARAM);
+                    if (!string.IsNullOrWhiteSpace(typeValue))
                     {
-                        string oldBasicTypeValue = (values.Get("t"));
-                        //values.Set("test", "true");
-                        //DoPermanentRedirect(context.Response, url + "?" + values);
+                        char[] delimiterChars = { '|' };
+                        string[] typeValArray = typeValue.Split(delimiterChars);
+
+                        // If the array length is 1, it's just a C-code, which is fine. 
+                        // It it's more than 2, the array separated by multiple pipes, which is new 
+                        // functionality; this is ok as well. But...
+                        if(typeValArray.Length == 2)
+                        {
+                            // Regex pattern: any string that contains a letter (other than "C") or an underscore
+                            string pattern = @"[ab-zAB-Z_]$";
+                            Regex rgx = new Regex(pattern);
+
+                            // If the right side of the array matches the regex, strip it out.
+                            // Then, replace any commas with a pipe and set do the redirect. 
+                            if(rgx.IsMatch(typeValArray[1]))
+                            {
+                                typeValue = typeValArray[0].Replace(",","|");
+                                values.Set("t", typeValue);
+                                DoPermanentRedirect(context.Response, url + "?" + values);
+                            }
+                        }
                     }
                 }
             }
 
         }
+
 
         /// <summary>
         /// Clears the Response text, issues an HTTP redirect using status 301, and ends
