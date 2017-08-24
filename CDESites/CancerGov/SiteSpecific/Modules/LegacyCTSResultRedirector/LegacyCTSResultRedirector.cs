@@ -40,9 +40,14 @@ namespace CancerGov.HttpModules
 
         #endregion
 
-        [Obsolete("Deprecated function for legacy search functionality; needs to be removed.", false)]
+        [Obsolete("Deprecated function for legacy search functionality; needs to be removed eventually.", false)]
         void OnBeginRequest(object sender, EventArgs e)
         {
+            /**
+             * TODO: handle the following path 90 days after 2017-09-15
+             * /about-cancer/treatment/clinical-trials/search/printresults
+             */
+
             //First we need to load the URL map.
             HttpContext context = ((HttpApplication)sender).Context;
 
@@ -53,6 +58,7 @@ namespace CancerGov.HttpModules
 
             string ctsAdvSearchPage = Config.AdvSearchPagePrettyUrl;
             string ctsResultsPage = Config.ResultsPagePrettyUrl;
+            string ctsDetailsPage = Config.DetailedViewPagePrettyUrl;
             string ctsRedirPage = Config.RedirectPagePrettyUrl;
 
             //If this is the homepage, then exit.
@@ -81,7 +87,7 @@ namespace CancerGov.HttpModules
             // Redirect old Advanced Search form page:
             // 1. If protocolsearchid query is present, redirect to search options content page
             // 2. Otherwise, if a POST request is made, redirect to current Advanced Search form
-            if (url.Equals("/about-cancer/treatment/clinical-trials/advanced-search", StringComparison.OrdinalIgnoreCase))
+            if (url.Equals(ctsAdvSearchPage, StringComparison.OrdinalIgnoreCase))
             {
                 if (parms.ToLower().IndexOf("protocolsearchid") > -1)
                 {
@@ -92,6 +98,24 @@ namespace CancerGov.HttpModules
                 else if (reqType == "post")
                 {
                     DoPermanentRedirect(context.Response, ctsAdvSearchPage);
+                }
+            }
+
+            // Clean up cancer type parameter ('t') from legacy Basic CTS
+            if (url.Equals(ctsResultsPage, StringComparison.OrdinalIgnoreCase) || url.Equals(ctsDetailsPage, StringComparison.OrdinalIgnoreCase))
+            {
+                // Check if parameter exists
+                if (!string.IsNullOrWhiteSpace(context.Request.QueryString["t"]))
+                {
+                    var values = HttpUtility.ParseQueryString(parms);
+
+                    // Now check that the parameter has a value
+                    if(!string.IsNullOrWhiteSpace(values.Get("t")))
+                    {
+                        string oldBasicTypeValue = (values.Get("t"));
+                        //values.Set("test", "true");
+                        //DoPermanentRedirect(context.Response, url + "?" + values);
+                    }
                 }
             }
 
