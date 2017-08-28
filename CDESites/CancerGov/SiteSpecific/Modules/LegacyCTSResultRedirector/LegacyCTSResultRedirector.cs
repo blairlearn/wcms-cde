@@ -27,6 +27,10 @@ namespace CancerGov.HttpModules
         /// </summary>
         protected BasicCTSPageInfo Config { get; private set; }
 
+        // Member variables 
+        const String TYPE_PARAM = "t";
+        const String PSID_PARAM = "protocolsearchid";
+
         public void Dispose()
         {
             return;
@@ -51,15 +55,12 @@ namespace CancerGov.HttpModules
             // First we need to load the URL map.
             HttpContext context = ((HttpApplication)sender).Context;
 
-            // Create constants 
-            const String TYPE_PARAM = "t";
-            const String PSID_PARAM = "protocolsearchid";
-
             // Get absolute path of the request URL as pretty URL
-            String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
-            String parms = context.Server.UrlDecode(context.Request.Url.Query);
-            String reqType = context.Request.HttpMethod.ToLower();
+            string url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
+            string parms = context.Server.UrlDecode(context.Request.Url.Query);
+            string reqType = context.Request.HttpMethod.ToLower();
 
+            // Get various page URLs from configuration 
             string ctsAdvSearchPage = Config.AdvSearchPagePrettyUrl;
             string ctsResultsPage = Config.ResultsPagePrettyUrl;
             string ctsDetailsPage = Config.DetailedViewPagePrettyUrl;
@@ -106,44 +107,57 @@ namespace CancerGov.HttpModules
             }
 
             // Clean up cancer type parameter ('t') from legacy Basic CTS on Results and View Details pages
-            // TODO: refactor and unit tests
             if (url.Equals(ctsResultsPage, StringComparison.OrdinalIgnoreCase) || url.Equals(ctsDetailsPage, StringComparison.OrdinalIgnoreCase))
             {
                 // Check if parameter exists
                 if (!string.IsNullOrWhiteSpace(context.Request.QueryString[TYPE_PARAM]))
                 {
-                    // Now check that the parameter has a value and if so, run it through the cleanup method
-                    var values = HttpUtility.ParseQueryString(parms);
-                    string typeValue = values.Get(TYPE_PARAM);
-                    if (!string.IsNullOrWhiteSpace(typeValue))
-                    {
-                        char[] delimiterChars = { '|' };
-                        string[] typeValArray = typeValue.Split(delimiterChars);
-
-                        // If the array length is 1, it's just a C-code, which is fine. 
-                        // It it's more than 2, the array separated by multiple pipes, which is new 
-                        // functionality; this is ok as well. But...
-                        if(typeValArray.Length == 2)
-                        {
-                            // Regex pattern: any string that contains a letter (other than "C") or an underscore
-                            string pattern = @"[ab-zAB-Z_]$";
-                            Regex rgx = new Regex(pattern);
-
-                            // If the right side of the array matches the regex, strip it out.
-                            // Then, replace any commas with a pipe and set do the redirect. 
-                            if(rgx.IsMatch(typeValArray[1]))
-                            {
-                                typeValue = typeValArray[0].Replace(",","|");
-                                values.Set("t", typeValue);
-                                DoPermanentRedirect(context.Response, url + "?" + values);
-                            }
-                        }
-                    }
+                    DoLegacyBasicRedirect(context, url, parms);
                 }
             }
 
         }
 
+        /// <summary>
+        /// Checks for the old "CXXX|cancer_type_name" pattern in the Cancer Type query parameter, cleans up the parameter, 
+        /// and redirects to a URL with the current query parameter value. 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="url"></param>
+        /// <param name="parms"></param>
+        private void DoLegacyBasicRedirect(HttpContext context, string url, string parms)
+        {
+            var values = HttpUtility.ParseQueryString(parms);
+            string typeValue = values.Get(TYPE_PARAM);
+
+            // Check that the parameter has a value. If so, run it through the cleanup logic.
+            if (!string.IsNullOrWhiteSpace(typeValue))
+            {
+                // Create an array of pipe-separated values.
+                char[] delimiterChars = { '|' };
+                string[] typeValArray = typeValue.Split(delimiterChars);
+
+                // If the array length == 1, it's just a C-code, which means it's fine.
+                // If the array length > 2, it means that the array will be multiple C-codes
+                // separated by multiple pipes; this is new functionality and is also fine. 
+                // But...
+                if (typeValArray.Length == 2)
+                {
+                    // Regex pattern: any string that contains an underscore or a letter other than "c".
+                    string pattern = @"[ab-zAB-Z_]$";
+                    Regex rgx = new Regex(pattern);
+
+                    // If the right side of the array matches the regex, strip it out.
+                    // Then, replace any commas with a pipe and do the redirect. 
+                    if (rgx.IsMatch(typeValArray[1]))
+                    {
+                        typeValue = typeValArray[0].Replace(",", "|");
+                        values.Set("t", typeValue);
+                        DoPermanentRedirect(context.Response, url + "?" + values);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Clears the Response text, issues an HTTP redirect using status 301, and ends
