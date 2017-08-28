@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Text.RegularExpressions;
 using System.Web;
-using CancerGov.ClinicalTrials.Basic.v2;
+using Common.Logging;
+
 using NCI.Web.CDE.Modules;
+using CancerGov.ClinicalTrials.Basic.v2;
 
 namespace CancerGov.HttpModules
 {
@@ -17,10 +20,9 @@ namespace CancerGov.HttpModules
     /// </summary>
     public class LegacyCTSResultRedirector : IHttpModule
     {
-        /// <summary>
-        /// 
-        /// </summary>
         #region IHttpModule Members
+
+        static ILog log = LogManager.GetLogger(typeof(LegacyCTSResultRedirector));
 
         /// <summary>
         /// Gets the Snippet Controls Config.
@@ -130,12 +132,11 @@ namespace CancerGov.HttpModules
             var values = HttpUtility.ParseQueryString(parms);
             string typeValue = values.Get(TYPE_PARAM);
 
-            // Check that the parameter has a value. If so, run it through the cleanup logic.
-            if (!string.IsNullOrWhiteSpace(typeValue))
+            // Check that the parameter has values. If so, run it through the cleanup logic.
+            try
             {
-                // Create an array of pipe-separated values.
-                char[] delimiterChars = { '|' };
-                string[] typeValArray = typeValue.Split(delimiterChars);
+                // Get an array of "type" parameter values.
+                string[] typeValArray = SplitArrayOnPipes(typeValue);
 
                 // If the array length == 1, it's just a C-code, which means it's fine.
                 // If the array length > 2, it means that the array will be multiple C-codes
@@ -143,20 +144,54 @@ namespace CancerGov.HttpModules
                 // But...
                 if (typeValArray.Length == 2)
                 {
-                    // Regex pattern: any string that contains an underscore or a letter other than "c".
-                    string pattern = @"[ab-zAB-Z_]$";
-                    Regex rgx = new Regex(pattern);
-
                     // If the right side of the array matches the regex, strip it out.
                     // Then, replace any commas with a pipe and do the redirect. 
-                    if (rgx.IsMatch(typeValArray[1]))
+                    if (IsLegacyValue(typeValArray[1]))
                     {
                         typeValue = typeValArray[0].Replace(",", "|");
-                        values.Set("t", typeValue);
+                        values.Set(TYPE_PARAM, typeValue);
                         DoPermanentRedirect(context.Response, url + "?" + values);
                     }
                 }
             }
+            catch(NullReferenceException ex)
+            {
+                string errorMessage = "LegacyCTSResultRedirector.cs:DoLegacyBasicRedirect() error setting legacy redirect for \"" + TYPE_PARAM + "\" query parameter";
+                log.Error(errorMessage, ex);
+            }
+        }
+
+        /// <summary>
+        /// Returns an array of values from a pipe-delimited string.
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public String[] SplitArrayOnPipes(string val)
+        {
+            List<string> vals = new List<string>();
+            string[] valArray = vals.ToArray();
+            char[] delimiterChars = { '|' };
+
+            // Check that the parameter has a value. 
+            if(!string.IsNullOrWhiteSpace(val))
+            {
+                // Create an array of pipe-separated values.
+                valArray = val.Split(delimiterChars);
+            }
+            return valArray;
+        }
+
+        /// <summary>
+        /// Checks for a non-C-Code pattern in a given string.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public bool IsLegacyValue(string str)
+        {
+            // Regex pattern: any string that contains an underscore or a letter other than "c".
+            string pattern = @"[ab-zAB-Z_]$";
+            Regex rgx = new Regex(pattern);
+            return rgx.IsMatch(str);
         }
 
         /// <summary>
