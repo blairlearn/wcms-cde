@@ -55,7 +55,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Determine the max page
             int maxPage = (int)Math.Ceiling((double)_results.TotalResults / (double)this.ItemsPerPage);
 
-            //TODO: Setup field filters
+            // Add URL filters
+            PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
+            {
+                //Convert the current search parameters into a NciUrl
+                NciUrl paramsUrl = CTSSearchParamFactory.ConvertParamsToUrl(this.SearchParams);
+
+                //Add or replace the currentURL params based on the *validated* query params.
+                foreach (KeyValuePair<string,string> qp in paramsUrl.QueryParameters) {
+                    if (!url.QueryParameters.ContainsKey(qp.Key))
+                    {
+                        url.QueryParameters.Add(qp.Key, qp.Value);
+                    }
+                    else
+                    {
+                        url.QueryParameters[qp.Key] = qp.Value;
+                    }
+                }
+
+                url.QueryParameters.Add("ni", this.ItemsPerPage.ToString());                
+            });
 
             //Return the object for binding.
             return new
