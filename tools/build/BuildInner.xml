@@ -47,7 +47,7 @@
     
     <!-- Write revision note file. -->
     <WriteLinesToFile File="$(StagingLocation)/$(CDE_Site)/$(BuildNoteFile)" Lines="Version: branches $(Branch);" />
-    <WriteLinesToFile File="$(StagingLocation)/$(CDE_Site)/$(BuildNoteFile)" Lines="Revision: $(Revision)" />
+    <WriteLinesToFile File="$(StagingLocation)/$(CDE_Site)/$(BuildNoteFile)" Lines="Build Number: $(BUILD_NUMBER)" />
     <WriteLinesToFile File="$(StagingLocation)/$(CDE_Site)/$(BuildNoteFile)" Lines="Build Target: $(TargetEnvironment)" />
   </Target>
 
