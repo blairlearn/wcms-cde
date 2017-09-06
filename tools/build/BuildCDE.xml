@@ -23,8 +23,10 @@
   -->
   <PropertyGroup>
     <SourceLocation>$(Workspace)</SourceLocation>
-	<OutputFolder>$(TEMPBASE)\output\</OutputFolder>
-    <StagingLocation>$(TEMPBASE)\staging</StagingLocation>
+	
+	<TempBase>$(TEMP)\Build-$(BUILD_NUMBER)</TempBase>
+	<OutputFolder>$(TempBase)\output\</OutputFolder>
+    <StagingLocation>$(TempBase)\staging</StagingLocation>
 	<ConfigFileLocation>$(StagingLocation)\_configFiles</ConfigFileLocation>
   </PropertyGroup>
 
@@ -58,6 +60,12 @@
 	
   </Target>
 
+  <!--
+	Clean up after the build is complete.
+  -->
+  <Target Name="Cleanup">
+	<RemoveDir Directories="$(TempBase)" />
+  </Target>
   
   <!--
     Deploy the built code (.as?x and .dll) to the location set in
@@ -95,7 +103,7 @@
 
     <CallTarget Targets="Build"/>
 
-    <CallTarget Targets="Deploy"/>
+    <CallTarget Targets="Cleanup"/>
 	
 	
   </Target>
@@ -106,7 +114,11 @@
     <Message Text=" " />
     <Message Text="To run this script, enter the command:" />
     <Message Text=" " />
-    <Message Text="  msbuild BuildCDE.xml /target:All" />
+    <Message Text="  msbuild BuildCDE.xml /target:All /p:TargetEnvironment=%BuildEnvironment%;Branch=%BranchName%" />
+    <Message Text="                BuildEnvironment - The system being used for the build." />
+    <Message Text="                BranchName - The branch being built." />
+	<Message Text=" " />
+    <Message Text="            The TEMP and BUILD_NUMBER environment variables must also be set." />
     <Message Text=" " />
   </Target>
   
