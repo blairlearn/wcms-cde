@@ -5,12 +5,12 @@
 #   Create a release on GitHub.
 #   Based on https://gist.github.com/JanJoris/ee4c7f9b4289016b2216
 #>
-function GitHub-Release($versionNumber, $commitId, $preRelease, $releaseNotes, $artifactOutputDirectory, $artifact, $gitHubUsername, $gitHubRepository, $gitHubApiKey)
+function GitHub-Release($tagname, $versionNumber, $commitId, $preRelease, $releaseNotes, $artifactOutputDirectory, $artifact, $gitHubUsername, $gitHubRepository, $gitHubApiKey)
 {
-    $draft = $TRUE
+    $draft = $FALSE
     
     $releaseData = @{
-       tag_name = [string]::Format("v{0}", $versionNumber);
+       tag_name = $tagname #[string]::Format("v{0}", $versionNumber);
        target_commitish = $commitId;
        name = [string]::Format("v{0}", $versionNumber);
        body = $releaseNotes;
