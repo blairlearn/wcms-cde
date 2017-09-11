@@ -11,7 +11,7 @@ function GitHub-Release($tagname, $releaseName, $commitId, $preRelease, $release
 
         .PARAMETER tagname
         Name of the tag the release should be associated with.  Required.
-        See commitId (below) for details of tag creation.
+        See commitId (below) for details of where tag is created.
         An error occurs if the tag already exists.
 
         .PARAMETER releaseName
@@ -21,6 +21,8 @@ function GitHub-Release($tagname, $releaseName, $commitId, $preRelease, $release
         The hash value the tag should be placed on.
             If commitID is blank, the tag is created on master.
             If commitID is a commit hash, the tag is created on the commit.
+            If commitID is null, and the tag doesn't already exist, the tag is created on master, else the existing
+                tag is used.
 
         .PARAMETER preRelease
         Boolean value, set to $True to mark the release as a pre-release, $False to
@@ -51,12 +53,16 @@ function GitHub-Release($tagname, $releaseName, $commitId, $preRelease, $release
     $draft = $FALSE
     
     $releaseData = @{
-       tag_name = $tagname #[string]::Format("v{0}", $versionNumber);
-       target_commitish = $commitId;
+       tag_name = $tagname
        name = $releaseName;
        body = $releaseNotes;
        draft = $draft;
        prerelease = $preRelease;
+    }
+
+    # Don't want the target_commitish element unless it's set to something.
+    if ($commitId -ne $null) {
+        $releaseData.target_commitish = $commitId;
     }
 
     $auth = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($gitHubApiKey + ":x-oauth-basic"));
@@ -89,3 +95,4 @@ function GitHub-Release($tagname, $releaseName, $commitId, $preRelease, $release
     }
     $result = Invoke-RestMethod @uploadParams
 }
+
