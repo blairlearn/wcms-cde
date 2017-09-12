@@ -13,14 +13,12 @@ using Newtonsoft.Json.Linq;
 
 namespace CancerGov.ClinicalTrialsAPI
 {
-    public class ClinicalTrialsAPIClient
+    public class ClinicalTrialsAPIClient : IClinicalTrialsAPIClient
     {
         static ILog log = LogManager.GetLogger(typeof(ClinicalTrialsAPIClient));
 
-        /// <summary>
-        /// Property for the hostname that requests will be sent to.
-        /// </summary>
-        public string Host { get; private set; }
+
+        private HttpClient _client = null;
 
         /// <summary>
         /// Base path (API version) set in the web.config.
@@ -30,8 +28,8 @@ namespace CancerGov.ClinicalTrialsAPI
         {
             get
             {
-                string basepath = ConfigurationManager.AppSettings["ClinicalTrialsAPIBasepath"].ToString();
-                if (String.IsNullOrWhiteSpace(basepath))
+                string basepath = ConfigurationManager.AppSettings["ClinicalTrialsAPIBasepath"];
+                if (basepath == null)
                 {
                     basepath = String.Empty;
                 }
@@ -43,9 +41,15 @@ namespace CancerGov.ClinicalTrialsAPI
             }
         }
 
-        public ClinicalTrialsAPIClient(string host)
+        /// <summary>
+        /// Creates a new instance of a Clinicaltrials API client.
+        /// </summary>
+        /// <param name="client">An HttpClient that has the BaseAddress set to the API address.</param>
+        public ClinicalTrialsAPIClient(HttpClient client)
         {
-            this.Host = host;
+            //We pass in an HttpClient instance so that this class can be mocked up for testing.
+            //Since client can have a BaseAddress set, it may be set on an instance and passed in here.
+            this._client = client;
         }
 
         /// <summary>
@@ -159,6 +163,13 @@ namespace CancerGov.ClinicalTrialsAPI
             HttpContent httpContent = ReturnGetRespContent("clinical-trial", id);
             rtnTrial = httpContent.ReadAsAsync<ClinicalTrial>().Result;
 
+            // If there are no sites for a trial in the API, the ClinicalTrial object will return Sites == null.  
+            // If this is the case, make ClinicalTrial.Sites an empty list.
+            if(rtnTrial.Sites == null)
+            {
+                rtnTrial.Sites = new List<ClinicalTrial.StudySite>();
+            }
+
             return rtnTrial;
         }
 
@@ -198,6 +209,73 @@ namespace CancerGov.ClinicalTrialsAPI
         }
 
         /// <summary>
+        /// Gets a collection of diseases from the API.
+        /// </summary>
+        /// <param name="size"># of results to return (optional)</param>
+        /// <param name="searchParams">Default search parameters (optional)</param>
+        /// <returns>Collection of diseases</returns>
+        public DiseaseCollection Diseases(
+            int size = 10,
+            //API CurrentlyDoes not support from
+            //string[] includeFields = null, 
+            //string[] excludeFields = null,
+            Dictionary<string, object> searchParams = null
+        )
+        {
+            DiseaseCollection rtnResults = null;
+
+            searchParams = searchParams ?? new Dictionary<string, object>();
+
+            JObject requestBody = new JObject();
+            requestBody.Add(new JProperty("size", size));
+
+            foreach (KeyValuePair<string, object> sp in searchParams)
+            {
+                requestBody.Add(new JProperty(sp.Key, sp.Value));
+            }
+
+            //Get the HTTP response content from our Post request
+            HttpContent httpContent = ReturnPostRespContent("diseases", requestBody);
+            rtnResults = httpContent.ReadAsAsync<DiseaseCollection>().Result;
+
+            return rtnResults;
+        }
+
+        /// <summary>
+        /// Gets a collection of interventions from the API.
+        /// </summary>
+        /// <param name="size"># of results to return (optional)</param>
+        /// <param name="searchParams">Default search parameters (optional)</param>
+        /// <returns>Collection of interventions</returns>
+        public InterventionCollection Interventions(
+            int size = 10,
+            // API currently does not support from
+            //string[] includeFields = null, 
+            //string[] excludeFields = null,
+            Dictionary<string, object> searchParams = null
+        )
+        {
+            InterventionCollection rtnResults = null;
+
+            searchParams = searchParams ?? new Dictionary<string, object>();
+
+            JObject requestBody = new JObject();
+            requestBody.Add(new JProperty("size", size));
+
+            foreach (KeyValuePair<string, object> sp in searchParams)
+            {
+                requestBody.Add(new JProperty(sp.Key, sp.Value));
+            }
+
+            //Get the HTTP response content from our Post request
+            HttpContent httpContent = ReturnPostRespContent("interventions", requestBody);
+            rtnResults = httpContent.ReadAsAsync<InterventionCollection>().Result;
+
+            return rtnResults;
+        }
+
+
+        /// <summary>
         /// Gets a term from the API via its key.
         /// </summary>
         /// <param name="key">the key</param>
@@ -230,34 +308,32 @@ namespace CancerGov.ClinicalTrialsAPI
             HttpContent content = null;
             String notFound = "NotFound";
 
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(this.Host);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                // We want this to be synchronus, so call Result right away.
-                response = client.GetAsync(BasePath + "/" + path + "/" + param).Result;
-                if (response.IsSuccessStatusCode)
+            // We want this to be synchronus, so call Result right away.
+            response = _client.GetAsync(BasePath + "/" + path + "/" + param).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                content = response.Content;
+            }
+            else
+            {
+                string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + BasePath + "/" + path + "/" + param;
+                if (response.StatusCode.ToString() == notFound)
                 {
-                    content = response.Content;
+                    // If trial is not found, log 404 message and return content as null
+                    log.Debug(errorMessage);
                 }
                 else
                 {
-                    string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + BasePath + "/" + path + "/" + param;
-                    if (response.StatusCode.ToString() == notFound)
-                    {
-                        // If trial is not found, log 404 message and return content as null
-                        log.Debug(errorMessage);
-                    }
-                    else
-                    {
-                        // If response is other error message, log and throw exception
-                        log.Error(errorMessage);
-                        throw new Exception(errorMessage);
-                    }
+                    // If response is other error message, log and throw exception
+                    log.Error(errorMessage);
+                    throw new Exception(errorMessage);
                 }
             }
+
             return content;
         }
 
@@ -273,25 +349,22 @@ namespace CancerGov.ClinicalTrialsAPI
             HttpResponseMessage response = null;
             HttpContent content = null;
 
-            using (HttpClient client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(this.Host);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Accept.Clear();
+            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-                //We want this to be synchronus, so call Result right away.
-                response = client.PostAsync(BasePath + "/" + path, new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    content = response.Content;
-                }
-                else
-                {
-                    //TODO: Add more checking here if the respone does not actually have any content
-                    string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + BasePath + "/" + path;
-                    throw new Exception(errorMessage);
-                }
+            //We want this to be synchronus, so call Result right away.
+            response = _client.PostAsync(BasePath + "/" + path, new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                content = response.Content;
             }
+            else
+            {
+                //TODO: Add more checking here if the respone does not actually have any content
+                string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + BasePath + "/" + path;
+                throw new Exception(errorMessage);
+            }
+
             return content;
         }
 

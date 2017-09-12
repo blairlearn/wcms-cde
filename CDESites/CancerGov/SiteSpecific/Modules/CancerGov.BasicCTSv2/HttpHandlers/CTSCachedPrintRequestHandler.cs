@@ -22,11 +22,31 @@ using NCI.Web.CDE;
 using NCI.Web.CDE.Application;
 using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI.Configuration;
+using NCI.Web;
+using System.Net.Http;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 {
     public class CTSCachedPrintRequestHandler : IHttpHandler
     {
+
+        /// <summary>
+        /// Gets the Snippet Controls Config.
+        /// </summary>
+        private static BasicCTSPageInfo _config = null;
+
+        static CTSCachedPrintRequestHandler()
+        {
+            //TODO: Validate this, and maybe cache it, and well, pull this out into something so it can be shared.
+            //TODO: Add watcher for config.
+
+            //////////////////////////////
+            // Load the configuration XML from the App Settings
+            string configPath = ConfigurationManager.AppSettings["CTSConfigFilePath"];
+            _config = ModuleObjectFactory<BasicCTSPageInfo>.GetObjectFromFile(configPath);
+
+        }
+
         public bool IsReusable
         {
             get { return false; }
@@ -43,100 +63,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
         public void ProcessRequest(HttpContext context)
         {
             HttpRequest request = context.Request;
-            HttpResponse response = context.Response;
-            CTSPrintManager manager = new CTSPrintManager();
+
+            CTSPrintManager manager = new CTSPrintManager(_config);
+
             if (request.HttpMethod == "POST")
             {
-                // Get the Query parameters from the URL
-                var cancerType = request.QueryString["t"];
-
-                if (cancerType != null)
-                {
-                    String[] ctarr = (cancerType.Contains("|") ? cancerType.Split(new Char[] { '|' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { cancerType });
-
-                    //split up the disease ids
-                    string[] diseaseIDs = ctarr[0].Split(',');
-
-                    // Determine cancer type display name from CIDs and key (if there is no match with the key,
-                    // then first term with matching ids is used)
-                    string termKey = ctarr.Length > 1 ? ctarr[1] : null;
-                    var _basicCTSManager = new BasicCTSManager(ApiUrl);
-
-                    cancerType = _basicCTSManager.GetCancerTypeDisplayName(diseaseIDs, termKey);
-                }
-
-                
-                var searchTerms = new CTSSearchParams()
-                {
-                    CancerType = cancerType,
-                    CancerTypePhrase = request.QueryString["ct"],
-                    Phrase = request.QueryString["q"],
-                    ZipCode = request.QueryString["z"],
-                    AgeOfEligibility = request.QueryString["a"],
-                    ZipRadius = !String.IsNullOrWhiteSpace(request.QueryString["zp"]) ? Int32.Parse(request.QueryString["zp"]) : 100,
-                    Gender = request.QueryString["g"]
-
-                };
-
-                //Set our output to be JSON
-                response.ContentType = "application/json";
-                response.ContentEncoding = Encoding.UTF8;
-
-                //Try and get the request.
-                Request req = null;
-                try
-                {
-                    req = GetRequestAndValidate(context);
-                }
-                catch (Exception ex)
-                {
-
-                    ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400); //Anything here is just a bad request.
-                    return;
-                }
-
-                // Store the cached print content
-                Guid printCacheID = manager.StorePrintContent(req.TrialIDs, DateTime.Now, searchTerms);
-
-                // Format our return as JSON
-                var resp = JsonConvert.SerializeObject(new
-                {
-                    printID = printCacheID
-                });
-
-                response.Write(resp);
-                response.End();
-            }
-           
-            if (request.HttpMethod == "GET")
+                GeneratePrintCacheAndRedirect(context, manager);
+            } else if (request.HttpMethod == "GET")
             {
-                //Set our output to be HTML
-                response.ContentType = "text/HTML";
-                response.ContentEncoding = Encoding.UTF8;
-
-                Guid printID = new Guid();
-
-                // Validate if the printID passed in through the URL is a valid Guid
-                try
-                {
-                    printID = Guid.Parse(request.QueryString["printid"]);
-                }
-                catch
-                {
-                    // Incorrect parameter for printid (not guid)
-                    ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400);
-                    throw new InvalidPrintIDException("Invalid PrintID parameter for CTS Print");
-                }
-
-
-                // If there is no error, send the printID to the manager to retrieve the cached print content
-                string printContent = manager.GetPrintContent(printID);
-                
-                printContent = printContent.Replace("${generatePrintURL}", GetEmailUrl(printID));
-
-                response.Write(printContent);
-                response.End();
-               
+                ReturnPrintCache(context, manager);
+            }
+            else
+            {
+                ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400);
             }
         }
 
@@ -154,6 +93,124 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
             popUpemailUrl = popUpemailUrl + HashMaster.SaltedHashURL(HttpUtility.UrlDecode(title) + emailUrl);
             
             return popUpemailUrl;
+        }
+
+        private void ReturnPrintCache(HttpContext context, CTSPrintManager manager)
+        {
+            HttpRequest request = context.Request;
+            HttpResponse response = context.Response;
+
+            //Set our output to be HTML
+            response.ContentType = "text/HTML";
+            response.ContentEncoding = Encoding.UTF8;
+
+            Guid printID = new Guid();
+
+            // Validate if the printID passed in through the URL is a valid Guid
+            try
+            {
+                printID = Guid.Parse(request.QueryString["printid"]);
+            }
+            catch
+            {
+                // Incorrect parameter for printid (not guid)
+                ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400);
+                throw new InvalidPrintIDException("Invalid PrintID parameter for CTS Print");
+            }
+
+
+            // If there is no error, send the printID to the manager to retrieve the cached print content
+            string printContent = manager.GetPrintContent(printID);
+
+            printContent = printContent.Replace("${generatePrintURL}", GetEmailUrl(printID));
+
+            response.Write(printContent);
+            response.End();
+
+        }
+
+        private void GeneratePrintCacheAndRedirect(HttpContext context, CTSPrintManager manager)
+        {
+            HttpRequest request = context.Request;
+            HttpResponse response = context.Response;
+
+            NciUrl parsedReqUrlParams = new NciUrl(true, true, true);  //We need this to be lowercase and collapse duplicate params. (Or not use an NCI URL)
+            parsedReqUrlParams.SetUrl(request.Url.Query);
+
+            string apiURL = BasicClinicalTrialSearchAPISection.GetAPIUrl();
+            if (string.IsNullOrEmpty(apiURL))
+            {
+                string err = String.Format("Could not load APIURL for {0}", this.GetType().ToString());
+                //TODO: Update error logging.
+                //log.Error(err);
+                throw new Exception(err);
+            }
+
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(apiURL);
+
+            ClinicalTrialsAPIClient apiClient = new ClinicalTrialsAPIClient(httpClient);
+
+            CTSSearchParams searchParams = null;
+            try
+            {
+                // Get mapping file names from configuration
+                TrialTermLookupConfig mappingConfig = new TrialTermLookupConfig();
+                mappingConfig.MappingFiles.AddRange(_config.MappingFiles.Select(fp => HttpContext.Current.Server.MapPath(fp)));
+
+                CTSSearchParamFactory factory = new CTSSearchParamFactory(new TrialTermLookupService(mappingConfig, apiClient), new ZipCodeGeoLookup());
+                searchParams = factory.Create(parsedReqUrlParams);
+            }
+            catch (Exception ex)
+            {
+                ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400); //Anything here is just a bad request.                
+            }
+
+            //Set our output to be JSON
+            response.ContentType = "application/json";
+            response.ContentEncoding = Encoding.UTF8;
+
+            //Try and get the request.
+            Request req = null;
+            try
+            {
+                req = GetRequestAndValidate(context);
+            }
+            catch (Exception)
+            {
+
+                ErrorPageDisplayer.RaisePageByCode(this.GetType().ToString(), 400); //Anything here is just a bad request.
+                return;
+            }
+
+            // Store the cached print content
+            Guid printCacheID = manager.StorePrintContent(req.TrialIDs, DateTime.Now, searchParams);
+
+            //Add in debugging helper param to make debugging templates easier.
+            //TODO: Refactor so get content and render is a single function.
+            if (parsedReqUrlParams.QueryParameters.ContainsKey("debug") && parsedReqUrlParams.QueryParameters["debug"] == "true")
+            {
+                response.ContentType = "text/HTML";
+                response.ContentEncoding = Encoding.UTF8;
+                // If there is no error, send the printID to the manager to retrieve the cached print content
+                string printContent = manager.GetPrintContent(printCacheID);
+
+                printContent = printContent.Replace("${generatePrintURL}", GetEmailUrl(printCacheID));
+
+                response.Write(printContent);
+                response.End();
+            }
+            else
+            {
+                // Format our return as JSON
+                var resp = JsonConvert.SerializeObject(new
+                {
+                    printID = printCacheID
+                });
+
+                response.Write(resp);
+                response.End();
+            }
         }
 
         /// <summary>

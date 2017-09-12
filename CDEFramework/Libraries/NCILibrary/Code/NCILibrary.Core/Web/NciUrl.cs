@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text;
 using System.Web;
 
@@ -8,7 +9,9 @@ namespace NCI.Web
     public class NciUrl
     {
         private string _uriStem;
-
+        private bool _decodeParameters = false;
+        private bool _isCaseInsensitive = false;
+        private bool _collapseSameParams = false;
 
         public string UriStem
         {
@@ -26,11 +29,44 @@ namespace NCI.Web
         }
 
         public Dictionary<string, string> QueryParameters { get; set; }
+        
+        /// <summary>
+        /// Creates a new instance of a case-sensitive NciUrl that does not decode parameters
+        /// </summary>
+        public NciUrl() : this(false) {}
 
+        /// <summary>
+        /// Creates a new instance of a case-sensitive NciUrl that will optionally decode parameters
+        /// </summary>
+        /// <param name="decodeParameters">True if we should decode the individual parameters</param>
+        public NciUrl(bool decodeParameters) : this(decodeParameters, false) { }
 
-        public NciUrl()
+        /// <summary>
+        /// Creates a new instance of a case-sensitive NciUrl that will optionally decode parameters
+        /// </summary>
+        /// <param name="decodeParameters">True if we should decode the individual parameters</param>
+        /// <param name="caseInsensitive">Treat parameters as case insensative</param>
+        public NciUrl(bool decodeParameters, bool caseInsensitive) : this(decodeParameters, caseInsensitive, false) { }
+
+        /// <summary>
+        /// Creates a new instance of a NciUrl that will optionally decode parameters and optionally be case-insensitive
+        /// </summary>
+        /// <param name="decodeParameters">True if we should decode the individual parameters</param>
+        /// <param name="caseInsensitive">Treat parameters as case insensative</param>
+        /// <param name="collapseSameParams">When handling urls with multiple params with the same name, combine the values using commas</param>
+        public NciUrl(bool decodeParameters, bool caseInsensitive, bool collapseSameParams)
         {
-            QueryParameters = new Dictionary<string, string>();
+            if (caseInsensitive)
+            {
+                QueryParameters = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
+            }
+            else
+            {
+                QueryParameters = new Dictionary<string, string>();
+            }
+            
+            _decodeParameters = decodeParameters;
+            _collapseSameParams = collapseSameParams;
         }
 
         public void Clear()
@@ -90,10 +126,36 @@ namespace NCI.Web
                 string[] nameAndValue = nameValuePair.Split(new char[] { '=' }, StringSplitOptions.None);
                 string name = nameAndValue[0];
                 string value = nameAndValue[1];
-                QueryParameters.Add(name, value);
+
+                if(_decodeParameters)
+                {
+                    value = HttpUtility.UrlDecode(value);
+                }
+
+                if (_collapseSameParams && QueryParameters.ContainsKey(name))
+                {
+                    QueryParameters[name] += "," + value;
+                }
+                else
+                {
+                    QueryParameters.Add(name, value);
+                }                
             }
         }
 
+        public NciUrl CopyWithLowerCaseQueryParams()
+        {
+            NciUrl rtn = new NciUrl();
+            rtn._uriStem = this._uriStem;
+
+            foreach (KeyValuePair<string, string> item in this.QueryParameters)
+            {
+                rtn.QueryParameters.Add(item.Key.ToLower(), item.Value);
+            }
+
+            return rtn;
+        }
+         
         /// <summary>
         /// Appends a segment onto the end of an existing url path, handling "slash issues" so we 
         /// are sure we have one and only one slash.

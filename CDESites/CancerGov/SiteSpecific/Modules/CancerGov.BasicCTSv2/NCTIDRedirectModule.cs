@@ -97,7 +97,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         if (!string.IsNullOrWhiteSpace(cleanId) && IsValidTrial(cleanId))
                         {
                             //In addition to the id param, add the "r" redirect flag
-                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}&r=", cleanId.ToUpper());
+                            string ctViewUrl = string.Format(SearchResultsPrettyUrl + "?id={0}&r=1", cleanId.ToUpper());
                             context.Response.Redirect(ctViewUrl, true);
                         }
 
@@ -117,7 +117,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             log.DebugFormat("NCT ID {0} not found in API and is not formatted correctly for clinicaltrials.cancer.gov", cleanId);
                         }
                     }
-                    catch (ThreadAbortException ex)
+                    catch (ThreadAbortException)
                     {
                         // Response.Redirect() throws a ThreadAbortException. This is normal behavior.
                         // Hide the "normal error" by swallowing the exception.
@@ -166,9 +166,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             // If the ID is a valid NCTID, go to web service and see if trial exists
             try
-            {
-                String host = BasicClinicalTrialSearchAPISection.GetAPIUrl();
-                ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(host);
+            {                
+                ClinicalTrialsAPIClient client = APIClientHelper.GetV1ClientInstance();
                 ClinicalTrial trial = client.Get(idString);
                 if (trial != null)
                 {
