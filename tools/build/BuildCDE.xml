@@ -61,6 +61,16 @@
   </Target>
 
   <!--
+	Create a ZIP file containing the build artifacts and upload it to GitHub.
+  -->
+  <Target Name="Upload">
+	<Exec Command="cd" />
+	<Exec Command="where powershell" />
+	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive -Command scripts\create-zip.ps1 -sourcePath &quot;$(StagingLocation)&quot;  -destinationPath &quot;$(TempBase)\$(branch)-$(TargetEnvironment)-$(BUILD_NUMBER).zip&quot;" />
+	<!--Error Text="Stopped!" Condition="true" /-->
+  </Target>
+  
+  <!--
 	Clean up after the build is complete.
   -->
   <Target Name="Cleanup">
@@ -98,15 +108,14 @@
     targets to be run.
   -->
   <Target Name="All" DependsOnTargets="ValidateProps">
-  
+
 	<Message Text="Building Branch: $(Branch) for target $(TargetEnvironment)" />
 
     <CallTarget Targets="Build"/>
-
+	<CallTarget Targets="Upload"/>	
     <CallTarget Targets="Cleanup"/>
-	
-	
-  </Target>
+
+	</Target>
 
   <Target Name="Help">
     <Message Text=" " />

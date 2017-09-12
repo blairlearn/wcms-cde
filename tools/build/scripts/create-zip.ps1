@@ -22,5 +22,5 @@ Param(
     The name and path of the ZIP file to be created.
 #>
 
-
+Write-Host "Creating '${destinationPath}' from '${sourcePath}'."
 Compress-Archive -Path $sourcePath -DestinationPath $destinationPath
