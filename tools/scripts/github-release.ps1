@@ -1,5 +1,37 @@
+Param(
+    [Parameter(mandatory=$True, ValueFromPipeline=$False)]
+    [string]$tagname,
 
-function GitHub-Release($tagname, $releaseName, $commitId, $preRelease, $releaseNotes, $artifactDirectory, $artifact, $gitHubUsername, $gitHubRepository, $gitHubApiKey)
+    [Parameter(mandatory=$True, ValueFromPipeline=$False)]
+    [string]$releaseName,
+
+    [Parameter(mandatory=$False, ValueFromPipeline=$False)]
+    [string]$commitId = $null,
+
+    [Parameter(mandatory=$False, ValueFromPipeline=$False)]
+    [switch]$IsPreRelease,
+    
+    [Parameter(mandatory=$True, ValueFromPipeline=$False)]
+    [string]$releaseNotes,
+    
+    [Parameter(mandatory=$True, ValueFromPipeline=$False)]
+    [string]$artifactDirectory,
+    
+    [Parameter(mandatory=$True, ValueFromPipeline=$False)]
+    [string]$artifactFileName,
+    
+    [Parameter(mandatory=$True, ValueFromPipeline=$False)]
+    [string]$gitHubUsername,
+    
+    [Parameter(mandatory=$True, ValueFromPipeline=$False)]
+    [string]$gitHubRepository,
+    
+    [Parameter(mandatory=$True, ValueFromPipeline=$False)]
+    [string]$gitHubApiKey
+)
+
+
+function GitHub-Release($tagname, $releaseName, $commitId, $IsPreRelease, $releaseNotes, $artifactDirectory, $artifact, $gitHubUsername, $gitHubRepository, $gitHubApiKey)
 {
     <#
         .SYNOPSIS
@@ -24,7 +56,7 @@ function GitHub-Release($tagname, $releaseName, $commitId, $preRelease, $release
             If commitID is null, and the tag doesn't already exist, the tag is created on master, else the existing
                 tag is used.
 
-        .PARAMETER preRelease
+        .PARAMETER IsPreRelease
         Boolean value, set to $True to mark the release as a pre-release, $False to
         mark it as a finalized release.
 
@@ -57,7 +89,7 @@ function GitHub-Release($tagname, $releaseName, $commitId, $preRelease, $release
        name = $releaseName;
        body = $releaseNotes;
        draft = $draft;
-       prerelease = $preRelease;
+       prerelease = $IsPreRelease;
     }
 
     # Don't want the target_commitish element unless it's set to something.
@@ -96,3 +128,4 @@ function GitHub-Release($tagname, $releaseName, $commitId, $preRelease, $release
     $result = Invoke-RestMethod @uploadParams
 }
 
+GitHub-Release $tagname $releaseName $commitId ($IsPreRelease -eq $True)  $releaseNotes $artifactDirectory $artifactFileName $gitHubUsername $gitHubRepository $gitHubApiKey
