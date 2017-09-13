@@ -66,7 +66,7 @@
   <Target Name="Upload">
 	<Exec Command="cd" />
 	<Exec Command="where powershell" />
-	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive -Command scripts\create-zip.ps1 -sourcePath &quot;$(StagingLocation)&quot;  -destinationPath &quot;$(TempBase)\$(branch)-$(TargetEnvironment)-$(BUILD_NUMBER).zip&quot;" />
+	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive -Command scripts\create-zip.ps1 -sourcePath &quot;$(StagingLocation)\*&quot;  -destinationPath &quot;$(TempBase)\$(branch)-$(TargetEnvironment)-$(BUILD_NUMBER).zip&quot;" />
 	<!--Error Text="Stopped!" Condition="true" /-->
   </Target>
   
