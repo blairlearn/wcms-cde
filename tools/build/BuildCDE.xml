@@ -28,6 +28,8 @@
 	<OutputFolder>$(TempBase)\output\</OutputFolder>
     <StagingLocation>$(TempBase)\staging</StagingLocation>
 	<ConfigFileLocation>$(StagingLocation)\_configFiles</ConfigFileLocation>
+	
+	<BuildName>$(branch)-$(TargetEnvironment)-$(BUILD_NUMBER)</BuildName>
   </PropertyGroup>
 
 
@@ -64,10 +66,11 @@
 	Create a ZIP file containing the build artifacts and upload it to GitHub.
   -->
   <Target Name="Upload">
-	<Exec Command="cd" />
-	<Exec Command="where powershell" />
-	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive -Command scripts\create-zip.ps1 -sourcePath &quot;$(StagingLocation)\*&quot;  -destinationPath &quot;$(TempBase)\$(branch)-$(TargetEnvironment)-$(BUILD_NUMBER).zip&quot;" />
-	<!--Error Text="Stopped!" Condition="true" /-->
+	<Message Text="Creating $(TempBase)\$(BuildName).zip from $(StagingLocation)" />
+	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\create-zip.ps1 -sourcePath &quot;$(StagingLocation)\*&quot;  -destinationPath &quot;$(TempBase)\$(BuildName).zip&quot;" />
+
+	<Message Text="Uploading $(BuildName).zip to GitHub" />
+	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\github-release.ps1 -tagname $(BuildName) -releaseName $(BuildName) -IsPreRelease -releaseNotes \&quot;Automated build $(BuildName)\&quot; -artifactDirectory &quot;$(TempBase)&quot; -artifactFileName &quot;$(BuildName).zip&quot; -gitHubUsername blairlearn -gitHubRepository wcms-cde -gitHubApiKey $(GITHUB_TOKEN)" />
   </Target>
   
   <!--
