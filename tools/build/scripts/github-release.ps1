@@ -24,10 +24,7 @@ Param(
     [string]$gitHubUsername,
     
     [Parameter(mandatory=$True, ValueFromPipeline=$False)]
-    [string]$gitHubRepository,
-    
-    [Parameter(mandatory=$True, ValueFromPipeline=$False)]
-    [string]$gitHubApiKey
+    [string]$gitHubRepository
 )
 
 
@@ -128,4 +125,4 @@ function GitHub-Release($tagname, $releaseName, $commitId, $IsPreRelease, $relea
     $result = Invoke-RestMethod @uploadParams
 }
 
-GitHub-Release $tagname $releaseName $commitId ($IsPreRelease -eq $True)  $releaseNotes $artifactDirectory $artifactFileName $gitHubUsername $gitHubRepository $gitHubApiKey
+GitHub-Release $tagname $releaseName $commitId ($IsPreRelease -eq $True)  $releaseNotes $artifactDirectory $artifactFileName $gitHubUsername $gitHubRepository $env:GITHUB_TOKEN

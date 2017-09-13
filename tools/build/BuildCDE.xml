@@ -65,12 +65,15 @@
   <!--
 	Create a ZIP file containing the build artifacts and upload it to GitHub.
   -->
-  <Target Name="Upload">
+  <Target Name="Upload" DependsOnTargets="ValidateProps">
 	<Message Text="Creating $(TempBase)\$(BuildName).zip from $(StagingLocation)" />
 	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\create-zip.ps1 -sourcePath &quot;$(StagingLocation)\*&quot;  -destinationPath &quot;$(TempBase)\$(BuildName).zip&quot;" />
 
+	<Message Text="Creating tag $(BuildName)." />
+	<Exec Command="git tag $(BuildName) $(COMMIT_ID)" />
+
 	<Message Text="Uploading $(BuildName).zip to GitHub" />
-	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\github-release.ps1 -tagname $(BuildName) -releaseName $(BuildName) -IsPreRelease -releaseNotes \&quot;Automated build $(BuildName)\&quot; -artifactDirectory &quot;$(TempBase)&quot; -artifactFileName &quot;$(BuildName).zip&quot; -gitHubUsername blairlearn -gitHubRepository wcms-cde -gitHubApiKey $(GITHUB_TOKEN)" />
+	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\github-release.ps1 -tagname $(BuildName) -releaseName $(BuildName) -commitId $(COMMIT_ID) -IsPreRelease -releaseNotes \&quot;Automated build $(BuildName)\&quot; -artifactDirectory &quot;$(TempBase)&quot; -artifactFileName &quot;$(BuildName).zip&quot; -gitHubUsername blairlearn -gitHubRepository wcms-cde" />
   </Target>
   
   <!--
@@ -100,10 +103,16 @@
   <Target Name="ValidateProps">
 	<Error Condition=" '$(TargetEnvironment)'=='' "
           Text=" Missing required property [TargetEnvironment]" />
-		  
+
 	<Error Condition=" '$(Branch)'=='' "
           Text=" Missing required property [Branch]" />
-  
+		  
+	<Error Condition=" '$(COMMIT_ID)'=='' "
+          Text=" Missing required property [COMMIT_ID]" />
+
+	<Error Condition=" '$(GITHUB_TOKEN)'=='' "
+          Text=" Missing required property [GITHUB_TOKEN]" />
+
   </Target>  
   
   <!--

@@ -23,6 +23,8 @@ IF "%my_target%"=="" set FAIL=True
 IF "%WORKSPACE%"=="" set FAIL=True
 IF "%TEMP%"=="" set FAIL=True
 IF "%BUILD_NUMBER%"=="" set FAIL=True
+IF "%GITHUB_TOKEN%"=="" set FAIL=True
+
 
 IF "%FAIL%" NEQ "" (
 	ECHO.
@@ -33,11 +35,13 @@ IF "%FAIL%" NEQ "" (
 	ECHO 	WORKSPACE - directory containing the source code.
 	ECHO	TEMP - Location for temporary files
 	ECHO	BUILD_NUMBER - Build number ^(automatically generated/set by Jenkins^)
+	ECHO	GITHUB_TOKEN - GitHub access token for the build user.
 	GOTO :EOF
 )
 
+REM Determine the current Git commit hash.
+FOR /f %%a IN ('git rev-parse --verify HEAD') DO SET COMMIT_ID=%%a
 
 ECHO Building for %my_target% using Branch %my_branch%
 @echo on
 msbuild /fileLogger /t:All "/p:TargetEnvironment=%my_target%;Branch=%my_branch%"  "%WORKSPACE%\tools\build\BuildCDE.xml"
-
