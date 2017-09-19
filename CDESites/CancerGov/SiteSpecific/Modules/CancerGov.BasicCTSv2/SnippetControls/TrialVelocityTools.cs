@@ -15,6 +15,184 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
     /// </summary>
     public class TrialVelocityTools
     {
+
+        #region SDS-Release Validated Methods
+
+        /// <summary>
+        /// Get the number of USA sites for a trial 
+        /// </summary>
+        /// <param name="trial"></param>
+        /// <returns></returns>
+        public ClinicalTrial.StudySite[] GetUSASites(ClinicalTrial trial)
+        {
+            return trial.Sites.Where(s => s.Country == "United States").ToArray();
+        }
+
+        /// <summary>
+        /// Get all Locations, but filtered by location parameters.
+        /// NOTE: LocationTypes for Hospital and None will not be filtered, but will be sorted.
+        /// </summary>
+        /// <returns></returns> 
+        public ClinicalTrial.StudySite[] GetFilteredLocations(ClinicalTrial trial, CTSSearchParams searchParams)
+        {
+            return GetFilteredLocations(trial.Sites, searchParams);
+        }
+
+        /// <summary>
+        /// Get all Locations, but filtered by location parameters.
+        /// NOTE: LocationTypes for Hospital and None will not be filtered, but will be sorted.
+        /// </summary>
+        /// <returns></returns> 
+        public ClinicalTrial.StudySite[] GetFilteredLocations(IEnumerable<ClinicalTrial.StudySite> sites, CTSSearchParams searchParams)
+        {
+            IEnumerable<ClinicalTrial.StudySite> rtnSites = sites;
+
+            switch (searchParams.Location)
+            {
+                case LocationType.AtNIH:
+                    {
+                        rtnSites = rtnSites.Where(s => s.PostalCode == "20892");
+                        break;
+                    }
+                case LocationType.CountryCityState:
+                    {
+
+                        CountryCityStateLocationSearchParams locParams = (CountryCityStateLocationSearchParams)searchParams.LocationParams;
+
+                        if (locParams.IsFieldSet(FormFields.Country))
+                        {
+                            rtnSites = rtnSites.Where(s => StringComparer.CurrentCultureIgnoreCase.Equals(s.Country, locParams.Country));
+                        }
+
+                        if (locParams.IsFieldSet(FormFields.City))
+                        {
+                            rtnSites = rtnSites.Where(s => StringComparer.CurrentCultureIgnoreCase.Equals(s.City, locParams.City));
+                        }
+
+                        if (locParams.IsFieldSet(FormFields.State))
+                        {
+                            var states = locParams.State.Select(s => s.Key); //Get Abbreviations
+                            rtnSites = rtnSites.Where(s => states.Contains(s.StateOrProvinceAbbreviation));
+                        }
+
+                        break;
+                    }
+                case LocationType.Zip:
+                    {
+                        ZipCodeLocationSearchParams locParams = (ZipCodeLocationSearchParams)searchParams.LocationParams;
+
+                        rtnSites = rtnSites.Where(site =>
+                                    site.Coordinates != null &&
+                                    locParams.GeoLocation.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= locParams.ZipRadius &&
+                                    site.Country == "United States"
+                        );
+
+                        break;
+                    }
+                default:
+                    {
+                        //Basically we can't/shouldn't filter.
+                        break;
+                    }
+            }
+
+            //Now that we have the sites filtered, now we need to sort.
+            return rtnSites.ToArray();
+        }
+
+        /// <summary>
+        /// Sorts the sites based on 
+        /// </summary>
+        /// <param name="sites"></param>
+        /// <returns></returns>
+        public ClinicalTrial.StudySite[] GetSortedSites(IEnumerable<ClinicalTrial.StudySite> sites)
+        {
+            var usaSites = sites.Where(s => s.Country == "United States").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name);
+            var canadaSites = sites.Where(s => s.Country == "Canada").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name);
+            var otherSites = sites.Where(s => s.Country != "United States" && s.Country != "Canada").OrderBy(s => s.Country).ThenBy(s => s.City).ThenBy(s => s.Name);
+
+            return usaSites.Union(canadaSites).Union(otherSites).ToArray();
+        }
+
+        /// <summary>
+        /// Groups the sites by USA/Canada/Other, Then by state/Province/Country, then by city
+        /// </summary>
+        /// <returns></returns> 
+        public OrderedDictionary GetGroupedSites(IEnumerable<ClinicalTrial.StudySite> sites)
+        {
+            OrderedDictionary locations = new OrderedDictionary();
+
+            var usaSites = sites.Where(s => s.Country == "United States");
+            var canadaSites = sites.Where(s => s.Country == "Canada");
+            var otherSites = sites.Where(s => s.Country != "United States" && s.Country != "Canada");
+
+            if (usaSites.Count() > 0)
+            {
+                //Group by state, then city
+                OrderedDictionary states = new OrderedDictionary();
+
+                //Group and loop over states
+                foreach (IGrouping<string, ClinicalTrial.StudySite> group in usaSites.GroupBy(s => s.StateOrProvince))
+                {
+                    states.Add(group.Key, new OrderedDictionary());
+
+                    //Now do the same for cities
+                    foreach (IGrouping<string, ClinicalTrial.StudySite> cityGroup in group.GroupBy(s => s.City))
+                    {
+                        ((OrderedDictionary)states[group.Key]).Add(cityGroup.Key, cityGroup.AsEnumerable());
+                    }
+                }
+
+                locations.Add("U.S.A.", states);
+            }
+
+            if (canadaSites.Count() > 0)
+            {
+                //Group by state, then city
+                OrderedDictionary states = new OrderedDictionary();
+
+                //Group and loop over states
+                foreach (IGrouping<string, ClinicalTrial.StudySite> group in canadaSites.GroupBy(s => s.StateOrProvince))
+                {
+                    states.Add(group.Key, new OrderedDictionary());
+
+                    //Now do the same for cities
+                    foreach (IGrouping<string, ClinicalTrial.StudySite> cityGroup in group.GroupBy(s => s.City))
+                    {
+                        ((OrderedDictionary)states[group.Key]).Add(cityGroup.Key, cityGroup.AsEnumerable());
+                    }
+                }
+
+                locations.Add("Canada", states);
+            }
+
+            if (otherSites.Count() > 0)
+            {
+                //Group by state, then city
+                OrderedDictionary countries = new OrderedDictionary();
+
+                //Group and loop over states
+                foreach (IGrouping<string, ClinicalTrial.StudySite> group in otherSites.GroupBy(s => s.Country))
+                {
+                    countries.Add(group.Key, new OrderedDictionary());
+
+                    //Now do the same for cities
+                    foreach (IGrouping<string, ClinicalTrial.StudySite> cityGroup in group.GroupBy(s => s.City))
+                    {
+                        ((OrderedDictionary)countries[group.Key]).Add(cityGroup.Key, cityGroup.AsEnumerable());
+                    }
+                }
+
+                locations.Add("Other", countries);
+            }
+
+            return locations;
+        }
+
+        #endregion
+
+
+
         /// <summary>
         /// Gets and formats the Trial Objectives and Outline
         /// </summary>
@@ -72,38 +250,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         /// <param name="trial"></param>
         /// <returns></returns>
+        [Obsolete("CTS-SDS")]
         public object GetAllSortedLocations(ClinicalTrial trial)
         {
             return trial.GetAllSortedLocations();
         }
 
-        //$trial.GetUSLocations($SearchResults.Control.SearchParams.ZipLookup.GeoCode, $SearchResults.Control.SearchParams.ZipRadius).length
 
-        /// <summary>
-        /// Get all us Locations, but filtered by origin and radius in miles
-        /// </summary>
-        /// <param name="origin"></param>
-        /// <param name="radius"></param>
-        /// <returns></returns>
-        public IEnumerable<ClinicalTrial.StudySite> GetFilteredLocations(ClinicalTrial trial, GeoLocation origin, int radius)
-        {
-            return (trial.Sites.Where(site => site.Coordinates != null &&
-                                              origin.DistanceBetween(new GeoLocation(site.Coordinates.Latitude, site.Coordinates.Longitude)) <= radius &&
-                                              site.Country == "United States")
-                    .OrderBy(loc => loc.Country)
-                    .ThenBy(loc => loc.StateOrProvince)
-                    .ThenBy(loc => loc.City).ToArray());
-        }
+
 
         /// <summary>
         /// Returns a list of all active study sites. 
         /// </summary>
         /// <param name="trial">Clinical trial</param>
         /// <returns>List of active sites for a given trial</returns>
+        [Obsolete("CTS-SDS")]
         public IEnumerable<ClinicalTrial.StudySite> GetAllStudySites(ClinicalTrial trial)
         {
             IEnumerable<ClinicalTrial.StudySite> sites = null;
-            BasicCTSManager mgr = new BasicCTSManager();
+            //BasicCTSManager mgr = new BasicCTSManager();
 
             // Assemble list of trial sites to be printed by the Velocity template:
             // 1. Filter inactive study sites out of our sites list
@@ -113,7 +278,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // 5. Join the lists with USA as the first group of items and all other countries alphabetized afterward
             if (trial.Sites != null)
             {
-                trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => mgr.ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower())));
+                trial.Sites = new List<ClinicalTrial.StudySite>(trial.Sites.Where(site => BasicCTSManager.ActiveRecruitmentStatuses.Any(status => status.ToLower() == site.RecruitmentStatus.ToLower())));
                 var usaSites = trial.Sites.Where(s => s.Country == "United States").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name).ToArray();
                 var canadaSites = trial.Sites.Where(s => s.Country == "Canada").OrderBy(s => s.StateOrProvince).ThenBy(s => s.City).ThenBy(s => s.Name).ToArray();
                 var otherSites = trial.Sites.Where(s => s.Country != "United States" && s.Country != "Canada").OrderBy(s => s.City).ThenBy(s => s.Name).ToArray();
@@ -128,6 +293,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         /// <param name="trial">OrderedDictionary countryLocations</param>
         /// <returns>int - number of locations for given country</returns>
+        [Obsolete("CTS-SDS")]
         public int GetLocCount(OrderedDictionary countryLocations)
         {
             int count = 0;
@@ -344,8 +510,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 phase = "Phase " + phase.Replace("_", "/");
             }
-            if (phase.Equals("Phase O") || phase.Equals("Phase NA"))
-                phase = "No phase specified";
             return phase;
         }
 

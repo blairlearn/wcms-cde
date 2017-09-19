@@ -5,18 +5,31 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xunit;
+using RichardSzalay.MockHttp;
+using System.Net.Http;
 
 namespace CancerGov.ClinicalTrialsAPI.Test
 {
     public class ClinicalTrialsAPIClientTests
     {
+
+        private HttpClient GetMockedClient()
+        {
+            //TODO: Fix this so it is actually doing something other than returning an empty object!
+
+            //The HttpMessageHandler is what HttpClient uses to send & recieve data from a server.
+            //The MockHttpMessageHandler allows us to intercept (or inspect) those requests and return mocked data.
+            MockHttpMessageHandler mockHandler = new MockHttpMessageHandler();
+            return new HttpClient(mockHandler);
+        }
+
         [Fact]
         public void TestGet()
         {
             //This is more of an integration test to get things worked out.  It would be nice to have some sort of adapter so that we can mock the service.
             //but for now we need to get this moving.
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient("clinicaltrialsapi.cancer.gov");
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(GetMockedClient());
 
             ClinicalTrial trial = client.Get("NCT02194738");
 
@@ -29,7 +42,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
             //This is more of an integration test to get things worked out.  It would be nice to have some sort of adapter so that we can mock the service.
             //but for now we need to get this moving.
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient("clinicaltrialsapi.cancer.gov");
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(GetMockedClient());
 
             ClinicalTrialsCollection results = client.List();
 
@@ -43,7 +56,7 @@ namespace CancerGov.ClinicalTrialsAPI.Test
             //This is more of an integration test to get things worked out.  It would be nice to have some sort of adapter so that we can mock the service.
             //but for now we need to get this moving.
 
-            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient("clinicaltrialsapi.cancer.gov");
+            ClinicalTrialsAPIClient client = new ClinicalTrialsAPIClient(GetMockedClient());
 
             ClinicalTrialsCollection results = client.List(includeFields: new string[]{ "brief_title" } );
 

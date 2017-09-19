@@ -3,15 +3,21 @@ using System.Configuration;
 using System.IO;
 using System.Web;
 using Common.Logging;
+using Newtonsoft.Json;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
     /// <summary>
     /// Manager class for looking up a given zip code in the ZipCodeDictionary
     /// </summary>
-    public static class ZipCodeGeoLookup
+    public class ZipCodeGeoLookup : IZipCodeGeoLookupService
     {
-        static ILog log = LogManager.GetLogger(typeof(ZipCodeGeoLookup));
+        static ILog log;
+
+        /// <summary>
+        /// The path to the zip file
+        /// </summary>
+        static string _zipFilePath;
 
         /// <summary>
         /// ZipCodeDictionary field that will be used for Loader/Reloader
@@ -21,14 +27,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Used by WatchTemplateDirectory() to watch for changes to zip_code.json
         /// </summary>
-        private static FileSystemWatcher zipCodeFileWatcher;
+        private static FileSystemWatcher zipCodeFileWatcher;        
 
         /// <summary>
         /// Static constructor - initializes ZipCodeDictionary object
+        /// A static class constructor is gauranteed to be called first and only once.
         /// </summary>
         static ZipCodeGeoLookup()
         {
-            zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
+            _zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"];
+
+            log = LogManager.GetLogger(typeof(ZipCodeGeoLookup));
+            zipCodeDictionary = LoadDictionary();
             WatchDictionaryFile();
         }
 
@@ -38,7 +48,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// </summary>
         /// <param name="zipCodeEntry">5-digit zip code string</param>
         /// <returns>ZipCodeGeoEntry or null if no match</returns>
-        public static ZipCodeGeoEntry GetZipCodeGeoEntry(string zipCodeEntry)
+        public GeoLocation GetZipCodeGeoEntry(string zipCodeEntry)
         {
             GuaranteeData();  // Guarantee we have data before trying to load it.
 
@@ -46,7 +56,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (zipDict != null && zipDict.ContainsKey(zipCodeEntry))
             {
-                return zipDict[zipCodeEntry];
+                ZipCodeGeoEntry zip = zipDict[zipCodeEntry];
+
+                return new GeoLocation(zip.Latitude, zip.Longitude);
             }
             else
             {
@@ -66,9 +78,41 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 {
                     if(zipCodeDictionary == null)
                     {
-                        zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
+                        zipCodeDictionary = LoadDictionary();
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Deserialize the json zip/coord mapping file into a dictionary object
+        /// </summary>
+        /// <returns>ZipCodeDictionary zipCodes</returns>
+        private static ZipCodeDictionary LoadDictionary()
+        {
+            // - Get the context object for the current HTTP request and map the physical filepath to the 
+            //   relative filepath (the relative filepath is specified in the Web.config).
+            // - Read the json file using StreamReader.
+            // - Deserialize the json data into a ZipCodeDictionary object.
+            string locZipFilePath = HttpContext.Current.Server.MapPath(_zipFilePath);
+            try
+            {
+                using (StreamReader r = new StreamReader(locZipFilePath))
+                {
+                    string json = r.ReadToEnd();
+                    ZipCodeDictionary zipCodes = JsonConvert.DeserializeObject<ZipCodeDictionary>(json);
+                    return zipCodes;
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                log.ErrorFormat("LoadDictionary(): Path {0} not found.", ex, locZipFilePath);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                log.ErrorFormat("LoadDictionary(): Failed to read dictionary file on path {0}", ex, locZipFilePath);
+                return null;
             }
         }
 
@@ -78,16 +122,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         static void WatchDictionaryFile()
         {
             // Get the .json relative filepath from the Web.config map to the full filepath on the machine.
-            String zipFilePath = ConfigurationManager.AppSettings["ZipCodesJsonMap"].ToString();
-            if (String.IsNullOrWhiteSpace(zipFilePath))
+            
+            if (String.IsNullOrWhiteSpace(_zipFilePath))
             {
                 log.Error("WatchDictionaryFile(): 'ZipCodesJsonMap' value not set.");
                 return;
             }
-            zipFilePath = HttpContext.Current.Server.MapPath(zipFilePath);
+            string mappedZipFilePath = HttpContext.Current.Server.MapPath(_zipFilePath);
 
             // Set FileSystemWatcher for the file path and set properties/event methods.
-            zipCodeFileWatcher = new FileSystemWatcher((Path.GetDirectoryName(zipFilePath)));
+            zipCodeFileWatcher = new FileSystemWatcher((Path.GetDirectoryName(mappedZipFilePath)));
             zipCodeFileWatcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.Size | NotifyFilters.LastAccess | NotifyFilters.Attributes;
             zipCodeFileWatcher.Filter = "*.json";
             zipCodeFileWatcher.EnableRaisingEvents = true;
@@ -105,7 +149,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <param name="e">event arguments (not used)</param>
         private static void OnChange(object src, FileSystemEventArgs e)
         {
-            zipCodeDictionary = ZipCodeGeoLoader.LoadDictionary();
+            zipCodeDictionary = LoadDictionary();
             log.Warn("OnChange(): Dictionary file was updated.");
         }
 
