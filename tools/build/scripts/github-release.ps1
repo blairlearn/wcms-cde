@@ -10,19 +10,19 @@ Param(
 
     [Parameter(mandatory=$False, ValueFromPipeline=$False)]
     [switch]$IsPreRelease,
-    
+
     [Parameter(mandatory=$True, ValueFromPipeline=$False)]
     [string]$releaseNotes,
-    
+
     [Parameter(mandatory=$True, ValueFromPipeline=$False)]
     [string]$artifactDirectory,
-    
+
     [Parameter(mandatory=$True, ValueFromPipeline=$False)]
     [string]$artifactFileName,
-    
+
     [Parameter(mandatory=$True, ValueFromPipeline=$False)]
     [string]$gitHubUsername,
-    
+
     [Parameter(mandatory=$True, ValueFromPipeline=$False)]
     [string]$gitHubRepository
 )
@@ -80,7 +80,7 @@ function GitHub-Release($tagname, $releaseName, $commitId, $IsPreRelease, $relea
     #>
 
     $draft = $FALSE
-    
+
     $releaseData = @{
        tag_name = $tagname
        name = $releaseName;
@@ -106,7 +106,7 @@ function GitHub-Release($tagname, $releaseName, $commitId, $IsPreRelease, $relea
        Body = (ConvertTo-Json $releaseData -Compress)
     }
 
-    $result = Invoke-RestMethod @releaseParams 
+    $result = Invoke-RestMethod @releaseParams
     $uploadUri = $result | Select -ExpandProperty upload_url
     Write-Host $uploadUri
     $uploadUri = $uploadUri -creplace '\{\?name,label\}'  #, "?name=$artifact"
