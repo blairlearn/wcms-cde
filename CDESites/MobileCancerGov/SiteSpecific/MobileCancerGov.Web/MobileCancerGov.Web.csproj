@@ -83,7 +83,7 @@
     <Content Include="SnippetTemplates\MobileTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="TermDictionary.svc" />
-    <Content Include="Schema\CDESchema.xsd">
+    <Content Include="..\..\..\..\CDESchema\CDESchema.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
