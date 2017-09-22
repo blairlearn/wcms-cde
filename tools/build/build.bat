@@ -42,6 +42,34 @@ IF "%FAIL%" NEQ "" (
 REM Determine the current Git commit hash.
 FOR /f %%a IN ('git rev-parse --verify HEAD') DO SET COMMIT_ID=%%a
 
+REM Inject placeholder configuration files.
+set placeholder=%WORKSPACE%\tools\build\resources\placeholder.config
+copy "%placeholder%" "build\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Services.Dictionary\Web.config"
+
+copy "%placeholder%" "CDESites\CancerGov\SiteSpecific\CancerGov.Web\web.config"
+copy "%placeholder%" "CDESites\DCEG\SiteSpecific\DCEG.Web\web.config"
+copy "%placeholder%" "CDESites\Imaging\SiteSpecific\Imaging.Web\web.config"
+copy "%placeholder%" "CDESites\MobileCancerGov\SiteSpecific\MobileCancerGov.Web\web.config"
+copy "%placeholder%" "CDESites\Proteomics\SiteSpecific\Proteomics.Web\web.config"
+copy "%placeholder%" "CDESites\TCGA\SiteSpecific\TCGA.Web\web.config"
+
+copy "%placeholder%" "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Modules.Search\app.config"
+copy "%placeholder%" "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.BestBets\app.config"
+copy "%placeholder%" "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\app.config"
+copy "%placeholder%" "CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE.UI\app.config"
+copy "%placeholder%" "CDEFramework\Libraries\NCILibrary\UnitTests\NCILibrary.Web.CDE.Test\app.config"
+copy "%placeholder%" "CDESites\CancerGov\CancerGovSpecific\CancerGov.Handlers\app.config"
+copy "%placeholder%" "CDESites\CancerGov\CancerGovSpecific\CancerGov.Modules\app.config"
+copy "%placeholder%" "CDESites\CancerGov\PresentationClasses\app.config"
+copy "%placeholder%" "CDESites\CancerGov\SiteSpecific\Modules\CancerGov.APICTS.Test\app.config"
+copy "%placeholder%" "CDESites\CancerGov\SiteSpecific\Modules\CancerGov.BasicCTS\app.config"
+copy "%placeholder%" "CDESites\CancerGov\SiteSpecific\Modules\CancerGov.BasicCTSv2\app.config"
+copy "%placeholder%" "CDESites\CancerGov\SiteSpecific\Modules\CancerGov.ClinicalTrialsAPI\app.config"
+copy "%placeholder%" "CDESites\CancerGov\SiteSpecific\Modules\CancerGov.ClinicalTrialsAPI.Test\app.config"
+copy "%placeholder%" "CDESites\CancerGov\SiteSpecific\Modules\CancerGov.Search.AutoSuggest\app.config"
+copy "%placeholder%" "CDESites\CancerGov\SiteSpecific\Modules\CancerGov.Search.BestBets\app.config"
+copy "%placeholder%" "CDESites\CancerGov\SiteSpecific\Modules\CancerGov.Search.Endeca\app.config"
+
+
 ECHO Building for %my_target% using Branch %my_branch%
-@echo on
 msbuild /fileLogger /t:All "/p:TargetEnvironment=%my_target%;Branch=%my_branch%"  "%WORKSPACE%\tools\build\BuildCDE.xml"
