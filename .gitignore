@@ -5,20 +5,37 @@
 
 msbuild.log
 
-# Block web.configs and tranforms from the public-facing repository.
+# Block application/web configs and tranforms from the public-facing repository.
 
-CDESites\CancerGov\SiteSpecific\CancerGov.Web\Web.config
-CDESites\CancerGov\SiteSpecific\CancerGov.Web\Web.*.config
-CDESites\DCEG\SiteSpecific\DCEG.Web\Web.config
-CDESites\DCEG\SiteSpecific\DCEG.Web\Web.*.config
-CDESites\Imaging\SiteSpecific\Imaging.Web\Web.config
-CDESites\Imaging\SiteSpecific\Imaging.Web\Web.config
-CDESites\MobileCancerGov\SiteSpecific\MobileCancerGov.Web\Web.config
-CDESites\MobileCancerGov\SiteSpecific\MobileCancerGov.Web\Web.*.config
-CDESites\Proteomics\SiteSpecific\Proteomics.Web\Web.config
-CDESites\Proteomics\SiteSpecific\Proteomics.Web\Web.*.config
-CDESites\TCGA\SiteSpecific\TCGA.Web\Web.config
-CDESites\TCGA\SiteSpecific\TCGA.Web\Web.*.config
+CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Modules.Search/app.config
+CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Search.BestBets/app.config
+CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Services.Dictionary/Web.config
+CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE.UI/app.config
+CDEFramework/Libraries/NCILibrary/Code/NCILibrary.Web.CDE/app.config
+CDEFramework/Libraries/NCILibrary/UnitTests/NCILibrary.Web.CDE.Test/App.config
+CDESites/CancerGov/CancerGovSpecific/CancerGov.Handlers/app.config
+CDESites/CancerGov/CancerGovSpecific/CancerGov.Modules/app.config
+CDESites/CancerGov/PresentationClasses/app.config
+CDESites/CancerGov/SiteSpecific/Modules/CancerGov.APICTS.Test/app.config
+CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/app.config
+CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/app.config
+CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/app.config
+CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/app.config
+CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/app.config
+CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/app.config
+
+CDESites/CancerGov/SiteSpecific/CancerGov.Web/Web.config
+CDESites/CancerGov/SiteSpecific/CancerGov.Web/Web.*.config
+CDESites/DCEG/SiteSpecific/DCEG.Web/Web.config
+CDESites/DCEG/SiteSpecific/DCEG.Web/Web.*.config
+CDESites/Imaging/SiteSpecific/Imaging.Web/Web.config
+CDESites/Imaging/SiteSpecific/Imaging.Web/Web.config
+CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/Web.config
+CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/Web.*.config
+CDESites/Proteomics/SiteSpecific/Proteomics.Web/Web.config
+CDESites/Proteomics/SiteSpecific/Proteomics.Web/Web.*.config
+CDESites/TCGA/SiteSpecific/TCGA.Web/Web.config
+CDESites/TCGA/SiteSpecific/TCGA.Web/Web.*.config
 
 
 # /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/
