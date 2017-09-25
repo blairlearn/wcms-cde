@@ -58,8 +58,9 @@
 		Similar to the build, we want to execute the ConfigTransform target multiple times, with varying
 		combinations of CDE sites, environments, and preview/live.
 	-->
+	<!--
     <Exec Command="for %%a in ($(CDE_Site_List)) do for %%b in ($(Config_Environment_List)) do for %%c in ($(Config_Site_List)) do msbuild buildInner.xml /nologo /t:ConfigTransform &quot;/p:CDE_Site=%%a;ENVIRON=%%b;SITE=%%c;ConfigFileLocation=$(ConfigFileLocation);SourceLocation=$(SourceLocation);Revision=$(Revision);TargetEnvironment=$(TargetEnvironment);Branch=$(Branch)&quot;" />
-	
+	-->
   </Target>
 
   <!--
