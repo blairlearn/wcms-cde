@@ -20,6 +20,7 @@ CDESites/CancerGov/SiteSpecific/Modules/CancerGov.APICTS.Test/app.config
 CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTS/app.config
 CDESites/CancerGov/SiteSpecific/Modules/CancerGov.BasicCTSv2/app.config
 CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI/app.config
+CDESites/CancerGov/SiteSpecific/Modules/CancerGov.ClinicalTrialsAPI.Test/app.config
 CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.AutoSuggest/app.config
 CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.BestBets/app.config
 CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/app.config
