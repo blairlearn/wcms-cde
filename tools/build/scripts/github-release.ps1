@@ -125,4 +125,12 @@ function GitHub-Release($tagname, $releaseName, $commitId, $IsPreRelease, $relea
     $result = Invoke-RestMethod @uploadParams
 }
 
-GitHub-Release $tagname $releaseName $commitId ($IsPreRelease -eq $True)  $releaseNotes $artifactDirectory $artifactFileName $gitHubUsername $gitHubRepository $env:GITHUB_TOKEN
+Try {
+	GitHub-Release $tagname $releaseName $commitId ($IsPreRelease -eq $True)  $releaseNotes $artifactDirectory $artifactFileName $gitHubUsername $gitHubRepository $env:GITHUB_TOKEN
+}
+Catch {
+	# Explicitly exit with an error.
+	Write-Error "An error has occured $_"
+	Exit 1
+}
+
