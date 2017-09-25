@@ -32,10 +32,6 @@ job("${FOLDER_NAME}/_lower/Build for $BRANCH on $ENVIRONMENT") {
     }
   }
 
-  parameters {
-    stringParam('RELEASE_LABEL', 'latest', 'Release label')
-  }
-
   label(ENVIRONMENT) // Require the specific build environment.
 
   scm {
