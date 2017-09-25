@@ -68,16 +68,9 @@
   -->
   <Target Name="Upload" DependsOnTargets="ValidateProps">
 	<Message Text="Copying deployment scripts" />
-	<Copy
-		SourceFiles="$(SourceLocation)\tools\build\resources\cdeDeploy.*"
-		DestinationFolder="$(StagingLocation)"
-		OverwriteReadOnlyFiles="true"
-	/>
-	<Copy
-		SourceFiles="$(SourceLocation)\tools\build\resources\cdeBackup.ps1"
-		DestinationFolder="$(StagingLocation)"
-		OverwriteReadOnlyFiles="true"
-	/>
+	<Copy	SourceFiles="$(SourceLocation)\tools\build\resources\cdeDeploy.bat"		DestinationFolder="$(StagingLocation)"		OverwriteReadOnlyFiles="true" />
+	<Copy	SourceFiles="$(SourceLocation)\tools\build\resources\cdeDeploy.ps1"		DestinationFolder="$(StagingLocation)"		OverwriteReadOnlyFiles="true" />
+	<Copy	SourceFiles="$(SourceLocation)\tools\build\resources\cdeBackup.ps1"		DestinationFolder="$(StagingLocation)"		OverwriteReadOnlyFiles="true" />
 
 	<Message Text="Creating $(TempBase)\$(BuildName).zip from $(StagingLocation)" />
 	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\create-zip.ps1 -sourcePath &quot;$(StagingLocation)\*&quot;  -destinationPath &quot;$(TempBase)\$(BuildName).zip&quot;" />
