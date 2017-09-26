@@ -49,7 +49,8 @@ function Main ($sourceLocation, $deployEnv) {
 
     ValidateLocation $sourceLocation $deployEnv
     Deploy $sourceLocation $deployEnv
-    Write-Host -foregroundcolor 'green' "Deployment completed."
+    Write-Host -foregroundcolor 'green' "Code deployment completed."
+	Write-Host -foregroundcolor 'yellow' "Configuration files must be deployed manually."
 }
 
 
@@ -99,15 +100,15 @@ function ValidateLocation ($sourceLocation, $deployEnv) {
             }
 
             ##TEST FOR CONFIGS
-            foreach( $subsite in $SUBSITE_LIST) {
-                $config_location = "$sourceLocation\_configFiles\$deployEnv\$site\$subsite\code\Web.config"
-                $config_exists = Test-Path $config_location
-
-                if( -not $config_exists ) {
-                    $errors = $errors + "Missing Config: $config_location."
-                }
-
-            }
+            #foreach( $subsite in $SUBSITE_LIST) {
+            #    $config_location = "$sourceLocation\_configFiles\$deployEnv\$site\$subsite\code\Web.config"
+            #    $config_exists = Test-Path $config_location
+            #
+            #    if( -not $config_exists ) {
+            #        $errors = $errors + "Missing Config: $config_location."
+            #    }
+            #
+            #}
 
         }
     }
