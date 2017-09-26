@@ -18,12 +18,12 @@ param (
 if( $env -eq "Colo" ) {
     $SITE_LIST = @("CancerGov")
     $SUBSITE_LIST = @("Live")
-	
+
 	Write-Host "Running at Colo - deploying CancerGov Live only"
 } else  {
     $SITE_LIST = @("CancerGov", "DCEG", "TCGA")
     $SUBSITE_LIST = @("Preview", "Live")
-	
+
 	Write-Host "Running on $env environment. Deploying all sites"
 }
 $DEPLOY_BASE = "E:\Content\PercussionSites\CDESites"
@@ -63,12 +63,12 @@ function Deploy ($sourceLocation, $env) {
             $destination = "$DEPLOY_BASE\$site\$subsite\code"
 
             $config_source = "$sourceLocation\_configFiles\$deployEnv\$site\$subsite\code\Web.config"
-            
+
             ##Write-Host "Test - Robocopy $source $destination /mir /xf *.config robots.txt *.pdb /xd localConfig"
             Robocopy $source $destination /mir /xf *.config robots.txt *.pdb /xd localConfig
             ##Write-Host "Test - copy $config_source -force -destination $destination"
-            copy $config_source -force -destination $destination
-            
+            ##copy $config_source -force -destination $destination
+
         }
     }
 
@@ -118,7 +118,7 @@ function ValidateLocation ($sourceLocation, $deployEnv) {
     if( -not $exists ) {
         $errors = $errors + "Deployment base location $DEPLOY_BASE not found."
     } else {
-        # Check for per-site destinations.    
+        # Check for per-site destinations.
         foreach( $site in $SITE_LIST ) {
             foreach( $subsite in $SUBSITE_LIST ) {
                 $location = "$DEPLOY_BASE\$site\$subsite\code"
