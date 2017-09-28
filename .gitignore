@@ -27,16 +27,19 @@ CDESites/CancerGov/SiteSpecific/Modules/CancerGov.Search.Endeca/app.config
 
 CDESites/CancerGov/SiteSpecific/CancerGov.Web/Web.config
 CDESites/CancerGov/SiteSpecific/CancerGov.Web/Web.*.config
+CDESites/CancerGov/SiteSpecific/CancerGov.Web/localConfig/connectionStrings.config
 CDESites/DCEG/SiteSpecific/DCEG.Web/Web.config
 CDESites/DCEG/SiteSpecific/DCEG.Web/Web.*.config
 CDESites/Imaging/SiteSpecific/Imaging.Web/Web.config
 CDESites/Imaging/SiteSpecific/Imaging.Web/Web.config
 CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/Web.config
 CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/Web.*.config
+CDESites/MobileCancerGov/SiteSpecific/MobileCancerGov.Web/localConfig/connectionStrings.config
 CDESites/Proteomics/SiteSpecific/Proteomics.Web/Web.config
 CDESites/Proteomics/SiteSpecific/Proteomics.Web/Web.*.config
 CDESites/TCGA/SiteSpecific/TCGA.Web/Web.config
 CDESites/TCGA/SiteSpecific/TCGA.Web/Web.*.config
+CDESites/TCGA/SiteSpecific/TCGA.Web/localConfig/connectionStrings.config
 
 
 # /CDEFramework/Libraries/NCILibrary/Code/NCILibrary.CMS.Percussion/
