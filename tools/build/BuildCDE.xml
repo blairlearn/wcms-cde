@@ -33,8 +33,6 @@
   </PropertyGroup>
 
 
-
-
   <!--
     Build the solution and copy only the necessary files to the staging folder.
   -->
@@ -52,15 +50,15 @@
         Because of command-line length limits, configured properties (e.g. version number) are allowed to be imported
         from the build.config.
     -->
-    <Exec Command="for %%a in ($(CDE_Site_List)) do msbuild buildInner.xml /t:Build &quot;/p:CDE_Site=%%a;StagingLocation=$(StagingLocation);OutputFolder=$(OutputFolder);SourceLocation=$(SourceLocation);Revision=$(Revision);TargetEnvironment=$(TargetEnvironment)Branch=$(Branch)&quot;" />
+    <Exec Command="for %%a in ($(CDE_Site_List)) do msbuild buildInner.xml /t:Build &quot;/p:CDE_Site=%%a;StagingLocation=$(StagingLocation);OutputFolder=$(OutputFolder);SourceLocation=$(SourceLocation);Revision=$(Revision);TargetEnvironment=$(TargetEnvironment);Branch=$(Branch)&quot;" />
 
-	
+
 	<!--
 		Copy the CDE Schema into the CancerGov deliverable folder. All sites are assumed to be configured to reference
 		CancerGov's copy of the file.
 	-->
 	<Copy SourceFiles="$(SourceLocation)\CDESchema\CDESchema.xsd"		DestinationFolder="$(StagingLocation)\CancerGov\Schema"		OverwriteReadOnlyFiles="true" />
-	
+
 	<!--
 		Similar to the build, we want to execute the ConfigTransform target multiple times, with varying
 		combinations of CDE sites, environments, and preview/live.
@@ -86,7 +84,7 @@
 	<Exec Command="git tag $(BuildName) $(COMMIT_ID)" />
 
 	<Message Text="Uploading $(BuildName).zip to GitHub" />
-	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\github-release.ps1 -tagname $(BuildName) -releaseName $(BuildName) -commitId $(COMMIT_ID) -IsPreRelease -releaseNotes \&quot;Automated build $(BuildName)\&quot; -artifactDirectory &quot;$(TempBase)&quot; -artifactFileName &quot;$(BuildName).zip&quot; -gitHubUsername $(GITHUB_USER) -gitHubRepository $(GITHUB_REPO)" />
+	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\github-release.ps1 -tagname $(BuildName) -releaseName $(BuildName) -commitId $(COMMIT_ID) -IsPreRelease -releaseNotes \&quot;Automated build $(BuildName)\&quot; -artifactDirectory &quot;$(TempBase)&quot; -artifactFileName &quot;$(BuildName).zip&quot; -gitHubUsername $(GH_ORGANIZATION_NAME) -gitHubRepository $(GH_REPO_NAME)" />
   </Target>
 
   <!--
