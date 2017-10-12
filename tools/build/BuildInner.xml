@@ -16,8 +16,8 @@
   <ItemGroup>
     <NonDeployedFiles Include="$(StagingLocation)\web.config" />
   </ItemGroup>
-  
-  
+
+
   <!--
     Build the solution and copy only the necessary files to the staging folder.
   -->
@@ -25,7 +25,7 @@
     <!--
       In order to make publishing work, we have to specify locations for
       both OutDir and WebProjectOutputDir.
-      
+
       OutDir is the location where Assemblies are created as they're individually
       built.  If this folder overlaps with WebProjectOutputDir, then we end up
       with extraneous executable files in the site root.
@@ -41,38 +41,40 @@
         Mirror="True" ExcludeFiles="*.config;*.pdb;" ExcludeFolders="sharedconfig"
     />
 
-    <!-- Clean up temporary output location, 
+    <!-- Clean up temporary output location,
     fake web.config and non-published file list. -->
     <Delete Files="@(NonDeployedFiles)" />
-    
+
     <!-- Write revision note file. -->
-    <WriteLinesToFile File="$(StagingLocation)/$(CDE_Site)/$(BuildNoteFile)" Lines="Version: branches $(Branch);" />
+    <WriteLinesToFile File="$(StagingLocation)/$(CDE_Site)/$(BuildNoteFile)" Lines="Version: $(Branch);" />
     <WriteLinesToFile File="$(StagingLocation)/$(CDE_Site)/$(BuildNoteFile)" Lines="Build Number: $(BUILD_NUMBER)" />
     <WriteLinesToFile File="$(StagingLocation)/$(CDE_Site)/$(BuildNoteFile)" Lines="Build Target: $(TargetEnvironment)" />
+	<WriteLinesToFile File="$(StagingLocation)/$(CDE_Site)/$(BuildNoteFile)" Lines="Commit: $(COMMIT_ID)" />
   </Target>
 
-  
+
   <Target Name="ConfigTransform">
-  
+
 	   <Message Text="SourceLocation = '$(SourceLocation)', ConfigFileLocation = '$(ConfigFileLocation)'" />
 	   <Message Text="CDE_Site = '$(CDE_Site)', ENVIRON = '$(ENVIRON)', SITE = '$(SITE)'" />
 
 	   <!-- Transform will fail if the output location doesn't already exist. -->
 	   <MakeDir Directories="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\"/>
-  
+
 	   <TransformXml   Source="$(SourceLocation)\CDESites\$(CDE_Site)\SiteSpecific\$(CDE_Site).Web\Web.config"
 					Transform="$(SourceLocation)\CDESites\$(CDE_Site)\SiteSpecific\$(CDE_Site).Web\Web.$(ENVIRON)-$(SITE).config"
 					Destination="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" />
 
     <!-- Write notes to config file. -->
-    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="&lt;!-- " />    
-    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="Version: branches $(Branch);" />
+    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="&lt;!-- " />
+    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="Version: $(Branch);" />
     <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="Revision: $(Revision)" />
-    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="Build Target: $(TargetEnvironment)" />      
-    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="Source Transform: $(SourceLocation)\CDESites\$(CDE_Site)\SiteSpecific\$(CDE_Site).Web\Web.$(ENVIRON)-$(SITE).config" />          
-    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="--&gt;" />        
+    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="Build Target: $(TargetEnvironment)" />
+	<WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="Commit: $(COMMIT_ID)" />
+    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="Source Transform: $(SourceLocation)\CDESites\$(CDE_Site)\SiteSpecific\$(CDE_Site).Web\Web.$(ENVIRON)-$(SITE).config" />
+    <WriteLinesToFile File="$(ConfigFileLocation)\$(ENVIRON)\$(CDE_Site)\$(SITE)\code\Web.config" Lines="--&gt;" />
   </Target>
-  
+
   <!--
     Deploy the built code (.as?x and .dll) to the location set in
     the $(DeployLocation) value, defined in build.config.  (If the
@@ -83,7 +85,7 @@
     <Error Condition="$(CDE_Site) == '' OR $(StagingLocation) == '' OR $(TargetEnvironment) == '' OR $(ConfigFileLocation) == ''"
              Text="CDE_Site and StagingLocation must be specified.\nCDE_Site: $(CDE_Site)\nStagingLocation: $(StagingLocation)\nTargetEnvironment: $(TargetEnvironment)\nConfigFileLocation: $(ConfigFileLocation)"
     />
-    
+
     <!-- NOTE: *.config, robots.txt, and *.pdb are not copied. -->
     <RoboCopy
         SourceFolder="$(StagingLocation)\$(CDE_Site)"
@@ -98,7 +100,7 @@
 		DestinationFolder="$(DeployLocation)\$(CDE_Site)\Live\Code"
 		OverwriteReadOnlyFiles="true"
 	/>
-	
+
     <RoboCopy
         SourceFolder="$(StagingLocation)\$(CDE_Site)"
         DestinationFolder="$(DeployLocation)\$(CDE_Site)\Preview\Code"
@@ -106,18 +108,18 @@
         ExcludeFiles="*.config;robots.txt;*.pdb"
 		ExcludeFolders="localConfig"
     />
-	
+
 	<Copy
 		SourceFiles="$(ConfigFileLocation)\$(TargetEnvironment)\$(CDE_Site)\Preview\code\\Web.config"
 		DestinationFolder="$(DeployLocation)\$(CDE_Site)\Preview\Code"
 		OverwriteReadOnlyFiles="true"
 	/>
-	
+
   </Target>
 
   <Target Name="Help">
     <Message Text="This script is not intended to be run directly." />
     <Message Text="Please use BuildCDE.xml instead." />
   </Target>
-  
+
 </Project>
