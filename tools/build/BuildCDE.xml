@@ -54,12 +54,6 @@
 
 
 	<!--
-		Copy the CDE Schema into the CancerGov deliverable folder. All sites are assumed to be configured to reference
-		CancerGov's copy of the file.
-	-->
-	<Copy SourceFiles="$(SourceLocation)\CDESchema\CDESchema.xsd"		DestinationFolder="$(StagingLocation)\CancerGov\Schema"		OverwriteReadOnlyFiles="true" />
-
-	<!--
 		Similar to the build, we want to execute the ConfigTransform target multiple times, with varying
 		combinations of CDE sites, environments, and preview/live.
 	-->
