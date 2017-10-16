@@ -86,6 +86,7 @@
     <Content Include="..\..\..\..\CDESchema\CDESchema.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>Schema\CDESchema.xsd</Link>
     </Content>
     <Content Include="packages.config" />
     <None Include="Web.config" />
