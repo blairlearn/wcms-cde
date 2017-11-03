@@ -1,1 +1,0 @@
-C:\Windows\System32\Robocopy.exe /e c:\wcms-configs\cde\CDESites %~dp0\CDESites
