@@ -115,6 +115,15 @@
 	<Error Condition=" '$(COMMIT_ID)'=='' "
           Text=" Missing required property [COMMIT_ID]" />
 
+	<Error Condition=" '$(WORKSPACE)'=='' "
+          Text=" Missing required property [WORKSPACE]" />
+
+	<Error Condition=" '$(TEMP)'=='' "
+          Text=" Missing required property [TEMP]" />
+
+	<Error Condition=" '$(BUILD_NUMBER)'=='' "
+          Text=" Missing required property [BUILD_NUMBER]" />
+
 	<Error Condition=" '$(GITHUB_TOKEN)'=='' "
           Text=" Missing required property [GITHUB_TOKEN]" />
 
