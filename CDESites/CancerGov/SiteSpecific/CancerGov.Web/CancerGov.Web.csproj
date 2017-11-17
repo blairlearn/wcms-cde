@@ -129,9 +129,6 @@
     <Content Include="SnippetTemplates\SearchBox.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="SnippetTemplates\TemplatedDynamicList.ascx" />
-    <Content Include="SnippetTemplates\TopicSearchCategorySnippet.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
     <Content Include="UserControls\Headers\MainPageHeader.ascx" />
     <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
     <Content Include="App_Data\wurfl-latest.zip" />
