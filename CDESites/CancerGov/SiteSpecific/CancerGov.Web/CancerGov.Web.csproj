@@ -616,10 +616,6 @@
       <Project>{a3d91f04-b62b-4ec4-bb66-ff10b2d23b23}</Project>
       <Name>CancerGov.Search.BestBets</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\CancerGov.TopicSearch\CancerGov.TopicSearch.csproj">
-      <Project>{917C939E-6AA1-4FEE-8C35-6EC62974455B}</Project>
-      <Name>CancerGov.TopicSearch</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Web.UI\CancerGov.Web.UI.csproj">
       <Project>{FF201258-189F-4EAF-B282-03FE7738A155}</Project>
       <Name>CancerGov.Web.UI</Name>
