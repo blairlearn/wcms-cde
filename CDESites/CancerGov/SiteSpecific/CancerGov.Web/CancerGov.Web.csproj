@@ -378,20 +378,6 @@
     <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx.designer.cs">
       <DependentUpon>DrugDictionaryResultsList.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\EmergencyBanner.ascx.cs">
-      <DependentUpon>EmergencyBanner.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\EmergencyBanner.ascx.designer.cs">
-      <DependentUpon>EmergencyBanner.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.cs">
-      <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.designer.cs">
-      <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx.cs">
       <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -586,10 +572,6 @@
       <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
       <Name>CDR.TermDictionary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\EmergencyAlert\EmergencyAlert.csproj">
-      <Project>{2ED8F4D6-9A1D-4109-8F37-6D407C674184}</Project>
-      <Name>EmergencyAlert</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\PresentationClasses\PresentationClasses.csproj">
       <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
       <Name>PresentationClasses</Name>
@@ -689,8 +671,6 @@
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx" />
-    <Content Include="SnippetTemplates\EmergencyBanner.ascx" />
-    <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx" />
