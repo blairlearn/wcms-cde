@@ -163,55 +163,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SiteWideSearch.resx</DependentUpon>
     </Compile>
-    <Compile Include="Archive\arch_dictionary.aspx.cs">
-      <DependentUpon>arch_dictionary.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_dictionary.aspx.designer.cs">
-      <DependentUpon>arch_dictionary.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\arch_drugdictionary.aspx.cs">
-      <DependentUpon>arch_drugdictionary.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_drugdictionary.aspx.designer.cs">
-      <DependentUpon>arch_drugdictionary.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\arch_druginfosummaries.aspx.cs">
-      <DependentUpon>arch_druginfosummaries.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_druginfosummaries.aspx.designer.cs">
-      <DependentUpon>arch_druginfosummaries.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\arch_protocols.aspx.cs">
-      <DependentUpon>arch_protocols.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_protocols.aspx.designer.cs">
-      <DependentUpon>arch_protocols.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\arch_summaries.aspx.cs">
-      <DependentUpon>arch_summaries.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_summaries.aspx.designer.cs">
-      <DependentUpon>arch_summaries.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\index.aspx.cs">
-      <DependentUpon>index.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\index.aspx.designer.cs">
-      <DependentUpon>index.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\UserControls\AlphaListBox.ascx.cs">
-      <DependentUpon>AlphaListBox.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\UserControls\AlphaListBox.ascx.designer.cs">
-      <DependentUpon>AlphaListBox.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Common\EmailSyntaxValidator.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\PopUpPage.cs">
@@ -599,13 +550,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\web_browsers_patch.xml" />
-    <Content Include="Archive\arch_dictionary.aspx" />
-    <Content Include="Archive\arch_drugdictionary.aspx" />
-    <Content Include="Archive\arch_druginfosummaries.aspx" />
-    <Content Include="Archive\arch_protocols.aspx" />
-    <Content Include="Archive\arch_summaries.aspx" />
-    <Content Include="Archive\index.aspx" />
-    <Content Include="Archive\UserControls\AlphaListBox.ascx" />
     <Content Include="AutoSuggestSearch.svc" />
     <Content Include="Common\PopUps\CTLSearch\blank.htm" />
     <Content Include="Common\PopUps\CTLSearch\CTFooter.htm" />
@@ -703,22 +647,6 @@
     <Content Include="sysimages\tile-slider-spanish-previous.gif" />
     <Content Include="TermDictionary.svc" />
     <Content Include="UserControls\CTCustomSelection.ascx" />
-    <EmbeddedResource Include="Archive\arch_dictionary.aspx.resx">
-      <DependentUpon>arch_dictionary.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Archive\arch_protocols.aspx.resx">
-      <DependentUpon>arch_protocols.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Archive\arch_summaries.aspx.resx">
-      <DependentUpon>arch_summaries.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Archive\index.aspx.resx">
-      <DependentUpon>index.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookup.aspx.resx">
       <DependentUpon>CTLookup.aspx.cs</DependentUpon>
       <SubType>Designer</SubType>
