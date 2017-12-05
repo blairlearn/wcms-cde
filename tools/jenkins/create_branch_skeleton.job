@@ -14,6 +14,7 @@ job("${FOLDER_NAME}/_lower/Build for $BRANCH on $ENVIRONMENT") {
   wrappers {
     credentialsBinding {
       string('GITHUB_TOKEN', GH_USER_TOKEN_KEY)
+	  usernamePassword('NEXUS_USER', 'NEXUS_PASS', NEXUS_USER_KEY)
     }
 
     environmentVariables {
