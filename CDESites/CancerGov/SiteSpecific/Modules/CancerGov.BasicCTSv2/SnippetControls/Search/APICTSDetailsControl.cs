@@ -110,12 +110,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             PageInstruction.AddFieldFilter("short_title", (fieldName, data) =>
             {
+                data.Value = trial.BriefTitle;
+
                 //Eh, When would this happen???
                 if (!string.IsNullOrWhiteSpace(trial.NCTID))
-                    data.Value = "View Clinical Trial " + trial.NCTID;
-                else
-                    data.Value = "View Clinical Trial";
+                    data.Value += " - " + trial.NCTID;
+
             });
+
+
+            PageInstruction.AddFieldFilter("meta_description", (fieldname, data) =>
+            {
+                data.Value = trial.BriefTitle;
+            });
+
+
+
 
             PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
             {
