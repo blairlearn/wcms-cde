@@ -138,22 +138,60 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //fetch results
             var results = _basicCTSManager.Search(SearchParams, query);
 
-            this.TotalSearchResults = results.TotalResults;            
 
-            //Load VM File and show search results
-            LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                this.BaseConfig.ResultsPageTemplatePath,
-                new
+           
+            //CODE ADDED BY CHRISTIAN RIKONG ON 12/07/2017 at 03:07 PM - THE GOAL IS THAT WHEN THERE ARE NO TRIALS RESULTS, WE 
+            //REDIRECT TO THE NOTRIALS PAGE
+
+            if(results == null || (results != null && results.TotalResults == 0 ))
+            {
+                string baseUrl = HttpContext.Current.Request.RawUrl.ToString();
+                string[] baseUrlTokens = baseUrl.Split(new string[] { "disease/" }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (baseUrlTokens != null && baseUrlTokens.Length >= 2)
                 {
-                    Results = results,
-                    Control = this,
-                    TrialTools = new TrialVelocityTools()
-                }
-            ));
-            Controls.Add(ltl);
+                    string diseaseBaseUrl = baseUrlTokens[0] + "disease/";
+                    string noTrialsUrl = diseaseBaseUrl + "notrials?";
+                    string[] extraParametersTokens = baseUrlTokens[1].Split(new char[] { '/' });
 
-            // Setup web analytics
-            this.SetAnalytics();
+                    for (int i = 0; i < extraParametersTokens.Length; i++)
+                    {
+                        noTrialsUrl = noTrialsUrl + "p" + (i + 1) + "=" + extraParametersTokens[i];
+
+                        if ((i + 1) <= extraParametersTokens.Length - 1)
+                            noTrialsUrl = noTrialsUrl + "&";
+                    }
+
+                    if(noTrialsUrl != null && noTrialsUrl.Length > 0)
+                        Response.Redirect(noTrialsUrl);
+                }
+
+                
+            }
+            else
+            {
+                this.TotalSearchResults = results.TotalResults;
+
+                //Load VM File and show search results
+                LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
+                    this.BaseConfig.ResultsPageTemplatePath,
+                    new
+                    {
+                        Results = results,
+                        Control = this,
+                        TrialTools = new TrialVelocityTools()
+                    }
+                ));
+                Controls.Add(ltl);
+
+                // Setup web analytics
+                this.SetAnalytics();
+            }
+
+
+
+
+           
         }
 
         /// <summary>
