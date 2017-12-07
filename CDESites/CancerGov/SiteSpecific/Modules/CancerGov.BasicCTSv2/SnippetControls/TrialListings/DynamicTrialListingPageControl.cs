@@ -181,6 +181,57 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             
             //Step 3. Setup Page Metadata
             this.SetupPageMetadata(pattern);
+
+
+        }
+
+     /// <summary>
+     ///    This method is called when no results are returned by the query. In this case the function checks that the current URL does not
+     ///    have the word notrials in it. If it is the case, the function will redirect the user to a page with the following URL:
+     ///    PRETTYURL/NOTRIALS?p1=a&p2=b
+     /// </summary>
+        protected override void OnEmptyResults()
+        {
+            try
+            {
+                string pageUrl = this.PrettyUrl;
+
+                if(pageUrl.ToLower().Trim().Contains("notrials") == false)
+                {
+                    int parametersCount = 0;
+                    string[] parameters = this.CurrAppPath.Split(new char[] { '/' });
+                    string noTrialsPageUrl = pageUrl + "/notrials?";
+
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        if(parameters[i].Length > 0)
+                        {
+                            parametersCount = parametersCount + 1;
+                            noTrialsPageUrl = noTrialsPageUrl + "p" + (parametersCount) + "=" + parameters[i];
+
+                            if (i < parameters.Length - 1)
+                            {
+                                noTrialsPageUrl = noTrialsPageUrl + "&";
+                            }
+                        }
+                        
+
+                       
+                    }
+
+                    if(noTrialsPageUrl.Length > 0 && noTrialsPageUrl.Contains("p1") == true && Session["redirect_to_notrials"] == null)
+                    {
+                        Session["redirect_to_notrials"] = true;
+                        Response.Redirect(noTrialsPageUrl);
+                        
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                string message = ex.Message;
+                string stackTrace = ex.StackTrace;
+            }
         }
 
         /// <summary>

@@ -151,6 +151,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 throw new HttpException(400, "Invalid Parameters");
             }
 
+            
+
             string[] urlParams = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             if (urlParams.Length >= 4)
             {
@@ -168,6 +170,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     // Lowercase all c-codes for comparison to items in mapping file
                     split = split.Select(s => s.ToLower()).ToArray();
                     this.DiseaseIDs = string.Join(",", split);
+                }
+                else if(urlParams[0].ToLower().Trim() == "notrials")
+                {
+                    SetParametersForNoTrialsPage();
                 }
                 else
                 {
@@ -200,6 +206,46 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     // Lowercase all c-codes for comparison to items in mapping file
                     this.InterventionIDs = urlParams[2].ToLower();
                 }
+            }
+        }
+
+
+        private void SetParametersForNoTrialsPage()
+        {
+            try
+            {
+                if(HttpContext.Current.Request.QueryString.Count >= 1)
+                {
+                    this.DiseaseIDs = HttpContext.Current.Request.QueryString[0].ToLower();
+                }
+
+                if (HttpContext.Current.Request.QueryString.Count >= 2)
+                {
+                    this.TrialType = HttpContext.Current.Request.QueryString[1].ToLower();
+                }
+
+                if (HttpContext.Current.Request.QueryString.Count >= 3)
+                {
+                    if (HttpContext.Current.Request.QueryString[2].Contains(","))
+                    {
+                        string[] split = HttpContext.Current.Request.QueryString[2].Split(',');
+                        // Sort c-codes in alphanumerical order for comparison to items in mapping file
+                        Array.Sort(split);
+                        // Lowercase all c-codes for comparison to items in mapping file
+                        split = split.Select(s => s.ToLower()).ToArray();
+                        this.InterventionIDs = string.Join(",", split);
+                    }
+                    else
+                    {
+                        // Lowercase all c-codes for comparison to items in mapping file
+                        this.InterventionIDs = HttpContext.Current.Request.QueryString[2].ToLower();
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                string message = ex.Message;
+                string stackTrace = ex.StackTrace;
             }
         }
 

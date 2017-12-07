@@ -138,38 +138,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //fetch results
             var results = _basicCTSManager.Search(SearchParams, query);
 
-
+            
            
             //CODE ADDED BY CHRISTIAN RIKONG ON 12/07/2017 at 03:07 PM - THE GOAL IS THAT WHEN THERE ARE NO TRIALS RESULTS, WE 
             //REDIRECT TO THE NOTRIALS PAGE
 
-            if(results == null || (results != null && results.TotalResults == 0 ))
+            if(results == null || (results.TotalResults == 0 ))
             {
-                string baseUrl = HttpContext.Current.Request.RawUrl.ToString();
-                string[] baseUrlTokens = baseUrl.Split(new string[] { "disease/" }, StringSplitOptions.RemoveEmptyEntries);
-
-                if (baseUrlTokens != null && baseUrlTokens.Length >= 2)
-                {
-                    string diseaseBaseUrl = baseUrlTokens[0] + "disease/";
-                    string noTrialsUrl = diseaseBaseUrl + "notrials?";
-                    string[] extraParametersTokens = baseUrlTokens[1].Split(new char[] { '/' });
-
-                    for (int i = 0; i < extraParametersTokens.Length; i++)
-                    {
-                        noTrialsUrl = noTrialsUrl + "p" + (i + 1) + "=" + extraParametersTokens[i];
-
-                        if ((i + 1) <= extraParametersTokens.Length - 1)
-                            noTrialsUrl = noTrialsUrl + "&";
-                    }
-
-                    if(noTrialsUrl != null && noTrialsUrl.Length > 0)
-                        Response.Redirect(noTrialsUrl);
-                }
-
-                
+                OnEmptyResults();
             }
-            else
-            {
+           
                 this.TotalSearchResults = results.TotalResults;
 
                 //Load VM File and show search results
@@ -186,13 +164,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
                 // Setup web analytics
                 this.SetAnalytics();
-            }
+            
 
 
 
 
            
         }
+
+
+     /// <summary>
+     ///    This method is called when no results are returned by the query
+     /// </summary>
+        protected abstract void OnEmptyResults();
+
 
         /// <summary>
         /// Loads the JSON configuration from the SnippetInfo's Data
