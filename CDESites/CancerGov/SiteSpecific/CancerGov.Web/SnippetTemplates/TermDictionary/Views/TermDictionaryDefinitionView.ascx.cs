@@ -124,10 +124,13 @@ namespace CancerGov.Web.SnippetTemplates
                     data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                 });
 
-                PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-                {
-                    data.Value = "Definition of " + termName;
-                });
+
+
+              //CHANGE MADE BY CHRISTIAN RIKONG ON 12/08/2017 AT 11:47 AM
+                SetMetaTagDescription(dataItem);
+                
+
+               
             }
 
 
@@ -140,6 +143,77 @@ namespace CancerGov.Web.SnippetTemplates
 
         }
 
+
+     /// <summary>
+     ///    Sets the meta tag description. The function checks if the Dictionary Term has a valid (not null and length greater than 0) definition.
+     ///    If it is the case the function attempts to extract the first two sentences of the Definition and set them as the meta tag description.
+     ///    If not, we revert to using the term itself has the meta tag description.
+     ///    
+     ///    AUTHOR: CHRISTIAN RIKONG
+     ///    LAST PUBLISHED DATE: 12/08/2017 11:47 AM
+     /// </summary>
+     /// <param name="dataItem">Stores the Dictionary Term that is used to create the description meta tag</param>
+        private void SetMetaTagDescription(DictionaryTerm dataItem)
+        {
+            try
+            {
+                string termName = dataItem.Term;
+
+
+                if (dataItem.Definition != null && dataItem.Definition.Text != null && dataItem.Definition.Text.Length > 0)
+                {
+                    string sentences = "";
+                    string[] definitionsSentences = System.Text.RegularExpressions.Regex.Split(dataItem.Definition.Text, @"(?<=[\.!\?])\s+");
+
+
+                    if (definitionsSentences != null && definitionsSentences.Length > 0)
+                    {
+                        int sentencesCount = 0;
+
+                        foreach (string existingSentence in definitionsSentences)
+                        {
+                            sentencesCount = sentencesCount + 1;
+
+                            if (sentencesCount <= 2)
+                            {
+                                sentences = sentences + existingSentence + ". ";
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                        {
+                            data.Value = sentences;
+                        });
+                    }
+                    else
+                    {
+                        PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                        {
+                            data.Value = "Definition of " + termName;
+                        });
+                    }
+
+
+
+                }
+                else
+                {
+                    PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                    {
+                        data.Value = "Definition of " + termName;
+                    });
+                }
+            }
+            catch(Exception ex)
+            {
+                string message = ex.Message;
+                string stackTrace = ex.StackTrace;
+            }
+        }
 
         /**
          * Add URL filter for old print page implementation
