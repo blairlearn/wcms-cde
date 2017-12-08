@@ -112,10 +112,13 @@ namespace CancerGov.Web.SnippetTemplates
 
                 this.Page.Title = PageInstruction.GetField("short_title");
 
-                PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-                {
-                    data.Value = "Definición de " + termName;
-                });
+
+                SetMetaTagDescription(dataItem, DictionaryLanguage);
+
+                //PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                //{
+                //    data.Value = "Definición de " + termName;
+                //});
             }
             else
             {
@@ -127,7 +130,7 @@ namespace CancerGov.Web.SnippetTemplates
 
 
               //CHANGE MADE BY CHRISTIAN RIKONG ON 12/08/2017 AT 11:47 AM
-                SetMetaTagDescription(dataItem);
+                SetMetaTagDescription(dataItem, DictionaryLanguage);
                 
 
                
@@ -153,7 +156,7 @@ namespace CancerGov.Web.SnippetTemplates
      ///    LAST PUBLISHED DATE: 12/08/2017 11:47 AM
      /// </summary>
      /// <param name="dataItem">Stores the Dictionary Term that is used to create the description meta tag</param>
-        private void SetMetaTagDescription(DictionaryTerm dataItem)
+        private void SetMetaTagDescription(DictionaryTerm dataItem, string DictionaryLanguage)
         {
             try
             {
@@ -202,10 +205,22 @@ namespace CancerGov.Web.SnippetTemplates
                 }
                 else
                 {
-                    PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                    switch(DictionaryLanguage.ToLower().Trim())
                     {
-                        data.Value = "Definition of " + termName;
-                    });
+                        case "es":
+                            PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                            {
+                                data.Value = "Definición de " + termName;
+                            });
+                            break;
+                        default:
+                            PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                            {
+                                data.Value = "Definition of " + termName;
+                            });
+                            break;
+                    }
+                    
                 }
             }
             catch(Exception ex)
