@@ -113,12 +113,9 @@ namespace CancerGov.Web.SnippetTemplates
                 this.Page.Title = PageInstruction.GetField("short_title");
 
 
-                SetMetaTagDescription(dataItem, DictionaryLanguage);
+                SetMetaTagDescriptionToTerm(PageInstruction, dataItem.Term, DictionaryLanguage);
 
-                //PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-                //{
-                //    data.Value = "Definición de " + termName;
-                //});
+              
             }
             else
             {
@@ -158,75 +155,74 @@ namespace CancerGov.Web.SnippetTemplates
      /// <param name="dataItem">Stores the Dictionary Term that is used to create the description meta tag</param>
         private void SetMetaTagDescription(DictionaryTerm dataItem, string DictionaryLanguage)
         {
-            try
+
+            string termName = dataItem.Term;
+
+
+            if (dataItem.Definition != null && dataItem.Definition.Text != null && dataItem.Definition.Text.Length > 0)
             {
-                string termName = dataItem.Term;
+                string sentences = "";
+                string[] definitionsSentences = System.Text.RegularExpressions.Regex.Split(dataItem.Definition.Text, @"(?<=[\.!\?])\s+");
 
 
-                if (dataItem.Definition != null && dataItem.Definition.Text != null && dataItem.Definition.Text.Length > 0)
+                if (definitionsSentences != null && definitionsSentences.Length > 0)
                 {
-                    string sentences = "";
-                    string[] definitionsSentences = System.Text.RegularExpressions.Regex.Split(dataItem.Definition.Text, @"(?<=[\.!\?])\s+");
+                    int sentencesCount = 0;
 
-
-                    if (definitionsSentences != null && definitionsSentences.Length > 0)
+                    foreach (string existingSentence in definitionsSentences)
                     {
-                        int sentencesCount = 0;
+                        sentencesCount = sentencesCount + 1;
 
-                        foreach (string existingSentence in definitionsSentences)
+                        if (sentencesCount <= 2)
                         {
-                            sentencesCount = sentencesCount + 1;
-
-                            if (sentencesCount <= 2)
-                            {
-                                sentences = sentences + existingSentence + ". ";
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            sentences = sentences + existingSentence + ". ";
                         }
-
-                        PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                        else
                         {
-                            data.Value = sentences;
-                        });
+                            break;
+                        }
                     }
-                    else
+
+                    PageInstruction.AddFieldFilter("meta_description", (name, data) =>
                     {
-                        PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-                        {
-                            data.Value = "Definition of " + termName;
-                        });
-                    }
-
-
-
+                        data.Value = sentences;
+                    });
                 }
                 else
                 {
-                    switch(DictionaryLanguage.ToLower().Trim())
-                    {
-                        case "es":
-                            PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-                            {
-                                data.Value = "Definición de " + termName;
-                            });
-                            break;
-                        default:
-                            PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-                            {
-                                data.Value = "Definition of " + termName;
-                            });
-                            break;
-                    }
-                    
+                    SetMetaTagDescriptionToTerm(PageInstruction, termName, DictionaryLanguage);
                 }
+
             }
-            catch(Exception ex)
+            else
             {
-                string message = ex.Message;
-                string stackTrace = ex.StackTrace;
+                SetMetaTagDescriptionToTerm(PageInstruction, termName, DictionaryLanguage);
+            }
+
+        }
+
+     /// <summary>
+     ///    Sets the Meta Tag Description to a given term
+     /// </summary>
+     /// <param name="PageInstruction"></param>
+     /// <param name="termName"></param>
+     /// <param name="DictionaryLanguage"></param>
+        private void SetMetaTagDescriptionToTerm(IPageAssemblyInstruction PageInstruction, string termName, string DictionaryLanguage)
+        {
+            switch (DictionaryLanguage.ToLower().Trim())
+            {
+                case "es":
+                    PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                    {
+                        data.Value = "Definición de " + termName;
+                    });
+                    break;
+                default:
+                    PageInstruction.AddFieldFilter("meta_description", (name, data) =>
+                    {
+                        data.Value = "Definition of " + termName;
+                    });
+                    break;
             }
         }
 

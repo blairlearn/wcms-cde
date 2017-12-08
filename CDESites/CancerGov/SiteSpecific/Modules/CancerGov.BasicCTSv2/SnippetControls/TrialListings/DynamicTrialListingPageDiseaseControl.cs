@@ -162,35 +162,74 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             List<string> rawParams = new List<string>();
 
-            //TODO: Only do this check in one place and it should be in SetupURLs in the DynamicTrialListingPageControl
-            if (this.CurrAppPath == "/notrials")
+            
+            if (this.IsNoTrials)
             {
                 NciUrl ParsedReqUrlParams = new NciUrl(true, true, true);  //We need this to be lowercase and collapse duplicate params. (Or not use an NCI URL)
                 ParsedReqUrlParams.SetUrl(this.Request.Url.Query);
 
-                //TODO: handle new /notrials link when there are 0 query parameters.
-                if ("No p1" == "true")
+               
+                if(ParsedReqUrlParams.QueryParameters.Count == 0)
                 {
                     throw new HttpException(400, "Invalid Parameters");
                 }
+
+                rawParams = GetRawParametersFromQueryString(ParsedReqUrlParams);
+
+               
+                    
             }
             else
             {
-                //Setup rawParams for /a/b/c structure
+              //Setup rawParams for /a/b/c structure
+                rawParams = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
             }
 
-            //
 
-            
+            SetUpRawParametersForListingPage(rawParams);  
+        }
 
-            string[] urlParams = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (urlParams.Length >= 4)
+      /// <summary>
+      ///   Retrieves parameters from the Query string and encapsulate them into a list
+      /// </summary>
+      /// <param name="ParsedReqUrlParams"></param>
+      /// <returns></returns>
+        private List<string> GetRawParametersFromQueryString(NciUrl ParsedReqUrlParams)
+        {
+            List<string> rawParams = new List<string>() { "", "", "" };
+
+
+            foreach (string key in ParsedReqUrlParams.QueryParameters.Keys)
+            {
+                if (ParsedReqUrlParams.QueryParameters["p1"] != null)
+                    rawParams[0] = ParsedReqUrlParams.QueryParameters[key];
+
+                if (ParsedReqUrlParams.QueryParameters.Count > 0 && ParsedReqUrlParams.QueryParameters["p2"] != null)
+                    rawParams[1] = ParsedReqUrlParams.QueryParameters["p2"];
+
+                if (ParsedReqUrlParams.QueryParameters.Count > 2 && ParsedReqUrlParams.QueryParameters["p3"] != null)
+                    rawParams[2] = ParsedReqUrlParams.QueryParameters[key];
+
+
+                rawParams.Add(ParsedReqUrlParams.QueryParameters[key]);
+            }
+
+
+            return (rawParams);
+        }
+
+     /// <summary>
+     ///    This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
+     /// </summary>
+        private void SetUpRawParametersForListingPage(List<string> urlParams)
+        {
+            if (urlParams.Count >= 4)
             {
                 throw new HttpException(400, "Invalid Parameters");
             }
 
             //Has Disease
-            if (urlParams.Length >= 1)
+            if (urlParams.Count >= 1)
             {
                 if (urlParams[0].Contains(","))
                 {
@@ -201,10 +240,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     split = split.Select(s => s.ToLower()).ToArray();
                     this.DiseaseIDs = string.Join(",", split);
                 }
-                else if(urlParams[0].ToLower().Trim() == "notrials")
-                {
-                    SetParametersForNoTrialsPage();
-                }
                 else
                 {
                     // Lowercase all c-codes for comparison to items in mapping file
@@ -213,14 +248,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             //Has Type of Trial
-            if (urlParams.Length >= 2)
+            if (urlParams.Count >= 2)
             {
                 // Lowercase all c-codes for comparison to items in mapping file
                 this.TrialType = urlParams[1].ToLower();
             }
 
             //Has Intervention
-            if (urlParams.Length >= 3)
+            if (urlParams.Count >= 3)
             {
                 if (urlParams[2].Contains(","))
                 {
@@ -236,46 +271,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     // Lowercase all c-codes for comparison to items in mapping file
                     this.InterventionIDs = urlParams[2].ToLower();
                 }
-            }
-        }
-
-
-        private void SetParametersForNoTrialsPage()
-        {
-            try
-            {
-                if(HttpContext.Current.Request.QueryString.Count >= 1)
-                {
-                    this.DiseaseIDs = HttpContext.Current.Request.QueryString[0].ToLower();
-                }
-
-                if (HttpContext.Current.Request.QueryString.Count >= 2)
-                {
-                    this.TrialType = HttpContext.Current.Request.QueryString[1].ToLower();
-                }
-
-                if (HttpContext.Current.Request.QueryString.Count >= 3)
-                {
-                    if (HttpContext.Current.Request.QueryString[2].Contains(","))
-                    {
-                        string[] split = HttpContext.Current.Request.QueryString[2].Split(',');
-                        // Sort c-codes in alphanumerical order for comparison to items in mapping file
-                        Array.Sort(split);
-                        // Lowercase all c-codes for comparison to items in mapping file
-                        split = split.Select(s => s.ToLower()).ToArray();
-                        this.InterventionIDs = string.Join(",", split);
-                    }
-                    else
-                    {
-                        // Lowercase all c-codes for comparison to items in mapping file
-                        this.InterventionIDs = HttpContext.Current.Request.QueryString[2].ToLower();
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                string message = ex.Message;
-                string stackTrace = ex.StackTrace;
             }
         }
 

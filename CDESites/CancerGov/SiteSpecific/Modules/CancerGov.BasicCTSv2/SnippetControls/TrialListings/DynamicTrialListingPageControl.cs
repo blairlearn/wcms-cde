@@ -75,6 +75,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
+     /// <summary>
+     ///    Read property indicating if the Trial Listing Page URL contains the keyword "/notrials". If it is the case,
+     ///    the property will be true. Otherwise false will be sent back
+     /// </summary>
+        protected bool IsNoTrials
+        {
+            get
+            {
+                return (this.CurrAppPath == "/notrials");
+            }
+        }
+
         /// <summary>
         /// Replaces the place holder text based on this Dynamic Trial Listing control type &
         /// user supplied URL parameters
@@ -193,7 +205,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override void OnEmptyResults()
         {
 
-            if (this.CurrAppPath == "/notrials")
+            if (this.IsNoTrials)
             {
                 return;
             }
