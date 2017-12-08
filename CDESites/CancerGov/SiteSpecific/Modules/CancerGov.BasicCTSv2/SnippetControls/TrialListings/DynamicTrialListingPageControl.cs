@@ -183,6 +183,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             this.SetupPageMetadata(pattern);
 
 
+            //if(Session["redirect_to_notrials"] != null)
+            //{
+            //    Session["redirect_to_notrials"] = null;
+            //}
+
         }
 
      /// <summary>
@@ -202,6 +207,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     string[] parameters = this.CurrAppPath.Split(new char[] { '/' });
                     string noTrialsPageUrl = pageUrl + "/notrials?";
 
+                    
+
                     for (int i = 0; i < parameters.Length; i++)
                     {
                         if(parameters[i].Length > 0)
@@ -219,12 +226,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                        
                     }
 
-                    if(noTrialsPageUrl.Length > 0 && noTrialsPageUrl.Contains("p1") == true && Session["redirect_to_notrials"] == null)
+                    if (noTrialsPageUrl.Length > 0 && noTrialsPageUrl.Contains("p1") == true && CurrAppPath.ToLower().Trim().Contains("/notrials") == false)
                     {
-                        Session["redirect_to_notrials"] = true;
                         Response.Redirect(noTrialsPageUrl);
-                        
                     }
+
                 }
             }
             catch(Exception ex)
