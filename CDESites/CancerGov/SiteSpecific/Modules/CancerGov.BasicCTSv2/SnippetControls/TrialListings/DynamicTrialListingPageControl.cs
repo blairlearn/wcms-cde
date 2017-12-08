@@ -10,6 +10,7 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Configs;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -182,12 +183,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             //Step 3. Setup Page Metadata
             this.SetupPageMetadata(pattern);
 
-
-            //if(Session["redirect_to_notrials"] != null)
-            //{
-            //    Session["redirect_to_notrials"] = null;
-            //}
-
         }
 
      /// <summary>
@@ -197,50 +192,31 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
      /// </summary>
         protected override void OnEmptyResults()
         {
-            try
+
+            if (this.CurrAppPath == "/notrials")
             {
-                string pageUrl = this.PrettyUrl;
-
-                if(pageUrl.ToLower().Trim().Contains("notrials") == false)
-                {
-                    int parametersCount = 0;
-                    string[] parameters = this.CurrAppPath.Split(new char[] { '/' });
-                    string noTrialsPageUrl = pageUrl + "/notrials?";
-
-                    
-
-
-
-                    for (int i = 0; i < parameters.Length; i++)
-                    {
-                        if(parameters[i].Length > 0)
-                        {
-                            parametersCount = parametersCount + 1;
-                            noTrialsPageUrl = noTrialsPageUrl + "p" + (parametersCount) + "=" + parameters[i];
-
-                            if (i < parameters.Length - 1)
-                            {
-                                noTrialsPageUrl = noTrialsPageUrl + "&";
-                            }
-                        }
-                        
-
-                       
-                    }
-
-                    if (noTrialsPageUrl.Length > 0 && noTrialsPageUrl.Contains("p1") == true && CurrAppPath.ToLower().Trim().Contains("/notrials") == false)
-                    {
-                        Response.Redirect(noTrialsPageUrl);
-                    }
-
-                }
+                return;
             }
-            catch(Exception ex)
+
+            NciUrl noTrialsUrl = new NciUrl();
+            noTrialsUrl.SetUrl(this.PrettyUrl + "/notrials");
+            
+            //Parameters is always assumed to be greater than one
+            string[] parameters = this.GetParametersForNoTrials();
+            
+            for (int i = 0; i < parameters.Length; i++)
             {
-                string message = ex.Message;
-                string stackTrace = ex.StackTrace;
+                noTrialsUrl.QueryParameters.Add("p" + (i + 1), parameters[i]);
             }
+
+            Response.Redirect(noTrialsUrl.ToString(), true);
         }
+
+        /// <summary>
+        /// Used to get the parameters for the /notrials URL based on the current request
+        /// </summary>
+        /// <returns></returns>
+        protected abstract string[] GetParametersForNoTrials();
 
         /// <summary>
         /// Sets up the page metadata based on the given pattern key using overrides
