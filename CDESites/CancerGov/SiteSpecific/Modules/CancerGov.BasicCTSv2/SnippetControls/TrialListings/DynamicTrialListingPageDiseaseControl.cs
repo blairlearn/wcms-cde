@@ -141,15 +141,45 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         private string InterventionIDs { get; set; }
 
+
+        protected override string[] GetParametersForNoTrials()
+        {
+            //TODO: Make this logic less sketchy. Use DiseaseIDs and Patterns, etc. 
+            return this.CurrAppPath.Split(new char[] { '/' });
+        }
+
         /// <summary>
         /// Parses the URL for all of the parameters for a disease dynamic listing page
         /// </summary>
         protected override void ParseURL()
         {
+
             if (this.CurrAppPath == "/")
             {
                 throw new HttpException(400, "Invalid Parameters");
             }
+
+
+            List<string> rawParams = new List<string>();
+
+            //TODO: Only do this check in one place and it should be in SetupURLs in the DynamicTrialListingPageControl
+            if (this.CurrAppPath == "/notrials")
+            {
+                NciUrl ParsedReqUrlParams = new NciUrl(true, true, true);  //We need this to be lowercase and collapse duplicate params. (Or not use an NCI URL)
+                ParsedReqUrlParams.SetUrl(this.Request.Url.Query);
+
+                //TODO: handle new /notrials link when there are 0 query parameters.
+                if ("No p1" == "true")
+                {
+                    throw new HttpException(400, "Invalid Parameters");
+                }
+            }
+            else
+            {
+                //Setup rawParams for /a/b/c structure
+            }
+
+            //
 
             
 

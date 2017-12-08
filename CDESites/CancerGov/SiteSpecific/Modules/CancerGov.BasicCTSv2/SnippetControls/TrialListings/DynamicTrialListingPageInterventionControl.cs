@@ -119,6 +119,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         private string TrialType { get; set; }
 
+        protected override string[] GetParametersForNoTrials()
+        {
+            //TODO: Make this logic less sketchy. Use DiseaseIDs and Patterns, etc. 
+            return this.CurrAppPath.Split(new char[] { '/' });
+        }
+
         /// <summary>
         /// Parses the URL for all of the parameters for an intervention dynamic listing page
         /// </summary>
