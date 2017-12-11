@@ -14,7 +14,6 @@ using NCI.Web.CDE.WebAnalytics;
 using CancerGov.Text;
 using CancerGov.Common;
 using CancerGov.CDR.TermDictionary;
-using CancerGov.Web.SnippetTemplates;
 using NCI.Web.CDE.UI.SnippetControls;
 using NCI.Web.UI.WebControls;
 using NCI.Web.CDE;

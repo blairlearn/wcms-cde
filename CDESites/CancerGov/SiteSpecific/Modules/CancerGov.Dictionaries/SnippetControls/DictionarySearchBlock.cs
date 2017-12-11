@@ -43,7 +43,7 @@ namespace CancerGov.Dictionaries.SnippetControls
 
         protected global::System.Web.UI.WebControls.Panel helpButton;
 
-        protected global::Www.Common.UserControls.AlphaListBox alphaListBox;
+        protected CancerGov.Dictionaries.SnippetControls.AlphaListBox alphaListBox;
 
         public NCI.Web.Dictionary.DictionaryType Dictionary { get; set; }
 
