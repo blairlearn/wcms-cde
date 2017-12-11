@@ -60,7 +60,7 @@ namespace CancerGov.Web.SnippetTemplates.Helpers
 
                         if (sentencesCount <= 2)
                         {
-                            sentences = sentences + existingSentence + ". ";
+                            sentences = sentences + existingSentence.Replace(".", "") + ". ";
                         }
                         else
                         {

@@ -126,12 +126,7 @@ namespace CancerGov.Web.SnippetTemplates
 
             DictionaryDefinitionHelper.SetMetaTagDescription(dataItem, DictionaryLanguage, PageInstruction);
 
-            //PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
-            //{
-            //    data.Value = "Definition of " + termName;
-            //});
-
-
+           
             
 
 
