@@ -113,7 +113,9 @@ namespace CancerGov.Web.SnippetTemplates
                 this.Page.Title = PageInstruction.GetField("short_title");
 
 
-                SetMetaTagDescriptionToTerm(PageInstruction, dataItem.Term, DictionaryLanguage);
+                SetMetaTagDescription(dataItem, DictionaryLanguage);
+
+                //SetMetaTagDescriptionToTerm(PageInstruction, dataItem.Term, DictionaryLanguage);
 
               
             }
