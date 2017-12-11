@@ -6,6 +6,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 using CancerGov.Text;
+using CancerGov.Web.SnippetTemplates.Helpers;
 using Common.Logging;
 
 using NCI.Web.CDE;
@@ -120,10 +121,19 @@ namespace CancerGov.Web.SnippetTemplates
                 this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
             }
 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
-            {
-                data.Value = "Definition of " + termName;
-            });
+
+
+
+            DictionaryDefinitionHelper.SetMetaTagDescription(dataItem, DictionaryLanguage, PageInstruction);
+
+            //PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
+            //{
+            //    data.Value = "Definition of " + termName;
+            //});
+
+
+            
+
 
 
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
