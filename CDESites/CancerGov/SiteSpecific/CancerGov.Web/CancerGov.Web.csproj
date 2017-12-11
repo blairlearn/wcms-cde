@@ -531,6 +531,10 @@
       <Project>{96f6420f-f16d-4873-af3a-5d22e9ffbd55}</Project>
       <Name>CancerGov.BasicCTSv2</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.Dictionaries\CancerGov.Dictionaries.csproj">
+      <Project>{a0b1e332-beee-4e60-b5b6-dafb53b3d1e4}</Project>
+      <Name>CancerGov.Dictionaries</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Search.AutoSuggest\CancerGov.Search.AutoSuggest.csproj">
       <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>
       <Name>CancerGov.Search.AutoSuggest</Name>
