@@ -135,14 +135,46 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 throw new HttpException(400, "Invalid Parameters");
             }
 
-            string[] urlParams = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (urlParams.Length >= 4)
+
+            List<string> rawParams = new List<string>();
+
+
+            if(this.IsNoTrials)
+            {
+                NciUrl ParsedReqUrlParams = new NciUrl(true, true, true);  //We need this to be lowercase and collapse duplicate params. (Or not use an NCI URL)
+                ParsedReqUrlParams.SetUrl(this.Request.Url.Query);
+
+
+                if (ParsedReqUrlParams.QueryParameters.Count == 0)
+                {
+                    throw new HttpException(400, "Invalid Parameters");
+                }
+
+                rawParams = GetRawParametersFromQueryString(ParsedReqUrlParams);
+            }
+            else
+            {
+                rawParams = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            }
+
+
+            SetUpRawParametersForListingPage(rawParams); 
+
+
+        }
+
+     /// <summary>
+     ///    This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
+     /// </summary>
+        private void SetUpRawParametersForListingPage(List<string> urlParams)
+        {
+            if (urlParams.Count >= 4)
             {
                 throw new HttpException(400, "Invalid Parameters");
             }
 
             //Has Intervention
-            if (urlParams.Length >= 1)
+            if (urlParams.Count >= 1)
             {
                 if (urlParams[0].Contains(","))
                 {
@@ -160,8 +192,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             }
 
-            //Has Type of Trial
-            if (urlParams.Length >= 2)
+          //Has Type of Trial
+            if (urlParams.Count >= 2)
             {
                 this.TrialType = urlParams[1].ToLower();
             }

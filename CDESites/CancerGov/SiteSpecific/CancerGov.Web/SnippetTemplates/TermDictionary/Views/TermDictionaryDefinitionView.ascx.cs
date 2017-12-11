@@ -6,6 +6,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 using CancerGov.Text;
+using CancerGov.Web.SnippetTemplates.Helpers;
 using Common.Logging;
 
 using NCI.Web.CDE;
@@ -113,7 +114,8 @@ namespace CancerGov.Web.SnippetTemplates
                 this.Page.Title = PageInstruction.GetField("short_title");
 
 
-                SetMetaTagDescriptionToTerm(PageInstruction, dataItem.Term, DictionaryLanguage);
+
+                DictionaryDefinitionHelper.SetMetaTagDescription(dataItem, DictionaryLanguage, PageInstruction);
 
               
             }
@@ -127,8 +129,8 @@ namespace CancerGov.Web.SnippetTemplates
 
 
               //CHANGE MADE BY CHRISTIAN RIKONG ON 12/08/2017 AT 11:47 AM
-                SetMetaTagDescription(dataItem, DictionaryLanguage);
-                
+                DictionaryDefinitionHelper.SetMetaTagDescription(dataItem, DictionaryLanguage, PageInstruction);
+               
 
                
             }
@@ -144,87 +146,7 @@ namespace CancerGov.Web.SnippetTemplates
         }
 
 
-     /// <summary>
-     ///    Sets the meta tag description. The function checks if the Dictionary Term has a valid (not null and length greater than 0) definition.
-     ///    If it is the case the function attempts to extract the first two sentences of the Definition and set them as the meta tag description.
-     ///    If not, we revert to using the term itself has the meta tag description.
-     ///    
-     ///    AUTHOR: CHRISTIAN RIKONG
-     ///    LAST PUBLISHED DATE: 12/08/2017 11:47 AM
-     /// </summary>
-     /// <param name="dataItem">Stores the Dictionary Term that is used to create the description meta tag</param>
-        private void SetMetaTagDescription(DictionaryTerm dataItem, string DictionaryLanguage)
-        {
-
-            string termName = dataItem.Term;
-
-
-            if (dataItem.Definition != null && dataItem.Definition.Text != null && dataItem.Definition.Text.Length > 0)
-            {
-                string sentences = "";
-                string[] definitionsSentences = System.Text.RegularExpressions.Regex.Split(dataItem.Definition.Text, @"(?<=[\.!\?])\s+");
-
-
-                if (definitionsSentences != null && definitionsSentences.Length > 0)
-                {
-                    int sentencesCount = 0;
-
-                    foreach (string existingSentence in definitionsSentences)
-                    {
-                        sentencesCount = sentencesCount + 1;
-
-                        if (sentencesCount <= 2)
-                        {
-                            sentences = sentences + existingSentence + ". ";
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-
-                    PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-                    {
-                        data.Value = sentences;
-                    });
-                }
-                else
-                {
-                    SetMetaTagDescriptionToTerm(PageInstruction, termName, DictionaryLanguage);
-                }
-
-            }
-            else
-            {
-                SetMetaTagDescriptionToTerm(PageInstruction, termName, DictionaryLanguage);
-            }
-
-        }
-
-     /// <summary>
-     ///    Sets the Meta Tag Description to a given term
-     /// </summary>
-     /// <param name="PageInstruction"></param>
-     /// <param name="termName"></param>
-     /// <param name="DictionaryLanguage"></param>
-        private void SetMetaTagDescriptionToTerm(IPageAssemblyInstruction PageInstruction, string termName, string DictionaryLanguage)
-        {
-            switch (DictionaryLanguage.ToLower().Trim())
-            {
-                case "es":
-                    PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-                    {
-                        data.Value = "Definición de " + termName;
-                    });
-                    break;
-                default:
-                    PageInstruction.AddFieldFilter("meta_description", (name, data) =>
-                    {
-                        data.Value = "Definition of " + termName;
-                    });
-                    break;
-            }
-        }
+     
 
         /**
          * Add URL filter for old print page implementation

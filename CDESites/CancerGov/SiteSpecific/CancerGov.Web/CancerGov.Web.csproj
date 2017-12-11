@@ -358,6 +358,7 @@
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx.designer.cs">
       <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\Helpers\DictionaryDefinitionHelper.cs" />
     <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.cs">
       <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
