@@ -189,34 +189,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             SetUpRawParametersForListingPage(rawParams);  
         }
 
-      /// <summary>
-      ///   Retrieves parameters from the Query string and encapsulate them into a list
-      /// </summary>
-      /// <param name="ParsedReqUrlParams"></param>
-      /// <returns></returns>
-        private List<string> GetRawParametersFromQueryString(NciUrl ParsedReqUrlParams)
-        {
-            List<string> rawParams = new List<string>() { "", "", "" };
-
-
-            foreach (string key in ParsedReqUrlParams.QueryParameters.Keys)
-            {
-                if (ParsedReqUrlParams.QueryParameters["p1"] != null)
-                    rawParams[0] = ParsedReqUrlParams.QueryParameters[key];
-
-                if (ParsedReqUrlParams.QueryParameters.Count > 0 && ParsedReqUrlParams.QueryParameters["p2"] != null)
-                    rawParams[1] = ParsedReqUrlParams.QueryParameters["p2"];
-
-                if (ParsedReqUrlParams.QueryParameters.Count > 2 && ParsedReqUrlParams.QueryParameters["p3"] != null)
-                    rawParams[2] = ParsedReqUrlParams.QueryParameters[key];
-
-
-                rawParams.Add(ParsedReqUrlParams.QueryParameters[key]);
-            }
-
-
-            return (rawParams);
-        }
+      
 
      /// <summary>
      ///    This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
