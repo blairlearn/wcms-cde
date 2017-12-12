@@ -21,29 +21,29 @@ namespace CancerGov.Dictionaries.SnippetControls
 {
     public class DictionarySearchBlock : SnippetControl
     {
-        protected global::System.Web.UI.WebControls.PlaceHolder pnlTermSearch;
+        protected System.Web.UI.WebControls.PlaceHolder pnlTermSearch;
 
-        protected global::System.Web.UI.HtmlControls.HtmlForm aspnetForm;
+        protected System.Web.UI.HtmlControls.HtmlForm aspnetForm;
 
-        protected global::System.Web.UI.WebControls.Panel englishHelpText;
+        protected Panel englishHelpText;
 
-        protected global::System.Web.UI.WebControls.Panel espanolHelpText;
+        protected Panel espanolHelpText;
 
-        protected global::System.Web.UI.WebControls.RadioButton radioStarts;
+        protected RadioButton radioStarts;
 
-        protected global::System.Web.UI.WebControls.Label lblStartsWith;
+        protected Label lblStartsWith;
 
-        protected global::System.Web.UI.WebControls.RadioButton radioContains;
+        protected RadioButton radioContains;
 
-        protected global::System.Web.UI.WebControls.Label lblContains;
+        protected Label lblContains;
 
-        protected global::System.Web.UI.WebControls.TextBox AutoComplete1;
+        protected TextBox AutoComplete1;
 
-        protected global::System.Web.UI.WebControls.Button btnSearch;
+        protected Button btnSearch;
 
-        protected global::System.Web.UI.WebControls.Panel helpButton;
+        protected Panel helpButton;
 
-        protected CancerGov.Dictionaries.SnippetControls.AlphaListBox alphaListBox;
+        protected AlphaListBox alphaListBox;
 
         public NCI.Web.Dictionary.DictionaryType Dictionary { get; set; }
 
@@ -71,7 +71,6 @@ namespace CancerGov.Dictionaries.SnippetControls
             GetQueryParams();
             ValidateParams();
 
-
             //set up everything that is common for all three dictionaries
             SetupCommon();
 
@@ -91,7 +90,6 @@ namespace CancerGov.Dictionaries.SnippetControls
                     SetUpTermDictionary();
                     break;
             }
-
         }
 
         /// <summary>
@@ -123,7 +121,6 @@ namespace CancerGov.Dictionaries.SnippetControls
                 catch (Exception ex)
                 {
                     throw new Exception("Invalid CDRID" + CdrID);
-
                 }
             }
         }
@@ -140,7 +137,6 @@ namespace CancerGov.Dictionaries.SnippetControls
             {
                 PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlFilter);
             }
-
         }
 
         private void SetupUrlFilter(string name, NciUrl url)
@@ -189,7 +185,6 @@ namespace CancerGov.Dictionaries.SnippetControls
                 AutoComplete1.Text = SearchStr;
             }
 
-
             if (!string.IsNullOrEmpty(Expand))
             {
                 if (Expand.Trim() == "#")
@@ -204,7 +199,6 @@ namespace CancerGov.Dictionaries.SnippetControls
 
             alphaListBox.TextOnly = (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web) ? true : false;
             alphaListBox.Title = string.Empty;
-
 
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             alphaListBox.BaseUrl = DictionaryURL;
@@ -234,7 +228,6 @@ namespace CancerGov.Dictionaries.SnippetControls
                 DictionaryLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
                 SetupEnglish();
             }
-
 
             if (WebAnalyticsOptions.IsEnabled)
             {
@@ -274,7 +267,6 @@ namespace CancerGov.Dictionaries.SnippetControls
             // hide english help text and show espanol
             englishHelpText.Visible = false;
             espanolHelpText.Visible = true;
-
         }
 
         /// <summary>
@@ -291,12 +283,8 @@ namespace CancerGov.Dictionaries.SnippetControls
             // show english help text and hide espanol
             englishHelpText.Visible = true;
             espanolHelpText.Visible = false;
-
         }
-
-
         #endregion
-
 
         private void SetUpGeneticsDictionary()
         {
@@ -319,7 +307,6 @@ namespace CancerGov.Dictionaries.SnippetControls
                 Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.GeneticsDictionarySearchNew(this);");
                 alphaListBox.WebAnalyticsFunction = "NCIAnalytics.GeneticsDictionarySearchAlphaList"; // Load A-Z list onclick script
             }
-
         }
 
         private void SetUpDrugDictionary()

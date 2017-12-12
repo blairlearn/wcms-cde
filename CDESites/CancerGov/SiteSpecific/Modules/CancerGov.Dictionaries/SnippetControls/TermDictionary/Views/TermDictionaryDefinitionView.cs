@@ -13,14 +13,15 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+using CancerGov.Dictionaries.SnippetControls.Helpers;
 
 namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 {
     public class TermDictionaryDefinitionView : SnippetControl
     {
-        protected global::CancerGov.Dictionaries.SnippetControls.TermDictionary.TermDictionaryHome dictionarySearchBlock;
+        protected TermDictionaryHome dictionarySearchBlock;
 
-        protected global::System.Web.UI.WebControls.Repeater termDictionaryDefinitionView;
+        protected Repeater termDictionaryDefinitionView;
 
         static ILog log = LogManager.GetLogger(typeof(TermDictionaryDefinitionView));
 
@@ -91,12 +92,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             }
 
             SetupPrintUrl();
-
         }
 
         private void ActivateDefinitionView(DictionaryTerm dataItem)
         {
-
             var myDataSource = new List<DictionaryTerm> { dataItem };
 
             termDictionaryDefinitionView.Visible = true;
@@ -116,10 +115,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
                 this.Page.Title = PageInstruction.GetField("short_title");
 
-
-                SetMetaTagDescriptionToTerm(PageInstruction, dataItem.Term, DictionaryLanguage);
-
-
+                DictionaryDefinitionHelper.SetMetaTagDescription(dataItem, DictionaryLanguage, PageInstruction);
             }
             else
             {
@@ -128,25 +124,15 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     data.Value = "Definition of " + termName + " - NCI Dictionary of Cancer Terms";
                 });
 
-
-
                 //CHANGE MADE BY CHRISTIAN RIKONG ON 12/08/2017 AT 11:47 AM
-                SetMetaTagDescription(dataItem, DictionaryLanguage);
-
-
-
+                DictionaryDefinitionHelper.SetMetaTagDescription(dataItem, DictionaryLanguage, PageInstruction);
             }
-
 
             PageInstruction.AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = termName + ", definition";
             });
-
-
-
         }
-
 
         /// <summary>
         ///    Sets the meta tag description. The function checks if the Dictionary Term has a valid (not null and length greater than 0) definition.
@@ -159,9 +145,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         /// <param name="dataItem">Stores the Dictionary Term that is used to create the description meta tag</param>
         private void SetMetaTagDescription(DictionaryTerm dataItem, string DictionaryLanguage)
         {
-
             string termName = dataItem.Term;
-
 
             if (dataItem.Definition != null && dataItem.Definition.Text != null && dataItem.Definition.Text.Length > 0)
             {
@@ -392,7 +376,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                                         relatedTerms.DataBind();
                                     }
                                 }
-
                             }
 
                             Repeater relatedImages = (Repeater)e.Item.FindControl("relatedImages");
@@ -404,9 +387,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                                     relatedImages.DataSource = termDetails.Images;
                                     relatedImages.DataBind();
                                 }
-
                             }
-
 
                             Repeater relatedVideos = (Repeater)e.Item.FindControl("relatedVideos");
                             if (relatedVideos != null)
@@ -417,26 +398,19 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                                     relatedVideos.DataSource = termDetails.Videos;
                                     relatedVideos.DataBind();
                                 }
-
                             }
-
                         }
                         else
                         {
                             pnlRelatedInfo.Visible = false;
                         }
-
                     }
-
-
-
                 }
             }
         }
 
         protected void relatedTerms_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the RelatedTerm object that is bound to the current row.
@@ -464,7 +438,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         protected void relatedImages_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the ImageReference object that is bound to the current row.
@@ -512,13 +485,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                                         termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationManager.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
                                         termEnlargeImage.InnerText = DictionaryLanguage == "es" ? "Ampliar" : "Enlarge";
                                     }
-
                                 }
                             }
-
                         }
                     }
-
                 }
             }
         }
@@ -590,7 +560,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             }
         }
 
-
         private void ValidateParams()
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);
@@ -603,7 +572,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 catch (Exception)
                 {
                     throw new Exception("Invalid CDRID" + CdrID);
-
                 }
             }
         }

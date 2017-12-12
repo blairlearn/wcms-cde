@@ -93,6 +93,8 @@
     <Compile Include="SnippetControls\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="SnippetControls\Helpers\DictionaryDefinitionHelper.cs" />
+    <Compile Include="SnippetControls\Helpers\GeneticsTermDictionaryHelper.cs" />
     <Compile Include="SnippetControls\TermDictionary\TermDictionaryRouter.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

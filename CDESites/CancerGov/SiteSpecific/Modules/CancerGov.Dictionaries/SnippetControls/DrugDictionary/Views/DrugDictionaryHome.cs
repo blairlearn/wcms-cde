@@ -12,7 +12,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 {
     public class DrugDictionaryHome : SnippetControl
     {
-        protected global::CancerGov.Dictionaries.SnippetControls.DictionarySearchBlock dictionarySearchBlock;
+        protected DictionarySearchBlock dictionarySearchBlock;
 
         protected void Page_Load(object sender, EventArgs e)
         {

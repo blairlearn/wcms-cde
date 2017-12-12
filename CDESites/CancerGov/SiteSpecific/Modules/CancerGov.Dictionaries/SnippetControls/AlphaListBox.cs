@@ -14,9 +14,9 @@
     ///</summary>
     public class AlphaListBox : System.Web.UI.UserControl
     {
-        protected global::System.Web.UI.WebControls.PlaceHolder phBrowseEnglish;
+        protected System.Web.UI.WebControls.PlaceHolder phBrowseEnglish;
 
-        protected global::System.Web.UI.WebControls.PlaceHolder phBrowseSpanish;
+        protected System.Web.UI.WebControls.PlaceHolder phBrowseSpanish;
 
         private string alphaListItems = "";
         private string title = "Alphabetical List of Cancers";

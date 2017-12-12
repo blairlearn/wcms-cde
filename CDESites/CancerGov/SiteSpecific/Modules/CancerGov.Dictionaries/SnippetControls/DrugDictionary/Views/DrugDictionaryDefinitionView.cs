@@ -11,14 +11,15 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+using CancerGov.Dictionaries.SnippetControls.Helpers;
 
 namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 {
     public class DrugDictionaryDefinitionView : SnippetControl
     {
-        protected global::CancerGov.Dictionaries.SnippetControls.DrugDictionary.DrugDictionaryHome dictionarySearchBlock;
+        protected DrugDictionaryHome dictionarySearchBlock;
 
-        protected global::System.Web.UI.WebControls.Repeater drugDictionaryDefinitionView;
+        protected Repeater drugDictionaryDefinitionView;
 
         static ILog log = LogManager.GetLogger(typeof(DrugDictionaryDefinitionView));
 
@@ -63,7 +64,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
             DictionaryLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
 
-
             if (!Page.IsPostBack)
             {
                 DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
@@ -89,12 +89,10 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
 
             SetupPrintUrl();
-
         }
 
         private void ActivateDefinitionView(DictionaryTerm dataItem)
         {
-
             var myDataSource = new List<DictionaryTerm> { dataItem };
 
             drugDictionaryDefinitionView.Visible = true;
@@ -105,24 +103,17 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
             CdrID = dataItem.ID.ToString();
 
-
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("browser_title", (name, data) =>
             {
                 data.Value = "Definition of " + termName + " - NCI Drug Dictionary";
             });
 
-
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
-            {
-                data.Value = "Definition of " + termName;
-            });
-
+            DictionaryDefinitionHelper.SetMetaTagDescription(dataItem, DictionaryLanguage, PageInstruction);
 
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = termName + ", definition";
             });
-
         }
 
         // Type names from the TermOtherNameType table, sorted by
@@ -146,7 +137,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         const string NAME_LABEL_CHEMICAL_NAME = "Chemical structure";
         const string NAME_LABEL_IND_NUMBER = "IND number";
         const string NAME_LABEL_NSC_CODE = "NSC code";
-
 
         /// <summary>
         /// Stinky code to generate a drug definition's list of aliases.
@@ -247,7 +237,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             return row;
         }
 
-
         /// <summary>
         /// Replicates legacy logic for rolling up alias names into a collection of named lists.
         /// </summary>
@@ -277,7 +266,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 nameList = map[key];
                 nameList.Add(alias.Name);
             });
-
 
             return map;
         }
@@ -371,11 +359,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
         }
 
-
-
         protected void relatedTerms_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the RelatedTerm object that is bound to the current row.
@@ -403,7 +388,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
         protected void relatedImages_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the ImageReference object that is bound to the current row.
@@ -445,13 +429,10 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                                     //example format CDR526538-750.jpg
                                     if (termEnlargeImage != null)
                                         termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationManager.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
-
                                 }
                             }
-
                         }
                     }
-
                 }
             }
         }
@@ -468,7 +449,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 catch (Exception)
                 {
                     throw new Exception("Invalid CDRID" + CdrID);
-
                 }
             }
         }

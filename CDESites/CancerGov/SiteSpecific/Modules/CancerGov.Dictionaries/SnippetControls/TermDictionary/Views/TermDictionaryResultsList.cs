@@ -18,17 +18,17 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 {
     public class TermDictionaryResultsList : SnippetControl
     {
-        protected global::CancerGov.Dictionaries.SnippetControls.TermDictionary.TermDictionaryHome dictionarySearchBlock;
+        protected TermDictionaryHome dictionarySearchBlock;
 
-        protected global::System.Web.UI.WebControls.Panel numResDiv;
+        protected Panel numResDiv;
 
-        protected global::System.Web.UI.WebControls.Label lblNumResults;
+        protected Label lblNumResults;
 
-        protected global::System.Web.UI.WebControls.Label lblResultsFor;
+        protected Label lblResultsFor;
 
-        protected global::System.Web.UI.WebControls.Label lblWord;
+        protected Label lblWord;
 
-        protected global::System.Web.UI.WebControls.ListView resultListView;
+        protected ListView resultListView;
 
         public string SearchStr { get; set; }
 

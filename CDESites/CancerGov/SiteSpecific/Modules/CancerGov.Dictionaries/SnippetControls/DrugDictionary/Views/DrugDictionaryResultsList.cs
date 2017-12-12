@@ -18,19 +18,19 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 {
     public class DrugDictionaryResultsList : SnippetControl
     {
-        protected global::CancerGov.Dictionaries.SnippetControls.DrugDictionary.DrugDictionaryHome dictionarySearchBlock;
+        protected DrugDictionaryHome dictionarySearchBlock;
 
-        protected global::System.Web.UI.WebControls.Panel numResDiv;
+        protected Panel numResDiv;
 
-        protected global::System.Web.UI.WebControls.Label lblNumResults;
+        protected Label lblNumResults;
 
-        protected global::System.Web.UI.WebControls.Label lblResultsFor;
+        protected Label lblResultsFor;
 
-        protected global::System.Web.UI.WebControls.Label lblWord;
+        protected Label lblWord;
 
-        protected global::System.Web.UI.WebControls.ListView resultListView;
+        protected ListView resultListView;
 
-        protected global::System.Web.UI.WebControls.Literal litPager;
+        protected Literal litPager;
 
         protected class DrugPager
         {

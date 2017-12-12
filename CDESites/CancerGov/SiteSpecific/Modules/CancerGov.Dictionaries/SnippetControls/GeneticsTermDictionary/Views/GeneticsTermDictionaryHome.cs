@@ -24,7 +24,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 {
     public class GeneticsTermDictionaryHome : SnippetControl
     {
-        protected CancerGov.Dictionaries.SnippetControls.DictionarySearchBlock dictionarySearchBlock;
+        protected DictionarySearchBlock dictionarySearchBlock;
 
         protected void Page_Load(object sender, EventArgs e)
         {

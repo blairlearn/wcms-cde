@@ -7,7 +7,7 @@ namespace CancerGov.Dictionaries.SnippetControls
 {
     public class GeneticsTermDictionaryRouter : SnippetControl
     {
-        protected global::System.Web.UI.WebControls.PlaceHolder phGeneticsTermDictionary;
+        protected System.Web.UI.WebControls.PlaceHolder phGeneticsTermDictionary;
 
         protected void Page_Load(object sender, EventArgs e)
         {

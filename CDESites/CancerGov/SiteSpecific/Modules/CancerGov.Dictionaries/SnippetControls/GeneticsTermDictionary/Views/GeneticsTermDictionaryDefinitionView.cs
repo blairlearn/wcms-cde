@@ -13,14 +13,15 @@ using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
+using CancerGov.Dictionaries.SnippetControls.Helpers;
 
 namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 {
     public class GeneticsTermDictionaryDefintionView : SnippetControl
     {
-        protected global::CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary.GeneticsTermDictionaryHome dictionarySearchBlock;
+        protected GeneticsTermDictionaryHome dictionarySearchBlock;
 
-        protected global::System.Web.UI.WebControls.Repeater termDictionaryDefinitionView;
+        protected Repeater termDictionaryDefinitionView;
 
         static ILog log = LogManager.GetLogger(typeof(GeneticsTermDictionaryDefintionView));
 
@@ -89,12 +90,10 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             }
 
             SetupPrintUrl();
-
         }
 
         private void ActivateDefinitionView(DictionaryTerm dataItem)
         {
-
             var myDataSource = new List<DictionaryTerm> { dataItem };
 
             termDictionaryDefinitionView.Visible = true;
@@ -124,21 +123,13 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                 this.Page.Header.Title = PageAssemblyContext.Current.PageAssemblyInstruction.GetField("short_title");
             }
 
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_description", (name, data) =>
-            {
-                data.Value = "Definition of " + termName;
-            });
-
+            DictionaryDefinitionHelper.SetMetaTagDescription(dataItem, DictionaryLanguage, PageInstruction);
 
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = termName + ", definition";
             });
-
-
-
         }
-
 
         /**
          * Add URL filter for old print page implementation
@@ -207,7 +198,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                         Literal pronunciationKey = (Literal)e.Item.FindControl("pronunciationKey");
                         if (pronunciationKey != null && termDetails.Pronunciation.HasKey)
                             pronunciationKey.Text = " " + termDetails.Pronunciation.Key;
-
                     }
                     else
                         phPronunciation.Visible = false;
@@ -302,7 +292,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                                         relatedTerms.DataBind();
                                     }
                                 }
-
                             }
 
                             Repeater relatedImages = (Repeater)e.Item.FindControl("relatedImages");
@@ -317,7 +306,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
                             }
 
-
                             Repeater relatedVideos = (Repeater)e.Item.FindControl("relatedVideos");
                             if (relatedVideos != null)
                             {
@@ -327,26 +315,19 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                                     relatedVideos.DataSource = termDetails.Videos;
                                     relatedVideos.DataBind();
                                 }
-
                             }
-
                         }
                         else
                         {
                             pnlRelatedInfo.Visible = false;
                         }
-
                     }
-
-
-
                 }
             }
         }
 
         protected void relatedTerms_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the RelatedTerm object that is bound to the current row.
@@ -366,7 +347,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                             if (e.Item.ItemIndex >= 0 && e.Item.ItemIndex < RelatedTermCount - 1)
                                 relatedTermSeparator.Visible = true;
                         }
-
                     }
                 }
             }
@@ -374,7 +354,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
         protected void relatedImages_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the ImageReference object that is bound to the current row.
@@ -416,20 +395,16 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                                     //example format CDR526538-750.jpg
                                     if (termEnlargeImage != null)
                                         termEnlargeImage.HRef = regularTermImage[0] + "-" + ConfigurationManager.AppSettings["CDRImageEnlarge"] + "." + regularTermImage[1];
-
                                 }
                             }
-
                         }
                     }
-
                 }
             }
         }
 
         protected void relatedVideos_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
             {
                 //get the ImageReference object that is bound to the current row.
@@ -491,7 +466,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             }
         }
 
-
         private void ValidateParams()
         {
             CdrID = Strings.Clean(Request.Params["cdrid"]);
@@ -504,7 +478,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                 catch (Exception)
                 {
                     throw new Exception("Invalid CDRID" + CdrID);
-
                 }
             }
         }

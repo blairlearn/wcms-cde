@@ -12,11 +12,11 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 {
     public class TermDictionaryHome : SnippetControl
     {
-        protected global::System.Web.UI.WebControls.PlaceHolder pnlIntroEnglish;
+        protected System.Web.UI.WebControls.PlaceHolder pnlIntroEnglish;
 
-        protected global::System.Web.UI.WebControls.PlaceHolder pnlIntroSpanish;
+        protected System.Web.UI.WebControls.PlaceHolder pnlIntroSpanish;
 
-        protected global::CancerGov.Dictionaries.SnippetControls.DictionarySearchBlock dictionarySearchBlock;
+        protected DictionarySearchBlock dictionarySearchBlock;
 
         public string TotalCount = "0";
 
