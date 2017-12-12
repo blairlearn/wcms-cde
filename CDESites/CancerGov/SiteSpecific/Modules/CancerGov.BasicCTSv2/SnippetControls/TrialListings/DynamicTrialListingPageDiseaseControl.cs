@@ -142,10 +142,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         private string InterventionIDs { get; set; }
 
 
+     /// <summary>
+     ///    Used to get the parameters for the /notrials URL based on the current request
+     /// </summary>
+     /// <returns></returns>
         protected override string[] GetParametersForNoTrials()
         {
-            //TODO: Make this logic less sketchy. Use DiseaseIDs and Patterns, etc. 
-            return this.CurrAppPath.Split(new char[] { '/' });
+
+            List<string> parameters = new List<string>();
+
+
+            if(this.DiseaseIDs != null && this.DiseaseIDs.Length > 0)
+                parameters.AddRange(this.DiseaseIDs.Split(new char[] {','}).ToList<string>());
+
+            if (this.TrialType != null)
+                parameters.Add(this.TrialType);
+
+
+            if(this.InterventionIDs != null && this.InterventionIDs.Length > 0)
+                parameters.AddRange(this.InterventionIDs.Split(new char[] { ',' }).ToList<string>());
+            
+
+            
+            return (parameters.ToArray());
         }
 
         /// <summary>
