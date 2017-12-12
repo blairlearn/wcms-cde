@@ -205,10 +205,40 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
 
-            SetUpRawParametersForListingPage(rawParams);  
+            SetUpRawParametersForListingPage(rawParams);
+            SetUpCanonicalUrl();
+
+
+          
         }
 
       
+
+     /// <summary>
+     ///    Sets the Canonical Url of the Disease Page
+     /// </summary>
+        private void SetUpCanonicalUrl()
+        {
+            //We set the Canonical Url. We make sure that the Canonical URL has the following format disease/trial type instead of 
+            //disease/trial type/intervention
+            string[] pathTokens = this.CurrAppPath.Split(new char[] { '/' });
+
+
+            if (pathTokens != null && pathTokens.Length > 0)
+            {
+                string canonicalUrl = this.CurrentUrl.ToString();
+
+              //If there are intervention IDS we strip them from the canonical url
+                if (this.InterventionIDs != null && this.InterventionIDs.Length > 0)
+                    canonicalUrl = canonicalUrl.Replace(this.InterventionIDs + "/", "").Replace(this.InterventionIDs, "");
+             
+
+                this.PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+                {
+                    url.SetUrl(canonicalUrl);
+                });
+            }
+        }
 
      /// <summary>
      ///    This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control

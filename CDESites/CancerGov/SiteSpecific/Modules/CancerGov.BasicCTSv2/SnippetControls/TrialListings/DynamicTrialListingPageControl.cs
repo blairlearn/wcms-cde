@@ -290,6 +290,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 url.SetUrl(this.CurrentUrl.ToString());
             });
 
+
+
+         
+
             //Setup the addthis URL since it is forced to be the raw PrettyURL field on the page.
             //TODO: account for paging?
             this.PageInstruction.AddUrlFilter("add_this_url", (name, url) =>
