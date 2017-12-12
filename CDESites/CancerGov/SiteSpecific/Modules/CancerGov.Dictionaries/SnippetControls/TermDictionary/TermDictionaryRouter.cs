@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.UI;
+using System.Linq;
 using NCI.Util;
 using NCI.Web.CDE.UI;
 
 namespace CancerGov.Dictionaries.SnippetControls
 {
-    public class TermDictionaryRouter : SnippetControl
+    public class TermDictionaryRouter : BaseDictionaryRouter
     {
         protected System.Web.UI.WebControls.PlaceHolder phTermDictionary;
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected Control localControl;
+
+        /*protected void Page_Load(object sender, EventArgs e)
         {
             String searchString = Strings.Clean(Request.QueryString["search"]);
             String term = Strings.Clean(Request.QueryString["term"]);
@@ -39,6 +44,29 @@ namespace CancerGov.Dictionaries.SnippetControls
 
             if (localControl != null)
                 phTermDictionary.Controls.Add(localControl);
+        }*/
+
+        protected void LoadDictionaryControl(string controlType)
+        {
+            // Load appropriate control based on controlType
+            if (controlType.Equals("home"))
+            {
+                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryHome.ascx");
+            }
+            else if (controlType.Equals("search") || controlType.Equals("expand"))
+            {
+                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryResultsList.ascx");
+            }
+            else if (controlType.Equals("view"))
+            {
+                localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryDefinitionView.ascx");
+            }
+
+            // Add control to page
+            if (localControl != null)
+            {
+                phTermDictionary.Controls.Add(localControl);
+            }
         }
     }
 }
