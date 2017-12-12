@@ -143,7 +143,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 // only the id should be provided for the canonical URL, so clear all query parameters and
                 // then add back id
                 url.QueryParameters.Clear();
-                url.QueryParameters.Add("id", TrialID);
+                url.QueryParameters.Add("id", trial.NCIID);
+                //url.QueryParameters.Add("id", TrialID); 
             });
 
             // Override the social media URL (og:url)

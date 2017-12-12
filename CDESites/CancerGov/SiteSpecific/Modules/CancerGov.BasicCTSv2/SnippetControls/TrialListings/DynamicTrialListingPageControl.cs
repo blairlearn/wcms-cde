@@ -84,7 +84,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             get
             {
-                return (this.CurrAppPath == "/notrials");
+                return (this.CurrAppPath.ToLower().Trim().Contains("/notrials"));
             }
         }
 
@@ -246,14 +246,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 if (ParsedReqUrlParams.QueryParameters["p1"] != null)
                     rawParams[0] = ParsedReqUrlParams.QueryParameters[key];
 
-                if (ParsedReqUrlParams.QueryParameters.Count > 0 && ParsedReqUrlParams.QueryParameters["p2"] != null)
+                if (ParsedReqUrlParams.QueryParameters.Count > 1 && ParsedReqUrlParams.QueryParameters["p2"] != null)
                     rawParams[1] = ParsedReqUrlParams.QueryParameters["p2"];
 
                 if (ParsedReqUrlParams.QueryParameters.Count > 2 && ParsedReqUrlParams.QueryParameters["p3"] != null)
                     rawParams[2] = ParsedReqUrlParams.QueryParameters[key];
-
-
-                rawParams.Add(ParsedReqUrlParams.QueryParameters[key]);
             }
 
 
