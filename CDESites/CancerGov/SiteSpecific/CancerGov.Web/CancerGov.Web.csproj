@@ -508,10 +508,6 @@
       <Project>{2FDF38AF-E70B-485F-86B9-A32948AC8926}</Project>
       <Name>ClinicalTrialControls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
-      <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
-      <Name>CDR.ClinicalTrials</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\CDR.DataManager\CDR.DataManager.csproj">
       <Project>{BD37ACFC-049C-4807-93CC-1A3BFA25F11A}</Project>
       <Name>CDR.DataManager</Name>

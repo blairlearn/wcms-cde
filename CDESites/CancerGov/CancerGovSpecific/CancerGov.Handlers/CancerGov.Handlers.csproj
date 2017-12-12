@@ -104,10 +104,6 @@
       <Project>{6F797B18-FF7E-4963-8E13-5EA26E910198}</Project>
       <Name>CancerGovCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
-      <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
-      <Name>CDR.ClinicalTrials</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\CDR.Common\CDR.Common.csproj">
       <Project>{0614DB16-1CB1-40E7-BAE8-112E3A290331}</Project>
       <Name>CDR.Common</Name>
