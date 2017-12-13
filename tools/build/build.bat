@@ -70,6 +70,6 @@ REM Restore environment variables.
 set WORKSPACE=%OLD_WORKSPACE%
 set GH_REPO_NAME=%OLD_GH_REPO_NAME%
 
-Clean up.
+REM Clean up.
 popd %ConfigDownload%
 rmdir /q/s %ConfigDownload%
