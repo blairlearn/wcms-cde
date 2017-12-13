@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TermDictionaryHome.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.TermDictionaryHome" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.TermDictionary.TermDictionaryHome" %>
 <%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
 
 

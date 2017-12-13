@@ -7,6 +7,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 using NCI.Util;
+using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
@@ -44,9 +45,12 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         public string DictionaryURL { get; set; }
 
+        public string DictionaryPrettyURL { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             //base.OnLoad(e);
             GetQueryParams();
@@ -65,7 +69,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             SetupCommon();
 
             LoadData();
-
         }
 
         private void LoadData()
@@ -104,7 +107,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
-                    string itemDefinitionUrl = DictionaryURL + "?cdrid=" + itemPtr.Current.ID;
+                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + itemPtr.Current.ID;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else
@@ -118,7 +121,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     {
                         RenderNoResults();
                     }
-
                 }
             }
             else
@@ -168,7 +170,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     SearchStr = Expand.Trim().ToUpper();
                 }
             }
-
         }
 
         private void ValidateParams()
@@ -183,7 +184,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 catch (Exception)
                 {
                     throw new Exception("Invalid CDRID" + CdrID);
-
                 }
             }
         }
@@ -194,8 +194,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         private void GetQueryParams()
         {
             Expand = Strings.Clean(Request.Params["expand"], "A");
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["search"]);
+            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["q"]);
             SearchStr = Strings.Clean(SearchStr);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
         }
