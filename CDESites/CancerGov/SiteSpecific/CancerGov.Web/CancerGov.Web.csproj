@@ -496,10 +496,6 @@
       <Project>{F2CB1924-487F-4756-BAC1-719C5CF97368}</Project>
       <Name>CancerGov.DataManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.Handlers\CancerGov.Handlers.csproj">
-      <Project>{F3414554-93F7-4116-88B2-637A3ABA050E}</Project>
-      <Name>CancerGov.Handlers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.Modules\CancerGov.Modules.csproj">
       <Project>{7634C4C2-6EC8-45D4-A423-7B53B15BDD9E}</Project>
       <Name>CancerGov.Modules</Name>
