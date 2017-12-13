@@ -142,14 +142,14 @@ namespace CancerGov.Dictionaries.SnippetControls
         private void SetupUrlFilter(string name, NciUrl url)
         {
             if (!string.IsNullOrEmpty(CdrID))
-                url.SetUrl(url.ToString() + "?cdrid=" + CdrID);
+                url.SetUrl(url.ToString());
             else if (!string.IsNullOrEmpty(Expand))
             {
                 if (Expand.Trim() == "#")
                 {
                     Expand = "%23";
                 }
-                url.SetUrl(url.ToString() + "?expand=" + Expand);
+                url.SetUrl(url.ToString());
             }
             else
                 url.SetUrl(url.ToString());
@@ -207,6 +207,9 @@ namespace CancerGov.Dictionaries.SnippetControls
                 DictionaryURLSpanish = DictionaryURL;
 
             DictionaryURLEnglish = DictionaryURL;
+
+            string englishCanonicalUrl = null;
+            string spanishCanonicalUrl = null;
 
             SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
         }
