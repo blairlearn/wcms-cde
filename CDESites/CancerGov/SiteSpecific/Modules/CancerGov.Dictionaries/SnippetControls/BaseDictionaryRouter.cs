@@ -16,6 +16,8 @@ namespace CancerGov.Dictionaries.SnippetControls
 {
     public abstract class BaseDictionaryRouter : SnippetControl
     {
+        protected System.Web.UI.WebControls.PlaceHolder phDictionary;
+
         /// <summary>
         /// Gets or sets the PrettyUrl of the page this component lives on.
         /// </summary>
@@ -80,9 +82,41 @@ namespace CancerGov.Dictionaries.SnippetControls
         }
 
         /// <summary>
-        /// Method called to load dictionary page control
+        /// Method called to load dictionary home control
         /// </summary>
-        protected abstract void LoadDictionaryControl(string controlType);
+        protected abstract Control LoadHomeControl();
+
+        /// <summary>
+        /// Method called to load dictionary results list control
+        /// </summary>
+        protected abstract Control LoadResultsListControl();
+
+        /// <summary>
+        /// Method called to load dictionary definition view control
+        /// </summary>
+        protected abstract Control LoadDefinitionViewControl();
+
+        protected void RedirectToResultsList(string searchString)
+        {
+            NciUrl redirectURL = new NciUrl();
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+            {
+                redirectURL.SetUrl(this.PrettyUrl + "/buscar");
+            }
+            else
+            {
+                redirectURL.SetUrl(this.PrettyUrl + "/search");
+            }
+            redirectURL.QueryParameters.Add("q", searchString);
+            DoPermanentRedirect(Response, redirectURL.ToString());
+        }
+
+        protected void RedirectToDefinitionView(string id)
+        {
+            NciUrl redirectURL = new NciUrl();
+            redirectURL.SetUrl(this.PrettyUrl + "/def/" + id);
+            DoPermanentRedirect(Response, redirectURL.ToString());
+        }
 
         /// <summary>
         /// Implement OnLoad Event to handle fetching of results.
@@ -104,63 +138,67 @@ namespace CancerGov.Dictionaries.SnippetControls
             // default results to 'A' if no term chosen
             String expand = Strings.Clean(Request.QueryString["expand"], "A");
             String language = Strings.Clean(Request.QueryString["language"]);
+            Control dictionaryControl = null;
 
             if (!String.IsNullOrEmpty(legacyTerm))
             {
                 searchString = legacyTerm;
             }
 
-            // Load control depending on path
-            // Path is either /search?q=<term> or /def/<term or code>
             List<string> route = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
-            if (route[0].Equals("search"))
-            {
-                // If path is /search, load the ResultsList control
-                LoadDictionaryControl("search");
-            }
-            else if(route[0].Equals("def"))
-            {
-                // If path is /def, load DefinitionView control
-                LoadDictionaryControl("view");
-                            }
-            else if(route.Count > 2)
-            {
-                // If path extends further than /search or /def/<term>, raise a 404 error
-                NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("Dictionary", 400, "Invalid parameters for dictionary");
-            }
 
-            if (!String.IsNullOrEmpty(legacySearchString))
+            // Load control depending on URL and path
+            // Path is either /search?q=<term> or /def/<term or code>
+            // Old URLs (?search=, ?cdrid=, ?id=, ?expand= get redirected or handled
+            if (route.Count > 0)
+            {
+                if (route[0].Equals("search") || route[0].Equals("buscar"))
+                {
+                    // If path is /search, load the ResultsList control
+                    dictionaryControl = LoadResultsListControl();
+                }
+                else if (route[0].Equals("def"))
+                {
+                    // If path is /def, load DefinitionView control
+                    dictionaryControl = LoadDefinitionViewControl();
+                }
+                else if (route.Count > 2)
+                {
+                    // If path extends further than /search or /def/<term>, raise a 400 error
+                    NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("Dictionary", 400, "Invalid parameters for dictionary");
+                }
+            }
+            else if (!String.IsNullOrEmpty(legacySearchString))
             {
                 // redirect to new search URL using searchString as term
-                NciUrl redirectURL = new NciUrl();
-                redirectURL.SetUrl(this.PrettyUrl + "/search");
-                redirectURL.QueryParameters.Add("q", searchString);
-                DoPermanentRedirect(Response, redirectURL.ToString());
+                RedirectToResultsList(legacySearchString);
             }
             else if (!String.IsNullOrEmpty(legacyCdrId))
             {
                 // redirect to new view URL using cdrId
                 // check for friendly name
-                NciUrl redirectURL = new NciUrl();
-                redirectURL.SetUrl(this.PrettyUrl + "/def/" + legacyCdrId);
-                DoPermanentRedirect(Response, redirectURL.ToString());
+                RedirectToDefinitionView(legacyCdrId);
             }
             else if (!String.IsNullOrEmpty(legacyId))
             {
                 // redirect to new view URL using cdrId or id
                 // check for friendly name
-                NciUrl redirectURL = new NciUrl();
-                redirectURL.SetUrl(this.PrettyUrl + "/def/" + legacyId);
-                DoPermanentRedirect(Response, redirectURL.ToString());
+                RedirectToDefinitionView(legacyId);
             }
             // TODO: legacy term???
-            else if (!String.IsNullOrEmpty(expand))
+            else if (dictionaryControl == null && !String.IsNullOrEmpty(expand))
             {
-                LoadDictionaryControl("expand");
+                dictionaryControl = LoadResultsListControl();
             }
             else
             {
-                LoadDictionaryControl("home");
+                dictionaryControl = LoadHomeControl();
+            }
+
+            // Add control to page
+            if (dictionaryControl != null)
+            {
+                phDictionary.Controls.Add(dictionaryControl);
             }
         }
 

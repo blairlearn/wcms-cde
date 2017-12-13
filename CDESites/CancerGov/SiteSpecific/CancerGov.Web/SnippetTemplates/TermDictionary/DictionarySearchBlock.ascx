@@ -1,5 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DictionarySearchBlock.ascx.cs"
-    Inherits="CancerGov.Web.SnippetTemplates.DictionarySearchBlock"%>
+﻿<%@ Control Language="C#" AutoEventWireup="true"  Inherits="CancerGov.Dictionaries.SnippetControls.DictionarySearchBlock"%>
 <%@ Register TagPrefix="CancerGovWww" TagName="AlphaListBox" Src="~/Common/UserControls/AlphaListBox.ascx" %>
 
 <script type="text/javascript">

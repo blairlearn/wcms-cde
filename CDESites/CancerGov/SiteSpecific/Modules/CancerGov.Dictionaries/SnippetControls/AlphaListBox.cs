@@ -163,17 +163,17 @@
                 for (int i = 65; i < 91; i++)
                 {
                     if (doWebAnalytics)
-                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + (char)i + "') >" + (char)i + "</a></li>\n";
+                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl) + "?expand=" + (char)i + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + (char)i + "') >" + (char)i + "</a></li>\n";
                     else
-                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + (char)i + urlArgs + "\">" + (char)i + "</a></li>\n";
+                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl) + "?expand=" + (char)i + urlArgs + "\">" + (char)i + "</a></li>\n";
                 }
 
                 if (numericItems)
                 {
                     if (doWebAnalytics)
-                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'#') >#</a></li>\n";
+                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl) + "?expand=" + Server.UrlEncode("#") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'#') >#</a></li>\n";
                     else
-                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\">#</a></li>\n";
+                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl) + "?expand=" + Server.UrlEncode("#") + urlArgs + "\">#</a></li>\n";
                 }
             }
             else
@@ -181,18 +181,18 @@
                 foreach (string item in boxItems)
                 {
                     if (doWebAnalytics)
-                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + item + "') >" + item + "</a></li>\n";
+                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl) + "?expand=" + Server.UrlEncode(item) + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + item + "') >" + item + "</a></li>\n";
                     else
-                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\">" + item + "</a></li>\n";
+                        alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl) + "?expand=" + Server.UrlEncode(item) + urlArgs + "\">" + item + "</a></li>\n";
                 }
             }
 
             if (showAll)
             {
                 if (doWebAnalytics)
-                    alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'ALL') >" + "All" + "</a></li>\n";
+                    alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl) + "?expand=" + Server.UrlEncode("All") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'ALL') >" + "All" + "</a></li>\n";
                 else
-                    alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.requestedUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\">" + "All" + "</a></li>\n";
+                    alphaListItems += "<li><a href=\"" + PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl) + "?expand=" + Server.UrlEncode("All") + urlArgs + "\">" + "All" + "</a></li>\n";
             }
 
             ////alphaListItems += "	<td width=\"1\"><img src=\"/images/spacer.gif\" alt=\"\" border=\"0\" width=\"1\" height=\"30\"></td>\n";
