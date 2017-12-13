@@ -23,7 +23,7 @@
                 <ItemTemplate>
                     <dt>
                        <dfn>
-                        <a href="<%# DictionaryURL %>?CdrID=<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                        <a href="<%# DictionaryPrettyURL %>/def/<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
                              <%# ((DictionarySearchResult)(Container.DataItem)).MatchedTerm%></a>
                         </dfn>
                     </dt>

@@ -45,9 +45,12 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         public string DictionaryURL { get; set; }
 
+        public string DictionaryPrettyURL { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             //base.OnLoad(e);
             GetQueryParams();
@@ -104,8 +107,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
-                    NciUrl purl = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl);
-                    string itemDefinitionUrl = purl + "/def/" + itemPtr.Current.ID;
+                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + itemPtr.Current.ID;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else

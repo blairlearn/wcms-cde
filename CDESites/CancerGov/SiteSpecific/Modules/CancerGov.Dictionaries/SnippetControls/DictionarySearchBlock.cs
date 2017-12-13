@@ -343,7 +343,7 @@ namespace CancerGov.Dictionaries.SnippetControls
             CdrID = string.Empty;
 
             if (!string.IsNullOrEmpty(SearchStr))
-                DictionaryURL = DictionaryURL + "?search=" + SearchStr;
+                DictionaryURL = DictionaryURL + "/search?q=" + SearchStr;
 
             RadioButton rd = (RadioButton)FindControl("radioContains");
 

@@ -131,12 +131,24 @@ namespace CancerGov.Dictionaries.SnippetControls
             this.SetupUrls();
 
             String searchString = Strings.Clean(Request.QueryString["q"]);
-            String legacySearchString = Strings.Clean(Request.QueryString["search"]);
+            String legacySearchString = null;
+
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+            {
+                legacySearchString = Strings.Clean(Request.QueryString["buscar"]);
+            }
+            else
+            {
+                legacySearchString = Strings.Clean(Request.QueryString["search"]);
+            }
+
             String legacyTerm = Strings.Clean(Request.QueryString["term"]);
             String legacyCdrId = Strings.Clean(Request.QueryString["cdrid"]);
             String legacyId = Strings.Clean(Request.QueryString["id"]);
+
             // default results to 'A' if no term chosen
             String expand = Strings.Clean(Request.QueryString["expand"], "A");
+
             String language = Strings.Clean(Request.QueryString["language"]);
             Control dictionaryControl = null;
 
