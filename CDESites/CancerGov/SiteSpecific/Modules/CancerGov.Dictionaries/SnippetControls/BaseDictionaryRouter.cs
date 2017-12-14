@@ -96,7 +96,7 @@ namespace CancerGov.Dictionaries.SnippetControls
         /// </summary>
         protected abstract Control LoadDefinitionViewControl();
 
-        protected void RedirectToResultsList(string searchString)
+        protected void RedirectToResultsList(string searchString, string contains)
         {
             NciUrl redirectURL = new NciUrl();
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -107,7 +107,14 @@ namespace CancerGov.Dictionaries.SnippetControls
             {
                 redirectURL.SetUrl(this.PrettyUrl + "/search");
             }
+
             redirectURL.QueryParameters.Add("q", searchString);
+
+            if(contains.Equals("true"))
+            {
+                redirectURL.QueryParameters.Add("contains", contains);
+            }
+
             DoPermanentRedirect(Response, redirectURL.ToString());
         }
 
@@ -150,6 +157,7 @@ namespace CancerGov.Dictionaries.SnippetControls
             String expand = Strings.Clean(Request.QueryString["expand"], "A");
 
             String language = Strings.Clean(Request.QueryString["language"]);
+            String contains = Strings.Clean(Request.QueryString["contains"], "false");
             Control dictionaryControl = null;
 
             if (!String.IsNullOrEmpty(legacyTerm))
@@ -183,7 +191,7 @@ namespace CancerGov.Dictionaries.SnippetControls
             else if (!String.IsNullOrEmpty(legacySearchString))
             {
                 // redirect to new search URL using searchString as term
-                RedirectToResultsList(legacySearchString);
+                RedirectToResultsList(legacySearchString, contains);
             }
             else if (!String.IsNullOrEmpty(legacyCdrId))
             {

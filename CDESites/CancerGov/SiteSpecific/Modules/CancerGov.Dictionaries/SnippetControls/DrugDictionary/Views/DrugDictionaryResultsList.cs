@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using NCI.Util;
+using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
@@ -34,13 +35,23 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
         protected class DrugPager
         {
+            private NciUrl pageBaseUrl = new NciUrl();
+            private Dictionary<string, string> queryParams = new Dictionary<string, string>();
             private int showPages = 10;
             private int currentPage = 0;
             private int recordsPerPage = 10;
             private int recordCount = 0;
-            private string pageBaseUrlFormat = "javascript:page('{0}');";
 
             #region Properties
+
+            /// <summary>
+            /// Property sets index of current page view
+            /// </summary>
+            public Dictionary<string, string> QueryParameters
+            {
+                get { return queryParams; }
+                set { queryParams = value; }
+            }
 
             /// <summary>
             /// Property sets index of current page view
@@ -82,13 +93,15 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             /// </summary>
             public DrugPager() { }
 
-            public DrugPager(string pageBaseUrl, int pageIndex, int pageSize, int pageCount, int itemCount)
+            public DrugPager(NciUrl pageBaseUrl, Dictionary<string, string> queryParams, int pageIndex, int pageSize, int pageCount, int itemCount)
             {
+                this.pageBaseUrl = pageBaseUrl;
+                this.queryParams = queryParams;
                 this.currentPage = pageIndex;
                 this.recordCount = itemCount;
                 this.recordsPerPage = pageSize;
                 this.showPages = pageCount;
-                this.pageBaseUrlFormat = pageBaseUrl + "&first={0}&page={1}";
+                //this.pageBaseUrlFormat = pageBaseUrl + "&first={0}&page={1}";
             }
 
             /// <summary>
@@ -112,16 +125,32 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     }
                 }
 
+                foreach (KeyValuePair<string, string> pair in queryParams)
+                {
+                    if(!pageBaseUrl.QueryParameters.ContainsKey(pair.Key))
+                    {
+                        pageBaseUrl.QueryParameters.Add(pair.Key, pair.Value);
+                    }
+                }
+
                 if (pages > 1)
                 {
                     startIndex = currentPage - showPages > 0 ? currentPage - showPages : 1;
                     endIndex = currentPage + showPages > pages ? pages : currentPage + showPages;
+                    string first = "";
+                    string page = "";
+                    string url = pageBaseUrl.ToString();
 
                     for (int i = startIndex; i <= endIndex; i++)
                     {
                         if (currentPage != i)
                         {
-                            result += "<li><a href=\"" + String.Format(pageBaseUrlFormat, (((i - 1) * this.recordsPerPage) + 1).ToString(), i) + "\">" + i.ToString() + "</a></li>";
+                            first = (((i - 1) * this.recordsPerPage) + 1).ToString();
+                            page = i.ToString();
+                            url = GetPagerUrl(pageBaseUrl, first, page);
+
+                            result += "<li><a href=\"" + url.ToString() + "\">" + i.ToString() + "</a></li>";
+                            //result += "<li><a href=\"" + String.Format(pageBaseUrlFormat, (((i - 1) * this.recordsPerPage) + 1).ToString(), i) + "\">" + i.ToString() + "</a></li>";
                         }
                         else
                         {
@@ -131,17 +160,56 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
                     if (currentPage > 1)
                     {
-                        result = "<li class='previous'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage - 2) * this.recordsPerPage) + 1).ToString(), (currentPage - 1).ToString()) + "\">Previous</a></li>" + result;
+                        first = (((currentPage - 2) * this.recordsPerPage) + 1).ToString();
+                        page = (currentPage - 1).ToString();
+                        url = GetPagerUrl(pageBaseUrl, first, page);
+
+                        result = "<li class='previous'><a href=\"" + url.ToString() + "\">Previous</a></li>" + result;
+
+                        //result = "<li class='previous'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage - 2) * this.recordsPerPage) + 1).ToString(), (currentPage - 1).ToString()) + "\">Previous</a></li>" + result;
                     }
                     if (currentPage < pages)
                     {
-                        result += "<li class='next'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage) * this.recordsPerPage) + 1).ToString(), (currentPage + 1).ToString()) + "\">Next</a></li>";
+                        first = (((currentPage) * this.recordsPerPage) + 1).ToString();
+                        page = (currentPage + 1).ToString();
+                        url = GetPagerUrl(pageBaseUrl, first, page);
+
+                        result += "<li class='next'><a href=\"" + url.ToString() + "\">Next</a></li>";
+
+                        //result += "<li class='next'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage) * this.recordsPerPage) + 1).ToString(), (currentPage + 1).ToString()) + "\">Next</a></li>";
                     }
 
                     result = "<div class='pagination'><ul class='no-bullets'>" + result + "</ul></div>";
                 }
 
                 return result;
+            }
+
+            public string GetPagerUrl(NciUrl basePageUrl, string first, string page)
+            {
+                NciUrl pagerUrl = basePageUrl;
+
+                if(!pagerUrl.QueryParameters.ContainsKey("first"))
+                {
+                    pagerUrl.QueryParameters.Add("first", first);
+                }
+                else
+                {
+                    pagerUrl.QueryParameters.Remove("first");
+                    pagerUrl.QueryParameters.Add("first", first);
+                }
+
+                if (!pagerUrl.QueryParameters.ContainsKey("page"))
+                {
+                    pagerUrl.QueryParameters.Add("page", page);
+                }
+                else
+                {
+                    pagerUrl.QueryParameters.Remove("page");
+                    pagerUrl.QueryParameters.Add("page", page);
+                }
+
+                return pagerUrl.ToString();
             }
         }
 
@@ -155,6 +223,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         public string SrcGroup { get; set; }
 
         public bool BContains { get; set; }
+
+        public bool isExpand { get; set; }
 
         public int NumResults { get; set; }
 
@@ -170,9 +240,12 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
         public string DictionaryURL { get; set; }
 
+        public string DictionaryPrettyURL { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             //base.OnLoad(e);
             GetQueryParams();
@@ -196,9 +269,12 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             string pageHtml = string.Empty;
             if (NumResults > 0 && PageAssemblyContext.Current.DisplayVersion != DisplayVersions.Print)
             {
-                string pageURL = GetPageUrl();
+                Dictionary<string, string> queryParams = GetPageQueryParams();
 
-                DrugPager objPager = new DrugPager(DictionaryURL + pageURL, CurrentPageIndex, PageSize, 2, NumResults);
+                NciUrl pagerUrl = new NciUrl();
+                pagerUrl.SetUrl(DictionaryURL);
+
+                DrugPager objPager = new DrugPager(pagerUrl, queryParams, CurrentPageIndex, PageSize, 2, NumResults);
                 pageHtml = objPager.RenderPager();
             }
             litPager.Text = pageHtml;
@@ -222,10 +298,11 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {
+                isExpand = false;
                 SearchStr = Sanitizer.GetSafeHtmlFragment(SearchStr);
                 resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
             }
-            else if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
+            else if (!String.IsNullOrEmpty(Expand) ) // A-Z expand provided - do an A-Z search
             {
                 string searchText;
                 if (Expand.ToLower() == "all")
@@ -242,6 +319,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 // This is a result of the hacky way variables are being used to both store search data,
                 // and as a flag for which sort of search is supposed to be performed.
                 SearchStr = Expand;
+                isExpand = true;
             }
 
             if (resultCollection != null && resultCollection.Count() > 0)
@@ -254,7 +332,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
-                    string itemDefinitionUrl = DictionaryURL + "?cdrid=" + itemPtr.Current.ID;
+                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + itemPtr.Current.ID;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else
@@ -268,7 +346,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     {
                         RenderNoResults();
                     }
-
                 }
             }
             else
@@ -302,10 +379,10 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             string url;
 
             // URL base.
-            url = "/?";
+            url = "?";
 
             //add expand
-            if (!string.IsNullOrEmpty(Expand))
+            if (!string.IsNullOrEmpty(Expand) && (isExpand == true))
             {
                 if (Expand.Trim() == "#")
                     url += "&expand=%23";
@@ -318,14 +395,47 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             {
                 url += "&cdrid=" + CdrID;
             }
-            else if (!string.IsNullOrEmpty(SearchStr))
+            else if (!string.IsNullOrEmpty(SearchStr) && (isExpand == false))
             {
-                url += "&searchTxt=" + SearchStr;
+                url += "&q=" + SearchStr;
                 if (BContains)
                     url += "&sgroup=Contains";
             }
 
             return url;
+        }
+
+        /// <summary>
+        /// Returns the page's query parameters for use in paging.
+        /// </summary>
+        private Dictionary<string, string> GetPageQueryParams()
+        {
+            Dictionary<string, string> queryParams = new Dictionary<string, string>();
+
+
+            //add expand
+            if (!string.IsNullOrEmpty(Expand) && (isExpand == true))
+            {
+                if (Expand.Trim() == "#")
+                    queryParams.Add("expand", "%23");
+                else
+                    queryParams.Add("expand", Expand.Trim());
+            }
+
+            //add cdrid or searchstr
+            if (!string.IsNullOrEmpty(CdrID))
+            {
+                queryParams.Add("cdrid", CdrID);
+            }
+            else if (!string.IsNullOrEmpty(SearchStr) && (isExpand == false))
+            {
+                queryParams.Add("q", SearchStr);
+                if (BContains)
+                    queryParams.Add("contains", "true");
+                    //url += "&sgroup=Contains";
+            }
+
+            return queryParams;
         }
 
         private void RenderNoResults()
@@ -401,8 +511,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         private void GetQueryParams()
         {
             Expand = Strings.Clean(Request.Params["expand"], "A");
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["search"]);
+            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["q"]);
             SearchStr = Strings.Clean(SearchStr);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
             CurrentPageIndex = Strings.ToInt(Request.Params["page"], 1);
@@ -477,7 +586,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
                 // Get the original search string, forcing it to be non-null and removing any
                 // leading/trailing spaces.
-                string searchstr = Strings.Clean(Request.Params["search"]) ?? String.Empty;
+                string searchstr = Strings.Clean(Request.Params["q"]) ?? String.Empty;
                 searchstr = SearchStr.Trim().ToLower();
 
                 // Handle the possibility that two alias types might have the same value
@@ -576,6 +685,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     }
                 }
             }
+
             return marked;
         }
 
