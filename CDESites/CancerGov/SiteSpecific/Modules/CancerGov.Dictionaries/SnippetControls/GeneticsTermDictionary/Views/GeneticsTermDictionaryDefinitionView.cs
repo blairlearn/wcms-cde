@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using System.Linq;
 
 using CancerGov.Text;
 using Common.Logging;
 
+using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
@@ -49,12 +52,72 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
         public int RelatedTermCount { get; set; }
 
+        /// <summary>
+        /// Gets or sets the PrettyUrl of the page this component lives on.
+        /// </summary>
+        protected string PrettyUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current Url as an NciUrl object.
+        /// </summary>
+        protected NciUrl CurrentUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Current AppPath, which is usually something like
+        /// https://www.cancer.gov(PURL)(AppPath)
+        /// (Where both PURL and AppPath start with /)
+        /// </summary>
+        protected string CurrAppPath
+        {
+            get
+            {
+                //Get the Current Application Path, e.g. if the URL is /foo/bar/results/chicken,
+                //and the pretty URL is /foo/bar, then the CurrAppPath should be /results/chicken
+                if (this.CurrentUrl.UriStem.Length == this.PrettyUrl.Length)
+                    return "/";
+                else
+                    return this.CurrentUrl.UriStem.Substring(PrettyUrl.Length);
+            }
+        }
+
+        /// <summary>
+        /// This sets up the Original Pretty URL, the current full URL and the app path
+        /// </summary>
+        private void SetupUrls()
+        {
+            //We want to use the PURL for this item.
+            //NOTE: THIS 
+            NciUrl purl = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl);
+
+            if (purl == null || string.IsNullOrWhiteSpace(purl.ToString()))
+                throw new Exception("Dictionary requires current PageAssemblyInstruction to provide its PrettyURL through GetURL.  PrettyURL is null or empty.");
+
+            //It is expected that this is pure and only the pretty URL of this page.
+            //This means that any elements on the same page as this app should NOT overwrite the
+            //PrettyURL URL Filter.
+            this.PrettyUrl = purl.ToString();
+
+            //Now, that we have the PrettyURL, let's figure out what the app paths are...
+            NciUrl currURL = new NciUrl();
+            currURL.SetUrl(HttpContext.Current.Request.RawUrl);
+            currURL.SetUrl(currURL.UriStem);
+
+            //Make sure this URL starts with the pretty url
+            if (currURL.UriStem.ToLower().IndexOf(this.PrettyUrl.ToLower()) != 0)
+                throw new Exception(String.Format("JSApplicationProxy: Cannot Determine App Path for Page, {0}, with PrettyURL {1}.", currURL.UriStem, PrettyUrl));
+
+            this.CurrentUrl = currURL;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
-            GetQueryParams();
-            ValidateParams();
+            //GetQueryParams();
+            //ValidateParams();
+
+            SetupUrls();
+            GetDefinitionTerm();
 
             //For Genetics dictionary language is always English
             DictionaryLanguage = "en";
@@ -489,8 +552,22 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
         {
             Expand = Strings.Clean(Request.Params["expand"]);
             CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Strings.Clean(Request.Params["search"]);
+            SearchStr = Strings.Clean(Request.Params["q"]);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
+        }
+
+        private void GetDefinitionTerm()
+        {
+            List<string> path = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            if (path.Count > 0 && path[0].Equals("def"))
+            {
+                CdrID = Strings.Clean(path[1]);
+                if (path.Count > 2)
+                {
+                    // If path extends further than /search or /def/<term>, raise a 400 error
+                    NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("Dictionary", 400, "Invalid parameters for dictionary");
+                }
+            }
         }
     }
 }

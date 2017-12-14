@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Web;
 using System.Web.UI;
-using System.Linq;
 using NCI.Util;
-using NCI.Web;
 using NCI.Web.CDE.UI;
 
 namespace CancerGov.Dictionaries.SnippetControls

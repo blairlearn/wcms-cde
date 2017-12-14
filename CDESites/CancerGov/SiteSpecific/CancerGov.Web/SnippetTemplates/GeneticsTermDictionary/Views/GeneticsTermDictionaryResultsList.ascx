@@ -1,5 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GeneticsTermDictionaryResultsList.ascx.cs"
-    Inherits="CancerGov.Web.SnippetTemplates.GenerticsTermDictionaryResultsList" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary.GeneticsTermDictionaryResultsList" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
 <%@ Register TagPrefix="GeneticsTermDictionary" TagName="SearchBlock" Src="~/SnippetTemplates/GeneticsTermDictionary/Views/GeneticsTermDictionaryHome.ascx" %>
 <GeneticsTermDictionary:SearchBlock ID="dictionarySearchBlock" runat="server" />
@@ -20,7 +19,7 @@
                 </dl>
             </LayoutTemplate>
             <ItemTemplate>
-                <dt><dfn><a href="<%# DictionaryURL %>?CdrID=<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>"
+                <dt><dfn><a href="<%# DictionaryPrettyURL %>/def/<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>"
                     <%# ResultListViewHrefOnclick(Container)%>>
                     <%# ((DictionarySearchResult)(Container.DataItem)).MatchedTerm%></a> </dfn></dt>
                 <asp:PlaceHolder ID="phPronunciation" runat="server">
