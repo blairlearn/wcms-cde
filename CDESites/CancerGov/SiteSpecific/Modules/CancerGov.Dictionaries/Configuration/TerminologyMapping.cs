@@ -71,10 +71,11 @@ namespace CancerGov.Dictionaries.Configuration
                     string line;
                     while ((line = sr.ReadLine()) != null)
                     {
-                        string[] parts = line.Split('|');
+                        // Lowercase entry  (for comparison to pretty name from URL parameters later)
+                        line = line.ToLower();
 
-                        // Lowercase pretty names (for comparison to pretty name from URL parameters later)
-                        parts[0] = parts[0].ToLower();
+
+                        string[] parts = line.Split('|');
 
                         // Add mapping to dictionary if it isn't already present
                         if (!dict.ContainsKey(parts[0]))
@@ -99,7 +100,7 @@ namespace CancerGov.Dictionaries.Configuration
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The CDRID</returns>
-        public string GetCDRID(string value)
+        public string GetFriendlyNameFromCDRID(string value)
         {
             value = value.ToLower();
             return _mapping[value];
@@ -110,21 +111,38 @@ namespace CancerGov.Dictionaries.Configuration
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The CDRID</returns>
-        public string GetFriendlyName(string value)
+        public string GetCDRIDFromFriendlyName(string value)
         {
             value = value.ToLower();
-            return _mapping[value];
+            return _mapping.FirstOrDefault(x => x.Value == value).Key;
+        }
+
+        /// <summary>
+        /// Checks to see if the lookup contains an entry for the CDRID
+        /// </summary>
+        /// <param name="key">The CDRID to lookup</param>
+        /// <returns>True or false based on the existance of the CDRID in the lookup</returns>
+        public bool MappingContainsCDRID(string key)
+        {
+            key = key.ToLower();
+            return _mapping.ContainsKey(key);
         }
 
         /// <summary>
         /// Checks to see if the lookup contains an entry for the pretty name
         /// </summary>
-        /// <param name="key">The pretty name to lookup</param>
+        /// <param name="value">The pretty name to lookup</param>
         /// <returns>True or false based on the existance of the pretty name in the lookup</returns>
-        public bool MappingContainsKey(string key)
+        public bool MappingContainsFriendlyName(string value)
         {
-            key = key.ToLower();
-            return _mapping.ContainsKey(key);
+            value = value.ToLower();
+            string myKey = _mapping.FirstOrDefault(x => x.Value == value).Key;
+            if (!string.IsNullOrEmpty(myKey))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

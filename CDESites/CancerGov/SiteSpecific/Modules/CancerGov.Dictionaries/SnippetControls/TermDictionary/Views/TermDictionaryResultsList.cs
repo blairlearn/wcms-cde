@@ -17,7 +17,7 @@ using Microsoft.Security.Application;
 
 namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 {
-    public class TermDictionaryResultsList : SnippetControl
+    public class TermDictionaryResultsList : BaseDictionaryControl
     {
         protected TermDictionaryHome dictionarySearchBlock;
 
@@ -107,7 +107,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
-                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + itemPtr.Current.ID;
+                    string urlItem = GetFriendlyName(itemPtr.Current.ID);
+
+                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
+
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else
@@ -189,7 +192,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         }
 
         /// <summary>
-        /// Saves the quesry parameters to support old gets
+        /// Saves the query parameters
         /// </summary>
         private void GetQueryParams()
         {
@@ -239,12 +242,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     else
                         phPronunciation.Visible = false;
                 }
-
             }
-
         }
-
     }
-
-
 }

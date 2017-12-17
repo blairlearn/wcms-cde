@@ -16,7 +16,7 @@ using Microsoft.Security.Application;
 
 namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 {
-    public class GeneticsTermDictionaryResultsList : SnippetControl
+    public class GeneticsTermDictionaryResultsList : BaseDictionaryControl
     {
         protected GeneticsTermDictionaryHome dictionarySearchBlock;
 
@@ -111,7 +111,9 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
-                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + itemPtr.Current.ID;
+                    string urlItem = GetFriendlyName(itemPtr.Current.ID);
+
+                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else

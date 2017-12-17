@@ -7,23 +7,23 @@ namespace CancerGov.Dictionaries.SnippetControls
 {
     public class TermDictionaryRouter : BaseDictionaryRouter
     {
-        protected Control localControl;
+        protected BaseDictionaryControl localControl;
 
-        protected override Control LoadHomeControl()
+        protected override BaseDictionaryControl LoadHomeControl()
         {
-            localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryHome.ascx");
+            localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryHome.ascx");
             return localControl;
         }
 
-        protected override Control LoadResultsListControl()
+        protected override BaseDictionaryControl LoadResultsListControl()
         {
-            localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryResultsList.ascx");
+            localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryResultsList.ascx");
             return localControl;
         }
 
-        protected override Control LoadDefinitionViewControl()
+        protected override BaseDictionaryControl LoadDefinitionViewControl()
         {
-            localControl = Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryDefinitionView.ascx");
+            localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryDefinitionView.ascx");
             return localControl;
         }
     }

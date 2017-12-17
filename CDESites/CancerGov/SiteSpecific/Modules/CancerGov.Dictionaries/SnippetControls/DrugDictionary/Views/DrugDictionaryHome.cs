@@ -10,7 +10,7 @@ using NCI.Web.Dictionary;
 
 namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 {
-    public class DrugDictionaryHome : SnippetControl
+    public class DrugDictionaryHome : BaseDictionaryControl
     {
         protected DictionarySearchBlock dictionarySearchBlock;
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using CancerGov.Dictionaries.Configuration;
 using NCI.Util;
 using NCI.Web;
 using NCI.Web.CDE;
@@ -17,7 +18,7 @@ using Microsoft.Security.Application;
 
 namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 {
-    public class DrugDictionaryResultsList : SnippetControl
+    public class DrugDictionaryResultsList : BaseDictionaryControl
     {
         protected DrugDictionaryHome dictionarySearchBlock;
 
@@ -101,7 +102,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 this.recordCount = itemCount;
                 this.recordsPerPage = pageSize;
                 this.showPages = pageCount;
-                //this.pageBaseUrlFormat = pageBaseUrl + "&first={0}&page={1}";
             }
 
             /// <summary>
@@ -213,7 +213,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
         }
 
-
         public string SearchStr { get; set; }
 
         public string Expand { get; set; }
@@ -249,7 +248,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
             //base.OnLoad(e);
             GetQueryParams();
-            ValidateParams();
+            //ValidateParams();
 
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -277,6 +276,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 DrugPager objPager = new DrugPager(pagerUrl, queryParams, CurrentPageIndex, PageSize, 2, NumResults);
                 pageHtml = objPager.RenderPager();
             }
+
             litPager.Text = pageHtml;
         }
 
@@ -332,7 +332,9 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
-                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + itemPtr.Current.ID;
+                    string urlItem = GetFriendlyName(itemPtr.Current.ID);
+
+                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else
@@ -369,7 +371,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             return filter;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Recreates the page's query string parameters for use in paging.
         /// </summary>
         /// <returns>A query string, starting with "/?", containing the parameters and values used
@@ -403,7 +405,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
 
             return url;
-        }
+        }*/
 
         /// <summary>
         /// Returns the page's query parameters for use in paging.
@@ -411,7 +413,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         private Dictionary<string, string> GetPageQueryParams()
         {
             Dictionary<string, string> queryParams = new Dictionary<string, string>();
-
 
             //add expand
             if (!string.IsNullOrEmpty(Expand) && (isExpand == true))
@@ -488,9 +489,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 PageSize = Int32.Parse(pgSize);
         }
 
-        private void ValidateParams()
+        /*private void ValidateCdrId()
         {
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
             if (!string.IsNullOrEmpty(CdrID))
             {
                 try
@@ -500,13 +500,12 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 catch (Exception)
                 {
                     throw new Exception("Invalid CDRID" + CdrID);
-
                 }
             }
-        }
+        }*/
 
         /// <summary>
-        /// Saves the quesry parameters to support old gets
+        /// Saves the query parameters
         /// </summary>
         private void GetQueryParams()
         {
@@ -557,9 +556,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     else
                         phPronunciation.Visible = false;
                 }
-
             }
-
         }
 
         /// <summary>
@@ -651,7 +648,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 }
             }
 
-
             return definition;
         }
 
@@ -688,8 +684,5 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
             return marked;
         }
-
     }
-
-
 }

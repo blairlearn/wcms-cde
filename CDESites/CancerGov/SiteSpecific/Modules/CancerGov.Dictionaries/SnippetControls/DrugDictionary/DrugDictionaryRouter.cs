@@ -7,23 +7,23 @@ namespace CancerGov.Dictionaries.SnippetControls
 {
     public class DrugDictionaryRouter : BaseDictionaryRouter
     {
-        protected Control localControl;
+        protected BaseDictionaryControl localControl;
 
-        protected override Control LoadHomeControl()
+        protected override BaseDictionaryControl LoadHomeControl()
         {
-            localControl = Page.LoadControl("~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryHome.ascx");
+            localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryHome.ascx");
             return localControl;
         }
 
-        protected override Control LoadResultsListControl()
+        protected override BaseDictionaryControl LoadResultsListControl()
         {
-            localControl = Page.LoadControl("~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryResultsList.ascx");
+            localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryResultsList.ascx");
             return localControl;
         }
 
-        protected override Control LoadDefinitionViewControl()
+        protected override BaseDictionaryControl LoadDefinitionViewControl()
         {
-            localControl = Page.LoadControl("~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryDefinitionView.ascx");
+            localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryDefinitionView.ascx"); 
             return localControl;
         }
     }

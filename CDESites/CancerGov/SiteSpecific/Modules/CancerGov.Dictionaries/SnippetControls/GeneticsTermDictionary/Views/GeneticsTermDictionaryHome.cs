@@ -22,7 +22,7 @@ using NCI.Web.CDE.UI;
 
 namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 {
-    public class GeneticsTermDictionaryHome : SnippetControl
+    public class GeneticsTermDictionaryHome : BaseDictionaryControl
     {
         protected DictionarySearchBlock dictionarySearchBlock;
 
