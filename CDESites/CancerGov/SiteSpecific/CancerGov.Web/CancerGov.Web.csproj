@@ -422,10 +422,6 @@
       <Project>{F2CB1924-487F-4756-BAC1-719C5CF97368}</Project>
       <Name>CancerGov.DataManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CancerGovSpecific\ClinicalTrialControls\ClinicalTrialControls.csproj">
-      <Project>{2FDF38AF-E70B-485F-86B9-A32948AC8926}</Project>
-      <Name>ClinicalTrialControls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\CDR.DataManager\CDR.DataManager.csproj">
       <Project>{BD37ACFC-049C-4807-93CC-1A3BFA25F11A}</Project>
       <Name>CDR.DataManager</Name>
