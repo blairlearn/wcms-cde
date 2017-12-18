@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using CancerGov.Text;
 using Common.Logging;
+using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
+using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
 using CancerGov.Dictionaries.SnippetControls.Helpers;
+using CancerGov.Dictionaries;
+using CancerGov.Dictionaries.Configuration;
 
 namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 {
-    public class DrugDictionaryDefinitionView : SnippetControl
+    public class DrugDictionaryDefinitionView : BaseDictionaryControl
     {
         protected DrugDictionaryHome dictionarySearchBlock;
 
@@ -28,6 +34,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         public string Expand { get; set; }
 
         public string CdrID { get; set; }
+
+        public string FriendlyName { get; set; }
 
         public string SrcGroup { get; set; }
 
@@ -47,12 +55,70 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
         public int RelatedTermCount { get; set; }
 
+        /// <summary>
+        /// Gets or sets the PrettyUrl of the page this component lives on.
+        /// </summary>
+        protected string PrettyUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current Url as an NciUrl object.
+        /// </summary>
+        protected NciUrl CurrentUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Current AppPath, which is usually something like
+        /// https://www.cancer.gov(PURL)(AppPath)
+        /// (Where both PURL and AppPath start with /)
+        /// </summary>
+        protected string CurrAppPath
+        {
+            get
+            {
+                //Get the Current Application Path, e.g. if the URL is /foo/bar/results/chicken,
+                //and the pretty URL is /foo/bar, then the CurrAppPath should be /results/chicken
+                if (this.CurrentUrl.UriStem.Length == this.PrettyUrl.Length)
+                    return "/";
+                else
+                    return this.CurrentUrl.UriStem.Substring(PrettyUrl.Length);
+            }
+        }
+
+        /// <summary>
+        /// This sets up the Original Pretty URL, the current full URL and the app path
+        /// </summary>
+        private void SetupUrls()
+        {
+            //We want to use the PURL for this item.
+            //NOTE: THIS 
+            NciUrl purl = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl);
+
+            if (purl == null || string.IsNullOrWhiteSpace(purl.ToString()))
+                throw new Exception("Dictionary requires current PageAssemblyInstruction to provide its PrettyURL through GetURL.  PrettyURL is null or empty.");
+
+            //It is expected that this is pure and only the pretty URL of this page.
+            //This means that any elements on the same page as this app should NOT overwrite the
+            //PrettyURL URL Filter.
+            this.PrettyUrl = purl.ToString();
+
+            //Now, that we have the PrettyURL, let's figure out what the app paths are...
+            NciUrl currURL = new NciUrl();
+            currURL.SetUrl(HttpContext.Current.Request.RawUrl);
+            currURL.SetUrl(currURL.UriStem);
+
+            //Make sure this URL starts with the pretty url
+            if (currURL.UriStem.ToLower().IndexOf(this.PrettyUrl.ToLower()) != 0)
+                throw new Exception(String.Format("JSApplicationProxy: Cannot Determine App Path for Page, {0}, with PrettyURL {1}.", currURL.UriStem, PrettyUrl));
+
+            this.CurrentUrl = currURL;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
-            GetQueryParams();
-            ValidateParams();
+            SetupUrls();
+            GetDefinitionTerm();
+            ValidateCDRID();
 
             DictionaryURLSpanish = DictionaryURL;
             DictionaryURLEnglish = DictionaryURL;
@@ -380,7 +446,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                             if (e.Item.ItemIndex >= 0 && e.Item.ItemIndex < RelatedTermCount - 1)
                                 relatedTermSeparator.Visible = true;
                         }
-
                     }
                 }
             }
@@ -437,9 +502,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
         }
 
-        private void ValidateParams()
+        private void ValidateCDRID()
         {
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
             if (!string.IsNullOrEmpty(CdrID))
             {
                 try
@@ -453,15 +517,62 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
         }
 
-        /// <summary>
+        /* /// <summary>
         /// Saves the quesry parameters to support old gets
         /// </summary>
         private void GetQueryParams()
         {
             Expand = Strings.Clean(Request.Params["expand"]);
             CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Strings.Clean(Request.Params["search"]);
+            SearchStr = Strings.Clean(Request.Params["q"]);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
+        }*/
+
+        private void GetDefinitionTerm()
+        {
+            List<string> path = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            if (path.Count > 0 && path[0].Equals("def"))
+            {
+                string param = Strings.Clean(path[1]);
+                param = Server.UrlDecode(param);
+
+                // Get friendly name to CDRID mappings
+                string dictionaryMappingFilepath = null;
+                
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                {
+                    dictionaryMappingFilepath = this.DictionaryConfiguration.SpanishCDRFriendlyNameMapFilepath;
+                }
+                else
+                {
+                    dictionaryMappingFilepath = this.DictionaryConfiguration.EnglishCDRFriendlyNameMapFilepath;
+                }
+
+                if(!string.IsNullOrEmpty(dictionaryMappingFilepath))
+                {
+                    TerminologyMapping map = TerminologyMapping.GetMappingForFile(dictionaryMappingFilepath);
+
+                    // If pretty name is in label mappings, set CDRID
+                    if (map.MappingContainsFriendlyName(param))
+                    {
+                        CdrID = map.GetCDRIDFromFriendlyName(param);
+                    }
+                    else
+                    {
+                        CdrID = param;
+                    }
+                }
+                else
+                {
+                    CdrID = param;
+                }
+
+                if (path.Count > 2)
+                {
+                    // If path extends further than /search or /def/<term>, raise a 400 error
+                    NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("Dictionary", 400, "Invalid parameters for dictionary");
+                }
+            }
         }
     }
 }

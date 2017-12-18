@@ -10,7 +10,7 @@ using NCI.Web.Dictionary;
 
 namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 {
-    public class TermDictionaryHome : SnippetControl
+    public class TermDictionaryHome : BaseDictionaryControl
     {
         protected System.Web.UI.WebControls.PlaceHolder pnlIntroEnglish;
 

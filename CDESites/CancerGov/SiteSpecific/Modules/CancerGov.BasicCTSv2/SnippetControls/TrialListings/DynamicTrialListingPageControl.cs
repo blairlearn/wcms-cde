@@ -240,19 +240,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             List<string> rawParams = new List<string>() { "", "", "" };
 
+            if (ParsedReqUrlParams.QueryParameters["p1"] != null)
+                rawParams[0] = ParsedReqUrlParams.QueryParameters["p1"];
 
-            foreach (string key in ParsedReqUrlParams.QueryParameters.Keys)
-            {
-                if (ParsedReqUrlParams.QueryParameters["p1"] != null)
-                    rawParams[0] = ParsedReqUrlParams.QueryParameters[key];
+            if (ParsedReqUrlParams.QueryParameters.Count > 1 && ParsedReqUrlParams.QueryParameters["p2"] != null)
+                rawParams[1] = ParsedReqUrlParams.QueryParameters["p2"];
 
-                if (ParsedReqUrlParams.QueryParameters.Count > 1 && ParsedReqUrlParams.QueryParameters["p2"] != null)
-                    rawParams[1] = ParsedReqUrlParams.QueryParameters["p2"];
-
-                if (ParsedReqUrlParams.QueryParameters.Count > 2 && ParsedReqUrlParams.QueryParameters["p3"] != null)
-                    rawParams[2] = ParsedReqUrlParams.QueryParameters[key];
-            }
-
+            if (ParsedReqUrlParams.QueryParameters.Count > 2 && ParsedReqUrlParams.QueryParameters["p3"] != null)
+                rawParams[2] = ParsedReqUrlParams.QueryParameters["p3"];
 
             return (rawParams);
         }

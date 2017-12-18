@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DrugDictionaryResultsList.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.DrugDictionaryResultsList" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.DrugDictionary.DrugDictionaryResultsList" %>
 <%@ Register TagPrefix="DrugDictionaryHome" TagName="SearchBlock" Src="~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryHome.ascx" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
 
@@ -23,7 +23,7 @@
         <ItemTemplate>
             <dt>
                <dfn>
-                    <a href="<%# DictionaryURL %>?CdrID=<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                    <a href="<%# DictionaryPrettyURL %>/def/<%# GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID)  %>" <%# ResultListViewHrefOnclick(Container)%>>
                         <%# HiLite(((DictionarySearchResult)(Container.DataItem)).MatchedTerm )%></a>
                     <span class="dictionary-partial-match-n">
                         <%# GetTermAliasList(Container.DataItem)%>

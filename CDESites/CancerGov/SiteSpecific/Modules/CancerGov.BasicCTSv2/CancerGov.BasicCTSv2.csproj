@@ -73,6 +73,7 @@
     <Compile Include="Configuration\TermMappingFileElementCollection.cs" />
     <Compile Include="CTSPrintException.cs" />
     <Compile Include="CTSPrintManager.cs" />
+    <Compile Include="DynamicTrialListingFriendlyNameMapping.cs" />
     <Compile Include="ITerminologyLookupService.cs" />
     <Compile Include="IZipCodeGeoLookupService.cs" />
     <Compile Include="SearchParams\CTSWebAnalyticsHelper.cs" />
