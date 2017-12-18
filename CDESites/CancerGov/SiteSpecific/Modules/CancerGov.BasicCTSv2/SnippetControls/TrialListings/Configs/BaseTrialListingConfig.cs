@@ -22,5 +22,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Configs
         /// The detailed view page pretty url formatter.
         /// </summary>
         public string DetailedViewPagePrettyUrlFormatter { get; set; }
+
+        /// <summary>
+        /// The location of the c-code to friendly name mapping file.
+        /// </summary>
+        public string FriendlyNameURLMapFilepath { get; set; }
     }
 }

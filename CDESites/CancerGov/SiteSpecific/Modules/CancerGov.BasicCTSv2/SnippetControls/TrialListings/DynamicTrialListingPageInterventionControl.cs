@@ -63,7 +63,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override JObject GetTypeSpecificQueryParameters()
         {
             JObject queryParams = new JObject();
-            string[] interventionIDsarr = this.InterventionIDs.Split(new char[] { ',' });
+
+            // Get friendly name to c-code mapping
+            string ivIDs = this.InterventionIDs;
+            if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            {
+                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                if (friendlyNameMap.MappingContainsFriendlyName(this.InterventionIDs.ToLower()))
+                {
+                    ivIDs = friendlyNameMap.GetCodeFromFriendlyName(this.InterventionIDs.ToLower());
+                }
+            }
+
+            string[] interventionIDsarr = ivIDs.Split(new char[] { ',' });
 
             queryParams.Add("arms.interventions.intervention_code", new JArray(interventionIDsarr));
 
@@ -82,6 +94,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>A string with the override text</returns>
         private string GetOverride(string valToOverride, bool needsTitleCase)
         {
+            // Get friendly name to c-code mapping
+            if(!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            {
+                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                if(friendlyNameMap.MappingContainsFriendlyName(valToOverride.ToLower()))
+                {
+                    valToOverride = friendlyNameMap.GetCodeFromFriendlyName(valToOverride);
+                }
+            }
+            
+
             // Get label mappings
             var labelMapping = DynamicTrialListingMapping.Instance;
             string overrideText = "";
