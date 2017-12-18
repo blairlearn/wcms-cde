@@ -57,13 +57,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CDR\AdvancedSearchProtocolRenderer.cs" />
-    <Compile Include="CDR\AdvancedSearchResultRenderer.cs" />
-    <Compile Include="CDR\PrintProtocolRenderer.cs" />
-    <Compile Include="CDR\PrintSearchResultsRenderer.cs" />
-    <Compile Include="CDR\ProtocolFunctions.cs" />
-    <Compile Include="CDR\ProtocolRenderer.cs" />
-    <Compile Include="CDR\ProtocolRendererOptions.cs" />
     <Compile Include="HTML\BaseHtmlHashtable.cs" />
     <Compile Include="HTML\HtmlAnchor.cs" />
     <Compile Include="HTML\HtmlImage.cs" />
@@ -96,10 +89,6 @@
     <ProjectReference Include="..\CancerGovSpecific\CancerGov.DataManager\CancerGov.DataManager.csproj">
       <Project>{F2CB1924-487F-4756-BAC1-719C5CF97368}</Project>
       <Name>CancerGov.DataManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CDR.DataManager\CDR.DataManager.csproj">
-      <Project>{BD37ACFC-049C-4807-93CC-1A3BFA25F11A}</Project>
-      <Name>CDR.DataManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

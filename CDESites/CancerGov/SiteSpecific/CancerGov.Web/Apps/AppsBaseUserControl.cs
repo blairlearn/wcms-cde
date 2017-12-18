@@ -67,18 +67,8 @@ namespace NCI.Web.CancerGov.Apps
 
         virtual public void RaiseErrorPage(string messageKey)
         {
-            //This seems like a bad place for the invalid search message, but in 
-            //refactoring 
-            if (messageKey == "InvalidSearchID")
-            {
-                // use ErrorPageDisplayer to call id-not-found error page 
-                ErrorPageDisplayer.RaiseClinicalTrialsIdNotFound(this.GetType().ToString());
-            }
-            else
-            {
-                // Use the common ErrorPageDisplayer so we do not duplicate the logic
-                ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
-            }
+            // Use the common ErrorPageDisplayer so we do not duplicate the logic
+            ErrorPageDisplayer.RaisePageError(this.GetType().ToString());
         }
 
         public string PrettyUrl

@@ -22,16 +22,6 @@ namespace NCI.Web.CDE.Application
         }
 
         /// <summary>
-        /// Display the "NotFoundPage" page and a status of 404.
-        /// </summary>
-        /// <param name="callingClass">The name of the class that called this - for logging.</param>
-        public static void RaiseClinicalTrialsIdNotFound(string callingClass, int code = 404)
-        {
-            // raise a not found page
-            RaisePage(callingClass, "Clinical Trials ID Not Found", code, "ClinicalTrialInvalidSearchID");
-        }
-
-        /// <summary>
         /// Display the Invalid Clinical Trials Search Id page and a status of 404.
         /// </summary>
         /// <param name="callingClass">The name of the class that called this - for logging.</param>

@@ -5,7 +5,7 @@ using NCI.Web.CDE.Modules;
 
 namespace CancerGov.Web.SnippetTemplates
 {
-    public class SearchBaseUserControl:AppsBaseUserControl
+    public class SearchBaseUserControl : AppsBaseUserControl
     {
         static ILog log = LogManager.GetLogger(typeof(SearchBaseUserControl));
 

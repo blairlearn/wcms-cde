@@ -150,6 +150,9 @@
     <Compile Include="Apps\GlossaryTerms.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Apps\SearchBaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Apps\SiteWideSearchModule.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -167,37 +170,6 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\PopUpPage.cs">
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookup.aspx.cs">
-      <DependentUpon>CTLookup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookup.aspx.designer.cs">
-      <DependentUpon>CTLookup.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookUpBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.cs">
-      <DependentUpon>CTLookupResults.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.designer.cs">
-      <DependentUpon>CTLookupResults.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.cs">
-      <DependentUpon>CTLookupSearch.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.designer.cs">
-      <DependentUpon>CTLookupSearch.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.cs">
-      <DependentUpon>CTLookupSelect.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.designer.cs">
-      <DependentUpon>CTLookupSelect.aspx</DependentUpon>
     </Compile>
     <Compile Include="Common\PopUps\definition.aspx.cs">
       <DependentUpon>definition.aspx</DependentUpon>
@@ -262,37 +234,6 @@
     </Compile>
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.designer.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsBaseUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsResults.ascx.cs">
-      <DependentUpon>ClinicalTrialsResults.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsResults.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsResults.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx.cs">
-      <DependentUpon>ClinicalTrialsSearchTemplate.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsSearchTemplate.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsView.ascx.cs">
-      <DependentUpon>ClinicalTrialsView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsView.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsView.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.cs">
-      <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\DocTitleBlock.ascx.cs">
       <DependentUpon>DocTitleBlock.ascx</DependentUpon>
@@ -359,13 +300,6 @@
       <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\Helpers\DictionaryDefinitionHelper.cs" />
-    <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.cs">
-      <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.designer.cs">
-      <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\ResultsGeneticsServices.ascx.cs">
       <DependentUpon>ResultsGeneticsServices.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -424,17 +358,9 @@
     </Compile>
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.designer.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\CTCustomSelection.ascx.cs">
-      <DependentUpon>CTCustomSelection.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\CTCustomSelection.ascx.designer.cs">
-      <DependentUpon>CTCustomSelection.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
       <DependentUpon>MainPageHeader.ascx</DependentUpon>
@@ -496,22 +422,6 @@
       <Project>{F2CB1924-487F-4756-BAC1-719C5CF97368}</Project>
       <Name>CancerGov.DataManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.Handlers\CancerGov.Handlers.csproj">
-      <Project>{F3414554-93F7-4116-88B2-637A3ABA050E}</Project>
-      <Name>CancerGov.Handlers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.Modules\CancerGov.Modules.csproj">
-      <Project>{7634C4C2-6EC8-45D4-A423-7B53B15BDD9E}</Project>
-      <Name>CancerGov.Modules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CancerGovSpecific\ClinicalTrialControls\ClinicalTrialControls.csproj">
-      <Project>{2FDF38AF-E70B-485F-86B9-A32948AC8926}</Project>
-      <Name>ClinicalTrialControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
-      <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
-      <Name>CDR.ClinicalTrials</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\CDR.DataManager\CDR.DataManager.csproj">
       <Project>{BD37ACFC-049C-4807-93CC-1A3BFA25F11A}</Project>
       <Name>CDR.DataManager</Name>
@@ -548,20 +458,10 @@
       <Project>{FF201258-189F-4EAF-B282-03FE7738A155}</Project>
       <Name>CancerGov.Web.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\LegacyCTSResultRedirector\LegacyCTSResultRedirector.csproj">
-      <Project>{2998FE53-18DD-4B27-A7AC-33BE692BAD61}</Project>
-      <Name>LegacyCTSResultRedirector</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\web_browsers_patch.xml" />
     <Content Include="AutoSuggestSearch.svc" />
-    <Content Include="Common\PopUps\CTLSearch\blank.htm" />
-    <Content Include="Common\PopUps\CTLSearch\CTFooter.htm" />
-    <Content Include="Common\PopUps\CTLSearch\CTLookup.aspx" />
-    <Content Include="Common\PopUps\CTLSearch\CTLookupResults.aspx" />
-    <Content Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx" />
-    <Content Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx" />
     <Content Include="Common\PopUps\definition.aspx" />
     <Content Include="Common\PopUps\popDefinition.aspx" />
     <Content Include="Common\PopUps\popHelp.aspx" />
@@ -607,10 +507,6 @@
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\CGovMainNavControl.ascx" />
     <Content Include="SnippetTemplates\CGovSectionNavControl.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsView.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx" />
     <Content Include="SnippetTemplates\ConditionalDisplaySnippet.ascx" />
     <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
     <Content Include="SnippetTemplates\BreadcrumbSnippet.ascx" />
@@ -625,7 +521,6 @@
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\GlossaryTerms.ascx" />
-    <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />
     <Content Include="SnippetTemplates\PublicArchiveBanner.ascx" />
     <Content Include="SnippetTemplates\PublicUseBanner.ascx" />
     <Content Include="SnippetTemplates\ResultsGeneticsServices.ascx" />
@@ -651,23 +546,6 @@
     <Content Include="sysimages\tile-slider-spanish-next.gif" />
     <Content Include="sysimages\tile-slider-spanish-previous.gif" />
     <Content Include="TermDictionary.svc" />
-    <Content Include="UserControls\CTCustomSelection.ascx" />
-    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookup.aspx.resx">
-      <DependentUpon>CTLookup.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.resx">
-      <DependentUpon>CTLookupResults.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.resx">
-      <DependentUpon>CTLookupSearch.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.resx">
-      <DependentUpon>CTLookupSelect.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_LocalResources\" />
