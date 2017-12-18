@@ -12,11 +12,18 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using NCI.Util;
 
+using CancerGov.Dictionaries.Configuration;
+
 namespace CancerGov.Dictionaries.SnippetControls
 {
     public abstract class BaseDictionaryRouter : SnippetControl
     {
         protected System.Web.UI.WebControls.PlaceHolder phDictionary;
+
+        /// <summary>
+        /// Gets or sets the DictionaryConfig of the App Module page.
+        /// </summary>
+        protected DictionaryConfig DictionaryConfig { get; set; }
 
         /// <summary>
         /// Gets or sets the PrettyUrl of the page this component lives on.
@@ -45,12 +52,6 @@ namespace CancerGov.Dictionaries.SnippetControls
                     return this.CurrentUrl.UriStem.Substring(PrettyUrl.Length);
             }
         }
-
-        /**
-         * 
-         * This section is the pipeline of events in order to render the trials.
-         * 
-         **/
 
         /// <summary>
         /// This sets up the Original Pretty URL, the current full URL and the app path
@@ -84,18 +85,21 @@ namespace CancerGov.Dictionaries.SnippetControls
         /// <summary>
         /// Method called to load dictionary home control
         /// </summary>
-        protected abstract Control LoadHomeControl();
+        protected abstract BaseDictionaryControl LoadHomeControl();
 
         /// <summary>
         /// Method called to load dictionary results list control
         /// </summary>
-        protected abstract Control LoadResultsListControl();
+        protected abstract BaseDictionaryControl LoadResultsListControl();
 
         /// <summary>
         /// Method called to load dictionary definition view control
         /// </summary>
-        protected abstract Control LoadDefinitionViewControl();
+        protected abstract BaseDictionaryControl LoadDefinitionViewControl();
 
+        /// <summary>
+        /// Method called to redirect old search URLs to the new search URL
+        /// </summary>
         protected void RedirectToResultsList(string searchString, string contains)
         {
             NciUrl redirectURL = new NciUrl();
@@ -118,6 +122,10 @@ namespace CancerGov.Dictionaries.SnippetControls
             DoPermanentRedirect(Response, redirectURL.ToString());
         }
 
+
+        /// <summary>
+        /// Method called to redirect old view URLs to the new view URL
+        /// </summary>
         protected void RedirectToDefinitionView(string id)
         {
             NciUrl redirectURL = new NciUrl();
@@ -133,41 +141,31 @@ namespace CancerGov.Dictionaries.SnippetControls
         sealed protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            
+            
+            // Step 1. Load config from App Module Page content item
+            // Set Dictionary Mapping Filepath according to current language
+            this.DictionaryConfig = ModuleObjectFactory<DictionaryConfig>.GetModuleObject(this.SnippetInfo.Data);
 
-            //Step 1. Parse URL and pull out parameters
+            //Step 2. Parse URL and pull out q and expand parameters for new URL syntax
             this.SetupUrls();
 
             String searchString = Strings.Clean(Request.QueryString["q"]);
-            String legacySearchString = null;
+            // default results to 'A' if no term chosen
+            String expand = Strings.Clean(Request.QueryString["expand"], "A");
+            String language = Strings.Clean(Request.QueryString["language"]);
+            String contains = Strings.Clean(Request.QueryString["contains"], "false");
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-            {
-                legacySearchString = Strings.Clean(Request.QueryString["buscar"]);
-            }
-            else
-            {
-                legacySearchString = Strings.Clean(Request.QueryString["search"]);
-            }
-
-            String legacyTerm = Strings.Clean(Request.QueryString["term"]);
+            // Step 3. Get URL query parameters for expand and handling old URL syntax
+            String legacySearchString = Strings.Clean(Request.QueryString["search"]);
             String legacyCdrId = Strings.Clean(Request.QueryString["cdrid"]);
             String legacyId = Strings.Clean(Request.QueryString["id"]);
 
-            // default results to 'A' if no term chosen
-            String expand = Strings.Clean(Request.QueryString["expand"], "A");
-
-            String language = Strings.Clean(Request.QueryString["language"]);
-            String contains = Strings.Clean(Request.QueryString["contains"], "false");
-            Control dictionaryControl = null;
-
-            if (!String.IsNullOrEmpty(legacyTerm))
-            {
-                searchString = legacyTerm;
-            }
+            BaseDictionaryControl dictionaryControl = null;
 
             List<string> route = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 
-            // Load control depending on URL and path
+            // Step 4. Load control depending on URL and path
             // Path is either /search?q=<term> or /def/<term or code>
             // Old URLs (?search=, ?cdrid=, ?id=, ?expand= get redirected or handled
             if (route.Count > 0)
@@ -218,6 +216,8 @@ namespace CancerGov.Dictionaries.SnippetControls
             // Add control to page
             if (dictionaryControl != null)
             {
+                dictionaryControl.DictionaryConfiguration = this.DictionaryConfig;
+                dictionaryControl.PageInstruction = this.PageInstruction;
                 phDictionary.Controls.Add(dictionaryControl);
             }
         }

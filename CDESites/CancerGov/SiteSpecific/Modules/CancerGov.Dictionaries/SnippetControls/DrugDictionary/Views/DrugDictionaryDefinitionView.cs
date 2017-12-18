@@ -11,14 +11,17 @@ using Common.Logging;
 using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
+using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.WebAnalytics;
 using NCI.Web.Dictionary;
 using NCI.Web.Dictionary.BusinessObjects;
 using CancerGov.Dictionaries.SnippetControls.Helpers;
+using CancerGov.Dictionaries;
+using CancerGov.Dictionaries.Configuration;
 
 namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 {
-    public class DrugDictionaryDefinitionView : SnippetControl
+    public class DrugDictionaryDefinitionView : BaseDictionaryControl
     {
         protected DrugDictionaryHome dictionarySearchBlock;
 
@@ -31,6 +34,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         public string Expand { get; set; }
 
         public string CdrID { get; set; }
+
+        public string FriendlyName { get; set; }
 
         public string SrcGroup { get; set; }
 
@@ -111,11 +116,9 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         {
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
-            //GetQueryParams();
-            //ValidateParams();
-
             SetupUrls();
             GetDefinitionTerm();
+            ValidateCDRID();
 
             DictionaryURLSpanish = DictionaryURL;
             DictionaryURLEnglish = DictionaryURL;
@@ -443,7 +446,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                             if (e.Item.ItemIndex >= 0 && e.Item.ItemIndex < RelatedTermCount - 1)
                                 relatedTermSeparator.Visible = true;
                         }
-
                     }
                 }
             }
@@ -500,9 +502,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
         }
 
-        private void ValidateParams()
+        private void ValidateCDRID()
         {
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
             if (!string.IsNullOrEmpty(CdrID))
             {
                 try
@@ -516,7 +517,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
         }
 
-        /// <summary>
+        /* /// <summary>
         /// Saves the quesry parameters to support old gets
         /// </summary>
         private void GetQueryParams()
@@ -525,14 +526,47 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             CdrID = Strings.Clean(Request.Params["cdrid"]);
             SearchStr = Strings.Clean(Request.Params["q"]);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
-        }
+        }*/
 
         private void GetDefinitionTerm()
         {
             List<string> path = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
             if (path.Count > 0 && path[0].Equals("def"))
             {
-                CdrID = Strings.Clean(path[1]);
+                string param = Strings.Clean(path[1]);
+                param = Server.UrlDecode(param);
+
+                // Get friendly name to CDRID mappings
+                string dictionaryMappingFilepath = null;
+                
+                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                {
+                    dictionaryMappingFilepath = this.DictionaryConfiguration.SpanishCDRFriendlyNameMapFilepath;
+                }
+                else
+                {
+                    dictionaryMappingFilepath = this.DictionaryConfiguration.EnglishCDRFriendlyNameMapFilepath;
+                }
+
+                if(!string.IsNullOrEmpty(dictionaryMappingFilepath))
+                {
+                    TerminologyMapping map = TerminologyMapping.GetMappingForFile(dictionaryMappingFilepath);
+
+                    // If pretty name is in label mappings, set CDRID
+                    if (map.MappingContainsFriendlyName(param))
+                    {
+                        CdrID = map.GetCDRIDFromFriendlyName(param);
+                    }
+                    else
+                    {
+                        CdrID = param;
+                    }
+                }
+                else
+                {
+                    CdrID = param;
+                }
+
                 if (path.Count > 2)
                 {
                     // If path extends further than /search or /def/<term>, raise a 400 error
