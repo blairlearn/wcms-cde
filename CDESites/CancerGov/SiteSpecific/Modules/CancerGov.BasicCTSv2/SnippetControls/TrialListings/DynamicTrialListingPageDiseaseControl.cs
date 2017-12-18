@@ -174,11 +174,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         private string InterventionIDs { get; set; }
 
-
-     /// <summary>
-     ///    Used to get the parameters for the /notrials URL based on the current request
-     /// </summary>
-     /// <returns></returns>
+         /// <summary>
+         /// Used to get the parameters for the /notrials URL based on the current request
+         /// </summary>
+         /// <returns></returns>
         protected override string[] GetParametersForNoTrials()
         {
 
@@ -194,9 +193,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             if(this.InterventionIDs != null && this.InterventionIDs.Length > 0)
                 parameters.AddRange(this.InterventionIDs.Split(new char[] { ',' }).ToList<string>());
-            
 
-            
             return (parameters.ToArray());
         }
 
@@ -211,9 +208,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 throw new HttpException(400, "Invalid Parameters");
             }
 
-
             List<string> rawParams = new List<string>();
-
             
             if (this.IsNoTrials)
             {
@@ -226,10 +221,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     throw new HttpException(400, "Invalid Parameters");
                 }
 
-                rawParams = GetRawParametersFromQueryString(ParsedReqUrlParams);
-
-               
-                    
+                rawParams = GetRawParametersFromQueryString(ParsedReqUrlParams);     
             }
             else
             {
@@ -237,33 +229,40 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 rawParams = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
             }
 
-
             SetUpRawParametersForListingPage(rawParams);
             SetUpCanonicalUrl();
-
-
-          
         }
 
-      
-
-     /// <summary>
-     ///    Sets the Canonical Url of the Disease Page
-     /// </summary>
+        /// <summary>
+        /// Sets the Canonical Url of the Disease Page
+        /// </summary>
         private void SetUpCanonicalUrl()
         {
-            //We set the Canonical Url. We make sure that the Canonical URL has the following format disease/trial type instead of 
-            //disease/trial type/intervention
+            // We set the Canonical Url. We make sure that the Canonical URL has the following format disease/trial type instead of 
+            // disease/trial type/intervention
             string[] pathTokens = this.CurrAppPath.Split(new char[] { '/' });
-
 
             if (pathTokens != null && pathTokens.Length > 0)
             {
-                string canonicalUrl = this.CurrentUrl.ToString();
+                string canonicalUrl = this.CurrentUrl.ToString().ToLower();
 
-              //If there are intervention IDS we strip them from the canonical url
+                // If there are disease IDs, we check if they have a friendly name for the canonical URL
+                if(this.DiseaseIDs != null && this.DiseaseIDs.Length > 0)
+                {
+                    // Get c-code to friendly name mapping
+                    if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+                    {
+                        DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                        if (friendlyNameMap.MappingContainsCode(this.DiseaseIDs.ToLower()))
+                        {
+                            canonicalUrl = canonicalUrl.Replace(this.DiseaseIDs, friendlyNameMap.GetFriendlyNameFromCode(this.DiseaseIDs));
+                        }
+                    }
+                }
+
+                // If there are intervention IDS we strip them from the canonical url
                 if (this.InterventionIDs != null && this.InterventionIDs.Length > 0)
-                    canonicalUrl = canonicalUrl.Replace(this.InterventionIDs + "/", "").Replace(this.InterventionIDs, "");
+                    canonicalUrl = canonicalUrl.Replace("/" + this.InterventionIDs + "/", "").Replace("/" + this.InterventionIDs, "");
              
 
                 this.PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
@@ -273,9 +272,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
-     /// <summary>
-     ///    This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
-     /// </summary>
+         /// <summary>
+         /// This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
+         /// </summary>
         private void SetUpRawParametersForListingPage(List<string> urlParams)
         {
             if (urlParams.Count >= 4)
@@ -397,7 +396,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 wbField.Value = desc;
             });
-
         }
     }
 }

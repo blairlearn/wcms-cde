@@ -103,7 +103,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     valToOverride = friendlyNameMap.GetCodeFromFriendlyName(valToOverride);
                 }
             }
-            
 
             // Get label mappings
             var labelMapping = DynamicTrialListingMapping.Instance;
@@ -171,9 +170,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 throw new HttpException(400, "Invalid Parameters");
             }
 
-
             List<string> rawParams = new List<string>();
-
 
             if(this.IsNoTrials)
             {
@@ -193,15 +190,47 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 rawParams = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
             }
 
-
-            SetUpRawParametersForListingPage(rawParams); 
-
-
+            SetUpRawParametersForListingPage(rawParams);
+            SetUpCanonicalUrl();
         }
 
-     /// <summary>
-     ///    This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
-     /// </summary>
+        /// <summary>
+        /// Sets the Canonical Url of the Intervention Page
+        /// </summary>
+        private void SetUpCanonicalUrl()
+        {
+            // We set the Canonical Url. We make sure that the Canonical URL has the following format intervention/trial type
+            // with the friendly name
+            string[] pathTokens = this.CurrAppPath.Split(new char[] { '/' });
+
+            if (pathTokens != null && pathTokens.Length > 0)
+            {
+                string canonicalUrl = this.CurrentUrl.ToString();
+
+                // If there are intervention IDs, we check if they have a friendly name for the canonical URL
+                if (this.InterventionIDs != null && this.InterventionIDs.Length > 0)
+                {
+                    // Get c-code to friendly name mapping
+                    if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+                    {
+                        DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                        if (friendlyNameMap.MappingContainsCode(this.InterventionIDs.ToLower()))
+                        {
+                            canonicalUrl = canonicalUrl.Replace(this.InterventionIDs, friendlyNameMap.GetFriendlyNameFromCode(this.InterventionIDs));
+                        }
+                    }
+                }
+
+                this.PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+                {
+                    url.SetUrl(canonicalUrl);
+                });
+            }
+        }
+
+         /// <summary>
+         /// This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
+         /// </summary>
         private void SetUpRawParametersForListingPage(List<string> urlParams)
         {
             if (urlParams.Count >= 4)
@@ -302,7 +331,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 wbField.Value = desc;
             });
-
         }
     }
 }
