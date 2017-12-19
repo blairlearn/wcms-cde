@@ -313,6 +313,7 @@ OpenCover/
 !build.config
 !NuGet.Config
 !placeholder-transform.config
+wcms-cde-substitutions.xml
 
 msbuild.log
 
