@@ -56,15 +56,16 @@ namespace NCI.Web.CDE
             //any URL that matches yyyy.v12353432.js or xxxx.v1233454.css to yyyy.js and xxxx.css respectively.
             //
             //This should move to another module when we have more time.
-            if (url.ToLower().IndexOf(".js") != -1
-                || url.IndexOf(".css") != -1
-                || url.IndexOf(".gif") != -1
-                || url.IndexOf(".png") != -1
-                || url.IndexOf(".jpg") != -1
-                || url.IndexOf(".svg") != -1
+            if (url.ToLower().IndexOf(".css") != -1
                 || url.IndexOf(".eot") != -1
+                || url.IndexOf(".gif") != -1
+                || url.IndexOf(".jpg") != -1
+                || url.IndexOf(".js") != -1
+                || url.IndexOf(".png") != -1
+                || url.IndexOf(".svg") != -1
+                || url.IndexOf(".ttf") != -1
                 || url.IndexOf(".woff") != -1
-                || url.IndexOf(".ttf") != -1)
+                || url.IndexOf(".woff2") != -1)
             {
                 //Only go through with the change if this path matches our string.  We experienced an issue in production
                 //where rewriting the URL to the same path can mangle the response.  This also seems to be an "known" or
