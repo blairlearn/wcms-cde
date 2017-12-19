@@ -17,7 +17,7 @@ using Microsoft.Security.Application;
 
 namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 {
-    public class TermDictionaryResultsList : BaseDictionaryControl
+    public class TermDictionaryExpandList : BaseDictionaryControl
     {
         protected TermDictionaryHome dictionarySearchBlock;
 
@@ -31,13 +31,15 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         protected ListView resultListView;
 
-        public string SearchStr { get; set; }
+        public string Expand { get; set; }
 
         public string CdrID { get; set; }
 
         public string SrcGroup { get; set; }
 
         public bool BContains { get; set; }
+
+        public bool isSearch { get; set; }
 
         public int NumResults { get; set; }
 
@@ -55,8 +57,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             GetQueryParams();
-            ValidateParams();
-            SetDoNotIndex();
 
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -74,6 +74,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
             DictionaryURLSpanish = DictionaryURL;
             DictionaryURLEnglish = DictionaryURL;
+            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
         }
 
         private void LoadData()
@@ -86,40 +87,25 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
             DictionarySearchResultCollection resultCollection = null;
 
-            if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
+            if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
             {
-                SearchStr = Sanitizer.GetSafeHtmlFragment(SearchStr);
 
-                resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
-
+                if (Expand.ToLower() == "all")
+                    resultCollection = _dictionaryAppManager.Expand("%", "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
+                else
+                    resultCollection = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
             }
 
             if (resultCollection != null && resultCollection.Count() > 0)
             {
-                //if there is only 1 record - go directly to definition view
-                if (resultCollection.ResultsCount == 1)
+                resultListView.DataSource = resultCollection;
+                resultListView.DataBind();
+                NumResults = resultCollection.ResultsCount;
+                lblWord.Text = Expand.Replace("[[]", "[");
+                lblNumResults.Text = NumResults.ToString();
+                if (NumResults == 0)
                 {
-                    // Get the first (only) item so we can redirect to it specifically
-                    IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
-                    itemPtr.MoveNext();
-
-                    string urlItem = GetFriendlyName(itemPtr.Current.ID);
-
-                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
-
-                    Page.Response.Redirect(itemDefinitionUrl);
-                }
-                else
-                {
-                    resultListView.DataSource = resultCollection;
-                    resultListView.DataBind();
-                    NumResults = resultCollection.ResultsCount;
-                    lblWord.Text = SearchStr.Replace("[[]", "[");
-                    lblNumResults.Text = NumResults.ToString();
-                    if (NumResults == 0)
-                    {
-                        RenderNoResults();
-                    }
+                    RenderNoResults();
                 }
             }
             else
@@ -157,30 +143,36 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         {
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = Convert.ToBoolean(SrcGroup);
-        }
 
-        private void SetDoNotIndex()
-        {
-            PageInstruction.AddFieldFilter("meta_robots", (name, data) =>
+            if (!string.IsNullOrEmpty(Expand))
             {
-                data.Value = "noindex, nofollow";
-            });
-        }
-
-        private void ValidateParams()
-        {
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                try
+                if (Expand.Trim() == "#")
                 {
-                    Int32.Parse(CdrID);
+                    Expand = "[0-9]";
                 }
-                catch (Exception)
+                else
                 {
-                    throw new Exception("Invalid CDRID" + CdrID);
+                    Expand = Expand.Trim().ToUpper();
                 }
             }
+        }
+
+        //Add a filter for the Canonical URL.
+        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
+
+            foreach (var lang in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
+            {
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlFilter);
+            }
+        }
+
+        private void SetupUrlFilter(string name, NciUrl url)
+        {
+            url.SetUrl(url.ToString());
+
+            url.QueryParameters.Add("expand", Expand);
         }
 
         /// <summary>
@@ -188,8 +180,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         /// </summary>
         private void GetQueryParams()
         {
-            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["q"]);
-            SearchStr = Strings.Clean(SearchStr);
+            Expand = Strings.Clean(Request.Params["expand"], "A");
             SrcGroup = Strings.Clean(Request.Params["contains"]);
         }
 

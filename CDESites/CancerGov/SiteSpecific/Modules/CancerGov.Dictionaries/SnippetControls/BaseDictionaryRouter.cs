@@ -90,6 +90,11 @@ namespace CancerGov.Dictionaries.SnippetControls
         /// <summary>
         /// Method called to load dictionary results list control
         /// </summary>
+        protected abstract BaseDictionaryControl LoadExpandListControl();
+
+        /// <summary>
+        /// Method called to load dictionary results list control
+        /// </summary>
         protected abstract BaseDictionaryControl LoadResultsListControl();
 
         /// <summary>
@@ -237,10 +242,9 @@ namespace CancerGov.Dictionaries.SnippetControls
                 // check for friendly name
                 RedirectToDefinitionView(legacyId);
             }
-            // TODO: legacy term???
             else if (dictionaryControl == null && !String.IsNullOrEmpty(expand))
             {
-                dictionaryControl = LoadResultsListControl();
+                dictionaryControl = LoadExpandListControl();
             }
             else
             {

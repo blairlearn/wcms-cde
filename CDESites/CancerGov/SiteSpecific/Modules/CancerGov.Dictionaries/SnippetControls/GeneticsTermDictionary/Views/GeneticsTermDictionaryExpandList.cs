@@ -16,7 +16,7 @@ using Microsoft.Security.Application;
 
 namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 {
-    public class GeneticsTermDictionaryResultsList : BaseDictionaryControl
+    public class GeneticsTermDictionaryExpandList : BaseDictionaryControl
     {
         protected GeneticsTermDictionaryHome dictionarySearchBlock;
 
@@ -30,7 +30,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
         protected ListView resultListView;
 
-        public string SearchStr { get; set; }
+        public string Expand { get; set; }
 
         public string CdrID { get; set; }
 
@@ -53,7 +53,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
             GetQueryParams();
             ValidateParams();
-            SetDoNotIndex();
 
             //For Genetics dictionary language is always English
             DictionaryLanguage = "en";
@@ -64,45 +63,44 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = Convert.ToBoolean(SrcGroup);
 
+            if (!string.IsNullOrEmpty(Expand))
+            {
+                if (Expand.Trim() == "#")
+                {
+                    Expand = "[0-9]";
+                }
+                else
+                {
+                    if (!Expand.Trim().ToUpper().Equals("ALL"))
+                        Expand = Expand.Trim().ToUpper();
+                }
+            }
+
+
             SearchType searchType = SearchType.Begins;
             if (BContains)
                 searchType = SearchType.Contains;
 
-
-
-            if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
+            if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
             {
-                SearchStr = Sanitizer.GetSafeHtmlFragment(SearchStr);
-                resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage);
 
+                if (Expand.ToLower() == "all")
+                    resultCollection = _dictionaryAppManager.Search("%", searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage);
+                else
+                    resultCollection = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
             }
 
             if (resultCollection != null && resultCollection.Count() > 0)
             {
-                //if there is only 1 record - go directly to definition view
-                if (resultCollection.ResultsCount == 1)
+                
+                resultListView.DataSource = resultCollection;
+                resultListView.DataBind();
+                NumResults = resultCollection.ResultsCount;
+                lblWord.Text = Expand.Replace("[[]", "[");
+                lblNumResults.Text = NumResults.ToString();
+                if (NumResults == 0)
                 {
-                    // Get the first (only) item so we can redirect to it specifically
-                    IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
-                    itemPtr.MoveNext();
-
-                    string urlItem = GetFriendlyName(itemPtr.Current.ID);
-
-                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
-                    Page.Response.Redirect(itemDefinitionUrl);
-                }
-                else
-                {
-                    resultListView.DataSource = resultCollection;
-                    resultListView.DataBind();
-                    NumResults = resultCollection.ResultsCount;
-                    if (!string.IsNullOrEmpty(SearchStr))
-                        lblWord.Text = SearchStr.Replace("[[]", "[");
-                    lblNumResults.Text = NumResults.ToString();
-                    if (NumResults == 0)
-                    {
-                        RenderNoResults();
-                    }
+                    RenderNoResults();
                 }
             }
             else
@@ -117,14 +115,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             resultListView.DataSource = new DictionarySearchResultCollection(new DictionarySearchResult[0]);
             resultListView.DataBind();
             numResDiv.Visible = false;
-        }
-
-        private void SetDoNotIndex()
-        {
-            PageInstruction.AddFieldFilter("meta_robots", (name, data) =>
-            {
-                data.Value = "noindex, nofollow";
-            });
         }
 
         private void ValidateParams()
@@ -149,8 +139,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
         /// </summary>
         private void GetQueryParams()
         {
-            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["q"]);
-            SearchStr = Strings.Clean(SearchStr);
+            Expand = Strings.Clean(Request.Params["expand"], "A");
             SrcGroup = Strings.Clean(Request.Params["contains"]);
         }
 

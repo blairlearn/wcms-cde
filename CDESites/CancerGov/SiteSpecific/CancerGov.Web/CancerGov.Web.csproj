@@ -117,15 +117,18 @@
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSView.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\TrialListingPage.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryExpandList.ascx" />
     <Content Include="SnippetTemplates\FilterTitle.ascx" />
     <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryExpandList.ascx" />
     <Content Include="SnippetTemplates\IntenseDebateComments.ascx" />
     <Content Include="SnippetTemplates\ModuleSearchBox.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SearchBox.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="SnippetTemplates\TemplatedDynamicList.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryExpandList.ascx" />
     <Content Include="UserControls\Headers\MainPageHeader.ascx" />
     <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
     <Content Include="App_Data\wurfl-latest.zip" />
@@ -256,6 +259,12 @@
     <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx.designer.cs">
       <DependentUpon>DrugDictionaryDefinitionView.ascx</DependentUpon>
     </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryExpandList.ascx.cs">
+      <DependentUpon>DrugDictionaryExpandList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryExpandList.ascx.designer.cs">
+      <DependentUpon>DrugDictionaryExpandList.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx.cs">
       <DependentUpon>DrugDictionaryHome.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -278,6 +287,12 @@
       <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHelper.cs" />
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryExpandList.ascx.cs">
+      <DependentUpon>GeneticsTermDictionaryExpandList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryExpandList.ascx.designer.cs">
+      <DependentUpon>GeneticsTermDictionaryExpandList.ascx</DependentUpon>
+    </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx.cs">
       <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -334,6 +349,13 @@
     </Compile>
     <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx.designer.cs">
       <DependentUpon>TermDictionaryDefinitionView.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryExpandList.ascx.cs">
+      <DependentUpon>TermDictionaryExpandList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryExpandList.ascx.designer.cs">
+      <DependentUpon>TermDictionaryExpandList.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx.cs">
       <DependentUpon>TermDictionaryHome.ascx</DependentUpon>

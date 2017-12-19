@@ -158,11 +158,11 @@ namespace CancerGov.Dictionaries.SnippetControls
             {
                 if (Expand.Trim() == "#")
                 {
-                    SearchStr = "[0-9]";
+                    Expand = "[0-9]";
                 }
                 else
                 {
-                    SearchStr = Expand.Trim().ToUpper();
+                    Expand = Expand.Trim().ToUpper();
                 }
             }
 

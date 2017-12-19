@@ -15,6 +15,12 @@ namespace CancerGov.Dictionaries.SnippetControls
             return localControl;
         }
 
+        protected override BaseDictionaryControl LoadExpandListControl()
+        {
+            localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryExpandList.ascx");
+            return localControl;
+        }
+
         protected override BaseDictionaryControl LoadResultsListControl()
         {
             localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryResultsList.ascx");
