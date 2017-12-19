@@ -150,7 +150,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                             url = GetPagerUrl(pageBaseUrl, first, page);
 
                             result += "<li><a href=\"" + url.ToString() + "\">" + i.ToString() + "</a></li>";
-                            //result += "<li><a href=\"" + String.Format(pageBaseUrlFormat, (((i - 1) * this.recordsPerPage) + 1).ToString(), i) + "\">" + i.ToString() + "</a></li>";
                         }
                         else
                         {
@@ -165,8 +164,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                         url = GetPagerUrl(pageBaseUrl, first, page);
 
                         result = "<li class='previous'><a href=\"" + url.ToString() + "\">Previous</a></li>" + result;
-
-                        //result = "<li class='previous'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage - 2) * this.recordsPerPage) + 1).ToString(), (currentPage - 1).ToString()) + "\">Previous</a></li>" + result;
                     }
                     if (currentPage < pages)
                     {
@@ -175,8 +172,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                         url = GetPagerUrl(pageBaseUrl, first, page);
 
                         result += "<li class='next'><a href=\"" + url.ToString() + "\">Next</a></li>";
-
-                        //result += "<li class='next'><a href=\"" + String.Format(pageBaseUrlFormat, (((currentPage) * this.recordsPerPage) + 1).ToString(), (currentPage + 1).ToString()) + "\">Next</a></li>";
                     }
 
                     result = "<div class='pagination'><ul class='no-bullets'>" + result + "</ul></div>";

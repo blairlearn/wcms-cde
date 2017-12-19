@@ -85,11 +85,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
             if (!String.IsNullOrEmpty(Expand)) // A-Z expand provided - do an A-Z search
             {
-
                 if (Expand.ToLower() == "all")
-                    resultCollection = _dictionaryAppManager.Expand("%", "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
+                    resultCollection = _dictionaryAppManager.Search("%", searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
                 else
-                    resultCollection = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
+                    resultCollection = _dictionaryAppManager.Search(Expand, searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.term, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
             }
 
             if (resultCollection != null && resultCollection.Count() > 0)

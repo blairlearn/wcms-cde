@@ -84,7 +84,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                 if (Expand.ToLower() == "all")
                     resultCollection = _dictionaryAppManager.Search("%", searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage);
                 else
-                    resultCollection = _dictionaryAppManager.Expand(Expand, "", 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage, "v1");
+                    resultCollection = _dictionaryAppManager.Search(Expand, searchType, 0, int.MaxValue, NCI.Web.Dictionary.DictionaryType.genetic, DictionaryLanguage);
             }
 
             if (resultCollection != null && resultCollection.Count() > 0)
