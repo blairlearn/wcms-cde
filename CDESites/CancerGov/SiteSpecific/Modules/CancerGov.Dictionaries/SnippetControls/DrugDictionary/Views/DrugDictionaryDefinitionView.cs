@@ -29,17 +29,9 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
         static ILog log = LogManager.GetLogger(typeof(DrugDictionaryDefinitionView));
 
-        public string SearchStr { get; set; }
-
-        public string Expand { get; set; }
-
         public string CdrID { get; set; }
 
         public string FriendlyName { get; set; }
-
-        public string SrcGroup { get; set; }
-
-        public bool BContains { get; set; }
 
         public string DictionaryURLSpanish { get; set; }
 
@@ -48,10 +40,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         public string DictionaryURL { get; set; }
 
         public String DictionaryLanguage { get; set; }
-
-        public string QueryStringLang { get; set; }
-
-        public string PagePrintUrl { get; set; }
 
         public int RelatedTermCount { get; set; }
 
@@ -334,48 +322,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             });
 
             return map;
-        }
-
-        /**
-         * Add URL filter for old print page implementation
-         * @deprecated
-         */
-        private void SetupPrintUrl()
-        {
-            PagePrintUrl = "?print=1";
-
-            //add expand
-            if (!string.IsNullOrEmpty(Expand))
-            {
-                if (Expand.Trim() == "#")
-                {
-                    PagePrintUrl += "&expand=%23";
-                }
-                else
-                {
-                    PagePrintUrl += "&expand=" + Expand.Trim().ToUpper();
-                }
-            }
-
-            //Language stuff
-            PagePrintUrl += QueryStringLang;
-
-            //add cdrid or searchstr
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                PagePrintUrl += "&cdrid=" + CdrID;
-            }
-            else if (!string.IsNullOrEmpty(SearchStr))
-            {
-                PagePrintUrl += "&search=" + SearchStr;
-                if (BContains)
-                    PagePrintUrl += "&contains=true";
-            }
-
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url) =>
-            {
-                url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
-            });
         }
 
         protected void drugDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)

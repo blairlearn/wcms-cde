@@ -29,15 +29,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
         static ILog log = LogManager.GetLogger(typeof(GeneticsTermDictionaryDefintionView));
 
-        public string SearchStr { get; set; }
-
-        public string Expand { get; set; }
-
         public string CdrID { get; set; }
-
-        public string SrcGroup { get; set; }
-
-        public bool BContains { get; set; }
 
         public string DictionaryURLSpanish { get; set; }
 
@@ -46,10 +38,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
         public string DictionaryURL { get; set; }
 
         public String DictionaryLanguage { get; set; }
-
-        public string QueryStringLang { get; set; }
-
-        public string PagePrintUrl { get; set; }
 
         public int RelatedTermCount { get; set; }
 
@@ -190,48 +178,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             PageAssemblyContext.Current.PageAssemblyInstruction.AddFieldFilter("meta_keywords", (name, data) =>
             {
                 data.Value = termName + ", definition";
-            });
-        }
-
-        /**
-         * Add URL filter for old print page implementation
-         * @deprecated
-         */
-        private void SetupPrintUrl()
-        {
-            PagePrintUrl = "?print=1";
-
-            //add expand
-            if (!string.IsNullOrEmpty(Expand))
-            {
-                if (Expand.Trim() == "#")
-                {
-                    PagePrintUrl += "&expand=%23";
-                }
-                else
-                {
-                    PagePrintUrl += "&expand=" + Expand.Trim().ToUpper();
-                }
-            }
-
-            //Language stuff
-            PagePrintUrl += QueryStringLang;
-
-            //add cdrid or searchstr
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                PagePrintUrl += "&cdrid=" + CdrID;
-            }
-            else if (!string.IsNullOrEmpty(SearchStr))
-            {
-                PagePrintUrl += "&search=" + SearchStr;
-                if (BContains)
-                    PagePrintUrl += "&contains=true";
-            }
-
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url) =>
-            {
-                url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
             });
         }
 

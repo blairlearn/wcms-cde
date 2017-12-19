@@ -32,8 +32,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
         public string Expand { get; set; }
 
-        public string CdrID { get; set; }
-
         public string SrcGroup { get; set; }
 
         public bool BContains { get; set; }
@@ -52,7 +50,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             GetQueryParams();
-            ValidateParams();
 
             //For Genetics dictionary language is always English
             DictionaryLanguage = "en";
@@ -115,23 +112,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             resultListView.DataSource = new DictionarySearchResultCollection(new DictionarySearchResult[0]);
             resultListView.DataBind();
             numResDiv.Visible = false;
-        }
-
-        private void ValidateParams()
-        {
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                try
-                {
-                    Int32.Parse(CdrID);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Invalid CDRID" + CdrID);
-
-                }
-            }
         }
 
         /// <summary>

@@ -246,9 +246,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
-            //base.OnLoad(e);
             GetQueryParams();
-            //ValidateParams();
+            SetDoNotIndex();
 
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -371,42 +370,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             return filter;
         }
 
-        /*/// <summary>
-        /// Recreates the page's query string parameters for use in paging.
-        /// </summary>
-        /// <returns>A query string, starting with "/?", containing the parameters and values used
-        /// to create the page.</returns>
-        private string GetPageUrl()
-        {
-            string url;
-
-            // URL base.
-            url = "?";
-
-            //add expand
-            if (!string.IsNullOrEmpty(Expand) && (isExpand == true))
-            {
-                if (Expand.Trim() == "#")
-                    url += "&expand=%23";
-                else
-                    url += "&expand=" + Expand.Trim();
-            }
-
-            //add cdrid or searchstr
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                url += "&cdrid=" + CdrID;
-            }
-            else if (!string.IsNullOrEmpty(SearchStr) && (isExpand == false))
-            {
-                url += "&q=" + SearchStr;
-                if (BContains)
-                    url += "&sgroup=Contains";
-            }
-
-            return url;
-        }*/
-
         /// <summary>
         /// Returns the page's query parameters for use in paging.
         /// </summary>
@@ -433,10 +396,17 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 queryParams.Add("q", SearchStr);
                 if (BContains)
                     queryParams.Add("contains", "true");
-                    //url += "&sgroup=Contains";
             }
 
             return queryParams;
+        }
+
+        private void SetDoNotIndex()
+        {
+            PageInstruction.AddFieldFilter("meta_robots", (name, data) =>
+            {
+                data.Value = "noindex, nofollow";
+            });
         }
 
         private void RenderNoResults()
@@ -488,21 +458,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             else
                 PageSize = Int32.Parse(pgSize);
         }
-
-        /*private void ValidateCdrId()
-        {
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                try
-                {
-                    Int32.Parse(CdrID);
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Invalid CDRID" + CdrID);
-                }
-            }
-        }*/
 
         /// <summary>
         /// Saves the query parameters

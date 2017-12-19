@@ -33,13 +33,9 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         public string Expand { get; set; }
 
-        public string CdrID { get; set; }
-
         public string SrcGroup { get; set; }
 
         public bool BContains { get; set; }
-
-        public bool isSearch { get; set; }
 
         public int NumResults { get; set; }
 

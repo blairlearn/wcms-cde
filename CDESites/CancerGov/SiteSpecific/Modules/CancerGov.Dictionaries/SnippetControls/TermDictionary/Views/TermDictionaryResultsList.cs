@@ -33,8 +33,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         public string SearchStr { get; set; }
 
-        public string CdrID { get; set; }
-
         public string SrcGroup { get; set; }
 
         public bool BContains { get; set; }
@@ -55,7 +53,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             GetQueryParams();
-            ValidateParams();
             SetDoNotIndex();
 
             //Set display props according to lang
@@ -165,22 +162,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             {
                 data.Value = "noindex, nofollow";
             });
-        }
-
-        private void ValidateParams()
-        {
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                try
-                {
-                    Int32.Parse(CdrID);
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Invalid CDRID" + CdrID);
-                }
-            }
         }
 
         /// <summary>

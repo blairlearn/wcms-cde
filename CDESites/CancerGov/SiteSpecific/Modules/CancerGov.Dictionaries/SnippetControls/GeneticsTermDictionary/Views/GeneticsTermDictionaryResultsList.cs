@@ -32,8 +32,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
         public string SearchStr { get; set; }
 
-        public string CdrID { get; set; }
-
         public string SrcGroup { get; set; }
 
         public bool BContains { get; set; }
@@ -52,7 +50,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             GetQueryParams();
-            ValidateParams();
             SetDoNotIndex();
 
             //For Genetics dictionary language is always English
@@ -67,8 +64,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             SearchType searchType = SearchType.Begins;
             if (BContains)
                 searchType = SearchType.Contains;
-
-
 
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {
@@ -127,23 +122,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             });
         }
 
-        private void ValidateParams()
-        {
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                try
-                {
-                    Int32.Parse(CdrID);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Invalid CDRID" + CdrID);
-
-                }
-            }
-        }
-
         /// <summary>
         /// Saves the quesry parameters to support old gets
         /// </summary>
@@ -194,10 +172,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                     else
                         phPronunciation.Visible = false;
                 }
-
             }
-
         }
-
     }
 }

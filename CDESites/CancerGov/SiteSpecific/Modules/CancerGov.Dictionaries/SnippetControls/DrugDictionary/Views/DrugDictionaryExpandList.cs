@@ -240,9 +240,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
-            //base.OnLoad(e);
             GetQueryParams();
-            //ValidateParams();
 
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")

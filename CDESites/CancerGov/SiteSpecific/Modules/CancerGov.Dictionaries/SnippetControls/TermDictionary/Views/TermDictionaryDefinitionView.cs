@@ -47,10 +47,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         public String DictionaryLanguage { get; set; }
 
-        public string QueryStringLang { get; set; }
-
-        public string PagePrintUrl { get; set; }
-
         public int RelatedTermCount { get; set; }
 
         /// <summary>
@@ -146,8 +142,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     termDictionaryDefinitionView.Visible = false;
                 }
             }
-
-            //SetupPrintUrl();
 
             SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
         }
@@ -287,48 +281,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         private void SetupUrlFilter(string name, NciUrl url)
         {
             url.SetUrl(url.ToString() + "/def/" + GetCDRIDForLanguageToggle());
-        }
-
-        /**
-         * Add URL filter for old print page implementation
-         * @deprecated
-         */
-        private void SetupPrintUrl()
-        {
-            PagePrintUrl = "?print=1";
-
-            //add expand
-            if (!string.IsNullOrEmpty(Expand))
-            {
-                if (Expand.Trim() == "#")
-                {
-                    PagePrintUrl += "&expand=%23";
-                }
-                else
-                {
-                    PagePrintUrl += "&expand=" + Expand.Trim().ToUpper();
-                }
-            }
-
-            //Language stuff
-            PagePrintUrl += QueryStringLang;
-
-            //add cdrid or searchstr
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                PagePrintUrl += "&cdrid=" + CdrID;
-            }
-            else if (!string.IsNullOrEmpty(SearchStr))
-            {
-                PagePrintUrl += "&q=" + SearchStr;
-                if (BContains)
-                    PagePrintUrl += "&contains=true";
-            }
-
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter("Print", (name, url) =>
-            {
-                url.SetUrl(PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl("CurrentURL").ToString() + "/" + PagePrintUrl);
-            });
         }
 
         protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
