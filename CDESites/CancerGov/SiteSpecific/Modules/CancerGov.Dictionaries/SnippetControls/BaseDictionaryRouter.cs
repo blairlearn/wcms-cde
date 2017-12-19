@@ -100,7 +100,7 @@ namespace CancerGov.Dictionaries.SnippetControls
         /// <summary>
         /// Method called to redirect old search URLs to the new search URL
         /// </summary>
-        protected void RedirectToResultsList(string searchString, string contains)
+        protected void RedirectToResultsList(string searchString, string contains, string first, string page)
         {
             NciUrl redirectURL = new NciUrl();
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -119,7 +119,17 @@ namespace CancerGov.Dictionaries.SnippetControls
                 redirectURL.QueryParameters.Add("contains", contains);
             }
 
-            DoPermanentRedirect(Response, redirectURL.ToString());
+            if (!string.IsNullOrEmpty(first))
+            {
+                redirectURL.QueryParameters.Add("first", first);
+            }
+
+            if (!string.IsNullOrEmpty(page))
+            {
+                redirectURL.QueryParameters.Add("page", page);
+            }
+
+            Response.RedirectPermanent(redirectURL.ToString());
         }
 
 
@@ -129,8 +139,18 @@ namespace CancerGov.Dictionaries.SnippetControls
         protected void RedirectToDefinitionView(string id)
         {
             NciUrl redirectURL = new NciUrl();
-            redirectURL.SetUrl(this.PrettyUrl + "/def/" + id);
-            DoPermanentRedirect(Response, redirectURL.ToString());
+
+            string friendlyName = GetFriendlyName(id);
+            if (!string.IsNullOrEmpty(friendlyName))
+            {
+                redirectURL.SetUrl(this.PrettyUrl + "/def/" + friendlyName);
+            }
+            else
+            {
+                redirectURL.SetUrl(this.PrettyUrl + "/def/" + id);
+            }
+
+            Response.RedirectPermanent(redirectURL.ToString());
         }
 
         /// <summary>
@@ -155,6 +175,8 @@ namespace CancerGov.Dictionaries.SnippetControls
             String expand = Strings.Clean(Request.QueryString["expand"], "A");
             // String language = Strings.Clean(Request.QueryString["language"]);
             String contains = Strings.Clean(Request.QueryString["contains"], "false");
+            String first = Strings.Clean(Request.QueryString["first"]);
+            String page = Strings.Clean(Request.QueryString["page"]);
 
             // Step 3. Get URL query parameters for expand and handling old URL syntax
             String legacySearchString = Strings.Clean(Request.QueryString["search"]);
@@ -167,6 +189,10 @@ namespace CancerGov.Dictionaries.SnippetControls
             BaseDictionaryControl dictionaryControl = null;
 
             List<string> route = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            for (int i = 0; i < route.Count; i++)
+            {
+                route[i] = Strings.Clean(route[i]);
+            }
 
             if (route.Count > 0)
             {
@@ -178,7 +204,15 @@ namespace CancerGov.Dictionaries.SnippetControls
                 else if (route[0].Equals("def"))
                 {
                     // If path is /def, load DefinitionView control
-                    dictionaryControl = LoadDefinitionViewControl();
+                    string friendlyName = GetFriendlyName(route[1]);
+                    if (!string.IsNullOrEmpty(friendlyName))
+                    {
+                        RedirectToDefinitionView(friendlyName);
+                    }
+                    else
+                    {
+                        dictionaryControl = LoadDefinitionViewControl();
+                    }
                 }
                 else if (route.Count > 2)
                 {
@@ -189,7 +223,7 @@ namespace CancerGov.Dictionaries.SnippetControls
             else if (!String.IsNullOrEmpty(legacySearchString))
             {
                 // redirect to new search URL using searchString as term
-                RedirectToResultsList(legacySearchString, contains);
+                RedirectToResultsList(legacySearchString, contains, first, page);
             }
             else if (!String.IsNullOrEmpty(legacyCdrId))
             {
@@ -222,24 +256,26 @@ namespace CancerGov.Dictionaries.SnippetControls
             }
         }
 
-        /// <summary>
-        /// Clears the Response text, issues an HTTP redirect using status 301, and ends
-        /// the current request.
-        /// </summary>
-        /// <param name="Response">The current response object.</param>
-        /// <param name="url">The redirection's target URL.</param>
-        /// <remarks>Response.Redirect() issues its redirect with a 301 (temporarily moved) status code.
-        /// We want these redirects to be permanent so search engines will link to the new
-        /// location. Unfortunately, HttpResponse.RedirectPermanent() isn't implemented until
-        /// at version 4.0 of the .NET Framework.</remarks>
-        /// <exception cref="ThreadAbortException">Called when the redirect takes place and the current
-        /// request is ended.</exception>
-        protected void DoPermanentRedirect(HttpResponse Response, String url)
+        
+        protected string GetFriendlyName(string id)
         {
-            Response.Clear();
-            Response.Status = "302 Found";
-            Response.AddHeader("Location", url);
-            Response.End();
+            // Get CDRID to friendly name mappings
+            string dictionaryMappingFilepath = null;
+
+            dictionaryMappingFilepath = this.DictionaryConfig.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
+
+            if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
+            {
+                TerminologyMapping map = TerminologyMapping.GetMappingForFile(dictionaryMappingFilepath);
+
+                // If pretty name is in label mappings, set CDRID
+                if (map.MappingContainsCDRID(id))
+                {
+                    return map.GetFriendlyNameFromCDRID(id);
+                }
+            }
+
+            return null;
         }
     }
 }
