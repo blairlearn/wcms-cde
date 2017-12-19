@@ -215,15 +215,9 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
         public string SearchStr { get; set; }
 
-        public string Expand { get; set; }
-
-        public string CdrID { get; set; }
-
         public string SrcGroup { get; set; }
 
         public bool BContains { get; set; }
-
-        public bool isExpand { get; set; }
 
         public int NumResults { get; set; }
 
@@ -297,35 +291,15 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
             if (!String.IsNullOrEmpty(SearchStr)) // SearchString provided, do a term search
             {
-                isExpand = false;
                 SearchStr = Sanitizer.GetSafeHtmlFragment(SearchStr);
                 resultCollection = _dictionaryAppManager.Search(SearchStr, searchType, offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language);
-            }
-            else if (!String.IsNullOrEmpty(Expand) ) // A-Z expand provided - do an A-Z search
-            {
-                string searchText;
-                if (Expand.ToLower() == "all")
-                    searchText = "%";
-                else
-                    searchText = Expand;
-
-                string filter = GetDrugDictionaryFilter();
-
-                resultCollection = _dictionaryAppManager.Expand(searchText, filter, offset, PageSize, NCI.Web.Dictionary.DictionaryType.drug, PageAssemblyContext.Current.PageAssemblyInstruction.Language, "v1");
-
-                // Other places in the code expect to find the string that was searched for in SearchStr,
-                // but if it was set prior to this point in the code, the wrong search would be performed.
-                // This is a result of the hacky way variables are being used to both store search data,
-                // and as a flag for which sort of search is supposed to be performed.
-                SearchStr = Expand;
-                isExpand = true;
             }
 
             if (resultCollection != null && resultCollection.Count() > 0)
             {
                 //if there is only 1 record - go directly to definition view
                 //check if expand equals "A", as this is the default value
-                if ((resultCollection.ResultsCount == 1) && (Expand == "A"))
+                if (resultCollection.ResultsCount == 1)
                 {
                     // Get the first (only) item so we can redirect to it specifically
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
@@ -377,21 +351,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         {
             Dictionary<string, string> queryParams = new Dictionary<string, string>();
 
-            //add expand
-            if (!string.IsNullOrEmpty(Expand) && (isExpand == true))
-            {
-                if (Expand.Trim() == "#")
-                    queryParams.Add("expand", "%23");
-                else
-                    queryParams.Add("expand", Expand.Trim());
-            }
-
-            //add cdrid or searchstr
-            if (!string.IsNullOrEmpty(CdrID))
-            {
-                queryParams.Add("cdrid", CdrID);
-            }
-            else if (!string.IsNullOrEmpty(SearchStr) && (isExpand == false))
+            if (!string.IsNullOrEmpty(SearchStr))
             {
                 queryParams.Add("q", SearchStr);
                 if (BContains)
@@ -439,18 +399,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             if (!string.IsNullOrEmpty(SrcGroup))
                 BContains = Convert.ToBoolean(SrcGroup);
 
-            if (!string.IsNullOrEmpty(Expand) && string.IsNullOrEmpty(SearchStr))
-            {
-                if (Expand.Trim() == "#")
-                {
-                    Expand = "[0-9]";
-                }
-                else
-                {
-                    Expand = Expand.Trim().ToUpper();
-                }
-            }
-
             // Initialize number of results per page.
             string pgSize = ConfigurationManager.AppSettings["DrugDictionaryPageSize"];
             if (string.IsNullOrEmpty(pgSize))
@@ -464,7 +412,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         /// </summary>
         private void GetQueryParams()
         {
-            Expand = Strings.Clean(Request.Params["expand"], "A");
             SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["q"]);
             SearchStr = Strings.Clean(SearchStr);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
@@ -529,10 +476,9 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
             DictionarySearchResult termInfo = termSearchResult as DictionarySearchResult;
 
-            if (string.IsNullOrEmpty(Expand) // Only do this if we're not responding to an "Expand" click.
-                    && termInfo != null      // Don't do this unless there are aliases to list.
-                    && termInfo.Term.Aliases.Length > 0
-                )
+            if (termInfo != null      // Don't do this unless there are aliases to list.
+                && termInfo.Term.Aliases.Length > 0
+            )
             {
                 StringBuilder sb = new StringBuilder();
 
@@ -582,25 +528,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
             if (termInfo != null)
             {
-                // Special handling for Expand.  Otherwise, just send back the definition.
-                if (!string.IsNullOrEmpty(Expand))
-                {
-                    // Is the matched name identical to the term name (preferred name)?
-                    // If so, return the actual definition
-                    if (termInfo.MatchedTerm.CompareTo(termInfo.Term.Term) == 0)
-                    {
-                        definition = termInfo.Term.Definition.Html;
-                    }
-                    // Otherwise, report that this name is an alias.
-                    else
-                    {
-                        definition = String.Format("(Other name for: {0})", termInfo.Term.Term);
-                    }
-                }
-                else
-                {
-                    definition = termInfo.Term.Definition.Html;
-                }
+                definition = termInfo.Term.Definition.Html;
             }
 
             return definition;
@@ -616,24 +544,21 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             int len = seq.Length;
             string style = "<span class=\"dictionary-partial-match\">";
 
-            if (string.IsNullOrEmpty(Expand))
+            if (!BContains)  //only higlight if it begins with sequence 
             {
-                if (!BContains)  //only higlight if it begins with sequence 
+                if (original.ToLower().StartsWith(seq))
                 {
-                    if (original.ToLower().StartsWith(seq))
-                    {
-                        marked = marked.Insert(len, "</span>");
-                        marked = marked.Insert(0, style);
-                    }
+                    marked = marked.Insert(len, "</span>");
+                    marked = marked.Insert(0, style);
                 }
-                else
+            }
+            else
+            {
+                int pos = original.ToLower().IndexOf(seq, 0);
+                if (pos > -1)
                 {
-                    int pos = original.ToLower().IndexOf(seq, 0);
-                    if (pos > -1)
-                    {
-                        marked = marked.Insert(pos + len, "</span>");
-                        marked = marked.Insert(pos, style);
-                    }
+                    marked = marked.Insert(pos + len, "</span>");
+                    marked = marked.Insert(pos, style);
                 }
             }
 
