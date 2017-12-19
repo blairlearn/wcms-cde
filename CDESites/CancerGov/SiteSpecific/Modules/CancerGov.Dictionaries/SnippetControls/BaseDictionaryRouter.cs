@@ -147,13 +147,13 @@ namespace CancerGov.Dictionaries.SnippetControls
             // Set Dictionary Mapping Filepath according to current language
             this.DictionaryConfig = ModuleObjectFactory<DictionaryConfig>.GetModuleObject(this.SnippetInfo.Data);
 
-            //Step 2. Parse URL and pull out q and expand parameters for new URL syntax
+            //Step 2. Parse URL and pull out q, expand, and contains parameters for new URL syntax
             this.SetupUrls();
 
             String searchString = Strings.Clean(Request.QueryString["q"]);
             // default results to 'A' if no term chosen
             String expand = Strings.Clean(Request.QueryString["expand"], "A");
-            String language = Strings.Clean(Request.QueryString["language"]);
+            // String language = Strings.Clean(Request.QueryString["language"]);
             String contains = Strings.Clean(Request.QueryString["contains"], "false");
 
             // Step 3. Get URL query parameters for expand and handling old URL syntax
@@ -161,13 +161,13 @@ namespace CancerGov.Dictionaries.SnippetControls
             String legacyCdrId = Strings.Clean(Request.QueryString["cdrid"]);
             String legacyId = Strings.Clean(Request.QueryString["id"]);
 
+            // Step 4. Load control depending on URL and path
+            // Path is either /search?q=<term> or /def/<term or code>
+            // Old URLs (?search=, ?cdrid=, ?id=, ?expand= get redirected or handled
             BaseDictionaryControl dictionaryControl = null;
 
             List<string> route = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 
-            // Step 4. Load control depending on URL and path
-            // Path is either /search?q=<term> or /def/<term or code>
-            // Old URLs (?search=, ?cdrid=, ?id=, ?expand= get redirected or handled
             if (route.Count > 0)
             {
                 if (route[0].Equals("search") || route[0].Equals("buscar"))

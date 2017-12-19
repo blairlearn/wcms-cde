@@ -114,9 +114,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
         {
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
-            //GetQueryParams();
-            //ValidateParams();
-
             SetupUrls();
             GetDefinitionTerm();
             ValidateCDRID();
@@ -154,7 +151,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                 }
             }
 
-            SetupPrintUrl();
+            //SetupPrintUrl();
         }
 
         private void ActivateDefinitionView(DictionaryTerm dataItem)
@@ -546,17 +543,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             }
         }
 
-        /*/// <summary>
-        /// Saves the quesry parameters to support old gets
-        /// </summary>
-        private void GetQueryParams()
-        {
-            Expand = Strings.Clean(Request.Params["expand"]);
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Strings.Clean(Request.Params["q"]);
-            SrcGroup = Strings.Clean(Request.Params["contains"]);
-        }*/
-
         private void GetDefinitionTerm()
         {
             List<string> path = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
@@ -568,14 +554,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                 // Get friendly name to CDRID mappings
                 string dictionaryMappingFilepath = null;
 
-                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-                {
-                    dictionaryMappingFilepath = this.DictionaryConfiguration.SpanishCDRFriendlyNameMapFilepath;
-                }
-                else
-                {
-                    dictionaryMappingFilepath = this.DictionaryConfiguration.EnglishCDRFriendlyNameMapFilepath;
-                }
+                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
 
                 if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
                 {

@@ -93,7 +93,7 @@ namespace CancerGov.Dictionaries.SnippetControls
         }
 
         /// <summary>
-        /// Saves the quesry parameters to support old gets
+        /// Saves the query parameters to support old gets
         /// </summary>
         private void GetQueryParams()
         {
@@ -103,9 +103,8 @@ namespace CancerGov.Dictionaries.SnippetControls
             SrcGroup = "";
             Expand = Strings.Clean(Request.Params["expand"]);
             CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["search"]);
+            SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["q"]);
             SearchStr = Strings.Clean(SearchStr);
-            //SearchStr = Strings.Clean(Request.Params["search"]);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
         }
 
@@ -123,36 +122,6 @@ namespace CancerGov.Dictionaries.SnippetControls
                     throw new Exception("Invalid CDRID" + CdrID);
                 }
             }
-        }
-
-        /**
-       * Add a filter for the Canonical URL.
-       * The Canonical URL includes query parameters if they exist.
-       */
-        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
-        {
-            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
-
-            foreach (var lang in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
-            {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlFilter);
-            }
-        }
-
-        private void SetupUrlFilter(string name, NciUrl url)
-        {
-            if (!string.IsNullOrEmpty(CdrID))
-                url.SetUrl(url.ToString());
-            else if (!string.IsNullOrEmpty(Expand))
-            {
-                if (Expand.Trim() == "#")
-                {
-                    Expand = "%23";
-                }
-                url.SetUrl(url.ToString());
-            }
-            else
-                url.SetUrl(url.ToString());
         }
 
         /// <summary>
@@ -203,15 +172,8 @@ namespace CancerGov.Dictionaries.SnippetControls
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             alphaListBox.BaseUrl = DictionaryURL;
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-                DictionaryURLSpanish = DictionaryURL;
-
+            DictionaryURLSpanish = DictionaryURL;
             DictionaryURLEnglish = DictionaryURL;
-
-            string englishCanonicalUrl = null;
-            string spanishCanonicalUrl = null;
-
-            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
         }
 
         #region "Term Dictionary Methods"

@@ -121,13 +121,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             DictionaryURLSpanish = DictionaryURL;
             DictionaryURLEnglish = DictionaryURL;
 
-            if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish"))
-            {
-                Response.Redirect("/diccionario" + Request.Url.Query);
-            }
-
             DictionaryLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
-
 
             if (!Page.IsPostBack)
             {
@@ -153,9 +147,12 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 }
             }
 
-            SetupPrintUrl();
+            //SetupPrintUrl();
+
+            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
         }
 
+        // Activate definition view for given term
         private void ActivateDefinitionView(DictionaryTerm dataItem)
         {
             var myDataSource = new List<DictionaryTerm> { dataItem };
@@ -274,6 +271,22 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     });
                     break;
             }
+        }
+        
+        //Add a filter for the Canonical URL.
+        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
+
+            foreach (var lang in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
+            {
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlFilter);
+            }
+        }
+
+        private void SetupUrlFilter(string name, NciUrl url)
+        {
+            url.SetUrl(url.ToString() + "/def/" + GetCDRIDForLanguageToggle());
         }
 
         /**
@@ -637,17 +650,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             }
         }
 
-        /*/// <summary>
-        /// Saves the quesry parameters to support old gets
-        /// </summary>
-        private void GetQueryParams()
-        {
-            Expand = Strings.Clean(Request.Params["expand"]);
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
-            SearchStr = Strings.Clean(Request.Params["q"]);
-            SrcGroup = Strings.Clean(Request.Params["contains"]);
-        }*/
-
         private void GetDefinitionTerm()
         {
             List<string> path = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
@@ -659,14 +661,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 // Get friendly name to CDRID mappings
                 string dictionaryMappingFilepath = null;
 
-                if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-                {
-                    dictionaryMappingFilepath = this.DictionaryConfiguration.SpanishCDRFriendlyNameMapFilepath;
-                }
-                else
-                {
-                    dictionaryMappingFilepath = this.DictionaryConfiguration.EnglishCDRFriendlyNameMapFilepath;
-                }
+                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
 
                 if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
                 {
@@ -693,6 +688,45 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("Dictionary", 400, "Invalid parameters for dictionary");
                 }
             }
+        }
+
+        private string GetCDRIDForLanguageToggle()
+        {
+            string cdridForLangToggle = CdrID;
+
+            List<string> path = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            if (path.Count > 0 && path[0].Equals("def"))
+            {
+                string param = Strings.Clean(path[1]);
+                param = Server.UrlDecode(param);
+
+                // Get friendly name to CDRID mappings
+                string dictionaryMappingFilepath = null;
+
+                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
+
+                if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
+                {
+                    TerminologyMapping map = TerminologyMapping.GetMappingForFile(dictionaryMappingFilepath);
+
+                    // If pretty name is in label mappings, set CDRID
+                    if (map.MappingContainsFriendlyName(param))
+                    {
+                        cdridForLangToggle = map.GetCDRIDFromFriendlyName(param);
+                    }
+                    else
+                    {
+                        cdridForLangToggle = param;
+                    }
+                }
+
+                if (path.Count > 2)
+                {
+                    // If path extends further than /search or /def/<term>, raise a 400 error
+                    NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("Dictionary", 400, "Invalid parameters for dictionary");
+                }
+            }
+            return cdridForLangToggle;
         }
     }
 }

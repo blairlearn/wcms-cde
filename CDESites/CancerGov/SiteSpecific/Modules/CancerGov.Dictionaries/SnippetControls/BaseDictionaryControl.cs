@@ -23,14 +23,7 @@ namespace CancerGov.Dictionaries.SnippetControls
             // Get CDRID to friendly name mappings
             string dictionaryMappingFilepath = null;
 
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-            {
-                dictionaryMappingFilepath = this.DictionaryConfiguration.SpanishCDRFriendlyNameMapFilepath;
-            }
-            else
-            {
-                dictionaryMappingFilepath = this.DictionaryConfiguration.EnglishCDRFriendlyNameMapFilepath;
-            }
+            dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
 
             if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
             {

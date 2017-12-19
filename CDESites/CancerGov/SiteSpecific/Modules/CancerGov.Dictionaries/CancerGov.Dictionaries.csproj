@@ -62,6 +62,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\CDRFriendlyNameMappingFile.cs" />
     <Compile Include="Configuration\DictionaryConfig.cs" />
     <Compile Include="Configuration\TerminologyMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

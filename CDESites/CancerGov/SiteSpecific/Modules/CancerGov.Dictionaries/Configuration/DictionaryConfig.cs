@@ -12,10 +12,11 @@ namespace CancerGov.Dictionaries.Configuration
     [System.Xml.Serialization.XmlRootAttribute("Module_DictionaryConfig", Namespace = "http://www.example.org/CDESchema", IsNullable = false)]
     public class DictionaryConfig
     {
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string EnglishCDRFriendlyNameMapFilepath { get; set; }
-
-        [XmlElement(Form = XmlSchemaForm.Unqualified)]
-        public string SpanishCDRFriendlyNameMapFilepath { get; set; }
+        /// <summary>
+        /// A collection of zero or more CDRID to friendly name mapping files for dictionaries.
+        /// </summary>
+        [XmlArray(ElementName = "CDRFriendlyNameMappingFiles", Form = XmlSchemaForm.Unqualified)]
+        [XmlArrayItem("CDRFriendlyNameMappingFile", typeof(CDRFriendlyNameMappingFile), Form = XmlSchemaForm.Unqualified)]
+        public CDRFriendlyNameMappingFile[] Files { get; set; }
     }
 }

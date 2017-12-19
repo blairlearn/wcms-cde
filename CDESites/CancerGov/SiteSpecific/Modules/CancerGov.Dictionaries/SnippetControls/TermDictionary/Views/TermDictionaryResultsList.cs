@@ -47,6 +47,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         public string DictionaryPrettyURL { get; set; }
 
+        public string DictionaryURLSpanish { get; set; }
+
+        public string DictionaryURLEnglish { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
@@ -69,6 +73,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             SetupCommon();
 
             LoadData();
+
+            DictionaryURLSpanish = DictionaryURL;
+            DictionaryURLEnglish = DictionaryURL;
+            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
         }
 
         private void LoadData()
@@ -172,6 +180,27 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 {
                     SearchStr = Expand.Trim().ToUpper();
                 }
+            }
+        }
+
+        //Add a filter for the Canonical URL.
+        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
+
+            foreach (var lang in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
+            {
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlFilter);
+            }
+        }
+
+        private void SetupUrlFilter(string name, NciUrl url)
+        {
+            url.SetUrl(url.ToString());
+
+            if(Expand != null && SearchStr == null)
+            {
+                url.QueryParameters.Add("expand", Expand);
             }
         }
 
