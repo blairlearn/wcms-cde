@@ -64,13 +64,13 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 lblResultsFor.Text = "results found for:";
             }
 
+            DictionaryURLEnglish = DictionaryURL;
+            DictionaryURLSpanish = DictionaryURL;
+
             SetupCommon();
+            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
 
             LoadData();
-
-            DictionaryURLSpanish = DictionaryURL;
-            DictionaryURLEnglish = DictionaryURL;
-            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
         }
 
         private void LoadData()
@@ -166,8 +166,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         private void SetupUrlFilter(string name, NciUrl url)
         {
             url.SetUrl(url.ToString());
-
-            url.QueryParameters.Add("expand", Expand);
         }
 
         /// <summary>

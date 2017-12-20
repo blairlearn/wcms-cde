@@ -16,10 +16,8 @@ namespace CancerGov.Dictionaries.SnippetControls
 
         public DictionaryConfig DictionaryConfiguration { get; set; }
 
-        public string GetFriendlyName(int cdrId)
+        public string GetFriendlyName(string cdrId)
         {
-            string CDRID = cdrId.ToString();
-
             // Get CDRID to friendly name mappings
             string dictionaryMappingFilepath = null;
 
@@ -30,13 +28,13 @@ namespace CancerGov.Dictionaries.SnippetControls
                 TerminologyMapping map = TerminologyMapping.GetMappingForFile(dictionaryMappingFilepath);
 
                 // If pretty name is in label mappings, set CDRID
-                if (map.MappingContainsCDRID(CDRID))
+                if (map.MappingContainsCDRID(cdrId))
                 {
-                    return map.GetFriendlyNameFromCDRID(CDRID);
+                    return map.GetFriendlyNameFromCDRID(cdrId);
                 }
             }
 
-            return CDRID;
+            return cdrId;
         }
     }
 }

@@ -23,7 +23,7 @@
         <ItemTemplate>
             <dt>
                <dfn>
-                    <a href="<%# DictionaryPrettyURL %>/def/<%# GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID)  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                    <a href="<%# DictionaryPrettyURL %>/def/<%# GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>" <%# ResultListViewHrefOnclick(Container)%>>
                         <%# HiLite(((DictionarySearchResult)(Container.DataItem)).MatchedTerm )%></a>
                     <span class="dictionary-partial-match-n">
                         <%# GetTermAliasList(Container.DataItem)%>

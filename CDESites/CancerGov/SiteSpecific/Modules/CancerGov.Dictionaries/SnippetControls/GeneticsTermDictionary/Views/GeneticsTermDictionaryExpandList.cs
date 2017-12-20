@@ -7,6 +7,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
 using NCI.Util;
+using NCI.Web;
 using NCI.Web.CDE;
 using NCI.Web.CDE.UI;
 using NCI.Web.CDE.WebAnalytics;
@@ -50,6 +51,8 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             GetQueryParams();
+
+            SetupCanonicalUrl(DictionaryURL);
 
             //For Genetics dictionary language is always English
             DictionaryLanguage = "en";
@@ -112,6 +115,17 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             resultListView.DataSource = new DictionarySearchResultCollection(new DictionarySearchResult[0]);
             resultListView.DataBind();
             numResDiv.Visible = false;
+        }
+
+        //Add a filter for the Canonical URL.
+        private void SetupCanonicalUrl(string englishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
+        }
+
+        private void SetupUrlFilter(string name, NciUrl url)
+        {
+            url.SetUrl(url.ToString());
         }
 
         /// <summary>

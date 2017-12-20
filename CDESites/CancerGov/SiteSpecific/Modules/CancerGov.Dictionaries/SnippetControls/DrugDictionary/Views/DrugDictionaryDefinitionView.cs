@@ -105,6 +105,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
             SetupUrls();
+            SetupCanonicalUrl(DictionaryURL);
             GetDefinitionTerm();
             ValidateCDRID();
 
@@ -143,6 +144,17 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
 
             //SetupPrintUrl();
+        }
+
+        //Add a filter for the Canonical URL.
+        private void SetupCanonicalUrl(string englishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
+        }
+
+        private void SetupUrlFilter(string name, NciUrl url)
+        {
+            url.SetUrl(url.ToString() + "/def/" + GetFriendlyName(CdrID));
         }
 
         private void ActivateDefinitionView(DictionaryTerm dataItem)

@@ -248,6 +248,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
 
             SetupCommon();
+            SetupCanonicalUrl(DictionaryURL);
 
             LoadData();
 
@@ -396,6 +397,17 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 PageSize = 100;
             else
                 PageSize = Int32.Parse(pgSize);
+        }
+
+        //Add a filter for the Canonical URL.
+        private void SetupCanonicalUrl(string englishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
+        }
+
+        private void SetupUrlFilter(string name, NciUrl url)
+        {
+            url.SetUrl(url.ToString());
         }
 
         /// <summary>

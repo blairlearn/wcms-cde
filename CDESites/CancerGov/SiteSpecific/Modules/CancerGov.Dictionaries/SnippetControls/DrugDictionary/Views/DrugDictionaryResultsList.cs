@@ -236,6 +236,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             GetQueryParams();
+            SetupCanonicalUrl(DictionaryURL);
             SetDoNotIndex();
 
             //Set display props according to lang
@@ -300,7 +301,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
-                    string urlItem = GetFriendlyName(itemPtr.Current.ID);
+                    string urlItem = GetFriendlyName(itemPtr.Current.ID.ToString());
 
                     string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
                     Page.Response.Redirect(itemDefinitionUrl);
@@ -354,6 +355,17 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
 
             return queryParams;
+        }
+
+        //Add a filter for the Canonical URL.
+        private void SetupCanonicalUrl(string englishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
+        }
+
+        private void SetupUrlFilter(string name, NciUrl url)
+        {
+            url.SetUrl(url.ToString());
         }
 
         private void SetDoNotIndex()

@@ -65,12 +65,13 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 lblResultsFor.Text = "results found for:";
             }
 
+            DictionaryURLEnglish = DictionaryURL;
+            DictionaryURLSpanish = DictionaryURL;
+
             SetupCommon();
+            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
 
             LoadData();
-
-            DictionaryURLSpanish = DictionaryURL;
-            DictionaryURLEnglish = DictionaryURL;
         }
 
         private void LoadData()
@@ -100,7 +101,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                     IEnumerator<DictionarySearchResult> itemPtr = resultCollection.GetEnumerator();
                     itemPtr.MoveNext();
 
-                    string urlItem = GetFriendlyName(itemPtr.Current.ID);
+                    string urlItem = GetFriendlyName(itemPtr.Current.ID.ToString());
 
                     string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
 
@@ -162,6 +163,22 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             {
                 data.Value = "noindex, nofollow";
             });
+        }
+
+        //Add a filter for the Canonical URL.
+        private void SetupCanonicalUrls(string englishDurl, string spanishDurl)
+        {
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, SetupUrlFilter);
+
+            foreach (var lang in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
+            {
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlFilter);
+            }
+        }
+
+        private void SetupUrlFilter(string name, NciUrl url)
+        {
+            url.SetUrl(url.ToString());
         }
 
         /// <summary>

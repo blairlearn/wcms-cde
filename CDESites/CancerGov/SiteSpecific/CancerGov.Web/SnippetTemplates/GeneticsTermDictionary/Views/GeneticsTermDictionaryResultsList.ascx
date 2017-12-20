@@ -19,7 +19,7 @@
                 </dl>
             </LayoutTemplate>
             <ItemTemplate>
-                <dt><dfn><a href="<%# DictionaryPrettyURL %>/def/<%# GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID)  %>"
+                <dt><dfn><a href="<%# DictionaryPrettyURL %>/def/<%# GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>"
                     <%# ResultListViewHrefOnclick(Container)%>>
                     <%# ((DictionarySearchResult)(Container.DataItem)).MatchedTerm%></a> </dfn></dt>
                 <asp:PlaceHolder ID="phPronunciation" runat="server">
