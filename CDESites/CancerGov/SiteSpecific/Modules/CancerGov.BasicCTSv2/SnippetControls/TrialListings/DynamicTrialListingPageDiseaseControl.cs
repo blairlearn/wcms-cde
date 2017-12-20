@@ -180,19 +180,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
          /// <returns></returns>
         protected override string[] GetParametersForNoTrials()
         {
-
             List<string> parameters = new List<string>();
 
-
             if(this.DiseaseIDs != null && this.DiseaseIDs.Length > 0)
-                parameters.AddRange(this.DiseaseIDs.Split(new char[] {','}).ToList<string>());
+                parameters.Add(this.DiseaseIDs);
 
             if (this.TrialType != null)
                 parameters.Add(this.TrialType);
 
-
             if(this.InterventionIDs != null && this.InterventionIDs.Length > 0)
-                parameters.AddRange(this.InterventionIDs.Split(new char[] { ',' }).ToList<string>());
+                parameters.Add(this.InterventionIDs);
 
             return (parameters.ToArray());
         }
@@ -215,8 +212,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 NciUrl ParsedReqUrlParams = new NciUrl(true, true, true);  //We need this to be lowercase and collapse duplicate params. (Or not use an NCI URL)
                 ParsedReqUrlParams.SetUrl(this.Request.Url.Query);
 
-               
-                if(ParsedReqUrlParams.QueryParameters.Count == 0)
+                if (ParsedReqUrlParams.QueryParameters.Count == 0)
                 {
                     throw new HttpException(400, "Invalid Parameters");
                 }

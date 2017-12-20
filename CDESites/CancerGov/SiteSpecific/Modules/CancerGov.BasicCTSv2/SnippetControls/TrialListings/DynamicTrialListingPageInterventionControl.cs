@@ -151,11 +151,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             if (this.TrialType != null)
                 parameters.Add(this.TrialType);
-
            
             if (this.InterventionIDs != null && this.InterventionIDs.Length > 0)
-                parameters.AddRange(this.InterventionIDs.Split(new char[] { ',' }).ToList<string>());
-
+                parameters.Add(this.InterventionIDs);
 
             return (parameters.ToArray());
         }

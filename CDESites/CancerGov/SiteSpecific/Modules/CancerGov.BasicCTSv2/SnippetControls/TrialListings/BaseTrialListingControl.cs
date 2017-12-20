@@ -145,7 +145,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             if(results == null || (results.TotalResults == 0 ))
             {
-                OnEmptyResults();
+                this.OnEmptyResults();
             }
            
                 this.TotalSearchResults = results.TotalResults;
