@@ -209,13 +209,6 @@
     <Compile Include="Common\PopUps\popHelp.aspx.designer.cs">
       <DependentUpon>popHelp.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Common\UserControls\AlphaListBox.ascx.cs">
-      <DependentUpon>AlphaListBox.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\UserControls\AlphaListBox.ascx.designer.cs">
-      <DependentUpon>AlphaListBox.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Common\UserControls\LangSwitch.ascx.cs">
       <DependentUpon>LangSwitch.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -252,68 +245,7 @@
     <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.designer.cs">
       <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx.cs">
-      <DependentUpon>DrugDictionaryDefinitionView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx.designer.cs">
-      <DependentUpon>DrugDictionaryDefinitionView.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryExpandList.ascx.cs">
-      <DependentUpon>DrugDictionaryExpandList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryExpandList.ascx.designer.cs">
-      <DependentUpon>DrugDictionaryExpandList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx.cs">
-      <DependentUpon>DrugDictionaryHome.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx.designer.cs">
-      <DependentUpon>DrugDictionaryHome.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx.cs">
-      <DependentUpon>DrugDictionaryResultsList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx.designer.cs">
-      <DependentUpon>DrugDictionaryResultsList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHelper.cs" />
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryExpandList.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryExpandList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryExpandList.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryExpandList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryRouter.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryRouter.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\Helpers\DictionaryDefinitionHelper.cs" />
     <Compile Include="SnippetTemplates\ResultsGeneticsServices.ascx.cs">
       <DependentUpon>ResultsGeneticsServices.ascx</DependentUpon>
@@ -335,48 +267,6 @@
     </Compile>
     <Compile Include="SnippetTemplates\TableofLinks.ascx.designer.cs">
       <DependentUpon>TableofLinks.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\DictionarySearchBlock.ascx.cs">
-      <DependentUpon>DictionarySearchBlock.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\DictionarySearchBlock.ascx.designer.cs">
-      <DependentUpon>DictionarySearchBlock.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx.cs">
-      <DependentUpon>TermDictionaryDefinitionView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx.designer.cs">
-      <DependentUpon>TermDictionaryDefinitionView.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryExpandList.ascx.cs">
-      <DependentUpon>TermDictionaryExpandList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryExpandList.ascx.designer.cs">
-      <DependentUpon>TermDictionaryExpandList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx.cs">
-      <DependentUpon>TermDictionaryHome.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx.designer.cs">
-      <DependentUpon>TermDictionaryHome.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx.cs">
-      <DependentUpon>TermDictionaryResultsList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx.designer.cs">
-      <DependentUpon>TermDictionaryResultsList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryRouter.ascx.cs">
-      <DependentUpon>TermDictionaryRouter.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryRouter.ascx.designer.cs">
-      <DependentUpon>TermDictionaryRouter.ascx</DependentUpon>
     </Compile>
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>

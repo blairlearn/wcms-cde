@@ -322,6 +322,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     this.InterventionIDs = urlParams[2].ToLower();
                 }
             }
+
+            // TODO: add check for friendly names: if exists, redirect to that URL
         }
 
         /// <summary>
