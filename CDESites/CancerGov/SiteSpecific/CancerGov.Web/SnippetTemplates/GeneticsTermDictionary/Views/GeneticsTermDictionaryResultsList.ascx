@@ -2,7 +2,7 @@
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
 <%@ Register TagPrefix="GeneticsTermDictionary" TagName="SearchBlock" Src="~/SnippetTemplates/GeneticsTermDictionary/Views/GeneticsTermDictionaryHome.ascx" %>
 <GeneticsTermDictionary:SearchBlock ID="dictionarySearchBlock" runat="server" />
-<div class="results">
+<div class="results" dict-data-id="genetic">
     <!-- Number of results -->
     <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
         <span class="results-count">
