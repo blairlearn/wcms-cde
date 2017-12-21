@@ -139,8 +139,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                     termDictionaryDefinitionView.Visible = false;
                 }
             }
-
-            //SetupPrintUrl();
         }
 
         //Add a filter for the Canonical URL.

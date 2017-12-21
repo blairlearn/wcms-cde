@@ -25,6 +25,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         static ILog log = LogManager.GetLogger(typeof(DynamicTrialListingPageControl));
 
+        protected bool needsRedirect = false;
+
         /// <summary>
         /// Creates a DynamicTrialListingConfig for use in implementation methods
         /// </summary>
@@ -76,10 +78,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
-     /// <summary>
-     ///    Read property indicating if the Trial Listing Page URL contains the keyword "/notrials". If it is the case,
-     ///    the property will be true. Otherwise false will be sent back
-     /// </summary>
+         /// <summary>
+         /// Read property indicating if the Trial Listing Page URL contains the keyword "/notrials". If it is the case,
+         /// the property will be true. Otherwise false will be sent back
+         /// </summary>
         protected bool IsNoTrials
         {
             get
@@ -198,11 +200,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         }
 
-     /// <summary>
-     ///    This method is called when no results are returned by the query. In this case the function checks that the current URL does not
-     ///    have the word notrials in it. If it is the case, the function will redirect the user to a page with the following URL:
-     ///    PRETTYURL/NOTRIALS?p1=a&p2=b
-     /// </summary>
+         /// <summary>
+         /// This method is called when no results are returned by the query. In this case the function checks that the current URL does not
+         /// have the word notrials in it. If it is the case, the function will redirect the user to a page with the following URL:
+         /// PRETTYURL/NOTRIALS?p1=a&p2=b
+         /// </summary>
         protected override void OnEmptyResults()
         {
 
@@ -285,10 +287,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 url.SetUrl(this.CurrentUrl.ToString());
             });
 
-
-
-         
-
             //Setup the addthis URL since it is forced to be the raw PrettyURL field on the page.
             //TODO: account for paging?
             this.PageInstruction.AddUrlFilter("add_this_url", (name, url) =>
@@ -313,6 +311,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             else
             {
                 return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Friendly Name to replace a c-code in the URL for the dynamic trial listing page. If there is no override for that c-code,
+        /// it return the given c-codes. Also sets needsRedirect to true if there is a friendly name override found.
+        /// </summary>
+        /// <returns>A string with the friendly name for the URL (replaces c-code) if the override exists, otherwise the given c-codes</returns>
+        protected string GetFriendlyNameForURL(string param)
+        {
+            DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+
+            if (friendlyNameMap.MappingContainsCode(param))
+            {
+                needsRedirect = true;
+                return friendlyNameMap.GetFriendlyNameFromCode(param);
+            }
+            else
+            {
+                return param;
             }
         }
     }

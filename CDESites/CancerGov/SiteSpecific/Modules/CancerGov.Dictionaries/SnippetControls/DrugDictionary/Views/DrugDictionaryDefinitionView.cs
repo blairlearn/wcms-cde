@@ -142,8 +142,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     drugDictionaryDefinitionView.Visible = false;
                 }
             }
-
-            //SetupPrintUrl();
         }
 
         //Add a filter for the Canonical URL.

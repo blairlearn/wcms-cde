@@ -141,10 +141,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         private string TrialType { get; set; }
 
-     /// <summary>
-     ///    Used to get the parameters for the /notrials URL based on the current request
-     /// </summary>
-     /// <returns></returns>
+        /// <summary>
+        /// Used to get the parameters for the /notrials URL based on the current request
+        /// </summary>
         protected override string[] GetParametersForNoTrials()
         {
             List<string> parameters = new List<string>();
@@ -226,9 +225,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
-         /// <summary>
-         /// This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
-         /// </summary>
+        /// <summary>
+        /// This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
+        /// </summary>
         private void SetUpRawParametersForListingPage(List<string> urlParams)
         {
             if (urlParams.Count >= 4)
@@ -255,10 +254,44 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             }
 
-          //Has Type of Trial
+            //Has Type of Trial
             if (urlParams.Count >= 2)
             {
                 this.TrialType = urlParams[1].ToLower();
+            }
+
+            // Check for friendly names that override c-codes in URL: if exists, redirect to that URL
+            if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            {
+                string redirectUrl = this.PrettyUrl.ToString();
+
+                List<string> urlParts = new List<string>();
+
+                if (!string.IsNullOrEmpty(this.InterventionIDs))
+                {
+                    // Add Intervention friendly name override to redirect URL path
+                    urlParts.Add(GetFriendlyNameForURL(this.InterventionIDs));
+
+                    if (!string.IsNullOrEmpty(this.TrialType))
+                    {
+                        // Add trial type to redirect URL path
+                        urlParts.Add(this.TrialType);
+                    }
+
+                }
+
+                // If there are friendly name overrides, set up the redirect URL using those values
+                if (needsRedirect)
+                {
+                    redirectUrl = redirectUrl.TrimEnd('/');
+
+                    foreach (string urlPart in urlParts)
+                    {
+                        redirectUrl += "/" + urlPart;
+                    }
+
+                    Response.RedirectPermanent(redirectUrl);
+                }
             }
         }
 

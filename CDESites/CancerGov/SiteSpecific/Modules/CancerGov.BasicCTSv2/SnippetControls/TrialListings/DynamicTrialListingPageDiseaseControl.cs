@@ -268,9 +268,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
         }
 
-         /// <summary>
-         /// This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
-         /// </summary>
+        /// <summary>
+        /// This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
+        /// </summary>
         private void SetUpRawParametersForListingPage(List<string> urlParams)
         {
             if (urlParams.Count >= 4)
@@ -323,7 +323,45 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 }
             }
 
-            // TODO: add check for friendly names: if exists, redirect to that URL
+            // Check for friendly names that override c-codes in URL: if exists, redirect to that URL
+            if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            {
+                string redirectUrl = this.PrettyUrl.ToString();
+
+                List<string> urlParts = new List<string>();
+
+                if (!string.IsNullOrEmpty(this.DiseaseIDs))
+                {
+                    // Add Disease friendly name override to redirect URL path
+                    urlParts.Add(GetFriendlyNameForURL(this.DiseaseIDs));
+
+                    if(!string.IsNullOrEmpty(this.TrialType))
+                    {
+                        // Add trial type to redirect URL path
+                        urlParts.Add(this.TrialType);
+
+                        if (!string.IsNullOrEmpty(this.InterventionIDs))
+                        {
+                            // Add Intervention friendly name override to redirect URL path
+                            urlParts.Add(GetFriendlyNameForURL(this.InterventionIDs));
+                        }
+                    }
+
+                }
+                
+                // If there are friendly name overrides, set up the redirect URL using those values
+                if(needsRedirect)
+                {
+                    redirectUrl = redirectUrl.TrimEnd('/');
+
+                    foreach (string urlPart in urlParts)
+                    {
+                        redirectUrl += "/" + urlPart;
+                    }
+
+                    Response.RedirectPermanent(redirectUrl);
+                }
+            }
         }
 
         /// <summary>

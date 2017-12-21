@@ -137,8 +137,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             //fetch results
             var results = _basicCTSManager.Search(SearchParams, query);
-
-            
            
             //CODE ADDED BY CHRISTIAN RIKONG ON 12/07/2017 at 03:07 PM - THE GOAL IS THAT WHEN THERE ARE NO TRIALS RESULTS, WE 
             //REDIRECT TO THE NOTRIALS PAGE
@@ -164,20 +162,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
                 // Setup web analytics
                 this.SetAnalytics();
-            
-
-
-
-
-           
         }
 
 
-     /// <summary>
-     ///    This method is called when no results are returned by the query
-     /// </summary>
+         /// <summary>
+         ///    This method is called when no results are returned by the query
+         /// </summary>
         protected abstract void OnEmptyResults();
-
 
         /// <summary>
         /// Loads the JSON configuration from the SnippetInfo's Data
