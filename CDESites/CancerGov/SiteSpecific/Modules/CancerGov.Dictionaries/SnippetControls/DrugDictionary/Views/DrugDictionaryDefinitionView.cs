@@ -43,6 +43,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
         public int RelatedTermCount { get; set; }
 
+        private DictionaryTerm currentItem;
+
         /// <summary>
         /// Gets or sets the PrettyUrl of the page this component lives on.
         /// </summary>
@@ -127,14 +129,12 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 if (dataItem != null && dataItem.Term != null)
                 {
                     ActivateDefinitionView(dataItem);
+                    currentItem = dataItem;
                     // Web Analytics *************************************************
                     if (WebAnalyticsOptions.IsEnabled)
                     {
-                        // Add dictionary term view event to analytics
-                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event11, wbField =>
-                        {
-                            wbField.Value = null;
-                        });
+                        // Set analytics for definition view page load
+                        SetAnalytics();
                     }
                 }
                 else
@@ -142,8 +142,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     drugDictionaryDefinitionView.Visible = false;
                 }
             }
-
-            //SetupPrintUrl();
         }
 
         //Add a filter for the Canonical URL.
@@ -513,6 +511,45 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("Dictionary", 400, "Invalid parameters for dictionary");
                 }
             }
+        }
+
+        /// <summary>
+        /// Set default pageLoad analytics for this page
+        /// </summary>
+        protected void SetAnalytics()
+        {
+            // Format string for analytics params: Dictionary|Language|Term|ID
+            string[] analyticsParams = new string[4];
+
+            analyticsParams[0] = DictionaryAnalyticsType.Term.Name;
+
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                analyticsParams[1] = "Spanish";
+            else
+                analyticsParams[1] = "English";
+
+            analyticsParams[2] = currentItem.Term;
+            analyticsParams[3] = currentItem.ID.ToString();
+
+            string dictionaryAnalytics = string.Join("|", analyticsParams);
+
+            // Set event
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event11, wbField =>
+            {
+                wbField.Value = WebAnalyticsOptions.Events.event11.ToString();
+            });
+
+            // Set props
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop16, wbField =>
+            {
+                wbField.Value = dictionaryAnalytics;
+            });
+
+            // Set eVars
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar16, wbField =>
+            {
+                wbField.Value = dictionaryAnalytics;
+            });
         }
     }
 }

@@ -36,5 +36,16 @@ namespace CancerGov.Dictionaries.SnippetControls
 
             return cdrId;
         }
+
+        public class DictionaryAnalyticsType
+        {
+            private DictionaryAnalyticsType(string name) { Name = name; }
+
+            public string Name { get; set; }
+
+            public static DictionaryAnalyticsType Term { get { return new DictionaryAnalyticsType("CancerTerms"); } }
+            public static DictionaryAnalyticsType Genetics { get { return new DictionaryAnalyticsType("Genetics"); } }
+            public static DictionaryAnalyticsType Drug { get { return new DictionaryAnalyticsType("Drug"); } }
+        }
     }
 }

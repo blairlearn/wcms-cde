@@ -12,7 +12,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
     /// </summary>
     public class TrialListingPageInfo
     {
-
         /// <summary>
         /// The path to the template to use.
         /// </summary>

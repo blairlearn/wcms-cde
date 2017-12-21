@@ -73,13 +73,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return this.Config.NoTrialsHTML;
         }
 
-     /// <summary>
-     ///    This method is called when no results are returned by the query
-     /// </summary>
-        protected override void OnEmptyResults()
-        {
-            
-        }
+         /// <summary>
+         /// This method is called when no results are returned by the query
+         /// </summary>
+        protected override void OnEmptyResults() { }
 
         /// <summary>
         /// Set default pageLoad analytics for this page
@@ -145,7 +142,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 wbField.Value = desc;
             });
-
         }
     }
 }

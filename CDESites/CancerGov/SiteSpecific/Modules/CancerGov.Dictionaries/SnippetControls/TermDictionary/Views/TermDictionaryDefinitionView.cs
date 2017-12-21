@@ -29,15 +29,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         static ILog log = LogManager.GetLogger(typeof(TermDictionaryDefinitionView));
 
-        public string SearchStr { get; set; }
-
-        public string Expand { get; set; }
-
         public string CdrID { get; set; }
-
-        public string SrcGroup { get; set; }
-
-        public bool BContains { get; set; }
 
         public string DictionaryURLSpanish { get; set; }
 
@@ -48,6 +40,8 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         public String DictionaryLanguage { get; set; }
 
         public int RelatedTermCount { get; set; }
+
+        private DictionaryTerm currentItem;
 
         /// <summary>
         /// Gets or sets the PrettyUrl of the page this component lives on.
@@ -127,14 +121,12 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 if (dataItem != null && dataItem.Term != null)
                 {
                     ActivateDefinitionView(dataItem);
+                    currentItem = dataItem;
                     // Web Analytics *************************************************
                     if (WebAnalyticsOptions.IsEnabled)
                     {
-                        // Add dictionary term view event to analytics
-                        this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event11, wbField =>
-                        {
-                            wbField.Value = null;
-                        });
+                        // Set analytics for definition view page load
+                        SetAnalytics();
                     }
                 }
                 else
@@ -679,6 +671,45 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 }
             }
             return cdridForLangToggle;
+        }
+
+        /// <summary>
+        /// Set default pageLoad analytics for this page
+        /// </summary>
+        protected void SetAnalytics()
+        {
+            // Format string for analytics params: Dictionary|Language|Term|ID
+            string[] analyticsParams = new string[4];
+
+            analyticsParams[0] = DictionaryAnalyticsType.Term.Name;
+
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+                analyticsParams[1] = "Spanish";
+            else
+                analyticsParams[1] = "English";
+
+            analyticsParams[2] = currentItem.Term;
+            analyticsParams[3] = currentItem.ID.ToString();
+            
+            string dictionaryAnalytics = string.Join("|", analyticsParams);
+
+            // Set event
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event11, wbField =>
+            {
+                wbField.Value = WebAnalyticsOptions.Events.event11.ToString();
+            });
+
+            // Set props
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop16, wbField =>
+            {
+                wbField.Value = dictionaryAnalytics;
+            });
+
+            // Set eVars
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.eVars.evar16, wbField =>
+            {
+                wbField.Value = dictionaryAnalytics;
+            });
         }
     }
 }
