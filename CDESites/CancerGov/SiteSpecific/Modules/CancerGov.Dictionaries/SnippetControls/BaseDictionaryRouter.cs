@@ -209,7 +209,7 @@ namespace CancerGov.Dictionaries.SnippetControls
                 else if (route[0].Equals("def"))
                 {
                     // If path is /def, load DefinitionView control
-                    string friendlyName = GetFriendlyName(route[1]);
+                    string friendlyName = GetFriendlyName(Server.UrlDecode(route[1]));
                     if (!string.IsNullOrEmpty(friendlyName))
                     {
                         RedirectToDefinitionView(friendlyName);
