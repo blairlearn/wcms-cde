@@ -7,7 +7,7 @@
 <asp:Repeater ID="termDictionaryDefinitionView" runat="server" OnItemDataBound="termDictionaryDefinitionView_OnItemDataBound">
 <ItemTemplate> 
         <!-- Term and def -->
-        <div class="results" dict-data-id="term">
+        <div class="results" data-dict-type="term">
             <dl class="dictionary-list">
                 <dt>
                     <dfn>
