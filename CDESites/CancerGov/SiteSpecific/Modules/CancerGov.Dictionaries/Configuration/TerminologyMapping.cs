@@ -53,43 +53,48 @@ namespace CancerGov.Dictionaries.Configuration
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
-            string realPath = "";
-            try
-            {
-                realPath = HttpContext.Current.Server.MapPath(filePath);
-            }
-            catch (Exception ex)
-            {
-                LogManager.GetLogger(typeof(TerminologyMapping)).ErrorFormat("Error while getting the mapping file.", ex);
-            }
+            bool fileExists = false;
+            
+            fileExists  = File.Exists(HttpContext.Current.Server.MapPath(filePath));
 
-            try
+            if(fileExists)
             {
-                // If file exists, use streamreader to load mappings into dictionary
-                using (StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath(filePath)))
+                try
                 {
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
+                    // If file exists, use streamreader to load mappings into dictionary
+                    using (StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath(filePath)))
                     {
-                        // Lowercase entry  (for comparison to pretty name from URL parameters later)
-                        line = line.ToLower();
-
-
-                        string[] parts = line.Split('|');
-
-                        // Add mapping to dictionary if it isn't already present
-                        if (!dict.ContainsKey(parts[0]))
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
                         {
-                            dict.Add(parts[0], parts[1]);
+                            // Lowercase entry  (for comparison to pretty name from URL parameters later)
+                            line = line.ToLower();
+
+
+                            string[] parts = line.Split('|');
+
+                            // Add mapping to dictionary if it isn't already present
+                            if (!dict.ContainsKey(parts[0]))
+                            {
+                                dict.Add(parts[0], parts[1]);
+                            }
                         }
                     }
                 }
+                catch
+                {
+                    // Log an error if the file exists but cannot be read.
+                    // Do not make the page error out - we want the dictionaries to still work,
+                    // even if there is something wrong with the friendly name mapping file.
+                    LogManager.GetLogger(typeof(TerminologyMapping)).ErrorFormat("Mapping file '{0}' could not be read.", filePath);
+                }
             }
-            catch
+            else
             {
-                // Throw exception if file doesn't exist
-                LogManager.GetLogger(typeof(TerminologyMapping)).ErrorFormat("Mapping file '{0}' could not be read.", filePath);
-                throw new FileNotFoundException(filePath);
+                // Log an error if the file does not exist.
+                // Do not make the page error out - we want the dictionaries to still work,
+                // even if there is something wrong with the friendly name mapping file.
+                LogManager.GetLogger(typeof(TerminologyMapping)).ErrorFormat("Error while getting the mapping file located at '{0}'.", filePath);
             }
 
             return new TerminologyMapping(dict);

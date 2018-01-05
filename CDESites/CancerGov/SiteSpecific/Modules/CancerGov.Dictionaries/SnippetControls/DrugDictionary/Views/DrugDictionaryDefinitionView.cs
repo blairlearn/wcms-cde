@@ -114,11 +114,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             DictionaryURLSpanish = DictionaryURL;
             DictionaryURLEnglish = DictionaryURL;
 
-            if (Request.RawUrl.ToLower().Contains("dictionary") && Request.RawUrl.ToLower().Contains("spanish"))
-            {
-                Response.Redirect("/diccionario" + Request.Url.Query);
-            }
-
             DictionaryLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
 
             if (!Page.IsPostBack)
