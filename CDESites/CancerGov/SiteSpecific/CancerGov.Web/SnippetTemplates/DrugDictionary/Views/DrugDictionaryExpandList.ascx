@@ -4,7 +4,7 @@
 
 <DrugDictionaryHome:SearchBlock AtoZIncludesAll="true" id="dictionarySearchBlock" runat="server" />
 
- <div class="results" dict-data-id="drug">
+ <div class="results" data-dict-type="drug">
     <!-- Number of results -->
     <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
         <span class="results-count">

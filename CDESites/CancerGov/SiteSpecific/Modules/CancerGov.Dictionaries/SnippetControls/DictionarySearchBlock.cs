@@ -130,8 +130,8 @@ namespace CancerGov.Dictionaries.SnippetControls
         private void SetupCommon()
         {
             // Set custom data attributes 
-            radioStarts.InputAttributes.Add("data-ac", "dict-radio-starts");
-            radioContains.InputAttributes.Add("data-ac", "dict-radio-contains");
+            radioStarts.InputAttributes.Add("data-autosuggest", "dict-radio-starts");
+            radioContains.InputAttributes.Add("data-autosuggest", "dict-radio-contains");
 
             //set language to english by default
             //this only applies to Genetics and Drug Dictionaries
@@ -223,7 +223,7 @@ namespace CancerGov.Dictionaries.SnippetControls
         {
             AutoComplete1.Attributes.Add("aria-label", "Escriba frase o palabra clave");
             AutoComplete1.Attributes.Add("placeholder", "Escriba frase o palabra clave");
-            AutoComplete1.Attributes.Add("data-ac", "dict-autocomplete");
+            AutoComplete1.Attributes.Add("data-autosuggest", "dict-autocomplete");
 
             lblStartsWith.Text = "Empieza con";
             lblContains.Text = "Contiene";
@@ -244,7 +244,7 @@ namespace CancerGov.Dictionaries.SnippetControls
             //Controls            
             AutoComplete1.Attributes.Add("aria-label", "Enter keywords or phrases");
             AutoComplete1.Attributes.Add("placeholder", "Enter keywords or phrases");
-            AutoComplete1.Attributes.Add("data-ac", "dict-autocomplete");
+            AutoComplete1.Attributes.Add("data-autosuggest", "dict-autocomplete");
 
             btnSearch.Text = "Search";
 

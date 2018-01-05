@@ -4,7 +4,7 @@
 
 <TermDictionaryHome:SearchBlock id="dictionarySearchBlock" runat="server" />
 
- <div class="results" dict-data-id="term">
+ <div class="results" data-dict-type="term">
             <!-- Number of results -->
             <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
                 <span class="results-count">
