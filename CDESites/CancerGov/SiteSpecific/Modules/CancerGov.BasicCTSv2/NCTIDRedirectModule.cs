@@ -28,11 +28,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             get
             {
-                if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["ClinicalTrialsViewPage"]))
-                {
-                    return ConfigurationManager.AppSettings["ClinicalTrialsViewPage"];
-                }
-                return "/about-cancer/treatment/clinical-trials/search/v";
+                BasicCTSPageInfo config = BasicCTSPageInfo.GetConfig();
+                return config.DetailedViewPagePrettyUrl;
             }
         }
 
@@ -77,6 +74,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 return;
             }
 
+            //Check if we have a view page pretty URL before redirecting.  Otherwise it should be a 404.
+            if (!string.IsNullOrWhiteSpace(this.SearchResultsPrettyUrl))
+            {
+                //Handle redirection for old clinical-trials/search/view?id=cdrid
+
+                //If this is not an old view url then handle the existing pretty url redirect logic.
+                RedirectForTrialPrettyURL(context);
+            }
+        }
+
+        /// <summary>
+        /// Handles redirections for &lt;hostname&gt;/clinicaltrials/&lt;NCTID&gt pretty urls.
+        /// </summary>
+        /// <param name="context"></param>
+        private void RedirectForTrialPrettyURL(HttpContext context)
+        {
             // The URL should match this pattern: '<hostname>/clinicaltrials/<NCTID>. If it does, proceed with retrieving the ID
             // We're only concerned about the NCT ID at this point - not NCI, CDR, or any other trial IDs
             if (context.Request.Url.Segments.Count() >= 3 && context.Request.Url.Segments[1].ToLower() == "clinicaltrials/")
@@ -92,7 +105,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
                     // Do behavior based on the given ID
                     try
-                    { 
+                    {
                         // If the ID matches a trial in the API, go to the view page on www.cancer.gov
                         if (!string.IsNullOrWhiteSpace(cleanId) && IsValidTrial(cleanId))
                         {
@@ -134,7 +147,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     log.Debug("ID is null or empty");
                 }
             }
-
         }
         #endregion
 

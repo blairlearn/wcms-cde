@@ -42,9 +42,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.HttpHandlers
 
             //////////////////////////////
             // Load the configuration XML from the App Settings
-            string configPath = ConfigurationManager.AppSettings["CTSConfigFilePath"];
-            _config = ModuleObjectFactory<BasicCTSPageInfo>.GetObjectFromFile(configPath);
-
+            _config = BasicCTSPageInfo.GetConfig();
         }
 
         public bool IsReusable
