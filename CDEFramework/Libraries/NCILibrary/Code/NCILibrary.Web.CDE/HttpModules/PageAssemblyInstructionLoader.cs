@@ -64,8 +64,7 @@ namespace NCI.Web.CDE
                 || url.IndexOf(".png") != -1
                 || url.IndexOf(".svg") != -1
                 || url.IndexOf(".ttf") != -1
-                || url.IndexOf(".woff") != -1
-                || url.IndexOf(".woff2") != -1)
+                || url.IndexOf(".woff") != -1)
             {
                 //Only go through with the change if this path matches our string.  We experienced an issue in production
                 //where rewriting the URL to the same path can mangle the response.  This also seems to be an "known" or
