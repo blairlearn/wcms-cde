@@ -217,7 +217,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     throw new HttpException(400, "Invalid Parameters");
                 }
 
-                rawParams = GetRawParametersFromQueryString(ParsedReqUrlParams);     
+                rawParams = GetRawParametersFromQueryString(ParsedReqUrlParams);
+                SetDoNotIndex();
             }
             else
             {
@@ -362,6 +363,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     Response.RedirectPermanent(redirectUrl);
                 }
             }
+        }
+
+        /// <summary>
+        /// Set do not index on no trials page
+        /// </summary>
+        private void SetDoNotIndex()
+        {
+            PageInstruction.AddFieldFilter("meta_robots", (name, data) =>
+            {
+                data.Value = "noindex, nofollow";
+            });
         }
 
         /// <summary>
