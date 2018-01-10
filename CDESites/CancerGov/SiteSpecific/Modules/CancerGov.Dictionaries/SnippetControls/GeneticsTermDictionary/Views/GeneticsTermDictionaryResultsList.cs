@@ -39,19 +39,16 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
         public int NumResults { get; set; }
 
-        public string DictionaryURL { get; set; }
+        public string DictionaryPrettyURL { get; set; }
 
         public String DictionaryLanguage { get; set; }
 
-        public string DictionaryPrettyURL { get; set; }
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             GetQueryParams();
-            SetupCanonicalUrl(DictionaryURL);
+            SetupCanonicalUrl(DictionaryPrettyURL);
             SetDoNotIndex();
 
             //For Genetics dictionary language is always English

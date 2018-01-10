@@ -108,14 +108,7 @@ namespace CancerGov.Dictionaries.SnippetControls
         protected void RedirectToResultsList(string searchString, string contains, string first, string page)
         {
             NciUrl redirectURL = new NciUrl();
-            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
-            {
-                redirectURL.SetUrl(this.PrettyUrl + "/buscar");
-            }
-            else
-            {
-                redirectURL.SetUrl(this.PrettyUrl + "/search");
-            }
+            redirectURL.SetUrl(GetSearchUrl());
 
             redirectURL.QueryParameters.Add("q", searchString);
 
@@ -156,6 +149,16 @@ namespace CancerGov.Dictionaries.SnippetControls
             }
 
             Response.RedirectPermanent(redirectURL.ToString());
+        }
+
+        protected sealed override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            
+            this.PageInstruction.AddUrlFilter("PostBackURL", (name, url) => 
+            {
+                url.SetUrl(GetSearchUrl());
+            });
         }
 
         /// <summary>
@@ -209,7 +212,7 @@ namespace CancerGov.Dictionaries.SnippetControls
                 else if (route[0].Equals("def"))
                 {
                     // If path is /def, load DefinitionView control
-                    string friendlyName = GetFriendlyName(Server.UrlDecode(route[1]));
+                    string friendlyName = GetFriendlyName(route[1]);
                     if (!string.IsNullOrEmpty(friendlyName))
                     {
                         RedirectToDefinitionView(friendlyName);
@@ -280,6 +283,23 @@ namespace CancerGov.Dictionaries.SnippetControls
             }
 
             return null;
+        }
+
+
+        protected string GetSearchUrl()
+        {
+            string redirectURL = this.PrettyUrl;
+
+            if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
+            {
+                redirectURL += "/buscar";
+            }
+            else
+            {
+                redirectURL += "/search";
+            }
+
+            return redirectURL;
         }
     }
 }

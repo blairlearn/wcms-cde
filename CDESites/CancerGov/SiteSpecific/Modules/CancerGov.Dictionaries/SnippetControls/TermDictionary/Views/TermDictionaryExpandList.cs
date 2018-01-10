@@ -39,8 +39,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         public int NumResults { get; set; }
 
-        public string DictionaryURL { get; set; }
-
         public string DictionaryPrettyURL { get; set; }
 
         public string DictionaryURLSpanish { get; set; }
@@ -49,7 +47,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             GetQueryParams();
@@ -64,8 +61,8 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 lblResultsFor.Text = "results found for:";
             }
 
-            DictionaryURLEnglish = DictionaryURL;
-            DictionaryURLSpanish = DictionaryURL;
+            DictionaryURLEnglish = DictionaryPrettyURL;
+            DictionaryURLSpanish = DictionaryPrettyURL;
 
             SetupCommon();
             SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
@@ -173,7 +170,8 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         /// </summary>
         private void GetQueryParams()
         {
-            Expand = Strings.Clean(Request.Params["expand"], "A");
+            Expand = Sanitizer.GetSafeHtmlFragment(Request.Params["expand"]);
+            Expand = Strings.Clean(Expand, "A");
             SrcGroup = Strings.Clean(Request.Params["contains"]);
         }
 

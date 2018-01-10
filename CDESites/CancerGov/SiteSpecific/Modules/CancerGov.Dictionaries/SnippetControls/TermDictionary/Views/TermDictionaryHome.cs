@@ -22,9 +22,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //dictionarySearchBlock.Dictionary = NCI.Web.Dictionary.DictionaryType.term;
-            //dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
-
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
             // Check if dictionary terms list size is cached; if so, set to TotalCount

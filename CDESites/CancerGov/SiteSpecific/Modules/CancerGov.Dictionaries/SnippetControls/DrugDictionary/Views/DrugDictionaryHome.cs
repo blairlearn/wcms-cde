@@ -17,7 +17,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         protected void Page_Load(object sender, EventArgs e)
         {
             dictionarySearchBlock.Dictionary = DictionaryType.drug;
-            dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+            dictionarySearchBlock.DictionaryPrettyURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
         }
 

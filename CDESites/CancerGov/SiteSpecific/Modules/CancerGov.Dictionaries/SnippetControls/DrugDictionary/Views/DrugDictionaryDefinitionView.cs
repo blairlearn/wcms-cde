@@ -33,11 +33,11 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
         public string FriendlyName { get; set; }
 
+        public string DictionaryPrettyURL { get; set; }
+
         public string DictionaryURLSpanish { get; set; }
 
         public string DictionaryURLEnglish { get; set; }
-
-        public string DictionaryURL { get; set; }
 
         public String DictionaryLanguage { get; set; }
 
@@ -104,38 +104,35 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             SetupUrls();
-            SetupCanonicalUrl(DictionaryURL);
+            SetupCanonicalUrl(DictionaryPrettyURL);
             GetDefinitionTerm();
             ValidateCDRID();
 
-            DictionaryURLSpanish = DictionaryURL;
-            DictionaryURLEnglish = DictionaryURL;
+            DictionaryURLSpanish = DictionaryPrettyURL;
+            DictionaryURLEnglish = DictionaryPrettyURL;
 
             DictionaryLanguage = PageAssemblyContext.Current.PageAssemblyInstruction.Language;
 
-            if (!Page.IsPostBack)
-            {
-                DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
+            DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
 
-                DictionaryTerm dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Web.Dictionary.DictionaryType.drug, DictionaryLanguage, "v1");
-                if (dataItem != null && dataItem.Term != null)
+            DictionaryTerm dataItem = _dictionaryAppManager.GetTerm(Convert.ToInt32(CdrID), NCI.Web.Dictionary.DictionaryType.drug, DictionaryLanguage, "v1");
+            if (dataItem != null && dataItem.Term != null)
+            {
+                ActivateDefinitionView(dataItem);
+                currentItem = dataItem;
+                // Web Analytics *************************************************
+                if (WebAnalyticsOptions.IsEnabled)
                 {
-                    ActivateDefinitionView(dataItem);
-                    currentItem = dataItem;
-                    // Web Analytics *************************************************
-                    if (WebAnalyticsOptions.IsEnabled)
-                    {
-                        // Set analytics for definition view page load
-                        SetAnalytics();
-                    }
+                    // Set analytics for definition view page load
+                    SetAnalytics();
                 }
-                else
-                {
-                    drugDictionaryDefinitionView.Visible = false;
-                }
+            }
+            else
+            {
+                drugDictionaryDefinitionView.Visible = false;
             }
         }
 
@@ -387,7 +384,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                     HyperLink relatedTermLink = (HyperLink)e.Item.FindControl("relatedTermLink");
                     if (relatedTermLink != null)
                     {
-                        relatedTermLink.NavigateUrl = DictionaryURL + "?cdrid=" + relatedTerm.Termid;
+                        relatedTermLink.NavigateUrl = DictionaryPrettyURL + "?cdrid=" + relatedTerm.Termid;
                         relatedTermLink.Text = relatedTerm.Text;
 
                         //make sure the comma is only displayed when there is more than one related term
@@ -474,7 +471,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             if (path.Count > 0 && path[0].Equals("def"))
             {
                 string param = Strings.Clean(path[1]);
-                param = Server.UrlDecode(param);
 
                 // Get friendly name to CDRID mappings
                 string dictionaryMappingFilepath = null;

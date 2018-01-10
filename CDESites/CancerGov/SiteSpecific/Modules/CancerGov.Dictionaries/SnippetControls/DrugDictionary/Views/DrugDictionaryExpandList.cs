@@ -226,13 +226,10 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         /// </summary>
         public int CurrentPageIndex { get; set; }
 
-        public string DictionaryURL { get; set; }
-
         public string DictionaryPrettyURL { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
             DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
 
             GetQueryParams();
@@ -248,7 +245,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
 
             SetupCommon();
-            SetupCanonicalUrl(DictionaryURL);
+            SetupCanonicalUrl(DictionaryPrettyURL);
 
             LoadData();
 
@@ -259,7 +256,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 Dictionary<string, string> queryParams = GetPageQueryParams();
 
                 NciUrl pagerUrl = new NciUrl();
-                pagerUrl.SetUrl(DictionaryURL);
+                pagerUrl.SetUrl(PageAssemblyContext.Current.requestedUrl.ToString());
 
                 DrugPager objPager = new DrugPager(pagerUrl, queryParams, CurrentPageIndex, PageSize, 2, NumResults);
                 pageHtml = objPager.RenderPager();

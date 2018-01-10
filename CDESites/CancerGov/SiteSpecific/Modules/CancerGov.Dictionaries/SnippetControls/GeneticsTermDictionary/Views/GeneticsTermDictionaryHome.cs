@@ -29,7 +29,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
         protected void Page_Load(object sender, EventArgs e)
         {
             dictionarySearchBlock.Dictionary = NCI.Web.Dictionary.DictionaryType.genetic;
-            dictionarySearchBlock.DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
+            dictionarySearchBlock.DictionaryPrettyURL = PageAssemblyContext.Current.requestedUrl.ToString();
 
         }
     }

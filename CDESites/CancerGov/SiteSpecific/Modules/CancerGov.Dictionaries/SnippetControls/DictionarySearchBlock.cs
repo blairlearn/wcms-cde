@@ -21,8 +21,6 @@ namespace CancerGov.Dictionaries.SnippetControls
 {
     public class DictionarySearchBlock : SnippetControl
     {
-        protected System.Web.UI.WebControls.PlaceHolder pnlTermSearch;
-
         protected System.Web.UI.HtmlControls.HtmlForm aspnetForm;
 
         protected Panel englishHelpText;
@@ -59,11 +57,7 @@ namespace CancerGov.Dictionaries.SnippetControls
 
         public String DictionaryLanguage { get; set; }
 
-        public string DictionaryURLSpanish { get; set; }
-
-        public string DictionaryURLEnglish { get; set; }
-
-        public string DictionaryURL { get; set; }
+        public string DictionaryPrettyURL { get; set; }
 
         protected override void OnLoad(EventArgs e)
         {
@@ -98,11 +92,9 @@ namespace CancerGov.Dictionaries.SnippetControls
         private void GetQueryParams()
         {
             Expand = "";
-            CdrID = "";
             SearchStr = "";
             SrcGroup = "";
             Expand = Strings.Clean(Request.Params["expand"]);
-            CdrID = Strings.Clean(Request.Params["cdrid"]);
             SearchStr = Sanitizer.GetSafeHtmlFragment(Request.Params["q"]);
             SearchStr = Strings.Clean(SearchStr);
             SrcGroup = Strings.Clean(Request.Params["contains"]);
@@ -170,11 +162,8 @@ namespace CancerGov.Dictionaries.SnippetControls
             alphaListBox.TextOnly = (PageAssemblyContext.Current.DisplayVersion == DisplayVersions.Web) ? true : false;
             alphaListBox.Title = string.Empty;
 
-            DictionaryURL = PageAssemblyContext.Current.requestedUrl.ToString();
-            alphaListBox.BaseUrl = DictionaryURL;
-
-            DictionaryURLSpanish = DictionaryURL;
-            DictionaryURLEnglish = DictionaryURL;
+            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
+            alphaListBox.BaseUrl = DictionaryPrettyURL;
         }
 
         #region "Term Dictionary Methods"
@@ -203,10 +192,16 @@ namespace CancerGov.Dictionaries.SnippetControls
                     string suffix = "";
                     if (!string.IsNullOrEmpty(Expand))
                         suffix = " - AlphaNumericBrowse";
-                    else if (!string.IsNullOrEmpty(CdrID))
+                    else if (HttpContext.Current.Request.RawUrl.Contains("def"))
                         suffix = " - Definition";
                     wbField.Value = ConfigurationManager.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
+
+                bool isStartsWith = true;
+                if(radioContains.Checked == true && radioStarts.Checked == false)
+                {
+                    isStartsWith = false;
+                }
 
                 Page.Form.Attributes.Add("onsubmit", "NCIAnalytics.TermsDictionarySearch(this," + _isSpanish.ToString().ToLower() + ");"); // Load from onsubit script
                 if (_isSpanish)
@@ -267,7 +262,7 @@ namespace CancerGov.Dictionaries.SnippetControls
                     string suffix = "";
                     if (!string.IsNullOrEmpty(Expand))
                         suffix = " - AlphaNumericBrowse";
-                    else if (!string.IsNullOrEmpty(CdrID))
+                    else if (HttpContext.Current.Request.RawUrl.Contains("def"))
                         suffix = " - Definition";
                     wbField.Value = ConfigurationManager.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
@@ -291,7 +286,7 @@ namespace CancerGov.Dictionaries.SnippetControls
                     string suffix = "";
                     if (!string.IsNullOrEmpty(Expand))
                         suffix = " - AlphaNumericBrowse";
-                    else if (!string.IsNullOrEmpty(CdrID))
+                    else if (HttpContext.Current.Request.RawUrl.Contains("def"))
                         suffix = " - Definition";
                     wbField.Value = ConfigurationManager.AppSettings["HostName"] + PageAssemblyContext.Current.requestedUrl.ToString() + suffix;
                 });
@@ -305,17 +300,21 @@ namespace CancerGov.Dictionaries.SnippetControls
         {
             SearchStr = Sanitizer.GetSafeHtmlFragment(AutoComplete1.Text);
             SearchStr = SearchStr.Replace("[", "[[]");
-            CdrID = string.Empty;
+
+            NciUrl redirectUrl = new NciUrl();
+            redirectUrl.SetUrl(DictionaryPrettyURL);
 
             if (!string.IsNullOrEmpty(SearchStr))
             {
                 if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 {
-                    DictionaryURL = DictionaryURL + "/buscar?q=" + SearchStr;
+                    redirectUrl.AppendPathSegment("buscar");
+                    redirectUrl.QueryParameters.Add("q", SearchStr);
                 }
                 else
                 {
-                    DictionaryURL = DictionaryURL + "/search?q=" + SearchStr;
+                    redirectUrl.AppendPathSegment("search");
+                    redirectUrl.QueryParameters.Add("q", SearchStr);
                 }
             }
 
@@ -324,18 +323,19 @@ namespace CancerGov.Dictionaries.SnippetControls
             if (rd.Checked == true)
             {
                 BContains = true;
-                if (!string.IsNullOrEmpty(SearchStr))
-                    DictionaryURL = DictionaryURL + "&contains=true";
+                /*if (!string.IsNullOrEmpty(SearchStr))
+                    redirectURL = redirectURL + "&contains=true";
                 else
-                    DictionaryURL = DictionaryURL + "?contains=true";
+                    redirectURL = redirectURL + "?contains=true";*/
+                redirectUrl.QueryParameters.Add("contains", "true");
             }
 
             if (!string.IsNullOrEmpty(Expand) && Expand.Trim().ToUpper().Equals("All"))
             {
-                DictionaryURL = DictionaryURL + "?expand=" + Expand;
+                redirectUrl.QueryParameters.Add("expand", Expand);
             }
 
-            Response.Redirect(DictionaryURL);
+            Response.Redirect(redirectUrl.ToString());
         }
     }
 }
