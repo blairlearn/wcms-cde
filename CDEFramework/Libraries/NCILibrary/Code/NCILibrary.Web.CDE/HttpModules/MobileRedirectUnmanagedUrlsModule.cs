@@ -29,13 +29,9 @@ namespace NCI.Web.CDE
 
                 if (context.Response.StatusCode == 404) // Page not found
                 {
-                    if (url.IndexOf(".ico") != -1 ||
-                        url.IndexOf(".css") != -1 ||
-                        url.IndexOf(".gif") != -1 ||
-                        url.IndexOf(".jpg") != -1 ||
-                        url.IndexOf(".js") != -1 ||
-                        url.IndexOf(".axd") != -1 ||
-                        url.IndexOf(".png") != -1)
+
+                    // Check if this URL can be ignored based on the file extension
+                    if (Utility.IgnoreWebResource(url))
                         return;
 
                     try

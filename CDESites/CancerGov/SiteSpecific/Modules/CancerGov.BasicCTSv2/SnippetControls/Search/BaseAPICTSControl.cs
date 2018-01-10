@@ -82,8 +82,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             //////////////////////////////
             // Load the configuration XML from the App Settings
-            string configPath = ConfigurationManager.AppSettings["CTSConfigFilePath"];
-            Config = ModuleObjectFactory<BasicCTSPageInfo>.GetObjectFromFile(configPath);
+            Config = BasicCTSPageInfo.GetConfig();
 
             Init();
         }
