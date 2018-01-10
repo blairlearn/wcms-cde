@@ -54,52 +54,57 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
-            string realPath = "";
-            try
-            {
-                realPath = HttpContext.Current.Server.MapPath(filePath);
-            }
-            catch (Exception ex)
-            {
-                LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMapping)).ErrorFormat("Error while getting the mapping file.", ex);
-            }
+            bool fileExists = false;
+            
+            fileExists  = File.Exists(HttpContext.Current.Server.MapPath(filePath));
 
-            try
+            if(fileExists)
             {
-                // If file exists, use streamreader to load mappings into dictionary
-                using (StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath(filePath)))
+                try
                 {
-                    string line;
-                    while ((line = sr.ReadLine()) != null)
+                    // If file exists, use streamreader to load mappings into dictionary
+                    using (StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath(filePath)))
                     {
-                        line = line.ToLower();
-
-                        string[] parts = line.Split('|');
-                        // Lowercase c-codes (for comparison to codes from URL parameters later)
-                        parts[0] = parts[0].ToLower();
-
-                        // Sort c-codes alphabetically/numerically if there are multiple 
-                        if (parts[0].Contains(","))
+                        string line;
+                        while ((line = sr.ReadLine()) != null)
                         {
-                            string[] split = parts[0].Split(',');
-                            Array.Sort(split);
-                            string newKey = string.Join(",", split);
-                            parts[0] = newKey;
-                        }
+                            line = line.ToLower();
 
-                        // Add mapping to dictionary if it isn't already present
-                        if (!dict.ContainsKey(parts[0]))
-                        {
-                            dict.Add(parts[0], parts[1]);
+                            string[] parts = line.Split('|');
+                            // Lowercase c-codes (for comparison to codes from URL parameters later)
+                            parts[0] = parts[0].ToLower();
+
+                            // Sort c-codes alphabetically/numerically if there are multiple 
+                            if (parts[0].Contains(","))
+                            {
+                                string[] split = parts[0].Split(',');
+                                Array.Sort(split);
+                                string newKey = string.Join(",", split);
+                                parts[0] = newKey;
+                            }
+
+                            // Add mapping to dictionary if it isn't already present
+                            if (!dict.ContainsKey(parts[0]))
+                            {
+                                dict.Add(parts[0], parts[1]);
+                            }
                         }
                     }
                 }
+                catch
+                {
+                    // Log an error if the file exists but cannot be read.
+                    // Do not make the page error out - we want the dictionaries to still work,
+                    // even if there is something wrong with the friendly name mapping file.
+                    LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMapping)).ErrorFormat("Mapping file '{0}' could not be read.", filePath);
+                }
             }
-            catch
+            else
             {
-                // Throw exception if file doesn't exist
-                LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMapping)).ErrorFormat("Mapping file '{0}' could not be read.", filePath);
-                throw new FileNotFoundException(filePath);
+                // Log an error if the file does not exist.
+                // Do not make the page error out - we want the dictionaries to still work,
+                // even if there is something wrong with the friendly name mapping file.
+                LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMapping)).ErrorFormat("Error while getting the mapping file located at '{0}'.", filePath);
             }
 
             return new DynamicTrialListingFriendlyNameMapping(dict);

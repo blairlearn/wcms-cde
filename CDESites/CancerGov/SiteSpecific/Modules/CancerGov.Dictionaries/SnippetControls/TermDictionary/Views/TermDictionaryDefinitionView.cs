@@ -266,11 +266,16 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
             foreach (var lang in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlFilter);
+                PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlTranslationFilter);
             }
         }
 
         private void SetupUrlFilter(string name, NciUrl url)
+        {
+            url.SetUrl(url.ToString() + "/def/" + GetFriendlyName(CdrID));
+        }
+
+        private void SetupUrlTranslationFilter(string name, NciUrl url)
         {
             url.SetUrl(url.ToString() + "/def/" + GetCDRIDForLanguageToggle());
         }
