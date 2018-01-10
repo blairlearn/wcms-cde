@@ -411,10 +411,6 @@
     <Content Include="JS\Widgets\TermDictionaryWidgetSpanish.js" />
     <Content Include="JS\Widgets\OLD_termdictWidget-autocomplete.js" />
     <Content Include="JS\Widgets\widget.css" />
-    <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
-    <Content Include="PageTemplates\DefaultCancerGovTemplate-NoLeftNav.aspx" />
-    <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
-    <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
     <Content Include="SnippetTemplates\BlogLandingDynamicList.ascx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\CGovMainNavControl.ascx" />
