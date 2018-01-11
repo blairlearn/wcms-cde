@@ -119,7 +119,6 @@
     <Content Include="SnippetTemplates\BasicCTSv2\TrialListingPage.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryExpandList.ascx" />
     <Content Include="SnippetTemplates\FilterTitle.ascx" />
-    <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryExpandList.ascx" />
     <Content Include="SnippetTemplates\IntenseDebateComments.ascx" />
@@ -392,12 +391,6 @@
     </Content>
     <Content Include="DictionaryService.svc" />
     <Content Include="DrugDictionary.svc" />
-    <Content Include="DynamicListTemplates\DynamicBlogDescImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListDescNoImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListDescImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListNoDescImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListNoDescNoImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicNewsDescImgDate.ascx" />
     <Content Include="JS\imgEvents.js" />
     <Content Include="JS\NetTracker\ntpagetag.js" />
     <Content Include="JS\Search\CDEResultsClinicalTrials.js" />
@@ -411,7 +404,6 @@
     <Content Include="JS\Widgets\TermDictionaryWidgetSpanish.js" />
     <Content Include="JS\Widgets\OLD_termdictWidget-autocomplete.js" />
     <Content Include="JS\Widgets\widget.css" />
-    <Content Include="SnippetTemplates\BlogLandingDynamicList.ascx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\CGovMainNavControl.ascx" />
     <Content Include="SnippetTemplates\CGovSectionNavControl.ascx" />
