@@ -128,8 +128,6 @@
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="SnippetTemplates\TemplatedDynamicList.ascx" />
     <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryExpandList.ascx" />
-    <Content Include="UserControls\Headers\MainPageHeader.ascx" />
-    <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <Content Include="packages.config" />
     <None Include="job_scheduling_data_2_0.xsd">
@@ -272,20 +270,6 @@
     </Compile>
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.designer.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
-      <DependentUpon>MainPageHeader.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Headers\MainPageHeader.ascx.designer.cs">
-      <DependentUpon>MainPageHeader.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Menu\TopLevelNavigationMenu.ascx.cs">
-      <DependentUpon>TopLevelNavigationMenu.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Menu\TopLevelNavigationMenu.ascx.designer.cs">
-      <DependentUpon>TopLevelNavigationMenu.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -450,7 +434,6 @@
   <ItemGroup>
     <Folder Include="App_LocalResources\" />
     <Folder Include="DynamicData\FieldTemplates\" />
-    <Folder Include="UserControls\Footers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
