@@ -220,7 +220,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 // Add redirection flag.
                 redirectURL.QueryParameters.Add(REDIRECTED_FLAG, String.Empty);
 
-                DoPermanentRedirect(Response, redirectURL.ToString());
+                Response.RedirectPermanent(redirectURL.ToString(), true);
             }
         }
 

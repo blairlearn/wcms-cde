@@ -87,7 +87,7 @@ namespace NCI.Web.CDE
                             context.RewritePath(mappedToUrl);
                         }
                         else
-                            DoPermanentRedirect(context.Response, mappedToUrl);
+                            context.Response.RedirectPermanent(mappedToUrl, true);
                     }
                     else if (!url.EndsWith("/") && promoUrlMapping.PromoUrls.ContainsKey(url.ToLower() + "/"))
                     {
@@ -102,7 +102,7 @@ namespace NCI.Web.CDE
                             context.RewritePath(mappedToUrl);
                         }
                         else
-                            DoPermanentRedirect(context.Response, mappedToUrl);
+                            context.Response.RedirectPermanent(mappedToUrl, true);
                     }
                     else
                     {
@@ -122,7 +122,7 @@ namespace NCI.Web.CDE
                                     context.RewritePath(mappedToUrl);
                                 }
                                 else
-                                    DoPermanentRedirect(context.Response, mappedToUrl);
+                                    context.Response.RedirectPermanent(mappedToUrl, true);                                    
                             }
 
                         }
@@ -150,27 +150,6 @@ namespace NCI.Web.CDE
         #endregion
 
         #region Private Members
-
-        /// <summary>
-        /// Clears the Response text, issues an HTTP redirect using status 301, and ends
-        /// the current request.
-        /// </summary>
-        /// <param name="Response">The current response object.</param>
-        /// <param name="url">The redirection's target URL.</param>
-        /// <remarks>Response.Redirect() issues its redirect with a 301 (temporarily moved) status code.
-        /// We want these redirects to be permanent so search engines will link to the new
-        /// location. Unfortunately, HttpResponse.RedirectPermanent() isn't implemented until
-        /// at version 4.0 of the .NET Framework.</remarks>
-        /// <exception cref="ThreadAbortException">Called when the redirect takes place and the current
-        /// request is ended.</exception>
-        private void DoPermanentRedirect(HttpResponse Response, String url)
-        {
-            Response.Clear();
-            Response.Status = "301 Moved Permanently";
-            Response.AddHeader("Location", url);
-            Response.End();
-        }
-
 
         private FileInfo CachedPromoMappingFileInfo
         {
