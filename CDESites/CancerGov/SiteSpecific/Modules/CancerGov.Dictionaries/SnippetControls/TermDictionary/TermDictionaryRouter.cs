@@ -9,12 +9,6 @@ namespace CancerGov.Dictionaries.SnippetControls
     {
         protected BaseDictionaryControl localControl;
 
-        protected override BaseDictionaryControl LoadHomeControl()
-        {
-            localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryHome.ascx");
-            return localControl;
-        }
-
         protected override BaseDictionaryControl LoadExpandListControl()
         {
             localControl = (BaseDictionaryControl)Page.LoadControl("~/SnippetTemplates/TermDictionary/Views/TermDictionaryExpandList.ascx");

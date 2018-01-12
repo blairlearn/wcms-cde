@@ -128,6 +128,8 @@
     <Content Include="SnippetTemplates\SearchBox.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="SnippetTemplates\TemplatedDynamicList.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\EnglishDictionarySearchBlock.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\SpanishDictionarySearchBlock.ascx" />
     <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryExpandList.ascx" />
     <Content Include="UserControls\Headers\MainPageHeader.ascx" />
     <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
@@ -238,13 +240,6 @@
     <Compile Include="SnippetTemplates\DocTitleBlock.ascx.designer.cs">
       <DependentUpon>DocTitleBlock.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.cs">
-      <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.designer.cs">
-      <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHelper.cs" />
     <Compile Include="SnippetTemplates\Helpers\DictionaryDefinitionHelper.cs" />
     <Compile Include="SnippetTemplates\ResultsGeneticsServices.ascx.cs">
@@ -270,6 +265,7 @@
     </Compile>
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.designer.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
@@ -422,10 +418,8 @@
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx" />
-    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx" />
-    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\GlossaryTerms.ascx" />

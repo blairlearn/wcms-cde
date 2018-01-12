@@ -1,8 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.TermDictionary.TermDictionaryExpandList"%>
-<%@ Register TagPrefix="TermDictionaryHome" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/Views/TermDictionaryHome.ascx" %>
+<%@ Register TagPrefix="TermDictionaryHome" TagName="DictionaryHome" Src="~/SnippetTemplates/TermDictionary/Views/TermDictionaryHome.ascx" %>
+<%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
 
-<TermDictionaryHome:SearchBlock id="dictionarySearchBlock" runat="server" />
+<TermDictionaryHome:DictionaryHome id="termDictionaryHome" runat="server" />
+<DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
 
  <div class="results" data-dict-type="term">
             <!-- Number of results -->
@@ -23,7 +25,7 @@
                 <ItemTemplate>
                     <dt>
                        <dfn>
-                        <a href="<%# DictionaryPrettyURL %>/def/<%# GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                        <a href="<%# this.DictionaryRouter.GetDefinitionUrl() + GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>" <%# ResultListViewHrefOnclick(Container)%>>
                              <%# ((DictionarySearchResult)(Container.DataItem)).MatchedTerm%></a>
                         </dfn>
                     </dt>

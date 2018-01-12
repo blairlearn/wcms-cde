@@ -19,8 +19,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 {
     public class GeneticsTermDictionaryExpandList : BaseDictionaryControl
     {
-        protected GeneticsTermDictionaryHome dictionarySearchBlock;
-
         protected Panel numResDiv;
 
         protected Label lblNumResults;
@@ -41,15 +39,11 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
         public String DictionaryLanguage { get; set; }
 
-        public string DictionaryPrettyURL { get; set; }
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
-
             GetQueryParams();
 
-            SetupCanonicalUrl(DictionaryPrettyURL);
+            SetupCanonicalUrl(this.DictionaryRouter.GetBaseURL());
 
             //For Genetics dictionary language is always English
             DictionaryLanguage = "en";

@@ -19,7 +19,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 {
     public class TermDictionaryResultsList : BaseDictionaryControl
     {
-        protected TermDictionaryHome dictionarySearchBlock;
+        protected TermDictionaryHome termDictionaryHome;
 
         protected Panel numResDiv;
 
@@ -39,16 +39,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         public int NumResults { get; set; }
 
-        public string DictionaryPrettyURL { get; set; }
-
-        public string DictionaryURLSpanish { get; set; }
-
-        public string DictionaryURLEnglish { get; set; }
+        public string DictionaryURL { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
-
             GetQueryParams();
             SetDoNotIndex();
 
@@ -62,11 +56,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 lblResultsFor.Text = "results found for:";
             }
 
-            DictionaryURLEnglish = DictionaryPrettyURL;
-            DictionaryURLSpanish = DictionaryPrettyURL;
+            DictionaryURL = this.DictionaryRouter.GetBaseURL();
 
             SetupCommon();
-            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
+            SetupCanonicalUrls(DictionaryURL, DictionaryURL);
 
             LoadData();
         }
@@ -100,7 +93,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
                     string urlItem = GetFriendlyName(itemPtr.Current.ID.ToString());
 
-                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
+                    string itemDefinitionUrl = this.DictionaryRouter.GetDefinitionUrl() + urlItem;
 
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
@@ -154,6 +147,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 BContains = Convert.ToBoolean(SrcGroup);
         }
 
+        // Sets the current page to not index for SEO
         private void SetDoNotIndex()
         {
             PageInstruction.AddFieldFilter("meta_robots", (name, data) =>
@@ -173,6 +167,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             }
         }
 
+        // Sets the URL Filter for the canonical URL
         private void SetupUrlFilter(string name, NciUrl url)
         {
             url.SetUrl(url.ToString());

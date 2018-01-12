@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.DrugDictionary.DrugDictionaryDefinitionView" %>
-<%@ Register TagPrefix="DrugDictionaryHome" TagName="SearchBlock" Src="~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryHome.ascx" %>
+<%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
  
-<DrugDictionaryHome:SearchBlock id="dictionarySearchBlock" runat="server" />
+<DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
     
 <asp:Repeater ID="drugDictionaryDefinitionView" runat="server" OnItemDataBound="drugDictionaryDefinitionView_OnItemDataBound">
 <ItemTemplate>

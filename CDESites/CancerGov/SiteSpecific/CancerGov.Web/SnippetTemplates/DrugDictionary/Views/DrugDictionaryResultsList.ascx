@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.DrugDictionary.DrugDictionaryResultsList" %>
-<%@ Register TagPrefix="DrugDictionaryHome" TagName="SearchBlock" Src="~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryHome.ascx" %>
+<%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
 
-<DrugDictionaryHome:SearchBlock AtoZIncludesAll="true" id="dictionarySearchBlock" runat="server" />
+<DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
 
  <div class="results" data-dict-type="drug">
     <!-- Number of results -->
@@ -23,7 +23,7 @@
         <ItemTemplate>
             <dt>
                <dfn>
-                    <a href="<%# DictionaryPrettyURL %>/def/<%# GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>" <%# ResultListViewHrefOnclick(Container)%>>
+                    <a href="<%# this.DictionaryRouter.GetDefinitionUrl() + GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>" <%# ResultListViewHrefOnclick(Container)%>>
                         <%# HiLite(((DictionarySearchResult)(Container.DataItem)).MatchedTerm )%></a>
                     <span class="dictionary-partial-match-n">
                         <%# GetTermAliasList(Container.DataItem)%>
