@@ -119,7 +119,6 @@
     <Content Include="SnippetTemplates\BasicCTSv2\TrialListingPage.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryExpandList.ascx" />
     <Content Include="SnippetTemplates\FilterTitle.ascx" />
-    <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryExpandList.ascx" />
     <Content Include="SnippetTemplates\IntenseDebateComments.ascx" />
@@ -131,8 +130,6 @@
     <Content Include="SnippetTemplates\TermDictionary\EnglishDictionarySearchBlock.ascx" />
     <Content Include="SnippetTemplates\TermDictionary\SpanishDictionarySearchBlock.ascx" />
     <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryExpandList.ascx" />
-    <Content Include="UserControls\Headers\MainPageHeader.ascx" />
-    <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <Content Include="packages.config" />
     <None Include="job_scheduling_data_2_0.xsd">
@@ -270,20 +267,6 @@
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.designer.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
-      <DependentUpon>MainPageHeader.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Headers\MainPageHeader.ascx.designer.cs">
-      <DependentUpon>MainPageHeader.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Menu\TopLevelNavigationMenu.ascx.cs">
-      <DependentUpon>TopLevelNavigationMenu.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Menu\TopLevelNavigationMenu.ascx.designer.cs">
-      <DependentUpon>TopLevelNavigationMenu.ascx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Core\NCILibrary.Core.csproj">
@@ -388,12 +371,6 @@
     </Content>
     <Content Include="DictionaryService.svc" />
     <Content Include="DrugDictionary.svc" />
-    <Content Include="DynamicListTemplates\DynamicBlogDescImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListDescNoImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListDescImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListNoDescImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListNoDescNoImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicNewsDescImgDate.ascx" />
     <Content Include="JS\imgEvents.js" />
     <Content Include="JS\NetTracker\ntpagetag.js" />
     <Content Include="JS\Search\CDEResultsClinicalTrials.js" />
@@ -407,7 +384,6 @@
     <Content Include="JS\Widgets\TermDictionaryWidgetSpanish.js" />
     <Content Include="JS\Widgets\OLD_termdictWidget-autocomplete.js" />
     <Content Include="JS\Widgets\widget.css" />
-    <Content Include="SnippetTemplates\BlogLandingDynamicList.ascx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\CGovMainNavControl.ascx" />
     <Content Include="SnippetTemplates\CGovSectionNavControl.ascx" />
@@ -452,7 +428,6 @@
   <ItemGroup>
     <Folder Include="App_LocalResources\" />
     <Folder Include="DynamicData\FieldTemplates\" />
-    <Folder Include="UserControls\Footers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
