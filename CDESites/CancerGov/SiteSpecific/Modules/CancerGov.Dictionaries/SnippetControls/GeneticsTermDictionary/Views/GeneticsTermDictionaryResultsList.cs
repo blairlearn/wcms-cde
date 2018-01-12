@@ -19,8 +19,6 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 {
     public class GeneticsTermDictionaryResultsList : BaseDictionaryControl
     {
-        protected GeneticsTermDictionaryHome dictionarySearchBlock;
-
         protected Panel numResDiv;
 
         protected Label lblNumResults;
@@ -39,16 +37,12 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
         public int NumResults { get; set; }
 
-        public string DictionaryPrettyURL { get; set; }
-
         public String DictionaryLanguage { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
-
             GetQueryParams();
-            SetupCanonicalUrl(DictionaryPrettyURL);
+            SetupCanonicalUrl(this.DictionaryRouter.GetBaseURL());
             SetDoNotIndex();
 
             //For Genetics dictionary language is always English
@@ -82,7 +76,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
 
                     string urlItem = GetFriendlyName(itemPtr.Current.ID.ToString());
 
-                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
+                    string itemDefinitionUrl = this.DictionaryRouter.GetDefinitionUrl() + urlItem;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else

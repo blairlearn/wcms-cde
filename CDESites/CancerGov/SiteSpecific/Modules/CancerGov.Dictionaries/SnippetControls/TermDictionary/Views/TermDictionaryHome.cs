@@ -10,13 +10,11 @@ using NCI.Web.Dictionary;
 
 namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 {
-    public class TermDictionaryHome : BaseDictionaryControl
+    public class TermDictionaryHome : UserControl
     {
         protected System.Web.UI.WebControls.PlaceHolder pnlIntroEnglish;
 
         protected System.Web.UI.WebControls.PlaceHolder pnlIntroSpanish;
-
-        protected DictionarySearchBlock dictionarySearchBlock;
 
         public string TotalCount = "0";
 

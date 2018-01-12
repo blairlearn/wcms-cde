@@ -20,8 +20,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 {
     public class DrugDictionaryResultsList : BaseDictionaryControl
     {
-        protected DrugDictionaryHome dictionarySearchBlock;
-
         protected Panel numResDiv;
 
         protected Label lblNumResults;
@@ -226,14 +224,10 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         /// </summary>
         public int CurrentPageIndex { get; set; }
 
-        public string DictionaryPrettyURL { get; set; }
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
-
             GetQueryParams();
-            SetupCanonicalUrl(DictionaryPrettyURL);
+            SetupCanonicalUrl(this.DictionaryRouter.GetBaseURL());
             SetDoNotIndex();
 
             //Set display props according to lang
@@ -300,7 +294,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 
                     string urlItem = GetFriendlyName(itemPtr.Current.ID.ToString());
 
-                    string itemDefinitionUrl = DictionaryPrettyURL + "/def/" + urlItem;
+                    string itemDefinitionUrl = this.DictionaryRouter.GetDefinitionUrl() + urlItem;
                     Page.Response.Redirect(itemDefinitionUrl);
                 }
                 else

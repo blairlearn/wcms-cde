@@ -1,7 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary.GeneticsTermDictionaryDefintionView" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
-<%@ Register TagPrefix="GeneticsTermDictionary" TagName="SearchBlock" Src="~/SnippetTemplates/GeneticsTermDictionary/Views/GeneticsTermDictionaryHome.ascx" %>
-<GeneticsTermDictionary:SearchBlock ID="dictionarySearchBlock" runat="server" />
+<%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
+
+<DictionarySearchBlock:SearchBlock ID="dictionarySearchBlock" runat="server" />
+
 <asp:Repeater ID="termDictionaryDefinitionView" runat="server" OnItemDataBound="termDictionaryDefinitionView_OnItemDataBound">
     <ItemTemplate>
         <!-- Term and def -->

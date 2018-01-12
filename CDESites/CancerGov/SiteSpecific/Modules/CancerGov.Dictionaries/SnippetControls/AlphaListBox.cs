@@ -41,19 +41,6 @@
             set { alphaListItems = value; }
         }
 
-        public string ExtraTd
-        {
-            get
-            {
-                string td = "<td style=\"background-image: none;\" valign=\"top\"><img src=\"/images/spacer.gif\"  border=\"0\"  width=\"1\" alt=\"\"></td>";
-                if (showAll)
-                    return "";
-                else
-                    return td;
-            }
-        }
-
-
         /// <summary>
         /// Sets base url for index links
         /// </summary>

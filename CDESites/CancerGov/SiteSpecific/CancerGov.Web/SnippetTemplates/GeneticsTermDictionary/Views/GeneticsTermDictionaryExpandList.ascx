@@ -1,7 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary.GeneticsTermDictionaryExpandList" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
-<%@ Register TagPrefix="GeneticsTermDictionary" TagName="SearchBlock" Src="~/SnippetTemplates/GeneticsTermDictionary/Views/GeneticsTermDictionaryHome.ascx" %>
-<GeneticsTermDictionary:SearchBlock ID="dictionarySearchBlock" runat="server" />
+<%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
+
+<DictionarySearchBlock:SearchBlock ID="dictionarySearchBlock" runat="server" />
+
 <div class="results" data-dict-type="genetic">
     <!-- Number of results -->
     <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
@@ -19,7 +21,7 @@
                 </dl>
             </LayoutTemplate>
             <ItemTemplate>
-                <dt><dfn><a href="<%# DictionaryPrettyURL %>/def/<%# GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>"
+                <dt><dfn><a href="<%# this.DictionaryRouter.GetDefinitionUrl() + GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>"
                     <%# ResultListViewHrefOnclick(Container)%>>
                     <%# ((DictionarySearchResult)(Container.DataItem)).MatchedTerm%></a> </dfn></dt>
                 <asp:PlaceHolder ID="phPronunciation" runat="server">

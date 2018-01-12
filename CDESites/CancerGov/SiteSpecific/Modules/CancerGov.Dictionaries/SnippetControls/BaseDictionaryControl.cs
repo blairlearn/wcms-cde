@@ -7,15 +7,60 @@ using System.Web.UI;
 
 using NCI.Web.CDE;
 using CancerGov.Dictionaries.Configuration;
+using Microsoft.Security.Application;
+using CancerGov.Text;
 
 namespace CancerGov.Dictionaries.SnippetControls
 {
     public class BaseDictionaryControl : UserControl
     {
+        protected DictionarySearchBlock dictionarySearchBlock;
+    
         public IPageAssemblyInstruction PageInstruction { get; set; }
 
         public DictionaryConfig DictionaryConfiguration { get; set; }
 
+        public BaseDictionaryRouter DictionaryRouter { get; set; }
+
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+
+            if (this.dictionarySearchBlock != null)
+            {
+                this.dictionarySearchBlock.listBoxBaseUrl = this.DictionaryRouter.GetBaseURL();
+                this.dictionarySearchBlock.DisplayHelpLink = false;
+                this.dictionarySearchBlock.FormAction = this.DictionaryRouter.GetSearchUrl();
+            }
+        }
+
+        /// <summary>
+        /// Gets the definition param from the URL, using the DictionaryRouter's current app path.
+        /// </summary>
+        public string GetDefinitionParam()
+        {
+            List<string> path = this.DictionaryRouter.GetCurrAppPath().Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            if (path.Count > 0 && path[0].Equals("def"))
+            {
+                string param = Sanitizer.GetSafeHtmlFragment(path[1]);
+                param = Strings.Clean(path[1]);
+
+                return param;
+            }
+            else if (path.Count > 2)
+            {
+                // If path extends further than /search or /def/<term>, raise a 400 error
+                NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("Dictionary", 400, "Invalid parameters for dictionary");
+                return null;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the friendly name of the given CDRID param, if it exists.
+        /// Otherwise, returns the CDRID param.
+        /// </summary>
         public string GetFriendlyName(string cdrId)
         {
             // Get CDRID to friendly name mappings
@@ -37,6 +82,9 @@ namespace CancerGov.Dictionaries.SnippetControls
             return cdrId;
         }
 
+        /// <summary>.
+        /// Sets the DictionaryAnalyticsType for analytics
+        /// </summary>
         public class DictionaryAnalyticsType
         {
             private DictionaryAnalyticsType(string name) { Name = name; }

@@ -20,8 +20,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
 {
     public class DrugDictionaryExpandList : BaseDictionaryControl
     {
-        protected DrugDictionaryHome dictionarySearchBlock;
-
         protected Panel numResDiv;
 
         protected Label lblNumResults;
@@ -226,12 +224,8 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
         /// </summary>
         public int CurrentPageIndex { get; set; }
 
-        public string DictionaryPrettyURL { get; set; }
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
-
             GetQueryParams();
 
             //Set display props according to lang
@@ -245,7 +239,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             }
 
             SetupCommon();
-            SetupCanonicalUrl(DictionaryPrettyURL);
+            SetupCanonicalUrl(this.DictionaryRouter.GetBaseURL());
 
             LoadData();
 

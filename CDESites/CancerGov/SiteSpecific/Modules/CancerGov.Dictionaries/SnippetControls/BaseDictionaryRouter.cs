@@ -83,11 +83,6 @@ namespace CancerGov.Dictionaries.SnippetControls
         }
 
         /// <summary>
-        /// Method called to load dictionary home control
-        /// </summary>
-        protected abstract BaseDictionaryControl LoadHomeControl();
-
-        /// <summary>
         /// Method called to load dictionary results list control
         /// </summary>
         protected abstract BaseDictionaryControl LoadExpandListControl();
@@ -141,11 +136,11 @@ namespace CancerGov.Dictionaries.SnippetControls
             string friendlyName = GetFriendlyName(id);
             if (!string.IsNullOrEmpty(friendlyName))
             {
-                redirectURL.SetUrl(this.PrettyUrl + "/def/" + friendlyName);
+                redirectURL.SetUrl(GetDefinitionUrl() + friendlyName);
             }
             else
             {
-                redirectURL.SetUrl(this.PrettyUrl + "/def/" + id);
+                redirectURL.SetUrl(GetDefinitionUrl() + id);
             }
 
             Response.RedirectPermanent(redirectURL.ToString());
@@ -169,7 +164,6 @@ namespace CancerGov.Dictionaries.SnippetControls
         sealed protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            
             
             // Step 1. Load config from App Module Page content item
             // Set Dictionary Mapping Filepath according to current language
@@ -251,7 +245,7 @@ namespace CancerGov.Dictionaries.SnippetControls
             }
             else
             {
-                dictionaryControl = LoadHomeControl();
+                dictionaryControl = LoadExpandListControl();
             }
 
             // Add control to page
@@ -259,10 +253,10 @@ namespace CancerGov.Dictionaries.SnippetControls
             {
                 dictionaryControl.DictionaryConfiguration = this.DictionaryConfig;
                 dictionaryControl.PageInstruction = this.PageInstruction;
+                dictionaryControl.DictionaryRouter = this;
                 phDictionary.Controls.Add(dictionaryControl);
             }
         }
-
         
         protected string GetFriendlyName(string id)
         {
@@ -285,8 +279,18 @@ namespace CancerGov.Dictionaries.SnippetControls
             return null;
         }
 
+        /// <summary>
+        /// Returns the base URL for this dictionary control.
+        /// </summary>
+        public string GetBaseURL()
+        {
+            return this.PrettyUrl;
+        }
 
-        protected string GetSearchUrl()
+        /// <summary>
+        /// Returns the search URL for this dictionary control.
+        /// </summary>
+        public string GetSearchUrl()
         {
             string redirectURL = this.PrettyUrl;
 
@@ -300,6 +304,25 @@ namespace CancerGov.Dictionaries.SnippetControls
             }
 
             return redirectURL;
+        }
+
+        /// <summary>
+        /// Returns the definition URL for this dictionary control.
+        /// </summary>
+        public string GetDefinitionUrl()
+        {
+            string redirectURL = this.PrettyUrl;
+            redirectURL += "/def/";            
+
+            return redirectURL;
+        }
+
+        /// <summary>
+        /// Returns the current app path for this dictionary URL.
+        /// </summary>
+        public string GetCurrAppPath()
+        {
+            return this.CurrAppPath;
         }
     }
 }

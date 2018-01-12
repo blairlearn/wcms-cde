@@ -19,7 +19,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 {
     public class TermDictionaryExpandList : BaseDictionaryControl
     {
-        protected TermDictionaryHome dictionarySearchBlock;
+        protected TermDictionaryHome termDictionaryHome;
 
         protected Panel numResDiv;
 
@@ -39,16 +39,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         public int NumResults { get; set; }
 
-        public string DictionaryPrettyURL { get; set; }
-
-        public string DictionaryURLSpanish { get; set; }
-
-        public string DictionaryURLEnglish { get; set; }
+        public string DictionaryURL { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            DictionaryPrettyURL = this.PageInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString();
-
             GetQueryParams();
 
             //Set display props according to lang
@@ -61,11 +55,10 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 lblResultsFor.Text = "results found for:";
             }
 
-            DictionaryURLEnglish = DictionaryPrettyURL;
-            DictionaryURLSpanish = DictionaryPrettyURL;
+            DictionaryURL = this.DictionaryRouter.GetBaseURL();
 
             SetupCommon();
-            SetupCanonicalUrls(DictionaryURLEnglish, DictionaryURLSpanish);
+            SetupCanonicalUrls(DictionaryURL, DictionaryURL);
 
             LoadData();
         }
@@ -160,6 +153,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             }
         }
 
+        // Sets the URL Filter for the canonical URL
         private void SetupUrlFilter(string name, NciUrl url)
         {
             url.SetUrl(url.ToString());
