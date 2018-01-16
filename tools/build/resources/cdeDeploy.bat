@@ -17,8 +17,8 @@ IF "%IS_COLO%"=="" (
 )
 
 rem Do a backup first.
-powershell -ExecutionPolicy RemoteSigned %batpath%cdeBackup.ps1 -env %my_target%
+powershell -ExecutionPolicy BYPASS %batpath%cdeBackup.ps1 -env %my_target%
 
 
-powershell -ExecutionPolicy RemoteSigned %batpath%cdeDeploy.ps1 -source %codepath% -env %my_target%
+powershell -ExecutionPolicy BYPASS %batpath%cdeDeploy.ps1 -source %codepath% -env %my_target%
 pause
