@@ -20,7 +20,7 @@
                     <label id="lblStartsWith" class="inline" for="radioStarts">Empieza con</label>
                 </span>
                 <span class="radio">
-                    <input id="radioContains" type="radio" name="contains" value="false" data-autosuggest="dict-radio-contains">
+                    <input id="radioContains" type="radio" name="contains" value="true" data-autosuggest="dict-radio-contains">
                     <label id="lblContains" class="inline" for="radioContains">Contiene</label>
                 </span>
             </div>
