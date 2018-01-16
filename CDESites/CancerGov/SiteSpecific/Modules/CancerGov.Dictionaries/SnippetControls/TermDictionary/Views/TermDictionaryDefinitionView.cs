@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Linq;
+using System.Globalization;
 
 using CancerGov.Text;
 using Common.Logging;
@@ -42,6 +43,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            SetupCanonicalUrls(DictionaryURL, DictionaryURL);
             GetDefinitionTerm();
             ValidateCDRID();
 
@@ -67,8 +69,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             {
                 termDictionaryDefinitionView.Visible = false;
             }
-
-            SetupCanonicalUrls(DictionaryURL, DictionaryURL);
         }
 
         // Activate definition view for given term
@@ -199,8 +199,27 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
             foreach (var lang in PageAssemblyContext.Current.PageAssemblyInstruction.TranslationKeys)
             {
-                PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlTranslationFilter);
+                SetupTranslationFilters(PageAssemblyContext.Current.PageAssemblyInstruction, lang);
+                //PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, SetupUrlTranslationFilter);
             }
+        }
+
+        private void SetupTranslationFilters(IPageAssemblyInstruction pai, string lang)
+        {
+            // check provided PageAssemblyInstruction
+            if (pai == null)
+            {
+                log.Warn("SetupTranslationFilter(): null PageAssemblyInstruction provided.");
+
+                return;
+            }
+
+            CultureInfo info = new CultureInfo(lang);
+            string translationLang = info.TwoLetterISOLanguageName;
+
+            PageAssemblyContext.Current.PageAssemblyInstruction.AddTranslationFilter(lang, (name, url) => {
+                url.SetUrl(url.ToString() + "/def/" + GetCDRIDForLanguageToggle(translationLang));
+            });
         }
 
         // Sets the URL Filter for the canonical URL
@@ -209,11 +228,11 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
             url.SetUrl(this.DictionaryRouter.GetDefinitionUrl() + GetFriendlyName(CdrID));
         }
 
-        // Set the URL Translation Filter
+        /*// Set the URL Translation Filter
         private void SetupUrlTranslationFilter(string name, NciUrl url)
         {
             url.SetUrl(url.ToString() + "/def/" + GetCDRIDForLanguageToggle());
-        }
+        }*/
 
         protected void termDictionaryDefinitionView_OnItemDataBound(object sender, RepeaterItemEventArgs e)
         {
@@ -547,7 +566,7 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
                 // Get friendly name to CDRID mappings
                 string dictionaryMappingFilepath = null;
 
-                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
+                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName).Filepath;
 
                 if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
                 {
@@ -574,31 +593,25 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         /// Gets the CDRID (definition term) for the language toggle using the current defintion term in the URL.
         /// If a friendly name is given, it determines the CDRID from it.
         /// </summary>
-        private string GetCDRIDForLanguageToggle()
+        private string GetCDRIDForLanguageToggle(string translationLang)
         {
             string cdridForLangToggle = CdrID;
 
             if (!string.IsNullOrEmpty(this.GetDefinitionParam()))
             {
-                string param = this.GetDefinitionParam();
-
                 // Get friendly name to CDRID mappings
                 string dictionaryMappingFilepath = null;
 
-                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
+                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == translationLang).Filepath;
 
                 if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
                 {
                     TerminologyMapping map = TerminologyMapping.GetMappingForFile(dictionaryMappingFilepath);
 
                     // If pretty name is in label mappings, set CDRID
-                    if (map.MappingContainsFriendlyName(param))
+                    if (map.MappingContainsCDRID(cdridForLangToggle))
                     {
-                        cdridForLangToggle = map.GetCDRIDFromFriendlyName(param);
-                    }
-                    else
-                    {
-                        cdridForLangToggle = param;
+                        cdridForLangToggle = map.GetFriendlyNameFromCDRID(cdridForLangToggle);
                     }
                 }
             }

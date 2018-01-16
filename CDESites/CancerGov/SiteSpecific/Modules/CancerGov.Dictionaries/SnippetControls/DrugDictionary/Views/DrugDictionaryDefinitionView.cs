@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Text;
 using System.Linq;
 using System.Web;
+using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using CancerGov.Text;
@@ -401,7 +402,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
                 // Get friendly name to CDRID mappings
                 string dictionaryMappingFilepath = null;
 
-                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
+                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName).Filepath;
 
                 if(!string.IsNullOrEmpty(dictionaryMappingFilepath))
                 {
@@ -445,7 +446,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             string dictionaryAnalytics = string.Join("|", analyticsParams);
 
             // Set event
-            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event11, wbField =>
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Events.event12, wbField =>
             {
                 wbField.Value = WebAnalyticsOptions.Events.event11.ToString();
             });

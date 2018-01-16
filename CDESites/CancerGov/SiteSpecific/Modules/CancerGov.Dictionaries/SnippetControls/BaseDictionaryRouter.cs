@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
+using System.Globalization;
 
 using NCI.Web;
 using NCI.Web.CDE;
@@ -122,7 +123,7 @@ namespace CancerGov.Dictionaries.SnippetControls
                 redirectURL.QueryParameters.Add("page", page);
             }
 
-            Response.RedirectPermanent(redirectURL.ToString());
+            Response.RedirectPermanent(redirectURL.ToString(), true);
         }
 
 
@@ -263,7 +264,7 @@ namespace CancerGov.Dictionaries.SnippetControls
             // Get CDRID to friendly name mappings
             string dictionaryMappingFilepath = null;
 
-            dictionaryMappingFilepath = this.DictionaryConfig.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
+            dictionaryMappingFilepath = this.DictionaryConfig.Files.Single(a => a.Locale == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName).Filepath;
 
             if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
             {

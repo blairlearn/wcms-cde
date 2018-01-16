@@ -59,6 +59,18 @@ namespace CancerGov.Dictionaries.SnippetControls
             }
         }
 
+        public bool listBoxShowAll
+        {
+            get
+            {
+                return this.searchBlock.listBoxShowAll;
+            }
+            set
+            {
+                this.searchBlock.listBoxShowAll = value;
+            }
+        }
+
         protected override void OnInit(EventArgs e)
         {
             base.OnInit(e);

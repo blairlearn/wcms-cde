@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Linq;
+using System.Globalization;
 
 using CancerGov.Text;
 using Common.Logging;
@@ -437,7 +438,7 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
                 // Get friendly name to CDRID mappings
                 string dictionaryMappingFilepath = null;
 
-                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
+                dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName).Filepath;
 
                 if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
                 {

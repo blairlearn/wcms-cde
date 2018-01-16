@@ -13,6 +13,12 @@ namespace CancerGov.Dictionaries.Configuration
     public class DictionaryConfig
     {
         /// <summary>
+        /// The type of dictionary.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string DictionaryType { get; set; }
+
+        /// <summary>
         /// A collection of zero or more CDRID to friendly name mapping files for dictionaries.
         /// </summary>
         [XmlArray(ElementName = "CDRFriendlyNameMappingFiles", Form = XmlSchemaForm.Unqualified)]

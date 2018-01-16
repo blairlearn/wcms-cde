@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
+using System.Globalization;
 
 using NCI.Web.CDE;
 using CancerGov.Dictionaries.Configuration;
@@ -29,8 +30,19 @@ namespace CancerGov.Dictionaries.SnippetControls
             if (this.dictionarySearchBlock != null)
             {
                 this.dictionarySearchBlock.listBoxBaseUrl = this.DictionaryRouter.GetBaseURL();
+                this.dictionarySearchBlock.listBoxShowAll = false;
                 this.dictionarySearchBlock.DisplayHelpLink = false;
                 this.dictionarySearchBlock.FormAction = this.DictionaryRouter.GetSearchUrl();
+
+                if(!String.Equals(this.DictionaryConfiguration.DictionaryType, "term"))
+                {
+                    this.dictionarySearchBlock.listBoxShowAll = true;
+                }
+
+                if(string.Equals(this.DictionaryConfiguration.DictionaryType, "drug"))
+                {
+                    this.dictionarySearchBlock.DisplayHelpLink = true;
+                }
             }
         }
 
@@ -66,7 +78,7 @@ namespace CancerGov.Dictionaries.SnippetControls
             // Get CDRID to friendly name mappings
             string dictionaryMappingFilepath = null;
 
-            dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == PageAssemblyContext.Current.PageAssemblyInstruction.Language).Filepath;
+            dictionaryMappingFilepath = this.DictionaryConfiguration.Files.Single(a => a.Locale == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName).Filepath;
 
             if (!string.IsNullOrEmpty(dictionaryMappingFilepath))
             {

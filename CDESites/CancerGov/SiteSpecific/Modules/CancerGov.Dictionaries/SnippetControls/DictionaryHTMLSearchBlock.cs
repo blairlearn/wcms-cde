@@ -59,5 +59,27 @@ namespace CancerGov.Dictionaries.SnippetControls
                 }
             }
         }
+
+        public bool listBoxShowAll
+        {
+            get
+            {
+                if (this.alphaListBox != null)
+                {
+                    return this.alphaListBox.ShowAll;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if (this.alphaListBox != null)
+                {
+                    alphaListBox.ShowAll = value;
+                }
+            }
+        }
     }
 }

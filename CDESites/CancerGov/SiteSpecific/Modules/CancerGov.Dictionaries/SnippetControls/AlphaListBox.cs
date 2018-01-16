@@ -19,16 +19,16 @@
         protected System.Web.UI.WebControls.PlaceHolder phBrowseSpanish;
 
         private string alphaListItems = "";
-        private string title = "Alphabetical List of Cancers";
-        private string colSpan = "11";
+        //private string title = "Alphabetical List of Cancers";
+        //private string colSpan = "11";
         private string baseUrl = "";
-        private string urlArgs = "";
-        private bool numericItems = false;
-        private bool textOnly = false;
+        //private string urlArgs = "";
+        //private bool numericItems = false;
+        //private bool textOnly = false;
         private bool showAll = false;
-        private string[] boxItems;
-        private string webAnalyticsFunction;
-        private bool doWebAnalytics = false;
+        //private string[] boxItems;
+        //private string webAnalyticsFunction;
+        //private bool doWebAnalytics = false;
 
         #region Page properties
 
@@ -53,17 +53,17 @@
         /// <summary>
         /// Indicates index contains numeric items
         /// </summary>
-        public bool NumericItems
+        /*public bool NumericItems
         {
             get { return numericItems; }
             set { numericItems = value; }
-        }
+        }*/
 
-        public string ColSpan
+        /*public string ColSpan
         {
             get { return colSpan; }
             set { colSpan = value; }
-        }
+        }*/
 
         /// <summary>
         /// Shows All at the end of the list
@@ -77,7 +77,7 @@
         /// <summary>
         /// Sets title for box, enables web form access to title
         /// </summary>
-        public string Title
+        /*public string Title
         {
             get { return title; }
             set { title = value; }
@@ -90,30 +90,30 @@
         {
             get { return urlArgs; }
             set { urlArgs = "&" + value; }
-        }
+        }*/
 
         /// <summary>
         /// Sets content version
         /// </summary>
-        public bool TextOnly
+        /*public bool TextOnly
         {
             get { return textOnly; }
             set { textOnly = value; }
-        }
+        }*/
 
         /// <summary>
         /// Sets characters to display in box control
         /// </summary>
-        public string[] BoxItems
+        /*public string[] BoxItems
         {
             get { return boxItems; }
             set { boxItems = value; }
-        }
+        }*/
 
         /// <summary>
         /// Sets the Web Analytics onclick JavaScript function name 
         /// /// </summary>
-        public string WebAnalyticsFunction
+        /*public string WebAnalyticsFunction
         {
             get { return webAnalyticsFunction; }
             set
@@ -121,7 +121,7 @@
                 webAnalyticsFunction = value;
                 doWebAnalytics = true;
             }
-        }
+        }*/
 
         #endregion
 
@@ -142,41 +142,16 @@
         {
             alphaListItems = "<ul>";
 
-            if (boxItems == null || boxItems.Length == 0)
+            for (int i = 65; i < 91; i++)
             {
-                for (int i = 65; i < 91; i++)
-                {
-                    if (doWebAnalytics)
-                        alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + (char)i + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + (char)i + "') >" + (char)i + "</a></li>\n";
-                    else
-                        alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + (char)i + urlArgs + "\">" + (char)i + "</a></li>\n";
-                }
+                alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + (char)i + "\">" + (char)i + "</a></li>\n";
+            }
 
-                if (numericItems)
-                {
-                    if (doWebAnalytics)
-                        alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'#') >#</a></li>\n";
-                    else
-                        alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + Server.UrlEncode("#") + urlArgs + "\">#</a></li>\n";
-                }
-            }
-            else
-            {
-                foreach (string item in boxItems)
-                {
-                    if (doWebAnalytics)
-                        alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'" + item + "') >" + item + "</a></li>\n";
-                    else
-                        alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + Server.UrlEncode(item) + urlArgs + "\">" + item + "</a></li>\n";
-                }
-            }
+            alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + Server.UrlEncode("#") + "\">#</a></li>\n";
 
             if (showAll)
             {
-                if (doWebAnalytics)
-                    alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\" onclick=" + webAnalyticsFunction + "(this,'ALL') >" + "All" + "</a></li>\n";
-                else
-                    alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + Server.UrlEncode("All") + urlArgs + "\">" + "All" + "</a></li>\n";
+                alphaListItems += "<li><a href=\"" + BaseUrl + "?expand=" + Server.UrlEncode("All") + "\">All</a></li>\n";
             }
 
             alphaListItems += "</ul>\n";
