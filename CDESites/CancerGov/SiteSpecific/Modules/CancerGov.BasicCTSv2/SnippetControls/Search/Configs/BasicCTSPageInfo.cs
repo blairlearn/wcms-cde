@@ -146,6 +146,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public bool RedirectIfInactive { get; set; }
 
         /// <summary>
+        /// Gets the path to the Legacy PDQ ID to NCI ID mapping file.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string LegacyPDQNCIIDMapFilePath { get; set; }
+
+        /// <summary>
         /// Filepaths for mapping files needed.
         /// </summary>
         [XmlArray(ElementName = "MappingFiles", Form = XmlSchemaForm.Unqualified)]
