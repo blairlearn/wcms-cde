@@ -12,7 +12,7 @@
         <div class="results" data-dict-type="term">
             <dl class="dictionary-list">
                 <dt>
-                    <dfn>
+                    <dfn data-cdr-id="<%# ((DictionaryTerm)(Container.DataItem)).ID%>">
                         <%# ((DictionaryTerm)(Container.DataItem)).Term%>
                        
                     </dfn>

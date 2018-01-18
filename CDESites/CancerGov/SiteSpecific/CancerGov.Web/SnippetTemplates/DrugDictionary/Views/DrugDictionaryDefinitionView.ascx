@@ -10,7 +10,7 @@
         <!-- Term and def -->
         <dl>
             <dt>
-                <dfn>
+                <dfn data-cdr-id="<%# ((DictionaryTerm)(Container.DataItem)).ID%>">
                     <span><%# ((DictionaryTerm)(Container.DataItem)).Term%></span>
                 </dfn>
             </dt>

@@ -9,7 +9,7 @@
         <!-- Term and def -->
         <div class="results" data-dict-type="genetic">
             <dl class="dictionary-list">
-                <dt><dfn>
+                <dt><dfn data-cdr-id="<%# ((DictionaryTerm)(Container.DataItem)).ID%>">
                     <%# ((DictionaryTerm)(Container.DataItem)).Term%>
                 </dfn></dt>
                 <asp:PlaceHolder ID="phPronunciation" runat="server">
