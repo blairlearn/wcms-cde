@@ -433,7 +433,7 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             // Format string for analytics params: Dictionary|Language|Term|ID
             string[] analyticsParams = new string[4];
 
-            analyticsParams[0] = DictionaryAnalyticsType.Term.Name;
+            analyticsParams[0] = DictionaryAnalyticsType.Drug.Name;
 
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
                 analyticsParams[1] = "Spanish";

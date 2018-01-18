@@ -360,7 +360,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                         redirectUrl += "/" + urlPart;
                     }
 
-                    Response.RedirectPermanent(redirectUrl);
+                    Response.Redirect(redirectUrl, true);
                 }
             }
         }

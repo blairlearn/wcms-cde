@@ -224,7 +224,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 noTrialsUrl.QueryParameters.Add("p" + (i + 1), parameters[i]);
             }
 
-            Response.Redirect(noTrialsUrl.ToString(), true);
+            Response.RedirectPermanent(noTrialsUrl.ToString(), true);
         }
 
         /// <summary>
