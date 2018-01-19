@@ -43,6 +43,8 @@ namespace CancerGov.Dictionaries.SnippetControls
                 {
                     this.dictionarySearchBlock.DisplayHelpLink = true;
                 }
+
+                this.dictionarySearchBlock.CheckRadioStarts = "checked=\"checked\"";
             }
         }
 

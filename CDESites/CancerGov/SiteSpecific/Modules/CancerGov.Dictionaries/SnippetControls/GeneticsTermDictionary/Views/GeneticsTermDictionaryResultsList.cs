@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -45,14 +46,22 @@ namespace CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary
             SetupCanonicalUrl(this.DictionaryRouter.GetBaseURL());
             SetDoNotIndex();
 
+            if (!string.IsNullOrEmpty(SrcGroup))
+                BContains = Convert.ToBoolean(SrcGroup);
+
+            this.dictionarySearchBlock.SearchBoxInputVal = HttpUtility.HtmlEncode(SearchStr);
+
+            if(BContains == true)
+            {
+                this.dictionarySearchBlock.CheckRadioStarts = "";
+                this.dictionarySearchBlock.CheckRadioContains = "checked=\"checked\"";
+            }
+
             //For Genetics dictionary language is always English
             DictionaryLanguage = "en";
 
             DictionarySearchResultCollection resultCollection = null;
             DictionaryAppManager _dictionaryAppManager = new DictionaryAppManager();
-
-            if (!string.IsNullOrEmpty(SrcGroup))
-                BContains = Convert.ToBoolean(SrcGroup);
 
             SearchType searchType = SearchType.Begins;
             if (BContains)

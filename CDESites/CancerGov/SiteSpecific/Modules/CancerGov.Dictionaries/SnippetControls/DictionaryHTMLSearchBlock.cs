@@ -14,6 +14,12 @@ namespace CancerGov.Dictionaries.SnippetControls
 
         protected Literal showHelpButton;
 
+        public string SearchBoxInputVal { get; set; }
+
+        public string CheckRadioStarts { get; set; }
+
+        public string CheckRadioContains { get; set; }
+
         public bool DisplayHelpLink
         {
             get

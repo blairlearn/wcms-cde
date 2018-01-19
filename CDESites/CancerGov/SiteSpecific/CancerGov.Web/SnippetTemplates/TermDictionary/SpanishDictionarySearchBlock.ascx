@@ -16,11 +16,11 @@
         <div class="row">
             <div class="small-12 columns">
                 <span class="radio">
-                    <input id="radioStarts" type="radio" name="contains" value="false" checked="checked" data-autosuggest="dict-radio-starts">
+                    <input id="radioStarts" type="radio" name="contains" value="false" <%=CheckRadioStarts%> data-autosuggest="dict-radio-starts">
                     <label id="lblStartsWith" class="inline" for="radioStarts">Empieza con</label>
                 </span>
                 <span class="radio">
-                    <input id="radioContains" type="radio" name="contains" value="true" data-autosuggest="dict-radio-contains">
+                    <input id="radioContains" type="radio" name="contains" value="true" <%=CheckRadioContains%> data-autosuggest="dict-radio-contains">
                     <label id="lblContains" class="inline" for="radioContains">Contiene</label>
                 </span>
             </div>
@@ -29,7 +29,8 @@
             <div class="large-6 columns">
                 <input type="text" class="dictionary-search-input" name="q" id="AutoComplete1" 
                     aria-autocomplete="list" autocomplete="off" aria-label="Escriba frase o palabra clave"
-                    placeholder="Escriba frase o palabra clave" data-autosuggest="dict-autocomplete">
+                    placeholder="Escriba frase o palabra clave" data-autosuggest="dict-autocomplete"
+                    value="<%=SearchBoxInputVal%>">
             </div>
             <div class="large-2 columns left">
                 <input type="submit" class="submit button postfix" id="btnSearch" title="Buscar" value="Buscar">

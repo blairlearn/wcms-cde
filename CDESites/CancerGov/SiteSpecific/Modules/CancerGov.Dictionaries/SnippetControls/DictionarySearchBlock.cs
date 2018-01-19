@@ -35,6 +35,42 @@ namespace CancerGov.Dictionaries.SnippetControls
             }
         }
 
+        public string SearchBoxInputVal
+        {
+            get
+            {
+                return this.searchBlock.SearchBoxInputVal;
+            }
+            set
+            {
+                this.searchBlock.SearchBoxInputVal = value;
+            }
+        }
+
+        public string CheckRadioStarts
+        {
+            get
+            {
+                return this.searchBlock.CheckRadioStarts;
+            }
+            set
+            {
+                this.searchBlock.CheckRadioStarts = value;
+            }
+        }
+
+        public string CheckRadioContains
+        {
+            get
+            {
+                return this.searchBlock.CheckRadioContains;
+            }
+            set
+            {
+                this.searchBlock.CheckRadioContains = value;
+            }
+        }
+
         public bool DisplayHelpLink
         {
             get

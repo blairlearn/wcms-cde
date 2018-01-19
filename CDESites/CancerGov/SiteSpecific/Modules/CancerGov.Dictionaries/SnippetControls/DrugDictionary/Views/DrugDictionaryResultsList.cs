@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -229,6 +230,15 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             GetQueryParams();
             SetupCanonicalUrl(this.DictionaryRouter.GetBaseURL());
             SetDoNotIndex();
+            SetupCommon();
+
+            this.dictionarySearchBlock.SearchBoxInputVal = HttpUtility.HtmlEncode(SearchStr);
+
+            if (BContains == true)
+            {
+                this.dictionarySearchBlock.CheckRadioStarts = "";
+                this.dictionarySearchBlock.CheckRadioContains = "checked=\"checked\"";
+            }
 
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -239,8 +249,6 @@ namespace CancerGov.Dictionaries.SnippetControls.DrugDictionary
             {
                 lblResultsFor.Text = "results found for:";
             }
-
-            SetupCommon();
 
             LoadData();
 

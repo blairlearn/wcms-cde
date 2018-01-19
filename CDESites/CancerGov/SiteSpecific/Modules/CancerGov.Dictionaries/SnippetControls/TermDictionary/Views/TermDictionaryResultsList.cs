@@ -46,6 +46,15 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
         {
             GetQueryParams();
             SetDoNotIndex();
+            SetupCommon();
+
+            this.dictionarySearchBlock.SearchBoxInputVal = HttpUtility.HtmlEncode(SearchStr);
+            
+            if(BContains == true)
+            {
+                this.dictionarySearchBlock.CheckRadioStarts = "";
+                this.dictionarySearchBlock.CheckRadioContains = "checked=\"checked\"";
+            }
 
             //Set display props according to lang
             if (PageAssemblyContext.Current.PageAssemblyInstruction.Language == "es")
@@ -59,7 +68,6 @@ namespace CancerGov.Dictionaries.SnippetControls.TermDictionary
 
             DictionaryURL = this.DictionaryRouter.GetBaseURL();
 
-            SetupCommon();
             SetupCanonicalUrls(DictionaryURL, DictionaryURL);
 
             LoadData();
