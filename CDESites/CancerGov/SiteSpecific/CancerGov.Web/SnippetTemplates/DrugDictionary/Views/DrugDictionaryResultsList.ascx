@@ -22,7 +22,7 @@
         </LayoutTemplate>
         <ItemTemplate>
             <dt>
-               <dfn>
+               <dfn data-cdr-id="<%# ((DictionarySearchResult)(Container.DataItem)).ID%>">
                     <a href="<%# this.DictionaryRouter.GetDefinitionUrl() + GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>" <%# ResultListViewHrefOnclick(Container)%>>
                         <%# HiLite(((DictionarySearchResult)(Container.DataItem)).MatchedTerm )%></a>
                     <span class="dictionary-partial-match-n">

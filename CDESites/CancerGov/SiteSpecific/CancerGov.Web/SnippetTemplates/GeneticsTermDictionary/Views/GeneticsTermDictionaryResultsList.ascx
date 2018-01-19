@@ -21,7 +21,7 @@
                 </dl>
             </LayoutTemplate>
             <ItemTemplate>
-                <dt><dfn><a href="<%# this.DictionaryRouter.GetDefinitionUrl() + GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>"
+                <dt><dfn data-cdr-id="<%# ((DictionarySearchResult)(Container.DataItem)).ID%>"><a href="<%# this.DictionaryRouter.GetDefinitionUrl() + GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>"
                     <%# ResultListViewHrefOnclick(Container)%>>
                     <%# ((DictionarySearchResult)(Container.DataItem)).MatchedTerm%></a> </dfn></dt>
                 <asp:PlaceHolder ID="phPronunciation" runat="server">
