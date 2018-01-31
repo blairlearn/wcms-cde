@@ -84,63 +84,10 @@
     <Content Include="..\..\..\..\CDESchema\CDESchema.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>Schema\CDESchema.xsd</Link>
     </Content>
     <Content Include="packages.config" />
-    <None Include="Web.Blue-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Blue-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.COLO-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.COLO-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
     <None Include="Web.config" />
-    <None Include="Web.DT-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.DT-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Pink-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Pink-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Prod-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Prod-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.QA-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.QA-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Red-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Red-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Stage-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Stage-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Training-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Training-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Apps\AppsBaseUserControl.cs">
@@ -187,10 +134,6 @@
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.ElasticSearch\NCILibrary.Search.ElasticSearch.csproj">
       <Project>{0af8d250-e5a2-4195-8940-54f806acf5f2}</Project>
       <Name>NCILibrary.Search.ElasticSearch</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
-      <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>
-      <Name>NCILibrary.Search.Endeca</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\NCILibrary.Search.csproj">
       <Project>{8962B50C-E3A9-4F0A-9E48-7008C40247CD}</Project>

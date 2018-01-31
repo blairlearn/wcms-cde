@@ -1,3 +1,3 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TermDictionaryRouter.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.TermDictionaryRouter" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.TermDictionaryRouter" EnableViewState="false" %>
 <%--<script src="/js/termDictionary.js" type="text/javascript"></script>--%>
-<asp:PlaceHolder ID="phTermDictionary" runat="server" />
+<asp:PlaceHolder ID="phDictionary" runat="server" />

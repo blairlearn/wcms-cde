@@ -1,9 +1,10 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GeneticsTermDictionaryResultsList.ascx.cs"
-    Inherits="CancerGov.Web.SnippetTemplates.GenerticsTermDictionaryResultsList" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionary.GeneticsTermDictionaryResultsList" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
-<%@ Register TagPrefix="GeneticsTermDictionary" TagName="SearchBlock" Src="~/SnippetTemplates/GeneticsTermDictionary/Views/GeneticsTermDictionaryHome.ascx" %>
-<GeneticsTermDictionary:SearchBlock ID="dictionarySearchBlock" runat="server" />
-<div class="results">
+<%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
+
+<DictionarySearchBlock:SearchBlock ID="dictionarySearchBlock" runat="server" />
+
+<div class="results" data-dict-type="genetic">
     <!-- Number of results -->
     <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
         <span class="results-count">
@@ -20,7 +21,7 @@
                 </dl>
             </LayoutTemplate>
             <ItemTemplate>
-                <dt><dfn><a href="<%# DictionaryURL %>?CdrID=<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>"
+                <dt><dfn data-cdr-id="<%# ((DictionarySearchResult)(Container.DataItem)).ID%>"><a href="<%# this.DictionaryRouter.GetDefinitionUrl() + GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>"
                     <%# ResultListViewHrefOnclick(Container)%>>
                     <%# ((DictionarySearchResult)(Container.DataItem)).MatchedTerm%></a> </dfn></dt>
                 <asp:PlaceHolder ID="phPronunciation" runat="server">

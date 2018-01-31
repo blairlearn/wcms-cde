@@ -1,4 +1,6 @@
-﻿using System.Xml.Schema;
+﻿using NCI.Web.CDE.Modules;
+using System.Configuration;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
@@ -144,10 +146,27 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public bool RedirectIfInactive { get; set; }
 
         /// <summary>
+        /// Gets the path to the Legacy PDQ ID to NCI ID mapping file.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string LegacyPDQNCIIDMapFilePath { get; set; }
+
+        /// <summary>
         /// Filepaths for mapping files needed.
         /// </summary>
         [XmlArray(ElementName = "MappingFiles", Form = XmlSchemaForm.Unqualified)]
         [XmlArrayItem("MappingFile", typeof(string), Form = XmlSchemaForm.Unqualified)]
         public string[] MappingFiles { get; set; }
+
+        /// <summary>
+        /// Helper method to load configuration based on CTSConfigFilePath appsetting path.
+        /// </summary>
+        /// <returns></returns>
+        public static BasicCTSPageInfo GetConfig()
+        {
+            string configPath = ConfigurationManager.AppSettings["CTSConfigFilePath"];
+            return (BasicCTSPageInfo)ModuleObjectFactory<BasicCTSPageInfo>.GetObjectFromFile(configPath);
+
+        }
     }
 }

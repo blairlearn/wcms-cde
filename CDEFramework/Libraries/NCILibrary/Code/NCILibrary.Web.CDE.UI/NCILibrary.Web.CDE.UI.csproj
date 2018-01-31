@@ -135,37 +135,10 @@
     <Compile Include="SnippetControls\ContentSearchSnippet.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="SnippetControls\DeprecatedDynamicList.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetControls\DynamicListDescNoImgDate.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetControls\DynamicListHelper.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetControls\DynamicListNoDescImgDate.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="SnippetControls\DisqusComments.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetControls\DisqusCommentsSettings.cs" />
-    <Compile Include="SnippetControls\BlogLandingDynamicList.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetControls\DynamicListDescImgDate.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetControls\DynamicListFactorySnippet.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetControls\DynamicListNoDescNoImgDate.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetControls\DynamicNewsDescImgDate.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="SnippetControls\ReCaptchaControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -211,10 +184,6 @@
     <ProjectReference Include="..\NCILibrary.DataManager\NCILibrary.DataManager.csproj">
       <Project>{F4C37116-861A-4FD6-B45D-578B258FEFC7}</Project>
       <Name>NCILibrary.DataManager</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
-      <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>
-      <Name>NCILibrary.Search.Endeca</Name>
     </ProjectReference>
     <ProjectReference Include="..\NCILibrary.Search\NCILibrary.Search.csproj">
       <Project>{8962B50C-E3A9-4F0A-9E48-7008C40247CD}</Project>

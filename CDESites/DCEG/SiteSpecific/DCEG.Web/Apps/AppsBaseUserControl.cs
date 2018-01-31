@@ -78,22 +78,13 @@ namespace DCEG.Web.Apps
 
         virtual public void RaiseErrorPage(string messageKey)
         {
-            string systemMessagePageUrl;
-            if (messageKey == "InvalidSearchID")
-            {
-                systemMessagePageUrl = ConfigurationManager.AppSettings["ClinicalTrialInvalidSearchID"].Trim();
-                Response.Redirect(systemMessagePageUrl, true);
-            }
-            else
-            {
-                systemMessagePageUrl = ConfigurationManager.AppSettings["SystemMessagePage"].Trim();
+            string systemMessagePageUrl = ConfigurationManager.AppSettings["SystemMessagePage"].Trim();
 
-                if (systemMessagePageUrl.Substring(systemMessagePageUrl.Length - 1, 1) != "?")
-                    systemMessagePageUrl += "?";
+            if (systemMessagePageUrl.Substring(systemMessagePageUrl.Length - 1, 1) != "?")
+                systemMessagePageUrl += "?";
 
-                systemMessagePageUrl += "msg=" + messageKey.Trim();
-                Response.Redirect(systemMessagePageUrl, true);
-            }
+            systemMessagePageUrl += "msg=" + messageKey.Trim();
+            Response.Redirect(systemMessagePageUrl, true);
         }
 
         public string PrettyUrl

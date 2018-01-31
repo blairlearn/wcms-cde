@@ -1,4 +1,4 @@
-﻿<%@ Control Language="c#" AutoEventWireup="True" CodeBehind="AlphaListBox.ascx.cs" Inherits="Www.Common.UserControls.AlphaListBox" %>
+﻿<%@ Control Language="c#" AutoEventWireup="True" Inherits="CancerGov.Dictionaries.SnippetControls.AlphaListBox" %>
 
 <asp:PlaceHolder ID="phBrowseEnglish" runat="server" EnableViewState="false">
     <span class="browse">Browse:</span>

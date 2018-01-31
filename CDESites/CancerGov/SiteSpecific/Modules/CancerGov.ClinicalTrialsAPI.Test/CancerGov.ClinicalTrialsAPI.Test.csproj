@@ -86,7 +86,6 @@
     <Compile Include="StudySiteComparer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Content Include="TrialExamples\NCT02194738.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

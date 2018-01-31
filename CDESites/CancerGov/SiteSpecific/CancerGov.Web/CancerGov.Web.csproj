@@ -117,23 +117,19 @@
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSView.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\TrialListingPage.ascx" />
-    <Content Include="SnippetTemplates\BasicCTS\BasicCTSResults.ascx" />
-    <Content Include="SnippetTemplates\BasicCTS\BasicCTSSearch.ascx" />
-    <Content Include="SnippetTemplates\BasicCTS\BasicCTSView.ascx" />
+    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryExpandList.ascx" />
     <Content Include="SnippetTemplates\FilterTitle.ascx" />
-    <Content Include="SnippetTemplates\DynamicListSnippet.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />
+    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryExpandList.ascx" />
     <Content Include="SnippetTemplates\IntenseDebateComments.ascx" />
     <Content Include="SnippetTemplates\ModuleSearchBox.ascx" />
     <Content Include="SnippetTemplates\PageOptionsDisplay.ascx" />
     <Content Include="SnippetTemplates\SearchBox.ascx" />
     <Content Include="SnippetTemplates\SiteWideSearch.ascx" />
     <Content Include="SnippetTemplates\TemplatedDynamicList.ascx" />
-    <Content Include="SnippetTemplates\TopicSearchCategorySnippet.ascx">
-      <SubType>ASPXCodeBehind</SubType>
-    </Content>
-    <Content Include="UserControls\Headers\MainPageHeader.ascx" />
-    <Content Include="UserControls\Menu\TopLevelNavigationMenu.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\EnglishDictionarySearchBlock.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\SpanishDictionarySearchBlock.ascx" />
+    <Content Include="SnippetTemplates\TermDictionary\Views\TermDictionaryExpandList.ascx" />
     <Content Include="App_Data\wurfl-latest.zip" />
     <Content Include="packages.config" />
     <None Include="job_scheduling_data_2_0.xsd">
@@ -142,63 +138,11 @@
     <Content Include="..\..\..\..\CDESchema\CDESchema.xsd">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>Schema\CDESchema.xsd</Link>
     </Content>
-    <None Include="Web.Blue-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Blue-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.COLO-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.COLO-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
+    <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Web.DT-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.DT-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Pink-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Pink-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Prod-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Prod-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.QA-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.QA-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Red-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Red-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Stage-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Stage-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Training-Live.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Training-Preview.config">
-      <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +150,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Apps\GlossaryTerms.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Apps\SearchBaseUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Apps\SiteWideSearchModule.cs">
@@ -221,90 +168,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SiteWideSearch.resx</DependentUpon>
     </Compile>
-    <Compile Include="Archive\arch_dictionary.aspx.cs">
-      <DependentUpon>arch_dictionary.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_dictionary.aspx.designer.cs">
-      <DependentUpon>arch_dictionary.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\arch_drugdictionary.aspx.cs">
-      <DependentUpon>arch_drugdictionary.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_drugdictionary.aspx.designer.cs">
-      <DependentUpon>arch_drugdictionary.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\arch_druginfosummaries.aspx.cs">
-      <DependentUpon>arch_druginfosummaries.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_druginfosummaries.aspx.designer.cs">
-      <DependentUpon>arch_druginfosummaries.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\arch_protocols.aspx.cs">
-      <DependentUpon>arch_protocols.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_protocols.aspx.designer.cs">
-      <DependentUpon>arch_protocols.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\arch_summaries.aspx.cs">
-      <DependentUpon>arch_summaries.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\arch_summaries.aspx.designer.cs">
-      <DependentUpon>arch_summaries.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\index.aspx.cs">
-      <DependentUpon>index.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\index.aspx.designer.cs">
-      <DependentUpon>index.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\UserControls\AlphaListBox.ascx.cs">
-      <DependentUpon>AlphaListBox.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Archive\UserControls\AlphaListBox.ascx.designer.cs">
-      <DependentUpon>AlphaListBox.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Common\EmailSyntaxValidator.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\PopUpPage.cs">
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookup.aspx.cs">
-      <DependentUpon>CTLookup.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookup.aspx.designer.cs">
-      <DependentUpon>CTLookup.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookUpBase.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.cs">
-      <DependentUpon>CTLookupResults.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.designer.cs">
-      <DependentUpon>CTLookupResults.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.cs">
-      <DependentUpon>CTLookupSearch.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.designer.cs">
-      <DependentUpon>CTLookupSearch.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.cs">
-      <DependentUpon>CTLookupSelect.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.designer.cs">
-      <DependentUpon>CTLookupSelect.aspx</DependentUpon>
     </Compile>
     <Compile Include="Common\PopUps\definition.aspx.cs">
       <DependentUpon>definition.aspx</DependentUpon>
@@ -341,13 +208,6 @@
     <Compile Include="Common\PopUps\popHelp.aspx.designer.cs">
       <DependentUpon>popHelp.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Common\UserControls\AlphaListBox.ascx.cs">
-      <DependentUpon>AlphaListBox.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Common\UserControls\AlphaListBox.ascx.designer.cs">
-      <DependentUpon>AlphaListBox.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Common\UserControls\LangSwitch.ascx.cs">
       <DependentUpon>LangSwitch.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -370,37 +230,6 @@
     <Compile Include="SnippetTemplates\CDRDefinitionTemplate.ascx.designer.cs">
       <DependentUpon>CDRDefinitionTemplate.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsBaseUserControl.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsResults.ascx.cs">
-      <DependentUpon>ClinicalTrialsResults.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsResults.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsResults.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx.cs">
-      <DependentUpon>ClinicalTrialsSearchTemplate.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsSearchTemplate.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsView.ascx.cs">
-      <DependentUpon>ClinicalTrialsView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsView.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsView.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.cs">
-      <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx.designer.cs">
-      <DependentUpon>ClinicalTrialsViewHeader.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\DocTitleBlock.ascx.cs">
       <DependentUpon>DocTitleBlock.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -408,84 +237,8 @@
     <Compile Include="SnippetTemplates\DocTitleBlock.ascx.designer.cs">
       <DependentUpon>DocTitleBlock.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.cs">
-      <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx.designer.cs">
-      <DependentUpon>DrugDictionaryRouter.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx.cs">
-      <DependentUpon>DrugDictionaryDefinitionView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx.designer.cs">
-      <DependentUpon>DrugDictionaryDefinitionView.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx.cs">
-      <DependentUpon>DrugDictionaryHome.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx.designer.cs">
-      <DependentUpon>DrugDictionaryHome.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx.cs">
-      <DependentUpon>DrugDictionaryResultsList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx.designer.cs">
-      <DependentUpon>DrugDictionaryResultsList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\EmergencyBanner.ascx.cs">
-      <DependentUpon>EmergencyBanner.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\EmergencyBanner.ascx.designer.cs">
-      <DependentUpon>EmergencyBanner.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.cs">
-      <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\EmergencyErrorMessage.ascx.designer.cs">
-      <DependentUpon>EmergencyErrorMessage.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryDefinitionView.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryHelper.cs" />
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryHome.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryRouter.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryRouter.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx.cs">
-      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx.designer.cs">
-      <DependentUpon>GeneticsTermDictionaryResultsList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.cs">
-      <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\PrintClinicalTrialsView.ascx.designer.cs">
-      <DependentUpon>PrintClinicalTrialsView.ascx</DependentUpon>
-    </Compile>
+    <Compile Include="SnippetTemplates\Helpers\DictionaryDefinitionHelper.cs" />
     <Compile Include="SnippetTemplates\ResultsGeneticsServices.ascx.cs">
       <DependentUpon>ResultsGeneticsServices.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -507,68 +260,12 @@
     <Compile Include="SnippetTemplates\TableofLinks.ascx.designer.cs">
       <DependentUpon>TableofLinks.ascx</DependentUpon>
     </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\DictionarySearchBlock.ascx.cs">
-      <DependentUpon>DictionarySearchBlock.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\DictionarySearchBlock.ascx.designer.cs">
-      <DependentUpon>DictionarySearchBlock.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx.cs">
-      <DependentUpon>TermDictionaryDefinitionView.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryDefinitionView.ascx.designer.cs">
-      <DependentUpon>TermDictionaryDefinitionView.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx.cs">
-      <DependentUpon>TermDictionaryHome.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryHome.ascx.designer.cs">
-      <DependentUpon>TermDictionaryHome.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx.cs">
-      <DependentUpon>TermDictionaryResultsList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\Views\TermDictionaryResultsList.ascx.designer.cs">
-      <DependentUpon>TermDictionaryResultsList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryRouter.ascx.cs">
-      <DependentUpon>TermDictionaryRouter.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="SnippetTemplates\TermDictionary\TermDictionaryRouter.ascx.designer.cs">
-      <DependentUpon>TermDictionaryRouter.ascx</DependentUpon>
-    </Compile>
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="SnippetTemplates\ViewGenericsProfessionals.ascx.designer.cs">
       <DependentUpon>ViewGenericsProfessionals.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\CTCustomSelection.ascx.cs">
-      <DependentUpon>CTCustomSelection.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\CTCustomSelection.ascx.designer.cs">
-      <DependentUpon>CTCustomSelection.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Headers\MainPageHeader.ascx.cs">
-      <DependentUpon>MainPageHeader.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Headers\MainPageHeader.ascx.designer.cs">
-      <DependentUpon>MainPageHeader.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Menu\TopLevelNavigationMenu.ascx.cs">
-      <DependentUpon>TopLevelNavigationMenu.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Menu\TopLevelNavigationMenu.ascx.designer.cs">
-      <DependentUpon>TopLevelNavigationMenu.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -587,10 +284,6 @@
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.ElasticSearch\NCILibrary.Search.ElasticSearch.csproj">
       <Project>{0af8d250-e5a2-4195-8940-54f806acf5f2}</Project>
       <Name>NCILibrary.Search.ElasticSearch</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search.Endeca\NCILibrary.Search.Endeca.csproj">
-      <Project>{4A2B4CEC-E86D-4DB2-B3FB-22CFA0DD6F26}</Project>
-      <Name>NCILibrary.Search.Endeca</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Search\NCILibrary.Search.csproj">
       <Project>{8962B50C-E3A9-4F0A-9E48-7008C40247CD}</Project>
@@ -620,22 +313,6 @@
       <Project>{F2CB1924-487F-4756-BAC1-719C5CF97368}</Project>
       <Name>CancerGov.DataManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.Handlers\CancerGov.Handlers.csproj">
-      <Project>{F3414554-93F7-4116-88B2-637A3ABA050E}</Project>
-      <Name>CancerGov.Handlers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CancerGovSpecific\CancerGov.Modules\CancerGov.Modules.csproj">
-      <Project>{7634C4C2-6EC8-45D4-A423-7B53B15BDD9E}</Project>
-      <Name>CancerGov.Modules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CancerGovSpecific\ClinicalTrialControls\ClinicalTrialControls.csproj">
-      <Project>{2FDF38AF-E70B-485F-86B9-A32948AC8926}</Project>
-      <Name>ClinicalTrialControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CDR.ClinicalTrials\CDR.ClinicalTrials.csproj">
-      <Project>{D4DF1240-9E40-409F-B927-E160191E2381}</Project>
-      <Name>CDR.ClinicalTrials</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\CDR.DataManager\CDR.DataManager.csproj">
       <Project>{BD37ACFC-049C-4807-93CC-1A3BFA25F11A}</Project>
       <Name>CDR.DataManager</Name>
@@ -648,10 +325,6 @@
       <Project>{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}</Project>
       <Name>CDR.TermDictionary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\EmergencyAlert\EmergencyAlert.csproj">
-      <Project>{2ED8F4D6-9A1D-4109-8F37-6D407C674184}</Project>
-      <Name>EmergencyAlert</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\PresentationClasses\PresentationClasses.csproj">
       <Project>{B6BAC183-15A2-44A8-85BA-A1F917308548}</Project>
       <Name>PresentationClasses</Name>
@@ -659,6 +332,10 @@
     <ProjectReference Include="..\Modules\CancerGov.BasicCTSv2\CancerGov.BasicCTSv2.csproj">
       <Project>{96f6420f-f16d-4873-af3a-5d22e9ffbd55}</Project>
       <Name>CancerGov.BasicCTSv2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\CancerGov.Dictionaries\CancerGov.Dictionaries.csproj">
+      <Project>{a0b1e332-beee-4e60-b5b6-dafb53b3d1e4}</Project>
+      <Name>CancerGov.Dictionaries</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Search.AutoSuggest\CancerGov.Search.AutoSuggest.csproj">
       <Project>{C5FC8889-2A67-4E7E-9E5A-90A7707F3874}</Project>
@@ -668,35 +345,14 @@
       <Project>{a3d91f04-b62b-4ec4-bb66-ff10b2d23b23}</Project>
       <Name>CancerGov.Search.BestBets</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\CancerGov.TopicSearch\CancerGov.TopicSearch.csproj">
-      <Project>{917C939E-6AA1-4FEE-8C35-6EC62974455B}</Project>
-      <Name>CancerGov.TopicSearch</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Modules\CancerGov.Web.UI\CancerGov.Web.UI.csproj">
       <Project>{FF201258-189F-4EAF-B282-03FE7738A155}</Project>
       <Name>CancerGov.Web.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\LegacyCTSResultRedirector\LegacyCTSResultRedirector.csproj">
-      <Project>{2998FE53-18DD-4B27-A7AC-33BE692BAD61}</Project>
-      <Name>LegacyCTSResultRedirector</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\web_browsers_patch.xml" />
-    <Content Include="Archive\arch_dictionary.aspx" />
-    <Content Include="Archive\arch_drugdictionary.aspx" />
-    <Content Include="Archive\arch_druginfosummaries.aspx" />
-    <Content Include="Archive\arch_protocols.aspx" />
-    <Content Include="Archive\arch_summaries.aspx" />
-    <Content Include="Archive\index.aspx" />
-    <Content Include="Archive\UserControls\AlphaListBox.ascx" />
     <Content Include="AutoSuggestSearch.svc" />
-    <Content Include="Common\PopUps\CTLSearch\blank.htm" />
-    <Content Include="Common\PopUps\CTLSearch\CTFooter.htm" />
-    <Content Include="Common\PopUps\CTLSearch\CTLookup.aspx" />
-    <Content Include="Common\PopUps\CTLSearch\CTLookupResults.aspx" />
-    <Content Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx" />
-    <Content Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx" />
     <Content Include="Common\PopUps\definition.aspx" />
     <Content Include="Common\PopUps\popDefinition.aspx" />
     <Content Include="Common\PopUps\popHelp.aspx" />
@@ -715,12 +371,6 @@
     </Content>
     <Content Include="DictionaryService.svc" />
     <Content Include="DrugDictionary.svc" />
-    <Content Include="DynamicListTemplates\DynamicBlogDescImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListDescNoImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListDescImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListNoDescImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicListNoDescNoImgDate.ascx" />
-    <Content Include="DynamicListTemplates\DynamicNewsDescImgDate.ascx" />
     <Content Include="JS\imgEvents.js" />
     <Content Include="JS\NetTracker\ntpagetag.js" />
     <Content Include="JS\Search\CDEResultsClinicalTrials.js" />
@@ -734,18 +384,9 @@
     <Content Include="JS\Widgets\TermDictionaryWidgetSpanish.js" />
     <Content Include="JS\Widgets\OLD_termdictWidget-autocomplete.js" />
     <Content Include="JS\Widgets\widget.css" />
-    <Content Include="PageTemplates\CancerTypeHomeTemplate.aspx" />
-    <Content Include="PageTemplates\DefaultCancerGovTemplate-NoLeftNav.aspx" />
-    <Content Include="PageTemplates\DefaultCancerGovTemplate-Print.aspx" />
-    <Content Include="PageTemplates\DefaultCancerGovTemplate.aspx" />
-    <Content Include="SnippetTemplates\BlogLandingDynamicList.ascx" />
     <Content Include="SnippetTemplates\CDRDefinitionTemplate.ascx" />
     <Content Include="SnippetTemplates\CGovMainNavControl.ascx" />
     <Content Include="SnippetTemplates\CGovSectionNavControl.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsResults.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsSearchTemplate.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsView.ascx" />
-    <Content Include="SnippetTemplates\ClinicalTrialsViewHeader.ascx" />
     <Content Include="SnippetTemplates\ConditionalDisplaySnippet.ascx" />
     <Content Include="SnippetTemplates\ContentSearchSnippet.ascx" />
     <Content Include="SnippetTemplates\BreadcrumbSnippet.ascx" />
@@ -753,16 +394,11 @@
     <Content Include="SnippetTemplates\DocTitleBlock.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\DrugDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryDefinitionView.ascx" />
-    <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryHome.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryResultsList.ascx" />
-    <Content Include="SnippetTemplates\EmergencyBanner.ascx" />
-    <Content Include="SnippetTemplates\EmergencyErrorMessage.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryDefinitionView.ascx" />
-    <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryHome.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\GeneticsTermDictionaryRouter.ascx" />
     <Content Include="SnippetTemplates\GeneticsTermDictionary\Views\GeneticsTermDictionaryResultsList.ascx" />
     <Content Include="SnippetTemplates\GlossaryTerms.ascx" />
-    <Content Include="SnippetTemplates\PrintClinicalTrialsView.ascx" />
     <Content Include="SnippetTemplates\PublicArchiveBanner.ascx" />
     <Content Include="SnippetTemplates\PublicUseBanner.ascx" />
     <Content Include="SnippetTemplates\ResultsGeneticsServices.ascx" />
@@ -788,44 +424,10 @@
     <Content Include="sysimages\tile-slider-spanish-next.gif" />
     <Content Include="sysimages\tile-slider-spanish-previous.gif" />
     <Content Include="TermDictionary.svc" />
-    <Content Include="UserControls\CTCustomSelection.ascx" />
-    <EmbeddedResource Include="Archive\arch_dictionary.aspx.resx">
-      <DependentUpon>arch_dictionary.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Archive\arch_protocols.aspx.resx">
-      <DependentUpon>arch_protocols.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Archive\arch_summaries.aspx.resx">
-      <DependentUpon>arch_summaries.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Archive\index.aspx.resx">
-      <DependentUpon>index.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookup.aspx.resx">
-      <DependentUpon>CTLookup.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupResults.aspx.resx">
-      <DependentUpon>CTLookupResults.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSearch.aspx.resx">
-      <DependentUpon>CTLookupSearch.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Common\PopUps\CTLSearch\CTLookupSelect.aspx.resx">
-      <DependentUpon>CTLookupSelect.aspx.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_LocalResources\" />
     <Folder Include="DynamicData\FieldTemplates\" />
-    <Folder Include="UserControls\Footers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

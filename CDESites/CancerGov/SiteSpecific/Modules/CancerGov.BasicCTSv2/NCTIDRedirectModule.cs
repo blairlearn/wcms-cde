@@ -10,6 +10,7 @@ using CancerGov.ClinicalTrialsAPI;
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
 
 using NCI.Web.CDE;
+using CancerGov.Text;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
 {
@@ -28,11 +29,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             get
             {
-                if (!String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["ClinicalTrialsViewPage"]))
-                {
-                    return ConfigurationManager.AppSettings["ClinicalTrialsViewPage"];
-                }
-                return "/about-cancer/treatment/clinical-trials/search/v";
+                BasicCTSPageInfo config = BasicCTSPageInfo.GetConfig();
+                return config.DetailedViewPagePrettyUrl;
+            }
+        }
+
+        /// <summary>
+        /// Gets the path to the Legacy PDQ ID to NCI ID mapping file.
+        /// </summary>
+        private string PDQNCIIDMapFilePath
+        {
+            get
+            {
+                BasicCTSPageInfo config = BasicCTSPageInfo.GetConfig();
+                return config.LegacyPDQNCIIDMapFilePath;
             }
         }
 
@@ -65,8 +75,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath);
 
             // Don't proceed if this is a file.
-            // TODO: Make this a configuration setting and reuse (future release)
-            if (url.IndexOf(".css") != -1 || url.IndexOf(".gif") != -1 || url.IndexOf(".jpg") != -1 || url.IndexOf(".js") != -1 || url.IndexOf(".axd") != -1)
+            if (Utility.IgnoreWebResource(url))
             {
                 return;
             }
@@ -77,6 +86,74 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 return;
             }
 
+            //Check if we have a view page pretty URL before redirecting.  Otherwise it should be a 404.
+            if (!string.IsNullOrWhiteSpace(this.SearchResultsPrettyUrl))
+            {
+                //Handle redirection for old clinical-trials/search/view?id=cdrid
+                RedirectForOldCDRIDViewURLs(context);
+
+                //If this is not an old view url then handle the existing pretty url redirect logic.
+                RedirectForTrialPrettyURL(context);
+            }
+        }
+
+        /// <summary>
+        /// Handles redirections for old /clinicaltrials/search/view?id=cdrid
+        /// </summary>
+        /// <param name="?"></param>
+        private void RedirectForOldCDRIDViewURLs(HttpContext context)
+        {
+
+            //If the url is not what we are looking for, bail
+            if (!context.Request.Url.AbsolutePath.Equals("/about-cancer/treatment/clinical-trials/search/view", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            //If there is no map, then bail
+            if (String.IsNullOrWhiteSpace(PDQNCIIDMapFilePath))
+            {
+                //TODO: Log warning?
+                return;
+            }
+
+            int cdrID = Strings.ToInt(context.Request.Params["cdrid"]);
+
+            //Invalid ID format, so bail
+            if (cdrID < 1)
+            {
+                return;
+            }
+
+            string mapFullPath = HttpContext.Current.Server.MapPath(PDQNCIIDMapFilePath);
+            LegacyPDQIDRedirectionMap map = LegacyPDQIDRedirectionMap.GetMap(mapFullPath, context);
+
+            //Map entry does not exist, bail
+            if (!map.Contains(cdrID.ToString()))
+            {
+                return;
+            }
+
+            string nciID = map[cdrID.ToString()];
+
+            //This is not a valid trial
+            if (!IsValidTrial(nciID))
+            {
+                return;
+            }
+
+            string redirectPath = string.Format("{0}?id={1}&r=1", this.SearchResultsPrettyUrl, nciID);
+
+            //Finally redirect.
+            context.Response.RedirectPermanent(redirectPath, true);
+        }
+
+        /// <summary>
+        /// Handles redirections for &lt;hostname&gt;/clinicaltrials/&lt;NCTID&gt pretty urls.
+        /// </summary>
+        /// <param name="context"></param>
+        private void RedirectForTrialPrettyURL(HttpContext context)
+        {
             // The URL should match this pattern: '<hostname>/clinicaltrials/<NCTID>. If it does, proceed with retrieving the ID
             // We're only concerned about the NCT ID at this point - not NCI, CDR, or any other trial IDs
             if (context.Request.Url.Segments.Count() >= 3 && context.Request.Url.Segments[1].ToLower() == "clinicaltrials/")
@@ -92,7 +169,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
                     // Do behavior based on the given ID
                     try
-                    { 
+                    {
                         // If the ID matches a trial in the API, go to the view page on www.cancer.gov
                         if (!string.IsNullOrWhiteSpace(cleanId) && IsValidTrial(cleanId))
                         {
@@ -134,7 +211,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     log.Debug("ID is null or empty");
                 }
             }
-
         }
         #endregion
 

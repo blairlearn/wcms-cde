@@ -27,16 +27,21 @@ namespace NCI.Web.CDE
             HttpContext context = ((HttpApplication)sender).Context;
             String url = context.Server.UrlDecode(context.Request.Url.AbsolutePath.ToLower(CultureInfo.InvariantCulture)).ToLower();
 
-            if (url.IndexOf(".ico") != -1 ||
+            // If this a front-end asset URL, don't proceed 
+            // TODO: make this a configuration setting 
+            if (url.IndexOf(".axd") != -1 ||
                 url.IndexOf(".css") != -1 ||
+                url.IndexOf(".eot") != -1 ||
                 url.IndexOf(".gif") != -1 ||
+                url.IndexOf(".ico") != -1 ||
                 url.IndexOf(".jpg") != -1 ||
                 url.IndexOf(".js") != -1 ||
-                url.IndexOf(".axd") != -1 ||
-                url.IndexOf(".png") != -1)
+                url.IndexOf(".png") != -1 ||
+                url.IndexOf(".svg") != -1 ||
+                url.IndexOf(".ttf") != -1 ||
+                url.IndexOf(".woff") != -1)
                 return;
 
-            
             string[] request = { "" };
             String command = (string)context.Request.QueryString[InformationRequestConstants.InformationRequestToken];
 

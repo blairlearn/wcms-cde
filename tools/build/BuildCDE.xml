@@ -54,12 +54,6 @@
 
 
 	<!--
-		Copy the CDE Schema into the CancerGov deliverable folder. All sites are assumed to be configured to reference
-		CancerGov's copy of the file.
-	-->
-	<Copy SourceFiles="$(SourceLocation)\CDESchema\CDESchema.xsd"		DestinationFolder="$(StagingLocation)\CancerGov\Schema"		OverwriteReadOnlyFiles="true" />
-
-	<!--
 		Similar to the build, we want to execute the ConfigTransform target multiple times, with varying
 		combinations of CDE sites, environments, and preview/live.
 	-->
@@ -78,13 +72,13 @@
 	<Copy	SourceFiles="$(SourceLocation)\tools\build\resources\cdeBackup.ps1"		DestinationFolder="$(StagingLocation)"		OverwriteReadOnlyFiles="true" />
 
 	<Message Text="Creating $(TempBase)\$(BuildName).zip from $(StagingLocation)" />
-	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\create-zip.ps1 -sourcePath &quot;$(StagingLocation)\*&quot;  -destinationPath &quot;$(TempBase)\$(BuildName).zip&quot;" />
+	<Exec Command="powershell -ExecutionPolicy Unrestricted -NonInteractive scripts\create-zip.ps1 -sourcePath &quot;$(StagingLocation)\*&quot;  -destinationPath &quot;$(TempBase)\$(BuildName).zip&quot;" />
 
 	<Message Text="Creating tag $(BuildName)." />
 	<Exec Command="git tag $(BuildName) $(COMMIT_ID)" />
 
 	<Message Text="Uploading $(BuildName).zip to GitHub" />
-	<Exec Command="powershell -ExecutionPolicy RemoteSigned -NonInteractive scripts\github-release.ps1 -tagname $(BuildName) -releaseName $(BuildName) -commitId $(COMMIT_ID) -IsPreRelease -releaseNotes \&quot;Automated build $(BuildName)\&quot; -artifactDirectory &quot;$(TempBase)&quot; -artifactFileName &quot;$(BuildName).zip&quot; -gitHubUsername $(GH_ORGANIZATION_NAME) -gitHubRepository $(GH_REPO_NAME)" />
+	<Exec Command="powershell -ExecutionPolicy Unrestricted -NonInteractive scripts\github-release.ps1 -tagname $(BuildName) -releaseName $(BuildName) -commitId $(COMMIT_ID) -IsPreRelease -releaseNotes \&quot;Automated build $(BuildName)\&quot; -artifactDirectory &quot;$(TempBase)&quot; -artifactFileName &quot;$(BuildName).zip&quot; -gitHubUsername $(GH_ORGANIZATION_NAME) -gitHubRepository $(GH_REPO_NAME)" />
   </Target>
 
   <!--
@@ -120,6 +114,15 @@
 
 	<Error Condition=" '$(COMMIT_ID)'=='' "
           Text=" Missing required property [COMMIT_ID]" />
+
+	<Error Condition=" '$(WORKSPACE)'=='' "
+          Text=" Missing required property [WORKSPACE]" />
+
+	<Error Condition=" '$(TEMP)'=='' "
+          Text=" Missing required property [TEMP]" />
+
+	<Error Condition=" '$(BUILD_NUMBER)'=='' "
+          Text=" Missing required property [BUILD_NUMBER]" />
 
 	<Error Condition=" '$(GITHUB_TOKEN)'=='' "
           Text=" Missing required property [GITHUB_TOKEN]" />

@@ -1,3 +1,3 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="GeneticsTermDictionaryRouter.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.GeneticsTermDictionaryRouter" %>
-<asp:PlaceHolder ID="phGeneticsTermDictionary" runat="server" /> 
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.GeneticsTermDictionaryRouter" EnableViewState="false" %>
+<asp:PlaceHolder ID="phDictionary" runat="server" /> 
 

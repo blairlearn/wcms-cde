@@ -74,7 +74,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         protected override JObject GetTypeSpecificQueryParameters()
         {
             JObject queryParams = new JObject();
-            string[] diseaseIDsarr = this.DiseaseIDs.Split(new char[] { ',' });
+
+            // Get friendly name to c-code mapping
+            string disIDs = this.DiseaseIDs;
+            if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            {
+                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                if (friendlyNameMap.MappingContainsFriendlyName(this.DiseaseIDs.ToLower()))
+                {
+                    disIDs = friendlyNameMap.GetCodeFromFriendlyName(this.DiseaseIDs.ToLower());
+                }
+            }
+
+            string[] diseaseIDsarr = disIDs.Split(new char[] { ',' });
 
             queryParams.Add("diseases.nci_thesaurus_concept_id", new JArray(diseaseIDsarr));
 
@@ -85,7 +97,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             if (!string.IsNullOrWhiteSpace(this.InterventionIDs))
             {
-                string[] interventionIDsarr = this.InterventionIDs.Split(new char[] { ',' });
+                // Get friendly name to c-code mapping
+                string ivIDs = this.InterventionIDs;
+                if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+                {
+                    DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                    if (friendlyNameMap.MappingContainsFriendlyName(this.InterventionIDs.ToLower()))
+                    {
+                        ivIDs = friendlyNameMap.GetCodeFromFriendlyName(this.InterventionIDs.ToLower());
+                    }
+                }
+
+                string[] interventionIDsarr = ivIDs.Split(new char[] { ',' });
                 queryParams.Add("arms.interventions.intervention_code", new JArray(interventionIDsarr));
             }
 
@@ -99,6 +122,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>A string with the override text</returns>
         private string GetOverride(string valToOverride, bool needsTitleCase)
         {
+            // Get friendly name to c-code mapping
+            if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            {
+                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                if (friendlyNameMap.MappingContainsFriendlyName(valToOverride.ToLower()))
+                {
+                    valToOverride = friendlyNameMap.GetCodeFromFriendlyName(valToOverride);
+                }
+            }
+
             // Get label mappings
             var labelMapping = DynamicTrialListingMapping.Instance;
             string overrideText = "";
@@ -141,24 +174,113 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         private string InterventionIDs { get; set; }
 
+         /// <summary>
+         /// Used to get the parameters for the /notrials URL based on the current request
+         /// </summary>
+         /// <returns></returns>
+        protected override string[] GetParametersForNoTrials()
+        {
+            List<string> parameters = new List<string>();
+
+            if(this.DiseaseIDs != null && this.DiseaseIDs.Length > 0)
+                parameters.Add(this.DiseaseIDs);
+
+            if (this.TrialType != null)
+                parameters.Add(this.TrialType);
+
+            if(this.InterventionIDs != null && this.InterventionIDs.Length > 0)
+                parameters.Add(this.InterventionIDs);
+
+            return (parameters.ToArray());
+        }
+
         /// <summary>
         /// Parses the URL for all of the parameters for a disease dynamic listing page
         /// </summary>
         protected override void ParseURL()
         {
+
             if (this.CurrAppPath == "/")
             {
                 throw new HttpException(400, "Invalid Parameters");
             }
 
-            string[] urlParams = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (urlParams.Length >= 4)
+            List<string> rawParams = new List<string>();
+            
+            if (this.IsNoTrials)
+            {
+                NciUrl ParsedReqUrlParams = new NciUrl(true, true, true);  //We need this to be lowercase and collapse duplicate params. (Or not use an NCI URL)
+                ParsedReqUrlParams.SetUrl(this.Request.Url.Query);
+
+                if (ParsedReqUrlParams.QueryParameters.Count == 0)
+                {
+                    throw new HttpException(400, "Invalid Parameters");
+                }
+
+                rawParams = GetRawParametersFromQueryString(ParsedReqUrlParams);
+                SetDoNotIndex();
+            }
+            else
+            {
+              //Setup rawParams for /a/b/c structure
+                rawParams = this.CurrAppPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+            }
+
+            SetUpRawParametersForListingPage(rawParams);
+            SetUpCanonicalUrl();
+        }
+
+        /// <summary>
+        /// Sets the Canonical Url of the Disease Page
+        /// </summary>
+        private void SetUpCanonicalUrl()
+        {
+            // We set the Canonical Url. We make sure that the Canonical URL has the following format disease/trial type instead of 
+            // disease/trial type/intervention
+            string[] pathTokens = this.CurrAppPath.Split(new char[] { '/' });
+
+            if (pathTokens != null && pathTokens.Length > 0)
+            {
+                string canonicalUrl = this.CurrentUrl.ToString().ToLower();
+
+                // If there are disease IDs, we check if they have a friendly name for the canonical URL
+                if(this.DiseaseIDs != null && this.DiseaseIDs.Length > 0)
+                {
+                    // Get c-code to friendly name mapping
+                    if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+                    {
+                        DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                        if (friendlyNameMap.MappingContainsCode(this.DiseaseIDs.ToLower()))
+                        {
+                            canonicalUrl = canonicalUrl.Replace(this.DiseaseIDs, friendlyNameMap.GetFriendlyNameFromCode(this.DiseaseIDs));
+                        }
+                    }
+                }
+
+                // If there are intervention IDS we strip them from the canonical url
+                if (this.InterventionIDs != null && this.InterventionIDs.Length > 0)
+                    canonicalUrl = canonicalUrl.Replace("/" + this.InterventionIDs + "/", "").Replace("/" + this.InterventionIDs, "");
+             
+
+                this.PageInstruction.AddUrlFilter(PageAssemblyInstructionUrls.CanonicalUrl, (name, url) =>
+                {
+                    url.SetUrl(canonicalUrl);
+                });
+            }
+        }
+
+        /// <summary>
+        /// This method extracts the different pieces of the URLS and assign them as properties (i.e. DiseaseIDs, TrialType, etc) values of this control
+        /// </summary>
+        private void SetUpRawParametersForListingPage(List<string> urlParams)
+        {
+            if (urlParams.Count >= 4)
             {
                 throw new HttpException(400, "Invalid Parameters");
             }
 
             //Has Disease
-            if (urlParams.Length >= 1)
+            if (urlParams.Count >= 1)
             {
                 if (urlParams[0].Contains(","))
                 {
@@ -177,14 +299,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             //Has Type of Trial
-            if (urlParams.Length >= 2)
+            if (urlParams.Count >= 2)
             {
                 // Lowercase all c-codes for comparison to items in mapping file
                 this.TrialType = urlParams[1].ToLower();
             }
 
             //Has Intervention
-            if (urlParams.Length >= 3)
+            if (urlParams.Count >= 3)
             {
                 if (urlParams[2].Contains(","))
                 {
@@ -201,6 +323,57 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     this.InterventionIDs = urlParams[2].ToLower();
                 }
             }
+
+            // Check for friendly names that override c-codes in URL: if exists, redirect to that URL
+            if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            {
+                string redirectUrl = this.PrettyUrl.ToString();
+
+                List<string> urlParts = new List<string>();
+
+                if (!string.IsNullOrEmpty(this.DiseaseIDs))
+                {
+                    // Add Disease friendly name override to redirect URL path
+                    urlParts.Add(GetFriendlyNameForURL(this.DiseaseIDs));
+
+                    if(!string.IsNullOrEmpty(this.TrialType))
+                    {
+                        // Add trial type to redirect URL path
+                        urlParts.Add(this.TrialType);
+
+                        if (!string.IsNullOrEmpty(this.InterventionIDs))
+                        {
+                            // Add Intervention friendly name override to redirect URL path
+                            urlParts.Add(GetFriendlyNameForURL(this.InterventionIDs));
+                        }
+                    }
+
+                }
+                
+                // If there are friendly name overrides, set up the redirect URL using those values
+                if(needsRedirect)
+                {
+                    redirectUrl = redirectUrl.TrimEnd('/');
+
+                    foreach (string urlPart in urlParts)
+                    {
+                        redirectUrl += "/" + urlPart;
+                    }
+
+                    Response.RedirectPermanent(redirectUrl, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set do not index on no trials page
+        /// </summary>
+        private void SetDoNotIndex()
+        {
+            PageInstruction.AddFieldFilter("meta_robots", (name, data) =>
+            {
+                data.Value = "noindex, nofollow";
+            });
         }
 
         /// <summary>
@@ -271,7 +444,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 wbField.Value = desc;
             });
-
         }
     }
 }

@@ -137,24 +137,38 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             //fetch results
             var results = _basicCTSManager.Search(SearchParams, query);
+           
+            //CODE ADDED BY CHRISTIAN RIKONG ON 12/07/2017 at 03:07 PM - THE GOAL IS THAT WHEN THERE ARE NO TRIALS RESULTS, WE 
+            //REDIRECT TO THE NOTRIALS PAGE
 
-            this.TotalSearchResults = results.TotalResults;            
+            if(results == null || (results.TotalResults == 0 ))
+            {
+                this.OnEmptyResults();
+            }
+           
+                this.TotalSearchResults = results.TotalResults;
 
-            //Load VM File and show search results
-            LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
-                this.BaseConfig.ResultsPageTemplatePath,
-                new
-                {
-                    Results = results,
-                    Control = this,
-                    TrialTools = new TrialVelocityTools()
-                }
-            ));
-            Controls.Add(ltl);
+                //Load VM File and show search results
+                LiteralControl ltl = new LiteralControl(VelocityTemplate.MergeTemplateWithResultsByFilepath(
+                    this.BaseConfig.ResultsPageTemplatePath,
+                    new
+                    {
+                        Results = results,
+                        Control = this,
+                        TrialTools = new TrialVelocityTools()
+                    }
+                ));
+                Controls.Add(ltl);
 
-            // Setup web analytics
-            this.SetAnalytics();
+                // Setup web analytics
+                this.SetAnalytics();
         }
+
+
+         /// <summary>
+         ///    This method is called when no results are returned by the query
+         /// </summary>
+        protected abstract void OnEmptyResults();
 
         /// <summary>
         /// Loads the JSON configuration from the SnippetInfo's Data
@@ -675,24 +689,5 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
         #endregion
 
-        /// <summary>
-        /// Clears the Response text, issues an HTTP redirect using status 301, and ends
-        /// the current request.
-        /// </summary>
-        /// <param name="Response">The current response object.</param>
-        /// <param name="url">The redirection's target URL.</param>
-        /// <remarks>Response.Redirect() issues its redirect with a 301 (temporarily moved) status code.
-        /// We want these redirects to be permanent so search engines will link to the new
-        /// location. Unfortunately, HttpResponse.RedirectPermanent() isn't implemented until
-        /// at version 4.0 of the .NET Framework.</remarks>
-        /// <exception cref="ThreadAbortException">Called when the redirect takes place and the current
-        /// request is ended.</exception>
-        protected void DoPermanentRedirect(HttpResponse Response, String url)
-        {
-            Response.Clear();
-            Response.Status = "301 Moved Permanently";
-            Response.AddHeader("Location", url);
-            Response.End();
-        }
     }
 }

@@ -1,16 +1,16 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DrugDictionaryDefinitionView.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.DrugDictionaryDefinitionView" %>
-<%@ Register TagPrefix="DrugDictionaryHome" TagName="SearchBlock" Src="~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryHome.ascx" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.DrugDictionary.DrugDictionaryDefinitionView" %>
+<%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
  
-<DrugDictionaryHome:SearchBlock id="dictionarySearchBlock" runat="server" />
+<DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
     
 <asp:Repeater ID="drugDictionaryDefinitionView" runat="server" OnItemDataBound="drugDictionaryDefinitionView_OnItemDataBound">
 <ItemTemplate>
-    <div class="results">
+    <div class="results" data-dict-type="drug">
         <!-- Term and def -->
         <dl>
             <dt>
-                <dfn>
+                <dfn data-cdr-id="<%# ((DictionaryTerm)(Container.DataItem)).ID%>">
                     <span><%# ((DictionaryTerm)(Container.DataItem)).Term%></span>
                 </dfn>
             </dt>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
@@ -10,6 +11,7 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Configs;
 using Newtonsoft.Json.Linq;
+using System.Threading;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -22,6 +24,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// Set logging for this class.
         /// </summary>
         static ILog log = LogManager.GetLogger(typeof(DynamicTrialListingPageControl));
+
+        protected bool needsRedirect = false;
 
         /// <summary>
         /// Creates a DynamicTrialListingConfig for use in implementation methods
@@ -71,6 +75,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             else
             {
                 return string.Empty;
+            }
+        }
+
+         /// <summary>
+         /// Read property indicating if the Trial Listing Page URL contains the keyword "/notrials". If it is the case,
+         /// the property will be true. Otherwise false will be sent back
+         /// </summary>
+        protected bool IsNoTrials
+        {
+            get
+            {
+                return (this.CurrAppPath.ToLower().Trim().Contains("/notrials"));
             }
         }
 
@@ -181,6 +197,61 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             
             //Step 3. Setup Page Metadata
             this.SetupPageMetadata(pattern);
+
+        }
+
+         /// <summary>
+         /// This method is called when no results are returned by the query. In this case the function checks that the current URL does not
+         /// have the word notrials in it. If it is the case, the function will redirect the user to a page with the following URL:
+         /// PRETTYURL/NOTRIALS?p1=a&p2=b
+         /// </summary>
+        protected override void OnEmptyResults()
+        {
+
+            if (this.IsNoTrials)
+            {
+                return;
+            }
+
+            NciUrl noTrialsUrl = new NciUrl();
+            noTrialsUrl.SetUrl(this.PrettyUrl + "/notrials");
+            
+            //Parameters is always assumed to be greater than one
+            string[] parameters = this.GetParametersForNoTrials();
+            
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                noTrialsUrl.QueryParameters.Add("p" + (i + 1), parameters[i]);
+            }
+
+            Response.Redirect(noTrialsUrl.ToString(), true);
+        }
+
+        /// <summary>
+        /// Used to get the parameters for the /notrials URL based on the current request
+        /// </summary>
+        /// <returns></returns>
+        protected abstract string[] GetParametersForNoTrials();
+
+        /// <summary>
+        ///   Retrieves parameters from the Query string and encapsulate them into a list
+        /// </summary>
+        /// <param name="ParsedReqUrlParams"></param>
+        /// <returns></returns>
+        protected List<string> GetRawParametersFromQueryString(NciUrl ParsedReqUrlParams)
+        {
+            List<string> rawParams = new List<string>() { "", "", "" };
+
+            if (ParsedReqUrlParams.QueryParameters["p1"] != null)
+                rawParams[0] = ParsedReqUrlParams.QueryParameters["p1"];
+
+            if (ParsedReqUrlParams.QueryParameters.Count > 1 && ParsedReqUrlParams.QueryParameters["p2"] != null)
+                rawParams[1] = ParsedReqUrlParams.QueryParameters["p2"];
+
+            if (ParsedReqUrlParams.QueryParameters.Count > 2 && ParsedReqUrlParams.QueryParameters["p3"] != null)
+                rawParams[2] = ParsedReqUrlParams.QueryParameters["p3"];
+
+            return (rawParams);
         }
 
         /// <summary>
@@ -240,6 +311,26 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             else
             {
                 return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Friendly Name to replace a c-code in the URL for the dynamic trial listing page. If there is no override for that c-code,
+        /// it return the given c-codes. Also sets needsRedirect to true if there is a friendly name override found.
+        /// </summary>
+        /// <returns>A string with the friendly name for the URL (replaces c-code) if the override exists, otherwise the given c-codes</returns>
+        protected string GetFriendlyNameForURL(string param)
+        {
+            DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+
+            if (friendlyNameMap.MappingContainsCode(param))
+            {
+                needsRedirect = true;
+                return friendlyNameMap.GetFriendlyNameFromCode(param);
+            }
+            else
+            {
+                return param;
             }
         }
     }

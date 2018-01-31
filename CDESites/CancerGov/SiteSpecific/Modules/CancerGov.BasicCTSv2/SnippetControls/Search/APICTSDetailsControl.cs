@@ -12,6 +12,7 @@ using NCI.Web.CDE.Modules;
 using NCI.Web.CDE.UI;
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
 using CancerGov.ClinicalTrialsAPI;
+using NCI.Web.CDE.WebAnalytics;
 
 namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
@@ -22,6 +23,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         private bool _showingAll = false;
         private string _trialID = string.Empty;
         private bool _showCriteria = false;
+        private string _nctid = string.Empty;
 
         public bool ShowingAll { get { return _showingAll; } }
         public string TrialID { get { return _trialID;  } }
@@ -81,7 +83,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             //TODO: Glossification????
 
-            //TODO: Setup analytics
+            // Set up NCTID for analytics
+            _nctid = trial.NCTID;
 
             //We did not come from a search, so don't show the criteria.
             //this also applies if we can from a print result.
@@ -110,12 +113,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             PageInstruction.AddFieldFilter("short_title", (fieldName, data) =>
             {
+                data.Value = trial.BriefTitle;
+
                 //Eh, When would this happen???
                 if (!string.IsNullOrWhiteSpace(trial.NCTID))
-                    data.Value = "View Clinical Trial " + trial.NCTID;
-                else
-                    data.Value = "View Clinical Trial";
+                    data.Value += " - " + trial.NCTID;
+
             });
+
+
+            PageInstruction.AddFieldFilter("meta_description", (fieldname, data) =>
+            {
+                data.Value = trial.BriefTitle;
+            });
+
+
+
 
             PageInstruction.AddUrlFilter("CurrentUrl", (name, url) =>
             {
@@ -133,7 +146,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 // only the id should be provided for the canonical URL, so clear all query parameters and
                 // then add back id
                 url.QueryParameters.Clear();
-                url.QueryParameters.Add("id", TrialID);
+                url.QueryParameters.Add("id", trial.NCIID);
+                //url.QueryParameters.Add("id", TrialID); 
             });
 
             // Override the social media URL (og:url)
@@ -270,6 +284,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             string type = GetSearchType(this.SearchParams);
             return "Clinical Trials: " + type;
+        }
+
+        /// <summary>
+        /// Set additional, page-specific analytics values.
+        /// Set NCTID analytics value.
+        /// </summary>
+        protected override void AddAdditionalAnalytics()
+        {
+            // Set prop16
+            this.PageInstruction.SetWebAnalytics(WebAnalyticsOptions.Props.prop16, wbField =>
+            {
+                wbField.Value = _nctid;
+            });
         }
 
         #endregion

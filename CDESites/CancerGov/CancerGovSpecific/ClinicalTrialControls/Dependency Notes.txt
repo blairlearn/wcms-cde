@@ -1,6 +1,0 @@
-﻿
-CTSearchCriteriaDisplay needs a reference to CancerGov.CDR.ClinicalTrials.Search.
-
-All other controls are (and should remain) independent of the ClinicalTrials
-project and should be moved to the NCILibrary.Web.UI.WebControls at the
-earliest opportunity.

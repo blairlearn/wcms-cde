@@ -135,6 +135,14 @@ namespace CancerGov.Web.UI.SnippetControls
                 {
                     divClass = "current-page";
                 }
+                // This check is implemented for pages that implement push state - such as the dictionaries, where all pages under the main
+                // dictionary page should still highlight the dictionary as the current page in the section nav, but have a different URL.
+                // They have the same PrettyURL, which is why the current page should be highlighted.
+                else if ((PageAssemblyContext.Current.PageAssemblyInstruction.ImplementsPushState == true) && String.Equals(item.URL, PageAssemblyContext.Current.PageAssemblyInstruction.GetUrl(PageAssemblyInstructionUrls.PrettyUrl).ToString()))
+                {
+                    divClass = "current-page";
+                }
+
                 ariaClass = "true";
                 pastCurrentPage = true;
             }

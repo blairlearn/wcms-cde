@@ -1,16 +1,18 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TermDictionaryDefinitionView.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.TermDictionaryDefinitionView" %>
-<%@ Register TagPrefix="TermDictionaryHome" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/Views/TermDictionaryHome.ascx" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.TermDictionary.TermDictionaryDefinitionView" %>
+<%@ Register TagPrefix="TermDictionaryHome" TagName="DictionaryHome" Src="~/SnippetTemplates/TermDictionary/Views/TermDictionaryHome.ascx" %>
+<%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
  
-<TermDictionaryHome:SearchBlock id="dictionarySearchBlock" runat="server" />
+<TermDictionaryHome:DictionaryHome id="termDictionaryHome" runat="server" />
+<DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
     
 <asp:Repeater ID="termDictionaryDefinitionView" runat="server" OnItemDataBound="termDictionaryDefinitionView_OnItemDataBound">
 <ItemTemplate> 
         <!-- Term and def -->
-        <div class="results">
+        <div class="results" data-dict-type="term">
             <dl class="dictionary-list">
                 <dt>
-                    <dfn>
+                    <dfn data-cdr-id="<%# ((DictionaryTerm)(Container.DataItem)).ID%>">
                         <%# ((DictionaryTerm)(Container.DataItem)).Term%>
                        
                     </dfn>

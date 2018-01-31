@@ -1,10 +1,10 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DrugDictionaryResultsList.ascx.cs" Inherits="CancerGov.Web.SnippetTemplates.DrugDictionaryResultsList" %>
-<%@ Register TagPrefix="DrugDictionaryHome" TagName="SearchBlock" Src="~/SnippetTemplates/DrugDictionary/Views/DrugDictionaryHome.ascx" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" Inherits="CancerGov.Dictionaries.SnippetControls.DrugDictionary.DrugDictionaryResultsList" %>
+<%@ Register TagPrefix="DictionarySearchBlock" TagName="SearchBlock" Src="~/SnippetTemplates/TermDictionary/DictionarySearchBlock.ascx" %>
 <%@ Import Namespace="NCI.Web.Dictionary.BusinessObjects" %>
 
-<DrugDictionaryHome:SearchBlock AtoZIncludesAll="true" id="dictionarySearchBlock" runat="server" />
+<DictionarySearchBlock:SearchBlock id="dictionarySearchBlock" runat="server" />
 
- <div class="results">
+ <div class="results" data-dict-type="drug">
     <!-- Number of results -->
     <asp:Panel ID="numResDiv" runat="server" CssClass="dictionary-search-results-header">
         <span class="results-count">
@@ -22,8 +22,8 @@
         </LayoutTemplate>
         <ItemTemplate>
             <dt>
-               <dfn>
-                    <a href="<%# DictionaryURL %>?CdrID=<%# ((DictionarySearchResult)(Container.DataItem)).ID  %>" <%# ResultListViewHrefOnclick(Container)%>>
+               <dfn data-cdr-id="<%# ((DictionarySearchResult)(Container.DataItem)).ID%>">
+                    <a href="<%# this.DictionaryRouter.GetDefinitionUrl() + GetFriendlyName(((DictionarySearchResult)(Container.DataItem)).ID.ToString())  %>" <%# ResultListViewHrefOnclick(Container)%>>
                         <%# HiLite(((DictionarySearchResult)(Container.DataItem)).MatchedTerm )%></a>
                     <span class="dictionary-partial-match-n">
                         <%# GetTermAliasList(Container.DataItem)%>
