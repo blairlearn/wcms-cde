@@ -44,6 +44,27 @@ namespace NCI.Web.CDE.PageAssembly
         }
 
         /// <summary>
+        /// Selects out the ExcludeFromSitemap property
+        /// </summary>
+        /// <param name="nav">The XPathNavigator representing the Instruction</param>
+        /// <param name="manager">The namespace manager for the Instruction</param>
+        /// <param name="instructionType">The type of the Instruction (SinglePageAssemblyInstruction or GenericFileInstruction)</param>
+        /// <returns>The value of the ExcludeFromSitemap node, or false if it does not exist</returns>
+        private bool ExcludeFromSitemap(XPathNavigator nav, XmlNamespaceManager manager, string instructionType)
+        {
+            string nodePath = String.Format("//cde:{0}/SearchMetadata/ExcludeFromSitemap", instructionType);
+
+            try
+            {
+                //Try and select it as a boolean returning the actual value as a boolean
+                return nav.SelectSingleNode(nodePath, manager).ValueAsBoolean;
+            }
+            catch { } //If it could not convert or be found, then continue.                        
+
+            return false; //Default is ExcludeFromSitemap = false;  This is in case the node is not found or not boolean text
+        }
+
+        /// <summary>
         /// Gets the URL for this item
         /// </summary>
         /// <param name="nav">The XPathNavigator representing the Instruction</param>
@@ -108,6 +129,10 @@ namespace NCI.Web.CDE.PageAssembly
 
                     //If this item is marked as DoNotIndex, then skip it.
                     if (DoNotIndex(nav, manager, "SinglePageAssemblyInstruction"))
+                        continue;
+
+                    //If this item is marked as DoNotIndex, then skip it.
+                    if (ExcludeFromSitemap(nav, manager, "SinglePageAssemblyInstruction"))
                         continue;
 
                     // Get pretty url from PrettyUrl node

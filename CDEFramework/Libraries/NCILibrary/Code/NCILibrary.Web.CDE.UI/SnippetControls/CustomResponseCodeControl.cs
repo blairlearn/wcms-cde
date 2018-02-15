@@ -28,7 +28,7 @@ namespace NCI.Web.CDE.UI.SnippetControls
             }
             catch (Exception ex)
             {
-                log.WarnFormat("Could not set response code {0} or description {1} for page.", ex, config.code, config.description);
+                log.ErrorFormat("Could not set custom response code \"{0}\" or description \"{1}\" for page.", ex, config.code, config.description);
             }
 
             this.Visible = false;
