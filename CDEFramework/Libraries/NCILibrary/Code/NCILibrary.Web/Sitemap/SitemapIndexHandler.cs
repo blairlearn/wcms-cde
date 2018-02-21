@@ -1,19 +1,22 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
 using System.Web;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Linq;
+using System.IO;
 using System.Configuration;
 using Common.Logging;
 
 namespace NCI.Web.Sitemap
 {
-    public class SitemapHandler : IHttpHandler
+    public class SitemapIndexHandler : IHttpHandler
     {
-        static ILog log = LogManager.GetLogger(typeof(SitemapHandler));
+
+        static ILog log = LogManager.GetLogger(typeof(SitemapIndexHandler));
 
 
         /// <summary>
@@ -38,16 +41,14 @@ namespace NCI.Web.Sitemap
             response.ContentEncoding = System.Text.Encoding.UTF8;
             byte[] utf8;
 
-            string sitemapName = GetSitemapName(request.FilePath);
-
             // Check if sitemap is already in the cache; if so, print the cached sitemap
-            if (HttpContext.Current.Cache[sitemapName] != null)
+            if (HttpContext.Current.Cache["sitemap_index"] != null)
             {
-                utf8 = (byte[])HttpContext.Current.Cache[sitemapName];
+                utf8 = (byte[])HttpContext.Current.Cache["sitemap_index"];
                 response.OutputStream.Write(utf8, 0, utf8.Length);
             }
             // Check if the exception is already in the cache; if so, go to error page
-            else if (HttpContext.Current.Cache[sitemapName + "_ex"] != null)
+            else if (HttpContext.Current.Cache["sitemap_index_ex"] != null)
             {
                 response.Status = "500";
                 response.End();
@@ -63,15 +64,15 @@ namespace NCI.Web.Sitemap
                 {
                     XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
                     ns.Add(string.Empty, "http://www.sitemaps.org/schemas/sitemap/0.9");
-                    XmlSerializer ser = new XmlSerializer(typeof(SitemapUrlSet), "http://www.sitemaps.org/schemas/sitemap/0.9");
+                    XmlSerializer ser = new XmlSerializer(typeof(SitemapIndexUrlSet), "http://www.sitemaps.org/schemas/sitemap/0.9");
 
                     using (MemoryStream memStream = new MemoryStream())
                     using (XmlWriter writer = XmlWriter.Create(memStream))
                     {
                         stopwatch.Start();
-                        ser.Serialize(writer, Sitemaps.GetSitemap(sitemapName), ns);
+                        ser.Serialize(writer, Sitemaps.GetSitemapIndex(), ns);
                         utf8 = memStream.ToArray();
-                        HttpContext.Current.Cache.Add(sitemapName, utf8, null, DateTime.Now.AddSeconds(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
+                        HttpContext.Current.Cache.Add("sitemap_index", utf8, null, DateTime.Now.AddSeconds(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
                         response.OutputStream.Write(utf8, 0, utf8.Length);
                         stopwatch.Stop();
                     }
@@ -82,11 +83,11 @@ namespace NCI.Web.Sitemap
                     timeSpan = stopwatch.Elapsed;
                     if (timeSpan.TotalSeconds > 90)
                     {
-                        log.Error("Warning: XML Sitemap " + sitemapName + " is taking longer than expected to retrieve. Check page and file instruction XML files.\nTime Elapsed for Sitemap " + sitemapName + " Retrieval: " + timeSpan.ToString());
+                        log.Error("Warning: XML sitemap index is taking longer than expected to retrieve. Check web config.\nTime Elapsed for Sitemap Index Retrieval: " + timeSpan.ToString());
                     }
                     else
                     {
-                        log.Debug("Time Elapsed for Sitemap " + sitemapName + " Retrieval: " + timeSpan.ToString());
+                        log.Debug("Time Elapsed for Sitemap Index Retrieval: " + timeSpan.ToString());
                     }
                 }
                 // Save the exception in the cache and send an error email
@@ -98,34 +99,13 @@ namespace NCI.Web.Sitemap
                     }
                     timeSpan = stopwatch.Elapsed;
 
-                    HttpContext.Current.Cache.Add(sitemapName + "_ex", ex, null, DateTime.Now.AddSeconds(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
-                    log.Fatal("Error generating Sitemap " + sitemapName + ". Check page and file instruction XML files. \nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host
-                              + "\nTime Elapsed for Sitemap " + sitemapName + " Retrieval: " + timeSpan.ToString() + " \nSitemapHandler.cs:ProcessRequest()", ex);
+                    HttpContext.Current.Cache.Add("sitemap_index_ex", ex, null, DateTime.Now.AddSeconds(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
+                    log.Fatal("Error generating sitemap index. Check web config. \nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host
+                              + "\nTime Elapsed for Sitemap Index Retrieval: " + timeSpan.ToString() + " \nSitemapIndexHandler.cs:ProcessRequest()", ex);
                     response.Status = "500";
                     response.End();
                 }
             }
-        }
-
-        private string GetSitemapName(string requestFilepath)
-        {
-            // check if filepath matches a sitemap given in the web.config
-            string filepath = requestFilepath.Split('/').Last();
-
-            SitemapIndexSection section = (SitemapIndexSection)ConfigurationManager.GetSection("SitemapIndex");
-            SitemapIndexProviderConfiguration config = section.Sitemaps;
-
-            foreach (SitemapProviderConfiguration element in config)
-            {
-                if (String.Equals(element.Name.ToLower(), filepath.ToLower()))
-                {
-                    string sitemapName = filepath.Replace(".xml", "");
-                    return sitemapName;
-                }
-            }
-
-            // throw error if filepath isn't defined in web config
-            return null;
         }
 
         #endregion

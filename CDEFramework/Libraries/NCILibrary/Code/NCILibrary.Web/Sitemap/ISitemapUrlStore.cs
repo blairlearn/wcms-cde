@@ -7,6 +7,6 @@ namespace NCI.Web.Sitemap
 {
     public interface ISitemapUrlStore
     {
-        SitemapUrlSet GetSitemapUrls();
+        SitemapUrlSet GetSitemapUrls(string sitemapName);
     }
 }

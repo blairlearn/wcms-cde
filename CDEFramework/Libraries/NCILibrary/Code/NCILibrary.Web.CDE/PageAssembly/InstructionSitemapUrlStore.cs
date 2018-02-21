@@ -101,7 +101,7 @@ namespace NCI.Web.CDE.PageAssembly
         /// Create a collection of URL elements from XML files
         /// </summary>
         /// <returns>SitemapUrlSet</returns>
-        public override SitemapUrlSet GetSitemapUrls()
+        public override SitemapUrlSet GetSitemapUrls(string sitemapName)
         {
             List<SitemapUrl> sitemapUrls = new List<SitemapUrl>();
             String path;
@@ -109,7 +109,9 @@ namespace NCI.Web.CDE.PageAssembly
             double priority;
             String directory = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/"));
             string fileDirectory = Path.GetDirectoryName(directory);
-            SitemapProviderConfiguration config = (SitemapProviderConfiguration)ConfigurationManager.GetSection("Sitemap");
+            SitemapIndexSection section = (SitemapIndexSection)ConfigurationManager.GetSection("SitemapIndex");
+            SitemapIndexProviderConfiguration indexConfig = section.Sitemaps;
+            SitemapProviderConfiguration config = indexConfig[sitemapName + ".xml"];
             int maxErrorCount = config.ErrorCount.Max;
             int errorCount = 0;
             List<String> errorMessages = new List<String>();
