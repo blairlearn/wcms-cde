@@ -31,8 +31,6 @@ namespace NCI.Web.Sitemap
             string path = config.SitemapStores[0].Parameters.Get("path");
             String file = HttpContext.Current.Server.MapPath(path);
 
-            List<String> errorMessages = new List<String>();
-
             try
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(SitemapUrlSet));

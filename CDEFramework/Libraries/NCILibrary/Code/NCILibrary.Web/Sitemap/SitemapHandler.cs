@@ -71,7 +71,7 @@ namespace NCI.Web.Sitemap
                         stopwatch.Start();
                         ser.Serialize(writer, Sitemaps.GetSitemap(sitemapName), ns);
                         utf8 = memStream.ToArray();
-                        HttpContext.Current.Cache.Add(sitemapName, utf8, null, DateTime.Now.AddSeconds(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
+                        HttpContext.Current.Cache.Add(sitemapName, utf8, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
                         response.OutputStream.Write(utf8, 0, utf8.Length);
                         stopwatch.Stop();
                     }
@@ -98,7 +98,7 @@ namespace NCI.Web.Sitemap
                     }
                     timeSpan = stopwatch.Elapsed;
 
-                    HttpContext.Current.Cache.Add(sitemapName + "_ex", ex, null, DateTime.Now.AddSeconds(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
+                    HttpContext.Current.Cache.Add(sitemapName + "_ex", ex, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
                     log.Fatal("Error generating Sitemap " + sitemapName + ". Check page and file instruction XML files. \nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host
                               + "\nTime Elapsed for Sitemap " + sitemapName + " Retrieval: " + timeSpan.ToString() + " \nSitemapHandler.cs:ProcessRequest()", ex);
                     response.Status = "500";
