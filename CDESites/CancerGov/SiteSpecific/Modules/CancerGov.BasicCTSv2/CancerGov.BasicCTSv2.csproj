@@ -106,6 +106,7 @@
     <Compile Include="SearchParams\ResultsLinkEnum.cs" />
     <Compile Include="SearchParams\TerminologyFieldSearchParam.cs" />
     <Compile Include="SearchParams\LocationParams\ZipCodeLocationSearchParams.cs" />
+    <Compile Include="Sitemap\ClinicalTrialsSitemapUrlStore.cs" />
     <Compile Include="SnippetControls\Search\APICTSAdvancedSearchControl.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -187,6 +188,10 @@
     <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web.CDE\NCILibrary.Web.CDE.csproj">
       <Project>{eee51ba0-18ae-4cf2-876f-7e75b5a2d1ff}</Project>
       <Name>NCILibrary.Web.CDE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\CDEFramework\Libraries\NCILibrary\Code\NCILibrary.Web\NCILibrary.Web.csproj">
+      <Project>{1fa9b9c2-0e20-4256-a00b-989b33154ebb}</Project>
+      <Name>NCILibrary.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\CancerGovCommon\CancerGovCommon.csproj">
       <Project>{6f797b18-ff7e-4963-8e13-5ea26e910198}</Project>

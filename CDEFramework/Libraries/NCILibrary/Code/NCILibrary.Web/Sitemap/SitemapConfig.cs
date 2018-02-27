@@ -38,10 +38,8 @@ namespace NCI.Web.Sitemap
 
             try
             {
-                SitemapIndexSection section = (SitemapIndexSection)ConfigurationManager.GetSection(sitemapIndexSection);
-                SitemapIndexProviderConfiguration indexConfig = section.Sitemaps;
-                SitemapProviderConfiguration provConfig = indexConfig[sitemapName + ".xml"];
-                rtnElem = provConfig.SitemapStores[0].Parameters.Get("path");
+                SitemapProviderConfiguration provider = GetProviderByName(sitemapName);
+                rtnElem = provider.SitemapStores[0].Parameters.Get("path");
             }
             catch (Exception ex)
             {

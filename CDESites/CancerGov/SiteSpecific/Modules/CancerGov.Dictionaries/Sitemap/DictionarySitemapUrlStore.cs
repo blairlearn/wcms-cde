@@ -43,7 +43,7 @@ namespace CancerGov.Dictionaries.Sitemap
                 throw ex;
             }
 
-            string path = SitemapConfig.GetProviderPathByName(sitemapName);
+            string path = _info.SitemapStore;
 
             if(path != null)
             {
@@ -85,13 +85,13 @@ namespace CancerGov.Dictionaries.Sitemap
                                 }
                                 catch
                                 {
-                                    log.ErrorFormat("Error in dictionary sitemap file for line {0} : could not create dictionary entry metadata.", currentLine);
+                                    log.ErrorFormat("Error in dictionary sitemap file {0} for line {1} : could not create dictionary entry metadata.", file, currentLine);
                                     continue;
                                 }
                             }
                             else
                             {
-                                log.ErrorFormat("Error in dictionary sitemap file for line {0} : invalid syntax.", currentLine);
+                                log.ErrorFormat("Error in dictionary sitemap file {0} for line {1} : invalid syntax.", file, currentLine);
                                 continue;
                             }
                         }
@@ -103,7 +103,7 @@ namespace CancerGov.Dictionaries.Sitemap
                 }
                 catch (Exception e)
                 {
-                    log.ErrorFormat("Error in DictionarySitemapUrlStore: unable to read dictionary sitemap file at {0}.", file);
+                    log.ErrorFormat("Error in DictionarySitemapUrlStore: unable to read dictionary sitemap file located at {0}.", file);
                 }
 
                 foreach (DictionaryEntryMetadata entry in entries)
@@ -133,7 +133,7 @@ namespace CancerGov.Dictionaries.Sitemap
         /// <returns></returns>
         public static DictionariesInfo GetDictionariesInfo()
         {
-            string configPath = ConfigurationManager.AppSettings["DictionariesInfo"];
+            string configPath = ConfigurationManager.AppSettings["DictionariesConfigFilePath"];
             return (DictionariesInfo)ModuleObjectFactory<DictionariesInfo>.GetObjectFromFile(configPath);
 
         }
@@ -164,24 +164,17 @@ namespace CancerGov.Dictionaries.Sitemap
         }
 
         /// <summary>
-        /// Gets the friendly name of the given CDRID, if it exists.
-        /// Otherwise, returns the CDRID.
+        /// Gets the URL for the given cdrID.
+        /// Returns the URL with the friendly-name if found, otherwise with the CDRID.
         /// </summary>
         public string GetSitemapUrl(DictionaryInfo info, string cdrId)
         {
-            string url = _hostName + info.DefinitionUrl;
-            string entryUrlSegment = GetFriendlyName(info, cdrId);
+            NciUrl url = new NciUrl();
+            url.SetUrl(_hostName);
+            url.AppendPathSegment(info.DefinitionUrl);
+            url.AppendPathSegment(GetFriendlyName(info, cdrId));
 
-            if (url.EndsWith("/"))
-            {
-                url += entryUrlSegment;
-            }
-            else
-            {
-                url += "/" + entryUrlSegment;
-            }
-
-            return url;
+            return _hostName + url.ToString();
         }
     }
 }

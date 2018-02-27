@@ -159,6 +159,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public string[] MappingFiles { get; set; }
 
         /// <summary>
+        /// Gets the path to the Clinical Trials Sitemap Store file.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string SitemapStore { get; set; }
+
+        /// <summary>
         /// Helper method to load configuration based on CTSConfigFilePath appsetting path.
         /// </summary>
         /// <returns></returns>

@@ -19,5 +19,11 @@ namespace CancerGov.Dictionaries.Configuration
         [XmlArray(ElementName = "Dictionaries", Form = XmlSchemaForm.Unqualified)]
         [XmlArrayItem("Dictionary", typeof(DictionaryInfo), Form = XmlSchemaForm.Unqualified)]
         public List<DictionaryInfo> DictionaryInfos { get; set; }
+
+        /// <summary>
+        /// Gets the path to the Dictionaries Sitemap Store file.
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public string SitemapStore { get; set; }
     }
 }
