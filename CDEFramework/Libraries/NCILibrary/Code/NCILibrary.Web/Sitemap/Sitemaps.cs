@@ -121,7 +121,7 @@ namespace NCI.Web.Sitemap
 
                     if (store != null)
                     {
-                        store.Initialize(settings.Name.Replace("Store", "").ToLower(), settings.Parameters);
+                        store.Initialize(settings.Name.ToLower(), settings.Parameters);
                     }
 
                     s_Stores.Add(store);
