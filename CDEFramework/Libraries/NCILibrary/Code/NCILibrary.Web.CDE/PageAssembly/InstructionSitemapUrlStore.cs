@@ -109,9 +109,7 @@ namespace NCI.Web.CDE.PageAssembly
             double priority;
             String directory = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/"));
             string fileDirectory = Path.GetDirectoryName(directory);
-            SitemapIndexSection section = (SitemapIndexSection)ConfigurationManager.GetSection("SitemapIndex");
-            SitemapIndexProviderConfiguration indexConfig = section.Sitemaps;
-            SitemapProviderConfiguration config = indexConfig[sitemapName + ".xml"];
+            SitemapProviderConfiguration config = SitemapConfig.GetProviderByName(sitemapName);
             int maxErrorCount = config.ErrorCount.Max;
             int errorCount = 0;
             List<String> errorMessages = new List<String>();

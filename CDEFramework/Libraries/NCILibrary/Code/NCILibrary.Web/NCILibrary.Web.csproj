@@ -80,6 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sitemap\FileSitemapUrlStore.cs" />
     <Compile Include="Sitemap\ISitemapUrlStore.cs" />
+    <Compile Include="Sitemap\SitemapConfig.cs" />
     <Compile Include="Sitemap\SitemapHandler.cs" />
     <Compile Include="Sitemap\SitemapIndexHandler.cs" />
     <Compile Include="Sitemap\SitemapIndexProviderConfiguration.cs" />

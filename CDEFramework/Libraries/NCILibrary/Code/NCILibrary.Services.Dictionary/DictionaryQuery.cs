@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using Common.Logging;
 using NCI.Data;
 
@@ -16,6 +18,7 @@ namespace NCI.Services.Dictionary
         const string SP_SEARCH_DICTIONARY = "usp_SearchDictionary";
         const string SP_SEARCH_SUGGEST_DICTIONARY = "usp_SearchSuggestDictionary";
         const string SP_EXPAND_DICTIONARY = "usp_SearchExpandDictionary";
+        const string SP_DO_DICTIONARY_ENTRIES_EXIST = "dictionaryTerm_exist";
 
         private string DBConnectionString { get; set; }
 
@@ -336,6 +339,114 @@ namespace NCI.Services.Dictionary
             }
 
             return new SearchResults(results, matchCount);
+        }
+
+        /// <summary>
+        /// Performs a check of whether the given dictionary entries are valid in the database.
+        /// </summary>
+        /// <param name="entriesList">A list of DictionaryEntryMetadata items to query the database for existence.</param>
+        /// <returns>DataTable containing a list of matching dictionary entries metadata.</returns>
+        public DataTable DoDictionaryEntriesExist(List<DictionaryEntryMetadata> entriesList)
+        {
+            // Set up DataTable of DictionaryEntryMetadatas
+            DataTable entries = ReturnTermMetadataSqlParam(entriesList);
+            DataTable results = null;
+            DataTable joinedResults = GetTermMetadataDataTable();
+
+            // Set up the entries DataTable SQL param
+            SqlParameter termMetadataTableParam = new SqlParameter("@dictionaryterms", entries);
+            termMetadataTableParam.SqlDbType = SqlDbType.Structured;
+            termMetadataTableParam.TypeName = "dbo.udt_DictionaryTerm";
+
+            SqlParameter[] parameters = new SqlParameter[] {
+                termMetadataTableParam               
+            };
+
+            using (SqlConnection conn = SqlHelper.CreateConnection(DBConnectionString))
+            {
+                // This returns a table with all of the given "entries" table's CDRIDs, and true or false depending on whether the item exists in the database.
+                results = SqlHelper.ExecuteDatatable(conn, CommandType.StoredProcedure, SP_DO_DICTIONARY_ENTRIES_EXIST, parameters);
+            }
+            
+            // Remove all entries from the results that are not valid in the database
+            var validResults = results.AsEnumerable().Where(r => r.Field<int>("Column1") == 0);
+
+            foreach (var row in validResults.ToList())
+            {
+                results.Rows.Remove(row);
+            }
+
+            // Join the given "results" table and the "entries" table. The joined match (or matches, since a term CDRID will match two CDRIDs - Spanish and English - in the "results table)
+            // are put into a list and the first of this list is selected to prevent duplicates.
+            IEnumerable<DataRow> joined = from dr1 in results.AsEnumerable()
+                                          join dr2 in entries.AsEnumerable()
+                                          on dr1.Field<int>("cdrid") equals dr2.Field<int>("CDRID") into lstGroup
+                                          select lstGroup.First();
+
+            joinedResults = joined.CopyToDataTable<DataRow>();
+            int i = joinedResults.Rows.Count;
+
+            return joinedResults;
+        }
+
+        // Set up datatable structure for Term Metadata table
+        private DataTable GetTermMetadataDataTable()
+        {
+            // This datatable must be structured like the datatable in the stored proc, 
+            // in order to be passed in correctly as a parameter.
+            DataTable dt = new DataTable();
+
+            // First column, "CDRID", is an int
+            DataColumn dc = new DataColumn();
+            dc.DataType = System.Type.GetType("System.Int32");
+            dc.ColumnName = "CDRID";
+            dt.Columns.Add(dc);
+
+            // Second column, "Dictionary", is a varchar of 20 characters
+            DataColumn dc1 = new DataColumn();
+            dc1.DataType = System.Type.GetType("System.String");
+            dc1.ColumnName = "Dictionary";
+            dc1.MaxLength = 20;
+            dt.Columns.Add(dc1);
+
+            // Third column, "Language", is a varchar of 40 characters
+            DataColumn dc2 = new DataColumn();
+            dc2.DataType = System.Type.GetType("System.String");
+            dc2.ColumnName = "Language";
+            dc2.MaxLength = 40;
+            dt.Columns.Add(dc2);
+
+            // Fourth column, "Audience", is a varchar of 50 characters
+            DataColumn dc3 = new DataColumn();
+            dc3.DataType = System.Type.GetType("System.String");
+            dc3.ColumnName = "Audience";
+            dc3.MaxLength = 50;
+            dt.Columns.Add(dc3);
+
+            return dt;
+        }
+
+        // Create TermMetadata DataTable from entries list for SQL query
+        private DataTable ReturnTermMetadataSqlParam(List<DictionaryEntryMetadata> entries)
+        {
+            // This datatable must be structured like the datatable in the stored proc, 
+            // in order to be passed in correctly as a parameter.
+            DataTable dt = GetTermMetadataDataTable();
+
+            // Loop through each of the different DictionaryEntryMetadata entries
+            foreach (DictionaryEntryMetadata entry in entries)
+            {
+                // Create a new row in the datatable for each dictionary entry, and assign the
+                // values to the columns accordingly.
+                DataRow row = dt.NewRow();
+                row["CDRID"] = entry.CDRID;
+                row["Dictionary"] = entry.Dictionary;
+                row["Language"] = entry.Language;
+                row["Audience"] = entry.Audience;
+                dt.Rows.Add(row);
+            }
+
+            return dt;
         }
     }
 }

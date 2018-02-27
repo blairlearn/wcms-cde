@@ -25,27 +25,33 @@ namespace NCI.Web.Sitemap
         {
             SitemapUrlSet sitemapUrls = new SitemapUrlSet();
 
-            SitemapIndexSection section = (SitemapIndexSection)ConfigurationManager.GetSection("SitemapIndex");
-            SitemapIndexProviderConfiguration indexConfig = section.Sitemaps;
-            SitemapProviderConfiguration config = indexConfig[sitemapName + ".xml"];
-            string path = config.SitemapStores[0].Parameters.Get("path");
-            String file = HttpContext.Current.Server.MapPath(path);
+            string path = SitemapConfig.GetProviderPathByName(sitemapName);
 
-            try
+            if (path != null)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(SitemapUrlSet));
-                StreamReader reader = new StreamReader(file);
-                sitemapUrls = (SitemapUrlSet)serializer.Deserialize(reader);
-                reader.Close();
+                String file = HttpContext.Current.Server.MapPath(path);
+
+                try
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(SitemapUrlSet));
+                    StreamReader reader = new StreamReader(file);
+                    sitemapUrls = (SitemapUrlSet)serializer.Deserialize(reader);
+                    reader.Close();
+                }
+                // If the file is malformed XML, create an error message.
+                catch (XmlException ex)
+                {
+                    log.Error("An XML file has failed parsing in FileSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString() + "\n");
+                    throw (ex);
+                }
+
+                return new SitemapUrlSet(sitemapUrls);
             }
-            // If the file is malformed XML, create an error message.
-            catch (XmlException ex)
+            else
             {
-                log.Error("An XML file has failed parsing in FileSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString() + "\n");
-                throw (ex);
+                log.ErrorFormat("Could not load dictionary provider file located at {0}.", path);
+                return new SitemapUrlSet();
             }
-            
-            return new SitemapUrlSet(sitemapUrls);
         }
     }
 }
