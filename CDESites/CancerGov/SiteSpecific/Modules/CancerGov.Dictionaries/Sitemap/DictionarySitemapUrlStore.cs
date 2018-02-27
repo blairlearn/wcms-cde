@@ -10,6 +10,7 @@ using NCI.Web;
 using NCI.Web.Sitemap;
 using NCI.Web.Dictionary;
 using NCI.Web.CDE.Modules;
+using NCI.Web.CDE.Configuration;
 using NCI.Services.Dictionary;
 using CancerGov.Dictionaries.Configuration;
 using Common.Logging;
@@ -19,6 +20,8 @@ namespace CancerGov.Dictionaries.Sitemap
     public class DictionarySitemapUrlStore : SitemapUrlStoreBase
     {
         static ILog log = LogManager.GetLogger(typeof(FileSitemapUrlStore));
+
+        private String _hostName = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName;
 
         private DictionariesInfo _info = null;
 
@@ -166,13 +169,19 @@ namespace CancerGov.Dictionaries.Sitemap
         /// </summary>
         public string GetSitemapUrl(DictionaryInfo info, string cdrId)
         {
-            NciUrl url = new NciUrl();
-            url.SetUrl(info.DefinitionUrl);
+            string url = _hostName + info.DefinitionUrl;
+            string entryUrlSegment = GetFriendlyName(info, cdrId);
 
-            string entryForUrl = GetFriendlyName(info, cdrId);
-            url.AppendPathSegment(entryForUrl);
+            if (url.EndsWith("/"))
+            {
+                url += entryUrlSegment;
+            }
+            else
+            {
+                url += "/" + entryUrlSegment;
+            }
 
-            return url.ToString();
+            return url;
         }
     }
 }
