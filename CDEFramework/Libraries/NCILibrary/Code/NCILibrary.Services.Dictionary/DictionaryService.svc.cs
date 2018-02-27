@@ -585,7 +585,7 @@ namespace NCI.Services.Dictionary
         /// </summary>
         /// <param name="entriesList">A list of DictionaryEntryMetadata items to validate in the DB.</param>
         /// <returns>A list of DictionaryEntryMetadata items.
-        [WebGet(ResponseFormat = WebMessageFormat.Json,
+        [WebInvoke(Method = "POST",
             UriTemplate = "v1/doDictionaryEntriesExist")]
         [OperationContract]
         public List<DictionaryEntryMetadata> DoDictionaryEntriesExist(List<DictionaryEntryMetadata> entriesList)

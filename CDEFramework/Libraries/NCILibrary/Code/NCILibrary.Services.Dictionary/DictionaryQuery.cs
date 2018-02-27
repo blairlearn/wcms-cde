@@ -378,10 +378,20 @@ namespace NCI.Services.Dictionary
 
             // Join the given "results" table and the "entries" table. The joined match (or matches, since a term CDRID will match two CDRIDs - Spanish and English - in the "results table)
             // are put into a list and the first of this list is selected to prevent duplicates.
-            IEnumerable<DataRow> joined = from dr1 in results.AsEnumerable()
-                                          join dr2 in entries.AsEnumerable()
-                                          on dr1.Field<int>("cdrid") equals dr2.Field<int>("CDRID") into lstGroup
-                                          select lstGroup.First();
+            IEnumerable<DataRow> joined = from dr1 in entries.AsEnumerable()
+                                          join dr2 in results.AsEnumerable()
+                                          on new {
+                                              CDRID = dr1.Field<int>("CDRID"),
+                                              Dictionary = dr1.Field<string>("Dictionary"),
+                                              Language = dr1.Field<string>("Language"),
+                                              Audience = dr1.Field<string>("Audience")
+                                          } equals new { 
+                                              CDRID = dr2.Field<int>("cdrid"),
+                                              Dictionary = dr2.Field<string>("dictionarytype"),
+                                              Language = dr2.Field<string>("language"),
+                                              Audience = dr2.Field<string>("audience")
+                                          } 
+                                          select dr1;
 
             joinedResults = joined.CopyToDataTable<DataRow>();
 
