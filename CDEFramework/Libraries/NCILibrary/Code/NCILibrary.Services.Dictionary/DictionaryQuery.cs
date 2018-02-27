@@ -384,7 +384,6 @@ namespace NCI.Services.Dictionary
                                           select lstGroup.First();
 
             joinedResults = joined.CopyToDataTable<DataRow>();
-            int i = joinedResults.Rows.Count;
 
             return joinedResults;
         }
