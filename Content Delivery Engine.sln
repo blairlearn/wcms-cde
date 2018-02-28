@@ -18,6 +18,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CDR", "CDR", "{48CCF15F-4AFA-4E3E-B3F7-EB2AC920499C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationClasses", "PresentationClasses", "{B28E6E81-60DB-4A40-804F-7474AB0CBFBC}"
+	ProjectSection(SolutionItems) = preProject
+		CDESites\CancerGov\SiteSpecific\Modules\CancerGov.ClinicalTrialsAPI.Test\TrialExamples\NCT02194738.json = CDESites\CancerGov\SiteSpecific\Modules\CancerGov.ClinicalTrialsAPI.Test\TrialExamples\NCT02194738.json
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDR.TermDictionary", "CDESites\CancerGov\CDR.TermDictionary\CDR.TermDictionary.csproj", "{ADF8D268-685C-4444-9C9C-0BE6C4C1C492}"
 EndProject
