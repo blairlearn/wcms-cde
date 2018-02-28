@@ -35,7 +35,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 SerializeFindings +
                 SerializeAge +
                 SerializeKeyword +
+                SerializeHealthyVolunteers +
                 SerializeGender +
+                SerializeIsVAOnly +
                 SerializeLocation +
                 SerializeTrialTypes +
                 SerializeDrugs +
@@ -66,7 +68,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 ParseFindings +
                 ParseAge +
                 ParseKeyword +
+                ParseHealthyVolunteers +
                 ParseGender +
+                ParseIsVAOnly +
                 ParseLocation +
                 ParseTrialTypes +
                 ParseDrugs +
@@ -193,12 +197,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
+        // Parameter hv (Healthy Volunteers)
+        private static void SerializeHealthyVolunteers(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.HealthyVolunteers))
+            {                
+                url.QueryParameters.Add("hv", searchParams.HealthyVolunteer.ToString("d")); //Output the decimal value of the enum as a string.
+            }
+        }
+
         // Parameter g (Gender)
         private static void SerializeGender(NciUrl url, CTSSearchParams searchParams)
         {
             if (searchParams.IsFieldSet(FormFields.Gender))
             {
                 url.QueryParameters.Add("g", HttpUtility.UrlEncode(searchParams.Gender));
+            }
+        }
+
+        // Parameter va (Search VA Only)
+        private static void SerializeIsVAOnly(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.IsVAOnly))
+            {
+                url.QueryParameters.Add("va", searchParams.IsVAOnly ? "1" : "0" );
             }
         }
 
@@ -373,7 +395,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "rl"))
             {
-                int resLinkFlag = ParamAsInt(url.QueryParameters["rl"], 0);
+                int resLinkFlag = url.CTSParamAsInt("rl", 0);
+                
+
                 if(resLinkFlag == 1 || resLinkFlag == 2)
                 {
                     searchParams.ResultsLinkFlag = (ResultsLinkType)resLinkFlag;
@@ -448,7 +472,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "a"))
             {
-                int age = this.ParamAsInt(url.QueryParameters["a"], 0);
+                int age = url.CTSParamAsInt("a", 0);
                 if(age <= 0)
                 {
                     LogParseError(FormFields.Age, "Please enter a valid age parameter.", searchParams);
@@ -469,7 +493,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "q"))
             {
-                string phrase = ParamAsStr(url.QueryParameters["q"]);
+                string phrase = url.CTSParamAsStr("q");
                 if (!string.IsNullOrWhiteSpace(phrase))
                 {
                     searchParams.Phrase = phrase;
@@ -481,12 +505,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
+        // Parameter hv (HealthyVolunteers)
+        private void ParseHealthyVolunteers(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (IsInUrl(url, "hv"))
+            {
+                int hvType = url.CTSParamAsInt("hv", -1);
+                if (hvType == 0 || hvType == 1 || hvType == 2)
+                {
+                    searchParams.HealthyVolunteer = (HealthyVolunteerType)hvType;
+                }
+                else
+                {
+                    LogParseError(FormFields.HealthyVolunteers, "Please enter a valid healthy volunteer indicator.", searchParams);
+                }
+            }
+        }
+    
+
         // Parameter g (Gender)
         private void ParseGender(NciUrl url, CTSSearchParams searchParams)
         {
             if (IsInUrl(url, "g"))
             {
-                string gender = ParamAsStr(url.QueryParameters["g"]);
+                string gender = url.CTSParamAsStr("g");
                 if (!string.IsNullOrWhiteSpace(gender))
                 {
                     if(gender == "male" || gender == "female")
@@ -505,6 +547,30 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
+        // Parameter va (VA Only Search)
+        private void ParseIsVAOnly(NciUrl url, CTSSearchParams searchParams)
+        {
+            if (IsInUrl(url, "va"))
+            {
+                int va = url.CTSParamAsInt("va", -1);
+                if (va == -1)
+                {
+                    LogParseError(FormFields.IsVAOnly, "Please enter a valid Veterans Health Administration facility search parameter.", searchParams);
+                }
+                else if (va > 1)
+                {
+                    LogParseError(FormFields.IsVAOnly, "Please enter a valid Veterans Health Administration facility search parameter.", searchParams);
+                }
+                else
+                {
+                    if (va == 0)
+                        searchParams.IsVAOnly = false;
+                    else
+                        searchParams.IsVAOnly = true;
+                }
+            }
+        }
+
         // Parameter loc (Location, and AtNIH if loc=nih)
         private void ParseLocation(NciUrl url, CTSSearchParams searchParams)
         {
@@ -512,7 +578,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             {
                 if (url.QueryParameters.ContainsKey("loc"))
                 {
-                    int locType = ParamAsInt(url.QueryParameters["loc"], -1);
+                    int locType = url.CTSParamAsInt("loc", -1);
                     if (locType == 0 || locType == 1 || locType == 2 || locType == 3 || locType == 4)
                     {
                         searchParams.Location = (LocationType)locType;
@@ -562,7 +628,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (IsInUrl(url, "z"))
             {
-                string zipCode = ParamAsStr(url.QueryParameters["z"]);
+                string zipCode = url.CTSParamAsStr("z");
  
                 if (string.IsNullOrWhiteSpace(zipCode) || (zipCode.Length < 5))
                 {
@@ -580,7 +646,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
                         if (IsInUrl(url, "zp"))
                         {
-                            int zipRadius = ParamAsInt(url.QueryParameters["zp"], -1);
+                            int zipRadius = url.CTSParamAsInt("zp", -1);
                             if (zipRadius < 1 || zipRadius > 12451)
                             {
                                 LogParseError(FormFields.ZipRadius, "Please enter a valid zip radius value.", searchParams);
@@ -638,7 +704,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 }
                 else
                 {
-                    string city = ParamAsStr(url.QueryParameters["lcty"]);
+                    string city = url.CTSParamAsStr("lcty");
                     if (!string.IsNullOrWhiteSpace(city))
                     {
                         locParams.City = city;
@@ -653,7 +719,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (IsInUrl(url, "lcnty"))
             {
-                string country = ParamAsStr(url.QueryParameters["lcnty"]);
+                string country = url.CTSParamAsStr("lcnty");
                 if (!string.IsNullOrWhiteSpace(country))
                 {
                     locParams.Country = country;
@@ -689,7 +755,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             if (IsInUrl(url, "hos"))
             {
-                string hospital = ParamAsStr(url.QueryParameters["hos"]);
+                string hospital = url.CTSParamAsStr("hos");
                 if (!string.IsNullOrWhiteSpace(hospital))
                 {
                     locParams.Hospital = hospital;
@@ -759,7 +825,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "tid"))
             {
-                string[] idArray = ParamAsStr(url.QueryParameters["tid"]).Split(new Char[] {',',';'} ).Select(id => id.Trim()).ToArray();
+                string[] idArray = CTSSearchParamExtensions.ParamAsStr(url.QueryParameters["tid"]).Split(new Char[] {',',';'} ).Select(id => id.Trim()).ToArray();
                 if(idArray.Length == 1 && string.IsNullOrWhiteSpace(idArray[0]))
                 {
                     LogParseError(FormFields.TrialIDs, "Please enter a valid trial ID parameter.", searchParams);
@@ -778,7 +844,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "in"))
             {
-                string investigator = ParamAsStr(url.QueryParameters["in"]);
+                string investigator = url.CTSParamAsStr("in");
                 if (!string.IsNullOrWhiteSpace(investigator))
                 {
                     searchParams.Investigator = investigator;
@@ -795,7 +861,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         {
             if (IsInUrl(url, "lo"))
             {
-                string leadOrg = ParamAsStr(url.QueryParameters["lo"]);
+                string leadOrg = url.CTSParamAsStr("lo");
                 if (!string.IsNullOrWhiteSpace(leadOrg))
                 {
                     searchParams.LeadOrg = leadOrg;
@@ -992,40 +1058,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     Array.Sort(param.Codes);
                 }
                 return filteredParams.ToArray();
-            }
-        }
-
-        /// <summary>
-        /// Gets a query parameter as a string
-        /// </summary>
-        protected string ParamAsStr(string paramVal)
-        {
-            if (string.IsNullOrWhiteSpace(paramVal))
-                return String.Empty;
-            else
-                return paramVal.Trim();
-        }
-
-        /// <summary>
-        /// Converts a query param to an int; returns 0 if unable to parse
-        /// </summary>
-        private int ParamAsInt(string paramVal, int def)
-        {
-            if (string.IsNullOrWhiteSpace(paramVal))
-            {
-                return def;
-            }
-            else
-            {
-                int tmpInt = 0;
-                if (int.TryParse(paramVal.Trim(), out tmpInt))
-                {
-                    return tmpInt;
-                }
-                else
-                {
-                    return def;
-                }
             }
         }
 

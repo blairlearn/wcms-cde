@@ -52,7 +52,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 this.AreParamArraysEqual(x.TrialIDs, y.TrialIDs) &&
                 x.Age == y.Age &&
                 x.Gender == y.Gender &&
+                x.HealthyVolunteer == y.HealthyVolunteer &&
                 x.Phrase == y.Phrase && // Keyword
+                x.IsVAOnly == y.IsVAOnly &&
                 x.Location == y.Location &&
                 _locParamComp.Equals(x.LocationParams, y.LocationParams) &&
                 x.Investigator == y.Investigator &&
