@@ -555,11 +555,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 int va = url.CTSParamAsInt("va", -1);
                 if (va == -1)
                 {
-                    LogParseError(FormFields.IsVAOnly, "Please enter a valid Veterans Health Administration facility search parameter.", searchParams);
+                    LogParseError(FormFields.IsVAOnly, "Please enter a valid VA facility search parameter.", searchParams);
                 }
                 else if (va > 1)
                 {
-                    LogParseError(FormFields.IsVAOnly, "Please enter a valid Veterans Health Administration facility search parameter.", searchParams);
+                    LogParseError(FormFields.IsVAOnly, "Please enter a valid VA facility search parameter.", searchParams);
                 }
                 else
                 {
