@@ -44,7 +44,7 @@ namespace NCI.Web.Sitemap
             {
                 try
                 {
-                    path = ConfigurationManager.AppSettings["HostName"] + "/sitemaps/" + element.Name.ToLower();
+                    path = ConfigurationManager.AppSettings["RootUrl"] + "/sitemaps/" + element.Name.ToLower();
                     sitemapIndexUrls.Add(new SitemapIndexUrl(path, DateTime.Now));
                 }
 
