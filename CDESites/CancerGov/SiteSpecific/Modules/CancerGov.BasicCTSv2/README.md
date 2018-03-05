@@ -15,7 +15,7 @@
    3. Add good parsing tests to CTSSearchParamFactory.Test
    4. Add invalid param test to check proper error handling to CTSSearchParamFactory.TestErrors
    5. Add serializations tests to ensure param is turned into query params properly
-*ALL TESTS SHOULD ACCOUNT FOR THE POSSIBLE VALUES FOR THE FIELD AS WELL AS DEFAULTS!*
+   - **ALL TESTS SHOULD ACCOUNT FOR THE POSSIBLE VALUES FOR THE FIELD AS WELL AS DEFAULTS!**
 5. Update BasicCTSManager
    1. Update MapSearchParamsToFilterCriteria to add the new field’s value to the search params. (If the field was set…)
 6. Add CTS Manager Tests:
@@ -23,4 +23,4 @@
       1. For Location params, that would be location search tests
       2. For EVS ID search Disease/Treatment add to the appropriate test partial class, for new EVS ID searches (e.g. Biomarkers) create a new partial test class
       3. For simple params, you would update BasicCTSManager.SearchTests
-*If this is a Location Filter, updates TrialVelocityTools.GetFilteredLocations to add the filtering for the UI display. (This support Locations: x including y near you & the details view filtering)*
+   - **If this is a Location Filter, updates TrialVelocityTools.GetFilteredLocations to add the filtering for the UI display. (This support Locations: x including y near you & the details view filtering)**
