@@ -21,7 +21,7 @@ namespace CancerGov.Dictionaries.Sitemap
     {
         static ILog log = LogManager.GetLogger(typeof(FileSitemapUrlStore));
 
-        private String _hostName = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName;
+        private String _rootUrl = ConfigurationManager.AppSettings["RootUrl"];
 
         private DictionariesInfo _info = null;
 
@@ -170,11 +170,11 @@ namespace CancerGov.Dictionaries.Sitemap
         public string GetSitemapUrl(DictionaryInfo info, string cdrId)
         {
             NciUrl url = new NciUrl();
-            url.SetUrl(_hostName);
+            url.SetUrl(_rootUrl);
             url.AppendPathSegment(info.DefinitionUrl);
             url.AppendPathSegment(GetFriendlyName(info, cdrId));
 
-            return _hostName + url.ToString();
+            return _rootUrl + url.ToString();
         }
     }
 }
