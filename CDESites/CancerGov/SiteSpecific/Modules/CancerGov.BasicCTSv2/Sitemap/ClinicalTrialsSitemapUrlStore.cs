@@ -19,7 +19,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Sitemap
     {
         static ILog log = LogManager.GetLogger(typeof(ClinicalTrialsSitemapUrlStore));
 
-        private String _hostName = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName;
+        private String _rootUrl = ConfigurationManager.AppSettings["RootUrl"];
 
         private static BasicCTSPageInfo _config = null;
 
@@ -111,11 +111,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Sitemap
         public string GetSitemapUrl(string nciid)
         {
             NciUrl url = new NciUrl();
-            url.SetUrl(_hostName);
+            url.SetUrl(_rootUrl);
             url.AppendPathSegment(_config.DetailedViewPagePrettyUrl);
             url.QueryParameters.Add("id", nciid);
 
-            return _hostName + url.ToString();
+            return _rootUrl + url.ToString();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace NCI.Web.CDE.PageAssembly
     {
         static ILog log = LogManager.GetLogger(typeof(InstructionSitemapUrlStore));
 
-        private String hostName = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName;
+        private String _rootUrl = ConfigurationManager.AppSettings["RootUrl"];
 
         /// <summary>
         /// Selects out the DoNotIndex property
@@ -84,7 +84,7 @@ namespace NCI.Web.CDE.PageAssembly
                 if (url != null && url.Trim() != "")
                 {
                     // If the URL is good, remove outer text and concatenate with base URL
-                    url = hostName + url;
+                    url = _rootUrl + url;
                 }
                 else
                 {
