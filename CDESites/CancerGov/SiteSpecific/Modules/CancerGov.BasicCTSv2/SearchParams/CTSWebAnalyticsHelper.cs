@@ -49,7 +49,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             _waTmntDrugOtherFields = (WADelegateTmntDrugOtherFields)AddAnalyticsTrialTypes +
                 AddAnalyticsDrugs +
-                AddAnalyticsOtherTreatments;
+                AddAnalyticsOtherTreatments +
+                AddAnalyticsHealthyVolunteers;
 
             _waPhaseIdInvOrgFields = (WADelegatePhaseIdInvOrgFields)AddAnalyticsTrialPhases +
                 AddAnalyticsTrialIDs +
@@ -278,6 +279,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (searchParams.IsFieldSet(FormFields.OtherTreatments))
             {
                 waList.Add("i");
+            }
+
+            //Parameter i (Other treatments / interventions)
+            if (searchParams.IsFieldSet(FormFields.HealthyVolunteers))
+            {
+                waList.Add("hv");
             }
 
             // Parameter tp (Trial Phase)
@@ -519,6 +526,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 value = string.Join(",", searchParams.TrialTypes.Select(tp => tp.Key.Substring(0,3)));
             }
             waList.Add(value);
+        }
+
+        private static void AddAnalyticsHealthyVolunteers(List<string> waList, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.HealthyVolunteers))
+            {
+                //Only add a parameter if it was added.  Do not add anything unless this field was set.
+                waList.Add("hv");
+            }
         }
 
         //Parameter d (Drugs)
