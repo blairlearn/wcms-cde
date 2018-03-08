@@ -104,6 +104,7 @@ namespace CancerGov.Dictionaries.Sitemap
                 catch (Exception e)
                 {
                     log.ErrorFormat("Error in DictionarySitemapUrlStore: unable to read dictionary sitemap file located at {0}.", file);
+                    return new SitemapUrlSet();
                 }
 
                 foreach (DictionaryEntryMetadata entry in entries)

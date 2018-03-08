@@ -50,7 +50,10 @@ namespace NCI.Web.Sitemap
             // Check if the exception is already in the cache; if so, go to error page
             else if (HttpContext.Current.Cache["sitemap_index_ex"] != null)
             {
-                response.Status = "500";
+                response.ContentType = "text/html";
+                response.TrySkipIisCustomErrors = true;
+                response.StatusCode = 500;
+                response.StatusDescription = "Error Generating Sitemap Index";
                 response.End();
             }
             // If it isn't, get the current sitemap, save that in the cache, and output
@@ -72,8 +75,11 @@ namespace NCI.Web.Sitemap
                         stopwatch.Start();
                         ser.Serialize(writer, Sitemaps.GetSitemapIndex(), ns);
                         utf8 = memStream.ToArray();
+                        
                         HttpContext.Current.Cache.Add("sitemap_index", utf8, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
+                        
                         response.OutputStream.Write(utf8, 0, utf8.Length);
+                        
                         stopwatch.Stop();
                     }
 
@@ -100,9 +106,13 @@ namespace NCI.Web.Sitemap
                     timeSpan = stopwatch.Elapsed;
 
                     HttpContext.Current.Cache.Add("sitemap_index_ex", ex, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
-                    log.Fatal("Error generating sitemap index. Check web config. \nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host
+                    
+                    log.Fatal("Error generating sitemap index. Check web config SitemapIndex section. \nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host
                               + "\nTime Elapsed for Sitemap Index Retrieval: " + timeSpan.ToString() + " \nSitemapIndexHandler.cs:ProcessRequest()", ex);
-                    response.Status = "500";
+
+                    response.TrySkipIisCustomErrors = true;
+                    response.StatusCode = 500;
+                    response.StatusDescription = "Error Generating Sitemap Index";
                     response.End();
                 }
             }

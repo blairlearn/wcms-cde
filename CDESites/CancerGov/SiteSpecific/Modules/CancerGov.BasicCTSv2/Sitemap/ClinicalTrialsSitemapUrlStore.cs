@@ -71,6 +71,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Sitemap
                 catch (Exception e)
                 {
                     log.ErrorFormat("Error in ClinicalTrialsSitemapUrlStore: unable to read dictionary sitemap file located at {0}.", file);
+                    return new SitemapUrlSet();
+                    
                 }
 
                 try
@@ -82,6 +84,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Sitemap
                 catch
                 {
                     log.ErrorFormat("Error in clinical trials sitemap file {0} : invalid clinical trial IDs", file);
+                    return new SitemapUrlSet();
                 }
 
                 if(validTrials != null)

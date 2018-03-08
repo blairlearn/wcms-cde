@@ -39,10 +39,10 @@ namespace NCI.Web.Sitemap
                     reader.Close();
                 }
                 // If the file is malformed XML, create an error message.
-                catch (XmlException ex)
+                catch (Exception ex)
                 {
                     log.Error("An XML file has failed parsing in FileSitemapUrlStore:GetSitemapUrls().\nFile: " + file + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString() + "\n");
-                    throw (ex);
+                    return new SitemapUrlSet();
                 }
 
                 return new SitemapUrlSet(sitemapUrls);

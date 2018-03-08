@@ -215,7 +215,7 @@ namespace NCI.Web.CDE.PageAssembly
             {
                 String err = "Error generating sitemap above threshold of " + maxErrorCount.ToString() + "\nCheck page and file instruction XML files. IntructionSitemapUrlStore:GetSitemapUrls()";
                 log.Error(err);
-                throw new Exception(err);
+                return new SitemapUrlSet();
             }
         }
     }

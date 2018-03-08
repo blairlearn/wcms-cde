@@ -27,6 +27,7 @@ namespace NCI.Web.Sitemap
             SitemapUrlSet sitemapSet = new SitemapUrlSet();
 
             SitemapUrlStoreBase S = s_Stores[sitemapName.ToLower()];
+
             sitemapSet.Add(S.GetSitemapUrls(S.Name));
 
             return sitemapSet;
