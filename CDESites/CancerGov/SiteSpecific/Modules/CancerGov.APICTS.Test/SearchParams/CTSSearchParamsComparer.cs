@@ -59,7 +59,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 _locParamComp.Equals(x.LocationParams, y.LocationParams) &&
                 x.Investigator == y.Investigator &&
                 x.LeadOrg == y.LeadOrg &&
-                x.ResultsLinkFlag == y.ResultsLinkFlag;
+                x.ResultsLinkFlag == y.ResultsLinkFlag &&
+                this.AreParseErrorListsEqual(x.ParseErrors, y.ParseErrors);
+            
             //ADD A FIELD TO SearchParams, NEED to add here.
 
             return isEqual;
@@ -82,6 +84,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 return true;
             }
             else if (x == null || y == null)
+            {
+                return false;
+            }
+
+            if (x.Count() != y.Count())
             {
                 return false;
             }
@@ -114,6 +121,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 return false;
             }
 
+            if (x.Count() != y.Count())
+            {
+                return false;
+            }
+
             //Generate a set of those values that are not in both lists.
             //if this is not 0, then there is an error.
             var diffxy = x.Except(y, new TerminologyFieldSearchParamComparer());
@@ -140,9 +152,45 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                 return false;
             }
 
+            if(x.Count() != y.Count())
+            {
+                return false;
+            }
+
             //Generate a set of those values that are not in both lists.
             //if this is not 0, then there is an error.
             var diffxy = x.Except(y, new LabelledSearchParamComparer());
+
+            return diffxy.Count() == 0;
+        }
+
+        /// <summary>
+        /// Helper function to determine if two lists of parse error objects are equal.
+        /// </summary>
+        /// <param name="x">Parse error 1</param>
+        /// <param name="y">Parse error 2</param>
+        /// <returns></returns>
+        private bool AreParseErrorListsEqual(List<CTSSearchParamError> x, List<CTSSearchParamError> y)
+        {
+            // If the items are both null, or if one or the other is null, return 
+            // the correct response right away.
+            if (x == null && y == null)
+            {
+                return true;
+            }
+            else if (x == null || y == null)
+            {
+                return false;
+            }
+
+            if (x.Count() != y.Count())
+            {
+                return false;
+            }
+
+            //Generate a set of those values that are not in both lists.
+            //if this is not 0, then there is an error.
+            var diffxy = x.Except(y, new CTSSearchParamErrorComparer());
 
             return diffxy.Count() == 0;
         }
