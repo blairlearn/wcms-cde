@@ -23,17 +23,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 filterCriteria.Add("_maintypes", searchParams.MainType.Codes);
             }
 
-            if (searchParams.IsFieldSet(FormFields.SubTypes))
+            if (searchParams.IsFieldSet(FormFields.SubTypes) && searchParams.SubTypes.Length > 0)
             {
                 filterCriteria.Add("_subtypes", searchParams.SubTypes.SelectMany(st => st.Codes).ToArray());
             }
 
-            if (searchParams.IsFieldSet(FormFields.Stages))
+            if (searchParams.IsFieldSet(FormFields.Stages) && searchParams.Stages.Length > 0)
             {
                 filterCriteria.Add("_stages", searchParams.Stages.SelectMany(st => st.Codes).ToArray());
             }
 
-            if (searchParams.IsFieldSet(FormFields.Findings))
+            if (searchParams.IsFieldSet(FormFields.Findings) && searchParams.Findings.Length > 0)
             {
                 filterCriteria.Add("_findings", searchParams.Findings.SelectMany(st => st.Codes).ToArray());
             }
@@ -45,11 +45,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 // Drug and Trial ID's are sent under the same key and should be grouped.
                 List<string> drugAndTrialIds = new List<string>();
 
-                if (searchParams.IsFieldSet(FormFields.Drugs))
+                if (searchParams.IsFieldSet(FormFields.Drugs) && searchParams.Drugs.Length > 0)
                 {
                     drugAndTrialIds.AddRange(searchParams.Drugs.SelectMany(d => d.Codes));
                 }
-                if (searchParams.IsFieldSet(FormFields.OtherTreatments))
+                if (searchParams.IsFieldSet(FormFields.OtherTreatments) && searchParams.OtherTreatments.Length > 0)
                 {
                     drugAndTrialIds.AddRange(searchParams.OtherTreatments.SelectMany(ot => ot.Codes));
                 }
@@ -73,13 +73,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 filterCriteria.Add("_fulltext", searchParams.Phrase);
             }
 
-            if (searchParams.IsFieldSet(FormFields.TrialTypes))
+            if (searchParams.IsFieldSet(FormFields.TrialTypes)&& searchParams.TrialTypes.Length > 0)
             {
                 filterCriteria.Add("primary_purpose.primary_purpose_code", searchParams.TrialTypes.Select(tt => tt.Key).ToArray());
             }
 
             // Array of strings
-            if (searchParams.IsFieldSet(FormFields.TrialPhases))
+            if (searchParams.IsFieldSet(FormFields.TrialPhases) && searchParams.TrialPhases.Length > 0)
             {
                 //We must expand the phases into the i_ii and ii_iii trials.
                 List<string> phases = new List<string>();
@@ -154,7 +154,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 filterCriteria.Add("eligibility.structured.gender", searchParams.Gender);
             }
 
-            if (searchParams.IsFieldSet(FormFields.TrialIDs))
+            if (searchParams.IsFieldSet(FormFields.TrialIDs) && searchParams.TrialIDs.Length > 0)
             {
                 filterCriteria.Add("_trialids", searchParams.TrialIDs);
             }
@@ -193,7 +193,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             {
                                 filterCriteria.Add("sites.org_city", locParams.City);
                             }
-                            if (locParams.IsFieldSet(FormFields.State))
+                            if (locParams.IsFieldSet(FormFields.State) && locParams.State.Length > 0)
                             {
                                 filterCriteria.Add("sites.org_state_or_province", locParams.State.Select(lst => lst.Key).ToArray());
                             }
