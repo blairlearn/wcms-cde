@@ -198,16 +198,27 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             foreach (string val in lookup)
             {
-                if (!CCODE_REGEX.IsMatch(key))
+                if (!CCODE_REGEX.IsMatch(val))
                 {
                     allKeysAreConceptIDs = false;
-                }
-
-                if (_mappingDict.ContainsKey(val))
-                {
-                    return true;
+                    break;
                 }
             }
+
+            //If there is an invalid key then throw an error
+            if (!allKeysAreConceptIDs)
+            {
+                //TODO: Determine if this *can* throw without breaking too much.  
+                //throw new ArgumentException("One or more of the Mapping Keys is NOT in a valid thesaurus code format.");
+                return false;
+            }
+
+            //If there is only one concept, then check just that one
+            if ((lookup.Length == 1) && _mappingDict.ContainsKey(lookup[0]))
+            {
+                return true;
+            }
+
 
             //If they are CCode, then go query the API
             if (allKeysAreConceptIDs)
