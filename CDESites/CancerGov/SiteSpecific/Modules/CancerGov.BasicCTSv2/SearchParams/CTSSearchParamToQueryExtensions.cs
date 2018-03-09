@@ -73,7 +73,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 filterCriteria.Add("_fulltext", searchParams.Phrase);
             }
 
-            if (searchParams.IsFieldSet(FormFields.TrialTypes)&& searchParams.TrialTypes.Length > 0)
+            if (searchParams.IsFieldSet(FormFields.TrialTypes) && searchParams.TrialTypes.Length > 0)
             {
                 filterCriteria.Add("primary_purpose.primary_purpose_code", searchParams.TrialTypes.Select(tt => tt.Key).ToArray());
             }
