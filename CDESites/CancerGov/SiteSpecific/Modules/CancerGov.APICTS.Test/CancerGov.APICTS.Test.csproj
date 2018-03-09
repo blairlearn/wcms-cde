@@ -98,6 +98,7 @@
     <Compile Include="SearchParams\AtNIHLocationSearchParams.Test.cs" />
     <Compile Include="SearchParams\CountryCityStateLocationSearchParams.Test.cs" />
     <Compile Include="SearchParams\CTSAnalytics.Test.cs" />
+    <Compile Include="SearchParams\CTSSearchParamErrorComparer.cs" />
     <Compile Include="SearchParams\CTSSearchParamFactory.Test.cs" />
     <Compile Include="SearchParams\CTSSearchParamFactory.TestErrors.cs" />
     <Compile Include="SearchParams\CTSSearchParamFactory.TestSerialize.cs" />
