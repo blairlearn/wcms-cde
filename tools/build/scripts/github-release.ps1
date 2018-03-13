@@ -78,6 +78,10 @@ function GitHub-Release($tagname, $releaseName, $commitId, $IsPreRelease, $relea
         https://github.com/settings/tokens
 
     #>
+	
+	# GitHub has deprecated TLS v1 and v1.1 as of 2/22/2018: https://githubengineering.com/crypto-removal-notice/
+    # This sets PowerShell to use TLS v1.2
+	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12;
 
     # GitHub has deprecated TLS v1 and v1.1 as of 2/22/2018: https://githubengineering.com/crypto-removal-notice/
     # This sets PowerShell to use TLS v1.2
