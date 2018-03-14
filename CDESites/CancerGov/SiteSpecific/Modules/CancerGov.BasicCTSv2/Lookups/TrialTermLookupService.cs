@@ -188,76 +188,85 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Checks the mapping for the key.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="key">The IDs or label to look up.</param>
+        /// <param name="isLabel">Whether or not the key parameter is a label (not a C-code).</param>
         /// <returns>A boolean.</returns>
-        public bool MappingContainsKey(string key)
+        public bool MappingContainsKey(string key, bool isLabel)
         {
-            // Break up value on comma, as we are looking for the first match we find in the dictionary
-            string[] lookup = key.Split(',');
-            bool allKeysAreConceptIDs = true;
-
-            foreach (string val in lookup)
+            if (isLabel)
             {
-                if (!CCODE_REGEX.IsMatch(val))
-                {
-                    allKeysAreConceptIDs = false;
-                    break;
-                }
+                return (!String.IsNullOrEmpty(key) && _mappingDict.ContainsKey(key));
             }
 
-            //If there is an invalid key then throw an error
-            if (!allKeysAreConceptIDs)
+            else
             {
-                //TODO: Determine if this *can* throw without breaking too much.  
-                //throw new ArgumentException("One or more of the Mapping Keys is NOT in a valid thesaurus code format.");
-                return false;
-            }
+                // Break up value on comma, as we are looking for the first match we find in the dictionary
+                string[] lookup = key.Split(',');
+                bool allKeysAreConceptIDs = true;
 
-            //If there is only one concept, then check just that one
-            if ((lookup.Length == 1) && _mappingDict.ContainsKey(lookup[0]))
-            {
-                return true;
-            }
-
-
-            //If they are CCode, then go query the API
-            if (allKeysAreConceptIDs)
-            {
-                Dictionary<string, object> searchParams = new Dictionary<string, object>();
-                searchParams.Add("code", lookup.Select(c => c.ToUpper()).ToArray());
-                DiseaseCollection dcoll = null;
-
-                try
+                foreach (string val in lookup)
                 {
-                    dcoll = _client.Diseases(1, searchParams);
-                }
-                catch (Exception ex)
-                {
-                    //TODO: Determine if we should log an error here or throw a specialized exception
-                    throw;
+                    if (!CCODE_REGEX.IsMatch(val))
+                    {
+                        allKeysAreConceptIDs = false;
+                        break;
+                    }
                 }
 
-                if (dcoll.Terms.Length == 1)
+                //If there is an invalid key then throw an error
+                if (!allKeysAreConceptIDs)
                 {
-                    return true;
-                }
-                InterventionCollection icoll = null;
-
-                try
-                {
-                    icoll = _client.Interventions(1, searchParams);
-                }
-                catch (Exception ex)
-                {
-                    //TODO: Determine if we should log an error here or throw a specialized exception
-                    throw;
+                    //TODO: Determine if this *can* throw without breaking too much.  
+                    //throw new ArgumentException("One or more of the Mapping Keys is NOT in a valid thesaurus code format.");
+                    return false;
                 }
 
-                if (icoll.Terms.Length == 1)
+                //If there is only one concept, then check just that one
+                if ((lookup.Length == 1) && _mappingDict.ContainsKey(lookup[0]))
                 {
                     return true;
                 }
 
+
+                //If they are CCode, then go query the API
+                if (allKeysAreConceptIDs)
+                {
+                    Dictionary<string, object> searchParams = new Dictionary<string, object>();
+                    searchParams.Add("code", lookup.Select(c => c.ToUpper()).ToArray());
+                    DiseaseCollection dcoll = null;
+
+                    try
+                    {
+                        dcoll = _client.Diseases(1, searchParams);
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO: Determine if we should log an error here or throw a specialized exception
+                        throw;
+                    }
+
+                    if (dcoll.Terms.Length == 1)
+                    {
+                        return true;
+                    }
+                    InterventionCollection icoll = null;
+
+                    try
+                    {
+                        icoll = _client.Interventions(1, searchParams);
+                    }
+                    catch (Exception ex)
+                    {
+                        //TODO: Determine if we should log an error here or throw a specialized exception
+                        throw;
+                    }
+
+                    if (icoll.Terms.Length == 1)
+                    {
+                        return true;
+                    }
+
+                }
             }
 
             return false;

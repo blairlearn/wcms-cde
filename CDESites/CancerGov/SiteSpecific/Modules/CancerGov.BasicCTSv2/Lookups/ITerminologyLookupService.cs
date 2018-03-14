@@ -30,7 +30,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// Checks to see if the lookup contains an entry for the ID(s)
         /// </summary>
         /// <param name="key">The ID(s) to lookup</param>
+        /// /// <param name="isLabel">Whether or not the key parameter is a label (not a C-code). Used by the TrialTermLookupService implementation.</param>
         /// <returns>True or false based on the existance of the ID(s) in the lookup</returns>
-        bool MappingContainsKey(string key);
+        bool MappingContainsKey(string key, bool isLabel);
     }
 }

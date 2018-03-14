@@ -224,9 +224,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <summary>
         /// Checks to see if the lookup contains an entry for the ID(s)
         /// </summary>
-        /// <param name="key">The ID(s) to lookup</param>
+        /// <param name="key">The ID(s) or labels to lookup</param>
+        /// <param name="isLabel">This is not used by this implementation. Defaults to false.</param>
         /// <returns>True or false based on the existance of the ID(s) in the lookup</returns>
-        public bool MappingContainsKey(string key)
+        public bool MappingContainsKey(string key, bool isLabel = false)
         {
             return Mappings.ContainsKey(key);
         }

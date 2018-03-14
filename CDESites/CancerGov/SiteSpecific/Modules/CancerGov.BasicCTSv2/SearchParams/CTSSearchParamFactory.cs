@@ -906,8 +906,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 {
                     if (!string.IsNullOrWhiteSpace(items[i]))
                     {
-                        bool contains = this._lookupSvc.MappingContainsKey(items[i]);
-                        if (this._lookupSvc.MappingContainsKey(items[i]))
+                        bool contains = this._lookupSvc.MappingContainsKey(items[i], true);
+                        if (this._lookupSvc.MappingContainsKey(items[i], true))
                         {
                             LabelledSearchParam type = new LabelledSearchParam();
                             type.Key = items[i];
@@ -983,7 +983,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         // If all match the C-code pattern, attempt lookup for label
                         if(allMatchCodePattern)
                         {
-                            if(this._lookupSvc.MappingContainsKey(string.Join(",", multiple).ToLower()))
+                            if(this._lookupSvc.MappingContainsKey(string.Join(",", multiple).ToLower(), false))
                             {
                                 // Only add to the stored parameters if a label is found for the combination of codes
                                 TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();
@@ -1008,7 +1008,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         if(Regex.IsMatch(items[i], codePattern))
                         {
                             // If this code matches the C-code pattern, attempt the lookup for the label
-                            if (this._lookupSvc.MappingContainsKey(items[i].ToLower()))
+                            if (this._lookupSvc.MappingContainsKey(items[i].ToLower(), false))
                             {
                                 // Only add to the stored parameters if a label is found for the code
                                 TerminologyFieldSearchParam type = new TerminologyFieldSearchParam();

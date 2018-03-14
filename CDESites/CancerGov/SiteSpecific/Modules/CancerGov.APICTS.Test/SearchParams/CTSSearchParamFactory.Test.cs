@@ -951,7 +951,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             rtnMock.Setup(lookup => lookup.Get("ii"))
                 .Returns("II");
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey(It.IsAny<string>()))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey(It.IsAny<string>(), It.IsAny<bool>()))
                 .Returns(true);
 
             //@Sarina and @Dion - Add other instances for GetTitleCase to support your unit tests.

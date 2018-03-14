@@ -682,135 +682,135 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             //This makes it so that we do not have to create a fake class that returns fake data.
             rtnMock.Setup(lookup => lookup.GetTitleCase("c4872"))
                 .Returns("Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4872"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4872", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c4878"))
                 .Returns("Lung Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4878"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4878", false))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4873"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4873", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c3995,c4872"))
                 .Returns("Stage IV Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c3995,c4872"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c3995,c4872", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c7771"))
                 .Returns("Recurrent Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c7771"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c7771", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c4001,c7771"))
                 .Returns("Recurrent Inflammatory Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4001,c7771"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4001,c7771", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c133092"))
                 .Returns("Recurrent Breast Angiosarcoma");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c133092"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c133092", false))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c7772"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c7772", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c88375"))
                 .Returns("Stage I Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c88375"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c88375", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c3641"))
                 .Returns("Stage 0 Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c3641"))
-                .Returns(true); 
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c3641", false))
+                .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c88376"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c88376", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c26696"))
                 .Returns("Anxiety");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c26696"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c26696", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c35014"))
                 .Returns("Separation Anxiety Disorder");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c35014"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c35014", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c2878,c35014"))
                 .Returns("Anxiety Disorder");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c2878,c35014"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c2878,c35014", false))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c35015"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c35015", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.Get("MD"))
                 .Returns("Maryland");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("MD"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("MD", true))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.Get("VA"))
                 .Returns("Virginia");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("VA"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("VA", true))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("VI"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("VI", true))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.Get("basic_science"))
                 .Returns("Basic Science");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("basic_science"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("basic_science", true))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.Get("supportive_care"))
                 .Returns("Supportive Care");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("supportive_care"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("supportive_care", true))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c1647"))
                 .Returns("Trastuzumab");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c1647"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c1647", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c2039"))
                 .Returns("Bevacizumab");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c2039"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c2039", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c136282,c2039"))
                 .Returns("Bevacizumab Regimen");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c136282,c2039"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c136282,c2039", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c131060"))
                 .Returns("Checkpoint Blockade Immunotherapy");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c131060"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c131060", false))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c131061"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c131061", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c26665"))
                 .Returns("Pomegranate Juice");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c26665"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c26665", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c107350,c26665"))
                 .Returns("Pomegranate");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c107350,c26665"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c107350,c26665", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.Get("i"))
                 .Returns("I");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("i"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("i", true))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.Get("ii"))
                 .Returns("II");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("ii"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("ii", true))
                 .Returns(true);
 
             return rtnMock;
