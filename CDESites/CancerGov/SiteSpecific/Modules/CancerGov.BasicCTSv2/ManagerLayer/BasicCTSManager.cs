@@ -213,8 +213,35 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }            
         }
 
+        /// <summary>
+        /// Gets a collection of trials based on trial ids, batchVal at a time.
+        /// </summary>
+        /// <param name="ids">An array of trial IDs to fetch</param>
+        /// <param name="batchVal">The number of trials to retrieve at a time</param>
+        /// <returns>An enumerable list of ClinicalTrial objects</returns>
+        public IEnumerable<string> GetActiveTrialIDs(List<String> ids, int batchVal = 50)
+        {
+            foreach (IEnumerable<string> batch in ids.Batch(batchVal))
+            {
+                Dictionary<string, object> filterCriteria = new Dictionary<string, object>();
+                filterCriteria.Add("nci_id", batch.ToArray());
+                filterCriteria.Add("current_trial_status", CTSConstants.ActiveTrialStatuses);
 
-        
+                ClinicalTrialsCollection ctColl = new ClinicalTrialsCollection();
+                string[] fieldsToInclude = { "nci_id" };
+
+                ctColl = Client.List(
+                    size: 100,
+                    includeFields: fieldsToInclude,
+                    searchParams: filterCriteria
+                );
+
+                foreach (ClinicalTrial c in ctColl.Trials)
+                {
+                    yield return c.NCIID;
+                }
+            }
+        }
 
         #endregion
 

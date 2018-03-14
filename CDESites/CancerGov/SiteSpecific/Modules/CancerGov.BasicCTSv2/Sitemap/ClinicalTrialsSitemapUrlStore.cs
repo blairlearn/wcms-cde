@@ -46,7 +46,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Sitemap
                 String file = HttpContext.Current.Server.MapPath(path);
 
                 List<string> trialIDs = new List<string>();
-                IEnumerable<ClinicalTrial> validTrials = null;
+                List<string> validTrials = null;
 
                 try
                 {
@@ -79,7 +79,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Sitemap
                 {
                     BasicCTSManager _basicCTSManager = new BasicCTSManager(APIClientHelper.GetV1ClientInstance());
 
-                    validTrials = _basicCTSManager.GetMultipleTrials(trialIDs);
+                    validTrials = _basicCTSManager.GetActiveTrialIDs(trialIDs).ToList();
                 }
                 catch
                 {
@@ -89,9 +89,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Sitemap
 
                 if(validTrials != null)
                 {
-                    foreach (ClinicalTrial trial in validTrials)
+                    foreach (string ID in validTrials)
                     {
-                        string entryUrl = GetSitemapUrl(trial.NCIID);
+                        string entryUrl = GetSitemapUrl(ID);
                         double priority = 0.5;
 
                         sitemapUrls.Add(new SitemapUrl(entryUrl, sitemapChangeFreq.weekly, priority));
