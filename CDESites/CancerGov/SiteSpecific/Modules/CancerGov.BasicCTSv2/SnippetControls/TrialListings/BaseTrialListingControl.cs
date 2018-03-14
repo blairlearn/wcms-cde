@@ -205,8 +205,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // and urlParms == { "key2":["value4,value5"], "key3":"value6" }
             // merged query == { "key1":value1, "key2":["value2,value3"], "key3":"value6" }
             JObject filteredQuery = TrialListingQueryHelper.MergeQueryAndURLFilters(query, HttpContext.Current.Request.QueryString);
-            
-            return filteredQuery;
+
+            JObject activeTrialStatuses = new JObject();
+
+            //Only return active statuses UNLESS the query in the listing states other statuses.
+            activeTrialStatuses.Add(new JProperty("current_trial_status", new JArray(CTSConstants.ActiveTrialStatuses)));
+            activeTrialStatuses.Merge(filteredQuery, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
+
+            return activeTrialStatuses;
         }
 
         /// <summary>
