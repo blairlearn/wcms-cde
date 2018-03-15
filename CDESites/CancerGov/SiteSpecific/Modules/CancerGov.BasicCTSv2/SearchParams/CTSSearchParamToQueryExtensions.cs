@@ -163,6 +163,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (searchParams.IsFieldSet(FormFields.IsVAOnly) && searchParams.IsVAOnly)
             {
                 filterCriteria.Add("sites.org_va", true);
+
+                //All locations need filtering of active sites.
+                //If any other location parameters are being set, it won't add this twice (based on the logic in FilterActiveSites).
+                FilterActiveSites(filterCriteria);
             }
 
             if (searchParams.IsFieldSet(FormFields.Location) && searchParams.Location != LocationType.None)

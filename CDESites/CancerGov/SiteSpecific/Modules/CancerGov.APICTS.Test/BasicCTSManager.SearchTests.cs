@@ -151,6 +151,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "sites.org_va", true },
+                            { "sites.recruitment_status", CTSConstants.ActiveRecruitmentStatuses },
                             { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },                    
