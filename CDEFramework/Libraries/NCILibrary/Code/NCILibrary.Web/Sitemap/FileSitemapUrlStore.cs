@@ -36,6 +36,12 @@ namespace NCI.Web.Sitemap
                     XmlSerializer serializer = new XmlSerializer(typeof(SitemapUrlSet));
                     StreamReader reader = new StreamReader(file);
                     sitemapUrls = (SitemapUrlSet)serializer.Deserialize(reader);
+                    
+                    foreach(SitemapUrl url in sitemapUrls)
+                    {
+                        url.changeFreq = sitemapChangeFreq.weekly;
+                    }
+
                     reader.Close();
                 }
                 // If the file is malformed XML, create an error message.
