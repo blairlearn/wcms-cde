@@ -49,7 +49,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             _waTmntDrugOtherFields = (WADelegateTmntDrugOtherFields)AddAnalyticsTrialTypes +
                 AddAnalyticsDrugs +
-                AddAnalyticsOtherTreatments;
+                AddAnalyticsOtherTreatments +
+                AddAnalyticsHealthyVolunteers;
 
             _waPhaseIdInvOrgFields = (WADelegatePhaseIdInvOrgFields)AddAnalyticsTrialPhases +
                 AddAnalyticsTrialIDs +
@@ -87,14 +88,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public static String GetAnalyticsLocation(CTSSearchParams searchParams)
         {
             List<string> waFieldsList = new List<string>();
-            string locValues = "all";
 
+            //This delegate should always return an array of values, even for "all".
             _waLocationFields(waFieldsList, searchParams);
-            if (waFieldsList.Count > 0)
-            {
-                locValues = string.Join("|", waFieldsList.ToArray());
-            }
-            return locValues;
+            
+            return string.Join("|", waFieldsList.ToArray());
         }
 
         /// <summary>
@@ -206,9 +204,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
 
             // Parameter loc (Location, and AtNIH if loc=nih)
-            if (searchParams.IsFieldSet(FormFields.Location))
+            if (searchParams.IsFieldSet(FormFields.Location) || searchParams.IsFieldSet(FormFields.IsVAOnly))
             {
                 waList.Add("loc");
+
+                if (searchParams.IsVAOnly) { waList.Add("va"); }
+
                 switch (searchParams.Location)
                 {
                     case LocationType.Zip:
@@ -252,7 +253,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         }
                     case LocationType.None:
                         {
-                            waList.Remove("loc");
+                            //If the user performed a VA search, then leave loc in place.
+                            if (!searchParams.IsVAOnly)
+                            {
+                                waList.Remove("loc");
+                            }
                             break;
                         }
                 } // End switch
@@ -274,6 +279,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             if (searchParams.IsFieldSet(FormFields.OtherTreatments))
             {
                 waList.Add("i");
+            }
+
+            //Parameter i (Other treatments / interventions)
+            if (searchParams.IsFieldSet(FormFields.HealthyVolunteers))
+            {
+                waList.Add("hv");
             }
 
             // Parameter tp (Trial Phase)
@@ -404,44 +415,45 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         // Parameter loc (Location, and AtNIH if loc=nih)
         private static void AddAnalyticsLocation(List<string> waList, CTSSearchParams searchParams)
         {
-            string value = "All Locations";
-            if (searchParams.IsFieldSet(FormFields.Location))
+            switch (searchParams.Location)
             {
-                switch (searchParams.Location)
-                {
-                    case LocationType.Zip:
-                        {
-                            value = "zip";
-                            waList.Add(value);
-                            AddAnalyticsZip(waList, searchParams);
-                            break;
-                        }
-                    case LocationType.CountryCityState:
-                        {
-                            value = "csc";
-                            waList.Add(value);
-                            AddAnalyticsCountryCityState(waList, searchParams);
-                            break;
-                        }
-                    case LocationType.Hospital:
-                        {
-                            value = "hi";
-                            waList.Add(value);
-                            AddAnalyticsHospital(waList, searchParams);
-                            break;
-                        }
-                    case LocationType.AtNIH:
-                        {
-                            value = "At NIH";
-                            waList.Add(value);
-                            break;
-                        }
-                    default:
-                        {
-                            waList.Add(value);
-                            break;
-                        }
-                }
+                case LocationType.None:
+                    {
+                        waList.Add("all");
+                        break;
+                    }
+                case LocationType.Zip:
+                    {
+                        waList.Add("zip");
+                        AddAnalyticsZip(waList, searchParams);
+                        break;
+                    }
+                case LocationType.CountryCityState:
+                    {                        
+                        waList.Add("csc");
+                        AddAnalyticsCountryCityState(waList, searchParams);
+                        break;
+                    }
+                case LocationType.Hospital:
+                    {
+                        waList.Add("hi");
+                        AddAnalyticsHospital(waList, searchParams);
+                        break;
+                    }
+                case LocationType.AtNIH:
+                    {
+                        waList.Add("At NIH");
+                        break;
+                    }
+                default:
+                    {
+                        waList.Add("unknown");
+                        break;
+                    }
+            }
+            if (searchParams.IsVAOnly)
+            {
+                waList.Add("va-only");
             }
         }
 
@@ -514,6 +526,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 value = string.Join(",", searchParams.TrialTypes.Select(tp => tp.Key.Substring(0,3)));
             }
             waList.Add(value);
+        }
+
+        private static void AddAnalyticsHealthyVolunteers(List<string> waList, CTSSearchParams searchParams)
+        {
+            if (searchParams.IsFieldSet(FormFields.HealthyVolunteers))
+            {
+                //Only add a parameter if it was added.  Do not add anything unless this field was set.
+                waList.Add("hv");
+            }
         }
 
         //Parameter d (Drugs)

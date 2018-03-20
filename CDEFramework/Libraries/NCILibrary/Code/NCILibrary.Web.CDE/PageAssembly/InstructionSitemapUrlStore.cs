@@ -20,7 +20,7 @@ namespace NCI.Web.CDE.PageAssembly
     {
         static ILog log = LogManager.GetLogger(typeof(InstructionSitemapUrlStore));
 
-        private String hostName = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName;
+        private String _rootUrl = ConfigurationManager.AppSettings["RootUrl"];
 
         /// <summary>
         /// Selects out the DoNotIndex property
@@ -44,6 +44,27 @@ namespace NCI.Web.CDE.PageAssembly
         }
 
         /// <summary>
+        /// Selects out the ExcludeFromSitemap property
+        /// </summary>
+        /// <param name="nav">The XPathNavigator representing the Instruction</param>
+        /// <param name="manager">The namespace manager for the Instruction</param>
+        /// <param name="instructionType">The type of the Instruction (SinglePageAssemblyInstruction or GenericFileInstruction)</param>
+        /// <returns>The value of the ExcludeFromSitemap node, or false if it does not exist</returns>
+        private bool ExcludeFromSitemap(XPathNavigator nav, XmlNamespaceManager manager, string instructionType)
+        {
+            string nodePath = String.Format("//cde:{0}/SearchMetadata/ExcludeFromSitemap", instructionType);
+
+            try
+            {
+                //Try and select it as a boolean returning the actual value as a boolean
+                return nav.SelectSingleNode(nodePath, manager).ValueAsBoolean;
+            }
+            catch { } //If it could not convert or be found, then continue.                        
+
+            return false; //Default is ExcludeFromSitemap = false;  This is in case the node is not found or not boolean text
+        }
+
+        /// <summary>
         /// Gets the URL for this item
         /// </summary>
         /// <param name="nav">The XPathNavigator representing the Instruction</param>
@@ -63,7 +84,7 @@ namespace NCI.Web.CDE.PageAssembly
                 if (url != null && url.Trim() != "")
                 {
                     // If the URL is good, remove outer text and concatenate with base URL
-                    url = hostName + url;
+                    url = _rootUrl + url;
                 }
                 else
                 {
@@ -80,7 +101,7 @@ namespace NCI.Web.CDE.PageAssembly
         /// Create a collection of URL elements from XML files
         /// </summary>
         /// <returns>SitemapUrlSet</returns>
-        public override SitemapUrlSet GetSitemapUrls()
+        public override SitemapUrlSet GetSitemapUrls(string sitemapName)
         {
             List<SitemapUrl> sitemapUrls = new List<SitemapUrl>();
             String path;
@@ -88,7 +109,7 @@ namespace NCI.Web.CDE.PageAssembly
             double priority;
             String directory = HttpContext.Current.Server.MapPath(String.Format(ContentDeliveryEngineConfig.PathInformation.PagePathFormat.Path, "/"));
             string fileDirectory = Path.GetDirectoryName(directory);
-            SitemapProviderConfiguration config = (SitemapProviderConfiguration)ConfigurationManager.GetSection("Sitemap");
+            SitemapProviderConfiguration config = SitemapConfig.GetProviderByName(sitemapName);
             int maxErrorCount = config.ErrorCount.Max;
             int errorCount = 0;
             List<String> errorMessages = new List<String>();
@@ -108,6 +129,10 @@ namespace NCI.Web.CDE.PageAssembly
 
                     //If this item is marked as DoNotIndex, then skip it.
                     if (DoNotIndex(nav, manager, "SinglePageAssemblyInstruction"))
+                        continue;
+
+                    //If this item is marked as DoNotIndex, then skip it.
+                    if (ExcludeFromSitemap(nav, manager, "SinglePageAssemblyInstruction"))
                         continue;
 
                     // Get pretty url from PrettyUrl node
@@ -190,7 +215,7 @@ namespace NCI.Web.CDE.PageAssembly
             {
                 String err = "Error generating sitemap above threshold of " + maxErrorCount.ToString() + "\nCheck page and file instruction XML files. IntructionSitemapUrlStore:GetSitemapUrls()";
                 log.Error(err);
-                throw new Exception(err);
+                return new SitemapUrlSet();
             }
         }
     }

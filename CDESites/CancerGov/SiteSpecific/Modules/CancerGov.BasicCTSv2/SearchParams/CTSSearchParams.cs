@@ -34,12 +34,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         ResultsLinkType _resultsLinkFlag = ResultsLinkType.Unknown;
         bool _redirectFlag          = false;
         int _age                    = 0;
+        HealthyVolunteerType _healthyVols = HealthyVolunteerType.Any;
         string _gender              = string.Empty;
         string _phrase              = string.Empty;
         string _investigator        = string.Empty;
         string _leadOrg             = string.Empty;
         string[] _trialIDs          = { };
         LocationType _locationType  = LocationType.None;
+        bool _isVAOnly                = false;
 
         LocationSearchParams _locationParams = null;
 
@@ -161,6 +163,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         {
                             return Phrase;
                         }
+                    case FormFields.HealthyVolunteers:
+                        {
+                            switch(_healthyVols)
+                            {
+                                case HealthyVolunteerType.Healthy   : { return "Only Accepting Healthy Volunteers"; }
+                                case HealthyVolunteerType.Infirmed  : { return "Not Accepting Healthy Volunteers"; }
+                                default                             : { return "Accepting All Volunteers"; }
+                            }
+                        }
                     case FormFields.Gender:
                         {
                             return Gender;
@@ -192,6 +203,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     case FormFields.LeadOrg:
                         {
                             return LeadOrg;
+                        }
+                    case FormFields.IsVAOnly:
+                        {
+                            if (IsVAOnly)
+                                return "True";
+                            else
+                                return "False";
                         }
                     case FormFields.AtNIH:
                     case FormFields.City:
@@ -327,6 +345,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public String Phrase {
             get { return _phrase; }
             set { _phrase = value; _usedFields |= FormFields.Phrase; } 
+        }
+
+        public HealthyVolunteerType HealthyVolunteer
+        {
+            get { return _healthyVols; }
+            set { _healthyVols = value; _usedFields |= FormFields.HealthyVolunteers; }
+        }
+
+        /// <summary>
+        /// Gets or sets an indicator if we need to search for trials with VA sites
+        /// </summary>
+        public bool IsVAOnly
+        {
+            get { return _isVAOnly; }
+            set { _isVAOnly = value; _usedFields |= FormFields.IsVAOnly; }
         }
 
         /// <summary>

@@ -102,6 +102,7 @@
     <Compile Include="DictionaryManager.cs" />
     <Compile Include="DictionaryQuery.cs" />
     <Compile Include="DictionaryService.svc.cs" />
+    <Compile Include="BusinessObjects\DictionaryEntryMetadata.cs" />
     <Compile Include="enum.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="Handler\ExpandInvoker.cs" />

@@ -28,37 +28,43 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 1.0 - Main Cancer Type with invalid param (not matching C-code pattern)
                     new object[] {"?t=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.MainType, ErrorMessage = "Please enter a valid parameter."}}
                     }},
                     
                     // TEST 1.1 - Main Cancer Type with C-code that has no lookup
                     new object[] {"?t=C4873", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.MainType, ErrorMessage = "Invalid code(s) for lookup: c4873"}}
                     }},
                     
                     // TEST 1.2 - Main Cancer Type with a multiple-coded param, one invalid
                     new object[] {"?t=C4872|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.MainType, ErrorMessage = "Please enter a valid parameter."}}
                     }},
                      
                     // TEST 1.3 - Main Cancer Type with multiple C-codes
                     new object[] {"?t=C4872,C4878", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.MainType, ErrorMessage = "Please include only one main cancer type in your search."}}
                     }},
                     
                     // TEST 2.0 - Cancer Subtype with invalid param (not matching C-code pattern)
                     new object[] {"?st=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.SubTypes, ErrorMessage = "Please enter a valid parameter."}}
                     }},
 
                     // TEST 2.1 - Cancer Subtype with C-code that has no lookup
                     new object[] {"?st=C7772", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.SubTypes, ErrorMessage = "Invalid code(s) for lookup: c7772"}}
                     }},
                     
                     // TEST 2.2 - Cancer Subtypes with same C-code multiple times
@@ -80,25 +86,35 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 2.3 - Cancer Subtypes with a multiple-coded param, one invalid
                     new object[] {"?st=C133092|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.SubTypes, ErrorMessage = "Please enter a valid parameter."}}
                     }},
                     
                     // TEST 2.4 - Cancer Subtypes with multiple codes, one with no lookup
                     new object[] {"?st=C4001|C7771,C7772", new CTSSearchParams() {
+                        SubTypes = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C4001", "C7771" },
+                                Label = "Recurrent Inflammatory Breast Cancer"
+                            }
+                        },
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.SubTypes, ErrorMessage = "Invalid code(s) for lookup: c7772"}}
                     }},
                     
                     // TEST 3.0 - Cancer stage with invalid param (not matching C-code pattern)
                     new object[] {"?stg=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Stages, ErrorMessage = "Please enter a valid parameter."}}
                     }},
                     
                     // TEST 3.1 - Cancer stages with C-code that has no lookup
                     new object[] {"?stg=C88376", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Stages, ErrorMessage = "Invalid code(s) for lookup: c88376"}}
                     }},
 
                     // TEST 3.2 - Cancer stages with same C-code multiple times
@@ -117,28 +133,38 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         Location = LocationType.None
                     }},
 
-                    // TEST 3.3 - Cancer Subtypes with a multiple-coded param, one invalid
-                    new object[] {"?st=C88375|chicken", new CTSSearchParams() {
+                    // TEST 3.3 - Cancer Stages with a multiple-coded param, one invalid
+                    new object[] {"?stg=C88375|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Stages, ErrorMessage = "Please enter a valid parameter."}}
                     }},
                     
-                    // TEST 3.4 - Cancer Subtypes with multiple codes, one with no lookup
-                    new object[] {"?st=C3995|C4872,C88376", new CTSSearchParams() {
+                    // TEST 3.4 - Cancer Stages with multiple codes, one with no lookup
+                    new object[] {"?stg=C3995|C4872,C88376", new CTSSearchParams() {
+                        Stages = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C3995", "C4872" },
+                                Label = "Stage IV Breast Cancer"
+                            }
+                        },
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Stages, ErrorMessage = "Invalid code(s) for lookup: c88376"}}
                     }},
 
                     // TEST 4.0 - Cancer findings with invalid param (not matching C-code pattern)
                     new object[] {"?fin=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Findings, ErrorMessage = "Please enter a valid parameter."}}
                     }},
 
                     // TEST 4.1 - Cancer findings with C-code that has no lookup
                     new object[] {"?fin=C35015", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Findings, ErrorMessage = "Invalid code(s) for lookup: c35015"}}
                     }},
 
                     // TEST 4.2 - Cancer findings with same C-code multiple times
@@ -160,55 +186,70 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 4.3 - Cancer findings with a multiple-coded param, one invalid
                     new object[] {"?fin=C26696|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Findings, ErrorMessage = "Please enter a valid parameter."}}
                     }},
                     
                     // TEST 4.4 - Cancer Subtypes with multiple codes, one with no lookup
                     new object[] {"?fin=C2878|C35014,C35015", new CTSSearchParams() {
+                        Findings = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C2878", "C35014" },
+                                Label ="Anxiety Disorder"
+                            }
+                        },
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Findings, ErrorMessage = "Invalid code(s) for lookup: c35015"}}
                     }},
                     
                     // TEST 5.0 - Age not an int
                     new object[] { "?a=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Age, ErrorMessage = "Please enter a valid age parameter."}}
                     }},
 
                     // TEST 5.1 - Age invalid (>120)
                     new object[] { "?a=122", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Age, ErrorMessage = "Please enter a valid age parameter."}}
                     }},
 
                     // TEST 5.2 - Age invalid (<0)
                     new object[] { "?a=-1", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Age, ErrorMessage = "Please enter a valid age parameter."}}
                     }},
                     
                     // TEST 6.0 - Gender not "male" or "female"
                     new object[] { "?g=1", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Gender, ErrorMessage = "Please enter a valid gender."}}
                     }},
 
                     // TEST 6.1 - Gender not "male" or "female"
                     new object[] { "?g=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Gender, ErrorMessage = "Please enter a valid gender."}}
                     }},
                     
                     // TEST 7.0 - Location with invalid param (not int)
-                    new object[] { "?loc=chicken", new CTSSearchParams() {
+                    new object[] { "?loc=chicken&rl=2", new CTSSearchParams() {
                         Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Location, ErrorMessage = "Please enter a valid location type."}}
                     }},
 
                     // TEST 7.1 - Location with invalid param (not 0-4) 
-                    new object[] { "?loc=5", new CTSSearchParams() {
+                    new object[] { "?loc=5&rl=2", new CTSSearchParams() {
                         Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Basic
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Location, ErrorMessage = "Please enter a valid location type."}}
                     }},
                     
                     // TEST 7.2 - Location all with zip code set
@@ -218,7 +259,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     }},
                     
                     // TEST 7.3 - Location all with state set
-                    new object[] { "?loc=0&st=VA&rl=2", new CTSSearchParams() {
+                    new object[] { "?loc=0&lst=VA&rl=2", new CTSSearchParams() {
                         Location = LocationType.None,
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
@@ -244,56 +285,65 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 7.7 - Location none and zip
                     new object[] { "?loc=0&loc=1&rl=2", new CTSSearchParams() {
                         Location = LocationType.None,
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Location, ErrorMessage = "Please enter a valid location type."}}
                     }},
                     
                     // TEST 8.0 - Location zip without a zip code param
                     new object[] { "?loc=1&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.ZipCode, ErrorMessage = "Please enter a valid zip code value."}}
                     }},
                     
                     // TEST 8.1 - Location zip with an invalid zip code
                     new object[] { "?loc=1&z=chicken&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.ZipCode, ErrorMessage = "Please enter a valid zip code value."}}
                     }},
                     
                     // TEST 8.2 - Location zip with an invalid zip code
                     new object[] { "?loc=1&z=11111&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.ZipCode, ErrorMessage = "Please enter a valid zip code value."}}
                     }},
                     
                     // TEST 8.3 - Location zip with invalid zip proximity
                     new object[] { "?loc=1&z=20850&zp=chicken&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.ZipRadius, ErrorMessage = "Please enter a valid zip radius value."}}
                     }},
 
                     // TEST 8.4 - Location zip with invalid zip proximity
                     new object[] { "?loc=1&z=20850&zp=-1&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.ZipRadius, ErrorMessage = "Please enter a valid zip radius value."}}
+
                     }},
                     
                     // TEST 8.5 - Location zip with city/state/country
                     new object[] { "?loc=1&lcty=Arlington&lst=VA&lcnty=United+States&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.ZipCode, ErrorMessage = "Please enter a valid zip code value."}}
                     }},
                     
                     // TEST 8.6 - Location zip with hospital
                     new object[] { "?loc=1&hos=Mayo+Clinic&rl=2", new CTSSearchParams() {
                         Location = LocationType.Zip,
                         LocationParams = new ZipCodeLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.ZipCode, ErrorMessage = "Please enter a valid zip code value."}}
                     }},
                 
                     // TEST 8.7 - Location zip without Advanced search form
@@ -307,35 +357,40 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     new object[] { "?loc=2&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Location, ErrorMessage = "You must enter either a valid country, city, or state parameter." }}
                     }},
 
                     // TEST 9.1 - Invalid State
                     new object[] { "?loc=2&lst=VI&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.State, ErrorMessage = "Invalid param(s) for lookup: VI" }}
                     }},
                     
                     // TEST 9.2 - Multiple states, one invalid
                     new object[] { "?loc=2&lst=MD,chicken&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.State, ErrorMessage = "Invalid param(s) for lookup: chicken" }}
                     }},
 
                     // TEST 9.3 - Location city/state/country with zip code
                     new object[] { "?loc=2&z=11111&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Location, ErrorMessage = "You must enter either a valid country, city, or state parameter." }}
                     }},
                     
                     // TEST 9.4 - Location city/state/country with hospital
                     new object[] { "?loc=2&hos=Mayo+Clinic&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Location, ErrorMessage = "You must enter either a valid country, city, or state parameter." }}
                     }},
 
                     // TEST 9.5 - Location city/state/country without Advanced search form
@@ -348,28 +403,32 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     new object[] { "?loc=2&lst=Baltimore&rl=2", new CTSSearchParams() {
                         Location = LocationType.CountryCityState,
                         LocationParams = new CountryCityStateLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.State, ErrorMessage = "Invalid param(s) for lookup: Baltimore" }}
                     }},
                     
                     // TEST 10.0 - Location hospital without hospital set
                     new object[] { "?loc=3&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
                         LocationParams = new HospitalLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Hospital, ErrorMessage = "Please enter a valid hospital/institution parameter." }}
                     }},
                      
                     // TEST 10.1 - Location hospital with zip code
                     new object[] { "?loc=3&z=11111&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
                         LocationParams = new HospitalLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Hospital, ErrorMessage = "Please enter a valid hospital/institution parameter." }}
                     }},
 
                     // TEST 10.2 - Location hospital with city/state/country
                     new object[] { "?loc=3&lcty=Arlington&lst=VA&lcnty=United+States&rl=2", new CTSSearchParams() {
                         Location = LocationType.Hospital,
                         LocationParams = new HospitalLocationSearchParams(),
-                        ResultsLinkFlag = ResultsLinkType.Advanced
+                        ResultsLinkFlag = ResultsLinkType.Advanced,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Hospital, ErrorMessage = "Please enter a valid hospital/institution parameter." }}
                     }},
 
                     // TEST 10.3 - Location hospital without Advanced search form
@@ -385,7 +444,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Advanced
                     }},
 
-                    // TEST 11.1 - Location hospital with city/state/country
+                    // TEST 11.1 - Location At NIH with city/state/country
                     new object[] { "?loc=4&lcty=Arlington&lst=VA&lcnty=United+States&rl=2", new CTSSearchParams() {
                         Location = LocationType.AtNIH,
                         LocationParams = new AtNIHLocationSearchParams(),
@@ -407,41 +466,48 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     
                     // TEST 12.0 - Results link flag invalid (string)
                     new object[] { "?rl=chicken", new CTSSearchParams() {
-                        ResultsLinkFlag = ResultsLinkType.Unknown
+                        ResultsLinkFlag = ResultsLinkType.Unknown,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchParamError() { Param = "ResultsLinkFlag", ErrorMessage = "Results Link Flag can only equal 1 or 2."}}
                     }},
                     // TEST 12.1 - Results link flag (not 1 or 2)
                     new object[] { "?rl=-1", new CTSSearchParams() {
-                        ResultsLinkFlag = ResultsLinkType.Unknown
+                        ResultsLinkFlag = ResultsLinkType.Unknown,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchParamError() { Param = "ResultsLinkFlag", ErrorMessage = "Results Link Flag can only equal 1 or 2."}}
                     }},
                     
                     // TEST 13.0 - Trial type invalid
                     new object[] {"?tt=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.TrialTypes, ErrorMessage = "Invalid param(s) for lookup: chicken"}}
                     }},
 
                     // TEST 13.1 - Trial type all with type
                     new object[] {"?tt=all,basic_science", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.TrialTypes, ErrorMessage = "Invalid param(s) for lookup: all"}}
                     }},
                     
                     // TEST 14.0 - Drug with invalid param
                     new object[] {"?d=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Drugs, ErrorMessage = "Please enter a valid parameter."}}
                     }},
 
                     // TEST 14.1 - Drugs with invalid param (no lookup)
                     new object[] {"?d=C1648", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Drugs, ErrorMessage = "Invalid code(s) for lookup: c1648"}}
                     }},
 
                     // TEST 14.2 - Drugs with multiple codes, one invalid
                     new object[] {"?d=C1647,chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.Drugs, ErrorMessage = "Please enter a valid parameter."}}
                     }},
 
                     // TEST 14.3 - Drugs with multiple codes, one repeated
@@ -463,19 +529,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 15.0 - Other treatments/interventions with invalid param
                     new object[] {"?i=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.OtherTreatments, ErrorMessage = "Please enter a valid parameter."}}
                     }},
                      
                     // TEST 15.1 - Other treatments/interventions with invalid param (no lookup)
                     new object[] {"?i=c131061", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.OtherTreatments, ErrorMessage = "Invalid code(s) for lookup: c131061"}}
                     }},
 
                     // TEST 15.2 - Other treatments/interventions with multiple codes, one invalid
                     new object[] {"?i=c131060,c131061", new CTSSearchParams() {
+                        OtherTreatments = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C131060" },
+                                Label = "Checkpoint Blockade Immunotherapy"
+                            }
+                        },
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.OtherTreatments, ErrorMessage = "Invalid code(s) for lookup: c131061"}}
                     }},
                     
                     // TEST 15.3 - Other treatments/interventions with multiple codes, one repeated
@@ -493,17 +568,29 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
                     }},
-
+                    
                     // TEST 15.4 - Other treatments/interventions with multiple codes, one without lookup
                     new object[] {"?i=C131060,C107350|C26665,C131061", new CTSSearchParams() {
+                         OtherTreatments = new TerminologyFieldSearchParam[] { 
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C131060" },
+                                Label = "Checkpoint Blockade Immunotherapy"
+                            },
+                            new TerminologyFieldSearchParam() {
+                                Codes = new string[] { "C26665" , "C107350" },
+                                Label = "Pomegranate"
+                            }
+                        },
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.OtherTreatments, ErrorMessage = "Invalid code(s) for lookup: c131061"}}
                     }},
                     
                     // TEST 16.0 - Trial phase with invalid param (no lookup)
                     new object[] {"?tp=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.TrialPhases, ErrorMessage = "Invalid param(s) for lookup: chicken"}}
                     }},
                    
                     // TEST 16.1 - Trial phases with all ("") and another value selected
@@ -521,7 +608,21 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // TEST 16.2 - Trial phases with multiple values, one invalid (without lookup)
                     new object[] {"?tp=ii,chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.TrialPhases, ErrorMessage = "Invalid param(s) for lookup: chicken"}}
+                    }},
+
+                    // TEST 17.0 - Is VA only with invalid param (not int)
+                    new object[] { "?va=chicken", new CTSSearchParams() {
+                        IsVAOnly = false,
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.IsVAOnly, ErrorMessage = "Please enter a valid VA facility search parameter."}}
+                    }},
+
+                    // TEST 18.0 - Healthy Volunteers with invalid param (not int)
+                    new object[] { "?hv=chicken", new CTSSearchParams() {
+                        ResultsLinkFlag = ResultsLinkType.Basic,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.HealthyVolunteers, ErrorMessage = "Please enter a valid healthy volunteer indicator."}}
                     }},
                 };
             }
@@ -581,135 +682,135 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             //This makes it so that we do not have to create a fake class that returns fake data.
             rtnMock.Setup(lookup => lookup.GetTitleCase("c4872"))
                 .Returns("Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4872"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4872", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c4878"))
                 .Returns("Lung Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4878"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4878", false))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4873"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4873", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c3995,c4872"))
                 .Returns("Stage IV Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c3995,c4872"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c3995,c4872", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c7771"))
                 .Returns("Recurrent Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c7771"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c7771", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c4001,c7771"))
                 .Returns("Recurrent Inflammatory Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4001,c7771"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c4001,c7771", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c133092"))
                 .Returns("Recurrent Breast Angiosarcoma");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c133092"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c133092", false))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c7772"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c7772", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c88375"))
                 .Returns("Stage I Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c88375"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c88375", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c3641"))
                 .Returns("Stage 0 Breast Cancer");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c3641"))
-                .Returns(true); 
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c3641", false))
+                .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c88376"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c88376", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c26696"))
                 .Returns("Anxiety");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c26696"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c26696", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c35014"))
                 .Returns("Separation Anxiety Disorder");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c35014"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c35014", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c2878,c35014"))
                 .Returns("Anxiety Disorder");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c2878,c35014"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c2878,c35014", false))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c35015"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c35015", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.Get("MD"))
                 .Returns("Maryland");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("MD"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("MD", true))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.Get("VA"))
                 .Returns("Virginia");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("VA"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("VA", true))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("VI"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("VI", true))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.Get("basic_science"))
                 .Returns("Basic Science");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("basic_science"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("basic_science", true))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.Get("supportive_care"))
                 .Returns("Supportive Care");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("supportive_care"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("supportive_care", true))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c1647"))
                 .Returns("Trastuzumab");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c1647"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c1647", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c2039"))
                 .Returns("Bevacizumab");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c2039"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c2039", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c136282,c2039"))
                 .Returns("Bevacizumab Regimen");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c136282,c2039"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c136282,c2039", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c131060"))
                 .Returns("Checkpoint Blockade Immunotherapy");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c131060"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c131060", false))
                 .Returns(true);
 
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c131061"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c131061", false))
                 .Returns(false);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c26665"))
                 .Returns("Pomegranate Juice");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c26665"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c26665", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.GetTitleCase("c107350,c26665"))
                 .Returns("Pomegranate");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("c107350,c26665"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("c107350,c26665", false))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.Get("i"))
                 .Returns("I");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("i"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("i", true))
                 .Returns(true);
 
             rtnMock.Setup(lookup => lookup.Get("ii"))
                 .Returns("II");
-            rtnMock.Setup(lookup => lookup.MappingContainsKey("ii"))
+            rtnMock.Setup(lookup => lookup.MappingContainsKey("ii", true))
                 .Returns(true);
 
             return rtnMock;

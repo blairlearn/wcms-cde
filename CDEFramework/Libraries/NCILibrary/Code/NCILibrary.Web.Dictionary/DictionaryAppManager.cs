@@ -285,6 +285,29 @@ namespace NCI.Web.Dictionary
         }
 
         /// <summary>
+        /// Dictionary search that will return a list of DictionaryEntryMetadata items for the sitemap
+        /// </summary>
+        /// <param name="entriesList">The list of DictionaryEntryMetadata items whose existence in the DB will be validated.</param>
+        /// <returns>A list of DictionaryEntryMetadata items that exist in the DB.</returns>
+        public List<DictionaryEntryMetadata> DoDictionaryEntriesExist(List<DictionaryEntryMetadata> entriesList)
+        {
+            DictionaryService service = new DictionaryService();
+            List<DictionaryEntryMetadata> entriesExistRet = null;
+
+            // Tries the dictionary service to get the list of dictionary entries back
+            try
+            {
+                entriesExistRet = service.DoDictionaryEntriesExist(entriesList);
+            }
+            catch (Exception ex)
+            {
+                log.Error("There is an error in the DoDictionaryEntriesExist method of the Dictionary Service.", ex);
+            }
+
+            return entriesExistRet;
+        }
+
+        /// <summary>
         /// this is to utilize shared code between search and expand as they return the same objects and do the same action
         /// </summary>
         /// <param name="list">the string list that the dictionary service would return</param>
@@ -313,6 +336,6 @@ namespace NCI.Web.Dictionary
             }
 
             return returnList;
-        }   
+        }
     }
 }

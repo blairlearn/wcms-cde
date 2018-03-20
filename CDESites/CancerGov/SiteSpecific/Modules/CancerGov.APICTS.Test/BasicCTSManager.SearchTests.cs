@@ -32,7 +32,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     new object[] { 
                         new CTSSearchParams(),
                         new Dictionary<string, object> {
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
 
@@ -44,7 +44,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         new Dictionary<string,object> {
                             {"eligibility.structured.max_age_in_years_gte", 35},
                             {"eligibility.structured.min_age_in_years_lte", 35},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
 
@@ -56,7 +56,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string,object> {
                             {"eligibility.structured.gender", "male" },
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
                     
@@ -68,7 +68,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "_fulltext", "chicken" },
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
 
@@ -84,7 +84,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "primary_purpose.primary_purpose_code", new string[] { "basic_science" }},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
                     new object[] {
@@ -102,7 +102,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "primary_purpose.primary_purpose_code", new string[] { "basic_science", "treatment" }},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
 
@@ -113,7 +113,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "principal_investigator_fulltext", "Sophia Smith"},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
 
@@ -124,7 +124,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "lead_org_fulltext", "Mayo Clinic"},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
                     new object[] {
@@ -133,7 +133,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "_trialids", new string[] {"NCI-2015-00054"} },
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
                     new object[] {
@@ -142,12 +142,53 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "_trialids", new string[] { "SWOG", "CCOG" } },
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
-
-
-
+                    new object[] {
+                        new CTSSearchParams() {
+                            IsVAOnly = true
+                        },
+                        new Dictionary<string, object>() {
+                            { "sites.org_va", true },
+                            { "sites.recruitment_status", CTSConstants.ActiveRecruitmentStatuses },
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
+                        }
+                    },                    
+                    new object[] {
+                        new CTSSearchParams() {
+                            IsVAOnly = false
+                        },
+                        new Dictionary<string, object>() {
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
+                        }
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            HealthyVolunteer = HealthyVolunteerType.Any
+                        },
+                        new Dictionary<string, object>() {
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
+                        }
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            HealthyVolunteer = HealthyVolunteerType.Healthy
+                        },
+                        new Dictionary<string, object>() {
+                            { "accepts_healthy_volunteers_indicator", "YES" },
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
+                        }
+                    },
+                    new object[] {
+                        new CTSSearchParams() {
+                            HealthyVolunteer = HealthyVolunteerType.Infirmed
+                        },
+                        new Dictionary<string, object>() {
+                            { "accepts_healthy_volunteers_indicator", "NO" },
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
+                        }
+                    },
                     /*
 
 
@@ -201,7 +242,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "phase.phase", new string[] { "i", "i_ii" }},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
                     new object[] {
@@ -215,7 +256,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "phase.phase", new string[] { "ii", "i_ii", "ii_iii" }},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
                     new object[] {
@@ -229,7 +270,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "phase.phase", new string[] { "iii", "ii_iii" }},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
                     new object[] {
@@ -243,7 +284,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "phase.phase", new string[] { "iv" }},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     },
                     new object[] {
@@ -269,7 +310,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         },
                         new Dictionary<string, object>() {
                             { "phase.phase", new string[] { "i", "i_ii", "ii", "ii_iii", "iii", "iv" }},
-                            { "current_trial_status", BasicCTSManager.ActiveTrialStatuses }
+                            { "current_trial_status", CTSConstants.ActiveTrialStatuses }
                         }
                     }
                 };

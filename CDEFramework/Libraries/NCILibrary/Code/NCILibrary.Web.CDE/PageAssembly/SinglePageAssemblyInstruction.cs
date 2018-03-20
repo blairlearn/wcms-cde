@@ -528,7 +528,7 @@ namespace NCI.Web.CDE
 
             if (string.IsNullOrEmpty(meta))
             {
-                meta = GetField("short_description");
+                meta = GetField("long_description");
 
                 if (!string.IsNullOrEmpty(meta))
                 {
@@ -538,7 +538,7 @@ namespace NCI.Web.CDE
 
                 else
                 {
-                    meta = GetField("long_description");
+                    meta = GetField("short_description");
                     if (!string.IsNullOrEmpty(meta))
                     {
                         //string meta tags from HTML.

@@ -6,12 +6,15 @@ using System.Text;
 
 namespace NCI.Web.Sitemap
 {
-    public class SitemapProviderConfiguration : ConfigurationSection
+    public class SitemapProviderConfiguration : ConfigurationElement
     {
-        public static SitemapProviderConfiguration Get()
+        /// <summary>
+        /// Name of the search collection
+        /// </summary>
+        [ConfigurationProperty("name", IsRequired = true)]
+        public string Name
         {
-            SitemapProviderConfiguration config = (SitemapProviderConfiguration)ConfigurationManager.GetSection("Sitemap");
-            return config;
+            get { return (string)base["name"]; }
         }
 
         [ConfigurationProperty("SitemapStores")]

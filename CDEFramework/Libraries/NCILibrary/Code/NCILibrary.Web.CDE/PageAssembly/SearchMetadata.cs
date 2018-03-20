@@ -19,6 +19,12 @@ namespace NCI.Web.CDE
         [XmlElement(Form = XmlSchemaForm.Unqualified)]
         public bool DoNotIndex { get; set; }
 
+        /// <summary>
+        /// Should this page be included in the sitemap(s)
+        /// </summary>
+        [XmlElement(Form = XmlSchemaForm.Unqualified)]
+        public bool ExcludeFromSitemap { get; set; }
+
         //SiteSpecificSearchMetadata is another method of unknown data type,
         //not implementing this as part of the DoNotIndex/Meta Robots implementation
 

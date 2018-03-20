@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Web;
@@ -574,6 +575,37 @@ namespace NCI.Services.Dictionary
                         Messages = new string[] { ex.Message }
                     }
                 };
+            }
+
+            return ret;
+        }
+
+        /// <summary>
+        /// Performs a check to see if the DictionaryEntryMetadata items provided exist in the database.
+        /// </summary>
+        /// <param name="entriesList">A list of DictionaryEntryMetadata items to validate in the DB.</param>
+        /// <returns>A list of DictionaryEntryMetadata items.
+        [WebInvoke(Method = "POST",
+            UriTemplate = "v1/doDictionaryEntriesExist")]
+        [OperationContract]
+        public List<DictionaryEntryMetadata> DoDictionaryEntriesExist(List<DictionaryEntryMetadata> entriesList)
+        {
+            List<DictionaryEntryMetadata> ret;
+
+            try
+            {
+                DictionaryManager mgr = new DictionaryManager();
+                ret = mgr.DoDictionaryEntriesExist(entriesList);
+
+                log.DebugFormat("Returning {0} results.", ret.Count());
+            }
+            // If there was a problem with the inputs for this request, fail with
+            // an HTTP status message and an explanation.
+            catch (Exception ex)
+            {
+                WebOperationContext ctx = WebOperationContext.Current;
+                ctx.OutgoingResponse.SetStatusAsNotFound(ex.Message);
+                ret = new List<DictionaryEntryMetadata>();
             }
 
             return ret;

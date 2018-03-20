@@ -40,8 +40,17 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
 
             //TODO: Don't do a search if there are param errors.
+            if (SearchParams.HasInvalidParams() == true)
+            {
+                _results = new ClinicalTrialsCollection();
+                _results.TotalResults = 0;
+            }
 
-            _results = CTSManager.Search(SearchParams, this.PageNum, this.ItemsPerPage);
+            else
+            {
+                _results = CTSManager.Search(SearchParams, this.PageNum, this.ItemsPerPage);
+
+            }
 
             //Let's setup some helpful items for the template, so they do not need to be helper functions
             //The start is either 0 if there are no results, or a 1 based offset based on Page number and items per page.
@@ -62,7 +71,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 NciUrl paramsUrl = CTSSearchParamFactory.ConvertParamsToUrl(this.SearchParams);
 
                 //Add or replace the currentURL params based on the *validated* query params.
-                foreach (KeyValuePair<string,string> qp in paramsUrl.QueryParameters) {
+                foreach (KeyValuePair<string, string> qp in paramsUrl.QueryParameters)
+                {
                     if (!url.QueryParameters.ContainsKey(qp.Key))
                     {
                         url.QueryParameters.Add(qp.Key, qp.Value);
@@ -73,8 +83,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     }
                 }
 
-                url.QueryParameters.Add("ni", this.ItemsPerPage.ToString());                
+                url.QueryParameters.Add("ni", this.ItemsPerPage.ToString());
             });
+            
 
             //Return the object for binding.
             return new

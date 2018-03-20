@@ -107,7 +107,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
                 // Array of tests
                 return new[]
                 {
-                    /*// TEST 0 - No parameters
+                    // TEST 0 - No parameters
                     new object[] { "", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
@@ -137,13 +137,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
                     // TEST 3 - Single item (invalid) for lookup
                     new object[] {"?t=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.MainType, ErrorMessage = "Please enter a valid parameter."}}
                     }},
 
                     // TEST 4 - Single item (multiple codes, one invalid) for lookup
                     new object[] {"?t=C4872|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.MainType, ErrorMessage = "Please enter a valid parameter."}}
                     }},
 
                     // TEST 5 - Multiple items (multiple codes) for lookup
@@ -177,13 +179,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
                     // TEST 7 - Multiple items (one invalid) for lookup
                     new object[] {"?st=C4872,chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.SubTypes, ErrorMessage = "Please enter a valid parameter."}}
                     }},
 
                     // TEST 7 - Multiple item (one with multiple codes, one invalid) for lookup
                     new object[] {"?st=C4872,C7771|chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.SubTypes, ErrorMessage = "Please enter a valid parameter."}}
                     }},
 
                     // TEST 8 - Multiple item (one with multiple codes) for lookup; all have same label
@@ -196,7 +200,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
                         },
                         ResultsLinkFlag = ResultsLinkType.Basic,
                         Location = LocationType.None
-                    }},*/
+                    }},
                     
                     // TEST 9 - Single item (non-code) for lookup 
                     new object[] {"?tp=I", new CTSSearchParams() {
@@ -213,7 +217,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
                     // TEST 10 - Single item (non-code, invalid) for lookup 
                     new object[] {"?tp=chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.TrialPhases, ErrorMessage = "Invalid param(s) for lookup: chicken"}}
                     }},
 
                     // TEST 11 - Multiple items (non-code) for lookup
@@ -237,7 +242,8 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
                     // TEST 12 - Multiple items (non-code, one invalid) for lookup
                     new object[] {"?tt=tt_treatment,tt_supportive_care,chicken", new CTSSearchParams() {
                         ResultsLinkFlag = ResultsLinkType.Basic,
-                        Location = LocationType.None
+                        Location = LocationType.None,
+                        ParseErrors = new List<CTSSearchParamError>() { new CTSSearchFieldParamError() { Field = FormFields.TrialTypes, ErrorMessage = "Invalid param(s) for lookup: chicken"}}
                     }},
                 };
             }
@@ -266,7 +272,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
         public void SingleLookup()
         {
             TrialTermLookupService lookup = GetMappingService(new string[] { "EVSWithMultiple.txt", "Other.txt" });
-            Assert.Equal(true, lookup.MappingContainsKey("c4872"));
+            Assert.Equal(true, lookup.MappingContainsKey("c4872", false));
             Assert.Equal("Breast Cancer", lookup.GetTitleCase("c4872"), new MappingsComparer());
         }
 
@@ -274,7 +280,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
         public void SingleLookupWithError()
         {
             TrialTermLookupService lookup = GetMappingService(new string[] { "EVSWithMultiple.txt", "Other.txt" });
-            Assert.Equal(false, lookup.MappingContainsKey("c4872,chicken"));
+            Assert.Equal(false, lookup.MappingContainsKey("c4872,chicken", false));
         }
 
         [Fact]
@@ -288,7 +294,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.ConfigTest
         public void MultipleLookupWithError()
         {
             TrialTermLookupService lookup = GetMappingService(new string[] { "EVSWithMultiple.txt", "Other.txt" });
-            Assert.Equal(false, lookup.MappingContainsKey("c88375,chicken,c88375"));
+            Assert.Equal(false, lookup.MappingContainsKey("c88375,chicken,c88375", false));
         }
         
         [Theory, MemberData("URLParseLabels")]
