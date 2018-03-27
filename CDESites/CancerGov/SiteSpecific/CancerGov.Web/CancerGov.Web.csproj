@@ -117,6 +117,7 @@
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSSearch.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\BasicCTSView.ascx" />
     <Content Include="SnippetTemplates\BasicCTSv2\TrialListingPage.ascx" />
+    <Content Include="SnippetTemplates\CustomResponseCodeControl.ascx" />
     <Content Include="SnippetTemplates\DrugDictionary\Views\DrugDictionaryExpandList.ascx" />
     <Content Include="SnippetTemplates\FilterTitle.ascx" />
     <Content Include="SnippetTemplates\GenericHtmlContentSnippet.ascx" />

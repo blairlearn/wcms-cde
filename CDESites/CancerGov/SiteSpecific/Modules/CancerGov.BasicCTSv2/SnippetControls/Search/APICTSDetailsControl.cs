@@ -18,7 +18,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 {
     public class APICTSDetailsControl : BaseMgrAPICTSControl
     {
-        static ILog log = LogManager.GetLogger(typeof(BasicCTSViewControl));
+        static ILog log = LogManager.GetLogger(typeof(APICTSDetailsControl));
 
         private bool _showingAll = false;
         private string _trialID = string.Empty;
@@ -199,7 +199,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             if (Config.RedirectIfInactive)
             {
-                string[] actives = BasicCTSManager.ActiveTrialStatuses;
+                string[] actives = CTSConstants.ActiveTrialStatuses;
                 if (Array.IndexOf(actives, trial.CurrentTrialStatus) < 0)
                 {
                     throw new HttpException(404, "Trial status is not active.");

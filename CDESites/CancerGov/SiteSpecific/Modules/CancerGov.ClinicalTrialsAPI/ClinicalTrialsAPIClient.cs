@@ -21,27 +21,6 @@ namespace CancerGov.ClinicalTrialsAPI
         private HttpClient _client = null;
 
         /// <summary>
-        /// Base path (API version) set in the web.config.
-        /// This can also be an empty string
-        /// </summary>
-        protected string BasePath
-        {
-            get
-            {
-                string basepath = ConfigurationManager.AppSettings["ClinicalTrialsAPIBasepath"];
-                if (basepath == null)
-                {
-                    basepath = String.Empty;
-                }
-                else
-                {
-                    basepath = "/" + basepath;
-                }
-                return basepath;
-            }
-        }
-
-        /// <summary>
         /// Creates a new instance of a Clinicaltrials API client.
         /// </summary>
         /// <param name="client">An HttpClient that has the BaseAddress set to the API address.</param>
@@ -55,28 +34,30 @@ namespace CancerGov.ClinicalTrialsAPI
         /// <summary>
         /// Calls the listing endpoint (/clinical-trials) of the clinical trials API
         /// </summary>
+        /// <param name="query">Search query (without paging and fields to include) (optional)</param>
         /// <param name="size"># of results to return (optional)</param>
         /// <param name="from">Beginning index for results (optional)</param>
         /// <param name="includeFields">Fields to include (optional)</param>
-        /// <param name="excludeFields">Fields to exclude (optional)</param>
-        /// <param name="searchParams">Search parameters (optional)</param>
+        /// <param name="excludeFields">Fields to exclude (optional)</param>        
         /// <returns>Collection of Clinical Trials</returns>
         public ClinicalTrialsCollection List(
-            int size = 10, 
-            int from = 0, 
-            string[] includeFields = null, 
-            string[] excludeFields = null,
-            Dictionary<string, object> searchParams = null
+            JObject query,
+            int size = 10,
+            int from = 0,
+            string[] includeFields = null,
+            string[] excludeFields = null
             )
         {
             ClinicalTrialsCollection rtnResults = null;
 
             //Handle Null include/exclude field
+            query = query ?? new JObject();
             includeFields = includeFields ?? new string[0];
             excludeFields = excludeFields ?? new string[0];
-            searchParams = searchParams ?? new Dictionary<string, object>();
 
-            JObject requestBody = new JObject();
+            //Make a copy of our search query so that we don't muck with the original.
+            //(The query will need to contain the size, from, etc
+            JObject requestBody = (JObject)query.DeepClone();
             requestBody.Add(new JProperty("size", size));
             requestBody.Add(new JProperty("from", from));
 
@@ -87,12 +68,7 @@ namespace CancerGov.ClinicalTrialsAPI
 
             if (excludeFields.Length > 0)
             {
-                requestBody.Add(new JProperty("exclude", includeFields));
-            }
-
-            foreach (KeyValuePair<string, object> sp in searchParams)
-            {
-                requestBody.Add(new JProperty(sp.Key, sp.Value));
+                requestBody.Add(new JProperty("exclude", excludeFields));
             }
 
             //Get the HTTP response content from POST request
@@ -100,49 +76,38 @@ namespace CancerGov.ClinicalTrialsAPI
             rtnResults = httpContent.ReadAsAsync<ClinicalTrialsCollection>().Result;
 
             return rtnResults;
-
         }
 
         /// <summary>
-        /// Calls the listing endpoint (/clinical-trials) of the clinical trials API using dynamically
-        /// created search params (see Trial Listing pages)
+        /// Calls the listing endpoint (/clinical-trials) of the clinical trials API
         /// </summary>
-        /// <param name="size"># of results to return</param>
-        /// <param name="from">Beginning index for results</param>
-        /// <param name="searchParams">Default search parameters</param>
-        /// <param name="dynamicSearchParams">Dynamic search parameters</param>
+        /// <param name="searchParams">Search parameters (optional)</param>
+        /// <param name="size"># of results to return (optional)</param>
+        /// <param name="from">Beginning index for results (optional)</param>
+        /// <param name="includeFields">Fields to include (optional)</param>
+        /// <param name="excludeFields">Fields to exclude (optional)</param>        
         /// <returns>Collection of Clinical Trials</returns>
-        public ClinicalTrialsCollection GetTrialsList(int size, int from, Dictionary<string, object> searchParams, JObject dynamicSearchParams)
+        public ClinicalTrialsCollection List(
+            Dictionary<string, object> searchParams,
+            int size = 10, 
+            int from = 0, 
+            string[] includeFields = null, 
+            string[] excludeFields = null            
+            )
         {
-            ClinicalTrialsCollection rtnResults = null;
 
-            //Handle null fields
+            //Handle Null include/exclude field
             searchParams = searchParams ?? new Dictionary<string, object>();
-            dynamicSearchParams = dynamicSearchParams ?? new JObject();
 
-                JObject requestBody = new JObject();
-                requestBody.Add(new JProperty("size", size));
-                requestBody.Add(new JProperty("from", from));
+            JObject query = new JObject();
 
-                //Add common filter criteria to request
-                foreach (KeyValuePair<string, object> sp in searchParams)
-                {
-                    requestBody.Add(new JProperty(sp.Key, sp.Value));
-                }
 
-                //Add dynamic filter criteria to request
-                if (dynamicSearchParams != null)
-                {
-                    //Merge dynamic and common filters (dynamic values override common)
-                    requestBody.Merge(dynamicSearchParams, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Concat });
-                }
+            foreach (KeyValuePair<string, object> sp in searchParams)
+            {
+                query.Add(new JProperty(sp.Key, sp.Value));
+            }
 
-                //Get the HTTP response content from POST request
-                HttpContent httpContent = ReturnPostRespContent("clinical-trials", requestBody);
-                rtnResults = httpContent.ReadAsAsync<ClinicalTrialsCollection>().Result;
-
-            return rtnResults;
-
+            return List(query, size, from, includeFields, excludeFields);
         }
 
         /// <summary>
@@ -313,14 +278,15 @@ namespace CancerGov.ClinicalTrialsAPI
             _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
             // We want this to be synchronus, so call Result right away.
-            response = _client.GetAsync(BasePath + "/" + path + "/" + param).Result;
+            //NOTE: When using HttpClient.BaseAddress as we are, the path must not have a preceeding slash
+            response = _client.GetAsync(path + "/" + param).Result;
             if (response.IsSuccessStatusCode)
             {
                 content = response.Content;
             }
             else
             {
-                string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + BasePath + "/" + path + "/" + param;
+                string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + this._client.BaseAddress.ToString() + path + "/" + param;
                 if (response.StatusCode.ToString() == notFound)
                 {
                     // If trial is not found, log 404 message and return content as null
@@ -353,7 +319,8 @@ namespace CancerGov.ClinicalTrialsAPI
             _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
             //We want this to be synchronus, so call Result right away.
-            response = _client.PostAsync(BasePath + "/" + path, new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
+            //NOTE: When using HttpClient.BaseAddress as we are, the path must not have a preceeding slash
+            response = _client.PostAsync(path, new StringContent(requestBody.ToString(), Encoding.UTF8, "application/json")).Result;
             if (response.IsSuccessStatusCode)
             {
                 content = response.Content;
@@ -361,7 +328,7 @@ namespace CancerGov.ClinicalTrialsAPI
             else
             {
                 //TODO: Add more checking here if the respone does not actually have any content
-                string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + BasePath + "/" + path;
+                string errorMessage = "Response: " + response.Content.ReadAsStringAsync().Result + "\nAPI path: " + this._client.BaseAddress.ToString() + path;
                 throw new Exception(errorMessage);
             }
 

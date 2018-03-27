@@ -1,32 +1,63 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using Common.Logging;
 
 namespace NCI.Web.Sitemap
 {
     public static class Sitemaps
     {
+        private static SitemapIndexProviderConfiguration s_Config;
         private static SitemapUrlStoreCollection s_Stores;
         private static object s_lock = new object();
         private static bool s_Initialized = false;
         private static Exception s_InitializeException = null;
 
         public static SitemapUrlStoreCollection Stores { get { Initialize(); return s_Stores; } }
+        static ILog log = LogManager.GetLogger(typeof(SitemapIndexHandler));
 
-        public static SitemapUrlSet GetSitemap()
+        public static SitemapUrlSet GetSitemap(string sitemapName)
         {
             Initialize();
 
             SitemapUrlSet sitemapSet = new SitemapUrlSet();
 
-            foreach (SitemapUrlStoreBase S in s_Stores)
-            {
-                sitemapSet.Add(S.GetSitemapUrls());
-            }
+            SitemapUrlStoreBase S = s_Stores[sitemapName.ToLower()];
+
+            sitemapSet.Add(S.GetSitemapUrls(S.Name));
 
             return sitemapSet;
+        }
+
+        public static SitemapIndexUrlSet GetSitemapIndex()
+        {
+            List<SitemapIndexUrl> sitemapIndexUrls = new List<SitemapIndexUrl>();
+            String path;
+            SitemapIndexSection section = (SitemapIndexSection)ConfigurationManager.GetSection("SitemapIndex");
+            SitemapIndexProviderConfiguration config = section.Sitemaps;
+
+            // Find all Sitemap elements within the Sitemaps collection and add their name (which is their URL) to the SitemapIndex
+            foreach (SitemapProviderConfiguration element in config)
+            {
+                try
+                {
+                    path = ConfigurationManager.AppSettings["RootUrl"] + "/sitemaps/" + element.Name.ToLower();
+                    sitemapIndexUrls.Add(new SitemapIndexUrl(path, DateTime.Now));
+                }
+
+                // If the sitemap index URL for this element can't be added, skip to the next element in the config.
+                catch (XmlException ex)
+                {
+                    log.Error("A sitemap index URL has failed parsing in Sitemaps:GetSitemapIndex().\nFile: " + element.Name + "\nEnvironment: " + System.Environment.MachineName + "\nRequest Host: " + HttpContext.Current.Request.Url.Host + "\n" + ex.ToString() + "\n");
+                    continue;
+                }
+            }
+
+            return new SitemapIndexUrlSet(sitemapIndexUrls);
         }
 
         public static void Initialize()
@@ -69,28 +100,33 @@ namespace NCI.Web.Sitemap
 
         public static void LoadStore()
         {
+            SitemapIndexSection section = (SitemapIndexSection)ConfigurationManager.GetSection("SitemapIndex");
+            SitemapIndexProviderConfiguration s_Config = section.Sitemaps;
             s_Stores = new SitemapUrlStoreCollection();
-            SitemapProviderConfiguration config = (SitemapProviderConfiguration)ConfigurationManager.GetSection("Sitemap");
+ 
             Type providerType = typeof(SitemapUrlStoreBase);
 
-            // Only use the first Provider.
-            foreach (ProviderSettings settings in config.SitemapStores)
+            foreach (SitemapProviderConfiguration element in s_Config)
             {
-                Type settingsType = Type.GetType(settings.Type, true, true);
-
-                if (settingsType == null)
-                    throw new ConfigurationErrorsException(String.Format("Could not find type: {0}", settings.Type));
-                if (!providerType.IsAssignableFrom(settingsType))
-                    throw new ConfigurationErrorsException(String.Format("SitemapStore '{0}' must subclass from '{1}'", settings.Name, providerType));
-
-                SitemapUrlStoreBase store = Activator.CreateInstance(settingsType) as SitemapUrlStoreBase;
-
-                if (store != null)
+                // Only use the first Provider.
+                foreach (ProviderSettings settings in element.SitemapStores)
                 {
-                    store.Initialize(settings.Name, settings.Parameters);
-                }
+                    Type settingsType = Type.GetType(settings.Type, true, true);
 
-                s_Stores.Add(store);
+                    if (settingsType == null)
+                        throw new ConfigurationErrorsException(String.Format("Could not find type: {0}", settings.Type));
+                    if (!providerType.IsAssignableFrom(settingsType))
+                        throw new ConfigurationErrorsException(String.Format("SitemapStore '{0}' must subclass from '{1}'", settings.Name, providerType));
+
+                    SitemapUrlStoreBase store = Activator.CreateInstance(settingsType) as SitemapUrlStoreBase;
+
+                    if (store != null)
+                    {
+                        store.Initialize(settings.Name.ToLower(), settings.Parameters);
+                    }
+
+                    s_Stores.Add(store);
+                }
             }
 
             if (s_Stores.Count == 0)

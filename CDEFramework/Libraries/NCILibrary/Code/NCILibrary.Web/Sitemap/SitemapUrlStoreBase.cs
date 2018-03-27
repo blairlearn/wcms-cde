@@ -8,6 +8,6 @@ namespace NCI.Web.Sitemap
 {
     public abstract class SitemapUrlStoreBase : ProviderBase, ISitemapUrlStore
     {
-        public abstract SitemapUrlSet GetSitemapUrls();
+        public abstract SitemapUrlSet GetSitemapUrls(string sitemapName);
     }
 }

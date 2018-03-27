@@ -1114,6 +1114,11 @@
           <documentation>Defines if this Assembly Instruction should NOT be indexed by the search engine</documentation>
         </annotation>
       </element>
+	  <element name="ExcludeFromSitemap" type="boolean" minOccurs="0" maxOccurs="1">
+	    <annotation>
+		  <documentation>Defines if this Assembly Instruction should NOT be included in the sitemap(s)</documentation>
+	    </annotation>
+	  </element>
       <element name="SiteSpecificSearchMetadata" type="cde:siteSpecificSearchMetadata" minOccurs="1" maxOccurs="1">
         <annotation>
           <documentation>Defines any site specific metadata for an Assembly Instruction to be used for searching</documentation>

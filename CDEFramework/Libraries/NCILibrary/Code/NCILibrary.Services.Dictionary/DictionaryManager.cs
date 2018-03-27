@@ -474,6 +474,41 @@ namespace NCI.Services.Dictionary
             return BuildSearchResultsStructure(results, language, audience, offset);
         }
 
+        /// <summary>
+        /// Performs a query for items from the DictionaryEntryMetadata list that are valid in the database..
+        /// </summary>
+        /// <param name="entriesList">A list of DictionaryEntryMetadata items, whose existence in the DB will be checked.</param>
+        /// <returns>A list of DictionaryEntryMetadata items.</returns>
+        public List<DictionaryEntryMetadata> DoDictionaryEntriesExist(List<DictionaryEntryMetadata> entriesList)
+        {
+            // In the initial implementation, the audience is implied by the particular dictionary being used.
+            foreach (DictionaryEntryMetadata entry in entriesList)
+            {
+                AudienceType audience = GetDefaultAudienceFromDictionaryType(entry.Dictionary);
+                entry.Audience = audience;
+            }
+
+            // Query that returns which DictionaryEntryMetadata items in the given list are valid in the database
+            DictionaryQuery query = new DictionaryQuery();
+            DataTable results = query.DoDictionaryEntriesExist(entriesList);
+
+            List<DictionaryEntryMetadata> validEntries = new List<DictionaryEntryMetadata>();
+
+            // Converts the datatable of entries into a list of DictionaryEntryMetadata items
+            foreach (DataRow row in results.Rows)
+            {
+                DictionaryEntryMetadata entry = new DictionaryEntryMetadata();
+                entry.CDRID = row.Field<int>("CDRID");
+                entry.Dictionary = (DictionaryType)System.Enum.Parse(typeof(DictionaryType), row.Field<string>("Dictionary"));
+                entry.Language = (Language)System.Enum.Parse(typeof(Language), row.Field<string>("Language"));
+                entry.Audience = (AudienceType)System.Enum.Parse(typeof(AudienceType), row.Field<string>("Audience"));
+
+                validEntries.Add(entry);
+            }
+
+            return validEntries;
+        }
+
 
         /// <summary>
         /// Common code for building the results data structure from Search and Expand.
