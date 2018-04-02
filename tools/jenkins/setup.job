@@ -7,13 +7,16 @@
 def FOLDER_NAME  = 'wcms-cde'    // Jenkins folder where the jbos will be placed.
 
 def GH_REPO_NAME = 'wcms-cde'     // The project's repository name (as used in the URL).
-def TARGET_BRANCH = 'master'            // Branch to run against.
+//def TARGET_BRANCH = 'master'            // Branch to run against.
+def TARGET_BRANCH = 'Deployment'            // Branch to run against.
 def GH_ORGANIZATION_NAME = 'NCIOCPL'   // GitHub Organization name (as used in the URL/userid).
 def GH_USER_TOKEN_KEY = 'NCIOCPL-GitHub-Token'  // Jenkins ID of the credential string containing the GitHub access token for creating releases.
 def NEXUS_USER_KEY = 'NCIOCPL-Nexus-Credentials' // Jenkins ID of the credentials object containing the nexus repository userid and password.
 def CONFIG_SUBSTITUTIONS = 'WCMS-cde-config-substitutions-file' // Jenkins ID of the credentials object containing the CDE configuration substitution values.
 
 def sourceRepository = "$GH_ORGANIZATION_NAME/$GH_REPO_NAME"
+def toolsRepository = "$GH_ORGANIZATION_NAME/cancergov-build-tools"  // Where do we find the build tools.
+def toolsBranch = "cde"
 
 job("${FOLDER_NAME}/Create build job for a branch") {
   description("Creates the jobs that build individual branches.\n\nTo modify this job, see the contents of setup.job and create-branch-skeleton.job.")
@@ -21,7 +24,7 @@ job("${FOLDER_NAME}/Create build job for a branch") {
   wrappers {
     environmentVariables {
       envs (
-        // Values common to the setup and job creation scripts that we don't want to maintain in two places.
+        // Values common to the various scripts that we don't want to maintain in more than one place.
         FOLDER_NAME : FOLDER_NAME,
         GH_REPO_NAME : GH_REPO_NAME,
         TARGET_BRANCH : TARGET_BRANCH,
@@ -48,5 +51,40 @@ job("${FOLDER_NAME}/Create build job for a branch") {
     dsl {
       external("tools/jenkins/create_branch_skeleton.job")
     }
+  }
+}
+
+
+job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
+  description("Deploys CDE builds to the WCMS RED environment.")
+
+  wrappers {
+    environmentVariables {
+      envs (
+        // Values common to the various scripts that we don't want to maintain in more than one place.
+        FOLDER_NAME : FOLDER_NAME,
+        GH_REPO_NAME : GH_REPO_NAME,
+        TARGET_BRANCH : TARGET_BRANCH,
+        GH_ORGANIZATION_NAME : GH_ORGANIZATION_NAME,
+        GH_USER_TOKEN_KEY : GH_USER_TOKEN_KEY,
+        NEXUS_USER_KEY : NEXUS_USER_KEY,
+        CONFIG_SUBSTITUTIONS : CONFIG_SUBSTITUTIONS
+      )
+    }
+  }
+
+  parameters {
+    stringParam('RELEASE_NAME', '', 'Enter the name of the release to be deployed.  Note that this includes the build number.')
+    choiceParam('ENVIRONMENT', ['pink', 'blue', 'red'], 'WCMS build environment.\n\nBlue - Dev\nRed - Hotfixes\nPink - Special projects')
+  }
+
+  scm {
+    github(toolsRepository, "*/$toolsBranch")
+  }
+
+  label("wcms-red") // Run anywhere except master.
+
+  steps {
+    batchFile("tools/jenkins/deploy-steps.bat")
   }
 }
