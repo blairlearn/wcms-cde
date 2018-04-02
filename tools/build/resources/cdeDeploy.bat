@@ -20,7 +20,7 @@ if errorlevel 1 (
 	exit /b 1
 )
 
-powershell -ExecutionPolicy BYPASS -FILE "%batpath%cdeDeploy.ps1" -source "'%batpath%'" -env %my_target%
+powershell -ExecutionPolicy BYPASS /c "& '%batpath%cdeDeploy.ps1' -source '%batpath%' -env %my_target%"
 if errorlevel 1 (
 	echo An error has occured.
 	exit /b 1
