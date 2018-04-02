@@ -20,5 +20,5 @@ rem Do a backup first.
 powershell -ExecutionPolicy BYPASS -FILE "%batpath%cdeBackup.ps1" -env %my_target%
 
 
-powershell -ExecutionPolicy BYPASS -FILE "%batpath%cdeDeploy.ps1" -source %codepath% -env %my_target%
+powershell -ExecutionPolicy BYPASS -FILE "%batpath%cdeDeploy.ps1" -source "%codepath%" -env %my_target%
 pause
