@@ -38,7 +38,6 @@ job("${FOLDER_NAME}/Create build job for a branch") {
 
   parameters {
     stringParam('BRANCH', '', 'New Branch\'s Name')
-    choiceParam('ENVIRONMENT', ['pink', 'blue', 'red'], 'WCMS build environment.\n\nBlue - Dev\nRed - Hotfixes\nPink - Special projects')
   }
 
   scm {
@@ -67,15 +66,13 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
         TARGET_BRANCH : TARGET_BRANCH,
         GH_ORGANIZATION_NAME : GH_ORGANIZATION_NAME,
         GH_USER_TOKEN_KEY : GH_USER_TOKEN_KEY,
-        NEXUS_USER_KEY : NEXUS_USER_KEY,
-        CONFIG_SUBSTITUTIONS : CONFIG_SUBSTITUTIONS
+        NEXUS_USER_KEY : NEXUS_USER_KEY
       )
     }
   }
 
   parameters {
     stringParam('RELEASE_NAME', '', 'Enter the name of the release to be deployed.  Note that this includes the build number.')
-    choiceParam('ENVIRONMENT', ['pink', 'blue', 'red'], 'WCMS build environment.\n\nBlue - Dev\nRed - Hotfixes\nPink - Special projects')
   }
 
   scm {
