@@ -77,7 +77,7 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
   }
 
   scm {
-    github(toolsRepository, "*/$toolsBranch")
+    github(sourceRepository, "*/$TARGET_BRANCH")
   }
 
   label("wcms-red") // Run anywhere except master.
