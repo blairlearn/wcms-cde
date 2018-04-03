@@ -80,13 +80,13 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
     git {
       remote {
         name('origin')
-        url(sourceRepository)
+        url("https://github.com/$sourceRepository")
       }
       branch("*/$TARGET_BRANCH")
-    }
-    extensions {
-      submoduleOptions {
-        recursive(true)
+      extensions {
+        submoduleOptions {
+          recursive(true)
+        }
       }
     }
   }
