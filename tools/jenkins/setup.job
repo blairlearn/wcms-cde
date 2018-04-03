@@ -94,6 +94,6 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
   label("wcms-red") // Run anywhere except master.
 
   steps {
-    batchFile("tools/jenkins/deploy-steps.bat")
+    batchFile("tools/deploy/deploy-steps.bat")
   }
 }
