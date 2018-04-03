@@ -94,9 +94,6 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
   label("wcms-red") // Run anywhere except master.
 
   steps {
-    batchFile("mkdir _dist")
-    batchFile("powershell -executionpolicy unrestricted github-tools\\download-release.ps1 -gitHubUsername nciocpl -gitHubRepository wcms-cde -releaseName %release_name% -saveToPath _dist\\distribution.zip")
-    batchFile("powershell -executionpolicy unrestricted zip-tools\\expand-zip -source _dist\\distribution.zip -destinationPath _dist")
-    batchFile("_dist\\cdeDeploy.bat")
+    batchFile("tools/jenkins/deploy-steps.bat")
   }
 }
