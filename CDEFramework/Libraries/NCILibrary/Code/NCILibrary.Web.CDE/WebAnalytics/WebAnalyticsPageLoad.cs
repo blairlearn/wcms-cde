@@ -36,9 +36,9 @@ namespace NCI.Web.CDE.WebAnalytics
 
         // Get paths for WCMS analytics code
         // Dev/QA/Stage tiers are hosted on static-dev.cancer.gov/wcms
-		// Prod is hosted on static.cancer.gov/wcms
+        // Prod is hosted on static.cancer.gov/wcms
         private string WaPre = ConfigurationManager.AppSettings["WAWCMSPre"].ToString();
-        //private string WaSCode = ConfigurationManager.AppSettings["SCode"].ToString();
+        private string WaSCode = ConfigurationManager.AppSettings["SCode"].ToString();
         private string WaFunctions = ConfigurationManager.AppSettings["NCIAnalyticsFunctions"].ToString();
 
         /// <summary>When true, page-wide link tracking is enabled.</summary>
@@ -55,29 +55,29 @@ namespace NCI.Web.CDE.WebAnalytics
         {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
             //pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
-            //pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
-            //pageLoadPreTag.AppendLine("<!--");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
+            pageLoadPreTag.AppendLine("<!--");
 
-            //// Default props, eVars, and/or events
-            //AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
-            //AddEvent(WebAnalyticsOptions.Events.event1); // page view event
+            // Default props, eVars, and/or events
+            AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
+            AddEvent(WebAnalyticsOptions.Events.event1); // page view event
 
-            //// The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
-            ////pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
+            // The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
+            //pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
 
-            //if (!TEST_MODE)
-            //{
-            //    pageLoadPostTag.AppendLine("var s_code=s.t();");
-            //    pageLoadPostTag.AppendLine("if(s_code)");
-            //    pageLoadPostTag.AppendLine("   document.write(s_code);");
-            //}
+            if (!TEST_MODE)
+            {
+                pageLoadPostTag.AppendLine("var s_code=s.t();");
+                pageLoadPostTag.AppendLine("if(s_code)");
+                pageLoadPostTag.AppendLine("   document.write(s_code);");
+            }
 
-            //pageLoadPostTag.AppendLine("-->");
-            //pageLoadPostTag.AppendLine("</script>");
-            //if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
-            //    pageLoadPostTag.Append(NoScriptTag().ToString());
-            ////pageLoadPostTag.AppendLine("<!-- End SiteCatalyst code version: H.20.3. -->");
-            //pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
+            pageLoadPostTag.AppendLine("-->");
+            pageLoadPostTag.AppendLine("</script>");
+            if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
+                pageLoadPostTag.Append(NoScriptTag().ToString());
+            //pageLoadPostTag.AppendLine("<!-- End SiteCatalyst code version: H.20.3. -->");
+            pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
         }
 
         /// <summary>Builds the Page-wide link tracking JavaScript code inserted into the Omniture page load code.</summary>
@@ -148,11 +148,11 @@ namespace NCI.Web.CDE.WebAnalytics
                 // 5. Channel, Prop, eVar, and Event info
                 // Note: as of the Feline release, the web analytics javascript is hosted on static.cancer.gov
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
-                //output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
-                //output.AppendLine("<!--");
-                //output.AppendLine("var s_account = AnalyticsMapping.GetSuites(\"" + reportSuites + "\");");
-                //output.AppendLine("-->");
-                //output.AppendLine("</script>");
+                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
+                output.AppendLine("<!--");
+                output.AppendLine("var s_account = AnalyticsMapping.GetSuites(\"" + reportSuites + "\");");
+                output.AppendLine("-->");
+                output.AppendLine("</script>");
 
                 output.Append(pageLoadPreTag.ToString());
 
