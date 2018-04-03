@@ -38,6 +38,7 @@ job("${FOLDER_NAME}/Create build job for a branch") {
 
   parameters {
     stringParam('BRANCH', '', 'New Branch\'s Name')
+    choiceParam('ENVIRONMENT', ['pink', 'blue', 'red'], 'WCMS build environment.\n\nBlue - Dev\nRed - Hotfixes\nPink - Special projects')
   }
 
   scm {
