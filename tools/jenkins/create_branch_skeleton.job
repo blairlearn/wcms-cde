@@ -28,11 +28,11 @@ job("${FOLDER_NAME}/_lower/Build for $BRANCH on $ENVIRONMENT") {
     }
   }
 
-  triggers {
-    pollSCM {
-      scmpoll_spec("H 7-19 * * 1-5")
-    }
-  }
+  # triggers {
+  #   pollSCM {
+  #     scmpoll_spec("H 7-19 * * 1-5")
+  #   }
+  # }
 
   label("wcms-${ENVIRONMENT}") // Require the specific build environment.
 
