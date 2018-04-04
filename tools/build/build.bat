@@ -54,8 +54,7 @@ set ConfigDownload=%TEMP%\%BUILD_NUMBER%\Config
 mkdir %ConfigDownload%
 pushd %ConfigDownload%
 REM Copy the configuration files from GitHub.
-git clone https://github.com/NCIOCPL/wcms-cde-config %ConfigDownload%
-git checkout %my_branch%
+git clone --recurse-submodules --branch %my_branch% https://github.com/NCIOCPL/wcms-cde-config %ConfigDownload%
 
 REM SET environment variables for Config file build
 set OLD_WORKSPACE=%WORKSPACE%
