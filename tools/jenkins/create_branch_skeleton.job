@@ -37,7 +37,18 @@ job("${FOLDER_NAME}/_lower/Build for $BRANCH on $ENVIRONMENT") {
   label("wcms-${ENVIRONMENT}") // Require the specific build environment.
 
   scm {
-    github(sourceRepository, "*/$BRANCH")
+    git {
+      remote {
+        name('origin')
+        url("https://github.com/$sourceRepository")
+      }
+      branch("*/$TARGET_BRANCH")
+      extensions {
+        submoduleOptions {
+          recursive(true)
+        }
+      }
+    }
   }
 
   steps {
