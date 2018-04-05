@@ -29,7 +29,7 @@
     <StagingLocation>$(TempBase)\staging</StagingLocation>
 	<ConfigFileLocation>$(StagingLocation)\_configFiles</ConfigFileLocation>
 
-	<BuildName>$(branch)-$(TargetEnvironment)-$(BUILD_NUMBER)</BuildName>
+  <BuildName>cde-$([System.DateTime]::Now.ToString(yyyy-MM-dd))-$(branch)-$(TargetEnvironment)-$(BUILD_NUMBER)</BuildName>
   </PropertyGroup>
 
 
