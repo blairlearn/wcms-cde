@@ -77,6 +77,7 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
       description('Enter the name of the tag to be deployed.  Note that this must be a tag associated with a release.')
       type('TAG')
       sortMode('ASCENDING')
+      tagFilter('cde-*')
     }
   }
 
