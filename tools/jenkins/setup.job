@@ -73,7 +73,11 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
   }
 
   parameters {
-    stringParam('RELEASE_NAME', '', 'Enter the name of the release to be deployed.  Note that this includes the build number.')
+    gitParam('RELEASE_NAME') {
+      description('Enter the name of the tag to be deployed.  Note that this must be a tag associated with a release.')
+      type('TAG')
+      sortMode('ASCENDING')
+    }
   }
 
   scm {
