@@ -55,8 +55,22 @@ job("${FOLDER_NAME}/Create build job for a branch") {
 }
 
 
-job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
-  description("Deploys CDE builds to the WCMS RED environment.")
+import hudson.model.*
+
+// Make a list of WCMS nodes
+nodeList = []
+def nodeListGlommer = { Slave item ->
+  nodeName = item.computer.name
+  if( nodeName.startsWith('WCMS-') ) {
+  	nodeList << item.computer.name
+  }
+}
+Hudson.instance.slaves.each { nodeListGlommer(it) }
+defaultNode = []
+defaultNode << nodeList[0]
+
+job("${FOLDER_NAME}/_lower/Experimental - Deploy CDE") {
+  description("Deploys a CDE build to the selected WCMS environment.")
 
   wrappers {
     environmentVariables {
@@ -74,10 +88,18 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy to RED") {
 
   parameters {
     gitParam('RELEASE_NAME') {
-      description('Enter the name of the tag to be deployed.  Note that this must be a tag associated with a release.')
+      description('Select the tag to be deployed.')
       type('TAG')
       sortMode('ASCENDING')
       tagFilter('cde-*')
+    }
+
+    nodeParam('NODE_NAME') {
+      description('Where would you like to deploy it?')
+      defaultNodes( defaultNode )
+      allowedNodes( nodeList )
+      trigger('multiSelectionDisallowed')
+      eligibility('IgnoreOfflineNodeEligibility')
     }
   }
 
