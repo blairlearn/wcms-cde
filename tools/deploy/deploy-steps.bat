@@ -77,7 +77,7 @@ if errorlevel 1 goto Error
 powershell -executionpolicy unrestricted tools\build\build-tools\zip-tools\expand-zip -source _dist\config\config.zip -destinationPath _dist\config\
 if errorlevel 1 goto Error
 
-call _dist\config\configDeploy.bat
+call _dist\config\configDeploy.bat %NODE_NAME%
 
 goto :EOF
 :Usage
