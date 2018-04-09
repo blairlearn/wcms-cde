@@ -1,26 +1,19 @@
 @echo off
 setlocal
 
-if "%1"=="" GOTO Usage
-if "%2"=="" GOTO Usage
-set RELEASE_NAME=%1
-set TARGET_ENV=%2
-
-if "%GIT_URL%"=="" (
-    echo Required environment variable 'GIT_URL' not set.
-    exit /b 1
-)
-
-@if "%USER_ID%"=="" (
-    echo Required environment variable 'USER_ID' not set.
-    exit /b 1
-)
-
-@if "%USER_PASS%"=="" (
-    echo Required environment variable 'USER_PASS' not set.
-    exit /b 1
-)
-
+::
+::  Usage:
+::
+::     deploy-steps <release-name> <target-environment>
+::
+::          release-name - The release name.
+::          target-environment - The WCMS environment being targeted.
+::
+::  Required environment variables:
+::
+::      NEXUS_USER - UserID for accessing the Nexus repository.
+::      NEXUS_PASS - Password for the Nexus repository.
+::
 :: Assumptions:
 ::  1. The release name is the same as the tag name.
 ::  2. The ZIP file containing the executables is the same as the tag and release names
@@ -31,6 +24,27 @@ if "%GIT_URL%"=="" (
 ::      c. A .zip extension
 ::         So for the pepperoni-blue-29 release, the config file would be
 ::         pepperoni-blue-29-0a9521...61d6.zip (But with more digits).
+
+
+if "%1"=="" GOTO Usage
+if "%2"=="" GOTO Usage
+set RELEASE_NAME=%1
+set TARGET_ENV=%2
+
+if "%GIT_URL%"=="" (
+    echo Required environment variable 'GIT_URL' not set.
+    exit /b 1
+)
+
+@if "%NEXUS_USER%"=="" (
+    echo Required environment variable 'NEXUS_USER' not set.
+    exit /b 1
+)
+
+@if "%NEXUS_PASS%"=="" (
+    echo Required environment variable 'NEXUS_PASS' not set.
+    exit /b 1
+)
 
 
 rmdir /s/q _dist
@@ -57,7 +71,7 @@ set CONFIG_ZIP=%RELEASE_NAME%-%RELEASE_HASH%.zip
 
 :: Download
 echo Downloading configuration archive '%CONFIG_ZIP%'.
-powershell -executionpolicy unrestricted tools\build\build-tools\nexus-tools\nexus-download.ps1 -Filename %CONFIG_ZIP% -UserID %USER_ID% -UserPass %USER_PASS% -SaveToPath _dist\config\config.zip
+powershell -executionpolicy unrestricted tools\build\build-tools\nexus-tools\nexus-download.ps1 -Filename %CONFIG_ZIP% -UserID %NEXUS_USER% -UserPass %NEXUS_PASS% -SaveToPath _dist\config\config.zip
 if errorlevel 1 goto Error
 
 powershell -executionpolicy unrestricted tools\build\build-tools\zip-tools\expand-zip -source _dist\config\config.zip -destinationPath _dist\config\

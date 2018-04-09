@@ -73,15 +73,15 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy CDE") {
   description("Deploys a CDE build to the selected WCMS environment.")
 
   wrappers {
+    credentialsBinding {
+      usernamePassword('NEXUS_USER', 'NEXUS_PASS', NEXUS_USER_KEY)
+    }
+
     environmentVariables {
       envs (
-        // Values common to the various scripts that we don't want to maintain in more than one place.
-        FOLDER_NAME : FOLDER_NAME,
         GH_REPO_NAME : GH_REPO_NAME,
         TARGET_BRANCH : TARGET_BRANCH,
-        GH_ORGANIZATION_NAME : GH_ORGANIZATION_NAME,
-        GH_USER_TOKEN_KEY : GH_USER_TOKEN_KEY,
-        NEXUS_USER_KEY : NEXUS_USER_KEY
+        GH_ORGANIZATION_NAME : GH_ORGANIZATION_NAME
       )
     }
   }
