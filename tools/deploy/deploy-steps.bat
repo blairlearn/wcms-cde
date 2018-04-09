@@ -69,7 +69,8 @@ echo.
 echo. Usage
 echo.   %~nx0 ^<release-name^> ^<target-environment^>
 echo.
-goto :EOF
+exit /b 1
 :Error
 echo An error has occured.
+exit /b 1
 pause
