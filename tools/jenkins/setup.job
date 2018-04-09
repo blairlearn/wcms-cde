@@ -49,6 +49,10 @@ job("${FOLDER_NAME}/Create build job for a branch") {
 
   steps {
     dsl {
+      // Create two build jobs.  One for releases, one for continous integration.
+      def jobName="Build for ${TARGET_BRANCH}"
+      external("tools/jenkins/create_branch_skeleton.job")
+      jobName="Integration build for ${TARGET_BRANCH}"
       external("tools/jenkins/create_branch_skeleton.job")
     }
   }
