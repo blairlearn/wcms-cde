@@ -58,7 +58,7 @@ if errorlevel 1 goto Error
 powershell -executionpolicy unrestricted tools\build\build-tools\zip-tools\expand-zip -source _dist\code\distribution.zip -destinationPath _dist\code\
 if errorlevel 1 goto Error
 
-_dist\code\cdeDeploy.bat
+call _dist\code\cdeDeploy.bat
 if errorlevel 1 goto Error
 
 :: Download and deploy CDE configuration
@@ -76,6 +76,8 @@ if errorlevel 1 goto Error
 
 powershell -executionpolicy unrestricted tools\build\build-tools\zip-tools\expand-zip -source _dist\config\config.zip -destinationPath _dist\config\
 if errorlevel 1 goto Error
+
+call _dist\config\configDeploy.bat
 
 goto :EOF
 :Usage
