@@ -52,7 +52,7 @@ mkdir _dist\code && mkdir _dist\config
 
 :: Download and deploy CDE code.
 echo Downloading code archive '%RELEASE_NAME%.zip'.
-powershell -executionpolicy unrestricted tools\build\build-tools\github-tools\download-release.ps1 -gitHubUsername nciocpl -gitHubRepository wcms-cde -releaseName %RELEASE_NAME% -saveToPath _dist\code\distribution.zip
+powershell -executionpolicy unrestricted tools\build\build-tools\github-tools\download-release.ps1 -gitHubUsername %GH_ORGANIZATION_NAME% -gitHubRepository %GH_REPO_NAME% -releaseName %RELEASE_NAME% -saveToPath _dist\code\distribution.zip
 if errorlevel 1 goto Error
 
 powershell -executionpolicy unrestricted tools\build\build-tools\zip-tools\expand-zip -source _dist\code\distribution.zip -destinationPath _dist\code\

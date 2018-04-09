@@ -61,7 +61,7 @@ import hudson.model.*
 nodeList = []
 def nodeListGlommer = { Slave item ->
   nodeName = item.computer.name
-  if( nodeName.startsWith('WCMS-') ) {
+  if( nodeName.startsWith('WCMS-Red') ) {
   	nodeList << item.computer.name
   }
 }
@@ -90,7 +90,7 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy CDE") {
     gitParam('RELEASE_NAME') {
       description('Select the tag to be deployed.')
       type('TAG')
-      sortMode('ASCENDING')
+      sortMode('DESCENDING')
       tagFilter('cde-*')
     }
 
@@ -121,6 +121,6 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy CDE") {
   label("wcms-red") // Run anywhere except master.
 
   steps {
-    batchFile("tools/deploy/deploy-steps.bat %RELEASE_NAME% %NODE_NAME%")
+    batchFile("tools\\deploy\\deploy-steps.bat %RELEASE_NAME% %NODE_NAME%")
   }
 }
