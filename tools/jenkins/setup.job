@@ -18,6 +18,21 @@ def sourceRepository = "$GH_ORGANIZATION_NAME/$GH_REPO_NAME"
 def toolsRepository = "$GH_ORGANIZATION_NAME/cancergov-build-tools"  // Where do we find the build tools.
 def toolsBranch = "cde"
 
+import hudson.model.*
+
+// Make a list of WCMS nodes
+nodeList = []
+def nodeListGlommer = { Slave item ->
+  nodeName = item.computer.name
+  if( nodeName.startsWith('WCMS-Red') ) {
+  	nodeList << item.computer.name
+  }
+}
+Hudson.instance.slaves.each { nodeListGlommer(it) }
+defaultNode = []
+defaultNode << nodeList[0]
+
+
 job("${FOLDER_NAME}/Create build job for a branch") {
   description("Creates the jobs that build individual branches.\n\nTo modify this job, see the contents of setup.job and create-branch-skeleton.job.")
 
@@ -55,21 +70,7 @@ job("${FOLDER_NAME}/Create build job for a branch") {
 }
 
 
-import hudson.model.*
-
-// Make a list of WCMS nodes
-nodeList = []
-def nodeListGlommer = { Slave item ->
-  nodeName = item.computer.name
-  if( nodeName.startsWith('WCMS-Red') ) {
-  	nodeList << item.computer.name
-  }
-}
-Hudson.instance.slaves.each { nodeListGlommer(it) }
-defaultNode = []
-defaultNode << nodeList[0]
-
-job("${FOLDER_NAME}/_lower/Experimental - Deploy CDE") {
+job("${FOLDER_NAME}/_lower/Deploy CDE") {
   description("Deploys a CDE build to the selected WCMS environment.")
 
   wrappers {
@@ -118,9 +119,63 @@ job("${FOLDER_NAME}/_lower/Experimental - Deploy CDE") {
     }
   }
 
-  label("wcms-red") // Run anywhere except master.
+  steps {
+    batchFile("tools\\deploy\\deploy-cde.bat %RELEASE_NAME% %NODE_NAME%")
+  }
+}
+
+
+
+job("${FOLDER_NAME}/_lower/Deploy Config Files") {
+  description("Deploys only the configuration files to the selected WCMS environment.")
+
+  wrappers {
+    credentialsBinding {
+      usernamePassword('NEXUS_USER', 'NEXUS_PASS', NEXUS_USER_KEY)
+    }
+
+    environmentVariables {
+      envs (
+        GH_REPO_NAME : GH_REPO_NAME,
+        TARGET_BRANCH : TARGET_BRANCH,
+        GH_ORGANIZATION_NAME : GH_ORGANIZATION_NAME
+      )
+    }
+  }
+
+  parameters {
+    gitParam('RELEASE_NAME') {
+      description('Select the tag to be deployed.')
+      type('TAG')
+      sortMode('DESCENDING')
+      tagFilter('cde-*')
+    }
+
+    nodeParam('NODE_NAME') {
+      description('Where would you like to deploy it?')
+      defaultNodes( defaultNode )
+      allowedNodes( nodeList )
+      trigger('multiSelectionDisallowed')
+      eligibility('IgnoreOfflineNodeEligibility')
+    }
+  }
+
+  scm {
+    git {
+      remote {
+        name('origin')
+        url("https://github.com/$sourceRepository")
+      }
+      branch("*/$TARGET_BRANCH")
+      extensions {
+        submoduleOptions {
+          recursive(true)
+        }
+      }
+    }
+  }
 
   steps {
-    batchFile("tools\\deploy\\deploy-steps.bat %RELEASE_NAME% %NODE_NAME%")
+    batchFile("tools\\deploy\\deploy-config.bat %RELEASE_NAME% %NODE_NAME%")
   }
 }
