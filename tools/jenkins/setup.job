@@ -64,7 +64,7 @@ job("${FOLDER_NAME}/Create build job for a branch") {
 
   steps {
     dsl {
-      external("tools/jenkins/create_branch_skeleton.job")
+      external("tools/jenkins/build_skeleton.job")
     }
   }
 }
