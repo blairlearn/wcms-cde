@@ -33,7 +33,7 @@ defaultNode = []
 defaultNode << nodeList[0]
 
 
-job("${FOLDER_NAME}/Create build job for a branch") {
+job("Create build job for a branch") {
   description("Creates the jobs that build individual branches.\n\nTo modify this job, see the contents of setup.job and create-branch-skeleton.job.")
 
   wrappers {
@@ -66,12 +66,13 @@ job("${FOLDER_NAME}/Create build job for a branch") {
     dsl {
       external("tools/jenkins/build_skeleton.job")
       external("tools/jenkins/integration_skeleton.job")
+      lookupStrategy("SEED_JOB")
     }
   }
 }
 
 
-job("${FOLDER_NAME}/_lower/Deploy CDE") {
+job("Deploy CDE") {
   description("Deploys a CDE build to the selected WCMS environment.")
 
   wrappers {
@@ -127,7 +128,7 @@ job("${FOLDER_NAME}/_lower/Deploy CDE") {
 
 
 
-job("${FOLDER_NAME}/_lower/Deploy Config Files") {
+job("Deploy Config Files") {
   description("Deploys only the configuration files to the selected WCMS environment.")
 
   wrappers {
