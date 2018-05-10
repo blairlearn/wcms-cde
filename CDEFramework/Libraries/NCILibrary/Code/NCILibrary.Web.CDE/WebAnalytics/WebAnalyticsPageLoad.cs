@@ -56,7 +56,6 @@ namespace NCI.Web.CDE.WebAnalytics
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
-            pageLoadPreTag.AppendLine("<!--");
 
             // Default props, eVars, and/or events
             AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
@@ -67,12 +66,10 @@ namespace NCI.Web.CDE.WebAnalytics
 
             if (!TEST_MODE)
             {
-                pageLoadPostTag.AppendLine("var s_code=s.t();");
-                pageLoadPostTag.AppendLine("if(s_code)");
-                pageLoadPostTag.AppendLine("   document.write(s_code);");
+                pageLoadPostTag.AppendLine("// Fire off Adobe tracking function");
+                pageLoadPostTag.AppendLine("s.t();");
             }
 
-            pageLoadPostTag.AppendLine("-->");
             pageLoadPostTag.AppendLine("</script>");
             if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
                 pageLoadPostTag.Append(NoScriptTag().ToString());
@@ -165,6 +162,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 }
 
                 if (channel != "") // if channel is set, output them to the tag
+                    output.AppendLine().AppendLine("// Set values for pageLoad 's' object");
                     output.AppendLine("s.channel=" + DELIMITER + channel + DELIMITER + ";");
 
                 if (pageName != null) // if pageName is not null (empty string ok), output them to the tag
