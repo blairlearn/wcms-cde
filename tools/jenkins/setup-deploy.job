@@ -31,7 +31,7 @@ import hudson.model.*
 nodeList = []
 def nodeListGlommer = { Slave item ->
   nodeName = item.computer.name
-  if( nodeName.startsWith('WCMS-Red') ) {
+  if( nodeName.startsWith('WCMS-') ) {
   	nodeList << item.computer.name
   }
 }
