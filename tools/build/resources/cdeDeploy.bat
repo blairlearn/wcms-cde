@@ -1,10 +1,7 @@
 @echo off
 rem Get paths into variables
 rem Batpath gets the path to this bat file.
-rem codepath gets the path the user is running from, which
-rem should be the root of the code to be deployed.
 set batpath=%~dp0
-set codepath=%cd%
 
 setLocal
 
@@ -17,8 +14,14 @@ IF "%IS_COLO%"=="" (
 )
 
 rem Do a backup first.
-powershell -ExecutionPolicy BYPASS %batpath%cdeBackup.ps1 -env %my_target%
+powershell -ExecutionPolicy BYPASS -FILE "%batpath%cdeBackup.ps1" -env %my_target%
+if errorlevel 1 (
+	echo An error has occured.
+	exit /b 1
+)
 
-
-powershell -ExecutionPolicy BYPASS %batpath%cdeDeploy.ps1 -source %codepath% -env %my_target%
-pause
+powershell -ExecutionPolicy BYPASS /c "& '%batpath%cdeDeploy.ps1' -source '%batpath%' -env %my_target%"
+if errorlevel 1 (
+	echo An error has occured.
+	exit /b 1
+)

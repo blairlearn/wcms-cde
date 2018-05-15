@@ -46,35 +46,10 @@ REM Insert placeholder configuration files.
 call "%WORKSPACE%\tools\build\insert-placeholders.bat"
 
 ECHO Building for %my_target% using Branch %my_branch%
-msbuild /fileLogger /t:All "/p:TargetEnvironment=%my_target%;Branch=%my_branch%"  "%WORKSPACE%\tools\build\BuildCDE.xml"
+msbuild /fileLogger /t:Build "/p:TargetEnvironment=%my_target%;Branch=%my_branch%"  "%WORKSPACE%\tools\build\BuildCDE.xml"
 IF errorlevel 1 GOTO ERROR
 
-Echo Retrieving configuration file build
-REM Create a directory for the configuration source.
-set ConfigDownload=%TEMP%\%BUILD_NUMBER%\Config
-mkdir %ConfigDownload%
-pushd %ConfigDownload%
-REM Copy the configuration files from GitHub.
-git clone --recurse-submodules --branch %my_branch% https://github.com/NCIOCPL/wcms-cde-config %ConfigDownload%
-IF errorlevel 1 GOTO ERROR
 
-REM SET environment variables for Config file build
-set OLD_WORKSPACE=%WORKSPACE%
-set WORKSPACE=%ConfigDownload%
-set OLD_GH_REPO_NAME=%GH_REPO_NAME%
-set GH_REPO_NAME=wcms-cde-config
-SET CDE_COMMIT_ID=%COMMIT_ID%
-FOR /f %%a IN ('git rev-parse --verify HEAD') DO SET CONFIG_COMMIT_ID=%%a
-call tools\build\BuildConfig.bat %my_branch% %my_target%
-IF errorlevel 1 GOTO ERROR
-
-REM Restore environment variables.
-set WORKSPACE=%OLD_WORKSPACE%
-set GH_REPO_NAME=%OLD_GH_REPO_NAME%
-
-REM Clean up.
-popd %ConfigDownload%
-rmdir /q/s %ConfigDownload%
 
 GOTO :EOF
 :ERROR
