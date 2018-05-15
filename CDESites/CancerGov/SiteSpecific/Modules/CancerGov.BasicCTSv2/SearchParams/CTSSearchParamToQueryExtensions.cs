@@ -86,9 +86,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
                 foreach (string phase in searchParams.TrialPhases.Select(tp => tp.Key))
                 {
-                    phases.Add(phase);
+                    phases.Add(phase.ToLower());
 
-                    switch (phase)
+                    switch (phase.ToLower())
                     {
                         case "i":
                             {
