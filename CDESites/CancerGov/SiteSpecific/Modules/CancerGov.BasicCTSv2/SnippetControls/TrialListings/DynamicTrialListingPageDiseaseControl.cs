@@ -219,7 +219,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
                 rawParams = GetRawParametersFromQueryString(ParsedReqUrlParams);
                 SetDoNotIndex();
-                Response.StatusCode = 404;
+                //Response.StatusCode = 404;
             }
             else
             {
