@@ -5,6 +5,9 @@
   <Import Project="bin\MSBuild.Community.Tasks.Targets"/>
   <Import Project="build.config"/>
 
+  <UsingTask
+    AssemblyFile="$(SourceLocation)\packages\xunit.runner.msbuild.2.1.0\build\portable-net45+win8+wp8+wpa81\xunit.runner.msbuild.dll"
+    TaskName="Xunit.Runner.MSBuild.xunit" />
 
   <!--
     Determine directory tree from values passed in at runtime
@@ -32,11 +35,31 @@
   <BuildName>cde-$([System.DateTime]::Now.ToString(yyyy-MM-dd))-$(branch)-$(TargetEnvironment)-$(BUILD_NUMBER)</BuildName>
   </PropertyGroup>
 
+  <!-- The ".Test" naming convention allows all assemblies to be found automatically -->
+  <ItemGroup>
+    <TestAssemblies Include="$(OutputFolder)Assemblies\*.Test.dll" />
+  </ItemGroup> 
+
+  <Target Name="UnitTest">
+ 
+     <!--
+       Tricky bit - Because the UnitTests project is in a solution folder, the project name has to be preceded by the
+       solution folder's name. This has *nothing* to do with file system directory that the project file resides in.
+     -->
+     <MSBuild
+         Projects="$(SourceLocation)\$(SolutionName)"
+         Properties="Configuration=Release; Platform=Any CPU; OutDir=$(OutputFolder)Assemblies\; WarningLevel=0;"
+         Targets="UnitTests\UnitTests" />
+ 
+     <message text="$(OutputFolder)Assemblies" />
+     <xunit Assemblies="@(TestAssemblies)" />
+ 
+  </Target>
 
   <!--
     Build the solution and copy only the necessary files to the staging folder.
   -->
-  <Target Name="Build">
+  <Target Name="Build" DependsOnTargets="UnitTest">
 
     <!-- Clean up old output locations. -->
     <RemoveDir Directories="$(StagingLocation)" />
