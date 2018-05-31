@@ -189,7 +189,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.SearchParams
             CTSSearchParams searchParams = new CTSSearchParams() {
                 TrialPhases = new LabelledSearchParam[] { 
                     new LabelledSearchParam() {
-                        Key = "i",
+                        Key = "I",
                         Label = "Phase I"
                     }
                 }
@@ -204,11 +204,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test.SearchParams
             {
                 TrialPhases = new LabelledSearchParam[] { 
                     new LabelledSearchParam() {
-                        Key = "i",
+                        Key = "I",
                         Label = "Phase I"
                     },
                     new LabelledSearchParam() {
-                        Key = "ii",
+                        Key = "II",
                         Label = "Phase II"
                     }
                 }

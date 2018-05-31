@@ -506,12 +506,12 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     },
                     
                     // TEST 34 - Trial phase 
-                    new object[] {"?tp=i", 
+                    new object[] {"?tp=I", 
                         new CTSSearchParams() {
                             TrialPhases = new LabelledSearchParam[] { 
                                 new LabelledSearchParam() {
-                                    Key = "i",
-                                    Label = "I"
+                                    Key = "I",
+                                    Label = "Phase I"
                                 }
                             },
                             ResultsLinkFlag = ResultsLinkType.Basic,
@@ -521,16 +521,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     },
                    
                     // TEST 35 - Trial phases
-                    new object[] {"?tp=i,ii",
+                    new object[] {"?tp=I,II",
                         new CTSSearchParams() {
                             TrialPhases = new LabelledSearchParam[] { 
                                 new LabelledSearchParam() {
-                                    Key = "i",
-                                    Label = "I"
+                                    Key = "I",
+                                    Label = "Phase I"
                                 },
                                 new LabelledSearchParam() {
-                                    Key = "ii",
-                                    Label = "II"
+                                    Key = "II",
+                                    Label = "Phase II"
                                 }
                             },
                             ResultsLinkFlag = ResultsLinkType.Basic,
@@ -945,11 +945,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             rtnMock.Setup(lookup => lookup.GetTitleCase("c116464"))
                 .Returns("Bone Graft ");
 
-            rtnMock.Setup(lookup => lookup.Get("i"))
-                .Returns("I");
+            rtnMock.Setup(lookup => lookup.Get("I"))
+                .Returns("Phase I");
 
-            rtnMock.Setup(lookup => lookup.Get("ii"))
-                .Returns("II");
+            rtnMock.Setup(lookup => lookup.Get("II"))
+                .Returns("Phase II");
 
             rtnMock.Setup(lookup => lookup.MappingContainsKey(It.IsAny<string>(), It.IsAny<bool>()))
                 .Returns(true);
