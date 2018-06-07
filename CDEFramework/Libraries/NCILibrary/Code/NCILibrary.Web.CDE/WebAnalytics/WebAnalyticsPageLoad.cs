@@ -54,26 +54,26 @@ namespace NCI.Web.CDE.WebAnalytics
         public WebAnalyticsPageLoad()
         {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
 
-            // Default props, eVars, and/or events
-            AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
-            AddEvent(WebAnalyticsOptions.Events.event1); // page view event
+            //pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
 
-            // The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
-            //pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
+            //// Default props, eVars, and/or events
+            //AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
+            //AddEvent(WebAnalyticsOptions.Events.event1); // page view event
 
-            if (!TEST_MODE)
-            {
-                pageLoadPostTag.AppendLine("// Fire off Adobe tracking function");
-                pageLoadPostTag.AppendLine("s.t();");
-            }
+            //// The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
+            ////pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
 
-            pageLoadPostTag.AppendLine("</script>");
-            if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
-                pageLoadPostTag.Append(NoScriptTag().ToString());
-            //pageLoadPostTag.AppendLine("<!-- End SiteCatalyst code version: H.20.3. -->");
+            //if (!TEST_MODE)
+            //{
+            //    pageLoadPostTag.AppendLine("// Fire off Adobe tracking function");
+            //    pageLoadPostTag.AppendLine("s.t();");
+            //}
+
+            //pageLoadPostTag.AppendLine("</script>");
+            //if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
+            //    pageLoadPostTag.Append(NoScriptTag().ToString());
+            ////pageLoadPostTag.AppendLine("<!-- End SiteCatalyst code version: H.20.3. -->");
             pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
         }
 
@@ -155,40 +155,40 @@ namespace NCI.Web.CDE.WebAnalytics
                     //output.AppendLine(LinkTrackPageLoadCode().ToString());
                 }
 
-                if (channel != "") // if channel is set, output them to the tag
-                    output.AppendLine().AppendLine("// Set values for pageLoad 's' object");
-                    output.AppendLine("s.channel=" + DELIMITER + channel + DELIMITER + ";");
+                //if (channel != "") // if channel is set, output them to the tag
+                //    output.AppendLine().AppendLine("// Set values for pageLoad 's' object");
+                //    output.AppendLine("s.channel=" + DELIMITER + channel + DELIMITER + ";");
 
-                if (pageName != null) // if pageName is not null (empty string ok), output them to the tag
-                    output.AppendLine("s.pageName=" + DELIMITER + pageName + DELIMITER + ";");
+                //if (pageName != null) // if pageName is not null (empty string ok), output them to the tag
+                //    output.AppendLine("s.pageName=" + DELIMITER + pageName + DELIMITER + ";");
 
-                if (pageType != "") // if pageType is set, output them to the tag
-                    output.AppendLine("s.pageType=" + DELIMITER + pageType + DELIMITER + ";");
+                //if (pageType != "") // if pageType is set, output them to the tag
+                //    output.AppendLine("s.pageType=" + DELIMITER + pageType + DELIMITER + ";");
 
-                if (props.Count > 0) // if props are set, output them to the tag
-                {
+                //if (props.Count > 0) // if props are set, output them to the tag
+                //{
 
-                    foreach (var k in props.Keys.OrderBy(k => k))
-                    {
-                        output.AppendLine("s.prop" + k.ToString() + "=" + props[k] + ";");
-                    }
-                }
+                //    foreach (var k in props.Keys.OrderBy(k => k))
+                //    {
+                //        output.AppendLine("s.prop" + k.ToString() + "=" + props[k] + ";");
+                //    }
+                //}
 
-                if (evars.Count > 0) // if eVars are set, output them to the tag
-                {
-                    var items = from k in evars.Keys
-                                orderby k ascending
-                                select k;
-                    foreach (int k in items)
-                    {
-                        output.AppendLine("s.eVar" + k.ToString() + "=" + evars[k] + ";");
-                    }
-                }
+                //if (evars.Count > 0) // if eVars are set, output them to the tag
+                //{
+                //    var items = from k in evars.Keys
+                //                orderby k ascending
+                //                select k;
+                //    foreach (int k in items)
+                //    {
+                //        output.AppendLine("s.eVar" + k.ToString() + "=" + evars[k] + ";");
+                //    }
+                //}
 
-                if (events.Count > 0)  // if events have been defined, output then to the tag
-                {
-                    output.AppendLine("s.events=" + DELIMITER + string.Join(",", events.ToArray<string>()) + DELIMITER + ";");
-                }
+                //if (events.Count > 0)  // if events have been defined, output then to the tag
+                //{
+                //    output.AppendLine("s.events=" + DELIMITER + string.Join(",", events.ToArray<string>()) + DELIMITER + ";");
+                //}
 
                 output.AppendLine("");
 
