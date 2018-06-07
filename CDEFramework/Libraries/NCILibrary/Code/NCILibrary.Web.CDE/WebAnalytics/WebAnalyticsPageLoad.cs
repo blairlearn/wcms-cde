@@ -41,70 +41,30 @@ namespace NCI.Web.CDE.WebAnalytics
         private string WaSCode = ConfigurationManager.AppSettings["SCode"].ToString();
         private string WaFunctions = ConfigurationManager.AppSettings["NCIAnalyticsFunctions"].ToString();
 
-        /// <summary>When true, page-wide link tracking is enabled.</summary>
-        public bool DoPageWideLinkTracking
-        {
-            get { return pageWideLinkTracking; }
-            set { pageWideLinkTracking = value; }
-        }
-
         /// <summary>the constructor builds base Omniture page load code.   
         /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
-        /// Note: as of the Feline release, Prod web analytics javascript is hosted on static.cancer.gov
         public WebAnalyticsPageLoad()
         {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
-
-            //pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
-
-            //// Default props, eVars, and/or events
-            //AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
-            //AddEvent(WebAnalyticsOptions.Events.event1); // page view event
-
-            //// The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
-            ////pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
-
-            //if (!TEST_MODE)
-            //{
-            //    pageLoadPostTag.AppendLine("// Fire off Adobe tracking function");
-            //    pageLoadPostTag.AppendLine("s.t();");
-            //}
-
-            //pageLoadPostTag.AppendLine("</script>");
-            //if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
-            //    pageLoadPostTag.Append(NoScriptTag().ToString());
-            ////pageLoadPostTag.AppendLine("<!-- End SiteCatalyst code version: H.20.3. -->");
+            // Default props, eVars, and/or events
+            AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
+            AddEvent(WebAnalyticsOptions.Events.event1); // page view event
             pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
         }
 
-        /// <summary>Builds the Page-wide link tracking JavaScript code inserted into the Omniture page load code.</summary>
-        private StringBuilder LinkTrackPageLoadCode()
-        {
-            //Page-wide link tracking is currently not used 
 
-            //This should be moved into a function in the NCIAnalytics.js file.
-            StringBuilder linkTrackerPageLoadCode = new StringBuilder();
-
-            linkTrackerPageLoadCode.AppendLine("// Page-wide click tracking");
-            linkTrackerPageLoadCode.AppendLine("if (document.addEventListener)");
-            linkTrackerPageLoadCode.AppendLine("   document.addEventListener('click',NCIAnalytics.LinkTrackTagBuilder,false);");
-            linkTrackerPageLoadCode.AppendLine("else if (document.attachEvent)");
-            linkTrackerPageLoadCode.AppendLine("   document.attachEvent('onclick',NCIAnalytics.LinkTrackTagBuilder);");
-            linkTrackerPageLoadCode.AppendLine("// End Page-wide click tracking");
-
-            return linkTrackerPageLoadCode;
-        }
-
+        /**
+         * No script tag 
+         * TODO: update or remove
+         */
         private StringBuilder NoScriptTag()
         {
             StringBuilder noScriptTag = new StringBuilder();
-
             noScriptTag.AppendLine("<noscript>");
             noScriptTag.AppendLine("<a href='http://www.omniture.com' title='Web Analytics'>");
             noScriptTag.AppendLine("<img src='http://metrics.cancer.gov/b/ss/nciglobal/1/H.20.3–NS/0' height='1' width='1' border='0' alt='' />");
             noScriptTag.AppendLine("</a>");
             noScriptTag.AppendLine("</noscript>");
-
             return noScriptTag;
         }
 
@@ -137,60 +97,50 @@ namespace NCI.Web.CDE.WebAnalytics
                     reportSuites += "";
                 }
 
+                // TODO: clean / refactor this 
+                string myProps = "";
+                if (props.Count > 0) // if props are set, output them to the tag
+                {
+                    foreach (var k in props.Keys.OrderBy(k => k))
+                    {
+                        myProps += ("prop" + k.ToString() + "=" + props[k] + ";");
+                    }
+                }
+
+                string myeVars = "";
+                if (evars.Count > 0) // if eVars are set, output them to the tag
+                {
+                    var items = from k in evars.Keys
+                                orderby k ascending
+                                select k;
+                    foreach (int k in items)
+                    {
+                        myeVars = ("evar" + k.ToString() + "=" + evars[k] + ";");
+                    }
+                }
+
+                string myEvents = "";
+                if (events.Count > 0)  // if events have been defined, output then to the tag
+                {
+                    myEvents = string.Join(",", events.ToArray<string>());
+                }
+
                 // Output analytics Javascript to HTML source in this order:
                 // 1. wa_wcms_pre.js source URL (s_account value is also set here)
                 // 2. NCIAnalyticsFunctions.js source URL (see line 56)
                 // 3. s_code.js source URL
                 // 4. Channel, Prop, eVar, and Event info
                 // 5. Fire off the the s.t() function
-                output.AppendLine("<div id=\"wa-data-element\" data-suites=\"" + reportSuites + "\" />");
+                output.AppendLine("<div id=\"wa-data-element\" data-suites=\"" + reportSuites + "\" "
+                                   + "data-channel=\"" + channel + "\" "
+                                   + "data-pagename=\"" + pageName + "\" "
+                                   + "data-pagetype=\"" + pageType + "\" "
+                                   + "data-events=\"" + myEvents + "\" "
+                                   + "data-props=\"" + myProps + "\" "
+                                   + "data-evars=\"" + myeVars + "\" "
+                                   + "style=\"display:none;\" />");
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
                 output.Append(pageLoadPreTag.ToString());
-
-                if (pageWideLinkTracking)
-                {
-                    // Page-wide link tracking is current not used - this may be implemented at a future date
-                    // This however should just output a JS function call that lives in the NCIAnalytics.js
-                    // file instead of the inline code.
-                    //output.AppendLine(LinkTrackPageLoadCode().ToString());
-                }
-
-                //if (channel != "") // if channel is set, output them to the tag
-                //    output.AppendLine().AppendLine("// Set values for pageLoad 's' object");
-                //    output.AppendLine("s.channel=" + DELIMITER + channel + DELIMITER + ";");
-
-                //if (pageName != null) // if pageName is not null (empty string ok), output them to the tag
-                //    output.AppendLine("s.pageName=" + DELIMITER + pageName + DELIMITER + ";");
-
-                //if (pageType != "") // if pageType is set, output them to the tag
-                //    output.AppendLine("s.pageType=" + DELIMITER + pageType + DELIMITER + ";");
-
-                //if (props.Count > 0) // if props are set, output them to the tag
-                //{
-
-                //    foreach (var k in props.Keys.OrderBy(k => k))
-                //    {
-                //        output.AppendLine("s.prop" + k.ToString() + "=" + props[k] + ";");
-                //    }
-                //}
-
-                //if (evars.Count > 0) // if eVars are set, output them to the tag
-                //{
-                //    var items = from k in evars.Keys
-                //                orderby k ascending
-                //                select k;
-                //    foreach (int k in items)
-                //    {
-                //        output.AppendLine("s.eVar" + k.ToString() + "=" + evars[k] + ";");
-                //    }
-                //}
-
-                //if (events.Count > 0)  // if events have been defined, output then to the tag
-                //{
-                //    output.AppendLine("s.events=" + DELIMITER + string.Join(",", events.ToArray<string>()) + DELIMITER + ";");
-                //}
-
-                output.AppendLine("");
 
                 // Add calls to special page-load functions for a specific channel
                 bool firstTime = true;
