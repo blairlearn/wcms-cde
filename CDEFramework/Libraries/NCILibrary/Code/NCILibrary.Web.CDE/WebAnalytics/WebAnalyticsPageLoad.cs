@@ -138,19 +138,13 @@ namespace NCI.Web.CDE.WebAnalytics
                 }
 
                 // Output analytics Javascript to HTML source in this order:
-                // 1. wa_wcms_pre.js source URL
-                // 2. Snippet to set s_account value
-                // 3. NCIAnalyticsFunctions.js source URL (see line 47)
-                // 4. s_code source URL
-                // 5. Channel, Prop, eVar, and Event info
-                // Note: as of the Feline release, the web analytics javascript is hosted on static.cancer.gov
+                // 1. wa_wcms_pre.js source URL (s_account value is also set here)
+                // 2. NCIAnalyticsFunctions.js source URL (see line 56)
+                // 3. s_code.js source URL
+                // 4. Channel, Prop, eVar, and Event info
+                // 5. Fire off the the s.t() function
+                output.AppendLine("<div id=\"wa-data-element\" data-suites=\"" + reportSuites + "\" />");
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
-                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
-                output.AppendLine("<!--");
-                output.AppendLine("var s_account = AnalyticsMapping.GetSuites(\"" + reportSuites + "\");");
-                output.AppendLine("-->");
-                output.AppendLine("</script>");
-
                 output.Append(pageLoadPreTag.ToString());
 
                 if (pageWideLinkTracking)
