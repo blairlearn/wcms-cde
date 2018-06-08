@@ -321,7 +321,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>A string with the friendly name for the URL (replaces c-code) if the override exists, otherwise the given c-codes</returns>
         protected string GetFriendlyNameForURL(string param)
         {
-            DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+            DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMapping(this.BaseConfig.FriendlyNameURLMapFilepath, this.BaseConfig.FriendlyNameURLOverrideMapFilepath, false);
 
             if (friendlyNameMap.MappingContainsCode(param))
             {

@@ -68,12 +68,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             string ivIDs = this.InterventionIDs;
             if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
             {
-                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMapping(this.BaseConfig.FriendlyNameURLMapFilepath, this.BaseConfig.FriendlyNameURLOverrideMapFilepath, false);
                 if (friendlyNameMap.MappingContainsFriendlyName(this.InterventionIDs.ToLower()))
                 {
                     ivIDs = friendlyNameMap.GetCodeFromFriendlyName(this.InterventionIDs.ToLower());
                 }
             }
+
+            // Add check for whether override/EVS mapping has all of the codes.
+            // If so, keep as is. If not, split and find the first match.
 
             string[] interventionIDsarr = ivIDs.Split(new char[] { ',' });
 
@@ -97,7 +100,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Get friendly name to c-code mapping
             if(!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
             {
-                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMapping(this.BaseConfig.FriendlyNameURLMapFilepath, this.BaseConfig.FriendlyNameURLOverrideMapFilepath, false);
                 if(friendlyNameMap.MappingContainsFriendlyName(valToOverride.ToLower()))
                 {
                     valToOverride = friendlyNameMap.GetCodeFromFriendlyName(valToOverride);
@@ -107,6 +110,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             // Get label mappings
             var labelMapping = DynamicTrialListingMapping.Instance;
             string overrideText = "";
+
+            // Add check for whether override/EVS mapping has all of the codes.
+            // If so, keep as is. If not, split and find the first match.
 
             // If combination of codes is in label mappings, set override
             if (labelMapping.MappingContainsKey(valToOverride))
@@ -213,7 +219,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     // Get c-code to friendly name mapping
                     if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
                     {
-                        DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMappingForFile(this.BaseConfig.FriendlyNameURLMapFilepath);
+                        DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMapping(this.BaseConfig.FriendlyNameURLMapFilepath, this.BaseConfig.FriendlyNameURLOverrideMapFilepath, false);
                         if (friendlyNameMap.MappingContainsCode(this.InterventionIDs.ToLower()))
                         {
                             canonicalUrl = canonicalUrl.Replace(this.InterventionIDs, friendlyNameMap.GetFriendlyNameFromCode(this.InterventionIDs));

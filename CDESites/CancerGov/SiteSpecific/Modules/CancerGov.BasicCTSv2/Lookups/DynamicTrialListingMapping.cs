@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Web;
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
+using CancerGov.ClinicalTrials.Basic.v2.Lookups;
 using Common.Logging;
 
 namespace CancerGov.ClinicalTrials.Basic.v2
@@ -25,7 +26,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private static readonly string OVERRIDE_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetOverrideMappingFilePath();
         private static readonly string TOKENS_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetTokenMappingFilePath();
         private static readonly string STAGES_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetStagesMappingFilePath();
-        private Dictionary<string, string> Mappings = new Dictionary<string, string>();
+        private Dictionary<string, MappingItem> Mappings = new Dictionary<string, MappingItem>();
         private HashSet<string> Tokens = new HashSet<string>();
        
         private DynamicTrialListingMapping() { }
@@ -53,9 +54,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         DynamicTrialListingMapping instance = new DynamicTrialListingMapping();
 
                         // Load up mapping files
-                        Dictionary<string, string> dictEVS = GetDictionary(EVS_MAPPING_FILE);
-                        Dictionary<string, string> dictOverrides = GetDictionary(OVERRIDE_MAPPING_FILE);
-                        Dictionary<string, string> dictStages = GetDictionary(STAGES_MAPPING_FILE);
+                        Dictionary<string, MappingItem> dictEVS = GetDictionary(EVS_MAPPING_FILE, false);
+                        Dictionary<string, MappingItem> dictOverrides = GetDictionary(OVERRIDE_MAPPING_FILE, true);
+                        Dictionary<string, MappingItem> dictStages = GetDictionary(STAGES_MAPPING_FILE, true);
                         
                         foreach(string key in dictStages.Keys)
                         {
@@ -96,9 +97,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
             }
         }
 
-        private static Dictionary<string, string> GetDictionary(string filePath)
+        private static Dictionary<string, MappingItem> GetDictionary(string filePath, bool isOverride)
         {
-            Dictionary<string, string> dict = new Dictionary<string,string>();
+            Dictionary<string, MappingItem> dict = new Dictionary<string, MappingItem>();
             try
             {
                 if (File.Exists(HttpContext.Current.Server.MapPath(filePath)))
@@ -122,10 +123,16 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                                 parts[0] = newKey;
                             }
 
+                            // Create MappingItem object for mapping
+                            MappingItem item = new MappingItem();
+                            item.Codes = parts[0].Split(',').ToList();
+                            item.Text = parts[1];
+                            item.IsOverride = isOverride;
+
                             // Add mapping to dictionary if it isn't already present
                             if (!dict.ContainsKey(parts[0]))
                             {
-                                dict.Add(parts[0], parts[1]);
+                                dict.Add(parts[0], item);
                             }
                         }
                     }
@@ -184,7 +191,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns>The display label</returns>
         public string GetTitleCase (string value)
         {
-            return Mappings[value];
+            return Mappings[value].Text;
         }
 
         /// <summary>
@@ -194,7 +201,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         /// <returns>The display label</returns>
         public string Get(string value)
         {
-            string overrideText = Mappings[value];
+            string overrideText = Mappings[value].Text;
 
             // Split apart string on known values (space and dash) for comparison to tokens
             string[] split = overrideText.Split(new char[] {' ', '-'});
@@ -230,6 +237,62 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         public bool MappingContainsKey(string key, bool isLabel = false)
         {
             return Mappings.ContainsKey(key);
+            /*
+            if (Mappings.ContainsKey(key))
+            {
+                return true;
+            }
+            else
+            {
+                // Split given codes
+                List<string> splitKeys = key.Split(new char[] { ',' }).ToList();
+
+                // If there is only one code, check to see if any other key in the mapping contains that code
+                if (splitKeys.Count == 1)
+                {
+                    List<string> labels = new List<string>();
+
+                    // Find all of the keys in the mapping that contain the code, and make a list of the labels for comparison.
+                    labels = Mappings.Where(m => m.Key.Contains(key)).Select(m => m.Value.Text).ToList();
+
+                    if(labels.Count < 1)
+                    {
+                        // If no other keys in the mapping contain the given code, return false
+                        return false;
+                    }
+                    else if(labels.Count == 1)
+                    {
+                        // If only one key in the mapping contains the given code, return true
+                        return true;
+                    }
+                    else
+                    {
+                        // If multiple keys in the mapping contain the given code, compare the labels of those keys.
+                        // If all of the labels are the same, return true.
+                        // If not, return false.
+                        return labels.All(l => l == labels.First());
+                    }
+                }
+                // If there are multiple codes, ???
+                else
+                {
+                    //
+                    List<string> splitKeyLabels = new List<string>();
+
+                    foreach (string ID in splitKeys)
+                    {
+                        if (Mappings.ContainsKey(ID))
+                        {
+                            splitKeyLabels.Add(GetTitleCase(ID));
+                        }
+                        else
+                        {
+                            Mappings.Keys.Where(m => m.Contains(ID));
+
+                        }
+                    }
+                }
+            }*/
         }
     }
 }

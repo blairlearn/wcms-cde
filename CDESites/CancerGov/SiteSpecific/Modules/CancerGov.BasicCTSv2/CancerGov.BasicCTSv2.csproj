@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="APIClientHelper.cs" />
     <Compile Include="CTSConstants.cs" />
+    <Compile Include="Lookups\MappingItem.cs" />
     <Compile Include="ManagerLayer\BasicCTSManager.cs" />
     <Compile Include="ClinicalTrialExtensions.cs" />
     <Compile Include="Configuration\BasicClinicalTrialSearchAPISection.cs" />
