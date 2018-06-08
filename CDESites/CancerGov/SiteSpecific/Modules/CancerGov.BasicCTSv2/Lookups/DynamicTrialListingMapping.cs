@@ -27,6 +27,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
         private static readonly string TOKENS_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetTokenMappingFilePath();
         private static readonly string STAGES_MAPPING_FILE = BasicClinicalTrialSearchAPISection.GetStagesMappingFilePath();
         private Dictionary<string, MappingItem> Mappings = new Dictionary<string, MappingItem>();
+        private Dictionary<string, MappingItem> MappingsWithOverrides = new Dictionary<string, MappingItem>();
         private HashSet<string> Tokens = new HashSet<string>();
        
         private DynamicTrialListingMapping() { }
@@ -57,6 +58,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                         Dictionary<string, MappingItem> dictEVS = GetDictionary(EVS_MAPPING_FILE, false);
                         Dictionary<string, MappingItem> dictOverrides = GetDictionary(OVERRIDE_MAPPING_FILE, true);
                         Dictionary<string, MappingItem> dictStages = GetDictionary(STAGES_MAPPING_FILE, true);
+
+                        // Store EVS mappings
+                        instance.Mappings = dictEVS;
                         
                         foreach(string key in dictStages.Keys)
                         {
@@ -85,8 +89,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                                 dictEVS.Add(key, dictOverrides[key]);
                             }
                         }
-                        
-                        instance.Mappings = dictEVS;
+
+                        // Store EVS with Overrides mappings
+                        instance.MappingsWithOverrides = dictEVS;
 
                         instance.Tokens = GetTokens(TOKENS_MAPPING_FILE);
 
