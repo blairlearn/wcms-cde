@@ -24,7 +24,6 @@ namespace NCI.Web.CDE.WebAnalytics
 
         private StringBuilder pageLoadPreTag = new StringBuilder();
         private StringBuilder pageLoadPostTag = new StringBuilder();
-        private bool pageWideLinkTracking = false;
         private Dictionary<int, string> props = new Dictionary<int, string>();
         private Dictionary<int, string> evars = new Dictionary<int, string>();
         private List<string> events = new List<string>();
@@ -50,7 +49,6 @@ namespace NCI.Web.CDE.WebAnalytics
         {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
             // Default props, eVars, and/or events
-            AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
             AddEvent(WebAnalyticsOptions.Events.event1); // page view event
             pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
         }
