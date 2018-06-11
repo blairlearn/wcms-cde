@@ -28,6 +28,9 @@ namespace NCI.Web.CDE.WebAnalytics
         private Dictionary<int, string> props = new Dictionary<int, string>();
         private Dictionary<int, string> evars = new Dictionary<int, string>();
         private List<string> events = new List<string>();
+        private String concatProps = "";
+        private String concatEvars = "";
+        private String concatEvents = "";
         private string channel = "";
         private string pageName = null;
         private string pageType = "";
@@ -98,31 +101,31 @@ namespace NCI.Web.CDE.WebAnalytics
                 }
 
                 // TODO: clean / refactor this 
-                string myProps = "";
-                if (props.Count > 0) // if props are set, output them to the tag
+                // if props are set, output them to the tag
+                if (props.Count > 0) 
                 {
                     foreach (var k in props.Keys.OrderBy(k => k))
                     {
-                        myProps += ("prop" + k.ToString() + "=" + props[k] + ";");
+                        concatProps +=("data-prop" + k.ToString() + "=\"" + props[k] + "\" ");
                     }
                 }
 
-                string myeVars = "";
-                if (evars.Count > 0) // if eVars are set, output them to the tag
+                // if eVars are set, output them to the tag
+                if (evars.Count > 0) 
                 {
                     var items = from k in evars.Keys
                                 orderby k ascending
                                 select k;
                     foreach (int k in items)
                     {
-                        myeVars = ("evar" + k.ToString() + "=" + evars[k] + ";");
+                        concatEvars += ("data-evar" + k.ToString() + "=\"" + evars[k] + "\" ");
                     }
                 }
 
-                string myEvents = "";
-                if (events.Count > 0)  // if events have been defined, output then to the tag
+                // if events have been defined, output then to the tag
+                if (events.Count > 0)  
                 {
-                    myEvents = string.Join(",", events.ToArray<string>());
+                    concatEvents = string.Join(",", events.ToArray<string>());
                 }
 
                 // Output analytics Javascript to HTML source in this order:
@@ -135,9 +138,8 @@ namespace NCI.Web.CDE.WebAnalytics
                                    + "data-channel=\"" + channel + "\" "
                                    + "data-pagename=\"" + pageName + "\" "
                                    + "data-pagetype=\"" + pageType + "\" "
-                                   + "data-events=\"" + myEvents + "\" "
-                                   + "data-props=\"" + myProps + "\" "
-                                   + "data-evars=\"" + myeVars + "\" "
+                                   + "data-events=\"" + concatEvents + "\" "
+                                   + concatProps + concatEvars
                                    + "style=\"display:none;\" />");
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
                 output.Append(pageLoadPreTag.ToString());
