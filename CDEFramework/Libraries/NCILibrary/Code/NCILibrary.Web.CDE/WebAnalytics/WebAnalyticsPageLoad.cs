@@ -18,8 +18,8 @@ namespace NCI.Web.CDE.WebAnalytics
         static ILog log = LogManager.GetLogger(typeof(WebAnalyticsPageLoad));
 
         private const string DELIMITER = "'";
-        private const string WEB_ANALYTICS_COMMENT_START = "<!-- ***** NCI Web Analytics - DO NOT ALTER ***** -->";
-        private const string WEB_ANALYTICS_COMMENT_END = "<!-- ***** End NCI Web Analytics ***** -->";
+        private const string WEB_ANALYTICS_COMMENT_START = "<!-- ***** Begin NCI Web Analytics data element ***** -->";
+        private const string WEB_ANALYTICS_COMMENT_END = "<!-- ***** End NCI Web Analytics data element ***** -->";
         private const bool TEST_MODE = false;  // When true, Omniture image request is not sent 
 
         private StringBuilder pageLoadPreTag = new StringBuilder();
@@ -35,24 +35,16 @@ namespace NCI.Web.CDE.WebAnalytics
         private string pageType = "";
         private string language = "";
         private IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
-
-        // Get paths for WCMS analytics code
-        // Dev/QA/Stage tiers are hosted on static-dev.cancer.gov/wcms
-        // Prod is hosted on static.cancer.gov/wcms
-        private string WaPre = ConfigurationManager.AppSettings["WAWCMSPre"].ToString();
-        private string WaSCode = ConfigurationManager.AppSettings["SCode"].ToString();
-        private string WaFunctions = ConfigurationManager.AppSettings["NCIAnalyticsFunctions"].ToString();
+        private String waDataID = ConfigurationManager.AppSettings["WADataElementID"].ToString();
 
         /// <summary>the constructor builds base Omniture page load code.   
         /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
         public WebAnalyticsPageLoad()
         {
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
             // Default props, eVars, and/or events
             AddEvent(WebAnalyticsOptions.Events.event1); // page view event
             pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
         }
-
 
         /**
          * No script tag 
@@ -132,14 +124,13 @@ namespace NCI.Web.CDE.WebAnalytics
                 // 3. s_code.js source URL
                 // 4. Channel, Prop, eVar, and Event info
                 // 5. Fire off the the s.t() function
-                output.AppendLine("<div id=\"wa-data-element\" data-suites=\"" + reportSuites + "\" "
+                output.AppendLine("<div id=\"" + waDataID + "\" "
+                                   + "data-suites=\"" + reportSuites + "\" "
                                    + "data-channel=\"" + channel + "\" "
                                    + "data-pagename=\"" + pageName + "\" "
                                    + "data-pagetype=\"" + pageType + "\" "
                                    + "data-events=\"" + concatEvents + "\" "
-                                   + concatProps + concatEvars
-                                   + "style=\"display:none;\" />");
-                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
+                                   + concatProps + concatEvars + " />");
                 output.Append(pageLoadPreTag.ToString());
 
                 // Add calls to special page-load functions for a specific channel
