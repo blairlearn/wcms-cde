@@ -118,12 +118,9 @@ namespace NCI.Web.CDE.WebAnalytics
                     concatEvents = string.Join(",", events.ToArray<string>());
                 }
 
-                // Output analytics Javascript to HTML source in this order:
-                // 1. wa_wcms_pre.js source URL (s_account value is also set here)
-                // 2. NCIAnalyticsFunctions.js source URL (see line 56)
-                // 3. s_code.js source URL
-                // 4. Channel, Prop, eVar, and Event info
-                // 5. Fire off the the s.t() function
+                // Output analytics values to an HTML data element. 
+                // This element will be queried by the DTM analytics JavaScript
+                // waDataID is set in the Web.config
                 output.AppendLine("<div id=\"" + waDataID + "\" "
                                    + "data-suites=\"" + reportSuites + "\" "
                                    + "data-channel=\"" + channel + "\" "
