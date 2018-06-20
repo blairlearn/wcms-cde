@@ -18,18 +18,17 @@ namespace NCI.Web.CDE.WebAnalytics
         static ILog log = LogManager.GetLogger(typeof(WebAnalyticsPageLoad));
 
         private const string DELIMITER = "'";
-        private const string WEB_ANALYTICS_COMMENT_START = "<!-- ***** Begin NCI Web Analytics data element ***** -->";
-        private const string WEB_ANALYTICS_COMMENT_END = "<!-- ***** End NCI Web Analytics data element ***** -->";
+        private const string WEB_ANALYTICS_COMMENT_START = "<!-- ***** NCI Web Analytics - DO NOT ALTER ***** -->";
+        private const string WEB_ANALYTICS_COMMENT_END = "<!-- ***** End NCI Web Analytics ***** -->";
         private const bool TEST_MODE = false;  // When true, Omniture image request is not sent 
 
         private StringBuilder pageLoadPreTag = new StringBuilder();
         private StringBuilder pageLoadPostTag = new StringBuilder();
+        private bool pageWideLinkTracking = false;
         private Dictionary<int, string> props = new Dictionary<int, string>();
         private Dictionary<int, string> evars = new Dictionary<int, string>();
         private List<string> events = new List<string>();
-        private String concatProps = "";
-        private String concatEvars = "";
-        private String concatEvents = "";
+        private String suites = "";
         private string channel = "";
         private string pageName = null;
         private string pageType = "";
@@ -62,6 +61,61 @@ namespace NCI.Web.CDE.WebAnalytics
         }
 
         /// <summary>When DoWebAnalytics is true, this method renders the Omniture page load JavaScript code.</summary>
+        public String TagHead()
+        {
+            StringBuilder output = new StringBuilder();
+            // TODO - remove debugging / newlines when done
+            output.AppendLine(" ");
+            output.AppendLine(" ");
+            output.AppendLine("<!-- BEGIN WA meta debugging -->");
+            String concatEvents = "";
+            String concatProps = "";
+            String concateVars = "";
+
+            // if props are set, output them to the tag
+            if (props.Count > 0)
+            {
+                foreach (int p in props.Keys.OrderBy(p => p))
+                {
+                    //drawMetaTag(output, "prop" + p.ToString(), props[p]);
+                    concatProps += ("data-prop" + p.ToString() + "=\"" + props[p] + "\" ");
+                }
+            }
+
+            // if eVars are set, output them to the tag
+            if (evars.Count > 0)
+            {
+                foreach (int v in evars.Keys.OrderBy(v => v))
+                {
+                    //drawMetaTag(output, "evar" + v.ToString(), evars[v]);
+                    concateVars += ("data-evar" + v.ToString() + "=\"" + evars[v] + "\" ");
+                }
+            }
+
+            // if events have been defined, output then to the tag
+            if (events.Count > 0)
+            {
+                concatEvents = string.Join(",", events.ToArray<string>());
+                // drawMetaTag(output, "events", concatEvents);
+            }
+
+            // Output analytics values to an HTML data element. 
+            // This element will be queried by the DTM analytics JavaScript
+            // waDataID is set in the Web.config
+            suites = getReportSuites();
+            output.AppendLine("<meta id=\"" + waDataID + "\" "
+                              + "data-suites=\"" + suites + "\" "
+                              + "data-channel=\"" + channel + "\" "
+                              + "data-events=\"" + concatEvents + "\" "
+                              + concatProps + concateVars + " />");
+
+            output.AppendLine("<!-- END WA meta debugging -->");
+            output.AppendLine(" ");
+            return output.ToString();
+        }
+
+        /// <summary>When DoWebAnalytics is true, this method renders the Omniture page load JavaScript code.</summary>
+        [Obsolete("This is the legacy method for drawing analytics JavaScript into the page HTML.")]
         public string Tag()
         {
             StringBuilder output = new StringBuilder();
@@ -90,45 +144,65 @@ namespace NCI.Web.CDE.WebAnalytics
                     reportSuites += "";
                 }
 
-                // TODO: clean / refactor this 
-                // if props are set, output them to the tag
-                if (props.Count > 0) 
+                // Output analytics Javascript to HTML source in this order:
+                // 1. wa_wcms_pre.js source URL
+                // 2. Snippet to set s_account value
+                // 3. NCIAnalyticsFunctions.js source URL (see line 47)
+                // 4. s_code source URL
+                // 5. Channel, Prop, eVar, and Event info
+                // Note: as of the Feline release, the web analytics javascript is hosted on static.cancer.gov
+                // output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
+                output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
+                output.AppendLine("<!--");
+                output.AppendLine("var s_account = AnalyticsMapping.GetSuites(\"" + reportSuites + "\");");
+                output.AppendLine("-->");
+                output.AppendLine("</script>");
+
+                output.Append(pageLoadPreTag.ToString());
+
+                if (pageWideLinkTracking)
                 {
+                    // Page-wide link tracking is current not used - this may be implemented at a future date
+                    // This however should just output a JS function call that lives in the NCIAnalytics.js
+                    // file instead of the inline code.
+                    //output.AppendLine(LinkTrackPageLoadCode().ToString());
+                }
+
+                if (channel != "") // if channel is set, output them to the tag
+                    output.AppendLine("s.channel=" + DELIMITER + channel + DELIMITER + ";");
+
+                if (pageName != null) // if pageName is not null (empty string ok), output them to the tag
+                    output.AppendLine("s.pageName=" + DELIMITER + pageName + DELIMITER + ";");
+
+                if (pageType != "") // if pageType is set, output them to the tag
+                    output.AppendLine("s.pageType=" + DELIMITER + pageType + DELIMITER + ";");
+
+                if (props.Count > 0) // if props are set, output them to the tag
+                {
+
                     foreach (var k in props.Keys.OrderBy(k => k))
                     {
-                        concatProps +=("data-prop" + k.ToString() + "=\"" + props[k] + "\" ");
+                        output.AppendLine("s.prop" + k.ToString() + "=" + props[k] + ";");
                     }
                 }
 
-                // if eVars are set, output them to the tag
-                if (evars.Count > 0) 
+                if (evars.Count > 0) // if eVars are set, output them to the tag
                 {
                     var items = from k in evars.Keys
                                 orderby k ascending
                                 select k;
                     foreach (int k in items)
                     {
-                        concatEvars += ("data-evar" + k.ToString() + "=\"" + evars[k] + "\" ");
+                        output.AppendLine("s.eVar" + k.ToString() + "=" + evars[k] + ";");
                     }
                 }
 
-                // if events have been defined, output then to the tag
-                if (events.Count > 0)  
+                if (events.Count > 0)  // if events have been defined, output then to the tag
                 {
-                    concatEvents = string.Join(",", events.ToArray<string>());
+                    output.AppendLine("s.events=" + DELIMITER + string.Join(",", events.ToArray<string>()) + DELIMITER + ";");
                 }
 
-                // Output analytics values to an HTML data element. 
-                // This element will be queried by the DTM analytics JavaScript
-                // waDataID is set in the Web.config
-                output.AppendLine("<div id=\"" + waDataID + "\" "
-                                   + "data-suites=\"" + reportSuites + "\" "
-                                   + "data-channel=\"" + channel + "\" "
-                                   + "data-pagename=\"" + pageName + "\" "
-                                   + "data-pagetype=\"" + pageType + "\" "
-                                   + "data-events=\"" + concatEvents + "\" "
-                                   + concatProps + concatEvars + " />");
-                output.Append(pageLoadPreTag.ToString());
+                output.AppendLine("");
 
                 // Add calls to special page-load functions for a specific channel
                 bool firstTime = true;
@@ -293,8 +367,6 @@ namespace NCI.Web.CDE.WebAnalytics
                     languageValue = "english";
                     break;
             }
-            this.AddProp(WebAnalyticsOptions.Props.prop8, languageValue); // Language
-            this.AddEvar(WebAnalyticsOptions.eVars.evar2, languageValue); // Language
             language = languageValue;
         }
 
@@ -303,7 +375,6 @@ namespace NCI.Web.CDE.WebAnalytics
         public void SetPageName(string pageNameValue)
         {
             pageName = pageNameValue.Replace("'", "\\'");
-            this.AddEvar(WebAnalyticsOptions.eVars.evar1, pageName); // Page name
         }
 
         /// <summary>Sets the value of the Omniture pageType  variable in the Omniture page load JavaScript code.</summary>
@@ -311,6 +382,39 @@ namespace NCI.Web.CDE.WebAnalytics
         public void SetPageType(string pageTypeValue)
         {
             pageType = pageTypeValue;
+        }
+
+        /// <summary>Get custom suites that are set on the navon. Default suites are being set in wa_wcms_pre.js.</summary>
+        public String getReportSuites()
+        {
+            string reportSuites = "";
+            try
+            {
+                string sectionPath = pgInstruction.SectionPath;
+                SectionDetail detail = SectionDetailFactory.GetSectionDetail(sectionPath);
+                string customSuites = detail.GetWASuites();
+                if (!string.IsNullOrEmpty(customSuites))
+                {
+                    reportSuites += customSuites;
+                }
+                return reportSuites;
+            }
+            catch (Exception ex)
+            {
+                log.Debug("Tag(): Exception encountered while retrieving web analytics suites.", ex);
+                return "";
+            }
+        }
+
+        /// <summary>Draws a meta tag.</summary>
+        /// <param name="stringBuilder">String builder object</param>
+        /// <param name="name">Meta name attribute</param>
+        /// <param name="content">Meta content attribute</param>
+        public void drawMetaTag(StringBuilder stringBuilder, string name, string content)
+        {
+            char[] charsToTrim = { '\'', ' ', '"' };
+            content = content.Trim(charsToTrim);
+            stringBuilder.AppendLine("<meta name=\"" + name + "\" content=\"" + content + "\" />");
         }
 
         /// <summary>Clears all previously set props, eVars, events, channel, pageName, and pageType.</summary>
