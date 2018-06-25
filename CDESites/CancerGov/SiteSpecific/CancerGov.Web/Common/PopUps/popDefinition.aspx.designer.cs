@@ -22,6 +22,24 @@ namespace Www.Common.PopUps {
         protected global::System.Web.UI.HtmlControls.HtmlHead header;
         
         /// <summary>
+        /// litDtmTop control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDtmTop;
+        
+        /// <summary>
+        /// litWaMeta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litWaMeta;
+        
+        /// <summary>
         /// logoAnchor control.
         /// </summary>
         /// <remarks>
@@ -85,12 +103,12 @@ namespace Www.Common.PopUps {
         protected global::System.Web.UI.WebControls.PlaceHolder phNoResult;
         
         /// <summary>
-        /// litOmniturePageLoad control.
+        /// litDtmBottom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litOmniturePageLoad;
+        protected global::System.Web.UI.WebControls.Literal litDtmBottom;
     }
 }

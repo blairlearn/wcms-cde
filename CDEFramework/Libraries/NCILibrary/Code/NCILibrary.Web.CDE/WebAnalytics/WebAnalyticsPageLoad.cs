@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.UI;
@@ -35,7 +36,10 @@ namespace NCI.Web.CDE.WebAnalytics
         private string pageType = "";
         private string language = "";
         private IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
-        private String waDataID = ConfigurationManager.AppSettings["WADataElementID"].ToString();
+
+        public String WaDataID = ConfigurationManager.AppSettings["WADataElementID"].ToString();
+        public String DTMTop = ConfigurationManager.AppSettings["DTMUrl"].ToString();
+        public String DTMBottom = "_satellite.pageBottom();";
 
         /// <summary>the constructor builds base Omniture page load code.   
         /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
@@ -58,16 +62,30 @@ namespace NCI.Web.CDE.WebAnalytics
             return noScriptTag;
         }
 
+        /// <summary>Get the analytics metadata to be used in the document head.</summary>
+        /// <returns>HTML string</returns>
+        public String GetHeadTags()
+        {
+            StringWriter stringWriter = new StringWriter();
+
+            // Put HtmlTextWsriter in using block because it needs to call Dispose()
+            using (HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter))
+            {
+                DrawHeadTags(htmlWriter);
+            }
+            return stringWriter.ToString();
+        }
+
         /// <summary>Draw the analytics metadata to be used in the document head.</summary>
         /// <param name="writer">Text writer object used to output HTML tags</param>
-        public void TagHead(HtmlTextWriter writer)
+        public void DrawHeadTags(HtmlTextWriter writer)
         {
             string concatEvents = string.Empty;
             string propValue = string.Empty;
             string eVarValue = string.Empty;
 
             // Draw meta tag ID, suites, channel attributes
-            writer.AddAttribute(HtmlTextWriterAttribute.Id, waDataID);
+            writer.AddAttribute(HtmlTextWriterAttribute.Id, WaDataID);
             writer.AddAttribute("data-suites", suites);
             writer.AddAttribute("data-channel", channel);
 
@@ -139,7 +157,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 // 3. NCIAnalyticsFunctions.js source URL (see line 47)
                 // 4. s_code source URL
                 // 5. Channel, Prop, eVar, and Event info
-                // Note: as of the Feline release, the web analytics javascript is hosted on static.cancer.gov
+                // Note: as of 06/2018, the web analytics javascript is hosted on DTM
                 // output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
                 output.AppendLine("<!--");
@@ -373,7 +391,14 @@ namespace NCI.Web.CDE.WebAnalytics
             pageType = pageTypeValue;
         }
 
-        /// <summary>Set custom suites based on section details. Default suites are being set in wa_wcms_pre.js.</summary>
+        /// <summary>Set custom suites based on a given string.</summary>
+        /// <param name="customSuites">String of comma-separated suite names</param>
+        public void SetReportSuites(String customSuites)
+        {
+            suites += customSuites;
+        }
+
+        /// <summary>Overload to set custom suites based on section details.</summary>
         /// <param name="detail">Nav details for the current page</param>
         public void SetReportSuites(SectionDetail detail)
         {
@@ -382,7 +407,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 string customSuites = detail.GetWASuites();
                 if (!string.IsNullOrEmpty(customSuites))
                 {
-                    suites += customSuites;
+                    SetReportSuites(customSuites);
                 }
             }
             catch (Exception ex)
