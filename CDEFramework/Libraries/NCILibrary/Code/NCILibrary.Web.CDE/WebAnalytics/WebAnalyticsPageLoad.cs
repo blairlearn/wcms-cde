@@ -38,7 +38,7 @@ namespace NCI.Web.CDE.WebAnalytics
         private IPageAssemblyInstruction pgInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
 
         public String WaDataID = ConfigurationManager.AppSettings["WADataElementID"].ToString();
-        public String DTMTop = ConfigurationManager.AppSettings["DTMUrl"].ToString();
+        public String DTMUrl = ConfigurationManager.AppSettings["DTMUrl"].ToString();
         public String DTMBottom = "_satellite.pageBottom();";
 
         /// <summary>the constructor builds base Omniture page load code.   

@@ -297,7 +297,7 @@ namespace Www.Common.PopUps
                 webAnalyticsPageLoad.SetChannel("Dictionary of Cancer Terms");
             }
 
-            litDtmTop.Text = "<script src=\"" + webAnalyticsPageLoad.DTMTop + "\"></script>";
+            litDtmTop.Text = "<script src=\"" + webAnalyticsPageLoad.DTMUrl + "\"></script>";
             litWaMeta.Text = webAnalyticsPageLoad.GetHeadTags();  // Load page load script 
             litDtmBottom.Text = "<script>" + webAnalyticsPageLoad.DTMBottom + "</script>";
         }
