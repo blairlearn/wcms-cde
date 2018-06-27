@@ -5,6 +5,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Common.Logging;
 
+using NCI.Web.CDE.WebAnalytics;
+
 namespace NCI.Web.CDE.UI.WebControls
 {
     /// <summary>
@@ -15,9 +17,8 @@ namespace NCI.Web.CDE.UI.WebControls
     public class AdobeDTMControl : WebControl
     {
         static ILog log = LogManager.GetLogger(typeof(AdobeDTMControl));
-        private static String DTMSrc = ConfigurationManager.AppSettings["DTMUrl"].ToString();
+        private WebAnalyticsPageLoad waPage = new WebAnalyticsPageLoad();
         private const String SCRIPT_TYPE = "text/javascript";
-        private const String DTM_BOTTOM = "_satellite.pageBottom();";
 
         protected override void OnInit(EventArgs e)
         { // Not doing anything at the moment
@@ -62,7 +63,7 @@ namespace NCI.Web.CDE.UI.WebControls
         /// <param name="writer">Text writer object used to output HTML tags</param>
         public void DrawTopTag(HtmlTextWriter writer)
         {
-            writer.AddAttribute(HtmlTextWriterAttribute.Src, DTMSrc);
+            writer.AddAttribute(HtmlTextWriterAttribute.Src, waPage.DTMUrl);
             writer.RenderBeginTag(HtmlTextWriterTag.Script);
         }
 
@@ -72,7 +73,7 @@ namespace NCI.Web.CDE.UI.WebControls
         {
             writer.AddAttribute(HtmlTextWriterAttribute.Type, SCRIPT_TYPE);
             writer.RenderBeginTag(HtmlTextWriterTag.Script);
-            writer.Write(DTM_BOTTOM);
+            writer.Write(waPage.DTMBottom);
         }
 
         /// <summary>Draw a DTM direct call tag.</summary>
