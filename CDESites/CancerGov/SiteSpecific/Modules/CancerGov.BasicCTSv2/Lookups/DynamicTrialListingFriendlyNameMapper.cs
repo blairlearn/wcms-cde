@@ -2,83 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.IO;
-using System.Web;
 using Common.Logging;
-using CancerGov.ClinicalTrials.Basic.v2.Lookups;
 
-namespace CancerGov.ClinicalTrials.Basic.v2
+namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
 {
-    /// <summary>
-    /// Class represents a singleton that can be used to lookup a CDRID for
-    /// one user-friendly URL name.  This is used by the Dictionary pages.
-    /// </summary>
-    public class DynamicTrialListingFriendlyNameMapping
-
+    public class DynamicTrialListingFriendlyNameMapper
     {
-        // Lock synchronization object
-        private static object syncLock = new Object();
-
+        private static string _evsMappingFile = null;
+        private static string _overrideMappingFile = null;
         private Dictionary<string, MappingItem> _mapping = new Dictionary<string, MappingItem>();
 
-        private DynamicTrialListingFriendlyNameMapping(Dictionary<string, MappingItem> mapping)
+        public DynamicTrialListingFriendlyNameMapper(string evsMappingFilepath, string overrideMappingFilepath, bool withOverrides)
         {
-            _mapping = mapping;
+            _evsMappingFile = evsMappingFilepath;
+            _overrideMappingFile = overrideMappingFilepath;
+            LoadMapping(withOverrides);
         }
 
-        public static DynamicTrialListingFriendlyNameMapping GetMapping(string evsMappingFilepath, string overrideMappingFilepath, bool withOverrides)
+        private void LoadMapping(bool withOverrides)
         {
-            if (string.IsNullOrEmpty(evsMappingFilepath) || string.IsNullOrEmpty(overrideMappingFilepath))
-            {
-                throw new ArgumentException("The dictionary mapping filepaths must not be empty or null.");
-            }
-
-            if (HttpContext.Current.Cache[evsMappingFilepath] == null)
-            {
-                lock (syncLock)
-                {
-                    if (HttpContext.Current.Cache[evsMappingFilepath] == null)
-                    {
-                        DynamicTrialListingFriendlyNameMapping instance = LoadDictionaryMappingFromFiles(evsMappingFilepath, overrideMappingFilepath, false);
-
-                        // Store instance in cache for five minutes
-                        HttpContext.Current.Cache.Add(evsMappingFilepath, instance, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
-                    }
-                }
-            }
-
-            if (HttpContext.Current.Cache[overrideMappingFilepath] == null)
-            {
-                lock (syncLock)
-                {
-                    if (HttpContext.Current.Cache[overrideMappingFilepath] == null)
-                    {
-                        DynamicTrialListingFriendlyNameMapping instance = LoadDictionaryMappingFromFiles(evsMappingFilepath, overrideMappingFilepath, true);
-
-                        // Store instance in cache for five minutes
-                        HttpContext.Current.Cache.Add(overrideMappingFilepath, instance, null, DateTime.Now.AddMinutes(5), System.Web.Caching.Cache.NoSlidingExpiration, System.Web.Caching.CacheItemPriority.High, null);
-                    }
-                }
-            }
-
-            return withOverrides ? (DynamicTrialListingFriendlyNameMapping)HttpContext.Current.Cache[overrideMappingFilepath] : (DynamicTrialListingFriendlyNameMapping)HttpContext.Current.Cache[evsMappingFilepath];
+            // Load and store mappings
+            _mapping = LoadDictionaryMappingFromFiles(_evsMappingFile, _overrideMappingFile, withOverrides);
         }
 
-        private static DynamicTrialListingFriendlyNameMapping LoadDictionaryMappingFromFiles(string evsFilePath, string overrideFilePath, bool withOverrides)
+        private static Dictionary<string, MappingItem> LoadDictionaryMappingFromFiles(string evsFilePath, string overrideFilePath, bool withOverrides)
         {
             Dictionary<string, MappingItem> dict = new Dictionary<string, MappingItem>();
 
-            bool fileExists = false;
-
-            fileExists = File.Exists(HttpContext.Current.Server.MapPath(evsFilePath));
-
-            if(fileExists)
+            if (!withOverrides)
             {
                 try
                 {
                     // If file exists, use streamreader to load EVS mappings into dictionary
-                    using (StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath(evsFilePath)))
+                    using (StreamReader sr = new StreamReader(evsFilePath))
                     {
                         string line;
                         while ((line = sr.ReadLine()) != null)
@@ -117,7 +76,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     // Log an error if the file exists but cannot be read.
                     // Do not make the page error out - we want the dictionaries to still work,
                     // even if there is something wrong with the friendly name mapping file.
-                    LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMapping)).ErrorFormat("Mapping file '{0}' could not be read.", evsFilePath);
+                    LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMappingService)).ErrorFormat("Mapping file '{0}' could not be read.", evsFilePath);
                 }
             }
             else
@@ -125,17 +84,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 // Log an error if the file does not exist.
                 // Do not make the page error out - we want the dictionaries to still work,
                 // even if there is something wrong with the friendly name mapping file.
-                LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMapping)).ErrorFormat("Error while getting the mapping file located at '{0}'.", evsFilePath);
+                LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMappingService)).ErrorFormat("Error while getting the mapping file located at '{0}'.", evsFilePath);
             }
 
-            fileExists = File.Exists(HttpContext.Current.Server.MapPath(overrideFilePath));
-
-            if (fileExists && withOverrides)
+            if (withOverrides)
             {
                 try
                 {
                     // If file exists and we need overrides, use streamreader to load override mappings into dictionary
-                    using (StreamReader sr = new StreamReader(HttpContext.Current.Server.MapPath(overrideFilePath)))
+                    using (StreamReader sr = new StreamReader(overrideFilePath))
                     {
                         string line;
                         while ((line = sr.ReadLine()) != null)
@@ -160,16 +117,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                             item.Codes = parts[0].Split(',').ToList();
                             item.Text = parts[1];
                             item.IsOverride = true;
-                            
+
                             if (!dict.ContainsKey(parts[0]))
                             {
                                 // Add override mapping to dictionary if it isn't already present
                                 dict.Add(parts[0], item);
-                            }
-                            else
-                            {
-                                // If mapping for key is already present, overwrite the entry with the override mapping
-                                dict[parts[0]] = item;
                             }
                         }
                     }
@@ -179,7 +131,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                     // Log an error if the file exists but cannot be read.
                     // Do not make the page error out - we want the dictionaries to still work,
                     // even if there is something wrong with the friendly name mapping file.
-                    LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMapping)).ErrorFormat("Mapping file '{0}' could not be read.", overrideFilePath);
+                    LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMappingService)).ErrorFormat("Mapping file '{0}' could not be read.", overrideFilePath);
                 }
             }
             else
@@ -187,76 +139,105 @@ namespace CancerGov.ClinicalTrials.Basic.v2
                 // Log an error if the file does not exist.
                 // Do not make the page error out - we want the dictionaries to still work,
                 // even if there is something wrong with the friendly name mapping file.
-                LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMapping)).ErrorFormat("Error while getting the mapping file located at '{0}'.", overrideFilePath);
+                LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMappingService)).ErrorFormat("Error while getting the mapping file located at '{0}'.", overrideFilePath);
             }
 
 
-            return new DynamicTrialListingFriendlyNameMapping(dict);
+            return dict;
         }
 
         /// <summary>
-        /// Gets the CDRID that maps to the given pretty name.
+        /// Gets the friendly name that maps to the given C-code(s).
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>The CDRID</returns>
-        public string GetFriendlyNameFromCode(string value)
+        /// <returns>The friendly name</returns>
+        public string GetFriendlyNameFromCode(string value, bool hasExactMatch)
         {
             value = value.ToLower();
 
-            //if(_mapping.ContainsKey(value))
-            //{
-                // If an exact match for the given codes is found, return the exact match.
+            if (hasExactMatch)
+            {
+                // If an exact match for the given code(s) is found, return the exact match.
                 return _mapping[value].Text;
-            /*}
+            }
             else
             {
-                // If no exact match for the given codes is found, remove all of the overrides from the mapping.
-                foreach (var item in _mapping.Where(m => m.Value.IsOverride).ToList())
-                {
-                    _mapping.Remove(item.Key);
-                }
+                string[] splitIDs = value.Split(new char[] { ',' });
 
-                // Check this mapping for any keys that contain the given value(s).
-                List<string> splitIDs = value.Split(new char[] { ',' }).ToList();
-                List<string> splitIDFriendlyNames = new List<string>();
-
-                foreach (string ID in splitIDs)
-                {
-                    if (_mapping.ContainsKey(ID))
-                    {
-                        splitIDFriendlyNames.Add(_mapping[ID].Text);
-                    }
-                    else
-                    {
-
-                    }
-                }
-
-                // If there is one match, return it.
-                // If there are multiple matches, compare the strings (friendly names) for each match. If they are the same, return the first match.
-            }*/
+                // Return friendly name associated with any key that contains the first code, as all codes have the same friendly name
+                return _mapping.FirstOrDefault(x => x.Key.Contains(splitIDs[0])).Value.Text;
+            }
         }
 
         /// <summary>
-        /// Gets the CDRID that maps to the given pretty name.
+        /// Gets the C-code (or combination of) that maps to the given pretty name.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns>The CDRID</returns>
+        /// <returns>The C-code(s)</returns>
         public string GetCodeFromFriendlyName(string value)
         {
             value = value.ToLower();
+
             return _mapping.FirstOrDefault(x => x.Value.Text == value).Key;
         }
 
         /// <summary>
-        /// Checks to see if the lookup contains an entry for the CDRID
+        /// Checks to see if the lookup contains an entry for the C-code(s), whether an exact match or contained in keys that all have the same friendly name.
         /// </summary>
-        /// <param name="key">The CDRID to lookup</param>
-        /// <returns>True or false based on the existance of the CDRID in the lookup</returns>
-        public bool MappingContainsCode(string key)
+        /// <param name="key">The C-code(s) to lookup</param>
+        /// <returns>True or false based on the existance of the C-code(s) in the lookup</returns>
+        public bool MappingContainsCode(string code, bool needsExactMatch)
         {
-            key = key.ToLower();
-            return _mapping.ContainsKey(key);
+            code = code.ToLower();
+
+            if (needsExactMatch)
+            {
+                // If an exact match is needed, check if the mapping contains an entry with the exact given code as the key.
+                return _mapping.ContainsKey(code);
+            }
+            else
+            {
+                // If no exact match is needed, check if the mapping contains entries whose keys contain the given code.
+
+                // Split the given codes apart, if there are multiple.
+                string[] splitIDs = code.Split(new char[] { ',' });
+                List<string> splitIDFriendlyNames = new List<string>();
+
+                // Loop through all the codes.
+                foreach (string ID in splitIDs)
+                {
+                    if (!_mapping.Keys.Any(k => k.Contains(ID)))
+                    {
+                        // If any code given is not contained in a key in the mapping, return false.
+                        return false;
+                    }
+                    else
+                    {
+                        if (!IsValidCCode(ID))
+                        {
+                            LogManager.GetLogger(typeof(DynamicTrialListingFriendlyNameMappingService)).ErrorFormat("Invalid parameter in dynamic listing page: {0} is not a valid c-code", ID);
+                            NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("DynamicTrialListingFriendlyNameMappingService", 404, "Invalid parameter in dynamic listing page: value given is not a valid c-code");
+                        }
+
+                        string idSingle = ID + "|";
+                        string idMultiple = ID + ",";
+
+                        // Add all of the friendly names for any entries whose key contains the current code to a list for later comparison.
+                        splitIDFriendlyNames.AddRange(_mapping.Where(m => (m.Key.Contains(idSingle) || m.Key.Contains(idMultiple))).Select(kvp => kvp.Value.Text).ToList());
+                    }
+                }
+
+                if (splitIDFriendlyNames.Any(f => f != splitIDFriendlyNames[0]))
+                {
+                    // If the friendly names associated with keys that contain the given codes are not the same, return false.
+                    return false;
+                }
+                else
+                {
+                    // If all of the friendly names associated with keys that contain the given codes match, return true.
+                    return true;
+                }
+            }
         }
 
         /// <summary>
@@ -275,6 +256,13 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             return false;
         }
+
+        public bool IsValidCCode(string code)
+        {
+            string pattern = @"[c][0-9]{4}";
+            Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            return r.IsMatch(code);
+        }
     }
 }
-

@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Linq;
 using CancerGov.ClinicalTrials.Basic.v2.Configuration;
 using Common.Logging;
 using NCI.Web;
@@ -35,6 +36,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             get
             {
                 return (DynamicTrialListingConfig)this.BaseConfig;
+            }
+        }
+
+        /// <summary>
+        /// Creates a DynamicTrialListingFriendlyNameMappingService for use in implementation methods
+        /// </summary>
+        protected DynamicTrialListingFriendlyNameMappingService FriendlyNameMapping
+        {
+            get
+            {
+               return DynamicTrialListingFriendlyNameMappingService.GetMapping(Config.FriendlyNameURLMapFilepath, Config.FriendlyNameURLOverrideMapFilepath, false);
+            }
+        }
+
+        /// <summary>
+        /// Creates a DynamicTrialListingFriendlyNameMappingService with overrides for use in implementation methods
+        /// </summary>
+        protected DynamicTrialListingFriendlyNameMappingService FriendlyNameWithOverridesMapping
+        {
+            get
+            {
+                return DynamicTrialListingFriendlyNameMappingService.GetMapping(Config.FriendlyNameURLMapFilepath, Config.FriendlyNameURLOverrideMapFilepath, true);
             }
         }
 
@@ -315,23 +338,44 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         }
 
         /// <summary>
-        /// Gets the Friendly Name to replace a c-code in the URL for the dynamic trial listing page. If there is no override for that c-code,
-        /// it return the given c-codes. Also sets needsRedirect to true if there is a friendly name override found.
+        /// Gets the Friendly Name to replace a c-code in the URL for the dynamic trial listing page. If there is no exact override for that c-code,
+        /// attempt to find a match that contains the given c-code in the EVS mappings.
+        /// Sets needsRedirect to true if there is a friendly name override found.
         /// </summary>
         /// <returns>A string with the friendly name for the URL (replaces c-code) if the override exists, otherwise the given c-codes</returns>
         protected string GetFriendlyNameForURL(string param)
         {
-            DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMapping(this.BaseConfig.FriendlyNameURLMapFilepath, this.BaseConfig.FriendlyNameURLOverrideMapFilepath, false);
-
-            if (friendlyNameMap.MappingContainsCode(param))
+            /*if(FriendlyNameMapping.MappingContainsFriendlyName(param))
             {
+                // If a friendly name is given, check to see if there is a friendly name override for the same code.
+                // If there is a friendly name override for the same thing, return the friendly name override and set redirection bool
+                string code = FriendlyNameMapping.GetCodeFromFriendlyName(param);
+
+                if(FriendlyNameWithOverridesMapping.MappingContainsCode(code, true))
+                {
+                    needsRedirect = true;
+                    return FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(code, true);
+                }
+            }*/
+
+            if (FriendlyNameWithOverridesMapping.MappingContainsCode(param, true))
+            {
+                // If an exact match is found in the Friendly Name With Overrides mapping, return the friendly name and set redirection bool
                 needsRedirect = true;
-                return friendlyNameMap.GetFriendlyNameFromCode(param);
+                return FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(param, true);
             }
             else
             {
-                return param;
+                if (FriendlyNameMapping.MappingContainsCode(param, false))
+                {
+                    // If an exact match is found in the Friendly Name mapping (without overrides), return the friendly name and set redirection bool
+                    // Also if matches are found that contain the given codes and all have the same friendly name, return that friendly name and set redirection bool
+                    needsRedirect = true;
+                    return FriendlyNameMapping.GetFriendlyNameFromCode(param, false);
+                }
             }
+
+            return param;
         }
     }
 }

@@ -66,12 +66,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             // Get friendly name to c-code mapping
             string ivIDs = this.InterventionIDs;
-            if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            if (FriendlyNameWithOverridesMapping.MappingContainsFriendlyName(this.InterventionIDs.ToLower()))
             {
-                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMapping(this.BaseConfig.FriendlyNameURLMapFilepath, this.BaseConfig.FriendlyNameURLOverrideMapFilepath, false);
-                if (friendlyNameMap.MappingContainsFriendlyName(this.InterventionIDs.ToLower()))
+                ivIDs = FriendlyNameWithOverridesMapping.GetCodeFromFriendlyName(this.InterventionIDs.ToLower());
+            }
+            else
+            {
+                if (FriendlyNameMapping.MappingContainsFriendlyName(this.InterventionIDs.ToLower()))
                 {
-                    ivIDs = friendlyNameMap.GetCodeFromFriendlyName(this.InterventionIDs.ToLower());
+                    ivIDs = FriendlyNameMapping.GetCodeFromFriendlyName(this.InterventionIDs.ToLower());
                 }
             }
 
@@ -84,7 +87,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
 
             if (!string.IsNullOrWhiteSpace(this.TrialType))
             {
-                queryParams.Add("primary_purpose.primary_purpose_code", this.TrialType);
+                if (FriendlyNameWithOverridesMapping.MappingContainsFriendlyName(this.TrialType.ToLower()))
+                {
+                    queryParams.Add("primary_purpose.primary_purpose_code", FriendlyNameWithOverridesMapping.GetCodeFromFriendlyName(this.TrialType.ToLower()));
+                }
+                else
+                {
+                    queryParams.Add("primary_purpose.primary_purpose_code", this.TrialType);
+                }
             }
 
             return queryParams;
@@ -98,17 +108,20 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         private string GetOverride(string valToOverride, bool needsTitleCase)
         {
             // Get friendly name to c-code mapping
-            if(!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            if (FriendlyNameWithOverridesMapping.MappingContainsFriendlyName(valToOverride.ToLower()))
             {
-                DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMapping(this.BaseConfig.FriendlyNameURLMapFilepath, this.BaseConfig.FriendlyNameURLOverrideMapFilepath, false);
-                if(friendlyNameMap.MappingContainsFriendlyName(valToOverride.ToLower()))
+                valToOverride = FriendlyNameWithOverridesMapping.GetCodeFromFriendlyName(valToOverride);
+            }
+            else
+            {
+                if (FriendlyNameMapping.MappingContainsFriendlyName(valToOverride.ToLower()))
                 {
-                    valToOverride = friendlyNameMap.GetCodeFromFriendlyName(valToOverride);
+                    valToOverride = FriendlyNameMapping.GetCodeFromFriendlyName(valToOverride);
                 }
             }
 
             // Get label mappings
-            var labelMapping = DynamicTrialListingMapping.Instance;
+            var labelMapping = DynamicTrialListingMappingService.Instance;
             string overrideText = "";
 
             // Add check for whether override/EVS mapping has all of the codes.
@@ -217,13 +230,25 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                 if (this.InterventionIDs != null && this.InterventionIDs.Length > 0)
                 {
                     // Get c-code to friendly name mapping
-                    if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+                    if (FriendlyNameWithOverridesMapping.MappingContainsCode(this.InterventionIDs.ToLower(), true))
                     {
-                        DynamicTrialListingFriendlyNameMapping friendlyNameMap = DynamicTrialListingFriendlyNameMapping.GetMapping(this.BaseConfig.FriendlyNameURLMapFilepath, this.BaseConfig.FriendlyNameURLOverrideMapFilepath, false);
-                        if (friendlyNameMap.MappingContainsCode(this.InterventionIDs.ToLower()))
+                        canonicalUrl = canonicalUrl.Replace(this.InterventionIDs, FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(this.InterventionIDs, true));
+                    }
+                    else
+                    {
+                        if (FriendlyNameMapping.MappingContainsCode(this.InterventionIDs.ToLower(), false))
                         {
-                            canonicalUrl = canonicalUrl.Replace(this.InterventionIDs, friendlyNameMap.GetFriendlyNameFromCode(this.InterventionIDs));
+                            canonicalUrl = canonicalUrl.Replace(this.InterventionIDs, FriendlyNameMapping.GetFriendlyNameFromCode(this.InterventionIDs, false));
                         }
+                    }
+                }
+
+                if (this.TrialType != null)
+                {
+                    // Get trial type to friendly name mapping
+                    if (FriendlyNameWithOverridesMapping.MappingContainsCode(this.TrialType.ToLower(), true))
+                    {
+                        canonicalUrl = canonicalUrl.Replace(this.TrialType, FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(this.TrialType, true));
                     }
                 }
 
@@ -270,37 +295,34 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             }
 
             // Check for friendly names that override c-codes in URL: if exists, redirect to that URL
-            if (!string.IsNullOrEmpty(this.BaseConfig.FriendlyNameURLMapFilepath))
+            string redirectUrl = this.PrettyUrl.ToString();
+
+            List<string> urlParts = new List<string>();
+
+            if (!string.IsNullOrEmpty(this.InterventionIDs))
             {
-                string redirectUrl = this.PrettyUrl.ToString();
+                // Add Intervention friendly name override to redirect URL path
+                urlParts.Add(GetFriendlyNameForURL(this.InterventionIDs));
 
-                List<string> urlParts = new List<string>();
-
-                if (!string.IsNullOrEmpty(this.InterventionIDs))
+                if (!string.IsNullOrEmpty(this.TrialType))
                 {
-                    // Add Intervention friendly name override to redirect URL path
-                    urlParts.Add(GetFriendlyNameForURL(this.InterventionIDs));
-
-                    if (!string.IsNullOrEmpty(this.TrialType))
-                    {
-                        // Add trial type to redirect URL path
-                        urlParts.Add(this.TrialType);
-                    }
-
+                    // Add trial type to redirect URL path
+                    urlParts.Add(GetFriendlyNameForURL(this.TrialType));
                 }
 
-                // If there are friendly name overrides, set up the redirect URL using those values
-                if (needsRedirect)
+            }
+
+            // If there are friendly name overrides, set up the redirect URL using those values
+            if (needsRedirect)
+            {
+                redirectUrl = redirectUrl.TrimEnd('/');
+
+                foreach (string urlPart in urlParts)
                 {
-                    redirectUrl = redirectUrl.TrimEnd('/');
-
-                    foreach (string urlPart in urlParts)
-                    {
-                        redirectUrl += "/" + urlPart;
-                    }
-
-                    Response.RedirectPermanent(redirectUrl, true);
+                    redirectUrl += "/" + urlPart;
                 }
+
+                Response.RedirectPermanent(redirectUrl, true);
             }
         }
 
