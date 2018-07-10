@@ -345,19 +345,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// <returns>A string with the friendly name for the URL (replaces c-code) if the override exists, otherwise the given c-codes</returns>
         protected string GetFriendlyNameForURL(string param)
         {
-            /*if(FriendlyNameMapping.MappingContainsFriendlyName(param))
-            {
-                // If a friendly name is given, check to see if there is a friendly name override for the same code.
-                // If there is a friendly name override for the same thing, return the friendly name override and set redirection bool
-                string code = FriendlyNameMapping.GetCodeFromFriendlyName(param);
-
-                if(FriendlyNameWithOverridesMapping.MappingContainsCode(code, true))
-                {
-                    needsRedirect = true;
-                    return FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(code, true);
-                }
-            }*/
-
             if (FriendlyNameWithOverridesMapping.MappingContainsCode(param, true))
             {
                 // If an exact match is found in the Friendly Name With Overrides mapping, return the friendly name and set redirection bool
@@ -368,10 +355,38 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 if (FriendlyNameMapping.MappingContainsCode(param, false))
                 {
-                    // If an exact match is found in the Friendly Name mapping (without overrides), return the friendly name and set redirection bool
-                    // Also if matches are found that contain the given codes and all have the same friendly name, return that friendly name and set redirection bool
+                    // If an exact match is found in the Friendly Name mapping (without overrides), or if matches are found that contain the given codes and all have the same friendly name,
+                    // get the friendly name and set redirection bool.
                     needsRedirect = true;
-                    return FriendlyNameMapping.GetFriendlyNameFromCode(param, false);
+
+                    string evsFriendlyName = FriendlyNameMapping.GetFriendlyNameFromCode(param, false);
+                    string codesToOverride = FriendlyNameMapping.GetCodeFromFriendlyName(evsFriendlyName);
+
+                    // If the found friendly name has code(s) that there is an entry in the override friendly name mapping for, return the override friendly name.
+                    if (FriendlyNameWithOverridesMapping.MappingContainsCode(codesToOverride, true))
+                    {
+                        return FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true);
+                    }
+                    // If the found friendly name do not have code(s) that there is an entry in the override friendly name mapping for, return the original friendly name.
+                    else
+                    {
+                        return FriendlyNameMapping.GetFriendlyNameFromCode(param, false);
+                    }
+                }
+                else
+                {
+                    // If a user comes in with a friendly name, get the codes associated with that friendly name.
+                    if (FriendlyNameMapping.MappingContainsFriendlyName(param))
+                    {
+                        string codesToOverride = FriendlyNameMapping.GetCodeFromFriendlyName(param);
+
+                        // If the code(s) have an entry in the override friendly name mapping for, return the override friendly name and set redirection bool.
+                        if (FriendlyNameWithOverridesMapping.MappingContainsCode(codesToOverride, true))
+                        {
+                            needsRedirect = true;
+                            return FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true);
+                        }
+                    }
                 }
             }
 

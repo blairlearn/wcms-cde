@@ -116,7 +116,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
         }
 
         [Fact]
-        public void GetOverrideL_EVSLabelTest()
+        public void GetOverride_EVSCodeTest()
         {
             DynamicTrialListingMapper labelMapper = GetLabelMappingService("DLPEVSRollupMapping.txt", "DLPEVSOverrideMapping.txt", "DLPTokensMapping.txt");
             DynamicTrialListingFriendlyNameMapper friendlyNameMapper = GetFriendlyNameMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", false);
@@ -124,15 +124,60 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
 
             Assert.Equal("Breast Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "c4872", true), new MappingsComparer());
 
-            Assert.Equal("Breast Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "breast-cancer", true), new MappingsComparer());
-
             Assert.Equal("Stage II Breast Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "c7768", true), new MappingsComparer());
 
+            Assert.Equal("Ependymoma", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "c9092,c3017", true), new MappingsComparer());
+
+            Assert.Equal("Short Limb Dwarfism-Saddle Nose-Spinal Alterations-Metaphyseal Striation Syndrome", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "c92206", true), new MappingsComparer());
+        }
+
+        [Fact]
+        public void GetOverride_EVSFriendlyNameTest()
+        {
+            DynamicTrialListingMapper labelMapper = GetLabelMappingService("DLPEVSRollupMapping.txt", "DLPEVSOverrideMapping.txt", "DLPTokensMapping.txt");
+            DynamicTrialListingFriendlyNameMapper friendlyNameMapper = GetFriendlyNameMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", false);
+            DynamicTrialListingFriendlyNameMapper friendlyNameWithOverridesMapper = GetFriendlyNameMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", true);
+
+            Assert.Equal("Breast Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "breast-cancer", true), new MappingsComparer());
+
             Assert.Equal("Stage II Breast Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "stage-ii-breast-cancer", true), new MappingsComparer());
+        }
+
+        [Fact]
+        public void GetOverride_OverrideCodeTest()
+        {
+            DynamicTrialListingMapper labelMapper = GetLabelMappingService("DLPEVSRollupMapping.txt", "DLPEVSOverrideMapping.txt", "DLPTokensMapping.txt");
+            DynamicTrialListingFriendlyNameMapper friendlyNameMapper = GetFriendlyNameMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", false);
+            DynamicTrialListingFriendlyNameMapper friendlyNameWithOverridesMapper = GetFriendlyNameMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", true);
 
             Assert.Equal("Thyroid Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "c118827,c4815", true), new MappingsComparer());
 
+            Assert.Equal("Kidney Small Cell Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "c116317", true), new MappingsComparer());
+        }
+
+        [Fact]
+        public void GetOverride_OverrideFriendlyNameTest()
+        {
+            DynamicTrialListingMapper labelMapper = GetLabelMappingService("DLPEVSRollupMapping.txt", "DLPEVSOverrideMapping.txt", "DLPTokensMapping.txt");
+            DynamicTrialListingFriendlyNameMapper friendlyNameMapper = GetFriendlyNameMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", false);
+            DynamicTrialListingFriendlyNameMapper friendlyNameWithOverridesMapper = GetFriendlyNameMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", true);
+
+            Assert.Equal("Thyroid Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "thyroid-cancer", true), new MappingsComparer());
+
+            Assert.Equal("Thyroid Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "thyroid-gland-cancer", true), new MappingsComparer());
+
             Assert.Equal("Kidney Small Cell Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "kidney-small-cell-cancer", true), new MappingsComparer());
+        }
+
+        public void GetOverride_EVSFriendlyNameWithOverrideLabelTest()
+        {
+            DynamicTrialListingMapper labelMapper = GetLabelMappingService("DLPEVSRollupMapping.txt", "DLPEVSOverrideMapping.txt", "DLPTokensMapping.txt");
+            DynamicTrialListingFriendlyNameMapper friendlyNameMapper = GetFriendlyNameMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", false);
+            DynamicTrialListingFriendlyNameMapper friendlyNameWithOverridesMapper = GetFriendlyNameMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", true);
+
+            Assert.Equal("Thyroid Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "thyroid-gland-cancer", true), new MappingsComparer());
+
+            Assert.Equal("Kidney Small Cell Cancer", GetOverride(friendlyNameMapper, friendlyNameWithOverridesMapper, labelMapper, "kidney-small-cell-carcinoma", true), new MappingsComparer());
         }
     }
 }

@@ -59,19 +59,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
         {
             bool needsRedirect = false;
 
-            if (FriendlyNameMapping.MappingContainsFriendlyName(param))
-            {
-                // If a friendly name is given, check to see if there is a friendly name override for the same code.
-                // If there is a friendly name override for the same thing, return the friendly name override and set redirection bool
-                string code = FriendlyNameMapping.GetCodeFromFriendlyName(param);
-
-                if (FriendlyNameWithOverridesMapping.MappingContainsCode(code, true))
-                {
-                    needsRedirect = true;
-                    return new KeyValuePair<string, bool>(FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(code, true), needsRedirect);
-                }
-            }
-
             if (FriendlyNameWithOverridesMapping.MappingContainsCode(param, true))
             {
                 // If an exact match is found in the Friendly Name With Overrides mapping, return the friendly name and set redirection bool
@@ -85,7 +72,33 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                     // If an exact match is found in the Friendly Name mapping (without overrides), return the friendly name and set redirection bool
                     // Also if matches are found that contain the given codes and all have the same friendly name, return that friendly name and set redirection bool
                     needsRedirect = true;
-                    return new KeyValuePair<string, bool>(FriendlyNameMapping.GetFriendlyNameFromCode(param, false), needsRedirect);
+
+                    string evsFriendlyName = FriendlyNameMapping.GetFriendlyNameFromCode(param, false);
+                    string codesToOverride = FriendlyNameMapping.GetCodeFromFriendlyName(evsFriendlyName);
+
+                    if (FriendlyNameWithOverridesMapping.MappingContainsCode(codesToOverride, true))
+                    {
+                        // If an exact match is found in the Friendly Name With Overrides mapping, return the friendly name and set redirection bool
+                        return new KeyValuePair<string, bool>(FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true), needsRedirect);
+                    }
+                    else
+                    {
+                        return new KeyValuePair<string, bool>(FriendlyNameMapping.GetFriendlyNameFromCode(param, false), needsRedirect);
+                    }
+                }
+                else
+                {
+                    if (FriendlyNameMapping.MappingContainsFriendlyName(param))
+                    {
+                        string codesToOverride = FriendlyNameMapping.GetCodeFromFriendlyName(param);
+
+                        if (FriendlyNameWithOverridesMapping.MappingContainsCode(codesToOverride, true))
+                        {
+                            // If an exact match is found in the Friendly Name With Overrides mapping, return the friendly name and set redirection bool
+                            needsRedirect = true;
+                            return new KeyValuePair<string, bool>(FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true), needsRedirect);
+                        }
+                    }
                 }
             }
 
@@ -115,9 +128,28 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
             Assert.Equal("stage-ii-breast-cancer", GetFriendlyNameForURL(friendlyNameMapper, friendlyNameWithOverridesMapper, "C139538").Key, new MappingsComparer());
 
             Assert.Equal(false, GetFriendlyNameForURL(friendlyNameMapper, friendlyNameWithOverridesMapper, "c2955").Value);
+        }
+
+        [Fact]
+        public void GetFriendlyNameForURL_NoFriendlyNameTest()
+        {
+            DynamicTrialListingFriendlyNameMapper friendlyNameMapper = GetMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", false);
+            DynamicTrialListingFriendlyNameMapper friendlyNameWithOverridesMapper = GetMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", true);
+
+            Assert.Equal(false, GetFriendlyNameForURL(friendlyNameMapper, friendlyNameWithOverridesMapper, "c2955").Value);
+        }
+
+        [Fact]
+        public void GetFriendlyNameForURL_EVSAndOverrideFriendlyNameTest()
+        {
+            DynamicTrialListingFriendlyNameMapper friendlyNameMapper = GetMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", false);
+            DynamicTrialListingFriendlyNameMapper friendlyNameWithOverridesMapper = GetMappingService("DLPFriendlyNameMapping.txt", "DLPFriendlyNameOverrideMapping.txt", true);
 
             Assert.Equal(true, GetFriendlyNameForURL(friendlyNameMapper, friendlyNameWithOverridesMapper, "c118827").Value);
-            Assert.Equal("thyroid-gland-cancer", GetFriendlyNameForURL(friendlyNameMapper, friendlyNameWithOverridesMapper, "c118827").Key, new MappingsComparer());
+            Assert.Equal("thyroid-cancer", GetFriendlyNameForURL(friendlyNameMapper, friendlyNameWithOverridesMapper, "c118827").Key, new MappingsComparer());
+
+            Assert.Equal(true, GetFriendlyNameForURL(friendlyNameMapper, friendlyNameWithOverridesMapper, "thyroid-gland-cancer").Value);
+            Assert.Equal("thyroid-cancer", GetFriendlyNameForURL(friendlyNameMapper, friendlyNameWithOverridesMapper, "thyroid-gland-cancer").Key, new MappingsComparer());
         }
     }
 }
