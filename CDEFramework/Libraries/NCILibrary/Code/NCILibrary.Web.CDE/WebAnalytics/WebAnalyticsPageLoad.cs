@@ -146,9 +146,50 @@ namespace NCI.Web.CDE.WebAnalytics
         /// <param name="writer">Text writer object used to output HTML tags</param>
         public void DrawHeadTags(HtmlTextWriter writer)
         {
-            string concatEvents = string.Empty;
-            string propValue = string.Empty;
-            string eVarValue = string.Empty;
+            //string blob = string.Empty;
+            Dictionary<string, string> blob = new Dictionary<string, string>();
+            String blob2 = string.Empty;
+
+            // Add suites
+            blob.Add("suites", cleanValues(suites));
+
+            // Add channels
+            blob.Add("channel", cleanValues(channel));
+
+            // if events have been defined, output then to the tag
+            if (events.Count > 0)
+            {
+                string eventVal = string.Join(",", events.ToArray<string>());
+                blob.Add("events", cleanValues(eventVal));
+            }
+
+            // if props are set, output them to the tag
+            if (props.Count > 0)
+            {
+                foreach (int k in props.Keys.OrderBy(k => k))
+                {
+                    string val = cleanValues(props[k]);
+                    blob.Add(("prop" + k.ToString()), val);
+                }
+            }
+
+            // if eVars are set, output them to the tag
+            if (evars.Count > 0)
+            {
+                foreach (int k in evars.Keys.OrderBy(k => k))
+                {
+                    string val = cleanValues(evars[k]);
+                    blob.Add(("eVar" + k.ToString()), val);
+                }
+            }
+
+            // Convert our blob to a string
+            foreach (KeyValuePair<string, string> kvp in blob)
+            {
+                blob2 += kvp.Key + "=" + kvp.Value + ";";
+            }
+
+
 
             // Set a meta tag with name="entity" and content="NCIAnalytics".
             // This is the closest valid <meta> name we have for our purposes. 
@@ -158,41 +199,9 @@ namespace NCI.Web.CDE.WebAnalytics
             // via inclusion of a JavaScript library. Library also supports inclusion of additional meta element entity 
             // definitions via iframe documents.
             writer.AddAttribute(HtmlTextWriterAttribute.Name, WaMetaName);
-            writer.AddAttribute(HtmlTextWriterAttribute.Content, WaMetaCont);
+            writer.AddAttribute(HtmlTextWriterAttribute.Content, blob2);
 
-            // Draw meta tag ID, suites, channel attributes
-            writer.AddAttribute(HtmlTextWriterAttribute.Id, WaDataID);
-            writer.AddAttribute("data-suites", suites);
-            writer.AddAttribute("data-channel", channel);
-
-            // if events have been defined, output then to the tag
-            if (events.Count > 0)
-            {
-                concatEvents = string.Join(",", events.ToArray<string>());
-                writer.AddAttribute("data-events", concatEvents);
-            }
-
-            // if props are set, output them to the tag
-            if (props.Count > 0)
-            {
-                foreach (int k in props.Keys.OrderBy(k => k))
-                {
-                    propValue = cleanQuotes(props[k]);
-                    writer.AddAttribute(("data-prop" + k.ToString()), propValue);
-                }
-            }
-
-            // if eVars are set, output them to the tag
-            if (evars.Count > 0)
-            {
-                foreach (int k in evars.Keys.OrderBy(k => k))
-                {
-                    eVarValue = cleanQuotes(evars[k]);
-                    writer.AddAttribute("data-evar" + k.ToString(), eVarValue);
-                }
-            }
-
-            // Draw the <meta> tag 
+            // Draw the actual <meta> tag 
             writer.RenderBeginTag(HtmlTextWriterTag.Meta);
             writer.RenderEndTag();
         }
@@ -498,8 +507,9 @@ namespace NCI.Web.CDE.WebAnalytics
         /// <summary>Trim quotes and spaces from string and replace with double quotes</summary>
         /// <param name="content">Meta content attribute</param>
         /// <returns>Cleaned string</returns>
-        public String cleanQuotes(string value)
+        public String cleanValues(string value)
         {
+            // TODO: handle semicolon delimiter
             char[] charsToTrim = { '\'', ' ', '"' };
             return value.Trim(charsToTrim);
         }
