@@ -86,8 +86,20 @@ namespace NCI.Web.CDE.UI.WebControls
                     webAnalyticsPageLoad.AddProp(kvp.Key, kvp.Value);
                 }
 
-                // Draw the control HTML
-                webAnalyticsPageLoad.DrawHeadTags(output);
+                // Draw the control HTML based on the control ID
+                switch (this.ID)
+                {
+                    case "WebAnalyticsHeadTag":
+                        webAnalyticsPageLoad.DrawHeadTags(output);
+                        break;
+                    case "WebAnalyticsLegacy":
+                        // Legacy method - do not use
+                        // If you're using this after 2018, I'm going to throw something at you
+                        output.Write(webAnalyticsPageLoad.Tag());
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
