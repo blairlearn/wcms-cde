@@ -45,7 +45,6 @@ namespace NCI.Web.CDE.WebAnalytics
         private string WaFunctions = ConfigurationManager.AppSettings["NCIAnalyticsFunctions"].ToString();
         public String WaMetaName = "entity";
         public String WaMetaCont = "NCIAnalytics";
-        public String WaDataID = ConfigurationManager.AppSettings["WADataElementID"].ToString();
 
         /// <summary>When true, page-wide link tracking is enabled.</summary>
         public bool DoPageWideLinkTracking
@@ -130,28 +129,28 @@ namespace NCI.Web.CDE.WebAnalytics
 
         /// <summary>Get the analytics metadata to be used in the document head.</summary>
         /// <returns>HTML string</returns>
-        public String GetHeadTags()
+        public String GetAnalyticsDataTag()
         {
             StringWriter stringWriter = new StringWriter();
 
             // Put HtmlTextWsriter in using block because it needs to call Dispose()
             using (HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter))
             {
-                DrawHeadTags(htmlWriter);
+                DrawAnalyticsDataTag(htmlWriter);
             }
             return stringWriter.ToString();
         }
 
         /// <summary>Draw the analytics metadata to be used in the document head.</summary>
         /// <param name="writer">Text writer object used to output HTML tags</param>
-        public void DrawHeadTags(HtmlTextWriter writer)
+        public void DrawAnalyticsDataTag(HtmlTextWriter writer)
         {
             //string blob = string.Empty;
             Dictionary<string, string> blob = new Dictionary<string, string>();
             String blob2 = string.Empty;
 
-            // Add suites
-            blob.Add("suites", cleanValues(suites));
+            // Add suites (AKA s_account or s.account in Adobe AppMeasurement)
+            blob.Add("suite", cleanValues(suites));
 
             // Add channels
             blob.Add("channel", cleanValues(channel));

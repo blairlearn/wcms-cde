@@ -90,7 +90,7 @@ namespace NCI.Web.CDE.UI.WebControls
                 switch (this.ID)
                 {
                     case "WebAnalytics":
-                        webAnalyticsPageLoad.DrawHeadTags(output);
+                        webAnalyticsPageLoad.DrawAnalyticsDataTag(output);
                         break;
                     case "WebAnalyticsLegacy":
                         // Legacy method - do not use
