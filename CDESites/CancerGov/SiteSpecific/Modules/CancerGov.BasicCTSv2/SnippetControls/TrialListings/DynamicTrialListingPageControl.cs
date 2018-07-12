@@ -380,11 +380,15 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     {
                         string codesToOverride = FriendlyNameMapping.GetCodeFromFriendlyName(param);
 
-                        // If the code(s) have an entry in the override friendly name mapping for, return the override friendly name and set redirection bool.
+                        // If the code(s) have an entry in the override friendly name mapping, and that new friendly name is not the same as the original,
+                        // return the override friendly name and set redirection bool.
                         if (FriendlyNameWithOverridesMapping.MappingContainsCode(codesToOverride, true))
                         {
-                            needsRedirect = true;
-                            return FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true);
+                            if(!string.Equals(param, FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true)))
+                            {
+                                needsRedirect = true;
+                                return FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true);
+                            }
                         }
                     }
                 }

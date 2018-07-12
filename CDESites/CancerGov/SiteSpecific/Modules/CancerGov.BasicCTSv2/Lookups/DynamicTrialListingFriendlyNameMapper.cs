@@ -13,7 +13,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
     {
         private static string _evsMappingFile = null;
         private static string _overrideMappingFile = null;
-        private Dictionary<string, MappingItem> _mapping = new Dictionary<string, MappingItem>();
+        private Dictionary<string, MappingItem> _mappings = new Dictionary<string, MappingItem>();
 
         public DynamicTrialListingFriendlyNameMapper(string evsMappingFilepath, string overrideMappingFilepath, bool withOverrides)
         {
@@ -25,7 +25,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
         private void LoadMapping(bool withOverrides)
         {
             // Load and store mappings
-            _mapping = LoadDictionaryMappingFromFiles(_evsMappingFile, _overrideMappingFile, withOverrides);
+            _mappings = LoadDictionaryMappingFromFiles(_evsMappingFile, _overrideMappingFile, withOverrides);
         }
 
         private static Dictionary<string, MappingItem> LoadDictionaryMappingFromFiles(string evsFilePath, string overrideFilePath, bool withOverrides)
@@ -158,14 +158,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
             if (hasExactMatch)
             {
                 // If an exact match for the given code(s) is found, return the exact match.
-                return _mapping[value].Text;
+                return _mappings[value].Text;
             }
             else
             {
                 string[] splitIDs = value.Split(new char[] { ',' });
 
                 // Return friendly name associated with any key that contains the first code, as all codes have the same friendly name
-                return _mapping.FirstOrDefault(x => x.Key.Contains(splitIDs[0])).Value.Text;
+                return _mappings.FirstOrDefault(x => x.Key.Contains(splitIDs[0])).Value.Text;
             }
         }
 
@@ -178,7 +178,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
         {
             value = value.ToLower();
 
-            return _mapping.FirstOrDefault(x => x.Value.Text == value).Key;
+            return _mappings.FirstOrDefault(x => x.Value.Text == value).Key;
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
             if (needsExactMatch)
             {
                 // If an exact match is needed, check if the mapping contains an entry with the exact given code as the key.
-                return _mapping.ContainsKey(code);
+                return _mappings.ContainsKey(code);
             }
             else
             {
@@ -206,7 +206,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
                 // Loop through all the codes.
                 foreach (string ID in splitIDs)
                 {
-                    if (!_mapping.Keys.Any(k => k.Contains(ID)))
+                    if (!_mappings.Keys.Any(k => k.Contains(ID)))
                     {
                         // If any code given is not contained in a key in the mapping, return false.
                         return false;
@@ -219,17 +219,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
                             NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("DynamicTrialListingFriendlyNameMappingService", 404, "Invalid parameter in dynamic listing page: value given is not a valid c-code");
                         }
 
-                        string idSingle = ID + "|";
-                        string idMultiple = ID + ",";
-
                         // Add all of the friendly names for any entries whose key contains the current code to a list for later comparison.
-                        splitIDFriendlyNames.AddRange(_mapping.Where(m => (m.Key.Contains(idSingle) || m.Key.Contains(idMultiple))).Select(kvp => kvp.Value.Text).ToList());
+                        splitIDFriendlyNames.AddRange(_mappings.Where(m => m.Key.Equals(ID) || m.Key.Split(new char[] { ',' }).Any(k => k.Equals(ID)))
+                                                                .GroupBy(g => g.Key)
+                                                                .Select(kvp => kvp.First().Value.Text)
+                                                                .ToList());
                     }
                 }
 
-                if (splitIDFriendlyNames.Any(f => f != splitIDFriendlyNames[0]))
+                if (splitIDFriendlyNames.Count() == 0 || splitIDFriendlyNames.Any(f => f != splitIDFriendlyNames[0]))
                 {
-                    // If the friendly names associated with keys that contain the given codes are not the same, return false.
+                    // If no friendly names are found, there was no match and return false.
+                    // Also, if the friendly names associated with keys that contain the given codes are not the same, return false.
                     return false;
                 }
                 else
@@ -248,7 +249,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
         public bool MappingContainsFriendlyName(string value)
         {
             value = value.ToLower();
-            string myKey = _mapping.FirstOrDefault(x => x.Value.Text == value).Key;
+            string myKey = _mappings.FirstOrDefault(x => x.Value.Text == value).Key;
             if (!string.IsNullOrEmpty(myKey))
             {
                 return true;

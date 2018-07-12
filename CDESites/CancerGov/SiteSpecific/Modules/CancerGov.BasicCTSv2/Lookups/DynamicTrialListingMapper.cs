@@ -14,9 +14,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
         private static string _evsMappingFile = null;
         private static string _overrideMappingFile = null;
         private static string _tokensMappingFile = null;
-        private Dictionary<string, MappingItem> Mappings = new Dictionary<string, MappingItem>();
-        private Dictionary<string, MappingItem> MappingsWithOverrides = new Dictionary<string, MappingItem>();
-        private HashSet<string> Tokens = new HashSet<string>();
+        private Dictionary<string, MappingItem> _mappings = new Dictionary<string, MappingItem>();
+        private Dictionary<string, MappingItem> _mappingsWithOverrides = new Dictionary<string, MappingItem>();
+        private HashSet<string>_tokens = new HashSet<string>();
 
         public DynamicTrialListingMapper(string evsMappingFilepath, string overrideMappingFilepath, string tokensMappingFilepath)
         {
@@ -28,14 +28,14 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
 
         private void LoadMappings()
         {
-           // Load and store EVS mappings
-            Mappings = GetDictionary(_evsMappingFile, false);
+            // Load and store EVS mappings
+            _mappings = GetDictionary(_evsMappingFile, false);
 
             // Load and store EVS with Overrides mappings
-            MappingsWithOverrides = GetDictionary(_overrideMappingFile, true);
+            _mappingsWithOverrides = GetDictionary(_overrideMappingFile, true);
 
             // Load and store tokens
-            Tokens = GetTokens(_tokensMappingFile);
+            _tokens = GetTokens(_tokensMappingFile);
         }
 
 
@@ -125,19 +125,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
         /// <returns>The display label</returns>
         public string GetTitleCase(string value)
         {
-            if (MappingsWithOverrides.ContainsKey(value))
+            if (_mappingsWithOverrides.ContainsKey(value))
             {
-                return MappingsWithOverrides[value].Text;
+                return _mappingsWithOverrides[value].Text;
             }
-            else if (Mappings.ContainsKey(value))
+            else if (_mappings.ContainsKey(value))
             {
-                return Mappings[value].Text;
+                return _mappings[value].Text;
             }
             else
             {
                 string[] splitIDs = value.Split(new char[] { ',' });
 
-                return Mappings.FirstOrDefault(m => m.Key.Equals(splitIDs[0]) || m.Key.Split(new char[] { ',' }).Any(k => k == splitIDs[0])).Value.Text;
+                return _mappings.FirstOrDefault(m => m.Key.Equals(splitIDs[0]) || m.Key.Split(new char[] { ',' }).Any(k => k == splitIDs[0])).Value.Text;
             }
 
         }
@@ -151,19 +151,19 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
         {
             string overrideText = "";
 
-            if (MappingsWithOverrides.ContainsKey(value))
+            if (_mappingsWithOverrides.ContainsKey(value))
             {
-                overrideText = MappingsWithOverrides[value].Text;
+                overrideText = _mappingsWithOverrides[value].Text;
             }
-            else if (Mappings.ContainsKey(value))
+            else if (_mappings.ContainsKey(value))
             {
-                overrideText = Mappings[value].Text;
+                overrideText = _mappings[value].Text;
             }
             else
             {
                 string[] splitIDs = value.Split(new char[] { ',' });
 
-                overrideText = Mappings.FirstOrDefault(m => m.Key.Equals(splitIDs[0]) || m.Key.Split(new char[] { ',' }).Any(k => k == splitIDs[0])).Value.Text;
+                overrideText = _mappings.FirstOrDefault(m => m.Key.Equals(splitIDs[0]) || m.Key.Split(new char[] { ',' }).Any(k => k == splitIDs[0])).Value.Text;
             }
 
             // Split apart string on known values (space and dash) for comparison to tokens
@@ -175,7 +175,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
 
             foreach (string part in split)
             {
-                if (Tokens.Contains(part))
+                if (_tokens.Contains(part))
                 {
                     // If do-not-replace tokens contains this string, replace with value for formatter
                     // and add token to list for later replace
@@ -201,9 +201,9 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
         {
             code = code.ToLower();
 
-            if (MappingsWithOverrides.ContainsKey(code))
+            if (_mappingsWithOverrides.ContainsKey(code))
             {
-                return MappingsWithOverrides.ContainsKey(code);
+                return _mappingsWithOverrides.ContainsKey(code);
             }
 
             // Split the given codes apart, if there are multiple.
@@ -213,7 +213,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
             // Loop through all the codes.
             foreach (string ID in splitIDs)
             {
-                if (!Mappings.Keys.Any(k => k.Contains(ID)))
+                if (!_mappings.Keys.Any(k => k.Contains(ID)))
                 {
                     // If any code given is not contained in a key in the mapping, return false.
                     return false;
@@ -226,23 +226,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Lookups
                         NCI.Web.CDE.Application.ErrorPageDisplayer.RaisePageByCode("DynamicTrialListingFriendlyNameMappingService", 404, "Invalid parameter in dynamic listing page: value given is not a valid c-code");
                     }
 
-                    string containsCode1 = "," + ID;
-                    string containsCode2 = ID + ",";
-
                     // Add all of the friendly names for any entries whose key contains the current code to a list for later comparison.
-                    splitIDFriendlyNames.AddRange(Mappings.Where(m => m.Key.Equals(ID) || m.Key.Split(new char[] { ',' }).Any(k => k == ID))
+                    splitIDFriendlyNames.AddRange(_mappings.Where(m => m.Key.Equals(ID) || m.Key.Split(new char[] { ',' }).Any(k => k.Equals(ID)))
                                                             .GroupBy(g => g.Key)
                                                             .Select(kvp => kvp.First().Value.Text)
                                                             .ToList());
-
-                    // Add all of the friendly names for any entries whose key contains the current code to a list for later comparison.
-                    //splitIDFriendlyNames.AddRange(Mappings.Where(m => m.Key.Contains(ID)).Select(kvp => kvp.Value.Text).ToList());
                 }
             }
 
-            if (splitIDFriendlyNames.Any(f => f != splitIDFriendlyNames[0]))
+            if (splitIDFriendlyNames.Count() == 0 || splitIDFriendlyNames.Any(f => f != splitIDFriendlyNames[0]))
             {
-                // If the friendly names associated with keys that contain the given codes are not the same, return false.
+                // If no friendly names are found, there was no match and return false.
+                // Also, if the friendly names associated with keys that contain the given codes are not the same, return false.
                 return false;
             }
             else

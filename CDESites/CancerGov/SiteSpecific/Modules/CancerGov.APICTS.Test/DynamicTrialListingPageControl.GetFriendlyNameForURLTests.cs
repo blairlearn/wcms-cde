@@ -95,8 +95,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.Test
                         if (FriendlyNameWithOverridesMapping.MappingContainsCode(codesToOverride, true))
                         {
                             // If an exact match is found in the Friendly Name With Overrides mapping, return the friendly name and set redirection bool
-                            needsRedirect = true;
-                            return new KeyValuePair<string, bool>(FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true), needsRedirect);
+                            if (!string.Equals(param, FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true)))
+                            {
+                                needsRedirect = true;
+                                return new KeyValuePair<string, bool>(FriendlyNameWithOverridesMapping.GetFriendlyNameFromCode(codesToOverride, true), needsRedirect);
+                            }
                         }
                     }
                 }
