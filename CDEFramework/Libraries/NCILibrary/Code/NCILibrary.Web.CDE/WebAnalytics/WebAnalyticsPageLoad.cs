@@ -145,21 +145,21 @@ namespace NCI.Web.CDE.WebAnalytics
         /// <param name="writer">Text writer object used to output HTML tags</param>
         public void DrawAnalyticsDataTag(HtmlTextWriter writer)
         {
-            //string blob = string.Empty;
+            //AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
             Dictionary<string, string> blob = new Dictionary<string, string>();
-            String blob2 = string.Empty;
+            String content = String.Empty;
 
             // Add suites (AKA s_account or s.account in Adobe AppMeasurement)
-            blob.Add("suite", cleanValues(suites));
+            blob.Add("suite", suites);
 
             // Add channels
-            blob.Add("channel", cleanValues(channel));
+            blob.Add("channel", channel);
 
             // if events have been defined, output then to the tag
             if (events.Count > 0)
             {
                 string eventVal = string.Join(",", events.ToArray<string>());
-                blob.Add("events", cleanValues(eventVal));
+                blob.Add("events", eventVal);
             }
 
             // if props are set, output them to the tag
@@ -167,8 +167,7 @@ namespace NCI.Web.CDE.WebAnalytics
             {
                 foreach (int k in props.Keys.OrderBy(k => k))
                 {
-                    string val = cleanValues(props[k]);
-                    blob.Add(("prop" + k.ToString()), val);
+                    blob.Add(("prop" + k.ToString()), props[k]);
                 }
             }
 
@@ -177,18 +176,12 @@ namespace NCI.Web.CDE.WebAnalytics
             {
                 foreach (int k in evars.Keys.OrderBy(k => k))
                 {
-                    string val = cleanValues(evars[k]);
-                    blob.Add(("eVar" + k.ToString()), val);
+                    blob.Add(("eVar" + k.ToString()), props[k]);
                 }
             }
 
             // Convert our blob to a string
-            foreach (KeyValuePair<string, string> kvp in blob)
-            {
-                blob2 += kvp.Key + "=" + kvp.Value + ";";
-            }
-
-
+            content = ConvertBlobToString(blob);
 
             // Set a meta tag with name="entity" and content="NCIAnalytics".
             // This is the closest valid <meta> name we have for our purposes. 
@@ -198,7 +191,7 @@ namespace NCI.Web.CDE.WebAnalytics
             // via inclusion of a JavaScript library. Library also supports inclusion of additional meta element entity 
             // definitions via iframe documents.
             writer.AddAttribute(HtmlTextWriterAttribute.Name, WaMetaName);
-            writer.AddAttribute(HtmlTextWriterAttribute.Content, blob2);
+            writer.AddAttribute(HtmlTextWriterAttribute.Content, content);
 
             // Draw the actual <meta> tag 
             writer.RenderBeginTag(HtmlTextWriterTag.Meta);
@@ -506,11 +499,25 @@ namespace NCI.Web.CDE.WebAnalytics
         /// <summary>Trim quotes and spaces from string and replace with double quotes</summary>
         /// <param name="content">Meta content attribute</param>
         /// <returns>Cleaned string</returns>
-        public String cleanValues(string value)
+        private String CleanValues(string value)
         {
             // TODO: handle semicolon delimiter
             char[] charsToTrim = { '\'', ' ', '"' };
             return value.Trim(charsToTrim);
+        }
+
+        /// <summary>Given a collection of key/value pairs, build a semicolon-delimited string</summary>
+        /// <param name="blob"></param>
+        /// <returns></returns>
+        private String ConvertBlobToString(Dictionary<String, String> blob)
+        {
+            string rtn = string.Empty;
+            foreach (KeyValuePair<String, String> b in blob)
+            {
+                string val = b.Value;
+                rtn += b.Key + "=" + CleanValues(val) + ";";
+            }
+            return rtn;
         }
 
         /// <summary>Clears all previously set props, eVars, events, channel, pageName, and pageType.</summary>
