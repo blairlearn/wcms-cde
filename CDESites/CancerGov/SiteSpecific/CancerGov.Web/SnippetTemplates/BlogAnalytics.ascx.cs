@@ -14,13 +14,14 @@ namespace CancerGov.Web.SnippetTemplates
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            BasePageAssemblyInstruction basePage = PageAssemblyContext.Current.PageAssemblyInstruction as BasePageAssemblyInstruction;
+            IPageAssemblyInstruction pageInstruction = PageAssemblyContext.Current.PageAssemblyInstruction;
+            BasePageAssemblyInstruction basePage = pageInstruction as BasePageAssemblyInstruction;
             string blogName = "";
             string blogContentType = "rx:cgvBlogPost";
 
             if (basePage.ContentItemInfo.ContentItemType == blogContentType)
             {
-                blogName = basePage.GetWebAnalytics(WebAnalyticsOptions.Props.prop44.ToString());
+                blogName = SectionDetailFactory.GetSectionDetail(pageInstruction.SectionPath).GetWAContentGroups();
                 if (!String.IsNullOrWhiteSpace(blogName))
                 {
                     basePage.SetWebAnalytics(WebAnalyticsOptions.eVars.evar48.ToString(), ffD =>
