@@ -64,69 +64,6 @@ namespace NCI.Web.CDE.WebAnalytics
             pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
         }
 
-        /// <summary>Draw noscript tag</noscript></summary>
-        private StringBuilder NoScriptTag()
-        {
-            StringBuilder noScriptTag = new StringBuilder();
-            noScriptTag.AppendLine("<noscript>");
-            noScriptTag.AppendLine("<a href='http://www.omniture.com' title='Web Analytics'>");
-            noScriptTag.AppendLine("<img src='http://metrics.cancer.gov/b/ss/nciglobal/1/H.20.3–NS/0' height='1' width='1' border='0' alt='' />");
-            noScriptTag.AppendLine("</a>");
-            noScriptTag.AppendLine("</noscript>");
-            return noScriptTag;
-        }
-
-        /// <summary>Legacy constructor logic - only for use in Tag() method. 
-        [Obsolete("This is the legacy method for drawing analytics JavaScript into the page HTML.")]
-        public void BuildLegacyTags()
-        {
-
-            /// Legacy constructor logic - only for use in Tag() method
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
-            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
-            pageLoadPreTag.AppendLine("<!--");
-
-            // Default props, eVars, and/or events
-            AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
-            AddEvent(WebAnalyticsOptions.Events.event1); // page view event
-
-            // The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
-            //pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
-
-            if (!TEST_MODE)
-            {
-                pageLoadPostTag.AppendLine("var s_code=s.t();");
-                pageLoadPostTag.AppendLine("if(s_code)");
-                pageLoadPostTag.AppendLine("   document.write(s_code);");
-            }
-
-            pageLoadPostTag.AppendLine("-->");
-            pageLoadPostTag.AppendLine("</script>");
-            if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
-                pageLoadPostTag.Append(NoScriptTag().ToString());
-            //pageLoadPostTag.AppendLine("<!-- End SiteCatalyst code version: H.20.3. -->");
-            pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
-        }
-
-        /// <summary>Builds the Page-wide link tracking JavaScript code inserted into the Omniture page load code.</summary>
-        private StringBuilder LinkTrackPageLoadCode()
-        {
-            //Page-wide link tracking is currently not used 
-
-            //This should be moved into a function in the NCIAnalytics.js file.
-            StringBuilder linkTrackerPageLoadCode = new StringBuilder();
-
-            linkTrackerPageLoadCode.AppendLine("// Page-wide click tracking");
-            linkTrackerPageLoadCode.AppendLine("if (document.addEventListener)");
-            linkTrackerPageLoadCode.AppendLine("   document.addEventListener('click',NCIAnalytics.LinkTrackTagBuilder,false);");
-            linkTrackerPageLoadCode.AppendLine("else if (document.attachEvent)");
-            linkTrackerPageLoadCode.AppendLine("   document.attachEvent('onclick',NCIAnalytics.LinkTrackTagBuilder);");
-            linkTrackerPageLoadCode.AppendLine("// End Page-wide click tracking");
-
-            return linkTrackerPageLoadCode;
-        }
-
         /// <summary>Get the analytics metadata to be used in the document head.</summary>
         /// <returns>HTML string</returns>
         public String GetAnalyticsDataTag()
@@ -145,7 +82,6 @@ namespace NCI.Web.CDE.WebAnalytics
         /// <param name="writer">Text writer object used to output HTML tags</param>
         public void DrawAnalyticsDataTag(HtmlTextWriter writer)
         {
-            //AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
             Dictionary<string, string> blob = new Dictionary<string, string>();
             String content = String.Empty;
 
@@ -196,6 +132,68 @@ namespace NCI.Web.CDE.WebAnalytics
             // Draw the actual <meta> tag 
             writer.RenderBeginTag(HtmlTextWriterTag.Meta);
             writer.RenderEndTag();
+        }
+
+        /// <summary>Draw noscript tag</noscript></summary>
+        private StringBuilder NoScriptTag()
+        {
+            StringBuilder noScriptTag = new StringBuilder();
+            noScriptTag.AppendLine("<noscript>");
+            noScriptTag.AppendLine("<a href='http://www.omniture.com' title='Web Analytics'>");
+            noScriptTag.AppendLine("<img src='http://metrics.cancer.gov/b/ss/nciglobal/1/H.20.3–NS/0' height='1' width='1' border='0' alt='' />");
+            noScriptTag.AppendLine("</a>");
+            noScriptTag.AppendLine("</noscript>");
+            return noScriptTag;
+        }
+
+        /// <summary>Legacy constructor logic - only for use in Tag() method. 
+        [Obsolete("This is the legacy method for drawing analytics JavaScript into the page HTML.")]
+        public void BuildLegacyTags()
+        {
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
+            pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
+            pageLoadPreTag.AppendLine("<!--");
+
+            // Default props, eVars, and/or events
+            AddProp(WebAnalyticsOptions.Props.prop10, "document.title", true); // long title
+            AddEvent(WebAnalyticsOptions.Events.event1); // page view event
+
+            // The following comment comes with the sample page-load tag from Omniture - it really has no relevance in this context 
+            //pageLoadPostTag.AppendLine("/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/");
+
+            if (!TEST_MODE)
+            {
+                pageLoadPostTag.AppendLine("var s_code=s.t();");
+                pageLoadPostTag.AppendLine("if(s_code)");
+                pageLoadPostTag.AppendLine("   document.write(s_code);");
+            }
+
+            pageLoadPostTag.AppendLine("-->");
+            pageLoadPostTag.AppendLine("</script>");
+            if (WebAnalyticsOptions.EnableNonJavaScriptTagging)
+                pageLoadPostTag.Append(NoScriptTag().ToString());
+            //pageLoadPostTag.AppendLine("<!-- End SiteCatalyst code version: H.20.3. -->");
+            pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
+        }
+
+        /// <summary>Builds the Page-wide link tracking JavaScript code inserted into the Omniture page load code.</summary>
+        [Obsolete("Page-wide link tracking is currently not used.")] 
+        private StringBuilder LinkTrackPageLoadCode()
+        {
+            //Page-wide link tracking is currently not used 
+
+            //This should be moved into a function in the NCIAnalytics.js file.
+            StringBuilder linkTrackerPageLoadCode = new StringBuilder();
+
+            linkTrackerPageLoadCode.AppendLine("// Page-wide click tracking");
+            linkTrackerPageLoadCode.AppendLine("if (document.addEventListener)");
+            linkTrackerPageLoadCode.AppendLine("   document.addEventListener('click',NCIAnalytics.LinkTrackTagBuilder,false);");
+            linkTrackerPageLoadCode.AppendLine("else if (document.attachEvent)");
+            linkTrackerPageLoadCode.AppendLine("   document.attachEvent('onclick',NCIAnalytics.LinkTrackTagBuilder);");
+            linkTrackerPageLoadCode.AppendLine("// End Page-wide click tracking");
+
+            return linkTrackerPageLoadCode;
         }
 
         /// <summary>When DoWebAnalytics is true, this method renders the Omniture page load JavaScript code.</summary>
@@ -499,9 +497,9 @@ namespace NCI.Web.CDE.WebAnalytics
         /// <summary>Trim quotes and spaces from string and replace with double quotes</summary>
         /// <param name="content">Meta content attribute</param>
         /// <returns>Cleaned string</returns>
+        /// TODO: escape equals and semicolon
         private String CleanValues(string value)
         {
-            // TODO: handle semicolon delimiter
             char[] charsToTrim = { '\'', ' ', '"' };
             return value.Trim(charsToTrim);
         }
