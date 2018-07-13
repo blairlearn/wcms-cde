@@ -133,8 +133,14 @@ namespace NCI.Web.CDE.UI
                     case HtmlMetaDataType.ContentLanguage:
                         metaData = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
                         break;
-                    case HtmlMetaDataType.Coverage:
+                    case HtmlMetaDataType.Coverage: // Suite(s) 
                         metaData = SectionDetailFactory.GetSectionDetail(path).GetWASuites();
+                        break;
+                    case HtmlMetaDataType.Subject: // Channel(s)
+                        metaData = SectionDetailFactory.GetSectionDetail(path).GetWAChannels();
+                        break;
+                    case HtmlMetaDataType.IsPartOf: // Content group(s)
+                        metaData = SectionDetailFactory.GetSectionDetail(path).GetWAContentGroups();
                         break;
                     case HtmlMetaDataType.DatePublished:
                         metaData = String.Format("{0:MM/dd/yyyy}", ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentDates.FirstPublished);
@@ -274,6 +280,10 @@ namespace NCI.Web.CDE.UI
                 hm.Name = "dcterms.type";
             else if (htmlMetaDataType == HtmlMetaDataType.Coverage)
                 hm.Name = "dcterms.coverage";
+            else if (htmlMetaDataType == HtmlMetaDataType.Subject)
+                hm.Name = "dcterms.subject";
+            else if (htmlMetaDataType == HtmlMetaDataType.IsPartOf)
+                hm.Name = "dcterms.isPartOf";
             else if (htmlMetaDataType == HtmlMetaDataType.DatePublished)
                 hm.Name = "dcterms.issued";
             else if (htmlMetaDataType == HtmlMetaDataType.EnglishLinkingPolicy)
@@ -572,6 +582,8 @@ namespace NCI.Web.CDE.UI
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Description);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.ContentLanguage);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Coverage);
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Subject);
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.IsPartOf);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.DatePublished);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EnglishLinkingPolicy);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EspanolLinkingPolicy);
