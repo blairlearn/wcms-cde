@@ -85,12 +85,6 @@ namespace NCI.Web.CDE.WebAnalytics
             Dictionary<string, string> blob = new Dictionary<string, string>();
             String content = String.Empty;
 
-            // Add suites (AKA s_account or s.account in Adobe AppMeasurement)
-            blob.Add("suite", suites);
-
-            // Add channels
-            blob.Add("channel", channel);
-
             // if events have been defined, output then to the tag
             if (events.Count > 0)
             {
