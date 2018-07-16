@@ -111,7 +111,7 @@ namespace NCI.Web.CDE.WebAnalytics
             }
 
             // Convert our blob to a string
-            content = ConvertBlobToString(blob);
+            content = CreateJsonString(blob);
 
             // Set a meta tag with name="entity" and content="NCIAnalytics".
             // This is the closest valid <meta> name we have for our purposes. 
@@ -490,26 +490,21 @@ namespace NCI.Web.CDE.WebAnalytics
 
         /// <summary>Trim quotes and spaces from string and replace with double quotes</summary>
         /// <param name="content">Meta content attribute</param>
-        /// <returns>Cleaned string</returns>
-        /// TODO: escape equals and semicolon
-        private String CleanValues(string value)
+        /// <returns>Clean string enclosed in double quotes</returns>
+        /// TODO: fix double quote encoding
+        private String CleanQuotedString(string value)
         {
             char[] charsToTrim = { '\'', ' ', '"' };
-            return value.Trim(charsToTrim);
+            return "\"" + value.Trim(charsToTrim) + "\"";
         }
 
         /// <summary>Given a collection of key/value pairs, build a semicolon-delimited string</summary>
         /// <param name="blob"></param>
-        /// <returns></returns>
-        private String ConvertBlobToString(Dictionary<String, String> blob)
+        /// <returns>JSON-formatted string</returns>
+        private String CreateJsonString(Dictionary<String, String> blob)
         {
-            string rtn = string.Empty;
-            foreach (KeyValuePair<String, String> b in blob)
-            {
-                string val = b.Value;
-                rtn += b.Key + "=" + CleanValues(val) + ";";
-            }
-            return rtn;
+            string rtn = string.Join(",", blob.Select(x => CleanQuotedString(x.Key) + ":" + CleanQuotedString(x.Value)));
+            return "{" + rtn + "}";
         }
 
         /// <summary>Clears all previously set props, eVars, events, channel, pageName, and pageType.</summary>
