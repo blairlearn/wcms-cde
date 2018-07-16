@@ -106,7 +106,7 @@ namespace NCI.Web.CDE.WebAnalytics
             {
                 foreach (int k in evars.Keys.OrderBy(k => k))
                 {
-                    blob.Add(("eVar" + k.ToString()), props[k]);
+                    blob.Add(("eVar" + k.ToString()), evars[k]);
                 }
             }
 
