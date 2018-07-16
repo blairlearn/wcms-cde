@@ -10,8 +10,8 @@
     <meta content="text/html;charset=ISO-8859-1" http-equiv="content-type" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="robots" content="noindex, nofollow" />
-    <asp:Literal ID="litDtmTop" Mode="PassThrough" runat="server" />
-    <asp:Literal ID="litWaMeta" Mode="PassThrough" runat="server" />
+    <asp:Literal ID="DTMTop" Mode="PassThrough" runat="server" />
+    <asp:Literal ID="WebAnalytics" Mode="PassThrough" runat="server" />
     <script src="/PublishedContent/js/Common.js" type="text/javascript"></script>
     <script src="/PublishedContent/js/Popups.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -118,6 +118,6 @@
                 The term you are looking for does not exist in the glossary.</div>
         </asp:PlaceHolder>
     </div>
-    <asp:Literal ID="litDtmBottom" Mode="PassThrough" runat="server" />
+    <asp:Literal ID="DTMBottom" Mode="PassThrough" runat="server" />
 </body>
 </html>

@@ -60,6 +60,16 @@ namespace NCI.Web.CDE.UI.WebControls
             writer.RenderEndTag();
         }
 
+        /// <summary>
+        /// Get an HTML tag based on the control ID set in the form.
+        /// </summary>
+        /// <param name="writer">HtmlTextWriter object</param>
+        /// <returns>String</returns>
+        public string RenderContents()
+        {
+            return "";
+        }
+
         /// <summary>Draw the analytics script tag with source for the head.</summary>
         /// <param name="writer">Text writer object used to output HTML tags</param>
         public void DrawTopTag(HtmlTextWriter writer)

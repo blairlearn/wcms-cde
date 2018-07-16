@@ -262,9 +262,9 @@ namespace TCGA.Web.Common.PopUps
             webAnalyticsPageLoad.SetChannel("Dictionary of Cancer Terms");
             webAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.event11); // Dictionary Term view (event11)
 
-            litDtmTop.Text = "<script src=\"" + AdobeDTMControl.DTMUrl + "\"></script>";
-            litWaMeta.Text = webAnalyticsPageLoad.GetAnalyticsDataTag();  // Load page load script 
-            litDtmBottom.Text = "<script>" + AdobeDTMControl.DTMBottom + "</script>";
+            DTMTop.Text = "<script src=\"" + AdobeDTMControl.DTMUrl + "\"></script>";
+            WebAnalytics.Text = webAnalyticsPageLoad.GetAnalyticsDataTag();  // Load page load script 
+            DTMBottom.Text = "<script>" + AdobeDTMControl.DTMBottom + "</script>";
         }
 
         #region Web Form Designer generated code
