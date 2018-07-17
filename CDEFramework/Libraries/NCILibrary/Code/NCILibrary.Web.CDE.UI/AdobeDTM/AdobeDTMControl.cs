@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Configuration;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Common.Logging;
@@ -18,8 +19,7 @@ namespace NCI.Web.CDE.UI.WebControls
     {
         static ILog log = LogManager.GetLogger(typeof(AdobeDTMControl));
         public static String DTMUrl = ConfigurationManager.AppSettings["DTMUrl"].ToString();
-        public static String DTMBottom = "_satellite.pageBottom();";
-        private WebAnalyticsPageLoad waPage = new WebAnalyticsPageLoad();
+        public static String DTMPageBottom = "_satellite.pageBottom();";
 
         protected override void OnInit(EventArgs e)
         { // Not doing anything at the moment
@@ -31,17 +31,17 @@ namespace NCI.Web.CDE.UI.WebControls
         /// <param name="writer"></param>
         protected override void Render(HtmlTextWriter writer)
         {
-            RenderContents(writer);
+            DrawDtmTag(writer, this.ID);
         }
 
         /// <summary>
         /// Draw the required tag based on the control ID set in the form.
         /// </summary>
         /// <param name="writer">HtmlTextWriter object</param>
-        protected override void RenderContents(HtmlTextWriter writer)
+        protected void DrawDtmTag(HtmlTextWriter writer, string id)
         {
             // Select which Draw() method to use
-            switch (this.ID)
+            switch (id)
             {
                 case "DTMTop":
                     this.DrawTopTag(writer);
@@ -55,9 +55,6 @@ namespace NCI.Web.CDE.UI.WebControls
                 default:
                     break;
             }
-
-            // Draw the closing tag 
-            writer.RenderEndTag();
         }
 
         /// <summary>
@@ -65,9 +62,15 @@ namespace NCI.Web.CDE.UI.WebControls
         /// </summary>
         /// <param name="writer">HtmlTextWriter object</param>
         /// <returns>String</returns>
-        public string RenderContents()
+        public String GetDtmTag(string id)
         {
-            return "";
+            StringWriter stringWriter = new StringWriter();
+            // Put HtmlTextWsriter in using block because it needs to call Dispose()
+            using (HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter))
+            {
+                DrawDtmTag(htmlWriter, id);
+            }
+            return stringWriter.ToString();
         }
 
         /// <summary>Draw the analytics script tag with source for the head.</summary>
@@ -76,6 +79,7 @@ namespace NCI.Web.CDE.UI.WebControls
         {
             writer.AddAttribute(HtmlTextWriterAttribute.Src, DTMUrl);
             writer.RenderBeginTag(HtmlTextWriterTag.Script);
+            writer.RenderEndTag();
         }
 
         /// <summary>Draw the analytics Javascript for the page bottom.</summary>
@@ -83,7 +87,8 @@ namespace NCI.Web.CDE.UI.WebControls
         public void DrawBottomTag(HtmlTextWriter writer)
         {
             writer.RenderBeginTag(HtmlTextWriterTag.Script);
-            writer.Write(DTMBottom);
+            writer.Write(DTMPageBottom);
+            writer.RenderEndTag();
         }
 
         /// <summary>Draw a DTM direct call tag.</summary>

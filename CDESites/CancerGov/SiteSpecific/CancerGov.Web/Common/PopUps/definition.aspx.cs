@@ -239,6 +239,8 @@ namespace CancerGov.Web.Common.PopUps
         {
             string popupSuites = "nciglobal,ncienterprise";
             WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
+            AdobeDTMControl adobeDtmControl = new AdobeDTMControl();
+
             webAnalyticsPageLoad.SetReportSuites(popupSuites);
             webAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.event11); // Dictionary Term view (event11)
 
@@ -251,9 +253,9 @@ namespace CancerGov.Web.Common.PopUps
                 webAnalyticsPageLoad.SetChannel("Dictionary of Cancer Terms");
             }
 
-            DTMTop.Text = "<script src=\"" + AdobeDTMControl.DTMUrl + "\"></script>";
-            WebAnalytics.Text = webAnalyticsPageLoad.GetAnalyticsDataTag();  // Load page load script 
-            DTMBottom.Text = "<script>" + AdobeDTMControl.DTMBottom + "</script>";
+            DTMTop.Text = adobeDtmControl.GetDtmTag("DTMTop"); // DTM JS tag
+            WebAnalytics.Text = webAnalyticsPageLoad.GetAnalyticsDataTag();  // Analytics meta tag
+            DTMBottom.Text = adobeDtmControl.GetDtmTag("DTMBottom"); // DTM pagebottom tag
         }
 
         protected void Page_Init(object sender, EventArgs e)
