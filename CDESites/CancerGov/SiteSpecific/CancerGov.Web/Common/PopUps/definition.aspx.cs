@@ -246,11 +246,11 @@ namespace CancerGov.Web.Common.PopUps
 
             if (dl == DisplayLanguage.Spanish)
             {
-                webAnalyticsPageLoad.SetChannel("Diccionario de cancer (Dictionary of Cancer Terms)");
+                MetaSubject.Attributes.Add("content", "Diccionario de cancer (Dictionary of Cancer Terms)");
             }
             else
             {
-                webAnalyticsPageLoad.SetChannel("Dictionary of Cancer Terms");
+                MetaSubject.Attributes.Add("content", "Dictionary of Cancer Terms");
             }
 
             DTMTop.Text = adobeDtmControl.GetDtmTag("DTMTop"); // DTM JS tag
