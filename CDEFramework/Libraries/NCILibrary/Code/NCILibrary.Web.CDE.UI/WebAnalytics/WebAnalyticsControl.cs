@@ -89,8 +89,8 @@ namespace NCI.Web.CDE.UI.WebControls
                 // Draw the control HTML based on the control ID
                 switch (this.ID)
                 {
-                    case "WebAnalyticsHeadTag":
-                        webAnalyticsPageLoad.DrawHeadTags(output);
+                    case "WebAnalytics":
+                        webAnalyticsPageLoad.DrawAnalyticsDataTag(output);
                         break;
                     case "WebAnalyticsLegacy":
                         // Legacy method - do not use

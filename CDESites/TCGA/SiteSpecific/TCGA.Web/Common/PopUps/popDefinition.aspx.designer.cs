@@ -22,22 +22,31 @@ namespace TCGA.Web.Common.PopUps {
         protected global::System.Web.UI.HtmlControls.HtmlHead header;
         
         /// <summary>
-        /// litDtmTop control.
+        /// MetaSubject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litDtmTop;
+        protected global::System.Web.UI.HtmlControls.HtmlMeta MetaSubject;
         
         /// <summary>
-        /// litWaMeta control.
+        /// DTMTop control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litWaMeta;
+        protected global::System.Web.UI.WebControls.Literal DTMTop;
+        
+        /// <summary>
+        /// WebAnalytics control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal WebAnalytics;
         
         /// <summary>
         /// closeWindowText control.
@@ -85,12 +94,12 @@ namespace TCGA.Web.Common.PopUps {
         protected global::System.Web.UI.WebControls.PlaceHolder phNoResult;
         
         /// <summary>
-        /// litDtmBottom control.
+        /// DTMBottom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litDtmBottom;
+        protected global::System.Web.UI.WebControls.Literal DTMBottom;
     }
 }

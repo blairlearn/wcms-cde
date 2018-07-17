@@ -258,13 +258,15 @@ namespace TCGA.Web.Common.PopUps
         {
             string popupSuites = "ncicssi-strategicscientificinitiatives,ncienterprise";
             WebAnalyticsPageLoad webAnalyticsPageLoad = new WebAnalyticsPageLoad();
+            AdobeDTMControl adobeDtmControl = new AdobeDTMControl();
+
             webAnalyticsPageLoad.SetReportSuites(popupSuites);
-            webAnalyticsPageLoad.SetChannel("Dictionary of Cancer Terms");
             webAnalyticsPageLoad.AddEvent(WebAnalyticsOptions.Events.event11); // Dictionary Term view (event11)
 
-            litDtmTop.Text = "<script src=\"" + AdobeDTMControl.DTMUrl + "\"></script>";
-            litWaMeta.Text = webAnalyticsPageLoad.GetHeadTags();  // Load page load script 
-            litDtmBottom.Text = "<script>" + AdobeDTMControl.DTMBottom + "</script>";
+            MetaSubject.Attributes.Add("content", "Dictionary of Cancer Terms");
+            DTMTop.Text = adobeDtmControl.GetDtmTag("DTMTop"); // DTM JS tag
+            WebAnalytics.Text = webAnalyticsPageLoad.GetAnalyticsDataTag();  // Analytics meta tag
+            DTMBottom.Text = adobeDtmControl.GetDtmTag("DTMBottom"); // DTM pagebottom tag
         }
 
         #region Web Form Designer generated code

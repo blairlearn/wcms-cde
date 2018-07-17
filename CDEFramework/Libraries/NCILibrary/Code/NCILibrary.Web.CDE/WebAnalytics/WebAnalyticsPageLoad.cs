@@ -45,7 +45,6 @@ namespace NCI.Web.CDE.WebAnalytics
         private string WaFunctions = ConfigurationManager.AppSettings["NCIAnalyticsFunctions"].ToString();
         public String WaMetaName = "entity";
         public String WaMetaCont = "NCIAnalytics";
-        public String WaDataID = ConfigurationManager.AppSettings["WADataElementID"].ToString();
 
         /// <summary>When true, page-wide link tracking is enabled.</summary>
         public bool DoPageWideLinkTracking
@@ -65,6 +64,70 @@ namespace NCI.Web.CDE.WebAnalytics
             pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
         }
 
+        /// <summary>Get the analytics metadata to be used in the document head.</summary>
+        /// <returns>HTML string</returns>
+        public String GetAnalyticsDataTag()
+        {
+            StringWriter stringWriter = new StringWriter();
+
+            // Put HtmlTextWsriter in using block because it needs to call Dispose()
+            using (HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter))
+            {
+                DrawAnalyticsDataTag(htmlWriter);
+            }
+            return stringWriter.ToString();
+        }
+
+        /// <summary>Draw the analytics metadata to be used in the document head.</summary>
+        /// <param name="writer">Text writer object used to output HTML tags</param>
+        public void DrawAnalyticsDataTag(HtmlTextWriter writer)
+        {
+            Dictionary<string, string> blob = new Dictionary<string, string>();
+            String content = String.Empty;
+
+            // if events have been defined, output then to the tag
+            if (events.Count > 0)
+            {
+                string eventVal = string.Join(",", events.ToArray<string>());
+                blob.Add("events", eventVal);
+            }
+
+            // if props are set, output them to the tag
+            if (props.Count > 0)
+            {
+                foreach (int k in props.Keys.OrderBy(k => k))
+                {
+                    blob.Add(("prop" + k.ToString()), props[k]);
+                }
+            }
+
+            // if eVars are set, output them to the tag
+            if (evars.Count > 0)
+            {
+                foreach (int k in evars.Keys.OrderBy(k => k))
+                {
+                    blob.Add(("eVar" + k.ToString()), evars[k]);
+                }
+            }
+
+            // Convert our blob to a string
+            content = CreateJsonString(blob);
+
+            // Set a meta tag with name="entity" and content="NCIAnalytics".
+            // This is the closest valid <meta> name we have for our purposes. 
+            // Per https://wiki.whatwg.org/wiki/MetaExtensions:
+            // Allows for definitions of XML-style entities for substitution of references 
+            // (defined as specially-named elements (e.g., use of data element and/or data-* attribute) or script tags)
+            // via inclusion of a JavaScript library. Library also supports inclusion of additional meta element entity 
+            // definitions via iframe documents.
+            writer.AddAttribute(HtmlTextWriterAttribute.Name, WaMetaName);
+            writer.AddAttribute(HtmlTextWriterAttribute.Content, content);
+
+            // Draw the actual <meta> tag 
+            writer.RenderBeginTag(HtmlTextWriterTag.Meta);
+            writer.RenderEndTag();
+        }
+
         /// <summary>Draw noscript tag</noscript></summary>
         private StringBuilder NoScriptTag()
         {
@@ -81,8 +144,6 @@ namespace NCI.Web.CDE.WebAnalytics
         [Obsolete("This is the legacy method for drawing analytics JavaScript into the page HTML.")]
         public void BuildLegacyTags()
         {
-
-            /// Legacy constructor logic - only for use in Tag() method
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
@@ -111,6 +172,7 @@ namespace NCI.Web.CDE.WebAnalytics
         }
 
         /// <summary>Builds the Page-wide link tracking JavaScript code inserted into the Omniture page load code.</summary>
+        [Obsolete("Page-wide link tracking is currently not used.")] 
         private StringBuilder LinkTrackPageLoadCode()
         {
             //Page-wide link tracking is currently not used 
@@ -126,75 +188,6 @@ namespace NCI.Web.CDE.WebAnalytics
             linkTrackerPageLoadCode.AppendLine("// End Page-wide click tracking");
 
             return linkTrackerPageLoadCode;
-        }
-
-        /// <summary>Get the analytics metadata to be used in the document head.</summary>
-        /// <returns>HTML string</returns>
-        public String GetHeadTags()
-        {
-            StringWriter stringWriter = new StringWriter();
-
-            // Put HtmlTextWsriter in using block because it needs to call Dispose()
-            using (HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter))
-            {
-                DrawHeadTags(htmlWriter);
-            }
-            return stringWriter.ToString();
-        }
-
-        /// <summary>Draw the analytics metadata to be used in the document head.</summary>
-        /// <param name="writer">Text writer object used to output HTML tags</param>
-        public void DrawHeadTags(HtmlTextWriter writer)
-        {
-            string concatEvents = string.Empty;
-            string propValue = string.Empty;
-            string eVarValue = string.Empty;
-
-            // Set a meta tag with name="entity" and content="NCIAnalytics".
-            // This is the closest valid <meta> name we have for our purposes. 
-            // Per https://wiki.whatwg.org/wiki/MetaExtensions:
-            // Allows for definitions of XML-style entities for substitution of references 
-            // (defined as specially-named elements (e.g., use of data element and/or data-* attribute) or script tags)
-            // via inclusion of a JavaScript library. Library also supports inclusion of additional meta element entity 
-            // definitions via iframe documents.
-            writer.AddAttribute(HtmlTextWriterAttribute.Name, WaMetaName);
-            writer.AddAttribute(HtmlTextWriterAttribute.Content, WaMetaCont);
-
-            // Draw meta tag ID, suites, channel attributes
-            writer.AddAttribute(HtmlTextWriterAttribute.Id, WaDataID);
-            writer.AddAttribute("data-suites", suites);
-            writer.AddAttribute("data-channel", channel);
-
-            // if events have been defined, output then to the tag
-            if (events.Count > 0)
-            {
-                concatEvents = string.Join(",", events.ToArray<string>());
-                writer.AddAttribute("data-events", concatEvents);
-            }
-
-            // if props are set, output them to the tag
-            if (props.Count > 0)
-            {
-                foreach (int k in props.Keys.OrderBy(k => k))
-                {
-                    propValue = cleanQuotes(props[k]);
-                    writer.AddAttribute(("data-prop" + k.ToString()), propValue);
-                }
-            }
-
-            // if eVars are set, output them to the tag
-            if (evars.Count > 0)
-            {
-                foreach (int k in evars.Keys.OrderBy(k => k))
-                {
-                    eVarValue = cleanQuotes(evars[k]);
-                    writer.AddAttribute("data-evar" + k.ToString(), eVarValue);
-                }
-            }
-
-            // Draw the <meta> tag 
-            writer.RenderBeginTag(HtmlTextWriterTag.Meta);
-            writer.RenderEndTag();
         }
 
         /// <summary>When DoWebAnalytics is true, this method renders the Omniture page load JavaScript code.</summary>
@@ -497,11 +490,21 @@ namespace NCI.Web.CDE.WebAnalytics
 
         /// <summary>Trim quotes and spaces from string and replace with double quotes</summary>
         /// <param name="content">Meta content attribute</param>
-        /// <returns>Cleaned string</returns>
-        public String cleanQuotes(string value)
+        /// <returns>Clean string enclosed in double quotes</returns>
+        /// TODO: fix double quote encoding
+        private String CleanQuotedString(string value)
         {
             char[] charsToTrim = { '\'', ' ', '"' };
-            return value.Trim(charsToTrim);
+            return "\"" + value.Trim(charsToTrim) + "\"";
+        }
+
+        /// <summary>Given a collection of key/value pairs, build a semicolon-delimited string</summary>
+        /// <param name="blob"></param>
+        /// <returns>JSON-formatted string</returns>
+        private String CreateJsonString(Dictionary<String, String> blob)
+        {
+            string rtn = string.Join(",", blob.Select(x => CleanQuotedString(x.Key) + ":" + CleanQuotedString(x.Value)));
+            return "{" + rtn + "}";
         }
 
         /// <summary>Clears all previously set props, eVars, events, channel, pageName, and pageType.</summary>
