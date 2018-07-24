@@ -207,7 +207,6 @@ namespace NCI.Web.CDE.UI
                         hl.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + url.ToString();
                         hl.Attributes.Add("hreflang", translationLang);
                         hl.Attributes.Add("rel", "alternate");
-                        hl.Attributes.Add("data-react-helmet", "true");
 
                         linkList.Add(hl);
                     }
@@ -223,7 +222,6 @@ namespace NCI.Web.CDE.UI
                             hl.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + CanonicalUrl;
                             hl.Attributes.Add("hreflang", pageLang);
                             hl.Attributes.Add("rel", "alternate");
-                            hl.Attributes.Add("data-react-helmet", "true");
 
                             linkList.Add(hl);
                         }
@@ -240,7 +238,6 @@ namespace NCI.Web.CDE.UI
                     HtmlLink hl = new HtmlLink();
                     hl.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + nextUrl;
                     hl.Attributes.Add("rel", "next");
-                    hl.Attributes.Add("data-react-helmet", "true");
 
                     linkList.Add(hl);
                 }
@@ -254,7 +251,6 @@ namespace NCI.Web.CDE.UI
                     HtmlLink hl = new HtmlLink();
                     hl.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + prevUrl;
                     hl.Attributes.Add("rel", "prev");
-                    hl.Attributes.Add("data-react-helmet", "true");
 
                     linkList.Add(hl);
                 }
@@ -302,7 +298,6 @@ namespace NCI.Web.CDE.UI
                 else
                     hm.Name = "robots";
             }
-            hm.Attributes.Add("data-react-helmet", "true");
 
             htmlHead.Controls.Add(hm);
         }
@@ -337,7 +332,6 @@ namespace NCI.Web.CDE.UI
             }
 
             hm.Content = content;
-            hm.Attributes.Add("data-react-helmet", "true");
 
             htmlHead.Controls.Add(hm);
         }
@@ -630,7 +624,6 @@ namespace NCI.Web.CDE.UI
                 {
                     HtmlLink hml = new HtmlLink();
                     hml.Attributes.Add("rel", "canonical");
-                    hml.Attributes.Add("data-react-helmet", "true");
                     hml.Href = ContentDeliveryEngineConfig.CanonicalHostName.CanonicalUrlHostName.CanonicalHostName + CanonicalUrl;
                     CurrentPageHead.Controls.Add(hml);
                 }
