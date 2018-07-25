@@ -52,11 +52,18 @@ namespace NCI.Web.CDE.WebAnalytics
             set { pageWideLinkTracking = value; }
         }
 
-        /// <summary>the constructor builds base Omniture page load code.   
-        /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
-        /// Note: as of the Feline release, Prod web analytics javascript is hosted on static.cancer.gov
+        /// <summary>Default constructor.</summary>
         public WebAnalyticsPageLoad()
         {
+        }
+
+        /// <summary>
+        /// This were the contents of the original constructor. 
+        /// It builds the base Omniture (Adobe) page load code.
+        /// Also sets the default custom variables (props), custom conversion variables (eVars), and events.
+        /// </summary>
+        [Obsolete("This is the legacy method for drawing analytics JavaScript into the page HTML.")]
+        public void DoLegacyPageLoad() {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
@@ -123,6 +130,9 @@ namespace NCI.Web.CDE.WebAnalytics
         {
             StringBuilder output = new StringBuilder();
             string reportSuites = "";
+
+            // Fire off old constructor actions
+            DoLegacyPageLoad();
 
             if (WebAnalyticsOptions.IsEnabled)
             {
