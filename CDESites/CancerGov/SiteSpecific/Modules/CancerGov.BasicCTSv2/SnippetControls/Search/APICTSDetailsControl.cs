@@ -272,19 +272,18 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             return url.ToString();
         }
 
-        #endregion
-
-        #region Analytics methods
-
         /// <summary>
         /// Get the search page type for analytics.
         /// </summary>
         /// <returns></returns>
-        protected override String GetPageTypeForAnalytics()
+        public override String GetPageType()
         {
-            string type = GetSearchType(this.SearchParams);
-            return "Clinical Trials: " + type;
+            return GetSearchType(this.SearchParams);
         }
+
+        #endregion
+
+        #region Analytics methods
 
         /// <summary>
         /// Set additional, page-specific analytics values.
@@ -297,17 +296,6 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             {
                 wbField.Value = _nctid;
             });
-        }
-
-        /// <summary>
-        /// Gets additional, Detail Page-specific analytics values.
-        /// </summary>
-        /// <param name="dict">Dictionary object</param>
-        /// <returns>Dictionary (key/value string pairs)</returns>
-        protected override Dictionary<String, String> GetAdditionalAnalytics(Dictionary<String, String> dict)
-        {
-            dict.Add(WebAnalyticsOptions.Props.prop16.ToString(), _nctid);
-            return dict;
         }
 
         #endregion
