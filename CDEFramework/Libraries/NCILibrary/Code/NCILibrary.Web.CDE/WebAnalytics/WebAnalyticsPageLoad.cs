@@ -23,6 +23,7 @@ namespace NCI.Web.CDE.WebAnalytics
         private const string WEB_ANALYTICS_COMMENT_START = "<!-- ***** NCI Web Analytics - DO NOT ALTER ***** -->";
         private const string WEB_ANALYTICS_COMMENT_END = "<!-- ***** End NCI Web Analytics ***** -->";
         private const bool TEST_MODE = false;  // When true, Omniture image request is not sent 
+        private const string WA_DATA_ELEMENT = "wa-data-element";
 
         private StringBuilder pageLoadPreTag = new StringBuilder();
         private StringBuilder pageLoadPostTag = new StringBuilder();
@@ -39,12 +40,10 @@ namespace NCI.Web.CDE.WebAnalytics
 
         // Get paths for WCMS analytics code
         // Dev/QA/Stage tiers are hosted on static-dev.cancer.gov/wcms
-        // Prod is hosted on static.cancer.gov/wcms
+		// Prod is hosted on static.cancer.gov/wcms
         private string WaPre = ConfigurationManager.AppSettings["WAWCMSPre"].ToString();
         private string WaSCode = ConfigurationManager.AppSettings["SCode"].ToString();
         private string WaFunctions = ConfigurationManager.AppSettings["NCIAnalyticsFunctions"].ToString();
-        public String WaMetaName = "entity";
-        public String WaMetaCont = "NCIAnalytics";
 
         /// <summary>When true, page-wide link tracking is enabled.</summary>
         public bool DoPageWideLinkTracking
@@ -55,94 +54,8 @@ namespace NCI.Web.CDE.WebAnalytics
 
         /// <summary>the constructor builds base Omniture page load code.   
         /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
-        /// <summary>the constructor builds base Omniture page load code.   
-        /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
+        /// Note: as of the Feline release, Prod web analytics javascript is hosted on static.cancer.gov
         public WebAnalyticsPageLoad()
-        {
-            // Default props, eVars, and/or events
-            AddEvent(WebAnalyticsOptions.Events.event1); // page view event
-            pageLoadPostTag.AppendLine(WEB_ANALYTICS_COMMENT_END);
-        }
-
-        /// <summary>Get the analytics metadata to be used in the document head.</summary>
-        /// <returns>HTML string</returns>
-        public String GetAnalyticsDataTag()
-        {
-            StringWriter stringWriter = new StringWriter();
-
-            // Put HtmlTextWsriter in using block because it needs to call Dispose()
-            using (HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter))
-            {
-                DrawAnalyticsDataTag(htmlWriter);
-            }
-            return stringWriter.ToString();
-        }
-
-        /// <summary>Draw the analytics metadata to be used in the document head.</summary>
-        /// <param name="writer">Text writer object used to output HTML tags</param>
-        public void DrawAnalyticsDataTag(HtmlTextWriter writer)
-        {
-            Dictionary<string, string> blob = new Dictionary<string, string>();
-            String content = String.Empty;
-
-            // if events have been defined, output then to the tag
-            if (events.Count > 0)
-            {
-                string eventVal = string.Join(",", events.ToArray<string>());
-                blob.Add("events", eventVal);
-            }
-
-            // if props are set, output them to the tag
-            if (props.Count > 0)
-            {
-                foreach (int k in props.Keys.OrderBy(k => k))
-                {
-                    blob.Add(("prop" + k.ToString()), props[k]);
-                }
-            }
-
-            // if eVars are set, output them to the tag
-            if (evars.Count > 0)
-            {
-                foreach (int k in evars.Keys.OrderBy(k => k))
-                {
-                    blob.Add(("eVar" + k.ToString()), evars[k]);
-                }
-            }
-
-            // Convert our blob to a string
-            content = CreateJsonString(blob);
-
-            // Set a meta tag with name="entity" and content="NCIAnalytics".
-            // This is the closest valid <meta> name we have for our purposes. 
-            // Per https://wiki.whatwg.org/wiki/MetaExtensions:
-            // Allows for definitions of XML-style entities for substitution of references 
-            // (defined as specially-named elements (e.g., use of data element and/or data-* attribute) or script tags)
-            // via inclusion of a JavaScript library. Library also supports inclusion of additional meta element entity 
-            // definitions via iframe documents.
-            writer.AddAttribute(HtmlTextWriterAttribute.Name, WaMetaName);
-            writer.AddAttribute(HtmlTextWriterAttribute.Content, content);
-
-            // Draw the actual <meta> tag 
-            writer.RenderBeginTag(HtmlTextWriterTag.Meta);
-            writer.RenderEndTag();
-        }
-
-        /// <summary>Draw noscript tag</noscript></summary>
-        private StringBuilder NoScriptTag()
-        {
-            StringBuilder noScriptTag = new StringBuilder();
-            noScriptTag.AppendLine("<noscript>");
-            noScriptTag.AppendLine("<a href='http://www.omniture.com' title='Web Analytics'>");
-            noScriptTag.AppendLine("<img src='http://metrics.cancer.gov/b/ss/nciglobal/1/H.20.3–NS/0' height='1' width='1' border='0' alt='' />");
-            noScriptTag.AppendLine("</a>");
-            noScriptTag.AppendLine("</noscript>");
-            return noScriptTag;
-        }
-
-        /// <summary>Legacy constructor logic - only for use in Tag() method. 
-        [Obsolete("This is the legacy method for drawing analytics JavaScript into the page HTML.")]
-        public void BuildLegacyTags()
         {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
@@ -190,15 +103,26 @@ namespace NCI.Web.CDE.WebAnalytics
             return linkTrackerPageLoadCode;
         }
 
+        /// <summary>Draw noscript tag</noscript></summary>
+        private StringBuilder NoScriptTag()
+        {
+            StringBuilder noScriptTag = new StringBuilder();
+
+            noScriptTag.AppendLine("<noscript>");
+            noScriptTag.AppendLine("<a href='http://www.omniture.com' title='Web Analytics'>");
+            noScriptTag.AppendLine("<img src='http://metrics.cancer.gov/b/ss/nciglobal/1/H.20.3–NS/0' height='1' width='1' border='0' alt='' />");
+            noScriptTag.AppendLine("</a>");
+            noScriptTag.AppendLine("</noscript>");
+
+            return noScriptTag;
+        }
+
         /// <summary>When DoWebAnalytics is true, this method renders the Omniture page load JavaScript code.</summary>
         [Obsolete("This is the legacy method for drawing analytics JavaScript into the page HTML.")]
         public string Tag()
         {
             StringBuilder output = new StringBuilder();
             string reportSuites = "";
-
-            // Do old constructor actions
-            BuildLegacyTags();
 
             if (WebAnalyticsOptions.IsEnabled)
             {
@@ -229,7 +153,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 // 3. NCIAnalyticsFunctions.js source URL (see line 47)
                 // 4. s_code source URL
                 // 5. Channel, Prop, eVar, and Event info
-                // Note: as of 06/2018, the web analytics javascript is hosted on DTM
+                // Note: as of 08/2018, the web analytics javascript is hosted on DTM
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
                 output.AppendLine("<!--");
@@ -311,6 +235,63 @@ namespace NCI.Web.CDE.WebAnalytics
                 output.AppendLine(pageLoadPostTag.ToString());
             }
             return output.ToString();
+        }
+
+        /// <summary>Get the analytics metadata to be used in the document head.</summary>
+        /// <returns>HTML string</returns>
+        public String GetAnalyticsDataTag()
+        {
+            StringWriter stringWriter = new StringWriter();
+
+            // Put HtmlTextWsriter in using block because it needs to call Dispose()
+            using (HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter))
+            {
+                DrawAnalyticsDataTag(htmlWriter);
+            }
+            return stringWriter.ToString();
+        }
+
+        /// <summary>
+        /// Draw the analytics data element that will be used to populate analytics values.
+        /// This is a div element that will be in the DOM but not visibile. 
+        /// </summary>
+        /// <param name="writer">Text writer object used to output HTML tags</param>
+        public void DrawAnalyticsDataTag(HtmlTextWriter writer)
+        {
+            // Add class and attributes to the tag
+            string[] classes = {WA_DATA_ELEMENT, "hide"};
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, string.Join(" ", classes));
+
+            // if events have been defined, output then to the tag
+            if (events.Count > 0)
+            {
+                string eventVal = string.Join(",", events.ToArray<string>());
+                writer.AddAttribute("data-events", eventVal);
+            }
+
+            // if props are set, output them to the tag
+            if (props.Count > 0)
+            {
+                foreach (int k in props.Keys.OrderBy(k => k))
+                {
+                    string propVal = CleanQuotedString(props[k]);
+                    writer.AddAttribute(("data-prop" + k.ToString()), propVal);
+                }
+            }
+
+            // if eVars are set, output them to the tag
+            if (evars.Count > 0)
+            {
+                foreach (int k in evars.Keys.OrderBy(k => k))
+                {
+                    string eVarVal = CleanQuotedString(evars[k]);
+                    writer.AddAttribute("data-evar" + k.ToString(), eVarVal);
+                }
+            }
+
+            // Draw the actual <div> tag 
+            writer.RenderBeginTag(HtmlTextWriterTag.Div);
+            writer.RenderEndTag();
         }
 
         /// <summary>Adds an Omniture custom variable (prop) to the Omniture page load JavaScript code 
@@ -491,20 +472,10 @@ namespace NCI.Web.CDE.WebAnalytics
         /// <summary>Trim quotes and spaces from string and replace with double quotes</summary>
         /// <param name="content">Meta content attribute</param>
         /// <returns>Clean string enclosed in double quotes</returns>
-        /// TODO: fix double quote encoding
         private String CleanQuotedString(string value)
         {
             char[] charsToTrim = { '\'', ' ', '"' };
-            return "\"" + value.Trim(charsToTrim) + "\"";
-        }
-
-        /// <summary>Given a collection of key/value pairs, build a semicolon-delimited string</summary>
-        /// <param name="blob"></param>
-        /// <returns>JSON-formatted string</returns>
-        private String CreateJsonString(Dictionary<String, String> blob)
-        {
-            string rtn = string.Join(",", blob.Select(x => CleanQuotedString(x.Key) + ":" + CleanQuotedString(x.Value)));
-            return "{" + rtn + "}";
+            return value.Trim(charsToTrim);
         }
 
         /// <summary>Clears all previously set props, eVars, events, channel, pageName, and pageType.</summary>
