@@ -27,5 +27,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls.Configs
         /// The location of the c-code to friendly name mapping file.
         /// </summary>
         public string FriendlyNameURLMapFilepath { get; set; }
+
+        /// <summary>
+        /// The location of the c-code to friendly name override mapping file.
+        /// </summary>
+        public string FriendlyNameURLOverrideMapFilepath { get; set; }
     }
 }

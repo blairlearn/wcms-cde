@@ -1,0 +1,5 @@
+﻿C4872|breast-cancer
+C7768,C139538,C139569|stage-ii-breast-cancer
+C118827,C4815|thyroid-gland-cancer
+C4912|bladder-cancer
+C116317|kidney-small-cell-carcinoma
