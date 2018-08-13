@@ -160,6 +160,8 @@ namespace NCI.Services.Dictionary
                 case SearchType.Contains:
                     searchText = "%" + searchText + "%";
                     break;
+                case SearchType.Exact:
+                    break;
                 default:
                     {
                         String message = String.Format("Unsupport search type '{0}'.", searchType);
