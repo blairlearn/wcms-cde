@@ -67,6 +67,9 @@
   <ItemGroup>
     <Compile Include="APIClientHelper.cs" />
     <Compile Include="CTSConstants.cs" />
+    <Compile Include="Lookups\DynamicTrialListingFriendlyNameMapper.cs" />
+    <Compile Include="Lookups\DynamicTrialListingMapper.cs" />
+    <Compile Include="Lookups\MappingItem.cs" />
     <Compile Include="ManagerLayer\BasicCTSManager.cs" />
     <Compile Include="ClinicalTrialExtensions.cs" />
     <Compile Include="Configuration\BasicClinicalTrialSearchAPISection.cs" />
@@ -74,7 +77,7 @@
     <Compile Include="Configuration\TermMappingFileElementCollection.cs" />
     <Compile Include="ManagerLayer\CTSPrintException.cs" />
     <Compile Include="ManagerLayer\CTSPrintManager.cs" />
-    <Compile Include="Lookups\DynamicTrialListingFriendlyNameMapping.cs" />
+    <Compile Include="Lookups\DynamicTrialListingFriendlyNameMappingService.cs" />
     <Compile Include="Lookups\ITerminologyLookupService.cs" />
     <Compile Include="Lookups\IZipCodeGeoLookupService.cs" />
     <Compile Include="Lookups\LegacyPDQIDRedirectionMap.cs" />
@@ -90,7 +93,7 @@
     <Compile Include="SearchParams\CTSSearchParamFactory.cs" />
     <Compile Include="SearchParams\CTSSearchParams.cs" />
     <Compile Include="DataManagers\CTSPrintResultsDataManager.cs" />
-    <Compile Include="Lookups\DynamicTrialListingMapping.cs" />
+    <Compile Include="Lookups\DynamicTrialListingMappingService.cs" />
     <Compile Include="HttpHandlers\CTSCachedPrintRequestHandler.cs" />
     <Compile Include="HttpModules\NCTIDRedirectModule.cs" />
     <Compile Include="Lookups\GeoLocation.cs" />

@@ -1,0 +1,2 @@
+﻿C118827,C4815|thyroid-cancer
+C116317|kidney-small-cell-cancer

@@ -1,0 +1,7 @@
+﻿C4872|Breast Cancer
+C7768,C139538,C139569|Stage II Breast Cancer
+C115270,C8578,C9092,C3017|Ependymoma
+C118827,C4815|Thyroid Gland Cancer
+C4912|Bladder Cancer
+C116317|Kidney Small Cell Carcinoma
+C92206|Short Limb Dwarfism-Saddle Nose-Spinal Alterations-Metaphyseal Striation Syndrome

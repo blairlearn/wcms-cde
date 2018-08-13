@@ -1,0 +1,2 @@
+﻿C118827,C4815|Thyroid Cancer
+C116317|Kidney Small Cell Cancer

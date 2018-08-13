@@ -95,6 +95,10 @@
     <Compile Include="BasicCTSManager.SearchTests.cs" />
     <Compile Include="ConfigTest\ConfigMappingLoader.Test.cs" />
     <Compile Include="ConfigTest\MappingsComparer.cs" />
+    <Compile Include="DLPMappingTest\DLPEVSMappingLoader.Test.cs" />
+    <Compile Include="DLPMappingTest\DLPFriendlyNameMappingLoader.Test.cs" />
+    <Compile Include="DynamicTrialListingPageControl.GetFriendlyNameForURLTests.cs" />
+    <Compile Include="DynamicTrialListingPageDiseaseControl.GetOverrideTests.cs" />
     <Compile Include="SearchParams\AtNIHLocationSearchParams.Test.cs" />
     <Compile Include="SearchParams\CountryCityStateLocationSearchParams.Test.cs" />
     <Compile Include="SearchParams\CTSAnalytics.Test.cs" />
@@ -123,6 +127,21 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <Content Include="MappingFiles\DLPFriendlyNameMapping.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\DLPEVSOverrideMapping.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\DLPEVSRollupMapping.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\DLPFriendlyNameOverrideMapping.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MappingFiles\DLPTokensMapping.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MappingFiles\EVSWithMultiple.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
