@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="Application\ErrorPageDisplayer.cs" />
     <Compile Include="Application\GlobalApplication.cs" />
+    <Compile Include="Application\PermanentRedirector.cs" />
     <Compile Include="CapabilitiesDetection\CapabilitiesDetector.cs" />
     <Compile Include="CapabilitiesDetection\DisplayDeviceDetector.cs" />
     <Compile Include="Conditional\ConditionalConfig.cs" />

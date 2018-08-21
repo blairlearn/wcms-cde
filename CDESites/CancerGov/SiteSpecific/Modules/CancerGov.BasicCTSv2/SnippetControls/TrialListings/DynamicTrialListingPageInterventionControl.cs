@@ -322,7 +322,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     redirectUrl += "/" + urlPart;
                 }
 
-                Response.RedirectPermanent(redirectUrl, true);
+                // Add redirect query parameter for analytics
+                redirectUrl += "?redirect=true";
+
+                NCI.Web.CDE.Application.PermanentRedirector.DoPermanentRedirect(Response, redirectUrl, "Dynamic Trial Listing Friendly Name Redirect");
             }
         }
 

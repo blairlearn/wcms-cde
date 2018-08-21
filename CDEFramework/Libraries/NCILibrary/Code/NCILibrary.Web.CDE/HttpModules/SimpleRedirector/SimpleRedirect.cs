@@ -57,11 +57,15 @@ namespace NCI.Web.CDE
             String query = context.Server.UrlDecode(context.Request.Url.Query);
             if (!String.IsNullOrEmpty(query))
             {
-                redirectUrl += query;
+                // Add query parameters and redirect flag for analytics
+                redirectUrl += query + "&redirect=true";
+            }
+            else
+            {
+                redirectUrl += "?redirect=true";
             }
 
-            HttpContext.Current.Response.AddHeader("X-Redirect-Reason", "Redirect Map");
-            context.Response.RedirectPermanent(redirectUrl, true);
+            NCI.Web.CDE.Application.PermanentRedirector.DoPermanentRedirect(context.Response, redirectUrl, "Redirect Map");
         }
 
         /// <summary>

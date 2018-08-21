@@ -76,9 +76,8 @@ namespace NCI.Web.CDE
                     PromoUrl promoUrl = null;
                     if (promoUrlMapping.PromoUrls.ContainsKey(url.ToLower()))
                     {
-                        HttpContext.Current.Response.AddHeader("X-Redirect-Reason", "Promo Url");
                         promoUrl = promoUrlMapping.PromoUrls[url.ToLower()];
-                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query);
+                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? "?redirect=true" : context.Request.Url.Query + "&redirect=true");
 
                         // If the original request is post then save target promo url
                         // for use in the page instructions assembly loader.
@@ -87,13 +86,12 @@ namespace NCI.Web.CDE
                             context.RewritePath(mappedToUrl);
                         }
                         else
-                            context.Response.RedirectPermanent(mappedToUrl, true);
+                            NCI.Web.CDE.Application.PermanentRedirector.DoPermanentRedirect(context.Response, mappedToUrl, "Promo Url");
                     }
                     else if (!url.EndsWith("/") && promoUrlMapping.PromoUrls.ContainsKey(url.ToLower() + "/"))
                     {
-                        HttpContext.Current.Response.AddHeader("X-Redirect-Reason", "Promo Url");
                         promoUrl = promoUrlMapping.PromoUrls[url.ToLower() + "/"];
-                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query);
+                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? "?redirect=true" : context.Request.Url.Query + "&redirect=true");
 
                         // If the original request is post then save target promo url
                         // for use in the page instructions assembly loader.
@@ -102,7 +100,7 @@ namespace NCI.Web.CDE
                             context.RewritePath(mappedToUrl);
                         }
                         else
-                            context.Response.RedirectPermanent(mappedToUrl, true);
+                            NCI.Web.CDE.Application.PermanentRedirector.DoPermanentRedirect(context.Response, mappedToUrl, "Promo Url");
                     }
                     else
                     {
@@ -114,15 +112,14 @@ namespace NCI.Web.CDE
                         {
                             if (promoUrlMapping.PromoUrls.ContainsKey(truncUrl.ToLower()))
                             {
-                                HttpContext.Current.Response.AddHeader("X-Redirect-Reason", "Promo Url multi-page");
                                 promoUrl = promoUrlMapping.PromoUrls[truncUrl.ToLower()];
-                                string mappedToUrl = promoUrl.MappedTo + appendUrl + (string.IsNullOrEmpty(context.Request.Url.Query) ? String.Empty : context.Request.Url.Query);
+                                string mappedToUrl = promoUrl.MappedTo + appendUrl + (string.IsNullOrEmpty(context.Request.Url.Query) ? "?redirect=true" : context.Request.Url.Query + "&redirect=true");
                                 if (context.Request.RequestType == "POST")
                                 {
                                     context.RewritePath(mappedToUrl);
                                 }
                                 else
-                                    context.Response.RedirectPermanent(mappedToUrl, true);                                    
+                                    NCI.Web.CDE.Application.PermanentRedirector.DoPermanentRedirect(context.Response, mappedToUrl, "Promo Url multi-page");                                    
                             }
 
                         }
