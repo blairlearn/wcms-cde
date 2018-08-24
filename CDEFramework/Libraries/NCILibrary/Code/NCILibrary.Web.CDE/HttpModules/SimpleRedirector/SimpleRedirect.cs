@@ -57,8 +57,8 @@ namespace NCI.Web.CDE
             String query = context.Server.UrlDecode(context.Request.Url.Query);
             if (!String.IsNullOrEmpty(query))
             {
-                // Add query parameters and redirect flag for analytics
-                redirectUrl += query + "&redirect=true";
+                // Add query parameters and redirect parameter for analytics (if not previously redirected)
+                redirectUrl += query + (!query.Contains("redirect=true") ? "&redirect=true" : String.Empty);
             }
             else
             {

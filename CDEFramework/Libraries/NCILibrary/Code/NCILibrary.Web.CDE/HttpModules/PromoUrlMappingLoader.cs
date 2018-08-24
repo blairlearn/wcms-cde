@@ -77,11 +77,18 @@ namespace NCI.Web.CDE
                     if (promoUrlMapping.PromoUrls.ContainsKey(url.ToLower()))
                     {
                         promoUrl = promoUrlMapping.PromoUrls[url.ToLower()];
-                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? "?redirect=true" : context.Request.Url.Query + "&redirect=true");
+                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? "?redirect=true" : context.Request.Url.Query);
+
+                        // Add redirect parameter for analytics (if not previously redirected)
+                        if(!string.IsNullOrEmpty(context.Request.Url.Query))
+                        {
+                            mappedToUrl += (!context.Request.Url.Query.Contains("redirect=true") ? "&redirect=true" : String.Empty);
+                        }
+
 
                         // If the original request is post then save target promo url
                         // for use in the page instructions assembly loader.
-                        if (context.Request.RequestType == "POST")
+                            if (context.Request.RequestType == "POST")
                         {
                             context.RewritePath(mappedToUrl);
                         }
@@ -91,7 +98,13 @@ namespace NCI.Web.CDE
                     else if (!url.EndsWith("/") && promoUrlMapping.PromoUrls.ContainsKey(url.ToLower() + "/"))
                     {
                         promoUrl = promoUrlMapping.PromoUrls[url.ToLower() + "/"];
-                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? "?redirect=true" : context.Request.Url.Query + "&redirect=true");
+                        string mappedToUrl = promoUrl.MappedTo + (string.IsNullOrEmpty(context.Request.Url.Query) ? "?redirect=true" : context.Request.Url.Query);
+
+                        // Add redirect parameter for analytics (if not previously redirected)
+                        if (!string.IsNullOrEmpty(context.Request.Url.Query))
+                        {
+                            mappedToUrl += (!context.Request.Url.Query.Contains("redirect=true") ? "&redirect=true" : String.Empty);
+                        }
 
                         // If the original request is post then save target promo url
                         // for use in the page instructions assembly loader.
@@ -113,7 +126,14 @@ namespace NCI.Web.CDE
                             if (promoUrlMapping.PromoUrls.ContainsKey(truncUrl.ToLower()))
                             {
                                 promoUrl = promoUrlMapping.PromoUrls[truncUrl.ToLower()];
-                                string mappedToUrl = promoUrl.MappedTo + appendUrl + (string.IsNullOrEmpty(context.Request.Url.Query) ? "?redirect=true" : context.Request.Url.Query + "&redirect=true");
+                                string mappedToUrl = promoUrl.MappedTo + appendUrl + (string.IsNullOrEmpty(context.Request.Url.Query) ? "?redirect=true" : context.Request.Url.Query);
+
+                                // Add redirect parameter for analytics (if not previously redirected)
+                                if (!string.IsNullOrEmpty(context.Request.Url.Query))
+                                {
+                                    mappedToUrl += (!context.Request.Url.Query.Contains("redirect=true") ? "&redirect=true" : String.Empty);
+                                }
+
                                 if (context.Request.RequestType == "POST")
                                 {
                                     context.RewritePath(mappedToUrl);
