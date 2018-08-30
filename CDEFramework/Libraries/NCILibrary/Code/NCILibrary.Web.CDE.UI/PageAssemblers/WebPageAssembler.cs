@@ -112,9 +112,10 @@ namespace NCI.Web.CDE.UI
         /// </summary>
         /// <param name="metaDataType"></param>
         /// <returns></returns>
-        private string getMetaData(HtmlMetaDataType metaDataType)
+        private String getMetaData(HtmlMetaDataType metaDataType)
         {
             IPageAssemblyInstruction asmInstr = PageAssemblyInstruction;
+            string path = asmInstr.SectionPath;
             string metaData = String.Empty;
             if (asmInstr != null)
             {
@@ -123,18 +124,27 @@ namespace NCI.Web.CDE.UI
                     case HtmlMetaDataType.Description:
                         metaData = asmInstr.GetField(PageAssemblyInstructionFields.HTML_MetaDescription);
                         break;
-
                     case HtmlMetaDataType.KeyWords:
                         metaData = asmInstr.GetField(PageAssemblyInstructionFields.HTML_MetaKeywords);
                         break;
-
                     case HtmlMetaDataType.Robots:
                         metaData = asmInstr.GetField(PageAssemblyInstructionFields.HTML_MetaRobots);
                         break;
-
                     case HtmlMetaDataType.ContentLanguage:
                         metaData = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
                         break;
+                    case HtmlMetaDataType.Coverage: // Suite(s) 
+                        metaData = SectionDetailFactory.GetSectionDetail(path).GetWASuites();
+                        break;
+                    case HtmlMetaDataType.Subject: // Channel(s)
+                        metaData = SectionDetailFactory.GetSectionDetail(path).GetWAChannels();
+                        break;
+                    case HtmlMetaDataType.IsPartOf: // Content group(s)
+                        metaData = SectionDetailFactory.GetSectionDetail(path).GetWAContentGroups();
+                        break;
+                    case HtmlMetaDataType.DatePublished:
+                        metaData = String.Format("{0:MM/dd/yyyy}", ((BasePageAssemblyInstruction)PageAssemblyInstruction).ContentDates.FirstPublished);
+                        break; 
                     case HtmlMetaDataType.EnglishLinkingPolicy:
                         metaData = ContentDeliveryEngineConfig.PathInformation.EnglishLinkingPolicyPath.Path;
                         break;
@@ -268,6 +278,14 @@ namespace NCI.Web.CDE.UI
                 hm.Name = "content-language";
             else if (htmlMetaDataType == HtmlMetaDataType.ContentType)
                 hm.Name = "dcterms.type";
+            else if (htmlMetaDataType == HtmlMetaDataType.Coverage)
+                hm.Name = "dcterms.coverage";
+            else if (htmlMetaDataType == HtmlMetaDataType.Subject)
+                hm.Name = "dcterms.subject";
+            else if (htmlMetaDataType == HtmlMetaDataType.IsPartOf)
+                hm.Name = "dcterms.isPartOf";
+            else if (htmlMetaDataType == HtmlMetaDataType.DatePublished)
+                hm.Name = "dcterms.issued";
             else if (htmlMetaDataType == HtmlMetaDataType.EnglishLinkingPolicy)
                 hm.Name = "english-linking-policy";
             else if (htmlMetaDataType == HtmlMetaDataType.EspanolLinkingPolicy)
@@ -563,6 +581,10 @@ namespace NCI.Web.CDE.UI
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.KeyWords);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Description);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.ContentLanguage);
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Coverage);
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Subject);
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.IsPartOf);
+                addMetaDataItem(CurrentPageHead, HtmlMetaDataType.DatePublished);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EnglishLinkingPolicy);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.EspanolLinkingPolicy);
                 addMetaDataItem(CurrentPageHead, HtmlMetaDataType.Robots);
@@ -709,7 +731,7 @@ namespace NCI.Web.CDE.UI
                     {
                         String url = appendFileFingerprint(jsLastInfo.JavascriptPath);
                         // Add script to end of body control, before WebAnalyticsControl
-                        NCI.Web.UI.WebControls.JSManager.AddFooterScript(CurrentPageBody, AnalyticsControl, url, jsLastInfo.Async, jsLastInfo.Defer);
+                        NCI.Web.UI.WebControls.JSManager.AddFooterScript(CurrentPageBody, null, url, jsLastInfo.Async, jsLastInfo.Defer);
                     }
 
                     //Load Stylesheets marked as "End"

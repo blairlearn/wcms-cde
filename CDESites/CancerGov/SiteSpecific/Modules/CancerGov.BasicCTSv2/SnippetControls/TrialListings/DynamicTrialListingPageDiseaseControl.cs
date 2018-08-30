@@ -394,7 +394,10 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
                     redirectUrl += "/" + urlPart;
                 }
 
-                Response.RedirectPermanent(redirectUrl, true);
+                // Add redirect query parameter for analytics
+                redirectUrl += "?redirect=true";
+
+                NCI.Web.CDE.Application.PermanentRedirector.DoPermanentRedirect(Response, redirectUrl, "Dynamic Trial Listing Friendly Name Redirect");
             }
         }
 
@@ -409,6 +412,22 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
             });
         }
 
+
+        /// <summary>
+        /// Format string for analytics params: Intervention|Disease IDs|Trial Type|Intervention IDs|Total Results
+        /// </summary>
+        /// <returns></returns>
+        public override String GetDynamicParams()
+        {
+            string[] analyticsParams = new string[5];
+            analyticsParams[0] = "Disease";
+            analyticsParams[1] = (!string.IsNullOrWhiteSpace(this.DiseaseIDs)) ? this.DiseaseIDs : "none";
+            analyticsParams[2] = (!string.IsNullOrWhiteSpace(this.TrialType)) ? this.TrialType : "none";
+            analyticsParams[3] = (!string.IsNullOrWhiteSpace(this.InterventionIDs)) ? this.InterventionIDs : "none";
+            analyticsParams[4] = this.TotalSearchResults.ToString();
+            return string.Join("|", analyticsParams);
+        }
+
         /// <summary>
         /// Set default pageLoad analytics for this page
         /// </summary>
@@ -416,15 +435,7 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         {
             string val = "clinicaltrials_custom";
             string desc = "Clinical Trials: Custom";
-
-            // Format string for analytics params: Intervention|Disease IDs|Trial Type|Intervention IDs|Total Results
-            string[] analyticsParams = new string[5];
-            analyticsParams[0] = "Disease";
-            analyticsParams[1] = (!string.IsNullOrWhiteSpace(this.DiseaseIDs)) ? this.DiseaseIDs : "none";
-            analyticsParams[2] = (!string.IsNullOrWhiteSpace(this.TrialType)) ? this.TrialType : "none";
-            analyticsParams[3] = (!string.IsNullOrWhiteSpace(this.InterventionIDs)) ? this.InterventionIDs : "none";
-            analyticsParams[4] = this.TotalSearchResults.ToString();
-            string dynamicAnalytics = string.Join("|", analyticsParams);
+            string dynamicAnalytics = GetDynamicParams();
 
             string resultsPerPage;
             if (this.TotalSearchResults < this.GetItemsPerPage())

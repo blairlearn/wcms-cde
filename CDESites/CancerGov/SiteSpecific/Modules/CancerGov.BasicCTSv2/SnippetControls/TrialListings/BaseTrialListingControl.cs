@@ -75,6 +75,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2.SnippetControls
         /// </summary>
         protected abstract void OnEmptyResults();
 
+        /// <summary>
+        /// Gets formatted list of search parameters depending on listing page type.
+        /// </summary>
+        public abstract String GetDynamicParams();
+
         #endregion
 
         /// <summary>

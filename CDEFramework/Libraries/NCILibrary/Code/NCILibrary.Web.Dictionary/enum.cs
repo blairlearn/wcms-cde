@@ -57,7 +57,12 @@ namespace NCI.Web.Dictionary
         /// <summary>
         /// Search for terms beginning with, followed by terms containing
         /// </summary>
-        Magic = 3
+        Magic = 3,
+
+        /// <summary>
+        /// Search for terms exact match
+        /// </summary>
+        Exact = 4
     }
 
     public enum AudienceType

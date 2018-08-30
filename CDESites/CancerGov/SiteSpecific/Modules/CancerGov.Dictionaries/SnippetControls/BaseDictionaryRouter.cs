@@ -123,7 +123,10 @@ namespace CancerGov.Dictionaries.SnippetControls
                 redirectURL.QueryParameters.Add("page", page);
             }
 
-            Response.RedirectPermanent(redirectURL.ToString(), true);
+            // Add redirect query parameter for analytics
+            redirectURL.QueryParameters.Add("redirect", "true");
+
+            NCI.Web.CDE.Application.PermanentRedirector.DoPermanentRedirect(Response, redirectURL.ToString(), "Dictionary Friendly Name Redirect");
         }
 
 
@@ -144,7 +147,10 @@ namespace CancerGov.Dictionaries.SnippetControls
                 redirectURL.SetUrl(GetDefinitionUrl() + id);
             }
 
-            Response.RedirectPermanent(redirectURL.ToString());
+            // Add redirect query parameter for analytics
+            redirectURL.QueryParameters.Add("redirect", "true");
+
+            NCI.Web.CDE.Application.PermanentRedirector.DoPermanentRedirect(Response, redirectURL.ToString(), "Dictionary Friendly Name Redirect");
         }
 
         protected sealed override void OnInit(EventArgs e)
