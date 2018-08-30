@@ -144,8 +144,11 @@ namespace CancerGov.ClinicalTrials.Basic.v2
 
             string redirectPath = string.Format("{0}?id={1}&r=1", this.SearchResultsPrettyUrl, nciID);
 
+            // Add redirect query parameter for analytics
+            redirectPath += "&redirect=true";
+
             //Finally redirect.
-            context.Response.RedirectPermanent(redirectPath, true);
+            NCI.Web.CDE.Application.PermanentRedirector.DoPermanentRedirect(context.Response, redirectPath, "NCTID Redirect");
         }
 
         /// <summary>

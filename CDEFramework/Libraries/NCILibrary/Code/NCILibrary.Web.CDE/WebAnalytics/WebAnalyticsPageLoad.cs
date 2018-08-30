@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web.UI;
 using Common.Logging;
 
 namespace NCI.Web.CDE.WebAnalytics
@@ -21,6 +23,7 @@ namespace NCI.Web.CDE.WebAnalytics
         private const string WEB_ANALYTICS_COMMENT_START = "<!-- ***** NCI Web Analytics - DO NOT ALTER ***** -->";
         private const string WEB_ANALYTICS_COMMENT_END = "<!-- ***** End NCI Web Analytics ***** -->";
         private const bool TEST_MODE = false;  // When true, Omniture image request is not sent 
+        private const string WA_DATA_ELEMENT = "wa-data-element";
 
         private StringBuilder pageLoadPreTag = new StringBuilder();
         private StringBuilder pageLoadPostTag = new StringBuilder();
@@ -28,6 +31,7 @@ namespace NCI.Web.CDE.WebAnalytics
         private Dictionary<int, string> props = new Dictionary<int, string>();
         private Dictionary<int, string> evars = new Dictionary<int, string>();
         private List<string> events = new List<string>();
+        private String suites = "";
         private string channel = "";
         private string pageName = null;
         private string pageType = "";
@@ -48,11 +52,18 @@ namespace NCI.Web.CDE.WebAnalytics
             set { pageWideLinkTracking = value; }
         }
 
-        /// <summary>the constructor builds base Omniture page load code.   
-        /// Also sets the default custom variables (props), custom conversion variables (eVars), and events. .</summary>
-        /// Note: as of the Feline release, Prod web analytics javascript is hosted on static.cancer.gov
+        /// <summary>Default constructor.</summary>
         public WebAnalyticsPageLoad()
         {
+        }
+
+        /// <summary>
+        /// This were the contents of the original constructor. 
+        /// It builds the base Omniture (Adobe) page load code.
+        /// Also sets the default custom variables (props), custom conversion variables (eVars), and events.
+        /// </summary>
+        [Obsolete("This is the legacy method for drawing analytics JavaScript into the page HTML.")]
+        public void DoLegacyPageLoad() {
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaFunctions + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaSCode + "\"></script>");
             pageLoadPreTag.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
@@ -81,6 +92,7 @@ namespace NCI.Web.CDE.WebAnalytics
         }
 
         /// <summary>Builds the Page-wide link tracking JavaScript code inserted into the Omniture page load code.</summary>
+        [Obsolete("Page-wide link tracking is currently not used.")] 
         private StringBuilder LinkTrackPageLoadCode()
         {
             //Page-wide link tracking is currently not used 
@@ -98,6 +110,7 @@ namespace NCI.Web.CDE.WebAnalytics
             return linkTrackerPageLoadCode;
         }
 
+        /// <summary>Draw noscript tag</noscript></summary>
         private StringBuilder NoScriptTag()
         {
             StringBuilder noScriptTag = new StringBuilder();
@@ -112,10 +125,14 @@ namespace NCI.Web.CDE.WebAnalytics
         }
 
         /// <summary>When DoWebAnalytics is true, this method renders the Omniture page load JavaScript code.</summary>
+        [Obsolete("This is the legacy method for drawing analytics JavaScript into the page HTML.")]
         public string Tag()
         {
             StringBuilder output = new StringBuilder();
             string reportSuites = "";
+
+            // Fire off old constructor actions
+            DoLegacyPageLoad();
 
             if (WebAnalyticsOptions.IsEnabled)
             {
@@ -146,7 +163,7 @@ namespace NCI.Web.CDE.WebAnalytics
                 // 3. NCIAnalyticsFunctions.js source URL (see line 47)
                 // 4. s_code source URL
                 // 5. Channel, Prop, eVar, and Event info
-                // Note: as of the Feline release, the web analytics javascript is hosted on static.cancer.gov
+                // Note: as of 08/2018, the web analytics javascript is hosted on DTM
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\" src=\"" + WaPre + "\"></script>");
                 output.AppendLine("<script language=\"JavaScript\" type=\"text/javascript\">");
                 output.AppendLine("<!--");
@@ -228,6 +245,63 @@ namespace NCI.Web.CDE.WebAnalytics
                 output.AppendLine(pageLoadPostTag.ToString());
             }
             return output.ToString();
+        }
+
+        /// <summary>Get the analytics metadata to be used in the document head.</summary>
+        /// <returns>HTML string</returns>
+        public String GetAnalyticsDataTag()
+        {
+            StringWriter stringWriter = new StringWriter();
+
+            // Put HtmlTextWsriter in using block because it needs to call Dispose()
+            using (HtmlTextWriter htmlWriter = new HtmlTextWriter(stringWriter))
+            {
+                DrawAnalyticsDataTag(htmlWriter);
+            }
+            return stringWriter.ToString();
+        }
+
+        /// <summary>
+        /// Draw the analytics data element that will be used to populate analytics values.
+        /// This is a div element that will be in the DOM but not visibile. 
+        /// </summary>
+        /// <param name="writer">Text writer object used to output HTML tags</param>
+        public void DrawAnalyticsDataTag(HtmlTextWriter writer)
+        {
+            // Add class and attributes to the tag
+            string[] classes = {WA_DATA_ELEMENT, "hide"};
+            writer.AddAttribute(HtmlTextWriterAttribute.Class, string.Join(" ", classes));
+
+            // if events have been defined, output then to the tag
+            if (events.Count > 0)
+            {
+                string eventVal = string.Join(",", events.ToArray<string>());
+                writer.AddAttribute("data-events", eventVal);
+            }
+
+            // if props are set, output them to the tag
+            if (props.Count > 0)
+            {
+                foreach (int k in props.Keys.OrderBy(k => k))
+                {
+                    string propVal = CleanQuotedString(props[k]);
+                    writer.AddAttribute(("data-prop" + k.ToString()), propVal);
+                }
+            }
+
+            // if eVars are set, output them to the tag
+            if (evars.Count > 0)
+            {
+                foreach (int k in evars.Keys.OrderBy(k => k))
+                {
+                    string eVarVal = CleanQuotedString(evars[k]);
+                    writer.AddAttribute("data-evar" + k.ToString(), eVarVal);
+                }
+            }
+
+            // Draw the actual <div> tag 
+            writer.RenderBeginTag(HtmlTextWriterTag.Div);
+            writer.RenderEndTag();
         }
 
         /// <summary>Adds an Omniture custom variable (prop) to the Omniture page load JavaScript code 
@@ -363,8 +437,6 @@ namespace NCI.Web.CDE.WebAnalytics
                     languageValue = "english";
                     break;
             }
-            this.AddProp(WebAnalyticsOptions.Props.prop8, languageValue); // Language
-            this.AddEvar(WebAnalyticsOptions.eVars.evar2, languageValue); // Language
             language = languageValue;
         }
 
@@ -373,7 +445,6 @@ namespace NCI.Web.CDE.WebAnalytics
         public void SetPageName(string pageNameValue)
         {
             pageName = pageNameValue.Replace("'", "\\'");
-            this.AddEvar(WebAnalyticsOptions.eVars.evar1, pageName); // Page name
         }
 
         /// <summary>Sets the value of the Omniture pageType  variable in the Omniture page load JavaScript code.</summary>
@@ -381,6 +452,40 @@ namespace NCI.Web.CDE.WebAnalytics
         public void SetPageType(string pageTypeValue)
         {
             pageType = pageTypeValue;
+        }
+
+        /// <summary>Set custom suites based on a given string.</summary>
+        /// <param name="customSuites">String of comma-separated suite names</param>
+        public void SetReportSuites(String customSuites)
+        {
+            suites += customSuites;
+        }
+
+        /// <summary>Overload to set custom suites based on section details.</summary>
+        /// <param name="detail">Nav details for the current page</param>
+        public void SetReportSuites(SectionDetail detail)
+        {
+            try
+            {
+                string customSuites = detail.GetWASuites();
+                if (!string.IsNullOrEmpty(customSuites))
+                {
+                    SetReportSuites(customSuites);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Debug("WebAnalyticsPageLoad:SetReportSuites(): Exception encountered while retrieving web analytics suites.", ex);
+            }
+        }
+
+        /// <summary>Trim quotes and spaces from string and replace with double quotes</summary>
+        /// <param name="content">Meta content attribute</param>
+        /// <returns>Clean string enclosed in double quotes</returns>
+        private String CleanQuotedString(string value)
+        {
+            char[] charsToTrim = { '\'', ' ', '"' };
+            return value.Trim(charsToTrim);
         }
 
         /// <summary>Clears all previously set props, eVars, events, channel, pageName, and pageType.</summary>
